@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { SdkDescriptor, SdkPackageDescriptor } from "../base/sdkPackages";
-import { logError, logInfo, logWarn } from "../cli/loggers";
+import { logError, logInfo, logNewSection, logWarn } from "../cli/loggers";
 import fs from "fs";
 import path from "path";
 import spawn from "cross-spawn";
@@ -14,14 +14,19 @@ const StdoutFilename = "applink.log";
 const StderrFilename = "applink.error.log";
 
 export class IncrementalBuilder {
-    private TimeoutId: any | undefined;
-    private AccumulatedChanges: string[] = [];
+    private timeoutId: any | undefined;
+    private accumulatedChanges: string[] = [];
 
-    constructor(private readonly sdk: SdkDescriptor) {}
+    constructor(
+        private readonly sdk: SdkDescriptor,
+        private readonly onNewBuildsReady: (sdkPackages: SdkPackageDescriptor[]) => void,
+    ) {}
 
     private processRebuildRequests = (requests: RebuildRequest[]) => {
-        requests.forEach((req) => {
-            const { sdkPackage } = req;
+        let allSucceeded = true;
+
+        for (const request of requests) {
+            const { sdkPackage } = request;
             const out = fs.openSync(path.join(sdkPackage.directory, StdoutFilename), "w+");
             const err = fs.openSync(path.join(sdkPackage.directory, StderrFilename), "w+");
 
@@ -41,15 +46,25 @@ export class IncrementalBuilder {
                         sdkPackage.rushPackage.projectFolder
                     }/${StdoutFilename}.`,
                 );
+
+                allSucceeded = false;
             } else {
                 logInfo(`[${sdkPackage.packageName}] Build succeeded after ${duration / 1000} seconds.`);
             }
-        });
+        }
+
+        if (allSucceeded) {
+            this.onNewBuildsReady(requests.map((r) => r.sdkPackage));
+        } else {
+            logError(
+                "Not all packages were successfully built. Will not publish anything to the app. Fix errors and try again.",
+            );
+        }
     };
 
     private rebuildAndPublish = () => {
-        const changes = this.AccumulatedChanges.concat();
-        this.AccumulatedChanges = [];
+        const changes = this.accumulatedChanges.concat();
+        this.accumulatedChanges = [];
 
         const requests = createRebuildRequests(this.sdk, changes);
 
@@ -61,6 +76,7 @@ export class IncrementalBuilder {
             return;
         }
 
+        logNewSection();
         logInfo(
             `Identified ${requests.length} package(s) to rebuild: ${requests
                 .map((r) => r.sdkPackage.packageName)
@@ -71,24 +87,24 @@ export class IncrementalBuilder {
     };
 
     public onSourceChange = (target: string, _type: "add" | "change" | "unlink"): void => {
-        this.AccumulatedChanges.push(target);
+        this.accumulatedChanges.push(target);
 
-        if (this.TimeoutId) {
-            clearTimeout(this.TimeoutId);
+        if (this.timeoutId) {
+            clearTimeout(this.timeoutId);
         }
 
-        this.TimeoutId = setTimeout(this.rebuildAndPublish, 500);
+        this.timeoutId = setTimeout(this.rebuildAndPublish, 500);
     };
 }
 
 function createRebuildRequests(sdk: SdkDescriptor, targets: string[]): RebuildRequest[] {
     const requests: Record<string, RebuildRequest> = {};
 
-    targets.forEach((target) => {
+    for (const target of targets) {
         const request = createRebuildRequest(sdk, target);
 
         if (!request) {
-            return;
+            break;
         }
 
         const { packageName } = request.sdkPackage;
@@ -99,7 +115,7 @@ function createRebuildRequests(sdk: SdkDescriptor, targets: string[]): RebuildRe
         } else {
             existingRequest.sourceFiles.push(...request.sourceFiles);
         }
-    });
+    }
 
     return Object.values(requests);
 }

@@ -6,17 +6,23 @@ export function log(key: string, value: string): void {
 }
 
 export function logError(message: string): void {
-    console.log(chalk`{white.bold.bgRed  ✘ ERROR } ${message}`);
+    console.log(chalk`{white.bold.bgRed ✘} ${message}`);
 }
 
 export function logSuccess(message: string): void {
-    console.log(chalk`{white.bold.bgGreen  ✔ SUCCESS } ${message}`);
+    console.log(chalk`{green ✔} ${message}`);
 }
 
 export function logInfo(message: string): void {
-    console.log(chalk`{blue.bold    INFO  } ${message}`);
+    console.log(chalk`{blue 🛈} ${message}`);
 }
 
 export function logWarn(message: string): void {
-    console.log(chalk`{blue.yellow    WARN  } ${message}`);
+    console.log(chalk`{blue.yellow ⚠} ${message}`);
+}
+
+export function logNewSection(): void {
+    console.log();
+    console.log("-----------------------------------------------------------------------");
+    console.log();
 }

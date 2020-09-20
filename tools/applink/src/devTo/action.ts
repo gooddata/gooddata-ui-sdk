@@ -6,11 +6,13 @@ import { logError, logInfo } from "../cli/loggers";
 import { DependencyOnSdk, findSdkDependencies } from "../base/dependencyDiscovery";
 import chokidar from "chokidar";
 import { IncrementalBuilder } from "./incrementalBuilder";
+import { DevBuildPublisher } from "./publisher";
 
 async function watchAndRebuildLoop(sdk: SdkDescriptor, deps: DependencyOnSdk[]): Promise<void> {
     logInfo(`Entering watch and incremental build loop for ${deps.length} package(s).`);
 
-    const incrementalBuilder = new IncrementalBuilder(sdk);
+    const buildPublisher = new DevBuildPublisher(deps);
+    const incrementalBuilder = new IncrementalBuilder(sdk, buildPublisher.onNewBuildsReady);
     const watcher = chokidar.watch(createWatchDirs(deps), {
         atomic: true,
         persistent: true,
@@ -45,16 +47,16 @@ export async function devTo(target: string): Promise<number> {
     logInfo(
         `The target project references the following SDK libraries (${
             dependencies.length
-        }):\n\t\t\t${dependencies.map((dep) => `${dep.pkg.packageName} @ ${dep.version}`).join("\n\t\t\t")}`,
+        }):\n\t${dependencies.map((dep) => `${dep.pkg.packageName} @ ${dep.version}`).join("\n\t")}`,
     );
 
     const unbuiltPackages = findUnbuiltPackages(dependencies);
 
     if (unbuiltPackages.length > 0) {
         logError(
-            `The SDK is not built entirely. Please run 'rush build'. The following packages are missing dist:\n\t\t\t${unbuiltPackages
+            `The SDK is not built entirely. Please run 'rush build'. The following packages are missing dist:\n\t${unbuiltPackages
                 .map((dep) => dep.pkg.packageName)
-                .join("\n\t\t\t")}`,
+                .join("\n\t")}`,
         );
 
         return 1;
