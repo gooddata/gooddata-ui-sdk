@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
-import { Sdk, SdkPackage } from "../base/sdkPackages";
+import { SdkDescriptor, SdkPackageDescriptor } from "../base/sdkPackages";
 import { logError, logInfo, logWarn } from "../cli/loggers";
 import fs from "fs";
 import path from "path";
 import spawn from "cross-spawn";
 
-export type RebuildRequest = {
-    sdkPackage: SdkPackage;
+type RebuildRequest = {
+    sdkPackage: SdkPackageDescriptor;
     sourceFiles: string[];
 };
 
@@ -17,7 +17,7 @@ export class IncrementalBuilder {
     private TimeoutId: any | undefined;
     private AccumulatedChanges: string[] = [];
 
-    constructor(private readonly sdk: Sdk) {}
+    constructor(private readonly sdk: SdkDescriptor) {}
 
     private processRebuildRequests = (requests: RebuildRequest[]) => {
         requests.forEach((req) => {
@@ -81,7 +81,7 @@ export class IncrementalBuilder {
     };
 }
 
-function createRebuildRequests(sdk: Sdk, targets: string[]): RebuildRequest[] {
+function createRebuildRequests(sdk: SdkDescriptor, targets: string[]): RebuildRequest[] {
     const requests: Record<string, RebuildRequest> = {};
 
     targets.forEach((target) => {
@@ -104,7 +104,7 @@ function createRebuildRequests(sdk: Sdk, targets: string[]): RebuildRequest[] {
     return Object.values(requests);
 }
 
-function createRebuildRequest(sdk: Sdk, target: string): RebuildRequest | undefined {
+function createRebuildRequest(sdk: SdkDescriptor, target: string): RebuildRequest | undefined {
     const libEndsIndex = target.indexOf("/", target.indexOf("/") + 1);
 
     if (libEndsIndex === -1) {

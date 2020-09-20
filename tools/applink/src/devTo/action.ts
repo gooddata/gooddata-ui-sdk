@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { getSdkPackages, Sdk } from "../base/sdkPackages";
+import { getSdkPackages, SdkDescriptor } from "../base/sdkPackages";
 import path from "path";
 import fs from "fs";
 import { logError, logInfo } from "../cli/loggers";
@@ -7,7 +7,7 @@ import { DependencyOnSdk, findSdkDependencies } from "../base/dependencyDiscover
 import chokidar from "chokidar";
 import { IncrementalBuilder } from "./incrementalBuilder";
 
-async function watchAndRebuildLoop(sdk: Sdk, deps: DependencyOnSdk[]): Promise<void> {
+async function watchAndRebuildLoop(sdk: SdkDescriptor, deps: DependencyOnSdk[]): Promise<void> {
     logInfo(`Entering watch and incremental build loop for ${deps.length} package(s).`);
 
     const incrementalBuilder = new IncrementalBuilder(sdk);
