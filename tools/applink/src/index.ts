@@ -5,7 +5,7 @@ import program from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
 import { logError } from "./cli/loggers";
-import { devTo } from "./tool/devToAction";
+import { devTo } from "./devTo/action";
 
 program
     .version(pkg.version)

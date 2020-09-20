@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { Sdk, SdkPackage } from "./sdkPackages";
+import { Sdk, SdkPackage } from "../base/sdkPackages";
 import { logError, logInfo, logWarn } from "../cli/loggers";
 import fs from "fs";
 import path from "path";

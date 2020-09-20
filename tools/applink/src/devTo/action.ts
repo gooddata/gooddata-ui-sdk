@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
-import { getSdkPackages, Sdk } from "./sdkPackages";
+import { getSdkPackages, Sdk } from "../base/sdkPackages";
 import path from "path";
 import fs from "fs";
 import { logError, logInfo } from "../cli/loggers";
-import { DependencyOnSdk, findSdkDependencies } from "./dependencyDiscovery";
+import { DependencyOnSdk, findSdkDependencies } from "../base/dependencyDiscovery";
 import chokidar from "chokidar";
 import { IncrementalBuilder } from "./incrementalBuilder";
 
