@@ -19,6 +19,7 @@ import {
     newNegativeAttributeFilter,
     isNegativeAttributeFilter,
     isMeasureValueFilter,
+    isRankingFilter,
     mergeFilters,
 } from "@gooddata/sdk-model";
 import partition from "lodash/fp/partition";
@@ -50,13 +51,15 @@ export async function appendFilters(
     return mergeFilters(normalizedOriginalFilters, normalizedAddedFilters);
 }
 
+const isFilterWithoutRefs = (filter: IFilter) => isMeasureValueFilter(filter) || isRankingFilter(filter);
+
 /**
  * Detects if all the filters with refs use the same ObjRef type.
  *
  * @param filters - the filters to check
  */
 function allUseSameRefType(filters: IFilter[]): boolean {
-    const filtersWithRefs = filters.filter((f) => !isMeasureValueFilter(f));
+    const filtersWithRefs = filters.filter((f) => !isFilterWithoutRefs(f));
 
     return (
         filtersWithRefs.every((f) => isIdentifierRef(filterObjRef(f))) ||
@@ -74,7 +77,7 @@ async function normalizeFilterRefs(
     filters: IFilter[],
     objRefNormalizer: (refs: ObjRef[]) => Promise<string[]>,
 ): Promise<IFilter[]> {
-    const [measureValueFilters, filtersWithRefs] = partition(isMeasureValueFilter, filters);
+    const [filtersWithoutRefs, filtersWithRefs] = partition(isFilterWithoutRefs, filters);
 
     const refs = filtersWithRefs.map(filterObjRef) as ObjRef[];
 
@@ -98,5 +101,5 @@ async function normalizeFilterRefs(
         }
     });
 
-    return [...measureValueFilters, ...normalized];
+    return [...filtersWithoutRefs, ...normalized];
 }
