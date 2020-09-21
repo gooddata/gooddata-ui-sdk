@@ -140,7 +140,11 @@ const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 const DEFAULT_ROW_HEIGHT = 28;
 
-const DEFAULT_AUTOSIZE_PADDING = 12; // needs to match real padding from styles
+/**
+ * DEFAULT_AUTOSIZE_PADDING needs to match real padding from styles
+ */
+const DEFAULT_AUTOSIZE_PADDING = 12;
+const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
 const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
@@ -811,7 +815,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             subtotalFont,
             totalFont,
             rowFont,
-            padding: 2 * DEFAULT_AUTOSIZE_PADDING + 1, // header cell has 1px border
+            padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER, // header cell has 1px border
             useWidthsCache: true,
             separators,
         });
@@ -864,6 +868,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (this.isPivotTableReady(event.api) && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
             // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
+            // TODO: PBR ONE-4491 - decide what to do with this IF (whether we still need "autoresize visible columns")
             if (this.isColumnAutoresizeAllEnabled()) {
                 await this.autoresizeAllColumns(event.api, event.columnApi);
             } else {

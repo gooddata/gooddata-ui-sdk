@@ -822,9 +822,6 @@ export const autoresizeAllColumns = (
         useWidthsCache: boolean;
     },
 ): IResizedColumns => {
-    // eslint-disable-next-line no-console
-    console.time("Resize all columns (including widths calculation)"); // TODO INE: remove time logging once tested on big table
-
     if (gridApi && columnApi && execution) {
         const canvas = document.createElement("canvas");
         const context = canvas.getContext("2d");
@@ -856,8 +853,6 @@ export const autoresizeAllColumns = (
                 };
             }
         });
-        // eslint-disable-next-line no-console
-        console.timeEnd("Resize all columns (including widths calculation)"); // TODO INE: remove time logging once tested on big table
         return autoResizedColumns;
     }
     return {};
@@ -875,7 +870,9 @@ const getTableFont = (containerRef: HTMLDivElement, className: string) => {
 export const getTableFonts = (
     containerRef: HTMLDivElement,
 ): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } => {
-    // All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
+    /**
+     * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
+     */
     const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS);
     const rowFont = getTableFont(containerRef, VALUE_CLASS);
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS);
