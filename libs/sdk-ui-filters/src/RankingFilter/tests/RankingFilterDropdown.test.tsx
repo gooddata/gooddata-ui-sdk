@@ -105,7 +105,7 @@ describe("RankingFilterDropdown", () => {
             const component = renderComponent();
 
             expect(component.isApplyButtonDisabled()).toEqual(true);
-            component.openMeasureDropdown().setMeasure("Measure 2");
+            component.openMeasureDropdown().setMeasureItem("Measure 2");
             expect(component.isApplyButtonDisabled()).toEqual(false);
         });
 
@@ -113,7 +113,7 @@ describe("RankingFilterDropdown", () => {
             const component = renderComponent();
 
             expect(component.isApplyButtonDisabled()).toEqual(true);
-            component.openAttributeDropdown().setAttribute("Attribute 2");
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
             expect(component.isApplyButtonDisabled()).toEqual(false);
         });
 
@@ -123,8 +123,8 @@ describe("RankingFilterDropdown", () => {
 
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
-            component.openMeasureDropdown().setMeasure("Measure 3");
-            component.openAttributeDropdown().setAttribute("Attribute 2");
+            component.openMeasureDropdown().setMeasureItem("Measure 3");
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
             component.clickApply();
 
             expect(onApply).toHaveBeenCalledWith({
@@ -143,7 +143,7 @@ describe("RankingFilterDropdown", () => {
 
             component.openOperatorDropdown().setOperator("BOTTOM");
             component.setValue("100");
-            component.openMeasureDropdown().setMeasure("Measure 3");
+            component.openMeasureDropdown().setMeasureItem("Measure 3");
             component.openAttributeDropdown().setAttributeToAllRecords();
             component.clickApply();
 
@@ -163,6 +163,66 @@ describe("RankingFilterDropdown", () => {
             component.clickCancel();
 
             expect(onCancel).toHaveBeenCalled();
+        });
+    });
+
+    describe("AttributeDropdown", () => {
+        it("should call onDropDownItemMouseOver on item mouseOver", () => {
+            const onDropDownItemMouseOver = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOver });
+
+            component.openAttributeDropdown().getAttributeItem("Attribute 1").simulate("mouseOver");
+
+            expect(onDropDownItemMouseOver).toHaveBeenCalled();
+            expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ uri: "attribute1" });
+        });
+
+        it("should call onDropDownItemMouseOut on item mouseOut", () => {
+            const onDropDownItemMouseOut = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOut });
+
+            component.openAttributeDropdown().getAttributeItem("Attribute 1").simulate("mouseOut");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+
+        it("should call onDropDownItemMouseOut on dropdown close", () => {
+            const onDropDownItemMouseOut = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOut });
+
+            component.openAttributeDropdown().setAttributeItem("Attribute 2");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+    });
+
+    describe("MeasureDropdown", () => {
+        it("should call onDropDownItemMouseOver on item mouseOver", () => {
+            const onDropDownItemMouseOver = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOver });
+
+            component.openMeasureDropdown().getMeasureItem("Measure 1").simulate("mouseOver");
+
+            expect(onDropDownItemMouseOver).toHaveBeenCalled();
+            expect(onDropDownItemMouseOver).toHaveBeenCalledWith({ localIdentifier: "measure1" });
+        });
+
+        it("should call onDropDownItemMouseOut on item mouseOut", () => {
+            const onDropDownItemMouseOut = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOut });
+
+            component.openMeasureDropdown().getMeasureItem("Measure 1").simulate("mouseOut");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
+        });
+
+        it("should call onDropDownItemMouseOut on dropdown close", () => {
+            const onDropDownItemMouseOut = jest.fn();
+            const component = renderComponent({ onDropDownItemMouseOut });
+
+            component.openMeasureDropdown().setMeasureItem("Measure 2");
+
+            expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
     });
 

@@ -30,6 +30,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
     const onItemSelect = (ref: ObjRefInScope) => {
         onSelect(ref);
         setIsOpen(false);
+        onDropDownItemMouseOut && onDropDownItemMouseOut();
     };
 
     const buttonClassNames = cx(
