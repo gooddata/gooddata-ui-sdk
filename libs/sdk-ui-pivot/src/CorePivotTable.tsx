@@ -763,6 +763,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }, this.autoResizedColumns);
     };
 
+    // TODO: ONE-4491 could be removed
     private autoresizeVisibleColumns = async (
         columnApi: ColumnApi,
         previouslyResizedColumnIds: string[],
@@ -801,6 +802,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private autoresizeAllColumns = async (gridApi: GridApi, columnApi: ColumnApi) => {
+        // TODO: ONE-4491 could be removed "shouldPerformAutoresize"?
         if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
             return Promise.resolve();
         }
@@ -815,7 +817,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             subtotalFont,
             totalFont,
             rowFont,
-            padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER, // header cell has 1px border
+            padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
             useWidthsCache: true,
             separators,
         });
@@ -864,16 +866,17 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         previouslyResizedColumnIds: string[] = [],
     ) => {
         const alreadyResized = () => this.state.resized || this.resizing;
-
+        console.log(previouslyResizedColumnIds);
         if (this.isPivotTableReady(event.api) && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
             // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
             // TODO: PBR ONE-4491 - decide what to do with this IF (whether we still need "autoresize visible columns")
-            if (this.isColumnAutoresizeAllEnabled()) {
+            if (this.isColumnAutoresizeAllEnabled() || this.isColumnAutoresizeEnabled()) {
                 await this.autoresizeAllColumns(event.api, event.columnApi);
-            } else {
-                await this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
             }
+            // else {
+            //     await this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
+            // }
             // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
             if (this.isGrowToFitEnabled()) {
                 this.growToFit(event.columnApi);
@@ -945,6 +948,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
+    // TODO: ONE-4491 could be removed
     private mapFieldIdToGridId(columnApi: ColumnApi, fieldIds: string[]) {
         const columns = columnApi.getAllColumns();
 
@@ -960,6 +964,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.lastResizedWidth = gridSizeChangedEvent.clientWidth;
             this.lastResizedHeight = gridSizeChangedEvent.clientHeight;
 
+            // TODO: ONE-4491 could be removed
             const resizedColumnsGridIds = this.mapFieldIdToGridId(
                 gridSizeChangedEvent.columnApi,
                 Object.keys(this.autoResizedColumns),
@@ -1208,6 +1213,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns;
     }
 
+    // TODO: ONE-4491 could be removed (if we do not want to keep default width)
     private getDefaultWidth = () => {
         return DEFAULT_COLUMN_WIDTH;
     };
@@ -1225,7 +1231,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.columnApi?.setColumnWidth(column, this.autoResizedColumns[id].width);
             return;
         }
-
+        // TODO: ONE-4491 could be removed
         this.autoresizeColumnsByColumnId(this.columnApi!, this.getColumnIds([column]));
         if (isColumnDisplayed(this.columnApi!.getAllDisplayedVirtualColumns(), column)) {
             // skip columns out of viewport because these can not be autoresized

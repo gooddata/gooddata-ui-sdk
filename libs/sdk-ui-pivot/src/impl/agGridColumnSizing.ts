@@ -578,6 +578,7 @@ export const updateColumnDefinitionsWithWidths = (
                 columnDefinition.suppressSizeToFit = !manualSize.allowGrowToFit;
             } else {
                 columnDefinition.suppressSizeToFit = false;
+                // TODO: ONE-4491 defaultColumnWidth could be removed (if we do not want to keep default width)
                 columnDefinition.width = autoResizeSize ? autoResizeSize.width : defaultColumnWidth;
                 if (isGrowToFitEnabled) {
                     const growToFittedColumn =
@@ -633,6 +634,8 @@ export const resetColumnsWidthToDefault = (
             }
         } else if (isColumnAutoResized(autoResizedColumns, id)) {
             columnApi.setColumnWidth(col, autoResizedColumns[id].width);
+            // TODO: ONE-4491 maybe this "else" is not need anymore because all columns are auto resized..
+            // in case when autoresize FF is set to false?
         } else {
             columnApi.setColumnWidth(col, defaultWidth);
         }
@@ -790,18 +793,20 @@ const calculateColumnWidths = (config: any) => {
 
 const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
     const rowCount = gridApi.getDisplayedRowCount();
-    const rowData = [];
+    const rowData: IGridRow[] = [];
     for (let index = 0; index < rowCount; index++) {
-        rowData.push(gridApi.getDisplayedRowAtIndex(index).data);
+        const item: IGridRow = gridApi.getDisplayedRowAtIndex(index).data;
+        rowData.push(item);
     }
     return rowData;
 };
 
 const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
     const totalCount = gridApi.getPinnedBottomRowCount();
-    const totalData = [];
+    const totalData: IGridRow[] = [];
     for (let index = 0; index < totalCount; index++) {
-        totalData.push(gridApi.getPinnedBottomRow(index).data);
+        const item: IGridRow = gridApi.getPinnedBottomRow(index).data;
+        totalData.push(item);
     }
     return totalData;
 };
