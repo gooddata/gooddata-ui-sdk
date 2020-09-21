@@ -8,6 +8,7 @@ import {
     IFilter,
     newAllTimeFilter,
     uriRef,
+    newRankingFilter,
 } from "@gooddata/sdk-model";
 
 describe("appendFilters", () => {
@@ -26,6 +27,15 @@ describe("appendFilters", () => {
     it("should append measure value filters", async () => {
         const insightFilters = [newMeasureValueFilter("foo", "EQUAL_TO", 42)];
         const addedFilters = [newMeasureValueFilter("bar", "BETWEEN", 0, 100)];
+
+        const actual = await appendFilters(insightFilters, addedFilters, uriResolver);
+
+        expect(actual).toEqual([...insightFilters, ...addedFilters]);
+    });
+
+    it("should append ranking filters", async () => {
+        const insightFilters = [newRankingFilter("foo", "TOP", 3)];
+        const addedFilters = [newRankingFilter("bar", "BOTTOM", 10)];
 
         const actual = await appendFilters(insightFilters, addedFilters, uriResolver);
 
