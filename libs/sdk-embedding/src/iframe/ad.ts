@@ -130,6 +130,11 @@ export namespace EmbeddedAnalyticalDesigner {
         InsightOpened = "insightOpened",
 
         /**
+         * Type represent that the insight is rendered
+         */
+        InsightRendered = "insightRendered",
+
+        /**
          * Type represent that the insight editor is cleared
          */
         ClearFinished = "clearFinished",
@@ -803,6 +808,59 @@ export namespace EmbeddedAnalyticalDesigner {
      */
     export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData {
         return getEventType(obj) === GdcAdEventType.InsightOpened;
+    }
+
+    //
+    // Insight Rendered
+    //
+
+    /**
+     * Main data of InsightRendered event
+     *
+     * @public
+     */
+    export type InsightRenderedBody = IAvailableCommands & {
+        /**
+         * The minimal rendered insight information
+         */
+        insight: IObjectMeta;
+
+        /**
+         * Message about rendering error (if any)
+         */
+        errorMessage?: string;
+    };
+
+    /**
+     * This event is emitted when AD has finished rendering an insight. Essential detail about
+     * the insight is included in the body.
+     *
+     * @public
+     */
+    export type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, InsightRenderedBody>;
+
+    /**
+     * Data type of event that was emitted when an insight is rendered
+     *
+     * Note: The main event data was wrapped to application and product data structure
+     * @remarks See {@link EmbeddedAnalyticalDesigner.InsightRenderedBody}
+     *
+     * @public
+     */
+    export type InsightRenderedData = IGdcAdMessageEnvelope<
+        GdcAdEventType.InsightRendered,
+        InsightRenderedBody
+    >;
+
+    /**
+     * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.InsightRenderedData}
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isInsightRenderedData(obj: unknown): obj is InsightRenderedData {
+        return getEventType(obj) === GdcAdEventType.InsightRendered;
     }
 
     //

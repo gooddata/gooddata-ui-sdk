@@ -277,7 +277,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                this.setState({ dataView, executionResult });
+                this.setState({ dataView, error: null, executionResult });
                 this.onLoadingChanged({ isLoading: false });
 
                 if (onExportReady) {
