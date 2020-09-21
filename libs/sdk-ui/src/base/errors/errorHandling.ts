@@ -6,7 +6,19 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import HttpStatusCodes from "http-status-codes";
 import { IntlShape } from "react-intl";
-import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./GoodDataSdkError";
+import {
+    BadRequestSdkError,
+    CancelledSdkError,
+    DataTooLargeToComputeSdkError,
+    ErrorCodes,
+    GoodDataSdkError,
+    isGoodDataSdkError,
+    NoDataSdkError,
+    NotFoundSdkError,
+    ProtectedReportSdkError,
+    UnauthorizedSdkError,
+    UnexpectedSdkError,
+} from "./GoodDataSdkError";
 import { isCancelError } from "../react/CancelablePromise";
 
 /**
@@ -86,31 +98,31 @@ export function convertError(error: unknown): GoodDataSdkError {
         if (isUnexpectedResponseError(error)) {
             switch (error.httpStatus) {
                 case HttpStatusCodes.NOT_FOUND:
-                    return new GoodDataSdkError(ErrorCodes.NOT_FOUND, error);
+                    return new NotFoundSdkError(ErrorCodes.NOT_FOUND, error);
                 case HttpStatusCodes.BAD_REQUEST:
-                    return new GoodDataSdkError(ErrorCodes.BAD_REQUEST, error);
+                    return new BadRequestSdkError(ErrorCodes.BAD_REQUEST, error);
                 default:
-                    return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
+                    return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error);
             }
         }
 
         switch (error.abeType) {
             case AnalyticalBackendErrorTypes.NO_DATA:
-                return new GoodDataSdkError(ErrorCodes.NO_DATA, error);
+                return new NoDataSdkError(ErrorCodes.NO_DATA, error);
             case AnalyticalBackendErrorTypes.DATA_TOO_LARGE:
-                return new GoodDataSdkError(ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE, error);
+                return new DataTooLargeToComputeSdkError(ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE, error);
             case AnalyticalBackendErrorTypes.PROTECTED_DATA:
-                return new GoodDataSdkError(ErrorCodes.PROTECTED_REPORT, error);
+                return new ProtectedReportSdkError(ErrorCodes.PROTECTED_REPORT, error);
             case AnalyticalBackendErrorTypes.NOT_AUTHENTICATED:
-                return new GoodDataSdkError(ErrorCodes.UNAUTHORIZED, error);
+                return new UnauthorizedSdkError(ErrorCodes.UNAUTHORIZED, error);
             default:
-                return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
+                return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error);
         }
     } else if (isCancelError(error)) {
-        return new GoodDataSdkError(ErrorCodes.CANCELLED, error);
+        return new CancelledSdkError(ErrorCodes.CANCELLED, error);
     }
 
-    return new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, error);
+    return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error as Error);
 }
 
 /**

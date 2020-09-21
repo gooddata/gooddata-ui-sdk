@@ -11,7 +11,36 @@ export { visualizationIsBetaWarning } from "./helpers/logging";
 /*
  * Error handling
  */
-export { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "./errors/GoodDataSdkError";
+export {
+    SdkErrorType,
+    ErrorCodes,
+    GoodDataSdkError,
+    UnauthorizedSdkError,
+    NotFoundSdkError,
+    CancelledSdkError,
+    UnexpectedSdkError,
+    ProtectedReportSdkError,
+    NoDataSdkError,
+    NegativeValuesSdkError,
+    DataTooLargeToComputeSdkError,
+    DataTooLargeToDisplaySdkError,
+    GeoLocationMissingSdkError,
+    BadRequestSdkError,
+    GeoTokenMissingSdkError,
+    isGoodDataSdkError,
+    isBadRequest,
+    isCancelledSdkError,
+    isDataTooLargeToCompute,
+    isDataTooLargeToDisplay,
+    isGeoLocationMissing,
+    isGeoTokenMissing,
+    isNegativeValues,
+    isNoDataSdkError,
+    isNotFound,
+    isProtectedReport,
+    isUnauthorized,
+    isUnknownSdkError,
+} from "./errors/GoodDataSdkError";
 export {
     IErrorDescriptors,
     newErrorMapping,

@@ -34,12 +34,18 @@ export type SdkErrorType = keyof typeof ErrorCodes;
  */
 export abstract class GoodDataSdkError extends Error {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    constructor(public readonly seType: SdkErrorType, message?: string, public readonly cause?: any) {
+    protected constructor(
+        public readonly seType: SdkErrorType,
+        message?: string,
+        public readonly cause?: any,
+    ) {
         /*
          * This is here to keep exception handling in client code initially backward compatible. Previosly
          * GoodDataSdkError had the error code inside the message itself. Keeping it that way.
+         *
+         * Note: using || instead of ?? so that code falls back to use error type even on empty message
          */
-        super(message ?? seType);
+        super(message || seType);
 
         Object.setPrototypeOf(this, new.target.prototype); // restore prototype chain
     }
@@ -56,6 +62,13 @@ export abstract class GoodDataSdkError extends Error {
      */
     public getCause(): any | undefined {
         return this.cause;
+    }
+
+    /**
+     * Error code for this exception. This can be used to identify exact type of exception.
+     */
+    public getErrorCode(): string {
+        return this.seType;
     }
 }
 
@@ -155,7 +168,7 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 /**
  * This error means that GoodData.UI does not know how to handle such error.
  */
-export class UnknownSdkError extends GoodDataSdkError {
+export class UnexpectedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
         super(ErrorCodes.UNKNOWN_ERROR as SdkErrorType, message, cause);
     }
@@ -274,11 +287,11 @@ export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError 
 }
 
 /**
- * Typeguard checking whether input is an instance of {@link UnknownSdkError};
+ * Typeguard checking whether input is an instance of {@link UnexpectedSdkError};
  *
  * @public
  */
-export function isUnknownSdkError(obj: unknown): obj is UnknownSdkError {
+export function isUnknownSdkError(obj: unknown): obj is UnexpectedSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "UNKNOWN_ERROR";
 }
 

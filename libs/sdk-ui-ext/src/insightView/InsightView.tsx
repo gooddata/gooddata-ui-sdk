@@ -39,6 +39,8 @@ import {
     IErrorDescriptors,
     IntlWrapper,
     newErrorMapping,
+    isGoodDataSdkError,
+    UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -318,7 +320,12 @@ class RenderInsightView extends React.Component<
         try {
             return await resourceObtainer(getInsightViewDataLoader(this.props.workspace));
         } catch (e) {
-            this.setError(new GoodDataSdkError(e.message, e));
+            if (isGoodDataSdkError(e)) {
+                this.setError(e);
+            } else {
+                this.setError(new UnexpectedSdkError(e));
+            }
+
             this.stopLoading();
             return undefined;
         }

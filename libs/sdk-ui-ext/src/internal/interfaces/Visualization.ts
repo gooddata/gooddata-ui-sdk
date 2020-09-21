@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
+import isEmpty from "lodash/isEmpty";
 import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -12,6 +13,8 @@ import {
 } from "@gooddata/sdk-model";
 import {
     ChartType,
+    ErrorCodes,
+    GoodDataSdkError,
     IDrillableItem,
     IDrillEvent,
     IHeaderPredicate,
@@ -19,6 +22,7 @@ import {
     IPushData,
     IVisualizationCallbacks,
     OverTimeComparisonType,
+    SdkErrorType,
     VisualizationEnvironment,
 } from "@gooddata/sdk-ui";
 
@@ -393,6 +397,71 @@ export const PluggableVisualizationErrorCodes = {
      */
     EMPTY_AFM: "EMPTY_AFM",
 };
+
+/**
+ * @alpha
+ */
+export type PluggableVisualizationErrorType = keyof typeof PluggableVisualizationErrorCodes;
+
+/**
+ * @alpha
+ */
+export class InvalidBucketsSdkError extends GoodDataSdkError {
+    public readonly pveType: PluggableVisualizationErrorType;
+
+    constructor(cause?: Error) {
+        super(ErrorCodes.UNKNOWN_ERROR as SdkErrorType, undefined, cause);
+
+        this.pveType = "INVALID_BUCKETS";
+    }
+
+    public getErrorCode(): string {
+        return this.pveType;
+    }
+}
+
+/**
+ * @alpha
+ */
+export class EmptyAfmSdkError extends GoodDataSdkError {
+    public readonly pveType: PluggableVisualizationErrorType;
+
+    constructor(cause?: Error) {
+        super(ErrorCodes.UNKNOWN_ERROR as SdkErrorType, undefined, cause);
+
+        this.pveType = "EMPTY_AFM";
+    }
+
+    public getErrorCode(): string {
+        return this.pveType;
+    }
+}
+
+/**
+ * @alpha
+ */
+export type PluggableVisualizationError = InvalidBucketsSdkError | EmptyAfmSdkError;
+
+/**
+ * @alpha
+ */
+export function isPluggableVisualizationError(obj: unknown): obj is PluggableVisualizationError {
+    return !isEmpty(obj) && (obj as any).pveType !== undefined;
+}
+
+/**
+ * @alpha
+ */
+export function isInvalidBuckets(obj: unknown): obj is InvalidBucketsSdkError {
+    return !isEmpty(obj) && (obj as InvalidBucketsSdkError).pveType === "INVALID_BUCKETS";
+}
+
+/**
+ * @alpha
+ */
+export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError {
+    return !isEmpty(obj) && (obj as EmptyAfmSdkError).pveType === "EMPTY_AFM";
+}
 
 /**
  * Source implicit drill down attribute local Identifier

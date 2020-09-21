@@ -3,16 +3,16 @@ import React from "react";
 import noop from "lodash/noop";
 import hoistNonReactStatics from "hoist-non-react-statics";
 import {
-    DataViewFacade,
-    makeCancelable,
-    ICancelablePromise,
+    CancelledSdkError,
     convertError,
-    GoodDataSdkError,
-    IExportFunction,
-    createExportFunction,
     createExportErrorFunction,
-    ErrorCodes,
+    createExportFunction,
+    DataViewFacade,
+    GoodDataSdkError,
+    ICancelablePromise,
+    IExportFunction,
     isCancelError,
+    makeCancelable,
 } from "../base";
 
 /**
@@ -279,7 +279,7 @@ export function withExecutionLoading<TProps>(
                     this.cancelablePromise.cancel();
                     // On refetch, when cancelablePromise was not fulfilled, throw cancel error immediately
                     if (!this.cancelablePromise.getHasFulfilled()) {
-                        this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
+                        this.setError(new CancelledSdkError());
                     }
                 }
 
@@ -330,7 +330,7 @@ export function withExecutionLoading<TProps>(
                 if (this.cancelablePromise) {
                     this.cancelablePromise.cancel();
                     if (!this.cancelablePromise.getHasFulfilled()) {
-                        this.setError(new GoodDataSdkError(ErrorCodes.CANCELLED));
+                        this.setError(new CancelledSdkError());
                     }
                 }
             }
