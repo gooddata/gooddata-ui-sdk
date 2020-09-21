@@ -98,11 +98,12 @@ export class RankingFilterDropdownFragment {
         return this;
     };
 
-    public setMeasure = (value: string): RankingFilterDropdownFragment => {
-        this.component
-            .find(`.s-rf-measure-${stringUtils.simplifyText(value)}`)
-            .hostNodes()
-            .simulate("click");
+    public getMeasureItem = (value: string): ReactWrapper => {
+        return this.component.find(`.s-rf-measure-${stringUtils.simplifyText(value)}`).hostNodes();
+    };
+
+    public setMeasureItem = (value: string): RankingFilterDropdownFragment => {
+        this.getMeasureItem(value).simulate("click");
         return this;
     };
 
@@ -120,11 +121,12 @@ export class RankingFilterDropdownFragment {
         return this;
     };
 
-    public setAttribute = (value: string): RankingFilterDropdownFragment => {
-        this.component
-            .find(`.s-rf-attribute-${stringUtils.simplifyText(value)}`)
-            .hostNodes()
-            .simulate("click");
+    public getAttributeItem = (value: string): ReactWrapper => {
+        return this.component.find(`.s-rf-attribute-${stringUtils.simplifyText(value)}`).hostNodes();
+    };
+
+    public setAttributeItem = (value: string): RankingFilterDropdownFragment => {
+        this.getAttributeItem(value).simulate("click");
         return this;
     };
 

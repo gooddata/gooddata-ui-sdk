@@ -48,6 +48,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
     const onItemSelect = (ref: ObjRefInScope) => {
         onSelect(ref);
         setIsOpen(false);
+        onDropDownItemMouseOut && onDropDownItemMouseOut();
     };
 
     const buttonClassNames = cx(
