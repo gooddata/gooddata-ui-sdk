@@ -76,9 +76,8 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
-                // todo: one-4491 test
-                defaultWidth: "autoresizeAll",
-                // growToFit: true,
+                defaultWidth: "viewport",
+                growToFit: true,
             },
         },
     });
