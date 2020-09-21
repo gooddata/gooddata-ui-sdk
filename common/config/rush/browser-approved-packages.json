@@ -203,6 +203,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/cross-spawn",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/enzyme",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -241,6 +245,10 @@
     {
       "name": "@types/json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@types/json5",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "@types/lodash",
@@ -391,6 +399,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples" ]
     },
@@ -417,6 +429,10 @@
     {
       "name": "core-js",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "cross-spawn",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "css-loader",
@@ -499,6 +515,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "find-up",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "fixed-data-table-2",
       "allowedCategories": [ "production" ]
     },
@@ -573,6 +593,10 @@
     {
       "name": "json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "json5",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "lodash",
