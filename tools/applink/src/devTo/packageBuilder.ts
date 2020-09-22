@@ -4,7 +4,7 @@ import path from "path";
 import { logError, logInfo, logSuccess } from "../cli/loggers";
 import spawn from "cross-spawn";
 import { SdkDescriptor, SdkPackageDescriptor } from "../base/types";
-import { determinePackageBuildOrder } from "../base/sdkDependencyGraph";
+import { determinePackageBuildOrder, findDependingPackages } from "../base/sdkDependencyGraph";
 import { DependencyOnSdk } from "./dependencyDiscovery";
 
 /**
@@ -165,7 +165,7 @@ export class PackageBuilder {
         return promise;
     };
 
-    public build = (requests: BuildRequest[]): Promise<BuildResult[]> => {
+    public buildWithDependencies = (requests: BuildRequest[]): Promise<BuildResult[]> => {
         let resolve: BuildResolver | undefined = undefined;
         let reject: BuildReject | undefined = undefined;
 
@@ -175,7 +175,7 @@ export class PackageBuilder {
         });
 
         const build: Build = {
-            queue: [requests],
+            queue: expandBuildRequestsToIncludeDependencies(this.sdk, this.buildOrder, requests),
             resolve: resolve!,
             reject: reject!,
             results: [],
@@ -187,7 +187,7 @@ export class PackageBuilder {
     };
 }
 
-type OnPackageGroupBuilt = (finished: BuildResult[], failed: BuildResult[]) => void;
+type OnParallelBuildFinished = (finished: BuildResult[], failed: BuildResult[]) => void;
 
 class ParallelBuilder {
     private finished: BuildResult[] = [];
@@ -195,7 +195,7 @@ class ParallelBuilder {
 
     constructor(
         private readonly requests: BuildRequest[],
-        private readonly onPackageGroupBuilt: OnPackageGroupBuilt,
+        private readonly onPackageGroupBuilt: OnParallelBuildFinished,
     ) {}
 
     private onBuildFinished = (result: BuildResult): void => {
@@ -251,11 +251,44 @@ class ParallelBuilder {
 
 function filterBuildOrderToCurrentScope(buildOrder: string[][], deps: DependencyOnSdk[]): string[][] {
     const packagesInScope: Set<string> = new Set<string>();
+
     deps.forEach((dep) => packagesInScope.add(dep.pkg.packageName));
 
     return buildOrder
         .map((group) => group.filter((pkg) => packagesInScope.has(pkg)))
         .filter((g) => g.length > 0);
+}
+
+/**
+ * Given the original build requests, this function takes sdk dependency graph and the build order and constructs
+ * groups of build requests to process. Requests in each group are independent and can be built in parallel. The groups
+ * should be processed sequentally from left to right.
+ *
+ * @param sdk - sdk, for the dependency graph
+ * @param buildOrder - the full build order containing all packages
+ * @param originalRequests - original requests provided to expand
+ */
+function expandBuildRequestsToIncludeDependencies(
+    sdk: SdkDescriptor,
+    buildOrder: string[][],
+    originalRequests: BuildRequest[],
+): BuildRequest[][] {
+    const dependingPackages = findDependingPackages(
+        sdk.dependencyGraph,
+        originalRequests.map((r) => r.sdkPackage),
+    );
+    const packagesInScope: Set<string> = new Set<string>();
+
+    originalRequests.forEach((r) => packagesInScope.add(r.sdkPackage.packageName));
+    dependingPackages.forEach((group) => group.forEach((pkg) => packagesInScope.add(pkg)));
+
+    const filteredBuildOrder = buildOrder
+        .map((group) => group.filter((pkg) => packagesInScope.has(pkg)))
+        .filter((g) => g.length > 0);
+
+    filteredBuildOrder.reverse();
+
+    return filteredBuildOrder.map((group) => group.map((pkg) => ({ sdkPackage: sdk.packages[pkg]! })));
 }
 
 /**

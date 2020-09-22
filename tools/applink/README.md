@@ -19,13 +19,7 @@ The idea of applink is that with a simple invocation such as `npm run applink de
 
 ## Current limitations
 
-1.  The tool does not yet work with SDK package dependencies. For bulletproof linkage, the tool needs to also
-    run builds in the packages which depend on the changed package.
-
-    > Note: with exception with api-client-bear, all SDK packages depend on each other's public API exposed
-    > through the package index. Therefore, this limitation _should_ show only when updating public API.
-
-2.  Handling build errors and recovery from build errors is missing.
+1.  Handling build errors and recovery from build errors is missing.
 
     The tool will at the moment not propagate any changes in case of build error - which is likely desired. As soon as
     multiple packages have their source code updated and one of them fails the build, none of the built changes will be
@@ -33,7 +27,7 @@ The idea of applink is that with a simple invocation such as `npm run applink de
 
     This is questionable and needs further thought - especially once the tool's limitation #1 is addressed.
 
-3.  Styles are not yet handled
+2.  Styles are not yet handled
 
 ## Technical Notes
 

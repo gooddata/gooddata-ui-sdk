@@ -17,7 +17,7 @@ export class IncrementalBuilder {
         const changes = this.accumulatedChanges.concat();
         this.accumulatedChanges = [];
 
-        const requests = createIncrementalBuildRequests(this.sdk, changes);
+        const requests = createBuildRequestsForChangedPackages(this.sdk, changes);
 
         if (requests.length === 0) {
             logWarn(
@@ -29,12 +29,12 @@ export class IncrementalBuilder {
 
         logNewSection();
         logInfo(
-            `Identified ${requests.length} package(s) to rebuild: ${requests
+            `Identified ${requests.length} package(s) and their dependencies to rebuild: ${requests
                 .map((r) => r.sdkPackage.packageName)
                 .join(", ")}`,
         );
 
-        const buildResult = await this.packageBuilder.build(requests);
+        const buildResult = await this.packageBuilder.buildWithDependencies(requests);
 
         if (!buildResult.every((r) => r.exitCode === 0)) {
             logError(
@@ -56,7 +56,7 @@ export class IncrementalBuilder {
     };
 }
 
-function createIncrementalBuildRequests(sdk: SdkDescriptor, targets: string[]): BuildRequest[] {
+function createBuildRequestsForChangedPackages(sdk: SdkDescriptor, targets: string[]): BuildRequest[] {
     const requests: Record<string, BuildRequest> = {};
 
     for (const target of targets) {
