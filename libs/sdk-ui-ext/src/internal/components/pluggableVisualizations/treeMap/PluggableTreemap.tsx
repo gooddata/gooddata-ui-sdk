@@ -5,7 +5,7 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
-import { BucketNames, VisualizationTypes, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
+import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { TREEMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -17,11 +17,11 @@ import {
     UICONFIG,
 } from "../../../constants/uiConfig";
 import {
+    IDrillDownContext,
     IExtendedReferencePoint,
+    IImplicitDrillDown,
     IReferencePoint,
     IVisConstruct,
-    IImplicitDrillDown,
-    IDrillDownContext,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -43,8 +43,11 @@ import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigur
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
-import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
-import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil";
 
 export class PluggableTreemap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -115,21 +118,13 @@ export class PluggableTreemap extends PluggableBaseChart {
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
 
-    private addFiltersForTreemap(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
-        const clicked = drillDownFromAttributeLocalId(drillConfig);
-
-        // intersection returned from treemap visualization is from outer to inner parts -> reverse
-        const reorderedIntersection = event.drillContext.intersection.slice().reverse();
-        const cutIntersection = getIntersectionPartAfter(reorderedIntersection, clicked);
+    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
         return addIntersectionFiltersToInsight(source, cutIntersection);
     }
 
     public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
-        const withFilters = this.addFiltersForTreemap(
-            source,
-            drillDownContext.drillDefinition,
-            drillDownContext.event,
-        );
+        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 

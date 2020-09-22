@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
-import { bucketsItems, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { bucketsItems, IInsight, IInsightDefinition, insightBuckets } from "@gooddata/sdk-model";
+import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
 
@@ -13,7 +13,9 @@ import { DEFAULT_AREA_UICONFIG, MAX_STACKS_COUNT, MAX_VIEW_COUNT } from "../../.
 import {
     IBucketItem,
     IBucketOfFun,
+    IDrillDownContext,
     IExtendedReferencePoint,
+    IImplicitDrillDown,
     IReferencePoint,
     IUiConfig,
     IVisConstruct,
@@ -47,6 +49,11 @@ import get from "lodash/get";
 import negate from "lodash/negate";
 import set from "lodash/set";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil";
 
 export class PluggableAreaChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -124,6 +131,16 @@ export class PluggableAreaChart extends PluggableBaseChart {
 
     protected getSupportedPropertiesList(): string[] {
         return AREA_CHART_SUPPORTED_PROPERTIES;
+    }
+
+    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection);
+    }
+
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {

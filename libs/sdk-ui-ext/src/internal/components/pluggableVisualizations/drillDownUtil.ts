@@ -1,26 +1,30 @@
 // (C) 2020 GoodData Corporation
 import {
+    areObjRefsEqual,
+    attributeLocalId,
+    bucketItemLocalId,
     IAttribute,
     IAttributeOrMeasure,
-    IInsight,
-    isAttribute,
-    VisualizationProperties,
-    insightModifyItems,
-    insightReduceItems,
-    attributeLocalId,
-    modifyAttribute,
-    insightSetProperties,
-    insightSetFilters,
     IFilter,
-    insightProperties,
+    IInsight,
     insightItems,
-    bucketItemLocalId,
+    insightModifyItems,
+    insightProperties,
+    insightReduceItems,
+    insightSetFilters,
+    insightSetProperties,
+    isAttribute,
+    modifyAttribute,
     newPositiveAttributeFilter,
-    areObjRefsEqual,
+    VisualizationProperties,
 } from "@gooddata/sdk-model";
 import { IImplicitDrillDown } from "../../interfaces/Visualization";
-import { isDrillIntersectionAttributeItem, IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
-import { drillDownFromAttributeLocalId, drillDownDisplayForm } from "../../utils/ImplicitDrillDownHelper";
+import {
+    getIntersectionPartAfter,
+    IDrillEventIntersectionElement,
+    isDrillIntersectionAttributeItem,
+} from "@gooddata/sdk-ui";
+import { drillDownDisplayForm, drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import { ColumnWidthItem, isAttributeColumnWidthItem } from "@gooddata/sdk-ui-pivot";
 
 function matchesDrillDownTargetAttribute(
@@ -124,6 +128,19 @@ export function convertIntersectionToFilters(intersections: IDrillEventIntersect
                 uris: [header.attributeHeaderItem.uri],
             }),
         );
+}
+
+export function reverseAndTrimIntersection(
+    drillConfig: IImplicitDrillDown,
+    intersection?: IDrillEventIntersectionElement[],
+): IDrillEventIntersectionElement[] {
+    if (!intersection || intersection.length === 0) {
+        return intersection;
+    }
+
+    const clicked = drillDownFromAttributeLocalId(drillConfig);
+    const reorderedIntersection = intersection.slice().reverse();
+    return getIntersectionPartAfter(reorderedIntersection, clicked);
 }
 
 export function addIntersectionFiltersToInsight(

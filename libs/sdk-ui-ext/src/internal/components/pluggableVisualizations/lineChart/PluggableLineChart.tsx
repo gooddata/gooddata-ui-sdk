@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, IDrillEvent, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
@@ -9,7 +9,9 @@ import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedPro
 import { DEFAULT_LINE_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
 import {
     IBucketItem,
+    IDrillDownContext,
     IExtendedReferencePoint,
+    IImplicitDrillDown,
     IReferencePoint,
     IVisConstruct,
 } from "../../../interfaces/Visualization";
@@ -38,8 +40,13 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
+import {
+    addIntersectionFiltersToInsight,
+    modifyBucketsAttributesForDrillDown,
+    reverseAndTrimIntersection,
+} from "../drillDownUtil";
 
 export class PluggableLineChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -130,6 +137,16 @@ export class PluggableLineChart extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
+        return addIntersectionFiltersToInsight(source, cutIntersection);
+    }
+
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): void {

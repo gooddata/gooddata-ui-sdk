@@ -6,6 +6,18 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { IBucketOfFun, IFilters, IReferencePoint } from "../../../../interfaces/Visualization";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
+
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "./getInsightWithDrillDownAppliedMock";
 
 describe("PluggableHeatmap", () => {
     const defaultProps = {
@@ -188,5 +200,52 @@ describe("PluggableHeatmap", () => {
                 },
             ]);
         });
+    });
+
+    describe("Drill Down", () => {
+        it.each([
+            [
+                "on column attribute",
+                sourceInsightDef,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefRegion,
+            ],
+            [
+                "on row attribute",
+                sourceInsightDef,
+                Department,
+                targetUri,
+                intersection,
+                expectedInsightDefDepartment,
+            ],
+        ])(
+            "%s should replace the drill down attribute and add intersection filters",
+            (
+                _testName: string,
+                sourceInsightDefinition: IInsightDefinition,
+                drillSourceAttribute: IAttribute,
+                drillTargetUri: string,
+                drillIntersection: IDrillEventIntersectionElement[],
+                expectedInsightDefinition: IInsightDefinition,
+            ) => {
+                const chart = createComponent();
+                const drillDefinition = createDrillDefinition(drillSourceAttribute, drillTargetUri);
+                const sourceInsight = insightDefinitionToInsight(sourceInsightDefinition, "first", "first");
+                const expectedInsight = insightDefinitionToInsight(
+                    expectedInsightDefinition,
+                    "first",
+                    "first",
+                );
+
+                const result: IInsight = chart.getInsightWithDrillDownApplied(sourceInsight, {
+                    drillDefinition,
+                    event: createDrillEvent("treemap", drillIntersection),
+                });
+
+                expect(result).toEqual(expectedInsight);
+            },
+        );
     });
 });
