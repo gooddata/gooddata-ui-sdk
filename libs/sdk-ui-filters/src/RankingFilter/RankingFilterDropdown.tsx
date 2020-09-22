@@ -5,7 +5,7 @@ import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
+import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
 import noop from "lodash/noop";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
@@ -38,6 +38,7 @@ export interface IRankingFilterDropdownProps {
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
     anchorEl?: EventTarget | string;
+    customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
 }
 
@@ -52,6 +53,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
     anchorEl,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    customGranularitySelection,
 }) => {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -78,6 +80,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
                 onCancel={onCancel}
                 onDropDownItemMouseOver={onDropDownItemMouseOver}
                 onDropDownItemMouseOut={onDropDownItemMouseOut}
+                customGranularitySelection={customGranularitySelection}
             />
         </Overlay>
     );

@@ -3,7 +3,7 @@ import React, { useState, useCallback } from "react";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
 import { IRankingFilter, newRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
-import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
+import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
 import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown";
 import { ValueDropdown } from "./ValueDropdown/ValueDropdown";
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
@@ -35,6 +35,7 @@ interface IRankingFilterDropdownBodyComponentOwnProps {
     onCancel?: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    customGranularitySelection?: ICustomGranularitySelection;
 }
 
 type RankingFilterDropdownBodyComponentProps = IRankingFilterDropdownBodyComponentOwnProps &
@@ -48,6 +49,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
     onCancel,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    customGranularitySelection,
     intl,
 }) => {
     const rankingFilter = filter.rankingFilter;
@@ -84,6 +86,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
                     onSelect={setAttributeIdentifier}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    customGranularitySelection={customGranularitySelection}
                 />
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.basedOn" />

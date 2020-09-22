@@ -947,7 +947,7 @@
         "comment": "Explanation of 'All' option.",
         "limit": 0
     },
-    "rankingFilter.attributeDropdown.noOptionsTooltip": {
+    "rankingFilter.attributeDropdown.oneAttributeTooltip": {
         "value": "The insight is sliced only by one attribute. The filter will apply to all its values.",
         "comment": "Tooltip when no options are available for attribute dropdown.",
         "limit": 0

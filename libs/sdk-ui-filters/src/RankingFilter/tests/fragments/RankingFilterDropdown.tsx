@@ -121,6 +121,10 @@ export class RankingFilterDropdownFragment {
         return this;
     };
 
+    public getAttributeDropdownBody = (): ReactWrapper => {
+        return this.component.find(ATTRIBUTE_DROPDOWN_BODY);
+    };
+
     public getAttributeItem = (value: string): ReactWrapper => {
         return this.component.find(`.s-rf-attribute-${stringUtils.simplifyText(value)}`).hostNodes();
     };

@@ -23,3 +23,11 @@ export interface IMeasureDropdownItem {
     ref: ObjRefInScope;
     sequenceNumber?: string;
 }
+
+/**
+ * @beta
+ */
+export interface ICustomGranularitySelection {
+    enable: boolean;
+    warningMessage: string;
+}

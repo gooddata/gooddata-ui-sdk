@@ -194,6 +194,32 @@ describe("RankingFilterDropdown", () => {
 
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
+
+        it("should not have disabled items when customGranuralitySelection is not provided", () => {
+            const component = renderComponent();
+
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(0);
+        });
+
+        it("should not have disabled items when customGranularitySelection 'enable' property is true", () => {
+            const customGranularitySelection = { enable: true, warningMessage: "warning" };
+            const component = renderComponent({ customGranularitySelection });
+
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(0);
+        });
+
+        it("should have disabled items when customGranularitySelection 'enable' property is false", () => {
+            const customGranularitySelection = { enable: false, warningMessage: "warning" };
+            const component = renderComponent({ customGranularitySelection });
+
+            component.openAttributeDropdown();
+
+            expect(component.getAttributeDropdownBody().find("button.disabled")).toHaveLength(5);
+        });
     });
 
     describe("MeasureDropdown", () => {
@@ -271,8 +297,8 @@ describe("RankingFilterDropdown", () => {
     });
 
     describe("AttributeDropdown button", () => {
-        it("should be disabled when no attribute items provided", () => {
-            const component = renderComponent({ attributeItems: [] });
+        it("should be disabled when only one attribute item provided", () => {
+            const component = renderComponent({ attributeItems: [Mock.attributeItems[0]] });
 
             expect(component.isAttributeButtonDisabled()).toEqual(true);
         });

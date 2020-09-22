@@ -25,7 +25,7 @@ const dropdownScenarios = {
     measureDropdownOpened: { clickSelector: ".s-rf-measure-dropdown-button", postInteractionWait: 200 },
 };
 
-const dropdownWithoutAttributeItemsScenarios = {
+const dropdownWithOneAttributeItemScenarios = {
     default: {},
     attributeDropdownButtonTooltip: {
         hoverSelector: ".s-rf-attribute-dropdown-button",
@@ -87,19 +87,19 @@ storiesOf(`${FilterStories}/RankingFilter`, module)
             dropdownScenarios,
         );
     })
-    .add("dropdown with no attribute items", () => {
+    .add("dropdown with one attribute item", () => {
         return withMultipleScreenshots(
             <div style={wrapperStyle} className="screenshot-target">
                 <RankingFilterDropdown
                     measureItems={measureDropdownItems}
-                    attributeItems={[]}
+                    attributeItems={[attributeDropdownItems[0]]}
                     filter={rankingFilter}
                     onApply={action("apply")}
                     onCancel={action("cancel")}
                     anchorEl="screenshot-target"
                 />
             </div>,
-            dropdownWithoutAttributeItemsScenarios,
+            dropdownWithOneAttributeItemScenarios,
         );
     })
     .add("default button with dropdown", () => {

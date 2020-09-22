@@ -3,7 +3,7 @@ import React from "react";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { AttributeItem } from "./DropdownItems/AttributeItem";
-import { IAttributeDropdownItem } from "../types";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types";
 import { AllRecordsItem } from "./DropdownItems/AllRecordsItem";
 
 interface IAttributeDropdownBodyProps {
@@ -13,6 +13,7 @@ interface IAttributeDropdownBodyProps {
     onClose: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    customGranularitySelection?: ICustomGranularitySelection;
 }
 
 export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
@@ -22,6 +23,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
     onClose,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    customGranularitySelection,
 }) => {
     return (
         <Overlay
@@ -42,6 +44,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
                             onSelect={onSelect}
                             onDropDownItemMouseOver={onDropDownItemMouseOver}
                             onDropDownItemMouseOut={onDropDownItemMouseOut}
+                            customGranularitySelection={customGranularitySelection}
                         />
                     );
                 })}
