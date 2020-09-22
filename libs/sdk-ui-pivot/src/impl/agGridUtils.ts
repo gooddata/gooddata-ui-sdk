@@ -237,10 +237,6 @@ export const isMeasureColumn = (item: Column | ColDef): boolean => {
     return item.type === MEASURE_COLUMN;
 };
 
-export const isColumnDisplayed = (displayedColumns: Column[], column: Column): boolean => {
-    return displayedColumns.some((displayedColumn) => displayedColumn.getColId() === column.getColId());
-};
-
 const getMappingHeaderMeasureItem = (item: Column | ColDef): IMeasureDescriptor | undefined => {
     if (!isMeasureColumn(item)) {
         return;

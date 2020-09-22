@@ -90,7 +90,6 @@ import {
     getRowNodeId,
     getTreeLeaves,
     indexOfTreeNode,
-    isColumnDisplayed,
     isMeasureColumn,
     isSomeTotal,
 } from "./impl/agGridUtils";
@@ -132,9 +131,6 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import sumBy from "lodash/sumBy";
-import difference from "lodash/difference";
-import debounce from "lodash/debounce";
-import { DebouncedFunc } from "lodash";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -146,7 +142,6 @@ const DEFAULT_ROW_HEIGHT = 28;
 const DEFAULT_AUTOSIZE_PADDING = 12;
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
-const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -215,12 +210,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private autoResizedColumns: IResizedColumns = {};
     private growToFittedColumns: IResizedColumns = {};
     private resizing: boolean = false;
-    private lastResizedWidth = 0;
-    private lastResizedHeight = 0;
     private numberOfColumnResizedCalls = 0;
     private isMetaOrCtrlKeyPressed = false;
     private isAltKeyPressed = false;
-    private debouncedGridSizeChanged: DebouncedFunc<(gridSizeChangedEvent: any) => Promise<void>> | undefined;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -235,7 +227,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         };
 
         this.errorMap = newErrorMapping(props.intl);
-        this.debouncedGridSizeChanged = debounce(this.gridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
         this.resizedColumnsStore = new ResizedColumnsStore();
     }
 
@@ -262,8 +253,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.firstDataRendered = false;
         this.resizedColumnsStore = new ResizedColumnsStore();
         this.autoResizedColumns = {};
-        this.lastResizedWidth = 0;
-        this.lastResizedHeight = 0;
         this.clearFittedColumns();
 
         this.lastScrollPosition = {
@@ -747,52 +736,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return columns.map((column: Column) => column.getColId());
     };
 
-    private getAutoResizedColumns = (columns: Column[]): IResizedColumns => {
-        return columns.reduce((acc, col) => {
-            const columnId = getColumnIdentifier(col);
-            const resizedColumn = acc[columnId];
-            if (resizedColumn) {
-                return acc;
-            }
-            return {
-                ...acc,
-                [columnId]: {
-                    width: col.getActualWidth(),
-                },
-            };
-        }, this.autoResizedColumns);
-    };
-
-    // TODO: ONE-4491 could be removed
-    private autoresizeVisibleColumns = async (
-        columnApi: ColumnApi,
-        previouslyResizedColumnIds: string[],
-        firstCall: boolean = true,
-    ): Promise<void> => {
-        if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
-            return Promise.resolve();
-        }
-
-        if (firstCall) {
-            await sleep(COLUMN_RESIZE_TIMEOUT);
-        }
-
-        const displayedVirtualColumns = columnApi.getAllDisplayedVirtualColumns();
-        const autoWidthColumnIds: string[] = this.getColumnIds(displayedVirtualColumns);
-
-        if (previouslyResizedColumnIds.length >= autoWidthColumnIds.length) {
-            this.autoResizedColumns = this.getAutoResizedColumns(columnApi.getAllDisplayedVirtualColumns());
-            return Promise.resolve();
-        }
-
-        const newColumnIds = difference(autoWidthColumnIds, previouslyResizedColumnIds);
-
-        this.autoresizeColumnsByColumnId(columnApi, newColumnIds);
-
-        await sleep(COLUMN_RESIZE_TIMEOUT);
-        return this.autoresizeVisibleColumns(columnApi, autoWidthColumnIds, false);
-    };
-
     private autoresizeColumnsByColumnId(columnApi: ColumnApi, columnIds: string[]) {
         setColumnMaxWidth(columnApi, columnIds, AUTO_SIZED_MAX_WIDTH);
 
@@ -802,7 +745,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private autoresizeAllColumns = async (gridApi: GridApi, columnApi: ColumnApi) => {
-        // TODO: ONE-4491 could be removed "shouldPerformAutoresize"?
         if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
             return Promise.resolve();
         }
@@ -860,24 +802,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return tablePagesLoaded() && dataRendered();
     };
 
-    private autoresizeColumns = async (
-        event: AgGridEvent,
-        force: boolean = false,
-        previouslyResizedColumnIds: string[] = [],
-    ) => {
+    private autoresizeColumns = async (event: AgGridEvent, force: boolean = false) => {
         const alreadyResized = () => this.state.resized || this.resizing;
-        console.log(previouslyResizedColumnIds);
         if (this.isPivotTableReady(event.api) && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
-            // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
-            // TODO: PBR ONE-4491 - decide what to do with this IF (whether we still need "autoresize visible columns")
-            if (this.isColumnAutoresizeAllEnabled() || this.isColumnAutoresizeEnabled()) {
+
+            if (this.isColumnAutoresizeEnabled()) {
                 await this.autoresizeAllColumns(event.api, event.columnApi);
             }
-            // else {
-            //     await this.autoresizeVisibleColumns(event.columnApi, previouslyResizedColumnIds);
-            // }
-            // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
+
             if (this.isGrowToFitEnabled()) {
                 this.growToFit(event.columnApi);
             } else if (this.shouldPerformAutoresize() && this.isColumnAutoresizeEnabled()) {
@@ -947,31 +880,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.setFittedColumns(columnApi);
         }
     }
-
-    // TODO: ONE-4491 could be removed
-    private mapFieldIdToGridId(columnApi: ColumnApi, fieldIds: string[]) {
-        const columns = columnApi.getAllColumns();
-
-        return columns.filter((d) => fieldIds.includes(getColumnIdentifier(d))).map((d) => d.getColId());
-    }
-
-    private gridSizeChanged = async (gridSizeChangedEvent: any): Promise<void> => {
-        if (
-            !this.resizing &&
-            (this.lastResizedWidth !== gridSizeChangedEvent.clientWidth ||
-                this.lastResizedHeight !== gridSizeChangedEvent.clientHeight)
-        ) {
-            this.lastResizedWidth = gridSizeChangedEvent.clientWidth;
-            this.lastResizedHeight = gridSizeChangedEvent.clientHeight;
-
-            // TODO: ONE-4491 could be removed
-            const resizedColumnsGridIds = this.mapFieldIdToGridId(
-                gridSizeChangedEvent.columnApi,
-                Object.keys(this.autoResizedColumns),
-            );
-            this.autoresizeColumns(gridSizeChangedEvent, true, resizedColumnsGridIds);
-        }
-    };
 
     //
     // event handlers - internal & funny stuff
@@ -1213,7 +1121,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns;
     }
 
-    // TODO: ONE-4491 could be removed (if we do not want to keep default width)
     private getDefaultWidth = () => {
         return DEFAULT_COLUMN_WIDTH;
     };
@@ -1231,12 +1138,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             this.columnApi?.setColumnWidth(column, this.autoResizedColumns[id].width);
             return;
         }
-        // TODO: ONE-4491 could be removed
+
         this.autoresizeColumnsByColumnId(this.columnApi!, this.getColumnIds([column]));
-        if (isColumnDisplayed(this.columnApi!.getAllDisplayedVirtualColumns(), column)) {
-            // skip columns out of viewport because these can not be autoresized
-            this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
-        }
+        this.resizedColumnsStore.addToManuallyResizedColumn(column, true);
     }
 
     private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
@@ -1417,7 +1321,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onCellClicked: this.cellClicked,
             onSortChanged: this.sortChanged,
             onColumnResized: this.onGridColumnResized,
-            onGridSizeChanged: this.debouncedGridSizeChanged,
             onGridColumnsChanged: this.gridColumnsChanged,
             onModelUpdated: this.onModelUpdated,
 

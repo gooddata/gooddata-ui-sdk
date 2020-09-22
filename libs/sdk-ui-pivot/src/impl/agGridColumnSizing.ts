@@ -25,7 +25,10 @@ import {
     HEADER_LABEL_CLASS,
     ROW_TOTAL_CLASS,
     ROW_SUBTOTAL_CLASS,
-    DEFAULT_FONT,
+    DEFAULT_HEADER_FONT,
+    DEFAULT_ROW_FONT,
+    DEFAULT_SUBTOTAL_FONT,
+    DEFAULT_TOTAL_FONT,
 } from "./agGridConst";
 import { identifyResponseHeader } from "./agGridHeaders";
 
@@ -578,7 +581,6 @@ export const updateColumnDefinitionsWithWidths = (
                 columnDefinition.suppressSizeToFit = !manualSize.allowGrowToFit;
             } else {
                 columnDefinition.suppressSizeToFit = false;
-                // TODO: ONE-4491 defaultColumnWidth could be removed (if we do not want to keep default width)
                 columnDefinition.width = autoResizeSize ? autoResizeSize.width : defaultColumnWidth;
                 if (isGrowToFitEnabled) {
                     const growToFittedColumn =
@@ -634,8 +636,6 @@ export const resetColumnsWidthToDefault = (
             }
         } else if (isColumnAutoResized(autoResizedColumns, id)) {
             columnApi.setColumnWidth(col, autoResizedColumns[id].width);
-            // TODO: ONE-4491 maybe this "else" is not need anymore because all columns are auto resized..
-            // in case when autoresize FF is set to false?
         } else {
             columnApi.setColumnWidth(col, defaultWidth);
         }
@@ -863,9 +863,9 @@ export const autoresizeAllColumns = (
     return {};
 };
 
-const getTableFont = (containerRef: HTMLDivElement, className: string) => {
+const getTableFont = (containerRef: HTMLDivElement, className: string, defaultFont: string) => {
     const element = containerRef.getElementsByClassName(className)[0];
-    let font = DEFAULT_FONT;
+    let font = defaultFont;
     if (element) {
         font = window.getComputedStyle(element).font;
     }
@@ -878,9 +878,9 @@ export const getTableFonts = (
     /**
      * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
      */
-    const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS);
-    const rowFont = getTableFont(containerRef, VALUE_CLASS);
-    const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS);
-    const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS);
+    const headerFont = getTableFont(containerRef, HEADER_LABEL_CLASS, DEFAULT_HEADER_FONT);
+    const rowFont = getTableFont(containerRef, VALUE_CLASS, DEFAULT_ROW_FONT);
+    const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
+    const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
     return { headerFont, rowFont, subtotalFont, totalFont };
 };

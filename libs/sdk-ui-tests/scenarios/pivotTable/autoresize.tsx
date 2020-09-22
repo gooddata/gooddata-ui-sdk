@@ -32,7 +32,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
             config: {
                 columnSizing: {
-                    defaultWidth: "autoresizeAll", // TODO ONE-4491 revert back after testing
+                    defaultWidth: "viewport",
                 },
             },
             pageSize: 3,
@@ -60,7 +60,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
         config: {
             columnSizing: {
-                defaultWidth: "autoresizeAll", // TODO ONE-4491 revert back or to viewport after testing
+                defaultWidth: "autoresizeAll",
             },
         },
     })
@@ -68,7 +68,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
-                defaultWidth: "autoresizeAll", // TODO ONE-4491 revert back or to viewport after testing
+                defaultWidth: "viewport",
             },
         },
     })
@@ -76,7 +76,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {
             columnSizing: {
-                defaultWidth: "autoresizeAll", // TODO ONE-4491 revert back or to viewport after testing
+                defaultWidth: "viewport",
                 growToFit: true,
             },
         },
