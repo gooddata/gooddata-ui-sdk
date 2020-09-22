@@ -1336,6 +1336,7 @@ export enum SettingCatalog {
     enableAxisNameConfiguration = "enableAxisNameConfiguration",
     enableBulletChart = "enableBulletChart",
     enableCustomColorPicker = "enableCustomColorPicker",
+    enableHidingOfDataPoints = "enableHidingOfDataPoints",
     enablePushpinGeoChart = "enablePushpinGeoChart",
     enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
     enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",

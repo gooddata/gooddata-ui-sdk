@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { newAttributeSort, newMeasureSort } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { ScenarioGroupNames } from "../_infra/groupNames";
@@ -24,6 +24,12 @@ export const AreaChartWithTwoMeasuresAndViewBy = {
 export const AreaChartViewByDate = {
     measures: [ReferenceLdm.Amount, ReferenceLdm.Won],
     viewBy: [ReferenceLdm.ClosedYear],
+};
+
+export const AreaChartWithManyDataPoints = {
+    measures: [ReferenceLdm.Amount],
+    filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],
+    viewBy: ReferenceLdm.Opportunity.Name,
 };
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)

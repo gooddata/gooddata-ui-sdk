@@ -21,7 +21,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "showLabels": false } },
         "sorts": [],
         "title": "GeoPushpinChart - location only",
         "uri": "GeoPushpinChart.41f47ebaa0fc751e23f4d5707fbd7238",

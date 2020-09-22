@@ -4,7 +4,7 @@ import flatMap from "lodash/flatMap";
 import unionBy from "lodash/unionBy";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
-import { defFingerprint, IInsight, IInsightDefinition, insightTitle, uriRef } from "@gooddata/sdk-model";
+import { defFingerprint, IInsight, IInsightDefinition, insightTitle } from "@gooddata/sdk-model";
 import * as fs from "fs";
 import * as path from "path";
 import allScenarios from "../../scenarios";
@@ -206,7 +206,7 @@ function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefinition)
      * runtime so then tests can say if they want id or uri
      */
     const persistentInsight: IInsight = scenario.insightConverter({
-        insight: { identifier: id, uri: id, ref: uriRef(id), ...def.insight },
+        insight: { identifier: id, uri: id, ...def.insight } as any,
     });
     const insightDir = path.join(storeDir, id);
 

@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunity.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunity.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 100000 } },
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                }
+            }
+        ],
+        "identifier": "LineChart.4b9123d4da99344e4873ac9dde1d2347",
+        "properties": { "controls": { "dataPoints": { "visible": "auto" } } },
+        "sorts": [],
+        "title": "LineChart - data points - dense chart - auto visibility",
+        "uri": "LineChart.4b9123d4da99344e4873ac9dde1d2347",
+        "visualizationUrl": "local:line"
+    }
+}

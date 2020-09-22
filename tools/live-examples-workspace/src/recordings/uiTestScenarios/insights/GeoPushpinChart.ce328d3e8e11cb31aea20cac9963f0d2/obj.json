@@ -71,6 +71,7 @@
         "properties": {
             "controls": {
                 "legend": { "enabled": true, "position": "right" },
+                "showLabels": false,
                 "tooltipText": "label.uscities.city"
             }
         },

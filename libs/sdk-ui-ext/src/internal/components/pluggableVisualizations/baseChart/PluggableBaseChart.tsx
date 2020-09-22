@@ -53,6 +53,7 @@ import {
     getHighchartsAxisNameConfiguration,
     getReferencePointWithSupportedProperties,
     getSupportedPropertiesControls,
+    getDataPointsConfiguration,
     hasColorMapping,
     isEmptyObject,
 } from "../../../utils/propertiesHelper";
@@ -405,6 +406,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         supportedControls = getHighchartsAxisNameConfiguration(
             supportedControls,
             this.featureFlags[SettingCatalog.enableAxisNameConfiguration] as boolean,
+        );
+
+        supportedControls = getDataPointsConfiguration(
+            supportedControls,
+            this.featureFlags[SettingCatalog.enableHidingOfDataPoints] as boolean,
         );
 
         return {

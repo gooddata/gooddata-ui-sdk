@@ -38,7 +38,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.b0ca2a5c013d83ef7698768341d37672",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "showLabels": false } },
         "sorts": [],
         "title": "GeoPushpinChart - location and size",
         "uri": "GeoPushpinChart.b0ca2a5c013d83ef7698768341d37672",

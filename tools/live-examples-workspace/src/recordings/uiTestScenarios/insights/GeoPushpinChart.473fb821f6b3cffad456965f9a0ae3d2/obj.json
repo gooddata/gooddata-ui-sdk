@@ -51,7 +51,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.473fb821f6b3cffad456965f9a0ae3d2",
-        "properties": { "controls": { "tooltipText": "label.uscities.city" } },
+        "properties": { "controls": { "showLabels": false, "tooltipText": "label.uscities.city" } },
         "sorts": [],
         "title": "GeoPushpinChart - location, segment, size with tooltip",
         "uri": "GeoPushpinChart.473fb821f6b3cffad456965f9a0ae3d2",

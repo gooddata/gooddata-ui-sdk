@@ -68,7 +68,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.809a9030247d0bbb8aa628e6dbd73433",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "showLabels": false } },
         "sorts": [],
         "title": "GeoPushpinChart - location, segment, size and color ",
         "uri": "GeoPushpinChart.809a9030247d0bbb8aa628e6dbd73433",

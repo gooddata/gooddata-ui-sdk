@@ -38,6 +38,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
     constructor(props: IDropdownControlProps & WrappedComponentProps) {
         super(props);
         this.onSelect = this.onSelect.bind(this);
+        this.getSelectedItem = this.getSelectedItem.bind(this);
     }
 
     public render() {

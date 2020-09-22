@@ -51,7 +51,7 @@
         ],
         "filters": [],
         "identifier": "GeoPushpinChart.ea5a1053a02c0d6d3e2557a7c03dccac",
-        "properties": { "controls": {} },
+        "properties": { "controls": { "showLabels": false } },
         "sorts": [],
         "title": "GeoPushpinChart - location, segment and size",
         "uri": "GeoPushpinChart.ea5a1053a02c0d6d3e2557a7c03dccac",

@@ -6,6 +6,7 @@ import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigge
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";
+import DataPointsControl from "../configurationControls/DataPointsControl";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
@@ -13,12 +14,15 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
+import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
     protected renderConfigurationPanel(): React.ReactNode {
         const { gridEnabled, axes } = this.getControlProperties();
 
-        const { properties, propertiesMeta, pushData } = this.props;
+        const { featureFlags, properties, propertiesMeta, pushData, panelConfig } = this.props;
+        const { isDataPointsControlDisabled } = panelConfig;
+
         const controlsDisabled = this.isControlDisabled();
 
         return (
@@ -40,6 +44,14 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             isDisabled={controlsDisabled}
                             defaultValue={false}
                         />
+                        {featureFlags[SettingCatalog.enableHidingOfDataPoints] && (
+                            <DataPointsControl
+                                pushData={pushData}
+                                properties={properties}
+                                isDisabled={controlsDisabled || isDataPointsControlDisabled}
+                                showDisabledMessage={isDataPointsControlDisabled}
+                            />
+                        )}
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"

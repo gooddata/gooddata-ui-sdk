@@ -25,6 +25,7 @@ export interface IConfigurationPanelContentProps {
     featureFlags?: ISettings;
     axis?: string;
     pushData?(data: any): void;
+    panelConfig?: any;
 }
 
 export default abstract class ConfigurationPanelContent extends React.PureComponent<
@@ -42,6 +43,7 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
         pushData: noop,
         featureFlags: {},
         axis: null,
+        panelConfig: {},
     };
 
     protected supportedPropertiesList: string[];

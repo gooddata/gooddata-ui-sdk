@@ -18,6 +18,7 @@ const HardcodedSettings = {
     enableWeekFilters: true,
     enableCustomMeasureFormatting: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
+    enableHidingOfDataPoints: true,
 
     // KD specific
     enableAnalyticalDashboards: true,
