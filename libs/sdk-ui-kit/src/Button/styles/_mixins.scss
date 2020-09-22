@@ -1,0 +1,154 @@
+// (C) 2007-2020 GoodData Corporation
+@import "../../../styles/scss/mixins.scss";
+@import "_variables";
+
+/* ==========================================================================
+   Silent classes - more clever mixins
+   ========================================================================== */
+
+%btn {
+    position: relative;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 14px;
+    border: 1px solid transparent;
+    font: 400 14px/20px $gd-font-primary;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: left;
+
+    @include transition(all, 0.25s, ease-in-out);
+    @include border-radius(3px);
+
+    &::before,
+    &::after {
+        position: absolute;
+        top: 50%;
+        height: 20px;
+        line-height: 20px;
+        color: $gd-color-text-dimmed;
+        transform: translateY(-50%);
+        font-size: 18px;
+        text-align: center;
+
+        @include transition(color, 0.25s, ease-in-out);
+    }
+
+    &::before {
+        left: 10px;
+        margin-right: 0.5em;
+    }
+
+    &::after {
+        right: 7px;
+        margin-left: 0.5em;
+    }
+
+    .gd-button-text,
+    .gd-button-icon {
+        position: relative;
+        display: block;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .gd-button-text {
+        top: 1px;
+        flex: 1 1 auto;
+        overflow: hidden;
+        width: 100%;
+        text-overflow: ellipsis;
+    }
+
+    .gd-button-icon {
+        flex: 0 0 auto;
+        width: $button-icon-width;
+        height: $button-icon-width;
+        margin: 0 0.5em;
+        line-height: $button-icon-width;
+        color: $gd-color-text-dimmed;
+        font-size: $button-icon-width;
+        text-align: center;
+        text-decoration: none;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &::before,
+        &::after {
+            color: inherit;
+
+            @include transition(color, 0.25s, ease-in-out);
+        }
+    }
+
+    &:not(.gd-button-link) .gd-button-icon {
+        &:first-child {
+            margin-left: -4px;
+        }
+
+        &:last-child {
+            margin-right: -4px;
+        }
+
+        &:only-child {
+            width: 19px;
+            height: 17px;
+            line-height: 17px;
+            margin-right: -9px;
+            margin-left: -9px;
+            font-size: 16px;
+        }
+    }
+
+    &:not(.disabled):not(.gd-button-link) {
+        &:active {
+            &::before,
+            &::after {
+                top: calc(50% + 1px);
+            }
+
+            .gd-button-text {
+                top: 2px;
+            }
+
+            .gd-button-icon {
+                margin-top: 2px;
+            }
+        }
+
+        .gd-button-icon {
+            &:only-child {
+                color: $button-normal-color;
+            }
+        }
+    }
+
+    &:hover {
+        &::before,
+        &::after,
+        .gd-button-icon {
+            color: $button-action-color;
+        }
+    }
+
+    &[class*="icon-"] {
+        padding-left: 37px;
+
+        &.icon-right {
+            padding-left: 11px;
+            padding-right: 32px;
+        }
+    }
+}
+
+// Temporary:
+// refactor
+// stylelint-disable-next-line no-duplicate-selectors
+%btn {
+    .ss-icon {
+        vertical-align: middle;
+    }
+}

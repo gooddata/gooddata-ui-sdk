@@ -6,6 +6,28 @@
 
 import { ISeparators } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
+
+// @internal (undocumented)
+export class Button extends React_3.Component<IButtonProps> {
+    // (undocumented)
+    buttonNode: HTMLElement;
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+        disabled: boolean;
+        onClick: (...args: any[]) => void;
+        tabIndex: number;
+        tagName: string;
+        title: string;
+        type: string;
+        value: string;
+        iconLeft: string;
+        iconRight: string;
+    };
+    // (undocumented)
+    render(): JSX.Element;
+    }
 
 // @internal (undocumented)
 export interface IAlignPoint {
@@ -13,6 +35,30 @@ export interface IAlignPoint {
     align: string;
     // (undocumented)
     offset: IOffset;
+}
+
+// @internal (undocumented)
+export interface IButtonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    iconLeft?: string;
+    // (undocumented)
+    iconRight?: string;
+    // (undocumented)
+    onClick?(e: React.MouseEvent): void;
+    // (undocumented)
+    tabIndex?: number;
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type?: string;
+    // (undocumented)
+    value?: string;
 }
 
 // @internal (undocumented)

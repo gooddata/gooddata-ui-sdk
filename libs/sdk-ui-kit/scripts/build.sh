@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
 _build_styles() {
-    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js styles/scss -o styles/css
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js src/**/styles/ -o styles/css
+}
+
+_build_styles_watch() {
+    node-sass --importer node_modules/node-sass-magic-importer/dist/cli.js styles/scss -o styles/css
+    node-sass -wr --importer node_modules/node-sass-magic-importer/dist/cli.js src/**/styles/ -o styles/css
 }
 
 _clean() {
@@ -30,7 +36,7 @@ build-dev() {
 build-dev-watch() {
     _common-build
     tsc --watch -p tsconfig.dev.json &
-    _build_styles
+    _build_styles_watch
 }
 
 FLAG=$1
