@@ -23,6 +23,11 @@ export class AttributeDisplayFormMetadataObjectBuilder<
         this.item.displayFormType = type;
         return this;
     }
+
+    public isDefault(value: boolean | undefined): this {
+        this.item.isDefault = value;
+        return this;
+    }
 }
 
 /**

@@ -70,6 +70,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     attribute(ref: ObjRef): this;
     // (undocumented)
     displayFormType(type: string | undefined): this;
+    // (undocumented)
+    isDefault(value: boolean | undefined): this;
 }
 
 // @public
@@ -439,6 +441,7 @@ export interface IAttribute {
 export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
     displayFormType?: string;
+    isDefault?: boolean;
     // (undocumented)
     type: "displayForm";
 }

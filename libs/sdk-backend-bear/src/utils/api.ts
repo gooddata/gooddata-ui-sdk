@@ -82,7 +82,7 @@ export const objRefsToUris = async (
     refs: ObjRef[],
     workspace: string,
     authCall: BearAuthenticatedCallGuard,
-): Promise<Identifier[]> => {
+): Promise<Uri[]> => {
     const identifiers = refs.filter(isIdentifierRef).map((filter) => filter.identifier);
     const identifiersToUrisPairs = await authCall((sdk) =>
         sdk.md.getUrisFromIdentifiers(workspace, identifiers),
