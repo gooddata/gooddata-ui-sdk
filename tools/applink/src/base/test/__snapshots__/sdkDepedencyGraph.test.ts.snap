@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`dependency graph should create correct build order 1`] = `
+Array [
+  Array [
+    "@gooddata/sdk-skel-ts",
+    "@gooddata/sdk-skel-tsx",
+    "@gooddata/api-model-bear",
+    "@gooddata/sdk-model",
+    "@gooddata/util",
+    "@gooddata/applink",
+  ],
+  Array [
+    "@gooddata/sdk-backend-spi",
+    "@gooddata/api-client-bear",
+    "@gooddata/sdk-embedding",
+  ],
+  Array [
+    "@gooddata/reference-workspace",
+  ],
+  Array [
+    "@gooddata/api-client-tiger",
+    "@gooddata/sdk-backend-base",
+  ],
+  Array [
+    "@gooddata/sdk-backend-mockingbird",
+    "@gooddata/sdk-backend-tiger",
+    "@gooddata/catalog-export",
+  ],
+  Array [
+    "@gooddata/sdk-ui",
+    "@gooddata/sdk-backend-bear",
+  ],
+  Array [
+    "@gooddata/mock-handling",
+    "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-kit",
+  ],
+  Array [
+    "@gooddata/sdk-ui-charts",
+    "@gooddata/sdk-ui-pivot",
+    "@gooddata/reference-workspace-mgmt",
+    "@gooddata/live-examples-workspace",
+    "@gooddata/experimental-workspace",
+  ],
+  Array [
+    "@gooddata/sdk-ui-geo",
+  ],
+  Array [
+    "@gooddata/sdk-ui-ext",
+  ],
+  Array [
+    "@gooddata/sdk-ui-tests",
+    "@gooddata/sdk-ui-all",
+  ],
+]
+`;

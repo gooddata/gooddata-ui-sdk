@@ -1,18 +1,37 @@
 // (C) 2020 GoodData Corporation
-import { getSdkPackages, SdkDescriptor } from "../base/sdkPackages";
+import { getSdkDescriptor } from "../base/sdkPackages";
 import path from "path";
-import fs from "fs";
 import { logError, logInfo } from "../cli/loggers";
-import { DependencyOnSdk, findSdkDependencies } from "../base/dependencyDiscovery";
+import { DependencyOnSdk, findSdkDependencies } from "./dependencyDiscovery";
 import chokidar from "chokidar";
 import { IncrementalBuilder } from "./incrementalBuilder";
 import { DevBuildPublisher } from "./publisher";
+import { SdkDescriptor } from "../base/types";
+import { filterBuildErrors, PackageBuilder } from "./packageBuilder";
 
 async function watchAndRebuildLoop(sdk: SdkDescriptor, deps: DependencyOnSdk[]): Promise<void> {
+    const buildPublisher = new DevBuildPublisher(deps);
+    const packageBuilder = new PackageBuilder(sdk, deps);
+
+    logInfo(`Doing initial build of all required packages`);
+
+    const errors = filterBuildErrors(await packageBuilder.buildAll());
+
+    if (errors.length) {
+        logError(
+            `The initial build has failed for one or more packages. Please correct and start again. The packages: ${errors
+                .map((e) => e.sdkPackage.packageName)
+                .join(", ")}`,
+        );
+
+        return;
+    }
+
+    buildPublisher.onNewBuildsReady(deps.map((d) => d.pkg));
+
     logInfo(`Entering watch and incremental build loop for ${deps.length} package(s).`);
 
-    const buildPublisher = new DevBuildPublisher(deps);
-    const incrementalBuilder = new IncrementalBuilder(sdk, buildPublisher.onNewBuildsReady);
+    const incrementalBuilder = new IncrementalBuilder(sdk, packageBuilder, buildPublisher.onNewBuildsReady);
     const watcher = chokidar.watch(createWatchDirs(deps), {
         atomic: true,
         persistent: true,
@@ -27,7 +46,7 @@ async function watchAndRebuildLoop(sdk: SdkDescriptor, deps: DependencyOnSdk[]):
 }
 
 export async function devTo(target: string): Promise<number> {
-    const sdk = await getSdkPackages();
+    const sdk = await getSdkDescriptor();
 
     if (!sdk) {
         return 1;
@@ -50,18 +69,6 @@ export async function devTo(target: string): Promise<number> {
         }):\n\t${dependencies.map((dep) => `${dep.pkg.packageName} @ ${dep.version}`).join("\n\t")}`,
     );
 
-    const unbuiltPackages = findUnbuiltPackages(dependencies);
-
-    if (unbuiltPackages.length > 0) {
-        logError(
-            `The SDK is not built entirely. Please run 'rush build'. The following packages are missing dist:\n\t${unbuiltPackages
-                .map((dep) => dep.pkg.packageName)
-                .join("\n\t")}`,
-        );
-
-        return 1;
-    }
-
     await watchAndRebuildLoop(sdk, dependencies);
 
     return 0;
@@ -70,14 +77,6 @@ export async function devTo(target: string): Promise<number> {
 //
 //
 //
-
-function findUnbuiltPackages(deps: DependencyOnSdk[]): DependencyOnSdk[] {
-    return deps.filter((dep) => {
-        const dist = path.join(dep.pkg.directory, "dist");
-
-        return !fs.existsSync(dist) || !fs.statSync(dist).isDirectory();
-    });
-}
 
 function createWatchDirs(deps: DependencyOnSdk[]): string[] {
     return deps.map((dep) => {

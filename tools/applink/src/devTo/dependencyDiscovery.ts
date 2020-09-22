@@ -2,8 +2,8 @@
 
 import * as path from "path";
 import * as fs from "fs";
-import { SdkDescriptor, SdkPackageDescriptor } from "./sdkPackages";
-import { readJsonSync } from "./utils";
+import { readJsonSync } from "../base/utils";
+import { SdkDescriptor, SdkPackageDescriptor } from "../base/types";
 
 /**
  * Describes application's dependency on an SDK library.
