@@ -129,6 +129,14 @@ export interface IAttributeFilterProps {
 }
 
 // @beta (undocumented)
+export interface ICustomGranularitySelection {
+    // (undocumented)
+    enable: boolean;
+    // (undocumented)
+    warningMessage: string;
+}
+
+// @beta (undocumented)
 export interface IDateFilterCallbackProps {
     // (undocumented)
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
@@ -214,6 +222,8 @@ export interface IMeasureValueFilterCommonProps {
     // (undocumented)
     displayTreatNullAsZeroOption?: boolean;
     // (undocumented)
+    enableOperatorSelection?: boolean;
+    // (undocumented)
     filter: IMeasureValueFilter;
     // (undocumented)
     locale?: string;
@@ -228,7 +238,7 @@ export interface IMeasureValueFilterCommonProps {
     // (undocumented)
     usePercentage?: boolean;
     // (undocumented)
-    warningMessage?: string;
+    warningMessage?: WarningMessage;
 }
 
 // @beta (undocumented)
@@ -259,6 +269,8 @@ export interface IRankingFilterDropdownProps {
     anchorEl?: EventTarget | string;
     // (undocumented)
     attributeItems: IAttributeDropdownItem[];
+    // (undocumented)
+    customGranularitySelection?: ICustomGranularitySelection;
     // (undocumented)
     filter: IRankingFilter;
     // (undocumented)
@@ -313,6 +325,12 @@ export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
 }
 
 // @beta (undocumented)
+export type IWarningMessage = {
+    text: string;
+    severity: "low" | "medium" | "high";
+};
+
+// @beta (undocumented)
 export class MeasureValueFilter extends React_2.PureComponent<IMeasureValueFilterProps, IMeasureValueFilterState> {
     // (undocumented)
     static defaultProps: Partial<IMeasureValueFilterProps>;
@@ -338,6 +356,9 @@ export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
 // @beta
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
+
+// @beta (undocumented)
+export type WarningMessage = string | IWarningMessage;
 
 
 // (No @packageDocumentation comment for this package)

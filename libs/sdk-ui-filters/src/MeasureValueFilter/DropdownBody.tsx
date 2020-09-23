@@ -10,12 +10,14 @@ import ComparisonInput from "./ComparisonInput";
 import { IMeasureValueFilterValue, MeasureValueFilterOperator } from "./types";
 import { isComparisonConditionOperator, isRangeConditionOperator } from "@gooddata/sdk-model";
 import TreatNullValuesAsZeroCheckbox from "./TreatNullValuesAsZeroCheckbox";
+import { WarningMessage } from "./typings";
+import { WarningMessageComponent } from "./WarningMessage";
 
 interface IDropdownBodyOwnProps {
     operator: MeasureValueFilterOperator;
     value: IMeasureValueFilterValue;
     usePercentage?: boolean;
-    warningMessage?: string;
+    warningMessage?: WarningMessage;
     locale?: string;
     disableAutofocus?: boolean;
     onCancel?: () => void;
@@ -28,6 +30,7 @@ interface IDropdownBodyOwnProps {
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
     valuePrecision?: number;
+    enableOperatorSelection?: boolean;
 }
 
 type IDropdownBodyProps = IDropdownBodyOwnProps & WrappedComponentProps;
@@ -54,7 +57,13 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
     }
 
     public render() {
-        const { onCancel, warningMessage, displayTreatNullAsZeroOption, intl } = this.props;
+        const {
+            onCancel,
+            warningMessage,
+            displayTreatNullAsZeroOption,
+            enableOperatorSelection,
+            intl,
+        } = this.props;
         const { operator, enabledTreatNullValuesAsZero } = this.state;
 
         return (
@@ -62,14 +71,16 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
                 <div className="gd-mvf-dropdown-content">
                     {warningMessage && (
                         <div className="gd-mvf-dropdown-section">
-                            <div className="gd-mvf-warning-message s-mvf-warning-message">
-                                {warningMessage}
-                            </div>
+                            <WarningMessageComponent warningMessage={warningMessage} />
                         </div>
                     )}
 
                     <div className="gd-mvf-dropdown-section">
-                        <OperatorDropdown onSelect={this.handleOperatorSelection} operator={operator} />
+                        <OperatorDropdown
+                            onSelect={this.handleOperatorSelection}
+                            operator={operator}
+                            isDisabled={!enableOperatorSelection}
+                        />
                     </div>
 
                     {operator !== "ALL" && (

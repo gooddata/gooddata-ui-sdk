@@ -22,13 +22,26 @@ $dialog_width: 250px;
 
         .gd-mvf-warning-message {
             font-size: 12px;
-            color: $gd-color-warning-text;
-            background: transparentize($gd-color-warning, 0.85);
             border-radius: 3px;
             font-family: $gd-font-primary;
             line-height: 1.4em;
             padding: 4px 8px 4px 10px;
             margin-top: 4px;
+
+            &.gd-mvf-warning-message-low {
+                background: transparentize($gd-color-highlight, 0.85);
+                color: $gd-color-highlight;
+            }
+
+            &.gd-mvf-warning-message-medium {
+                background: transparentize($gd-color-warning, 0.85);
+                color: $gd-color-warning-text;
+            }
+
+            &.gd-mvf-warning-message-high {
+                background: transparentize($gd-color-negative, 0.85);
+                color: $gd-color-negative;
+            }
         }
 
         .gd-mvf-treat-null-values-as-zero {

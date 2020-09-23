@@ -5,7 +5,7 @@ import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigge
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IAttributeDropdownItem } from "../types";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types";
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { IntlShape, WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 
@@ -26,6 +26,7 @@ interface IAttributeDropdownComponentProps {
     onSelect: (ref?: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    customGranularitySelection?: ICustomGranularitySelection;
 }
 
 type AttributeDropdownProps = IAttributeDropdownComponentProps & WrappedComponentProps;
@@ -36,10 +37,11 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    customGranularitySelection,
     intl,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const isDisabled = !items.length;
+    const isDisabled = items.length === 1;
 
     const onButtonClick = () => {
         setIsOpen(!isOpen);
@@ -74,7 +76,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
                 className={`bubble-primary gd-rf-tooltip-bubble s-rf-attribute-no-options-bubble`}
                 alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
             >
-                <FormattedMessage id="rankingFilter.attributeDropdown.noOptionsTooltip" />
+                <FormattedMessage id="rankingFilter.attributeDropdown.oneAttributeTooltip" />
             </Bubble>
         </BubbleHoverTrigger>
     ) : (
@@ -93,6 +95,7 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
                     onClose={() => setIsOpen(false)}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    customGranularitySelection={customGranularitySelection}
                 />
             )}
         </>

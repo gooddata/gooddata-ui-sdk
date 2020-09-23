@@ -5,6 +5,7 @@ import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { DropdownBody } from "./DropdownBody";
 import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types";
+import { WarningMessage } from "./typings";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 /*
@@ -20,12 +21,13 @@ interface IDropdownOwnProps {
     operator?: MeasureValueFilterOperator;
     value?: IMeasureValueFilterValue;
     usePercentage?: boolean;
-    warningMessage?: string;
+    warningMessage?: WarningMessage;
     locale?: string;
     anchorEl: EventTarget | string;
     separators?: ISeparators;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
+    enableOperatorSelection?: boolean;
 }
 
 type IDropdownProps = WrappedComponentProps & IDropdownOwnProps;
@@ -54,6 +56,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
             separators,
             displayTreatNullAsZeroOption,
             treatNullAsZeroValue,
+            enableOperatorSelection,
         } = this.props;
 
         const selectedOperator: MeasureValueFilterOperator = operator !== null ? operator : "ALL";
@@ -78,6 +81,7 @@ class DropdownWrapped extends React.PureComponent<IDropdownProps, IDropdownState
                     separators={separators}
                     displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                     treatNullAsZeroValue={treatNullAsZeroValue}
+                    enableOperatorSelection={enableOperatorSelection}
                 />
             </Overlay>
         );

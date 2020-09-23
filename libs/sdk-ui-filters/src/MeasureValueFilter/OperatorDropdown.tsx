@@ -13,6 +13,7 @@ import { MeasureValueFilterOperator } from "./types";
 interface IOperatorDropdownOwnProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
+    isDisabled?: boolean;
 }
 
 type IOperatorDropdownProps = IOperatorDropdownOwnProps & WrappedComponentProps;
@@ -43,7 +44,7 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
     }
 
     private renderDropdownButton() {
-        const { intl, operator } = this.props;
+        const { intl, operator, isDisabled } = this.props;
         const { opened } = this.state;
 
         const title = capitalize(intl.formatMessage({ id: getOperatorTranslationKey(operator) }));
@@ -69,6 +70,7 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
                 onClick={this.handleOperatorDropdownButtonClick}
                 iconLeft={`icon-${getOperatorIcon(operator)}`}
                 iconRight={opened ? "icon-navigateup" : "icon-navigatedown"}
+                disabled={isDisabled}
             />
         );
     }

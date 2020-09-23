@@ -10,9 +10,23 @@ export interface IMeasureValueFilterCommonProps {
     measureIdentifier: string;
     onApply: (filter: IMeasureValueFilter) => void;
     usePercentage?: boolean;
-    warningMessage?: string;
+    warningMessage?: WarningMessage;
     locale?: string;
     separators?: ISeparators;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroDefaultValue?: boolean;
+    enableOperatorSelection?: boolean;
 }
+
+/**
+ * @beta
+ */
+export type WarningMessage = string | IWarningMessage;
+
+/**
+ * @beta
+ */
+export type IWarningMessage = {
+    text: string;
+    severity: "low" | "medium" | "high";
+};

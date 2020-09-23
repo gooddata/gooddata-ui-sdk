@@ -3,10 +3,11 @@ import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { newMeasureValueFilter, IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
+import { withIntl } from "@gooddata/sdk-ui";
 
 import MVFDropdownFragment from "./fragments/MeasureValueFilterDropdown";
 import { MeasureValueFilterDropdown, IMeasureValueFilterDropdownProps } from "../MeasureValueFilterDropdown";
-import { withIntl } from "@gooddata/sdk-ui";
+import { IWarningMessage } from "../typings";
 
 // we cannot use factory here, it does not allow creating empty filters
 const emptyFilter: IMeasureValueFilter = {
@@ -89,18 +90,63 @@ describe("Measure value filter dropdown", () => {
         expect(component.getInputSuffixes().length).toEqual(2);
     });
 
-    it("should not render warning message if not provided", () => {
-        const component = renderComponent();
+    it("should render disabled operator button if enableOperatorSelection is false", () => {
+        const component = renderComponent({ enableOperatorSelection: false });
 
-        expect(component.getWarningMessage().length).toEqual(0);
+        expect(component.getOperatorDropdownButton().hasClass("disabled")).toEqual(true);
     });
 
-    it("should render warning message if provided", () => {
-        const warningMessage = "The filter uses actual measure values, not percentage.";
-        const component = renderComponent({ warningMessage });
+    describe("warning message", () => {
+        it("should not render warning message if not provided", () => {
+            const component = renderComponent();
 
-        expect(component.getWarningMessage().length).toEqual(1);
-        expect(component.getWarningMessageText()).toEqual(warningMessage);
+            expect(component.getWarningMessage().length).toEqual(0);
+        });
+
+        it("should render low severity warning message if string provided", () => {
+            const warningMessage = "The filter uses actual measure values, not percentage.";
+            const component = renderComponent({ warningMessage });
+
+            expect(component.getWarningMessage().length).toEqual(1);
+            expect(component.getWarningMessageText()).toEqual(warningMessage);
+            expect(component.getWarningMessageBySeverity("low").exists()).toEqual(true);
+        });
+
+        it("should render low severity warning message if low severity warning message object provided", () => {
+            const warningMessage: IWarningMessage = {
+                severity: "low",
+                text: "The filter uses actual measure values, not percentage.",
+            };
+            const component = renderComponent({ warningMessage });
+
+            expect(component.getWarningMessage().length).toEqual(1);
+            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("low").exists()).toEqual(true);
+        });
+
+        it("should render medium severity warning message if medium severity warning message object provided", () => {
+            const warningMessage: IWarningMessage = {
+                severity: "medium",
+                text: "The filter uses actual measure values, not percentage.",
+            };
+            const component = renderComponent({ warningMessage });
+
+            expect(component.getWarningMessage().length).toEqual(1);
+            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("medium").exists()).toEqual(true);
+        });
+
+        it("should render high severity warning message if high severity warning message object provided", () => {
+            const warningMessage: IWarningMessage = {
+                severity: "high",
+                text: "The filter uses actual measure values, not percentage.",
+            };
+            const component = renderComponent({ warningMessage });
+
+            expect(component.getWarningMessage().length).toEqual(1);
+            expect(component.getWarningMessageText()).toEqual(warningMessage.text);
+            expect(component.getWarningMessageBySeverity("high").exists()).toEqual(true);
+        });
     });
 
     describe("tooltip", () => {

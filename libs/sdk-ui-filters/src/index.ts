@@ -32,7 +32,15 @@ export {
     MeasureValueFilterDropdown,
     IMeasureValueFilterDropdownProps,
 } from "./MeasureValueFilter/MeasureValueFilterDropdown";
-export { IMeasureValueFilterCommonProps } from "./MeasureValueFilter/typings";
+export {
+    IMeasureValueFilterCommonProps,
+    WarningMessage,
+    IWarningMessage,
+} from "./MeasureValueFilter/typings";
 export { RankingFilter, IRankingFilterProps } from "./RankingFilter/RankingFilter";
 export { RankingFilterDropdown, IRankingFilterDropdownProps } from "./RankingFilter/RankingFilterDropdown";
-export { IMeasureDropdownItem, IAttributeDropdownItem } from "./RankingFilter/types";
+export {
+    IMeasureDropdownItem,
+    IAttributeDropdownItem,
+    ICustomGranularitySelection,
+} from "./RankingFilter/types";

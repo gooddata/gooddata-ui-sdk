@@ -61,6 +61,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
     public static defaultProps: Partial<IMeasureValueFilterDropdownProps> = {
         displayTreatNullAsZeroOption: false,
         treatNullAsZeroDefaultValue: false,
+        enableOperatorSelection: true,
     };
 
     public render(): React.ReactNode {
@@ -74,6 +75,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
             separators,
             displayTreatNullAsZeroOption,
             treatNullAsZeroDefaultValue,
+            enableOperatorSelection,
         } = this.props;
 
         return (
@@ -89,6 +91,7 @@ export class MeasureValueFilterDropdown extends React.PureComponent<IMeasureValu
                 separators={separators}
                 displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                 treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
+                enableOperatorSelection={enableOperatorSelection}
             />
         );
     }

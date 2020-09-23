@@ -3,7 +3,10 @@ import React from "react";
 import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
 import cx from "classnames";
-import { IAttributeDropdownItem } from "../../types";
+import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types";
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import Button from "@gooddata/goodstrap/lib/Button/Button";
 
 interface IAttributeItemProps {
     item: IAttributeDropdownItem;
@@ -12,6 +15,7 @@ interface IAttributeItemProps {
     onSelect: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
+    customGranularitySelection?: ICustomGranularitySelection;
 }
 
 export const AttributeItem: React.FC<IAttributeItemProps> = ({
@@ -21,13 +25,16 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
     onSelect,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
+    customGranularitySelection,
 }) => {
     const { title, ref } = item;
+    const isDisabled = customGranularitySelection && !customGranularitySelection.enable;
     const className = cx(
         "gd-list-item",
         "gd-list-item-shortened",
         {
             "is-selected": isSelected,
+            "is-disabled": isDisabled,
         },
         "gd-button-link",
         iconClass,
@@ -46,14 +53,28 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
         }
     };
 
+    if (!isDisabled) {
+        return (
+            <button
+                className={className}
+                onClick={() => onSelect(ref)}
+                onMouseOver={onMouseOver}
+                onMouseOut={onMouseOut}
+            >
+                <span>{title}</span>
+            </button>
+        );
+    }
+
     return (
-        <button
-            className={className}
-            onClick={() => onSelect(ref)}
-            onMouseOver={onMouseOver}
-            onMouseOut={onMouseOut}
-        >
-            <span>{title}</span>
-        </button>
+        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+            <Button className={className} value={title} disabled={true} />
+            <Bubble
+                className="bubble-primary gd-rf-tooltip-bubble s-rf-disabled-attribute-bubble"
+                alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
+            >
+                {customGranularitySelection.warningMessage}
+            </Bubble>
+        </BubbleHoverTrigger>
     );
 };

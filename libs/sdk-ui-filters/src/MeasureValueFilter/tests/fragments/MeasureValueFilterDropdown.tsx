@@ -78,6 +78,9 @@ export default class MeasureValueFilterFragment {
 
     public getWarningMessage = () => this.component.find(".s-mvf-warning-message");
 
+    public getWarningMessageBySeverity = (severity: string) =>
+        this.component.find(`.s-mvf-warning-message-${severity}`);
+
     public getWarningMessageText = () => this.getWarningMessage().text();
 
     public toggleTreatNullAsCheckbox = () => {

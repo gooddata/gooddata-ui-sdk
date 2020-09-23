@@ -111,6 +111,15 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
         color: $gd-color-text;
         padding: 0 1px;
     }
+
+    .gd-button-link.disabled {
+        color: $gd-color-text;
+    }
+
+    .gd-button-link.disabled:hover {
+        background-color: $is-focused-background;
+        color: $gd-color-text;
+    }
 }
 
 .gd-rf-attribute-dropdown-separator {
