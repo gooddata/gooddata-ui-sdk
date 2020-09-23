@@ -339,6 +339,7 @@ export namespace EmbeddedKpiDashboard {
         Delete = "deleteDashboard",
         DrillableItems = "drillableItems",
         ExportToPdf = "exportToPdf",
+        OpenScheduleEmailDialog = "openScheduleEmailDialog",
         RemoveFilterContext = "removeFilterContext",
         Save = "saveDashboard",
         SaveAsDashboard = "saveAsDashboard",
@@ -365,6 +366,7 @@ export namespace EmbeddedKpiDashboard {
         Platform = "platform",
         RemoveFilterContextFinished = "removeFilterContextFinished",
         Resized = "resized",
+        ScheduleEmailDialogOpened = "scheduleEmailDialogOpened",
         SetFilterContextFinished = "setFilterContextFinished",
         SwitchedToEdit = "switchedToEdit",
         SwitchedToView = "switchedToView",
@@ -472,6 +474,7 @@ export namespace EmbeddedKpiDashboard {
     }
     export function isExportToPdfCommandData(obj: unknown): obj is ExportToPdfCommandData;
     export function isIdentifierInsight(obj: unknown): obj is IIdentifierInsightRef;
+    export function isOpenScheduleEmailDialogCommandData(obj: unknown): obj is OpenScheduleEmailDialogCommandData;
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData;
     export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData;
     export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData;
@@ -485,6 +488,9 @@ export namespace EmbeddedKpiDashboard {
         uri: string;
     }
     export type NoPermissionsEventData = IGdcKdMessageEnvelope<GdcKdEventType.NoPermissions, INoPermissionsBody>;
+    export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
+    // (undocumented)
+    export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
     // (undocumented)
     export type PlaformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlaformBody>;
     export type RemoveFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
