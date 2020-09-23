@@ -4,14 +4,17 @@ import bearFactory from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GoodDataAuthProvider } from "./GoodDataAuthProvider";
-import { IAuthState, IAuthContext, AuthStatus } from "./types";
+import { AuthStatus, IAuthContext, IAuthState } from "./types";
 import { useAuthState } from "./state";
+import { ANONYMOUS_ACCESS } from "../../constants/env";
 
 const noop = () => undefined;
 
 const authProvider = new GoodDataAuthProvider();
 
-const backend = bearFactory().withAuthentication(authProvider);
+const backend = bearFactory({ hostname: ANONYMOUS_ACCESS ? BACKEND_URL : undefined }).withAuthentication(
+    authProvider,
+);
 
 const initialState: IAuthState = {
     authStatus: AuthStatus.AUTHORIZING,

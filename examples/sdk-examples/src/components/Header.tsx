@@ -7,6 +7,7 @@ import { CustomLoading } from "./CustomLoading";
 import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
+import { ANONYMOUS_ACCESS } from "../constants/env";
 
 const appName = "GoodData.UI Examples";
 
@@ -350,7 +351,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                     >
                         Run Locally
                     </a>
-                    {renderLoggingBlock()}
+                    {!ANONYMOUS_ACCESS ? renderLoggingBlock() : null}
                 </div>
             </div>
             {renderBackendInfo()}

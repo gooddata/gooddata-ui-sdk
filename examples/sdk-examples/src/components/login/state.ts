@@ -5,6 +5,7 @@ import sdk from "@gooddata/api-client-bear";
 import { workspace } from "../../constants/fixtures";
 import { useAuth, AuthStatus } from "../../context/auth";
 import { DemoProjectAuthStatus, IDemoProjectState } from "./types";
+import { ANONYMOUS_ACCESS } from "../../constants/env";
 
 const uriToId = (uri: string) => uri.split("/").pop();
 const isDemoProjectAssignedToUser = (projects: any[]) =>
@@ -20,6 +21,13 @@ export const useDemoProjectAuth = (): {
     authStatus: DemoProjectAuthStatus;
     error: string | undefined;
 } => {
+    if (ANONYMOUS_ACCESS) {
+        return {
+            authStatus: DemoProjectAuthStatus.AUTHORIZED,
+            error: undefined,
+        };
+    }
+
     const { authStatus: userAuthStatus } = useAuth();
     const [{ authStatus, profileUri, projects, error }, setState] = useState<IDemoProjectState>(initialState);
     const hasUserDemoProjectAssigned = projects && isDemoProjectAssignedToUser(projects);

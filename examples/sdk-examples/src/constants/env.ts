@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 const anonymousAccess: any = {
-    "https://live-examples-proxy.herokuapp.com/": true,
+    "https://live-examples-proxy.herokuapp.com": true,
 };
 
 export const ENV_CREDENTIALS = {
