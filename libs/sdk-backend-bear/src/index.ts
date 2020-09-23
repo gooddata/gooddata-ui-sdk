@@ -24,6 +24,7 @@ export {
     BearAuthProviderBase,
 };
 
+export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
 export default bearFactory;
 
 //
