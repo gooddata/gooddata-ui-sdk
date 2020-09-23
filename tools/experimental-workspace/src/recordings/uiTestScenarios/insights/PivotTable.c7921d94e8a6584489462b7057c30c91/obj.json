@@ -25,24 +25,25 @@
                         }
                     }
                 ],
-                "localIdentifier": "view"
+                "localIdentifier": "attribute"
             },
-            { "items": [], "localIdentifier": "stack" }
+            { "items": [], "localIdentifier": "columns" }
         ],
         "filters": [
             {
-                "measureValueFilter": {
-                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 500 } },
-                    "measure": { "localIdentifier": "m_aangOxLSeztu" }
+                "rankingFilter": {
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" },
+                    "operator": "BOTTOM",
+                    "value": 10
                 }
             }
         ],
-        "identifier": "BarChart.6893135987d6d8b4ce14fc1b78a96441",
-        "properties": { "controls": {} },
-        "ref": { "uri": "BarChart.6893135987d6d8b4ce14fc1b78a96441" },
+        "identifier": "PivotTable.c7921d94e8a6584489462b7057c30c91",
+        "properties": {},
+        "ref": { "uri": "PivotTable.c7921d94e8a6584489462b7057c30c91" },
         "sorts": [],
-        "title": "BarChart - with measure value filter",
-        "uri": "BarChart.6893135987d6d8b4ce14fc1b78a96441",
-        "visualizationUrl": "local:bar"
+        "title": "PivotTable - with measure value filter",
+        "uri": "PivotTable.c7921d94e8a6584489462b7057c30c91",
+        "visualizationUrl": "local:table"
     }
 }

@@ -25,9 +25,9 @@
                         }
                     }
                 ],
-                "localIdentifier": "view"
+                "localIdentifier": "attribute"
             },
-            { "items": [], "localIdentifier": "stack" }
+            { "items": [], "localIdentifier": "columns" }
         ],
         "filters": [
             {
@@ -37,12 +37,12 @@
                 }
             }
         ],
-        "identifier": "BarChart.6893135987d6d8b4ce14fc1b78a96441",
-        "properties": { "controls": {} },
-        "ref": { "uri": "BarChart.6893135987d6d8b4ce14fc1b78a96441" },
+        "identifier": "PivotTable.25c27bc5cf6442b716ad550dffeb9392",
+        "properties": {},
+        "ref": { "uri": "PivotTable.25c27bc5cf6442b716ad550dffeb9392" },
         "sorts": [],
-        "title": "BarChart - with measure value filter",
-        "uri": "BarChart.6893135987d6d8b4ce14fc1b78a96441",
-        "visualizationUrl": "local:bar"
+        "title": "PivotTable - with ranking filter",
+        "uri": "PivotTable.25c27bc5cf6442b716ad550dffeb9392",
+        "visualizationUrl": "local:table"
     }
 }
