@@ -2,7 +2,7 @@
 
 ## Getting Started
 
-You can start the live examples locally in development mode using the `npm run start` or `yarn start` commands. This
+You can start the live examples locally in development mode using the `npm run examples` or `yarn examples` commands. This
 will start the Webpack dev server.
 
 The application in dev mode still works on top of a live project in GoodData platform - you will need to
