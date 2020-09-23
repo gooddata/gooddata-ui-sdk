@@ -68,6 +68,13 @@ export function isMeasureValueFilter(filter: IBucketFilter): filter is IMeasureV
     return !!filter && !!(filter as IMeasureValueFilter).measureLocalIdentifier;
 }
 
+export function isActiveMeasureValueFilter(filter: IBucketFilter): boolean {
+    if (!isMeasureValueFilter(filter)) {
+        return false;
+    }
+    return !!filter.condition;
+}
+
 export function isRankingFilter(filter: IBucketFilter): filter is IRankingFilter {
     const filterAsRankingFilter = filter as IRankingFilter;
     return (

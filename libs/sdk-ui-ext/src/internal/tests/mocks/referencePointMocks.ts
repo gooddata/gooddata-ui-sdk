@@ -2292,3 +2292,71 @@ export const twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint: IReferen
         sortItems: [defaultSortItem],
     },
 };
+
+export const tableWithNativeTotal: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 2),
+        },
+        {
+            localIdentifier: "attribute",
+            items: attributeItems.slice(0, 2),
+            totals: [
+                {
+                    measureIdentifier: "m1",
+                    attributeIdentifier: "a1",
+                    type: "sum",
+                    alias: "Sum",
+                },
+                {
+                    measureIdentifier: "m2",
+                    attributeIdentifier: "a1",
+                    type: "nat",
+                },
+            ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: attributeFilters.slice(0, 1),
+    },
+    properties: {
+        sortItems: [
+            {
+                attributeSortItem: {
+                    attributeIdentifier: "a1",
+                    direction: "asc",
+                },
+            },
+        ],
+    },
+};
+
+export const rankingFilterAndInvalidNatTotal: IReferencePoint = {
+    ...tableWithNativeTotal,
+    filters: {
+        localIdentifier: "filters",
+        items: [
+            ...tableWithNativeTotal.filters.items,
+            {
+                localIdentifier: "ranking1",
+                filters: [rankingFilter],
+            },
+        ],
+    },
+};
+
+export const measureValueFilterAndInvalidNatTotal: IReferencePoint = {
+    ...tableWithNativeTotal,
+    filters: {
+        localIdentifier: "filters",
+        items: [
+            ...tableWithNativeTotal.filters.items,
+            {
+                localIdentifier: "mvf1",
+                filters: [measureValueFilter],
+            },
+        ],
+    },
+};

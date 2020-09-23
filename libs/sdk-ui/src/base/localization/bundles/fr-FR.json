@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Max",
     "visualizations.totals.dropdown.title.nat": "Cumul (Total)",
-    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "L'agrégation Cumul (Total) n'est pas disponible en filtrant la perception par valeur de mesure. Pour utiliser Cumul (Total), supprimez tous les filtres de valeur de mesure de la barre de filtres.",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "L'agrégation Cumul (Total) n'est pas disponible en filtrant la perception par valeur de mesure. Pour utiliser Cumul (Total), supprimez tous les filtres de valeur de mesure de la barre de filtres.",
     "visualizations.totals.dropdown.title.med": "Médiane",
     "visualizations.totals.row.title.sum": "Somme",
     "visualizations.totals.row.title.avg": "Moyenne",

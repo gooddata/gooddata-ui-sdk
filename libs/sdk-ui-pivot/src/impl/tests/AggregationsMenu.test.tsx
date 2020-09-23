@@ -15,6 +15,7 @@ import {
     idRef,
     localIdRef,
     newMeasureValueFilter,
+    newRankingFilter,
 } from "@gooddata/sdk-model";
 import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
@@ -153,6 +154,19 @@ describe("AggregationsMenu", () => {
         const wrapper = render({
             showSubmenu: true,
             getExecutionDefinition: () => defWithMeasureValueFilter,
+        });
+        expect(wrapper.find(".is-disabled").length).toBe(1);
+        expect(wrapper.find(AggregationsSubMenu).length).toBe(5);
+    });
+
+    it("should disable native totals when there is ranking filter set", () => {
+        const defWithRankingFilter = defWithFilters(emptyDef("testWorkspace"), [
+            newRankingFilter(localIdRef("some-localIdentifier"), "TOP", 3),
+        ]);
+
+        const wrapper = render({
+            showSubmenu: true,
+            getExecutionDefinition: () => defWithRankingFilter,
         });
         expect(wrapper.find(".is-disabled").length).toBe(1);
         expect(wrapper.find(AggregationsSubMenu).length).toBe(5);

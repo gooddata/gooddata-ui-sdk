@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Max",
     "visualizations.totals.dropdown.title.nat": "Rollup (Gesamt)",
-    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "Rollup (Gesamt) Aggregation ist nicht verfügbar, wenn die Betrachtung nach Messwert gefiltert wird. Um Rollup (Gesamt) zu verwenden, entfernen Sie alle Messwertfilter aus der Filterleiste.",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Rollup (Gesamt) Aggregation ist nicht verfügbar, wenn die Betrachtung nach Messwert gefiltert wird. Um Rollup (Gesamt) zu verwenden, entfernen Sie alle Messwertfilter aus der Filterleiste.",
     "visualizations.totals.dropdown.title.med": "Medianwert",
     "visualizations.totals.row.title.sum": "Summe",
     "visualizations.totals.row.title.avg": "Mittelwert",
