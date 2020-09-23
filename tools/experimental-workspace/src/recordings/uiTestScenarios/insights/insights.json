@@ -13,5 +13,15 @@
         "comment": "Auto-generated insight for test scenario BarChart - with measure value filter.",
         "scenarioName": "with measure value filter",
         "visName": "BarChart"
+    },
+    "PivotTable.25c27bc5cf6442b716ad550dffeb9392": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with ranking filter.",
+        "scenarioName": "with ranking filter",
+        "visName": "PivotTable"
+    },
+    "PivotTable.c7921d94e8a6584489462b7057c30c91": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with measure value filter.",
+        "scenarioName": "with measure value filter",
+        "visName": "PivotTable"
     }
 }

@@ -4,15 +4,15 @@ import { scenariosFor } from "../../src";
 import { newRankingFilter, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { PivotTable, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 
-const PivotTableWithRankingFilter = {
+export const PivotTableWithRankingFilter = {
     measures: [ExperimentalLdm.Amount],
-    viewBy: [ExperimentalLdm.Product.Default],
+    rows: [ExperimentalLdm.Product.Default],
     filters: [newRankingFilter(ExperimentalLdm.Amount, "BOTTOM", 10)],
 };
 
-const PivotTableWithMeasureValueFilter = {
+export const PivotTableWithMeasureValueFilter = {
     measures: [ExperimentalLdm.Amount],
-    viewBy: [ExperimentalLdm.Product.Default],
+    rows: [ExperimentalLdm.Product.Default],
     filters: [newMeasureValueFilter(ExperimentalLdm.Amount, "GREATER_THAN", 500)],
 };
 

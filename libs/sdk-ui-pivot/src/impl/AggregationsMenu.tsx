@@ -7,6 +7,7 @@ import {
     ITotal,
     TotalType,
     measureValueFilterCondition,
+    isRankingFilter,
 } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React from "react";
@@ -133,12 +134,13 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         onClick: () => void,
         isSelected: boolean,
         hasSubMenu = false,
-        isEnabled: boolean,
+        disabled: boolean,
+        tooltipMessage?: string,
     ) {
         const { intl } = this.props;
-        const onClickHandler = isEnabled ? onClick : noop;
+        const onClickHandler = disabled ? noop : onClick;
         const itemElement = (
-            <Item checked={isSelected} subMenu={hasSubMenu} disabled={!isEnabled}>
+            <Item checked={isSelected} subMenu={hasSubMenu} disabled={disabled}>
                 <div
                     onClick={onClickHandler}
                     className="gd-aggregation-menu-item-inner s-menu-aggregation-inner"
@@ -149,17 +151,15 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                 </div>
             </Item>
         );
-        return isEnabled ? (
-            itemElement
-        ) : (
+        return disabled ? (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 {itemElement}
                 <Bubble className="bubble-primary" alignPoints={[{ align: "bc tc" }]}>
-                    {intl.formatMessage({
-                        id: "visualizations.totals.dropdown.title.nat.disabled.tooltip",
-                    })}
+                    {tooltipMessage}
                 </Bubble>
             </BubbleHoverTrigger>
+        ) : (
+            itemElement
         );
     }
 
@@ -176,6 +176,11 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         );
     }
 
+    private isTableFilteredByRankingFilter(): boolean {
+        const definition = this.props.getExecutionDefinition();
+        return definition.filters.some(isRankingFilter);
+    }
+
     private renderMainMenuItems(
         columnTotals: IColumnTotal[],
         measureLocalIdentifiers: string[],
@@ -184,6 +189,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         const { intl, onAggregationSelect, showSubmenu } = this.props;
         const firstAttributeIdentifier = attributeDescriptorLocalId(rowAttributeDescriptors[0]);
         const isFilteredByMeasureValue = this.isTableFilteredByMeasureValue();
+        const isFilteredByRankingFilter = this.isTableFilteredByRankingFilter();
 
         return AVAILABLE_TOTALS.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
@@ -200,14 +206,21 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
                     attributeIdentifier: attributeDescriptor.attributeHeader.localIdentifier,
                 });
             const itemClassNames = this.getItemClassNames(totalType);
-            const isEnabled = totalType !== "nat" || !isFilteredByMeasureValue;
-            const renderSubmenu = isEnabled && showSubmenu && rowAttributeDescriptors.length > 0;
+
+            const disabled = totalType === "nat" && (isFilteredByMeasureValue || isFilteredByRankingFilter);
+            const cause = isFilteredByMeasureValue ? "mvf" : "ranking";
+            const tooltipMessage = disabled
+                ? intl.formatMessage({ id: `visualizations.totals.dropdown.tooltip.nat.disabled.${cause}` })
+                : undefined;
+
+            const renderSubmenu = !disabled && showSubmenu && rowAttributeDescriptors.length > 0;
             const toggler = this.renderMenuItemContent(
                 totalType,
                 onClick,
                 isSelected,
                 renderSubmenu,
-                isEnabled,
+                disabled,
+                tooltipMessage,
             );
 
             return (

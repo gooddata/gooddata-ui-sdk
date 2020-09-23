@@ -1,0 +1,48 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            { "items": [], "localIdentifier": "columns" }
+        ],
+        "filters": [
+            {
+                "rankingFilter": {
+                    "measure": { "localIdentifier": "m_aangOxLSeztu" },
+                    "operator": "BOTTOM",
+                    "value": 10
+                }
+            }
+        ],
+        "identifier": "PivotTable.c7921d94e8a6584489462b7057c30c91",
+        "properties": {},
+        "sorts": [],
+        "title": "PivotTable - with measure value filter",
+        "uri": "PivotTable.c7921d94e8a6584489462b7057c30c91",
+        "visualizationUrl": "local:table"
+    }
+}

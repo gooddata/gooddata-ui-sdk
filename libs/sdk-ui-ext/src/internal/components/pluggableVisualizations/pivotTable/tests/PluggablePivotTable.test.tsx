@@ -486,6 +486,52 @@ describe("PluggablePivotTable", () => {
                 });
         });
 
+        describe("native totals", () => {
+            it("should remove native total if measure value filter is present", () => {
+                const pivotTable = createComponent();
+
+                const expectedTotals = [
+                    {
+                        measureIdentifier: "m1",
+                        attributeIdentifier: "a1",
+                        type: "sum",
+                        alias: "Sum",
+                    },
+                ];
+
+                return pivotTable
+                    .getExtendedReferencePoint(
+                        referencePointMocks.measureValueFilterAndInvalidNatTotal,
+                        referencePointMocks.tableWithNativeTotal,
+                    )
+                    .then((extendedReferencePoint) => {
+                        expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
+                    });
+            });
+
+            it("should remove native total if ranking filter is present", () => {
+                const pivotTable = createComponent();
+
+                const expectedTotals = [
+                    {
+                        measureIdentifier: "m1",
+                        attributeIdentifier: "a1",
+                        type: "sum",
+                        alias: "Sum",
+                    },
+                ];
+
+                return pivotTable
+                    .getExtendedReferencePoint(
+                        referencePointMocks.rankingFilterAndInvalidNatTotal,
+                        referencePointMocks.tableWithNativeTotal,
+                    )
+                    .then((extendedReferencePoint) => {
+                        expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
+                    });
+            });
+        });
+
         it("should return a new reference point without updating grand totals and subtotals", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {

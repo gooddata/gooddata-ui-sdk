@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "Min",
     "visualizations.totals.dropdown.title.max": "Max",
     "visualizations.totals.dropdown.title.nat": "Groot (Totaal)",
-    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "Overzicht (Totaal)-aggregatie is niet beschikbaar bij het filteren van het inzicht op maatwaarde. Om Overzicht (Totaal) te gebruiken, verwijdert u alle filters voor maatwaarden van de filterbalk.",
+    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "Overzicht (Totaal)-aggregatie is niet beschikbaar bij het filteren van het inzicht op maatwaarde. Om Overzicht (Totaal) te gebruiken, verwijdert u alle filters voor maatwaarden van de filterbalk.",
     "visualizations.totals.dropdown.title.med": "Mediaan",
     "visualizations.totals.row.title.sum": "Som",
     "visualizations.totals.row.title.avg": "Gem",

@@ -1,0 +1,33 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.product.id", "type": "displayForm" },
+                "localIdentifier": "a_label.product.id"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [{ "itemIdentifiers": ["a_label.product.id"] }, { "itemIdentifiers": ["measureGroup"] }],
+    "filters": [
+        {
+            "rankingFilter": {
+                "measure": { "localIdentifier": "m_aangOxLSeztu" },
+                "operator": "BOTTOM",
+                "value": 10
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": { "item": { "identifier": "aangOxLSeztu", "type": "measure" } }
+                },
+                "localIdentifier": "m_aangOxLSeztu"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "experimental-workspace"
+}

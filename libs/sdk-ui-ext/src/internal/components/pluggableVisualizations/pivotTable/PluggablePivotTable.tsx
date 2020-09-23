@@ -84,6 +84,7 @@ import {
     addDefaultSort,
     sanitizePivotTableSorts,
 } from "./sortItemsHelpers";
+import { removeInvalidTotals } from "./totalsHelpers";
 
 export const getColumnAttributes = (buckets: IBucketOfFun[]): IBucketItem[] => {
     return getItemsFromBuckets(
@@ -149,7 +150,11 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const previousColumnAttributes =
             previousReferencePoint && getColumnAttributes(previousReferencePoint.buckets);
 
-        const totals = getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE);
+        const filters: IBucketFilter[] = newReferencePoint.filters
+            ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
+            : [];
+
+        const totals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
 
         newReferencePoint.buckets = removeDuplicateBucketItems([
             {
@@ -169,10 +174,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 items: columnAttributes,
             },
         ]);
-
-        const filters: IBucketFilter[] = newReferencePoint.filters
-            ? flatMap(newReferencePoint.filters.items, (item) => item.filters)
-            : [];
 
         const originalSortItems: ISortItem[] = get(newReferencePoint.properties, "sortItems", []);
         const originalColumnWidths: ColumnWidthItem[] = get(
