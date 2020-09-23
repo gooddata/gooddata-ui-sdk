@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 
-import { DependencyOnSdk } from "../base/dependencyDiscovery";
-import { SdkPackageDescriptor } from "../base/sdkPackages";
+import { DependencyOnSdk } from "./dependencyDiscovery";
 import { logError, logInfo, logSuccess, logWarn } from "../cli/loggers";
 import path from "path";
 import spawn from "cross-spawn";
+import { SdkPackageDescriptor } from "../base/types";
 
 export class DevBuildPublisher {
     private readonly packageToDep: Map<SdkPackageDescriptor, DependencyOnSdk> = new Map<
@@ -56,14 +56,13 @@ export class DevBuildPublisher {
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 
+type OnPublished = (deps: DependencyOnSdk[], failed: DependencyOnSdk[]) => void;
+
 class Publisher {
     private finished: DependencyOnSdk[] = [];
     private failed: DependencyOnSdk[] = [];
 
-    constructor(
-        private readonly deps: DependencyOnSdk[],
-        private readonly onPublished: (deps: DependencyOnSdk[], failed: DependencyOnSdk[]) => void,
-    ) {}
+    constructor(private readonly deps: DependencyOnSdk[], private readonly onPublished: OnPublished) {}
 
     private onCopyFinished = (dep: DependencyOnSdk, exitCode: number): void => {
         if (!exitCode) {
