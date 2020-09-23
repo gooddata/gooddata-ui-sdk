@@ -162,6 +162,18 @@ describe("percentRecommendationEnabled", () => {
             ),
         ).toBeFalsy();
     });
+
+    it("should return false if ranking filter exists", () => {
+        const editedReferencePoint = cloneDeep(referencePointMocks.percentRecommendationReferencePoint);
+        set(editedReferencePoint, ["filters", "items", 0], referencePointMocks.rankingFilterBucketItem);
+
+        expect(
+            bucketRules.percentRecommendationEnabled(
+                editedReferencePoint.buckets,
+                editedReferencePoint.filters,
+            ),
+        ).toBeFalsy();
+    });
 });
 
 describe("previousPeriodRecommendationEnabled", () => {
@@ -544,26 +556,6 @@ describe("partial rules", () => {
             expect(
                 bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.attributeFilterBucketItem),
             ).toBeFalsy();
-        });
-    });
-
-    describe("hasRankingFilter", () => {
-        it("should return false when ranking filter is not in filter bucket", () => {
-            const filters: IFilters = {
-                localIdentifier: "filters",
-                items: [...referencePointMocks.attributeFilters],
-            };
-
-            expect(bucketRules.hasRankingFilter(filters)).toBeFalsy();
-        });
-
-        it("should return true when ranking filter is not in filter bucket", () => {
-            const filters: IFilters = {
-                localIdentifier: "filters",
-                items: [...referencePointMocks.attributeFilters, referencePointMocks.rankingFilterBucketItem],
-            };
-
-            expect(bucketRules.hasRankingFilter(filters)).toBeTruthy();
         });
     });
 });
