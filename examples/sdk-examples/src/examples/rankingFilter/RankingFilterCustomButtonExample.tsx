@@ -2,7 +2,14 @@
 import React, { useState } from "react";
 import { LdmExt } from "../../ldm";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
-import { newRankingFilter, measureLocalId, localIdRef, attributeLocalId } from "@gooddata/sdk-model";
+import {
+    newRankingFilter,
+    measureLocalId,
+    localIdRef,
+    attributeLocalId,
+    IFilter,
+    IRankingFilter,
+} from "@gooddata/sdk-model";
 import {
     IMeasureDropdownItem,
     IAttributeDropdownItem,
@@ -10,13 +17,13 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import classNames from "classnames";
 
-const measures = [LdmExt.FranchiseFees, LdmExt.FranchisedSales];
+const measures = [LdmExt.TotalSales2, LdmExt.FranchisedSales];
 const attributes = [LdmExt.LocationState, LdmExt.LocationName];
 
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
-        title: "Franchise fees",
-        ref: localIdRef(measureLocalId(LdmExt.FranchiseFees)),
+        title: "$ Total sales",
+        ref: localIdRef(measureLocalId(LdmExt.TotalSales2)),
         sequenceNumber: "M1",
     },
     {
@@ -48,6 +55,8 @@ const DropdownButton = ({ isActive, onClick }: IRankingFilterDropdownButton) => 
     const className = classNames(
         "gd-button",
         "gd-button-secondary",
+        "gd-button-small",
+        "gd-button-positive",
         "button-dropdown",
         "icon-right",
         "custom-button",
@@ -61,25 +70,59 @@ const DropdownButton = ({ isActive, onClick }: IRankingFilterDropdownButton) => 
     );
 };
 
+const PresetButtonComponent: React.FC<{ title: string; isActive: boolean; onClick: () => void }> = ({
+    title,
+    isActive,
+    onClick,
+}) => (
+    <button
+        className={`gd-button gd-button-secondary gd-button-small ${
+            isActive ? "is-active" : ""
+        } s-filter-button`}
+        onClick={onClick}
+    >
+        {title}
+    </button>
+);
+
 export const RankingFilterCustomButtonExample: React.FC = () => {
-    const [filter, setFilter] = useState(newRankingFilter(LdmExt.franchiseSalesLocalId, "TOP", 3));
+    const [filters, setFilters] = useState<IFilter[]>([]);
     const [isOpen, toggleDropdown] = useState(false);
+
+    const handleApply = (filter: IFilter) => {
+        setFilters([filter]);
+        toggleDropdown(false);
+    };
     return (
         <React.Fragment>
-            <DropdownButton onClick={() => toggleDropdown(!isOpen)} isActive={isOpen} />
-            {isOpen && (
-                <RankingFilterDropdown
-                    measureItems={measureDropdownItems}
-                    attributeItems={attributeDropdownItems}
-                    filter={filter}
-                    onApply={setFilter}
-                    onCancel={() => toggleDropdown(false)}
-                    anchorEl=".custom-button"
-                />
+            <PresetButtonComponent
+                title="No filter"
+                isActive={filters.length === 0}
+                onClick={() => setFilters([])}
+            />
+            <PresetButtonComponent
+                title="Apply ranking filter"
+                isActive={filters.length > 0}
+                onClick={() => setFilters([newRankingFilter(LdmExt.franchiseSalesLocalId, "TOP", 3)])}
+            />
+            {filters.length > 0 && (
+                <React.Fragment>
+                    <DropdownButton onClick={() => toggleDropdown(!isOpen)} isActive={isOpen} />
+                    {isOpen && (
+                        <RankingFilterDropdown
+                            measureItems={measureDropdownItems}
+                            attributeItems={attributeDropdownItems}
+                            filter={filters[0] as IRankingFilter}
+                            onApply={handleApply}
+                            onCancel={() => toggleDropdown(false)}
+                            anchorEl=".custom-button"
+                        />
+                    )}
+                </React.Fragment>
             )}
             <hr className="separator" />
             <div style={{ height: 300 }} className="s-pivot-table">
-                <PivotTable measures={measures} rows={attributes} filters={[filter]} />
+                <PivotTable measures={measures} rows={attributes} filters={filters} />
             </div>
         </React.Fragment>
     );
