@@ -1,12 +1,23 @@
 // (C) 2019 GoodData Corporation
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    IDrillEvent,
+    isDrillIntersectionAttributeItem,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
 import React from "react";
 import { render } from "react-dom";
 
 import { ATTRIBUTE, BUCKETS, DATE } from "../../../constants/bucket";
 import { HEATMAP_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import { DEFAULT_HEATMAP_UICONFIG } from "../../../constants/uiConfig";
-import { IExtendedReferencePoint, IReferencePoint, IVisConstruct } from "../../../interfaces/Visualization";
+import {
+    IDrillDownContext,
+    IExtendedReferencePoint,
+    IImplicitDrillDown,
+    IReferencePoint,
+    IVisConstruct,
+} from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
 import {
@@ -28,8 +39,10 @@ import cloneDeep from "lodash/cloneDeep";
 import includes from "lodash/includes";
 import set from "lodash/set";
 import tail from "lodash/tail";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { SettingCatalog } from "@gooddata/sdk-backend-spi";
+import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
 export class PluggableHeatmap extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -98,6 +111,21 @@ export class PluggableHeatmap extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
+    }
+
+    private addFilters(source: IInsight, drillConfig: IImplicitDrillDown, event: IDrillEvent) {
+        const clicked = drillDownFromAttributeLocalId(drillConfig);
+        const cutIntersection = (event.drillContext.intersection || []).filter(
+            (i) =>
+                isDrillIntersectionAttributeItem(i.header) &&
+                i.header.attributeHeader.localIdentifier === clicked,
+        );
+        return addIntersectionFiltersToInsight(source, cutIntersection);
+    }
+
+    public getInsightWithDrillDownApplied(source: IInsight, drillDownContext: IDrillDownContext): IInsight {
+        const withFilters = this.addFilters(source, drillDownContext.drillDefinition, drillDownContext.event);
+        return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition): React.ReactNode {

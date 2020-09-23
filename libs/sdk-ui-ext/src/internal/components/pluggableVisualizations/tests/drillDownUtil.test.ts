@@ -2,9 +2,11 @@
 
 import { newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { IImplicitDrillDown } from "../../..";
-import { modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
+import { reverseAndTrimIntersection, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 import { Account, Department, Region, Status, Won } from "@gooddata/reference-workspace/dist/ldm/full";
 import { insightDefinitionToInsight } from "./testHelpers";
+import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
+import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock";
 
 describe("drillDownUtil", () => {
     describe("modifyBucketsAttributesForDrillDown", () => {
@@ -82,6 +84,39 @@ describe("drillDownUtil", () => {
 
             const expectedInsight = insightDefinitionToInsight(expected, "uri", "id");
             expect(result).toEqual(expectedInsight);
+        });
+    });
+
+    describe("reverseAndTrimIntersection", () => {
+        const {
+            drillConfigRegion,
+            intersectionWithOuterDepartment,
+            intersectionWithOuterRegion,
+            intersectionWithOuterDepartmentResult,
+            intersectionWithOuterRegionResult,
+        } = reverseAndTrimIntersectionMock;
+
+        const invalidScenarios: Array<[string, IDrillEventIntersectionElement[]?]> = [
+            ["undefined", undefined],
+            ["null", null],
+            ["empty", []],
+        ];
+        it.each(invalidScenarios)(
+            "should handle '%s' intersection and return the original intersection",
+            (_name, intersection?) => {
+                const actual = reverseAndTrimIntersection(drillConfigRegion, intersection);
+                expect(actual).toEqual(intersection);
+            },
+        );
+
+        it("should cut and reverse the intersection when drilling to inner attribute", () => {
+            const actual = reverseAndTrimIntersection(drillConfigRegion, intersectionWithOuterDepartment);
+            expect(actual).toEqual(intersectionWithOuterDepartmentResult);
+        });
+
+        it("should cut and reverse the intersection when drilling to outer attribute", () => {
+            const actual = reverseAndTrimIntersection(drillConfigRegion, intersectionWithOuterRegion);
+            expect(actual).toEqual(intersectionWithOuterRegionResult);
         });
     });
 });

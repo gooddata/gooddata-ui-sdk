@@ -7,8 +7,18 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { AXIS } from "../../../../constants/axis";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
-import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { IDrillEventIntersectionElement, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import {
+    expectedInsightDefDepartment,
+    expectedInsightDefRegion,
+    intersection,
+    sourceInsightDef,
+    targetUri,
+} from "../../treeMap/tests/getInsightWithDrillDownAppliedMock";
+import { Department, Region } from "@gooddata/reference-workspace/dist/ldm/full";
+import { IAttribute, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "../../tests/testHelpers";
 
 jest.mock("react-dom", () => {
     const renderObject = {
@@ -516,5 +526,52 @@ describe("PluggableLineChart", () => {
             );
             expect(get(chart, "supportedPropertiesList")).toEqual(LINE_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL]);
         });
+    });
+
+    describe("Drill Down", () => {
+        it.each([
+            [
+                "on segmentby attribute",
+                sourceInsightDef,
+                Region,
+                targetUri,
+                intersection,
+                expectedInsightDefRegion,
+            ],
+            [
+                "on viewby attribute",
+                sourceInsightDef,
+                Department,
+                targetUri,
+                intersection,
+                expectedInsightDefDepartment,
+            ],
+        ])(
+            "%s should replace the drill down attribute and add intersection filters",
+            (
+                _testName: string,
+                sourceInsightDefinition: IInsightDefinition,
+                drillSourceAttribute: IAttribute,
+                drillTargetUri: string,
+                drillIntersection: IDrillEventIntersectionElement[],
+                expectedInsightDefinition: IInsightDefinition,
+            ) => {
+                const chart = createComponent();
+                const drillDefinition = createDrillDefinition(drillSourceAttribute, drillTargetUri);
+                const sourceInsight = insightDefinitionToInsight(sourceInsightDefinition, "first", "first");
+                const expectedInsight = insightDefinitionToInsight(
+                    expectedInsightDefinition,
+                    "first",
+                    "first",
+                );
+
+                const result: IInsight = chart.getInsightWithDrillDownApplied(sourceInsight, {
+                    drillDefinition,
+                    event: createDrillEvent("treemap", drillIntersection),
+                });
+
+                expect(result).toEqual(expectedInsight);
+            },
+        );
     });
 });
