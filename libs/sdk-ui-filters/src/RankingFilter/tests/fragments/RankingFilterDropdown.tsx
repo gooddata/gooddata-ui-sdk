@@ -64,6 +64,10 @@ export class RankingFilterDropdownFragment {
         return this.component.find(DynamicSelect).find(VirtualizedSelectMenu);
     };
 
+    public isValueDropdownVisible = (): boolean => {
+        return this.component.find(DynamicSelect).find(VirtualizedSelectMenu).exists();
+    };
+
     public isValueDropdownOpen = (): boolean =>
         this.component.find(DynamicSelect).find(VirtualizedSelectMenu).exists();
 
@@ -83,6 +87,12 @@ export class RankingFilterDropdownFragment {
     public setValue = (value: string): RankingFilterDropdownFragment => {
         this.changeInputValue(value);
         this.component.find(VALUE_DROPDOWN_ITEM).hostNodes().simulate("click");
+        return this;
+    };
+
+    public setValueByBlur = (value: string): RankingFilterDropdownFragment => {
+        this.changeInputValue(value);
+        this.component.find(VALUE_DROPDOWN_INPUT).hostNodes().simulate("blur");
         return this;
     };
 

@@ -2,7 +2,7 @@
 import React from "react";
 import { DynamicSelect } from "../../DateFilter/DynamicSelect/DynamicSelect";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { sanitizeInput } from "./utils";
+import { sanitizeCustomInput, sanitizeInput } from "./utils";
 
 interface IValueDropdownOwnProps {
     selectedValue: number;
@@ -12,10 +12,7 @@ interface IValueDropdownOwnProps {
 type ValueDropdownProps = IValueDropdownOwnProps & WrappedComponentProps;
 
 const ValueDropdownComponent: React.FC<ValueDropdownProps> = ({ selectedValue, onSelect, intl }) => {
-    const getDropdownItems = (value: string) => {
-        return sanitizeInput(value, intl);
-    };
-
+    const getDropdownItems = (value: string) => sanitizeInput(value, intl);
     return (
         <DynamicSelect
             getItems={getDropdownItems}
@@ -23,6 +20,8 @@ const ValueDropdownComponent: React.FC<ValueDropdownProps> = ({ selectedValue, o
             value={selectedValue}
             className="gd-rf-value-dropdown-button s-rf-value-dropdown-button"
             optionClassName="s-rf-value-dropdown-item"
+            resetOnBlur={false}
+            customValueValidator={sanitizeCustomInput}
         />
     );
 };
