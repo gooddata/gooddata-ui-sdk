@@ -8,11 +8,68 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 
 // @internal (undocumented)
+export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
+    // (undocumented)
+    render(): React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export type GetOptimalAlignment = {
+    targetRegion: Record<string, unknown>;
+    selfRegion: Record<string, unknown>;
+    ignoreScrollOffsets?: boolean;
+    alignPoints: IAlignPoint[];
+    getViewportRegion?: (ignoreScrollOffsets: boolean) => void;
+    getDocumentRegion?: () => void;
+};
+
+// @internal (undocumented)
+export type GetOptimalAlignmentForRegion = {
+    boundaryRegion: any;
+    targetRegion: any;
+    selfRegion: any;
+    alignPoints: IAlignPoint[];
+};
+
+// @internal (undocumented)
+export type GetPositionedSelfRegion = {
+    targetRegion: Region;
+    selfRegion: Region;
+    alignPoint: IAlignPoint;
+};
+
+// @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
     align: string;
     // (undocumented)
-    offset: IOffset;
+    offset?: IOffset;
+}
+
+// @internal (undocumented)
+export interface IDatePickerOwnProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    date: Date | null;
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onAlign?: (align: string) => void;
+    // (undocumented)
+    onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    placeholder?: string;
+    // (undocumented)
+    resetOnInvalidValue?: boolean;
+    // (undocumented)
+    size?: string;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
@@ -129,6 +186,22 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
+}
+
+// @internal (undocumented)
+export interface Region {
+    // (undocumented)
+    bottom: number;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    right: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
 }
 
 // @internal (undocumented)
