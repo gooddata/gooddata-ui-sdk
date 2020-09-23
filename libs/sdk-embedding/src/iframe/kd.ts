@@ -943,14 +943,6 @@ export namespace EmbeddedKpiDashboard {
      */
     export interface IDrillToUrlStartedDataBody {
         id: string;
-
-        /**
-         * Contains date filter and attribute filters set in the dashboard.
-         *
-         * Note: You can use the type guards defined in EmbeddedGdc namespace to test the type of the filter.
-         * For instance, you can call data.filters.find(isDashboardDateFilter) to get the date filter.
-         */
-        filters: DrillToUrlFilters;
     }
 
     /**

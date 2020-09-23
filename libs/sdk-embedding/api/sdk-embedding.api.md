@@ -405,7 +405,6 @@ export namespace EmbeddedKpiDashboard {
     }
     // (undocumented)
     export interface IDrillToUrlStartedDataBody {
-        filters: DrillToUrlFilters;
         // (undocumented)
         id: string;
     }
