@@ -186,9 +186,9 @@ export function hasNonAllTimeFilter(filters: IFilters): boolean {
     return !isEmpty(filterInterval);
 }
 
-export function hasRankingFilter(filters: IFilters): boolean {
+function hasNoRankingFilter(_: IBucketOfFun[], filters: IFilters): boolean {
     const allBucketFilters = flatMap(filters.items, (filterItem) => filterItem.filters);
-    return allBucketFilters.some(isRankingFilter);
+    return !allBucketFilters.some(isRankingFilter);
 }
 
 export function isShowInPercentAllowed(
@@ -196,13 +196,12 @@ export function isShowInPercentAllowed(
     filters: IFilters,
     bucketLocalIdentifier: string,
 ): boolean {
-    const rules = [hasNoStacks, hasSomeCategories];
+    const rules = [hasNoStacks, hasSomeCategories, hasNoRankingFilter];
 
     return (
         allRulesMet(rules, buckets, filters) &&
         hasOneMasterMeasureInBucket(buckets, bucketLocalIdentifier) &&
-        !filteredByDerivedMeasure(buckets, filters) &&
-        !hasRankingFilter(filters)
+        !filteredByDerivedMeasure(buckets, filters)
     );
 }
 
@@ -249,9 +248,10 @@ export function percentRecommendationEnabled(buckets: IBucketOfFun[], filters: I
         hasOneMasterMeasure,
         hasOneCategory,
         hasNoStacks,
+        hasNoRankingFilter,
     ];
 
-    return allRulesMet(rules, buckets) && !filteredByDerivedMeasure(buckets, filters);
+    return allRulesMet(rules, buckets, filters) && !filteredByDerivedMeasure(buckets, filters);
 }
 
 export function previousPeriodRecommendationEnabled(buckets: IBucketOfFun[]): boolean {
