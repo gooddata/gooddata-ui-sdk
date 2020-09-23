@@ -7,7 +7,6 @@ import { CustomLoading } from "./CustomLoading";
 import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
-import { BASEPATH } from "../constants/env";
 
 const appName = "GoodData.UI Examples";
 

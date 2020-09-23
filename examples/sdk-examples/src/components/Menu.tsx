@@ -2,7 +2,6 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { BASEPATH } from "../constants/env";
 
 interface IMenuProps {
     location: any;
