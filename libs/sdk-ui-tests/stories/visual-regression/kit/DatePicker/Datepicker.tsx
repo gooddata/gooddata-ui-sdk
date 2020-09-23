@@ -1,4 +1,4 @@
-import { DatePicker } from "@gooddata/sdk-ui-kit";
+import { Datepicker } from "@gooddata/sdk-ui-kit";
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
@@ -11,10 +11,10 @@ const DatePickerTest: React.FC = () => {
     return (
         <div>
             <h4>Basic picker</h4>
-            <DatePicker date={new Date()} />
+            <Datepicker date={new Date()} />
 
             <h4>Small version</h4>
-            <DatePicker size="small" date={new Date()} />
+            <Datepicker size="small" date={new Date()} />
 
             <h4>Viewport fitting</h4>
             <div className="pickerExampleFlexRow">
@@ -23,7 +23,7 @@ const DatePickerTest: React.FC = () => {
                     it it aligned to the right edge of date input.
                 </div>
                 <div>
-                    <DatePicker date={new Date()} />
+                    <Datepicker date={new Date()} />
                 </div>
             </div>
             <div className="pickerExampleFlexRow">
@@ -39,13 +39,13 @@ const DatePickerTest: React.FC = () => {
                     </p>
                 </div>
                 <div>
-                    <DatePicker alignPoints={[{ align: "bl tl" }]} date={new Date()} />
+                    <Datepicker alignPoints={[{ align: "bl tl" }]} date={new Date()} />
                 </div>
             </div>
 
             <h4>Set date externally</h4>
             <div>
-                <DatePicker date={date} />
+                <Datepicker date={date} />
                 <br />
                 <button
                     onClick={() => {
