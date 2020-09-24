@@ -51,6 +51,7 @@ export class MeasureValueFilter extends React.PureComponent<
             separators,
             displayTreatNullAsZeroOption,
             treatNullAsZeroDefaultValue,
+            enableOperatorSelection,
         } = this.props;
 
         return (
@@ -74,6 +75,7 @@ export class MeasureValueFilter extends React.PureComponent<
                         separators={separators}
                         displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                         treatNullAsZeroDefaultValue={treatNullAsZeroDefaultValue}
+                        enableOperatorSelection={enableOperatorSelection}
                         anchorEl={this.buttonRef.current}
                     />
                 ) : null}
