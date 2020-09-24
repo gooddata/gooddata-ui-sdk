@@ -41,6 +41,7 @@ function sanitizeSize(size: number[]): number[] {
 }
 
 export class TigerExecutionResult implements IExecutionResult {
+    private readonly workspace: string;
     public readonly dimensions: IDimensionDescriptor[];
     private readonly resultId: string;
     private readonly _fingerprint: string;
@@ -56,12 +57,15 @@ export class TigerExecutionResult implements IExecutionResult {
             execResponse.executionResponse.dimensions,
             this.definition,
         );
+        this.workspace = this.definition.workspace;
         this.resultId = execResponse.executionResponse.links.executionResult;
         this._fingerprint = SparkMD5.hash(this.resultId);
     }
 
     public async readAll(): Promise<IDataView> {
-        const executionResultPromise = this.authCall((sdk) => sdk.execution.executionResult(this.resultId));
+        const executionResultPromise = this.authCall((sdk) =>
+            sdk.execution.executionResult(this.workspace, this.resultId),
+        );
 
         return this.asDataView(executionResultPromise);
     }
@@ -71,7 +75,7 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneSize = sanitizeSize(size);
 
         const executionResultPromise = this.authCall((sdk) =>
-            sdk.execution.executionResult(this.resultId, saneOffset, saneSize),
+            sdk.execution.executionResult(this.workspace, this.resultId, saneOffset, saneSize),
         );
 
         return this.asDataView(executionResultPromise);

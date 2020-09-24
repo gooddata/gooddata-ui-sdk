@@ -10680,8 +10680,8 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
-    executeAfm: (workspace: string, execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
-    executionResult: (workspace: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
+    executeAfm: (workspaceId: string, execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
+    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
 };
 
 // @public (undocumented)

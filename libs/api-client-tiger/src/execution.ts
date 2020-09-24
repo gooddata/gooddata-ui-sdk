@@ -11,8 +11,12 @@ import { Execution } from "./gd-tiger-model/Execution";
 export const tigerExecutionClientFactory = (
     axios: AxiosInstance,
 ): {
-    executeAfm: (execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
+    executeAfm: (
+        workspaceId: string,
+        execution: ExecuteAFM.IExecution,
+    ) => Promise<Execution.IExecutionResponse>;
     executionResult: (
+        workspaceId: string,
         resultId: string,
         offset?: number[] | undefined,
         size?: number[] | undefined,
@@ -22,23 +26,31 @@ export const tigerExecutionClientFactory = (
      * Starts a new AFM execution.
      *
      * @param axios - instance of configured http client to use
+     * @param workspaceId workspace identifier
      * @param execution - execution to send as-is in request body
      * @public
      */
-    const executeAfm = (execution: ExecuteAFM.IExecution): Promise<Execution.IExecutionResponse> => {
-        return axios.post("/api/afm", execution).then((res: AxiosResponse<Execution.IExecutionResponse>) => {
-            return res.data;
-        });
+    const executeAfm = (
+        workspaceId: string,
+        execution: ExecuteAFM.IExecution,
+    ): Promise<Execution.IExecutionResponse> => {
+        return axios
+            .post(`/api/workspaces/${workspaceId}/afm`, execution)
+            .then((res: AxiosResponse<Execution.IExecutionResponse>) => {
+                return res.data;
+            });
     };
 
     /**
      * Retrieves result of execution. All calculated data is returned, no paging yet.
      *
      * @param axios - instance of configured http client to use
+     * @param workspaceId workspace identifier
      * @param resultId - ID of AFM execution result
      * @public
      */
     const executionResult = (
+        workspaceId: string,
         resultId: string,
         offset?: number[],
         size?: number[],
@@ -46,7 +58,7 @@ export const tigerExecutionClientFactory = (
         const params = { limit: size && size.join(","), offset: offset && offset.join(",") };
 
         return axios
-            .get(`/api/result/${resultId}`, { params })
+            .get(`/api/workspaces/${workspaceId}/result/${resultId}`, { params })
             .then((res: AxiosResponse<Execution.IExecutionResult>) => {
                 return res.data;
             });
