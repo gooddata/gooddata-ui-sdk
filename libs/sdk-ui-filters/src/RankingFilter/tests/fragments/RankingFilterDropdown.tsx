@@ -15,6 +15,7 @@ const MEASURE_DROPDOWN_BODY = ".s-rf-measure-dropdown-body";
 const ATTRIBUTE_DROPDOWN_BUTTON = ".s-rf-attribute-dropdown-button";
 const ATTRIBUTE_DROPDOWN_BODY = ".s-rf-attribute-dropdown-body";
 const ATTRIBUTE_ALL_RECORDS = ".s-rf-attribute-all-records";
+const PREVIEW_TEXT = ".s-rf-preview";
 
 export class RankingFilterDropdownFragment {
     private component: ReactWrapper = null;
@@ -150,4 +151,6 @@ export class RankingFilterDropdownFragment {
     };
 
     public getAttribute = (): string => this.component.find(ATTRIBUTE_DROPDOWN_BUTTON).hostNodes().text();
+
+    public getPreview = (): string => this.component.find(PREVIEW_TEXT).hostNodes().text();
 }
