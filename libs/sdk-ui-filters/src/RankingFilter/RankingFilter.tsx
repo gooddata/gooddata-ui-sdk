@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { IRankingFilter } from "@gooddata/sdk-model";
+import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { RankingFilterButton } from "./RankingFilterButton";
 import { RankingFilterDropdown } from "./RankingFilterDropdown";
-import { IMeasureDropdownItem, IAttributeDropdownItem } from "./types";
+import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
 import noop from "lodash/noop";
 
 /**
@@ -16,6 +16,9 @@ export interface IRankingFilterProps {
     onApply: (filter: IRankingFilter) => void;
     onCancel?: () => void;
     buttonTitle: string;
+    onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
+    onDropDownItemMouseOut?: () => void;
+    customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
 }
 
@@ -29,6 +32,9 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
     onApply,
     onCancel,
     buttonTitle,
+    onDropDownItemMouseOver,
+    onDropDownItemMouseOut,
+    customGranularitySelection,
     locale,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -62,8 +68,11 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
                     filter={filter}
                     onApply={handleApply}
                     onCancel={handleCancel}
-                    locale={locale}
                     anchorEl=".gd-rf-dropdown-button"
+                    onDropDownItemMouseOver={onDropDownItemMouseOver}
+                    onDropDownItemMouseOut={onDropDownItemMouseOut}
+                    customGranularitySelection={customGranularitySelection}
+                    locale={locale}
                 />
             )}
         </>

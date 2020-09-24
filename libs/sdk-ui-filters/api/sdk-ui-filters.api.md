@@ -294,6 +294,8 @@ export interface IRankingFilterProps {
     // (undocumented)
     buttonTitle: string;
     // (undocumented)
+    customGranularitySelection?: ICustomGranularitySelection;
+    // (undocumented)
     filter: IRankingFilter;
     // (undocumented)
     locale?: string;
@@ -303,6 +305,10 @@ export interface IRankingFilterProps {
     onApply: (filter: IRankingFilter) => void;
     // (undocumented)
     onCancel?: () => void;
+    // (undocumented)
+    onDropDownItemMouseOut?: () => void;
+    // (undocumented)
+    onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
 }
 
 // @beta

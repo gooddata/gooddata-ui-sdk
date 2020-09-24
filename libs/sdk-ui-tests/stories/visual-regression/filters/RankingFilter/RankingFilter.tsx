@@ -33,6 +33,10 @@ const dropdownWithOneAttributeItemScenarios = {
     },
 };
 
+const customGranularityScenarios = {
+    attributeDropdownOpened: { clickSelector: ".s-rf-attribute-dropdown-button", postInteractionWait: 200 },
+};
+
 const buttonScenarios = {
     closed: {},
     opened: { clickSelector: ".s-rf-dropdown-button", postInteractionWait: 200 },
@@ -120,6 +124,22 @@ storiesOf(`${FilterStories}/RankingFilter`, module)
                     anchorEl="screenshot-target"
                 />
             </div>,
+        );
+    })
+    .add("dropdown with custom granularity selection disabled", () => {
+        return withMultipleScreenshots(
+            <div style={wrapperStyle} className="screenshot-target">
+                <RankingFilterDropdown
+                    measureItems={measureDropdownItems}
+                    attributeItems={attributeDropdownItems}
+                    filter={rankingFilter}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    anchorEl="screenshot-target"
+                    customGranularitySelection={{ enable: false, warningMessage: "This item is disabled." }}
+                />
+            </div>,
+            customGranularityScenarios,
         );
     })
     .add("default button with dropdown", () => {

@@ -3,7 +3,7 @@ import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
@@ -64,6 +64,19 @@ storiesOf(`${FilterStories}/MeasureValueFilter`, module)
                 />
             </div>,
             scenarios,
+        );
+    })
+    .add("with-disabled-operator-selection", () => {
+        return withScreenshot(
+            <div style={wrapperStyle} className="screenshot-target">
+                <MeasureValueFilterDropdown
+                    measureIdentifier="localIdentifier"
+                    onApply={action("applyClick")}
+                    onCancel={action("cancelClick")}
+                    anchorEl="screenshot-target"
+                    enableOperatorSelection={false}
+                />
+            </div>,
         );
     })
     .add("localized", () => {
