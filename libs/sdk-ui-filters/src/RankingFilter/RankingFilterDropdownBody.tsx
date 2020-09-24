@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import Button from "@gooddata/goodstrap/lib/Button/Button";
-import { IRankingFilter, newRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
+import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
 import { OperatorDropdown } from "./OperatorDropdown/OperatorDropdown";
@@ -12,6 +12,7 @@ import isEqual from "lodash/isEqual";
 import xorWith from "lodash/xorWith";
 import isEmpty from "lodash/isEmpty";
 import noop from "lodash/noop";
+import { Preview } from "./Preview";
 
 const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilter) => {
     const rankingFilter = filter.rankingFilter;
@@ -58,6 +59,9 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
     const [measure, setMeasureIdentifier] = useState(rankingFilter.measure);
     const [attribute, setAttributeIdentifier] = useState(rankingFilter.attributes?.[0]);
 
+    const selectedMeasure = measureItems.find((item) => areObjRefsEqual(item.ref, measure));
+    const selectedAttribute = attributeItems.find((item) => areObjRefsEqual(item.ref, attribute));
+
     const getFilterState = useCallback(() => {
         return attribute
             ? newRankingFilter(measure, [attribute], operator, value)
@@ -97,6 +101,15 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
                     onSelect={setMeasureIdentifier}
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
+                />
+                <div className="gd-rf-dropdown-section-title">
+                    <FormattedMessage id="rankingFilter.preview" />
+                </div>
+                <Preview
+                    measure={selectedMeasure}
+                    attribute={selectedAttribute}
+                    operator={operator}
+                    value={value}
                 />
             </div>
             <div className="gd-rf-dropdown-footer">

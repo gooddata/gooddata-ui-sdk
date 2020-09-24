@@ -354,4 +354,26 @@ describe("RankingFilterDropdown", () => {
             expect(component.isAttributeButtonDisabled()).toEqual(true);
         });
     });
+
+    describe("Preview", () => {
+        it.each([
+            ["top of measure", newRankingFilter(Mock.measure1Ref, "TOP", 42), "Top 42 of Measure 1"],
+            [
+                "top out of attribute based on measure",
+                newRankingFilter(Mock.measure2Ref, [Mock.attribute1Ref], "TOP", 5),
+                "Top 5 out of Attribute 1 based on Measure 2",
+            ],
+            ["bottom of measure", newRankingFilter(Mock.measure1Ref, "BOTTOM", 3), "Bottom 3 of Measure 1"],
+            [
+                "bottom out of attribute based on measure",
+                newRankingFilter(Mock.measure2Ref, [Mock.date1Ref], "BOTTOM", 10),
+                "Bottom 10 out of Date based on Measure 2",
+            ],
+        ])("should render expected preview for %s", (_, filter, expectedPreview) => {
+            const component = renderComponent({
+                filter,
+            });
+            expect(component.getPreview()).toEqual(expectedPreview);
+        });
+    });
 });

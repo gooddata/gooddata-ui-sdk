@@ -971,5 +971,30 @@
         "value": "Input value too large.",
         "comment": "Warning message when value is too large.",
         "limit": 0
+    },
+    "rankingFilter.preview": {
+        "value": "Preview:",
+        "comment": "Section title that shows ranking filter preview.",
+        "limit": 0
+    },
+    "rankingFilter.preview.top_without_attribute": {
+        "value": "Top {value} of <strong>{measure}</strong>",
+        "comment": "Do not translate placeholder {value} and {measure} or HTML markup enclosed in <>. Text describes ranking filter. Example: 'Top 3 of Revenue'",
+        "limit": 0
+    },
+    "rankingFilter.preview.bottom_without_attribute": {
+        "value": "Bottom {value} of <strong>{measure}</strong>",
+        "comment": "Do not translate placeholder {value} and {measure} or HTML markup enclosed in <>. Title describing ranking direction and number of values. Example: 'Bottom 5 of Revenue'",
+        "limit": 0
+    },
+    "rankingFilter.preview.top_with_attribute": {
+        "value": "Top {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Top 3 out of Product based on Revenue'",
+        "limit": 0
+    },
+    "rankingFilter.preview.bottom_with_attribute": {
+        "value": "Bottom {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
+        "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Bottom 5 out of Product based on Revenue'",
+        "limit": 0
     }
 }
