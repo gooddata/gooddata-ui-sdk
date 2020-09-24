@@ -142,6 +142,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             : items;
         const availableItemsResponse = await this.authCall((sdk) =>
             sdk.validObjects.processAfmValidObjectsQuery({
+                workspaceId: this.workspace,
                 afmValidObjectsQuery: {
                     types: relevantRestrictingTypes.map(mapToTigerType),
                     afm: {

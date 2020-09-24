@@ -31,15 +31,17 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
         const afmExecution = toAfmExecution(this.definition);
 
-        return this.authCall((sdk) => sdk.execution.executeAfm(afmExecution)).then((response) => {
-            return new TigerExecutionResult(
-                this.authCall,
-                this.definition,
-                this.executionFactory,
-                response,
-                this.dateFormatter,
-            );
-        });
+        return this.authCall((sdk) => sdk.execution.executeAfm(this.definition.workspace, afmExecution)).then(
+            (response) => {
+                return new TigerExecutionResult(
+                    this.authCall,
+                    this.definition,
+                    this.executionFactory,
+                    response,
+                    this.dateFormatter,
+                );
+            },
+        );
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

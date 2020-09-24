@@ -2,7 +2,6 @@
 
 export namespace ExecuteAFM {
     export interface IExecution {
-        project: string;
         resultSpec?: IResultSpec;
         execution: IAfm;
     }

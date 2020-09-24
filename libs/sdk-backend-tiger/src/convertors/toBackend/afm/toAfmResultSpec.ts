@@ -43,7 +43,6 @@ function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
  */
 export function toAfmExecution(def: IExecutionDefinition): ExecuteAFM.IExecution {
     return {
-        project: def.workspace,
         resultSpec: convertResultSpec(def),
         execution: {
             ...convertAFM(def),

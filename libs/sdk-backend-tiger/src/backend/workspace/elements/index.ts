@@ -74,7 +74,7 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
                 limit,
                 offset,
                 label: ref.identifier,
-                workspace: this.workspace,
+                workspaceId: this.workspace,
             };
 
             return sdk.labelElements.processElementsRequest(elementsRequest);

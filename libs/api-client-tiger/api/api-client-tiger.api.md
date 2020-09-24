@@ -30,67 +30,56 @@ export interface AFM {
 // @public
 export class AfmControllerApi extends LabelElementsBaseApi implements AfmControllerApiInterface {
     processAfmRequest(params: {
+        workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
-    processAfmValidObjectsQuery(params: {
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
 }
 
 // @public
 export const AfmControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
     processAfmRequest(params: {
+        workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean | undefined;
         timestamp?: string | undefined;
-    }, options?: any): LabelElementsRequestArgs;
-    processAfmValidObjectsQuery(params: {
-        afmValidObjectsQuery: AfmValidObjectsQuery;
     }, options?: any): LabelElementsRequestArgs;
 };
 
 // @public
 export const AfmControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     processAfmRequest(params: {
+        workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
-    processAfmValidObjectsQuery(params: {
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
 };
 
 // @public
 export const AfmControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
     processAfmRequest(params: {
+        workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmExecutionResponse>;
-    processAfmValidObjectsQuery(params: {
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmValidObjectsResponse>;
 };
 
 // @public
 export interface AfmControllerApiInterface {
     processAfmRequest(params: {
+        workspaceId: string;
         afmExecution: AfmExecution;
         skipCache?: boolean;
         timestamp?: string;
     }, options?: any): AxiosPromise<AfmExecutionResponse>;
-    processAfmValidObjectsQuery(params: {
-        afmValidObjectsQuery: AfmValidObjectsQuery;
-    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
 }
 
 // @public
 export interface AfmExecution {
     execution: AFM;
-    project: string;
     resultSpec: ResultSpec;
 }
 
@@ -8820,7 +8809,7 @@ export { Element_2 as Element }
 // @public
 export class ElementsControllerApi extends LabelElementsBaseApi implements ElementsControllerApiInterface {
     processElementsRequest(params: {
-        workspace: string;
+        workspaceId: string;
         label: string;
         sortOrder?: "ASC" | "DESC";
         includeTotalWithoutFilters?: boolean;
@@ -8835,7 +8824,7 @@ export class ElementsControllerApi extends LabelElementsBaseApi implements Eleme
 // @public
 export const ElementsControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
     processElementsRequest(params: {
-        workspace: string;
+        workspaceId: string;
         label: string;
         sortOrder?: "ASC" | "DESC" | undefined;
         includeTotalWithoutFilters?: boolean | undefined;
@@ -8850,7 +8839,7 @@ export const ElementsControllerApiAxiosParamCreator: (configuration?: LabelEleme
 // @public
 export const ElementsControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     processElementsRequest(params: {
-        workspace: string;
+        workspaceId: string;
         label: string;
         sortOrder?: "ASC" | "DESC";
         includeTotalWithoutFilters?: boolean;
@@ -8865,7 +8854,7 @@ export const ElementsControllerApiFactory: (configuration?: LabelElementsConfigu
 // @public
 export const ElementsControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
     processElementsRequest(params: {
-        workspace: string;
+        workspaceId: string;
         label: string;
         sortOrder?: "ASC" | "DESC";
         includeTotalWithoutFilters?: boolean;
@@ -8880,7 +8869,7 @@ export const ElementsControllerApiFp: (configuration?: LabelElementsConfiguratio
 // @public
 export interface ElementsControllerApiInterface {
     processElementsRequest(params: {
-        workspace: string;
+        workspaceId: string;
         label: string;
         sortOrder?: "ASC" | "DESC";
         includeTotalWithoutFilters?: boolean;
@@ -9018,8 +9007,6 @@ export namespace ExecuteAFM {
     export interface IExecution {
         // (undocumented)
         execution: IAfm;
-        // (undocumented)
-        project: string;
         // (undocumented)
         resultSpec?: IResultSpec;
     }
@@ -9526,6 +9513,14 @@ export enum FormOfGranularityEnum {
     DAYOFWEEK = "DAY_OF_WEEK",
     // (undocumented)
     DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
     // (undocumented)
     MONTH = "MONTH",
     // (undocumented)
@@ -10152,13 +10147,9 @@ export interface RelativeDateFilterRelativeDateFilter {
 }
 
 // @public
-export interface ResultDimension {
-    headers: Array<MeasureGroupHeader | AttributeHeader>;
-}
-
-// @public
-export class ResultServiceControllerApi extends LabelElementsBaseApi implements ResultServiceControllerApiInterface {
+export class ResultControllerApi extends LabelElementsBaseApi implements ResultControllerApiInterface {
     getResult(params: {
+        workspaceId: string;
         resultId: string;
         offset?: Array<number>;
         limit?: Array<number>;
@@ -10166,8 +10157,9 @@ export class ResultServiceControllerApi extends LabelElementsBaseApi implements 
 }
 
 // @public
-export const ResultServiceControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
+export const ResultControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
     getResult(params: {
+        workspaceId: string;
         resultId: string;
         offset?: number[] | undefined;
         limit?: number[] | undefined;
@@ -10175,8 +10167,9 @@ export const ResultServiceControllerApiAxiosParamCreator: (configuration?: Label
 };
 
 // @public
-export const ResultServiceControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+export const ResultControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     getResult(params: {
+        workspaceId: string;
         resultId: string;
         offset?: Array<number>;
         limit?: Array<number>;
@@ -10184,8 +10177,9 @@ export const ResultServiceControllerApiFactory: (configuration?: LabelElementsCo
 };
 
 // @public
-export const ResultServiceControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
+export const ResultControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
     getResult(params: {
+        workspaceId: string;
         resultId: string;
         offset?: Array<number>;
         limit?: Array<number>;
@@ -10193,12 +10187,18 @@ export const ResultServiceControllerApiFp: (configuration?: LabelElementsConfigu
 };
 
 // @public
-export interface ResultServiceControllerApiInterface {
+export interface ResultControllerApiInterface {
     getResult(params: {
+        workspaceId: string;
         resultId: string;
         offset?: Array<number>;
         limit?: Array<number>;
     }, options?: any): AxiosPromise<ExecutionResult>;
+}
+
+// @public
+export interface ResultDimension {
+    headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
 
 // @public
@@ -10680,8 +10680,8 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
-    executeAfm: (execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
-    executionResult: (resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
+    executeAfm: (workspaceId: string, execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
+    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
 };
 
 // @public (undocumented)
@@ -10691,7 +10691,47 @@ export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Elements
 export const tigerMetadataClientFactory: (axios: AxiosInstance) => DefaultApiInterface;
 
 // @public (undocumented)
-export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => AfmControllerApiInterface;
+export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObjectsControllerApiInterface;
+
+// @public
+export class ValidObjectsControllerApi extends LabelElementsBaseApi implements ValidObjectsControllerApiInterface {
+    processAfmValidObjectsQuery(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+}
+
+// @public
+export const ValidObjectsControllerApiAxiosParamCreator: (configuration?: LabelElementsConfiguration | undefined) => {
+    processAfmValidObjectsQuery(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): LabelElementsRequestArgs;
+};
+
+// @public
+export const ValidObjectsControllerApiFactory: (configuration?: LabelElementsConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    processAfmValidObjectsQuery(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+};
+
+// @public
+export const ValidObjectsControllerApiFp: (configuration?: LabelElementsConfiguration | undefined) => {
+    processAfmValidObjectsQuery(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AfmValidObjectsResponse>;
+};
+
+// @public
+export interface ValidObjectsControllerApiInterface {
+    processAfmValidObjectsQuery(params: {
+        workspaceId: string;
+        afmValidObjectsQuery: AfmValidObjectsQuery;
+    }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
+}
 
 // @public (undocumented)
 export namespace VisualizationObject {
