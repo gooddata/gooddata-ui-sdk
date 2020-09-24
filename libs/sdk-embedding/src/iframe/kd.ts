@@ -94,6 +94,11 @@ export namespace EmbeddedKpiDashboard {
          * The command to duplicate a KPI Dashboard
          */
         SaveAsDashboard = "saveAsDashboard",
+
+        /**
+         * The command to open schedule email dialog
+         */
+        OpenScheduleEmailDialog = "openScheduleEmailDialog",
     }
 
     /**
@@ -221,6 +226,11 @@ export namespace EmbeddedKpiDashboard {
          * DrillToUrlStarted event.
          */
         DrillToUrlResolved = "drillToUrlResolved",
+
+        /**
+         * Type represent that the schedule email dialog is opened.
+         */
+        ScheduleEmailDialogOpened = "scheduleEmailDialogOpened",
     }
 
     /**
@@ -976,4 +986,42 @@ export namespace EmbeddedKpiDashboard {
         GdcKdEventType.DrillToUrlResolved,
         IDrillToUrlResolvedDataBody
     >;
+
+    /**
+     * Open the schedule email dialog, user will be able to schedule periodic exports of the current dashboard
+     *
+     * Contract:
+     *
+     * -  if KD is currently viewing dashboard, this command will try to open the dialog to schedule an email,
+     *    on success ScheduleEmailDialogOpened will be posted
+     * -  if KD is currently editing dashboard or is not currently showing any dashboard or schedule email dialog is opened,
+     *    commandFailed will be posted
+     *
+     * @public
+     */
+    export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<
+        GdcKdCommandType.OpenScheduleEmailDialog,
+        null
+    >;
+
+    /**
+     * @public
+     */
+    export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<
+        GdcKdCommandType.OpenScheduleEmailDialog,
+        null
+    >;
+
+    /**
+     * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.OpenScheduleEmailDialogCommandData}.
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isOpenScheduleEmailDialogCommandData(
+        obj: unknown,
+    ): obj is OpenScheduleEmailDialogCommandData {
+        return getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
+    }
 }
