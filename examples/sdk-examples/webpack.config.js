@@ -20,7 +20,7 @@ const backendShortcuts = {
     stg3: "https://staging3.intgdc.com",
     demo: "https://client-demo-be.na.intgdc.com",
     developer: "https://developer.na.gooddata.com",
-    public: "https://live-examples-proxy.herokuapp.com/",
+    public: "https://live-examples-proxy.herokuapp.com",
 };
 
 const defaultBackend = backendShortcuts.public;
@@ -161,7 +161,7 @@ module.exports = async (env, argv) => {
             compress: true,
             port: 8999,
             stats: "errors-only",
-            proxy: backendUrl === "https://live-examples-proxy.herokuapp.com/" ? undefined : proxy,
+            proxy,
         },
         stats: "errors-only",
     };

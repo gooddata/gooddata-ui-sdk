@@ -5,7 +5,7 @@ const demoProject: { [domain: string]: string } = {
     "https://staging2.intgdc.com": "ws7pxsamkx8o0t1s7kfvkj5o41uwcmqg",
     "https://staging.intgdc.com": "na1q8a0q4efb7cajbgre9mmm776dr1yv",
     "https://developer.na.gooddata.com": "xms7ga4tf3g3nzucd8380o2bev8oeknp",
-    "https://live-examples-proxy.herokuapp.com/": "xms7ga4tf3g3nzucd8380o2bev8oeknp",
+    "https://live-examples-proxy.herokuapp.com": "xms7ga4tf3g3nzucd8380o2bev8oeknp",
 };
 
 const backendUrl = BACKEND_URL;
