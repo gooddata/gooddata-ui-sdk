@@ -811,6 +811,7 @@ function lineSeriesMapFn(seriesOrig: any) {
     const series = cloneDeep(seriesOrig);
     if (series.isDrillable) {
         set(series, "marker.states.hover.fillColor", getLighterColor(series.color, HOVER_BRIGHTNESS));
+        set(series, "className", "gd-viz-tooltip-drilling-point");
     } else {
         set(series, "states.hover.halo.size", 0);
     }
@@ -916,32 +917,6 @@ function getHoverStyles({ type }: any, config: any) {
     }
     return {
         series: config.series.map((item: any) => seriesMapFn(item, config)),
-        plotOptions: {
-            ...[
-                VisualizationTypes.LINE,
-                VisualizationTypes.AREA,
-                VisualizationTypes.SCATTER,
-                VisualizationTypes.BUBBLE,
-            ].reduce(
-                (conf: any, key) => ({
-                    ...conf,
-                    [key]: {
-                        point: {
-                            events: {
-                                // Workaround
-                                // from Highcharts 5.0.0 cursor can be set by using 'className' for individual data items
-                                mouseOver() {
-                                    if (this.drilldown) {
-                                        this.graphic.element.style.cursor = "pointer";
-                                    }
-                                },
-                            },
-                        },
-                    },
-                }),
-                {},
-            ),
-        },
     };
 }
 

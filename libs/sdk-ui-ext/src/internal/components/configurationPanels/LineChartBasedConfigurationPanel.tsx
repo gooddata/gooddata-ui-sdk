@@ -44,6 +44,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             isDisabled={controlsDisabled}
                             defaultValue={false}
                         />
+
                         {featureFlags[SettingCatalog.enableHidingOfDataPoints] && (
                             <DataPointsControl
                                 pushData={pushData}
@@ -52,6 +53,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                                 showDisabledMessage={isDataPointsControlDisabled}
                             />
                         )}
+
                         <CheckboxControl
                             valuePath="grid.enabled"
                             labelText="properties.canvas.gridline"
