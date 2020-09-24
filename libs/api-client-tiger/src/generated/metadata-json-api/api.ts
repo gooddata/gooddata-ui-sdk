@@ -551,21 +551,21 @@ export interface ApiErrorSource {
  * @enum {string}
  */
 export enum AttributeGranularityResourceAttribute {
-    Year = "year",
-    Day = "day",
-    Hour = "hour",
     Minute = "minute",
-    Quarter = "quarter",
-    Month = "month",
+    Hour = "hour",
+    Day = "day",
     Week = "week",
-    QuarterOfYear = "quarterOfYear",
-    MonthOfYear = "monthOfYear",
-    DayOfYear = "dayOfYear",
+    Month = "month",
+    Quarter = "quarter",
+    Year = "year",
+    MinuteOfHour = "minuteOfHour",
+    HourOfDay = "hourOfDay",
     DayOfWeek = "dayOfWeek",
     DayOfMonth = "dayOfMonth",
-    HourOfDay = "hourOfDay",
-    MinuteOfHour = "minuteOfHour",
+    DayOfYear = "dayOfYear",
     WeekOfYear = "weekOfYear",
+    MonthOfYear = "monthOfYear",
+    QuarterOfYear = "quarterOfYear",
 }
 /**
  *

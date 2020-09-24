@@ -1257,17 +1257,21 @@
             },
             "AttributeGranularityResourceAttribute": {
                 "enum": [
-                    "year",
+                    "minute",
+                    "hour",
                     "day",
-                    "quarter",
-                    "month",
                     "week",
-                    "quarterOfYear",
-                    "monthOfYear",
-                    "dayOfYear",
+                    "month",
+                    "quarter",
+                    "year",
+                    "minuteOfHour",
+                    "hourOfDay",
                     "dayOfWeek",
                     "dayOfMonth",
-                    "weekOfYear"
+                    "dayOfYear",
+                    "weekOfYear",
+                    "monthOfYear",
+                    "quarterOfYear"
                 ],
                 "nullable": true,
                 "type": "string"

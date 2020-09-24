@@ -11,13 +11,23 @@
         }
     ],
     "paths": {
-        "/api/afm": {
+        "/api/workspaces/{workspaceId}/afm": {
             "post": {
                 "tags": ["afm-controller"],
                 "summary": "Executes analytical request and returns link to the result",
                 "description": "AFM is a combination of attributes, measures and filters that describe a query you want to execute.",
                 "operationId": "processAfmRequest",
                 "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-zA-Z0-9._-]+"
+                        }
+                    },
                     {
                         "name": "skip-cache",
                         "in": "header",
@@ -62,12 +72,24 @@
                 }
             }
         },
-        "/api/validObjects": {
+        "/api/workspaces/{workspaceId}/valid-objects": {
             "post": {
-                "tags": ["afm-controller"],
+                "tags": ["valid-objects-controller"],
                 "summary": "Valid objects",
                 "description": "Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.",
                 "operationId": "processAfmValidObjectsQuery",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-zA-Z0-9._-]+"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -92,7 +114,7 @@
                 }
             }
         },
-        "/api/labelElements": {
+        "/api/workspaces/{workspaceId}/label-elements": {
             "get": {
                 "tags": ["elements-controller"],
                 "summary": "Listing of label values.",
@@ -100,12 +122,13 @@
                 "operationId": "processElementsRequest",
                 "parameters": [
                     {
-                        "name": "workspace",
-                        "in": "query",
-                        "description": "Workspace on which to run request.",
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "[a-zA-Z0-9._-]+"
                         }
                     },
                     {
@@ -203,13 +226,23 @@
                 }
             }
         },
-        "/api/result/{resultId}": {
+        "/api/workspaces/{workspaceId}/result/{resultId}": {
             "get": {
-                "tags": ["result-service-controller"],
+                "tags": ["result-controller"],
                 "summary": "Get a single execution result",
                 "description": "Gets a single execution result.",
                 "operationId": "getResult",
                 "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "pattern": "[a-zA-Z0-9._-]+"
+                        }
+                    },
                     {
                         "name": "resultId",
                         "in": "path",
@@ -324,16 +357,11 @@
                 }
             },
             "AfmExecution": {
-                "required": ["execution", "project", "resultSpec"],
+                "required": ["execution", "resultSpec"],
                 "type": "object",
                 "properties": {
                     "execution": {
                         "$ref": "#/components/schemas/AFM"
-                    },
-                    "project": {
-                        "description": "Id of the workspace where analytical request will be executed.",
-                        "example": "sampleWorkspace",
-                        "type": "string"
                     },
                     "resultSpec": {
                         "$ref": "#/components/schemas/ResultSpec"
@@ -1103,6 +1131,8 @@
                         "enum": [
                             "YEAR",
                             "DAY",
+                            "HOUR",
+                            "MINUTE",
                             "QUARTER",
                             "MONTH",
                             "WEEK",
@@ -1111,6 +1141,8 @@
                             "DAY_OF_YEAR",
                             "DAY_OF_WEEK",
                             "DAY_OF_MONTH",
+                            "HOUR_OF_DAY",
+                            "MINUTE_OF_HOUR",
                             "WEEK_OF_YEAR"
                         ]
                     }
@@ -1213,7 +1245,7 @@
                     "next": {
                         "type": "string",
                         "description": "Link to next page, or null if this is last page.",
-                        "example": "https://sample.gooddata.com/api/labelElements?workspace=sampleWorkspace&label=sample.price&limit=5&offset=10"
+                        "example": "https://sample.gooddata.com/api/workspaces/sampleWorkspace/label-elements?label=sample.price&limit=5&offset=10"
                     }
                 },
                 "description": "Current page description."

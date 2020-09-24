@@ -1,3 +1,5 @@
+// (C) 2020 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -103,12 +105,6 @@ export interface AfmExecution {
      * @memberof AfmExecution
      */
     execution: AFM;
-    /**
-     * Id of the workspace where analytical request will be executed.
-     * @type {string}
-     * @memberof AfmExecution
-     */
-    project: string;
     /**
      *
      * @type {ResultSpec}
@@ -711,6 +707,8 @@ export interface FormOf {
 export enum FormOfGranularityEnum {
     YEAR = "YEAR",
     DAY = "DAY",
+    HOUR = "HOUR",
+    MINUTE = "MINUTE",
     QUARTER = "QUARTER",
     MONTH = "MONTH",
     WEEK = "WEEK",
@@ -719,6 +717,8 @@ export enum FormOfGranularityEnum {
     DAYOFYEAR = "DAY_OF_YEAR",
     DAYOFWEEK = "DAY_OF_WEEK",
     DAYOFMONTH = "DAY_OF_MONTH",
+    HOUROFDAY = "HOUR_OF_DAY",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
     WEEKOFYEAR = "WEEK_OF_YEAR",
 }
 
@@ -1427,6 +1427,7 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
         /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
@@ -1435,13 +1436,21 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
          */
         processAfmRequest(
             params: {
+                workspaceId: string;
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
                 timestamp?: string;
             },
             options: any = {},
         ): RequestArgs {
-            const { afmExecution, skipCache, timestamp } = params;
+            const { workspaceId, afmExecution, skipCache, timestamp } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling processAfmRequest.",
+                );
+            }
             // verify required parameter 'afmExecution' is not null or undefined
             if (afmExecution === null || afmExecution === undefined) {
                 throw new RequiredError(
@@ -1449,7 +1458,10 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
                     "Required parameter afmExecution was null or undefined when calling processAfmRequest.",
                 );
             }
-            const localVarPath = `/api/afm`;
+            const localVarPath = `/api/workspaces/{workspaceId}/afm`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1485,55 +1497,6 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        processAfmValidObjectsQuery(
-            params: {
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { afmValidObjectsQuery } = params;
-            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
-            if (afmValidObjectsQuery === null || afmValidObjectsQuery === undefined) {
-                throw new RequiredError(
-                    "afmValidObjectsQuery",
-                    "Required parameter afmValidObjectsQuery was null or undefined when calling processAfmValidObjectsQuery.",
-                );
-            }
-            const localVarPath = `/api/validObjects`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof afmValidObjectsQuery !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
-                : afmValidObjectsQuery || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     };
 };
 
@@ -1546,6 +1509,7 @@ export const AfmControllerApiFp = function (configuration?: Configuration) {
         /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
@@ -1554,6 +1518,7 @@ export const AfmControllerApiFp = function (configuration?: Configuration) {
          */
         processAfmRequest(
             params: {
+                workspaceId: string;
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
                 timestamp?: string;
@@ -1564,30 +1529,6 @@ export const AfmControllerApiFp = function (configuration?: Configuration) {
                 params,
                 options,
             );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        processAfmValidObjectsQuery(
-            params: {
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse> {
-            const localVarAxiosArgs = AfmControllerApiAxiosParamCreator(
-                configuration,
-            ).processAfmValidObjectsQuery(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -1612,6 +1553,7 @@ export const AfmControllerApiFactory = function (
         /**
          * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
          * @summary Executes analytical request and returns link to the result
+         * @param {string} workspaceId Workspace identifier
          * @param {AfmExecution} afmExecution
          * @param {boolean} [skipCache] Ignore all caches during execution of current request.
          * @param {string} [timestamp]
@@ -1620,6 +1562,7 @@ export const AfmControllerApiFactory = function (
          */
         processAfmRequest(
             params: {
+                workspaceId: string;
                 afmExecution: AfmExecution;
                 skipCache?: boolean;
                 timestamp?: string;
@@ -1627,24 +1570,6 @@ export const AfmControllerApiFactory = function (
             options?: any,
         ): AxiosPromise<AfmExecutionResponse> {
             return AfmControllerApiFp(configuration).processAfmRequest(params, options)(axios, basePath);
-        },
-        /**
-         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-         * @summary Valid objects
-         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        processAfmValidObjectsQuery(
-            params: {
-                afmValidObjectsQuery: AfmValidObjectsQuery;
-            },
-            options?: any,
-        ): AxiosPromise<AfmValidObjectsResponse> {
-            return AfmControllerApiFp(configuration).processAfmValidObjectsQuery(params, options)(
-                axios,
-                basePath,
-            );
         },
     };
 };
@@ -1658,6 +1583,7 @@ export interface AfmControllerApiInterface {
     /**
      * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
      * @summary Executes analytical request and returns link to the result
+     * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {string} [timestamp]
@@ -1667,27 +1593,13 @@ export interface AfmControllerApiInterface {
      */
     processAfmRequest(
         params: {
+            workspaceId: string;
             afmExecution: AfmExecution;
             skipCache?: boolean;
             timestamp?: string;
         },
         options?: any,
     ): AxiosPromise<AfmExecutionResponse>;
-
-    /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-     * @summary Valid objects
-     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmControllerApiInterface
-     */
-    processAfmValidObjectsQuery(
-        params: {
-            afmValidObjectsQuery: AfmValidObjectsQuery;
-        },
-        options?: any,
-    ): AxiosPromise<AfmValidObjectsResponse>;
 }
 
 /**
@@ -1700,6 +1612,7 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
     /**
      * AFM is a combination of attributes, measures and filters that describe a query you want to execute.
      * @summary Executes analytical request and returns link to the result
+     * @param {string} workspaceId Workspace identifier
      * @param {AfmExecution} afmExecution
      * @param {boolean} [skipCache] Ignore all caches during execution of current request.
      * @param {string} [timestamp]
@@ -1709,6 +1622,7 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
      */
     public processAfmRequest(
         params: {
+            workspaceId: string;
             afmExecution: AfmExecution;
             skipCache?: boolean;
             timestamp?: string;
@@ -1716,26 +1630,6 @@ export class AfmControllerApi extends BaseAPI implements AfmControllerApiInterfa
         options?: any,
     ) {
         return AfmControllerApiFp(this.configuration).processAfmRequest(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
-     * @summary Valid objects
-     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AfmControllerApi
-     */
-    public processAfmValidObjectsQuery(
-        params: {
-            afmValidObjectsQuery: AfmValidObjectsQuery;
-        },
-        options?: any,
-    ) {
-        return AfmControllerApiFp(this.configuration).processAfmValidObjectsQuery(params, options)(
             this.axios,
             this.basePath,
         );
@@ -1751,7 +1645,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
-         * @param {string} workspace Workspace on which to run request.
+         * @param {string} workspaceId Workspace identifier
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
          * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
@@ -1765,7 +1659,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
          */
         processElementsRequest(
             params: {
-                workspace: string;
+                workspaceId: string;
                 label: string;
                 sortOrder?: "ASC" | "DESC";
                 includeTotalWithoutFilters?: boolean;
@@ -1778,7 +1672,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
             options: any = {},
         ): RequestArgs {
             const {
-                workspace,
+                workspaceId,
                 label,
                 sortOrder,
                 includeTotalWithoutFilters,
@@ -1788,11 +1682,11 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                 limit,
                 skipCache,
             } = params;
-            // verify required parameter 'workspace' is not null or undefined
-            if (workspace === null || workspace === undefined) {
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
-                    "workspace",
-                    "Required parameter workspace was null or undefined when calling processElementsRequest.",
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling processElementsRequest.",
                 );
             }
             // verify required parameter 'label' is not null or undefined
@@ -1802,7 +1696,10 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                     "Required parameter label was null or undefined when calling processElementsRequest.",
                 );
             }
-            const localVarPath = `/api/labelElements`;
+            const localVarPath = `/api/workspaces/{workspaceId}/label-elements`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -1811,14 +1708,6 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
             const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
-
-            if (workspace !== undefined) {
-                if (typeof workspace === "object") {
-                    addFlattenedObjectTo(workspace, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["workspace"] = workspace;
-                }
-            }
 
             if (label !== undefined) {
                 if (typeof label === "object") {
@@ -1902,7 +1791,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
-         * @param {string} workspace Workspace on which to run request.
+         * @param {string} workspaceId Workspace identifier
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
          * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
@@ -1916,7 +1805,7 @@ export const ElementsControllerApiFp = function (configuration?: Configuration) 
          */
         processElementsRequest(
             params: {
-                workspace: string;
+                workspaceId: string;
                 label: string;
                 sortOrder?: "ASC" | "DESC";
                 includeTotalWithoutFilters?: boolean;
@@ -1955,7 +1844,7 @@ export const ElementsControllerApiFactory = function (
         /**
          * Returns paged list of elements (values) of given label satisfying given filtering criteria.
          * @summary Listing of label values.
-         * @param {string} workspace Workspace on which to run request.
+         * @param {string} workspaceId Workspace identifier
          * @param {string} label Requested label.
          * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
          * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
@@ -1969,7 +1858,7 @@ export const ElementsControllerApiFactory = function (
          */
         processElementsRequest(
             params: {
-                workspace: string;
+                workspaceId: string;
                 label: string;
                 sortOrder?: "ASC" | "DESC";
                 includeTotalWithoutFilters?: boolean;
@@ -1998,7 +1887,7 @@ export interface ElementsControllerApiInterface {
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values.
-     * @param {string} workspace Workspace on which to run request.
+     * @param {string} workspaceId Workspace identifier
      * @param {string} label Requested label.
      * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
      * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
@@ -2013,7 +1902,7 @@ export interface ElementsControllerApiInterface {
      */
     processElementsRequest(
         params: {
-            workspace: string;
+            workspaceId: string;
             label: string;
             sortOrder?: "ASC" | "DESC";
             includeTotalWithoutFilters?: boolean;
@@ -2037,7 +1926,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
     /**
      * Returns paged list of elements (values) of given label satisfying given filtering criteria.
      * @summary Listing of label values.
-     * @param {string} workspace Workspace on which to run request.
+     * @param {string} workspaceId Workspace identifier
      * @param {string} label Requested label.
      * @param {'ASC' | 'DESC'} [sortOrder] Sort order of returned items. Items are sorted by &#x60;&#x60;&#x60;label&#x60;&#x60;&#x60; title.
      * @param {boolean} [includeTotalWithoutFilters] Specify if &#x60;&#x60;&#x60;totalCountWithoutFilters&#x60;&#x60;&#x60; should be returned.
@@ -2052,7 +1941,7 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
      */
     public processElementsRequest(
         params: {
-            workspace: string;
+            workspaceId: string;
             label: string;
             sortOrder?: "ASC" | "DESC";
             includeTotalWithoutFilters?: boolean;
@@ -2072,14 +1961,15 @@ export class ElementsControllerApi extends BaseAPI implements ElementsController
 }
 
 /**
- * ResultServiceControllerApi - axios parameter creator
+ * ResultControllerApi - axios parameter creator
  * @export
  */
-export const ResultServiceControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const ResultControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
+         * @param {string} workspaceId Workspace identifier
          * @param {string} resultId Result ID
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
@@ -2088,13 +1978,21 @@ export const ResultServiceControllerApiAxiosParamCreator = function (configurati
          */
         getResult(
             params: {
+                workspaceId: string;
                 resultId: string;
                 offset?: Array<number>;
                 limit?: Array<number>;
             },
             options: any = {},
         ): RequestArgs {
-            const { resultId, offset, limit } = params;
+            const { workspaceId, resultId, offset, limit } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling getResult.",
+                );
+            }
             // verify required parameter 'resultId' is not null or undefined
             if (resultId === null || resultId === undefined) {
                 throw new RequiredError(
@@ -2102,10 +2000,9 @@ export const ResultServiceControllerApiAxiosParamCreator = function (configurati
                     "Required parameter resultId was null or undefined when calling getResult.",
                 );
             }
-            const localVarPath = `/api/result/{resultId}`.replace(
-                `{${"resultId"}}`,
-                encodeURIComponent(String(resultId)),
-            );
+            const localVarPath = `/api/workspaces/{workspaceId}/result/{resultId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -2137,14 +2034,15 @@ export const ResultServiceControllerApiAxiosParamCreator = function (configurati
 };
 
 /**
- * ResultServiceControllerApi - functional programming interface
+ * ResultControllerApi - functional programming interface
  * @export
  */
-export const ResultServiceControllerApiFp = function (configuration?: Configuration) {
+export const ResultControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
+         * @param {string} workspaceId Workspace identifier
          * @param {string} resultId Result ID
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
@@ -2153,13 +2051,14 @@ export const ResultServiceControllerApiFp = function (configuration?: Configurat
          */
         getResult(
             params: {
+                workspaceId: string;
                 resultId: string;
                 offset?: Array<number>;
                 limit?: Array<number>;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExecutionResult> {
-            const localVarAxiosArgs = ResultServiceControllerApiAxiosParamCreator(configuration).getResult(
+            const localVarAxiosArgs = ResultControllerApiAxiosParamCreator(configuration).getResult(
                 params,
                 options,
             );
@@ -2175,10 +2074,10 @@ export const ResultServiceControllerApiFp = function (configuration?: Configurat
 };
 
 /**
- * ResultServiceControllerApi - factory interface
+ * ResultControllerApi - factory interface
  * @export
  */
-export const ResultServiceControllerApiFactory = function (
+export const ResultControllerApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
@@ -2187,6 +2086,7 @@ export const ResultServiceControllerApiFactory = function (
         /**
          * Gets a single execution result.
          * @summary Get a single execution result
+         * @param {string} workspaceId Workspace identifier
          * @param {string} resultId Result ID
          * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
          * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
@@ -2195,35 +2095,38 @@ export const ResultServiceControllerApiFactory = function (
          */
         getResult(
             params: {
+                workspaceId: string;
                 resultId: string;
                 offset?: Array<number>;
                 limit?: Array<number>;
             },
             options?: any,
         ): AxiosPromise<ExecutionResult> {
-            return ResultServiceControllerApiFp(configuration).getResult(params, options)(axios, basePath);
+            return ResultControllerApiFp(configuration).getResult(params, options)(axios, basePath);
         },
     };
 };
 
 /**
- * ResultServiceControllerApi - interface
+ * ResultControllerApi - interface
  * @export
- * @interface ResultServiceControllerApi
+ * @interface ResultControllerApi
  */
-export interface ResultServiceControllerApiInterface {
+export interface ResultControllerApiInterface {
     /**
      * Gets a single execution result.
      * @summary Get a single execution result
+     * @param {string} workspaceId Workspace identifier
      * @param {string} resultId Result ID
      * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResultServiceControllerApiInterface
+     * @memberof ResultControllerApiInterface
      */
     getResult(
         params: {
+            workspaceId: string;
             resultId: string;
             offset?: Array<number>;
             limit?: Array<number>;
@@ -2233,31 +2136,225 @@ export interface ResultServiceControllerApiInterface {
 }
 
 /**
- * ResultServiceControllerApi - object-oriented interface
+ * ResultControllerApi - object-oriented interface
  * @export
- * @class ResultServiceControllerApi
+ * @class ResultControllerApi
  * @extends {BaseAPI}
  */
-export class ResultServiceControllerApi extends BaseAPI implements ResultServiceControllerApiInterface {
+export class ResultControllerApi extends BaseAPI implements ResultControllerApiInterface {
     /**
      * Gets a single execution result.
      * @summary Get a single execution result
+     * @param {string} workspaceId Workspace identifier
      * @param {string} resultId Result ID
      * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ResultServiceControllerApi
+     * @memberof ResultControllerApi
      */
     public getResult(
         params: {
+            workspaceId: string;
             resultId: string;
             offset?: Array<number>;
             limit?: Array<number>;
         },
         options?: any,
     ) {
-        return ResultServiceControllerApiFp(this.configuration).getResult(params, options)(
+        return ResultControllerApiFp(this.configuration).getResult(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+}
+
+/**
+ * ValidObjectsControllerApi - axios parameter creator
+ * @export
+ */
+export const ValidObjectsControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAfmValidObjectsQuery(
+            params: {
+                workspaceId: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, afmValidObjectsQuery } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling processAfmValidObjectsQuery.",
+                );
+            }
+            // verify required parameter 'afmValidObjectsQuery' is not null or undefined
+            if (afmValidObjectsQuery === null || afmValidObjectsQuery === undefined) {
+                throw new RequiredError(
+                    "afmValidObjectsQuery",
+                    "Required parameter afmValidObjectsQuery was null or undefined when calling processAfmValidObjectsQuery.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/valid-objects`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof afmValidObjectsQuery !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(afmValidObjectsQuery !== undefined ? afmValidObjectsQuery : {})
+                : afmValidObjectsQuery || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * ValidObjectsControllerApi - functional programming interface
+ * @export
+ */
+export const ValidObjectsControllerApiFp = function (configuration?: Configuration) {
+    return {
+        /**
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAfmValidObjectsQuery(
+            params: {
+                workspaceId: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AfmValidObjectsResponse> {
+            const localVarAxiosArgs = ValidObjectsControllerApiAxiosParamCreator(
+                configuration,
+            ).processAfmValidObjectsQuery(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+    };
+};
+
+/**
+ * ValidObjectsControllerApi - factory interface
+ * @export
+ */
+export const ValidObjectsControllerApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    return {
+        /**
+         * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+         * @summary Valid objects
+         * @param {string} workspaceId Workspace identifier
+         * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        processAfmValidObjectsQuery(
+            params: {
+                workspaceId: string;
+                afmValidObjectsQuery: AfmValidObjectsQuery;
+            },
+            options?: any,
+        ): AxiosPromise<AfmValidObjectsResponse> {
+            return ValidObjectsControllerApiFp(configuration).processAfmValidObjectsQuery(params, options)(
+                axios,
+                basePath,
+            );
+        },
+    };
+};
+
+/**
+ * ValidObjectsControllerApi - interface
+ * @export
+ * @interface ValidObjectsControllerApi
+ */
+export interface ValidObjectsControllerApiInterface {
+    /**
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ValidObjectsControllerApiInterface
+     */
+    processAfmValidObjectsQuery(
+        params: {
+            workspaceId: string;
+            afmValidObjectsQuery: AfmValidObjectsQuery;
+        },
+        options?: any,
+    ): AxiosPromise<AfmValidObjectsResponse>;
+}
+
+/**
+ * ValidObjectsControllerApi - object-oriented interface
+ * @export
+ * @class ValidObjectsControllerApi
+ * @extends {BaseAPI}
+ */
+export class ValidObjectsControllerApi extends BaseAPI implements ValidObjectsControllerApiInterface {
+    /**
+     * Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.
+     * @summary Valid objects
+     * @param {string} workspaceId Workspace identifier
+     * @param {AfmValidObjectsQuery} afmValidObjectsQuery
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ValidObjectsControllerApi
+     */
+    public processAfmValidObjectsQuery(
+        params: {
+            workspaceId: string;
+            afmValidObjectsQuery: AfmValidObjectsQuery;
+        },
+        options?: any,
+    ) {
+        return ValidObjectsControllerApiFp(this.configuration).processAfmValidObjectsQuery(params, options)(
             this.axios,
             this.basePath,
         );
