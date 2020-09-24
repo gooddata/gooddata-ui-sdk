@@ -1,0 +1,23 @@
+// (C) 2020 GoodData Corporation
+@import "../styles/goodstrap.scss";
+
+.pickerExampleFlexRow {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px;
+    flex-flow: row nowrap;
+
+    & > div {
+        flex: 1 auto;
+
+        &:last-child {
+            flex: none;
+            width: 150px;
+            margin: 0 0 0 30px;
+        }
+    }
+}
+
+.library-component.gd-datepicker {
+    height: 800px; // to make room for date picker overlay
+}

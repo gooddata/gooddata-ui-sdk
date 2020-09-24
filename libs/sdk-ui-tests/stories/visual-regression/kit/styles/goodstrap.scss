@@ -14,9 +14,12 @@
     font-weight: 400;
 
     input,
+    optgroup,
+    select,
     textarea {
-        font-family: $goodstrap-fontFamily;
-        font-size: 12px;
+        outline: 0;
+        font: inherit;
+        color: inherit;
     }
 }
 

@@ -5,12 +5,12 @@ import { DayPickerProps } from "react-day-picker";
 import MomentLocaleUtils from "react-day-picker/moment";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import { translationUtils } from "@gooddata/util";
 import { convertDateToPlatformDateString, convertPlatformDateStringToDate } from "../utils/DateConversions";
 import { DateRangePickerInputField } from "./DateRangePickerInputField";
 import { mergeDayPickerProps, areRangeBoundsCrossed } from "./utils";
 import { DateRangePickerError } from "./DateRangePickerError";
 import { IExtendedDateFilterErrors } from "../interfaces";
-import { sanitizeLocaleForMoment } from "../utils/FormattingUtils";
 import { DateRangePickerInputFieldBody } from "./DateRangePickerInputFieldBody";
 
 export interface IDateRange {
@@ -45,7 +45,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
             showOutsideDays: true,
             modifiers: { start: from, end: to },
             selectedDays: [from, { from, to }],
-            locale: sanitizeLocaleForMoment(intl.locale),
+            locale: translationUtils.sanitizeLocaleForMoment(intl.locale),
             localeUtils: MomentLocaleUtils as any, // the typings are broken
         };
 
