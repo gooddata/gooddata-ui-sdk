@@ -183,12 +183,12 @@ There will probably be a check step in the future that will make sure you ran th
 
 ### How do I publish new version of packages?
 
-For detailed description of the release process, please see [Release process](docs/releases.md).
+For detailed description of the release process, please see [Release process](./releases.md).
 
 ### Where do I put my contributions?
 
 Please go ahead and familiarize yourself with the GoodData.UI SDK architecture, layering and packaging design
-which are all documented in our [Developer's Guide](docs/sdk-dev.md).
+which are all documented in our [Developer's Guide](./sdk-dev.md).
 
 If you are still in doubt, ask.
 
@@ -196,8 +196,8 @@ If you are still in doubt, ask.
 
 Before proceeding, first ask yourself:
 
--   Why does the contribution not fit into an existing package? (see [Developer's Guide](docs/sdk-dev.md))
--   Which of the existing packages is closest fit for the contribution? Why does the contribution not fit in there? (see [Developer's Guide](docs/sdk-dev.md))
+-   Why does the contribution not fit into an existing package? (see [Developer's Guide](./sdk-dev.md))
+-   Which of the existing packages is closest fit for the contribution? Why does the contribution not fit in there? (see [Developer's Guide](./sdk-dev.md))
 
 Once you have answers to these questions and still feel a new package is needed, get in touch for approval before
 proceeding.

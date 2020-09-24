@@ -14,7 +14,7 @@ Here are couple of hints to achieve optimal setup:
 
     -   `common/temp`
     -   All `dist` directories in all packages (in both `libs` and `tools`)
-    -   In `libs/api-bear-client` exclude `lib` and `umn`
+    -   In `libs/api-client-bear` exclude `umd`
     -   If IntelliJ does not automatically exclude `node_modules`, then mark them as excludes as well
     -   In `examples/sdk-examples` exclude the auto-generated `examplesJS`
 
