@@ -11,6 +11,8 @@ import {
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
+    getMaxWidth,
+    SORT_ICON_WIDTH,
 } from "../agGridColumnSizing";
 import { IGridHeader } from "../agGridTypes";
 import { ColumnWidthItem, IAbsoluteColumnWidth, IResizedColumns } from "../../columnWidths";
@@ -575,6 +577,19 @@ describe("agGridColumnSizing", () => {
                 200,
                 222,
             ]);
+        });
+    });
+
+    describe("getMaxWidth", () => {
+        const width = 20;
+        const measureTextMock = jest.fn();
+        const context: any = {
+            measureText: measureTextMock.mockReturnValueOnce({ width }),
+        };
+
+        it("should return correct new max width when sort is set to true", () => {
+            const correctWidth = width + SORT_ICON_WIDTH;
+            expect(getMaxWidth(context, "text", true, 15)).toBe(correctWidth);
         });
     });
 });

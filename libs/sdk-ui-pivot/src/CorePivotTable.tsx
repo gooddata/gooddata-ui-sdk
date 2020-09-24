@@ -760,7 +760,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             totalFont,
             rowFont,
             padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
-            useWidthsCache: true,
             separators,
         });
     };
