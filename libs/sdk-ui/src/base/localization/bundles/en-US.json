@@ -971,10 +971,5 @@
         "value": "Input value too large.",
         "comment": "Warning message when value is too large.",
         "limit": 0
-    },
-    "rankingFilter.noMatch": {
-        "value": "No match found.",
-        "comment": "Warning message when no match found.",
-        "limit": 0
     }
 }

@@ -3,7 +3,9 @@ import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { withIntl } from "@gooddata/sdk-ui";
+import { newRankingFilter } from "@gooddata/sdk-model";
 import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown";
+
 import {
     IRankingFilterDropdownProps,
     RankingFilterDropdown,
@@ -195,7 +197,7 @@ describe("RankingFilterDropdown", () => {
             expect(onDropDownItemMouseOut).toHaveBeenCalled();
         });
 
-        it("should not have disabled items when customGranuralitySelection is not provided", () => {
+        it("should not have disabled items when customGranularitySelection is not provided", () => {
             const component = renderComponent();
 
             component.openAttributeDropdown();
@@ -271,6 +273,23 @@ describe("RankingFilterDropdown", () => {
             expect(component.getValueDropdown().text()).toEqual("100");
         });
 
+        it("should render list items with matching items", () => {
+            const component = renderComponent();
+
+            component.changeInputValue("1");
+
+            // items with label 10, 15, 100
+            expect(component.getValueDropdown().text()).toEqual("1015100");
+        });
+
+        it("should not render list items when none matches the entered value", () => {
+            const component = renderComponent();
+
+            component.changeInputValue("42");
+
+            expect(component.isValueDropdownVisible()).toBe(false);
+        });
+
         it("should render error message when input value lower than 1", () => {
             const component = renderComponent();
 
@@ -292,7 +311,39 @@ describe("RankingFilterDropdown", () => {
 
             component.changeInputValue("test");
 
-            expect(component.getValueDropdown().text()).toEqual("No match found.");
+            expect(component.getValueDropdown().text()).toEqual("Input value should be a positive number.");
+        });
+
+        it("should set value via input blur handler", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply });
+
+            component.setValueByBlur("42");
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: Mock.measure1Ref,
+                    operator: "TOP",
+                    value: 42,
+                },
+            });
+        });
+
+        it.each([["0"], ["1000000"], ["test"]])(
+            "should not set value via input blur handler when invalid value '%s' is entered",
+            (invalidValue) => {
+                const component = renderComponent();
+                component.setValueByBlur(invalidValue);
+                expect(component.isApplyButtonDisabled()).toBe(true);
+            },
+        );
+
+        it("should have set non default value", () => {
+            const component = renderComponent({
+                filter: newRankingFilter(Mock.measure1Ref, "TOP", 42),
+            });
+            expect(component.getValue()).toEqual("42");
         });
     });
 

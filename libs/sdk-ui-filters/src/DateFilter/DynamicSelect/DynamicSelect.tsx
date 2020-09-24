@@ -12,6 +12,7 @@ import {
 import { findRelativeDateFilterOptionByValue } from "./utils";
 import { DynamicSelectItem, DynamicSelectOption } from "./types";
 import noop from "lodash/noop";
+import { ISelectItemOption } from "../Select/types";
 
 export interface IDynamicSelectProps {
     getItems: (inputValue: string) => DynamicSelectItem[];
@@ -23,6 +24,8 @@ export interface IDynamicSelectProps {
     style?: React.CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
+    resetOnBlur?: boolean;
+    customValueValidator?: (value: string) => boolean;
 }
 
 export interface IDynamicSelectState {
@@ -39,7 +42,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                 : null;
 
         this.state = {
-            inputValue: selectedItem ? itemToString(selectedItem) : "",
+            inputValue: selectedItem ? itemToString(selectedItem) : props.value ? props.value.toString() : "",
         };
     }
 
@@ -53,6 +56,8 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         className: undefined,
         style: undefined,
         visibleItemsRange: defaultVisibleItemsRange,
+        resetOnBlur: true,
+        customValueValidator: () => false,
     };
 
     public onChange = (option: DynamicSelectOption | null): void => {
@@ -64,7 +69,9 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     public componentDidUpdate = (lastProps: IDynamicSelectProps): void => {
         if (lastProps.value !== this.props.value) {
             const defaultItems = this.props.getItems(this.props.value.toString());
-            const inputValue = findRelativeDateFilterOptionByValue(defaultItems, this.props.value).label;
+            const inputValue =
+                findRelativeDateFilterOptionByValue(defaultItems, this.props.value)?.label ||
+                this.props.value.toString();
             this.setState({
                 inputValue,
             });
@@ -80,6 +87,28 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     public onInputValueChanged = (inputValue: string): void => {
         if (inputValue !== this.state.inputValue) {
             this.setState({ inputValue });
+        }
+    };
+
+    public onBlur = (
+        event: React.FocusEvent<HTMLInputElement>,
+        selectedItem: ISelectItemOption<number>,
+        selectItem: (item: ISelectItemOption<number>) => void,
+    ): void => {
+        const { resetOnBlur, value, customValueValidator } = this.props;
+        const currentValue = (event.target as HTMLInputElement).value;
+        if (resetOnBlur) {
+            selectItem(selectedItem);
+            this.onInputValueChanged(selectedItem ? selectedItem.label : "");
+        } else if (customValueValidator(currentValue)) {
+            selectItem({
+                type: "option",
+                value: Number(currentValue),
+                label: currentValue,
+            });
+            this.onInputValueChanged(currentValue);
+        } else {
+            this.onInputValueChanged(value.toString());
         }
     };
 
@@ -165,17 +194,12 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                             this.onInputValueChanged(
                                                 (event.target as HTMLInputElement).value,
                                             ),
-                                        onBlur: () => {
-                                            // reset to selected item on blur
-                                            selectItem(selectedItem);
-                                            this.setState({
-                                                inputValue: selectedItem ? selectedItem.label : "",
-                                            });
-                                        },
+                                        onBlur: (event: React.FocusEvent<HTMLInputElement>) =>
+                                            this.onBlur(event, selectedItem, selectItem),
                                     })}
                                 />
                             </div>
-                            {isOpen && <VirtualizedSelectMenu {...menuProps} />}
+                            {isOpen && items.length > 0 && <VirtualizedSelectMenu {...menuProps} />}
                         </div>
                     );
                 }}
