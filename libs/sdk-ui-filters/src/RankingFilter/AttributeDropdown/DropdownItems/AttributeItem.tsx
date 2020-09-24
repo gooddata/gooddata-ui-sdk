@@ -60,6 +60,7 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
                 onClick={() => onSelect(ref)}
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
+                title={title}
             >
                 <span>{title}</span>
             </button>
@@ -68,7 +69,7 @@ export const AttributeItem: React.FC<IAttributeItemProps> = ({
 
     return (
         <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-            <Button className={className} value={title} disabled={true} />
+            <Button className={className} value={title} title={title} disabled={true} />
             <Bubble
                 className="bubble-primary gd-rf-tooltip-bubble s-rf-disabled-attribute-bubble"
                 alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}

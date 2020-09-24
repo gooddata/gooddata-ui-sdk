@@ -10,7 +10,7 @@ import { newRankingFilter, measureLocalId, attributeLocalId, localIdRef } from "
 import { ExperimentalLdm } from "@gooddata/experimental-workspace";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/rankingFilter.css";
@@ -39,6 +39,12 @@ const buttonScenarios = {
 };
 
 const rankingFilter = newRankingFilter(ExperimentalLdm.Amount_1.Sum, "TOP", 10);
+const nonStandardRankingFilter = newRankingFilter(
+    ExperimentalLdm.Velocity.Sum,
+    [ExperimentalLdm.Status],
+    "TOP",
+    42,
+);
 
 const measureDropdownItems: IMeasureDropdownItem[] = [
     {
@@ -47,7 +53,7 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
         sequenceNumber: "M1",
     },
     {
-        title: "Sum of velocity",
+        title: "Sum of velocity with very long name",
         ref: localIdRef(measureLocalId(ExperimentalLdm.Velocity.Sum)),
         sequenceNumber: "M2",
     },
@@ -60,7 +66,7 @@ const attributeDropdownItems: IAttributeDropdownItem[] = [
         type: "ATTRIBUTE",
     },
     {
-        title: "Status",
+        title: "Status attribute with very long name",
         ref: localIdRef(attributeLocalId(ExperimentalLdm.Status)),
         type: "ATTRIBUTE",
     },
@@ -100,6 +106,20 @@ storiesOf(`${FilterStories}/RankingFilter`, module)
                 />
             </div>,
             dropdownWithOneAttributeItemScenarios,
+        );
+    })
+    .add("dropdown with non default value and long items selected", () => {
+        return withScreenshot(
+            <div style={wrapperStyle} className="screenshot-target">
+                <RankingFilterDropdown
+                    measureItems={measureDropdownItems}
+                    attributeItems={attributeDropdownItems}
+                    filter={nonStandardRankingFilter}
+                    onApply={action("apply")}
+                    onCancel={action("cancel")}
+                    anchorEl="screenshot-target"
+                />
+            </div>,
         );
     })
     .add("default button with dropdown", () => {

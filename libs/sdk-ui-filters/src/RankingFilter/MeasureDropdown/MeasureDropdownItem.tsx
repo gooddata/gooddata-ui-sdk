@@ -51,6 +51,7 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
             onClick={() => onSelect(ref)}
             onMouseOver={onMouseOver}
             onMouseOut={onMouseOut}
+            title={title}
         >
             <span className="gd-rf-measure-title">{title}</span>
             {sequenceNumber ? <span className="gd-rf-sequence-number">{sequenceNumber}</span> : null}
