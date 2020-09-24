@@ -62,7 +62,11 @@ export default scenariosFor<IBarChartProps>("BarChart", BarChart)
             },
         },
     })
-    .addScenario("single measure, two viewBy and stacking with drilling on parent", {
-        ...BarChartWithSingleMeasureAndTwoViewByAndStack,
-        drillableItems: [AttributeElements.Product.Explorer],
-    });
+    .addScenario(
+        "single measure, two viewBy and stacking with drilling on parent",
+        {
+            ...BarChartWithSingleMeasureAndTwoViewByAndStack,
+            drillableItems: [AttributeElements.Product.Explorer],
+        },
+        (m) => m.withTests("api"),
+    ); // TODO: RAIL-2721 flaky test removed from screenshoting

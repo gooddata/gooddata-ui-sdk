@@ -23,5 +23,6 @@
         }
     },
     "compileOnSave": false,
+    "include": ["src/index.ts", "src/typings.d.ts"],
     "exclude": ["node_modules", "dist", "**/__mocks__/**/*"]
 }

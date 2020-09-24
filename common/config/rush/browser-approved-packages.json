@@ -719,6 +719,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "react-native-listener",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-responsive",
       "allowedCategories": [ "production" ]
     },

@@ -22,6 +22,8 @@
     @include transition(all, 0.25s, ease-in-out);
     @include border-radius(3px);
 
+    outline: 0;
+
     &::before,
     &::after {
         position: absolute;
