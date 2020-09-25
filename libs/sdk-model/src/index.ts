@@ -104,6 +104,7 @@ export {
     RankingFilterOperator,
     isRankingFilter,
     IFilter,
+    INullableFilter,
     IMeasureFilter,
     IDateFilter,
     IAttributeFilter,

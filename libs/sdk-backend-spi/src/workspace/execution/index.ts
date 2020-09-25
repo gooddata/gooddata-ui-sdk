@@ -3,12 +3,12 @@ import {
     IAttributeOrMeasure,
     IBucket,
     IDimension,
-    IFilter,
     IInsightDefinition,
     ISortItem,
     IExecutionDefinition,
     DimensionGenerator,
     IInsight,
+    INullableFilter,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
@@ -46,7 +46,7 @@ export interface IExecutionFactory {
      * @param items - list of attributes and measures, must not be empty
      * @param filters - list of filters, may not be provided
      */
-    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
 
     /**
      * Prepares a new execution for a list of buckets. Attributes and measures WILL be transferred to the
@@ -63,9 +63,9 @@ export interface IExecutionFactory {
      * `@gooddata/sdk-model` package.
      *
      * @param buckets - list of buckets with attributes and measures, must be non empty, must have at least one attr or measure
-     * @param filters - optional, may not be provided
+     * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
      */
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
 
     /**
      * Prepares a new execution for the provided insight. Buckets with attributes and measures WILL be used
@@ -80,9 +80,9 @@ export interface IExecutionFactory {
      * `@gooddata/sdk-model` package.
      *
      * @param insightDefinition - insight definition to create execution for, must have buckets which must have some attributes or measures in them
-     * @param filters - optional, may not be provided
+     * @param filters - optional, may not be provided, may contain null or undefined values which must be ignored
      */
-    forInsight(insightDefinition: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
 
     /**
      * Prepares new, by-reference execution for an existing insight.
@@ -99,9 +99,9 @@ export interface IExecutionFactory {
      * `@gooddata/sdk-model` package.
      *
      * @param insight - saved insight
-     * @param filters - optional list of filters to merge with filters already defined in the insight
+     * @param filters - optional list of filters to merge with filters already defined in the insight, may contain null or undefined values which must be ignored
      */
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
 }
 
 /**

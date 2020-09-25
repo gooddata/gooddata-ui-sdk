@@ -12,7 +12,9 @@ import {
     IRankingFilter,
     isMeasureValueFilter,
     isRankingFilter,
+    INullableFilter,
 } from "./index";
+import compact from "lodash/compact";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
 import invariant from "ts-invariant";
@@ -72,15 +74,24 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  * @param addedFilters - new filters to add on top of original
  * @internal
  */
-export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[] {
+export function mergeFilters(
+    originalFilters: IFilter[],
+    addedFilters: INullableFilter[] | undefined,
+): IFilter[] {
     invariant(originalFilters, "original filters must be specified");
 
-    if (!addedFilters || !addedFilters.length) {
+    const filtersToMerge = compact(addedFilters ?? []);
+
+    if (!filtersToMerge.length) {
         return originalFilters;
     }
 
+    if (!originalFilters.length) {
+        return filtersToMerge;
+    }
+
     const original = separateFiltersByType(originalFilters);
-    const added = separateFiltersByType(addedFilters);
+    const added = separateFiltersByType(filtersToMerge);
 
     // concat attribute filters
     const attributeFilters = [...original.attribute, ...added.attribute];

@@ -28,9 +28,9 @@ import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
-import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -44,15 +44,15 @@ import { ObjRef } from '@gooddata/sdk-model';
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
     constructor(workspace: string);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
     abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
     protected readonly workspace: string;
 }
@@ -164,15 +164,15 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
     // (undocumented)
     protected readonly decorated: IExecutionFactory;
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
     protected wrap: (execution: IPreparedExecution) => IPreparedExecution;
     }
 
@@ -300,20 +300,20 @@ export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) =>
 export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecutionFactory {
     constructor(decorated: IExecutionFactory);
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
 }
 
 // @internal
 export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
-    constructor(decorated: IExecutionFactory, filters?: IFilter[]);
+    constructor(decorated: IExecutionFactory, filters?: INullableFilter[]);
     // (undocumented)
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
+    forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
     // (undocumented)
-    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
 }
 
 // @beta

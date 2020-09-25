@@ -10,7 +10,7 @@ import {
 import { ISortItem } from "../base/sort";
 import { IAttributeOrMeasure, bucketAttributes, bucketMeasures, IBucket } from "../buckets";
 import { bucketsAttributes, bucketsIsEmpty, bucketsMeasures } from "../buckets/bucketArray";
-import { IFilter } from "../filter";
+import { INullableFilter } from "../filter";
 import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
 import { isMeasure } from "../measure";
 import {
@@ -56,7 +56,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
 export function newDefForItems(
     workspace: string,
     items: IAttributeOrMeasure[],
-    filters: IFilter[] = [],
+    filters: INullableFilter[] = [],
 ): IExecutionDefinition {
     invariant(workspace, "workspace to create exec def for must be specified");
     invariant(items, "items to create exec def from must be specified");
@@ -90,7 +90,7 @@ export function newDefForItems(
 export function newDefForBuckets(
     workspace: string,
     buckets: IBucket[],
-    filters: IFilter[] = [],
+    filters: INullableFilter[] = [],
 ): IExecutionDefinition {
     invariant(workspace, "workspace to create exec def for must be specified");
     invariant(buckets, "buckets to create exec def from must be specified");
@@ -129,7 +129,7 @@ export function newDefForBuckets(
 export function newDefForInsight(
     workspace: string,
     insight: IInsightDefinition,
-    filters: IFilter[] = [],
+    filters: INullableFilter[] = [],
 ): IExecutionDefinition {
     invariant(workspace, "workspace to create exec def for must be specified");
     invariant(insight, "insight to create exec def from must be specified");

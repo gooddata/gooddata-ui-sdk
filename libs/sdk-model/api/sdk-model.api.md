@@ -335,7 +335,7 @@ export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 export function defWithDimensions(definition: IExecutionDefinition, ...dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
 
 // @public
-export function defWithFilters(def: IExecutionDefinition, filters?: IFilter[]): IExecutionDefinition;
+export function defWithFilters(def: IExecutionDefinition, filters?: INullableFilter[]): IExecutionDefinition;
 
 // @public
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition;
@@ -962,6 +962,9 @@ export function insightUri(insight: IInsight): string;
 export function insightVisualizationUrl(insight: IInsightDefinition): string;
 
 // @public
+export type INullableFilter = IFilter | undefined | null;
+
+// @public
 export interface IObjectExpressionToken {
     ref: ObjRef;
     type: ObjectType;
@@ -1454,7 +1457,7 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
 
 // @internal
-export function mergeFilters(originalFilters: IFilter[], addedFilters: IFilter[] | undefined): IFilter[];
+export function mergeFilters(originalFilters: IFilter[], addedFilters: INullableFilter[] | undefined): IFilter[];
 
 // @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject;
@@ -1547,13 +1550,13 @@ export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMea
 export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>) => IDataSetMetadataObject;
 
 // @public
-export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: IFilter[]): IExecutionDefinition;
+export function newDefForBuckets(workspace: string, buckets: IBucket[], filters?: INullableFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefForInsight(workspace: string, insight: IInsightDefinition, filters?: IFilter[]): IExecutionDefinition;
+export function newDefForInsight(workspace: string, insight: IInsightDefinition, filters?: INullableFilter[]): IExecutionDefinition;
 
 // @public
-export function newDefForItems(workspace: string, items: IAttributeOrMeasure[], filters?: IFilter[]): IExecutionDefinition;
+export function newDefForItems(workspace: string, items: IAttributeOrMeasure[], filters?: INullableFilter[]): IExecutionDefinition;
 
 // @public
 export function newDimension(items?: DimensionItem[], totals?: ITotal[]): IDimension;
