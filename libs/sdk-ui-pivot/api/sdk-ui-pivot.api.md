@@ -8,8 +8,8 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
-import { IFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -121,7 +121,7 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
 // @public (undocumented)
 export interface IPivotTableBucketProps {
     columns?: IAttribute[];
-    filters?: IFilter[];
+    filters?: INullableFilter[];
     measures?: IAttributeOrMeasure[];
     rows?: IAttribute[];
     sortBy?: ISortItem[];

@@ -1,11 +1,11 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    IAttributeOrMeasure,
     IAttribute,
-    IFilter,
+    IAttributeOrMeasure,
+    IExecutionDefinition,
+    INullableFilter,
     ISortItem,
     newBucket,
-    IExecutionDefinition,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -75,7 +75,7 @@ export interface ILineChartBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

@@ -15,9 +15,9 @@ import { IDataVisualizationProps } from '@gooddata/sdk-ui';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDrillConfig } from '@gooddata/sdk-ui';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
-import { IFilter } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
+import { INullableFilter } from '@gooddata/sdk-model';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -242,7 +242,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     // (undocumented)
     config?: IGeoConfig;
     // (undocumented)
-    filters?: IFilter[];
+    filters?: INullableFilter[];
     // (undocumented)
     location: IAttribute;
     onCenterPositionChanged?: CenterPositionChangedCallback;

@@ -1,16 +1,16 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    ComputeRatioRule,
     applyRatioRule,
+    ComputeRatioRule,
     IAttribute,
-    IFilter,
     IMeasure,
-    newBucket,
+    INullableFilter,
     ISortItem,
+    newBucket,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { defaultDimensions } from "../_commons/dimensions";
-import { IChartConfig, IBucketChartProps } from "../../interfaces";
+import { IBucketChartProps, IChartConfig } from "../../interfaces";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
 import get from "lodash/get";
@@ -106,7 +106,7 @@ export interface IComboChartBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

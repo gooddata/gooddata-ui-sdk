@@ -1,20 +1,20 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { withExecution } from "./withExecution";
-import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withExecutionLoading";
+import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading";
 import {
     attributeLocalId,
-    IAttributeOrMeasure,
     DimensionItem,
     IAttribute,
+    IAttributeOrMeasure,
     IDimension,
-    IFilter,
+    INullableFilter,
     isAttribute,
+    ISortItem,
     ITotal,
     MeasureGroupIdentifier,
     newDimension,
     newTwoDimensional,
-    ISortItem,
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
@@ -61,7 +61,7 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     /**
      * Optional filters to apply on server side.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optional sorting to apply on server side.

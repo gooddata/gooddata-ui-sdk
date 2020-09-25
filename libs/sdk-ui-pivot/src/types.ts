@@ -1,7 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttributeOrMeasure, IAttribute, IFilter, ITotal, ISortItem, TotalType } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IAttributeOrMeasure,
+    INullableFilter,
+    ISortItem,
+    ITotal,
+    TotalType,
+} from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 import { ColumnWidthItem } from "./columnWidths";
@@ -171,7 +178,7 @@ export interface IPivotTableBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

@@ -1,14 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    IAttributeOrMeasure,
-    IAttribute,
-    IFilter,
-    newBucket,
-    ISortItem,
-    bucketsFind,
     bucketAttribute,
+    bucketsFind,
+    IAttribute,
+    IAttributeOrMeasure,
     IBucket,
+    INullableFilter,
+    ISortItem,
     newAttributeSort,
+    newBucket,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { heatmapDimensions } from "../_commons/dimensions";
@@ -71,7 +71,7 @@ export interface IHeatmapBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IAttribute, IAttributeOrMeasure, IFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
@@ -61,7 +61,7 @@ export interface IPieChartBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.
