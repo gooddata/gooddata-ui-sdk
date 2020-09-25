@@ -24,7 +24,6 @@ export interface IDynamicSelectProps {
     style?: React.CSSProperties;
     optionClassName?: string;
     visibleItemsRange?: number;
-    resetOnBlur?: boolean;
     customValueValidator?: (value: string) => boolean;
 }
 
@@ -56,7 +55,6 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         className: undefined,
         style: undefined,
         visibleItemsRange: defaultVisibleItemsRange,
-        resetOnBlur: true,
         customValueValidator: () => false,
     };
 
@@ -87,28 +85,6 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     public onInputValueChanged = (inputValue: string): void => {
         if (inputValue !== this.state.inputValue) {
             this.setState({ inputValue });
-        }
-    };
-
-    public onBlur = (
-        event: React.FocusEvent<HTMLInputElement>,
-        selectedItem: ISelectItemOption<number>,
-        selectItem: (item: ISelectItemOption<number>) => void,
-    ): void => {
-        const { resetOnBlur, value, customValueValidator } = this.props;
-        const currentValue = (event.target as HTMLInputElement).value;
-        if (resetOnBlur) {
-            selectItem(selectedItem);
-            this.onInputValueChanged(selectedItem ? selectedItem.label : "");
-        } else if (customValueValidator(currentValue)) {
-            selectItem({
-                type: "option",
-                value: Number(currentValue),
-                label: currentValue,
-            });
-            this.onInputValueChanged(currentValue);
-        } else {
-            this.onInputValueChanged(value.toString());
         }
     };
 
@@ -188,14 +164,9 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                             this.setState({ inputValue: "" });
                                             openMenu();
                                         },
-                                        // Downshifts onInputValueChanged fires twice and with an old value
-                                        // So we need to use our own callback
                                         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
-                                            this.onInputValueChanged(
-                                                (event.target as HTMLInputElement).value,
-                                            ),
-                                        onBlur: (event: React.FocusEvent<HTMLInputElement>) =>
-                                            this.onBlur(event, selectedItem, selectItem),
+                                            this.onChangeHandler(event, selectItem),
+                                        onBlur: () => this.onBlurHandler(selectedItem, selectItem),
                                     })}
                                 />
                             </div>
@@ -206,4 +177,35 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
             </Downshift>
         );
     }
+
+    private onBlurHandler = (
+        selectedItem: ISelectItemOption<number>,
+        selectItem: (item: ISelectItemOption<number>) => void,
+    ): void => {
+        const { customValueValidator, value } = this.props;
+        if (customValueValidator) {
+            selectItem(selectedItem);
+            this.onInputValueChanged(selectedItem ? selectedItem.label : "");
+        } else {
+            this.onInputValueChanged(value.toString());
+        }
+    };
+
+    private onChangeHandler = (
+        event: React.ChangeEvent<HTMLInputElement>,
+        selectItem: (item: ISelectItemOption<number>) => void,
+    ): void => {
+        const { customValueValidator } = this.props;
+        const currentValue = (event.target as HTMLInputElement).value;
+        if (customValueValidator(currentValue)) {
+            selectItem({
+                type: "option",
+                value: Number(currentValue),
+                label: currentValue,
+            });
+        }
+        // Downshifts onInputValueChanged fires twice and with an old value,
+        // so we need to use our own callback
+        this.onInputValueChanged(currentValue);
+    };
 }

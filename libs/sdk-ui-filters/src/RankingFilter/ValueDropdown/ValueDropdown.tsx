@@ -20,7 +20,6 @@ const ValueDropdownComponent: React.FC<ValueDropdownProps> = ({ selectedValue, o
             value={selectedValue}
             className="gd-rf-value-dropdown-button s-rf-value-dropdown-button"
             optionClassName="s-rf-value-dropdown-item"
-            resetOnBlur={false}
             customValueValidator={sanitizeCustomInput}
         />
     );
