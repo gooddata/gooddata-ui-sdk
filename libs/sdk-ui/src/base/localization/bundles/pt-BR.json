@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "Mínimo",
     "visualizations.totals.dropdown.title.max": "Máx",
     "visualizations.totals.dropdown.title.nat": "Acumulado (Total)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "A agregação Acumulado (Total) não está disponível ao filtrar o insight por valor de medida. Para usar Acumulado (Total), remova todos os filtros de valor de medida da barra de filtros.",
+    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "A agregação Acumulado (Total) não está disponível ao filtrar o insight por valor de medida. Para usar Acumulado (Total), remova todos os filtros de valor de medida da barra de filtros.",
     "visualizations.totals.dropdown.title.med": "Mediana",
     "visualizations.totals.row.title.sum": "Soma",
     "visualizations.totals.row.title.avg": "Média",
@@ -177,7 +177,5 @@
     "measureNumberCustomFormatDialog.extendedPreview.button": "Exibir mais",
     "measureNumberCustomFormatDialog.howToFormat": "Como formatar?",
     "measureNumberCustomFormatDialog.definition": "Definição",
-    "measureNumberCustomFormatDialog.preview": "Pré-visualizar",
-    "attrf.all": "Todos",
-    "attrf.all_except": "Tudo exceto"
+    "measureNumberCustomFormatDialog.preview": "Pré-visualizar"
 }

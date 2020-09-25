@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "最小值",
     "visualizations.totals.dropdown.title.max": "最大值",
     "visualizations.totals.dropdown.title.nat": "汇总（总计）",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "按度量值筛选洞察时，汇总（总计）聚合不可用。 要使用汇总（总计），请从筛选器栏中删除所有度量值筛选器。",
+    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "按度量值筛选洞察时，汇总（总计）聚合不可用。 要使用汇总（总计），请从筛选器栏中删除所有度量值筛选器。",
     "visualizations.totals.dropdown.title.med": "中值",
     "visualizations.totals.row.title.sum": "加",
     "visualizations.totals.row.title.avg": "平均值",
@@ -177,7 +177,5 @@
     "measureNumberCustomFormatDialog.extendedPreview.button": "显示更多",
     "measureNumberCustomFormatDialog.howToFormat": "如何格式化？",
     "measureNumberCustomFormatDialog.definition": "定义",
-    "measureNumberCustomFormatDialog.preview": "预览",
-    "attrf.all": "全部",
-    "attrf.all_except": "除了"
+    "measureNumberCustomFormatDialog.preview": "预览"
 }

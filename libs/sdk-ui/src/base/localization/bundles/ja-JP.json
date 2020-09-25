@@ -11,7 +11,7 @@
     "visualizations.totals.dropdown.title.min": "最小",
     "visualizations.totals.dropdown.title.max": "最高",
     "visualizations.totals.dropdown.title.nat": "ロールアップ (合計)",
-    "visualizations.totals.dropdown.tooltip.nat.disabled.mvf": "ロールアップ（合計）集約はインサイトを測定値でフィルターしたときに使用できません。ロールアップ（合計）を使用するにはフィルターバーから測定値フィルターを全て解除してください。",
+    "visualizations.totals.dropdown.title.nat.disabled.tooltip": "ロールアップ（合計）集約はインサイトを測定値でフィルターしたときに使用できません。ロールアップ（合計）を使用するにはフィルターバーから測定値フィルターを全て解除してください。",
     "visualizations.totals.dropdown.title.med": "中央値",
     "visualizations.totals.row.title.sum": "合計",
     "visualizations.totals.row.title.avg": "平均",
@@ -177,7 +177,5 @@
     "measureNumberCustomFormatDialog.extendedPreview.button": "もっと表示",
     "measureNumberCustomFormatDialog.howToFormat": "フォーマット方法",
     "measureNumberCustomFormatDialog.definition": "定義",
-    "measureNumberCustomFormatDialog.preview": "プレビュー",
-    "attrf.all": "すべて",
-    "attrf.all_except": "次を除くすべて"
+    "measureNumberCustomFormatDialog.preview": "プレビュー"
 }
