@@ -1,12 +1,21 @@
 // (C) 2020 GoodData Corporation
 import { isEmpty, isString, isNumber } from "lodash";
 import { EmbeddedGdc } from "../iframe/common";
+import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
 export interface IExternalFiltersObject {
     attributeFilters: ITransformedAttributeFilterItem[];
     dateFilters: ITransformedDateFilterItem[];
+    rankingFilter?: ITransformedRankingFilter;
+}
+
+export interface ITransformedRankingFilter {
+    measureLocalIdentifier: string;
+    attributeLocalIdentifiers?: string[];
+    operator: EmbeddedGdc.RankingFilterOperator;
+    value: number;
 }
 
 export interface ITransformedDateFilterItem {
@@ -90,15 +99,50 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
     }
 }
 
+function isValidRankingFilterOperator(operator: unknown): boolean {
+    return operator === "TOP" || operator === "BOTTOM";
+}
+
+function isValidRankingFilterValue(value: unknown): boolean {
+    return typeof value === "number" && value > 0 && value <= 99_999;
+}
+
+function isValidLocalIdentifier(localIdentifier: unknown): boolean {
+    return (
+        GdcExecuteAFM.isLocalIdentifierQualifier(localIdentifier) &&
+        typeof localIdentifier.localIdentifier === "string"
+    );
+}
+
+function isValidRankingFilterAttributes(attributes?: EmbeddedGdc.ILocalIdentifierQualifier[]): boolean {
+    return (
+        !attributes ||
+        (Array.isArray(attributes) && attributes.length > 0 && attributes.every(isValidLocalIdentifier))
+    );
+}
+
+function isValidRankingFilterFormat(rankingFilterItem: EmbeddedGdc.IRankingFilter): boolean {
+    const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
+    return (
+        isValidLocalIdentifier(measure) &&
+        isValidRankingFilterAttributes(attributes) &&
+        isValidRankingFilterOperator(operator) &&
+        isValidRankingFilterValue(value)
+    );
+}
+
 // `dataSet` is required in AD only.
 // In AD, we call this function with `shouldValidateDataSet = true`
 // In KD, we call this function with `shouldValidateDataSet = false`
 export function isValidFilterItemFormat(filterItem: unknown, shouldValidateDataSet: boolean = true): boolean {
     if (EmbeddedGdc.isDateFilter(filterItem)) {
         return isValidDateFilterFormat(filterItem, shouldValidateDataSet);
-    } else {
+    } else if (EmbeddedGdc.isAttributeFilter(filterItem)) {
         return isValidAttributeFilterFormat(filterItem);
+    } else if (EmbeddedGdc.isRankingFilter(filterItem)) {
+        return isValidRankingFilterFormat(filterItem);
     }
+    return false;
 }
 
 export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
@@ -110,6 +154,8 @@ export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
         const { displayForm } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(displayForm);
         return isString(uri) || isString(identifier);
+    } else if (EmbeddedGdc.isRemoveRankingFilter(filterItem)) {
+        return true;
     }
 
     return false;
@@ -193,6 +239,22 @@ function transformAttributeFilterItem(
     }
 }
 
+function transformRankingFilterItem(
+    rankingFilterItem: EmbeddedGdc.IRankingFilter,
+): ITransformedRankingFilter {
+    const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
+    const attributesProp = attributes
+        ? { attributeLocalIdentifiers: attributes.map((attribute) => attribute.localIdentifier) }
+        : {};
+
+    return {
+        measureLocalIdentifier: measure.localIdentifier,
+        ...attributesProp,
+        value,
+        operator,
+    };
+}
+
 export function transformFilterContext(filters: EmbeddedGdc.FilterItem[]): IExternalFiltersObject {
     const defaultFiltersObject: IExternalFiltersObject = {
         attributeFilters: [],
@@ -210,9 +272,12 @@ export function transformFilterContext(filters: EmbeddedGdc.FilterItem[]): IExte
             if (EmbeddedGdc.isDateFilter(filterItem)) {
                 const dateFilter = transformDateFilterItem(filterItem);
                 externalFilters.dateFilters.push(dateFilter);
-            } else {
+            } else if (EmbeddedGdc.isAttributeFilter(filterItem)) {
                 const attributeFilter = transformAttributeFilterItem(filterItem);
                 externalFilters.attributeFilters.push(attributeFilter);
+            } else if (EmbeddedGdc.isRankingFilter(filterItem)) {
+                const rankingFilter = transformRankingFilterItem(filterItem);
+                externalFilters.rankingFilter = rankingFilter;
             }
 
             return externalFilters;

@@ -297,6 +297,13 @@ export namespace GdcExecuteAFM {
         );
     }
 
+    export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier {
+        return (
+            !isEmpty(qualifier) &&
+            (qualifier as GdcExecuteAFM.ILocalIdentifierQualifier).localIdentifier !== undefined
+        );
+    }
+
     export function isSimpleMeasureDefinition(
         definition: GdcExecuteAFM.MeasureDefinition,
     ): definition is GdcExecuteAFM.ISimpleMeasureDefinition {

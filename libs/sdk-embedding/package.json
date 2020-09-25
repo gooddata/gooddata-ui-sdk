@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "@gooddata/api-model-bear": "^8.0.0-beta.98",
+        "@gooddata/sdk-model": "^8.0.0-beta.98",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },

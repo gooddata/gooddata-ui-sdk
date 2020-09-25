@@ -62,6 +62,9 @@ export const identifierObjectQualifier: AFM.ObjQualifier = {
 export const uriObjectQualifier: AFM.ObjQualifier = {
     uri: "/gdc/mock/id",
 };
+export const localIdentifierQualifier: AFM.ILocalIdentifierQualifier = {
+    localIdentifier: "localId",
+};
 export const simpleMeasureDefinition: AFM.ISimpleMeasureDefinition = {
     measure: {
         item: {
