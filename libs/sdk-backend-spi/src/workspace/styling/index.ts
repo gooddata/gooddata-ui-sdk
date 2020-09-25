@@ -1,6 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
-
 import { IColorPalette } from "@gooddata/sdk-model";
+
+import { ITheme } from "./theme";
+
+export {
+    ThemeFontUri,
+    ThemeColor,
+    IThemeColorFamily,
+    IThemeWidgetTitle,
+    IThemeTypography,
+    IThemePalette,
+    ITheme,
+} from "./theme";
 
 /**
  * This service provides access to workspace styling settings such as color palette.
@@ -18,4 +29,11 @@ export interface IWorkspaceStylingService {
      * @returns promise of color palette
      */
     getColorPalette(): Promise<IColorPalette>;
+
+    /**
+     * Asynchronously returns theme.
+     *
+     * @returns promise of theme
+     */
+    getTheme(): Promise<ITheme>;
 }

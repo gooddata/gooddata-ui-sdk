@@ -66,8 +66,8 @@ $button-negative-active-gradient-top: darken($button-negative-bg, 20%);
 $button-negative-active-gradient-bottom: $button-negative-hover-bg;
 
 // border-radius
-$button-border-radius: var(--gd-button-border-radius, 3px);
-$button-group-border-radius: var(--gd-button-border-radius, 0);
+$button-border-radius: var(--gd-button-borderRadius, 3px);
+$button-group-border-radius: 0;
 
 // text-capitalization
 $button-text-capitalization: var(--gd-button-text-capitalization, none);

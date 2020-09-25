@@ -1,0 +1,11 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "Add sdk-ui-theme-provider library with the ThemeProvider component which is used to fetch selected theme object, parse it and inject generated css variables into document body in order to theme wrapped application",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all",
+  "email": "strouhal.jan@gmail.com"
+}

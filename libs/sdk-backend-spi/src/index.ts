@@ -79,7 +79,16 @@ export {
 
 export { IExportConfig, IExportResult } from "./workspace/execution/export";
 
-export { IWorkspaceStylingService } from "./workspace/styling";
+export {
+    IWorkspaceStylingService,
+    ThemeFontUri,
+    ThemeColor,
+    IThemeColorFamily,
+    IThemeWidgetTitle,
+    IThemeTypography,
+    IThemePalette,
+    ITheme,
+} from "./workspace/styling";
 
 export {
     AnalyticalBackendError,

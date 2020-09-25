@@ -26,6 +26,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IKpiAlert
         | GdcMetadata.IDataSet
         | GdcMetadata.IPrompt
+        | GdcMetadata.ITheme
         | GdcDashboard.IAnalyticalDashboard
         | GdcFilterContext.IFilterContext
         | GdcFilterContext.ITempFilterContext
@@ -46,6 +47,7 @@ export namespace GdcMetadataObject {
         | GdcMetadata.IWrappedKpiAlert
         | GdcMetadata.IWrappedDataSet
         | GdcMetadata.IWrappedPrompt
+        | GdcMetadata.IWrappedTheme
         | GdcDashboard.IWrappedAnalyticalDashboard
         | GdcFilterContext.IWrappedFilterContext
         | GdcFilterContext.IWrappedTempFilterContext

@@ -19,6 +19,7 @@ const supportedMetadataObjectsTypeGuards = [
     GdcMetadata.isFact,
     GdcMetadata.isDataSet,
     GdcMetadata.isPrompt,
+    GdcMetadata.isTheme,
 ];
 
 export type SupportedWrappedMetadataObject =
@@ -27,7 +28,8 @@ export type SupportedWrappedMetadataObject =
     | GdcMetadata.IWrappedMetric
     | GdcMetadata.IWrappedFact
     | GdcMetadata.IWrappedDataSet
-    | GdcMetadata.IWrappedPrompt;
+    | GdcMetadata.IWrappedPrompt
+    | GdcMetadata.IWrappedTheme;
 
 export type SupportedMetadataObject =
     | GdcMetadata.IAttribute
@@ -35,7 +37,8 @@ export type SupportedMetadataObject =
     | GdcMetadata.IMetric
     | GdcMetadata.IFact
     | GdcMetadata.IDataSet
-    | GdcMetadata.IPrompt;
+    | GdcMetadata.IPrompt
+    | GdcMetadata.ITheme;
 
 const isSupportedMetadataObject = (obj: any): obj is SupportedMetadataObject =>
     supportedMetadataObjectsTypeGuards.some((isType) => isType(obj));

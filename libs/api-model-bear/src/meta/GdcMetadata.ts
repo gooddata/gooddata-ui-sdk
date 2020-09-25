@@ -1,6 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
-import { Timestamp, MaqlExpression, Uri, NumberAsString, BooleanAsString } from "../aliases";
+import {
+    Timestamp,
+    MaqlExpression,
+    Uri,
+    NumberAsString,
+    BooleanAsString,
+    ThemeColor,
+    ThemeFontUri,
+} from "../aliases";
 import { GdcExecuteAFM } from "../executeAfm/GdcExecuteAFM";
 
 /**
@@ -37,7 +45,8 @@ export namespace GdcMetadata {
         | "userFilter"
         | "visualizationClass"
         | "visualizationObject"
-        | "visualizationWidget";
+        | "visualizationWidget"
+        | "theme";
 
     export interface IObjectMeta {
         category?: ObjectCategory;
@@ -136,7 +145,123 @@ export namespace GdcMetadata {
             whenTriggered: "underThreshold" | "aboveThreshold";
             filterContext?: Uri;
         };
-        meta: IObjectMeta;
+    }
+
+    export interface IThemeColorFamily {
+        base: ThemeColor;
+        light?: ThemeColor;
+        dark?: ThemeColor;
+        contrast?: ThemeColor;
+    }
+
+    export interface IThemePalette {
+        primary?: IThemeColorFamily;
+        error?: IThemeColorFamily;
+        warning?: IThemeColorFamily;
+        success?: IThemeColorFamily;
+    }
+
+    export interface ITheme extends IMetadataObject {
+        content: {
+            typography?: {
+                font?: ThemeFontUri;
+                fontBold?: ThemeFontUri;
+            };
+            palette?: IThemePalette;
+            button?: {
+                borderRadius?: string;
+                dropShadow?: boolean;
+                textCapitalization?: boolean;
+            };
+            tooltip?: {
+                backgroundColor?: ThemeColor;
+                color?: ThemeColor;
+            };
+            modal?: {
+                title?: {
+                    color?: ThemeColor;
+                    lineColor?: ThemeColor;
+                };
+                outsideBackgroundColor?: ThemeColor;
+                dropShadow?: boolean;
+                borderWidth?: string;
+                borderColor?: ThemeColor;
+                borderRadius?: string;
+            };
+            kpiDashboards?: {
+                title?: {
+                    color?: ThemeColor;
+                };
+                section?: {
+                    title?: {
+                        color?: ThemeColor;
+                        lineColor?: ThemeColor;
+                    };
+                    description?: {
+                        color?: ThemeColor;
+                    };
+                };
+                filterBar?: {
+                    backgroundColor?: ThemeColor;
+                    filterButton?: {
+                        backgroundColor?: ThemeColor;
+                    };
+                };
+                content?: {
+                    backgroundColor?: ThemeColor;
+                    widget?: {
+                        title?: {
+                            color?: ThemeColor;
+                            textAlign?: string;
+                        };
+                        backgroundColor?: ThemeColor;
+                        borderColor?: ThemeColor;
+                        borderWidth?: string;
+                        borderRadius?: string;
+                        dropShadow?: boolean;
+                    };
+                    headline?: {
+                        title?: {
+                            color?: ThemeColor;
+                            textAlign?: string;
+                        };
+                        backgroundColor?: ThemeColor;
+                        borderColor?: ThemeColor;
+                        borderWidth?: string;
+                        borderRadius?: string;
+                        dropShadow?: boolean;
+                        value?: {
+                            textAlign?: string;
+                            positiveColor?: ThemeColor;
+                            negativeColor?: ThemeColor;
+                        };
+                        primaryMeasureColor?: ThemeColor;
+                        secondaryInfoColor?: ThemeColor;
+                    };
+                };
+                navigation?: {
+                    backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
+                    header?: {
+                        color?: ThemeColor;
+                    };
+                    item?: {
+                        color?: ThemeColor;
+                        hoverColor?: ThemeColor;
+                        selectedColor?: ThemeColor;
+                        selectedBackgroundColor?: ThemeColor;
+                    };
+                };
+                editPanel?: {
+                    backgroundColor?: ThemeColor;
+                };
+            };
+            analyticalDesigner?: {
+                title?: {
+                    color?: ThemeColor;
+                };
+            };
+        };
     }
 
     export interface IDataSet extends IMetadataObject {
@@ -204,6 +329,10 @@ export namespace GdcMetadata {
                 offset: NumberAsString;
             };
         };
+    }
+
+    export interface IWrappedTheme {
+        theme: ITheme;
     }
 
     /**
@@ -428,5 +557,14 @@ export namespace GdcMetadata {
     export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt {
         // eslint-disable-next-line no-prototype-builtins
         return !isEmpty(obj) && obj.hasOwnProperty("prompt");
+    }
+
+    export function isTheme(obj: unknown): obj is ITheme {
+        return !isEmpty(obj) && (obj as IPrompt).meta.category === "theme";
+    }
+
+    export function isWrappedTheme(obj: unknown): obj is IWrappedTheme {
+        // eslint-disable-next-line no-prototype-builtins
+        return !isEmpty(obj) && obj.hasOwnProperty("theme");
     }
 }

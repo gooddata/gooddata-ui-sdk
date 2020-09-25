@@ -27,6 +27,7 @@ import {
     IBackendCapabilities,
     IWorkspaceDescriptor,
     IWorkspacePermissions,
+    ITheme,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -151,6 +152,9 @@ function recordedWorkspace(
             return {
                 async getColorPalette(): Promise<IColorPalette> {
                     return implConfig.globalPalette ?? [];
+                },
+                async getTheme(): Promise<ITheme> {
+                    return {};
                 },
             };
         },

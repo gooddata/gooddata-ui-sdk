@@ -1207,6 +1207,127 @@ export interface ITextExpressionToken {
     value: string;
 }
 
+// @beta
+export interface ITheme {
+    analyticalDesigner?: {
+        title?: {
+            color?: ThemeColor;
+        };
+    };
+    button?: {
+        borderRadius?: string;
+        dropShadow?: boolean;
+        textCapitalization?: boolean;
+    };
+    kpiDashboards?: {
+        title?: {
+            color?: ThemeColor;
+        };
+        section?: {
+            title?: {
+                color?: ThemeColor;
+                lineColor?: ThemeColor;
+            };
+            description?: {
+                color?: ThemeColor;
+            };
+        };
+        filterBar?: {
+            backgroundColor?: ThemeColor;
+            filterButton?: {
+                backgroundColor?: ThemeColor;
+            };
+        };
+        content?: {
+            backgroundColor?: ThemeColor;
+            widget?: {
+                title?: IThemeWidgetTitle;
+                backgroundColor?: ThemeColor;
+                borderColor?: ThemeColor;
+                borderWidth?: string;
+                borderRadius?: string;
+                dropShadow?: boolean;
+            };
+            headline?: {
+                title?: IThemeWidgetTitle;
+                backgroundColor?: ThemeColor;
+                borderColor?: ThemeColor;
+                borderWidth?: string;
+                borderRadius?: string;
+                dropShadow?: boolean;
+                value?: {
+                    textAlign?: string;
+                    positiveColor?: ThemeColor;
+                    negativeColor?: ThemeColor;
+                };
+                primaryMeasureColor?: ThemeColor;
+                secondaryInfoColor?: ThemeColor;
+            };
+        };
+        navigation?: {
+            backgroundColor?: ThemeColor;
+            borderColor?: ThemeColor;
+            header?: {
+                color?: ThemeColor;
+            };
+            item?: {
+                color?: ThemeColor;
+                hoverColor?: ThemeColor;
+                selectedColor?: ThemeColor;
+                selectedBackgroundColor?: ThemeColor;
+            };
+        };
+        editPanel?: {
+            backgroundColor?: ThemeColor;
+        };
+    };
+    modal?: {
+        title?: {
+            color?: ThemeColor;
+            lineColor?: ThemeColor;
+        };
+        outsideBackgroundColor?: ThemeColor;
+        dropShadow?: boolean;
+        borderWidth?: string;
+        borderColor?: ThemeColor;
+        borderRadius?: string;
+    };
+    palette?: IThemePalette;
+    tooltip?: {
+        backgroundColor?: ThemeColor;
+        color?: ThemeColor;
+    };
+    typography?: IThemeTypography;
+}
+
+// @beta
+export interface IThemeColorFamily {
+    base: ThemeColor;
+    contrast?: ThemeColor;
+    dark?: ThemeColor;
+    light?: ThemeColor;
+}
+
+// @beta
+export interface IThemePalette {
+    error?: IThemeColorFamily;
+    primary?: IThemeColorFamily;
+    success?: IThemeColorFamily;
+    warning?: IThemeColorFamily;
+}
+
+// @beta
+export interface IThemeTypography {
+    font?: ThemeFontUri;
+    fontBold?: ThemeFontUri;
+}
+
+// @beta
+export interface IThemeWidgetTitle {
+    color?: ThemeColor;
+    textAlign?: string;
+}
+
 // @public
 export interface ITotalDescriptor {
     // (undocumented)
@@ -1492,6 +1613,7 @@ export interface IWorkspacesQueryResult extends IPagedResource<IAnalyticalWorksp
 // @public
 export interface IWorkspaceStylingService {
     getColorPalette(): Promise<IColorPalette>;
+    getTheme(): Promise<ITheme>;
 }
 
 // @public
@@ -1609,6 +1731,12 @@ export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "dis
 
 // @alpha
 export type SupportedWidgetReferenceTypes = Exclude<ObjectType, "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable">;
+
+// @beta
+export type ThemeColor = string;
+
+// @beta
+export type ThemeFontUri = string;
 
 // @public
 export class UnexpectedError extends AnalyticalBackendError {
