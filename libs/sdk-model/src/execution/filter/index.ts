@@ -247,6 +247,14 @@ export type IFilter =
     | IRankingFilter;
 
 /**
+ * Represents a filter specification variant where either the actual filter or a 'null' filter is
+ * provided. Null filters will be ignored during processing.
+ *
+ * @public
+ */
+export type INullableFilter = IFilter | undefined | null;
+
+/**
  * All possible filters that can be specified for a simple measure.
  *
  * @public

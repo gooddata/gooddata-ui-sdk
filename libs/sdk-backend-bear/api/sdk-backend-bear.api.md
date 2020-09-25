@@ -5,10 +5,13 @@
 ```ts
 
 import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+
+export { AnonymousAuthProvider }
 
 // @internal
 export const BackendToBearConvertors: {

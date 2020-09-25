@@ -4,7 +4,7 @@ import bearFactory from "@gooddata/sdk-backend-bear";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { GoodDataAuthProvider } from "./GoodDataAuthProvider";
-import { IAuthState, IAuthContext, AuthStatus } from "./types";
+import { AuthStatus, IAuthContext, IAuthState } from "./types";
 import { useAuthState } from "./state";
 
 const noop = () => undefined;

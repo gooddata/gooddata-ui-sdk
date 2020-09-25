@@ -28,6 +28,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasureExpressionToken } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { INullableFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { IWorkspace } from '@gooddata/sdk-model';
@@ -484,11 +485,11 @@ export type IElementQueryResult = IPagedResource<IAttributeElement>;
 
 // @public
 export interface IExecutionFactory {
-    forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution;
+    forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution;
     forDefinition(def: IExecutionDefinition): IPreparedExecution;
-    forInsight(insightDefinition: IInsightDefinition, filters?: IFilter[]): IPreparedExecution;
-    forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution;
-    forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution;
+    forInsight(insightDefinition: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution;
+    forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution;
+    forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution;
 }
 
 // @public

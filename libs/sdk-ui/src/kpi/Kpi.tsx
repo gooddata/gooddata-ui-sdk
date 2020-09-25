@@ -1,21 +1,21 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IMeasure, IFilter } from "@gooddata/sdk-model";
+import { IMeasure, INullableFilter } from "@gooddata/sdk-model";
 import { ISeparators } from "@gooddata/numberjs";
-import { RawExecute, IRawExecuteProps, IWithLoadingEvents } from "../execution";
+import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 import get from "lodash/get";
 import isNil from "lodash/isNil";
 import {
-    withContexts,
-    IntlWrapper,
-    ILoadingProps,
-    LoadingComponent,
-    IErrorProps,
     DataViewFacade,
+    IErrorProps,
+    ILoadingProps,
+    IntlWrapper,
+    LoadingComponent,
+    withContexts,
 } from "../base";
 import { InvariantError } from "ts-invariant";
 
@@ -149,7 +149,7 @@ export interface IKpiProps extends IWithLoadingEvents<IRawExecuteProps> {
     /**
      * Optionally specify filters to apply during calculation
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify number separators to use when rendering (segment delimiters, decimal point character)

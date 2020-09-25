@@ -20,9 +20,10 @@ const backendShortcuts = {
     stg3: "https://staging3.intgdc.com",
     demo: "https://client-demo-be.na.intgdc.com",
     developer: "https://developer.na.gooddata.com",
+    public: "https://live-examples-proxy.herokuapp.com",
 };
 
-const defaultBackend = backendShortcuts.developer;
+const defaultBackend = backendShortcuts.public;
 
 function SimplestProgressPlugin() {
     let lastPercent = -10;

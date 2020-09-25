@@ -1,15 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 import {
-    IAttributeOrMeasure,
-    IAttribute,
-    IFilter,
-    newBucket,
-    IBucket,
-    ISortItem,
-    bucketsFind,
     bucketAttribute,
-    newAttributeSort,
+    bucketsFind,
     bucketsMeasures,
+    IAttribute,
+    IAttributeOrMeasure,
+    IBucket,
+    INullableFilter,
+    ISortItem,
+    newAttributeSort,
+    newBucket,
     newMeasureSort,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -79,7 +79,7 @@ export interface ITreemapBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 }
 
 /**

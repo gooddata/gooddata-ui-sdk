@@ -539,6 +539,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "heroku",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "highcharts",
       "allowedCategories": [ "production" ]
     },
@@ -637,6 +641,10 @@
     {
       "name": "node-sass-magic-importer",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "npm-run-all",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "ora",

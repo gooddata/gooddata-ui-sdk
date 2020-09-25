@@ -2,17 +2,17 @@
 import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
-    IBucket,
-    IFilter,
-    IMeasure,
-    newBucket,
-    IAttribute,
     attributeLocalId,
-    newDimension,
     bucketsAttributes,
+    IAttribute,
+    IBucket,
+    IMeasure,
+    INullableFilter,
+    newBucket,
+    newDimension,
 } from "@gooddata/sdk-model";
 import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
-import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreXirr } from "./CoreXirr";
 import omit from "lodash/omit";
 
@@ -36,7 +36,7 @@ export interface IXirrBucketProps {
     /**
      * Optionally specify filters to apply on the data to compute with.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 }
 
 /**

@@ -1,14 +1,14 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
-    IFilter,
-    newBucket,
+    IAttributeOrMeasure,
+    INullableFilter,
     ISortItem,
+    newBucket,
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
-import { IChartConfig, IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
+import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
@@ -172,7 +172,7 @@ export interface IAreaChartBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

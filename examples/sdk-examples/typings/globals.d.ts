@@ -11,3 +11,6 @@ declare module "*.ico" {
     const contents: string;
     export = contents;
 }
+
+declare const BACKEND_URL: string;
+declare const BASEPATH: string;

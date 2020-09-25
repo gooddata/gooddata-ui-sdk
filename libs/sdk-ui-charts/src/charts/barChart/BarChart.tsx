@@ -1,11 +1,11 @@
 // (C) 2019 GoodData Corporation
 import {
-    IAttributeOrMeasure,
     applyRatioRule,
     IAttribute,
-    IFilter,
-    newBucket,
+    IAttributeOrMeasure,
+    INullableFilter,
     ISortItem,
+    newBucket,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
@@ -84,7 +84,7 @@ export interface IBarChartBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 
     /**
      * Optionally specify how to sort the data to chart.

@@ -467,6 +467,16 @@ Object {
   "dimensions": Array [],
   "filters": Array [
     Object {
+      "relativeDateFilter": Object {
+        "dataSet": Object {
+          "identifier": "myDs",
+        },
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "to": -10,
+      },
+    },
+    Object {
       "positiveAttributeFilter": Object {
         "displayForm": Object {
           "identifier": "label.account.id.name",
@@ -477,16 +487,6 @@ Object {
             "myAccount",
           ],
         },
-      },
-    },
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
-          "identifier": "myDs",
-        },
-        "from": 0,
-        "granularity": "GDC.time.month",
-        "to": -10,
       },
     },
     Object {
@@ -1428,6 +1428,16 @@ Object {
   "dimensions": Array [],
   "filters": Array [
     Object {
+      "relativeDateFilter": Object {
+        "dataSet": Object {
+          "identifier": "myDs",
+        },
+        "from": 0,
+        "granularity": "GDC.time.month",
+        "to": -10,
+      },
+    },
+    Object {
       "positiveAttributeFilter": Object {
         "displayForm": Object {
           "identifier": "label.account.id.name",
@@ -1438,16 +1448,6 @@ Object {
             "myAccount",
           ],
         },
-      },
-    },
-    Object {
-      "relativeDateFilter": Object {
-        "dataSet": Object {
-          "identifier": "myDs",
-        },
-        "from": 0,
-        "granularity": "GDC.time.month",
-        "to": -10,
       },
     },
     Object {

@@ -16,10 +16,10 @@ import {
     IBucket,
     IDimension,
     IExecutionDefinition,
-    IFilter,
     IInsightDefinition,
     ISortItem,
     IInsight,
+    INullableFilter,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
@@ -46,19 +46,19 @@ export class DecoratedExecutionFactory implements IExecutionFactory {
         return this.wrap(this.decorated.forDefinition(def));
     }
 
-    public forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+    public forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forItems(items, filters));
     }
 
-    public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
+    public forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forBuckets(buckets, filters));
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forInsight(insight, filters));
     }
 
-    public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    public forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution {
         return this.wrap(this.decorated.forInsightByRef(insight, filters));
     }
 

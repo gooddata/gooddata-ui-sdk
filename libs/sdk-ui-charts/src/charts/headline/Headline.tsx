@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IBucket, IFilter, IMeasure, newBucket } from "@gooddata/sdk-model";
+import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
 import React from "react";
-import { BucketNames, withContexts, Subtract } from "@gooddata/sdk-ui";
-import { ICoreChartProps, IBucketChartProps } from "../../interfaces";
+import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
+import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreHeadline } from "./CoreHeadline";
 import omit from "lodash/omit";
 
@@ -29,7 +29,7 @@ export interface IHeadlineBucketProps {
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: INullableFilter[];
 }
 
 /**

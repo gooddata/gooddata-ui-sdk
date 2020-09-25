@@ -1,5 +1,11 @@
 // (C) 2020 GoodData Corporation
-import { IAttribute, IAttributeOrMeasure, IColorPalette, IFilter, ISortItem } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IAttributeOrMeasure,
+    IColorPalette,
+    INullableFilter,
+    ISortItem,
+} from "@gooddata/sdk-model";
 import {
     IDrillEventContext,
     ISeparators,
@@ -212,7 +218,7 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
     color?: IAttributeOrMeasure;
     segmentBy?: IAttribute;
 
-    filters?: IFilter[];
+    filters?: INullableFilter[];
     sortBy?: ISortItem[];
 
     config?: IGeoConfig;

@@ -8,7 +8,7 @@ import { dimensionTotals, IDimension } from "../base/dimension";
 import { ISortItem } from "../base/sort";
 import { ITotal } from "../base/totals";
 import { IBucket } from "../buckets";
-import { IFilter } from "../filter";
+import { IFilter, INullableFilter } from "../filter";
 import { mergeFilters } from "../filter/filterMerge";
 import { IMeasure } from "../measure";
 import { measureFingerprint } from "../measure/fingerprint";
@@ -82,7 +82,10 @@ export type DimensionGenerator = (def: IExecutionDefinition) => IDimension[];
  * @returns always new instance
  * @public
  */
-export function defWithFilters(def: IExecutionDefinition, filters: IFilter[] = []): IExecutionDefinition {
+export function defWithFilters(
+    def: IExecutionDefinition,
+    filters: INullableFilter[] = [],
+): IExecutionDefinition {
     invariant(def, "execution definition to add more filters to must be defined");
 
     if (isEmpty(filters)) {

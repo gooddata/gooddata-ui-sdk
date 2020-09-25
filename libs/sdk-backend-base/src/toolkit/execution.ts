@@ -6,13 +6,13 @@ import {
     defWithDimensions,
     IBucket,
     IExecutionDefinition,
-    IFilter,
     IInsightDefinition,
     newDefForBuckets,
     newDefForInsight,
     newDefForItems,
     IInsight,
     isInsight,
+    INullableFilter,
 } from "@gooddata/sdk-model";
 
 import { IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -36,7 +36,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
 
     public abstract forDefinition(def: IExecutionDefinition): IPreparedExecution;
 
-    public forItems(items: IAttributeOrMeasure[], filters?: IFilter[]): IPreparedExecution {
+    public forItems(items: IAttributeOrMeasure[], filters?: INullableFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForItems(this.workspace, items, filters),
             defaultDimensionsGenerator,
@@ -45,7 +45,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
         return this.forDefinition(def);
     }
 
-    public forBuckets(buckets: IBucket[], filters?: IFilter[]): IPreparedExecution {
+    public forBuckets(buckets: IBucket[], filters?: INullableFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForBuckets(this.workspace, buckets, filters),
             defaultDimensionsGenerator,
@@ -54,7 +54,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
         return this.forDefinition(def);
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForInsight(this.workspace, insight, filters),
             defaultDimensionsGenerator,
@@ -63,7 +63,7 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
         return this.forDefinition(def);
     }
 
-    public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    public forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution {
         return this.forInsight(insight, filters);
     }
 }
@@ -78,23 +78,23 @@ export abstract class AbstractExecutionFactory implements IExecutionFactory {
  * @internal
  */
 export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory {
-    constructor(decorated: IExecutionFactory, private readonly filters: IFilter[] = []) {
+    constructor(decorated: IExecutionFactory, private readonly filters: INullableFilter[] = []) {
         super(decorated);
     }
 
-    public forItems(items: IAttributeOrMeasure[], filters: IFilter[] = []): IPreparedExecution {
+    public forItems(items: IAttributeOrMeasure[], filters: INullableFilter[] = []): IPreparedExecution {
         return super.forItems(items, this.filters.concat(filters));
     }
 
-    public forBuckets(buckets: IBucket[], filters: IFilter[] = []): IPreparedExecution {
+    public forBuckets(buckets: IBucket[], filters: INullableFilter[] = []): IPreparedExecution {
         return super.forBuckets(buckets, this.filters.concat(filters));
     }
 
-    public forInsight(insight: IInsightDefinition, filters: IFilter[] = []): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters: INullableFilter[] = []): IPreparedExecution {
         return super.forInsight(insight, this.filters.concat(filters));
     }
 
-    public forInsightByRef(insight: IInsight, filters: IFilter[] = []): IPreparedExecution {
+    public forInsightByRef(insight: IInsight, filters: INullableFilter[] = []): IPreparedExecution {
         return super.forInsightByRef(insight, this.filters.concat(filters));
     }
 }
@@ -111,7 +111,7 @@ export class ExecutionFactoryUpgradingToExecByReference extends DecoratedExecuti
         super(decorated);
     }
 
-    public forInsight(insight: IInsightDefinition, filters?: IFilter[]): IPreparedExecution {
+    public forInsight(insight: IInsightDefinition, filters?: INullableFilter[]): IPreparedExecution {
         if (isInsight(insight)) {
             return this.forInsightByRef(insight, filters);
         }

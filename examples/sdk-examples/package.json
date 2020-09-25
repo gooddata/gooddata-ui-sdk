@@ -50,10 +50,12 @@
         "eslint": "^7.5.0",
         "file-loader": "^6.0.0",
         "fork-ts-checker-webpack-plugin": "^4.1.3",
+        "heroku": "^7.43.2",
         "html-webpack-plugin": "^4.3.0",
         "jest-junit": "^3.0.0",
         "jest": "^26.4.2",
         "node-sass": "^4.13.0",
+        "npm-run-all": "^4.1.5",
         "prettier": "~2.0.5",
         "raw-loader": "^4.0.1",
         "sass-loader": "^8.0.0",
@@ -134,13 +136,17 @@
         "test-once": "jest",
         "examples?": "# Default is developer domain, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "examples": "npm run refresh-examplesjs && bash scripts/run-examples.sh",
-        "build": "npm run refresh-examplesjs && bash scripts/build-examples.sh",
+        "build": "npm run refresh-examplesjs && bash scripts/build-examples.sh ${EXAMPLES_BUILD_TYPE}",
         "examples-server": "node server/src/index.js",
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",
         "examples-testcafe-ci": "./scripts/run-testcafe.sh ci",
         "refresh-ldm": "./scripts/refresh-ldm.sh && npm run build",
         "refresh-examplesjs": "bash ./scripts/refresh-examplesJS.sh",
-        "heroku-postbuild": "npm run build developer"
+        "heroku-create-app": "heroku create ${PUBLIC_APP_NAME}; exit 0",
+        "heroku-set-env": "run-s heroku-set-env:*",
+        "heroku-set-env:BACKEND_URL": "echo ${BACKEND_URL} && heroku config:set BACKEND_URL=${BACKEND_URL} -a ${PUBLIC_APP_NAME}",
+        "heroku-set-env:BACKEND_HOST": "echo ${BACKEND_HOST} && heroku config:set BACKEND_HOST=${BACKEND_HOST} -a ${PUBLIC_APP_NAME}",
+        "heroku-release": "heroku container:release web -a ${PUBLIC_APP_NAME}"
     }
 }

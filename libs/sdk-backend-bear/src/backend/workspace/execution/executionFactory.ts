@@ -7,12 +7,14 @@ import {
     IExecutionDefinition,
     IFilter,
     IInsight,
+    INullableFilter,
     newDefForInsight,
 } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { BearPreparedExecution } from "./preparedExecution";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import { BearPreparedExecutionByRef } from "./preparedExecutionByRef";
+import compact from "lodash/compact";
 
 export class BearExecution extends AbstractExecutionFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, workspace: string) {
@@ -23,19 +25,20 @@ export class BearExecution extends AbstractExecutionFactory {
         return new BearPreparedExecution(this.authCall, def, this);
     }
 
-    public forInsightByRef(insight: IInsight, filters?: IFilter[]): IPreparedExecution {
+    public forInsightByRef(insight: IInsight, filters?: INullableFilter[]): IPreparedExecution {
         const def = defWithDimensions(
             newDefForInsight(this.workspace, insight, filters),
             defaultDimensionsGenerator,
         );
 
+        const nonNullFilters = compact(filters);
         /*
          * Need different factory to retain `insight` and `filters` during as the prepared execution is
          * cumulatively constructed
          */
-        const byRefFactory = new BearExecutionByRef(this.authCall, this.workspace, insight, filters);
+        const byRefFactory = new BearExecutionByRef(this.authCall, this.workspace, insight, nonNullFilters);
 
-        return new BearPreparedExecutionByRef(this.authCall, def, insight, filters, byRefFactory);
+        return new BearPreparedExecutionByRef(this.authCall, def, insight, nonNullFilters, byRefFactory);
     }
 }
 
