@@ -40,7 +40,7 @@ export async function getSdkDescriptor(): Promise<SdkDescriptor | undefined> {
         const rushPackages = readJsonSync(rushJsonFile).projects as RushPackageDescriptor[];
         const rootDir = path.dirname(rushJsonFile);
         const packages: SdkPackageDescriptor[] = rushPackages
-            .filter((p) => !p.projectFolder.startsWith("examples"))
+            .filter((p) => !p.projectFolder.startsWith("examples") && !p.projectFolder.startsWith("skel"))
             .map((rushPackage: RushPackageDescriptor) => {
                 const { packageName, projectFolder } = rushPackage;
                 let isLib = true;

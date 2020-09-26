@@ -5,6 +5,7 @@ import program from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
 import { logError } from "./cli/loggers";
+import { devConsole } from "./devConsole/action";
 import { devTo } from "./devTo/action";
 
 program
@@ -12,6 +13,8 @@ program
     .command("devTo <path>")
     .description("Links SDK libraries to an application residing in <path>")
     .action(devTo);
+
+program.command("devConsole").description("Starts development console").action(devConsole);
 
 async function run() {
     program.parse(process.argv);
