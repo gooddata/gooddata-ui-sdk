@@ -12,7 +12,10 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
     getMaxWidth,
+    getMaxWidthCached,
     SORT_ICON_WIDTH,
+    getUpdatedColumnDefs,
+    MIN_WIDTH as AG_GRID_COLUMN_SIZING_MIN_WIDTH,
 } from "../agGridColumnSizing";
 import { IGridHeader } from "../agGridTypes";
 import { ColumnWidthItem, IAbsoluteColumnWidth, IResizedColumns } from "../../columnWidths";
@@ -584,12 +587,117 @@ describe("agGridColumnSizing", () => {
         const width = 20;
         const measureTextMock = jest.fn();
         const context: any = {
-            measureText: measureTextMock.mockReturnValueOnce({ width }),
+            measureText: measureTextMock.mockReturnValue({ width }),
         };
 
         it("should return correct new max width when sort is set to true", () => {
             const correctWidth = width + SORT_ICON_WIDTH;
             expect(getMaxWidth(context, "text", true, 15)).toBe(correctWidth);
+        });
+
+        it("should return correct new max width when sort is set to false", () => {
+            const correctWidth = width;
+            expect(getMaxWidth(context, "text", false, 15)).toBe(correctWidth);
+        });
+
+        it("should return undefined when maxWidth is bigger than the measured width", () => {
+            const maxWidth = 100;
+            expect(getMaxWidth(context, "text", true, maxWidth)).toBeUndefined();
+        });
+    });
+
+    describe("getMaxWidthCached", () => {
+        const width = 20;
+        const measureTextMock = jest.fn();
+        const context: any = {
+            measureText: measureTextMock.mockReturnValue({ width }),
+        };
+        const widthsCache: Map<string, number> = new Map();
+
+        it("should return correct width from cache", () => {
+            const correctWidth = width;
+            widthsCache.set("text", correctWidth);
+            expect(getMaxWidthCached(context, "text", 15, widthsCache)).toBe(correctWidth);
+        });
+
+        it("should return correct width when string is not in cache", () => {
+            const correctWidth = width;
+            widthsCache.set("text", 100);
+            expect(getMaxWidthCached(context, "new_text", 15, widthsCache)).toBe(correctWidth);
+        });
+
+        it("should return undefined when maxWidth is bigger than the measured width", () => {
+            const maxWidth = 100;
+            widthsCache.set("text", 20);
+            expect(getMaxWidthCached(context, "text", maxWidth, widthsCache)).toBeUndefined();
+        });
+    });
+
+    describe("getUpdatedColumnDefs", () => {
+        const column1 = {
+            getColDef: jest.fn().mockReturnValue({ field: "text1" }),
+        };
+        const column2 = {
+            getColDef: jest.fn().mockReturnValue({ field: "text2" }),
+        };
+        const column3 = {
+            getColDef: jest.fn().mockReturnValue({ field: "text3" }),
+        };
+        const column4 = {
+            getColDef: jest.fn().mockReturnValue({ field: "text4" }),
+        };
+        const columns: any = [column1, column2, column3];
+        const padding = 10;
+
+        it("should return correct column definitions with calculated width", () => {
+            const width = 100;
+            const maxWidths: Map<string, number> = new Map();
+            maxWidths.set("text1", width);
+            maxWidths.set("text2", width);
+            maxWidths.set("text3", width);
+            const correctColDefs: any = [
+                {
+                    field: "text1",
+                    width: width + padding,
+                },
+                {
+                    field: "text2",
+                    width: width + padding,
+                },
+                {
+                    field: "text3",
+                    width: width + padding,
+                },
+            ];
+            expect(getUpdatedColumnDefs(columns, maxWidths, padding)).toStrictEqual(correctColDefs);
+        });
+
+        it("should return correct column definitions with calculated width and one column definition with min width", () => {
+            const width = 100;
+            const maxWidths: Map<string, number> = new Map();
+            maxWidths.set("text1", width);
+            maxWidths.set("text2", width);
+            maxWidths.set("text3", width);
+            const newColumns = [...columns, column4];
+            const correctColDefs: any = [
+                {
+                    field: "text1",
+                    width: width + padding,
+                },
+                {
+                    field: "text2",
+                    width: width + padding,
+                },
+                {
+                    field: "text3",
+                    width: width + padding,
+                },
+                {
+                    field: "text4",
+                    width: AG_GRID_COLUMN_SIZING_MIN_WIDTH,
+                },
+            ];
+            expect(getUpdatedColumnDefs(newColumns, maxWidths, padding)).toStrictEqual(correctColDefs);
         });
     });
 });

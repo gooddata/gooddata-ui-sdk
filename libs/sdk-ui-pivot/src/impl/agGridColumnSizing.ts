@@ -681,6 +681,21 @@ const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrow
  * Custom implementation of columns autoresizing according content
  * https://en.morzel.net/post/resizing-all-ag-gird-react-columns
  */
+interface CalculateColumnWidthsConfig {
+    context: CanvasRenderingContext2D | null;
+    columns: Column[];
+    rowData: IGridRow[];
+    totalData: IGridRow[];
+    execution: IExecutionResult;
+    measureHeaders: boolean;
+    headerFont: string;
+    subtotalFont: string;
+    totalFont: string;
+    rowFont: string;
+    padding: number;
+    separators: any;
+    cache: Map<string, number>;
+}
 
 export const getMaxWidth = (
     context: CanvasRenderingContext2D,
@@ -698,7 +713,7 @@ export const getMaxWidth = (
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 };
 
-const getMaxWidthCached = (
+export const getMaxWidthCached = (
     context: CanvasRenderingContext2D,
     text: string,
     maxWidth: number | undefined,
@@ -723,16 +738,20 @@ const valueFormatter = (text: string, colDef: IGridHeader, execution: IExecution
         : null;
 };
 
-const collectWidths = (config: any, row: IGridRow, maxWidths: Map<string, number>) => {
+const collectWidths = (
+    config: CalculateColumnWidthsConfig,
+    row: IGridRow,
+    maxWidths: Map<string, number>,
+): void => {
     const { context } = config;
     config.columns.forEach((column: Column) => {
-        const cd: IGridHeader = column.getColDef() as IGridHeader;
-        if (cd.field) {
-            const text = row[cd.field];
+        const colDef: IGridHeader = column.getColDef() as IGridHeader;
+        if (colDef.field && context) {
+            const text = row[colDef.field];
             const formattedText =
-                isMeasureColumn(column) && valueFormatter(text, cd, config.execution, config.separators);
+                isMeasureColumn(column) && valueFormatter(text, colDef, config.execution, config.separators);
             const textForCalculation = formattedText || text;
-            const maxWidth = cd.field ? maxWidths.get(cd.field) : undefined;
+            const maxWidth = colDef.field ? maxWidths.get(colDef.field) : undefined;
             let possibleMaxWidth;
 
             if (config.cache) {
@@ -742,27 +761,30 @@ const collectWidths = (config: any, row: IGridRow, maxWidths: Map<string, number
             }
 
             if (possibleMaxWidth) {
-                maxWidths.set(cd.field, possibleMaxWidth);
+                maxWidths.set(colDef.field, possibleMaxWidth);
             }
         }
     });
 };
 
-interface CalculateColumnWidthsConfig {
-    context: CanvasRenderingContext2D | null;
-    columns: Column[];
-    rowData: IGridRow[];
-    totalData: IGridRow[];
-    execution: IExecutionResult | null;
-    measureHeaders: boolean;
-    headerFont: string;
-    subtotalFont: string;
-    totalFont: string;
-    rowFont: string;
-    padding: number;
-    separators: any;
-    cache: Map<string, number>;
-}
+export const getUpdatedColumnDefs = (
+    columns: Column[],
+    maxWidths: Map<string, number>,
+    padding: number,
+): ColDef[] => {
+    return columns.map((column: Column) => {
+        const colDef: ColDef = column.getColDef();
+        if (colDef.field) {
+            const maxWidth = maxWidths.get(colDef.field);
+            const newWidth = maxWidth ? Math.ceil(maxWidth + padding) : 0;
+            return {
+                ...colDef,
+                width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
+            };
+        }
+        return colDef;
+    });
+};
 
 const calculateColumnWidths = (config: CalculateColumnWidthsConfig) => {
     const { context } = config;
@@ -796,20 +818,7 @@ const calculateColumnWidths = (config: CalculateColumnWidthsConfig) => {
         }
     });
 
-    const updatedColumnDefs = config.columns.map((column: Column) => {
-        const cd: ColDef = column.getColDef();
-        if (cd.field) {
-            const maxWidth = maxWidths.get(cd.field);
-            const newWidth = maxWidth ? Math.ceil(maxWidth + config.padding) : 0;
-            return {
-                ...cd,
-                width: Math.min(Math.max(MIN_WIDTH, newWidth), AUTO_SIZED_MAX_WIDTH),
-            };
-        }
-        return cd;
-    });
-
-    return updatedColumnDefs;
+    return getUpdatedColumnDefs(config.columns, maxWidths, config.padding);
 };
 
 const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
