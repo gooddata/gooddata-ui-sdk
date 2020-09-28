@@ -11,6 +11,8 @@ export type AppMenuItem = {
     registerCb: (ch: any, key: IKeyEventArg) => void;
 };
 
+const MenuItemLength = 10;
+
 export class AppMenu {
     private readonly text: blessed.Widgets.TextElement;
 
@@ -40,8 +42,10 @@ export class AppMenu {
     private createMenuContent(items: AppMenuItem[]): string {
         return items
             .map((i) => {
-                return `{white-fg}{black-bg}${i.keyName}{/}{black-fg}{cyan-bg}${i.name}{/}`;
+                const padding = new Array(MenuItemLength - i.name.length).fill(" ").join("");
+
+                return `{${ColorCodes.brightwhite}-fg}{${ColorCodes.black}-bg}${i.keyName}{/}{black-fg}{cyan-bg}${i.name}${padding}{/}`;
             })
-            .join();
+            .join("");
     }
 }
