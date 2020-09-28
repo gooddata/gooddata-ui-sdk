@@ -56,3 +56,78 @@ Array [
   ],
 ]
 `;
+
+exports[`dependency graph should create correct build order for prod deps only 1`] = `
+Array [
+  Array [
+    "@gooddata/sdk-skel-ts",
+    "@gooddata/sdk-skel-tsx",
+    "@gooddata/api-model-bear",
+    "@gooddata/sdk-model",
+    "@gooddata/util",
+    "@gooddata/applink",
+  ],
+  Array [
+    "@gooddata/sdk-backend-spi",
+    "@gooddata/api-client-bear",
+    "@gooddata/sdk-embedding",
+  ],
+  Array [
+    "@gooddata/reference-workspace",
+    "@gooddata/sdk-backend-base",
+    "@gooddata/live-examples-workspace",
+    "@gooddata/experimental-workspace",
+    "@gooddata/api-client-tiger",
+    "@gooddata/sdk-ui",
+  ],
+  Array [
+    "@gooddata/sdk-ui-kit",
+    "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-backend-mockingbird",
+    "@gooddata/sdk-backend-tiger",
+    "@gooddata/sdk-backend-bear",
+    "@gooddata/catalog-export",
+  ],
+  Array [
+    "@gooddata/mock-handling",
+    "@gooddata/sdk-ui-pivot",
+    "@gooddata/sdk-ui-charts",
+    "@gooddata/sdk-ui-geo",
+  ],
+  Array [
+    "@gooddata/sdk-ui-ext",
+    "@gooddata/sdk-ui-tests",
+    "@gooddata/reference-workspace-mgmt",
+  ],
+  Array [
+    "@gooddata/sdk-ui-all",
+  ],
+]
+`;
+
+exports[`dependency graph should find depending packages 1`] = `
+Array [
+  Array [
+    "@gooddata/sdk-embedding",
+    "@gooddata/catalog-export",
+    "@gooddata/mock-handling",
+    "@gooddata/sdk-backend-mockingbird",
+    "@gooddata/sdk-backend-bear",
+    "@gooddata/api-client-bear",
+    "@gooddata/sdk-ui-ext",
+    "@gooddata/experimental-workspace",
+    "@gooddata/live-examples-workspace",
+    "@gooddata/reference-workspace-mgmt",
+    "@gooddata/sdk-ui-tests",
+    "@gooddata/sdk-ui-vis-commons",
+    "@gooddata/sdk-ui-geo",
+    "@gooddata/sdk-ui-charts",
+    "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-ui-pivot",
+    "@gooddata/sdk-ui",
+    "@gooddata/sdk-ui-all",
+    "@gooddata/sdk-ui-kit",
+  ],
+]
+`;

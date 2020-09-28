@@ -6,7 +6,7 @@ import groupBy from "lodash/groupBy";
 import flatMap from "lodash/flatMap";
 import difference from "lodash/difference";
 import fromPairs from "lodash/fromPairs";
-import { DependencyGraph, DependencyType, SdkPackageDescriptor } from "./types";
+import { AllDepdencyTypes, DependencyGraph, DependencyType, SdkPackageDescriptor } from "./types";
 
 function addDependencies(
     graph: DependencyGraph,
@@ -78,30 +78,35 @@ export function createDependencyGraph(packages: SdkPackageDescriptor[]): Depende
  *
  * @param graph - dependency graph
  * @param packages - packages to get dependencies for
+ * @param depTypes - dependency types to follow - defaults to all
  */
 export function findDependingPackages(
     graph: DependencyGraph,
     packages: Array<string | SdkPackageDescriptor>,
+    depTypes: DependencyType[] = AllDepdencyTypes,
 ): string[][] {
     const names = packages.map((p) => (typeof p === "string" ? p : p.packageName));
     const results: string[][] = [];
 
     for (const pkg of names) {
         let remaining = [pkg];
-        const result: string[] = [];
+        const result: Set<string> = new Set<string>();
 
         while (remaining.length > 0) {
             /*
              * For all remaining packages to investigate, check out which packages are depending on them,
              * add them to result and then prepare for the next cycle
              */
-            const depending = flatMap(remaining, (p) => graph.incoming[p]?.map((d) => d.from) ?? []);
+            const depending = flatMap(
+                remaining,
+                (p) => graph.incoming[p]?.filter((d) => depTypes.includes(d.type)).map((d) => d.from) ?? [],
+            );
 
-            result.push(...depending);
+            depending.forEach((p) => result.add(p));
             remaining = depending;
         }
 
-        results.push(result);
+        results.push(Array.from(result.keys()));
     }
 
     return results;
@@ -112,8 +117,12 @@ export function findDependingPackages(
  * can be safely built in parallel and the next group can only be built if the previous group is built.
  *
  * @param graph - dependency graph to create build order for
+ * @param depTypes - dependency types
  */
-export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
+export function determinePackageBuildOrder(
+    graph: DependencyGraph,
+    depTypes: DependencyType[] = AllDepdencyTypes,
+): string[][] {
     /*
      * The algorithm to achieve this does 'shave' the packages from the leaves up to the roots. The package
      * can only be shaved-off if all packages which it depends on have already been shaved off.
@@ -139,7 +148,8 @@ export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
 
         while (possibleGroup.length > 0) {
             const pkg = possibleGroup.pop()!;
-            const packageDependencies = graph.outgoing[pkg]?.map((d) => d.to) ?? [];
+            const packageDependencies =
+                graph.outgoing[pkg]?.filter((d) => depTypes.includes(d.type)).map((d) => d.to) ?? [];
             const shavedForThisPackage = allShavedOffDependencies[pkg]!;
             const leftToShaveOff = difference(packageDependencies, shavedForThisPackage);
 
@@ -150,7 +160,8 @@ export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
                  */
                 group.push(pkg);
 
-                const dependents = graph.incoming[pkg]?.map((d) => d.from) ?? [];
+                const dependents =
+                    graph.incoming[pkg]?.filter((d) => depTypes.includes(d.type)).map((d) => d.from) ?? [];
 
                 for (const dep of dependents) {
                     shavedOffByThisGroup.push([dep, pkg]);

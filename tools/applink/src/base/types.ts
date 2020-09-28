@@ -117,6 +117,8 @@ export type DependencyGraph = {
 
 export type DependencyType = "prod" | "dev" | "peer";
 
+export const AllDepdencyTypes: DependencyType[] = ["prod", "dev", "peer"];
+
 /**
  * Dependency between SDK packages.
  */
