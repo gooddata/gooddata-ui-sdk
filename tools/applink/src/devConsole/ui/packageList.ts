@@ -6,6 +6,9 @@ import { DependencyGraph, SdkPackageDescriptor } from "../../base/types";
 import max from "lodash/max";
 import { determinePackageBuildOrder, findDependingPackages } from "../../base/sdkDependencyGraph";
 import flatten from "lodash/flatten";
+import { intersection } from "lodash";
+import { appLogMessage } from "./utils";
+import { ColorCodes } from "./colors";
 
 type PackageListItem = {
     selected: boolean;
@@ -19,11 +22,14 @@ type PackageListItem = {
 
 const IndicatorSuccess = "{green-bg} {/}";
 const IndicatorError = "{red-bg} {/}";
-const IndicatorWarn = "{yellow-bg} {/}";
 const IndicatorInit = "{blue-bg} {/}";
 
 const CursorHighlight = "{cyan-bg}";
-const DependentHightlight = ["{cyan-fg}{bold}", "{cyan-fg}"];
+const DependentHightlight = [
+    `{${ColorCodes.lightcyan}-fg}{bold}`,
+    `{${ColorCodes.lightcyan}-fg}`,
+    `{${ColorCodes.cyan}-fg}`,
+];
 
 const ClearTags = "{/}";
 
@@ -35,6 +41,8 @@ export class PackageList extends AppPanel implements IEventListener {
 
     private listItems: PackageListItem[] = [];
     private itemIndex: Record<string, number> = {};
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     private selectedItemIdx: number | undefined;
 
     constructor(options: AppPanelOptions) {
@@ -49,12 +57,16 @@ export class PackageList extends AppPanel implements IEventListener {
             interactive: true,
         });
 
+        this.list.focus();
+        this.box.append(this.list);
+
         this.list.on("select item", (_element, index) => {
             this.selectItem(index);
         });
 
-        this.list.focus();
-        this.box.append(this.list);
+        this.list.on("action", (_element, index) => {
+            appLogMessage("enter on " + index);
+        });
 
         GlobalEventBus.register(this);
     }
@@ -70,6 +82,10 @@ export class PackageList extends AppPanel implements IEventListener {
                 break;
             }
         }
+    };
+
+    public focus = (): void => {
+        this.list.focus();
     };
 
     private onPackagesInitialized = (event: PackagesInitialized): void => {
@@ -105,11 +121,14 @@ export class PackageList extends AppPanel implements IEventListener {
         }
 
         this.selectedItemIdx = selectedIdx;
-        const selectedItemPosition =
-            this.buildOrder?.findIndex((pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
+
         const dependents = flatten(
             findDependingPackages(this.dependencyGraph!, [selectedItem.packageName], ["prod"]),
         );
+        const filteredBuildOrder =
+            this.buildOrder?.filter((g) => intersection(g, dependents).length > 0) ?? [];
+        const selectedItemPosition =
+            filteredBuildOrder.findIndex((pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
 
         this.listItems.forEach((item, idx) => {
             item.selected = false;
@@ -118,10 +137,10 @@ export class PackageList extends AppPanel implements IEventListener {
             if (selectedIdx === idx) {
                 item.selected = true;
             } else if (dependents.includes(item.packageName)) {
-                const itemPosition =
-                    this.buildOrder?.findIndex((pkgs) => pkgs.includes(item.packageName)) ?? -1;
+                const itemDistance =
+                    filteredBuildOrder.findIndex((pkgs) => pkgs.includes(item.packageName)) ?? -1;
 
-                item.highlightLevel = itemPosition - selectedItemPosition - 1;
+                item.highlightLevel = itemDistance - selectedItemPosition - 1;
             }
 
             this.list.setItem(this.list.getItem(idx), createPackageItem(item));

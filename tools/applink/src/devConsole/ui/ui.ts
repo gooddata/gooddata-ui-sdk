@@ -2,13 +2,15 @@
 import blessed from "blessed";
 import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
-import { getTerminalSize } from "./utils";
+import { appLogMessage, getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
 
 export class TerminalUi {
     private readonly screen: blessed.Widgets.Screen;
     private readonly packageList: PackageList;
     private readonly log: AppLog;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     private readonly menu: AppMenu;
 
     constructor() {
@@ -57,6 +59,36 @@ export class TerminalUi {
 
     private createApplicationMenu(): AppMenu {
         const items: AppMenuItem[] = [
+            {
+                name: "Log Toggle",
+                keyName: "F2",
+                registerKeys: ["f2"],
+                registerCb: () => {
+                    this.log.toggleExpand();
+
+                    if (this.log.expanded) {
+                        this.log.focus();
+                    } else {
+                        this.packageList.focus();
+                    }
+                },
+            },
+            {
+                name: "BuildOne",
+                keyName: "F7",
+                registerKeys: ["f7"],
+                registerCb: () => {
+                    appLogMessage("build selected package");
+                },
+            },
+            {
+                name: "BuildDeps",
+                keyName: "F8",
+                registerKeys: ["f8"],
+                registerCb: () => {
+                    appLogMessage("build selected package with dependencies");
+                },
+            },
             {
                 name: "Quit",
                 keyName: "F10",
