@@ -344,7 +344,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                         </div>
                     </div>
                     <a
-                        href="https://github.com/gooddata/gooddata-react-components#run-live-examples-locally"
+                        href="https://github.com/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-examples#getting-started"
                         className="gd-header-menu-item button-header button-header-border"
                         target="_blank"
                         rel="noopener noreferrer"
