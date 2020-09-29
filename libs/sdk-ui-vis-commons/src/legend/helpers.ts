@@ -394,6 +394,13 @@ export function calculateStaticLegend(
     hasPaging: boolean;
     visibleItemsCount: number;
 } {
+    if (containerHeight < ITEM_HEIGHT) {
+        return {
+            hasPaging: false,
+            visibleItemsCount: 0,
+        };
+    }
+
     const visibleItemsCount = getStaticVisibleItemsCount(containerHeight);
     if (visibleItemsCount >= seriesCount) {
         return {
