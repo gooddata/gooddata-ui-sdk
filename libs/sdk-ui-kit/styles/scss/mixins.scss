@@ -184,10 +184,6 @@
 
     background: -ms-linear-gradient(top, $color1 1%, $color2 49%, $color3 50%, $color4 100%); /* IE10+ */
     background: linear-gradient(to top, $color1 1%, $color2 49%, $color3 50%, $color4 100%); /* W3C */
-
-    // it would not work
-    // stylelint-disable-next-line function-name-case
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{ie-hex-str($color1)}', EndColorStr='#{ie-hex-str($color4)}'); /* IE6-IE9 */
 }
 
 @mixin grid-sort-gradient($color) {
@@ -210,7 +206,4 @@
     background-image: -moz-linear-gradient(top, $topColor, $bottomColor); /* FF3.6 */
     background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
     background-image: linear-gradient(to top, $topColor, $bottomColor);
-    // it would not work
-    // stylelint-disable-next-line function-name-case
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{ie-hex-str($topColor)}', EndColorStr='#{ie-hex-str($bottomColor)}'); /* IE6-IE9 */
 }

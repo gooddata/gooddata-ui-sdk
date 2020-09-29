@@ -66,6 +66,15 @@ const ScenarioConfig = [
             readySelector: ".screenshot-target",
         },
     },
+    {
+        /*
+         * Tests for UI KIT components
+         */
+        idRegex: /(12).*/g,
+        config: {
+            readySelector: ".screenshot-target",
+        },
+    },
 ];
 
 // --------------------------------------------------------------------

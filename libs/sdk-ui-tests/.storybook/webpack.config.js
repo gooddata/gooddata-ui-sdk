@@ -1,10 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 
-const commitHash = require("child_process")
-    .execSync("git rev-parse --short HEAD")
-    .toString()
-    .trim();
+const commitHash = require("child_process").execSync("git rev-parse --short HEAD").toString().trim();
 
 /*
  * Our extension of config adds support for typescript. support for CSS loading and SVG & fonts is built into
@@ -28,6 +25,22 @@ module.exports = ({ config, mode }) => {
                     transpileOnly: true,
                     configFile: path.join(__dirname, "../tsconfig.json"),
                 },
+            },
+        ],
+    });
+
+    // SCSS support
+    config.module.rules.push({
+        test: /\.scss$/,
+        use: [
+            {
+                loader: "style-loader",
+            },
+            {
+                loader: "css-loader",
+            },
+            {
+                loader: "sass-loader",
             },
         ],
     });

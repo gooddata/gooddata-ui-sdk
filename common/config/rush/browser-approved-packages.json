@@ -436,7 +436,7 @@
     },
     {
       "name": "css-loader",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "custom-event",
@@ -748,7 +748,7 @@
     },
     {
       "name": "sass-loader",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "spark-md5",
@@ -768,7 +768,7 @@
     },
     {
       "name": "style-loader",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "styled-jsx",

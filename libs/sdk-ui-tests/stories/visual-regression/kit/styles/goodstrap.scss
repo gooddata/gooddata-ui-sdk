@@ -1,0 +1,37 @@
+// (C) 2020 GoodData Corporation
+
+@import "./library";
+@import "./theme";
+
+.library-component {
+    margin: 20px;
+    padding: 0;
+    line-height: 1.4rem;
+    color: #464e56;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: avenir, "Helvetica Neue", arial, sans-serif;
+    font-weight: 400;
+
+    input,
+    textarea {
+        font-family: $goodstrap-fontFamily;
+        font-size: 12px;
+    }
+}
+
+.goodstrap-row {
+    max-width: none !important;
+}
+
+.row,
+.column,
+.columns {
+    box-sizing: border-box;
+}
+
+abbr,
+acronym {
+    border-bottom: 0.1em dotted;
+    cursor: help;
+}
