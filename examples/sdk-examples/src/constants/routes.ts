@@ -33,7 +33,6 @@ import { PivotTableDynamic } from "../examples/hidden/pivotTableDynamic";
 import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
 
 import { Login } from "../components/login";
-import { Registration } from "../components/registration";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
 
@@ -193,10 +192,7 @@ export const backendInfoRoutes = [
     { path: "/about-this-project", title: "About This Project", Component: AboutThisProject },
 ];
 
-export const userRoutes = [
-    { path: "/login", title: "Login", Component: Login },
-    { path: "/registration", title: "Registration", Component: Registration },
-];
+export const userRoutes = [{ path: "/login", title: "Login", Component: Login }];
 
 export const topNavigationRoutes = [{ path: "/", title: "Live Examples", Component: BasicComponents }];
 
