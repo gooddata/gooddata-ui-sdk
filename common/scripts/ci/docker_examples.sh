@@ -3,7 +3,7 @@ set -eu
 set -o pipefail
 
 # Absolute root directory - for volumes
-ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../.. && pwd -P))
+ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../.. && pwd -P))
 
 IMAGE="node:12.15.0"
 
@@ -18,6 +18,8 @@ echo "-----------------------------------------------------------------------"
 #
 
 _BACKEND_URL="https://${BACKEND_HOST}"
+DEPLOY_USERID=1000
+DEPLOY_GROUPID=$(cut -d: -f3 < <(getent group docker))
 
 echo "Going to deploy examples to heroku. Deployment details:"
 echo "  Application name:  ${PUBLIC_APP_NAME}"
@@ -28,8 +30,9 @@ docker run \
   --env PUBLIC_APP_NAME=${PUBLIC_APP_NAME} \
   --env BACKEND_URL=${_BACKEND_URL} \
   --env BACKEND_HOST=${BACKEND_HOST} \
+  --env HOME="/home/node" \
   --volume ${ROOT_DIR}:/workspace:rw,z,delegated \
-  -u $(id -u ${USER}):$(id -g ${USER}) \
+  -u ${DEPLOY_USERID}:${DEPLOY_GROUPID} \
   -w /workspace \
   ${IMAGE} \
   /bin/bash -c "cd examples/sdk-examples && npm run $*"

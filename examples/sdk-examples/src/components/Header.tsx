@@ -43,20 +43,24 @@ const CoreHeader: React.FC<IHeaderProps> = ({
 
         return (
             <div className="backendInfo">
-                <span className="backendInfoItem">
-                    Connected to:
-                    <span className="backendInfoValue">{backendUrlForInfo}</span>
-                </span>
-                <span className="backendInfoItem">
-                    Project ID:
-                    <span className="backendInfoValue">{workspace}</span>
-                </span>
+                {!ANONYMOUS_ACCESS ? (
+                    <>
+                        <span className="backendInfoItem">
+                            Connected to:
+                            <span className="backendInfoValue">{backendUrlForInfo}</span>
+                        </span>
+                        <span className="backendInfoItem">
+                            Project ID:
+                            <span className="backendInfoValue">{workspace}</span>
+                        </span>
+                    </>
+                ) : null}
                 <span className="backendInfoItem">
                     <span className="backendInfoValue">
                         <a
                             rel="noopener noreferrer"
                             target="_blank"
-                            href="https://github.com/gooddata/gooddata-react-components/blob/master/examples/src/utils/fixtures.js#L25"
+                            href="https://github.com/gooddata/gooddata-ui-sdk/blob/master/examples/sdk-examples/src/ldm/full.ts"
                         >
                             Data Used
                         </a>
@@ -344,7 +348,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                         </div>
                     </div>
                     <a
-                        href="https://github.com/gooddata/gooddata-react-components#run-live-examples-locally"
+                        href="https://github.com/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-examples#getting-started"
                         className="gd-header-menu-item button-header button-header-border"
                         target="_blank"
                         rel="noopener noreferrer"

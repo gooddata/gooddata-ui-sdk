@@ -19,10 +19,10 @@ _EXAMPLES="${DIR}/docker_examples.sh"
 # mapping between build-type -> host -> project
 #
 export EXAMPLES_BUILD_TYPE=${EXAMPLES_BUILD_TYPE:-"public"}
-export EXAMPLES_MAPBOX_TOKEN=${MAPBOX_TOKEN}
+export EXAMPLE_MAPBOX_ACCESS_TOKEN=${MAPBOX_TOKEN}
 
 $_RUSH install
-$_RUSH build
+$_RUSH build -t @gooddata/sdk-examples
 
 #
 # Create ${PUBLIC_APP_NAME} application

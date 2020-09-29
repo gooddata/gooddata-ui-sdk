@@ -2,10 +2,11 @@
 /* eslint-disable react/jsx-closing-tag-location */
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
+import { RouteDefinition } from "../constants/routes";
 
 interface IMenuProps {
     location: any;
-    sideNavigationRoutes?: any[];
+    sideNavigationRoutes?: RouteDefinition[];
     routes?: any[];
 }
 
@@ -14,13 +15,15 @@ const CoreMenu: React.FC<IMenuProps> = ({ sideNavigationRoutes = [], routes = []
     const href = pathname;
     const currentRoute = (href !== undefined && routes.find((link) => link.path === BASEPATH + href)) || null;
 
-    const navigationElements = sideNavigationRoutes.map(({ path, title, exact = false }) => (
-        <li key={path} className={`navListItem${path === currentRoute ? " navListItemActive" : ""}`}>
-            <NavLink to={path} className="navItem" activeClassName="navItemActive" exact={exact}>
-                <span>{title}</span>
-            </NavLink>
-        </li>
-    ));
+    const navigationElements = sideNavigationRoutes
+        .filter((r) => !r.inBuilds || r.inBuilds.includes(BUILD_TYPE))
+        .map(({ path, title, exact = false }) => (
+            <li key={path} className={`navListItem${path === currentRoute ? " navListItemActive" : ""}`}>
+                <NavLink to={path} className="navItem" activeClassName="navItemActive" exact={exact}>
+                    <span>{title}</span>
+                </NavLink>
+            </li>
+        ));
 
     return (
         <div className="navWrapper">

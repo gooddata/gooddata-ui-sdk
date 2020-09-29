@@ -23,4 +23,4 @@ console.log("The /gdc proxy is connected to: ", backendUrl, " with workspace: ",
 export const backendUrlForInfo = backendUrl;
 export const workspace = demoProjectId;
 
-export const MAPBOX_TOKEN: string = process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || "";
+export const MAPBOX_TOKEN: string = process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || BUILTIN_MAPBOX_TOKEN || "";

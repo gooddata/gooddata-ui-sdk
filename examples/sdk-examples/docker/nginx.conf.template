@@ -48,13 +48,9 @@ server {
     proxy_set_header x-forwarded-host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header Host ${BACKEND_HOST};
-  }
-
-  location ^~ /appConfig {
-    proxy_pass ${BACKEND_URL};
-    proxy_set_header x-forwarded-host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_set_header Host ${BACKEND_HOST};
+    proxy_set_header Referer ${BACKEND_URL};
+    proxy_set_header Origin "";
+    proxy_cookie_domain ${BACKEND_HOST} $host;
   }
 
   location ~* \.(?:css|js)$ {
