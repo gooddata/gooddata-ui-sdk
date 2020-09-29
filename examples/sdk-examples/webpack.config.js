@@ -23,8 +23,6 @@ const backendShortcuts = {
     public: "https://live-examples-proxy.herokuapp.com",
 };
 
-const defaultBackend = backendShortcuts.public;
-
 function SimplestProgressPlugin() {
     let lastPercent = -10;
     return new webpack.ProgressPlugin((percent) => {
@@ -37,9 +35,10 @@ function SimplestProgressPlugin() {
 }
 
 module.exports = async (env, argv) => {
+    const backendParam = (env && env.backend) || "public";
+
     const basePath = (env && env.basePath) || ""; // eslint-disable-line no-mixed-operators
-    const backendParam = env ? env.backend : "";
-    const backendUrl = backendShortcuts[backendParam] || backendParam || defaultBackend;
+    const backendUrl = backendShortcuts[backendParam] || backendParam;
     console.log("Backend URI: ", backendUrl); // eslint-disable-line no-console
 
     const isProduction = argv.mode === "production";
@@ -86,7 +85,8 @@ module.exports = async (env, argv) => {
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(backendUrl),
             BASEPATH: JSON.stringify(basePath),
-            BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN),
+            BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),
+            BUILD_TYPE: JSON.stringify(backendParam),
         }),
         new SimplestProgressPlugin(),
         new Dotenv({

@@ -107,7 +107,17 @@ const DrillingUseCasesRoutes = (props: any): JSX.Element =>
 const MeasureValueFilterUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: measureValueFilterUseCasesRoutes });
 
-export const sideNavigationRoutes = [
+export type RouteDefinition = {
+    path: string;
+    title: string;
+    Component: any;
+    pathMatch?: string;
+    redirectTo?: string;
+    exact?: boolean;
+    inBuilds?: string[];
+};
+
+export const sideNavigationRoutes: RouteDefinition[] = [
     { path: "/", title: "Basic Components", Component: BasicComponents, exact: true },
     { path: "/pivot-table", title: "Pivot Table", Component: PivotTable },
     { path: "/geo-pushpin-chart", title: "Geo Pushpin Chart", Component: GeoPushpin },
@@ -141,6 +151,7 @@ export const sideNavigationRoutes = [
         pathMatch: "full",
         title: "Ranking Filter",
         Component: RankingFilter,
+        inBuilds: ["stg3"],
     },
     {
         path: "/date-filter-component",
