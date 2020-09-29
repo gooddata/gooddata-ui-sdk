@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { Link } from "react-router-dom";
 import { withFormik, FormikProps } from "formik";
 import Yup from "yup";
 import { CustomLoading } from "../CustomLoading";
@@ -110,10 +109,6 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
             />
             <form className="LoginForm s-loginForm" onSubmit={handleSubmit}>
                 <h1>Sign in to the Live&nbsp;Examples</h1>
-                <p>
-                    Accessing Live Examples requires a unique one-time{" "}
-                    <Link to="/registration">registration</Link> even if you already have a GoodData account.
-                </p>
 
                 <div className="gd-input">
                     <label htmlFor="email">E-mail</label>
@@ -162,14 +157,6 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
                     >
                         Sign in
                     </button>
-                    <Link
-                        className="gd-button gd-button-link"
-                        to={{
-                            pathname: "/registration",
-                        }}
-                    >
-                        <span>Register</span>
-                    </Link>
                 </div>
             </form>
         </div>
