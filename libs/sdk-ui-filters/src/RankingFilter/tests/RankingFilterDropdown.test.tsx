@@ -330,6 +330,27 @@ describe("RankingFilterDropdown", () => {
             });
         });
 
+        it("should set custom value via input change handler", () => {
+            const onApply = jest.fn();
+            const component = renderComponent({ onApply });
+
+            expect(component.isApplyButtonDisabled()).toBe(true);
+
+            component.changeInputValue("42");
+
+            expect(component.isApplyButtonDisabled()).toBe(false);
+
+            component.clickApply();
+
+            expect(onApply).toHaveBeenCalledWith({
+                rankingFilter: {
+                    measure: Mock.measure1Ref,
+                    operator: "TOP",
+                    value: 42,
+                },
+            });
+        });
+
         it.each([["0"], ["1000000"], ["test"]])(
             "should not set value via input blur handler when invalid value '%s' is entered",
             (invalidValue) => {
