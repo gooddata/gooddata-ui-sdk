@@ -171,3 +171,9 @@ export {
     createNumberJsFormatter,
     DefaultDataAccessConfig,
 } from "./results/dataAccessConfig";
+
+/*
+ * Theme loader
+ */
+
+export { createFontFace } from "./theming/fontFace";
