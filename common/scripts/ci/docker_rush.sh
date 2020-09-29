@@ -33,7 +33,7 @@ docker run \
   --env WIREMOCK_NET \
   --env HOME="/workspace" \
   --env EXAMPLES_BUILD_TYPE \
-  --env EXAMPLES_MAPBOX_TOKEN \
+  --env EXAMPLE_MAPBOX_ACCESS_TOKEN \
   --rm \
   ${net_param} \
   --volume ${ROOT_DIR}:/workspace:Z \

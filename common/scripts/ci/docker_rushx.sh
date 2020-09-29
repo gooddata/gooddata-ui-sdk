@@ -33,6 +33,8 @@ fi
 docker run \
   --env CI \
   --env WIREMOCK_NET \
+  --env EXAMPLES_BUILD_TYPE \
+  --env EXAMPLE_MAPBOX_ACCESS_TOKEN \
   --env HOME="/workspace" \
   --rm \
   ${net_param} \
