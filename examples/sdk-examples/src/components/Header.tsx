@@ -56,7 +56,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                         <a
                             rel="noopener noreferrer"
                             target="_blank"
-                            href="https://github.com/gooddata/gooddata-react-components/blob/master/examples/src/utils/fixtures.js#L25"
+                            href="https://github.com/gooddata/gooddata-ui-sdk/blob/master/examples/sdk-examples/src/ldm/full.ts"
                         >
                             Data Used
                         </a>
