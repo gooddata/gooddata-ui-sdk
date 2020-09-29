@@ -43,14 +43,18 @@ const CoreHeader: React.FC<IHeaderProps> = ({
 
         return (
             <div className="backendInfo">
-                <span className="backendInfoItem">
-                    Connected to:
-                    <span className="backendInfoValue">{backendUrlForInfo}</span>
-                </span>
-                <span className="backendInfoItem">
-                    Project ID:
-                    <span className="backendInfoValue">{workspace}</span>
-                </span>
+                {!ANONYMOUS_ACCESS ? (
+                    <>
+                        <span className="backendInfoItem">
+                            Connected to:
+                            <span className="backendInfoValue">{backendUrlForInfo}</span>
+                        </span>
+                        <span className="backendInfoItem">
+                            Project ID:
+                            <span className="backendInfoValue">{workspace}</span>
+                        </span>
+                    </>
+                ) : null}
                 <span className="backendInfoItem">
                     <span className="backendInfoValue">
                         <a
