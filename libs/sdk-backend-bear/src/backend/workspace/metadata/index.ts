@@ -7,6 +7,7 @@ import invariant from "ts-invariant";
 import { IWorkspaceMetadata } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import {
+    UriRef,
     IAttributeDisplayFormMetadataObject,
     IMeasureExpressionToken,
     IMetadataObject,
@@ -220,4 +221,71 @@ export class BearWorkspaceMetadata implements IWorkspaceMetadata {
             }),
         );
     }
+
+    public getAttributeDisplayForms = async (
+        refs: ObjRef[],
+    ): Promise<IAttributeDisplayFormMetadataObject[]> => {
+        const displayFormUris = await objRefsToUris(refs, this.workspace, this.authCall);
+        const wrappedAttributeDisplayForms = await this.authCall((sdk) =>
+            sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
+        );
+        return wrappedAttributeDisplayForms.map(
+            (
+                wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm,
+            ): IAttributeDisplayFormMetadataObject => {
+                const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
+                return this.buildAttributeDisplayForm(displayFormDetails);
+            },
+        );
+    };
+
+    public getAttributes = async (refs: ObjRef[]): Promise<IAttributeMetadataObject[]> => {
+        const attributeUris = await objRefsToUris(refs, this.workspace, this.authCall);
+        const wrappedAttributes = await this.authCall((sdk) =>
+            sdk.md.getObjects<GdcMetadata.IWrappedAttribute>(this.workspace, attributeUris),
+        );
+
+        return wrappedAttributes.map(
+            (wrappedAttribute: GdcMetadata.IWrappedAttribute): IAttributeMetadataObject => {
+                const {
+                    meta: { title, uri, isProduction, identifier, summary },
+                    content: { displayForms },
+                } = wrappedAttribute.attribute;
+                const ref = uriRef(uri);
+                const attributeDisplayForms = displayForms.map((displayForm) =>
+                    this.buildAttributeDisplayForm(displayForm),
+                );
+
+                return newAttributeMetadataObject(ref, (attribute) =>
+                    attribute
+                        .title(title)
+                        .uri(uri)
+                        .production(Boolean(isProduction))
+                        .id(identifier)
+                        .description(summary)
+                        .displayForms(attributeDisplayForms),
+                );
+            },
+        );
+    };
+
+    private buildAttributeDisplayForm = (
+        displayFormDetails: GdcMetadata.IAttributeDisplayForm,
+    ): IAttributeDisplayFormMetadataObject => {
+        const {
+            meta: { title, summary, identifier, uri },
+            content: { formOf, default: defaultDisplayForm },
+        } = displayFormDetails;
+        const ref: UriRef = uriRef(uri);
+        const isDefaultDf = !!(defaultDisplayForm === 1);
+        return newAttributeDisplayFormMetadataObject(ref, (df) =>
+            df
+                .attribute(uriRef(formOf))
+                .title(title)
+                .description(summary)
+                .isDefault(isDefaultDf)
+                .id(identifier)
+                .uri(uri),
+        );
+    };
 }

@@ -1173,6 +1173,8 @@ export interface IWorkspaceInsights {
 export interface IWorkspaceMetadata {
     getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;

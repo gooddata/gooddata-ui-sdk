@@ -82,4 +82,12 @@ export class RecordedMetadata implements IWorkspaceMetadata {
     public getCommonAttributesBatch(): Promise<ObjRef[][]> {
         throw new NotSupported("not supported");
     }
+
+    public getAttributeDisplayForms(_: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    public getAttributes(_: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
 }

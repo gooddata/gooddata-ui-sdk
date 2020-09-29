@@ -58,4 +58,20 @@ export interface IWorkspaceMetadata {
      * @returns promise returning batch of attribute references.
      */
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
+
+    /**
+     * Gets the list of metadata of attribute display form with the provided list of uris or identifiers. (list of object refs)
+     *
+     * @param refs - list of refs of the attribute display form to retrieve.
+     * @returns promise of list of attribute display form metadata object.
+     */
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
+
+    /**
+     * Gets the list of metadata of attribute with the provided list of uris. (list of object refs)
+     *
+     * @param refs - list of refs of the attribute to retrieve.
+     * @returns promise of list of attribute metadata object.
+     */
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
 }

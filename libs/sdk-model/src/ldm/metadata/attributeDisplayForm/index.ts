@@ -20,6 +20,11 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * Subtype of the display form (e.g. GDC.geo.pin, or GDC.link)
      */
     displayFormType?: string;
+
+    /**
+     * Default display form of attribute.
+     */
+    isDefault?: boolean;
 }
 
 /**

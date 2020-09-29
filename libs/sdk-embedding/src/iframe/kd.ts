@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-// (C) 2020 GoodData Corporation
 import {
     IGdcMessageEvent,
     getEventType,

@@ -117,4 +117,12 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
     getCommonAttributesBatch(): Promise<ObjRef[][]> {
         throw new NotSupported("not supported");
     }
+
+    getAttributeDisplayForms(_: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    getAttributes(_: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
 }
