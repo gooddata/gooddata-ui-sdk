@@ -6,7 +6,7 @@ other typical tasks related to contributing.
 
 ## IDE Settings
 
-Please check out [How to setup IntelliJ](setupIntellij.md) guide to find out about recommended settings for IntelliJ IDEA.
+Please check out [How to setup IntelliJ](setupIntellij.md) guide to find out about recommended settings for IntelliJ IDEA or [How to setup VS Code](setupVsCode.md) guide to find out about recommended settings for VS Code.
 
 ## Rush primer
 
