@@ -16,6 +16,8 @@
      * will recalculate all version selections.
      */
     "preferredVersions": {
+        "@types/node": "^12.12.26",
+
         /*
          * API extractor version >=7.8.2 fails to cope with inline imports. Must wait for a fix.
          */
