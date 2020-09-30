@@ -84,6 +84,12 @@ else
     git ls-files | grep '\.json' | xargs git add
     git commit -m "Release ${LIBRARY_VERSION}"
 
+    if [ ! -z "$TAG_VERSION" ]; then
+         echo "Adding tag ${LIBRARY_VERSION} - Release ${LIBRARY_VERSION}"
+
+         git tag -a "${LIBRARY_VERSION}" -m "Release ${LIBRARY_VERSION}"
+    fi
+
     if [ ! -z "$SLACK_VARS_FILE" ]; then
         echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
 
@@ -91,4 +97,6 @@ else
         echo "LIBRARY_VERSION=$LIBRARY_VERSION" >> $SLACK_VARS_FILE
         echo "MESSAGE=just released *gooddata-ui-sdk@$LIBRARY_VERSION*" >> $SLACK_VARS_FILE
     fi
+
+    exit 0
 fi
