@@ -7,6 +7,7 @@
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITotal } from '@gooddata/sdk-model';
 
 // @public
 export interface AbsoluteDateFilter {
@@ -692,7 +693,7 @@ export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 // @public
 export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
     analyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -709,17 +710,17 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     analyticalDashboardsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     analyticalDashboardsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     analyticalDashboardsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -735,12 +736,12 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     analyticalDashboardsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardPatchResource?: AnalyticalDashboardPatchResource;
     }, options?: any): AxiosPromise<Info>;
     analyticalDashboardsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -756,11 +757,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -778,17 +779,17 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -805,11 +806,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -827,17 +828,17 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     analyticalDashboardsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -854,11 +855,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     analyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         analyticalDashboardPostResource?: AnalyticalDashboardPostResource;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     attributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -876,19 +877,19 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     attributesIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     attributesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     attributesIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -904,13 +905,13 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     attributesIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     attributesIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -926,7 +927,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     attributesIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -944,7 +945,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     attributesIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -962,7 +963,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     datasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -986,7 +987,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1002,7 +1003,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     datasetsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1017,13 +1018,13 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     datasetsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     datasetsIdReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1045,7 +1046,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1061,7 +1062,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     datasetsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1076,7 +1077,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     datasetsIdRelationshipsReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1098,7 +1099,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     datasetsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1116,7 +1117,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     datasetsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1134,7 +1135,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     factsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1151,25 +1152,25 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     factsIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     factsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<FactResourceResponseSchema>;
     factsIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     factsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1187,7 +1188,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     factsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1205,7 +1206,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     labelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1223,25 +1224,25 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     labelsIdAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     labelsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceResponseSchema>;
     labelsIdRelationshipsAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferenceResponseSchema>;
     labelsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1259,7 +1260,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     labelsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1277,7 +1278,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1299,7 +1300,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1315,11 +1316,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     metricsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     metricsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1334,13 +1335,13 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     metricsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     metricsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1356,7 +1357,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     metricsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1376,12 +1377,12 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricPatchResource?: MetricPatchResource;
     }, options?: any): AxiosPromise<Info>;
     metricsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1397,7 +1398,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     metricsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1412,7 +1413,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     metricsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1428,7 +1429,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     metricsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1448,11 +1449,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1470,21 +1471,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1502,21 +1503,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         metricPostResource?: MetricPostResource;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     sourcesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1529,13 +1530,13 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<SourceResourcesResponseSchema>;
     sourcesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     sourcesIdRelationshipsTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1547,7 +1548,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TableResourceReferencesResponseSchema>;
     sourcesIdTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1559,7 +1560,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1573,25 +1574,25 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TableResourceResponseSchema>;
     tablesIdRelationshipsSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceReferenceResponseSchema>;
     tablesIdSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     tagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -1611,11 +1612,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1630,21 +1631,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1660,21 +1661,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     tagsIdAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1696,25 +1697,25 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     tagsIdDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     tagsIdFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1729,27 +1730,27 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     tagsIdFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     tagsIdLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1765,21 +1766,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     tagsIdLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1799,26 +1800,26 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     tagsIdMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagPatchResource?: TagPatchResource;
     }, options?: any): AxiosPromise<Info>;
     tagsIdRelationshipsAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1833,21 +1834,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1863,21 +1864,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1899,21 +1900,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1928,21 +1929,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1958,21 +1959,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -1992,21 +1993,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2023,21 +2024,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2054,21 +2055,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     tagsIdVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         tagPostResource?: TagPostResource;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     visualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -2087,7 +2088,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     visualizationObjectsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2103,11 +2104,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     visualizationObjectsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     visualizationObjectsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2122,13 +2123,13 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     visualizationObjectsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
     visualizationObjectsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2144,7 +2145,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     visualizationObjectsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2164,12 +2165,12 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     visualizationObjectsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource;
     }, options?: any): AxiosPromise<Info>;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2185,7 +2186,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2200,7 +2201,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2216,7 +2217,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2236,11 +2237,11 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2258,21 +2259,21 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2290,17 +2291,17 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     visualizationObjectsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         visualizationObjectPostResource?: VisualizationObjectPostResource;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
 }
@@ -2308,7 +2309,7 @@ export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
 // @public
 export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
     analyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2325,17 +2326,17 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2351,12 +2352,12 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardPatchResource?: AnalyticalDashboardPatchResource | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2372,11 +2373,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2394,17 +2395,17 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2421,11 +2422,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2443,17 +2444,17 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2470,11 +2471,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     analyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         analyticalDashboardPostResource?: AnalyticalDashboardPostResource | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2492,19 +2493,19 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2520,13 +2521,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2542,7 +2543,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2560,7 +2561,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     attributesIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2578,7 +2579,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2602,7 +2603,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2618,7 +2619,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2633,13 +2634,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2661,7 +2662,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2677,7 +2678,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2692,7 +2693,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2714,7 +2715,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2732,7 +2733,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     datasetsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2750,7 +2751,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     factsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2767,25 +2768,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     factsIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     factsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     factsIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     factsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2803,7 +2804,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     factsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2821,7 +2822,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2839,25 +2840,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsIdAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsIdRelationshipsAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2875,7 +2876,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     labelsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2893,7 +2894,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -2915,7 +2916,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2931,11 +2932,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     metricsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2950,13 +2951,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2972,7 +2973,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -2992,12 +2993,12 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricPatchResource?: MetricPatchResource | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3013,7 +3014,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3028,7 +3029,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3044,7 +3045,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3064,11 +3065,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3086,21 +3087,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     metricsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3118,21 +3119,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     metricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         metricPostResource?: MetricPostResource | undefined;
     }, options?: any): MetadataRequestArgs;
     sourcesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -3145,13 +3146,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     sourcesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     sourcesIdRelationshipsTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3163,7 +3164,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     sourcesIdTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3175,7 +3176,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -3189,25 +3190,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     tablesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tablesIdRelationshipsSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tablesIdSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -3227,11 +3228,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3246,21 +3247,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3276,21 +3277,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3312,25 +3313,25 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3345,27 +3346,27 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3381,21 +3382,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3415,26 +3416,26 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagPatchResource?: TagPatchResource | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3449,21 +3450,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3479,21 +3480,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3515,21 +3516,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3544,21 +3545,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3574,21 +3575,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3608,21 +3609,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3639,21 +3640,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3670,21 +3671,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsIdVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     tagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         tagPostResource?: TagPostResource | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -3703,7 +3704,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         pageOffset?: number | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3719,11 +3720,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3738,13 +3739,13 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string | undefined;
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3760,7 +3761,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3780,12 +3781,12 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3801,7 +3802,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3816,7 +3817,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3832,7 +3833,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3852,11 +3853,11 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3874,21 +3875,21 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3906,17 +3907,17 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
         include?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     visualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         visualizationObjectPostResource?: VisualizationObjectPostResource | undefined;
     }, options?: any): MetadataRequestArgs;
 };
@@ -3924,7 +3925,7 @@ export const DefaultApiAxiosParamCreator: (configuration?: MetadataConfiguration
 // @public
 export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     analyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -3941,17 +3942,17 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     analyticalDashboardsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     analyticalDashboardsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     analyticalDashboardsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3967,12 +3968,12 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     analyticalDashboardsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardPatchResource?: AnalyticalDashboardPatchResource;
     }, options?: any): AxiosPromise<Info>;
     analyticalDashboardsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -3988,11 +3989,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4010,17 +4011,17 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4037,11 +4038,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4059,17 +4060,17 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     analyticalDashboardsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4086,11 +4087,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     analyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         analyticalDashboardPostResource?: AnalyticalDashboardPostResource;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     attributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4108,19 +4109,19 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     attributesIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     attributesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     attributesIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4136,13 +4137,13 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     attributesIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     attributesIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4158,7 +4159,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     attributesIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4176,7 +4177,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     attributesIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4194,7 +4195,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     datasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4218,7 +4219,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4234,7 +4235,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     datasetsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4249,13 +4250,13 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     datasetsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     datasetsIdReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4277,7 +4278,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4293,7 +4294,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     datasetsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4308,7 +4309,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     datasetsIdRelationshipsReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4330,7 +4331,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     datasetsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4348,7 +4349,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     datasetsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4366,7 +4367,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     factsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4383,25 +4384,25 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     factsIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     factsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<FactResourceResponseSchema>;
     factsIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     factsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4419,7 +4420,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     factsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4437,7 +4438,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     labelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4455,25 +4456,25 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     labelsIdAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     labelsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceResponseSchema>;
     labelsIdRelationshipsAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferenceResponseSchema>;
     labelsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4491,7 +4492,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     labelsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4509,7 +4510,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4531,7 +4532,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4547,11 +4548,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     metricsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     metricsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4566,13 +4567,13 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     metricsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     metricsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4588,7 +4589,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     metricsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4608,12 +4609,12 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricPatchResource?: MetricPatchResource;
     }, options?: any): AxiosPromise<Info>;
     metricsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4629,7 +4630,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     metricsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4644,7 +4645,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     metricsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4660,7 +4661,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     metricsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4680,11 +4681,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4702,21 +4703,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4734,21 +4735,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         metricPostResource?: MetricPostResource;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     sourcesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4761,13 +4762,13 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<SourceResourcesResponseSchema>;
     sourcesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     sourcesIdRelationshipsTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4779,7 +4780,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TableResourceReferencesResponseSchema>;
     sourcesIdTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4791,7 +4792,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4805,25 +4806,25 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TableResourceResponseSchema>;
     tablesIdRelationshipsSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceReferenceResponseSchema>;
     tablesIdSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     tagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -4843,11 +4844,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4862,21 +4863,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4892,21 +4893,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     tagsIdAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4928,25 +4929,25 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     tagsIdDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     tagsIdFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4961,27 +4962,27 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     tagsIdFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     tagsIdLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -4997,21 +4998,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     tagsIdLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5031,26 +5032,26 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     tagsIdMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagPatchResource?: TagPatchResource;
     }, options?: any): AxiosPromise<Info>;
     tagsIdRelationshipsAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5065,21 +5066,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5095,21 +5096,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5131,21 +5132,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5160,21 +5161,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5190,21 +5191,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5224,21 +5225,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5255,21 +5256,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5286,21 +5287,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     tagsIdVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         tagPostResource?: TagPostResource;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     visualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -5319,7 +5320,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         pageOffset?: number | undefined;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     visualizationObjectsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5335,11 +5336,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     visualizationObjectsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     visualizationObjectsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5354,13 +5355,13 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     visualizationObjectsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
     visualizationObjectsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5376,7 +5377,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     visualizationObjectsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5396,12 +5397,12 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     visualizationObjectsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource;
     }, options?: any): AxiosPromise<Info>;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5417,7 +5418,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5432,7 +5433,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5448,7 +5449,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5468,11 +5469,11 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5490,21 +5491,21 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5522,17 +5523,17 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
         include?: string | undefined;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     visualizationObjectsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         visualizationObjectPostResource?: VisualizationObjectPostResource;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
 };
@@ -5540,7 +5541,7 @@ export const DefaultApiFactory: (configuration?: MetadataConfiguration | undefin
 // @public
 export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) => {
     analyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -5557,17 +5558,17 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     analyticalDashboardsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     analyticalDashboardsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     analyticalDashboardsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5583,12 +5584,12 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     analyticalDashboardsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardPatchResource?: AnalyticalDashboardPatchResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Info>;
     analyticalDashboardsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5604,11 +5605,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5626,17 +5627,17 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5653,11 +5654,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5675,17 +5676,17 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     analyticalDashboardsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5702,11 +5703,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     analyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         analyticalDashboardPostResource?: AnalyticalDashboardPostResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     attributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -5724,19 +5725,19 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourcesResponseSchema>;
     attributesIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceResponseSchema>;
     attributesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceResponseSchema>;
     attributesIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5752,13 +5753,13 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     attributesIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferenceResponseSchema>;
     attributesIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5774,7 +5775,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     attributesIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5792,7 +5793,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     attributesIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5810,7 +5811,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     datasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -5834,7 +5835,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5850,7 +5851,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourcesResponseSchema>;
     datasetsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5865,13 +5866,13 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourcesResponseSchema>;
     datasetsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceResponseSchema>;
     datasetsIdReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5893,7 +5894,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5909,7 +5910,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     datasetsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5924,7 +5925,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     datasetsIdRelationshipsReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5946,7 +5947,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     datasetsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5964,7 +5965,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     datasetsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -5982,7 +5983,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     factsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -5999,25 +6000,25 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourcesResponseSchema>;
     factsIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceResponseSchema>;
     factsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceResponseSchema>;
     factsIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferenceResponseSchema>;
     factsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6035,7 +6036,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     factsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6053,7 +6054,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     labelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6071,25 +6072,25 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     labelsIdAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceResponseSchema>;
     labelsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceResponseSchema>;
     labelsIdRelationshipsAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferenceResponseSchema>;
     labelsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6107,7 +6108,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     labelsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6125,7 +6126,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     metricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6147,7 +6148,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6163,11 +6164,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourcesResponseSchema>;
     metricsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     metricsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6182,13 +6183,13 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourcesResponseSchema>;
     metricsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceResponseSchema>;
     metricsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6204,7 +6205,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     metricsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6224,12 +6225,12 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricPatchResource?: MetricPatchResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Info>;
     metricsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6245,7 +6246,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     metricsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6260,7 +6261,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     metricsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6276,7 +6277,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     metricsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6296,11 +6297,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6318,21 +6319,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6350,21 +6351,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     metricsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         metricPostResource?: MetricPostResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceResponseSchema>;
     sourcesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6377,13 +6378,13 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<SourceResourcesResponseSchema>;
     sourcesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<SourceResourceResponseSchema>;
     sourcesIdRelationshipsTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6395,7 +6396,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TableResourceReferencesResponseSchema>;
     sourcesIdTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6407,7 +6408,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TableResourcesResponseSchema>;
     tablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6421,25 +6422,25 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TableResourcesResponseSchema>;
     tablesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TableResourceResponseSchema>;
     tablesIdRelationshipsSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<SourceResourceReferenceResponseSchema>;
     tablesIdSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<SourceResourceResponseSchema>;
     tagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6459,11 +6460,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6478,21 +6479,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6508,21 +6509,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourcesResponseSchema>;
     tagsIdAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6544,25 +6545,25 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourcesResponseSchema>;
     tagsIdDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     tagsIdFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6577,27 +6578,27 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourcesResponseSchema>;
     tagsIdFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceResponseSchema>;
     tagsIdLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6613,21 +6614,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     tagsIdLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6647,26 +6648,26 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourcesResponseSchema>;
     tagsIdMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagPatchResource?: TagPatchResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Info>;
     tagsIdRelationshipsAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6681,21 +6682,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6711,21 +6712,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6747,21 +6748,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6776,21 +6777,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6806,21 +6807,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6840,21 +6841,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6871,21 +6872,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6902,21 +6903,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     tagsIdVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         tagPostResource?: TagPostResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceResponseSchema>;
     visualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         } | undefined;
@@ -6935,7 +6936,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         pageOffset?: number | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     visualizationObjectsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6951,11 +6952,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourcesResponseSchema>;
     visualizationObjectsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     visualizationObjectsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6970,13 +6971,13 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourcesResponseSchema>;
     visualizationObjectsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceResponseSchema>;
     visualizationObjectsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -6992,7 +6993,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourcesResponseSchema>;
     visualizationObjectsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7012,12 +7013,12 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourcesResponseSchema>;
     visualizationObjectsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Info>;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7033,7 +7034,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AttributeResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7048,7 +7049,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<FactResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7064,7 +7065,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<LabelResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7084,11 +7085,11 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetricResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7106,21 +7107,21 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7138,17 +7139,17 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
         include?: string | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourcesResponseSchema>;
     visualizationObjectsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         visualizationObjectPostResource?: VisualizationObjectPostResource;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<VisualizationObjectResourceResponseSchema>;
 };
@@ -7156,7 +7157,7 @@ export const DefaultApiFp: (configuration?: MetadataConfiguration | undefined) =
 // @public
 export interface DefaultApiInterface {
     analyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7173,17 +7174,17 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     analyticalDashboardsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     analyticalDashboardsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     analyticalDashboardsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7199,12 +7200,12 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     analyticalDashboardsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardPatchResource?: AnalyticalDashboardPatchResource;
     }, options?: any): AxiosPromise<Info>;
     analyticalDashboardsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7220,11 +7221,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7242,17 +7243,17 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7269,11 +7270,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7291,17 +7292,17 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     analyticalDashboardsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     analyticalDashboardsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7318,11 +7319,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     analyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         analyticalDashboardPostResource?: AnalyticalDashboardPostResource;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceResponseSchema>;
     attributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7340,19 +7341,19 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     attributesIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     attributesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     attributesIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7368,13 +7369,13 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     attributesIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     attributesIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7390,7 +7391,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     attributesIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7408,7 +7409,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     attributesIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7426,7 +7427,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     datasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7450,7 +7451,7 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7466,7 +7467,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     datasetsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7481,13 +7482,13 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     datasetsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     datasetsIdReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7509,7 +7510,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     datasetsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7525,7 +7526,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     datasetsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7540,7 +7541,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     datasetsIdRelationshipsReferencesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7562,7 +7563,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     datasetsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7580,7 +7581,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     datasetsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7598,7 +7599,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     factsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7615,25 +7616,25 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     factsIdDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceResponseSchema>;
     factsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<FactResourceResponseSchema>;
     factsIdRelationshipsDatasetGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferenceResponseSchema>;
     factsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7651,7 +7652,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     factsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7669,7 +7670,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     labelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7687,25 +7688,25 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     labelsIdAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceResponseSchema>;
     labelsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceResponseSchema>;
     labelsIdRelationshipsAttributeGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferenceResponseSchema>;
     labelsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7723,7 +7724,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     labelsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7741,7 +7742,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7763,7 +7764,7 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7779,11 +7780,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     metricsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     metricsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7798,13 +7799,13 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     metricsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     metricsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7820,7 +7821,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     metricsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7840,12 +7841,12 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     metricsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricPatchResource?: MetricPatchResource;
     }, options?: any): AxiosPromise<Info>;
     metricsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7861,7 +7862,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     metricsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7876,7 +7877,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     metricsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7892,7 +7893,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     metricsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7912,11 +7913,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7934,21 +7935,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -7966,21 +7967,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     metricsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     metricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         metricPostResource?: MetricPostResource;
     }, options?: any): AxiosPromise<MetricResourceResponseSchema>;
     sourcesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -7993,13 +7994,13 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<SourceResourcesResponseSchema>;
     sourcesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     sourcesIdRelationshipsTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8011,7 +8012,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TableResourceReferencesResponseSchema>;
     sourcesIdTablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8023,7 +8024,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -8037,25 +8038,25 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<TableResourcesResponseSchema>;
     tablesIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TableResourceResponseSchema>;
     tablesIdRelationshipsSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceReferenceResponseSchema>;
     tablesIdSourceGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<SourceResourceResponseSchema>;
     tagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -8075,11 +8076,11 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8094,21 +8095,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourcesResponseSchema>;
     tagsIdAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8124,21 +8125,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     tagsIdAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8160,25 +8161,25 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourcesResponseSchema>;
     tagsIdDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     tagsIdFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8193,27 +8194,27 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     tagsIdFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     tagsIdLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8229,21 +8230,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     tagsIdLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8263,26 +8264,26 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     tagsIdMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagPatchResource?: TagPatchResource;
     }, options?: any): AxiosPromise<Info>;
     tagsIdRelationshipsAnalyticalDashboardsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8297,21 +8298,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAnalyticalDashboardsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         analyticalDashboardResourceReferencesResponseSchema?: AnalyticalDashboardResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AnalyticalDashboardResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8327,21 +8328,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsAttributesPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         attributeResourceReferencesResponseSchema?: AttributeResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8363,21 +8364,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsDatasetsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         datasetResourceReferencesResponseSchema?: DatasetResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<DatasetResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8392,21 +8393,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsFactsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         factResourceReferencesResponseSchema?: FactResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8422,21 +8423,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsLabelsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         labelResourceReferencesResponseSchema?: LabelResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8456,21 +8457,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsMetricsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         metricResourceReferencesResponseSchema?: MetricResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8487,21 +8488,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdRelationshipsVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8518,21 +8519,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     tagsIdVisualizationObjectsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsIdVisualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectResourceReferencesResponseSchema?: VisualizationObjectResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<VisualizationObjectResourceReferencesResponseSchema>;
     tagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         tagPostResource?: TagPostResource;
     }, options?: any): AxiosPromise<TagResourceResponseSchema>;
     visualizationObjectsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         filter?: {
             [key: string]: object;
         };
@@ -8551,7 +8552,7 @@ export interface DefaultApiInterface {
         pageOffset?: number;
     }, options?: any): AxiosPromise<VisualizationObjectResourcesResponseSchema>;
     visualizationObjectsIdAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8567,11 +8568,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourcesResponseSchema>;
     visualizationObjectsIdDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<void>;
     visualizationObjectsIdFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8586,13 +8587,13 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourcesResponseSchema>;
     visualizationObjectsIdGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         fields?: string;
         include?: string;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
     visualizationObjectsIdLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8608,7 +8609,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourcesResponseSchema>;
     visualizationObjectsIdMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8628,12 +8629,12 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourcesResponseSchema>;
     visualizationObjectsIdPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         visualizationObjectPatchResource?: VisualizationObjectPatchResource;
     }, options?: any): AxiosPromise<Info>;
     visualizationObjectsIdRelationshipsAttributesGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8649,7 +8650,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<AttributeResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsFactsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8664,7 +8665,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<FactResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsLabelsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8680,7 +8681,7 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<LabelResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsMetricsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8700,11 +8701,11 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<MetricResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8722,21 +8723,21 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdRelationshipsTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsDelete(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsGet(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         filter?: {
             [key: string]: object;
@@ -8754,17 +8755,17 @@ export interface DefaultApiInterface {
         include?: string;
     }, options?: any): AxiosPromise<TagResourcesResponseSchema>;
     visualizationObjectsIdTagsPatch(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsIdTagsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         id: string;
         tagResourceReferencesResponseSchema?: TagResourceReferencesResponseSchema;
     }, options?: any): AxiosPromise<TagResourceReferencesResponseSchema>;
     visualizationObjectsPost(params: {
-        contentType: "application/vnd.api+json" | "application/json";
+        contentType: 'application/vnd.api+json' | 'application/json';
         visualizationObjectPostResource?: VisualizationObjectPostResource;
     }, options?: any): AxiosPromise<VisualizationObjectResourceResponseSchema>;
 }
@@ -8811,7 +8812,7 @@ export class ElementsControllerApi extends LabelElementsBaseApi implements Eleme
     processElementsRequest(params: {
         workspaceId: string;
         label: string;
-        sortOrder?: "ASC" | "DESC";
+        sortOrder?: 'ASC' | 'DESC';
         includeTotalWithoutFilters?: boolean;
         complementFilter?: boolean;
         patternFilter?: string;
@@ -8841,7 +8842,7 @@ export const ElementsControllerApiFactory: (configuration?: LabelElementsConfigu
     processElementsRequest(params: {
         workspaceId: string;
         label: string;
-        sortOrder?: "ASC" | "DESC";
+        sortOrder?: 'ASC' | 'DESC';
         includeTotalWithoutFilters?: boolean;
         complementFilter?: boolean;
         patternFilter?: string;
@@ -8856,7 +8857,7 @@ export const ElementsControllerApiFp: (configuration?: LabelElementsConfiguratio
     processElementsRequest(params: {
         workspaceId: string;
         label: string;
-        sortOrder?: "ASC" | "DESC";
+        sortOrder?: 'ASC' | 'DESC';
         includeTotalWithoutFilters?: boolean;
         complementFilter?: boolean;
         patternFilter?: string;
@@ -8871,7 +8872,7 @@ export interface ElementsControllerApiInterface {
     processElementsRequest(params: {
         workspaceId: string;
         label: string;
-        sortOrder?: "ASC" | "DESC";
+        sortOrder?: 'ASC' | 'DESC';
         includeTotalWithoutFilters?: boolean;
         complementFilter?: boolean;
         patternFilter?: string;
@@ -8898,425 +8899,6 @@ export interface ErrorMessage {
     timestamp: string;
 }
 
-// @public (undocumented)
-export namespace ExecuteAFM {
-    // (undocumented)
-    export type ArithmeticMeasureOperator = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
-    // (undocumented)
-    export type AttributeElements = string[] | IAttributeElementsByValue;
-    // (undocumented)
-    export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
-    // (undocumented)
-    export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
-    // (undocumented)
-    export type CompatibilityFilter = IExpressionFilter | FilterItem;
-    // (undocumented)
-    export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
-    // (undocumented)
-    export type FilterItem = DateFilterItem | AttributeFilterItem | MeasureValueFilterItem;
-    // (undocumented)
-    export interface IAbsoluteDateFilter {
-        // (undocumented)
-        absoluteDateFilter: {
-            dataset: ObjQualifier;
-            from: string;
-            to: string;
-        };
-    }
-    // (undocumented)
-    export interface IAfm {
-        // (undocumented)
-        attributes?: IAttribute[];
-        // (undocumented)
-        filters?: CompatibilityFilter[];
-        // (undocumented)
-        measures?: IMeasure[];
-    }
-    // (undocumented)
-    export interface IArithmeticMeasure {
-        // (undocumented)
-        measureIdentifiers: ILocalIdentifierQualifier[];
-        // (undocumented)
-        operator: ArithmeticMeasureOperator;
-    }
-    // (undocumented)
-    export interface IArithmeticMeasureDefinition {
-        // (undocumented)
-        arithmeticMeasure: IArithmeticMeasure;
-    }
-    // (undocumented)
-    export interface IAttribute {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        displayForm: ObjQualifier;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IAttributeElementsByValue {
-        // (undocumented)
-        values: string[];
-    }
-    // (undocumented)
-    export interface IAttributeSortKey {
-        // (undocumented)
-        attribute: {
-            attributeIdentifier: string;
-            direction: SortDirection;
-        };
-    }
-    // (undocumented)
-    export interface IComparisonMeasureValueFilter {
-        // (undocumented)
-        comparisonMeasureValueFilter: {
-            measure: ObjQualifier | ILocalIdentifierQualifier;
-            operator: ComparisonConditionOperator;
-            value: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export type Identifier = string;
-    // (undocumented)
-    export interface IDimension {
-        // (undocumented)
-        itemIdentifiers: Identifier[];
-        // (undocumented)
-        localIdentifier: string;
-        // (undocumented)
-        sorting?: SortKey[];
-        // (undocumented)
-        totals?: ITotalItem[];
-    }
-    // (undocumented)
-    export interface IDimensionItemValue {
-        // (undocumented)
-        itemIdentifier: string;
-        // (undocumented)
-        itemValue: string;
-    }
-    // (undocumented)
-    export interface IDimensionLocator {
-        // (undocumented)
-        dimensionIdentifier: string;
-        // (undocumented)
-        locator: IDimensionItemValue[];
-    }
-    // (undocumented)
-    export interface IExecution {
-        // (undocumented)
-        execution: IAfm;
-        // (undocumented)
-        resultSpec?: IResultSpec;
-    }
-    // (undocumented)
-    export interface IExpressionFilter {
-        // (undocumented)
-        value: string;
-    }
-    // (undocumented)
-    export interface ILocalIdentifierQualifier {
-        // (undocumented)
-        localIdentifier: string;
-    }
-    // (undocumented)
-    export interface IMeasure {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        definition: MeasureDefinition;
-        // (undocumented)
-        format?: string;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface INativeTotalItem {
-        // (undocumented)
-        attributeIdentifiers: ILocalIdentifierQualifier[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface INegativeAttributeFilter {
-        // (undocumented)
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IObjIdentifierQualifier {
-        // (undocumented)
-        identifier: {
-            id: string;
-            type: string;
-        };
-    }
-    // (undocumented)
-    export interface IOverPeriodMeasure {
-        // (undocumented)
-        dateAttributes: IPopDateAttribute[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface IOverPeriodMeasureDefinition {
-        // (undocumented)
-        overPeriodMeasure: IOverPeriodMeasure;
-    }
-    // (undocumented)
-    export interface IPopDateAttribute {
-        // (undocumented)
-        attribute: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPositiveAttributeFilter {
-        // (undocumented)
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IPreviousPeriodDateDataset {
-        // (undocumented)
-        dataset: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasure {
-        // (undocumented)
-        dateDatasets: IPreviousPeriodDateDataset[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasureDefinition {
-        // (undocumented)
-        previousPeriodMeasure: IPreviousPeriodMeasure;
-    }
-    // (undocumented)
-    export interface IRangeMeasureValueFilter {
-        // (undocumented)
-        rangeMeasureValueFilter: {
-            measure: ObjQualifier | ILocalIdentifierQualifier;
-            operator: RangeConditionOperator;
-            from: number;
-            to: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export interface IRelativeDateFilter {
-        // (undocumented)
-        relativeDateFilter: {
-            dataset: ObjQualifier;
-            granularity: string;
-            from: number;
-            to: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultSpec {
-        // (undocumented)
-        dimensions?: IDimension[];
-    }
-    // (undocumented)
-    export interface ISimpleMeasure {
-        // (undocumented)
-        aggregation?: SimpleMeasureAggregation;
-        // (undocumented)
-        computeRatio?: boolean;
-        // (undocumented)
-        filters?: FilterItem[];
-        // (undocumented)
-        item: ObjQualifier;
-    }
-    // (undocumented)
-    export interface ISimpleMeasureDefinition {
-        // (undocumented)
-        measure: ISimpleMeasure;
-    }
-    // (undocumented)
-    export interface ITotalItem {
-        // (undocumented)
-        attributeIdentifier: ILocalIdentifierQualifier;
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-        // (undocumented)
-        type: TotalType;
-    }
-    // (undocumented)
-    export interface IValueSortKey {
-        // (undocumented)
-        value: {
-            direction: SortDirection;
-            dataColumnLocators: IDimensionLocator[];
-        };
-    }
-    // (undocumented)
-    export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IOverPeriodMeasureDefinition | IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export type MeasureValueFilterItem = IRangeMeasureValueFilter | IComparisonMeasureValueFilter;
-    // (undocumented)
-    export type ObjQualifier = IObjIdentifierQualifier;
-    // (undocumented)
-    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-    // (undocumented)
-    export type SimpleMeasureAggregation = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM";
-    // (undocumented)
-    export type SortDirection = "ASC" | "DESC";
-    // (undocumented)
-    export type SortKey = IAttributeSortKey | IValueSortKey;
-    // (undocumented)
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    const // (undocumented)
-    isObjIdentifierQualifier: (value: unknown) => value is IObjIdentifierQualifier;
-}
-
-// @public (undocumented)
-export namespace Execution {
-    // (undocumented)
-    export type DataValue = null | string | number;
-    // (undocumented)
-    export interface IAttributeHeader {
-        // (undocumented)
-        attributeHeader: {
-            identifier: string;
-            localIdentifier: string;
-            name: string;
-            formOf: {
-                identifier: string;
-                name: string;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IDimensionHeader {
-        // (undocumented)
-        headerGroups: IHeaderGroup[];
-    }
-    // (undocumented)
-    export interface IError extends Error {
-        // (undocumented)
-        response: Response;
-    }
-    // (undocumented)
-    export interface IExecutionResponse {
-        // (undocumented)
-        executionResponse: {
-            links: {
-                executionResult: string;
-            };
-            dimensions: IResultDimension[];
-        };
-    }
-    export interface IExecutionResponses {
-        // (undocumented)
-        executionResponse: IExecutionResponse;
-        // (undocumented)
-        executionResult: IExecutionResult | null;
-    }
-    // (undocumented)
-    export interface IExecutionResult {
-        // (undocumented)
-        data: DataValue[][] | DataValue[];
-        // (undocumented)
-        dimensionHeaders?: IDimensionHeader[];
-        // (undocumented)
-        paging: {
-            count: number[];
-            offset: number[];
-            total: number[];
-        };
-    }
-    // (undocumented)
-    export type IHeader = IMeasureGroupHeader | IAttributeHeader;
-    // (undocumented)
-    export interface IHeaderGroup {
-        // (undocumented)
-        headers: IResultHeader[];
-    }
-    // (undocumented)
-    export interface IMeasureGroupHeader {
-        // (undocumented)
-        measureGroupHeader: {
-            items: IMeasureHeaderItem[];
-        };
-    }
-    // (undocumented)
-    export interface IMeasureHeaderItem {
-        // (undocumented)
-        measureHeaderItem: {
-            identifier?: string;
-            format: string;
-            localIdentifier: string;
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultAttributeHeader {
-        // (undocumented)
-        attributeHeader: {
-            labelValue: string;
-            primaryLabelValue?: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultDimension {
-        // (undocumented)
-        headers: IHeader[];
-    }
-    // (undocumented)
-    export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
-    // (undocumented)
-    export interface IResultMeasureHeader {
-        // (undocumented)
-        measureHeader: {
-            measureIndex: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultTotalHeader {
-        // (undocumented)
-        totalHeader: {
-            name: string;
-            type: string;
-        };
-    }
-    // (undocumented)
-    export function isAttributeHeader(header: IHeader): header is IAttributeHeader;
-    // (undocumented)
-    export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
-    // (undocumented)
-    export function isResultAttributeHeader(header: IResultHeader): header is IResultAttributeHeader;
-    // (undocumented)
-    export function isResultMeasureHeader(header: IResultHeader): header is IResultMeasureHeader;
-    // (undocumented)
-    export function isResultTotalHeader(header: IResultHeader): header is IResultTotalHeader;
-    // (undocumented)
-    export interface ITotalHeaderItem {
-        // (undocumented)
-        totalHeaderItem: {
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface Warning {
-        // (undocumented)
-        message: string;
-        // (undocumented)
-        parameters?: any[];
-        // (undocumented)
-        warningCode: string;
-    }
-}
-
 // @public
 export interface ExecutionLinks {
     executionResult: string;
@@ -9336,10 +8918,7 @@ export interface ExecutionResult {
 }
 
 // @public
-export interface ExecutionResultHeader {
-    attributeHeader: AttributeResultHeader;
-    measureHeader: MeasureResultHeader;
-}
+export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader;
 
 // @public
 export interface ExecutionResultPaging {
@@ -9575,6 +9154,21 @@ export interface InlineMeasureDefinitionInline {
 }
 
 // @public (undocumented)
+export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
+
+// @public (undocumented)
+export function isMeasureGroupHeader(header: ResultDimensionHeader): header is MeasureGroupHeader;
+
+// @public (undocumented)
+export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
+
+// @public (undocumented)
+export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
+
+// @public (undocumented)
+export function isResultMeasureHeader(header: ExecutionResultHeader): header is MeasureExecutionResultHeader;
+
+// @public (undocumented)
 export interface ITigerClient {
     // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
@@ -9799,12 +9393,12 @@ export interface MeasureExecutionResultHeader {
 
 // @public
 export interface MeasureGroupHeader {
-    measureGroupHeader: Array<MeasureGroupHeaderIn>;
+    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
 }
 
 // @public
-export interface MeasureGroupHeaderIn {
-    items: MeasureHeaderItem;
+export interface MeasureGroupHeaderMeasureGroupHeader {
+    items: Array<MeasureHeaderItem>;
 }
 
 // @public
@@ -10108,7 +9702,7 @@ export interface PositiveAttributeFilter {
 // @public
 export interface PositiveAttributeFilterPositiveAttributeFilter {
     displayForm: ObjectIdentifier;
-    _in: AttributeFilterElements;
+    in: AttributeFilterElements;
 }
 
 // @public
@@ -10680,8 +10274,8 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
-    executeAfm: (workspaceId: string, execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
-    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
+    executeAfm: (workspaceId: string, execution: AfmExecution) => Promise<AfmExecutionResponse>;
+    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<ExecutionResult>;
 };
 
 // @public (undocumented)
@@ -10736,7 +10330,16 @@ export interface ValidObjectsControllerApiInterface {
 // @public (undocumented)
 export namespace VisualizationObject {
     // (undocumented)
-    export type IAttributeOrMeasure = ExecuteAFM.IMeasure | ExecuteAFM.IAttribute;
+    export interface IAttribute {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        displayForm: ObjectIdentifier;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export type IAttributeOrMeasure = IMeasure | IAttribute;
     // (undocumented)
     export interface IBucket {
         // (undocumented)
@@ -10744,7 +10347,40 @@ export namespace VisualizationObject {
         // (undocumented)
         localIdentifier?: string;
         // (undocumented)
-        totals?: ExecuteAFM.ITotalItem[];
+        totals?: ITotal[];
+    }
+    // (undocumented)
+    export type Identifier = string;
+    // (undocumented)
+    export interface IDimension {
+        // (undocumented)
+        itemIdentifiers: Identifier[];
+        // (undocumented)
+        localIdentifier: string;
+        // (undocumented)
+        sorting?: SortKey[];
+        // (undocumented)
+        totals?: ITotalItem[];
+    }
+    // (undocumented)
+    export interface IMeasure {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        definition: MeasureDefinition;
+        // (undocumented)
+        format?: string;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export interface ITotalItem {
+        // (undocumented)
+        attributeIdentifier: LocalIdentifier;
+        // (undocumented)
+        measureIdentifier: LocalIdentifier;
+        // (undocumented)
+        type: TotalType;
     }
     // (undocumented)
     export interface IVisualizationObject {
@@ -10753,11 +10389,15 @@ export namespace VisualizationObject {
             title: string;
             visualizationUrl: string;
             buckets: IBucket[];
-            filters: ExecuteAFM.FilterItem[];
+            filters: FilterDefinition[];
             sorts: ISortItem[];
             properties: VisualizationProperties;
         };
     }
+    // (undocumented)
+    export type SortKey = SortKeyAttribute | SortKeyValue;
+    // (undocumented)
+    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     // (undocumented)
     export type VisualizationProperties = {
         [key: string]: any;

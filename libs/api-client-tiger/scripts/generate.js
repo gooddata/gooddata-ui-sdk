@@ -37,8 +37,16 @@ const downloadSpec = async (specMeta, outputDir, outputFile) => {
 const generate = async (specMeta, outputDir, outputFile) => {
     const inputPath = path.resolve(outputDir, specMeta.name, outputFile);
     const outputPath = path.dirname(inputPath);
+
+    /**
+     * openapi-generator escapes language keywords by default, eg. property `in` converts to `_in`
+     * we can disable mapping for individual items only.
+     *
+     * you can add other reserved words into reserved-words-mappings
+     * --reserved-words-mappings in=in,for=for
+     */
     await exec(
-        `openapi-generator generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true`,
+        `openapi-generator generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in`,
     );
 };
 

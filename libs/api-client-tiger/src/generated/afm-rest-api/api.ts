@@ -613,24 +613,11 @@ export interface ExecutionResult {
     paging: ExecutionResultPaging;
 }
 /**
+ * @type ExecutionResultHeader
  * Abstract execution result header
  * @export
- * @interface ExecutionResultHeader
  */
-export interface ExecutionResultHeader {
-    /**
-     *
-     * @type {AttributeResultHeader}
-     * @memberof ExecutionResultHeader
-     */
-    attributeHeader: AttributeResultHeader;
-    /**
-     *
-     * @type {MeasureResultHeader}
-     * @memberof ExecutionResultHeader
-     */
-    measureHeader: MeasureResultHeader;
-}
+export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader;
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
  * @export
@@ -838,23 +825,10 @@ export interface MeasureExecutionResultHeader {
 export interface MeasureGroupHeader {
     /**
      *
-     * @type {Array<MeasureGroupHeaderIn>}
+     * @type {object}
      * @memberof MeasureGroupHeader
      */
-    measureGroupHeader: Array<MeasureGroupHeaderIn>;
-}
-/**
- *
- * @export
- * @interface MeasureGroupHeaderIn
- */
-export interface MeasureGroupHeaderIn {
-    /**
-     *
-     * @type {MeasureHeaderItem}
-     * @memberof MeasureGroupHeaderIn
-     */
-    items: MeasureHeaderItem;
+    measureGroupHeader: object;
 }
 /**
  *
@@ -1153,7 +1127,7 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
      * @type {AttributeFilterElements}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
-    _in: AttributeFilterElements;
+    in: AttributeFilterElements;
 }
 /**
  * Filter the result by comparing specified measure to given range of values.
