@@ -106,13 +106,19 @@ export const ParentFilterExample: React.FC = () => {
             : undefined;
     }, [stateFilterValues]);
 
+    const onStateValueChange = (values: IFilterValue[] | null) => {
+        setStateFilterValues(values);
+        // clear cities on state change to avoid possible invalid state - city combinations
+        setCityFilterValues(null);
+    };
+
     return (
         <div>
             <span>Total Sales per site in&emsp;</span>
             <CustomFilter
                 displayForm={attributeDisplayFormRef(Ldm.LocationState)}
                 filterValues={stateFilterValues}
-                onChange={setStateFilterValues}
+                onChange={onStateValueChange}
                 placeholder="all states"
                 className="s-select-state"
             />
