@@ -87,7 +87,7 @@ export function mergeFilters(
     }
 
     if (!originalFilters.length) {
-        return filtersToMerge;
+        return filtersToMerge.filter((f) => !isAllTimeDateFilter(f));
     }
 
     const original = separateFiltersByType(originalFilters);
