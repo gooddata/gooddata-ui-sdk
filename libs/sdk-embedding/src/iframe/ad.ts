@@ -11,6 +11,7 @@ import {
     IDrillableItemsCommandBody,
     EmbeddedGdc,
 } from "./common";
+import { IInsightDefinition } from "@gooddata/sdk-model";
 import { GdcExport, GdcVisualizationObject } from "@gooddata/api-model-bear";
 
 /**
@@ -183,9 +184,14 @@ export namespace EmbeddedAnalyticalDesigner {
         RemoveFilterContextFinished = "removeFilterContextFinished",
 
         /**
-         * Type notify KD that the insight editing has been cancelled
+         * Type notify AD that the insight editing has been cancelled
          */
         InsightEditingCancelled = "insightEditingCancelled",
+
+        /**
+         * Type to notify AD that the insight has been changed and execution started. It contains new insight definition.
+         */
+        InsightChanged = "insightChanged",
     }
 
     /**
@@ -779,6 +785,11 @@ export namespace EmbeddedAnalyticalDesigner {
          * The minimal opened insight information
          */
         insight: IObjectMeta;
+
+        /**
+         * Definition of insight
+         */
+        definition: IInsightDefinition;
     };
 
     /**
@@ -1101,4 +1112,16 @@ export namespace EmbeddedAnalyticalDesigner {
         GdcAdEventType.FilterContextChanged,
         FilterContextChangedBody
     >;
+
+    /**
+     * @public
+     */
+    export type InsightChangedBody = IAvailableCommands & {
+        definition: IInsightDefinition;
+    };
+
+    /**
+     * @public
+     */
+    export type InsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, InsightChangedBody>;
 }

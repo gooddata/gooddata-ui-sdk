@@ -7,6 +7,7 @@
 import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
+import { IInsightDefinition } from '@gooddata/sdk-model';
 
 // @public
 export type CommandFailed<Product> = IGdcMessageEvent<Product, GdcEventType.AppCommandFailed, ICommandFailedBody>;
@@ -50,6 +51,7 @@ export namespace EmbeddedAnalyticalDesigner {
         Drill = "drill",
         ExportFinished = "exportInsightFinished",
         FilterContextChanged = "filterContextChanged",
+        InsightChanged = "insightChanged",
         InsightEditingCancelled = "insightEditingCancelled",
         InsightOpened = "insightOpened",
         InsightRendered = "insightRendered",
@@ -72,9 +74,16 @@ export namespace EmbeddedAnalyticalDesigner {
     export interface IInsightExportConfig extends GdcExport.IBaseExportConfig {
         includeFilterContext?: boolean;
     }
+    // (undocumented)
+    export type InsightChangedBody = IAvailableCommands & {
+        definition: IInsightDefinition;
+    };
+    // (undocumented)
+    export type InsightChangedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightChanged, InsightChangedBody>;
     export type InsightOpened = IGdcAdMessageEvent<GdcAdEventType.InsightOpened, InsightOpenedBody>;
     export type InsightOpenedBody = IAvailableCommands & {
         insight: IObjectMeta;
+        definition: IInsightDefinition;
     };
     export type InsightOpenedData = IGdcAdMessageEnvelope<GdcAdEventType.InsightOpened, InsightOpenedBody>;
     export type InsightRendered = IGdcAdMessageEvent<GdcAdEventType.InsightRendered, InsightRenderedBody>;
@@ -167,7 +176,7 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export type DateString = string;
     // (undocumented)
-    export type FilterItem = DateFilterItem | AttributeFilterItem;
+    export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
     // (undocumented)
     export interface IAbsoluteDateFilter {
         // (undocumented)
@@ -218,6 +227,8 @@ export namespace EmbeddedGdc {
         filters: FilterItem[];
     }
     // (undocumented)
+    export type ILocalIdentifierQualifier = GdcExecuteAFM.ILocalIdentifierQualifier;
+    // (undocumented)
     export interface INegativeAttributeFilter {
         // (undocumented)
         negativeAttributeFilter: {
@@ -236,6 +247,16 @@ export namespace EmbeddedGdc {
         };
     }
     // (undocumented)
+    export interface IRankingFilter {
+        // (undocumented)
+        rankingFilter: {
+            measure: ILocalIdentifierQualifier;
+            attributes?: ILocalIdentifierQualifier[];
+            operator: RankingFilterOperator;
+            value: number;
+        };
+    }
+    // (undocumented)
     export interface IRelativeDateFilter {
         // (undocumented)
         relativeDateFilter: {
@@ -245,10 +266,6 @@ export namespace EmbeddedGdc {
             to: number;
         };
     }
-    const // (undocumented)
-    isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
-    const // (undocumented)
-    isObjectUriQualifier: typeof GdcExecuteAFM.isObjectUriQualifier;
     // (undocumented)
     export interface IRemoveAttributeFilterItem {
         // (undocumented)
@@ -259,9 +276,18 @@ export namespace EmbeddedGdc {
         // (undocumented)
         dataSet: ObjQualifier;
     }
+    const // (undocumented)
+    isObjIdentifierQualifier: typeof GdcExecuteAFM.isObjIdentifierQualifier;
+    const // (undocumented)
+    isObjectUriQualifier: typeof GdcExecuteAFM.isObjectUriQualifier;
     export interface IRemoveFilterContextContent {
         // (undocumented)
         filters: RemoveFilterItem[];
+    }
+    // (undocumented)
+    export interface IRemoveRankingFilterItem {
+        // (undocumented)
+        removeRankingFilter: unknown;
     }
     // (undocumented)
     export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFilter;
@@ -284,17 +310,23 @@ export namespace EmbeddedGdc {
     // (undocumented)
     export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveAttributeFilter;
     // (undocumented)
+    export function isRankingFilter(filter: unknown): filter is IRankingFilter;
+    // (undocumented)
     export function isRelativeDateFilter(filter: unknown): filter is IRelativeDateFilter;
     // (undocumented)
     export function isRemoveAttributeFilter(filter: unknown): filter is EmbeddedGdc.IRemoveAttributeFilterItem;
     // (undocumented)
     export function isRemoveDateFilter(filter: unknown): filter is EmbeddedGdc.IRemoveDateFilterItem;
     // (undocumented)
+    export function isRemoveRankingFilter(filter: unknown): filter is EmbeddedGdc.IRemoveRankingFilterItem;
+    // (undocumented)
     export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
+    // (undocumented)
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
     // (undocumented)
     export type RelativeType = "relative";
     // (undocumented)
-    export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem;
+    export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem | IRemoveRankingFilterItem;
 }
 
 // @public

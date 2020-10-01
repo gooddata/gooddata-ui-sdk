@@ -293,9 +293,22 @@ export namespace EmbeddedGdc {
             to: number;
         };
     }
+
+    export type RankingFilterOperator = "TOP" | "BOTTOM";
+
+    export interface IRankingFilter {
+        rankingFilter: {
+            measure: ILocalIdentifierQualifier;
+            attributes?: ILocalIdentifierQualifier[];
+            operator: RankingFilterOperator;
+            value: number;
+        };
+    }
+
     export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
     export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
-    export type FilterItem = DateFilterItem | AttributeFilterItem;
+    export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
+    export type ILocalIdentifierQualifier = GdcExecuteAFM.ILocalIdentifierQualifier;
     export type ObjQualifier = GdcExecuteAFM.ObjQualifier;
     export interface IRemoveDateFilterItem {
         dataSet: ObjQualifier;
@@ -303,7 +316,13 @@ export namespace EmbeddedGdc {
     export interface IRemoveAttributeFilterItem {
         displayForm: ObjQualifier;
     }
-    export type RemoveFilterItem = IRemoveDateFilterItem | IRemoveAttributeFilterItem;
+    export interface IRemoveRankingFilterItem {
+        removeRankingFilter: unknown;
+    }
+    export type RemoveFilterItem =
+        | IRemoveDateFilterItem
+        | IRemoveAttributeFilterItem
+        | IRemoveRankingFilterItem;
     export function isDateFilter(filter: unknown): filter is DateFilterItem {
         return !isEmpty(filter) && (isRelativeDateFilter(filter) || isAbsoluteDateFilter(filter));
     }
@@ -326,6 +345,10 @@ export namespace EmbeddedGdc {
     }
     export const isObjIdentifierQualifier = GdcExecuteAFM.isObjIdentifierQualifier;
     export const isObjectUriQualifier = GdcExecuteAFM.isObjectUriQualifier;
+
+    export function isRankingFilter(filter: unknown): filter is IRankingFilter {
+        return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+    }
 
     /**
      * The filter context content that is used to exchange the filter context
@@ -354,6 +377,13 @@ export namespace EmbeddedGdc {
     ): filter is EmbeddedGdc.IRemoveAttributeFilterItem {
         return (
             !isEmpty(filter) && (filter as EmbeddedGdc.IRemoveAttributeFilterItem).displayForm !== undefined
+        );
+    }
+
+    export function isRemoveRankingFilter(filter: unknown): filter is EmbeddedGdc.IRemoveRankingFilterItem {
+        return (
+            !isEmpty(filter) &&
+            (filter as EmbeddedGdc.IRemoveRankingFilterItem).removeRankingFilter !== undefined
         );
     }
 

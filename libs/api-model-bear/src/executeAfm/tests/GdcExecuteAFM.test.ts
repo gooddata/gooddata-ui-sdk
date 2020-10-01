@@ -19,6 +19,7 @@ import {
     attributeLocatorItem,
     measureLocatorItem,
     rankingFilter,
+    localIdentifierQualifier,
 } from "./GdcExecuteAFM.fixtures";
 
 describe("GdcExecuteAFM", () => {
@@ -255,6 +256,19 @@ describe("GdcExecuteAFM", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(AFM.isSimpleMeasureDefinition(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isLocalIdentifierQualifier", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "identifier object qualifier", identifierObjectQualifier],
+            [false, "uri object qualifier", uriObjectQualifier],
+            [true, "local identifier qualifier", localIdentifierQualifier],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(AFM.isLocalIdentifierQualifier(input)).toBe(expectedResult);
         });
     });
 

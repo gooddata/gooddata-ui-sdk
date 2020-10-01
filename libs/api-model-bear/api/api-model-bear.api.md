@@ -738,6 +738,8 @@ export namespace GdcExecuteAFM {
         measure: ISimpleMeasure;
     }
     // (undocumented)
+    export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
+    // (undocumented)
     export function isMeasureLocatorItem(locator: GdcExecuteAFM.LocatorItem): locator is GdcExecuteAFM.IMeasureLocatorItem;
     // (undocumented)
     export function isMeasureSortItem(sortItem: GdcExecuteAFM.SortItem): sortItem is GdcExecuteAFM.IMeasureSortItem;
