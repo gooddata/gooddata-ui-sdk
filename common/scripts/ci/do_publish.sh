@@ -4,13 +4,6 @@
 # This script runs Rush commands to perform release.
 #
 
-# TODO: support official releases (e.g. anyhthing else than prerelease).
-# mostly small things remaining:
-# 1.  Correctly commit changelog updates (script now only commits JSON files)
-# 2.  Tag the commit
-# 3.  After publication, spin of prerelease version of the next minor (do not publish):
-#     rush version --bump --override-bump-type preminor --override-prerelease-id alpha
-
 #
 # Supported environment variables:
 #
@@ -24,6 +17,7 @@
 #
 
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
+
 _RUSH="${DIR}/docker_rush.sh"
 
 source ${DIR}/utils.sh
@@ -80,7 +74,10 @@ else
 
     echo "Successfully published new version ${LIBRARY_VERSION}. Creating commit to document this."
 
-    # stage all modified json files
+    # Ensure changelog files are added for tracking if they were created just now
+    ROOT_DIR=${DIR}/../../..
+    git add ${ROOT_DIR}/libs/sdk-ui-all/CHANGELOG.*
+    # Stage all modified json files
     git ls-files | grep '\.json' | xargs git add
     git commit -m "Release ${LIBRARY_VERSION}"
 
