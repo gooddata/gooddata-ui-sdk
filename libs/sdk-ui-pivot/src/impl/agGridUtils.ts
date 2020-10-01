@@ -10,6 +10,7 @@ import {
     ROW_SUBTOTAL,
     ROW_TOTAL,
     MEASURE_COLUMN,
+    VALUE_CLASS,
 } from "./agGridConst";
 import { IGridHeader, IGridRow } from "./agGridTypes";
 import escape from "lodash/escape";
@@ -75,11 +76,14 @@ export const getGridIndex = (position: number, gridDistance: number): number => 
     return Math.floor(position / gridDistance);
 };
 
+export const isSomeTotal = (rowType: string): boolean => {
+    const isRowTotal = rowType === ROW_TOTAL;
+    const isRowSubtotal = rowType === ROW_SUBTOTAL;
+    return isRowTotal || isRowSubtotal;
+};
+
 export const cellRenderer = (params: ICellRendererParams): string => {
-    const isRowTotalOrSubtotal =
-        params.data &&
-        params.data.type &&
-        (params.data.type === ROW_TOTAL || params.data.type === ROW_SUBTOTAL);
+    const isRowTotalOrSubtotal = params.data && params.data.type && isSomeTotal(params.data.type);
 
     const isActiveRowTotal =
         isRowTotalOrSubtotal && // short circuit for non row totals
@@ -93,7 +97,7 @@ export const cellRenderer = (params: ICellRendererParams): string => {
         isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
             ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
             : escape(params.formatValue(params.value));
-    const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : "s-value";
+    const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : VALUE_CLASS;
     return `<span class="${className}">${formattedValue || ""}</span>`;
 };
 
@@ -231,10 +235,6 @@ export const isMeasureColumn = (item: Column | ColDef): boolean => {
         return item.getColDef().type === MEASURE_COLUMN;
     }
     return item.type === MEASURE_COLUMN;
-};
-
-export const isColumnDisplayed = (displayedColumns: Column[], column: Column): boolean => {
-    return displayedColumns.some((displayedColumn) => displayedColumn.getColId() === column.getColId());
 };
 
 const getMappingHeaderMeasureItem = (item: Column | ColDef): IMeasureDescriptor | undefined => {
