@@ -44,5 +44,5 @@ export interface IPositioning {
  */
 export interface IAlignPoint {
     align: string;
-    offset: IOffset;
+    offset?: IOffset;
 }

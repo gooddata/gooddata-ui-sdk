@@ -8,11 +8,11 @@ import { wrapDisplayName } from "../react/wrapDisplayName";
 /**
  * @internal
  */
-export function createIntlMock(customMessages = {}): IntlShape {
+export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape {
     return createIntl({
-        locale: "en-US",
+        locale,
         messages: {
-            ...messagesMap["en-US"],
+            ...messagesMap[locale],
             ...customMessages,
         },
     });

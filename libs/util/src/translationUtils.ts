@@ -17,3 +17,16 @@ export function removeMetadata(translationsWithMetadata: Record<string, any>): R
     });
     return translations;
 }
+
+/**
+ * Handles difference between GD locale and moment.js locale identifiers
+ *
+ * @param intlLocale - locale identifier
+ * @internal
+ */
+export const sanitizeLocaleForMoment = (intlLocale: string): string => {
+    if (intlLocale === "zh-Hans") {
+        return "zh-CN";
+    }
+    return intlLocale;
+};

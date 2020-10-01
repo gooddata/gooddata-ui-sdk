@@ -26,15 +26,46 @@ export class Button extends React_3.Component<IButtonProps> {
         iconRight: string;
     };
     // (undocumented)
-    render(): JSX.Element;
+    render(): React_3.ReactNode;
     }
+
+// @internal (undocumented)
+export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
+    // (undocumented)
+    render(): React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export type GetOptimalAlignment = {
+    targetRegion: IRegion;
+    selfRegion: IRegion;
+    ignoreScrollOffsets?: boolean;
+    alignPoints: IAlignPoint[];
+    getViewportRegion?: (ignoreScrollOffsets: boolean) => void;
+    getDocumentRegion?: () => void;
+};
+
+// @internal (undocumented)
+export type GetOptimalAlignmentForRegion = {
+    boundaryRegion: any;
+    targetRegion: any;
+    selfRegion: any;
+    alignPoints: IAlignPoint[];
+};
+
+// @internal (undocumented)
+export type GetPositionedSelfRegion = {
+    targetRegion: IRegion;
+    selfRegion: IRegion;
+    alignPoint: IAlignPoint;
+};
 
 // @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
     align: string;
     // (undocumented)
-    offset: IOffset;
+    offset?: IOffset;
 }
 
 // @internal (undocumented)
@@ -59,6 +90,32 @@ export interface IButtonProps {
     type?: string;
     // (undocumented)
     value?: string;
+}
+
+// @internal (undocumented)
+export interface IDatePickerOwnProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    date?: Date;
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onAlign?: (align: string) => void;
+    // (undocumented)
+    onChange?: (selectedData: Date) => void;
+    // (undocumented)
+    placeholder?: string;
+    // (undocumented)
+    resetOnInvalidValue?: boolean;
+    // (undocumented)
+    size?: string;
+    // (undocumented)
+    tabIndex?: number;
 }
 
 // @internal (undocumented)
@@ -124,11 +181,40 @@ export interface IOffset {
 }
 
 // @internal (undocumented)
+export interface IOptimalAlignment {
+    // (undocumented)
+    alignment: {
+        left: number;
+        top: number;
+        right: number;
+        align: string;
+    };
+    // (undocumented)
+    visiblePart: number;
+}
+
+// @internal (undocumented)
 export interface IPositioning {
     // (undocumented)
     offset?: IOffset;
     // (undocumented)
     snapPoints: ISnapPoints;
+}
+
+// @internal (undocumented)
+export interface IRegion {
+    // (undocumented)
+    bottom?: number;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    right?: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
 }
 
 // @internal (undocumented)

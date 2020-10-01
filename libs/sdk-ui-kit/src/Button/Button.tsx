@@ -24,7 +24,7 @@ export class Button extends React.Component<IButtonProps> {
 
     public buttonNode: HTMLElement;
 
-    public render() {
+    public render(): React.ReactNode {
         const { tagName, title, value, tabIndex, type, iconLeft, iconRight } = this.props;
         const TagName = tagName as any;
 
