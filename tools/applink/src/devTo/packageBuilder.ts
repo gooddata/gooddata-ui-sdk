@@ -3,9 +3,9 @@ import fs from "fs";
 import path from "path";
 import { logError, logInfo, logSuccess } from "../cli/loggers";
 import spawn from "cross-spawn";
-import { SdkDescriptor, SdkPackageDescriptor } from "../base/types";
-import { determinePackageBuildOrder, findDependingPackages } from "../base/sdkDependencyGraph";
-import { DependencyOnSdk } from "./dependencyDiscovery";
+import { SourceDescriptor, PackageDescriptor } from "../base/types";
+import { determinePackageBuildOrder, findDependingPackages } from "../base/dependencyGraph";
+import { TargetDependency } from "../base/types";
 
 /**
  * Request to build a particular SDK package
@@ -14,7 +14,7 @@ export type BuildRequest = {
     /**
      * Package to build
      */
-    sdkPackage: SdkPackageDescriptor;
+    sdkPackage: PackageDescriptor;
 
     /**
      * Files that changed, which triggered the build request.
@@ -29,7 +29,7 @@ export type BuildResult = {
     /**
      * Package that was built
      */
-    sdkPackage: SdkPackageDescriptor;
+    sdkPackage: PackageDescriptor;
 
     /**
      * Exit code of the incremental build
@@ -82,7 +82,7 @@ export class PackageBuilder {
     private currentBuild: Build | undefined;
     private pendingBuilds: Build[] = [];
 
-    constructor(readonly sdk: SdkDescriptor, deps: DependencyOnSdk[]) {
+    constructor(readonly sdk: SourceDescriptor, deps: TargetDependency[]) {
         this.buildOrder = filterBuildOrderToCurrentScope(
             determinePackageBuildOrder(sdk.dependencyGraph),
             deps,
@@ -249,7 +249,7 @@ class ParallelBuilder {
     };
 }
 
-function filterBuildOrderToCurrentScope(buildOrder: string[][], deps: DependencyOnSdk[]): string[][] {
+function filterBuildOrderToCurrentScope(buildOrder: string[][], deps: TargetDependency[]): string[][] {
     const packagesInScope: Set<string> = new Set<string>();
 
     deps.forEach((dep) => packagesInScope.add(dep.pkg.packageName));
@@ -269,7 +269,7 @@ function filterBuildOrderToCurrentScope(buildOrder: string[][], deps: Dependency
  * @param originalRequests - original requests provided to expand
  */
 function expandBuildRequestsToIncludeDependencies(
-    sdk: SdkDescriptor,
+    sdk: SourceDescriptor,
     buildOrder: string[][],
     originalRequests: BuildRequest[],
 ): BuildRequest[][] {

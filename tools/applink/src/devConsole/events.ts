@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 
-import { DependencyGraph, SdkPackageDescriptor } from "../base/types";
-import { DependencyOnSdk } from "../devTo/dependencyDiscovery";
+import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
 
 export type DcEventType =
-    | "packagesInitialized"
+    | "sourceInitialized"
+    | "targetSelected"
     | "filesChanged"
     | "packagesChanged"
     | "buildScheduled"
@@ -17,40 +17,95 @@ interface BaseDcEvent {
     type: DcEventType;
 }
 
-export interface PackagesInitialized extends BaseDcEvent {
-    type: "packagesInitialized";
+//
+//
+//
+
+export interface SourceInitialized extends BaseDcEvent {
+    type: "sourceInitialized";
     body: {
-        packages: SdkPackageDescriptor[];
-        graph: DependencyGraph;
+        sourceDescriptor: SourceDescriptor;
     };
 }
 
-export interface FilesChanged extends BaseDcEvent {
-    type: "filesChanged";
-    body: {
-        files: string[];
+export function sourceInitialized(sourceDescriptor: SourceDescriptor): SourceInitialized {
+    return {
+        type: "sourceInitialized",
+        body: {
+            sourceDescriptor,
+        },
     };
 }
 
+//
+//
+//
+
+export interface TargetSelected extends BaseDcEvent {
+    type: "targetSelected";
+    body: {
+        targetDescriptor: TargetDescriptor;
+    };
+}
+
+export function targetSelected(targetDescriptor: TargetDescriptor): TargetSelected {
+    return {
+        type: "targetSelected",
+        body: {
+            targetDescriptor,
+        },
+    };
+}
+
+//
+//
+//
+
+export type PackageChange = {
+    /**
+     * Name of package which has changed
+     */
+    packageName: string;
+    files: string[];
+};
+
+/**
+ * One or more source packages had their source files changed.
+ */
 export interface PackagesChanged extends BaseDcEvent {
     type: "packagesChanged";
     body: {
-        packages: SdkPackageDescriptor[];
-        graph: DependencyGraph;
+        /**
+         * Packages whose sources have changed
+         */
+        changes: PackageChange[];
     };
 }
+
+export function packagesChanged(changes: PackageChange[]): PackagesChanged {
+    return {
+        type: "packagesChanged",
+        body: {
+            changes,
+        },
+    };
+}
+
+//
+//
+//
 
 export interface BuildScheduled extends BaseDcEvent {
     type: "buildScheduled";
     body: {
-        packages: SdkPackageDescriptor[];
+        packages: string[];
     };
 }
 
 export interface PackageBuilt extends BaseDcEvent {
     type: "packageBuilt";
     body: {
-        sdkPackage: SdkPackageDescriptor;
+        packageName: string;
         exitCode: number;
         stdoutPath: string;
         stderrPath: string;
@@ -61,29 +116,42 @@ export interface PackageBuilt extends BaseDcEvent {
 export interface BuildFinished extends BaseDcEvent {
     type: "buildFinished";
     body: {
-        success: SdkPackageDescriptor[];
-        fail: SdkPackageDescriptor[];
+        success: string[];
+        fail: string[];
     };
 }
 
 export interface PackagePublished extends BaseDcEvent {
     type: "packagePublished";
     body: {
-        sdkPackage: SdkPackageDescriptor;
-        dependency: DependencyOnSdk;
+        packageName: string;
+        dependency: TargetDependency;
     };
 }
+
+export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 
 export interface SomethingHappened extends BaseDcEvent {
     type: "somethingHappened";
     body: {
+        severity: Severity;
         message: string;
     };
 }
 
+export function somethingHappened(severity: Severity, message: string): SomethingHappened {
+    return {
+        type: "somethingHappened",
+        body: {
+            severity,
+            message,
+        },
+    };
+}
+
 export type DcEvent =
-    | PackagesInitialized
-    | FilesChanged
+    | SourceInitialized
+    | TargetSelected
     | PackagesChanged
     | BuildScheduled
     | PackageBuilt
@@ -91,11 +159,18 @@ export type DcEvent =
     | PackagePublished
     | SomethingHappened;
 
+//
+//
+//
+
 export interface IEventListener {
     onEvent: (event: DcEvent) => void;
 }
 export type EventListener = ((event: DcEvent) => void) | IEventListener;
 
+/**
+ * Simple event bus allows registration of listener functions to which all post-ed events will be dispatched.
+ */
 export class EventBus {
     private readonly queue: DcEvent[] = [];
     private readonly listeners: EventListener[] = [];
@@ -136,4 +211,7 @@ export class EventBus {
     };
 }
 
+/**
+ * Single instance of the event bus. All comonents should would register and/or post to this bus.
+ */
 export const GlobalEventBus = new EventBus();

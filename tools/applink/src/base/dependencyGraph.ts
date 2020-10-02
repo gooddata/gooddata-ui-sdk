@@ -6,7 +6,7 @@ import groupBy from "lodash/groupBy";
 import flatMap from "lodash/flatMap";
 import difference from "lodash/difference";
 import fromPairs from "lodash/fromPairs";
-import { AllDepdencyTypes, DependencyGraph, DependencyType, SdkPackageDescriptor } from "./types";
+import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types";
 
 function addDependencies(
     graph: DependencyGraph,
@@ -39,7 +39,7 @@ function addDependencies(
  *
  * @param packages - list of packages
  */
-export function createDependencyGraph(packages: SdkPackageDescriptor[]): DependencyGraph {
+export function createDependencyGraph(packages: PackageDescriptor[]): DependencyGraph {
     const graph: DependencyGraph = {
         nodes: [],
         edges: [],
@@ -82,7 +82,7 @@ export function createDependencyGraph(packages: SdkPackageDescriptor[]): Depende
  */
 export function findDependingPackages(
     graph: DependencyGraph,
-    packages: Array<string | SdkPackageDescriptor>,
+    packages: Array<string | PackageDescriptor>,
     depTypes: DependencyType[] = AllDepdencyTypes,
 ): string[][] {
     const names = packages.map((p) => (typeof p === "string" ? p : p.packageName));

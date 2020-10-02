@@ -2,7 +2,7 @@
 import blessed from "blessed";
 import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
-import { appLogMessage, getTerminalSize } from "./utils";
+import { appLogInfo, getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
 
 export class TerminalUi {
@@ -78,7 +78,7 @@ export class TerminalUi {
                 keyName: "F7",
                 registerKeys: ["f7"],
                 registerCb: () => {
-                    appLogMessage("build selected package");
+                    appLogInfo("build selected package");
                 },
             },
             {
@@ -86,7 +86,7 @@ export class TerminalUi {
                 keyName: "F8",
                 registerKeys: ["f8"],
                 registerCb: () => {
-                    appLogMessage("build selected package with dependencies");
+                    appLogInfo("build selected package with dependencies");
                 },
             },
             {

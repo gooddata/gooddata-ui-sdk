@@ -1,23 +1,23 @@
 // (C) 2020 GoodData Corporation
 
-import { DependencyOnSdk } from "./dependencyDiscovery";
+import { TargetDependency } from "../base/types";
 import { logError, logInfo, logSuccess, logWarn } from "../cli/loggers";
 import path from "path";
 import spawn from "cross-spawn";
-import { SdkPackageDescriptor } from "../base/types";
+import { PackageDescriptor } from "../base/types";
 
 export class DevBuildPublisher {
-    private readonly packageToDep: Map<SdkPackageDescriptor, DependencyOnSdk> = new Map<
-        SdkPackageDescriptor,
-        DependencyOnSdk
+    private readonly packageToDep: Map<PackageDescriptor, TargetDependency> = new Map<
+        PackageDescriptor,
+        TargetDependency
     >();
 
-    constructor(private readonly deps: DependencyOnSdk[]) {
+    constructor(private readonly deps: TargetDependency[]) {
         this.deps.forEach((dep) => {
             this.packageToDep.set(dep.pkg, dep);
         });
     }
-    public onNewBuildsReady = (sdkPackages: SdkPackageDescriptor[]): void => {
+    public onNewBuildsReady = (sdkPackages: PackageDescriptor[]): void => {
         logInfo(
             `Going to publish content for ${sdkPackages.length} package(s): ${sdkPackages
                 .map((p) => p.packageName)
@@ -30,7 +30,7 @@ export class DevBuildPublisher {
         ).run();
     };
 
-    public onPublished = (success: DependencyOnSdk[], fail: DependencyOnSdk[]): void => {
+    public onPublished = (success: TargetDependency[], fail: TargetDependency[]): void => {
         if (fail.length > 0) {
             if (success.length > 0) {
                 logWarn(
@@ -56,15 +56,15 @@ export class DevBuildPublisher {
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 
-type OnPublished = (deps: DependencyOnSdk[], failed: DependencyOnSdk[]) => void;
+type OnPublished = (deps: TargetDependency[], failed: TargetDependency[]) => void;
 
 class Publisher {
-    private finished: DependencyOnSdk[] = [];
-    private failed: DependencyOnSdk[] = [];
+    private finished: TargetDependency[] = [];
+    private failed: TargetDependency[] = [];
 
-    constructor(private readonly deps: DependencyOnSdk[], private readonly onPublished: OnPublished) {}
+    constructor(private readonly deps: TargetDependency[], private readonly onPublished: OnPublished) {}
 
-    private onCopyFinished = (dep: DependencyOnSdk, exitCode: number): void => {
+    private onCopyFinished = (dep: TargetDependency, exitCode: number): void => {
         if (!exitCode) {
             // logInfo(`Successfully updated app with new build of ${dep.pkg.packageName}`);
             this.finished.push(dep);

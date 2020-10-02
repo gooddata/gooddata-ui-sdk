@@ -6,15 +6,12 @@ import * as process from "process";
 import * as pkg from "../package.json";
 import { logError } from "./cli/loggers";
 import { devConsole } from "./devConsole/action";
-import { devTo } from "./devTo/action";
 
 program
     .version(pkg.version)
-    .command("devTo <path>")
-    .description("Links SDK libraries to an application residing in <path>")
-    .action(devTo);
-
-program.command("devConsole").description("Starts development console").action(devConsole);
+    .command("devConsole <path>")
+    .description("Starts development console for SDK dependencies of the application residing in <path>")
+    .action(devConsole);
 
 async function run() {
     program.parse(process.argv);

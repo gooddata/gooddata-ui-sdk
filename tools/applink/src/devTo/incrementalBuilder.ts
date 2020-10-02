@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { SdkDescriptor, SdkPackageDescriptor } from "../base/types";
+import { SourceDescriptor, PackageDescriptor } from "../base/types";
 import { logError, logInfo, logNewSection, logWarn } from "../cli/loggers";
 import { BuildRequest, PackageBuilder } from "./packageBuilder";
 
@@ -8,9 +8,9 @@ export class IncrementalBuilder {
     private accumulatedChanges: string[] = [];
 
     constructor(
-        private readonly sdk: SdkDescriptor,
+        private readonly sdk: SourceDescriptor,
         private readonly packageBuilder: PackageBuilder,
-        private readonly onNewBuildsReady: (sdkPackages: SdkPackageDescriptor[]) => void,
+        private readonly onNewBuildsReady: (sdkPackages: PackageDescriptor[]) => void,
     ) {}
 
     private rebuildAndPublish = async () => {
@@ -56,7 +56,7 @@ export class IncrementalBuilder {
     };
 }
 
-function createBuildRequestsForChangedPackages(sdk: SdkDescriptor, targets: string[]): BuildRequest[] {
+function createBuildRequestsForChangedPackages(sdk: SourceDescriptor, targets: string[]): BuildRequest[] {
     const requests: Record<string, BuildRequest> = {};
 
     for (const target of targets) {
@@ -79,7 +79,7 @@ function createBuildRequestsForChangedPackages(sdk: SdkDescriptor, targets: stri
     return Object.values(requests);
 }
 
-function createIncrementalBuildRequest(sdk: SdkDescriptor, target: string): BuildRequest | undefined {
+function createIncrementalBuildRequest(sdk: SourceDescriptor, target: string): BuildRequest | undefined {
     const libEndsIndex = target.indexOf("/", target.indexOf("/") + 1);
 
     if (libEndsIndex === -1) {

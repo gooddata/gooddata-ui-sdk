@@ -1,48 +1,49 @@
 // (C) 2020 GoodData Corporation
-import { getSdkDescriptor } from "../base/sdkPackages";
-import path from "path";
-import { DependencyOnSdk } from "../devTo/dependencyDiscovery";
+import { getSourceDescriptor } from "../base/sourceDiscovery";
+import { discoverTargetDependencies } from "../base/targetDiscovery";
 import { TerminalUi } from "./ui/ui";
-import { registerLogFn } from "../cli/loggers";
-import { appLogMessage } from "./ui/utils";
-import { GlobalEventBus, PackagesInitialized } from "./events";
+import { logInfo, registerLogFn } from "../cli/loggers";
+import { appLogInfo } from "./ui/utils";
+import { GlobalEventBus, sourceInitialized, targetSelected } from "./events";
+import { ChangeDetector } from "./changeDetector";
 
-export async function devConsole(): Promise<number> {
-    const sdk = await getSdkDescriptor();
+export async function devConsole(targetDir: string): Promise<number> {
+    const sourceDescriptor = await getSourceDescriptor(
+        (pkg) => !pkg.projectFolder.startsWith("examples") && !pkg.projectFolder.startsWith("skel"),
+    );
 
-    if (!sdk) {
+    if (!sourceDescriptor) {
+        return 1;
+    }
+
+    const targetDescriptor = discoverTargetDependencies(targetDir, sourceDescriptor);
+
+    if (!targetDescriptor.dependencies.length) {
+        logInfo(`The target project does not have any dependencies on the SDK. There is nothing to do.`);
+
         return 1;
     }
 
     /*
-     * Initializes the terminal UI.
+     * Register log function so that all messages land in the application's log
+     */
+    registerLogFn(appLogInfo);
+
+    /*
+     * Initialize the terminal UI - this will make the app run forever until user triggers exit
      */
     new TerminalUi();
 
     /*
-     * Register log function so that all messages land in the application's log
+     * Initialize components of the watch-build-publish system
      */
-    registerLogFn(appLogMessage);
+    new ChangeDetector();
 
-    const packagesInitialized: PackagesInitialized = {
-        type: "packagesInitialized",
-        body: {
-            graph: sdk.dependencyGraph,
-            packages: Object.values(sdk.packages),
-        },
-    };
-
-    GlobalEventBus.post(packagesInitialized);
+    /*
+     * Initialize the console with source packages
+     */
+    GlobalEventBus.post(sourceInitialized(sourceDescriptor));
+    GlobalEventBus.post(targetSelected(targetDescriptor));
 
     return 0;
-}
-
-//
-//
-//
-
-export function createWatchDirs(deps: DependencyOnSdk[]): string[] {
-    return deps.map((dep) => {
-        return path.join(dep.pkg.directory, "src");
-    });
 }

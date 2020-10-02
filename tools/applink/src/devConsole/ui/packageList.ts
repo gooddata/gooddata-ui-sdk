@@ -1,20 +1,27 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel";
-import { DcEvent, GlobalEventBus, IEventListener, PackageBuilt, PackagesInitialized } from "../events";
-import { DependencyGraph, SdkPackageDescriptor } from "../../base/types";
+import {
+    DcEvent,
+    GlobalEventBus,
+    IEventListener,
+    PackagesChanged,
+    SourceInitialized,
+    TargetSelected,
+} from "../events";
+import { DependencyGraph, SourceDescriptor } from "../../base/types";
 import max from "lodash/max";
-import { determinePackageBuildOrder, findDependingPackages } from "../../base/sdkDependencyGraph";
+import { determinePackageBuildOrder, findDependingPackages } from "../../base/dependencyGraph";
 import flatten from "lodash/flatten";
 import { intersection } from "lodash";
-import { appLogMessage } from "./utils";
+import { appLogInfo } from "./utils";
 import { ColorCodes } from "./colors";
+import { TargetDescriptor } from "../../base/types";
 
 type PackageListItem = {
     selected: boolean;
     highlightLevel: number;
     packageName: string;
-    sdkPackage: SdkPackageDescriptor;
     padding: number;
     buildIndicator: string;
     publishIndicator: string;
@@ -22,6 +29,7 @@ type PackageListItem = {
 
 const IndicatorSuccess = "{green-bg} {/}";
 const IndicatorError = "{red-bg} {/}";
+const IndicatorWarn = "{yellow-bg} {/}";
 const IndicatorInit = "{blue-bg} {/}";
 
 const CursorHighlight = "{cyan-bg}";
@@ -36,7 +44,9 @@ const ClearTags = "{/}";
 export class PackageList extends AppPanel implements IEventListener {
     private readonly list: blessed.Widgets.ListElement;
 
-    private dependencyGraph: DependencyGraph | undefined;
+    private sourceDescriptor: SourceDescriptor | undefined;
+    private targetDescriptor: TargetDescriptor | undefined;
+
     private buildOrder: string[][] | undefined;
 
     private listItems: PackageListItem[] = [];
@@ -65,7 +75,7 @@ export class PackageList extends AppPanel implements IEventListener {
         });
 
         this.list.on("action", (_element, index) => {
-            appLogMessage("enter on " + index);
+            appLogInfo("enter on " + index);
         });
 
         GlobalEventBus.register(this);
@@ -73,12 +83,16 @@ export class PackageList extends AppPanel implements IEventListener {
 
     public onEvent = (event: DcEvent): void => {
         switch (event.type) {
-            case "packagesInitialized": {
-                this.onPackagesInitialized(event);
+            case "sourceInitialized": {
+                this.onSourceInitialized(event);
                 break;
             }
-            case "packageBuilt": {
-                this.onPackageBuilt(event);
+            case "targetSelected": {
+                this.onTargetSelected(event);
+                break;
+            }
+            case "packagesChanged": {
+                this.onPackageChanged(event);
                 break;
             }
         }
@@ -88,28 +102,38 @@ export class PackageList extends AppPanel implements IEventListener {
         this.list.focus();
     };
 
-    private onPackagesInitialized = (event: PackagesInitialized): void => {
-        const { graph, packages } = event.body;
+    private initializePackageLIst = (): void => {
+        const graph = this.sourceDescriptor!.dependencyGraph;
+        const packageScope = this.targetDescriptor!.dependencies.map((pkg) => pkg.pkg.packageName);
 
-        this.dependencyGraph = graph;
-        this.buildOrder = determinePackageBuildOrder(graph, ["prod"]);
+        this.buildOrder = getBuildOrder(graph, packageScope);
         this.itemIndex = {};
-        this.listItems = createPackageItems(packages);
-        this.listItems.forEach((item, idx) => (this.itemIndex[item.sdkPackage.packageName] = idx));
+        this.listItems = createPackageItems(packageScope);
+        this.listItems.forEach((item, idx) => (this.itemIndex[item.packageName] = idx));
 
         this.list.setItems(this.listItems.map(createPackageItem) as any);
         this.screen.render();
     };
 
-    private onPackageBuilt = (event: PackageBuilt): void => {
-        const { sdkPackage, exitCode } = event.body;
+    private onSourceInitialized = (event: SourceInitialized): void => {
+        this.sourceDescriptor = event.body.sourceDescriptor;
+    };
 
-        const result = this.updateItem(sdkPackage.packageName, (item) => {
-            item.buildIndicator = !exitCode ? IndicatorSuccess : IndicatorError;
-        });
+    private onTargetSelected = (event: TargetSelected): void => {
+        this.targetDescriptor = event.body.targetDescriptor;
 
-        if (result) {
-            this.refreshItem(...result);
+        this.initializePackageLIst();
+    };
+
+    private onPackageChanged = (event: PackagesChanged): void => {
+        for (const change of event.body.changes) {
+            const result = this.updateItem(change.packageName, (item) => {
+                item.buildIndicator = IndicatorWarn;
+            });
+
+            if (result) {
+                this.refreshItem(...result);
+            }
         }
     };
 
@@ -123,7 +147,11 @@ export class PackageList extends AppPanel implements IEventListener {
         this.selectedItemIdx = selectedIdx;
 
         const dependents = flatten(
-            findDependingPackages(this.dependencyGraph!, [selectedItem.packageName], ["prod"]),
+            findDependingPackages(
+                this.sourceDescriptor!.dependencyGraph,
+                [selectedItem.packageName],
+                ["prod"],
+            ),
         );
         const filteredBuildOrder =
             this.buildOrder?.filter((g) => intersection(g, dependents).length > 0) ?? [];
@@ -176,20 +204,19 @@ export class PackageList extends AppPanel implements IEventListener {
     };
 }
 
-function createPackageItems(packages: SdkPackageDescriptor[]): PackageListItem[] {
+function createPackageItems(packages: string[]): PackageListItem[] {
     if (packages.length === 0) {
         return [];
     }
 
-    packages.sort(packageComparator);
-    const maxLen = max(packages.map((p) => p.packageName.length))!;
+    packages.sort();
+    const maxLen = max(packages.map((p) => p.length))!;
 
     return packages.map((p) => ({
         selected: false,
         highlightLevel: -1,
-        packageName: p.packageName,
-        sdkPackage: p,
-        padding: maxLen - p.packageName.length,
+        packageName: p,
+        padding: maxLen - p.length,
         buildIndicator: IndicatorInit,
         publishIndicator: IndicatorInit,
     }));
@@ -211,15 +238,9 @@ function createPackageItem(item: PackageListItem): string {
     const [selectedBeginTag, selectedEndTag] = getPackageItemTags(item);
     const padding = item.padding > 0 ? new Array(item.padding).fill(".").join("") : "";
 
-    return `${selectedBeginTag}${item.sdkPackage.packageName}${padding}${selectedEndTag} ${item.buildIndicator}${item.publishIndicator}`;
+    return `${selectedBeginTag}${item.packageName}${padding}${selectedEndTag} ${item.buildIndicator}${item.publishIndicator}`;
 }
 
-function packageComparator(a: SdkPackageDescriptor, b: SdkPackageDescriptor): number {
-    if (a.type === "lib" && b.type === "tool") {
-        return -1;
-    } else if (a.type === "tool" && b.type === "lib") {
-        return 1;
-    }
-
-    return a.packageName.localeCompare(b.packageName);
+function getBuildOrder(graph: DependencyGraph, packages: string[]) {
+    return determinePackageBuildOrder(graph, ["prod"]).filter((g) => intersection(g, packages).length > 0);
 }

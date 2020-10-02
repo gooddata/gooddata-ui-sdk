@@ -1,18 +1,27 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
-import { GlobalEventBus, SomethingHappened } from "../events";
+import { GlobalEventBus, somethingHappened } from "../events";
 
 export function getTerminalSize(screen: blessed.Widgets.Screen): [number, number] {
     return [screen.program.rows, screen.program.cols];
 }
 
-export function appLogMessage(message: string) {
-    const event: SomethingHappened = {
-        type: "somethingHappened",
-        body: {
-            message,
-        },
-    };
+export function appLogInfo(message: string): void {
+    GlobalEventBus.post(somethingHappened("info", message));
+}
 
-    GlobalEventBus.post(event);
+export function appLogImportant(message: string): void {
+    GlobalEventBus.post(somethingHappened("important", message));
+}
+
+export function appLogWarn(message: string): void {
+    GlobalEventBus.post(somethingHappened("warn", message));
+}
+
+export function appLogError(message: string): void {
+    GlobalEventBus.post(somethingHappened("error", message));
+}
+
+export function appLogFatal(message: string): void {
+    GlobalEventBus.post(somethingHappened("fatal", message));
 }

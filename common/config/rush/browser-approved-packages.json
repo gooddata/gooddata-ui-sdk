@@ -195,6 +195,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/blessed",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@types/classnames",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -393,6 +397,10 @@
     {
       "name": "babel-runtime",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "blessed",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "chalk",
