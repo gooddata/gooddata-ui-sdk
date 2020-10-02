@@ -55,7 +55,6 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         className: undefined,
         style: undefined,
         visibleItemsRange: defaultVisibleItemsRange,
-        customValueValidator: () => false,
     };
 
     public onChange = (option: DynamicSelectOption | null): void => {
@@ -184,7 +183,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     ): void => {
         const { customValueValidator, value } = this.props;
         if (customValueValidator) {
-            this.onInputValueChanged(value.toString());
+            this.onInputValueChanged(value?.toString());
         } else {
             selectItem(selectedItem);
             this.onInputValueChanged(selectedItem ? selectedItem.label : "");
@@ -197,7 +196,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     ): void => {
         const { customValueValidator } = this.props;
         const currentValue = (event.target as HTMLInputElement).value;
-        if (customValueValidator(currentValue)) {
+        if (customValueValidator && customValueValidator(currentValue)) {
             selectItem({
                 type: "option",
                 value: Number(currentValue),
