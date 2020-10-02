@@ -56,14 +56,6 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
             },
         },
     })
-    .addScenario("with autoresizeAll", {
-        ...PivotTableWithTwoMeasuresAndSingleRowAttr,
-        config: {
-            columnSizing: {
-                defaultWidth: "autoresizeAll",
-            },
-        },
-    })
     .addScenario("with two measures, grand totals and subtotals with auto-resizing", {
         ...PivotTableWithTwoMeasuresGrandTotalsAndSubtotals,
         config: {

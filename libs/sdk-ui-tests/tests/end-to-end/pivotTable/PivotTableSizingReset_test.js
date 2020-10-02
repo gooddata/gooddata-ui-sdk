@@ -27,8 +27,8 @@ const ADD_ALL_MEASURE_WIDTH_BUTTON = ".s-change-width-button-measure-all";
 const TURN_ON_GROW_TO_FIT_COMPLEX = ".s-pivot-table-sizing-complex-grow-to-fit-checkbox";
 
 const AGGRID_ON_RESIZE_TIMEOUT = 500;
-const AUTO_SIZE_TOLERANCE = 10;
-const DND_SIZE_TOLERANCE = 10;
+const AUTO_SIZE_TOLERANCE = 5;
+const DND_SIZE_TOLERANCE = 5;
 const CELL_DEFAULT_WIDTH = 200;
 const FIRST_CELL_AUTORESIZE_WIDTH = 111;
 const SECOND_CELL_AUTORESIZE_WIDTH = 110;

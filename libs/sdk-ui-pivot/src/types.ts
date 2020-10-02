@@ -31,7 +31,7 @@ export interface IMenu {
 /**
  * @public
  */
-export type DefaultColumnWidth = "viewport" | "unset" | "autoresizeAll";
+export type DefaultColumnWidth = "viewport" | "unset"; // | "auto"  | number; can be added later see ONE-4276
 
 /**
  * @public
