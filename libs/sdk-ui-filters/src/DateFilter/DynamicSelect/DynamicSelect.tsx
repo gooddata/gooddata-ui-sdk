@@ -184,10 +184,10 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     ): void => {
         const { customValueValidator, value } = this.props;
         if (customValueValidator) {
+            this.onInputValueChanged(value.toString());
+        } else {
             selectItem(selectedItem);
             this.onInputValueChanged(selectedItem ? selectedItem.label : "");
-        } else {
-            this.onInputValueChanged(value.toString());
         }
     };
 

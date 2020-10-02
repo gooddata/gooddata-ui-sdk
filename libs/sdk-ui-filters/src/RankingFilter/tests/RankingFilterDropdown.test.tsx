@@ -321,6 +321,7 @@ describe("RankingFilterDropdown", () => {
             component.setValueByBlur("42");
             component.clickApply();
 
+            expect(component.getValue()).toEqual("42");
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
                     measure: Mock.measure1Ref,
@@ -356,6 +357,7 @@ describe("RankingFilterDropdown", () => {
             (invalidValue) => {
                 const component = renderComponent();
                 component.setValueByBlur(invalidValue);
+                expect(component.getValue()).toEqual("10");
                 expect(component.isApplyButtonDisabled()).toBe(true);
             },
         );
