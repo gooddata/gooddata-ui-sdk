@@ -398,9 +398,9 @@ class RenderInsightView extends React.Component<
     };
 
     private componentDidMountInner = async () => {
-        await this.setupVisualization();
         await this.updateColorPalette();
         await this.updateWorkspaceSettings();
+        await this.setupVisualization();
 
         return this.updateVisualization();
     };
