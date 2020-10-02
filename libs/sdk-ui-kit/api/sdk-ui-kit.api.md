@@ -30,9 +30,50 @@ export class Button extends React_3.Component<IButtonProps> {
     }
 
 // @internal (undocumented)
+export class Checkbox extends React_2.PureComponent<CheckboxProps> {
+    // (undocumented)
+    static defaultProps: {
+        disabled: boolean;
+        name: string;
+        text: string;
+        title: string;
+        value: boolean;
+        onChange: (...args: any[]) => void;
+    };
+    // (undocumented)
+    onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface CheckboxProps {
+    // (undocumented)
+    disabled: boolean;
+    // (undocumented)
+    name: string;
+    // (undocumented)
+    onChange: (e: boolean) => void;
+    // (undocumented)
+    text: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    value: boolean;
+}
+
+// @internal (undocumented)
 export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export enum ENUM_KEY_CODE {
+    // (undocumented)
+    KEY_CODE_ENTER = 13,
+    // (undocumented)
+    KEY_CODE_ESCAPE = 27
 }
 
 // @internal (undocumented)
@@ -173,6 +214,213 @@ export interface IMeasureNumberFormatOwnProps {
 }
 
 // @internal (undocumented)
+export class Input extends React_2.PureComponent<InputPureProps, InputState> {
+    constructor(props: InputPureProps);
+    // (undocumented)
+    static defaultProps: {
+        autofocus: boolean;
+        className: string;
+        clearOnEsc: boolean;
+        disabled: boolean;
+        hasError: boolean;
+        hasWarning: boolean;
+        isSearch: boolean;
+        isSmall: boolean;
+        maxlength: number;
+        onChange: (...args: any[]) => void;
+        onEscKeyPress: (...args: any[]) => void;
+        onEnterKeyPress: (...args: any[]) => void;
+        onBlur: (...args: any[]) => void;
+        onFocus: (...args: any[]) => void;
+        placeholder: string;
+        prefix: string;
+        readonly: boolean;
+        suffix: string;
+        label: string;
+        labelPositionTop: boolean;
+        value: string;
+    };
+    // (undocumented)
+    inputNodeRef: InputPure;
+    // (undocumented)
+    onChange: (value: string | number) => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
+    // (undocumented)
+    valueChanged(value: string | number): void;
+}
+
+// @internal (undocumented)
+export class InputPure extends React_2.PureComponent<InputPureProps> {
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    static defaultProps: {
+        autofocus: boolean;
+        className: string;
+        clearOnEsc: boolean;
+        disabled: boolean;
+        hasError: boolean;
+        hasWarning: boolean;
+        isSearch: boolean;
+        isSmall: boolean;
+        maxlength: number;
+        onChange: (...args: any[]) => void;
+        onEscKeyPress: (...args: any[]) => void;
+        onEnterKeyPress: (...args: any[]) => void;
+        onBlur: (...args: any[]) => void;
+        onFocus: (...args: any[]) => void;
+        placeholder: string;
+        prefix: string;
+        readonly: boolean;
+        suffix: string;
+        label: string;
+        labelPositionTop: boolean;
+        value: string;
+    };
+    // (undocumented)
+    getInputClassNames(): string;
+    // (undocumented)
+    getLabelClassNames(className: string): string;
+    // (undocumented)
+    inputNodeRef: HTMLInputElement;
+    // (undocumented)
+    onChange: (e: React_2.ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onClear: (e?: React_2.ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onKeyPress: (e: React_2.KeyboardEvent) => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    renderClearIcon(clearOnEsc: boolean): React_2.ReactNode;
+    // (undocumented)
+    renderLabel(label: string): React_2.ReactNode;
+    // (undocumented)
+    renderPrefix(prefix: string): React_2.ReactNode;
+    // (undocumented)
+    renderSearch(isSearch: boolean): React_2.ReactNode;
+    // (undocumented)
+    renderSuffix(suffix: string): React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface InputPureProps {
+    // (undocumented)
+    autofocus: boolean;
+    // (undocumented)
+    className: string;
+    // (undocumented)
+    clearOnEsc: boolean;
+    // (undocumented)
+    disabled: boolean;
+    // (undocumented)
+    hasError: boolean;
+    // (undocumented)
+    hasWarning: boolean;
+    // (undocumented)
+    isSearch: boolean;
+    // (undocumented)
+    isSmall: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    labelPositionTop: boolean;
+    // (undocumented)
+    maxlength: number;
+    // (undocumented)
+    onBlur: () => void;
+    // (undocumented)
+    onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onEnterKeyPress: () => void;
+    // (undocumented)
+    onEscKeyPress: () => void;
+    // (undocumented)
+    onFocus: () => void;
+    // (undocumented)
+    placeholder: string;
+    // (undocumented)
+    prefix: string;
+    // (undocumented)
+    readonly: boolean;
+    // (undocumented)
+    suffix: string;
+    // (undocumented)
+    value: string | number;
+}
+
+// @internal (undocumented)
+export interface InputState {
+    // (undocumented)
+    value: string | number;
+}
+
+// @internal (undocumented)
+export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumberFormatProps, InputWithNumberFormatState> {
+    constructor(props: InputWithNumberFormatProps);
+    // (undocumented)
+    static defaultProps: {
+        separators: {
+            thousand: string;
+            decimal: string;
+        };
+        autofocus: boolean;
+        className: string;
+        clearOnEsc: boolean;
+        disabled: boolean;
+        hasError: boolean;
+        hasWarning: boolean;
+        isSearch: boolean;
+        isSmall: boolean;
+        maxlength: number;
+        onChange: (...args: any[]) => void;
+        onEscKeyPress: (...args: any[]) => void;
+        onEnterKeyPress: (...args: any[]) => void;
+        onBlur: (...args: any[]) => void;
+        onFocus: (...args: any[]) => void;
+        placeholder: string;
+        prefix: string;
+        readonly: boolean;
+        suffix: string;
+        label: string;
+        labelPositionTop: boolean;
+        value: string;
+    };
+    // (undocumented)
+    handleCaretShift(e: React_2.ChangeEvent<HTMLInputElement>): void;
+    // (undocumented)
+    onBlur: () => void;
+    // (undocumented)
+    onChange: (value: number, e: React_2.ChangeEvent<HTMLInputElement>) => void;
+    // (undocumented)
+    onFocus: () => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps({ value: newValue }: InputWithNumberFormatProps): void;
+}
+
+// @internal (undocumented)
+export interface InputWithNumberFormatOwnProps {
+    // (undocumented)
+    separators: Separators;
+}
+
+// @internal (undocumented)
+export type InputWithNumberFormatProps = InputWithNumberFormatOwnProps & InputPureProps;
+
+// @internal (undocumented)
+export interface InputWithNumberFormatState {
+    // (undocumented)
+    isFocused: boolean;
+    // (undocumented)
+    value: number;
+}
+
+// @internal (undocumented)
 export interface IOffset {
     // (undocumented)
     x?: number;
@@ -262,6 +510,12 @@ export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export type Separators = {
+    thousand: string;
+    decimal: string;
+};
 
 // @internal (undocumented)
 export enum SnapPoint {

@@ -1,0 +1,569 @@
+// (C) 2007-2020 GoodData Corporation
+@import "./Form/_mixins";
+@import "./Form/_variables";
+@import "variables.scss";
+@import "mixins.scss";
+
+/* ==========================================================================
+   General styles for inputs & selects
+   ========================================================================== */
+.gd-input {
+    position: relative;
+    display: block;
+    outline: 0;
+}
+
+.gd-input-wrapper,
+.gd-input-field,
+.input-text {
+    width: 100%;
+    max-width: 100%;
+}
+
+.gd-input-wrapper {
+    position: relative;
+}
+
+.gd-input-field,
+.input-text {
+    @include gd-input-base;
+    @include border-radius(3px);
+    @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.85));
+
+    @include placeholder {
+        color: transparentize($gd-color-link, 0.25);
+
+        @include transition(color, 0.25s, ease-in-out);
+    }
+
+    &:hover {
+        border-color: $gd-input-text-hover-border;
+
+        @include placeholder {
+            color: $gd-color-link;
+        }
+    }
+
+    &:focus {
+        outline: 0;
+        border-color: $gd-input-focus-color;
+
+        @include box-shadow(inset 0 1px 1px 0 transparentize($gd-input-text-box-shadow-color, 0.8));
+    }
+
+    &:disabled,
+    &.disabled {
+        &,
+        &:hover {
+            color: $gd-color-disabled;
+            border-color: $gd-input-text-border;
+            background-color: $gd-color-light;
+
+            @include box-shadow(none);
+        }
+    }
+
+    &.gd-input-field-small,
+    &.small {
+        @include gd-input-small-base;
+    }
+}
+
+textarea {
+    &.gd-input,
+    &.input-text {
+        height: auto;
+        outline: 0;
+    }
+}
+
+/* Searchfield
+   ========================================================================== */
+
+.gd-input-search,
+.searchfield {
+    position: relative;
+
+    &.gd-input-small,
+    &.small {
+        .gd-input-field,
+        .searchfield-input {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .gd-input-icon,
+        .searchfield-icon {
+            left: 8px;
+        }
+
+        .gd-input-icon-clear,
+        .searchfield-clear {
+            right: 8px;
+        }
+
+        .gd-input-icon,
+        .gd-input-icon-clear,
+        .searchfield-icon,
+        .searchfield-clear {
+            line-height: 29px;
+            font-size: 14px;
+        }
+    }
+}
+
+.gd-input-search .gd-input-field,
+.searchfield-input {
+    padding-left: 36px;
+    padding-right: 36px;
+}
+
+.gd-input-icon,
+.searchfield-icon {
+    left: 10px;
+    color: $gd-color-disabled;
+
+    @include gd-searchfield-base;
+    @include transition(all, 0.25s, ease-in-out);
+
+    :focus + & {
+        color: $gd-searchfield-icon-color;
+    }
+}
+
+.gd-input-icon-clear,
+.searchfield-clear {
+    right: 10px;
+    color: $gd-color-link;
+    cursor: pointer;
+
+    @include gd-searchfield-base;
+    @include transition(all, 0.25s, ease-in-out);
+
+    &:hover {
+        color: $gd-searchfield-clear-color;
+    }
+}
+
+/* Input states
+   ========================================================================== */
+
+.has-error {
+    .gd-input-field {
+        color: $gd-color-text;
+        border-color: transparentize($gd-color-negative, 0.5);
+
+        @include box-shadow(inset 0 0 2px 0 transparentize(darken($gd-color-negative, 20%), 0.7));
+    }
+
+    .gd-input-icon {
+        color: $gd-color-negative;
+    }
+}
+
+.has-warning {
+    .gd-input-field {
+        border-color: $gd-color-warning;
+
+        @include box-shadow(inset 0 0 2px 0 transparentize(darken($gd-color-warning, 20%), 0.7));
+    }
+}
+
+/* Input label
+   ========================================================================== */
+.gd-input-with-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .gd-input-wrapper {
+        flex: 1 1 auto;
+    }
+
+    &.is-disabled {
+        .gd-input-label {
+            color: $gd-color-disabled;
+            user-select: none;
+        }
+    }
+
+    &.has-error {
+        .gd-input-label {
+            color: $gd-color-negative;
+        }
+    }
+}
+
+.gd-input-label {
+    flex: 0 0 auto;
+    margin-right: 20px;
+    white-space: nowrap;
+    color: $gd-color-label;
+    font-size: 14px;
+}
+
+.gd-input-label-top {
+    flex-wrap: wrap;
+
+    .gd-input-label {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+}
+
+/* Input prefixes and suffixes
+   ========================================================================== */
+
+.gd-input-with-prefix,
+.gd-input-with-suffix {
+    .gd-input-wrapper {
+        display: flex;
+    }
+
+    &:hover {
+        .gd-input-field,
+        .gd-input-prefix,
+        .gd-input-suffix {
+            border-color: $gd-input-text-hover-border;
+        }
+
+        .gd-input-field:disabled {
+            @include gd-input-and-prefix {
+                border-color: $gd-input-text-border;
+            }
+        }
+    }
+
+    .gd-input-prefix {
+        order: 0;
+    }
+
+    .gd-input-field {
+        flex: 1 1 100%;
+
+        // Fixing flexbox bug:
+        // http://stackoverflow.com/questions/27424831/firefox-flexbox-overflow
+        min-width: 0;
+
+        &:focus {
+            @include gd-input-and-prefix {
+                border-color: $gd-input-focus-color;
+            }
+        }
+
+        &.gd-input-field-small,
+        &.small {
+            @include gd-input-and-prefix {
+                @include gd-input-small-base;
+            }
+
+            @include gd-input-prefix {
+                min-width: 27px;
+            }
+        }
+    }
+
+    .gd-input-field,
+    .gd-input-suffix {
+        order: 1;
+    }
+
+    &.has-error .gd-input-field {
+        @include gd-input-and-prefix {
+            border-color: transparentize($gd-color-negative, 0.5);
+        }
+    }
+}
+
+.gd-input-with-prefix {
+    .gd-input-field {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.gd-input-with-suffix {
+    .gd-input-field {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.gd-input-prefix,
+.gd-input-suffix {
+    display: block;
+    flex: 0 0 auto;
+    @include gd-input-base;
+
+    color: $gd-color-disabled;
+    min-width: 30px;
+    text-align: center;
+    background-color: $gd-color-light;
+}
+
+.gd-input-prefix {
+    border-right: none;
+    border-radius: 3px 0 0 3px;
+}
+
+.gd-input-suffix {
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+}
+
+/* Checkbox and radio
+   ========================================================================== */
+
+.input-radio-label,
+.input-checkbox-label {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    padding: 0 10px 0 23px;
+    line-height: 20px;
+    margin-left: -3px;
+
+    .input-label-text {
+        line-height: inherit;
+        vertical-align: middle;
+        color: $gd-color-text;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            box-sizing: content-box;
+            cursor: pointer;
+        }
+
+        &::before {
+            top: 3px;
+            left: 3px;
+            width: 12px;
+            height: 12px;
+            border: 1px solid $gd-input-text-hover-border;
+            transition: all 0.2s;
+            background-color: $gd-color-text-light;
+        }
+
+        &::after {
+            transform: scale(0);
+            transition: transform 0.2s;
+        }
+    }
+
+    .gd-checkbox-label-small {
+        line-height: inherit;
+        vertical-align: inherit;
+    }
+
+    &,
+    &:hover,
+    &:active {
+        input:disabled,
+        input.disabled {
+            ~ .input-label-text::before {
+                box-shadow: none;
+                border-color: transparentize($gd-input-text-border, 0.3);
+                background-color: $gd-color-light;
+            }
+        }
+    }
+
+    &:hover,
+    &:active {
+        .input-label-text::before {
+            box-shadow: inset 0 1px 2px 0 transparentize($gd-input-text-box-shadow-color, 0.75);
+        }
+
+        input:checked ~ .input-label-text::before {
+            box-shadow: none;
+            border-color: transparent;
+        }
+    }
+
+    &:hover .input-label-text::before {
+        border-color: $gd-color-state-blank;
+    }
+
+    &:active .input-label-text::before {
+        border-color: $gd-input-checkbox-label-color;
+        background-color: $gd-color-highlight-dimmed;
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+        outline: 0;
+
+        &:checked ~ .input-label-text {
+            &::before {
+                border-color: transparent;
+                background-color: $gd-input-checkbox-label-color;
+            }
+
+            &::after {
+                transform: scale(1);
+            }
+        }
+
+        &:disabled,
+        &.disabled {
+            ~ .input-label-text {
+                color: $gd-color-disabled;
+            }
+
+            ~ .input-label-text::before,
+            ~ .input-label-text::after {
+                cursor: default;
+            }
+
+            &:checked ~ .input-label-text::before {
+                background-color: $gd-input-text-border;
+            }
+        }
+    }
+}
+
+.input-radio-label {
+    .input-label-text {
+        &::before {
+            border-radius: 50%;
+        }
+
+        &::after {
+            top: 7px;
+            left: 7px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: $gd-color-text-light;
+        }
+    }
+}
+
+.input-checkbox-label {
+    .input-label-text {
+        &::before {
+            border-radius: 2px;
+        }
+
+        &::after {
+            top: 7px;
+            left: 4px;
+            width: 7px;
+            height: 3px;
+            transform: scale(0) rotate(315deg) skew(-2deg);
+            transform-origin: top;
+            border-left: 2px solid $gd-color-text-light;
+            border-bottom: 2px solid $gd-color-text-light;
+        }
+    }
+
+    input:checked ~ .input-label-text::after {
+        transform: scale(1) rotate(315deg) skew(-2deg);
+    }
+
+    .checkbox-indefinite {
+        ~ .input-label-text::after {
+            top: 9px;
+            left: 6px;
+            width: 8px;
+            height: 0;
+            transform: scale(0);
+            border-left: none;
+        }
+
+        &:checked ~ .input-label-text::after {
+            transform: scale(1);
+        }
+    }
+}
+
+.input-checkbox-toggle {
+    input {
+        position: absolute;
+        opacity: 0;
+        outline: 0;
+
+        &:disabled,
+        &.disabled {
+            ~ .input-label-text {
+                color: $gd-color-disabled;
+            }
+        }
+    }
+
+    .input-label-text {
+        position: relative;
+        height: 14px;
+        line-height: 14px;
+        padding-right: 35px;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            box-sizing: content-box;
+            background: #f3f6f7;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        &::before {
+            top: 1px;
+            right: 0;
+            width: 28px;
+            height: 12px;
+            border: 1px solid #c9d5e0;
+            border-radius: 7px;
+        }
+
+        &::after {
+            top: 3px;
+            right: 18px;
+            width: 8px;
+            height: 8px;
+            border: 1px solid $gd-color-disabled;
+            border-radius: 50%;
+        }
+    }
+
+    input:checked {
+        ~ .input-label-text::after {
+            right: 2px;
+            border: 1px solid $button-action-hover-bg;
+            background: $gd-input-checkbox-toggle-color;
+        }
+    }
+
+    &:hover,
+    &:active {
+        .input-label-text::after {
+            border: 1px solid $gd-color-state-blank;
+            background: #d7dfe5;
+        }
+
+        input:checked ~ .input-label-text::after {
+            background: $button-action-hover-bg;
+        }
+    }
+
+    &,
+    &:hover,
+    &:active {
+        input:disabled,
+        input.disabled {
+            ~ .input-label-text::before,
+            ~ .input-label-text::after {
+                box-shadow: none;
+                cursor: default;
+                border-color: transparentize($gd-input-text-border, 0.5);
+                background-color: $gd-color-light;
+            }
+        }
+    }
+}
