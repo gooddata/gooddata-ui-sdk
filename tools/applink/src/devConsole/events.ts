@@ -8,8 +8,10 @@ export type DcEventType =
     | "filesChanged"
     | "packagesChanged"
     | "buildScheduled"
-    | "packageBuilt"
+    | "buildRequested"
+    | "buildStarted"
     | "buildFinished"
+    | "packagesRebuilt"
     | "packagePublished"
     | "somethingHappened";
 
@@ -21,6 +23,9 @@ interface BaseDcEvent {
 //
 //
 
+/**
+ * This event is emitted once the app discovers all necessary information about the source packages.
+ */
 export interface SourceInitialized extends BaseDcEvent {
     type: "sourceInitialized";
     body: {
@@ -41,6 +46,10 @@ export function sourceInitialized(sourceDescriptor: SourceDescriptor): SourceIni
 //
 //
 
+/**
+ * This event is emitted once the app discovers all the necessary information about the target to which
+ * it will be publishing updated builds.
+ */
 export interface TargetSelected extends BaseDcEvent {
     type: "targetSelected";
     body: {
@@ -70,7 +79,7 @@ export type PackageChange = {
 };
 
 /**
- * One or more source packages had their source files changed.
+ * This event is emitted when the app discovers that source code in one or more packages has changed.
  */
 export interface PackagesChanged extends BaseDcEvent {
     type: "packagesChanged";
@@ -95,15 +104,82 @@ export function packagesChanged(changes: PackageChange[]): PackagesChanged {
 //
 //
 
+/**
+ * This event is emitted after builds of changed & impacted packages are scheduled.
+ */
 export interface BuildScheduled extends BaseDcEvent {
     type: "buildScheduled";
     body: {
-        packages: string[];
+        changes: PackageChange[];
+        depending: string[][];
     };
 }
 
-export interface PackageBuilt extends BaseDcEvent {
-    type: "packageBuilt";
+export function buildScheduled(changes: PackageChange[], depending: string[][]): BuildScheduled {
+    return {
+        type: "buildScheduled",
+        body: {
+            changes,
+            depending,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted when the app requests that a particular package must be rebuilt.
+ */
+export interface BuildRequested extends BaseDcEvent {
+    type: "buildRequested";
+    body: {
+        packageName: string;
+    };
+}
+
+export function buildRequested(packageName: string): BuildRequested {
+    return {
+        type: "buildRequested",
+        body: {
+            packageName,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted when the app starts building a package.
+ */
+export interface BuildStarted extends BaseDcEvent {
+    type: "buildStarted";
+    body: {
+        packageName: string;
+    };
+}
+
+export function buildStarted(packageName: string): BuildStarted {
+    return {
+        type: "buildStarted",
+        body: {
+            packageName,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted when app finished building a package.
+ */
+export interface BuildFinished extends BaseDcEvent {
+    type: "buildFinished";
     body: {
         packageName: string;
         exitCode: number;
@@ -113,13 +189,32 @@ export interface PackageBuilt extends BaseDcEvent {
     };
 }
 
-export interface BuildFinished extends BaseDcEvent {
-    type: "buildFinished";
+//
+//
+//
+
+/**
+ * This event is emitted once the app rebuilds all packages impacted by changes described in {@link PackagesChanged}
+ */
+export interface PackagesRebuilt extends BaseDcEvent {
+    type: "packagesRebuilt";
     body: {
-        success: string[];
-        fail: string[];
+        packages: string[];
     };
 }
+
+export function packagesRebuilt(packages: string[]): PackagesRebuilt {
+    return {
+        type: "packagesRebuilt",
+        body: {
+            packages,
+        },
+    };
+}
+
+//
+//
+//
 
 export interface PackagePublished extends BaseDcEvent {
     type: "packagePublished";
@@ -131,6 +226,9 @@ export interface PackagePublished extends BaseDcEvent {
 
 export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 
+/**
+ * This event is emitted when something note-worthy happens.
+ */
 export interface SomethingHappened extends BaseDcEvent {
     type: "somethingHappened";
     body: {
@@ -149,12 +247,16 @@ export function somethingHappened(severity: Severity, message: string): Somethin
     };
 }
 
+/**
+ * All recognized events.
+ */
 export type DcEvent =
     | SourceInitialized
     | TargetSelected
     | PackagesChanged
     | BuildScheduled
-    | PackageBuilt
+    | BuildRequested
+    | BuildStarted
     | BuildFinished
     | PackagePublished
     | SomethingHappened;

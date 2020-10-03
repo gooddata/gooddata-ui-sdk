@@ -6,6 +6,7 @@ import { logInfo, registerLogFn } from "../cli/loggers";
 import { appLogInfo } from "./ui/utils";
 import { GlobalEventBus, sourceInitialized, targetSelected } from "./events";
 import { ChangeDetector } from "./changeDetector";
+import { BuildScheduler } from "./buildScheduler";
 
 export async function devConsole(targetDir: string): Promise<number> {
     const sourceDescriptor = await getSourceDescriptor(
@@ -38,6 +39,7 @@ export async function devConsole(targetDir: string): Promise<number> {
      * Initialize components of the watch-build-publish system
      */
     new ChangeDetector();
+    new BuildScheduler();
 
     /*
      * Initialize the console with source packages

@@ -2,6 +2,10 @@
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel";
 import {
+    BuildFinished,
+    BuildRequested,
+    BuildScheduled,
+    BuildStarted,
     DcEvent,
     GlobalEventBus,
     IEventListener,
@@ -11,7 +15,11 @@ import {
 } from "../events";
 import { DependencyGraph, SourceDescriptor } from "../../base/types";
 import max from "lodash/max";
-import { determinePackageBuildOrder, findDependingPackages } from "../../base/dependencyGraph";
+import {
+    determinePackageBuildOrder,
+    findDependingPackages,
+    naiveFilterDependencyGraph,
+} from "../../base/dependencyGraph";
 import flatten from "lodash/flatten";
 import { intersection } from "lodash";
 import { appLogInfo } from "./utils";
@@ -23,13 +31,14 @@ type PackageListItem = {
     highlightLevel: number;
     packageName: string;
     padding: number;
-    buildIndicator: string;
-    publishIndicator: string;
+    buildStateIndicator: string;
+    publishStateIndicator: string;
 };
 
 const IndicatorSuccess = "{green-bg} {/}";
 const IndicatorError = "{red-bg} {/}";
-const IndicatorWarn = "{yellow-bg} {/}";
+const IndicatorChange = `{${ColorCodes.brightyellow}-bg}{black-fg} {/}`;
+const IndicatorDependencyChange = "{yellow-bg}{black-fg} {/}";
 const IndicatorInit = "{blue-bg} {/}";
 
 const CursorHighlight = "{cyan-bg}";
@@ -47,6 +56,7 @@ export class PackageList extends AppPanel implements IEventListener {
     private sourceDescriptor: SourceDescriptor | undefined;
     private targetDescriptor: TargetDescriptor | undefined;
 
+    private dependencyGraph: DependencyGraph | undefined;
     private buildOrder: string[][] | undefined;
 
     private listItems: PackageListItem[] = [];
@@ -95,6 +105,21 @@ export class PackageList extends AppPanel implements IEventListener {
                 this.onPackageChanged(event);
                 break;
             }
+            case "buildScheduled": {
+                this.onBuildScheduled(event);
+                break;
+            }
+            case "buildRequested": {
+                this.onBuildRequested(event);
+                break;
+            }
+            case "buildStarted": {
+                this.onBuildStarted(event);
+                break;
+            }
+            case "buildFinished": {
+                this.onBuildFinished(event);
+            }
         }
     };
 
@@ -102,39 +127,111 @@ export class PackageList extends AppPanel implements IEventListener {
         this.list.focus();
     };
 
-    private initializePackageLIst = (): void => {
-        const graph = this.sourceDescriptor!.dependencyGraph;
-        const packageScope = this.targetDescriptor!.dependencies.map((pkg) => pkg.pkg.packageName);
-
-        this.buildOrder = getBuildOrder(graph, packageScope);
-        this.itemIndex = {};
-        this.listItems = createPackageItems(packageScope);
-        this.listItems.forEach((item, idx) => (this.itemIndex[item.packageName] = idx));
-
-        this.list.setItems(this.listItems.map(createPackageItem) as any);
-        this.screen.render();
-    };
+    //
+    // Event handlers
+    //
 
     private onSourceInitialized = (event: SourceInitialized): void => {
         this.sourceDescriptor = event.body.sourceDescriptor;
+        this.dependencyGraph = this.sourceDescriptor.dependencyGraph;
     };
 
     private onTargetSelected = (event: TargetSelected): void => {
         this.targetDescriptor = event.body.targetDescriptor;
 
-        this.initializePackageLIst();
+        const packageScope = this.targetDescriptor.dependencies.map((pkg) => pkg.pkg.packageName);
+        this.dependencyGraph = naiveFilterDependencyGraph(this.dependencyGraph!, packageScope);
+        this.buildOrder = determinePackageBuildOrder(this.dependencyGraph, ["prod"]);
+
+        this.initializePackageLIst(packageScope);
     };
 
+    /*
+     * Update all package items with 'change' build indicator.
+     */
     private onPackageChanged = (event: PackagesChanged): void => {
         for (const change of event.body.changes) {
             const result = this.updateItem(change.packageName, (item) => {
-                item.buildIndicator = IndicatorWarn;
+                item.buildStateIndicator = IndicatorChange;
             });
 
             if (result) {
                 this.refreshItem(...result);
             }
         }
+    };
+
+    /*
+     * Update all depending package items with 'dependency change' build indicator.
+     */
+    private onBuildScheduled = (event: BuildScheduled): void => {
+        const dependingPackages = flatten(event.body.depending);
+
+        for (const packageName of dependingPackages) {
+            const result = this.updateItem(packageName, (item) => {
+                if (item.buildStateIndicator !== IndicatorChange) {
+                    item.buildStateIndicator = IndicatorDependencyChange;
+                }
+            });
+
+            if (result) {
+                this.refreshItem(...result);
+            }
+        }
+    };
+
+    private onBuildRequested = (event: BuildRequested): void => {
+        const { packageName } = event.body;
+
+        const result = this.updateItem(packageName, (item) => {
+            item.buildStateIndicator = item.buildStateIndicator.replace(" ", "Q");
+        });
+
+        if (result) {
+            this.refreshItem(...result);
+        }
+    };
+
+    private onBuildStarted = (event: BuildStarted): void => {
+        const { packageName } = event.body;
+
+        const result = this.updateItem(packageName, (item) => {
+            item.buildStateIndicator = item.buildStateIndicator.replace("Q", "*");
+        });
+
+        if (result) {
+            this.refreshItem(...result);
+        }
+    };
+
+    private onBuildFinished = (event: BuildFinished): void => {
+        const { packageName, exitCode } = event.body;
+
+        const result = this.updateItem(packageName, (item) => {
+            if (exitCode) {
+                item.buildStateIndicator = IndicatorError;
+            } else {
+                item.buildStateIndicator = IndicatorSuccess;
+                item.publishStateIndicator = IndicatorChange;
+            }
+        });
+
+        if (result) {
+            this.refreshItem(...result);
+        }
+    };
+
+    //
+    //
+    //
+
+    private initializePackageLIst = (packageScope: string[]): void => {
+        this.itemIndex = {};
+        this.listItems = createPackageItems(packageScope);
+        this.listItems.forEach((item, idx) => (this.itemIndex[item.packageName] = idx));
+
+        this.list.setItems(this.listItems.map(createPackageItem) as any);
+        this.screen.render();
     };
 
     private selectItem = (selectedIdx: number): void => {
@@ -217,8 +314,8 @@ function createPackageItems(packages: string[]): PackageListItem[] {
         highlightLevel: -1,
         packageName: p,
         padding: maxLen - p.length,
-        buildIndicator: IndicatorInit,
-        publishIndicator: IndicatorInit,
+        buildStateIndicator: IndicatorInit,
+        publishStateIndicator: IndicatorInit,
     }));
 }
 
@@ -238,9 +335,5 @@ function createPackageItem(item: PackageListItem): string {
     const [selectedBeginTag, selectedEndTag] = getPackageItemTags(item);
     const padding = item.padding > 0 ? new Array(item.padding).fill(".").join("") : "";
 
-    return `${selectedBeginTag}${item.packageName}${padding}${selectedEndTag} ${item.buildIndicator}${item.publishIndicator}`;
-}
-
-function getBuildOrder(graph: DependencyGraph, packages: string[]) {
-    return determinePackageBuildOrder(graph, ["prod"]).filter((g) => intersection(g, packages).length > 0);
+    return `${selectedBeginTag}${item.packageName}${padding}${selectedEndTag} ${item.buildStateIndicator}${item.publishStateIndicator}`;
 }
