@@ -2,11 +2,8 @@
 
 import { readJsonSync } from "./utils";
 import path from "path";
-import groupBy from "lodash/groupBy";
-import flatMap from "lodash/flatMap";
-import difference from "lodash/difference";
-import fromPairs from "lodash/fromPairs";
 import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types";
+import { difference, flatMap, fromPairs, groupBy, intersection } from "lodash";
 
 function addDependencies(
     graph: DependencyGraph,
@@ -68,6 +65,34 @@ export function createDependencyGraph(packages: PackageDescriptor[]): Dependency
         ...graph,
         outgoing: groupBy(graph.edges, (e) => e.from),
         incoming: groupBy(graph.edges, (e) => e.to),
+    };
+}
+
+/**
+ * Naive dependency graph filtering. This will filter the input graph so that it only contains `packages` and
+ * edges only between `packages`.
+ *
+ * This simple filtering is OK to use if the `packages` already are a transitive closure of all inter-dependent
+ * packages. For instance devConsole uses this filtering to filter dependency graph to only those packages which
+ * are used by the target app - it gets the correct results because the packages used in the target are resolved by
+ * `npm` and are transitive closure.
+ *
+ * @param graph - input dependency graph
+ * @param packages - packages to filter to (see function contract for more)
+ */
+export function naiveFilterDependencyGraph(graph: DependencyGraph, packages: string[]): DependencyGraph {
+    const newEdges = graph.edges.filter((e) => intersection([e.from, e.to], packages).length === 2);
+    const newNodes = intersection(graph.nodes, packages);
+    const nodesSet: Set<string> = new Set<string>();
+
+    newNodes.forEach((node) => nodesSet.add(node));
+
+    return {
+        nodes: newNodes,
+        edges: newEdges,
+        nodesSet,
+        outgoing: groupBy(newEdges, (e) => e.from),
+        incoming: groupBy(newEdges, (e) => e.to),
     };
 }
 
