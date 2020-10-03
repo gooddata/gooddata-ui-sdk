@@ -7,6 +7,7 @@ import { appLogInfo } from "./ui/utils";
 import { GlobalEventBus, sourceInitialized, targetSelected } from "./events";
 import { ChangeDetector } from "./changeDetector";
 import { BuildScheduler } from "./buildScheduler";
+import { PackageBuilder } from "./packageBuilder";
 
 export async function devConsole(targetDir: string): Promise<number> {
     const sourceDescriptor = await getSourceDescriptor(
@@ -40,6 +41,7 @@ export async function devConsole(targetDir: string): Promise<number> {
      */
     new ChangeDetector();
     new BuildScheduler();
+    new PackageBuilder();
 
     /*
      * Initialize the console with source packages

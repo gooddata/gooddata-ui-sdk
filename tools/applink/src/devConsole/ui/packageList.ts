@@ -7,6 +7,7 @@ import {
     BuildScheduled,
     BuildStarted,
     DcEvent,
+    EventBus,
     GlobalEventBus,
     IEventListener,
     PackagesChanged,
@@ -65,7 +66,7 @@ export class PackageList extends AppPanel implements IEventListener {
     // @ts-ignore
     private selectedItemIdx: number | undefined;
 
-    constructor(options: AppPanelOptions) {
+    constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
         super(options);
 
         this.list = blessed.list({
@@ -88,7 +89,7 @@ export class PackageList extends AppPanel implements IEventListener {
             appLogInfo("enter on " + index);
         });
 
-        GlobalEventBus.register(this);
+        this.eventBus.register(this);
     }
 
     public onEvent = (event: DcEvent): void => {

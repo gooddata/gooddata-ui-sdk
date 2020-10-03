@@ -175,17 +175,26 @@ export function buildStarted(packageName: string): BuildStarted {
 //
 //
 
+export type BuildResult = {
+    packageName: string;
+    exitCode: number;
+    stdoutPath: string;
+    stderrPath: string;
+    duration: number;
+};
+
 /**
  * This event is emitted when app finished building a package.
  */
 export interface BuildFinished extends BaseDcEvent {
     type: "buildFinished";
-    body: {
-        packageName: string;
-        exitCode: number;
-        stdoutPath: string;
-        stderrPath: string;
-        duration: number;
+    body: BuildResult;
+}
+
+export function buildFinished(result: BuildResult): BuildFinished {
+    return {
+        type: "buildFinished",
+        body: result,
     };
 }
 

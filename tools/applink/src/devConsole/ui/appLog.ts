@@ -1,14 +1,14 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel";
-import { DcEvent, GlobalEventBus, IEventListener } from "../events";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener } from "../events";
 import { getTerminalSize } from "./utils";
 
 export class AppLog extends AppPanel implements IEventListener {
     private readonly log: blessed.Widgets.Log;
     public expanded: boolean = false;
 
-    constructor(options: AppPanelOptions) {
+    constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
         super(options);
 
         this.log = blessed.log({
@@ -24,7 +24,7 @@ export class AppLog extends AppPanel implements IEventListener {
         });
 
         this.box.append(this.log);
-        GlobalEventBus.register(this);
+        this.eventBus.register(this);
     }
 
     public onEvent = (event: DcEvent): void => {

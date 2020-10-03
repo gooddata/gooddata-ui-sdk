@@ -3,7 +3,7 @@ import { PackageDescriptor, SourceDescriptor } from "../base/types";
 import chokidar from "chokidar";
 import path from "path";
 import { logWarn } from "../cli/loggers";
-import { DcEvent, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "./events";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "./events";
 import { appLogImportant } from "./ui/utils";
 import { TargetDescriptor } from "../base/types";
 import { intersection } from "lodash";
@@ -37,8 +37,8 @@ export class ChangeDetector implements IEventListener {
     private timeoutId: any | undefined;
     private accumulatedFileChanges: string[] = [];
 
-    constructor() {
-        GlobalEventBus.register(this);
+    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+        this.eventBus.register(this);
     }
 
     public onEvent = (event: DcEvent): void => {
@@ -145,7 +145,7 @@ export class ChangeDetector implements IEventListener {
             }
         }
 
-        GlobalEventBus.post(packagesChanged(Object.values(changes)));
+        this.eventBus.post(packagesChanged(Object.values(changes)));
     };
 }
 

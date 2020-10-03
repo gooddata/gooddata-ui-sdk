@@ -8,6 +8,9 @@ import {
     PackagesChanged,
     packagesRebuilt,
     buildScheduled,
+    EventBus,
+    TargetSelected,
+    BuildStarted,
 } from "./events";
 import { DependencyGraph, SourceDescriptor } from "../base/types";
 import { findDependingPackages, naiveFilterDependencyGraph } from "../base/dependencyGraph";
@@ -15,6 +18,9 @@ import { flatten, uniq } from "lodash";
 import { appLogError, appLogInfo, appLogWarn } from "./ui/utils";
 
 type PackageState = {
+    buildRequested: boolean;
+    buildRunning: boolean;
+    buildDirty: boolean;
     dirty: boolean;
     failed: boolean;
 };
@@ -46,22 +52,30 @@ type PackageState = {
  * -  Build fails - the package is marked as failed. For purposes of identifying dirty leaves, failed packages
  *    are not counted as clean dependencies.
  *
+ * Note: the scheduler 'ticks' performs build-scheduling every time package change occurs or a build finishes. To
+ * prevent triggering build of dirty packages multiple times, the scheduler needs to keep track of what package
+ * builds were requested or are running.
  */
 export class BuildScheduler implements IEventListener {
     /*
      * set after handling sourceInitialized
      */
     private sourceDescriptor: SourceDescriptor | undefined;
+    /*
+     * set after handling targetSelected
+     */
     private dependencyGraph: DependencyGraph | undefined;
-
+    /*
+     * set after handling target selected. states maintained thorough various event handling
+     */
     private packageStates: Record<string, PackageState> = {};
-    private dirtyBuilds: Set<string> = new Set<string>();
-    private runningBuilds: Set<string> = new Set<string>();
-
+    /*
+     * contents are dispatched & then reset to empty once scheduler finds all packages are clean
+     */
     private buildsToGetClean: Set<string> = new Set<string>();
 
-    constructor() {
-        GlobalEventBus.register(this);
+    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+        this.eventBus.register(this);
     }
 
     public onEvent = (event: DcEvent): void => {
@@ -72,54 +86,95 @@ export class BuildScheduler implements IEventListener {
                 break;
             }
             case "targetSelected": {
-                // TODO once tool allows switching targets, it is essential that this changes. reconciliaton will
-                //  be needed
-                const packageScope = event.body.targetDescriptor.dependencies.map(
-                    (dep) => dep.pkg.packageName,
-                );
-
-                this.dependencyGraph = naiveFilterDependencyGraph(
-                    this.sourceDescriptor!.dependencyGraph,
-                    packageScope,
-                );
-                packageScope.forEach(
-                    (pkg) =>
-                        (this.packageStates[pkg] = {
-                            dirty: false,
-                            failed: false,
-                        }),
-                );
+                this.onTargetSelected(event);
 
                 break;
             }
             case "packagesChanged": {
-                this.processPackageChanges(event);
-                this.triggerBuilds();
+                this.onPackagesChanged(event);
 
                 break;
             }
             case "buildStarted": {
-                this.runningBuilds.add(event.body.packageName);
+                this.onBuildStarted(event);
 
                 break;
             }
             case "buildFinished": {
                 this.onBuildFinished(event);
-                this.triggerBuilds();
-
-                if (this.isAllClean()) {
-                    /*
-                     * After last build, when all packages are clean, emit PackagesRebuilt; this can then be
-                     * used by publishers to copy results once everything is green.
-                     */
-                    packagesRebuilt(Array.from(this.buildsToGetClean.values()));
-                    this.buildsToGetClean = new Set<string>();
-                }
 
                 break;
             }
         }
     };
+
+    //
+    // Event handlers
+    //
+
+    /*
+     * Initializes dependency graph and package states so that only those packages that are used in the target will
+     * be effectively used by the
+     */
+    private onTargetSelected = (event: TargetSelected): void => {
+        // TODO once tool allows switching targets, it is essential that this changes. reconciliaton will
+        //  be needed
+        const packageScope = event.body.targetDescriptor.dependencies.map((dep) => dep.pkg.packageName);
+
+        this.dependencyGraph = naiveFilterDependencyGraph(
+            this.sourceDescriptor!.dependencyGraph,
+            packageScope,
+        );
+        packageScope.forEach(
+            (pkg) =>
+                (this.packageStates[pkg] = {
+                    buildDirty: false,
+                    buildRequested: false,
+                    buildRunning: false,
+                    dirty: false,
+                    failed: false,
+                }),
+        );
+    };
+
+    /*
+     * When package change occurs, the scheduler determines all the impacted packages, marks them dirty and triggers
+     * build of dirty leaves.
+     */
+    private onPackagesChanged = (event: PackagesChanged): void => {
+        this.processPackageChanges(event);
+
+        this.triggerBuilds();
+    };
+
+    /*
+     * When build starts for a package, this handler will modify package state to indicate that the build is
+     * running.
+     */
+    private onBuildStarted = (event: BuildStarted): void => {
+        const packageState = this.packageStates[event.body.packageName];
+
+        packageState.buildRequested = false;
+        packageState.buildRunning = true;
+    };
+
+    private onBuildFinished = (event: BuildFinished): void => {
+        this.processBuildFinished(event);
+        this.triggerBuilds();
+
+        if (this.isAllClean()) {
+            /*
+             * After last build, when all packages are clean, emit PackagesRebuilt; this can then be
+             * used by publishers to copy results once everything is green.
+             */
+            packagesRebuilt(Array.from(this.buildsToGetClean.values()));
+            this.buildsToGetClean = new Set<string>();
+        }
+    };
+
+    //
+    //
+    //
 
     /*
      * When packages change, find all packages that transitively depend on them. Mark them as dirty so that when
@@ -133,17 +188,19 @@ export class BuildScheduler implements IEventListener {
         const { changes } = packagesChanged.body;
         const changedPackages = changes.map((p) => p.packageName);
         const depending = findDependingPackages(this.dependencyGraph!, changedPackages, ["prod"]);
-        const allPackagesToRebuild = changedPackages.concat(uniq(flatten(depending)));
+        const allPackagesToRebuild = uniq(changedPackages.concat(flatten(depending)));
 
         allPackagesToRebuild.forEach((pkg) => (this.packageStates[pkg].dirty = true));
 
         for (const packageToRebuild of allPackagesToRebuild) {
-            if (this.runningBuilds.has(packageToRebuild)) {
-                this.dirtyBuilds.add(packageToRebuild);
+            const packageState = this.packageStates[packageToRebuild];
+
+            if (packageState.buildRunning) {
+                packageState.buildDirty = true;
             }
         }
 
-        GlobalEventBus.post(buildScheduled(changes, depending));
+        this.eventBus.post(buildScheduled(changes, depending));
     };
 
     /*
@@ -155,17 +212,17 @@ export class BuildScheduler implements IEventListener {
      *
      * Note that packages that stay dirty because of dirty build will be rebuild on next triggerBuilds().
      */
-    private onBuildFinished = (event: BuildFinished): void => {
+    private processBuildFinished = (event: BuildFinished): void => {
         const { exitCode, packageName } = event.body;
         const packageState = this.packageStates[packageName];
 
         if (exitCode) {
-            packageState.dirty = this.dirtyBuilds.has(packageName);
+            packageState.dirty = packageState.buildDirty;
             packageState.failed = true;
 
             appLogError(`Build of ${packageName} has failed.`);
         } else {
-            packageState.dirty = this.dirtyBuilds.has(packageName);
+            packageState.dirty = packageState.buildDirty;
             packageState.failed = false;
 
             if (!packageState.dirty) {
@@ -179,15 +236,21 @@ export class BuildScheduler implements IEventListener {
             }
         }
 
-        this.dirtyBuilds.delete(packageName);
-        this.runningBuilds.delete(packageName);
+        packageState.buildDirty = false;
+        packageState.buildRunning = false;
     };
 
     private triggerBuilds = (): void => {
         this.findDirtyLeaves().forEach((pkg) => {
             appLogInfo(`Going to rebuild ${pkg}.`);
 
-            GlobalEventBus.post(buildRequested(pkg));
+            const packageState = this.packageStates[pkg];
+
+            packageState.buildRequested = true;
+            packageState.buildRunning = false;
+            packageState.buildDirty = false;
+
+            this.eventBus.post(buildRequested(pkg));
         });
     };
 
@@ -199,7 +262,7 @@ export class BuildScheduler implements IEventListener {
      */
     private findDirtyLeaves = (): string[] => {
         const dirtyPackages: string[] = Object.entries(this.packageStates)
-            .filter(([, state]) => state.dirty)
+            .filter(([, state]) => state.dirty && !state.buildRequested && !state.buildRunning)
             .map(([packageName]) => packageName);
 
         if (!dirtyPackages.length) {
