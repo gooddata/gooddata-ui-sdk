@@ -5,11 +5,15 @@ import { PackageList } from "./packageList";
 import { getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
 import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
+import { BuildOutput } from "./buildOutput";
 
 export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;
     private readonly packageList: PackageList;
     private readonly log: AppLog;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    private readonly buildOutput: BuildOutput;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     private readonly menu: AppMenu;
@@ -20,6 +24,7 @@ export class TerminalUi implements IEventListener {
         this.eventBus.register(this);
         this.screen = this.createScreen();
         this.packageList = this.createPackageList();
+        this.buildOutput = this.createBuildOutput();
         this.log = this.createApplicationLog();
         this.menu = this.createApplicationMenu();
 
@@ -67,6 +72,19 @@ export class TerminalUi implements IEventListener {
             left: 0,
             width: cols,
             height: 5,
+            screen: this.screen,
+        });
+    }
+
+    private createBuildOutput(): BuildOutput {
+        const [rows, cols] = getTerminalSize(this.screen);
+
+        return new BuildOutput({
+            title: "Build Output (hit enter on package to show)",
+            top: 0,
+            left: 41,
+            width: cols - 41,
+            height: rows - 6,
             screen: this.screen,
         });
     }
@@ -132,12 +150,4 @@ export class TerminalUi implements IEventListener {
 
         return new AppMenu(this.screen, items);
     }
-
-    public getPackageList = (): PackageList => {
-        return this.packageList;
-    };
-
-    public addMessage = (message: string): void => {
-        this.log.addMessage(message);
-    };
 }

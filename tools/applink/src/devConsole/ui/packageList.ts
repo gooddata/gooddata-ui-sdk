@@ -3,6 +3,7 @@ import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel";
 import {
     BuildFinished,
+    buildOutputRequested,
     BuildRequested,
     BuildScheduled,
     BuildStarted,
@@ -64,6 +65,8 @@ export class PackageList extends AppPanel implements IEventListener {
     private itemIndex: Record<string, number> = {};
     private selectedItemIdx: number | undefined;
 
+    private browsingBuildOutput: boolean = false;
+
     constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
         super(options);
 
@@ -96,8 +99,17 @@ export class PackageList extends AppPanel implements IEventListener {
             this.list.select(this.listItems.length - 1);
         });
 
-        this.list.on("action", (_element, _index) => {
-            // TODO: on enter, open last build stdout
+        this.list.on("action", (_element, index) => {
+            const packageItem = this.listItems[index];
+
+            if (packageItem !== undefined) {
+                this.browsingBuildOutput = true;
+                this.list.setItems(
+                    this.listItems.map((item) => createPackageItem(item, this.browsingBuildOutput)) as any,
+                );
+                this.screen.render();
+                this.eventBus.post(buildOutputRequested(packageItem.packageName));
+            }
         });
     }
 
@@ -135,11 +147,21 @@ export class PackageList extends AppPanel implements IEventListener {
                 this.onPublishFinished(event);
                 break;
             }
+            case "buildOutputExited": {
+                this.focus();
+                break;
+            }
         }
     };
 
     public focus = (): void => {
         this.list.focus();
+        this.browsingBuildOutput = false;
+        this.list.setItems(
+            this.listItems.map((item) => createPackageItem(item, this.browsingBuildOutput)) as any,
+        );
+
+        this.screen.render();
     };
 
     //
@@ -261,7 +283,9 @@ export class PackageList extends AppPanel implements IEventListener {
         this.listItems = createPackageItems(packageScope);
         this.listItems.forEach((item, idx) => (this.itemIndex[item.packageName] = idx));
 
-        this.list.setItems(this.listItems.map(createPackageItem) as any);
+        this.list.setItems(
+            this.listItems.map((item) => createPackageItem(item, this.browsingBuildOutput)) as any,
+        );
         this.screen.render();
     };
 
@@ -299,7 +323,7 @@ export class PackageList extends AppPanel implements IEventListener {
                 item.highlightLevel = itemDistance - selectedItemPosition - 1;
             }
 
-            this.list.setItem(this.list.getItem(idx), createPackageItem(item));
+            this.list.setItem(this.list.getItem(idx), createPackageItem(item, this.browsingBuildOutput));
         });
 
         /*
@@ -330,7 +354,7 @@ export class PackageList extends AppPanel implements IEventListener {
     };
 
     private refreshItem = (idx: number, item: PackageListItem) => {
-        this.list.setItem(this.list.getItem(idx), createPackageItem(item));
+        this.list.setItem(this.list.getItem(idx), createPackageItem(item, this.browsingBuildOutput));
 
         /*
          * One would think that just list should be rendered on change when its item changes - but it does not seem
@@ -359,7 +383,11 @@ function createPackageItems(packages: string[]): PackageListItem[] {
     }));
 }
 
-function getPackageItemTags(item: PackageListItem): [string, string] {
+function getPackageItemTags(item: PackageListItem, browsingBuildOutput: boolean): [string, string] {
+    if (browsingBuildOutput) {
+        return ["", ""];
+    }
+
     if (item.selected) {
         return [CursorHighlight, ClearTags];
     } else if (item.highlightLevel > -1) {
@@ -371,8 +399,8 @@ function getPackageItemTags(item: PackageListItem): [string, string] {
     return ["", ""];
 }
 
-function createPackageItem(item: PackageListItem): string {
-    const [selectedBeginTag, selectedEndTag] = getPackageItemTags(item);
+function createPackageItem(item: PackageListItem, browsingBuildOutput: boolean): string {
+    const [selectedBeginTag, selectedEndTag] = getPackageItemTags(item, browsingBuildOutput);
     const padding = item.padding > 0 ? new Array(item.padding).fill(".").join("") : "";
 
     return `${selectedBeginTag}${item.packageName}${padding}${selectedEndTag} ${item.buildStateIndicator}${item.publishStateIndicator}`;

@@ -43,7 +43,13 @@ export abstract class AppPanel {
         this.options.screen.append(this.box);
     }
 
+    protected changeTitle = (title: string): void => {
+        this.header.setContent(" " + title);
+        this.header.width = title.length + 2;
+        this.renderPanel();
+    };
+
     protected renderPanel = (): void => {
-        this.box.render();
+        this.screen.render();
     };
 }

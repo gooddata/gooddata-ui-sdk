@@ -14,6 +14,8 @@ export type DcEventType =
     | "packagesRebuilt"
     | "publishFinished"
     | "packagesSelected"
+    | "buildOutputRequested"
+    | "buildOutputExited"
     | "somethingHappened";
 
 interface BaseDcEvent {
@@ -283,6 +285,47 @@ export function packagesSelected(packages: string | string[]): PackagesSelected 
 //
 //
 
+/**
+ * This event is emitted once the user of the app wants to see build output for particular package.
+ */
+export interface BuildOutputRequested extends BaseDcEvent {
+    type: "buildOutputRequested";
+    body: {
+        packageName: string;
+    };
+}
+
+export function buildOutputRequested(packageName: string): BuildOutputRequested {
+    return {
+        type: "buildOutputRequested",
+        body: {
+            packageName,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * This event is emitted once the user of the app exits the build output browser and wants to navigate within
+ * the list of packages again.
+ */
+export interface BuildOutputExited extends BaseDcEvent {
+    type: "buildOutputExited";
+}
+
+export function buildOutputExited(): BuildOutputExited {
+    return {
+        type: "buildOutputExited",
+    };
+}
+
+//
+//
+//
+
 export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 
 /**
@@ -320,6 +363,8 @@ export type DcEvent =
     | PackagesRebuilt
     | PublishFinished
     | PackagesSelected
+    | BuildOutputRequested
+    | BuildOutputExited
     | SomethingHappened;
 
 //
