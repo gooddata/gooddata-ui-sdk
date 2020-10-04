@@ -1,21 +1,21 @@
 // (C) 2020 GoodData Corporation
 import {
+    BuildFinished,
     buildRequested,
+    buildScheduled,
+    BuildStarted,
     DcEvent,
+    EventBus,
     GlobalEventBus,
     IEventListener,
-    BuildFinished,
     PackagesChanged,
     packagesRebuilt,
-    buildScheduled,
-    EventBus,
     TargetSelected,
-    BuildStarted,
-} from "./events";
-import { DependencyGraph, SourceDescriptor } from "../base/types";
-import { findDependingPackages, naiveFilterDependencyGraph } from "../base/dependencyGraph";
+} from "../events";
+import { DependencyGraph, SourceDescriptor } from "../../base/types";
+import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph";
 import { flatten, uniq } from "lodash";
-import { appLogError, appLogInfo, appLogWarn } from "./ui/utils";
+import { appLogError, appLogWarn } from "../ui/utils";
 
 type PackageState = {
     buildRequested: boolean;
@@ -227,8 +227,6 @@ export class BuildScheduler implements IEventListener {
 
             if (!packageState.dirty) {
                 this.buildsToGetClean.add(packageName);
-
-                appLogInfo(`Build of ${packageName} has succeeded.`);
             } else {
                 appLogWarn(
                     `Build of ${packageName} has succeeded however more changes to this package were register in the meanwhile. Have to rebuild.`,
@@ -242,8 +240,6 @@ export class BuildScheduler implements IEventListener {
 
     private triggerBuilds = (): void => {
         this.findDirtyLeaves().forEach((pkg) => {
-            appLogInfo(`Going to rebuild ${pkg}.`);
-
             const packageState = this.packageStates[pkg];
 
             packageState.buildRequested = true;

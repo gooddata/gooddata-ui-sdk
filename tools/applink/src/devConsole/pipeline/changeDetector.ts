@@ -1,11 +1,9 @@
 // (C) 2020 GoodData Corporation
-import { PackageDescriptor, SourceDescriptor } from "../base/types";
+import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types";
 import chokidar from "chokidar";
 import path from "path";
-import { logWarn } from "../cli/loggers";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "./events";
-import { appLogImportant } from "./ui/utils";
-import { TargetDescriptor } from "../base/types";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
+import { appLogImportant, appLogWarn } from "../ui/utils";
 import { intersection } from "lodash";
 
 /**
@@ -67,7 +65,7 @@ export class ChangeDetector implements IEventListener {
         }
     };
 
-    private onSourceChange = (target: string, _type: "add" | "change" | "unlink"): void => {
+    private onSourceChanged = (target: string, _type: "add" | "change" | "unlink"): void => {
         this.accumulatedFileChanges.push(target);
 
         if (this.timeoutId) {
@@ -90,9 +88,9 @@ export class ChangeDetector implements IEventListener {
         });
 
         watcher
-            .on("add", (path) => this.onSourceChange(path, "add"))
-            .on("change", (path) => this.onSourceChange(path, "change"))
-            .on("unlink", (path) => this.onSourceChange(path, "unlink"));
+            .on("add", (path) => this.onSourceChanged(path, "add"))
+            .on("change", (path) => this.onSourceChanged(path, "change"))
+            .on("unlink", (path) => this.onSourceChanged(path, "unlink"));
 
         appLogImportant("Package change detector started.");
     };
@@ -101,7 +99,7 @@ export class ChangeDetector implements IEventListener {
         const libEndsIndex = file.indexOf("/", file.indexOf("/") + 1);
 
         if (libEndsIndex === -1) {
-            logWarn(`Unable to find SDK lib to which ${file} belongs.`);
+            appLogWarn(`Unable to find SDK lib to which ${file} belongs.`);
 
             return undefined;
         }
@@ -110,7 +108,7 @@ export class ChangeDetector implements IEventListener {
         const sdkPackage = this.sourceDescriptor!.packagesByDir[libDir];
 
         if (!sdkPackage) {
-            logWarn(
+            appLogWarn(
                 `Unable to find SDK lib to which ${file} belongs. Cannot match ${libDir} to an SDK package.`,
             );
 

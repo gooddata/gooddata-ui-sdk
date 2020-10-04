@@ -15,7 +15,7 @@ import {
     SourceInitialized,
     TargetSelected,
 } from "../events";
-import { DependencyGraph, SourceDescriptor } from "../../base/types";
+import { DependencyGraph, SourceDescriptor, TargetDescriptor } from "../../base/types";
 import max from "lodash/max";
 import {
     determinePackageBuildOrder,
@@ -24,9 +24,7 @@ import {
 } from "../../base/dependencyGraph";
 import flatten from "lodash/flatten";
 import { intersection } from "lodash";
-import { appLogInfo } from "./utils";
 import { ColorCodes } from "./colors";
-import { TargetDescriptor } from "../../base/types";
 
 type PackageListItem = {
     selected: boolean;
@@ -86,8 +84,8 @@ export class PackageList extends AppPanel implements IEventListener {
             this.selectItem(index);
         });
 
-        this.list.on("action", (_element, index) => {
-            appLogInfo("enter on " + index);
+        this.list.on("action", (_element, _index) => {
+            // TODO: on enter, open last build stdout
         });
 
         this.eventBus.register(this);

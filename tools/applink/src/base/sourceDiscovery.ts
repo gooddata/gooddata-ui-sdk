@@ -1,10 +1,9 @@
 // (C) 2020 GoodData Corporation
-import { logError, logInfo } from "../cli/loggers";
 import path from "path";
 import findUp from "find-up";
 import process from "process";
 import { readJsonSync } from "./utils";
-import { RushPackageDescriptor, SourceDescriptor, PackageDescriptor } from "./types";
+import { PackageDescriptor, RushPackageDescriptor, SourceDescriptor } from "./types";
 import { createDependencyGraph } from "./dependencyGraph";
 import { identity, keyBy } from "lodash";
 
@@ -31,13 +30,13 @@ export async function getSourceDescriptor(
     const rushJsonFile = await findRushJsonFile();
 
     if (!rushJsonFile) {
-        logError(
+        console.error(
             "Unable to locate rush.json. You need to run this tool from inside the SDK directory hierarchy.",
         );
 
         return;
     } else {
-        logInfo(`Found ${rushJsonFile}. Reading packages.`);
+        console.info(`Found ${rushJsonFile}. Reading packages.`);
     }
 
     if (!_SourceDescriptor) {
@@ -56,7 +55,7 @@ export async function getSourceDescriptor(
                 };
             });
 
-        logInfo(`Found ${packages.length} packages in rush.json`);
+        console.info(`Found ${packages.length} packages in rush.json`);
 
         _SourceDescriptor = {
             root: path.dirname(rushJsonFile),

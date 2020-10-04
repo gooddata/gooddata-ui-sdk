@@ -2,6 +2,8 @@
 
 /**
  * Mapping of color name to color code. blessed accepts color codes somewhere..
+ *
+ * These colorcodes are copy-paste from blessed js code. Could not find them anywhere in typings.
  */
 export const ColorCodes = {
     // special

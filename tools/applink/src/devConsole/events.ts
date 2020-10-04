@@ -225,6 +225,9 @@ export function packagesRebuilt(packages: string[]): PackagesRebuilt {
 //
 //
 
+/*
+ * This event is emitted once the app publishes build from source to target.
+ */
 export interface PublishFinished extends BaseDcEvent {
     type: "publishFinished";
     body: {

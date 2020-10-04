@@ -2,7 +2,7 @@
 import fs from "fs";
 import path from "path";
 import spawn from "cross-spawn";
-import { PackageDescriptor, SourceDescriptor } from "../base/types";
+import { PackageDescriptor, SourceDescriptor } from "../../base/types";
 import {
     buildFinished,
     BuildRequested,
@@ -11,12 +11,16 @@ import {
     EventBus,
     GlobalEventBus,
     IEventListener,
-} from "./events";
-import { appLogInfo } from "./ui/utils";
+} from "../events";
 
 const StdoutFilename = "applink.log";
 const StderrFilename = "applink.error.log";
 
+/**
+ * Package builder initialized itself after SourceInitialized event. And then as BuildRequested events appear,
+ * it will trigger the 'build-incremental' target in the respective package. Whatever happens during the build-incremental
+ * is at the discretion of each package.
+ */
 export class PackageBuilder implements IEventListener {
     private sourceDescriptor: SourceDescriptor | undefined;
 
@@ -50,8 +54,6 @@ export class PackageBuilder implements IEventListener {
         const stderrPath = path.join(directory, StderrFilename);
         const stdout = fs.openSync(stdoutPath, "w+");
         const stderr = fs.openSync(stderrPath, "w+");
-
-        appLogInfo(`[${packageName}] Starting incremental build.`);
 
         const startTime = Date.now();
         const build = spawn("npm", ["run", "build-incremental"], {

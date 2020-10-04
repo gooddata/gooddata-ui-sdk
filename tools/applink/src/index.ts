@@ -4,7 +4,6 @@
 import program from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
-import { logError } from "./cli/loggers";
 import { devConsole } from "./devConsole/action";
 
 program
@@ -22,7 +21,7 @@ async function run() {
 }
 
 run().catch((err) => {
-    logError(`An unexpected error has occurred: ${err}`);
+    console.error(`An unexpected error has occurred: ${err}`);
     console.error(err);
 
     process.exit(1);

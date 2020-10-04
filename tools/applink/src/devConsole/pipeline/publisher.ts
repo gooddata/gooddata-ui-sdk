@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { TargetDependency } from "../base/types";
+import { TargetDependency } from "../../base/types";
 import path from "path";
 import spawn from "cross-spawn";
 import {
@@ -10,8 +10,8 @@ import {
     IEventListener,
     PackagesRebuilt,
     publishFinished,
-} from "./events";
-import { appLogError } from "./ui/utils";
+} from "../events";
+import { appLogError } from "../ui/utils";
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 

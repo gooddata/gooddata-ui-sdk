@@ -12,10 +12,7 @@ import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/ty
  * @param target - target app root directory
  * @param sourceDescriptor - source descriptor to match dependencies against
  */
-export function discoverTargetDependencies(
-    target: string,
-    sourceDescriptor: SourceDescriptor,
-): TargetDescriptor {
+export function getTargetDescriptor(target: string, sourceDescriptor: SourceDescriptor): TargetDescriptor {
     const root = path.resolve(target);
     const dependencies: TargetDependency[] = [];
 
