@@ -11,23 +11,53 @@ apps that use SDK. It aims to address challenges related to linkage of a complex
 
 ## Usage
 
-The idea of applink is that with a simple invocation such as `npm run applink devTo /home/user/myApp` the tool will:
+Start `npm run applink devConsole /home/user/myApp`.
 
--   Identify what SDK packages are used in the target app
--   Start watching for source code changes in those SDK packages
--   On change, run incremental build and 'publish' the new dist directly into the target app's `node_modules`
+This will bring up an application with terminal UI which will automatically:
+
+-   Determine what packages from this repo are used in your app
+-   Monitor source folders of those packages for changes
+-   Upon changes, trigger incremental builds of the changed packages and all packages which depend on them
+-   Upon build artifact changes, trigger rsync of the build between the source and the target app
+
+The `devConsole` user interface indicates consists for three sections:
+
+-   Package List on the left displays all SDK packages used by the target app
+
+    -   Next to each package are build state (first) and publish state indicators (second)
+        -   Both indicators start blue
+        -   If package sources changed and its build is scheduled, the build indicator is yellow
+        -   If package build is queued, the indicator contains letter 'Q'
+        -   If package build is running, the indicator contains character '\*'
+        -   If build succeeded, the build indicator is green. The publish indicator turns yellow to indicate the target
+            is out of date
+        -   If build failed, the build indicator is red
+        -   Once successful build is copied to the target app, the publish indicator turns green
+    -   You can navigate the list using arrow keys and 'Home' or 'End' keys
+        -   As you select a package, its dependencies will also be highlighted
+
+-   Build output on the right displays the stdout of the incremental build
+
+    -   Select a package and press 'Enter' to show the available output
+    -   This will move focus to the build output, allowing you to scroll long outputs
+    -   If you press 'Enter' again, the focus returns to the package list
+
+    > Note: focused build output will be automatically refreshed as builds happen
+
+-   Application log at the bottom is updated with essential messages about the application operations
+
+The application supports several global hotkeys:
+
+-   'F2' toggles expanded / minimized application log
+-   'F7' triggers ad-hoc build of currently selected package, ignoring builds of any of its dependencies
+-   'F8' triggers ad-hoc build of currently selected package and all its dependencies
+
+> Note: The hotkeys work even if you are browsing build output.
 
 ## Current limitations
 
-1.  Handling build errors and recovery from build errors is missing.
-
-    The tool will at the moment not propagate any changes in case of build error - which is likely desired. As soon as
-    multiple packages have their source code updated and one of them fails the build, none of the built changes will be
-    propagated either.
-
-    This is questionable and needs further thought - especially once the tool's limitation #1 is addressed.
-
-2.  Styles are not yet handled
+1.  Styles are not yet handled
+2.  Terminal UI does not respond to resizing
 
 ## Technical Notes
 
