@@ -11,6 +11,7 @@ import {
     GlobalEventBus,
     IEventListener,
     PackagesChanged,
+    packagesSelected,
     PublishFinished,
     SourceInitialized,
     TargetSelected,
@@ -61,13 +62,12 @@ export class PackageList extends AppPanel implements IEventListener {
 
     private listItems: PackageListItem[] = [];
     private itemIndex: Record<string, number> = {};
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     private selectedItemIdx: number | undefined;
 
     constructor(options: AppPanelOptions, private readonly eventBus: EventBus = GlobalEventBus) {
         super(options);
 
+        this.eventBus.register(this);
         this.list = blessed.list({
             top: 0,
             left: 0,
@@ -82,13 +82,15 @@ export class PackageList extends AppPanel implements IEventListener {
 
         this.list.on("select item", (_element, index) => {
             this.selectItem(index);
+
+            if (this.selectedItemIdx !== undefined) {
+                this.eventBus.post(packagesSelected(this.listItems[this.selectedItemIdx].packageName));
+            }
         });
 
         this.list.on("action", (_element, _index) => {
             // TODO: on enter, open last build stdout
         });
-
-        this.eventBus.register(this);
     }
 
     public onEvent = (event: DcEvent): void => {

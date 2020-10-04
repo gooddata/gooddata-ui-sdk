@@ -13,6 +13,7 @@ export type DcEventType =
     | "buildFinished"
     | "packagesRebuilt"
     | "publishFinished"
+    | "packagesSelected"
     | "somethingHappened";
 
 interface BaseDcEvent {
@@ -72,10 +73,19 @@ export function targetSelected(targetDescriptor: TargetDescriptor): TargetSelect
 
 export type PackageChange = {
     /**
-     * Name of package which has changed
+     * Name of package which has changed.
      */
     packageName: string;
+
+    /**
+     * Files that have changed.
+     */
     files: string[];
+
+    /**
+     * If specified, indicates that the package change should not trigger rebuild of change package's dependencies.
+     */
+    independent?: boolean;
 };
 
 /**
@@ -85,7 +95,7 @@ export interface PackagesChanged extends BaseDcEvent {
     type: "packagesChanged";
     body: {
         /**
-         * Packages whose sources have changed
+         * Packages whose sources have changed.
          */
         changes: PackageChange[];
     };
@@ -246,6 +256,33 @@ export function publishFinished(packageName: string, exitCode: number): PublishF
     };
 }
 
+//
+//
+//
+
+/**
+ * This event is emitted once the user of the app selects one or more packages to target for commands.
+ */
+export interface PackagesSelected extends BaseDcEvent {
+    type: "packagesSelected";
+    body: {
+        packages: string[];
+    };
+}
+
+export function packagesSelected(packages: string | string[]): PackagesSelected {
+    return {
+        type: "packagesSelected",
+        body: {
+            packages: typeof packages === "string" ? [packages] : packages,
+        },
+    };
+}
+
+//
+//
+//
+
 export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 
 /**
@@ -282,6 +319,7 @@ export type DcEvent =
     | BuildFinished
     | PackagesRebuilt
     | PublishFinished
+    | PackagesSelected
     | SomethingHappened;
 
 //

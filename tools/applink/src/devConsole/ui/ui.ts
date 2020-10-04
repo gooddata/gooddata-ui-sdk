@@ -2,10 +2,11 @@
 import blessed from "blessed";
 import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
-import { appLogInfo, getTerminalSize } from "./utils";
+import { getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
 
-export class TerminalUi {
+export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;
     private readonly packageList: PackageList;
     private readonly log: AppLog;
@@ -13,7 +14,10 @@ export class TerminalUi {
     // @ts-ignore
     private readonly menu: AppMenu;
 
-    constructor() {
+    private selectedPackages: string[] = [];
+
+    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+        this.eventBus.register(this);
         this.screen = this.createScreen();
         this.packageList = this.createPackageList();
         this.log = this.createApplicationLog();
@@ -21,6 +25,16 @@ export class TerminalUi {
 
         this.screen.render();
     }
+
+    public onEvent = (event: DcEvent): void => {
+        switch (event.type) {
+            case "packagesSelected": {
+                this.selectedPackages = event.body.packages;
+
+                break;
+            }
+        }
+    };
 
     private createScreen(): blessed.Widgets.Screen {
         const screen = blessed.screen({
@@ -78,7 +92,16 @@ export class TerminalUi {
                 keyName: "F7",
                 registerKeys: ["f7"],
                 registerCb: () => {
-                    appLogInfo("build selected package");
+                    if (!this.selectedPackages.length) {
+                        return;
+                    }
+
+                    const changes: PackageChange[] = this.selectedPackages.map((sel) => ({
+                        packageName: sel,
+                        files: [],
+                        independent: true,
+                    }));
+                    this.eventBus.post(packagesChanged(changes));
                 },
             },
             {
@@ -86,7 +109,15 @@ export class TerminalUi {
                 keyName: "F8",
                 registerKeys: ["f8"],
                 registerCb: () => {
-                    appLogInfo("build selected package with dependencies");
+                    if (!this.selectedPackages.length) {
+                        return;
+                    }
+
+                    const changes: PackageChange[] = this.selectedPackages.map((sel) => ({
+                        packageName: sel,
+                        files: [],
+                    }));
+                    this.eventBus.post(packagesChanged(changes));
                 },
             },
             {

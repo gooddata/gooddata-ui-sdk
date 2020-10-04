@@ -187,8 +187,15 @@ export class BuildScheduler implements IEventListener {
     private processPackageChanges = (packagesChanged: PackagesChanged): void => {
         const { changes } = packagesChanged.body;
         const changedPackages = changes.map((p) => p.packageName);
-        const depending = findDependingPackages(this.dependencyGraph!, changedPackages, ["prod"]);
-        const allPackagesToRebuild = uniq(changedPackages.concat(flatten(depending)));
+        const dependenciesToRebuild = changes.map((change) => {
+            if (change.independent) {
+                return [];
+            } else {
+                return findDependingPackages(this.dependencyGraph!, [change.packageName], ["prod"])[0];
+            }
+        });
+
+        const allPackagesToRebuild = uniq(changedPackages.concat(flatten(dependenciesToRebuild)));
 
         allPackagesToRebuild.forEach((pkg) => (this.packageStates[pkg].dirty = true));
 
@@ -200,7 +207,7 @@ export class BuildScheduler implements IEventListener {
             }
         }
 
-        this.eventBus.post(buildScheduled(changes, depending));
+        this.eventBus.post(buildScheduled(changes, dependenciesToRebuild));
     };
 
     /*
