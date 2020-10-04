@@ -11,6 +11,7 @@ import {
     GlobalEventBus,
     IEventListener,
     PackagesChanged,
+    PublishFinished,
     SourceInitialized,
     TargetSelected,
 } from "../events";
@@ -120,6 +121,11 @@ export class PackageList extends AppPanel implements IEventListener {
             }
             case "buildFinished": {
                 this.onBuildFinished(event);
+                break;
+            }
+            case "publishFinished": {
+                this.onPublishFinished(event);
+                break;
             }
         }
     };
@@ -222,6 +228,22 @@ export class PackageList extends AppPanel implements IEventListener {
         }
     };
 
+    private onPublishFinished = (event: PublishFinished): void => {
+        const { packageName, exitCode } = event.body;
+
+        const result = this.updateItem(packageName, (item) => {
+            if (exitCode) {
+                item.publishStateIndicator = IndicatorError;
+            } else {
+                item.publishStateIndicator = IndicatorSuccess;
+            }
+        });
+
+        if (result) {
+            this.refreshItem(...result);
+        }
+    };
+
     //
     //
     //
@@ -298,7 +320,13 @@ export class PackageList extends AppPanel implements IEventListener {
 
     private refreshItem = (idx: number, item: PackageListItem) => {
         this.list.setItem(this.list.getItem(idx), createPackageItem(item));
-        this.list.render();
+
+        /*
+         * One would think that just list should be rendered on change when its item changes - but it does not seem
+         * work reliably. Sometimes on a valid change, nothing changes on the screen. Could be timing related or
+         * perhaps bad/misunderstood use of blessed?
+         */
+        this.screen.render();
     };
 }
 

@@ -167,7 +167,7 @@ export class BuildScheduler implements IEventListener {
              * After last build, when all packages are clean, emit PackagesRebuilt; this can then be
              * used by publishers to copy results once everything is green.
              */
-            packagesRebuilt(Array.from(this.buildsToGetClean.values()));
+            this.eventBus.post(packagesRebuilt(Array.from(this.buildsToGetClean.values())));
             this.buildsToGetClean = new Set<string>();
         }
     };

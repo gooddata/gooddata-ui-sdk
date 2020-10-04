@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 
-import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
+import { SourceDescriptor, TargetDescriptor } from "../base/types";
 
 export type DcEventType =
     | "sourceInitialized"
@@ -12,7 +12,7 @@ export type DcEventType =
     | "buildStarted"
     | "buildFinished"
     | "packagesRebuilt"
-    | "packagePublished"
+    | "publishFinished"
     | "somethingHappened";
 
 interface BaseDcEvent {
@@ -225,11 +225,21 @@ export function packagesRebuilt(packages: string[]): PackagesRebuilt {
 //
 //
 
-export interface PackagePublished extends BaseDcEvent {
-    type: "packagePublished";
+export interface PublishFinished extends BaseDcEvent {
+    type: "publishFinished";
     body: {
         packageName: string;
-        dependency: TargetDependency;
+        exitCode: number;
+    };
+}
+
+export function publishFinished(packageName: string, exitCode: number): PublishFinished {
+    return {
+        type: "publishFinished",
+        body: {
+            packageName,
+            exitCode,
+        },
     };
 }
 
@@ -267,7 +277,8 @@ export type DcEvent =
     | BuildRequested
     | BuildStarted
     | BuildFinished
-    | PackagePublished
+    | PackagesRebuilt
+    | PublishFinished
     | SomethingHappened;
 
 //
