@@ -88,6 +88,14 @@ export class PackageList extends AppPanel implements IEventListener {
             }
         });
 
+        this.list.key(["home"], () => {
+            this.list.select(0);
+        });
+
+        this.list.key(["end"], () => {
+            this.list.select(this.listItems.length - 1);
+        });
+
         this.list.on("action", (_element, _index) => {
             // TODO: on enter, open last build stdout
         });
@@ -294,7 +302,10 @@ export class PackageList extends AppPanel implements IEventListener {
             this.list.setItem(this.list.getItem(idx), createPackageItem(item));
         });
 
-        this.list.render();
+        /*
+         * Same as refreshItem.. render entire screen otherwise stuff like 'home' and 'end' keys won't work
+         */
+        this.screen.render();
     };
 
     private updateItem = (
