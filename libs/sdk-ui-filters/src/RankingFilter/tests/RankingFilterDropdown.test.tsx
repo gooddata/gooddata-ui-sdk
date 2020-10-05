@@ -314,7 +314,7 @@ describe("RankingFilterDropdown", () => {
             expect(component.getValueDropdown().text()).toEqual("Input value should be a positive number.");
         });
 
-        it("should set value via input blur handler", () => {
+        it("should set custom value via input blur handler", () => {
             const onApply = jest.fn();
             const component = renderComponent({ onApply });
 
@@ -329,6 +329,15 @@ describe("RankingFilterDropdown", () => {
                     value: 42,
                 },
             });
+        });
+
+        it("should set one of the default values via input blur handler", () => {
+            const component = renderComponent();
+
+            component.setValueByBlur("10");
+
+            expect(component.getValue()).toEqual("10");
+            expect(component.isValueDropdownVisible()).toBe(false);
         });
 
         it("should set custom value via input change handler", () => {
