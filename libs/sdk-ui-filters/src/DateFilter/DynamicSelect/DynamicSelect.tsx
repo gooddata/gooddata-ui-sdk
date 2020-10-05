@@ -127,6 +127,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                     getItemProps,
                     isOpen,
                     openMenu,
+                    closeMenu,
                     inputValue,
                     highlightedIndex,
                     setHighlightedIndex,
@@ -165,7 +166,7 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
                                         },
                                         onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
                                             this.onChangeHandler(event, selectItem),
-                                        onBlur: () => this.onBlurHandler(selectedItem, selectItem),
+                                        onBlur: () => this.onBlurHandler(selectedItem, selectItem, closeMenu),
                                     })}
                                 />
                             </div>
@@ -180,9 +181,11 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
     private onBlurHandler = (
         selectedItem: ISelectItemOption<number>,
         selectItem: (item: ISelectItemOption<number>) => void,
+        closeMenu: () => void,
     ): void => {
         const { customValueValidator, value } = this.props;
         if (customValueValidator) {
+            closeMenu();
             this.onInputValueChanged(value?.toString());
         } else {
             selectItem(selectedItem);
