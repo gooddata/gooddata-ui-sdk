@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";

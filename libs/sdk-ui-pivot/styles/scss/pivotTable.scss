@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 @import "~@gooddata/goodstrap/lib/core/styles/variables";
-@import "~@gooddata/goodstrap/lib/Button/styles/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/button";
 
 $ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
 
@@ -339,7 +339,7 @@ $header-cell-resize-width: 20px;
         transition: width 200ms, opacity 100ms;
 
         &:hover {
-            background-color: darken($gd-color-highlight-dimmed, 3%);
+            background-image: linear-gradient(rgba(125, 125, 125, 0.1), rgba(125, 125, 125, 0.1));
         }
 
         .menu-icon {

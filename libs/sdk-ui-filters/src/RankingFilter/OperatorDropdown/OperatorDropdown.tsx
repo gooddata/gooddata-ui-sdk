@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 import { RankingFilterOperator } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { IOperatorDropdownItem } from "../types";

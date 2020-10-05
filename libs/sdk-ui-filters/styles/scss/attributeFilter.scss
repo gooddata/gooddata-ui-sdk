@@ -5,11 +5,11 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
 @import "~@gooddata/goodstrap/lib/core/styles/Overlay";
 @import "~@gooddata/goodstrap/lib/core/styles/Spinner";
-@import "~@gooddata/goodstrap/lib/Button/styles/Button";
 @import "~@gooddata/goodstrap/lib/List/styles/List";
 @import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
 @import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
-@import "~@gooddata/goodstrap/lib/Form/styles/Form";
+@import "~@gooddata/sdk-ui-kit/styles/scss/form";
+@import "~@gooddata/sdk-ui-kit/styles/scss/button";
 @import "~fixed-data-table-2/dist/fixed-data-table.css";
 
 .gd-attribute-filter {

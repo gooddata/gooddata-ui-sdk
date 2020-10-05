@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 interface IComparisonInputProps {

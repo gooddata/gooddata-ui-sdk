@@ -535,7 +535,7 @@ textarea {
     input:checked {
         ~ .input-label-text::after {
             right: 2px;
-            border: 1px solid $button-action-hover-bg;
+            border: 1px solid $gd-color-highlight-darken06;
             background: $gd-input-checkbox-toggle-color;
         }
     }
@@ -548,7 +548,7 @@ textarea {
         }
 
         input:checked ~ .input-label-text::after {
-            background: $button-action-hover-bg;
+            background: $gd-color-highlight-darken06;
         }
     }
 
