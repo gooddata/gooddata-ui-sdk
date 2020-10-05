@@ -2,11 +2,8 @@
 
 import { readJsonSync } from "./utils";
 import path from "path";
-import groupBy from "lodash/groupBy";
-import flatMap from "lodash/flatMap";
-import difference from "lodash/difference";
-import fromPairs from "lodash/fromPairs";
-import { DependencyGraph, DependencyType, SdkPackageDescriptor } from "./types";
+import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types";
+import { difference, flatMap, fromPairs, groupBy, intersection } from "lodash";
 
 function addDependencies(
     graph: DependencyGraph,
@@ -39,7 +36,7 @@ function addDependencies(
  *
  * @param packages - list of packages
  */
-export function createDependencyGraph(packages: SdkPackageDescriptor[]): DependencyGraph {
+export function createDependencyGraph(packages: PackageDescriptor[]): DependencyGraph {
     const graph: DependencyGraph = {
         nodes: [],
         edges: [],
@@ -72,36 +69,69 @@ export function createDependencyGraph(packages: SdkPackageDescriptor[]): Depende
 }
 
 /**
+ * Naive dependency graph filtering. This will filter the input graph so that it only contains `packages` and
+ * edges only between `packages`.
+ *
+ * This simple filtering is OK to use if the `packages` already are a transitive closure of all inter-dependent
+ * packages. For instance devConsole uses this filtering to filter dependency graph to only those packages which
+ * are used by the target app - it gets the correct results because the packages used in the target are resolved by
+ * `npm` and are transitive closure.
+ *
+ * @param graph - input dependency graph
+ * @param packages - packages to filter to (see function contract for more)
+ */
+export function naiveFilterDependencyGraph(graph: DependencyGraph, packages: string[]): DependencyGraph {
+    const newEdges = graph.edges.filter((e) => intersection([e.from, e.to], packages).length === 2);
+    const newNodes = intersection(graph.nodes, packages);
+    const nodesSet: Set<string> = new Set<string>();
+
+    newNodes.forEach((node) => nodesSet.add(node));
+
+    return {
+        nodes: newNodes,
+        edges: newEdges,
+        nodesSet,
+        outgoing: groupBy(newEdges, (e) => e.from),
+        incoming: groupBy(newEdges, (e) => e.to),
+    };
+}
+
+/**
  * Given a list of SDK packages, this function will find all packages that depend on them. The function returns
  * results partitioned by input package. For each package on input, there will be an entry in the resulting array which
  * will contain an array of all dependent packages.
  *
  * @param graph - dependency graph
  * @param packages - packages to get dependencies for
+ * @param depTypes - dependency types to follow - defaults to all
  */
 export function findDependingPackages(
     graph: DependencyGraph,
-    packages: Array<string | SdkPackageDescriptor>,
+    packages: Array<string | PackageDescriptor>,
+    depTypes: DependencyType[] = AllDepdencyTypes,
 ): string[][] {
     const names = packages.map((p) => (typeof p === "string" ? p : p.packageName));
     const results: string[][] = [];
 
     for (const pkg of names) {
         let remaining = [pkg];
-        const result: string[] = [];
+        const result: Set<string> = new Set<string>();
 
         while (remaining.length > 0) {
             /*
              * For all remaining packages to investigate, check out which packages are depending on them,
              * add them to result and then prepare for the next cycle
              */
-            const depending = flatMap(remaining, (p) => graph.incoming[p]?.map((d) => d.from) ?? []);
+            const depending = flatMap(
+                remaining,
+                (p) => graph.incoming[p]?.filter((d) => depTypes.includes(d.type)).map((d) => d.from) ?? [],
+            );
 
-            result.push(...depending);
+            depending.forEach((p) => result.add(p));
             remaining = depending;
         }
 
-        results.push(result);
+        results.push(Array.from(result.keys()));
     }
 
     return results;
@@ -112,8 +142,12 @@ export function findDependingPackages(
  * can be safely built in parallel and the next group can only be built if the previous group is built.
  *
  * @param graph - dependency graph to create build order for
+ * @param depTypes - dependency types
  */
-export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
+export function determinePackageBuildOrder(
+    graph: DependencyGraph,
+    depTypes: DependencyType[] = AllDepdencyTypes,
+): string[][] {
     /*
      * The algorithm to achieve this does 'shave' the packages from the leaves up to the roots. The package
      * can only be shaved-off if all packages which it depends on have already been shaved off.
@@ -139,7 +173,8 @@ export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
 
         while (possibleGroup.length > 0) {
             const pkg = possibleGroup.pop()!;
-            const packageDependencies = graph.outgoing[pkg]?.map((d) => d.to) ?? [];
+            const packageDependencies =
+                graph.outgoing[pkg]?.filter((d) => depTypes.includes(d.type)).map((d) => d.to) ?? [];
             const shavedForThisPackage = allShavedOffDependencies[pkg]!;
             const leftToShaveOff = difference(packageDependencies, shavedForThisPackage);
 
@@ -150,7 +185,8 @@ export function determinePackageBuildOrder(graph: DependencyGraph): string[][] {
                  */
                 group.push(pkg);
 
-                const dependents = graph.incoming[pkg]?.map((d) => d.from) ?? [];
+                const dependents =
+                    graph.incoming[pkg]?.filter((d) => depTypes.includes(d.type)).map((d) => d.from) ?? [];
 
                 for (const dep of dependents) {
                     shavedOffByThisGroup.push([dep, pkg]);

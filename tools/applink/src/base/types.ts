@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 
 /**
- * SDK descriptor
+ * Descriptor for package sources
  */
-export type SdkDescriptor = {
+export type SourceDescriptor = {
     /**
      * Absolute path to the root directory where SDK is located.
      */
@@ -12,12 +12,12 @@ export type SdkDescriptor = {
     /**
      * Mapping of package name to SDK Package
      */
-    packages: Record<string, SdkPackageDescriptor>;
+    packages: Record<string, PackageDescriptor>;
 
     /**
      * Mapping of package dir (relative to SDK root) to SDK Package.
      */
-    packagesByDir: Record<string, SdkPackageDescriptor>;
+    packagesByDir: Record<string, PackageDescriptor>;
 
     /**
      * Inter-package dependency graph
@@ -28,12 +28,7 @@ export type SdkDescriptor = {
 /**
  * SDK Package descriptor
  */
-export type SdkPackageDescriptor = {
-    /**
-     * Type of package (library or tool)
-     */
-    type: "lib" | "tool";
-
+export type PackageDescriptor = {
     /**
      * Package name (@gooddata/api-client-bear)
      */
@@ -117,6 +112,8 @@ export type DependencyGraph = {
 
 export type DependencyType = "prod" | "dev" | "peer";
 
+export const AllDepdencyTypes: DependencyType[] = ["prod", "dev", "peer"];
+
 /**
  * Dependency between SDK packages.
  */
@@ -135,4 +132,36 @@ export type Dependency = {
      * Type of dependency.
      */
     type: DependencyType;
+};
+
+export type TargetDescriptor = {
+    /**
+     * Absolute path to the directory in which the target resides.
+     */
+    root: string;
+
+    /**
+     * All dependencies on source packages which were found in the target's node_modules
+     */
+    dependencies: TargetDependency[];
+};
+
+/**
+ * Describes application's dependency on an SDK library.
+ */
+export type TargetDependency = {
+    /**
+     * Absolute path to the directory within app's node_modules where the SDK dependency is installed
+     */
+    directory: string;
+
+    /**
+     * The version of installed dependency.
+     */
+    version: string;
+
+    /**
+     * Full information about the SDK package on which the app depends.
+     */
+    pkg: PackageDescriptor;
 };

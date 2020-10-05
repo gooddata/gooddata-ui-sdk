@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { DependencyGraph } from "../types";
-import groupBy from "lodash/groupBy";
+import { naiveFilterDependencyGraph } from "../dependencyGraph";
 
 const SdkDependencySnapshot: Partial<DependencyGraph> = {
     nodes: [
@@ -609,25 +609,7 @@ const SdkDependencySnapshot: Partial<DependencyGraph> = {
     ],
 };
 
-/**
- *
- * @param partialGraph
- */
-function rehydrateGraph(partialGraph: Partial<DependencyGraph>): DependencyGraph {
-    const { nodes = [], edges = [] } = partialGraph;
-    const nodesSet = new Set<string>();
-
-    for (const pkg of nodes) {
-        nodesSet.add(pkg);
-    }
-
-    return {
-        nodes,
-        nodesSet,
-        edges,
-        outgoing: groupBy(edges, (e) => e.from),
-        incoming: groupBy(edges, (e) => e.to),
-    };
-}
-
-export const TestSdkDependencyGraph = rehydrateGraph(SdkDependencySnapshot);
+export const TestSdkDependencyGraph = naiveFilterDependencyGraph(
+    SdkDependencySnapshot as any,
+    SdkDependencySnapshot.nodes!,
+);
