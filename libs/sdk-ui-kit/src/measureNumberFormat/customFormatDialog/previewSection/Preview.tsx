@@ -2,7 +2,7 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { ISeparators } from "@gooddata/sdk-ui";
-import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { InputWithNumberFormat } from "../../../Form";
 
 import { ExtendedPreview } from "./ExtendedPreview";
 import { FormattedPreview } from "../shared/FormattedPreview";

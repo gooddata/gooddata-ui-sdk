@@ -1,8 +1,5 @@
 // (C) 2020 GoodData Corporation
-@import "../Button/variables";
-
-$gd-input-text-border: #ccd8e2;
-$gd-input-text-hover-border: #b1c1d1;
+@import "../variables";
 
 // CSS variables
 $gd-input-focus-color: var(--gd-palette-primary-base, $gd-color-highlight);

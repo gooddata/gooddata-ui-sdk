@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { getTranslation } from "../../../../utils/translations";
 

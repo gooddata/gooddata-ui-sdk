@@ -24,11 +24,13 @@ $gd-color-dark: #000;
 
 $border-color: #dde4eb;
 
-// secondary colors
+// primary derived colors
 $gd-color-highlight-dimmed: var(
     --gd-palette-primary-dimmed,
     mix($gd-color-highlight, $gd-color-text-light, 10%)
 );
+$gd-color-highlight-darken06: var(--gd-palette-primary-base-d06, darken($gd-color-highlight, 6%));
+// secondary colors
 $gd-color-positive-dimmed: mix($gd-color-positive, $gd-color-text-light, 10%);
 $gd-color-negative-dimmed: mix($gd-color-negative, $gd-color-text-light, 10%);
 $gd-color-warning-dimmed: mix($gd-color-warning, $gd-color-text-light, 20%);

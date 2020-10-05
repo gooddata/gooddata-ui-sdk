@@ -2,11 +2,11 @@
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
 import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { IPositioning, SnapPoint } from "../../typings/positioning";
 import { positioningToAlignPoints } from "../../utils/positioning";
+import { Button } from "../../Button";
 import { IFormatTemplate } from "../typings";
 import Preview from "./previewSection/Preview";
 import FormatInput from "./FormatInput";

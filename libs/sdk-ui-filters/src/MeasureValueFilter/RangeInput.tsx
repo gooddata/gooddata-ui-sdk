@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import InputWithNumberFormat from "@gooddata/goodstrap/lib/Form/InputWithNumberFormat";
+import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 import React from "react";
 

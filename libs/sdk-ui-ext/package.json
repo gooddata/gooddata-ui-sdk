@@ -45,6 +45,7 @@
         "@gooddata/sdk-ui": "^8.0.0-beta.103",
         "@gooddata/sdk-ui-charts": "^8.0.0-beta.103",
         "@gooddata/sdk-ui-geo": "^8.0.0-beta.103",
+        "@gooddata/sdk-ui-kit": "^8.0.0-beta.103",
         "@gooddata/sdk-ui-pivot": "^8.0.0-beta.103",
         "@gooddata/sdk-ui-vis-commons": "^8.0.0-beta.103",
         "@gooddata/util": "^8.0.0-beta.103",

@@ -5,7 +5,7 @@ import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import ConfigSection from "../../configurationControls/ConfigSection";

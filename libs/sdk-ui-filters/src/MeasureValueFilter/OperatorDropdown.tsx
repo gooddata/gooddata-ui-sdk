@@ -3,7 +3,7 @@ import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import capitalize from "lodash/capitalize";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import OperatorDropdownBody from "./OperatorDropdownBody";

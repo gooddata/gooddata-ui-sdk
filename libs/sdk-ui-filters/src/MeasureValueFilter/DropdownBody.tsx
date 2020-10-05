@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
 import OperatorDropdown from "./OperatorDropdown";

@@ -6,7 +6,7 @@ import cx from "classnames";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types";
 import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import Button from "@gooddata/goodstrap/lib/Button/Button";
+import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeItemProps {
     item: IAttributeDropdownItem;
