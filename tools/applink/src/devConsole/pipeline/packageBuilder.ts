@@ -24,8 +24,12 @@ const StderrFilename = "applink.error.log";
 export class PackageBuilder implements IEventListener {
     private sourceDescriptor: SourceDescriptor | undefined;
 
-    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+    constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
+    }
+
+    public static init(eventBus: EventBus = GlobalEventBus): PackageBuilder {
+        return new PackageBuilder(eventBus);
     }
 
     public onEvent = (event: DcEvent): void => {

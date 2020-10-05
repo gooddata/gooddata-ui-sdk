@@ -20,7 +20,7 @@ export class TerminalUi implements IEventListener {
 
     private selectedPackages: string[] = [];
 
-    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+    private constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
         this.screen = this.createScreen();
         this.packageList = this.createPackageList();
@@ -29,6 +29,10 @@ export class TerminalUi implements IEventListener {
         this.menu = this.createApplicationMenu();
 
         this.screen.render();
+    }
+
+    public static init(eventBus: EventBus = GlobalEventBus): TerminalUi {
+        return new TerminalUi(eventBus);
     }
 
     public onEvent = (event: DcEvent): void => {

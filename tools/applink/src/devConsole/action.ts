@@ -28,15 +28,15 @@ export async function devConsole(targetDir: string): Promise<number> {
     /*
      * Initialize the terminal UI - this will make the app run forever until user triggers exit
      */
-    new TerminalUi();
+    TerminalUi.init();
 
     /*
      * Initialize components of the watch-build-publish system
      */
-    new ChangeDetector();
-    new BuildScheduler();
-    new PackageBuilder();
-    new PackagePublisher();
+    ChangeDetector.init();
+    BuildScheduler.init();
+    PackageBuilder.init();
+    PackagePublisher.init();
 
     /*
      * Initialize the console with source packages

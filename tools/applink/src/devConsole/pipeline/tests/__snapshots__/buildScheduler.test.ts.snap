@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`BuildScheduler should build only single package if it is root 1`] = `
+Array [
+  "@gooddata/sdk-ui-ext",
+]
+`;
+
 exports[`BuildScheduler should build single package if the package change is marked as independent 1`] = `
 Array [
   "@gooddata/sdk-model",
@@ -35,11 +41,5 @@ Array [
   "@gooddata/api-client-bear",
   "@gooddata/sdk-ui-ext",
   "@gooddata/sdk-backend-bear",
-]
-`;
-
-exports[`BuildScheduler should only single package if it is root 1`] = `
-Array [
-  "@gooddata/sdk-ui-ext",
 ]
 `;

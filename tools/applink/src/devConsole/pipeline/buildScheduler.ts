@@ -66,7 +66,7 @@ export class BuildScheduler implements IEventListener {
      */
     private dependencyGraph: DependencyGraph | undefined;
     /*
-     * set after handling target selected. states maintained thorough various event handling
+     * set after handling target selected. states maintained in packages changed, build started, build finished event handlers
      */
     private packageStates: Record<string, PackageState> = {};
     /*
@@ -74,8 +74,12 @@ export class BuildScheduler implements IEventListener {
      */
     private buildsToGetClean: Set<string> = new Set<string>();
 
-    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+    private constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
+    }
+
+    public static init(eventBus: EventBus = GlobalEventBus): BuildScheduler {
+        return new BuildScheduler(eventBus);
     }
 
     public onEvent = (event: DcEvent): void => {
@@ -114,7 +118,7 @@ export class BuildScheduler implements IEventListener {
 
     /*
      * Initializes dependency graph and package states so that only those packages that are used in the target will
-     * be effectively used by the
+     * be effectively used by the scheduler.
      */
     private onTargetSelected = (event: TargetSelected): void => {
         // TODO once tool allows switching targets, it is essential that this changes. reconciliaton will

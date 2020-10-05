@@ -11,14 +11,14 @@ describe("BuildScheduler", () => {
         eventBus = new EventBus();
         collector = new EventCollector(eventBus, ["buildRequested", "packagesRebuilt"]);
 
-        new BuildScheduler(eventBus);
+        BuildScheduler.init(eventBus);
         new MockBuilder(eventBus);
 
         eventBus.post(sourceInitialized(TestSourceDescriptor));
         eventBus.post(targetSelected(TestTargetDescriptor));
     });
 
-    it("should only single package if it is root", async () => {
+    it("should build only single package if it is root", async () => {
         eventBus?.post(
             packagesChanged([{ packageName: "@gooddata/sdk-ui-ext", files: [], independent: false }]),
         );

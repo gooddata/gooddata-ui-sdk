@@ -22,8 +22,12 @@ const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 export class PackagePublisher implements IEventListener {
     private dependencyIndex: Record<string, TargetDependency> = {};
 
-    constructor(private readonly eventBus: EventBus = GlobalEventBus) {
+    constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
+    }
+
+    public static init(eventBus: EventBus = GlobalEventBus): PackagePublisher {
+        return new PackagePublisher(eventBus);
     }
 
     public onEvent = (event: DcEvent): void => {
