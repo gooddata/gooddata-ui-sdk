@@ -271,6 +271,21 @@ storiesOf(`${UiKit}/Button`, module).add("full-featured button", () => {
         });
     };
 
+    const getGroupButtons = () => (
+        <tr key={uniqueId("button-")}>
+            <td>
+                <div className="gd-button-group">
+                    <Button className="gd-button-secondary" value="1" />
+                    <Button className="gd-button-secondary" value="2" />
+                    <Button className="gd-button-secondary" value="3" />
+                </div>
+            </td>
+            <td className="example-buttons-button-class">
+                <code>gd-button-group</code>
+            </td>
+        </tr>
+    );
+
     const getIcons = () => {
         return icons.map((item) => {
             return (
@@ -293,6 +308,7 @@ storiesOf(`${UiKit}/Button`, module).add("full-featured button", () => {
                         <th>ClassNames</th>
                     </tr>
                     {getButtons()}
+                    {getGroupButtons()}
                 </tbody>
             </table>
             <h4>Icons</h4>

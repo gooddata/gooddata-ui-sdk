@@ -20,7 +20,8 @@
     text-align: left;
 
     @include transition(all, 0.25s, ease-in-out);
-    @include border-radius(3px);
+    border-radius: $button-border-radius;
+    text-transform: $button-text-capitalization;
 
     outline: 0;
 
