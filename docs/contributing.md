@@ -179,6 +179,11 @@ In the PR body, please follow the checklist and really try to explain the change
 
 Run `rush change` and follow the instructions. Run this after any significant block of work (one or more commits) that you want to mention in the changelog. Think of this as a condensed commit message. You should probably run this after you have your PR ready for review and you have squashed your commits. Run the `rush change` and amend your final commit with the results. This will create files in `common/changes`. Commit these files, they will be used during release to generate CHANGELOG automatically.
 
+As for how to write the changes, please refer to the [Rush recommendations](https://rushjs.io/pages/best_practices/change_logs/).
+Moreover, if your changes are only in one package, please prefix the message with the name of the package like:
+
+> sdk-ui-pivot: Add automatic column resizing
+
 There will probably be a check step in the future that will make sure you ran the `rush change` command.
 
 ### How do I publish new version of packages?
