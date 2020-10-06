@@ -1,8 +1,16 @@
 // (C) 2020 GoodData Corporation
 import blessed from "blessed";
 import { AppPanel, AppPanelOptions } from "./appPanel";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener } from "../events";
+import { DcEvent, EventBus, GlobalEventBus, IEventListener, Severity } from "../events";
 import { getTerminalSize } from "./utils";
+
+const SeverityTags: Record<Severity, string> = {
+    info: "{white-fg}",
+    important: "{bold}",
+    warn: "{yellow-fg}",
+    error: "{red-fg}{bold}",
+    fatal: "{bold}{red-fg}",
+};
 
 export class AppLog extends AppPanel implements IEventListener {
     private readonly log: blessed.Widgets.Log;
@@ -29,8 +37,14 @@ export class AppLog extends AppPanel implements IEventListener {
 
     public onEvent = (event: DcEvent): void => {
         switch (event.type) {
-            case "somethingHappened":
-                this.addMessage(event.body.message);
+            case "somethingHappened": {
+                const tags = SeverityTags[event.body.severity];
+                const message = `${tags}${event.body.message}{/}`;
+
+                this.addMessage(message);
+
+                break;
+            }
         }
     };
 
@@ -51,6 +65,7 @@ export class AppLog extends AppPanel implements IEventListener {
 
             const lines = this.log.getLines().length;
             this.log.setScroll(lines);
+            this.log.scrollOnInput = true;
         } else {
             const [rows] = getTerminalSize(this.screen);
 
