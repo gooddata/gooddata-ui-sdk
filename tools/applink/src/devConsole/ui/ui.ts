@@ -4,7 +4,15 @@ import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
 import { getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
+import {
+    autobuildToggled,
+    DcEvent,
+    EventBus,
+    GlobalEventBus,
+    IEventListener,
+    PackageChange,
+    packagesChanged,
+} from "../events";
 import { BuildOutput } from "./buildOutput";
 
 export class TerminalUi implements IEventListener {
@@ -114,6 +122,22 @@ export class TerminalUi implements IEventListener {
                         this.packageList.focus();
                     }
                 },
+            },
+            {
+                name: (item: AppMenuItem): string => {
+                    if (item.itemState) {
+                        return "Auto On";
+                    } else {
+                        return "Auto Off";
+                    }
+                },
+                keyName: "F3",
+                registerKeys: ["f3"],
+                registerCb: (item: AppMenuItem) => {
+                    item.itemState = !item.itemState;
+                    this.eventBus.post(autobuildToggled(item.itemState));
+                },
+                itemState: true,
             },
             {
                 name: "BuildOne",

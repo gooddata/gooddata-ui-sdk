@@ -16,6 +16,7 @@ export type DcEventType =
     | "packagesSelected"
     | "buildOutputRequested"
     | "buildOutputExited"
+    | "autobuildToggled"
     | "somethingHappened";
 
 interface BaseDcEvent {
@@ -326,6 +327,26 @@ export function buildOutputExited(): BuildOutputExited {
 //
 //
 
+export interface AutobuildToggled extends BaseDcEvent {
+    type: "autobuildToggled";
+    body: {
+        value: boolean;
+    };
+}
+
+export function autobuildToggled(value: boolean): AutobuildToggled {
+    return {
+        type: "autobuildToggled",
+        body: {
+            value,
+        },
+    };
+}
+
+//
+//
+//
+
 export type Severity = "info" | "important" | "warn" | "error" | "fatal";
 
 /**
@@ -365,6 +386,7 @@ export type DcEvent =
     | PackagesSelected
     | BuildOutputRequested
     | BuildOutputExited
+    | AutobuildToggled
     | SomethingHappened;
 
 //
