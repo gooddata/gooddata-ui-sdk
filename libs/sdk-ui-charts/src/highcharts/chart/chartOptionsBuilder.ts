@@ -239,8 +239,6 @@ export function getSeriesItemData(
     type: string,
     colorStrategy: IColorStrategy,
 ): IPointData[] {
-    const singlePointInSeries = seriesItem.length < 2;
-
     return seriesItem.map((pointValue: string, pointIndex: number) => {
         // by default seriesIndex corresponds to measureGroup label index
         let measureIndex = seriesIndex;
@@ -267,12 +265,19 @@ export function getSeriesItemData(
             };
         }
 
-        const pointData: IPointData = {
-            ...valueProp,
-            format: unwrap(measureGroup.items[measureIndex]).format,
-            ...(singlePointInSeries ? { marker: { enabled: true } } : null),
-            ...(pointValue === null ? { marker: { enabled: false } } : null),
-        };
+        const pointData: IPointData = Object.assign(
+            {
+                ...valueProp,
+                format: unwrap(measureGroup.items[measureIndex]).format,
+            },
+            pointValue === null
+                ? {
+                      marker: {
+                          enabled: false,
+                      },
+                  }
+                : {},
+        );
 
         if (stackByAttribute) {
             // if there is a stackBy attribute, then seriesIndex corresponds to stackBy label index
