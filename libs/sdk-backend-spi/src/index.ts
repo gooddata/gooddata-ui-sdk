@@ -52,6 +52,7 @@ export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
     IWorkspaceInsights,
+    IGetVisualizationClassesOptions,
     InsightOrdering,
     IInsightQueryOptions,
     IInsightQueryResult,

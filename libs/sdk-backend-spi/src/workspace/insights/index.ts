@@ -13,6 +13,18 @@ import {
 import { IPagedResource } from "../../common/paging";
 
 /**
+ * Additional options for the getVisualizationClasses function.
+ *
+ * @public
+ */
+export interface IGetVisualizationClassesOptions {
+    /**
+     * If true, deprecated visualization classes will be included in the result.
+     */
+    includeDeprecated?: boolean;
+}
+
+/**
  * Service to query, update or delete insights, and other methods related to insights.
  * Check IInsight for more details.
  *
@@ -30,9 +42,10 @@ export interface IWorkspaceInsights {
     /**
      * Request all visualization classes
      *
+     * @param options - optionally specify additional options
      * @returns promise of visualization classes
      */
-    getVisualizationClasses(): Promise<IVisualizationClass[]>;
+    getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
 
     /**
      * Request insight for the given reference
