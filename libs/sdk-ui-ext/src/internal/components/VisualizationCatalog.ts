@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import last from "lodash/last";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
 import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
 import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";
@@ -83,7 +83,7 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         const VisType = this.findInMapping(uri);
 
         if (!VisType) {
-            throw new GoodDataSdkError(`Unknown visualization class URI: ${uri}`);
+            throw new UnexpectedSdkError(`Unknown visualization class URI: ${uri}`);
         }
 
         return (params) => new VisType(params);

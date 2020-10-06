@@ -2,14 +2,14 @@
 
 import {
     IDataView,
+    IDimensionDescriptor,
     IExecutionResult,
     IMeasureDescriptor,
     IPreparedExecution,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
     isNoDataError,
     isUnexpectedResponseError,
-    isMeasureGroupDescriptor,
-    IDimensionDescriptor,
-    isAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
@@ -20,20 +20,24 @@ import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
 import uniqBy from "lodash/fp/uniqBy";
 import {
+    IAvailableDrillTargetMeasure,
+    IAvailableDrillTargets,
     IExportFunction,
     ILoadingState,
-    IAvailableDrillTargets,
-    IAvailableDrillTargetMeasure,
 } from "../../vis/Events";
-import { GoodDataSdkError, ErrorCodes } from "../../errors/GoodDataSdkError";
+import {
+    DataTooLargeToDisplaySdkError,
+    GoodDataSdkError,
+    NegativeValuesSdkError,
+} from "../../errors/GoodDataSdkError";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export";
 import { DataViewFacade } from "../../results/facade";
 import { convertError } from "../../errors/errorHandling";
 import { IntlWrapper } from "../../localization/IntlWrapper";
 import { IDataVisualizationProps } from "../../vis/VisualizationProps";
 import {
-    IMeasureGroupDescriptor,
     IAttributeDescriptor,
+    IMeasureGroupDescriptor,
 } from "../../../../../sdk-backend-spi/dist/workspace/execution/results";
 
 interface IDataViewLoadState {
@@ -185,11 +189,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         private onDataTooLarge() {
-            this.onError(new GoodDataSdkError(ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY));
+            this.onError(new DataTooLargeToDisplaySdkError());
         }
 
         private onNegativeValues() {
-            this.onError(new GoodDataSdkError(ErrorCodes.NEGATIVE_VALUES));
+            this.onError(new NegativeValuesSdkError());
         }
 
         private getAvailableDrillTargets(dv: DataViewFacade): IAvailableDrillTargets {

@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { newInsightDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 import { PluggableBarChart } from "../pluggableVisualizations/barChart/PluggableBarChart";
 import { CatalogViaTypeToClassMap } from "../VisualizationCatalog";
 
@@ -43,12 +43,12 @@ describe("CatalogViaTypeToClassMap", () => {
     });
 
     it("throws when URI cannot be resolved", () => {
-        expect(() => TestCatalog.forUri("local:nonsense")).toThrowError(GoodDataSdkError);
+        expect(() => TestCatalog.forUri("local:nonsense")).toThrowError(UnexpectedSdkError);
     });
 
     it("throws when insight cannot be resolved", () => {
         expect(() => TestCatalog.forInsight(newInsightDefinition("local:nonsense"))).toThrowError(
-            GoodDataSdkError,
+            UnexpectedSdkError,
         );
     });
 });

@@ -1,6 +1,6 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 
-import { ErrorCodes, GoodDataSdkError } from "../GoodDataSdkError";
+import { ErrorCodes, UnexpectedSdkError } from "../GoodDataSdkError";
 import {
     DataTooLargeError,
     NoDataError,
@@ -32,7 +32,7 @@ describe("convertErrors", () => {
     });
 
     it("leaves GoodDataSdkError as is", () => {
-        const error = new GoodDataSdkError("test");
+        const error = new UnexpectedSdkError("test");
 
         expect(convertError(error)).toBe(error);
     });

@@ -3,7 +3,7 @@
 import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasDataDefined } from "@gooddata/sdk-model";
 
-import { BucketNames, GoodDataSdkError } from "@gooddata/sdk-ui";
+import { BucketNames } from "@gooddata/sdk-ui";
 import { CoreHeadline, updateConfigWithSettings } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import { render } from "react-dom";
@@ -12,10 +12,10 @@ import {
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
+    InvalidBucketsSdkError,
     IReferencePoint,
     IVisConstruct,
     IVisProps,
-    PluggableVisualizationErrorCodes,
     RenderFunction,
 } from "../../../interfaces/Visualization";
 
@@ -123,7 +123,8 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         if (!measureBucket || bucketIsEmpty(measureBucket)) {
             // unmount on error because currently AD cannot recover in certain cases (RAIL-2625)
             this.unmount();
-            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
+
+            throw new InvalidBucketsSdkError();
         }
 
         return true;

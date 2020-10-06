@@ -11,15 +11,15 @@ import {
     IVisualization,
     IVisualizationOptions,
     IVisualizationProperties,
-    PluggableVisualizationErrorCodes,
     IDrillDownContext,
+    EmptyAfmSdkError,
+    isEmptyAfm,
 } from "../../interfaces/Visualization";
 import { findDerivedBucketItem, hasDerivedBucketItems, isDerivedBucketItem } from "../../utils/bucketHelper";
 import { IInsight, IInsightDefinition, insightHasDataDefined, insightProperties } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     DefaultLocale,
-    ErrorCodes,
     GoodDataSdkError,
     IDrillEvent,
     IExportFunction,
@@ -27,6 +27,7 @@ import {
     ILocale,
     IPushData,
     isGoodDataSdkError,
+    UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider";
@@ -130,7 +131,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
         try {
             shouldRenderVisualization = this.checkBeforeRender(insight);
         } catch (e) {
-            const sdkError = isGoodDataSdkError(e) ? e : new GoodDataSdkError(ErrorCodes.UNKNOWN_ERROR, e);
+            const sdkError = isGoodDataSdkError(e) ? e : new UnexpectedSdkError(undefined, e);
 
             this.onError(sdkError);
 
@@ -177,7 +178,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
      */
     protected checkBeforeRender(insight: IInsightDefinition): boolean {
         if (!insightHasDataDefined(insight)) {
-            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
+            throw new EmptyAfmSdkError();
         }
 
         return true;
@@ -214,7 +215,7 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
         // EMPTY_AFM is handled in update as it can change on any render contrary to other error types
         // that have to be set manually or by loading
-        if (error.message !== PluggableVisualizationErrorCodes.EMPTY_AFM) {
+        if (!isEmptyAfm(error)) {
             this.hasError = true;
         }
 

@@ -2,6 +2,7 @@
 import React from "react";
 
 import {
+    EmptyAfmSdkError,
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
@@ -10,7 +11,6 @@ import {
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-    PluggableVisualizationErrorCodes,
 } from "../../../interfaces/Visualization";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { ATTRIBUTE, BUCKETS, METRIC } from "../../../constants/bucket";
@@ -31,7 +31,7 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { GEOPUSHPIN_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import GeoPushpinConfigurationPanel from "../../configurationPanels/GeoPushpinConfigurationPanel";
-import { BucketNames, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     attributeAlias,
     attributeDisplayFormRef,
@@ -75,7 +75,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
 
     protected checkBeforeRender(insight: IInsightDefinition): boolean {
         if (!insightHasDataDefined(insight)) {
-            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.EMPTY_AFM);
+            throw new EmptyAfmSdkError();
         }
 
         return true;

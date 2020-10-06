@@ -7,12 +7,12 @@ import { IGeoChartInnerProps } from "../geoChart/GeoChartInner";
 import { isLocationMissing } from "./helpers/geoChart/common";
 import { IGeoConfig } from "../../GeoChart";
 import {
-    IErrorDescriptors,
-    ErrorComponent as DefaultErrorComponent,
-    newErrorMapping,
     ErrorCodes,
-    GoodDataSdkError,
+    ErrorComponent as DefaultErrorComponent,
+    GeoLocationMissingSdkError,
+    IErrorDescriptors,
     IntlWrapper,
+    newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { IColor } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -81,7 +81,7 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
         private handleError() {
             const { onError } = this.props;
             if (onError && this.isLocationMissing) {
-                onError(new GoodDataSdkError(ErrorCodes.GEO_LOCATION_MISSING));
+                onError(new GeoLocationMissingSdkError());
             }
         }
 

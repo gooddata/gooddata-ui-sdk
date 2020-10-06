@@ -10,7 +10,7 @@ import {
     insightHasMeasures,
     insightMeasures,
 } from "@gooddata/sdk-model";
-import { BucketNames, ChartType, GoodDataSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import { render } from "react-dom";
@@ -24,15 +24,15 @@ import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
     IBucketItem,
     IBucketOfFun,
+    IDrillDownContext,
     IExtendedReferencePoint,
+    InvalidBucketsSdkError,
     IReferencePoint,
     IReferences,
     IUiConfig,
     IVisConstruct,
     IVisProps,
     IVisualizationProperties,
-    PluggableVisualizationErrorCodes,
-    IDrillDownContext,
 } from "../../../interfaces/Visualization";
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig";
 
@@ -73,7 +73,7 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
-import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
+import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -209,7 +209,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         super.checkBeforeRender(insight);
 
         if (!insightHasMeasures(insight)) {
-            throw new GoodDataSdkError(PluggableVisualizationErrorCodes.INVALID_BUCKETS);
+            throw new InvalidBucketsSdkError();
         }
 
         return true;
