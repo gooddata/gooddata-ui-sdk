@@ -825,10 +825,23 @@ export interface MeasureExecutionResultHeader {
 export interface MeasureGroupHeader {
     /**
      *
-     * @type {object}
+     * @type {MeasureGroupHeaderMeasureGroupHeader}
      * @memberof MeasureGroupHeader
      */
-    measureGroupHeader: object;
+    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
+}
+/**
+ *
+ * @export
+ * @interface MeasureGroupHeaderMeasureGroupHeader
+ */
+export interface MeasureGroupHeaderMeasureGroupHeader {
+    /**
+     *
+     * @type {Array<MeasureHeaderItem>}
+     * @memberof MeasureGroupHeaderMeasureGroupHeader
+     */
+    items: Array<MeasureHeaderItem>;
 }
 /**
  *

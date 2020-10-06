@@ -8,7 +8,7 @@ import {
     ResultDimension,
 } from "../generated/afm-rest-api";
 
-type ResultDimensionHeader = ResultDimension["headers"][number];
+export type ResultDimensionHeader = ResultDimension["headers"][number];
 
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader {
     return header && (header as AttributeHeader).attributeHeader !== undefined;
