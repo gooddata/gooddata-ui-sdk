@@ -23,8 +23,8 @@ export interface InputPureProps {
     onChange: (value: string | number, e?: React.ChangeEvent<HTMLInputElement>) => void;
     onEscKeyPress: () => void;
     onEnterKeyPress: () => void;
-    onBlur: () => void;
-    onFocus: () => void;
+    onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
+    onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
     placeholder: string;
     prefix: string;
     readonly: boolean;

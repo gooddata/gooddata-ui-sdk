@@ -331,7 +331,7 @@ export interface InputPureProps {
     // (undocumented)
     maxlength: number;
     // (undocumented)
-    onBlur: () => void;
+    onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
@@ -339,7 +339,7 @@ export interface InputPureProps {
     // (undocumented)
     onEscKeyPress: () => void;
     // (undocumented)
-    onFocus: () => void;
+    onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     placeholder: string;
     // (undocumented)
@@ -392,11 +392,11 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
     // (undocumented)
     handleCaretShift(e: React_2.ChangeEvent<HTMLInputElement>): void;
     // (undocumented)
-    onBlur: () => void;
+    onBlur: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     onChange: (value: number, e: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onFocus: () => void;
+    onFocus: (e: React_2.FocusEvent<HTMLInputElement>) => void;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)

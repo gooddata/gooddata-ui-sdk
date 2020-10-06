@@ -150,12 +150,12 @@ export class InputWithNumberFormat extends React.PureComponent<
         onChange(parse(value, separators));
     };
 
-    onFocus = (): void => {
+    onFocus = (e: React.FocusEvent<HTMLInputElement>): void => {
         this.setState({ isFocused: true });
-        this.props.onFocus();
+        this.props.onFocus(e);
     };
 
-    onBlur = (): void => {
+    onBlur = (e: React.FocusEvent<HTMLInputElement>): void => {
         const { separators, onBlur } = this.props;
         const { value } = this.state;
 
@@ -163,7 +163,7 @@ export class InputWithNumberFormat extends React.PureComponent<
             value: format(parse(value, separators), separators),
             isFocused: false,
         });
-        onBlur();
+        onBlur(e);
     };
 
     handleCaretShift(e: React.ChangeEvent<HTMLInputElement>): void {

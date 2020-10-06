@@ -354,6 +354,11 @@
 .button-dropdown {
     font-weight: 400;
 
+    &:not(.customizable) {
+        border-radius: 3px;
+        text-transform: "none";
+    }
+
     &::after,
     &::before,
     .gd-button-icon {
