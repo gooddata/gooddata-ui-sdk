@@ -869,7 +869,7 @@ function getHoverStyles({ type }: any, config: any) {
             seriesMapFn = (seriesOrig) => {
                 const { type } = seriesOrig;
 
-                if (type === "line") {
+                if (type === "line" || type === "area") {
                     return lineSeriesMapFn(seriesOrig);
                 }
                 return barSeriesMapFn(seriesOrig);
