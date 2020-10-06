@@ -196,6 +196,11 @@ describe("filter convertors", () => {
                 newRankingFilter(localId("id"), undefined, "TOP", 100_000),
             ],
             [true, "with value 99_999", newRankingFilter(localId("id"), undefined, "TOP", 99_999)],
+            [
+                false,
+                "with number with decimal point",
+                newRankingFilter(localId("id"), undefined, "TOP", 44.24),
+            ],
         ];
 
         it.each(Scenarios)("should return %s when filter is %s", (expectedResult, _desc, input) => {

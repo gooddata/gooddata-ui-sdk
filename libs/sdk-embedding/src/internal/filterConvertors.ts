@@ -104,7 +104,7 @@ function isValidRankingFilterOperator(operator: unknown): boolean {
 }
 
 function isValidRankingFilterValue(value: unknown): boolean {
-    return typeof value === "number" && value > 0 && value <= 99_999;
+    return typeof value === "number" && value > 0 && value <= 99_999 && value % 1 === 0;
 }
 
 function isValidLocalIdentifier(localIdentifier: unknown): boolean {
