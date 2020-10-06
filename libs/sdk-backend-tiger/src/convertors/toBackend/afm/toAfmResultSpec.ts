@@ -1,21 +1,27 @@
 // (C) 2007-2020 GoodData Corporation
 import compact from "lodash/compact";
-import isEmpty from "lodash/isEmpty";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
+import {
+    AFM,
+    AfmExecution,
+    AttributeItem,
+    FilterDefinition,
+    MeasureItem,
+    ResultSpec,
+} from "@gooddata/api-client-tiger";
 import { convertVisualizationObjectFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import { convertAttribute } from "./AttributeConverter";
 import { convertDimensions } from "./DimensionsConverter";
 
-function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
-    const attributes: ExecuteAFM.IAttribute[] = def.attributes.map(convertAttribute);
+function convertAFM(def: IExecutionDefinition): AFM {
+    const attributes: AttributeItem[] = def.attributes.map(convertAttribute);
     const attrProp = { attributes };
 
-    const measures: ExecuteAFM.IMeasure[] = def.measures.map(convertMeasure);
+    const measures: MeasureItem[] = def.measures.map(convertMeasure);
     const measuresProp = { measures };
 
-    const filters: ExecuteAFM.CompatibilityFilter[] = def.filters
+    const filters: FilterDefinition[] = def.filters
         ? compact(def.filters.map(convertVisualizationObjectFilter))
         : [];
     const filtersProp = { filters };
@@ -27,13 +33,10 @@ function convertAFM(def: IExecutionDefinition): ExecuteAFM.IAfm {
     };
 }
 
-function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
+function convertResultSpec(def: IExecutionDefinition): ResultSpec {
     const convertedDimensions = convertDimensions(def);
-    const dimsProp = !isEmpty(convertedDimensions) ? { dimensions: convertedDimensions } : {};
 
-    return {
-        ...dimsProp,
-    };
+    return { dimensions: convertedDimensions };
 }
 /**
  * Converts execution definition to AFM Execution
@@ -41,7 +44,7 @@ function convertResultSpec(def: IExecutionDefinition): ExecuteAFM.IResultSpec {
  * @param def - execution definition
  * @returns AFM Execution
  */
-export function toAfmExecution(def: IExecutionDefinition): ExecuteAFM.IExecution {
+export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
     return {
         resultSpec: convertResultSpec(def),
         execution: {

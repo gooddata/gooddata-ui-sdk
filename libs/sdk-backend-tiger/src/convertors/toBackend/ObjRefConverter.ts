@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
+import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isIdentifierRef,
@@ -11,8 +11,6 @@ import {
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { TigerAfmType } from "../../types";
-import ILocalIdentifierQualifier = ExecuteAFM.ILocalIdentifierQualifier;
-import ObjQualifier = ExecuteAFM.ObjQualifier;
 
 type AfmObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
 
@@ -47,11 +45,10 @@ function toTigerAfmType(value: ObjectType | undefined, defaultValue?: TigerAfmTy
         throw new UnexpectedError(`Cannot convert ${value} to AFM type, ${value} is not valid AfmObjectType`);
     }
 
-    const type = tigerAfmTypeByObjectAfmType[value];
-    return type;
+    return tigerAfmTypeByObjectAfmType[value];
 }
 
-export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjQualifier {
+export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjectIdentifier {
     if (isUriRef(ref)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
@@ -67,28 +64,28 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjQua
 /**
  * @internal
  */
-export function toFactQualifier(ref: ObjRef): ObjQualifier {
+export function toFactQualifier(ref: ObjRef): ObjectIdentifier {
     return toObjQualifier(ref, "fact");
 }
 
 /**
  * @internal
  */
-export function toDisplayFormQualifier(ref: ObjRef): ObjQualifier {
+export function toDisplayFormQualifier(ref: ObjRef): ObjectIdentifier {
     return toObjQualifier(ref, "label");
 }
 
 /**
  * @internal
  */
-export function toDateDataSetQualifier(ref: ObjRef): ObjQualifier {
+export function toDateDataSetQualifier(ref: ObjRef): ObjectIdentifier {
     return toObjQualifier(ref, "dataset");
 }
 
 /**
  * @internal
  */
-export function toLocalIdentifier(localIdentifier: string): ILocalIdentifierQualifier {
+export function toLocalIdentifier(localIdentifier: string): LocalIdentifier {
     return {
         localIdentifier,
     };
@@ -97,9 +94,7 @@ export function toLocalIdentifier(localIdentifier: string): ILocalIdentifierQual
 /**
  * @internal
  */
-export function toMeasureValueFilterMeasureQualifier(
-    ref: ObjRefInScope,
-): ExecuteAFM.ILocalIdentifierQualifier | ExecuteAFM.IObjIdentifierQualifier {
+export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope): LocalIdentifier | ObjectIdentifier {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
     } else if (isIdentifierRef(ref)) {

@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/api-client-tiger";
+import { ExecutionResult } from "@gooddata/api-client-tiger";
 import { idRef } from "@gooddata/sdk-model";
 
-export const mockResult: Execution.IExecutionResult = {
+export const mockResult: ExecutionResult = {
     data: [["20.0", "40.2"]],
     dimensionHeaders: [
         {
@@ -26,11 +26,13 @@ export const mockResult: Execution.IExecutionResult = {
                         {
                             attributeHeader: {
                                 labelValue: "1906-4",
+                                primaryLabelValue: "1906-4",
                             },
                         },
                         {
                             attributeHeader: {
                                 labelValue: "1910-1",
+                                primaryLabelValue: "1910-1",
                             },
                         },
                     ],

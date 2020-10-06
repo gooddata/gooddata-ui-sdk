@@ -1,9 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import { ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
-import ObjQualifier = ExecuteAFM.ObjQualifier;
+
 import { TigerAfmType } from "../../../types";
 
 const allValidTigerAfmTypes: TigerAfmType[] = ["metric", "label", "fact", "dataset", "attribute"];
@@ -32,7 +32,7 @@ function toObjectType(value: TigerAfmType): ObjectType {
     return type;
 }
 
-export function toObjRef(qualifier: ObjQualifier): ObjRef {
+export function toObjRef(qualifier: ObjectIdentifier): ObjRef {
     if (isUriRef(qualifier)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }

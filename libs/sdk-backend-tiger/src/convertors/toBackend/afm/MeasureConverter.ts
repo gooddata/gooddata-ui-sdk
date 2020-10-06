@@ -1,5 +1,17 @@
 // (C) 2007-2020 GoodData Corporation
 import {
+    ArithmeticMeasureDefinition,
+    ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
+    FilterDefinitionForSimpleMeasure,
+    MeasureDefinition,
+    PopDatasetMeasureDefinition,
+    PopDateMeasureDefinition,
+    SimpleMeasureDefinition,
+    SimpleMeasureDefinitionMeasureAggregationEnum,
+    VisualizationObject,
+} from "@gooddata/api-client-tiger";
+import {
+    ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
     IMeasure,
     IMeasureDefinition,
@@ -11,21 +23,19 @@ import {
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
     MeasureAggregation,
-    ArithmeticMeasureOperator,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
-import {
-    toDateDataSetQualifier,
-    toFactQualifier,
-    toDisplayFormQualifier,
-    toLocalIdentifier,
-} from "../ObjRefConverter";
 import compact from "lodash/compact";
 import get from "lodash/get";
 import { InvariantError } from "ts-invariant";
+import {
+    toDateDataSetQualifier,
+    toDisplayFormQualifier,
+    toFactQualifier,
+    toLocalIdentifier,
+} from "../ObjRefConverter";
+import { convertVisualizationObjectFilter } from "./FilterConverter";
 
-export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
+export function convertMeasure(measure: IMeasure): VisualizationObject.IMeasure {
     const {
         measure: { definition },
     } = measure;
@@ -46,7 +56,7 @@ export function convertMeasure(measure: IMeasure): ExecuteAFM.IMeasure {
     };
 }
 
-function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAFM.MeasureDefinition {
+function convertMeasureDefinition(definition: IMeasureDefinitionType): MeasureDefinition {
     if (isMeasureDefinition(definition)) {
         return convertSimpleMeasureDefinition(definition);
     } else if (isPoPMeasureDefinition(definition)) {
@@ -62,37 +72,39 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): ExecuteAF
 
 function convertAggregation(
     aggregation?: MeasureAggregation,
-): ExecuteAFM.SimpleMeasureAggregation | undefined {
+): SimpleMeasureDefinitionMeasureAggregationEnum | undefined {
     if (!aggregation) {
         return undefined;
     }
     if (aggregation === "sum") {
-        return "SUM";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.SUM;
     }
     if (aggregation === "avg") {
-        return "AVG";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.AVG;
     }
     if (aggregation === "count") {
-        return "COUNT";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.COUNT;
     }
     if (aggregation === "max") {
-        return "MAX";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.MAX;
     }
     if (aggregation === "median") {
-        return "MEDIAN";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.MEDIAN;
     }
     if (aggregation === "min") {
-        return "MIN";
+        return SimpleMeasureDefinitionMeasureAggregationEnum.MIN;
     }
 
-    return "RUNSUM";
+    return SimpleMeasureDefinitionMeasureAggregationEnum.RUNSUM;
 }
 
-function convertSimpleMeasureDefinition(definition: IMeasureDefinition): ExecuteAFM.ISimpleMeasureDefinition {
+function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleMeasureDefinition {
     const { measureDefinition } = definition;
 
-    const filters: ExecuteAFM.FilterItem[] = measureDefinition.filters
-        ? compact(measureDefinition.filters.map(convertVisualizationObjectFilter))
+    const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
+        ? (compact(
+              measureDefinition.filters.map(convertVisualizationObjectFilter),
+          ) as FilterDefinitionForSimpleMeasure[]) // TODO je to správně?
         : [];
     const filtersProp = filters.length ? { filters } : {};
 
@@ -114,9 +126,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): Execute
     };
 }
 
-function convertPopMeasureDefinition(
-    definition: IPoPMeasureDefinition,
-): ExecuteAFM.IOverPeriodMeasureDefinition {
+function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): PopDateMeasureDefinition {
     const { popMeasureDefinition } = definition;
     const attributeRef = popMeasureDefinition.popAttribute;
 
@@ -135,7 +145,7 @@ function convertPopMeasureDefinition(
 
 function convertPreviousPeriodMeasureDefinition(
     definition: IPreviousPeriodMeasureDefinition,
-): ExecuteAFM.IPreviousPeriodMeasureDefinition {
+): PopDatasetMeasureDefinition {
     const { previousPeriodMeasure } = definition;
 
     return {
@@ -155,18 +165,18 @@ function convertPreviousPeriodMeasureDefinition(
 
 function convertArithmeticMeasureOperator(
     operator: ArithmeticMeasureOperator,
-): ExecuteAFM.ArithmeticMeasureOperator {
+): ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
     switch (operator) {
         case "sum":
-            return "SUM";
+            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.SUM;
         case "difference":
-            return "DIFFERENCE";
+            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.DIFFERENCE;
         case "multiplication":
-            return "MULTIPLICATION";
+            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.MULTIPLICATION;
         case "ratio":
-            return "RATIO";
+            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.RATIO;
         case "change":
-            return "CHANGE";
+            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.CHANGE;
         default:
             throw new InvariantError(`Unknown arithmetic measure operator "${operator}"`);
     }
@@ -174,7 +184,7 @@ function convertArithmeticMeasureOperator(
 
 function convertArithmeticMeasureDefinition(
     definition: IArithmeticMeasureDefinition,
-): ExecuteAFM.IArithmeticMeasureDefinition {
+): ArithmeticMeasureDefinition {
     const { arithmeticMeasure } = definition;
     return {
         arithmeticMeasure: {

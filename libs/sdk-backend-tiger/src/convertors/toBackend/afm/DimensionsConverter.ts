@@ -1,10 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
-import SortKey = ExecuteAFM.SortKey;
-import IAttributeSortKey = ExecuteAFM.IAttributeSortKey;
-import IValueSortKey = ExecuteAFM.IValueSortKey;
-import IDimensionItemValue = ExecuteAFM.IDimensionItemValue;
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
+import {
+    Dimension,
+    DimensionItemValue,
+    SortDirection as TigerSortDirection,
+    SortKeyAttribute,
+    SortKeyValue,
+    VisualizationObject,
+} from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
     ILocatorItem,
@@ -14,8 +16,14 @@ import {
     MeasureGroupIdentifier,
     SortDirection,
 } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 
-function merge(dims: ExecuteAFM.IDimension[], sorting: SortKey[][]): ExecuteAFM.IDimension[] {
+type SortKey = SortKeyAttribute | SortKeyValue;
+
+function merge(
+    dims: VisualizationObject.IDimension[],
+    sorting: SortKey[][],
+): VisualizationObject.IDimension[] {
     return dims.map((dim, idx) => {
         if (!isEmpty(sorting[idx])) {
             return {
@@ -28,12 +36,12 @@ function merge(dims: ExecuteAFM.IDimension[], sorting: SortKey[][]): ExecuteAFM.
     });
 }
 
-function convertSortDirection(direction: SortDirection): ExecuteAFM.SortDirection {
+function convertSortDirection(direction: SortDirection): TigerSortDirection {
     if (direction === "asc") {
-        return "ASC";
+        return TigerSortDirection.ASC;
     }
 
-    return "DESC";
+    return TigerSortDirection.DESC;
 }
 
 /**
@@ -58,8 +66,8 @@ function extractItemValueFromElement(elementUri: string): string {
     return elementUri;
 }
 
-function convertMeasureLocators(locators: ILocatorItem[]): IDimensionItemValue[] {
-    return locators.map<IDimensionItemValue>((locator) => {
+function convertMeasureLocators(locators: ILocatorItem[]): DimensionItemValue[] {
+    return locators.map<DimensionItemValue>((locator) => {
         if (isAttributeLocator(locator)) {
             return {
                 itemIdentifier: locator.attributeLocatorItem.attributeIdentifier,
@@ -94,7 +102,10 @@ function convertMeasureLocators(locators: ILocatorItem[]): IDimensionItemValue[]
  * @param dims - dimensions to add sorting to
  * @param sorts - sort items defined by SDK user
  */
-function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]): ExecuteAFM.IDimension[] {
+function dimensionsWithSorts(
+    dims: VisualizationObject.IDimension[],
+    sorts: ISortItem[],
+): VisualizationObject.IDimension[] {
     if (isEmpty(sorts)) {
         return dims;
     }
@@ -107,7 +118,7 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
         if (isAttributeSort(sortItem)) {
             const attributeIdentifier = sortItem.attributeSortItem.attributeIdentifier;
 
-            const attributeSortKey: IAttributeSortKey = {
+            const attributeSortKey: SortKeyAttribute = {
                 attribute: {
                     attributeIdentifier,
                     direction: convertSortDirection(sortItem.attributeSortItem.direction),
@@ -146,7 +157,7 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
                 return;
             }
 
-            const valueSortKey: IValueSortKey = {
+            const valueSortKey: SortKeyValue = {
                 value: {
                     direction: convertSortDirection(sortItem.measureSortItem.direction),
                     dataColumnLocators: [
@@ -171,8 +182,8 @@ function dimensionsWithSorts(dims: ExecuteAFM.IDimension[], sorts: ISortItem[]):
  *
  * @param def
  */
-export function convertDimensions(def: IExecutionDefinition): ExecuteAFM.IDimension[] {
-    const dimensionsWithoutSorts: ExecuteAFM.IDimension[] = def.dimensions.map((dim, idx) => {
+export function convertDimensions(def: IExecutionDefinition): Dimension[] {
+    const dimensionsWithoutSorts: VisualizationObject.IDimension[] = def.dimensions.map((dim, idx) => {
         if (!isEmpty(dim.totals)) {
             throw new Error("Tiger backend does not support totals.");
         }

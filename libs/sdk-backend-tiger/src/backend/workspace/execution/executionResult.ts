@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
+import { AfmExecutionResponse, ExecutionResult } from "@gooddata/api-client-tiger";
 import {
     DataValue,
     IDataView,
@@ -14,13 +15,12 @@ import {
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
-import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { Execution } from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../../../types";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
+import { TigerAuthenticatedCallGuard } from "../../../types";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 
@@ -50,7 +50,7 @@ export class TigerExecutionResult implements IExecutionResult {
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly definition: IExecutionDefinition,
         private readonly executionFactory: IExecutionFactory,
-        readonly execResponse: Execution.IExecutionResponse,
+        readonly execResponse: AfmExecutionResponse,
         private readonly dateFormatter: DateFormatter,
     ) {
         this.dimensions = transformResultDimensions(
@@ -99,7 +99,7 @@ export class TigerExecutionResult implements IExecutionResult {
         return this._fingerprint;
     }
 
-    private asDataView = (promisedRes: Promise<Execution.IExecutionResult>): Promise<IDataView> => {
+    private asDataView = (promisedRes: Promise<ExecutionResult>): Promise<IDataView> => {
         return promisedRes.then((result) => {
             if (!result) {
                 // TODO: SDK8: investigate when can this actually happen; perhaps end of data during paging?
@@ -130,11 +130,7 @@ class TigerDataView implements IDataView {
     public readonly totals?: DataValue[][][];
     private readonly _fingerprint: string;
 
-    constructor(
-        result: IExecutionResult,
-        execResult: Execution.IExecutionResult,
-        dateFormatter: DateFormatter,
-    ) {
+    constructor(result: IExecutionResult, execResult: ExecutionResult, dateFormatter: DateFormatter) {
         this.result = result;
         this.definition = result.definition;
 
@@ -163,11 +159,11 @@ class TigerDataView implements IDataView {
     }
 }
 
-function hasEmptyData(result: Execution.IExecutionResult): boolean {
+function hasEmptyData(result: ExecutionResult): boolean {
     return result.data.length === 0;
 }
 
-function hasMissingDimensionHeaders(result: Execution.IExecutionResult): boolean {
+function hasMissingDimensionHeaders(result: ExecutionResult): boolean {
     /*
      * messy fix to tiger's afm always returning dimension headers with no content
      */
@@ -177,6 +173,6 @@ function hasMissingDimensionHeaders(result: Execution.IExecutionResult): boolean
     return !result.dimensionHeaders || (!firstDimHeaders && !secondDimHeaders);
 }
 
-function isEmptyDataResult(result: Execution.IExecutionResult): boolean {
+function isEmptyDataResult(result: ExecutionResult): boolean {
     return hasEmptyData(result) && hasMissingDimensionHeaders(result);
 }

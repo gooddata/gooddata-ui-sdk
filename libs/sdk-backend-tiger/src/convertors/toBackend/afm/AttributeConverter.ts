@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
 
 import { IAttribute } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
+import { VisualizationObject } from "@gooddata/api-client-tiger";
 
 import { toDisplayFormQualifier } from "../ObjRefConverter";
 
-export function convertAttribute(attribute: IAttribute, idx: number): ExecuteAFM.IAttribute {
+export function convertAttribute(attribute: IAttribute, idx: number): VisualizationObject.IAttribute {
     const alias = attribute.attribute.alias;
     const aliasProp = alias ? { alias } : {};
     const displayFromRef = attribute.attribute.displayForm;
