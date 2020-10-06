@@ -123,3 +123,16 @@ $color-picker-spacing: 5px;
     text-align: center;
     color: $gd-color-text-dimmed;
 }
+
+.gd-canvas-section.adi-bucket-configuration {
+    padding: 10px 12px;
+
+    .adi-properties-dropdown-container {
+        margin: -8px auto;
+    }
+
+    .input-checkbox-label {
+        margin-top: 5px;
+        margin-bottom: -2px;
+    }
+}

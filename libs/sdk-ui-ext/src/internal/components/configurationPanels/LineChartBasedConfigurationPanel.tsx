@@ -33,6 +33,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                     {this.renderLegendSection()}
                     <ConfigSection
                         id="canvas_section"
+                        className="gd-canvas-section"
                         title="properties.canvas.title"
                         propertiesMeta={propertiesMeta}
                         properties={properties}
