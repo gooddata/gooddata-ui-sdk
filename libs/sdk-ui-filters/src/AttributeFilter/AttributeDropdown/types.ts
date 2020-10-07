@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IPagedResource } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IPagedResource, IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 export const emptyListItem = { empty: true };
 export type EmptyListItem = typeof emptyListItem;
