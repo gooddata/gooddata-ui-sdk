@@ -3,10 +3,8 @@ import React from "react";
 import { stringUtils } from "@gooddata/util";
 import { ObjRefInScope } from "@gooddata/sdk-model";
 import cx from "classnames";
+import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../../types";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import { Button } from "@gooddata/sdk-ui-kit";
 
 interface IAttributeItemProps {
     item: IAttributeDropdownItem;

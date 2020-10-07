@@ -9,6 +9,93 @@ import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 
 // @internal (undocumented)
+export type ArrowDirections = Record<string, string>;
+
+// @internal (undocumented)
+export type ArrowOffset = number[];
+
+// @internal (undocumented)
+export type ArrowOffsets = Record<string, ArrowOffset>;
+
+// @internal (undocumented)
+export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
+    constructor(props: IBubbleProps);
+    // (undocumented)
+    addOffsetToAlignPoints(alignPoints: IAlignPoint[]): IAlignPoint[];
+    // (undocumented)
+    arrowDirections: ArrowDirections;
+    // (undocumented)
+    arrowOffsets: ArrowOffsets;
+    // (undocumented)
+    static defaultProps: {
+        alignPoints: {
+            align: string;
+        }[];
+        alignTo: string;
+        arrowOffsets: {};
+        arrowDirections: {};
+        arrowStyle: {};
+        className: string;
+        closeOnOutsideClick: boolean;
+        onClose: () => void;
+        onMouseEnter: () => void;
+        onMouseLeave: () => void;
+        overlayClassName: string;
+    };
+    // (undocumented)
+    getArrowDirection(alignPoints: string): string;
+    // (undocumented)
+    getArrowsClassname(alignPoints: string): string;
+    // (undocumented)
+    getClassnames(): string;
+    // (undocumented)
+    static identifier: string;
+    // (undocumented)
+    onAlign: (alignment: IAlignPoint) => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean;
+}
+
+// @internal (undocumented)
+export class BubbleFocusTrigger extends BubbleTrigger<BubbleFocusTriggerProps> {
+    // (undocumented)
+    static defaultProps: Partial<BubbleFocusTriggerProps>;
+    // (undocumented)
+    protected eventListeners(): any;
+}
+
+// @internal (undocumented)
+export type BubbleFocusTriggerProps = IBubbleTriggerProps;
+
+// @internal (undocumented)
+export class BubbleHoverTrigger extends BubbleTrigger<IBubbleHoverTriggerProps> {
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: Partial<IBubbleHoverTriggerProps>;
+    // (undocumented)
+    protected eventListeners(): any;
+    // (undocumented)
+    scheduleId: number;
+}
+
+// @internal (undocumented)
+export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureComponent<P, IBubbleTriggerState> {
+    // (undocumented)
+    protected changeBubbleVisibility(active: boolean): void;
+    // (undocumented)
+    static defaultProps: Partial<IBubbleTriggerProps>;
+    // (undocumented)
+    protected eventListeners(): any;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    readonly state: Readonly<IBubbleTriggerState>;
+}
+
+// @internal (undocumented)
 export class Button extends React_3.Component<IButtonProps> {
     // (undocumented)
     buttonNode: HTMLElement;
@@ -107,6 +194,70 @@ export interface IAlignPoint {
     align: string;
     // (undocumented)
     offset?: IOffset;
+}
+
+// @internal (undocumented)
+export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
+    // (undocumented)
+    hideDelay?: number;
+    // (undocumented)
+    hoverHideDelay?: number;
+    // (undocumented)
+    showDelay?: number;
+}
+
+// @internal (undocumented)
+export interface IBubbleProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    alignTo?: string;
+    // (undocumented)
+    arrowDirections?: ArrowDirections;
+    // (undocumented)
+    arrowOffsets?: ArrowOffsets;
+    // (undocumented)
+    arrowStyle?: React_2.CSSProperties;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    closeOnOutsideClick?: boolean;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onMouseEnter?: () => void;
+    // (undocumented)
+    onMouseLeave?: () => void;
+    // (undocumented)
+    overlayClassName?: string;
+}
+
+// @internal (undocumented)
+export interface IBubbleState {
+    // (undocumented)
+    alignPoints: IAlignPoint[];
+    // (undocumented)
+    optimalAlignPoints: string;
+}
+
+// @internal (undocumented)
+export interface IBubbleTriggerProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    eventsOnBubble?: boolean;
+    // (undocumented)
+    tagName?: React_2.ElementType;
+}
+
+// @internal (undocumented)
+export interface IBubbleTriggerState {
+    // (undocumented)
+    bubbleId: string;
+    // (undocumented)
+    isBubbleVisible: boolean;
 }
 
 // @internal (undocumented)

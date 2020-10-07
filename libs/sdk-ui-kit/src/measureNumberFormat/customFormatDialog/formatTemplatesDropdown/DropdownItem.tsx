@@ -2,11 +2,11 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { stringUtils } from "@gooddata/util";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import PreviewRows from "../shared/PreviewRows";
 import { IFormatTemplate } from "../../typings";
+import { Bubble } from "../../../Bubble";
 
 interface ITemplateDropdownItemProps {
     template: IFormatTemplate;

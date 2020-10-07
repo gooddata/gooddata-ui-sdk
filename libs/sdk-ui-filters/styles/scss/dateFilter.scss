@@ -7,9 +7,10 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/goodstrap/lib/Dialog/styles/Dialog";
 @import "~@gooddata/goodstrap/lib/List/styles/List";
 @import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
-@import "~@gooddata/goodstrap/lib/Bubble/styles/Bubble";
+
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
 @import "~@gooddata/sdk-ui-kit/styles/scss/button";
+@import "~@gooddata/sdk-ui-kit/styles/scss/bubble";
 
 @import "./components/DynamicSelect.scss";
 @import "./components/Select.scss";

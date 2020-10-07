@@ -1,8 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import ConfigSection from "../configurationControls/ConfigSection";
 import CheckboxControl from "../configurationControls/CheckboxControl";
 import DataLabelsControl from "../configurationControls/DataLabelsControl";

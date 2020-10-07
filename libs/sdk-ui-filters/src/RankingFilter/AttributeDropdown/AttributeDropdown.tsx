@@ -1,8 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import { Button, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { IAttributeDropdownItem, ICustomGranularitySelection } from "../types";
