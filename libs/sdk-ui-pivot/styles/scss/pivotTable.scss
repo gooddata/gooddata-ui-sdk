@@ -139,7 +139,7 @@ $header-cell-resize-width: 20px;
                 display: block;
                 width: $header-cell-resize-width / 2;
                 margin-right: $header-cell-resize-width / 2;
-                border-right: 1px solid $gd-color-highlight;
+                border-right: 1px solid $gd-palette-primary-base;
                 text-indent: $header-cell-resize-width / 2;
                 height: 16px;
             }
@@ -148,7 +148,7 @@ $header-cell-resize-width: 20px;
         .gd-column-group-header:hover {
             .gd-pivot-table-header-label--clickable,
             .gd-pivot-table-header-menu ~ .gd-pivot-table-header-label {
-                background-color: $gd-color-highlight-dimmed;
+                background-color: $gd-palette-primary-base-dimmed;
             }
 
             .ag-header-cell-resize {
@@ -333,7 +333,7 @@ $header-cell-resize-width: 20px;
         align-items: center;
         overflow: hidden;
         border-top: 2px solid transparent;
-        background-color: $gd-color-highlight-dimmed;
+        background-color: $gd-palette-primary-base-dimmed;
         opacity: 0;
         cursor: pointer;
         transition: width 200ms, opacity 100ms;

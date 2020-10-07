@@ -28,8 +28,8 @@ $dialog_width: 250px;
             margin-top: 4px;
 
             &.gd-mvf-warning-message-low {
-                background: transparentize($gd-color-highlight, 0.85);
-                color: $gd-color-highlight;
+                background: $gd-palette-primary-base-t80;
+                color: $gd-palette-primary-base;
             }
 
             &.gd-mvf-warning-message-medium {

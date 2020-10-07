@@ -41,7 +41,7 @@
     bottom: 0;
     left: 10px;
     line-height: 30px;
-    color: $gd-date-picker-color;
+    color: $gd-palette-primary-base;
     font-size: 18px;
 
     @include transition("color", 0.25s, ease-in-out);
@@ -143,7 +143,7 @@
 
         &::before {
             display: block;
-            color: $gd-date-picker-color;
+            color: $gd-palette-primary-base;
             padding-top: 0.15em;
             font-family: Indigo;
             font-size: 18px;
@@ -172,7 +172,7 @@
 
     .DayPicker-NavButton--next:hover,
     .DayPicker-NavButton--prev:hover {
-        color: $gd-date-picker-color;
+        color: $gd-palette-primary-base;
         cursor: pointer;
     }
 
@@ -253,6 +253,6 @@
 
     .DayPicker-Day--selected:not(.DayPicker-Day--disabled):not(.DayPicker-Day--outside) {
         color: $gd-color-text-light;
-        background: $gd-date-picker-color;
+        background: $gd-palette-primary-base;
     }
 }

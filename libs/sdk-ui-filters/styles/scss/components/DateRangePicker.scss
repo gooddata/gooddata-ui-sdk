@@ -1,8 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 @import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables.scss";
 
 $gd-date-range-picker-hover-bgcolor: $is-focused-background;
-$gd-date-range-picker-interval-bgcolor: lighten($gd-color-highlight, 45%);
+$gd-date-range-picker-interval-bgcolor: var(
+    --gd-palette-primary-base-lighten45,
+    lighten($gd-color-highlight, 45%)
+);
 $gd-date-range-picker-shadow-color: #1f354a;
 
 $gd-color-warning-text: #888;
@@ -64,7 +68,7 @@ $gd-day-picker-width: 268px;
             align-items: center;
             height: 100%;
             font-size: 16px;
-            color: $gd-color-highlight;
+            color: $gd-palette-primary-base;
             pointer-events: none;
         }
 
@@ -126,11 +130,11 @@ $gd-day-picker-width: 268px;
                 padding-top: 0.15em;
                 font-family: Indigo;
                 font-size: 18px;
-                color: $gd-color-highlight;
+                color: $gd-palette-primary-base;
             }
 
             &:hover {
-                color: $gd-color-highlight;
+                color: $gd-palette-primary-base;
                 cursor: pointer;
             }
 
@@ -240,7 +244,7 @@ $gd-day-picker-width: 268px;
 
         .DayPicker-Day--selected:not(.DayPicker-Day--disabled) {
             color: $gd-color-text-light;
-            background: $gd-color-highlight;
+            background: $gd-palette-primary-base;
         }
 
         .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end) {
