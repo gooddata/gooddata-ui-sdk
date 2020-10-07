@@ -41,7 +41,6 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -128,7 +127,7 @@ export class PluggableLineChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

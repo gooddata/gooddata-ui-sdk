@@ -12,5 +12,5 @@ export interface IUserSettingsService {
      *
      * @returns promise of the feature flags of the current user
      */
-    query(): Promise<IUserSettings>;
+    getSettings(): Promise<IUserSettings>;
 }

@@ -8,7 +8,6 @@ import { ObjRef, IMetadataObject } from "@gooddata/sdk-model";
  * @public
  */
 export interface IWorkspaceFactsService {
-    // For what is this used for?
     /**
      * Get information about the given fact's dataset
      * @param ref - ref of the fact

@@ -3,7 +3,7 @@
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
 import { IWorkspaceQueryFactory, IAnalyticalWorkspace } from "../workspace";
-import { IAuthenticationProvider, AuthenticatedPrincipal } from "../auth";
+import { IAuthenticatedPrincipal, IAuthenticationProvider } from "../auth";
 import { IUserService } from "../user";
 
 /**
@@ -12,9 +12,9 @@ import { IUserService } from "../user";
  *
  * @public
  */
-export type AnalyticalBackendConfig = {
+export interface IAnalyticalBackendConfig {
     readonly hostname?: string;
-};
+}
 
 /**
  * Factory function to create new instances of Analytical Backend realization using optionally both platform agnostic
@@ -29,7 +29,7 @@ export type AnalyticalBackendConfig = {
  * @public
  */
 export type AnalyticalBackendFactory = (
-    config?: AnalyticalBackendConfig,
+    config?: IAnalyticalBackendConfig,
     implConfig?: any,
 ) => IAnalyticalBackend;
 
@@ -46,12 +46,12 @@ export interface IAnalyticalBackend {
     /**
      * Configuration used for communication with this backend.
      */
-    readonly config: AnalyticalBackendConfig;
+    readonly config: IAnalyticalBackendConfig;
 
     /**
      * Capabilities available on this backend.
      */
-    readonly capabilities: BackendCapabilities;
+    readonly capabilities: IBackendCapabilities;
 
     /**
      * Creates new instance of backend on the provided hostname. It is valid NOT TO specify any hostname, in
@@ -87,7 +87,7 @@ export interface IAnalyticalBackend {
      *
      * @returns promise of authenticated principal is returned if authenticated, null is returned if not authenticated.
      */
-    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
+    isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
 
     /**
      * Triggers authentication process against the backend.
@@ -103,7 +103,7 @@ export interface IAnalyticalBackend {
      *  session is already authenticated; defaults to false
      * @returns promise of authenticated principal, or rejection if authentication has failed.
      */
-    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
+    authenticate(force?: boolean): Promise<IAuthenticatedPrincipal>;
 
     /**
      * Triggers deauthentication process against the backend.
@@ -139,7 +139,7 @@ export interface IAnalyticalBackend {
  *
  * @public
  */
-export type BackendCapabilities = {
+export interface IBackendCapabilities {
     /**
      * Indicates whether the backend is capable to address objects using URIs
      */
@@ -199,7 +199,7 @@ export type BackendCapabilities = {
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
-};
+}
 
 //
 // Supporting / convenience functions

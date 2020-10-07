@@ -12,12 +12,12 @@ export interface IWorkspaceSettingsService {
      *
      * @returns promise of workspace settings
      */
-    query(): Promise<IWorkspaceSettings>;
+    getSettings(): Promise<IWorkspaceSettings>;
 
     /**
      * Asynchronously queries feature flags taking into account settings from both the workspace and the current user.
      *
      * @returns promise of user/workspace settings
      */
-    queryForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
 }

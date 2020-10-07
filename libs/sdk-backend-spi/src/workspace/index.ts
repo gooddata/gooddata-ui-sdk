@@ -1,15 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 import { IPagedResource } from "../common/paging";
 import { IExecutionFactory } from "./execution";
-import { IWorkspaceInsights } from "./insights";
+import { IWorkspaceInsightsService } from "./insights";
 import { IWorkspaceStylingService } from "./styling";
 import { IWorkspaceSettingsService } from "./settings";
 import { IWorkspaceCatalogFactory } from "./ldm/catalog";
 import { IWorkspaceDatasetsService } from "./ldm/datasets";
-import { IWorkspacePermissionsFactory } from "./permissions";
-import { IWorkspaceDashboards } from "./dashboards";
-import { IWorkspaceUsersQuery } from "./users";
-import { IWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
+import { IWorkspacePermissionsService } from "./permissions";
+import { IWorkspaceDashboardsService } from "./dashboards";
+import { IWorkspaceUserQuery } from "./users";
+import { IDateFilterConfigsQuery } from "./dateFilterConfigs";
 import { IWorkspaceAttributesService } from "./attributes";
 import { IWorkspaceMeasuresService } from "./measures";
 import { IWorkspaceFactsService } from "./facts";
@@ -29,24 +29,25 @@ export interface IAnalyticalWorkspace {
     getDescriptor(): Promise<IWorkspaceDescriptor>;
 
     /**
-     * Returns service that can be used to query workspace catalog items - attributes, measures, facts and date data sets.
+     * Returns factory that can be used to query workspace catalog items - attributes, measures, facts and date data sets.
      */
     catalog(): IWorkspaceCatalogFactory;
 
     /**
      * Returns service that can be used to query and update insights.
      */
-    insights(): IWorkspaceInsights;
+    insights(): IWorkspaceInsightsService;
 
     /**
      * Returns service that can be used to query and update dashboards.
      */
-    dashboards(): IWorkspaceDashboards;
+    dashboards(): IWorkspaceDashboardsService;
 
+    ///// QUERY or SERVICE => QUERY (to be more extensible)?
     /**
      * Returns service that can be used to query date filter configs.
      */
-    dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery;
+    dateFilterConfigs(): IDateFilterConfigsQuery;
 
     /**
      * Returns service that can be used to query additional attributes and attribtue display forms data, and their elements.
@@ -66,7 +67,7 @@ export interface IAnalyticalWorkspace {
     /**
      * Returns service that can be used to query data sets defined in this workspace.
      */
-    dataSets(): IWorkspaceDatasetsService;
+    datasets(): IWorkspaceDatasetsService;
 
     /**
      * Returns execution factory - which is an entry point to triggering executions and thus obtaining
@@ -74,15 +75,16 @@ export interface IAnalyticalWorkspace {
      */
     execution(): IExecutionFactory;
 
+    ///// QUERY or SERVICE => QUERY (to be more extensible)? + User vs Users ?
     /**
      * Returns service that can be used to query workspace users.
      */
-    users(): IWorkspaceUsersQuery;
+    users(): IWorkspaceUserQuery;
 
     /**
      * Returns service that can be used to query workspace permissions.
      */
-    permissions(): IWorkspacePermissionsFactory;
+    permissions(): IWorkspacePermissionsService;
 
     /**
      * Returns service that can be used to obtain settings that are currently in effect for the workspace.
@@ -113,53 +115,53 @@ export interface IWorkspaceDescriptor {
  *
  * @public
  */
-export interface IWorkspaceQueryFactory {
+export interface IWorkspacesQueryFactory {
     /**
      * Creates a query for workspaces available to the specified user.
      *
      * @param userId - id of the user to retrieve workspaces for
      * @public
      */
-    forUser(userId: string): IWorkspaceQuery;
+    forUser(userId: string): IWorkspacesQuery;
 
     /**
      * Creates a query for workspaces available to the user currently logged in.
      *
      * @public
      */
-    forCurrentUser(): IWorkspaceQuery;
+    forCurrentUser(): IWorkspacesQuery;
 }
 
 /**
- * Query to retrieve available worksapces.
+ * Query to retrieve available workspaces.
  *
  * @public
  */
-export interface IWorkspaceQuery {
+export interface IWorkspacesQuery {
     /**
      * Sets a limit on how many items to retrieve at once.
      * @param limit - how many items to retrieve at most
      *
      * @public
      */
-    withLimit(limit: number): IWorkspaceQuery;
+    withLimit(limit: number): IWorkspacesQuery;
 
     /**
      * Sets a number of items to skip.
      * @param offset - how many items to skip
      */
-    withOffset(offset: number): IWorkspaceQuery;
+    withOffset(offset: number): IWorkspacesQuery;
 
     /**
      * Sets a text to search.
      * @param search - text to search
      */
-    withSearch(search: string): IWorkspaceQuery;
+    withSearch(search: string): IWorkspacesQuery;
 
     /**
      * Executes the query and returns the result asynchronously.
      */
-    query(): Promise<IWorkspaceQueryResult>;
+    query(): Promise<IWorkspacesQueryResult>;
 }
 
 /**
@@ -167,6 +169,6 @@ export interface IWorkspaceQuery {
  *
  * @public
  */
-export interface IWorkspaceQueryResult extends IPagedResource<IAnalyticalWorkspace> {
+export interface IWorkspacesQueryResult extends IPagedResource<IAnalyticalWorkspace> {
     search: string | undefined;
 }

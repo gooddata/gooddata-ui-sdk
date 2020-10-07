@@ -32,7 +32,6 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
 import without from "lodash/without";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableComboChartDeprecated extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -96,7 +95,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = applyUiConfig(newReferencePoint);
         newReferencePoint = removeSort(newReferencePoint);

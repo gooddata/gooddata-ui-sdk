@@ -11,7 +11,7 @@ import { IWidget, SupportedWidgetReferenceTypes, IWidgetReferences } from "./wid
  *
  * @alpha
  */
-export interface IWorkspaceDashboards {
+export interface IWorkspaceDashboardsService {
     readonly workspace: string;
 
     /**
@@ -133,7 +133,7 @@ export interface IWorkspaceDashboards {
      * @param refs - widget alerts references
      * @returns promise
      */
-    bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+    deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
 
     /**
      * Get all metadata objects referenced by a given widget.

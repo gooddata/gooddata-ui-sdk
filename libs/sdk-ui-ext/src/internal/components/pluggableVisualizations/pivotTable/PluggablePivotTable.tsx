@@ -11,7 +11,7 @@ import get from "lodash/get";
 import isNil from "lodash/isNil";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     bucketAttribute,
     IDimension,
@@ -216,7 +216,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         setPivotTableUiConfig(newReferencePoint, this.intl, VisualizationTypes.TABLE);
         configurePercent(newReferencePoint, false);
-        configureOverTimeComparison(newReferencePoint, !!this.settings?.[SettingCatalog.enableWeekFilters]);
+        configureOverTimeComparison(newReferencePoint, !!this.settings?.["enableWeekFilters"]);
         Object.assign(
             newReferencePoint,
             getReferencePointWithSupportedProperties(newReferencePoint, this.supportedPropertiesList),
@@ -439,7 +439,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 }
 
 function isManualResizingEnabled(settings: ISettings): boolean {
-    return settings[SettingCatalog.enableTableColumnsManualResizing] === true;
+    return settings["enableTableColumnsManualResizing"] === true;
 }
 
 /**
@@ -467,13 +467,12 @@ export function createPivotTableConfig(
         };
     }
 
-    const autoSize = settings[SettingCatalog.enableTableColumnsAutoResizing];
+    const autoSize = settings["enableTableColumnsAutoResizing"];
 
     // the growToFit can only be enabled in dashboards
-    const growToFit =
-        environment === DASHBOARDS_ENVIRONMENT && settings[SettingCatalog.enableTableColumnsGrowToFit];
+    const growToFit = environment === DASHBOARDS_ENVIRONMENT && settings["enableTableColumnsGrowToFit"];
 
-    const manualResizing = settings[SettingCatalog.enableTableColumnsManualResizing];
+    const manualResizing = settings["enableTableColumnsManualResizing"];
 
     let columnSizing: Partial<IColumnSizing> = {};
     if (autoSize) {

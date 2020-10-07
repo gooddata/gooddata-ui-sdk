@@ -48,7 +48,6 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import negate from "lodash/negate";
 import set from "lodash/set";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -95,7 +94,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
 
         this.supportedPropertiesList = removeImmutableOptionalStackingProperties(

@@ -42,7 +42,6 @@ import { setTreemapUiConfig } from "../../../utils/uiConfigHelpers/treemapUiConf
 import TreeMapConfigurationPanel from "../../configurationPanels/TreeMapConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 import {
     addIntersectionFiltersToInsight,
     modifyBucketsAttributesForDrillDown,
@@ -107,7 +106,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

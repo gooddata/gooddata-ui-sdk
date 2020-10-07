@@ -41,7 +41,6 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggablePieChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -101,7 +100,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

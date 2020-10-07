@@ -30,7 +30,7 @@ export interface IGetVisualizationClassesOptions {
  *
  * @public
  */
-export interface IWorkspaceInsights {
+export interface IWorkspaceInsightsService {
     /**
      * Request visualization class for the given reference
      *
@@ -61,7 +61,7 @@ export interface IWorkspaceInsights {
      * @param options - query options; if not specified defaults to no sorting, no filtering and 50 items per page
      * @returns paged results, empty page with zero total count if there are no insights stored in the workspace
      */
-    getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
 
     /**
      * Create and save insight for the provided insight definition
@@ -94,7 +94,7 @@ export interface IWorkspaceInsights {
      * @param types - optional array of object types to include, when not specified, all supported references will
      *  be retrieved
      */
-    getReferencedObjects(
+    getInsightReferencedObjects(
         insight: IInsight,
         types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences>;
@@ -104,7 +104,7 @@ export interface IWorkspaceInsights {
      *
      * @param ref - ref of the insight to get referencing objects for
      */
-    getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
+    getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
 
     /**
      * Get insight with the filters provided merged with the filters specified by the insight itself.
@@ -172,7 +172,7 @@ export type InsightOrdering = "id" | "title" | "updated";
  *
  * @public
  */
-export interface IInsightQueryOptions {
+export interface IInsightsQueryOptions {
     /**
      * Optionally specify (zero-based) starting offset for the results. Default: 0
      */
@@ -205,4 +205,4 @@ export interface IInsightQueryOptions {
  *
  * @public
  */
-export type IInsightQueryResult = IPagedResource<IInsight>;
+export type IInsightsQueryResult = IPagedResource<IInsight>;

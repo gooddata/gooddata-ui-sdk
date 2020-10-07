@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IAttributeDisplayFormMetadataObject, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
-import { IElementQueryFactory } from "./elements";
+import { IElementsQueryFactory } from "./elements";
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
@@ -14,7 +14,7 @@ export interface IWorkspaceAttributesService {
      * instance if workspace has data set Employee with attribute Name, then this service can be used to retrieve
      * names of all employees.
      */
-    elements(): IElementQueryFactory;
+    elements(): IElementsQueryFactory;
 
     /**
      * Gets the attribute display form with the provided identifier.
@@ -32,7 +32,7 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
 
     /**
-     * Get metadata of attribute
+     * Gets metadata of the attribute
      * @param ref - ref of the attribute to retrieve
      * @returns promise of attribute metadata object
      */
