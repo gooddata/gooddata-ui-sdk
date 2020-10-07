@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "8.0.0-beta.109",
+    "version": "8.0.0-beta.110",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-vis-commons",
@@ -37,9 +37,9 @@
     "dependencies": {
         "@gooddata/goodstrap": "^68.20.4",
         "@gooddata/numberjs": "^3.2.4",
-        "@gooddata/sdk-backend-spi": "^8.0.0-beta.109",
-        "@gooddata/sdk-model": "^8.0.0-beta.109",
-        "@gooddata/sdk-ui": "^8.0.0-beta.109",
+        "@gooddata/sdk-backend-spi": "^8.0.0-beta.110",
+        "@gooddata/sdk-model": "^8.0.0-beta.110",
+        "@gooddata/sdk-ui": "^8.0.0-beta.110",
         "classnames": "^2.2.6",
         "lodash": "^4.17.19",
         "prop-types": "^15.6.0",
@@ -53,8 +53,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
-        "@gooddata/reference-workspace": "^8.0.0-beta.109",
-        "@gooddata/sdk-backend-mockingbird": "^8.0.0-beta.109",
+        "@gooddata/reference-workspace": "^8.0.0-beta.110",
+        "@gooddata/sdk-backend-mockingbird": "^8.0.0-beta.110",
         "@microsoft/api-extractor": "^7.3.8",
         "@types/classnames": "2.2.3",
         "@types/enzyme": "^3.10.3",
