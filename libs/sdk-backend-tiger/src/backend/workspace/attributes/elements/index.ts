@@ -6,8 +6,9 @@ import {
     IElementsQueryResult,
     UnexpectedError,
     NotSupported,
+    IAttributeElement,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, isIdentifierRef, IAttributeElement } from "@gooddata/sdk-model";
+import { ObjRef, isIdentifierRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { TigerAuthenticatedCallGuard } from "../../../../types";
 

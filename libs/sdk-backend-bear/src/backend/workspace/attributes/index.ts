@@ -1,18 +1,19 @@
 // (C) 2019-2020 GoodData Corporation
-import { IElementsQueryFactory, IWorkspaceAttributesService } from "@gooddata/sdk-backend-spi";
-import { GdcMetadata } from "@gooddata/api-model-bear";
 import {
-    UriRef,
     IAttributeDisplayFormMetadataObject,
-    newAttributeDisplayFormMetadataObject,
-    ObjRef,
-    uriRef,
     IAttributeMetadataObject,
-    newAttributeMetadataObject,
-} from "@gooddata/sdk-model";
+    IElementsQueryFactory,
+    IWorkspaceAttributesService,
+} from "@gooddata/sdk-backend-spi";
+import { GdcMetadata } from "@gooddata/api-model-bear";
+import { UriRef, ObjRef, uriRef } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri, objRefsToUris } from "../../../utils/api";
 import { BearWorkspaceElements } from "./elements";
+import {
+    newAttributeDisplayFormMetadataObject,
+    newAttributeMetadataObject,
+} from "@gooddata/sdk-backend-base";
 
 export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}

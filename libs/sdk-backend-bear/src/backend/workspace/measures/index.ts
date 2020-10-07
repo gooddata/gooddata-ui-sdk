@@ -3,9 +3,9 @@ import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
-import { IWorkspaceMeasuresService } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
-import { IMeasureExpressionToken, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import {

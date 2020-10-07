@@ -30,9 +30,9 @@ import {
     NoDataError,
     NotSupported,
     IWorkspaceDescriptor,
+    CatalogItemType,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItemType,
     defFingerprint,
     defWithDimensions,
     defWithSorting,

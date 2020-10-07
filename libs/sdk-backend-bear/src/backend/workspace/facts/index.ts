@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import invariant from "ts-invariant";
-import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceFactsService, IMetadataObject } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
-import { IMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { getObjectIdFromUri, objRefToUri } from "../../../utils/api";

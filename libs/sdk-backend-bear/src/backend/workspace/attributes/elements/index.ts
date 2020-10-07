@@ -4,8 +4,9 @@ import {
     IElementsQuery,
     IElementsQueryOptions,
     IElementsQueryResult,
+    IAttributeElement,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";

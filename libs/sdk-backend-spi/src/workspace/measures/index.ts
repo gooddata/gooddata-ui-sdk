@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { IMeasureExpressionToken, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
+import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
 
 /**
  * Service for querying additional measures data.

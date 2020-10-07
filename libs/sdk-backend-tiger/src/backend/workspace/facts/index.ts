@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceFactsService } from "@gooddata/sdk-backend-spi";
-import { ObjRef, idRef, IMetadataObject, newDataSetMetadataObject } from "@gooddata/sdk-model";
+import { IWorkspaceFactsService, IMetadataObject } from "@gooddata/sdk-backend-spi";
+import { ObjRef, idRef } from "@gooddata/sdk-model";
+import { newDataSetMetadataObject } from "@gooddata/sdk-backend-base";
 
 export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     constructor() {}

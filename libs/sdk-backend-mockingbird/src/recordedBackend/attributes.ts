@@ -5,19 +5,15 @@ import {
     IElementsQueryFactory,
     UnexpectedResponseError,
     NotSupported,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    isCatalogAttribute,
 } from "@gooddata/sdk-backend-spi";
 import { RecordingIndex } from "./types";
 import { RecordedElementQueryFactory } from "./elements";
-import {
-    IAttributeDisplayFormMetadataObject,
-    isUriRef,
-    ObjRef,
-    IAttributeMetadataObject,
-    isCatalogAttribute,
-    newAttributeMetadataObject,
-    areObjRefsEqual,
-} from "@gooddata/sdk-model";
+import { isUriRef, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { identifierToRecording } from "./utils";
+import { newAttributeMetadataObject } from "@gooddata/sdk-backend-base";
 
 /**
  * @internal

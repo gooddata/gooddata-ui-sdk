@@ -7,8 +7,9 @@ import {
     IElementsQueryResult,
     NotImplemented,
     UnexpectedResponseError,
+    IAttributeElement,
 } from "@gooddata/sdk-backend-spi";
-import { IAttributeElement, isUriRef, ObjRef } from "@gooddata/sdk-model";
+import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
 import { identifierToRecording, RecordingPager } from "./utils";
 

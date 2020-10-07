@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { IWorkspaceMeasuresService, NotSupported } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IMeasureExpressionToken } from "@gooddata/sdk-model";
+import { IWorkspaceMeasuresService, NotSupported, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * @internal

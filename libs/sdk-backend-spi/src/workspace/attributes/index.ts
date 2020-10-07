@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { IAttributeDisplayFormMetadataObject, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { IElementsQueryFactory } from "./elements";
+import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
  * Service for querying additional attributes and attribute display forms data, and their elements.
