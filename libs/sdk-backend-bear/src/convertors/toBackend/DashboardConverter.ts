@@ -562,6 +562,7 @@ export const convertScheduledMail = (
         lastSuccessfull,
         unsubscribed,
         attachments,
+        unlisted,
     } = scheduledMail;
 
     const convertedScheduledMail: GdcScheduledMail.IWrappedScheduledMail = {
@@ -577,6 +578,7 @@ export const convertScheduledMail = (
                 unsubscribed,
             },
             meta: {
+                unlisted: unlisted ? 1 : 0,
                 ...(uri
                     ? {
                           uri,

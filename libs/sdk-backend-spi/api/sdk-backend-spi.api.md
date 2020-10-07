@@ -808,6 +808,7 @@ export interface IScheduledMailBase {
     subject: string;
     title: string;
     to: string[];
+    unlisted: boolean;
     unsubscribed?: string[];
     when: {
         startDate: string;

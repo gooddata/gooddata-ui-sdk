@@ -80,6 +80,11 @@ export interface IScheduledMailBase {
      * Last successfull job
      */
     lastSuccessfull?: string;
+
+    /**
+     * Is unlisted?
+     */
+    unlisted: boolean;
 }
 
 /**

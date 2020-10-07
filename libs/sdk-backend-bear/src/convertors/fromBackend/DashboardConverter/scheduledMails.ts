@@ -36,7 +36,7 @@ export const convertScheduledMail = (
     const {
         scheduledMail: {
             content: { attachments, body, subject, to, when, bcc, lastSuccessfull, unsubscribed },
-            meta: { uri, identifier, title, summary: description },
+            meta: { uri, identifier, title, summary: description, unlisted },
         },
     } = scheduledMail;
 
@@ -58,6 +58,7 @@ export const convertScheduledMail = (
         lastSuccessfull,
         unsubscribed,
         attachments: attachments.map(convertScheduledMailAttachment),
+        unlisted: !!unlisted,
     };
 
     return convertedScheduledMail;
