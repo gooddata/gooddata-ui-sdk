@@ -275,3 +275,60 @@ export {
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "./workspace/dateFilterConfigs/types";
+
+export {
+    CatalogItemType,
+    CatalogItem,
+    ICatalogGroup,
+    ICatalogAttribute,
+    ICatalogFact,
+    ICatalogMeasure,
+    ICatalogDateDataset,
+    ICatalogDateAttribute,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
+    isCatalogDateDataset,
+    ICatalogItemBase,
+    IGroupableCatalogItemBase,
+    GroupableCatalogItem,
+    catalogItemMetadataObject,
+} from "./workspace/fromModel/ldm/catalog";
+
+export {
+    IAttributeDisplayFormMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    isAttributeMetadataObject,
+    IDataSetMetadataObject,
+    isDataSetMetadataObject,
+    IVariableMetadataObject,
+    isVariableMetadataObject,
+    IFactMetadataObject,
+    isFactMetadataObject,
+    IMeasureMetadataObject,
+    isMeasureMetadataObject,
+    IMetadataObject,
+    isMetadataObject,
+    MetadataObject,
+    metadataObjectId,
+} from "./workspace/fromModel/ldm/metadata";
+
+export {
+    DataColumnType,
+    DatasetLoadStatus,
+    IDataColumn,
+    IDataHeader,
+    IDatasetLoadInfo,
+    IDatasetUser,
+    IDataset,
+} from "./workspace/fromModel/ldm/datasets";
+
+export { IAttributeElement } from "./workspace/fromModel/ldm/attributeElement";
+
+export {
+    IMeasureExpressionToken,
+    IObjectExpressionToken,
+    IAttributeElementExpressionToken,
+    ITextExpressionToken,
+} from "./workspace/fromModel/ldm/measure";

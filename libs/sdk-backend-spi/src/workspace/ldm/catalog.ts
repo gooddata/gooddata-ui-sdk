@@ -1,16 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
+import { IAttributeOrMeasure, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import {
-    CatalogItemType,
     CatalogItem,
-    ICatalogGroup,
+    CatalogItemType,
     ICatalogAttribute,
-    ICatalogMeasure,
-    ICatalogFact,
-    IAttributeOrMeasure,
     ICatalogDateDataset,
-    IInsightDefinition,
-    ObjRef,
-} from "@gooddata/sdk-model";
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+} from "../fromModel/ldm/catalog";
 
 /**
  * Configuration options for querying catalog items

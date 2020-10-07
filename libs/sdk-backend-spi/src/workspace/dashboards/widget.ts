@@ -1,11 +1,12 @@
 // (C) 2020 GoodData Corporation
-import { ObjRef, isObjRef, ObjectType, CatalogItem, VisualizationProperties } from "@gooddata/sdk-model";
+import { ObjRef, isObjRef, ObjectType, VisualizationProperties } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardFilterReference } from "./filterContext";
 import { DrillDefinition } from "./drills";
 import { ILegacyKpi } from "./kpi";
 import { IDashboardObjectIdentity } from "./common";
 import invariant from "ts-invariant";
+import { CatalogItem } from "../fromModel/ldm/catalog";
 
 /**
  * Temporary type to distinguish between kpi and insight

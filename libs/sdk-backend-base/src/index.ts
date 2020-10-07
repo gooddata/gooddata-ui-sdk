@@ -63,3 +63,50 @@ export {
     ResultFactory,
     CustomBackendState,
 } from "./customBackend/config";
+
+export {
+    Builder,
+    BuilderConstructor,
+    builderFactory,
+    BuilderModifications,
+    ExtractBuilderType,
+    IBuilder,
+} from "./ldmFactories/builder";
+export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory";
+export {
+    CatalogDateAttributeBuilder,
+    CatalogDateDatasetBuilder,
+    newCatalogDateAttribute,
+    newCatalogDateDataset,
+} from "./ldmFactories/catalog/dateDatasetFactory";
+export { CatalogFactBuilder, newCatalogFact } from "./ldmFactories/catalog/factFactory";
+export {
+    CatalogGroupBuilder,
+    GroupableCatalogItemBuilder,
+    IGroupableCatalogItemBuilder,
+    newCatalogGroup,
+} from "./ldmFactories/catalog/groupFactory";
+export { CatalogMeasureBuilder, newCatalogMeasure } from "./ldmFactories/catalog/measureFactory";
+
+export {
+    AttributeMetadataObjectBuilder,
+    newAttributeMetadataObject,
+} from "./ldmFactories/metadata/attributeFactory";
+export {
+    DataSetMetadataObjectBuilder,
+    newDataSetMetadataObject,
+} from "./ldmFactories/metadata/dataSetFactory";
+export {
+    AttributeDisplayFormMetadataObjectBuilder,
+    newAttributeDisplayFormMetadataObject,
+} from "./ldmFactories/metadata/displayFormFactory";
+export { IMetadataObjectBuilder, MetadataObjectBuilder } from "./ldmFactories/metadata/factory";
+export { newFactMetadataObject, FactMetadataObjectBuilder } from "./ldmFactories/metadata/factFactory";
+export {
+    MeasureMetadataObjectBuilder,
+    newMeasureMetadataObject,
+} from "./ldmFactories/metadata/measureFactory";
+export {
+    newVariableMetadataObject,
+    VariableMetadataObjectBuilder,
+} from "./ldmFactories/metadata/variableFactory";
