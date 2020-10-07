@@ -9,7 +9,7 @@ import {
     LabelResourceSchema,
     SuccessIncluded,
 } from "@gooddata/api-client-tiger";
-import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
+import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import {
     convertAttribute,
     convertDateAttribute,

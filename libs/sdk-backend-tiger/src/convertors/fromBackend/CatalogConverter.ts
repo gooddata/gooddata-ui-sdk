@@ -1,23 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import {
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    ICatalogDateDataset,
-    ICatalogFact,
-    ICatalogGroup,
-    ICatalogMeasure,
-    IdentifierRef,
-    idRef,
-    IGroupableCatalogItemBase,
-    IGroupableCatalogItemBuilder,
-    IMetadataObjectBuilder,
-    newAttributeDisplayFormMetadataObject,
-    newCatalogAttribute,
-    newCatalogDateAttribute,
-    newCatalogDateDataset,
-    newCatalogFact,
-    newCatalogMeasure,
-} from "@gooddata/sdk-model";
+import { IdentifierRef, idRef } from "@gooddata/sdk-model";
 import {
     AttributeResourceSchema,
     DatasetResourceSchema,
@@ -28,6 +10,25 @@ import {
     TagResourceSchema,
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
+import {
+    IGroupableCatalogItemBuilder,
+    IMetadataObjectBuilder,
+    newAttributeDisplayFormMetadataObject,
+    newCatalogAttribute,
+    newCatalogDateAttribute,
+    newCatalogDateDataset,
+    newCatalogFact,
+    newCatalogMeasure,
+} from "@gooddata/sdk-backend-base";
+import {
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+    IGroupableCatalogItemBase,
+} from "@gooddata/sdk-backend-spi";
 
 type MetadataObjectResourceSchema =
     | AttributeResourceSchema
