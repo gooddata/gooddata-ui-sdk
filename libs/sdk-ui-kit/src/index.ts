@@ -7,3 +7,4 @@ export * from "./syntaxHighlightingInput";
 export * from "./Button";
 export * from "./Datepicker";
 export * from "./Form";
+export * from "./Bubble";
