@@ -8,7 +8,7 @@ import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewWindow, WithLoadingResult } from "../withExecutionLoading";
 import { IWithExecution, withExecution } from "../withExecution";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { withEventing } from "../../../../sdk-backend-base/src/eventingBackend";
+import { withEventing } from "@gooddata/sdk-backend-base";
 
 interface IDummyComponentProps {
     attributes?: IAttribute[];

@@ -1,10 +1,12 @@
 // (C) 2019 GoodData Corporation
 
 import {
+    IAttributeDescriptor,
     IDataView,
     IDimensionDescriptor,
     IExecutionResult,
     IMeasureDescriptor,
+    IMeasureGroupDescriptor,
     IPreparedExecution,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
@@ -35,10 +37,6 @@ import { DataViewFacade } from "../../results/facade";
 import { convertError } from "../../errors/errorHandling";
 import { IntlWrapper } from "../../localization/IntlWrapper";
 import { IDataVisualizationProps } from "../../vis/VisualizationProps";
-import {
-    IAttributeDescriptor,
-    IMeasureGroupDescriptor,
-} from "../../../../../sdk-backend-spi/dist/workspace/execution/results";
 
 interface IDataViewLoadState {
     isLoading: boolean;

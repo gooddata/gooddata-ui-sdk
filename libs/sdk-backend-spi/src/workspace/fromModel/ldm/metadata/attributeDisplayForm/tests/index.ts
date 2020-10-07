@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
-import { idRef } from "@gooddata/sdk-model/dist/src/objRef/factory";
-import { newAttributeDisplayFormMetadataObject } from "../../../../../../../../sdk-backend-base/src/ldmFactories/metadata/displayFormFactory";
+import { idRef } from "@gooddata/sdk-model";
 import {
     attributeDisplayFormRef,
     attributeDisplayFormTitle,
     attributeDisplayFormAttributeRef,
+    IAttributeDisplayFormMetadataObject,
 } from "../index";
 
 describe("attribute display form", () => {
@@ -12,9 +12,18 @@ describe("attribute display form", () => {
     const _attributeDisplayFormRef = idRef("label.account.account");
     const _attributeDisplayFormAttributeRef = idRef("attr.account.account");
 
-    const attributeDisplayForm = newAttributeDisplayFormMetadataObject(_attributeDisplayFormRef, (df) =>
-        df.attribute(_attributeDisplayFormAttributeRef).title(_attributeDisplayFormTitle),
-    );
+    const attributeDisplayForm: IAttributeDisplayFormMetadataObject = {
+        type: "displayForm",
+        description: "test display form",
+        unlisted: false,
+        deprecated: false,
+        production: false,
+        id: _attributeDisplayFormRef.identifier,
+        uri: "/uri",
+        ref: _attributeDisplayFormRef,
+        title: _attributeDisplayFormTitle,
+        attribute: _attributeDisplayFormAttributeRef,
+    };
 
     describe("attributeDisplayFormRef", () => {
         it("should return ref", () => {

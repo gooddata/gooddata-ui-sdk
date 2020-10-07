@@ -55,6 +55,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
         "@gooddata/reference-workspace": "^8.0.0-beta.111",
+        "@gooddata/sdk-backend-base": "^8.0.0-beta.111",
         "@gooddata/sdk-backend-mockingbird": "^8.0.0-beta.111",
         "@types/enzyme": "^3.10.3",
         "@types/enzyme-adapter-react-16": "^1.0.5",
