@@ -1,10 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IAttributeElement, ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import Dropdown, { DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import { stringUtils } from "@gooddata/util";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 import { ITranslationsComponentProps } from "@gooddata/sdk-ui";
 import cx from "classnames";
 import debounce from "lodash/debounce";

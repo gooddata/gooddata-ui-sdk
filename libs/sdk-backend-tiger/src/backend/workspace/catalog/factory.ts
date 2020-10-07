@@ -3,8 +3,12 @@ import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
+    CatalogItem,
+    CatalogItemType,
+    ICatalogFact,
+    ICatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
-import { CatalogItem, CatalogItemType, ICatalogFact, ICatalogMeasure, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertFact, convertGroup, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";

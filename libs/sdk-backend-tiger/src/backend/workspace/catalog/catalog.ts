@@ -15,7 +15,7 @@ import {
     ICatalogMeasure,
     ICatalogFact,
     ICatalogDateDataset,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory";
 

@@ -5,12 +5,12 @@ import {
     IInsight,
     IInsightDefinition,
     ObjRef,
-    IMetadataObject,
     ObjectType,
-    CatalogItem,
     IFilter,
 } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging";
+import { CatalogItem } from "../fromModel/ldm/catalog";
+import { IMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
  * Additional options for the getVisualizationClasses function.

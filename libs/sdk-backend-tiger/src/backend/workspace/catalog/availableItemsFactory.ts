@@ -1,12 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 import {
+    CatalogItem,
+    CatalogItemType,
+    ICatalogGroup,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
 } from "@gooddata/sdk-backend-spi";
 import {
-    CatalogItemType,
-    CatalogItem,
-    ICatalogGroup,
     IAttributeOrMeasure,
     IInsightDefinition,
     ObjRef,
@@ -14,9 +17,6 @@ import {
     insightAttributes,
     isAttribute,
     isMeasure,
-    isCatalogAttribute,
-    isCatalogFact,
-    isCatalogMeasure,
     insightFilters,
     IFilter,
     isDateFilter,

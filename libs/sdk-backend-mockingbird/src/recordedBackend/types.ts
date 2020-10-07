@@ -1,15 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
-import { IAnalyticalBackendConfig, ISettings } from "@gooddata/sdk-backend-spi";
 import {
-    IExecutionDefinition,
+    CatalogItem,
+    IAnalyticalBackendConfig,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
-    IInsight,
-    IColorPalette,
-    CatalogItem,
     ICatalogGroup,
-    IVisualizationClass,
-} from "@gooddata/sdk-model";
+    ISettings,
+} from "@gooddata/sdk-backend-spi";
+import { IExecutionDefinition, IInsight, IColorPalette, IVisualizationClass } from "@gooddata/sdk-model";
 
 /**
  * @internal

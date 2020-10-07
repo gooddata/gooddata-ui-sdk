@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef, IMetadataObject } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
+import { IMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
  * Service for querying additional facts data.

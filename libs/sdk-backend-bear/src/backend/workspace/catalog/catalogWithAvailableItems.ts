@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceCatalogWithAvailableItems } from "@gooddata/sdk-backend-spi";
 import {
+    IWorkspaceCatalogWithAvailableItems,
     CatalogItem,
     ICatalogGroup,
     isCatalogAttribute,
@@ -11,7 +11,7 @@ import {
     ICatalogMeasure,
     ICatalogFact,
     ICatalogDateDataset,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
 
 export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
     constructor(

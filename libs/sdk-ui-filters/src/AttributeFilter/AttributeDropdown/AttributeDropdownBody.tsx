@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import { IAttributeElement } from "@gooddata/sdk-model";
+import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdownList } from "./AttributeDropdownList";
 import { AttributeDropdownButtons } from "./AttributeDropdownButtons";

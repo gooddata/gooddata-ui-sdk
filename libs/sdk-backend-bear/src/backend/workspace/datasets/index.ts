@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
-import { IDataset } from "@gooddata/sdk-model";
+import { IWorkspaceDatasetsService, IDataset } from "@gooddata/sdk-backend-spi";
 import { convertDataSet } from "../../../convertors/fromBackend/DataSetConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 

@@ -1,15 +1,18 @@
 // (C) 2019-2020 GoodData Corporation
-import { IElementsQueryFactory, IWorkspaceAttributesService, NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
-    idRef,
-    newAttributeDisplayFormMetadataObject,
-    newAttributeMetadataObject,
-    ObjRef,
-} from "@gooddata/sdk-model";
+    IElementsQueryFactory,
+    IWorkspaceAttributesService,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
+import { idRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
+import {
+    newAttributeDisplayFormMetadataObject,
+    newAttributeMetadataObject,
+} from "@gooddata/sdk-backend-base";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}

@@ -1,7 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { CatalogItem, uriRef } from "@gooddata/sdk-model";
+import { CatalogItem } from "@gooddata/sdk-backend-spi";
+import { uriRef } from "@gooddata/sdk-model";
 import { convertResponseToObjRefs, filterAvailableItems } from "../availableItemsFactory";
 import { JsonApiId } from "../../../../convertors/fromBackend/afm/ObjRefConverter";
 

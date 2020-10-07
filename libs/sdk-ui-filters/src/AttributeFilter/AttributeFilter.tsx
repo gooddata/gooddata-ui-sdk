@@ -3,7 +3,6 @@ import React from "react";
 import { injectIntl } from "react-intl";
 import MediaQuery from "react-responsive";
 import {
-    IAttributeElement,
     filterObjRef,
     isPositiveAttributeFilter,
     filterAttributeElements,
@@ -16,7 +15,7 @@ import {
     ObjRef,
     idRef,
 } from "@gooddata/sdk-model";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IAttributeElement } from "@gooddata/sdk-backend-spi";
 
 import { AttributeDropdown } from "./AttributeDropdown/AttributeDropdown";
 import {

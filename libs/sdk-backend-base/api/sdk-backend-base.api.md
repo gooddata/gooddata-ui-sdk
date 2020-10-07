@@ -4,22 +4,29 @@
 
 ```ts
 
-import { CatalogItem } from '@gooddata/sdk-model';
-import { CatalogItemType } from '@gooddata/sdk-model';
+import { AttributeModifications } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-backend-spi';
+import { CatalogItemType } from '@gooddata/sdk-backend-spi';
+import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IAttributeMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
-import { ICatalogAttribute } from '@gooddata/sdk-model';
-import { ICatalogDateDataset } from '@gooddata/sdk-model';
-import { ICatalogFact } from '@gooddata/sdk-model';
-import { ICatalogGroup } from '@gooddata/sdk-model';
-import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateAttribute } from '@gooddata/sdk-backend-spi';
+import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
+import { ICatalogFact } from '@gooddata/sdk-backend-spi';
+import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
+import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
+import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
@@ -28,16 +35,24 @@ import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
+import { IFactMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IGroupableCatalogItemBase } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
+import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
+import { MeasureBuilder } from '@gooddata/sdk-model';
+import { MeasureModifications } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @internal
@@ -83,6 +98,24 @@ export class AnonymousAuthProvider implements IAuthProviderCallGuard {
 export type ApiClientProvider = (config: CustomBackendConfig) => any;
 
 // @beta
+export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    attribute(ref: ObjRef): this;
+    // (undocumented)
+    displayFormType(type: string | undefined): this;
+    // (undocumented)
+    isDefault(value: boolean | undefined): this;
+}
+
+// @beta
+export class AttributeMetadataObjectBuilder<T extends IAttributeMetadataObject = IAttributeMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
+    drillDownStep(ref: ObjRef | undefined): this;
+}
+
+// @beta
 export type AuthenticatedAsyncCall<TSdk, TReturn> = (sdk: TSdk, context: IAuthenticatedAsyncCallContext) => Promise<TReturn>;
 
 // @beta
@@ -102,6 +135,30 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
 }
 
 // @beta
+export class Builder<T> implements IBuilder<T> {
+    constructor(item: Partial<T>, validator?: ((item: Partial<T>) => void) | undefined);
+    // (undocumented)
+    build(): T;
+    // (undocumented)
+    protected item: Partial<T>;
+    // (undocumented)
+    modify(modifications: BuilderModifications<this, T>): this;
+    // (undocumented)
+    validate(): this;
+    // (undocumented)
+    protected validator?: ((item: Partial<T>) => void) | undefined;
+}
+
+// @beta
+export type BuilderConstructor<TBuilder extends IBuilder<TItem>, TItem> = new (item: Partial<TItem>) => TBuilder;
+
+// @beta
+export function builderFactory<TItem, TBuilder extends Builder<TItem>, TBuilderConstructor extends BuilderConstructor<TBuilder, TItem>>(Builder: TBuilderConstructor, defaultItem: Partial<TItem>, modifications: BuilderModifications<TBuilder, TItem>): TItem;
+
+// @beta
+export type BuilderModifications<TBuilder extends IBuilder<TItem>, TItem = ExtractBuilderType<TBuilder>> = (builder: TBuilder) => TBuilder;
+
+// @beta
 export type CacheControl = {
     resetExecutions: () => void;
     resetCatalogs: () => void;
@@ -117,8 +174,62 @@ export type CachingConfiguration = {
     onCacheReady?: (cacheControl: CacheControl) => void;
 };
 
+// @beta
+export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttribute> extends GroupableCatalogItemBuilder<T> {
+    // (undocumented)
+    attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
+    // (undocumented)
+    defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
+    // (undocumented)
+    geoPinDisplayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
+    toExecutionModel(modifications?: AttributeModifications): IAttribute;
+}
+
+// @beta
+export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICatalogDateAttribute> extends Builder<T> {
+    // (undocumented)
+    attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
+    // (undocumented)
+    defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
+    // (undocumented)
+    granularity(granularity: DateAttributeGranularity): this;
+}
+
+// @beta
+export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogDateDataset> extends Builder<T> {
+    // (undocumented)
+    dataSet(dataSetOrRef: IDataSetMetadataObject | ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>): this;
+    // (undocumented)
+    dateAttributes(dateAttributes: ICatalogDateAttribute[]): this;
+    // (undocumented)
+    relevance(relevance: number): this;
+}
+
 // @alpha (undocumented)
 export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWorkspaceCatalogFactory;
+
+// @beta
+export class CatalogFactBuilder<T extends ICatalogFact = ICatalogFact> extends GroupableCatalogItemBuilder<T> {
+    // (undocumented)
+    fact(factOrRef: IFactMetadataObject | ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>): this;
+}
+
+// @beta
+export class CatalogGroupBuilder<T extends ICatalogGroup = ICatalogGroup> extends Builder<T> {
+    // (undocumented)
+    tag(tagRef: ObjRef): this;
+    // (undocumented)
+    title(title: string): this;
+}
+
+// @beta
+export class CatalogMeasureBuilder<T extends ICatalogMeasure = ICatalogMeasure> extends GroupableCatalogItemBuilder<T> {
+    // (undocumented)
+    measure(measureOrRef: IMeasureMetadataObject | ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>): this;
+    // (undocumented)
+    toExecutionModel(modifications?: MeasureModifications<MeasureBuilder>): IMeasure;
+}
 
 // @beta
 export function customBackend(config: CustomBackendConfig): IAnalyticalBackend;
@@ -154,6 +265,10 @@ export type DataProviderContext = CustomCallContext & {
         size: number[];
     };
 };
+
+// @beta
+export class DataSetMetadataObjectBuilder<T extends IDataSetMetadataObject = IDataSetMetadataObject> extends MetadataObjectBuilder<T> {
+}
 
 // @alpha
 export function decoratedBackend(backend: IAnalyticalBackend, decorators: DecoratorFactories): IAnalyticalBackend;
@@ -317,6 +432,19 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
 }
 
 // @beta
+export type ExtractBuilderType<TBuilder> = TBuilder extends IBuilder<infer TItem> ? TItem : never;
+
+// @beta
+export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMetadataObject> extends MetadataObjectBuilder<T> {
+}
+
+// @beta
+export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends Builder<T> implements IGroupableCatalogItemBuilder<T> {
+    // (undocumented)
+    groups(tagRefs: ObjRef[]): this;
+}
+
+// @beta
 export interface IAuthenticatedAsyncCallContext {
     getPrincipal(): Promise<IAuthenticatedPrincipal>;
 }
@@ -327,10 +455,96 @@ export interface IAuthProviderCallGuard extends IAuthenticationProvider {
     reset(): void;
 }
 
+// @beta
+export interface IBuilder<T> {
+    build(): T;
+    modify(modifications: BuilderModifications<this, T>): this;
+    validate(): this;
+}
+
+// @beta
+export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase> extends IBuilder<T> {
+    // (undocumented)
+    groups(tagRefs: ObjRef[]): this;
+}
+
+// @beta
+export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends IBuilder<T> {
+    deprecated(isDeprecated: boolean): this;
+    description(description: string): this;
+    id(id: string): this;
+    production(isProduction: boolean): this;
+    title(title: string): this;
+    unlisted(value: boolean): this;
+    uri(uri: string): this;
+}
+
 // @beta (undocumented)
 export type LocalIdMap = {
     [from: string]: string;
 };
+
+// @beta
+export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMeasureMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    expression(maql: string): this;
+    // (undocumented)
+    format(format: string): this;
+}
+
+// @beta
+export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T> implements IMetadataObjectBuilder {
+    // (undocumented)
+    deprecated(isDeprecated: boolean): this;
+    // (undocumented)
+    description(description: string): this;
+    // (undocumented)
+    id(identifier: string): this;
+    // (undocumented)
+    production(isProduction: boolean): this;
+    // (undocumented)
+    title(title: string): this;
+    // (undocumented)
+    unlisted(value: boolean): this;
+    // (undocumented)
+    uri(uri: string): this;
+}
+
+// @beta
+export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>) => IAttributeDisplayFormMetadataObject;
+
+// @beta
+export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>) => IAttributeMetadataObject;
+
+// @beta
+export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder>) => ICatalogAttribute;
+
+// @beta
+export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder>) => ICatalogDateAttribute;
+
+// @beta
+export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder>) => ICatalogDateDataset;
+
+// @beta
+export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder>) => ICatalogFact;
+
+// @beta
+export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder>) => ICatalogGroup;
+
+// @beta
+export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder>) => ICatalogMeasure;
+
+// @beta
+export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>) => IDataSetMetadataObject;
+
+// @beta
+export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
+
+// @beta
+export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>) => IMeasureMetadataObject;
+
+// @beta
+export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder>) => IVariableMetadataObject;
 
 // @internal
 export class NoopAuthProvider implements IAuthProviderCallGuard {
@@ -390,6 +604,10 @@ export type TelemetryData = {
     componentName?: string;
     props?: string[];
 };
+
+// @beta
+export class VariableMetadataObjectBuilder<T extends IVariableMetadataObject = IVariableMetadataObject> extends MetadataObjectBuilder<T> {
+}
 
 // @beta
 export function withCaching(realBackend: IAnalyticalBackend, config?: CachingConfiguration): IAnalyticalBackend;

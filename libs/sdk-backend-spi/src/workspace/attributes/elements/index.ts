@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { SortDirection, IAttributeElement, ObjRef, IAttributeFilter } from "@gooddata/sdk-model";
+import { SortDirection, ObjRef, IAttributeFilter } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
+import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
 /**
  * Configuration options for querying attribute elements

@@ -1,11 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IWorkspaceCatalog,
-    IWorkspaceCatalogAvailableItemsFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceCatalogFactoryOptions,
-} from "@gooddata/sdk-backend-spi";
-import {
     CatalogItem,
     CatalogItemType,
     ICatalogAttribute,
@@ -13,8 +7,12 @@ import {
     ICatalogFact,
     ICatalogGroup,
     ICatalogMeasure,
-    ObjRef,
-} from "@gooddata/sdk-model";
+    IWorkspaceCatalog,
+    IWorkspaceCatalogAvailableItemsFactory,
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogFactoryOptions,
+} from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
 /**

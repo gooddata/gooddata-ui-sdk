@@ -4,16 +4,16 @@
 
 ```ts
 
-import { CatalogItem } from '@gooddata/sdk-model';
+import { CatalogItem } from '@gooddata/sdk-backend-spi';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
 import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
-import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
-import { IAttributeElement } from '@gooddata/sdk-model';
+import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IAttributeElement } from '@gooddata/sdk-backend-spi';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
-import { ICatalogGroup } from '@gooddata/sdk-model';
+import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';

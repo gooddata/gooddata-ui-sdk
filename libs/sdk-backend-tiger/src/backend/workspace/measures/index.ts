@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceMeasuresService } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
 import {
     MetricResourceResponseSchema,
     MetricResourceSchema,
@@ -9,7 +9,7 @@ import {
     SuccessIncluded,
 } from "@gooddata/api-client-tiger";
 import { AxiosResponse } from "axios";
-import { IMeasureExpressionToken, ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
+import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 

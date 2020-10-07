@@ -7,23 +7,19 @@ import {
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogWithAvailableItems,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
-} from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
     CatalogItemType,
-    CatalogItem,
     ICatalogGroup,
+    CatalogItem,
     ICatalogAttribute,
+    isCatalogAttribute,
     ICatalogMeasure,
+    isCatalogMeasure,
     ICatalogFact,
+    isCatalogFact,
     ICatalogDateDataset,
     isCatalogDateDataset,
-    isCatalogFact,
-    isCatalogMeasure,
-    isCatalogAttribute,
-    IAttributeOrMeasure,
-    IInsightDefinition,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
+import { ObjRef, IAttributeOrMeasure, IInsightDefinition } from "@gooddata/sdk-model";
 
 import { RecordingIndex } from "./types";
 

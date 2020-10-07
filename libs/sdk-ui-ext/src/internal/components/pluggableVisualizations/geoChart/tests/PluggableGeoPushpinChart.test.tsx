@@ -4,7 +4,7 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart";
 import { IExtendedReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
-import { dummyBackend } from "../../../../../../../sdk-backend-base/src/dummyBackend";
+import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("PluggableGeoPushpinChart", () => {
     const defaultProps: IVisConstruct = {

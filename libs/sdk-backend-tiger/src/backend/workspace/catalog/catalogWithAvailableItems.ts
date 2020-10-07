@@ -11,7 +11,7 @@ import {
     ICatalogMeasure,
     ICatalogFact,
     ICatalogDateDataset,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
 
 export class TigerWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
     constructor(
