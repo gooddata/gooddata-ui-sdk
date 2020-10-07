@@ -104,7 +104,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleM
     const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
         ? (compact(
               measureDefinition.filters.map(convertVisualizationObjectFilter),
-          ) as FilterDefinitionForSimpleMeasure[]) // TODO je to správně?
+          ) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only data and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

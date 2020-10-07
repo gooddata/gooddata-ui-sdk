@@ -19,9 +19,11 @@ import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { DateFormatter } from "../dateFormatting/types";
 import { toSdkGranularity } from "../dateGranularityConversions";
 
+export type Data = DataValue[] | DataValue[][];
+
 export type TransformerResult = {
     readonly headerItems: IResultHeader[][][];
-    readonly data: DataValue[];
+    readonly data: Data;
     readonly offset: number[];
     readonly count: number[];
     readonly total: number[];
@@ -120,7 +122,7 @@ export function transformExecutionResult(
 ): TransformerResult {
     return {
         // in API is data typed as Array<object>
-        data: (result.data as unknown) as DataValue[],
+        data: (result.data as unknown) as Data,
         headerItems: transformHeaderItems(dimensions, dateFormatter, result.dimensionHeaders),
         offset: result.paging.offset,
         count: result.paging.count,

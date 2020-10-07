@@ -1,10 +1,15 @@
 // (C) 2007-2020 GoodData Corporation
 import {
+    AbsoluteDateFilter,
+    AttributeFilter,
     ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
     FilterDefinition,
+    FilterDefinitionForSimpleMeasure,
+    MeasureValueFilter,
     NegativeAttributeFilter,
     PositiveAttributeFilter,
     RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
+    RelativeDateFilter,
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
@@ -12,6 +17,7 @@ import {
     IAbsoluteDateFilter,
     IAttributeFilter,
     IFilter,
+    IMeasureFilter,
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
@@ -65,7 +71,7 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): NegativeAttrib
     };
 }
 
-function convertAttributeFilter(filter: IAttributeFilter): FilterDefinition | null {
+function convertAttributeFilter(filter: IAttributeFilter): AttributeFilter | null {
     if (filterIsEmpty(filter)) {
         return null;
     }
@@ -77,7 +83,7 @@ function convertAttributeFilter(filter: IAttributeFilter): FilterDefinition | nu
     return convertNegativeFilter(filter);
 }
 
-export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): FilterDefinition | null {
+export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): AbsoluteDateFilter | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -95,7 +101,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): FilterDe
     };
 }
 
-export function convertRelativeDateFilter(filter: IRelativeDateFilter): FilterDefinition | null {
+export function convertRelativeDateFilter(filter: IRelativeDateFilter): RelativeDateFilter | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
@@ -114,7 +120,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): FilterDe
     };
 }
 
-export function convertMeasureValueFilter(filter: IMeasureValueFilter): FilterDefinition | null {
+export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureValueFilter | null {
     const { measureValueFilter } = filter;
     const condition = measureValueFilter.condition;
 
@@ -150,7 +156,9 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): FilterDe
     return null;
 }
 
-export function convertVisualizationObjectFilter(filter: IFilter): FilterDefinition | null {
+export function convertVisualizationObjectFilter(
+    filter: IMeasureFilter | IFilter,
+): FilterDefinition | FilterDefinitionForSimpleMeasure | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {

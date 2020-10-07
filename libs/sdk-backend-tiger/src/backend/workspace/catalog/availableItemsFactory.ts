@@ -140,6 +140,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const relevantItems = insight
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
+
         const availableItemsResponse = await this.authCall((sdk) =>
             sdk.validObjects.processAfmValidObjectsQuery({
                 workspaceId: this.workspace,
