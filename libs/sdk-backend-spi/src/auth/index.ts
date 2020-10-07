@@ -12,20 +12,20 @@ export interface IAuthenticationProvider {
      *
      * @param context - context in which the authentication is done
      */
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 
     /**
      * Returns the currently authenticated principal, or undefined if not authenticated.
      * Does not trigger authentication if no principal is available.
      */
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
 
     /**
      * Clear existing authentication.
      *
      * @param context - context in which the authentication is done
      */
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
 }
 
 /**
@@ -35,20 +35,20 @@ export interface IAuthenticationProvider {
  *
  * @public
  */
-export type AuthenticationContext = {
+export interface IAuthenticationContext {
     /**
      * API client used to communicate with the backend - this can be used to perform any backend-specific,
      * non-standard authentication.
      */
     client: any;
-};
+}
 
 /**
  * Describes user, which is currently authenticated to the backend.
  *
  * @public
  */
-export type AuthenticatedPrincipal = {
+export interface IAuthenticatedPrincipal {
     /**
      * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
      * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
@@ -60,4 +60,4 @@ export type AuthenticatedPrincipal = {
      * Backend-specific user metadata.
      */
     userMeta?: any;
-};
+}

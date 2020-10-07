@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import { SortDirection, IAttributeElement, ObjRef, IAttributeFilter } from "@gooddata/sdk-model";
-import { IPagedResource } from "../../common/paging";
+import { IPagedResource } from "../../../common/paging";
 
 /**
  * Configuration options for querying attribute elements
  *
  * @public
  */
-export interface IElementQueryOptions {
+export interface IElementsQueryOptions {
     /**
      * Ordering of the elements
      */
@@ -64,7 +64,7 @@ export interface IElementQueryOptions {
  * @public
  */
 
-export interface IElementQueryAttributeFilter {
+export interface IElementsQueryAttributeFilter {
     attributeFilter: IAttributeFilter;
     overAttribute: ObjRef;
 }
@@ -77,14 +77,14 @@ export interface IElementQueryAttributeFilter {
  *
  * @public
  */
-export interface IElementQueryFactory {
+export interface IElementsQueryFactory {
     /**
      * Query attribute elements represented by concrete display form
      *
      * @param ref - display form ref
      * @returns instance that can be used to query attribute elements
      */
-    forDisplayForm(ref: ObjRef): IElementQuery;
+    forDisplayForm(ref: ObjRef): IElementsQuery;
 }
 
 /**
@@ -92,7 +92,7 @@ export interface IElementQueryFactory {
  *
  * @public
  */
-export interface IElementQuery {
+export interface IElementsQuery {
     /**
      * Sets number of valid elements to return per page.
      * Default limit is specific per backend
@@ -100,7 +100,7 @@ export interface IElementQuery {
      * @param limit - desired max number of valid elements per page; must be a positive number
      * @returns element query
      */
-    withLimit(limit: number): IElementQuery;
+    withLimit(limit: number): IElementsQuery;
 
     /**
      * Sets starting point for the query. Backend WILL return no data if the offset is greater than
@@ -110,14 +110,14 @@ export interface IElementQuery {
      * @param offset - zero indexed, must be non-negative
      * @returns element query
      */
-    withOffset(offset: number): IElementQuery;
+    withOffset(offset: number): IElementsQuery;
 
     /**
      * Sets the attribute filters that will limit the available elements
      *
      * @param filters - attribute filters limiting the elements
      */
-    withAttributeFilters(filters: IElementQueryAttributeFilter[]): IElementQuery;
+    withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
 
     /**
      * Allows to specify advanced options for the elements query.
@@ -125,14 +125,14 @@ export interface IElementQuery {
      * @param options - advanced options
      * @returns element query
      */
-    withOptions(options: IElementQueryOptions): IElementQuery;
+    withOptions(options: IElementsQueryOptions): IElementsQuery;
 
     /**
      * Starts the valid elements query.
      *
      * @returns promise of first page of the results
      */
-    query(): Promise<IElementQueryResult>;
+    query(): Promise<IElementsQueryResult>;
 }
 
 /**
@@ -140,4 +140,4 @@ export interface IElementQuery {
  *
  * @public
  */
-export type IElementQueryResult = IPagedResource<IAttributeElement>;
+export type IElementsQueryResult = IPagedResource<IAttributeElement>;

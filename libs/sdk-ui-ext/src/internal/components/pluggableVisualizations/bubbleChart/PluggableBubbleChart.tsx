@@ -26,7 +26,6 @@ import cloneDeep from "lodash/cloneDeep";
 import includes from "lodash/includes";
 import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export class PluggableBubbleChart extends PluggableBaseChart {
     constructor(props: IVisConstruct) {
@@ -113,7 +112,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, true);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

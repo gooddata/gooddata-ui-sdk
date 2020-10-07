@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
-import { IWorkspaceDashboards, IListedDashboard, NotSupported } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceDashboardsService, IListedDashboard, NotSupported } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { objRefToIdentifier } from "../../../utils/api";
 
-export class TigerWorkspaceDashboards implements IWorkspaceDashboards {
+export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
@@ -74,7 +74,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboards {
         throw new NotSupported("Not supported");
     };
 
-    public bulkDeleteWidgetAlerts = async () => {
+    public deleteWidgetAlerts = async () => {
         throw new NotSupported("Not supported");
     };
 

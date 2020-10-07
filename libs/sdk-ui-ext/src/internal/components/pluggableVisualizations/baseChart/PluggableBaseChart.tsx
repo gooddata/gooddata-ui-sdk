@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IExecutionFactory, ISettings, SettingCatalog } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     bucketsIsEmpty,
     IColorMappingItem,
@@ -124,12 +124,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         newReferencePoint = configurePercent(newReferencePoint, false);
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = setBaseChartUiConfigRecommendations(
             newReferencePoint,
             this.type,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,
@@ -405,12 +405,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
         supportedControls = getHighchartsAxisNameConfiguration(
             supportedControls,
-            this.featureFlags[SettingCatalog.enableAxisNameConfiguration] as boolean,
+            this.featureFlags["enableAxisNameConfiguration"] as boolean,
         );
 
         supportedControls = getDataPointsConfiguration(
             supportedControls,
-            this.featureFlags[SettingCatalog.enableHidingOfDataPoints] as boolean,
+            this.featureFlags["enableHidingOfDataPoints"] as boolean,
         );
 
         return {

@@ -1,32 +1,32 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IElementQueryFactory,
-    IElementQuery,
-    IElementQueryOptions,
-    IElementQueryResult,
+    IElementsQueryFactory,
+    IElementsQuery,
+    IElementsQueryOptions,
+    IElementsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import { IAttributeElement, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { objRefToUri, getObjectIdFromUri } from "../../../utils/api";
-import { IElementQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { BearAuthenticatedCallGuard } from "../../../../types/auth";
+import { objRefToUri, getObjectIdFromUri } from "../../../../utils/api";
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { LimitingAfmFactory } from "./limitingAfmFactory";
 
-export class BearWorkspaceElements implements IElementQueryFactory {
+export class BearWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public forDisplayForm(ref: ObjRef): IElementQuery {
+    public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new BearWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
 }
 
-class BearWorkspaceElementsQuery implements IElementQuery {
+class BearWorkspaceElementsQuery implements IElementsQuery {
     private limit: number = 50;
     private offset: number = 0;
-    private options: IElementQueryOptions | undefined;
-    private attributeFilters: IElementQueryAttributeFilter[] | undefined;
+    private options: IElementsQueryOptions | undefined;
+    private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
     // cached AFM used to apply attributeRef and attributeFilters to the element queries
     private limitingAfm: GdcExecuteAFM.IAfm | undefined;
 
@@ -39,7 +39,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         private readonly workspace: string,
     ) {}
 
-    public withLimit(limit: number): IElementQuery {
+    public withLimit(limit: number): IElementsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         this.limit = limit;
@@ -47,22 +47,22 @@ class BearWorkspaceElementsQuery implements IElementQuery {
         return this;
     }
 
-    public withOffset(offset: number): IElementQuery {
+    public withOffset(offset: number): IElementsQuery {
         this.offset = offset;
         return this;
     }
 
-    public withAttributeFilters(filters: IElementQueryAttributeFilter[]): IElementQuery {
+    public withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery {
         this.attributeFilters = filters;
         return this;
     }
 
-    public withOptions(options: IElementQueryOptions): IElementQuery {
+    public withOptions(options: IElementsQueryOptions): IElementsQuery {
         this.options = options;
         return this;
     }
 
-    public async query(): Promise<IElementQueryResult> {
+    public async query(): Promise<IElementsQueryResult> {
         const limitingAfmFactory = new LimitingAfmFactory(this.authCall, this.displayFormRef, this.workspace);
 
         this.limitingAfm = await limitingAfmFactory.getAfm(this.attributeFilters);
@@ -82,8 +82,8 @@ class BearWorkspaceElementsQuery implements IElementQuery {
     private async queryWorker(
         offset: number,
         limit: number,
-        options: IElementQueryOptions | undefined,
-    ): Promise<IElementQueryResult> {
+        options: IElementsQueryOptions | undefined,
+    ): Promise<IElementsQueryResult> {
         const mergedOptions = { ...options, limit, offset, afm: this.limitingAfm };
         const objectId = await this.getObjectId();
         const data = await this.authCall((sdk) =>
@@ -97,7 +97,7 @@ class BearWorkspaceElementsQuery implements IElementQuery {
 
         const hasNextPage = serverOffset + count < total;
 
-        const emptyResult: IElementQueryResult = {
+        const emptyResult: IElementsQueryResult = {
             items: [],
             limit: count,
             offset: total,

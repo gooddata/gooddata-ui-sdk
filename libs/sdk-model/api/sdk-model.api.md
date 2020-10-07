@@ -1286,18 +1286,6 @@ export interface IVisualizationClass {
 }
 
 // @public
-export interface IWorkspace {
-    // (undocumented)
-    description: string;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    isDemo?: boolean;
-    // (undocumented)
-    title: string;
-}
-
-// @public
 export type IWorkspacePermissions = {
     [permission in WorkspacePermission]: boolean;
 };

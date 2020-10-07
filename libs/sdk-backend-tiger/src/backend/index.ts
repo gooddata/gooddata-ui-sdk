@@ -2,17 +2,17 @@
 import { AxiosInstance } from "axios";
 import invariant from "ts-invariant";
 import {
-    AnalyticalBackendConfig,
-    BackendCapabilities,
+    IAnalyticalBackendConfig,
+    IBackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
-    AuthenticatedPrincipal,
-    IWorkspaceQueryFactory,
+    IAuthenticatedPrincipal,
+    IWorkspacesQueryFactory,
     IUserService,
     ErrorConverter,
     NotAuthenticated,
-    AuthenticationContext,
+    IAuthenticationContext,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -34,7 +34,7 @@ import {
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
 import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
 
-const CAPABILITIES: BackendCapabilities = {
+const CAPABILITIES: IBackendCapabilities = {
     canCalculateTotals: false,
     canExportCsv: false,
     canExportXlsx: false,
@@ -87,8 +87,8 @@ export type TigerBackendConfig = {
  *
  */
 export class TigerBackend implements IAnalyticalBackend {
-    public readonly capabilities: BackendCapabilities = CAPABILITIES;
-    public readonly config: AnalyticalBackendConfig;
+    public readonly capabilities: IBackendCapabilities = CAPABILITIES;
+    public readonly config: IAnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: TigerBackendConfig;
@@ -97,7 +97,7 @@ export class TigerBackend implements IAnalyticalBackend {
     private readonly dateFormatter: DateFormatter;
 
     constructor(
-        config: AnalyticalBackendConfig = {},
+        config: IAnalyticalBackendConfig = {},
         implConfig: TigerBackendConfig = {},
         telemetry: TelemetryData = {},
         authProvider?: AuthProviderCallGuard,
@@ -139,11 +139,11 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerWorkspace(this.authApiCall, id, this.dateFormatter);
     }
 
-    public workspaces(): IWorkspaceQueryFactory {
-        return new TigerWorkspaceQueryFactory(this.authApiCall);
+    public workspaces(): IWorkspacesQueryFactory {
+        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter);
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
         return new Promise((resolve, reject) => {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
@@ -160,7 +160,7 @@ export class TigerBackend implements IAnalyticalBackend {
         });
     }
 
-    public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
+    public authenticate(force: boolean): Promise<IAuthenticatedPrincipal> {
         if (!force) {
             return this.authApiCall(async (sdk) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
@@ -201,10 +201,10 @@ export class TigerBackend implements IAnalyticalBackend {
         });
     };
 
-    private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk });
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
-        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+        const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {
             if (!this.authProvider) {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }
@@ -222,7 +222,7 @@ export class TigerBackend implements IAnalyticalBackend {
         };
     };
 
-    private triggerAuthentication = (reset = false): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset = false): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
@@ -238,7 +238,7 @@ export class TigerBackend implements IAnalyticalBackend {
 }
 
 function createAxios(
-    config: AnalyticalBackendConfig,
+    config: IAnalyticalBackendConfig,
     implConfig: TigerBackendConfig,
     telemetry: TelemetryData,
 ): AxiosInstance {

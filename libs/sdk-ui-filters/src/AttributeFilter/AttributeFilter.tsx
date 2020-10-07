@@ -213,9 +213,9 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
         this.setState({ error: null, isLoading: true });
 
         try {
-            const metadata = this.getBackend().workspace(this.props.workspace).metadata();
-            const displayForm = await metadata.getAttributeDisplayForm(this.getObjRef());
-            const attribute = await metadata.getAttribute(displayForm.attribute);
+            const attributes = this.getBackend().workspace(this.props.workspace).attributes();
+            const displayForm = await attributes.getAttributeDisplayForm(this.getObjRef());
+            const attribute = await attributes.getAttribute(displayForm.attribute);
 
             this.setState({ title: attribute.title, error: null, isLoading: false });
         } catch (error) {

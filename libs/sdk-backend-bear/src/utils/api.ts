@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { AuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IAuthenticatedPrincipal, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import last from "lodash/last";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef, Uri } from "@gooddata/sdk-model";
 import { BearAuthenticatedCallGuard } from "../types/auth";
@@ -11,7 +11,7 @@ import { BearAuthenticatedCallGuard } from "../types/auth";
  * @internal
  */
 export const userUriFromAuthenticatedPrincipal = async (
-    getPrincipal: () => Promise<AuthenticatedPrincipal>,
+    getPrincipal: () => Promise<IAuthenticatedPrincipal>,
 ): Promise<string> => {
     const principal = await getPrincipal();
     const selfLink: string = principal.userMeta?.links?.self;
@@ -30,7 +30,7 @@ export const userUriFromAuthenticatedPrincipal = async (
  * @internal
  */
 export const userLoginMd5FromAuthenticatedPrincipal = async (
-    getPrincipal: () => Promise<AuthenticatedPrincipal>,
+    getPrincipal: () => Promise<IAuthenticatedPrincipal>,
 ): Promise<string> => {
     const principal = await getPrincipal();
     const selfLink: string = principal.userMeta?.links?.self ?? "";

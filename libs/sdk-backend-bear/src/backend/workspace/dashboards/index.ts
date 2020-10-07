@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     IDashboard,
     IListedDashboard,
     IDashboardDefinition,
@@ -65,7 +65,7 @@ const DASHBOARD_DEPENDENCIES_TYPES: DashboardDependencyCategory[] = [
     "filterContext",
 ];
 
-export class BearWorkspaceDashboards implements IWorkspaceDashboards {
+export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
@@ -169,7 +169,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         );
 
         if (alertsToDelete.length) {
-            await this.bulkDeleteWidgetAlerts(alertsToDelete);
+            await this.deleteWidgetAlerts(alertsToDelete);
         }
 
         // Then update the dashboard itself
@@ -291,7 +291,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboards {
         await this.deleteBearMetadataObject(ref);
     };
 
-    public bulkDeleteWidgetAlerts = async (refs: ObjRef[]): Promise<void> => {
+    public deleteWidgetAlerts = async (refs: ObjRef[]): Promise<void> => {
         const uris = await Promise.all(refs.map((ref) => objRefToUri(ref, this.workspace, this.authCall)));
         return this.authCall((sdk) => sdk.md.bulkDeleteObjects(this.workspace, uris, "cascade"));
     };

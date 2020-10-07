@@ -12,9 +12,9 @@ import { IAbsoluteDateFilterPreset } from '@gooddata/sdk-backend-spi';
 import { IAllTimeDateFilterOption } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeFilter } from '@gooddata/sdk-model';
-import { IElementQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
-import { IElementQueryOptions } from '@gooddata/sdk-backend-spi';
-import { IElementQueryResult } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryOptions } from '@gooddata/sdk-backend-spi';
+import { IElementsQueryResult } from '@gooddata/sdk-backend-spi';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
 import { IRankingFilter } from '@gooddata/sdk-model';
 import { IRelativeDateFilterForm } from '@gooddata/sdk-backend-spi';
@@ -92,7 +92,7 @@ export interface IAttributeElementsChildren {
     error: any;
     isLoading: boolean;
     loadMore: () => void;
-    validElements: IElementQueryResult;
+    validElements: IElementsQueryResult;
 }
 
 // @public (undocumented)
@@ -101,11 +101,11 @@ export interface IAttributeElementsProps {
     // (undocumented)
     children?(props: IAttributeElementsChildren): React_2.ReactNode;
     displayForm: ObjRef;
-    filters?: IElementQueryAttributeFilter[];
+    filters?: IElementsQueryAttributeFilter[];
     limit?: number;
     offset?: number;
     onError?: OnError;
-    options?: IElementQueryOptions;
+    options?: IElementsQueryOptions;
     workspace?: string;
 }
 

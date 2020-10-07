@@ -5,7 +5,7 @@ import { BarChart } from "@gooddata/sdk-ui-charts";
 import { newPositiveAttributeFilter, attributeDisplayFormRef, ObjRef, idRef } from "@gooddata/sdk-model";
 import Select from "react-select";
 import { Ldm, LdmExt } from "../../../ldm";
-import { IElementQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
+import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 
 interface IFilterValue {
     value: string;
@@ -15,7 +15,7 @@ interface IFilterValue {
 interface ICustomFilterProps {
     displayForm: ObjRef;
     filterValues: IFilterValue[] | null;
-    parentFilters?: IElementQueryAttributeFilter[];
+    parentFilters?: IElementsQueryAttributeFilter[];
     placeholder: string;
     onChange: (filters: any) => void;
     className: string;

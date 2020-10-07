@@ -1,14 +1,14 @@
-// (C) 2019 GoodData Corporation
-import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2020 GoodData Corporation
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 import { mergeElementQueryResults } from "../mergeElementQueryResults";
 import { emptyListItem } from "../types";
 
 describe("mergeElementQueryResults", () => {
     it("should handle empty current elements", () => {
-        const current: IElementQueryResult | undefined = undefined;
+        const current: IElementsQueryResult | undefined = undefined;
 
-        const incoming: IElementQueryResult = {
+        const incoming: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -29,7 +29,7 @@ describe("mergeElementQueryResults", () => {
     });
 
     it("should handle appending to empty current elements", () => {
-        const current: IElementQueryResult = {
+        const current: IElementsQueryResult = {
             items: [],
             limit: 1,
             next: jest.fn(),
@@ -37,7 +37,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 1,
         };
 
-        const incoming: IElementQueryResult = {
+        const incoming: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -58,7 +58,7 @@ describe("mergeElementQueryResults", () => {
     });
 
     it("should handle appending to non-empty current elements without a hole", () => {
-        const current: IElementQueryResult = {
+        const current: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -71,7 +71,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 1,
         };
 
-        const incoming: IElementQueryResult = {
+        const incoming: IElementsQueryResult = {
             items: [
                 {
                     title: "Bar",
@@ -84,7 +84,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 2,
         };
 
-        const expected: IElementQueryResult = {
+        const expected: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -107,7 +107,7 @@ describe("mergeElementQueryResults", () => {
     });
 
     it("should handle appending to non-empty current elements with a hole", () => {
-        const current: IElementQueryResult = {
+        const current: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -120,7 +120,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 1,
         };
 
-        const incoming: IElementQueryResult = {
+        const incoming: IElementsQueryResult = {
             items: [
                 {
                     title: "Bar",
@@ -159,7 +159,7 @@ describe("mergeElementQueryResults", () => {
     });
 
     it("should handle overwriting non-empty current elements", () => {
-        const current: IElementQueryResult = {
+        const current: IElementsQueryResult = {
             items: [
                 {
                     title: "Foo",
@@ -172,7 +172,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 1,
         };
 
-        const incoming: IElementQueryResult = {
+        const incoming: IElementsQueryResult = {
             items: [
                 {
                     title: "Bar",
@@ -185,7 +185,7 @@ describe("mergeElementQueryResults", () => {
             totalCount: 1,
         };
 
-        const expected: IElementQueryResult = {
+        const expected: IElementsQueryResult = {
             items: [
                 {
                     title: "Bar",

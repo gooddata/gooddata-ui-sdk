@@ -2,19 +2,21 @@
 
 import {
     IAnalyticalWorkspace,
-    IElementQueryFactory,
     IExecutionFactory,
     IWorkspaceCatalogFactory,
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     IWorkspaceDatasetsService,
-    IWorkspaceInsights,
-    IWorkspaceMetadata,
-    IWorkspacePermissionsFactory,
+    IWorkspaceInsightsService,
+    IWorkspaceAttributesService,
+    IWorkspaceMeasuresService,
+    IWorkspaceFactsService,
+    IWorkspacePermissionsService,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
+    IDateFilterConfigsQuery,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution";
 import { CustomBackendConfig, CustomBackendState } from "./config";
@@ -29,6 +31,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         private readonly state: CustomBackendState,
     ) {}
 
+    public getDescriptor(): Promise<IWorkspaceDescriptor> {
+        throw new NotSupported("getting workspace descriptor is not supported");
+    }
+
     public execution(): IExecutionFactory {
         return new CustomExecutionFactory(this.workspace, this.config, this.state);
     }
@@ -38,8 +44,8 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
     //
 
     // used by attribute filters
-    public elements(): IElementQueryFactory {
-        throw new NotSupported("elements service is not supported");
+    public attributes(): IWorkspaceAttributesService {
+        throw new NotSupported("attributes service is not supported");
     }
 
     // used in InsightView - implement if custom backend should support persisted insights
@@ -55,7 +61,7 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
     //
     // Services for 'advanced' use cases - used in AD and KD.
     //
-    public permissions(): IWorkspacePermissionsFactory {
+    public permissions(): IWorkspacePermissionsService {
         throw new NotSupported("permissions are not supported");
     }
 
@@ -63,19 +69,23 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("catalog is not supported");
     }
 
-    public metadata(): IWorkspaceMetadata {
-        throw new NotSupported("metadata is not supported");
+    public measures(): IWorkspaceMeasuresService {
+        throw new NotSupported("measures service is not supported");
     }
 
-    public dataSets(): IWorkspaceDatasetsService {
+    public facts(): IWorkspaceFactsService {
+        throw new NotSupported("measures service is not supported");
+    }
+
+    public datasets(): IWorkspaceDatasetsService {
         throw new NotSupported("data sets service is not supported");
     }
 
-    public insights(): IWorkspaceInsights {
+    public insights(): IWorkspaceInsightsService {
         throw new NotSupported("insights are not supported");
     }
 
-    public dashboards(): IWorkspaceDashboards {
+    public dashboards(): IWorkspaceDashboardsService {
         throw new NotSupported("dashboards are not supported");
     }
 
@@ -83,7 +93,7 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("users are not supported");
     }
 
-    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+    public dateFilterConfigs(): IDateFilterConfigsQuery {
         throw new NotSupported("dateFilterConfigs are not supported");
     }
 }

@@ -28,7 +28,7 @@ const HardcodedSettings = {
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public query(): Promise<IWorkspaceSettings> {
+    public getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async () => {
             return {
                 workspace: this.workspace,
@@ -37,7 +37,7 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
         });
     }
 
-    public queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
+    public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.authCall(async () => {
             return {
                 userId: "dummy",

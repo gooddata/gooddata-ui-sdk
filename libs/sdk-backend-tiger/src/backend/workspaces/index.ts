@@ -1,48 +1,57 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceQueryFactory, IWorkspaceQuery, IWorkspaceQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspacesQueryFactory,
+    IWorkspacesQuery,
+    IWorkspacesQueryResult,
+    IAnalyticalWorkspace,
+} from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../types";
-import { IWorkspace } from "@gooddata/sdk-model";
+import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
+import { TigerWorkspace } from "../workspace";
 
-export class TigerWorkspaceQueryFactory implements IWorkspaceQueryFactory {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
+export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        private readonly dateFormatter: DateFormatter,
+    ) {}
 
-    public forUser(userId: string): IWorkspaceQuery {
-        return new TigerWorkspaceQuery(this.authCall, userId);
+    public forUser(userId: string): IWorkspacesQuery {
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, userId);
     }
 
-    public forCurrentUser(): IWorkspaceQuery {
-        return new TigerWorkspaceQuery(this.authCall);
+    public forCurrentUser(): IWorkspacesQuery {
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter);
     }
 }
 
-class TigerWorkspaceQuery implements IWorkspaceQuery {
+class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
 
     constructor(
-        // @ts-expect-error Keeping this for now for future use
         private readonly authCall: TigerAuthenticatedCallGuard,
+        private readonly dateFormatter: DateFormatter,
         // @ts-expect-error Keeping this for now for future use
         private readonly userId?: string,
     ) {}
 
-    public withLimit(limit: number): IWorkspaceQuery {
+    public withLimit(limit: number): IWorkspacesQuery {
         this.limit = limit;
         return this;
     }
 
-    public withOffset(offset: number): IWorkspaceQuery {
+    public withOffset(offset: number): IWorkspacesQuery {
         this.offset = offset;
         return this;
     }
 
-    public withSearch(search: string): IWorkspaceQuery {
+    public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
         return this;
     }
 
-    public query(): Promise<IWorkspaceQueryResult> {
+    public query(): Promise<IWorkspacesQueryResult> {
         return this.queryWorker(this.offset, this.limit, this.search);
     }
 
@@ -50,8 +59,8 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
         offset: number,
         limit: number,
         search?: string,
-    ): Promise<IWorkspaceQueryResult> {
-        const emptyResult: IWorkspaceQueryResult = {
+    ): Promise<IWorkspacesQueryResult> {
+        const emptyResult: IWorkspacesQueryResult = {
             search,
             items: [],
             limit,
@@ -66,7 +75,7 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
          *
          * List taken from NAS code: sqlexecutor/databaseaccess/DataSourceService.kt
          */
-        const workspaces: IWorkspace[] = [
+        const workspaces: IAnalyticalWorkspace[] = [
             {
                 title: "TPC-H - Postgres",
                 id: "tpch",
@@ -115,7 +124,7 @@ class TigerWorkspaceQuery implements IWorkspaceQuery {
                 description: "",
                 isDemo: true,
             },
-        ];
+        ].map((descriptor) => new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter));
 
         return {
             search,

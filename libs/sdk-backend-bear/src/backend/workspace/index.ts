@@ -2,23 +2,24 @@
 
 import {
     IAnalyticalWorkspace,
-    IElementQueryFactory,
     IExecutionFactory,
     IWorkspaceSettingsService,
-    IWorkspaceMetadata,
     IWorkspaceStylingService,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
-    IWorkspacePermissionsFactory,
-    IWorkspaceInsights,
-    IWorkspaceDashboards,
+    IWorkspacePermissionsService,
+    IWorkspaceInsightsService,
+    IWorkspaceDashboardsService,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
+    IDateFilterConfigsQuery,
+    IWorkspaceAttributesService,
+    IWorkspaceMeasuresService,
+    IWorkspaceFactsService,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { BearExecution } from "./execution/executionFactory";
-import { BearWorkspaceMetadata } from "./metadata";
+import { BearWorkspaceMeasures } from "./measures";
 import { BearWorkspaceStyling } from "./styling/styling";
-import { BearWorkspaceElements } from "./elements/elements";
 import { BearWorkspaceCatalogFactory } from "./catalog/factory";
 import { BearWorkspaceSettings } from "./settings/settings";
 import { BearWorkspacePermissionsFactory } from "./permissions/permissions";
@@ -28,12 +29,41 @@ import { BearWorkspaceDashboards } from "./dashboards";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { BearWorkspaceUsersQuery } from "./users";
 import { BearWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
+import { BearWorkspaceAttributes } from "./attributes/index";
+import { BearWorkspaceFacts } from "./facts";
+import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
 
 export class BearWorkspace implements IAnalyticalWorkspace {
-    constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
+    constructor(
+        private readonly authCall: BearAuthenticatedCallGuard,
+        public readonly workspace: string,
+        private readonly descriptor?: IWorkspaceDescriptor,
+    ) {}
 
-    public elements(): IElementQueryFactory {
-        return new BearWorkspaceElements(this.authCall, this.workspace);
+    public async getDescriptor(): Promise<IWorkspaceDescriptor> {
+        if (!this.descriptor) {
+            const projects = await this.authCall(async (sdk, { getPrincipal }) => {
+                const userId = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+                return sdk.project.getProjects(userId);
+            });
+            const project = projects.find(
+                (project) => project.links?.self.split("/").pop() === this.workspace,
+            );
+            const descriptor: IWorkspaceDescriptor = {
+                id: this.workspace,
+                description: project?.meta.summary ?? "",
+                title: project?.meta.title ?? "",
+                // isDemo:  TO-DO: Implement this using sdk.project.getProjectsWithPaging, which contains demoWorkspace prop
+            };
+
+            return descriptor;
+        }
+
+        return this.descriptor;
+    }
+
+    public attributes(): IWorkspaceAttributesService {
+        return new BearWorkspaceAttributes(this.authCall, this.workspace);
     }
 
     public execution(): IExecutionFactory {
@@ -44,16 +74,20 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearWorkspaceSettings(this.authCall, this.workspace);
     }
 
-    public insights(): IWorkspaceInsights {
+    public insights(): IWorkspaceInsightsService {
         return new BearWorkspaceInsights(this.authCall, this.workspace);
     }
 
-    public dashboards(): IWorkspaceDashboards {
+    public dashboards(): IWorkspaceDashboardsService {
         return new BearWorkspaceDashboards(this.authCall, this.workspace);
     }
 
-    public metadata(): IWorkspaceMetadata {
-        return new BearWorkspaceMetadata(this.authCall, this.workspace);
+    public measures(): IWorkspaceMeasuresService {
+        return new BearWorkspaceMeasures(this.authCall, this.workspace);
+    }
+
+    public facts(): IWorkspaceFactsService {
+        return new BearWorkspaceFacts(this.authCall, this.workspace);
     }
 
     public styling(): IWorkspaceStylingService {
@@ -64,11 +98,11 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearWorkspaceCatalogFactory(this.authCall, this.workspace);
     }
 
-    public dataSets(): IWorkspaceDatasetsService {
+    public datasets(): IWorkspaceDatasetsService {
         return new BearWorkspaceDataSets(this.authCall, this.workspace);
     }
 
-    public permissions(): IWorkspacePermissionsFactory {
+    public permissions(): IWorkspacePermissionsService {
         return new BearWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 
@@ -76,7 +110,7 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         return new BearWorkspaceUsersQuery(this.authCall, this.workspace);
     }
 
-    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+    public dateFilterConfigs(): IDateFilterConfigsQuery {
         return new BearWorkspaceDateFilterConfigsQuery(this.authCall, this.workspace);
     }
 }

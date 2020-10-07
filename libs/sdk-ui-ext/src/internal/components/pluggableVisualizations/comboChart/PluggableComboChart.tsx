@@ -53,8 +53,6 @@ import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChart
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
-
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
     private secondaryChartType: string = VisualizationTypes.COLUMN;
@@ -123,7 +121,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         newReferencePoint = configurePercent(newReferencePoint, this.isPercentDisabled(newReferencePoint));
         newReferencePoint = configureOverTimeComparison(
             newReferencePoint,
-            !!this.featureFlags[SettingCatalog.enableWeekFilters],
+            !!this.featureFlags["enableWeekFilters"],
         );
         newReferencePoint = getReferencePointWithSupportedProperties(
             newReferencePoint,

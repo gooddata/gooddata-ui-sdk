@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BearBackend, BearBackendConfig } from "./backend";
 import { FixedLoginAndPasswordAuthProvider, ContextDeferredAuthProvider, BearAuthProviderBase } from "./auth";
 
@@ -13,7 +13,7 @@ import { FixedLoginAndPasswordAuthProvider, ContextDeferredAuthProvider, BearAut
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
+function bearFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     return new BearBackend(config, implConfig);
 }
 

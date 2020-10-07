@@ -1,32 +1,34 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AnalyticalBackendConfig,
-    AuthenticatedPrincipal,
-    BackendCapabilities,
+    IAnalyticalBackendConfig,
+    IAuthenticatedPrincipal,
+    IBackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
-    IElementQueryFactory,
     IExecutionFactory,
     IUserService,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
-    IWorkspaceInsights,
-    IWorkspaceMetadata,
-    IWorkspacePermissionsFactory,
-    IWorkspaceQueryFactory,
+    IWorkspaceInsightsService,
+    IWorkspaceAttributesService,
+    IWorkspaceFactsService,
+    IWorkspaceMeasuresService,
+    IWorkspacePermissionsService,
+    IWorkspacesQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
+    IDateFilterConfigsQuery,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
-    public capabilities: BackendCapabilities;
-    public config: AnalyticalBackendConfig;
+    public capabilities: IBackendCapabilities;
+    public config: IAnalyticalBackendConfig;
     private decorated: IAnalyticalBackend;
     private readonly factories: DecoratorFactories;
 
@@ -37,7 +39,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         this.config = backend.config;
     }
 
-    public authenticate(force?: boolean): Promise<AuthenticatedPrincipal> {
+    public authenticate(force?: boolean): Promise<IAuthenticatedPrincipal> {
         return this.decorated.authenticate(force);
     }
 
@@ -45,7 +47,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         return this.decorated.deauthenticate();
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
         return this.decorated.isAuthenticated();
     }
 
@@ -72,7 +74,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         return new AnalyticalWorkspaceDecorator(this.decorated.workspace(id), this.factories);
     }
 
-    public workspaces(): IWorkspaceQueryFactory {
+    public workspaces(): IWorkspacesQueryFactory {
         return this.decorated.workspaces();
     }
 }
@@ -88,8 +90,12 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         this.workspace = decorated.workspace;
     }
 
-    public elements(): IElementQueryFactory {
-        return this.decorated.elements();
+    public getDescriptor(): Promise<IWorkspaceDescriptor> {
+        return this.decorated.getDescriptor();
+    }
+
+    public attributes(): IWorkspaceAttributesService {
+        return this.decorated.attributes();
     }
 
     public execution(): IExecutionFactory {
@@ -112,15 +118,19 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.catalog();
     }
 
-    public metadata(): IWorkspaceMetadata {
-        return this.decorated.metadata();
+    public measures(): IWorkspaceMeasuresService {
+        return this.decorated.measures();
     }
 
-    public insights(): IWorkspaceInsights {
+    public facts(): IWorkspaceFactsService {
+        return this.decorated.facts();
+    }
+
+    public insights(): IWorkspaceInsightsService {
         return this.decorated.insights();
     }
 
-    public dashboards(): IWorkspaceDashboards {
+    public dashboards(): IWorkspaceDashboardsService {
         return this.decorated.dashboards();
     }
 
@@ -132,11 +142,11 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.styling();
     }
 
-    public dataSets(): IWorkspaceDatasetsService {
-        return this.decorated.dataSets();
+    public datasets(): IWorkspaceDatasetsService {
+        return this.decorated.datasets();
     }
 
-    public permissions(): IWorkspacePermissionsFactory {
+    public permissions(): IWorkspacePermissionsService {
         return this.decorated.permissions();
     }
 
@@ -144,7 +154,7 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.users();
     }
 
-    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+    public dateFilterConfigs(): IDateFilterConfigsQuery {
         return this.decorated.dateFilterConfigs();
     }
 }

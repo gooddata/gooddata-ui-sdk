@@ -2,21 +2,15 @@
 
 export {
     IAnalyticalBackend,
-    BackendCapabilities,
-    AnalyticalBackendConfig,
+    IBackendCapabilities,
+    IAnalyticalBackendConfig,
     AnalyticalBackendFactory,
     prepareExecution,
 } from "./backend";
 
-export { AuthenticatedPrincipal, AuthenticationContext, IAuthenticationProvider } from "./auth";
+export { IAuthenticatedPrincipal, IAuthenticationContext, IAuthenticationProvider } from "./auth";
 
-export {
-    ISettings,
-    SettingCatalog,
-    IUserSettings,
-    IWorkspaceSettings,
-    IUserWorkspaceSettings,
-} from "./common/settings";
+export { ISettings, IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings";
 
 export { IUserService } from "./user";
 export { IUserSettingsService } from "./user/settings";
@@ -51,18 +45,16 @@ export {
 export { IWorkspaceSettingsService } from "./workspace/settings";
 
 export {
-    IWorkspaceInsights,
     IGetVisualizationClassesOptions,
+    IWorkspaceInsightsService,
     InsightOrdering,
-    IInsightQueryOptions,
-    IInsightQueryResult,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
     InsightReferenceTypes,
     SupportedInsightReferenceTypes,
 } from "./workspace/insights";
-
-export { IWorkspaceMetadata } from "./workspace/metadata";
 
 export {
     IWorkspaceCatalogFactory,
@@ -78,12 +70,12 @@ export {
 export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets";
 
 export {
-    IElementQueryFactory,
-    IElementQueryResult,
-    IElementQuery,
-    IElementQueryOptions,
-    IElementQueryAttributeFilter,
-} from "./workspace/elements";
+    IElementsQueryFactory,
+    IElementsQueryResult,
+    IElementsQuery,
+    IElementsQueryOptions,
+    IElementsQueryAttributeFilter,
+} from "./workspace/attributes/elements";
 
 export { IExportConfig, IExportResult } from "./workspace/execution/export";
 
@@ -116,14 +108,21 @@ export { IPagedResource } from "./common/paging";
 
 export {
     IAnalyticalWorkspace,
-    IWorkspaceQuery,
-    IWorkspaceQueryFactory,
-    IWorkspaceQueryResult,
+    IWorkspacesQuery,
+    IWorkspacesQueryFactory,
+    IWorkspacesQueryResult,
+    IWorkspaceDescriptor,
 } from "./workspace";
 
-export { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "./workspace/permissions";
+export { IWorkspacePermissionsService } from "./workspace/permissions";
 
-export { IWorkspaceDashboards } from "./workspace/dashboards";
+export { IWorkspaceAttributesService } from "./workspace/attributes";
+
+export { IWorkspaceMeasuresService } from "./workspace/measures";
+
+export { IWorkspaceFactsService } from "./workspace/facts";
+
+export { IWorkspaceDashboardsService } from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";
 export {
     DrillDefinition,
@@ -251,10 +250,7 @@ export {
     IScheduledMailBase,
 } from "./workspace/dashboards/scheduledMail";
 export { IWorkspaceUser, IWorkspaceUsersQuery, IWorkspaceUsersQueryOptions } from "./workspace/users";
-export {
-    IWorkspaceDateFilterConfigsQuery,
-    IDateFilterConfigsQueryResult,
-} from "./workspace/dateFilterConfigs";
+export { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "./workspace/dateFilterConfigs";
 export {
     IDateFilterConfig,
     AbsoluteFormType,

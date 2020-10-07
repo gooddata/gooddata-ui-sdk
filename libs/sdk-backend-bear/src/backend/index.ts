@@ -1,16 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
 import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
-    AnalyticalBackendConfig,
-    AuthenticatedPrincipal,
-    AuthenticationContext,
+    IAnalyticalBackendConfig,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
     ErrorConverter,
-    BackendCapabilities,
+    IBackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     NotAuthenticated,
-    IWorkspaceQueryFactory,
+    IWorkspacesQueryFactory,
     IUserService,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
@@ -38,7 +38,7 @@ import {
 } from "@gooddata/sdk-backend-base";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 
-const CAPABILITIES: BackendCapabilities = {
+const CAPABILITIES: IBackendCapabilities = {
     canCalculateTotals: true,
     canExportCsv: true,
     canExportXlsx: true,
@@ -122,8 +122,8 @@ type LegacyFunctionsSubscription = {
  *
  */
 export class BearBackend implements IAnalyticalBackend {
-    public readonly capabilities: BackendCapabilities = CAPABILITIES;
-    public readonly config: AnalyticalBackendConfig;
+    public readonly capabilities: IBackendCapabilities = CAPABILITIES;
+    public readonly config: IAnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: any;
@@ -131,7 +131,7 @@ export class BearBackend implements IAnalyticalBackend {
     private readonly sdk: SDK;
 
     constructor(
-        config?: AnalyticalBackendConfig,
+        config?: IAnalyticalBackendConfig,
         implConfig?: BearBackendConfig & LegacyFunctionsSubscription,
         telemetry?: TelemetryData,
         authProvider?: IAuthProviderCallGuard,
@@ -230,7 +230,7 @@ export class BearBackend implements IAnalyticalBackend {
         return new BearBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
     }
 
-    public isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+    public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
         return new Promise((resolve, reject) => {
             this.authProvider
                 .getCurrentPrincipal({ client: this.sdk })
@@ -247,7 +247,7 @@ export class BearBackend implements IAnalyticalBackend {
         });
     }
 
-    public authenticate(force: boolean): Promise<AuthenticatedPrincipal> {
+    public authenticate(force: boolean): Promise<IAuthenticatedPrincipal> {
         if (!force) {
             return this.authApiCall(async (sdk) => {
                 const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
@@ -274,7 +274,7 @@ export class BearBackend implements IAnalyticalBackend {
         return new BearWorkspace(this.authApiCall, id);
     }
 
-    public workspaces(): IWorkspaceQueryFactory {
+    public workspaces(): IWorkspacesQueryFactory {
         return new BearWorkspaceQueryFactory(this.authApiCall);
     }
 
@@ -315,9 +315,9 @@ export class BearBackend implements IAnalyticalBackend {
         return result;
     };
 
-    private getAuthenticationContext = (): AuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk });
 
-    private triggerAuthentication = (reset = false): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset = false): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
@@ -332,7 +332,7 @@ export class BearBackend implements IAnalyticalBackend {
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
-        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+        const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {
             if (!this.authProvider) {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }
@@ -359,7 +359,7 @@ function isNotAuthenticatedError(err: any): boolean {
     return isApiResponseError(err) && err.response.status === 401;
 }
 
-function configSanitize(config?: AnalyticalBackendConfig): AnalyticalBackendConfig {
+function configSanitize(config?: IAnalyticalBackendConfig): IAnalyticalBackendConfig {
     return config ? config : {};
 }
 
@@ -372,7 +372,7 @@ function telemetrySanitize(telemetry?: TelemetryData): TelemetryData {
 }
 
 function newSdkInstance(
-    config: AnalyticalBackendConfig,
+    config: IAnalyticalBackendConfig,
     implConfig: BearBackendConfig,
     telemetry: TelemetryData,
 ): SDK {

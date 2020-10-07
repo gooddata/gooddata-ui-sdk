@@ -156,35 +156,35 @@ export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMe
      *
      * @returns array of available catalog items
      */
-    getAvailableItems(): CatalogItem[];
+    allAvailableItems(): CatalogItem[];
 
     /**
      * Get all available catalog attributes
      *
      * @returns array of available catalog attributes
      */
-    getAvailableAttributes(): ICatalogAttribute[];
+    availableAttributes(): ICatalogAttribute[];
 
     /**
      * Get all available catalog measures
      *
      * @returns array of available catalog measures
      */
-    getAvailableMeasures(): ICatalogMeasure[];
+    availableMeasures(): ICatalogMeasure[];
 
     /**
      * Get all available catalog facts
      *
      * @returns array of available catalog facts
      */
-    getAvailableFacts(): ICatalogFact[];
+    availableFacts(): ICatalogFact[];
 
     /**
      * Get all available catalog date datasets
      *
      * @returns array of available catalog date datasets
      */
-    getAvailableDateDatasets(): ICatalogDateDataset[];
+    availableDateDatasets(): ICatalogDateDataset[];
 }
 
 /**
@@ -245,40 +245,40 @@ export interface IWorkspaceCatalogMethods {
      *
      * @returns array of catalog groups
      */
-    getGroups(): ICatalogGroup[];
+    groups(): ICatalogGroup[];
 
     /**
      * Get all catalog items
      *
      * @returns array of catalog items
      */
-    getItems(): CatalogItem[];
+    allItems(): CatalogItem[];
 
     /**
      * Get all catalog attributes
      *
      * @returns array of catalog attribtues
      */
-    getAttributes(): ICatalogAttribute[];
+    attributes(): ICatalogAttribute[];
 
     /**
      * Get all catalog measures
      *
      * @returns array of catalog measures
      */
-    getMeasures(): ICatalogMeasure[];
+    measures(): ICatalogMeasure[];
 
     /**
      * Get all catalog facts
      *
      * @returns array of catalog facts
      */
-    getFacts(): ICatalogFact[];
+    facts(): ICatalogFact[];
 
     /**
      * Get all catalog date datasets
      *
      * @returns array of catalog date datasets
      */
-    getDateDatasets(): ICatalogDateDataset[];
+    dateDatasets(): ICatalogDateDataset[];
 }

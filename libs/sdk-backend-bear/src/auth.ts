@@ -2,8 +2,8 @@
 import { SDK } from "@gooddata/api-client-bear";
 import invariant from "ts-invariant";
 import {
-    AuthenticationContext,
-    AuthenticatedPrincipal,
+    IAuthenticationContext,
+    IAuthenticatedPrincipal,
     IAuthenticationProvider,
     NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
@@ -14,17 +14,19 @@ import {
  * @public
  */
 export abstract class BearAuthProviderBase implements IAuthenticationProvider {
-    protected principal: AuthenticatedPrincipal | undefined;
+    protected principal: IAuthenticatedPrincipal | undefined;
 
-    public abstract authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    public abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
+    public async deauthenticate(context: IAuthenticationContext): Promise<void> {
         const sdk = context.client as SDK;
         // we do not return the promise to logout as we do not want to return the response
         await sdk.user.logout();
     }
 
-    public async getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
+    public async getCurrentPrincipal(
+        context: IAuthenticationContext,
+    ): Promise<IAuthenticatedPrincipal | null> {
         if (!this.principal) {
             await this.obtainCurrentPrincipal(context);
         }
@@ -32,7 +34,7 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
         return this.principal || null;
     }
 
-    protected async obtainCurrentPrincipal(context: AuthenticationContext): Promise<void> {
+    protected async obtainCurrentPrincipal(context: IAuthenticationContext): Promise<void> {
         const sdk = context.client as SDK;
         const currentProfile = await sdk.user.getCurrentProfile();
 
@@ -54,7 +56,7 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase
         super();
     }
 
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+    public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         const sdk = context.client as SDK;
 
         await sdk.user.login(this.username, this.password);
@@ -73,7 +75,7 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase
  * @public
  */
 export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+    public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         const sdk = context.client as SDK;
 
         // check if the user is logged in, implicitly triggering token renewal in case it is needed

@@ -17,5 +17,5 @@ export interface IWorkspaceStylingService {
      *
      * @returns promise of color palette
      */
-    colorPalette(): Promise<IColorPalette>;
+    getColorPalette(): Promise<IColorPalette>;
 }

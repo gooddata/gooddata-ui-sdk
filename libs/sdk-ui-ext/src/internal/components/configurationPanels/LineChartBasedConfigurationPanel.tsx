@@ -13,7 +13,6 @@ import {
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
 import BaseChartConfigurationPanel from "./BaseChartConfigurationPanel";
-import { SettingCatalog } from "@gooddata/sdk-backend-spi";
 
 export default class LineChartBasedConfigurationPanel extends BaseChartConfigurationPanel {
     protected renderConfigurationPanel(): React.ReactNode {
@@ -45,7 +44,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                             defaultValue={false}
                         />
 
-                        {featureFlags[SettingCatalog.enableHidingOfDataPoints] && (
+                        {featureFlags["enableHidingOfDataPoints"] && (
                             <DataPointsControl
                                 pushData={pushData}
                                 properties={properties}

@@ -86,40 +86,40 @@ export class RecordedCatalogFactory implements IWorkspaceCatalogFactory {
 }
 
 class RecordedCatalogBase {
-    constructor(protected readonly groups: ICatalogGroup[], protected readonly items: CatalogItem[]) {}
+    constructor(protected readonly catalogGroups: ICatalogGroup[], protected readonly items: CatalogItem[]) {}
 
-    public getItems(): CatalogItem[] {
+    public allItems(): CatalogItem[] {
         return this.items;
     }
 
-    public getAttributes(): ICatalogAttribute[] {
+    public attributes(): ICatalogAttribute[] {
         return this.items.filter(isCatalogAttribute);
     }
 
-    public getMeasures(): ICatalogMeasure[] {
+    public measures(): ICatalogMeasure[] {
         return this.items.filter(isCatalogMeasure);
     }
 
-    public getFacts(): ICatalogFact[] {
+    public facts(): ICatalogFact[] {
         return this.items.filter(isCatalogFact);
     }
 
-    public getDateDatasets(): ICatalogDateDataset[] {
+    public dateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
     }
 
-    public getGroups(): ICatalogGroup[] {
-        return this.groups;
+    public groups(): ICatalogGroup[] {
+        return this.catalogGroups;
     }
 }
 
 class RecordedCatalog extends RecordedCatalogBase implements IWorkspaceCatalog {
-    constructor(private readonly workspace: string, groups: ICatalogGroup[], items: CatalogItem[]) {
-        super(groups, items);
+    constructor(private readonly workspace: string, catalogGroups: ICatalogGroup[], items: CatalogItem[]) {
+        super(catalogGroups, items);
     }
 
     public availableItems(): IWorkspaceCatalogAvailableItemsFactory {
-        return new RecordedAvailableCatalogFactory(this.workspace, this.groups, this.items);
+        return new RecordedAvailableCatalogFactory(this.workspace, this.catalogGroups, this.items);
     }
 }
 
@@ -191,19 +191,19 @@ class RecordedAvailableCatalog extends RecordedCatalogBase implements IWorkspace
     }
 
     // availability not implemented yet, just return everything
-    public getAvailableItems(): CatalogItem[] {
-        return this.getItems();
+    public allAvailableItems(): CatalogItem[] {
+        return this.allItems();
     }
-    public getAvailableAttributes(): ICatalogAttribute[] {
-        return this.getAttributes();
+    public availableAttributes(): ICatalogAttribute[] {
+        return this.attributes();
     }
-    public getAvailableMeasures(): ICatalogMeasure[] {
-        return this.getMeasures();
+    public availableMeasures(): ICatalogMeasure[] {
+        return this.measures();
     }
-    public getAvailableFacts(): ICatalogFact[] {
-        return this.getFacts();
+    public availableFacts(): ICatalogFact[] {
+        return this.facts();
     }
-    public getAvailableDateDatasets(): ICatalogDateDataset[] {
-        return this.getDateDatasets();
+    public availableDateDatasets(): ICatalogDateDataset[] {
+        return this.dateDatasets();
     }
 }

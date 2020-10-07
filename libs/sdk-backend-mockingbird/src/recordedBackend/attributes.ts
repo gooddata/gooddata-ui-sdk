@@ -1,25 +1,33 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { IWorkspaceMetadata, UnexpectedResponseError, NotSupported } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspaceAttributesService,
+    IElementsQueryFactory,
+    UnexpectedResponseError,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
+import { RecordingIndex } from "./types";
+import { RecordedElementQueryFactory } from "./elements";
 import {
     IAttributeDisplayFormMetadataObject,
     isUriRef,
     ObjRef,
-    IMeasureExpressionToken,
-    IMetadataObject,
     IAttributeMetadataObject,
     isCatalogAttribute,
     newAttributeMetadataObject,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { RecordingIndex } from "./types";
 import { identifierToRecording } from "./utils";
 
 /**
  * @internal
  */
-export class RecordedMetadata implements IWorkspaceMetadata {
-    constructor(private readonly recordings: RecordingIndex) {}
+export class RecordedAttributes implements IWorkspaceAttributesService {
+    constructor(private recordings: RecordingIndex) {}
+
+    public elements(): IElementsQueryFactory {
+        return new RecordedElementQueryFactory(this.recordings);
+    }
 
     public getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
@@ -70,12 +78,6 @@ export class RecordedMetadata implements IWorkspaceMetadata {
         );
     }
 
-    public getMeasureExpressionTokens(_: ObjRef): Promise<IMeasureExpressionToken[]> {
-        throw new NotSupported("not supported");
-    }
-    public getFactDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
-        throw new NotSupported("not supported");
-    }
     public getCommonAttributes(): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
     }

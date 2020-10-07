@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import { BarChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { newPositiveAttributeFilter, IAttributeElementsByRef } from "@gooddata/sdk-model";
 import { Kpi } from "@gooddata/sdk-ui";
 import { SidebarItem } from "../../../components/SidebarItem";
@@ -14,7 +14,7 @@ import { CustomError } from "../../../components/CustomError";
 import { IItem } from "../../attributeFilter/AttributeElementsExample";
 
 interface IEmployeeProfileProps {
-    validElements: IElementQueryResult;
+    validElements: IElementsQueryResult;
 }
 
 interface IEmployeeProfileState {

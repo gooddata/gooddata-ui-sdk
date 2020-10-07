@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AuthenticatedPrincipal,
-    AuthenticationContext,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
     ErrorConverter,
     IAuthenticationProvider,
     NotSupported,
@@ -19,7 +19,7 @@ export interface IAuthenticatedAsyncCallContext {
      * is not yet authenticated and the principal is unknown.
      * If the authentication flow fails, the NotAuthenticated error is thrown.
      */
-    getPrincipal(): Promise<AuthenticatedPrincipal>;
+    getPrincipal(): Promise<IAuthenticatedPrincipal>;
 }
 
 /**
@@ -64,8 +64,8 @@ export interface IAuthProviderCallGuard extends IAuthenticationProvider {
  * @internal
  */
 export class AuthProviderCallGuard implements IAuthProviderCallGuard {
-    private inflightRequest: Promise<AuthenticatedPrincipal> | undefined;
-    private principal: AuthenticatedPrincipal | undefined;
+    private inflightRequest: Promise<IAuthenticatedPrincipal> | undefined;
+    private principal: IAuthenticatedPrincipal | undefined;
 
     constructor(private readonly realProvider: IAuthenticationProvider) {}
 
@@ -73,7 +73,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         this.principal = undefined;
     };
 
-    public authenticate = (context: AuthenticationContext): Promise<AuthenticatedPrincipal> => {
+    public authenticate = (context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> => {
         if (this.principal) {
             return Promise.resolve(this.principal);
         }
@@ -99,11 +99,11 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         return this.inflightRequest;
     };
 
-    public getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
+    public getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null> {
         return this.realProvider.getCurrentPrincipal(context);
     }
 
-    public async deauthenticate(context: AuthenticationContext): Promise<void> {
+    public async deauthenticate(context: IAuthenticationContext): Promise<void> {
         return this.realProvider.deauthenticate(context);
     }
 }
@@ -114,15 +114,15 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
  * @internal
  */
 export class NoopAuthProvider implements IAuthProviderCallGuard {
-    public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+    public authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         throw new NotSupported("NoopAuthProvider does not support authenticate");
     }
 
-    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
+    public getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null> {
         throw new NotSupported("NoopAuthProvider does not support getCurrentPrincipal");
     }
 
-    public deauthenticate(_context: AuthenticationContext): Promise<void> {
+    public deauthenticate(_context: IAuthenticationContext): Promise<void> {
         throw new NotSupported("NoopAuthProvider does not support deauthenticate");
     }
 
@@ -131,7 +131,7 @@ export class NoopAuthProvider implements IAuthProviderCallGuard {
     }
 }
 
-export const AnonymousUser: AuthenticatedPrincipal = {
+export const AnonymousUser: IAuthenticatedPrincipal = {
     userId: "anonymous",
 };
 
@@ -141,15 +141,15 @@ export const AnonymousUser: AuthenticatedPrincipal = {
  * @public
  */
 export class AnonymousAuthProvider implements IAuthProviderCallGuard {
-    public authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+    public authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         return Promise.resolve(AnonymousUser);
     }
 
-    public getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null> {
+    public getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null> {
         return Promise.resolve(AnonymousUser);
     }
 
-    public deauthenticate(_context: AuthenticationContext): Promise<void> {
+    public deauthenticate(_context: IAuthenticationContext): Promise<void> {
         return Promise.resolve();
     }
 

@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    IElementQuery,
-    IElementQueryFactory,
-    IElementQueryOptions,
-    IElementQueryResult,
+    IElementsQuery,
+    IElementsQueryFactory,
+    IElementsQueryOptions,
+    IElementsQueryResult,
     NotImplemented,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -15,22 +15,22 @@ import { identifierToRecording, RecordingPager } from "./utils";
 /**
  * @internal
  */
-export class RecordedElementQueryFactory implements IElementQueryFactory {
+export class RecordedElementQueryFactory implements IElementsQueryFactory {
     constructor(private recordings: RecordingIndex) {}
 
-    public forDisplayForm(ref: ObjRef): IElementQuery {
+    public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new RecordedElements(ref, this.recordings);
     }
 }
 
-class RecordedElements implements IElementQuery {
+class RecordedElements implements IElementsQuery {
     private limit = 50;
     private offset = 0;
-    private options: IElementQueryOptions = {};
+    private options: IElementsQueryOptions = {};
 
     constructor(private ref: ObjRef, private recordings: RecordingIndex) {}
 
-    public query(): Promise<IElementQueryResult> {
+    public query(): Promise<IElementsQueryResult> {
         if (!this.recordings.metadata || !this.recordings.metadata.displayForms) {
             return Promise.reject(new UnexpectedResponseError("No displayForm recordings", 404, {}));
         }
@@ -59,7 +59,7 @@ class RecordedElements implements IElementQuery {
         return Promise.resolve(new RecordingPager<IAttributeElement>(elements, this.limit, this.offset));
     }
 
-    public withLimit(limit: number): IElementQuery {
+    public withLimit(limit: number): IElementsQuery {
         if (limit <= 0) {
             throw new Error("Limit must be positive number");
         }
@@ -69,19 +69,19 @@ class RecordedElements implements IElementQuery {
         return this;
     }
 
-    public withOffset(offset: number): IElementQuery {
+    public withOffset(offset: number): IElementsQuery {
         this.offset = offset;
 
         return this;
     }
 
-    public withOptions(options: IElementQueryOptions): IElementQuery {
+    public withOptions(options: IElementsQueryOptions): IElementsQuery {
         this.options = options;
 
         return this;
     }
 
-    public withAttributeFilters(): IElementQuery {
+    public withAttributeFilters(): IElementsQuery {
         // eslint-disable-next-line no-console
         console.warn("recorded backend does not support withAttributeFilters yet, ignoring...");
         return this;

@@ -5,7 +5,7 @@ import { TigerAuthenticatedCallGuard } from "../../types";
 export class TigerUserSettingsService implements IUserSettingsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {}
 
-    public async query(): Promise<IUserSettings> {
+    public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async () => {
             return {
                 userId: "dummy",

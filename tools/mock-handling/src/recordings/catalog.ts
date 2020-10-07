@@ -57,8 +57,8 @@ export class CatalogRecording implements IRecording {
     ): Promise<void> {
         const catalog = await backend.workspace(workspace).catalog().load();
 
-        const items = catalog.getItems();
-        const groups = catalog.getGroups();
+        const items = catalog.allItems();
+        const groups = catalog.groups();
 
         if (!fs.existsSync(this.directory)) {
             fs.mkdirSync(this.directory, { recursive: true });

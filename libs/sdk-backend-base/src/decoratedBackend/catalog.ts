@@ -83,27 +83,27 @@ export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
         return this.decorated.availableItems();
     }
 
-    public getAttributes(): ICatalogAttribute[] {
-        return this.decorated.getAttributes();
+    public attributes(): ICatalogAttribute[] {
+        return this.decorated.attributes();
     }
 
-    public getDateDatasets(): ICatalogDateDataset[] {
-        return this.decorated.getDateDatasets();
+    public dateDatasets(): ICatalogDateDataset[] {
+        return this.decorated.dateDatasets();
     }
 
-    public getFacts(): ICatalogFact[] {
-        return this.decorated.getFacts();
+    public facts(): ICatalogFact[] {
+        return this.decorated.facts();
     }
 
-    public getGroups(): ICatalogGroup[] {
-        return this.decorated.getGroups();
+    public groups(): ICatalogGroup[] {
+        return this.decorated.groups();
     }
 
-    public getItems(): CatalogItem[] {
-        return this.decorated.getItems();
+    public allItems(): CatalogItem[] {
+        return this.decorated.allItems();
     }
 
-    public getMeasures(): ICatalogMeasure[] {
-        return this.decorated.getMeasures();
+    public measures(): ICatalogMeasure[] {
+        return this.decorated.measures();
     }
 }

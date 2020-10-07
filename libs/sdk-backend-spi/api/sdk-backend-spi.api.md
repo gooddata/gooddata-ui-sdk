@@ -31,14 +31,12 @@ import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
-import { IWorkspace } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
-import { WorkspacePermission } from '@gooddata/sdk-model';
 
 // @alpha
 export type AbsoluteFormType = "absoluteForm";
@@ -51,11 +49,6 @@ export type AbsoluteType = "absolute";
 
 // @alpha
 export type AllTimeType = "allTime";
-
-// @public
-export type AnalyticalBackendConfig = {
-    readonly hostname?: string;
-};
 
 // @public
 export abstract class AnalyticalBackendError extends Error {
@@ -79,40 +72,13 @@ export const AnalyticalBackendErrorTypes: {
 };
 
 // @public
-export type AnalyticalBackendFactory = (config?: AnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
+export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
 // @public
 export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): string;
 
 // @public
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
-
-// @public
-export type AuthenticatedPrincipal = {
-    userId: string;
-    userMeta?: any;
-};
-
-// @public
-export type AuthenticationContext = {
-    client: any;
-};
-
-// @public
-export type BackendCapabilities = {
-    supportsObjectUris?: boolean;
-    canCalculateTotals?: boolean;
-    canSortData?: boolean;
-    supportsElementUris?: boolean;
-    maxDimensions?: number;
-    canExportCsv?: boolean;
-    canExportXlsx?: boolean;
-    canTransformExistingResult?: boolean;
-    canExecuteByReference?: boolean;
-    supportsCsvUploader?: boolean;
-    supportsRankingFilter?: boolean;
-    [key: string]: undefined | boolean | number | string;
-};
 
 // @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
@@ -174,30 +140,38 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
 
 // @public
 export interface IAnalyticalBackend {
-    authenticate(force?: boolean): Promise<AuthenticatedPrincipal>;
-    readonly capabilities: BackendCapabilities;
-    readonly config: AnalyticalBackendConfig;
+    authenticate(force?: boolean): Promise<IAuthenticatedPrincipal>;
+    readonly capabilities: IBackendCapabilities;
+    readonly config: IAnalyticalBackendConfig;
     currentUser(): IUserService;
     deauthenticate(): Promise<void>;
-    isAuthenticated(): Promise<AuthenticatedPrincipal | null>;
+    isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
-    workspaces(): IWorkspaceQueryFactory;
+    workspaces(): IWorkspacesQueryFactory;
+}
+
+// @public
+export interface IAnalyticalBackendConfig {
+    // (undocumented)
+    readonly hostname?: string;
 }
 
 // @public
 export interface IAnalyticalWorkspace {
+    attributes(): IWorkspaceAttributesService;
     catalog(): IWorkspaceCatalogFactory;
-    dashboards(): IWorkspaceDashboards;
-    dataSets(): IWorkspaceDatasetsService;
-    dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery;
-    elements(): IElementQueryFactory;
+    dashboards(): IWorkspaceDashboardsService;
+    datasets(): IWorkspaceDatasetsService;
+    dateFilterConfigs(): IDateFilterConfigsQuery;
     execution(): IExecutionFactory;
-    insights(): IWorkspaceInsights;
-    metadata(): IWorkspaceMetadata;
-    permissions(): IWorkspacePermissionsFactory;
+    facts(): IWorkspaceFactsService;
+    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    insights(): IWorkspaceInsightsService;
+    measures(): IWorkspaceMeasuresService;
+    permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
     users(): IWorkspaceUsersQuery;
@@ -225,10 +199,37 @@ export interface IAttributeDescriptor {
 }
 
 // @public
+export interface IAuthenticatedPrincipal {
+    userId: string;
+    userMeta?: any;
+}
+
+// @public
+export interface IAuthenticationContext {
+    client: any;
+}
+
+// @public
 export interface IAuthenticationProvider {
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
-    deauthenticate(context: AuthenticationContext): Promise<void>;
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
+}
+
+// @public
+export interface IBackendCapabilities {
+    [key: string]: undefined | boolean | number | string;
+    canCalculateTotals?: boolean;
+    canExecuteByReference?: boolean;
+    canExportCsv?: boolean;
+    canExportXlsx?: boolean;
+    canSortData?: boolean;
+    canTransformExistingResult?: boolean;
+    maxDimensions?: number;
+    supportsCsvUploader?: boolean;
+    supportsElementUris?: boolean;
+    supportsObjectUris?: boolean;
+    supportsRankingFilter?: boolean;
 }
 
 // @alpha
@@ -357,6 +358,13 @@ export interface IDateFilterConfig {
     selectedOption: Identifier;
 }
 
+// @alpha
+export interface IDateFilterConfigsQuery {
+    query(): Promise<IDateFilterConfigsQueryResult>;
+    withLimit(limit: number): IDateFilterConfigsQuery;
+    withOffset(offset: number): IDateFilterConfigsQuery;
+}
+
 // @public
 export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
 
@@ -447,16 +455,16 @@ export interface IDrillToLegacyDashboard extends IDrill {
 }
 
 // @public
-export interface IElementQuery {
-    query(): Promise<IElementQueryResult>;
-    withAttributeFilters(filters: IElementQueryAttributeFilter[]): IElementQuery;
-    withLimit(limit: number): IElementQuery;
-    withOffset(offset: number): IElementQuery;
-    withOptions(options: IElementQueryOptions): IElementQuery;
+export interface IElementsQuery {
+    query(): Promise<IElementsQueryResult>;
+    withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
+    withLimit(limit: number): IElementsQuery;
+    withOffset(offset: number): IElementsQuery;
+    withOptions(options: IElementsQueryOptions): IElementsQuery;
 }
 
 // @public
-export interface IElementQueryAttributeFilter {
+export interface IElementsQueryAttributeFilter {
     // (undocumented)
     attributeFilter: IAttributeFilter;
     // (undocumented)
@@ -464,12 +472,12 @@ export interface IElementQueryAttributeFilter {
 }
 
 // @public
-export interface IElementQueryFactory {
-    forDisplayForm(ref: ObjRef): IElementQuery;
+export interface IElementsQueryFactory {
+    forDisplayForm(ref: ObjRef): IElementsQuery;
 }
 
 // @public
-export interface IElementQueryOptions {
+export interface IElementsQueryOptions {
     complement?: boolean;
     filter?: string;
     includeTotalCountWithoutFilters?: boolean;
@@ -481,7 +489,7 @@ export interface IElementQueryOptions {
 }
 
 // @public
-export type IElementQueryResult = IPagedResource<IAttributeElement>;
+export type IElementsQueryResult = IPagedResource<IAttributeElement>;
 
 // @public
 export interface IExecutionFactory {
@@ -602,18 +610,6 @@ export interface IGetVisualizationClassesOptions {
 }
 
 // @public
-export interface IInsightQueryOptions {
-    author?: string;
-    limit?: number;
-    offset?: number;
-    orderBy?: InsightOrdering;
-    title?: string;
-}
-
-// @public
-export type IInsightQueryResult = IPagedResource<IInsight>;
-
-// @public
 export interface IInsightReferences {
     catalogItems?: CatalogItem[];
     dataSetMeta?: IMetadataObject[];
@@ -623,6 +619,18 @@ export interface IInsightReferences {
 export interface IInsightReferencing {
     analyticalDashboards?: IMetadataObject[];
 }
+
+// @public
+export interface IInsightsQueryOptions {
+    author?: string;
+    limit?: number;
+    offset?: number;
+    orderBy?: InsightOrdering;
+    title?: string;
+}
+
+// @public
+export type IInsightsQueryResult = IPagedResource<IInsight>;
 
 // @alpha
 export interface ILayoutWidget {
@@ -871,7 +879,18 @@ export interface ISectionHeader {
 // @public
 export interface ISettings {
     // (undocumented)
-    [key: string]: number | boolean | string;
+    [key: string]: number | boolean | string | undefined;
+    ADMeasureValueFilterNullAsZeroOption?: string;
+    disableKpiDashboardHeadlineUnderline?: boolean;
+    enableAxisNameConfiguration?: boolean;
+    enableBulletChart?: boolean;
+    enableCustomColorPicker?: boolean;
+    enableHidingOfDataPoints?: boolean;
+    enablePushpinGeoChart?: boolean;
+    enableTableColumnsAutoResizing?: boolean;
+    enableTableColumnsGrowToFit?: boolean;
+    enableTableColumnsManualResizing?: boolean;
+    enableWeekFilters?: boolean;
 }
 
 // @alpha
@@ -987,7 +1006,7 @@ export interface IUserSettings extends ISettings {
 
 // @public
 export interface IUserSettingsService {
-    query(): Promise<IUserSettings>;
+    getSettings(): Promise<IUserSettings>;
 }
 
 // @public
@@ -1067,6 +1086,17 @@ export interface IWidgetWithLayoutPath {
 }
 
 // @public
+export interface IWorkspaceAttributesService {
+    elements(): IElementsQueryFactory;
+    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
+    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
+    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
+    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
+    getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
+}
+
+// @public
 export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
     availableItems(): IWorkspaceCatalogAvailableItemsFactory;
 }
@@ -1105,21 +1135,21 @@ export interface IWorkspaceCatalogFactoryOptions {
 
 // @public
 export interface IWorkspaceCatalogMethods {
-    getAttributes(): ICatalogAttribute[];
-    getDateDatasets(): ICatalogDateDataset[];
-    getFacts(): ICatalogFact[];
-    getGroups(): ICatalogGroup[];
-    getItems(): CatalogItem[];
-    getMeasures(): ICatalogMeasure[];
+    allItems(): CatalogItem[];
+    attributes(): ICatalogAttribute[];
+    dateDatasets(): ICatalogDateDataset[];
+    facts(): ICatalogFact[];
+    groups(): ICatalogGroup[];
+    measures(): ICatalogMeasure[];
 }
 
 // @public
 export interface IWorkspaceCatalogWithAvailableItems extends IWorkspaceCatalogMethods {
-    getAvailableAttributes(): ICatalogAttribute[];
-    getAvailableDateDatasets(): ICatalogDateDataset[];
-    getAvailableFacts(): ICatalogFact[];
-    getAvailableItems(): CatalogItem[];
-    getAvailableMeasures(): ICatalogMeasure[];
+    allAvailableItems(): CatalogItem[];
+    availableAttributes(): ICatalogAttribute[];
+    availableDateDatasets(): ICatalogDateDataset[];
+    availableFacts(): ICatalogFact[];
+    availableMeasures(): ICatalogMeasure[];
 }
 
 // @public
@@ -1129,13 +1159,13 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
 }
 
 // @alpha
-export interface IWorkspaceDashboards {
-    bulkDeleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
+export interface IWorkspaceDashboardsService {
     createDashboard(dashboard: IDashboardDefinition): Promise<IDashboard>;
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
     deleteDashboard(ref: ObjRef): Promise<void>;
     deleteWidgetAlert(ref: ObjRef): Promise<void>;
+    deleteWidgetAlerts(refs: ObjRef[]): Promise<void>;
     exportDashboardToPdf(ref: ObjRef, filters?: FilterContextItem[]): Promise<string>;
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
@@ -1154,62 +1184,45 @@ export interface IWorkspaceDatasetsService {
     getDatasets(): Promise<IDataset[]>;
 }
 
-// @alpha
-export interface IWorkspaceDateFilterConfigsQuery {
-    query(): Promise<IDateFilterConfigsQueryResult>;
-    withLimit(limit: number): IWorkspaceDateFilterConfigsQuery;
-    withOffset(offset: number): IWorkspaceDateFilterConfigsQuery;
+// @public
+export interface IWorkspaceDescriptor {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDemo?: boolean;
+    // (undocumented)
+    title: string;
 }
 
 // @public
-export interface IWorkspaceInsights {
+export interface IWorkspaceFactsService {
+    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+}
+
+// @public
+export interface IWorkspaceInsightsService {
     createInsight(insight: IInsightDefinition): Promise<IInsight>;
     deleteInsight(ref: ObjRef): Promise<void>;
     getInsight(ref: ObjRef): Promise<IInsight>;
-    getInsights(options?: IInsightQueryOptions): Promise<IInsightQueryResult>;
+    getInsightReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
+    getInsightReferencingObjects(ref: ObjRef): Promise<IInsightReferencing>;
+    getInsights(options?: IInsightsQueryOptions): Promise<IInsightsQueryResult>;
     getInsightWithAddedFilters<T extends IInsightDefinition>(insight: T, filters: IFilter[]): Promise<T>;
-    getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
-    getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
 }
 
 // @public
-export interface IWorkspaceMetadata {
-    getAttribute(ref: ObjRef): Promise<IAttributeMetadataObject>;
-    getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
-    getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
-    getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
-    getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
-    getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
-    getFactDatasetMeta(ref: ObjRef): Promise<IMetadataObject>;
+export interface IWorkspaceMeasuresService {
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
 }
 
 // @public
-export interface IWorkspacePermissionsFactory {
-    forCurrentUser(): Promise<IWorkspaceUserPermissions>;
-}
-
-// @public
-export interface IWorkspaceQuery {
-    query(): Promise<IWorkspaceQueryResult>;
-    withLimit(limit: number): IWorkspaceQuery;
-    withOffset(offset: number): IWorkspaceQuery;
-    withSearch(search: string): IWorkspaceQuery;
-}
-
-// @public
-export interface IWorkspaceQueryFactory {
-    forCurrentUser(): IWorkspaceQuery;
-    forUser(userId: string): IWorkspaceQuery;
-}
-
-// @public
-export interface IWorkspaceQueryResult extends IPagedResource<IWorkspace> {
-    // (undocumented)
-    search: string | undefined;
+export interface IWorkspacePermissionsService {
+    getPermissionsForCurrentUser(): Promise<IWorkspacePermissions>;
 }
 
 // @public
@@ -1219,13 +1232,33 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
-    query(): Promise<IWorkspaceSettings>;
-    queryForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    getSettings(): Promise<IWorkspaceSettings>;
+    getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+}
+
+// @public
+export interface IWorkspacesQuery {
+    query(): Promise<IWorkspacesQueryResult>;
+    withLimit(limit: number): IWorkspacesQuery;
+    withOffset(offset: number): IWorkspacesQuery;
+    withSearch(search: string): IWorkspacesQuery;
+}
+
+// @public
+export interface IWorkspacesQueryFactory {
+    forCurrentUser(): IWorkspacesQuery;
+    forUser(userId: string): IWorkspacesQuery;
+}
+
+// @public
+export interface IWorkspacesQueryResult extends IPagedResource<IAnalyticalWorkspace> {
+    // (undocumented)
+    search: string | undefined;
 }
 
 // @public
 export interface IWorkspaceStylingService {
-    colorPalette(): Promise<IColorPalette>;
+    getColorPalette(): Promise<IColorPalette>;
 }
 
 // @public
@@ -1236,12 +1269,6 @@ export interface IWorkspaceUser {
     login: string;
     ref: ObjRef;
     uri: string;
-}
-
-// @public
-export interface IWorkspaceUserPermissions {
-    allPermissions(): IWorkspacePermissions;
-    hasPermission(permission: WorkspacePermission): boolean;
 }
 
 // @public
@@ -1337,21 +1364,6 @@ export type ScheduledMailAttachment = IDashboardAttachment;
 
 // @alpha
 export type SectionHeader = ISectionHeader | ISectionDescription;
-
-// @public
-export enum SettingCatalog {
-    ADMeasureValueFilterNullAsZeroOption = "ADMeasureValueFilterNullAsZeroOption",
-    disableKpiDashboardHeadlineUnderline = "disableKpiDashboardHeadlineUnderline",
-    enableAxisNameConfiguration = "enableAxisNameConfiguration",
-    enableBulletChart = "enableBulletChart",
-    enableCustomColorPicker = "enableCustomColorPicker",
-    enableHidingOfDataPoints = "enableHidingOfDataPoints",
-    enablePushpinGeoChart = "enablePushpinGeoChart",
-    enableTableColumnsAutoResizing = "enableTableColumnsAutoResizing",
-    enableTableColumnsGrowToFit = "enableTableColumnsGrowToFit",
-    enableTableColumnsManualResizing = "enableTableColumnsManualResizing",
-    enableWeekFilters = "enableWeekFilters"
-}
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

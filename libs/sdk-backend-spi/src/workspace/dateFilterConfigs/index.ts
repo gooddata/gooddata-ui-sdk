@@ -9,7 +9,7 @@ import { IDateFilterConfig } from "./types";
  *
  * @alpha
  */
-export interface IWorkspaceDateFilterConfigsQuery {
+export interface IDateFilterConfigsQuery {
     /**
      * Sets number of date filter configs to return per page.
      * Default/max limit is specific per backend
@@ -17,7 +17,7 @@ export interface IWorkspaceDateFilterConfigsQuery {
      * @param limit - desired max number of date filter configs per page; must be a positive number
      * @returns date filter configs query
      */
-    withLimit(limit: number): IWorkspaceDateFilterConfigsQuery;
+    withLimit(limit: number): IDateFilterConfigsQuery;
 
     /**
      * Sets starting point for the query. Backend WILL return no data if the offset is greater than
@@ -27,7 +27,7 @@ export interface IWorkspaceDateFilterConfigsQuery {
      * @param offset - zero indexed, must be non-negative
      * @returns date filter configs query
      */
-    withOffset(offset: number): IWorkspaceDateFilterConfigsQuery;
+    withOffset(offset: number): IDateFilterConfigsQuery;
 
     /**
      * Starts the date filter configs query.

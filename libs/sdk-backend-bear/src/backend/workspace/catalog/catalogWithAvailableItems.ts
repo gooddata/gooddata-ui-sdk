@@ -15,52 +15,52 @@ import {
 
 export class BearWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAvailableItems {
     constructor(
-        private readonly groups: ICatalogGroup[],
+        private readonly catalogGroups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly availableItems: CatalogItem[],
     ) {}
 
-    public getGroups(): ICatalogGroup[] {
-        return this.groups;
+    public groups(): ICatalogGroup[] {
+        return this.catalogGroups;
     }
 
-    public getItems(): CatalogItem[] {
+    public allItems(): CatalogItem[] {
         return this.items;
     }
 
-    public getAttributes(): ICatalogAttribute[] {
+    public attributes(): ICatalogAttribute[] {
         return this.items.filter(isCatalogAttribute);
     }
 
-    public getMeasures(): ICatalogMeasure[] {
+    public measures(): ICatalogMeasure[] {
         return this.items.filter(isCatalogMeasure);
     }
 
-    public getFacts(): ICatalogFact[] {
+    public facts(): ICatalogFact[] {
         return this.items.filter(isCatalogFact);
     }
 
-    public getDateDatasets(): ICatalogDateDataset[] {
+    public dateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
     }
 
-    public getAvailableItems(): CatalogItem[] {
+    public allAvailableItems(): CatalogItem[] {
         return this.availableItems;
     }
 
-    public getAvailableAttributes(): ICatalogAttribute[] {
+    public availableAttributes(): ICatalogAttribute[] {
         return this.availableItems.filter(isCatalogAttribute);
     }
 
-    public getAvailableMeasures(): ICatalogMeasure[] {
+    public availableMeasures(): ICatalogMeasure[] {
         return this.availableItems.filter(isCatalogMeasure);
     }
 
-    public getAvailableFacts(): ICatalogFact[] {
+    public availableFacts(): ICatalogFact[] {
         return this.availableItems.filter(isCatalogFact);
     }
 
-    public getAvailableDateDatasets(): ICatalogDateDataset[] {
+    public availableDateDatasets(): ICatalogDateDataset[] {
         return this.availableItems.filter(isCatalogDateDataset);
     }
 }

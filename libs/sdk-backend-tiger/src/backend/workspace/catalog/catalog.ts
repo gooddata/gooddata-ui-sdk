@@ -23,32 +23,32 @@ export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspace: string,
-        private readonly groups: ICatalogGroup[],
+        private readonly catalogGroups: ICatalogGroup[],
         private readonly items: CatalogItem[],
         private readonly options: IWorkspaceCatalogFactoryOptions,
     ) {}
 
-    public getGroups(): ICatalogGroup[] {
-        return this.groups;
+    public groups(): ICatalogGroup[] {
+        return this.catalogGroups;
     }
 
-    public getItems(): CatalogItem[] {
+    public allItems(): CatalogItem[] {
         return this.items;
     }
 
-    public getAttributes(): ICatalogAttribute[] {
+    public attributes(): ICatalogAttribute[] {
         return this.items.filter(isCatalogAttribute);
     }
 
-    public getMeasures(): ICatalogMeasure[] {
+    public measures(): ICatalogMeasure[] {
         return this.items.filter(isCatalogMeasure);
     }
 
-    public getFacts(): ICatalogFact[] {
+    public facts(): ICatalogFact[] {
         return this.items.filter(isCatalogFact);
     }
 
-    public getDateDatasets(): ICatalogDateDataset[] {
+    public dateDatasets(): ICatalogDateDataset[] {
         return this.items.filter(isCatalogDateDataset);
     }
 
@@ -56,7 +56,7 @@ export class TigerWorkspaceCatalog implements IWorkspaceCatalog {
         return new TigerWorkspaceCatalogAvailableItemsFactory(
             this.authCall,
             this.workspace,
-            this.groups,
+            this.catalogGroups,
             this.items,
             this.options,
         );

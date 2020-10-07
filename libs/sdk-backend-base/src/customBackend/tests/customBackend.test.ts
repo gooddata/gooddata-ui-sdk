@@ -2,8 +2,8 @@
 
 import { customBackend } from "../index";
 import {
-    AuthenticatedPrincipal,
-    AuthenticationContext,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
     IAuthenticationProvider,
     IDataView,
     IExecutionResult,
@@ -79,7 +79,7 @@ function createBackend(
 }
 
 function createAuthenticationProvider(
-    authMethod?: (ctx: AuthenticationContext) => Promise<AuthenticatedPrincipal>,
+    authMethod?: (ctx: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>,
 ) {
     const anonymouse = new AnonymousAuthProvider();
     const mockGetCurrentPrincipal = jest.fn(anonymouse.getCurrentPrincipal);

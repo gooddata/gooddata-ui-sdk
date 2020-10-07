@@ -4,15 +4,15 @@
 
 ```ts
 
-import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
-import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
-import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { CatalogItemType } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -70,11 +70,11 @@ export type AnalyticalBackendCallbacks = {
 // @public
 export class AnonymousAuthProvider implements IAuthProviderCallGuard {
     // (undocumented)
-    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    deauthenticate(_context: IAuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
     reset(): void;
 }
@@ -92,11 +92,11 @@ export type AuthenticatedCallGuard<TSdk = any> = <TReturn>(call: AuthenticatedAs
 export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     constructor(realProvider: IAuthenticationProvider);
     // (undocumented)
-    authenticate: (context: AuthenticationContext) => Promise<AuthenticatedPrincipal>;
+    authenticate: (context: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
     reset: () => void;
 }
@@ -124,7 +124,7 @@ export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWo
 export function customBackend(config: CustomBackendConfig): IAnalyticalBackend;
 
 // @beta (undocumented)
-export type CustomBackendConfig = AnalyticalBackendConfig & {
+export type CustomBackendConfig = IAnalyticalBackendConfig & {
     readonly clientProvider: ApiClientProvider;
     readonly resultProvider: ResultProvider;
     readonly dataProvider?: DataProvider;
@@ -221,19 +221,19 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
     protected constructor(decorated: IWorkspaceCatalog);
     // (undocumented)
+    allItems(): CatalogItem[];
+    // (undocumented)
+    attributes(): ICatalogAttribute[];
+    // (undocumented)
     availableItems(): IWorkspaceCatalogAvailableItemsFactory;
     // (undocumented)
-    getAttributes(): ICatalogAttribute[];
+    dateDatasets(): ICatalogDateDataset[];
     // (undocumented)
-    getDateDatasets(): ICatalogDateDataset[];
+    facts(): ICatalogFact[];
     // (undocumented)
-    getFacts(): ICatalogFact[];
+    groups(): ICatalogGroup[];
     // (undocumented)
-    getGroups(): ICatalogGroup[];
-    // (undocumented)
-    getItems(): CatalogItem[];
-    // (undocumented)
-    getMeasures(): ICatalogMeasure[];
+    measures(): ICatalogMeasure[];
 }
 
 // @alpha (undocumented)
@@ -283,7 +283,7 @@ export class Denormalizer {
 export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 
 // @internal (undocumented)
-export type DummyBackendConfig = AnalyticalBackendConfig & {
+export type DummyBackendConfig = IAnalyticalBackendConfig & {
     raiseNoDataExceptions: boolean;
 };
 
@@ -318,7 +318,7 @@ export class ExecutionFactoryWithFixedFilters extends DecoratedExecutionFactory 
 
 // @beta
 export interface IAuthenticatedAsyncCallContext {
-    getPrincipal(): Promise<AuthenticatedPrincipal>;
+    getPrincipal(): Promise<IAuthenticatedPrincipal>;
 }
 
 // @public
@@ -335,11 +335,11 @@ export type LocalIdMap = {
 // @internal
 export class NoopAuthProvider implements IAuthProviderCallGuard {
     // (undocumented)
-    authenticate(_context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(_context: AuthenticationContext): Promise<void>;
+    deauthenticate(_context: IAuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(_context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    getCurrentPrincipal(_context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
     reset(): void;
 }

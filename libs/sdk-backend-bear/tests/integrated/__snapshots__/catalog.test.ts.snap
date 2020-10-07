@@ -1316,7 +1316,7 @@ BearWorkspaceCatalogWithAvailableItems {
       "type": "dateDataset",
     },
   ],
-  "groups": Array [],
+  "catalogGroups": Array [],
   "items": Array [
     Object {
       "groups": Array [],
@@ -3227,7 +3227,7 @@ BearWorkspaceCatalogWithAvailableItems {
 exports[`bear catalog should read catalog for reference workspace 1`] = `
 BearWorkspaceCatalog {
   "authCall": [Function],
-  "groups": Array [],
+  "catalogGroups": Array [],
   "items": Array [
     Object {
       "groups": Array [],

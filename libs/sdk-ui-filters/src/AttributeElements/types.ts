@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 
 /**
  * An object of this type will be passed down to the children render function by AttributeElements component.
@@ -9,7 +9,7 @@ export interface IAttributeElementsChildren {
     /**
      * Loaded elements
      */
-    validElements: IElementQueryResult;
+    validElements: IElementsQueryResult;
 
     /**
      * Function to trigger load of next page of attribute elements.
