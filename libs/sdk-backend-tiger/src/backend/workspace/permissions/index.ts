@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
-import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
+import { IWorkspacePermissionsService, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {

@@ -114,7 +114,11 @@ export {
     IWorkspaceDescriptor,
 } from "./workspace";
 
-export { IWorkspacePermissionsService } from "./workspace/permissions";
+export {
+    IWorkspacePermissionsService,
+    IWorkspacePermissions,
+    WorkspacePermission,
+} from "./workspace/permissions";
 
 export { IWorkspaceAttributesService } from "./workspace/attributes";
 
