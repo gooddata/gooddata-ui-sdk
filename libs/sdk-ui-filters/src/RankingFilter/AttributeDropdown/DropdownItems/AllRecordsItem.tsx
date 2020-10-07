@@ -2,8 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 const BUBBLE_OFFSET_X = 16;
 

@@ -3,15 +3,16 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import get from "lodash/get";
+import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
+import { BucketNames } from "@gooddata/sdk-ui";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import {
     SHOW_DELAY_DEFAULT,
     HIDE_DELAY_DEFAULT,
     BUBBLE_ARROW_OFFSET_X,
     BUBBLE_ARROW_OFFSET_Y,
 } from "../../constants/bubble";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
 
 import ConfigurationPanelContent from "./ConfigurationPanelContent";
 import CheckboxControl from "../configurationControls/CheckboxControl";
@@ -20,8 +21,6 @@ import PushpinSizeControl from "../configurationControls/PushpinSizeControl";
 import PushpinViewportControl from "../configurationControls/PushpinViewportControl";
 import LegendSection from "../configurationControls/legend/LegendSection";
 import ColorsSection from "../configurationControls/colors/ColorsSection";
-import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {

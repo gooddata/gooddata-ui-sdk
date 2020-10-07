@@ -2,8 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 import { ExcludeCurrentPeriodToggleLabel } from "./ExcludeCurrentPeriodToggleLabel";

@@ -9,8 +9,7 @@ import { stringUtils } from "@gooddata/util";
 import { getOperatorTranslationKey, getOperatorIcon } from "./helpers/measureValueFilterOperator";
 import { MeasureValueFilterOperator } from "./types";
 
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;

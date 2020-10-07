@@ -1,7 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 export const ListItemTooltip: React.FC<React.HTMLProps<HTMLSpanElement>> = ({

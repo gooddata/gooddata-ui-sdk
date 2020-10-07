@@ -12,8 +12,7 @@ import {
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
 
 import Menu from "../menu/Menu";
