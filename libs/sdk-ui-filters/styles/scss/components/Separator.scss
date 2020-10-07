@@ -1,9 +1,9 @@
 // (C) 2007-2019 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables.scss";
 
 .gd-separator-generic {
     height: 1px;
     margin: 0;
     border: 0;
-    background: $border-color;
+    background: $gd-border-color;
 }

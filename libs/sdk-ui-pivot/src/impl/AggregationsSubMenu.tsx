@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
+import { Header, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import {
     attributeDescriptorLocalId,
     attributeDescriptorName,

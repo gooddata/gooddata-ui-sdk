@@ -22,7 +22,7 @@ $gd-color-text-dimmed: $gd-color-disabled;
 $gd-color-text-light: #fff;
 $gd-color-dark: #000;
 
-$border-color: #dde4eb;
+$gd-border-color: #dde4eb;
 // primary color - must not be used to create derived colors by scss color function
 $gd-palette-primary-base: var(--gd-palette-primary-base, $gd-color-highlight);
 

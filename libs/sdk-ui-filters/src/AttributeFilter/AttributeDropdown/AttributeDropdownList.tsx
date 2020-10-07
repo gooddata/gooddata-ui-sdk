@@ -2,7 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
-import InvertableList from "@gooddata/goodstrap/lib/List/InvertableList";
+import { LegacyInvertableList } from "@gooddata/sdk-ui-kit";
 import LoadingMask from "@gooddata/goodstrap/lib/core/LoadingMask";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
@@ -23,7 +23,7 @@ const ListError = () => (
 interface IAttributeDropdownListProps {
     items: AttributeListItem[];
     totalCount: number;
-    selectedItems: Array<Partial<IAttributeElement>>;
+    selectedItems: Array<IAttributeElement>;
     isInverted: boolean;
     isLoading: boolean;
     error?: any;
@@ -52,7 +52,7 @@ export const AttributeDropdownList: React.FC<IAttributeDropdownListProps> = ({
     }
 
     return (
-        <InvertableList
+        <LegacyInvertableList
             items={items}
             itemsCount={totalCount}
             filteredItemsCount={items.length}

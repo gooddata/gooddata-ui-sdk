@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/core/styles/variables";
-@import "~@gooddata/sdk-ui-kit/styles/scss/button";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 
 $ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
 
@@ -19,6 +20,10 @@ $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
 $header-cell-resize-width: 20px;
+$table-menu-hover: var(
+    --gd-palette-primary-dimmed-darken03,
+    darken(mix($gd-color-highlight, $gd-color-text-light, 10%), 3%)
+);
 
 .gd-table-component {
     @import "~@ag-grid-community/all-modules/dist/styles/ag-grid";
@@ -339,7 +344,7 @@ $header-cell-resize-width: 20px;
         transition: width 200ms, opacity 100ms;
 
         &:hover {
-            background-image: linear-gradient(rgba(125, 125, 125, 0.1), rgba(125, 125, 125, 0.1));
+            background-color: $table-menu-hover;
         }
 
         .menu-icon {

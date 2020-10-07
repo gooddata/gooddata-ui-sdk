@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
-import { messagesMap } from "./IntlWrapper";
-import { DefaultLocale } from "./Locale";
+import { ITranslations, messagesMap } from "./IntlWrapper";
+import { DefaultLocale, ILocale } from "./Locale";
 import { wrapDisplayName } from "../react/wrapDisplayName";
 
 /**
@@ -18,11 +18,17 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
     });
 }
 
-export function withIntl<P>(WrappedComponent: React.FC<P> | React.ComponentClass<P>): React.ComponentType<P> {
+export function withIntl<P>(
+    WrappedComponent: React.FC<P> | React.ComponentClass<P>,
+    customLocale?: ILocale,
+    customMessages?: ITranslations,
+): React.ComponentType<P> {
     class WithIntl extends React.Component<P> {
         public render() {
+            const locale = customLocale ? customLocale : DefaultLocale;
+            const messages = customMessages ? customMessages : messagesMap[locale as string];
             return (
-                <IntlProvider locale={DefaultLocale} messages={messagesMap[DefaultLocale]}>
+                <IntlProvider locale={locale as string} messages={messages}>
                     <WrappedComponent {...this.props} />
                 </IntlProvider>
             );

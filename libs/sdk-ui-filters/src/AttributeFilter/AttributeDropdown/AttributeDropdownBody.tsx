@@ -9,7 +9,7 @@ import { AttributeListItem } from "./types";
 interface IAttributeDropdownBodyProps {
     items: AttributeListItem[];
     totalCount: number;
-    selectedItems: Array<Partial<IAttributeElement>>;
+    selectedItems: Array<IAttributeElement>;
     isInverted: boolean;
     isLoading: boolean;
     isFullWidth?: boolean;

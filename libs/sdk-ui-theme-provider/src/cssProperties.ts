@@ -107,11 +107,13 @@ const getMeasureNumberFormatDialogDerivedColors = (palette: IThemePalette): CssP
 
 const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     (palette?.primary?.base && [
+        ...getCommonDerivedColors(palette),
         ...getDashboardsDerivedColors(palette),
         ...getButtonDerivedColors(palette),
         ...getBubbleDerivedColors(palette),
         ...getDateFilterDerivedColors(palette),
         ...getMeasureNumberFormatDialogDerivedColors(palette),
+        ...getPivotTableDerivedColors(palette),
     ]) ||
     [];
 
