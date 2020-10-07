@@ -1,24 +1,29 @@
 // (C) 2019-2020 GoodData Corporation
 import {
+    AttributeGranularityResourceAttribute,
+    DimensionHeader,
+    ExecutionResult,
+    isResultAttributeHeader,
+} from "@gooddata/api-client-tiger";
+import {
     DataValue,
-    IResultHeader,
     IDimensionDescriptor,
-    isAttributeDescriptor,
     IDimensionItemDescriptor,
     IMeasureDescriptor,
+    IResultHeader,
+    isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { Execution, AttributeGranularityResourceAttribute } from "@gooddata/api-client-tiger";
-import isResultAttributeHeader = Execution.isResultAttributeHeader;
-import isResultMeasureHeader = Execution.isResultMeasureHeader;
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
-import { toSdkGranularity } from "../dateGranularityConversions";
-import { DateFormatter } from "../dateFormatting/types";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
+import { DateFormatter } from "../dateFormatting/types";
+import { toSdkGranularity } from "../dateGranularityConversions";
+
+export type Data = DataValue[] | DataValue[][];
 
 export type TransformerResult = {
     readonly headerItems: IResultHeader[][][];
-    readonly data: DataValue[][] | DataValue[];
+    readonly data: Data;
     readonly offset: number[];
     readonly count: number[];
     readonly total: number[];
@@ -60,7 +65,7 @@ function getMeasuresFromDimensions(dimensions: IDimensionDescriptor[]): IMeasure
 function transformHeaderItems(
     dimensions: IDimensionDescriptor[],
     dateFormatter: DateFormatter,
-    dimensionHeaders?: Execution.IDimensionHeader[],
+    dimensionHeaders?: DimensionHeader[],
 ): IResultHeader[][][] {
     if (!dimensionHeaders) {
         return [[[]]];
@@ -75,9 +80,6 @@ function transformHeaderItems(
             return headerGroup.headers.map(
                 (header): IResultHeader => {
                     if (isResultAttributeHeader(header)) {
-                        const primaryLabel =
-                            header.attributeHeader.primaryLabelValue ?? header.attributeHeader.labelValue;
-
                         /*
                          * Funny stuff #1 - we have to set 'uri' to some made-up value resembling the URIs sent by bear. This
                          * is because pivot table relies on the format of URIs. Ideally we would refactor pivot table to
@@ -86,7 +88,7 @@ function transformHeaderItems(
                          */
                         return {
                             attributeHeaderItem: {
-                                uri: `/obj/${headerGroupIndex}/elements?id=${primaryLabel}`,
+                                uri: `/obj/${headerGroupIndex}/elements?id=${header.attributeHeader.primaryLabelValue}`,
                                 name: granularity
                                     ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
                                     : header.attributeHeader.labelValue,
@@ -94,26 +96,17 @@ function transformHeaderItems(
                         };
                     }
 
-                    if (isResultMeasureHeader(header)) {
-                        /*
-                         * Funny stuff #2 - Tiger sends just the measure index in the measure headers. This is the index of the
-                         * measure descriptor within the measure group. The code looks up the measure descriptor so that
-                         * it can then fill in the `name` to the one in the descriptor
-                         */
-                        const measureIndex = header.measureHeader.measureIndex;
-
-                        return {
-                            measureHeaderItem: {
-                                name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
-                                order: measureIndex,
-                            },
-                        };
-                    }
+                    /*
+                     * Funny stuff #2 - Tiger sends just the measure index in the measure headers. This is the index of the
+                     * measure descriptor within the measure group. The code looks up the measure descriptor so that
+                     * it can then fill in the `name` to the one in the descriptor
+                     */
+                    const measureIndex = header.measureHeader.measureIndex;
 
                     return {
-                        totalHeaderItem: {
-                            name: header.totalHeader.name,
-                            type: header.totalHeader.type,
+                        measureHeaderItem: {
+                            name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
+                            order: measureIndex,
                         },
                     };
                 },
@@ -123,12 +116,13 @@ function transformHeaderItems(
 }
 
 export function transformExecutionResult(
-    result: Execution.IExecutionResult,
+    result: ExecutionResult,
     dimensions: IDimensionDescriptor[],
     dateFormatter: DateFormatter,
 ): TransformerResult {
     return {
-        data: result.data,
+        // in API is data typed as Array<object>
+        data: (result.data as unknown) as Data,
         headerItems: transformHeaderItems(dimensions, dateFormatter, result.dimensionHeaders),
         offset: result.paging.offset,
         count: result.paging.count,

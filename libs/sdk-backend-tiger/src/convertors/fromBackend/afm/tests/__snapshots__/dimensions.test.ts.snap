@@ -12,7 +12,7 @@ Array [
                 "format": "#,##0.00",
                 "identifier": undefined,
                 "localIdentifier": "measureLocalId",
-                "name": "Sum of duration",
+                "name": "measureLocalId",
                 "ref": undefined,
                 "uri": undefined,
               },
@@ -62,7 +62,7 @@ Array [
                 "format": "#,##0.00",
                 "identifier": "measureIdentifier",
                 "localIdentifier": "measureLocalId",
-                "name": "Sum of duration",
+                "name": "measureLocalId",
                 "ref": Object {
                   "identifier": "measureIdentifier",
                   "type": "measure",

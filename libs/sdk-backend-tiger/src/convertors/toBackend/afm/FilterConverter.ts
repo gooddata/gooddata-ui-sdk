@@ -1,33 +1,45 @@
 // (C) 2007-2020 GoodData Corporation
+import {
+    AbsoluteDateFilter,
+    AttributeFilter,
+    ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
+    FilterDefinition,
+    FilterDefinitionForSimpleMeasure,
+    MeasureValueFilter,
+    NegativeAttributeFilter,
+    PositiveAttributeFilter,
+    RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
+    RelativeDateFilter,
+} from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
     IAttributeFilter,
     IFilter,
+    IMeasureFilter,
+    IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     IRelativeDateFilter,
-    IMeasureValueFilter,
     isAbsoluteDateFilter,
     isAttributeElementsByValue,
     isAttributeFilter,
-    isPositiveAttributeFilter,
-    isRelativeDateFilter,
-    isMeasureValueFilter,
     isComparisonCondition,
+    isMeasureValueFilter,
+    isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
+    isRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { ExecuteAFM } from "@gooddata/api-client-tiger";
+import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
 import {
     toDateDataSetQualifier,
     toDisplayFormQualifier,
     toMeasureValueFilterMeasureQualifier,
 } from "../ObjRefConverter";
-import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
 
-function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPositiveAttributeFilter {
+function convertPositiveFilter(filter: IPositiveAttributeFilter): PositiveAttributeFilter {
     const displayFormRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
 
@@ -43,7 +55,7 @@ function convertPositiveFilter(filter: IPositiveAttributeFilter): ExecuteAFM.IPo
     };
 }
 
-function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INegativeAttributeFilter | null {
+function convertNegativeFilter(filter: INegativeAttributeFilter): NegativeAttributeFilter | null {
     const displayFormRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
 
@@ -59,7 +71,7 @@ function convertNegativeFilter(filter: INegativeAttributeFilter): ExecuteAFM.INe
     };
 }
 
-function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem | null {
+function convertAttributeFilter(filter: IAttributeFilter): AttributeFilter | null {
     if (filterIsEmpty(filter)) {
         return null;
     }
@@ -71,7 +83,7 @@ function convertAttributeFilter(filter: IAttributeFilter): ExecuteAFM.FilterItem
     return convertNegativeFilter(filter);
 }
 
-export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteAFM.FilterItem | null {
+export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): AbsoluteDateFilter | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -89,7 +101,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): ExecuteA
     };
 }
 
-export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteAFM.FilterItem | null {
+export function convertRelativeDateFilter(filter: IRelativeDateFilter): RelativeDateFilter | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
@@ -108,7 +120,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): ExecuteA
     };
 }
 
-export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteAFM.FilterItem | null {
+export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureValueFilter | null {
     const { measureValueFilter } = filter;
     const condition = measureValueFilter.condition;
 
@@ -117,7 +129,8 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteA
         return {
             comparisonMeasureValueFilter: {
                 measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
-                operator,
+                // Operator has same values, we only need type assertion
+                operator: operator as ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
                 value,
                 treatNullValuesAs,
             },
@@ -129,7 +142,8 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteA
         return {
             rangeMeasureValueFilter: {
                 measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
-                operator,
+                // Operator has same values, we only need type assertion
+                operator: operator as RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
                 // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
                 // this is effectively the same behavior as in bear
                 from: Math.min(originalFrom, originalTo),
@@ -142,7 +156,9 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): ExecuteA
     return null;
 }
 
-export function convertVisualizationObjectFilter(filter: IFilter): ExecuteAFM.FilterItem | null {
+export function convertVisualizationObjectFilter(
+    filter: IMeasureFilter | IFilter,
+): FilterDefinition | FilterDefinitionForSimpleMeasure | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {

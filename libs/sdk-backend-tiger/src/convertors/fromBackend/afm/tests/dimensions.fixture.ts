@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { Execution } from "@gooddata/api-client-tiger";
+import { ResultDimension } from "@gooddata/api-client-tiger";
 
-export const mockDimensions: Execution.IResultDimension[] = [
+export const mockDimensions: ResultDimension[] = [
     {
         headers: [
             {
@@ -10,7 +10,6 @@ export const mockDimensions: Execution.IResultDimension[] = [
                         {
                             measureHeaderItem: {
                                 localIdentifier: "measureLocalId",
-                                name: "Sum of duration",
                                 format: "#,##0.00",
                             },
                         },
@@ -27,6 +26,7 @@ export const mockDimensions: Execution.IResultDimension[] = [
                     localIdentifier: "fd48e8fd32b54b1baba3e3ccdd719f26",
                     name: "event_date - Quarter/Year",
                     formOf: {
+                        primaryLabelIdentifier: "event_date.quarter",
                         identifier: "event_date.quarter",
                         name: "event_date - Quarter/Year",
                     },

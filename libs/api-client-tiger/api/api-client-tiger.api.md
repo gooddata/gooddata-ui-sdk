@@ -7,6 +7,7 @@
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITotal } from '@gooddata/sdk-model';
 
 // @public
 export interface AbsoluteDateFilter {
@@ -8898,425 +8899,6 @@ export interface ErrorMessage {
     timestamp: string;
 }
 
-// @public (undocumented)
-export namespace ExecuteAFM {
-    // (undocumented)
-    export type ArithmeticMeasureOperator = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
-    // (undocumented)
-    export type AttributeElements = string[] | IAttributeElementsByValue;
-    // (undocumented)
-    export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
-    // (undocumented)
-    export type ComparisonConditionOperator = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
-    // (undocumented)
-    export type CompatibilityFilter = IExpressionFilter | FilterItem;
-    // (undocumented)
-    export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
-    // (undocumented)
-    export type FilterItem = DateFilterItem | AttributeFilterItem | MeasureValueFilterItem;
-    // (undocumented)
-    export interface IAbsoluteDateFilter {
-        // (undocumented)
-        absoluteDateFilter: {
-            dataset: ObjQualifier;
-            from: string;
-            to: string;
-        };
-    }
-    // (undocumented)
-    export interface IAfm {
-        // (undocumented)
-        attributes?: IAttribute[];
-        // (undocumented)
-        filters?: CompatibilityFilter[];
-        // (undocumented)
-        measures?: IMeasure[];
-    }
-    // (undocumented)
-    export interface IArithmeticMeasure {
-        // (undocumented)
-        measureIdentifiers: ILocalIdentifierQualifier[];
-        // (undocumented)
-        operator: ArithmeticMeasureOperator;
-    }
-    // (undocumented)
-    export interface IArithmeticMeasureDefinition {
-        // (undocumented)
-        arithmeticMeasure: IArithmeticMeasure;
-    }
-    // (undocumented)
-    export interface IAttribute {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        displayForm: ObjQualifier;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface IAttributeElementsByValue {
-        // (undocumented)
-        values: string[];
-    }
-    // (undocumented)
-    export interface IAttributeSortKey {
-        // (undocumented)
-        attribute: {
-            attributeIdentifier: string;
-            direction: SortDirection;
-        };
-    }
-    // (undocumented)
-    export interface IComparisonMeasureValueFilter {
-        // (undocumented)
-        comparisonMeasureValueFilter: {
-            measure: ObjQualifier | ILocalIdentifierQualifier;
-            operator: ComparisonConditionOperator;
-            value: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export type Identifier = string;
-    // (undocumented)
-    export interface IDimension {
-        // (undocumented)
-        itemIdentifiers: Identifier[];
-        // (undocumented)
-        localIdentifier: string;
-        // (undocumented)
-        sorting?: SortKey[];
-        // (undocumented)
-        totals?: ITotalItem[];
-    }
-    // (undocumented)
-    export interface IDimensionItemValue {
-        // (undocumented)
-        itemIdentifier: string;
-        // (undocumented)
-        itemValue: string;
-    }
-    // (undocumented)
-    export interface IDimensionLocator {
-        // (undocumented)
-        dimensionIdentifier: string;
-        // (undocumented)
-        locator: IDimensionItemValue[];
-    }
-    // (undocumented)
-    export interface IExecution {
-        // (undocumented)
-        execution: IAfm;
-        // (undocumented)
-        resultSpec?: IResultSpec;
-    }
-    // (undocumented)
-    export interface IExpressionFilter {
-        // (undocumented)
-        value: string;
-    }
-    // (undocumented)
-    export interface ILocalIdentifierQualifier {
-        // (undocumented)
-        localIdentifier: string;
-    }
-    // (undocumented)
-    export interface IMeasure {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        definition: MeasureDefinition;
-        // (undocumented)
-        format?: string;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export interface INativeTotalItem {
-        // (undocumented)
-        attributeIdentifiers: ILocalIdentifierQualifier[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface INegativeAttributeFilter {
-        // (undocumented)
-        negativeAttributeFilter: {
-            displayForm: ObjQualifier;
-            notIn: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IObjIdentifierQualifier {
-        // (undocumented)
-        identifier: {
-            id: string;
-            type: string;
-        };
-    }
-    // (undocumented)
-    export interface IOverPeriodMeasure {
-        // (undocumented)
-        dateAttributes: IPopDateAttribute[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface IOverPeriodMeasureDefinition {
-        // (undocumented)
-        overPeriodMeasure: IOverPeriodMeasure;
-    }
-    // (undocumented)
-    export interface IPopDateAttribute {
-        // (undocumented)
-        attribute: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPositiveAttributeFilter {
-        // (undocumented)
-        positiveAttributeFilter: {
-            displayForm: ObjQualifier;
-            in: AttributeElements;
-        };
-    }
-    // (undocumented)
-    export interface IPreviousPeriodDateDataset {
-        // (undocumented)
-        dataset: ObjQualifier;
-        // (undocumented)
-        periodsAgo: number;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasure {
-        // (undocumented)
-        dateDatasets: IPreviousPeriodDateDataset[];
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-    }
-    // (undocumented)
-    export interface IPreviousPeriodMeasureDefinition {
-        // (undocumented)
-        previousPeriodMeasure: IPreviousPeriodMeasure;
-    }
-    // (undocumented)
-    export interface IRangeMeasureValueFilter {
-        // (undocumented)
-        rangeMeasureValueFilter: {
-            measure: ObjQualifier | ILocalIdentifierQualifier;
-            operator: RangeConditionOperator;
-            from: number;
-            to: number;
-            treatNullValuesAs?: number;
-        };
-    }
-    // (undocumented)
-    export interface IRelativeDateFilter {
-        // (undocumented)
-        relativeDateFilter: {
-            dataset: ObjQualifier;
-            granularity: string;
-            from: number;
-            to: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultSpec {
-        // (undocumented)
-        dimensions?: IDimension[];
-    }
-    // (undocumented)
-    export interface ISimpleMeasure {
-        // (undocumented)
-        aggregation?: SimpleMeasureAggregation;
-        // (undocumented)
-        computeRatio?: boolean;
-        // (undocumented)
-        filters?: FilterItem[];
-        // (undocumented)
-        item: ObjQualifier;
-    }
-    // (undocumented)
-    export interface ISimpleMeasureDefinition {
-        // (undocumented)
-        measure: ISimpleMeasure;
-    }
-    // (undocumented)
-    export interface ITotalItem {
-        // (undocumented)
-        attributeIdentifier: ILocalIdentifierQualifier;
-        // (undocumented)
-        measureIdentifier: ILocalIdentifierQualifier;
-        // (undocumented)
-        type: TotalType;
-    }
-    // (undocumented)
-    export interface IValueSortKey {
-        // (undocumented)
-        value: {
-            direction: SortDirection;
-            dataColumnLocators: IDimensionLocator[];
-        };
-    }
-    // (undocumented)
-    export type MeasureDefinition = ISimpleMeasureDefinition | IArithmeticMeasureDefinition | IOverPeriodMeasureDefinition | IPreviousPeriodMeasureDefinition;
-    // (undocumented)
-    export type MeasureValueFilterItem = IRangeMeasureValueFilter | IComparisonMeasureValueFilter;
-    // (undocumented)
-    export type ObjQualifier = IObjIdentifierQualifier;
-    // (undocumented)
-    export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
-    // (undocumented)
-    export type SimpleMeasureAggregation = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM";
-    // (undocumented)
-    export type SortDirection = "ASC" | "DESC";
-    // (undocumented)
-    export type SortKey = IAttributeSortKey | IValueSortKey;
-    // (undocumented)
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    const // (undocumented)
-    isObjIdentifierQualifier: (value: unknown) => value is IObjIdentifierQualifier;
-}
-
-// @public (undocumented)
-export namespace Execution {
-    // (undocumented)
-    export type DataValue = null | string | number;
-    // (undocumented)
-    export interface IAttributeHeader {
-        // (undocumented)
-        attributeHeader: {
-            identifier: string;
-            localIdentifier: string;
-            name: string;
-            formOf: {
-                identifier: string;
-                name: string;
-            };
-        };
-    }
-    // (undocumented)
-    export interface IDimensionHeader {
-        // (undocumented)
-        headerGroups: IHeaderGroup[];
-    }
-    // (undocumented)
-    export interface IError extends Error {
-        // (undocumented)
-        response: Response;
-    }
-    // (undocumented)
-    export interface IExecutionResponse {
-        // (undocumented)
-        executionResponse: {
-            links: {
-                executionResult: string;
-            };
-            dimensions: IResultDimension[];
-        };
-    }
-    export interface IExecutionResponses {
-        // (undocumented)
-        executionResponse: IExecutionResponse;
-        // (undocumented)
-        executionResult: IExecutionResult | null;
-    }
-    // (undocumented)
-    export interface IExecutionResult {
-        // (undocumented)
-        data: DataValue[][] | DataValue[];
-        // (undocumented)
-        dimensionHeaders?: IDimensionHeader[];
-        // (undocumented)
-        paging: {
-            count: number[];
-            offset: number[];
-            total: number[];
-        };
-    }
-    // (undocumented)
-    export type IHeader = IMeasureGroupHeader | IAttributeHeader;
-    // (undocumented)
-    export interface IHeaderGroup {
-        // (undocumented)
-        headers: IResultHeader[];
-    }
-    // (undocumented)
-    export interface IMeasureGroupHeader {
-        // (undocumented)
-        measureGroupHeader: {
-            items: IMeasureHeaderItem[];
-        };
-    }
-    // (undocumented)
-    export interface IMeasureHeaderItem {
-        // (undocumented)
-        measureHeaderItem: {
-            identifier?: string;
-            format: string;
-            localIdentifier: string;
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultAttributeHeader {
-        // (undocumented)
-        attributeHeader: {
-            labelValue: string;
-            primaryLabelValue?: string;
-        };
-    }
-    // (undocumented)
-    export interface IResultDimension {
-        // (undocumented)
-        headers: IHeader[];
-    }
-    // (undocumented)
-    export type IResultHeader = IResultAttributeHeader | IResultMeasureHeader | IResultTotalHeader;
-    // (undocumented)
-    export interface IResultMeasureHeader {
-        // (undocumented)
-        measureHeader: {
-            measureIndex: number;
-        };
-    }
-    // (undocumented)
-    export interface IResultTotalHeader {
-        // (undocumented)
-        totalHeader: {
-            name: string;
-            type: string;
-        };
-    }
-    // (undocumented)
-    export function isAttributeHeader(header: IHeader): header is IAttributeHeader;
-    // (undocumented)
-    export function isMeasureGroupHeader(header: IHeader): header is IMeasureGroupHeader;
-    // (undocumented)
-    export function isResultAttributeHeader(header: IResultHeader): header is IResultAttributeHeader;
-    // (undocumented)
-    export function isResultMeasureHeader(header: IResultHeader): header is IResultMeasureHeader;
-    // (undocumented)
-    export function isResultTotalHeader(header: IResultHeader): header is IResultTotalHeader;
-    // (undocumented)
-    export interface ITotalHeaderItem {
-        // (undocumented)
-        totalHeaderItem: {
-            name: string;
-        };
-    }
-    // (undocumented)
-    export interface Warning {
-        // (undocumented)
-        message: string;
-        // (undocumented)
-        parameters?: any[];
-        // (undocumented)
-        warningCode: string;
-    }
-}
-
 // @public
 export interface ExecutionLinks {
     executionResult: string;
@@ -9336,10 +8918,7 @@ export interface ExecutionResult {
 }
 
 // @public
-export interface ExecutionResultHeader {
-    attributeHeader: AttributeResultHeader;
-    measureHeader: MeasureResultHeader;
-}
+export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader;
 
 // @public
 export interface ExecutionResultPaging {
@@ -9575,6 +9154,15 @@ export interface InlineMeasureDefinitionInline {
 }
 
 // @public (undocumented)
+export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
+
+// @public (undocumented)
+export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
+
+// @public (undocumented)
+export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
+
+// @public (undocumented)
 export interface ITigerClient {
     // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
@@ -9799,12 +9387,12 @@ export interface MeasureExecutionResultHeader {
 
 // @public
 export interface MeasureGroupHeader {
-    measureGroupHeader: Array<MeasureGroupHeaderIn>;
+    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
 }
 
 // @public
-export interface MeasureGroupHeaderIn {
-    items: MeasureHeaderItem;
+export interface MeasureGroupHeaderMeasureGroupHeader {
+    items: Array<MeasureHeaderItem>;
 }
 
 // @public
@@ -10108,7 +9696,7 @@ export interface PositiveAttributeFilter {
 // @public
 export interface PositiveAttributeFilterPositiveAttributeFilter {
     displayForm: ObjectIdentifier;
-    _in: AttributeFilterElements;
+    in: AttributeFilterElements;
 }
 
 // @public
@@ -10200,6 +9788,9 @@ export interface ResultControllerApiInterface {
 export interface ResultDimension {
     headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
+
+// @public (undocumented)
+export type ResultDimensionHeader = ResultDimension["headers"][number];
 
 // @public
 export interface ResultSpec {
@@ -10680,8 +10271,8 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
-    executeAfm: (workspaceId: string, execution: ExecuteAFM.IExecution) => Promise<Execution.IExecutionResponse>;
-    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<Execution.IExecutionResult>;
+    executeAfm: (workspaceId: string, execution: AfmExecution) => Promise<AfmExecutionResponse>;
+    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<ExecutionResult>;
 };
 
 // @public (undocumented)
@@ -10736,7 +10327,16 @@ export interface ValidObjectsControllerApiInterface {
 // @public (undocumented)
 export namespace VisualizationObject {
     // (undocumented)
-    export type IAttributeOrMeasure = ExecuteAFM.IMeasure | ExecuteAFM.IAttribute;
+    export interface IAttribute {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        displayForm: ObjectIdentifier;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export type IAttributeOrMeasure = IMeasure | IAttribute;
     // (undocumented)
     export interface IBucket {
         // (undocumented)
@@ -10744,7 +10344,40 @@ export namespace VisualizationObject {
         // (undocumented)
         localIdentifier?: string;
         // (undocumented)
-        totals?: ExecuteAFM.ITotalItem[];
+        totals?: ITotal[];
+    }
+    // (undocumented)
+    export type Identifier = string;
+    // (undocumented)
+    export interface IDimension {
+        // (undocumented)
+        itemIdentifiers: Identifier[];
+        // (undocumented)
+        localIdentifier: string;
+        // (undocumented)
+        sorting?: SortKey[];
+        // (undocumented)
+        totals?: ITotalItem[];
+    }
+    // (undocumented)
+    export interface IMeasure {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        definition: MeasureDefinition;
+        // (undocumented)
+        format?: string;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export interface ITotalItem {
+        // (undocumented)
+        attributeIdentifier: LocalIdentifier;
+        // (undocumented)
+        measureIdentifier: LocalIdentifier;
+        // (undocumented)
+        type: TotalType;
     }
     // (undocumented)
     export interface IVisualizationObject {
@@ -10753,11 +10386,15 @@ export namespace VisualizationObject {
             title: string;
             visualizationUrl: string;
             buckets: IBucket[];
-            filters: ExecuteAFM.FilterItem[];
+            filters: FilterDefinition[];
             sorts: ISortItem[];
             properties: VisualizationProperties;
         };
     }
+    // (undocumented)
+    export type SortKey = SortKeyAttribute | SortKeyValue;
+    // (undocumented)
+    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     // (undocumented)
     export type VisualizationProperties = {
         [key: string]: any;

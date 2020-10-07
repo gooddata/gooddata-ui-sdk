@@ -613,24 +613,11 @@ export interface ExecutionResult {
     paging: ExecutionResultPaging;
 }
 /**
+ * @type ExecutionResultHeader
  * Abstract execution result header
  * @export
- * @interface ExecutionResultHeader
  */
-export interface ExecutionResultHeader {
-    /**
-     *
-     * @type {AttributeResultHeader}
-     * @memberof ExecutionResultHeader
-     */
-    attributeHeader: AttributeResultHeader;
-    /**
-     *
-     * @type {MeasureResultHeader}
-     * @memberof ExecutionResultHeader
-     */
-    measureHeader: MeasureResultHeader;
-}
+export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExecutionResultHeader;
 /**
  * A paging information related to the data presented in the execution result. These paging information are multi-dimensional.
  * @export
@@ -838,23 +825,23 @@ export interface MeasureExecutionResultHeader {
 export interface MeasureGroupHeader {
     /**
      *
-     * @type {Array<MeasureGroupHeaderIn>}
+     * @type {MeasureGroupHeaderMeasureGroupHeader}
      * @memberof MeasureGroupHeader
      */
-    measureGroupHeader: Array<MeasureGroupHeaderIn>;
+    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
 }
 /**
  *
  * @export
- * @interface MeasureGroupHeaderIn
+ * @interface MeasureGroupHeaderMeasureGroupHeader
  */
-export interface MeasureGroupHeaderIn {
+export interface MeasureGroupHeaderMeasureGroupHeader {
     /**
      *
-     * @type {MeasureHeaderItem}
-     * @memberof MeasureGroupHeaderIn
+     * @type {Array<MeasureHeaderItem>}
+     * @memberof MeasureGroupHeaderMeasureGroupHeader
      */
-    items: MeasureHeaderItem;
+    items: Array<MeasureHeaderItem>;
 }
 /**
  *
@@ -1153,7 +1140,7 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
      * @type {AttributeFilterElements}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
-    _in: AttributeFilterElements;
+    in: AttributeFilterElements;
 }
 /**
  * Filter the result by comparing specified measure to given range of values.
@@ -1482,7 +1469,7 @@ export const AfmControllerApiAxiosParamCreator = function (configuration?: Confi
             localVarHeaderParameter["Content-Type"] = "application/json";
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
             const needsSerialization =
@@ -1770,7 +1757,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
 
@@ -2021,7 +2008,7 @@ export const ResultControllerApiAxiosParamCreator = function (configuration?: Co
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
 
@@ -2221,7 +2208,7 @@ export const ValidObjectsControllerApiAxiosParamCreator = function (configuratio
             localVarHeaderParameter["Content-Type"] = "application/json";
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
             const needsSerialization =

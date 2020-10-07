@@ -18,9 +18,13 @@ import {
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
-export { ExecuteAFM } from "./gd-tiger-model/ExecuteAFM";
-export { Execution } from "./gd-tiger-model/Execution";
 export { VisualizationObject } from "./gd-tiger-model/VisualizationObject";
+export {
+    isAttributeHeader,
+    isObjectIdentifier,
+    isResultAttributeHeader,
+    ResultDimensionHeader,
+} from "./gd-tiger-model/typeGuards";
 
 export { newAxios };
 

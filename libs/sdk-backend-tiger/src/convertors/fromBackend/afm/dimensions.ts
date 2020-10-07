@@ -5,9 +5,8 @@ import {
     IMeasureDescriptor,
     IDimensionDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { Execution } from "@gooddata/api-client-tiger";
+import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
 
-import isAttributeHeader = Execution.isAttributeHeader;
 import {
     idRef,
     IExecutionDefinition,
@@ -23,7 +22,7 @@ import mapValues from "lodash/mapValues";
 const DEFAULT_FORMAT = "#,#.##";
 
 function transformDimension(
-    dim: Execution.IResultDimension,
+    dim: ResultDimension,
     simpleMeasureRefs: Record<string, ObjRef>,
 ): IDimensionDescriptor {
     return {
@@ -76,7 +75,7 @@ function transformDimension(
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,
-                                    name: m.measureHeaderItem.name ?? m.measureHeaderItem.localIdentifier,
+                                    name: m.measureHeaderItem.localIdentifier,
                                     format: m.measureHeaderItem.format ?? DEFAULT_FORMAT,
                                     identifier,
                                     ref,
@@ -107,7 +106,7 @@ function transformDimension(
  * @returns dimensions as used in the unified model
  */
 export function transformResultDimensions(
-    dimensions: Execution.IResultDimension[],
+    dimensions: ResultDimension[],
     def: IExecutionDefinition,
 ): IDimensionDescriptor[] {
     const simpleMeasures = def.measures.filter(isSimpleMeasure);

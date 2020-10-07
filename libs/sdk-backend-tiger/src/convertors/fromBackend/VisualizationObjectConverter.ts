@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeepWith from "lodash/cloneDeepWith";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { ExecuteAFM, VisualizationObject } from "@gooddata/api-client-tiger";
+import { VisualizationObject, isObjectIdentifier } from "@gooddata/api-client-tiger";
 
 import { toObjRef } from "./afm/ObjRefConverter";
 
 const cloneWithSanitizedIds = (item: any) =>
     cloneDeepWith(item, (value) => {
-        if (ExecuteAFM.isObjIdentifierQualifier(value)) {
+        if (isObjectIdentifier(value)) {
             return toObjRef(value);
         }
 

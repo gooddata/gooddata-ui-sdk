@@ -1056,19 +1056,16 @@
                 "type": "object",
                 "properties": {
                     "measureGroupHeader": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/MeasureGroupHeaderIn"
+                        "required": ["items"],
+                        "type": "object",
+                        "properties": {
+                            "items": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/MeasureHeaderItem"
+                                }
+                            }
                         }
-                    }
-                }
-            },
-            "MeasureGroupHeaderIn": {
-                "required": ["items"],
-                "type": "object",
-                "properties": {
-                    "items": {
-                        "$ref": "#/components/schemas/MeasureHeaderItem"
                     }
                 }
             },
@@ -1354,7 +1351,7 @@
             "ExecutionResultHeader": {
                 "type": "object",
                 "description": "Abstract execution result header",
-                "anyOf": [
+                "oneOf": [
                     {
                         "$ref": "#/components/schemas/AttributeExecutionResultHeader"
                     },
