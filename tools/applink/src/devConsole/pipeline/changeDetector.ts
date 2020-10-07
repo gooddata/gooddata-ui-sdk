@@ -2,7 +2,15 @@
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types";
 import chokidar from "chokidar";
 import path from "path";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
+import {
+    AutobuildToggled,
+    DcEvent,
+    EventBus,
+    GlobalEventBus,
+    IEventListener,
+    PackageChange,
+    packagesChanged,
+} from "../events";
 import { appLogImportant, appLogWarn } from "../ui/utils";
 import { intersection } from "lodash";
 
@@ -34,6 +42,7 @@ export class ChangeDetector implements IEventListener {
 
     private timeoutId: any | undefined;
     private accumulatedFileChanges: string[] = [];
+    private active: boolean = true;
 
     private constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
@@ -60,7 +69,38 @@ export class ChangeDetector implements IEventListener {
 
                 break;
             }
+            case "autobuildToggled": {
+                this.onAutobuildToggled(event);
+                break;
+            }
         }
+    };
+
+    private onAutobuildToggled = (event: AutobuildToggled): void => {
+        const { value } = event.body;
+
+        this.active = value;
+
+        if (!this.active) {
+            this.pauseChanges();
+        } else {
+            this.resumeChanges();
+        }
+    };
+
+    private pauseChanges = (): void => {
+        if (this.timeoutId) {
+            clearTimeout(this.timeoutId);
+            this.timeoutId = undefined;
+        }
+
+        appLogWarn("Autobuild paused. Will accumulate file change information but will not start builds.");
+    };
+
+    private resumeChanges = (): void => {
+        this.processAccumulatedChanges();
+
+        appLogImportant("Autobuild resumed. Will dispatch all accumulated changes.");
     };
 
     private close = (): void => {
@@ -76,7 +116,9 @@ export class ChangeDetector implements IEventListener {
             clearTimeout(this.timeoutId);
         }
 
-        this.timeoutId = setTimeout(this.processAccumulatedChanges, 100);
+        if (this.active) {
+            this.timeoutId = setTimeout(this.processAccumulatedChanges, 100);
+        }
     };
 
     private startWatchingForChanges = (): void => {

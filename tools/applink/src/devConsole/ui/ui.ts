@@ -4,7 +4,15 @@ import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
 import { getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
-import { DcEvent, EventBus, GlobalEventBus, IEventListener, PackageChange, packagesChanged } from "../events";
+import {
+    autobuildToggled,
+    DcEvent,
+    EventBus,
+    GlobalEventBus,
+    IEventListener,
+    PackageChange,
+    packagesChanged,
+} from "../events";
 import { BuildOutput } from "./buildOutput";
 
 export class TerminalUi implements IEventListener {
@@ -18,6 +26,7 @@ export class TerminalUi implements IEventListener {
     // @ts-ignore
     private readonly menu: AppMenu;
 
+    private allPackages: string[] = [];
     private selectedPackages: string[] = [];
 
     private constructor(private readonly eventBus: EventBus) {
@@ -39,6 +48,11 @@ export class TerminalUi implements IEventListener {
         switch (event.type) {
             case "packagesSelected": {
                 this.selectedPackages = event.body.packages;
+
+                break;
+            }
+            case "targetSelected": {
+                this.allPackages = event.body.targetDescriptor.dependencies.map((dep) => dep.pkg.packageName);
 
                 break;
             }
@@ -110,6 +124,22 @@ export class TerminalUi implements IEventListener {
                 },
             },
             {
+                name: (item: AppMenuItem): string => {
+                    if (item.itemState) {
+                        return "Auto On";
+                    } else {
+                        return "Auto Off";
+                    }
+                },
+                keyName: "F3",
+                registerKeys: ["f3"],
+                registerCb: (item: AppMenuItem) => {
+                    item.itemState = !item.itemState;
+                    this.eventBus.post(autobuildToggled(item.itemState));
+                },
+                itemState: true,
+            },
+            {
                 name: "BuildOne",
                 keyName: "F7",
                 registerKeys: ["f7"],
@@ -138,6 +168,21 @@ export class TerminalUi implements IEventListener {
                     const changes: PackageChange[] = this.selectedPackages.map((sel) => ({
                         packageName: sel,
                         files: [],
+                    }));
+                    this.eventBus.post(packagesChanged(changes));
+                },
+            },
+            {
+                name: "BuildAll",
+                keyName: "F9",
+                registerKeys: ["f9"],
+                registerCb: () => {
+                    // fire package change for all packages. these form transitive closure so it is ok to
+                    // mark changes as independent (means less initial processing for scheduler).
+                    const changes: PackageChange[] = this.allPackages.map((sel) => ({
+                        packageName: sel,
+                        files: [],
+                        independent: true,
                     }));
                     this.eventBus.post(packagesChanged(changes));
                 },
