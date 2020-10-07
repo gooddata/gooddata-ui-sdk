@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 @import "./variables.scss";
+@import "./MeasureNumberFormat/_variables";
 
 .gd-measure-number-format-dropdown-body {
     padding: 5px 0;
@@ -20,9 +21,6 @@
         }
     }
 }
-
-$measure_number_format_custom_format_dialog_width: 250px;
-$measure_number_format_custom_format_dialog_textarea_height: 100px;
 
 .gd-measure-custom-format-dialog-body {
     display: flex;
@@ -113,10 +111,10 @@ $measure_number_format_custom_format_dialog_textarea_height: 100px;
         }
 
         .gd-measure-format-button-templates {
-            color: $gd-color-highlight;
+            color: $gd-palette-primary-base;
 
             &:hover {
-                color: darken($gd-color-highlight, 20%);
+                color: $button_templates_hover_color;
             }
         }
 

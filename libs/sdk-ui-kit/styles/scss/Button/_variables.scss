@@ -28,18 +28,18 @@ $button-shadow-darker: transparentize($button-shadow-color, 0.85);
 
 // Branded colors calculation
 // primary color
-$button-action-color: var(--gd-palette-primary-base, $gd-color-highlight);
-$button-action-bg: var(--gd-palette-primary-base, $gd-color-highlight);
+$button-action-color: $gd-palette-primary-base;
+$button-action-bg: $gd-palette-primary-base;
 
 $button-action-color-t25: var(--gd-palette-primary-base-t25, transparentize($gd-color-highlight, 0.25));
-$button-action-color-t80: var(--gd-palette-primary-base-t80, transparentize($gd-color-highlight, 0.8));
+$button-action-color-t80: $gd-palette-primary-base-t80;
 $button-action-color-t70: var(--gd-palette-primary-base-t70, transparentize($gd-color-highlight, 0.7));
 
 $button-action-color-d12: var(--gd-palette-primary-base-d12, darken($gd-color-highlight, 12%));
 
 $button-action-disabled-color: transparentize(lighten($gd-color-highlight, 12%), 0.4);
 $button-action-disabled-bg: var(--gd-palette-primary-disabled, $button-action-disabled-color);
-$button-action-hover-bg: $gd-color-highlight-darken06;
+$button-action-hover-bg: $gd-palette-primary-base-darken06;
 $button-action-focus-shadow: var(
     --gd-palette-primary-focus,
     transparentize(lighten($gd-color-highlight, 6%), 0.4)
