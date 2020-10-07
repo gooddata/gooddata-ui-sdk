@@ -3,9 +3,9 @@ import React from "react";
 import isEqual from "lodash/isEqual";
 import {
     IAnalyticalBackend,
-    IElementQueryOptions,
-    IElementQueryResult,
-    IElementQueryAttributeFilter,
+    IElementsQueryOptions,
+    IElementsQueryResult,
+    IElementsQueryAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { defaultErrorHandler, OnError, withContexts } from "@gooddata/sdk-ui";
@@ -52,7 +52,7 @@ export interface IAttributeElementsProps {
      * Optionally specify options that will be passed to the element query, which is responsible for loading the data (
      * this can be used to add server-side filtering)
      */
-    options?: IElementQueryOptions;
+    options?: IElementsQueryOptions;
 
     /**
      * Optionally specify error callback.
@@ -62,13 +62,13 @@ export interface IAttributeElementsProps {
     /**
      * Optionally specify filters that restrict the elements.
      */
-    filters?: IElementQueryAttributeFilter[];
+    filters?: IElementsQueryAttributeFilter[];
 
     children?(props: IAttributeElementsChildren): React.ReactNode;
 }
 
 interface IAttributeElementsState {
-    validElements?: IElementQueryResult;
+    validElements?: IElementsQueryResult;
     isLoading: boolean;
     error?: any;
 }
@@ -155,6 +155,7 @@ class AttributeElementsCore extends React.PureComponent<IAttributeElementsProps,
 
             const elements = await this.getBackend()
                 .workspace(workspace)
+                .attributes()
                 .elements()
                 .forDisplayForm(displayForm)
                 .withOffset(offset || 0)

@@ -111,9 +111,16 @@ export {
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
     IWorkspacesQueryResult,
+    IWorkspaceDescriptor,
 } from "./workspace";
 
 export { IWorkspacePermissionsService } from "./workspace/permissions";
+
+export { IWorkspaceAttributesService } from "./workspace/attributes";
+
+export { IWorkspaceMeasuresService } from "./workspace/measures";
+
+export { IWorkspaceFactsService } from "./workspace/facts";
 
 export { IWorkspaceDashboardsService } from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";

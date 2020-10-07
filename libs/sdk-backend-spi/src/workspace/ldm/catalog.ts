@@ -252,7 +252,7 @@ export interface IWorkspaceCatalogMethods {
      *
      * @returns array of catalog items
      */
-    items(): CatalogItem[];
+    allItems(): CatalogItem[];
 
     /**
      * Get all catalog attributes

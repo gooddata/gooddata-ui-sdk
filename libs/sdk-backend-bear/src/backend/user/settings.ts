@@ -6,7 +6,7 @@ import { BearAuthenticatedCallGuard } from "../../types/auth";
 export class BearUserSettingsService implements IUserSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
 
-    public async query(): Promise<IUserSettings> {
+    public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (sdk, { getPrincipal }) => {
             const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
 

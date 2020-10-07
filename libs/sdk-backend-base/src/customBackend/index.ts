@@ -1,15 +1,15 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AuthenticatedPrincipal,
-    AuthenticationContext,
-    BackendCapabilities,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
+    IBackendCapabilities,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     isNotAuthenticated,
     IUserService,
-    IWorkspaceQueryFactory,
+    IWorkspacesQueryFactory,
     NotAuthenticated,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -32,7 +32,7 @@ import { CustomBackendConfig } from "./config";
  * @internal
  */
 export class CustomBackend implements IAnalyticalBackend {
-    public readonly capabilities: BackendCapabilities;
+    public readonly capabilities: IBackendCapabilities;
     public readonly config: CustomBackendConfig;
 
     private readonly authProvider: IAuthProviderCallGuard;
@@ -63,7 +63,7 @@ export class CustomBackend implements IAnalyticalBackend {
         return new CustomBackend(this.config, guardedAuthProvider);
     };
 
-    public authenticate = (force?: boolean): Promise<AuthenticatedPrincipal> => {
+    public authenticate = (force?: boolean): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
@@ -81,7 +81,7 @@ export class CustomBackend implements IAnalyticalBackend {
         return this.authProvider.deauthenticate(this.getAuthenticationContext());
     };
 
-    public isAuthenticated = (): Promise<AuthenticatedPrincipal | null> => {
+    public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
         return this.authProvider.getCurrentPrincipal(this.getAuthenticationContext());
     };
 
@@ -99,7 +99,7 @@ export class CustomBackend implements IAnalyticalBackend {
         });
     };
 
-    public workspaces = (): IWorkspaceQueryFactory => {
+    public workspaces = (): IWorkspacesQueryFactory => {
         throw new NotSupported("workspace listing is not supported");
     };
 
@@ -107,7 +107,7 @@ export class CustomBackend implements IAnalyticalBackend {
         throw new NotSupported("user service is not supported");
     };
 
-    private getAuthenticationContext = (useClient?: any): AuthenticationContext => {
+    private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {
         return {
             client: useClient || this.config.clientProvider(this.config),
         };
@@ -141,7 +141,7 @@ export class CustomBackend implements IAnalyticalBackend {
         return result;
     };
 
-    private triggerAuthentication = (reset = false, useClient?: any): Promise<AuthenticatedPrincipal> => {
+    private triggerAuthentication = (reset = false, useClient?: any): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
             return Promise.reject(
                 new NotAuthenticated("Backend is not set up with authentication provider."),
@@ -156,7 +156,7 @@ export class CustomBackend implements IAnalyticalBackend {
     };
 
     private getAsyncCallContext = async (client: any): Promise<IAuthenticatedAsyncCallContext> => {
-        const getPrincipal = async (): Promise<AuthenticatedPrincipal> => {
+        const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {
             if (!this.authProvider) {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }

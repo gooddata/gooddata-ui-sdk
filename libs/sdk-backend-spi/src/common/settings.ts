@@ -57,7 +57,7 @@ export interface ISettings {
     /**
      * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
      */
-    ADMeasureValueFilterNullAsZeroOption?: boolean;
+    ADMeasureValueFilterNullAsZeroOption?: string;
 
     /**
      * Indicates whether data point visibility configuration is available in AD

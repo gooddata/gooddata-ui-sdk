@@ -152,6 +152,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         const { workspace, displayForm } = this.props;
         const elements = await this.getBackend()
             .workspace(workspace)
+            .attributes()
             .elements()
             .forDisplayForm(displayForm)
             .withOptions({
@@ -214,6 +215,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
         const newElements = await this.getBackend()
             .workspace(workspace)
+            .attributes()
             .elements()
             .forDisplayForm(displayForm)
             .withOptions({

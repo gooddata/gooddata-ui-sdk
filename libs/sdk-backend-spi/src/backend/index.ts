@@ -2,7 +2,7 @@
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
-import { IWorkspaceQueryFactory, IAnalyticalWorkspace } from "../workspace";
+import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace";
 import { IAuthenticatedPrincipal, IAuthenticationProvider } from "../auth";
 import { IUserService } from "../user";
 
@@ -130,7 +130,7 @@ export interface IAnalyticalBackend {
     /**
      * Returns service that can be used to obtain available workspaces.
      */
-    workspaces(): IWorkspaceQueryFactory;
+    workspaces(): IWorkspacesQueryFactory;
 }
 
 /**

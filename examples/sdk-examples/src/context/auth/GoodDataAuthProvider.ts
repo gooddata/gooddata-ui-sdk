@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import sdk from "@gooddata/api-client-bear";
-import { IAuthenticationProvider, AuthenticatedPrincipal } from "@gooddata/sdk-backend-spi";
+import { IAuthenticationProvider, IAuthenticatedPrincipal } from "@gooddata/sdk-backend-spi";
 import { ANONYMOUS_ACCESS } from "../../constants/env";
 
 export class GoodDataAuthProvider implements IAuthenticationProvider {
@@ -65,7 +65,7 @@ export class GoodDataAuthProvider implements IAuthenticationProvider {
         // TODO: SDK8 Decide whether to implement this or remove it
     }
 
-    public async getCurrentPrincipal(): Promise<AuthenticatedPrincipal | null> {
+    public async getCurrentPrincipal(): Promise<IAuthenticatedPrincipal | null> {
         // eslint-disable-next-line no-warning-comments
         // TODO: SDK8 Decide whether to implement this or remove it
         return null;

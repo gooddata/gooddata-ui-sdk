@@ -4,15 +4,15 @@
 
 ```ts
 
-import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
-import { BackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { CatalogItem } from '@gooddata/sdk-model';
 import { dummyBackend } from '@gooddata/sdk-backend-base';
 import { dummyBackendEmptyData } from '@gooddata/sdk-backend-base';
 import { dummyDataView } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
+import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -78,7 +78,7 @@ export type LegacyExecutionRecording = {
 };
 
 // @internal @deprecated
-export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: AnalyticalBackendConfig): IAnalyticalBackend;
+export function legacyRecordedBackend(index: LegacyRecordingIndex, config?: IAnalyticalBackendConfig): IAnalyticalBackend;
 
 // @internal @deprecated
 export function legacyRecordedDataView(recording: LegacyExecutionRecording): IDataView;
@@ -110,10 +110,10 @@ export type NamedDataView = {
 };
 
 // @internal
-export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig, capabilities?: BackendCapabilities): IAnalyticalBackend;
+export function recordedBackend(index: RecordingIndex, config?: RecordedBackendConfig, capabilities?: IBackendCapabilities): IAnalyticalBackend;
 
 // @internal
-export type RecordedBackendConfig = AnalyticalBackendConfig & {
+export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     globalSettings?: ISettings;
     globalPalette?: IColorPalette;
     useRefType?: RecordedRefType;

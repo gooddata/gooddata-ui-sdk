@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 
 import {
-    AuthenticatedPrincipal,
-    AuthenticationContext,
+    IAuthenticatedPrincipal,
+    IAuthenticationContext,
     IAnalyticalBackend,
     IAuthenticationProvider,
 } from "@gooddata/sdk-backend-spi";
@@ -22,7 +22,7 @@ let GlobalBackend: IAnalyticalBackend | undefined;
  * There is no state on the wiremock server.
  */
 class NoLoginAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
-    public async authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal> {
+    public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         await this.obtainCurrentPrincipal(context);
 
         return this.principal!;

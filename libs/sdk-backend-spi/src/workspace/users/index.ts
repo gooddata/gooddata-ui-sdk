@@ -38,7 +38,7 @@ export interface IWorkspaceUser {
  *
  * @public
  */
-export interface IWorkspaceUserQueryOptions {
+export interface IWorkspaceUsersQueryOptions {
     /**
      * Structured prefix filter
      * - disjunctions are separated by colon (',')
@@ -53,14 +53,14 @@ export interface IWorkspaceUserQueryOptions {
  *
  * @public
  */
-export interface IWorkspaceUserQuery {
+export interface IWorkspaceUsersQuery {
     /**
      * Allows to specify advanced options for the users query.
      *
      * @param options - advanced options
      * @returns users query
      */
-    withOptions(options: IWorkspaceUserQueryOptions): IWorkspaceUserQuery;
+    withOptions(options: IWorkspaceUsersQueryOptions): IWorkspaceUsersQuery;
 
     /**
      * Starts the users query.

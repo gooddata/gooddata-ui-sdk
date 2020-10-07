@@ -48,7 +48,7 @@ describe("InsightViewDataLoader", () => {
             workspace: () => ({
                 ...baseBackend.workspace(workspace),
                 styling: () => ({
-                    colorPalette: getColorPalette,
+                    getColorPalette: getColorPalette,
                 }),
             }),
         });
@@ -93,8 +93,8 @@ describe("InsightViewDataLoader", () => {
             workspace: () => ({
                 ...baseBackend.workspace(workspace),
                 settings: () => ({
-                    queryForCurrentUser: noop as any,
-                    query: getSettings,
+                    getSettingsForCurrentUser: noop as any,
+                    getSettings: getSettings,
                 }),
             }),
         });
@@ -143,11 +143,11 @@ describe("InsightViewDataLoader", () => {
                     deleteInsight: noop as any,
                     getInsight,
                     getInsights: noop as any,
-                    getReferencedObjects: noop as any,
+                    getInsightReferencedObjects: noop as any,
                     getVisualizationClass: noop as any,
                     getVisualizationClasses: noop as any,
                     updateInsight: noop as any,
-                    getObjectsReferencing: noop as any,
+                    getInsightReferencingObjects: noop as any,
                     getInsightWithAddedFilters: noop as any,
                 }),
             }),

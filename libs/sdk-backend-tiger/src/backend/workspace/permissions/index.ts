@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspacePermissionsFactory, IWorkspaceUserPermissions } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissions, WorkspacePermission } from "@gooddata/sdk-model";
+import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
-export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsFactory {
+export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public async forCurrentUser(): Promise<IWorkspaceUserPermissions> {
-        const permissions = await this.authCall(async () => {
+    public async getPermissionsForCurrentUser(): Promise<IWorkspacePermissions> {
+        return await this.authCall(async () => {
             const result: IWorkspacePermissions = {
                 canAccessWorkbench: true,
                 canCreateReport: true,
@@ -27,18 +27,5 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsFa
             };
             return result;
         });
-        return new TigerWorkspaceUserPermissions(permissions);
-    }
-}
-
-export class TigerWorkspaceUserPermissions implements IWorkspaceUserPermissions {
-    constructor(public readonly permissions: IWorkspacePermissions) {}
-
-    public allPermissions(): IWorkspacePermissions {
-        return { ...this.permissions };
-    }
-
-    public hasPermission(permission: WorkspacePermission): boolean {
-        return this.permissions[permission] === true;
     }
 }

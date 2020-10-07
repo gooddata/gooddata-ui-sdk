@@ -10,7 +10,7 @@ import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api";
 export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public query(): Promise<IWorkspaceSettings> {
+    public getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async (sdk) => {
             const flags = await sdk.project.getProjectFeatureFlags(this.workspace);
 
@@ -21,7 +21,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
         });
     }
 
-    public queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
+    public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.authCall(async (sdk, { getPrincipal }) => {
             const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
 

@@ -1,15 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
 import { GdcExecution } from "@gooddata/api-model-bear";
 import {
-    AnalyticalBackendConfig,
-    AuthenticatedPrincipal,
+    IAnalyticalBackendConfig,
+    IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAttributeDescriptor,
     IAuthenticationProvider,
     IDataView,
     IDimensionDescriptor,
-    IElementQueryFactory,
+    IWorkspaceAttributesService,
+    IWorkspaceMeasuresService,
+    IWorkspaceFactsService,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -18,17 +20,17 @@ import {
     IPreparedExecution,
     IUserService,
     IWorkspaceCatalogFactory,
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     IWorkspaceDatasetsService,
-    IWorkspaceDateFilterConfigsQuery,
-    IWorkspaceInsights,
-    IWorkspaceMetadata,
-    IWorkspacePermissionsFactory,
-    IWorkspaceQueryFactory,
+    IDateFilterConfigsQuery,
+    IWorkspaceInsightsService,
+    IWorkspacePermissionsService,
+    IWorkspacesQueryFactory,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     IWorkspaceUsersQuery,
     NotSupported,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -94,7 +96,7 @@ export type LegacyExecutionRecording = {
  */
 export function legacyRecordedBackend(
     index: LegacyRecordingIndex,
-    config: AnalyticalBackendConfig = defaultConfig,
+    config: IAnalyticalBackendConfig = defaultConfig,
 ): IAnalyticalBackend {
     const noopBackend: IAnalyticalBackend = {
         capabilities: {},
@@ -114,16 +116,16 @@ export function legacyRecordedBackend(
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index[id]);
         },
-        workspaces(): IWorkspaceQueryFactory {
+        workspaces(): IWorkspacesQueryFactory {
             throw new NotSupported("not yet supported");
         },
-        authenticate(): Promise<AuthenticatedPrincipal> {
+        authenticate(): Promise<IAuthenticatedPrincipal> {
             return Promise.resolve({ userId: "recordedUser" });
         },
         deauthenticate(): Promise<void> {
             return Promise.resolve();
         },
-        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+        isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: "recordedUser" });
         },
     };
@@ -158,22 +160,28 @@ function recordedWorkspace(
 ): IAnalyticalWorkspace {
     return {
         workspace,
+        getDescriptor(): Promise<IWorkspaceDescriptor> {
+            throw new NotSupported("not supported");
+        },
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace);
-        },
-        elements(): IElementQueryFactory {
-            throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
             throw new NotSupported("not supported");
         },
-        metadata(): IWorkspaceMetadata {
+        attributes(): IWorkspaceAttributesService {
             throw new NotSupported("not supported");
         },
-        insights(): IWorkspaceInsights {
+        measures(): IWorkspaceMeasuresService {
             throw new NotSupported("not supported");
         },
-        dashboards(): IWorkspaceDashboards {
+        facts(): IWorkspaceFactsService {
+            throw new NotSupported("not supported");
+        },
+        insights(): IWorkspaceInsightsService {
+            throw new NotSupported("not supported");
+        },
+        dashboards(): IWorkspaceDashboardsService {
             throw new NotSupported("not supported");
         },
         styling(): IWorkspaceStylingService {
@@ -182,16 +190,16 @@ function recordedWorkspace(
         catalog(): IWorkspaceCatalogFactory {
             throw new NotSupported("not supported");
         },
-        dataSets(): IWorkspaceDatasetsService {
+        datasets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
         },
-        permissions(): IWorkspacePermissionsFactory {
+        permissions(): IWorkspacePermissionsService {
             throw new NotSupported("not supported");
         },
         users(): IWorkspaceUsersQuery {
             throw new NotSupported("not supported");
         },
-        dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+        dateFilterConfigs(): IDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };

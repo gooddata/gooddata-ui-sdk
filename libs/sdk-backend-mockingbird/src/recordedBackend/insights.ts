@@ -1,12 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    IInsightQueryOptions,
-    IInsightQueryResult,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
     InsightOrdering,
-    IWorkspaceInsights,
+    IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
@@ -42,7 +42,7 @@ let adHocInsightCounter = 1;
  *
  * @internal
  */
-export class RecordedInsights implements IWorkspaceInsights {
+export class RecordedInsights implements IWorkspaceInsightsService {
     private readonly insights: { [id: string]: InsightRecording };
     private readonly visClasses: IVisualizationClass[];
 
@@ -82,7 +82,7 @@ export class RecordedInsights implements IWorkspaceInsights {
         return this.createInsightWithRef(recording.obj);
     }
 
-    public async getInsights(query?: IInsightQueryOptions): Promise<IInsightQueryResult> {
+    public async getInsights(query?: IInsightsQueryOptions): Promise<IInsightsQueryResult> {
         const { limit, offset, orderBy } = query ?? {};
 
         if (isEmpty(this.insights)) {
@@ -135,14 +135,14 @@ export class RecordedInsights implements IWorkspaceInsights {
         return this.visClasses;
     }
 
-    public getReferencedObjects = async (
+    public getInsightReferencedObjects = async (
         _insight: IInsight,
         _types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences> => {
         return {};
     };
 
-    public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
+    public getInsightReferencingObjects = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return {};
     };
 

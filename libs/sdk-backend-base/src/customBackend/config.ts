@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AnalyticalBackendConfig,
+    IAnalyticalBackendConfig,
     IDataView,
     IDimensionDescriptor,
     IExecutionResult,
@@ -91,7 +91,7 @@ export type DataProviderContext = CustomCallContext & {
 /**
  * @beta
  */
-export type CustomBackendConfig = AnalyticalBackendConfig & {
+export type CustomBackendConfig = IAnalyticalBackendConfig & {
     /**
      * Provider which will be called to obtain an instance of API client to talk to the backend server.
      */

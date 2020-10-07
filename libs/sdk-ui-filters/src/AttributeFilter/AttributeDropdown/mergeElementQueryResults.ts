@@ -1,10 +1,10 @@
-// (C) 2019 GoodData Corporation
-import { IElementQueryResult } from "@gooddata/sdk-backend-spi";
+// (C) 2019-2020 GoodData Corporation
+import { IElementsQueryResult } from "@gooddata/sdk-backend-spi";
 import { IElementQueryResultWithEmptyItems, emptyListItem } from "./types";
 
 export function mergeElementQueryResults(
     currentElements: IElementQueryResultWithEmptyItems,
-    newElements: IElementQueryResult,
+    newElements: IElementsQueryResult,
 ): IElementQueryResultWithEmptyItems {
     const mergedItems = currentElements ? [...currentElements.items] : [];
     const currentLength = mergedItems.length;

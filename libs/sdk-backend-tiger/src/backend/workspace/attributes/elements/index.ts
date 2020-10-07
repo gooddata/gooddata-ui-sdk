@@ -1,28 +1,28 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IElementQueryFactory,
-    IElementQuery,
-    IElementQueryOptions,
-    IElementQueryResult,
+    IElementsQueryFactory,
+    IElementsQuery,
+    IElementsQueryOptions,
+    IElementsQueryResult,
     UnexpectedError,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, isIdentifierRef, IAttributeElement } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { TigerAuthenticatedCallGuard } from "../../../types";
+import { TigerAuthenticatedCallGuard } from "../../../../types";
 
-export class TigerWorkspaceElements implements IElementQueryFactory {
+export class TigerWorkspaceElements implements IElementsQueryFactory {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public forDisplayForm(ref: ObjRef): IElementQuery {
+    public forDisplayForm(ref: ObjRef): IElementsQuery {
         return new TigerWorkspaceElementsQuery(this.authCall, ref, this.workspace);
     }
 }
 
-class TigerWorkspaceElementsQuery implements IElementQuery {
+class TigerWorkspaceElementsQuery implements IElementsQuery {
     private limit: number = 100;
     private offset: number = 0;
-    private options: IElementQueryOptions | undefined;
+    private options: IElementsQueryOptions | undefined;
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -30,7 +30,7 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
         private readonly workspace: string,
     ) {}
 
-    public withLimit(limit: number): IElementQuery {
+    public withLimit(limit: number): IElementsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         this.limit = limit;
@@ -38,29 +38,29 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
         return this;
     }
 
-    public withOffset(offset: number): IElementQuery {
+    public withOffset(offset: number): IElementsQuery {
         this.offset = offset;
         return this;
     }
 
-    public withAttributeFilters(): IElementQuery {
+    public withAttributeFilters(): IElementsQuery {
         throw new NotSupported("not supported");
     }
 
-    public withOptions(options: IElementQueryOptions): IElementQuery {
+    public withOptions(options: IElementsQueryOptions): IElementsQuery {
         this.options = options;
         return this;
     }
 
-    public async query(): Promise<IElementQueryResult> {
+    public async query(): Promise<IElementsQueryResult> {
         return this.queryWorker(this.offset, this.limit, this.options);
     }
 
     private async queryWorker(
         offset: number,
         limit: number,
-        options: IElementQueryOptions | undefined,
-    ): Promise<IElementQueryResult> {
+        options: IElementsQueryOptions | undefined,
+    ): Promise<IElementsQueryResult> {
         const { ref } = this;
         if (!isIdentifierRef(ref)) {
             throw new UnexpectedError("Tiger backend does not allow referencing objects by URI");
@@ -84,7 +84,7 @@ class TigerWorkspaceElementsQuery implements IElementQuery {
         const { count, total, offset: serverOffset } = paging;
         const hasNextPage = serverOffset + count < total;
 
-        const emptyResult: IElementQueryResult = {
+        const emptyResult: IElementsQueryResult = {
             items: [],
             limit,
             offset,

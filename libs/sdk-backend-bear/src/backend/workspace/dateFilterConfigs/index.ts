@@ -1,17 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
+import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import { GdcExtendedDateFilters } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertDateFilterConfig } from "../../../convertors/fromBackend/DateFilterConfigConverter";
 
-export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilterConfigsQuery {
+export class BearWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQuery {
     private limit: number | undefined;
     private offset: number | undefined;
 
     constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly workspace: string) {}
 
-    public withLimit(limit: number): IWorkspaceDateFilterConfigsQuery {
+    public withLimit(limit: number): IDateFilterConfigsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
         this.limit = limit;
@@ -19,7 +19,7 @@ export class BearWorkspaceDateFilterConfigsQuery implements IWorkspaceDateFilter
         return this;
     }
 
-    public withOffset(offset: number): IWorkspaceDateFilterConfigsQuery {
+    public withOffset(offset: number): IDateFilterConfigsQuery {
         this.offset = offset;
         return this;
     }

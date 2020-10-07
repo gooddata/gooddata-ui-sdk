@@ -1,38 +1,40 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AuthenticatedPrincipal,
+    IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
-    IElementQueryFactory,
     IExecutionFactory,
     IWorkspaceCatalogFactory,
     IWorkspaceDatasetsService,
-    IWorkspaceMetadata,
-    IWorkspacePermissionsFactory,
-    IWorkspaceQueryFactory,
+    IWorkspaceAttributesService,
+    IWorkspaceMeasuresService,
+    IWorkspaceFactsService,
+    IWorkspacePermissionsService,
+    IWorkspacesQueryFactory,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
     NotSupported,
     IUserService,
-    IWorkspaceInsights,
+    IWorkspaceInsightsService,
     IUserSettingsService,
-    IWorkspaceUserPermissions,
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     IUserWorkspaceSettings,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
-    BackendCapabilities,
+    IDateFilterConfigsQuery,
+    IBackendCapabilities,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette } from "@gooddata/sdk-model";
-import { RecordedElementQueryFactory } from "./elements";
+import { IColorPalette, IWorkspacePermissions } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
-import { RecordedMetadata } from "./metadata";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedInsights } from "./insights";
 import { RecordedCatalogFactory } from "./catalog";
+import { RecordedAttributes } from "./attributes";
+import { RecordedMeasures } from "./measures";
+import { RecordedFacts } from "./facts";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -59,7 +61,7 @@ const locale = "en-US";
 export function recordedBackend(
     index: RecordingIndex,
     config: RecordedBackendConfig = defaultConfig,
-    capabilities: BackendCapabilities = {
+    capabilities: IBackendCapabilities = {
         canCalculateTotals: true,
     },
 ): IAnalyticalBackend {
@@ -81,16 +83,16 @@ export function recordedBackend(
         workspace(id: string): IAnalyticalWorkspace {
             return recordedWorkspace(id, index, config);
         },
-        workspaces(): IWorkspaceQueryFactory {
+        workspaces(): IWorkspacesQueryFactory {
             throw new NotSupported("not supported");
         },
-        authenticate(): Promise<AuthenticatedPrincipal> {
+        authenticate(): Promise<IAuthenticatedPrincipal> {
             return Promise.resolve({ userId: USER_ID });
         },
         deauthenticate(): Promise<void> {
             return Promise.resolve();
         },
-        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+        isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
             return Promise.resolve({ userId: USER_ID });
         },
     };
@@ -105,30 +107,36 @@ function recordedWorkspace(
 ): IAnalyticalWorkspace {
     return {
         workspace,
+        getDescriptor(): Promise<IWorkspaceDescriptor> {
+            throw new NotSupported("not supported");
+        },
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace, implConfig.useRefType ?? "uri");
         },
-        elements(): IElementQueryFactory {
-            return new RecordedElementQueryFactory(recordings);
+        attributes(): IWorkspaceAttributesService {
+            return new RecordedAttributes(recordings);
         },
-        metadata(): IWorkspaceMetadata {
-            return new RecordedMetadata(recordings);
+        measures(): IWorkspaceMeasuresService {
+            return new RecordedMeasures();
         },
-        insights(): IWorkspaceInsights {
+        facts(): IWorkspaceFactsService {
+            return new RecordedFacts();
+        },
+        insights(): IWorkspaceInsightsService {
             return new RecordedInsights(recordings, implConfig.useRefType ?? "uri");
         },
-        dashboards(): IWorkspaceDashboards {
+        dashboards(): IWorkspaceDashboardsService {
             throw new NotSupported("not supported");
         },
         settings(): IWorkspaceSettingsService {
             return {
-                async query(): Promise<IWorkspaceSettings> {
+                async getSettings(): Promise<IWorkspaceSettings> {
                     return {
                         workspace,
                         ...(implConfig.globalSettings ?? {}),
                     };
                 },
-                async queryForCurrentUser(): Promise<IUserWorkspaceSettings> {
+                async getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
                     return {
                         userId: USER_ID,
                         workspace,
@@ -140,7 +148,7 @@ function recordedWorkspace(
         },
         styling(): IWorkspaceStylingService {
             return {
-                async colorPalette(): Promise<IColorPalette> {
+                async getColorPalette(): Promise<IColorPalette> {
                     return implConfig.globalPalette ?? [];
                 },
             };
@@ -148,16 +156,16 @@ function recordedWorkspace(
         catalog(): IWorkspaceCatalogFactory {
             return new RecordedCatalogFactory(workspace, recordings);
         },
-        dataSets(): IWorkspaceDatasetsService {
+        datasets(): IWorkspaceDatasetsService {
             throw new NotSupported("not supported");
         },
-        permissions(): IWorkspacePermissionsFactory {
+        permissions(): IWorkspacePermissionsService {
             return recordedPermissionsFactory();
         },
         users(): IWorkspaceUsersQuery {
             throw new NotSupported("not supported");
         },
-        dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+        dateFilterConfigs(): IDateFilterConfigsQuery {
             throw new NotSupported("not supported");
         },
     };
@@ -168,7 +176,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
         settings(): IUserSettingsService {
             return {
-                query: async () => ({
+                getSettings: async () => ({
                     userId: USER_ID,
                     locale,
                     ...(implConfig.globalSettings ?? {}),
@@ -179,27 +187,24 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
 }
 
 // return true for all
-function recordedPermissionsFactory(): IWorkspacePermissionsFactory {
+function recordedPermissionsFactory(): IWorkspacePermissionsService {
     return {
-        forCurrentUser: async (): Promise<IWorkspaceUserPermissions> => ({
-            allPermissions: () => ({
-                canAccessWorkbench: true,
-                canCreateAnalyticalDashboard: true,
-                canCreateReport: true,
-                canCreateVisualization: true,
-                canExecuteRaw: true,
-                canExportReport: true,
-                canInitData: true,
-                canManageAnalyticalDashboard: true,
-                canManageMetric: true,
-                canManageProject: true,
-                canManageReport: true,
-                canUploadNonProductionCSV: true,
-                canCreateScheduledMail: true,
-                canListUsersInProject: true,
-                canManageDomain: true,
-            }),
-            hasPermission: (_) => true,
+        getPermissionsForCurrentUser: async (): Promise<IWorkspacePermissions> => ({
+            canAccessWorkbench: true,
+            canCreateAnalyticalDashboard: true,
+            canCreateReport: true,
+            canCreateVisualization: true,
+            canExecuteRaw: true,
+            canExportReport: true,
+            canInitData: true,
+            canManageAnalyticalDashboard: true,
+            canManageMetric: true,
+            canManageProject: true,
+            canManageReport: true,
+            canUploadNonProductionCSV: true,
+            canCreateScheduledMail: true,
+            canListUsersInProject: true,
+            canManageDomain: true,
         }),
     };
 }

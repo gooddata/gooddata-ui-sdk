@@ -80,7 +80,7 @@ export class InsightViewDataLoader implements IInsightViewDataLoader {
             this.cachedColorPalette = backend
                 .workspace(this.workspace)
                 .styling()
-                .colorPalette()
+                .getColorPalette()
                 .catch((error) => {
                     this.cachedColorPalette = undefined;
                     throw error;
@@ -95,7 +95,7 @@ export class InsightViewDataLoader implements IInsightViewDataLoader {
             this.cachedWorkspaceSettings = backend
                 .workspace(this.workspace)
                 .settings()
-                .query()
+                .getSettings()
                 .catch((error) => {
                     this.cachedWorkspaceSettings = undefined;
                     throw error;
@@ -110,7 +110,7 @@ export class InsightViewDataLoader implements IInsightViewDataLoader {
             this.cachedLocale = backend
                 .currentUser()
                 .settings()
-                .query()
+                .getSettings()
                 .then((settings) => settings.locale)
                 .catch((error) => {
                     this.cachedLocale = undefined;

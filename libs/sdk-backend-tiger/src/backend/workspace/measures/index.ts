@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceMetadata, NotSupported } from "@gooddata/sdk-backend-spi";
+import { IWorkspaceMeasuresService } from "@gooddata/sdk-backend-spi";
 import {
     MetricResourceResponseSchema,
     MetricResourceSchema,
@@ -9,35 +9,12 @@ import {
     SuccessIncluded,
 } from "@gooddata/api-client-tiger";
 import { AxiosResponse } from "axios";
-import {
-    IAttributeDisplayFormMetadataObject,
-    IMeasureExpressionToken,
-    ObjRef,
-    newAttributeDisplayFormMetadataObject,
-    idRef,
-    IMetadataObject,
-    newDataSetMetadataObject,
-    IAttributeMetadataObject,
-    newAttributeMetadataObject,
-    isIdentifierRef,
-} from "@gooddata/sdk-model";
+import { IMeasureExpressionToken, ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
 
-export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
+export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
-
-    public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
-        return this.authCall(async () =>
-            newAttributeDisplayFormMetadataObject(ref, (df) =>
-                df.title("Display form").attribute(idRef("attr.dummy")),
-            ),
-        );
-    };
-
-    public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        return this.authCall(async () => newAttributeMetadataObject(ref, (att) => att.title("dummyTitle")));
-    };
 
     public async getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]> {
         if (!isIdentifierRef(ref)) {
@@ -55,12 +32,6 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
 
         const regexTokens = tokenizeExpression(maql);
         return regexTokens.map((regexToken) => this.resolveToken(regexToken, metricMetadata));
-    }
-
-    public async getFactDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
-        return newDataSetMetadataObject(idRef("dummyDataset"), (m) =>
-            m.id("dummyDataset").uri("/dummy/dataset").title("Dummy dataset").description(""),
-        );
     }
 
     private resolveToken(
@@ -108,21 +79,5 @@ export class TigerWorkspaceMetadata implements IWorkspaceMetadata {
             value,
             ref: idRef(identifier),
         };
-    }
-
-    getCommonAttributes(): Promise<ObjRef[]> {
-        throw new NotSupported("not supported");
-    }
-
-    getCommonAttributesBatch(): Promise<ObjRef[][]> {
-        throw new NotSupported("not supported");
-    }
-
-    getAttributeDisplayForms(_: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        throw new NotSupported("not supported");
-    }
-
-    getAttributes(_: ObjRef[]): Promise<IAttributeMetadataObject[]> {
-        throw new NotSupported("not supported");
     }
 }

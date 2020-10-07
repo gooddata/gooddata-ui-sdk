@@ -1,44 +1,45 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceQueryFactory, IWorkspaceQuery, IWorkspaceQueryResult } from "@gooddata/sdk-backend-spi";
+import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
 import { convertUserProject } from "../../convertors/toBackend/WorkspaceConverter";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
 import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
+import { BearWorkspace } from "../workspace";
 
-export class BearWorkspaceQueryFactory implements IWorkspaceQueryFactory {
+export class BearWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
 
-    public forUser(userId: string): IWorkspaceQuery {
+    public forUser(userId: string): IWorkspacesQuery {
         return new BearWorkspaceQuery(this.authCall, userId);
     }
 
-    public forCurrentUser(): IWorkspaceQuery {
+    public forCurrentUser(): IWorkspacesQuery {
         return new BearWorkspaceQuery(this.authCall);
     }
 }
 
-class BearWorkspaceQuery implements IWorkspaceQuery {
+class BearWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
 
     constructor(private readonly authCall: BearAuthenticatedCallGuard, private readonly userId?: string) {}
 
-    public withLimit(limit: number): IWorkspaceQuery {
+    public withLimit(limit: number): IWorkspacesQuery {
         this.limit = limit;
         return this;
     }
 
-    public withOffset(offset: number): IWorkspaceQuery {
+    public withOffset(offset: number): IWorkspacesQuery {
         this.offset = offset;
         return this;
     }
 
-    public withSearch(search: string): IWorkspaceQuery {
+    public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
         return this;
     }
 
-    public query(): Promise<IWorkspaceQueryResult> {
+    public query(): Promise<IWorkspacesQueryResult> {
         return this.queryWorker(this.offset, this.limit, this.search);
     }
 
@@ -46,7 +47,7 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
         offset: number,
         limit: number,
         search?: string,
-    ): Promise<IWorkspaceQueryResult> {
+    ): Promise<IWorkspacesQueryResult> {
         const {
             userProjects: { paging, items },
         } = await this.authCall(async (sdk, { getPrincipal }) => {
@@ -59,7 +60,7 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
 
         const hasNextPage = serverOffset + count < totalCount;
 
-        const emptyResult: IWorkspaceQueryResult = {
+        const emptyResult: IWorkspacesQueryResult = {
             search,
             items: [],
             limit: count,
@@ -70,7 +71,10 @@ class BearWorkspaceQuery implements IWorkspaceQuery {
 
         return {
             search,
-            items: items.map(convertUserProject),
+            items: items.map((workspace) => {
+                const descriptor = convertUserProject(workspace);
+                return new BearWorkspace(this.authCall, descriptor.id, descriptor);
+            }),
             limit: paging.limit,
             offset: paging.offset,
             totalCount: paging.totalCount,

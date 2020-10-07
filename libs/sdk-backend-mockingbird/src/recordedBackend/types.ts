@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { AnalyticalBackendConfig, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackendConfig, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
     IAttributeDisplayFormMetadataObject,
@@ -21,7 +21,7 @@ export type RecordedRefType = "id" | "uri";
  *
  * @internal
  */
-export type RecordedBackendConfig = AnalyticalBackendConfig & {
+export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     /**
      * Specify settings that will be returned by any settings service (e.g. workspace settings)
      */

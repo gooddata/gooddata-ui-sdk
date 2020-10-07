@@ -1,12 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AuthenticatedPrincipal,
+    IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
     IAuthenticationProvider,
     IUserService,
-    IWorkspaceQueryFactory,
+    IWorkspacesQueryFactory,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 
@@ -65,16 +65,16 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
 
             return targetBackend.workspace(id);
         },
-        workspaces(): IWorkspaceQueryFactory {
+        workspaces(): IWorkspacesQueryFactory {
             throw new NotSupported("not supported");
         },
-        authenticate(): Promise<AuthenticatedPrincipal> {
+        authenticate(): Promise<IAuthenticatedPrincipal> {
             return primaryBackend.authenticate();
         },
         deauthenticate(): Promise<void> {
             return primaryBackend.deauthenticate();
         },
-        isAuthenticated(): Promise<AuthenticatedPrincipal | null> {
+        isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
             return primaryBackend.isAuthenticated();
         },
     };

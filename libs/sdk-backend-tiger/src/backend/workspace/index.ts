@@ -2,42 +2,53 @@
 
 import {
     IAnalyticalWorkspace,
-    IElementQueryFactory,
     IExecutionFactory,
     IWorkspaceSettingsService,
-    IWorkspaceMetadata,
     IWorkspaceStylingService,
     IWorkspaceCatalogFactory,
-    IWorkspacePermissionsFactory,
-    IWorkspaceInsights,
+    IWorkspacePermissionsService,
+    IWorkspaceInsightsService,
     IWorkspaceDatasetsService,
-    IWorkspaceDashboards,
+    IWorkspaceDashboardsService,
     NotSupported,
     IWorkspaceUsersQuery,
-    IWorkspaceDateFilterConfigsQuery,
+    IDateFilterConfigsQuery,
+    IWorkspaceAttributesService,
+    IWorkspaceMeasuresService,
+    IWorkspaceFactsService,
+    IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory";
 import { TigerWorkspaceDataSets } from "./datasets";
 import { TigerAuthenticatedCallGuard } from "../../types";
-import { TigerWorkspaceElements } from "./elements";
+import { TigerWorkspaceAttributes } from "./attributes";
 import { TigerWorkspaceSettings } from "./settings";
-import { TigerWorkspaceMetadata } from "./metadata";
 import { TigerWorkspacePermissionsFactory } from "./permissions";
 import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
 import { TigerWorkspaceDashboards } from "./dashboards";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
+import { TigerWorkspaceMeasures } from "./measures";
+import { TigerWorkspaceFacts } from "./facts";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         public readonly workspace: string,
         private readonly dateFormatter: DateFormatter,
+        private readonly descriptor?: IWorkspaceDescriptor,
     ) {}
 
-    public elements(): IElementQueryFactory {
-        return new TigerWorkspaceElements(this.authCall, this.workspace);
+    public async getDescriptor(): Promise<IWorkspaceDescriptor> {
+        if (!this.descriptor) {
+            throw new NotSupported("Fetching descriptor asynchronously is not supported");
+        }
+        return this.descriptor;
+    }
+
+    public attributes(): IWorkspaceAttributesService {
+        return new TigerWorkspaceAttributes(this.authCall, this.workspace);
     }
 
     public execution(): IExecutionFactory {
@@ -48,16 +59,20 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return new TigerWorkspaceSettings(this.authCall, this.workspace);
     }
 
-    public insights(): IWorkspaceInsights {
+    public insights(): IWorkspaceInsightsService {
         return new TigerWorkspaceInsights(this.authCall, this.workspace);
     }
 
-    public dashboards(): IWorkspaceDashboards {
+    public dashboards(): IWorkspaceDashboardsService {
         return new TigerWorkspaceDashboards(this.authCall, this.workspace);
     }
 
-    public metadata(): IWorkspaceMetadata {
-        return new TigerWorkspaceMetadata(this.authCall, this.workspace);
+    public measures(): IWorkspaceMeasuresService {
+        return new TigerWorkspaceMeasures(this.authCall, this.workspace);
+    }
+
+    public facts(): IWorkspaceFactsService {
+        return new TigerWorkspaceFacts();
     }
 
     public styling(): IWorkspaceStylingService {
@@ -68,18 +83,18 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return new TigerWorkspaceCatalogFactory(this.authCall, this.workspace);
     }
 
-    public dataSets(): IWorkspaceDatasetsService {
+    public datasets(): IWorkspaceDatasetsService {
         return new TigerWorkspaceDataSets(this.authCall, this.workspace);
     }
 
-    public permissions(): IWorkspacePermissionsFactory {
+    public permissions(): IWorkspacePermissionsService {
         return new TigerWorkspacePermissionsFactory(this.authCall, this.workspace);
     }
 
     public users(): IWorkspaceUsersQuery {
         throw new NotSupported("Not supported");
     }
-    public dateFilterConfigs(): IWorkspaceDateFilterConfigsQuery {
+    public dateFilterConfigs(): IDateFilterConfigsQuery {
         throw new NotSupported("not supported");
     }
 }

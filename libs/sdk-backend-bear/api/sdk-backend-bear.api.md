@@ -4,11 +4,11 @@
 
 ```ts
 
-import { AnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
-import { AuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
-import { AuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 
 export { AnonymousAuthProvider }
@@ -32,15 +32,15 @@ export const BackendToBearConvertors: {
 // @public
 export abstract class BearAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
-    abstract authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: AuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
     // (undocumented)
-    getCurrentPrincipal(context: AuthenticationContext): Promise<AuthenticatedPrincipal | null>;
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
-    protected obtainCurrentPrincipal(context: AuthenticationContext): Promise<void>;
+    protected obtainCurrentPrincipal(context: IAuthenticationContext): Promise<void>;
     // (undocumented)
-    protected principal: AuthenticatedPrincipal | undefined;
+    protected principal: IAuthenticatedPrincipal | undefined;
 }
 
 // @public
@@ -50,7 +50,7 @@ export type BearBackendConfig = {
 };
 
 // @public
-function bearFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
+function bearFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
 export default bearFactory;
 
@@ -66,14 +66,14 @@ export const BearToBackendConvertors: {
 // @public
 export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 }
 
 // @public
 export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
     constructor(username: string, password: string);
     // (undocumented)
-    authenticate(context: AuthenticationContext): Promise<AuthenticatedPrincipal>;
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     }
 
 

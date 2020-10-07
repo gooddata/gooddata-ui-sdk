@@ -8,7 +8,7 @@ import { IWorkspaceCatalogFactory } from "./ldm/catalog";
 import { IWorkspaceDatasetsService } from "./ldm/datasets";
 import { IWorkspacePermissionsService } from "./permissions";
 import { IWorkspaceDashboardsService } from "./dashboards";
-import { IWorkspaceUserQuery } from "./users";
+import { IWorkspaceUsersQuery } from "./users";
 import { IDateFilterConfigsQuery } from "./dateFilterConfigs";
 import { IWorkspaceAttributesService } from "./attributes";
 import { IWorkspaceMeasuresService } from "./measures";
@@ -43,7 +43,6 @@ export interface IAnalyticalWorkspace {
      */
     dashboards(): IWorkspaceDashboardsService;
 
-    ///// QUERY or SERVICE => QUERY (to be more extensible)?
     /**
      * Returns service that can be used to query date filter configs.
      */
@@ -75,11 +74,10 @@ export interface IAnalyticalWorkspace {
      */
     execution(): IExecutionFactory;
 
-    ///// QUERY or SERVICE => QUERY (to be more extensible)? + User vs Users ?
     /**
      * Returns service that can be used to query workspace users.
      */
-    users(): IWorkspaceUserQuery;
+    users(): IWorkspaceUsersQuery;
 
     /**
      * Returns service that can be used to query workspace permissions.

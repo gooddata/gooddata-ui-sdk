@@ -1,10 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    IInsightQueryOptions,
-    IInsightQueryResult,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
-    IWorkspaceInsights,
+    IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -43,7 +43,7 @@ const insightFromInsightDefinition = (insight: IInsightDefinition, id: string, u
     };
 };
 
-export class TigerWorkspaceInsights implements IWorkspaceInsights {
+export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public getVisualizationClass = async (ref: ObjRef): Promise<IVisualizationClass> => {
@@ -61,7 +61,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         return this.authCall(async () => visualizationClassesMocks);
     };
 
-    public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
+    public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const {
             data: { data: visualizationObjects, links, meta },
         } = await this.authCall((sdk) => {
@@ -104,7 +104,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         const totalCount = (meta?.totalResourceCount as unknown) as number;
         const hasNextPage = !!links?.next;
 
-        const emptyResult: IInsightQueryResult = {
+        const emptyResult: IInsightsQueryResult = {
             items: [],
             // TODO default to some backend limit here
             // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
@@ -114,7 +114,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
             next: () => Promise.resolve(emptyResult),
         };
 
-        const result: IInsightQueryResult = {
+        const result: IInsightsQueryResult = {
             items: insights,
             // TODO default to some backend limit here
             // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
@@ -210,14 +210,14 @@ export class TigerWorkspaceInsights implements IWorkspaceInsights {
         );
     };
 
-    public getReferencedObjects = async (
+    public getInsightReferencedObjects = async (
         _insight: IInsight,
         _types?: SupportedInsightReferenceTypes[],
     ): Promise<IInsightReferences> => {
         return Promise.resolve({});
     };
 
-    public getObjectsReferencing = async (_ref: ObjRef): Promise<IInsightReferencing> => {
+    public getInsightReferencingObjects = async (_ref: ObjRef): Promise<IInsightReferencing> => {
         return Promise.resolve({});
     };
 

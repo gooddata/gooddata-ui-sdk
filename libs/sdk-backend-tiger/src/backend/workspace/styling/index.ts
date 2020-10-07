@@ -8,7 +8,7 @@ import { DefaultColorPalette } from "./mocks/colorPalette";
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public colorPalette = async (): Promise<IColorPaletteItem[]> => {
+    public getColorPalette = async (): Promise<IColorPaletteItem[]> => {
         return this.authCall(async () => DefaultColorPalette);
     };
 }

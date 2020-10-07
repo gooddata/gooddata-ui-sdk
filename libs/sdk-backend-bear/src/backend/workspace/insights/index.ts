@@ -4,11 +4,11 @@ import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
 import {
     IGetVisualizationClassesOptions,
-    IInsightQueryOptions,
-    IInsightQueryResult,
+    IInsightsQueryOptions,
+    IInsightsQueryResult,
     IInsightReferences,
     IInsightReferencing,
-    IWorkspaceInsights,
+    IWorkspaceInsightsService,
     SupportedInsightReferenceTypes,
 } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
@@ -33,7 +33,7 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { InsightReferencesQuery } from "./insightReferences";
 import { appendFilters } from "./filterMerging";
 
-export class BearWorkspaceInsights implements IWorkspaceInsights {
+export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
 
     public getVisualizationClass = async (ref: ObjRef): Promise<IVisualizationClass> => {
@@ -87,7 +87,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         return convertVisualization(visualization, visualizationClassUri);
     };
 
-    public getInsights = async (options?: IInsightQueryOptions): Promise<IInsightQueryResult> => {
+    public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const {
             items: visualizations,
@@ -122,7 +122,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
             ),
         );
 
-        const emptyResult: IInsightQueryResult = {
+        const emptyResult: IInsightsQueryResult = {
             items: [],
             limit: count,
             offset: totalCount!,
@@ -182,14 +182,14 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         );
     };
 
-    public getReferencedObjects = async (
+    public getInsightReferencedObjects = async (
         insight: IInsight,
         types: SupportedInsightReferenceTypes[] = ["dataSet", "measure", "fact", "attribute"],
     ): Promise<IInsightReferences> => {
         return new InsightReferencesQuery(this.authCall, this.workspace, insight, types).run();
     };
 
-    public getObjectsReferencing = async (ref: ObjRef): Promise<IInsightReferencing> => {
+    public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const uri = await objRefToUri(ref, this.workspace, this.authCall);
         const objectId = getObjectIdFromUri(uri);
         return this.authCall(async (sdk) => {

@@ -13,6 +13,7 @@ describe("bear elements", () => {
     it("should load attribute elements for existing display form", async () => {
         const result = await backend
             .workspace(testWorkspace())
+            .attributes()
             .elements()
             .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
             .withLimit(20)
@@ -27,6 +28,7 @@ describe("bear elements", () => {
 
         const result = await backend
             .workspace(testWorkspace())
+            .attributes()
             .elements()
             .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
             .withLimit(20)

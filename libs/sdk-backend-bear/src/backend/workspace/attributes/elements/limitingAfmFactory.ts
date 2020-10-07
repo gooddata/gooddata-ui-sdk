@@ -12,16 +12,16 @@ import {
     areObjRefsEqual,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { IElementQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
+import { IElementsQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import flatMap from "lodash/flatMap";
 import groupBy from "lodash/groupBy";
 import uniqWith from "lodash/uniqWith";
 
-import { toBearRef } from "../../../convertors/toBackend/ObjRefConverter";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { toBearRef } from "../../../../convertors/toBackend/ObjRefConverter";
+import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
-import { objRefsToUris } from "../../../utils/api";
+import { objRefsToUris } from "../../../../utils/api";
 
 export class LimitingAfmFactory {
     constructor(
@@ -31,7 +31,7 @@ export class LimitingAfmFactory {
     ) {}
 
     public getAfm = async (
-        filters: IElementQueryAttributeFilter[] | undefined,
+        filters: IElementsQueryAttributeFilter[] | undefined,
     ): Promise<GdcExecuteAFM.IAfm | undefined> => {
         if (!filters?.length) {
             return undefined;
@@ -54,7 +54,9 @@ export class LimitingAfmFactory {
         };
     };
 
-    private createFiltersExpressionFromAttributeFilters = async (filters: IElementQueryAttributeFilter[]) => {
+    private createFiltersExpressionFromAttributeFilters = async (
+        filters: IElementsQueryAttributeFilter[],
+    ) => {
         const filterDisplayForms = filters.map((f) => filterObjRef(f.attributeFilter));
         const allDisplayFormRefs = uniqWith([this.displayFormRef, ...filterDisplayForms], areObjRefsEqual);
 
@@ -117,14 +119,14 @@ export class LimitingAfmFactory {
     };
 
     private getIdentifierUriPairs = (
-        filters: IElementQueryAttributeFilter[],
+        filters: IElementsQueryAttributeFilter[],
     ): Promise<IUriIdentifierPair[]> => {
         const allIdentifiersUsed = this.getAllIdentifiersUsedInAttributeFilters(filters);
         return this.authCall((sdk) => sdk.md.getUrisFromIdentifiers(this.workspace, allIdentifiersUsed));
     };
 
     private getAllIdentifiersUsedInAttributeFilters = (
-        filters: IElementQueryAttributeFilter[],
+        filters: IElementsQueryAttributeFilter[],
     ): Identifier[] => {
         return flatMap(filters, (filter) => {
             // the only candidates are the filter itself and the overAttribute

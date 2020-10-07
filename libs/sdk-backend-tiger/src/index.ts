@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { AnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
@@ -13,7 +13,7 @@ import { withNormalization } from "@gooddata/sdk-backend-base";
  * @public
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-function tigerFactory(config?: AnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
+function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend {
     /*
      * Execution normalization is applied by default for tiger. This is so that tiger does not have to support
      * questionable mechanics of measure name and format assignment and attribute name assignment; tiger does not

@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { IRecording, readJsonSync, RecordingIndexEntry, RecordingType, writeAsJsonSync } from "./common";
-import { IAnalyticalBackend, IElementQuery } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IElementsQuery } from "@gooddata/sdk-backend-spi";
 import { isEqual } from "lodash";
 import fs from "fs";
 import path from "path";
@@ -88,7 +88,7 @@ export class DisplayFormRecording implements IRecording {
         const elements = await this.queryValidElements(backend, workspace);
         const obj = await backend
             .workspace(workspace)
-            .metadata()
+            .attributes()
             .getAttributeDisplayForm(idRef(this.displayFormId));
 
         if (!fs.existsSync(this.directory)) {
@@ -130,10 +130,14 @@ export class DisplayFormRecording implements IRecording {
         return !elementCount ? result : result.slice(0, elementCount);
     }
 
-    private createValidElementsQuery(backend: IAnalyticalBackend, workspace: string): IElementQuery {
+    private createValidElementsQuery(backend: IAnalyticalBackend, workspace: string): IElementsQuery {
         const { offset, elementCount } = this.spec;
 
-        let validElements = backend.workspace(workspace).elements().forDisplayForm(idRef(this.displayFormId));
+        let validElements = backend
+            .workspace(workspace)
+            .attributes()
+            .elements()
+            .forDisplayForm(idRef(this.displayFormId));
 
         if (offset !== undefined) {
             validElements = validElements.withOffset(offset);
