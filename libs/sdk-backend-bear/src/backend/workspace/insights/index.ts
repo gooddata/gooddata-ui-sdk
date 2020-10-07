@@ -1,9 +1,9 @@
 // (C) 2019-2020 GoodData Corporation
 import flow from "lodash/flow";
-import filter from "lodash/fp/filter";
 import map from "lodash/fp/map";
 import sortBy from "lodash/fp/sortBy";
 import {
+    IGetVisualizationClassesOptions,
     IInsightQueryOptions,
     IInsightQueryResult,
     IInsightReferences,
@@ -12,6 +12,7 @@ import {
     SupportedInsightReferenceTypes,
 } from "@gooddata/sdk-backend-spi";
 import { GdcVisualizationClass, GdcVisualizationObject, GdcMetadata } from "@gooddata/api-model-bear";
+import { IGetObjectsByQueryOptions } from "@gooddata/api-client-bear";
 import {
     IInsight,
     IInsightDefinition,
@@ -44,22 +45,27 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
         return convertVisualizationClass(visClassResult[0]);
     };
 
-    public getVisualizationClasses = async (): Promise<IVisualizationClass[]> => {
+    public getVisualizationClasses = async (
+        options: IGetVisualizationClassesOptions = {},
+    ): Promise<IVisualizationClass[]> => {
         const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] = await this.authCall(
-            (sdk) =>
-                sdk.md.getObjectsByQuery(this.workspace, {
+            (sdk) => {
+                const queryOptions: IGetObjectsByQueryOptions = {
                     category: "visualizationClass",
-                }),
-        );
+                };
 
-        const isVisClassNotDeprecated = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
-            visClass.visualizationClass.meta.deprecated !== "1";
+                if (options.includeDeprecated) {
+                    queryOptions.deprecated = true;
+                }
+
+                return sdk.md.getObjectsByQuery(this.workspace, queryOptions);
+            },
+        );
 
         const visClassOrderingIndex = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
             visClass.visualizationClass.content.orderIndex ?? 0;
 
         return flow(
-            filter(isVisClassNotDeprecated),
             sortBy(visClassOrderingIndex),
             map(convertVisualizationClass),
         )(visualizationClassesResult);
@@ -93,7 +99,8 @@ export class BearWorkspaceInsights implements IWorkspaceInsights {
             }),
         );
 
-        const visualizationClasses = await this.getVisualizationClasses();
+        // get also deprecated visClasses in case some insights use them
+        const visualizationClasses = await this.getVisualizationClasses({ includeDeprecated: true });
         const visualizationClassUrlByVisualizationClassUri: {
             [key: string]: string;
         } = visualizationClasses.reduce((acc, el) => {

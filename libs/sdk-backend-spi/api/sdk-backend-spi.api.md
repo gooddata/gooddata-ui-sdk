@@ -597,6 +597,11 @@ export interface IFluidLayoutSize {
 }
 
 // @public
+export interface IGetVisualizationClassesOptions {
+    includeDeprecated?: boolean;
+}
+
+// @public
 export interface IInsightQueryOptions {
     author?: string;
     limit?: number;
@@ -1165,7 +1170,7 @@ export interface IWorkspaceInsights {
     getObjectsReferencing(ref: ObjRef): Promise<IInsightReferencing>;
     getReferencedObjects(insight: IInsight, types?: SupportedInsightReferenceTypes[]): Promise<IInsightReferences>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
-    getVisualizationClasses(): Promise<IVisualizationClass[]>;
+    getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
 }
 
