@@ -2,7 +2,8 @@
 
 import { testBackend, testWorkspace } from "./backend";
 import { ReferenceLdm, ReferenceRecordings, ReferenceLdmExt } from "@gooddata/reference-workspace";
-import { attributeDisplayFormRef, newPositiveAttributeFilter, IAttributeElement } from "@gooddata/sdk-model";
+import { attributeDisplayFormRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement } from "@gooddata/sdk-backend-spi";
 const backend = testBackend();
 
 beforeAll(async () => {

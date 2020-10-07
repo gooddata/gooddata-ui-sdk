@@ -2,18 +2,18 @@
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
-} from "@gooddata/sdk-backend-spi";
-import {
     CatalogItemType,
     CatalogItem,
     ICatalogGroup,
     ICatalogDateDataset,
-    IAttributeOrMeasure,
-    IInsightDefinition,
-    ObjRef,
     isCatalogAttribute,
     isCatalogMeasure,
     isCatalogFact,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeOrMeasure,
+    IInsightDefinition,
+    ObjRef,
     insightItems,
     isAttribute,
     isArithmeticMeasure,

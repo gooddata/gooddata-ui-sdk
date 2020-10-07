@@ -1,28 +1,28 @@
 // (C) 2019-2020 GoodData Corporation
-import {
-    CatalogItemType,
-    CatalogItem,
-    ICatalogDateDataset,
-    ICatalogAttribute,
-    ICatalogMeasure,
-    ICatalogFact,
-    ICatalogDateAttribute,
-    ICatalogGroup,
-    newCatalogAttribute,
-    uriRef,
-    newCatalogGroup,
-    idRef,
-    newCatalogMeasure,
-    newCatalogFact,
-    newCatalogDateAttribute,
-    newCatalogDateDataset,
-    IMetadataObjectBuilder,
-    newAttributeDisplayFormMetadataObject,
-    IAttributeDisplayFormMetadataObject,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { uriRef, idRef, ObjRef } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
 import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
+import {
+    CatalogItem,
+    CatalogItemType,
+    IAttributeDisplayFormMetadataObject,
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    ICatalogDateDataset,
+    ICatalogFact,
+    ICatalogGroup,
+    ICatalogMeasure,
+} from "@gooddata/sdk-backend-spi";
+import {
+    IMetadataObjectBuilder,
+    newAttributeDisplayFormMetadataObject,
+    newCatalogAttribute,
+    newCatalogDateAttribute,
+    newCatalogDateDataset,
+    newCatalogFact,
+    newCatalogGroup,
+    newCatalogMeasure,
+} from "@gooddata/sdk-backend-base";
 
 export type CompatibleCatalogItemType = Exclude<CatalogItemType, "dateDataset">;
 export type CompatibleCatalogItem = Exclude<CatalogItem, ICatalogDateDataset>;

@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { CatalogItem } from "@gooddata/sdk-model";
+import { CatalogItem } from "@gooddata/sdk-backend-spi";
 import {
     IWidgetReferences,
     SupportedWidgetReferenceTypes,

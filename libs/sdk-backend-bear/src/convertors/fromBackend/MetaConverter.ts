@@ -1,19 +1,16 @@
 // (C) 2019-2020 GoodData Corporation
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
+import { uriRef, ObjectType } from "@gooddata/sdk-model";
+import { UnexpectedError, MetadataObject, IMetadataObject } from "@gooddata/sdk-backend-spi";
 import {
-    uriRef,
-    MetadataObject,
-    newAttributeMetadataObject,
-    newAttributeDisplayFormMetadataObject,
-    newFactMetadataObject,
     IMetadataObjectBuilder,
-    newMeasureMetadataObject,
-    IMetadataObject,
-    ObjectType,
+    newAttributeDisplayFormMetadataObject,
+    newAttributeMetadataObject,
     newDataSetMetadataObject,
+    newFactMetadataObject,
+    newMeasureMetadataObject,
     newVariableMetadataObject,
-} from "@gooddata/sdk-model";
-import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+} from "@gooddata/sdk-backend-base";
 
 const supportedMetadataObjectsTypeGuards = [
     GdcMetadata.isAttribute,

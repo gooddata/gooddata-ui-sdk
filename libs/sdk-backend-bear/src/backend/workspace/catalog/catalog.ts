@@ -3,8 +3,6 @@ import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogFactoryOptions,
     IWorkspaceCatalog,
-} from "@gooddata/sdk-backend-spi";
-import {
     CatalogItem,
     ICatalogGroup,
     isCatalogAttribute,
@@ -15,7 +13,7 @@ import {
     ICatalogMeasure,
     ICatalogFact,
     ICatalogDateDataset,
-} from "@gooddata/sdk-model";
+} from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { IUriMappings } from "../../../types/catalog";
 import { BearWorkspaceCatalogAvailableItemsFactory } from "./availableItemsFactory";
