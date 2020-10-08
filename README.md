@@ -1,11 +1,5 @@
 # GoodData.UI SDK
 
-## Status
-
-This repository contains the beta version of the upcoming 8.0.0 release of GoodData.UI SDK. While the beta version is
-at this point 99% feature-complete it is still undergoing testing and there are known defects. It is not suitable for
-production use. The exported APIs are still subject to breaking changes even if they are marked as public.
-
 ## Getting Started
 
 The easiest way to start developing analytical applications using GoodData.UI SDK is to use
