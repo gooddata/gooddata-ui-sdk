@@ -8968,6 +8968,139 @@ Object {
 }
 `;
 
+exports[`PivotTable with with autoresizeAll should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with with autoresizeAll should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {
+    "columnSizing": Object {
+      "defaultWidth": "autoresizeAll",
+    },
+  },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "groupRows": true,
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable with with column attributes only and auto-resizing should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
