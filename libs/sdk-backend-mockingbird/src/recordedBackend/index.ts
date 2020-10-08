@@ -26,8 +26,9 @@ import {
     IDateFilterConfigsQuery,
     IBackendCapabilities,
     IWorkspaceDescriptor,
+    IWorkspacePermissions,
 } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IWorkspacePermissions } from "@gooddata/sdk-model";
+import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
 import { RecordedBackendConfig, RecordingIndex } from "./types";
 import { RecordedInsights } from "./insights";

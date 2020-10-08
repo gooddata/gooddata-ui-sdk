@@ -19,7 +19,6 @@ import { IInsightDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
-import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ObjRefInScope } from '@gooddata/sdk-model';
@@ -1449,6 +1448,11 @@ export interface IWorkspaceMeasuresService {
 }
 
 // @public
+export type IWorkspacePermissions = {
+    [permission in WorkspacePermission]: boolean;
+};
+
+// @public
 export interface IWorkspacePermissionsService {
     getPermissionsForCurrentUser(): Promise<IWorkspacePermissions>;
 }
@@ -1637,6 +1641,9 @@ export function widgetType(widget: IWidget): WidgetType;
 
 // @alpha
 export function widgetUri(widget: IWidget): string;
+
+// @public
+export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain";
 
 
 // (No @packageDocumentation comment for this package)

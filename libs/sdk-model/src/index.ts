@@ -328,5 +328,3 @@ export { newInsightDefinition, InsightDefinitionBuilder, InsightModifications } 
 export { insightSanitize } from "./insight/sanitization";
 
 export { factoryNotationFor } from "./execution/objectFactoryNotation";
-
-export { IWorkspacePermissions, WorkspacePermission } from "./workspace";

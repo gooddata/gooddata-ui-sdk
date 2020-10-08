@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
-import { IWorkspacePermissions } from "@gooddata/sdk-model";
+import { IWorkspacePermissionsService, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertPermissions } from "../../../convertors/toBackend/WorkspaceConverter";
 
