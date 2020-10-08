@@ -64,8 +64,15 @@ export const convertAttribute = (
     attribute: AttributeResourceSchema,
     defaultLabel: LabelResourceSchema,
     geoLabels: LabelResourceSchema[],
+    allLabels: LabelResourceSchema[],
 ): ICatalogAttribute => {
     const geoPinDisplayForms = geoLabels.map((label) => {
+        return newAttributeDisplayFormMetadataObject(
+            idRef(label.id, "displayForm"),
+            commonMetadataObjectModifications(label),
+        );
+    });
+    const displayForms = allLabels.map((label) => {
         return newAttributeDisplayFormMetadataObject(
             idRef(label.id, "displayForm"),
             commonMetadataObjectModifications(label),
@@ -81,6 +88,7 @@ export const convertAttribute = (
                 df.modify(commonMetadataObjectModifications(defaultLabel)),
             )
             .geoPinDisplayForms(geoPinDisplayForms)
+            .displayForms(displayForms)
             .modify(commonGroupableCatalogItemModifications(attribute)),
     );
 };
