@@ -3,12 +3,12 @@
 ## Getting Started
 
 The easiest way to start developing analytical applications using GoodData.UI SDK is to use
-the [Accelerator Toolkit for v8](https://github.com/gooddata/gooddata-create-gooddata-react-app/tree/sdk8). You will
+the [Accelerator Toolkit](https://github.com/gooddata/gooddata-create-gooddata-react-app). You will
 be up and running in minutes.
 
 For detailed description of available components and capabilities see the [official documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
 
-You can also register to our [live examples](https://gooddata-examples.herokuapp.com/login) and then start the live examples
+You can also view our [live examples](https://gdui-examples.herokuapp.com/login) or start the live examples
 [application locally](examples/sdk-examples).
 
 ## Contributing
