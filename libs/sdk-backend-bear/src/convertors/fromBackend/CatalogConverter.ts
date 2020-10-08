@@ -198,6 +198,13 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
     return newCatalogAttribute((catalogAttr) => {
         let result = catalogAttr
             .attribute(attrRef, (a) => a.modify(commonMetadataModifications(meta)))
+            .displayForms(
+                displayForms.map((displayForm) =>
+                    newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+                        df.modify(commonMetadataModifications(displayForm.meta)).attribute(attrRef),
+                    ),
+                ),
+            )
             .geoPinDisplayForms(
                 geoPinDisplayForms.map((geoDisplayForm) =>
                     newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri), (df) =>

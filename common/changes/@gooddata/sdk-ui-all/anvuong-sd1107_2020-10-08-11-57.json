@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Passes all fetched display forms of each attribute in an insight to AD in an InsightReferencesQuery",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "an.vuong@gooddata.com"
+}

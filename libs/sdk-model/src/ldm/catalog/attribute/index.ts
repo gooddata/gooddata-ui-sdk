@@ -26,6 +26,11 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
 
     /**
+     * Display forms of the attribute
+     */
+    displayForms: IAttributeDisplayFormMetadataObject[];
+
+    /**
      * Attribute's display forms that contain geo pins (lat; lng) pairs.
      */
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];

@@ -53,6 +53,11 @@ export class CatalogAttributeBuilder<
         return this;
     }
 
+    public displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
+        this.item.displayForms = displayForms;
+        return this;
+    }
+
     public geoPinDisplayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
         this.item.geoPinDisplayForms = displayForms;
 
