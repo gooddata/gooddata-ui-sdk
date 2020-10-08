@@ -87,11 +87,11 @@ export const convertDashboard = (
 
     const convertedDashboard: IDashboard = {
         title,
-        description: summary,
+        description: summary!,
 
-        identifier,
-        uri,
-        ref: uriRef(uri),
+        identifier: identifier!,
+        uri: uri!,
+        ref: uriRef(uri!),
 
         created: created!,
         updated: updated!,

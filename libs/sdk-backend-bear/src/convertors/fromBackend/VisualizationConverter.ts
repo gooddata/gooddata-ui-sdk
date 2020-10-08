@@ -214,12 +214,12 @@ export const convertVisualization = (
         insight: {
             buckets: content.buckets.map(convertBucket),
             filters: content.filters ? compact(content.filters.map(convertFilter)) : [],
-            ref: uriRef(meta.uri),
+            ref: uriRef(meta.uri!),
             // we assume that identifier is always defined for visualizations
             identifier: meta.identifier!,
             properties: parsedProperties,
             sorts: parsedProperties.sortItems || [],
-            title: meta.title!,
+            title: meta.title,
             uri: meta.uri!,
             visualizationUrl: visualizationClassUri,
             updated: meta.updated,

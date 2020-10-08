@@ -43,7 +43,8 @@ export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.Cat
     return bearItemType;
 };
 
-const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri);
+const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri!);
+
 const bearCatalogItemToBearRef = (obj: GdcCatalog.CatalogItem): ObjRef => uriRef(obj.links.self);
 
 const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[] => {
@@ -53,15 +54,16 @@ const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[
 
 const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) => (
     builder: T,
-) =>
-    builder
-        .id(item.identifier)
-        .uri(item.uri)
+) => {
+    return builder
+        .id(item.identifier!)
+        .uri(item.uri!)
         .title(item.title)
-        .description(item.summary)
+        .description(item.summary ?? "")
         .production(item.isProduction === 1)
         .unlisted(item.unlisted === 1)
         .deprecated(item.deprecated === "1");
+};
 
 const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
     builder: T,
@@ -143,7 +145,7 @@ const convertDateDataSetAttribute = (
     const { attributeMeta, defaultDisplayFormMeta } = dateDatasetAttribute;
     const attributeRef = bearObjectMetaToBearRef(attributeMeta);
     const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
-    const attributeData = attributeById[attributeMeta.identifier];
+    const attributeData = attributeById[attributeMeta.identifier!];
     const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
         ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
         : undefined;
@@ -180,7 +182,7 @@ export const convertDateDataset = (
 
 export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact => {
     const { meta } = fact.fact;
-    const factRef = uriRef(meta.uri);
+    const factRef = uriRef(meta.uri!);
 
     return newCatalogFact((catalogFact) =>
         catalogFact.fact(factRef, (f) => f.modify(commonMetadataModifications(meta))),
@@ -189,7 +191,7 @@ export const convertWrappedFact = (fact: GdcMetadata.IWrappedFact): ICatalogFact
 
 export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute): ICatalogAttribute => {
     const { content, meta } = attribute.attribute;
-    const attrRef = uriRef(meta.uri);
+    const attrRef = uriRef(meta.uri!);
 
     const displayForms = content.displayForms ?? [];
     const defaultDisplayForm = displayForms.find((df) => df.content.default === 1) ?? displayForms[0];
@@ -200,21 +202,21 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
             .attribute(attrRef, (a) => a.modify(commonMetadataModifications(meta)))
             .displayForms(
                 displayForms.map((displayForm) =>
-                    newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+                    newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri!), (df) =>
                         df.modify(commonMetadataModifications(displayForm.meta)).attribute(attrRef),
                     ),
                 ),
             )
             .geoPinDisplayForms(
-                geoPinDisplayForms.map((geoDisplayForm) =>
-                    newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri), (df) =>
+                geoPinDisplayForms.map((geoDisplayForm) => {
+                    return newAttributeDisplayFormMetadataObject(uriRef(geoDisplayForm.meta.uri!), (df) =>
                         df.modify(commonMetadataModifications(geoDisplayForm.meta)).attribute(attrRef),
-                    ),
-                ),
+                    );
+                }),
             );
 
         if (defaultDisplayForm) {
-            result = result.defaultDisplayForm(uriRef(defaultDisplayForm.meta.uri), (df) =>
+            result = result.defaultDisplayForm(uriRef(defaultDisplayForm.meta.uri!), (df) =>
                 df.modify(commonMetadataModifications(defaultDisplayForm.meta)).attribute(attrRef),
             );
         }
@@ -225,7 +227,7 @@ export const convertWrappedAttribute = (attribute: GdcMetadata.IWrappedAttribute
 
 export const convertMetric = (metric: GdcMetadata.IWrappedMetric): ICatalogMeasure => {
     const { content, meta } = metric.metric;
-    const measureRef = uriRef(meta.uri);
+    const measureRef = uriRef(meta.uri!);
 
     return newCatalogMeasure((catalogMeasure) =>
         catalogMeasure.measure(measureRef, (m) =>

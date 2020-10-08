@@ -228,7 +228,7 @@ export function convertFilterContext(
                           identifier: filterContext.identifier,
                       }
                     : {}),
-            } as GdcMetadata.IObjectMeta,
+            },
         },
     };
 
@@ -349,7 +349,7 @@ export const convertWidget = (
             : {}),
         title,
         summary: description,
-    } as GdcMetadata.IObjectMeta;
+    };
     const convertedDateDataSet = dateDataSet && refToUri(dateDataSet);
     const convertedIgnoredDashboardFilters = ignoreDashboardFilters.map(convertFilterReference);
 
@@ -479,7 +479,7 @@ export const convertDashboard = (
                 title,
                 summary: description,
                 locked: isLocked,
-            } as GdcMetadata.IObjectMeta,
+            },
         },
     };
 
@@ -523,7 +523,7 @@ export const convertWidgetAlert = (
                     : {}),
                 title,
                 summary: description,
-            } as GdcMetadata.IObjectMeta,
+            },
         },
     };
 
@@ -587,7 +587,7 @@ export const convertScheduledMail = (
                     : {}),
                 title,
                 summary: description,
-            } as GdcMetadata.IObjectMeta,
+            },
         },
     };
 

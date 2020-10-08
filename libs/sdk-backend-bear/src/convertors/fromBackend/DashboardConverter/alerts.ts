@@ -11,12 +11,12 @@ export const convertAlert = (
     const {
         kpiAlert: {
             content: { dashboard, isTriggered, kpi, threshold, whenTriggered },
-            meta: { uri, identifier, title, summary: description },
+            meta: { uri, identifier, title, summary },
         },
     } = alert;
     const convertedAlert: IWidgetAlert | IWidgetAlertDefinition = {
         title,
-        description,
+        description: summary!,
         ...(uri
             ? {
                   ref: uriRef(uri),

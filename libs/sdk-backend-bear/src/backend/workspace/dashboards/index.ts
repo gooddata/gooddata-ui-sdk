@@ -236,7 +236,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
         const filterContextByUri = keyBy(
             filterContexts,
-            (filterContext) => filterContext.filterContext.meta.uri,
+            (filterContext) => filterContext.filterContext.meta.uri!,
         );
         const convertedAlerts = alerts.map((alert) => {
             const alertFilterContext = filterContextByUri[alert.kpiAlert.content.filterContext!];
@@ -364,7 +364,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             sdk.md.createObject(this.workspace, bearDashboard),
         );
         const createdDashboardDependencies = await this.getBearDashboardDependencies(
-            uriRef(createdBearDashboard.analyticalDashboard.meta.uri),
+            uriRef(createdBearDashboard.analyticalDashboard.meta.uri!),
         );
         return toSdkModel.convertDashboard(createdBearDashboard, createdDashboardDependencies);
     };

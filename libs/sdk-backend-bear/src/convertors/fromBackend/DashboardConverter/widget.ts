@@ -50,11 +50,11 @@ export const convertVisualizationWidget = (
 
     const convertedWidget: IWidget = {
         type: "insight",
-        ref: uriRef(uri),
-        identifier,
-        uri,
+        ref: uriRef(uri!),
+        identifier: identifier!,
+        uri: uri!,
         title,
-        description: summary,
+        description: summary!,
         insight: uriRef(visualization),
         dateDataSet: dateDataSet ? uriRef(dateDataSet) : undefined,
         ignoreDashboardFilters: ignoreDashboardFilters
@@ -78,11 +78,11 @@ export const convertKpi = (kpi: GdcKpi.IWrappedKPI): IWidget => {
 
     const convertedWidget: IWidget = {
         type: "kpi",
-        ref: uriRef(uri),
-        identifier,
-        uri,
+        ref: uriRef(uri!),
+        identifier: identifier!,
+        uri: uri!,
         title,
-        description: summary,
+        description: summary!,
         dateDataSet: dateDataSet ? uriRef(dateDataSet) : undefined,
         ignoreDashboardFilters: ignoreDashboardFilters
             ? ignoreDashboardFilters.map(convertFilterReference)

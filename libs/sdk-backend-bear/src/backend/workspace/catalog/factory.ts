@@ -58,10 +58,10 @@ const createLookups = (
     const [attributes, displayForms] = partition(displayFormsAndAttributes, GdcMetadata.isWrappedAttribute);
     const unwrappedDisplayForms = displayForms.map((df) => df.attributeDisplayForm);
 
-    const attributeByUri: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.uri);
-    const attributeById: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.identifier);
-    const displayFormByUri: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.uri);
-    const displayFormById: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.identifier);
+    const attributeByUri: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.uri!);
+    const attributeById: IAttributeByKey = keyBy(attributes, (item) => item.attribute.meta.identifier!);
+    const displayFormByUri: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.uri!);
+    const displayFormById: IDisplayFormByKey = keyBy(unwrappedDisplayForms, (item) => item.meta.identifier!);
 
     const attributeByDisplayFormUri = Object.keys(displayFormByUri).reduce(
         (acc: IAttributeByKey, displayFormUri) => {
@@ -328,7 +328,7 @@ export class BearWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
             return [attr.links.defaultDisplayForm, ...geoPins];
         });
-        const dateAttributeUris = dateDatasetAttributes.map((attr) => attr.attributeMeta.uri);
+        const dateAttributeUris = dateDatasetAttributes.map((attr) => attr.attributeMeta.uri!);
 
         return this.authCall((sdk) =>
             sdk.md.getObjects<BearDisplayFormOrAttribute>(

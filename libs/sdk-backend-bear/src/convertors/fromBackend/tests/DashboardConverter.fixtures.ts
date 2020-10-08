@@ -172,7 +172,7 @@ export const visualizationHeadline: GdcVisualizationObject.IVisualization = {
         content: {
             buckets: [],
             visualizationClass: {
-                uri: visualizationClassHeadline.visualizationClass.meta.uri,
+                uri: visualizationClassHeadline.visualizationClass.meta.uri!,
             },
         },
         meta: createObjectMeta("visualizationHeadline"),
@@ -184,7 +184,7 @@ export const visualizationBarChart: GdcVisualizationObject.IVisualization = {
         content: {
             buckets: [],
             visualizationClass: {
-                uri: visualizationClassBarChart.visualizationClass.meta.uri,
+                uri: visualizationClassBarChart.visualizationClass.meta.uri!,
             },
         },
         meta: createObjectMeta("visualizationBarChart"),
@@ -195,7 +195,7 @@ export const visualizationWidgetHeadline: GdcVisualizationWidget.IWrappedVisuali
     visualizationWidget: {
         content: {
             ignoreDashboardFilters: [{ attributeFilterReference: { displayForm: "/gdc/md/displayForm" } }],
-            visualization: visualizationHeadline.visualizationObject.meta.uri,
+            visualization: visualizationHeadline.visualizationObject.meta.uri!,
             drills: [
                 {
                     drillToDashboard: {
@@ -214,7 +214,7 @@ export const visualizationWidgetBarChart: GdcVisualizationWidget.IWrappedVisuali
     visualizationWidget: {
         content: {
             ignoreDashboardFilters: [],
-            visualization: visualizationBarChart.visualizationObject.meta.uri,
+            visualization: visualizationBarChart.visualizationObject.meta.uri!,
             drills: [
                 {
                     drillToVisualization: {
@@ -251,9 +251,9 @@ export const dashboardWithoutLayout: GdcDashboard.IWrappedAnalyticalDashboard = 
     analyticalDashboard: {
         content: {
             widgets: [
-                visualizationWidgetBarChart.visualizationWidget.meta.uri,
-                kpiWidget.kpi.meta.uri,
-                visualizationWidgetHeadline.visualizationWidget.meta.uri,
+                visualizationWidgetBarChart.visualizationWidget.meta.uri!,
+                kpiWidget.kpi.meta.uri!,
+                visualizationWidgetHeadline.visualizationWidget.meta.uri!,
             ],
         },
         meta: createObjectMeta("dashboardWithFilterContext"),
@@ -271,9 +271,9 @@ export const dashboardWithLayout: GdcDashboard.IWrappedAnalyticalDashboard = {
     analyticalDashboard: {
         content: {
             widgets: [
-                visualizationWidgetBarChart.visualizationWidget.meta.uri,
-                kpiWidget.kpi.meta.uri,
-                visualizationWidgetHeadline.visualizationWidget.meta.uri,
+                visualizationWidgetBarChart.visualizationWidget.meta.uri!,
+                kpiWidget.kpi.meta.uri!,
+                visualizationWidgetHeadline.visualizationWidget.meta.uri!,
             ],
             layout: {
                 fluidLayout: {
@@ -289,7 +289,8 @@ export const dashboardWithLayout: GdcDashboard.IWrappedAnalyticalDashboard = {
                                     content: {
                                         widget: {
                                             qualifier: {
-                                                uri: visualizationWidgetHeadline.visualizationWidget.meta.uri,
+                                                uri: visualizationWidgetHeadline.visualizationWidget.meta
+                                                    .uri!,
                                             },
                                         },
                                     },
@@ -303,7 +304,8 @@ export const dashboardWithLayout: GdcDashboard.IWrappedAnalyticalDashboard = {
                                     content: {
                                         widget: {
                                             qualifier: {
-                                                uri: visualizationWidgetBarChart.visualizationWidget.meta.uri,
+                                                uri: visualizationWidgetBarChart.visualizationWidget.meta
+                                                    .uri!,
                                             },
                                         },
                                     },
@@ -317,7 +319,7 @@ export const dashboardWithLayout: GdcDashboard.IWrappedAnalyticalDashboard = {
                                     content: {
                                         widget: {
                                             qualifier: {
-                                                uri: kpiWidget.kpi.meta.uri,
+                                                uri: kpiWidget.kpi.meta.uri!,
                                             },
                                         },
                                     },

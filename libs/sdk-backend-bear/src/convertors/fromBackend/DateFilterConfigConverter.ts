@@ -72,7 +72,7 @@ export const convertDateFilterConfig = (
         },
     } = dateFilterConfig;
     const convertedDateFilterConfig: IDateFilterConfig = {
-        ref: uriRef(meta.uri),
+        ref: uriRef(meta.uri!),
         selectedOption,
         allTime: allTime && convertAllTime(allTime),
         absoluteForm: absoluteForm && convertAbsoluteForm(absoluteForm),
