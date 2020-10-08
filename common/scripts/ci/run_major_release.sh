@@ -44,13 +44,12 @@ fi
 # Perform release; this will create commits & tags with the major release in it.
 #
 export TAG_VERSION=TRUE
+export TAG_NPM="latest"
 ${DIR}/do_publish.sh
 publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
   echo "Publishing major version failed. Please investigate the impact of this catastrophe and correct manually. Good luck."
-
-  exit 1
 else
   #
   # Now that the major is published and commit created, prepare for the next minor release.
@@ -62,7 +61,5 @@ else
   # stage all modified json files
   git ls-files | grep '\.json' | xargs git add
   git commit -m "Prepare for next minor release ${NEXT_MINOR}"
-
-  exit 0
 fi
 

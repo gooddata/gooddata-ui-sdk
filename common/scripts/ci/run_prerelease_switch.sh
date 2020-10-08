@@ -49,4 +49,5 @@ if [ $bump_rc -ne 0 ]; then
     exit 1
 fi
 
+export TAG_NPM="prerelease"
 ${DIR}/do_publish.sh
