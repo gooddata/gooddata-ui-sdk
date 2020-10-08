@@ -150,7 +150,6 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         pathMatch: "full",
         title: "Ranking Filter",
         Component: RankingFilter,
-        inBuilds: ["stg3"],
     },
     {
         path: "/date-filter-component",
