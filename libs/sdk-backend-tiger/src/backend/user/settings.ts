@@ -21,7 +21,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableNewADFilterBar: true,
                 enableMeasureValueFilters: true,
                 enablePushpinGeoChart: true,
-                hidePixelPerfectExperience: false,
+                hidePixelPerfectExperience: true,
                 enableBulletChart: true,
                 enableCsvUploader: true,
                 platformEdition: "enterprise",
@@ -31,6 +31,8 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableCustomMeasureFormatting: true,
                 enableAnalyticalDashboards: true,
                 enableHidingOfDataPoints: true,
+                enableAdCatalogRefresh: true,
+                enableAdRankingFilter: true,
             };
         });
     }
