@@ -183,6 +183,53 @@ describe("getCustomizedConfiguration", () => {
             expect(result.xAxis[0]).toEqual(expectedResult);
         });
 
+        it("should not set chart and X axis configurations when the zooming is disabled", () => {
+            const result = getCustomizedConfiguration(
+                {
+                    ...chartOptions,
+                },
+                {
+                    zoomInsight: false,
+                },
+            );
+            const xAxisResult = {
+                ...result.xAxis[0],
+                minRange: undefined,
+            };
+
+            expect(result.xAxis[0]).toEqual(xAxisResult);
+            expect(result.chart).toEqual(undefined);
+        });
+
+        it("should set chart and X axis configurations when the zooming is enabled", () => {
+            const result = getCustomizedConfiguration(
+                {
+                    ...chartOptions,
+                },
+                {
+                    zoomInsight: true,
+                },
+            );
+            const expectedResult = {
+                ...result.xAxis[0],
+                minRange: 2,
+            };
+            const chartResult = {
+                ...result.chart,
+                zoomType: "x",
+                panKey: "shift",
+                panning: true,
+                resetZoomButton: {
+                    theme: {
+                        display: "none",
+                    },
+                },
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedResult);
+            expect(result.chart).toEqual(chartResult);
+        });
+
         it("should set X axis configurations with style", () => {
             const result = getCustomizedConfiguration(chartOptions);
             expect(result.xAxis[0].title.style).toEqual({

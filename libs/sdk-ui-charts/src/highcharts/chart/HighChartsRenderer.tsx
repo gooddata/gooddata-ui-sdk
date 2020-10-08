@@ -199,6 +199,17 @@ export default class HighChartsRenderer extends React.PureComponent<
         });
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    private onChartSelection = (event: any): void => {
+        const chartWrapper = event.target.renderTo.parentElement;
+        const resetZoomButton = chartWrapper.closest(".gd-base-visualization").querySelector(".viz-zoom-out");
+        if (event.resetSelection) {
+            resetZoomButton.style.display = "none";
+        } else {
+            resetZoomButton.style.display = "block";
+        }
+    };
+
     public createChartConfig(chartConfig: IChartConfig, legendItemsEnabled: any[]): IChartConfig {
         const config: any = cloneDeep(chartConfig);
         const { yAxis } = config;
@@ -210,7 +221,12 @@ export default class HighChartsRenderer extends React.PureComponent<
             // with minHeight of the container (legend overlaps)
             config.chart.height = this.props.height;
         }
-
+        if (chartConfig.chart.zoomType) {
+            config.chart.events = {
+                ...config.chart.events,
+                selection: this.onChartSelection,
+            };
+        }
         // render chart with disabled visibility based on legendItemsEnabled
         const firstSeriesTypes = [
             VisualizationTypes.PIE,
@@ -280,6 +296,26 @@ export default class HighChartsRenderer extends React.PureComponent<
         return this.props.chartRenderer(chartProps);
     }
 
+    private onZoomOutButtonClick = (): void => {
+        this.chartRef.getChart().zoomOut();
+    };
+
+    private renderZoomOutButton() {
+        const {
+            hcOptions: { chart },
+        } = this.props;
+        if (chart && chart.zoomType) {
+            return (
+                <button
+                    className="viz-zoom-out s-zoom-out"
+                    onClick={this.onZoomOutButtonClick}
+                    style={{ display: "none" }}
+                ></button>
+            );
+        }
+        return null;
+    }
+
     public render(): React.ReactNode {
         const { legend } = this.props;
         const { showFluidLegend } = this.state;
@@ -299,6 +335,7 @@ export default class HighChartsRenderer extends React.PureComponent<
 
         return (
             <div className={classes} ref={this.highchartsRendererRef}>
+                {this.renderZoomOutButton()}
                 {isLegendRenderedFirst && this.renderLegend()}
                 {this.renderHighcharts()}
                 {!isLegendRenderedFirst && this.renderLegend()}
