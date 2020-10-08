@@ -19,6 +19,8 @@ const HardcodedSettings = {
     enableCustomMeasureFormatting: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
     enableHidingOfDataPoints: true,
+    enableAdCatalogRefresh: true,
+    enableAdRankingFilter: true,
 
     // KD specific
     enableAnalyticalDashboards: true,
