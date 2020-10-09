@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import md5 from "md5";
+import SparkMD5 from "spark-md5";
 import invariant from "ts-invariant";
 import cloneDeep from "lodash/cloneDeep";
 import compact from "lodash/compact";
@@ -193,7 +193,7 @@ function getPoPExpression(attributeUri: string, metricExpression: string) {
 }
 
 function getGeneratedMetricHash(title: string, format: string, expression: string) {
-    return md5(`${expression}#${title}#${format}`);
+    return SparkMD5.hash(`${expression}#${title}#${format}`);
 }
 
 function getMeasureType(measure: any) {
