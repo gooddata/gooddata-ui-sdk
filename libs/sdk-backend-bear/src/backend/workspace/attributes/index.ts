@@ -4,6 +4,7 @@ import {
     IAttributeMetadataObject,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import { UriRef, ObjRef, uriRef } from "@gooddata/sdk-model";
@@ -91,13 +92,20 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         refs: ObjRef[],
     ): Promise<IAttributeDisplayFormMetadataObject[]> => {
         const displayFormUris = await objRefsToUris(refs, this.workspace, this.authCall);
-        const wrappedAttributeDisplayForms = await this.authCall((sdk) =>
-            sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
+        const wrappedAttributeDisplayForms: GdcMetadata.IWrappedAttributeDisplayForm[] = await this.authCall(
+            (sdk) =>
+                sdk.md.getObjects<GdcMetadata.IWrappedAttributeDisplayForm>(this.workspace, displayFormUris),
         );
+
         return wrappedAttributeDisplayForms.map(
-            (
-                wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm,
-            ): IAttributeDisplayFormMetadataObject => {
+            (wrappedDisplayForm: GdcMetadata.IWrappedAttributeDisplayForm) => {
+                if (!GdcMetadata.isWrappedAttributeDisplayForm(wrappedDisplayForm)) {
+                    throw new UnexpectedError(
+                        "INVALID_REFERENCED_OBJECT",
+                        new Error("Referenced object is not attributeDisplayForm"),
+                    );
+                }
+
                 const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
                 return this.buildAttributeDisplayForm(displayFormDetails);
             },

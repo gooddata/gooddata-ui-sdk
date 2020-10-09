@@ -94,7 +94,10 @@ export const objRefsToUris = async (
         } else {
             const foundPair = identifiersToUrisPairs.find((pair) => pair.identifier === ref.identifier);
             if (!foundPair) {
-                throw new Error(`URI for ${ref.identifier} have not been found`);
+                throw new UnexpectedError(
+                    "REFERENCED_OBJECT_NOT_FOUND",
+                    new Error(`Referenced object for ${ref.identifier} not found`),
+                );
             }
             return foundPair.uri;
         }
