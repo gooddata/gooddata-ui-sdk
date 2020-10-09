@@ -1,0 +1,27 @@
+// (C) 2019-2020 GoodData Corporation
+@import "./mixins";
+
+/* ==========================================================================
+   Timepicker
+   ========================================================================== */
+.gd-timepicker {
+    display: inline-block;
+
+    .button-dropdown {
+        width: 100%;
+    }
+
+    .icon-timer,
+    .button-dropdown .icon-timer,
+    .button-dropdown:focus .icon-timer,
+    .button-dropdown:hover .icon-timer,
+    .button-dropdown.is-active .icon-timer {
+        color: $gd-palette-primary-base;
+    }
+}
+
+.gd-mobile-dropdown-header {
+    .button-dropdown.is-active .gd-button-icon.icon-timer {
+        color: $gd-palette-primary-base;
+    }
+}

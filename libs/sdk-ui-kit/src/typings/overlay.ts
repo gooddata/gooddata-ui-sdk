@@ -48,3 +48,9 @@ export interface IOptimalAlignment {
     };
     visiblePart: number;
 }
+
+/**
+ * @internal
+ */
+
+export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";

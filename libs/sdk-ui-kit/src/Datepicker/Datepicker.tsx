@@ -13,7 +13,7 @@ import DayPicker from "react-day-picker";
 import DayPickerInput from "react-day-picker/DayPickerInput";
 
 import { IAlignPoint } from "../typings/positioning";
-import { getOptimalAlignment } from "./utils/overlay";
+import { getOptimalAlignment } from "../utils/overlay";
 import { elementRegion } from "../utils/domUtilities";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "DayPicker-Day--outside";
