@@ -231,24 +231,6 @@ describe("PluggableBulletChart", () => {
         });
     });
 
-    describe("isError property", () => {
-        it("should set to true if primary measure is missing", async () => {
-            await bulletChart.getExtendedReferencePoint(
-                referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
-            );
-
-            expect((bulletChart as any).getIsError()).toEqual(true);
-        });
-
-        it("should set to false if primary measure is present", async () => {
-            await bulletChart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
-            );
-
-            expect((bulletChart as any).getIsError()).toEqual(false);
-        });
-    });
-
     describe("Arithmetic measures", () => {
         it("should add AM that does fit", async () => {
             const extendedReferencePoint = await bulletChart.getExtendedReferencePoint({
