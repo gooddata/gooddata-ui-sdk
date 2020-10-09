@@ -66,10 +66,6 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
     protected isLoading: boolean;
 
-    protected setIsError = (value: boolean): void => {
-        this.hasError = value;
-    };
-
     protected getIsError = (): boolean => {
         return this.hasEmptyAfm || this.hasError;
     };
