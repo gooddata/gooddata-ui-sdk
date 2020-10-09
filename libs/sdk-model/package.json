@@ -5,8 +5,11 @@
     "description": "GoodData Model definitions used by UI components and Backend SPI and its implementations",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-model",
     "license": "MIT",
-    "main": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "browser": "dist/cjs/index.js",
+    "typings": "dist/cjs/index.d.ts",
+    "sideEffects": false,
     "files": [
         "dist"
     ],
@@ -16,7 +19,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run api-extractor",
+        "build": "rm -rf dist && tsc -p tsconfig.build.json && tsc -p tsconfig.build.esm.json && npm run api-extractor",
         "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",

@@ -3,6 +3,7 @@
         "esModuleInterop": true,
         "target": "es5",
         "module": "commonjs",
+        "moduleResolution": "node",
         "importHelpers": true,
         "lib": ["es6", "dom"],
         "declaration": true,
