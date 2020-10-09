@@ -12,6 +12,7 @@ import {
     IBucketOfFun,
     IImplicitDrillDown,
     IDrillDownContext,
+    InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization";
 
 import {
@@ -28,8 +29,8 @@ import { DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig";
 import { BULLET_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
 import BulletChartConfigurationPanel from "../../configurationPanels/BulletChartConfigurationPanel";
 import { getReferencePointWithSupportedProperties } from "../../../utils/propertiesHelper";
-import { VisualizationTypes, IDrillEvent, getIntersectionPartAfter } from "@gooddata/sdk-ui";
-import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
+import { VisualizationTypes, IDrillEvent, getIntersectionPartAfter, BucketNames } from "@gooddata/sdk-ui";
+import { bucketIsEmpty, IInsight, IInsightDefinition, insightBucket } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper";
 import { modifyBucketsAttributesForDrillDown, addIntersectionFiltersToInsight } from "../drillDownUtil";
 import { drillDownFromAttributeLocalId } from "../../../utils/ImplicitDrillDownHelper";
@@ -67,8 +68,6 @@ export class PluggableBulletChart extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
-
-        this.setPrimaryMeasureIsMissingError(buckets);
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -134,11 +133,14 @@ export class PluggableBulletChart extends PluggableBaseChart {
         }, []);
     }
 
-    private setPrimaryMeasureIsMissingError(measureBuckets: IBucketOfFun[]): void {
-        const hasPrimaryMeasureIsMissingError =
-            measureBuckets[0].items.length === 0 &&
-            (measureBuckets[1].items.length > 0 || measureBuckets[2].items.length > 0);
+    protected checkBeforeRender(insight: IInsightDefinition): boolean {
+        super.checkBeforeRender(insight);
 
-        this.setIsError(hasPrimaryMeasureIsMissingError);
+        const measureBucket = insightBucket(insight, BucketNames.MEASURES);
+        if (!measureBucket || bucketIsEmpty(measureBucket)) {
+            throw new InvalidBucketsSdkError();
+        }
+
+        return true;
     }
 }
