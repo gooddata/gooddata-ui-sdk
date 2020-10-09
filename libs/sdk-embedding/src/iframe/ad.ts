@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+import isObject from "lodash/isObject";
 import {
     CommandFailed,
     IObjectMeta,
@@ -257,7 +258,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData {
-        return getEventType(obj) === GdcAdCommandType.DrillableItems;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.DrillableItems;
     }
 
     //
@@ -359,7 +360,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isOpenInsightCommandData(obj: unknown): obj is OpenInsightCommandData {
-        return getEventType(obj) === GdcAdCommandType.OpenInsight;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.OpenInsight;
     }
 
     //
@@ -390,7 +391,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isClearCommandData(obj: unknown): obj is ClearCommandData {
-        return getEventType(obj) === GdcAdCommandType.Clear;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.Clear;
     }
 
     //
@@ -447,7 +448,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData {
-        return getEventType(obj) === GdcAdCommandType.Save;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.Save;
     }
 
     //
@@ -496,7 +497,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData {
-        return getEventType(obj) === GdcAdCommandType.SaveAs;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.SaveAs;
     }
 
     //
@@ -558,7 +559,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData {
-        return getEventType(obj) === GdcAdCommandType.Export;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.Export;
     }
 
     //
@@ -596,7 +597,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isUndoCommandData(obj: unknown): obj is UndoCommandData {
-        return getEventType(obj) === GdcAdCommandType.Undo;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.Undo;
     }
 
     //
@@ -634,7 +635,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isRedoCommandData(obj: unknown): obj is RedoCommandData {
-        return getEventType(obj) === GdcAdCommandType.Redo;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.Redo;
     }
 
     /**
@@ -674,7 +675,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData {
-        return getEventType(obj) === GdcAdCommandType.SetFilterContext;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.SetFilterContext;
     }
 
     /**
@@ -708,7 +709,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData {
-        return getEventType(obj) === GdcAdCommandType.RemoveFilterContext;
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.RemoveFilterContext;
     }
 
     //
@@ -768,7 +769,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isNewInsightInitializedData(obj: unknown): obj is NewInsightInitializedData {
-        return getEventType(obj) === GdcAdEventType.NewInsightInitialized;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.NewInsightInitialized;
     }
 
     //
@@ -818,7 +819,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isInsightOpenedData(obj: unknown): obj is InsightOpenedData {
-        return getEventType(obj) === GdcAdEventType.InsightOpened;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightOpened;
     }
 
     //
@@ -871,7 +872,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isInsightRenderedData(obj: unknown): obj is InsightRenderedData {
-        return getEventType(obj) === GdcAdEventType.InsightRendered;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightRendered;
     }
 
     //
@@ -903,7 +904,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isClearFinishedData(obj: unknown): obj is ClearFinishedData {
-        return getEventType(obj) === GdcAdEventType.ClearFinished;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearFinished;
     }
 
     //
@@ -948,7 +949,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isInsightSavedData(obj: unknown): obj is InsightSavedData {
-        return getEventType(obj) === GdcAdEventType.InsightSaved;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.InsightSaved;
     }
 
     //
@@ -988,7 +989,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isExportFinishedData(obj: unknown): obj is ExportFinishedData {
-        return getEventType(obj) === GdcAdEventType.ExportFinished;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.ExportFinished;
     }
 
     //
@@ -1023,7 +1024,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isUndoFinishedData(obj: unknown): obj is UndoFinishedData {
-        return getEventType(obj) === GdcAdEventType.UndoFinished;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.UndoFinished;
     }
 
     //
@@ -1059,7 +1060,7 @@ export namespace EmbeddedAnalyticalDesigner {
      * @public
      */
     export function isRedoFinishedData(obj: unknown): obj is RedoFinishedData {
-        return getEventType(obj) === GdcAdEventType.RedoFinished;
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.RedoFinished;
     }
 
     //

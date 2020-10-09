@@ -16,6 +16,7 @@
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
+        "strict": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/api-model-bear": ["api-model-bear/src"]

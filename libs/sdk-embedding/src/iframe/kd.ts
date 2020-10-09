@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+import isObject from "lodash/isObject";
 import {
     IGdcMessageEvent,
     getEventType,
@@ -289,7 +290,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData {
-        return getEventType(obj) === GdcKdCommandType.Save;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.Save;
     }
 
     /**
@@ -333,7 +334,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData {
-        return getEventType(obj) === GdcKdCommandType.SaveAsDashboard;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SaveAsDashboard;
     }
 
     /**
@@ -363,7 +364,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandData {
-        return getEventType(obj) === GdcKdCommandType.CancelEdit;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.CancelEdit;
     }
 
     /**
@@ -413,7 +414,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isSwitchToEditCommandData(obj: unknown): obj is SwitchToEditCommandData {
-        return getEventType(obj) === GdcKdCommandType.SwitchToEdit;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SwitchToEdit;
     }
 
     /**
@@ -448,7 +449,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData {
-        return getEventType(obj) === GdcKdCommandType.DrillableItems;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.DrillableItems;
     }
 
     /**
@@ -478,7 +479,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isSetSizeCommandData(obj: unknown): obj is SetSizeCommandData {
-        return getEventType(obj) === GdcKdCommandType.SetSize;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetSize;
     }
 
     /**
@@ -518,7 +519,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData {
-        return getEventType(obj) === GdcKdCommandType.SetFilterContext;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterContext;
     }
 
     /**
@@ -551,7 +552,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData {
-        return getEventType(obj) === GdcKdCommandType.RemoveFilterContext;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.RemoveFilterContext;
     }
 
     //
@@ -648,7 +649,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandData {
-        return getEventType(obj) === GdcKdCommandType.AddWidget;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddWidget;
     }
 
     /**
@@ -674,7 +675,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isAddFilterCommandData(obj: unknown): obj is AddFilterCommandData {
-        return getEventType(obj) === GdcKdCommandType.AddFilter;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.AddFilter;
     }
 
     /**
@@ -702,7 +703,7 @@ export namespace EmbeddedKpiDashboard {
      * @public
      */
     export function isExportToPdfCommandData(obj: unknown): obj is ExportToPdfCommandData {
-        return getEventType(obj) === GdcKdCommandType.ExportToPdf;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.ExportToPdf;
     }
 
     /**
@@ -1021,6 +1022,6 @@ export namespace EmbeddedKpiDashboard {
     export function isOpenScheduleEmailDialogCommandData(
         obj: unknown,
     ): obj is OpenScheduleEmailDialogCommandData {
-        return getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
     }
 }
