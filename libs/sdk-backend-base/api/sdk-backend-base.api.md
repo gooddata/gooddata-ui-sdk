@@ -181,6 +181,8 @@ export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttri
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
+    displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
     geoPinDisplayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
     // (undocumented)
     toExecutionModel(modifications?: AttributeModifications): IAttribute;

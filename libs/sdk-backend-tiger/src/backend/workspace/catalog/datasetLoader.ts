@@ -62,7 +62,7 @@ function createNonDateAttributes(attributes: AttributeResourcesResponseSchema): 
         const geoLabels = allLabels.filter(isGeoLabel);
         const defaultLabel = nonGeoLabels[0] ?? geoLabels[0];
 
-        return convertAttribute(attribute, defaultLabel, geoLabels);
+        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels);
     });
 }
 
