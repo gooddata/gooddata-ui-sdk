@@ -42,12 +42,12 @@ export namespace GdcMetadata {
     export interface IObjectMeta {
         category?: ObjectCategory;
         title: string;
-        summary: string;
+        summary?: string;
         tags?: string;
         author?: string;
         contributor?: string;
-        identifier: string;
-        uri: string;
+        identifier?: string;
+        uri?: string;
         deprecated?: "0" | "1";
         isProduction?: 1 | 0;
         created?: Timestamp;

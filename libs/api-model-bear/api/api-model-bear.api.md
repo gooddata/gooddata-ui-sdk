@@ -1383,7 +1383,7 @@ export namespace GdcMetadata {
         // (undocumented)
         flags?: string[];
         // (undocumented)
-        identifier: string;
+        identifier?: string;
         // (undocumented)
         isProduction?: 1 | 0;
         // (undocumented)
@@ -1393,7 +1393,7 @@ export namespace GdcMetadata {
         // (undocumented)
         sharedWithSomeone?: 1 | 0;
         // (undocumented)
-        summary: string;
+        summary?: string;
         // (undocumented)
         tags?: string;
         // (undocumented)
@@ -1403,7 +1403,7 @@ export namespace GdcMetadata {
         // (undocumented)
         updated?: Timestamp;
         // (undocumented)
-        uri: string;
+        uri?: string;
     }
     export interface IObjectXrefEntry {
         author: string;

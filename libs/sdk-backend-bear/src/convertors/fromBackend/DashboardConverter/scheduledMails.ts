@@ -36,13 +36,13 @@ export const convertScheduledMail = (
     const {
         scheduledMail: {
             content: { attachments, body, subject, to, when, bcc, lastSuccessfull, unsubscribed },
-            meta: { uri, identifier, title, summary: description, unlisted },
+            meta: { uri, identifier, title, summary, unlisted },
         },
     } = scheduledMail;
 
     const convertedScheduledMail: IScheduledMail | IScheduledMailDefinition = {
         title,
-        description,
+        description: summary!,
         ...(uri
             ? {
                   ref: uriRef(uri),

@@ -47,25 +47,25 @@ export const convertMetadataObject = (obj: GdcMetadataObject.IObject): MetadataO
         );
     }
 
-    const ref = uriRef(obj.meta.uri);
+    const ref = uriRef(obj.meta.uri!);
 
     const commonModifications = <T extends IMetadataObjectBuilder>(builder: T) =>
         builder
             .title(obj.meta.title)
-            .description(obj.meta.summary)
-            .id(obj.meta.identifier)
+            .description(obj.meta.summary!)
+            .id(obj.meta.identifier!)
             .production(obj.meta.isProduction === 1)
-            .uri(obj.meta.uri);
+            .uri(obj.meta.uri!);
 
     if (GdcMetadata.isAttribute(obj)) {
         const attributeDisplayForms = obj.content.displayForms.map((displayForm) =>
-            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri!), (df) =>
                 df
                     .attribute(ref)
                     .title(displayForm.meta.title)
-                    .description(displayForm.meta.summary)
-                    .id(displayForm.meta.identifier)
-                    .uri(displayForm.meta.uri)
+                    .description(displayForm.meta.summary!)
+                    .id(displayForm.meta.identifier!)
+                    .uri(displayForm.meta.uri!)
                     .displayFormType(displayForm.content.type),
             ),
         );

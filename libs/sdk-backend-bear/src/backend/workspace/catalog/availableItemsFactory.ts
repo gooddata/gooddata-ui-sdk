@@ -275,7 +275,7 @@ function translateIdentifiersToUris(item: IAttributeOrMeasure, mappings: IUriMap
             const displayForm = mappings.displayFormById[ref.identifier];
 
             return modifyAttribute(item, (m) =>
-                m.displayForm(uriRef(displayForm.meta.uri)).localId(attributeLocalId(item)),
+                m.displayForm(uriRef(displayForm.meta.uri!)).localId(attributeLocalId(item)),
             );
         }
 

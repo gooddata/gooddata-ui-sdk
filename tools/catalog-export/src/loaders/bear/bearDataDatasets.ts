@@ -25,7 +25,7 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
             const newDs: DateDataSet = {
                 dateDataSet: {
                     meta: {
-                        identifier: ds.dataSet.meta.identifier,
+                        identifier: ds.dataSet.meta.identifier!,
                         tags: ds.dataSet.meta.tags!,
                         title: ds.dataSet.meta.title,
                     },

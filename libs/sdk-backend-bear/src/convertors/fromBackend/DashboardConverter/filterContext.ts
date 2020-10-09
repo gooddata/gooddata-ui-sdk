@@ -101,7 +101,7 @@ export const convertFilterContext = (
     } = filterContext;
 
     const convertedFilterContext: IFilterContext | IFilterContextDefinition = {
-        description: summary,
+        description: summary!,
         ...(uri
             ? {
                   identifier,

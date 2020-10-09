@@ -11,7 +11,7 @@ export const convertVisualizationClass = (
             ...content,
             identifier: meta.identifier!, // we assume that identifier is always defined for visualizations
             title: meta.title,
-            uri: meta.uri,
+            uri: meta.uri!,
         },
     };
 };

@@ -175,8 +175,9 @@ describe("metadata", () => {
                         content: {
                             expression: "SELECT 1",
                         },
-                        // tslint:disable-next-line: no-object-literal-type-assertion
-                        meta: {} as GdcMetadata.IObjectMeta,
+                        meta: {
+                            title: "",
+                        },
                     },
                 };
 

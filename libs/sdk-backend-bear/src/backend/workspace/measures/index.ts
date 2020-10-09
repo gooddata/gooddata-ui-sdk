@@ -64,7 +64,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
                 return {
                     ...acc,
-                    [el.meta.uri]: el,
+                    [el.meta.uri!]: el,
                 };
             },
             {},
@@ -74,7 +74,7 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             (acc: { [key: string]: GdcMetadataObject.IObject }, el) => {
                 return {
                     ...acc,
-                    [el.meta.identifier]: el,
+                    [el.meta.identifier!]: el,
                 };
             },
             {},

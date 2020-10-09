@@ -35,9 +35,9 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
             df
                 .attribute(attrRef)
                 .title(displayFormDetails.meta.title)
-                .description(displayFormDetails.meta.summary)
-                .id(displayFormDetails.meta.identifier)
-                .uri(displayFormDetails.meta.uri),
+                .description(displayFormDetails.meta.summary!)
+                .id(displayFormDetails.meta.identifier!)
+                .uri(displayFormDetails.meta.uri!),
         );
     };
 
@@ -49,13 +49,13 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         const { title, uri, isProduction, identifier, summary } = wrappedAttribute.attribute.meta;
         const { displayForms } = wrappedAttribute.attribute.content;
         const attributeDisplayForms = displayForms.map((displayForm) =>
-            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri), (df) =>
+            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri!), (df) =>
                 df
                     .attribute(ref)
                     .title(displayForm.meta.title)
-                    .description(displayForm.meta.summary)
-                    .id(displayForm.meta.identifier)
-                    .uri(displayForm.meta.uri)
+                    .description(displayForm.meta.summary!)
+                    .id(displayForm.meta.identifier!)
+                    .uri(displayForm.meta.uri!)
                     .displayFormType(displayForm.content.type),
             ),
         );
@@ -63,10 +63,10 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         return newAttributeMetadataObject(ref, (a) =>
             a
                 .title(title)
-                .uri(uri)
+                .uri(uri!)
                 .production(Boolean(isProduction))
-                .id(identifier)
-                .description(summary)
+                .id(identifier!)
+                .description(summary!)
                 .displayForms(attributeDisplayForms),
         );
     };
@@ -116,7 +116,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
                     meta: { title, uri, isProduction, identifier, summary },
                     content: { displayForms },
                 } = wrappedAttribute.attribute;
-                const ref = uriRef(uri);
+                const ref = uriRef(uri!);
                 const attributeDisplayForms = displayForms.map((displayForm) =>
                     this.buildAttributeDisplayForm(displayForm),
                 );
@@ -124,10 +124,10 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
                 return newAttributeMetadataObject(ref, (attribute) =>
                     attribute
                         .title(title)
-                        .uri(uri)
+                        .uri(uri!)
                         .production(Boolean(isProduction))
-                        .id(identifier)
-                        .description(summary)
+                        .id(identifier!)
+                        .description(summary!)
                         .displayForms(attributeDisplayForms),
                 );
             },
@@ -141,16 +141,16 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
             meta: { title, summary, identifier, uri },
             content: { formOf, default: defaultDisplayForm },
         } = displayFormDetails;
-        const ref: UriRef = uriRef(uri);
+        const ref: UriRef = uriRef(uri!);
         const isDefaultDf = !!(defaultDisplayForm === 1);
         return newAttributeDisplayFormMetadataObject(ref, (df) =>
             df
                 .attribute(uriRef(formOf))
                 .title(title)
-                .description(summary)
+                .description(summary!)
                 .isDefault(isDefaultDf)
-                .id(identifier)
-                .uri(uri),
+                .id(identifier!)
+                .uri(uri!),
         );
     };
 }

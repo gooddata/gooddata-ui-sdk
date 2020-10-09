@@ -144,7 +144,7 @@ export class MetadataModuleExt {
 
             const duplicateDashboardUri: string = (
                 await this.metadataModule.createObject(projectId, duplicateDashboard)
-            ).analyticalDashboard.meta.uri;
+            ).analyticalDashboard.meta.uri!;
 
             return duplicateDashboardUri;
         } catch (err) {
