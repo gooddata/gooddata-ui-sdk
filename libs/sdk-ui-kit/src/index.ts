@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 
+export * from "./typings/utilities";
 export * from "./typings/positioning";
 export * from "./typings/domUtilities";
 export * from "./typings/overlay";
@@ -14,3 +15,4 @@ export * from "./List";
 export * from "./Tabs";
 export * from "./Header";
 export * from "./Messages";
+export * from "./Dialog";

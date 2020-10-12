@@ -160,6 +160,22 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
+export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal (undocumented)
+export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
+    // (undocumented)
+    static defaultProps: Partial<IConfirmDialogBaseProps>;
+    // (undocumented)
+    onKeyDown: (event: React_2.KeyboardEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
@@ -169,11 +185,47 @@ export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
 }
 
 // @internal (undocumented)
+export class Dialog extends Component<IDialogBaseProps> {
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal (undocumented)
+export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
+    // (undocumented)
+    static defaultProps: Partial<IDialogBaseProps>;
+    // (undocumented)
+    protected getDialogClasses(additionalClassName?: string): string;
+    // (undocumented)
+    protected onKeyDown: (event: React_2.KeyboardEvent<HTMLDivElement>) => void | undefined;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    protected renderCloseButton(): JSX.Element;
+}
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
     // (undocumented)
     KEY_CODE_ESCAPE = 27
+}
+
+// @internal (undocumented)
+export const ExportDialog: {
+    (props: IExportDialogBaseProps): JSX.Element;
+    defaultProps: Partial<IExportDialogBaseProps>;
+};
+
+// @internal (undocumented)
+export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
+    // (undocumented)
+    static defaultProps: Partial<IExportDialogBaseProps>;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    state: IExportDialogBaseState;
 }
 
 // @internal (undocumented)
@@ -356,6 +408,22 @@ export interface IButtonProps {
 }
 
 // @internal (undocumented)
+export interface IConfirmDialogBaseProps extends IDialogBaseProps {
+    // (undocumented)
+    cancelButtonText?: string;
+    // (undocumented)
+    headline?: string;
+    // (undocumented)
+    isPositive?: boolean;
+    // (undocumented)
+    isSubmitDisabled?: boolean;
+    // (undocumented)
+    submitButtonText?: string;
+    // (undocumented)
+    warning?: string | React.ReactElement;
+}
+
+// @internal (undocumented)
 export interface IDateDatasetsListItemProps {
     // (undocumented)
     id?: string;
@@ -395,6 +463,68 @@ export interface IDatePickerOwnProps {
     size?: string;
     // (undocumented)
     tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IDialogBaseProps {
+    // (undocumented)
+    children?: React.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    displayCloseButton?: boolean;
+    // (undocumented)
+    onCancel?: () => void;
+    // (undocumented)
+    onSubmit?: (data?: any) => void;
+    // (undocumented)
+    submitOnEnterKey?: boolean;
+}
+
+// @internal (undocumented)
+export interface IExportDialogBaseProps extends IDialogBaseProps {
+    // (undocumented)
+    cancelButtonText?: string;
+    // (undocumented)
+    filterContextText?: string;
+    // (undocumented)
+    filterContextTitle?: string;
+    // (undocumented)
+    filterContextVisible?: boolean;
+    // (undocumented)
+    headline?: string;
+    // (undocumented)
+    includeFilterContext?: boolean;
+    // (undocumented)
+    isPositive?: boolean;
+    // (undocumented)
+    isSubmitDisabled?: boolean;
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    mergeHeadersDisabled?: boolean;
+    // (undocumented)
+    mergeHeadersText?: string;
+    // (undocumented)
+    mergeHeadersTitle?: string;
+    // (undocumented)
+    submitButtonText?: string;
+}
+
+// @internal (undocumented)
+export interface IExportDialogBaseState {
+    // (undocumented)
+    includeFilterContext: boolean;
+    // (undocumented)
+    mergeHeaders: boolean;
+}
+
+// @internal (undocumented)
+export interface IExportDialogData {
+    // (undocumented)
+    includeFilterContext: boolean;
+    // (undocumented)
+    mergeHeaders: boolean;
 }
 
 // @internal (undocumented)

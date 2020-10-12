@@ -1,0 +1,208 @@
+// (C) 2007-2020 GoodData Corporation
+@import "./Dialog/_mixins";
+
+// STYLES FROM GOODSTRAP
+.modalityPlugin-mask {
+    position: fixed;
+    z-index: 5000;
+    top: 0;
+    left: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    opacity: 0.9;
+    background-color: $gd-modal-outsideBackgroundColor;
+}
+
+.modalityPlugin-mask-visible {
+    display: block;
+}
+//
+
+.gd-dialog,
+.overlay.gd-dialog {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    outline: 0;
+    max-width: $modalDialog-maxWidth;
+    border-style: solid;
+    border-color: $gd-modal-borderColor;
+    border-radius: $gd-modal-borderRadius;
+    border-width: $gd-modal-borderWidth;
+    box-shadow: $gd-modal-boxShadow $modal-shadow-darker;
+
+    /**
+     * Row inside a row has negative margin.
+     * Dialog can be inserted anywhere to the DOM,
+     * we have to set default value to be consistent
+     * across all applications
+     */
+    .row {
+        width: auto;
+        margin-left: -$column-gutter/2;
+        margin-right: -$column-gutter/2;
+    }
+
+    .gd-dialog-close,
+    .gd-dialog-close.gd-button-link {
+        position: absolute;
+        z-index: 5;
+        top: 14px;
+        right: 4px;
+        outline: none;
+
+        &::before {
+            color: $gd-color-link;
+        }
+
+        @include active-states {
+            box-shadow: none;
+            border-color: transparent;
+
+            &::before {
+                color: $gd-color-highlight;
+            }
+        }
+    }
+}
+
+.overlay.gd-dialog.gd-dropdown {
+    padding: 0;
+}
+
+.gd-dialog.gd-confirm {
+    max-width: 350px;
+
+    .gd-dialog-close,
+    .gd-dialog-close.gd-button-link {
+        top: 10px;
+    }
+}
+
+.gd-dialog-header {
+    @include text-overflow();
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+        padding: 0;
+    }
+
+    margin: 0 30px 20px 0;
+
+    h2,
+    h3,
+    div {
+        @include text-overflow();
+
+        line-height: 1.2;
+        color: $gd-modal-title-color;
+    }
+
+    h2 {
+        @include gd-heading-2;
+    }
+
+    h3 {
+        @include gd-heading-3;
+    }
+
+    h2,
+    h3,
+    div {
+        color: $gd-modal-title-color;
+    }
+}
+
+.gd-dialog-header.gd-dialog-header-with-border {
+    border-bottom: 1px solid $gd-modal-title-lineColor;
+}
+
+.gd-dialog-icon {
+    @include gd-heading-1;
+
+    display: inline-block;
+    width: 35px;
+    vertical-align: middle;
+
+    &::before {
+        color: $gd-color-highlight;
+    }
+}
+
+.gd-dialog-section {
+    margin-bottom: 20px;
+
+    & + .gd-dialog-footer {
+        margin-top: 30px;
+    }
+}
+
+.gd-dialog-section-separated {
+    @extend .gd-dialog-section;
+
+    padding-bottom: 20px;
+    border-bottom: 1px solid $gd-border-color;
+
+    & + & {
+        margin-top: 20px;
+    }
+}
+
+.gd-dialog-warning {
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fff3f2;
+    color: $gd-color-negative;
+}
+
+.gd-dialog-content,
+.gd-dialog-section,
+.gd-dialog-section-separated {
+    p {
+        &:first-of-type {
+            margin-top: 0;
+        }
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.gd-dialog-footer {
+    margin-top: 20px;
+    text-align: right;
+}
+
+/* Export Dialog
+   ========================================================================== */
+
+.gd-export-dialog {
+    min-width: 350px;
+
+    .gd-dialog-header h3 {
+        margin: 0;
+        padding: 0;
+    }
+
+    h6 {
+        margin: 0;
+        padding: 12px 0 0;
+    }
+
+    h6:first-child {
+        padding-top: 0;
+    }
+
+    .input-label-text {
+        margin-left: 3px;
+    }
+}
