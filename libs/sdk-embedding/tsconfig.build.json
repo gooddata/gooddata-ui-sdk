@@ -1,6 +1,6 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/internal.ts"],
+    "include": ["src/index.ts", "src/internal/index.ts"],
     "compilerOptions": {
         "baseUrl": null,
         "paths": null

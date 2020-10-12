@@ -29,4 +29,17 @@ export {
     isPluggableVisualizationError,
     isEmptyAfm,
     isInvalidBuckets,
+    IExtendedReferencePoint,
+    IBucketItem,
+    IReferencePoint,
+    IOpenAsReportUiConfig,
+    IFilters,
+    IFiltersBucketItem,
+    IMeasureValueFilter,
+    IRankingFilter,
+    IAttributeFilter,
+    IDateFilter,
+    IDrillDownContext,
 } from "./interfaces/Visualization";
+
+export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
