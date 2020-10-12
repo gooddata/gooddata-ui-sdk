@@ -52,7 +52,7 @@ import { removeSort } from "../../../utils/sort";
 import { setComboChartUiConfig } from "../../../utils/uiConfigHelpers/comboChartUiConfigHelper";
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
-import { IInsightDefinition } from "@gooddata/sdk-model";
+import { insightBuckets, bucketsIsEmpty, IInsightDefinition } from "@gooddata/sdk-model";
 export class PluggableComboChart extends PluggableBaseChart {
     private primaryChartType: string = VisualizationTypes.COLUMN;
     private secondaryChartType: string = VisualizationTypes.COLUMN;
@@ -242,10 +242,17 @@ export class PluggableComboChart extends PluggableBaseChart {
         return primaryMasterMeasures + secondaryMasterMeasures > 1;
     }
 
-    private isDataPointsControlDisabled(): boolean {
+    private isDataPointsControlDisabled(insight: IInsightDefinition): boolean {
+        const measureBucketsOfNonColumnCharts = [
+            [this.primaryChartType, BucketNames.MEASURES],
+            [this.secondaryChartType, BucketNames.SECONDARY_MEASURES],
+        ]
+            .filter(([chartType]) => chartType !== VisualizationTypes.COLUMN)
+            .map(([, bucketId]) => insightBuckets(insight, bucketId));
+
         return (
-            this.primaryChartType === VisualizationTypes.COLUMN &&
-            this.secondaryChartType === VisualizationTypes.COLUMN
+            measureBucketsOfNonColumnCharts.length === 0 ||
+            measureBucketsOfNonColumnCharts.every((bucket) => bucketsIsEmpty(bucket))
         );
     }
 
@@ -266,7 +273,7 @@ export class PluggableComboChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     axis={this.axis}
                     panelConfig={{
-                        isDataPointsControlDisabled: this.isDataPointsControlDisabled(),
+                        isDataPointsControlDisabled: this.isDataPointsControlDisabled(insight),
                     }}
                 />,
                 document.querySelector(this.configPanelElement),
