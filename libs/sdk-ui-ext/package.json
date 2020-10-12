@@ -2,10 +2,14 @@
     "name": "@gooddata/sdk-ui-ext",
     "version": "8.1.0-alpha.17",
     "description": "GoodData.UI SDK - Extensions",
-    "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-ext",
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "browser": "dist/cjs/index.js",
+    "typings": "dist/cjs/index.d.ts",
+    "sideEffects": false,
     "files": [
         "dist",
         "styles"
@@ -33,7 +37,6 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
-    "typings": "dist/index.d.ts",
     "dependencies": {
         "@formatjs/intl-pluralrules": "~1.3.7",
         "@gooddata/goodstrap": "^69.0.0",
@@ -103,6 +106,9 @@
         "prettier": "~2.0.5",
         "raf": "^3.4.1",
         "ts-jest": "^26.3.0",
-        "typescript": "4.0.2"
+        "typescript": "4.0.2",
+        "rollup": "^2.29.0",
+        "rollup-plugin-typescript2": "^0.27.3",
+        "@rollup/plugin-commonjs": "^15.1.0"
     }
 }

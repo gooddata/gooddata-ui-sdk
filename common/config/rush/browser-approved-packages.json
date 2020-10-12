@@ -179,6 +179,14 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@rollup/plugin-commonjs",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@rollup/plugin-json",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/addon-actions",
       "allowedCategories": [ "production" ]
     },

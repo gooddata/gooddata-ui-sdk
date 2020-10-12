@@ -10,9 +10,12 @@ _clean() {
 }
 
 _common-build() {
-    mkdir -p dist/internal
-    cp -rf src/internal/assets dist/internal/
-    cp -rf src/internal/translations dist/internal/
+    mkdir -p dist/cjs/internal
+    mkdir -p dist/esm/internal
+    cp -rf src/internal/assets dist/cjs/internal/
+    cp -rf src/internal/translations dist/cjs/internal/
+    cp -rf src/internal/assets dist/esm/internal/
+    cp -rf src/internal/translations dist/esm/internal/
 
     _build_styles
 }
@@ -20,7 +23,7 @@ _common-build() {
 build() {
     _clean
     _common-build
-    tsc -p tsconfig.build.json
+    rollup -c
 }
 
 build-dev() {

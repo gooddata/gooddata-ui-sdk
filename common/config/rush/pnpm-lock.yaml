@@ -2665,6 +2665,23 @@ packages:
       react-dom: 15.x || 16.x || 16.4.0-alpha.0911da3
     resolution:
       integrity: sha512-+mtn9wjlB9NN2CNnnC/BRYtwdKBfSyyasPYraNAyvaV1occr/5NnB4CVzjEZipNHwYebQwcndGUmpFzxAUoqSA==
+  /@rollup/plugin-commonjs/15.1.0_rollup@2.32.0:
+    dependencies:
+      '@rollup/pluginutils': 3.1.0_rollup@2.32.0
+      commondir: 1.0.1
+      estree-walker: 2.0.1
+      glob: 7.1.6
+      is-reference: 1.2.1
+      magic-string: 0.25.7
+      resolve: 1.17.0
+      rollup: 2.32.0
+    dev: false
+    engines:
+      node: '>= 8.0.0'
+    peerDependencies:
+      rollup: ^2.22.0
+    resolution:
+      integrity: sha512-xCQqz4z/o0h2syQ7d9LskIMvBSH4PX5PjYdpSSvgS+pQik3WahkQVNWg3D8XJeYjZoVWnIUQYDghuEMRGrmQYQ==
   /@rollup/pluginutils/3.1.0_rollup@2.32.0:
     dependencies:
       '@types/estree': 0.0.39
@@ -8742,6 +8759,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==
+  /estree-walker/2.0.1:
+    dev: false
+    resolution:
+      integrity: sha512-tF0hv+Yi2Ot1cwj9eYHtxC0jB9bmjacjQs6ZBTj82H8JwUywFuc+7E83NWfNMwHXZc11mjfFcVXPe9gEP4B8dg==
   /esutils/2.0.3:
     dev: false
     engines:
@@ -11324,6 +11345,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-DFLlS8yjkbssSUsh6GJtczbG45c=
+  /is-reference/1.2.1:
+    dependencies:
+      '@types/estree': 0.0.45
+    dev: false
+    resolution:
+      integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==
   /is-regex/1.1.1:
     dependencies:
       has-symbols: 1.0.1
@@ -12953,6 +12980,12 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+  /magic-string/0.25.7:
+    dependencies:
+      sourcemap-codec: 1.4.8
+    dev: false
+    resolution:
+      integrity: sha512-4CrMT5DOHTDk4HYDlzmwu4FVCcIYI8gauveasrdCu2IKIFOJ3f0v/8MDGJCDL9oD2ppz/Av1b0Nj345H9M+XIA==
   /make-dir/2.1.0:
     dependencies:
       pify: 4.0.1
@@ -17263,6 +17296,10 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
+  /sourcemap-codec/1.4.8:
+    dev: false
+    resolution:
+      integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==
   /space-separated-tokens/1.1.5:
     dev: false
     resolution:
@@ -20738,6 +20775,7 @@ packages:
       '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
+      '@rollup/plugin-commonjs': 15.1.0_rollup@2.32.0
       '@types/classnames': 2.2.3
       '@types/enzyme': 3.10.7
       '@types/enzyme-adapter-react-16': 1.0.6
@@ -20780,6 +20818,8 @@ packages:
       react-dom: 16.13.1_react@16.13.1
       react-intl: 3.12.1_react@16.13.1
       react-measure: 2.5.2_react-dom@16.13.1+react@16.13.1
+      rollup: 2.32.0
+      rollup-plugin-typescript2: 0.27.3_rollup@2.32.0+typescript@4.0.2
       ts-jest: 26.4.1_jest@26.4.2+typescript@4.0.2
       tslib: 2.0.1
       typescript: 4.0.2
@@ -20787,7 +20827,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-2wR7upoU6uBv4NhZ+69Epuo7e6XEVU6DptFFjK0E48C7heTOkcK2haa43N41FZk/cV0oF7/cISue/v8YB6R8kA==
+      integrity: sha512-CeGrEx2hY99/259jGK082RiimbPa2EA6MmfjMY5W5diH/1QK6tMaD15OvHA7FRqIfvHuiWzQKqOR9Q6MJ1J/fA==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
