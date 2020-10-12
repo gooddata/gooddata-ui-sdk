@@ -159,6 +159,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-theme-provider",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-vis-commons",
       "allowedCategories": [ "production" ]
     },
@@ -661,6 +665,10 @@
     {
       "name": "p-map",
       "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "polished",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "prettier",

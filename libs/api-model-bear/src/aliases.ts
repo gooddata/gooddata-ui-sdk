@@ -45,3 +45,14 @@ export type MaqlExpression = string; // Maql expression (f.e. SELECT [/gdc/md/..
  * @public
  */
 export type BooleanAsString = "1" | "0";
+
+/**
+ * CSS color in hex format (f.g. #14b2e2)
+ * @public
+ */
+export type ThemeColor = string;
+
+/**
+ * @public
+ */
+export type ThemeFontUri = string; // font uri

@@ -32,6 +32,8 @@ export {
     TimeIso8601,
     Timestamp,
     Uri,
+    ThemeFontUri,
+    ThemeColor,
 } from "./aliases";
 
 export { sanitizeFiltersForExport } from "./filterContext/utils";

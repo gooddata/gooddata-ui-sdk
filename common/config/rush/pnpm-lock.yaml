@@ -31,6 +31,7 @@ dependencies:
   '@rush-temp/sdk-ui-kit': 'file:projects/sdk-ui-kit.tgz'
   '@rush-temp/sdk-ui-pivot': 'file:projects/sdk-ui-pivot.tgz'
   '@rush-temp/sdk-ui-tests': 'file:projects/sdk-ui-tests.tgz'
+  '@rush-temp/sdk-ui-theme-provider': 'file:projects/sdk-ui-theme-provider.tgz'
   '@rush-temp/sdk-ui-vis-commons': 'file:projects/sdk-ui-vis-commons.tgz'
   '@rush-temp/util': 'file:projects/util.tgz'
   '@types/node': 12.12.62
@@ -3536,12 +3537,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-5BjQ4wmRpz584qApgazma/6w2EB2evIaWKwZrDlshSX0+KoM8XT3nTrp8iYHQyMZV3mmIzEdbvt0jmc6ToLqeQ==
-  /@types/md5/2.2.0:
-    dependencies:
-      '@types/node': 12.12.62
-    dev: false
-    resolution:
-      integrity: sha512-JN8OVL/wiDlCWTPzplsgMPu0uE9Q6blwp68rYsfk2G8aokRUQ8XD9MEhZwihfAiQvoyE+m31m6i3GFXwYWomKQ==
   /@types/minimatch/3.0.3:
     dev: false
     resolution:
@@ -6418,10 +6413,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
-  /charenc/0.0.2:
-    dev: false
-    resolution:
-      integrity: sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
   /check-error/1.0.2:
     dev: false
     resolution:
@@ -7205,10 +7196,6 @@ packages:
       node: '>= 8'
     resolution:
       integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==
-  /crypt/0.0.2:
-    dev: false
-    resolution:
-      integrity: sha1-iNf/fsDfuG9xPch7u0LQRNPmxBs=
   /crypto-browserify/3.12.0:
     dependencies:
       browserify-cipher: 1.0.1
@@ -13068,14 +13055,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-xitP+WxNPcTTOgnTJcrhM0xvdPepipPSf3I8EIpGKeFLjt3PlJLIDG3u8EX53ZIubkb+5U2+3rELYpEhHhzdkg==
-  /md5/2.3.0:
-    dependencies:
-      charenc: 0.0.2
-      crypt: 0.0.2
-      is-buffer: 1.1.6
-    dev: false
-    resolution:
-      integrity: sha512-T1GITYmFaKuO91vxyoQMFETst+O71VUPEU3ze5GNzDm0OWdP8v1ziTaAEPUr/3kLsY3Sftgz242A1SetQiDL7g==
   /mdn-data/2.0.4:
     dev: false
     resolution:
@@ -19928,7 +19907,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-bear'
     resolution:
-      integrity: sha512-6+rbMozMLWxdm/kZiSVMXFpvfoKwMUeBQNV9JVbyivvfFUbTfzAt/cS7eBF/v/XRfYmZiMQr64V8AbJatzIOsw==
+      integrity: sha512-njcLwcgGVu9EnoEvpL7h+BgOXNVxaPT/EFaAwdLlGA34fd8Q7A0germMicaujw0yCn+xGejfR7g6BkRs8gNlyQ==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz':
@@ -21052,6 +21031,53 @@ packages:
       integrity: sha512-gB7nozdB7RuNilZKs85kLB4Qg7/8MApukGRdtb5SZwXfyVXgiVjDgJt/3jQ4vXBpBtK28khkJRsRF0fB5ZWjHg==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
+  'file:projects/sdk-ui-theme-provider.tgz':
+    dependencies:
+      '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
+      '@microsoft/api-extractor': 7.8.1
+      '@types/enzyme': 3.10.7
+      '@types/enzyme-adapter-react-16': 1.0.6
+      '@types/jest': 26.0.14
+      '@types/lodash': 4.14.161
+      '@types/node': 12.12.62
+      '@types/raf': 3.4.0
+      '@types/react': 16.9.49
+      '@types/react-dom': 16.9.8
+      '@types/stringify-object': 3.3.0
+      '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
+      '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      dependency-cruiser: 9.14.1_typescript@4.0.2
+      enzyme: 3.11.0
+      enzyme-adapter-react-16: 1.15.5_df2dc313d8031f8c2dbd009d86ca7fc7
+      eslint: 7.10.0
+      eslint-plugin-header: 3.1.0_eslint@7.10.0
+      eslint-plugin-import: 2.22.1_eslint@7.10.0
+      eslint-plugin-jest: 23.20.0_eslint@7.10.0+typescript@4.0.2
+      eslint-plugin-prettier: 3.1.4_eslint@7.10.0+prettier@2.0.5
+      eslint-plugin-react: 7.21.2_eslint@7.10.0
+      eslint-plugin-react-hooks: 4.1.2_eslint@7.10.0
+      jest: 26.4.2
+      jest-enzyme: 7.1.2_15e0646601b17205074344cb7926e40c
+      jest-junit: 3.7.0
+      lodash: 4.17.20
+      node-sass: 4.14.1
+      node-sass-magic-importer: 5.3.2
+      polished: 3.6.7
+      prettier: 2.0.5
+      raf: 3.4.1
+      react: 16.13.1
+      react-dom: 16.13.1_react@16.13.1
+      react-intl: 3.12.1_react@16.13.1
+      ts-invariant: 0.4.4
+      ts-jest: 26.4.1_jest@26.4.2+typescript@4.0.2
+      tslib: 2.0.1
+      typescript: 4.0.2
+    dev: false
+    name: '@rush-temp/sdk-ui-theme-provider'
+    resolution:
+      integrity: sha512-y0zknaZCycFbaou4+cHiBkl3lp0xq5f5urN8YIY9qeTmSzUmM82gMR2m8RhBxIZAKZSVEcKIM67iz8oPB1GUjg==
+      tarball: 'file:projects/sdk-ui-theme-provider.tgz'
+    version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
@@ -21213,6 +21239,7 @@ specifiers:
   '@rush-temp/sdk-ui-kit': 'file:./projects/sdk-ui-kit.tgz'
   '@rush-temp/sdk-ui-pivot': 'file:./projects/sdk-ui-pivot.tgz'
   '@rush-temp/sdk-ui-tests': 'file:./projects/sdk-ui-tests.tgz'
+  '@rush-temp/sdk-ui-theme-provider': 'file:./projects/sdk-ui-theme-provider.tgz'
   '@rush-temp/sdk-ui-vis-commons': 'file:./projects/sdk-ui-vis-commons.tgz'
   '@rush-temp/util': 'file:./projects/util.tgz'
   '@types/node': ^12.12.26

@@ -1295,8 +1295,6 @@ export namespace GdcMetadata {
             whenTriggered: "underThreshold" | "aboveThreshold";
             filterContext?: Uri;
         };
-        // (undocumented)
-        meta: IObjectMeta;
     }
     // (undocumented)
     export interface IMaqlAstPosition {
@@ -1445,6 +1443,8 @@ export namespace GdcMetadata {
     // (undocumented)
     export function isPrompt(obj: unknown): obj is IPrompt;
     // (undocumented)
+    export function isTheme(obj: unknown): obj is ITheme;
+    // (undocumented)
     export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute;
     // (undocumented)
     export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm;
@@ -1458,6 +1458,134 @@ export namespace GdcMetadata {
     export function isWrappedMetric(obj: unknown): obj is IWrappedMetric;
     // (undocumented)
     export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt;
+    // (undocumented)
+    export function isWrappedTheme(obj: unknown): obj is IWrappedTheme;
+    // (undocumented)
+    export interface ITheme extends IMetadataObject {
+        // (undocumented)
+        content: {
+            typography?: {
+                font?: ThemeFontUri;
+                fontBold?: ThemeFontUri;
+            };
+            palette?: IThemePalette;
+            button?: {
+                borderRadius?: string;
+                dropShadow?: boolean;
+                textCapitalization?: boolean;
+            };
+            tooltip?: {
+                backgroundColor?: ThemeColor;
+                color?: ThemeColor;
+            };
+            modal?: {
+                title?: {
+                    color?: ThemeColor;
+                    lineColor?: ThemeColor;
+                };
+                outsideBackgroundColor?: ThemeColor;
+                dropShadow?: boolean;
+                borderWidth?: string;
+                borderColor?: ThemeColor;
+                borderRadius?: string;
+            };
+            kpiDashboards?: {
+                title?: {
+                    color?: ThemeColor;
+                };
+                section?: {
+                    title?: {
+                        color?: ThemeColor;
+                        lineColor?: ThemeColor;
+                    };
+                    description?: {
+                        color?: ThemeColor;
+                    };
+                };
+                filterBar?: {
+                    backgroundColor?: ThemeColor;
+                    filterButton?: {
+                        backgroundColor?: ThemeColor;
+                    };
+                };
+                content?: {
+                    backgroundColor?: ThemeColor;
+                    widget?: {
+                        title?: {
+                            color?: ThemeColor;
+                            textAlign?: string;
+                        };
+                        backgroundColor?: ThemeColor;
+                        borderColor?: ThemeColor;
+                        borderWidth?: string;
+                        borderRadius?: string;
+                        dropShadow?: boolean;
+                    };
+                    headline?: {
+                        title?: {
+                            color?: ThemeColor;
+                            textAlign?: string;
+                        };
+                        backgroundColor?: ThemeColor;
+                        borderColor?: ThemeColor;
+                        borderWidth?: string;
+                        borderRadius?: string;
+                        dropShadow?: boolean;
+                        value?: {
+                            textAlign?: string;
+                            positiveColor?: ThemeColor;
+                            negativeColor?: ThemeColor;
+                        };
+                        primaryMeasureColor?: ThemeColor;
+                        secondaryInfoColor?: ThemeColor;
+                    };
+                };
+                navigation?: {
+                    backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
+                    header?: {
+                        color?: ThemeColor;
+                    };
+                    item?: {
+                        color?: ThemeColor;
+                        hoverColor?: ThemeColor;
+                        selectedColor?: ThemeColor;
+                        selectedBackgroundColor?: ThemeColor;
+                    };
+                };
+                editPanel?: {
+                    backgroundColor?: ThemeColor;
+                };
+            };
+            analyticalDesigner?: {
+                title?: {
+                    color?: ThemeColor;
+                };
+            };
+        };
+    }
+    // (undocumented)
+    export interface IThemeColorFamily {
+        // (undocumented)
+        base: ThemeColor;
+        // (undocumented)
+        contrast?: ThemeColor;
+        // (undocumented)
+        dark?: ThemeColor;
+        // (undocumented)
+        light?: ThemeColor;
+    }
+    // (undocumented)
+    export interface IThemePalette {
+        // (undocumented)
+        error?: IThemeColorFamily;
+        // (undocumented)
+        primary?: IThemeColorFamily;
+        // (undocumented)
+        success?: IThemeColorFamily;
+        // (undocumented)
+        warning?: IThemeColorFamily;
+    }
     export interface IValidElementsParams {
         // (undocumented)
         afm?: GdcExecuteAFM.IAfm;
@@ -1565,7 +1693,12 @@ export namespace GdcMetadata {
         prompt: IPrompt;
     }
     // (undocumented)
-    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget";
+    export interface IWrappedTheme {
+        // (undocumented)
+        theme: ITheme;
+    }
+    // (undocumented)
+    export type ObjectCategory = "analyticalDashboard" | "attribute" | "attributeDisplayForm" | "column" | "dataLoadingColumn" | "dataSet" | "dateFilterConfig" | "dimension" | "domain" | "elementMasking" | "etlFile" | "executionContext" | "fact" | "filterContext" | "filter" | "folder" | "kpi" | "kpiAlert" | "metric" | "projectDashboard" | "prompt" | "reportDefinition" | "report" | "scheduledMail" | "tableDataload" | "table" | "userFilter" | "visualizationClass" | "visualizationObject" | "visualizationWidget" | "theme";
     // (undocumented)
     export type SortDirection = "asc" | "desc";
 }
@@ -1573,11 +1706,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet;
 }
 
 // @public
@@ -2608,6 +2741,12 @@ export type NumberAsString = string;
 
 // @public (undocumented)
 export function sanitizeFiltersForExport(filters: GdcFilterContext.FilterContextItem[]): GdcFilterContext.FilterContextItem[];
+
+// @public
+export type ThemeColor = string;
+
+// @public (undocumented)
+export type ThemeFontUri = string;
 
 // @public (undocumented)
 export type TimeIso8601 = string;

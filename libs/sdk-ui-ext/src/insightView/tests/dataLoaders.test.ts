@@ -49,6 +49,7 @@ describe("InsightViewDataLoader", () => {
                 ...baseBackend.workspace(workspace),
                 styling: () => ({
                     getColorPalette: getColorPalette,
+                    getTheme: () => Promise.resolve({}),
                 }),
             }),
         });
