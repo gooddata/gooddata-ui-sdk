@@ -18,11 +18,12 @@ const granularityOrder: DateFilterGranularity[] = [
 ];
 
 export const RelativePresetFilterItems: React.FC<{
+    dateFormat: string;
     filterOption: DateFilterRelativeOptionGroup;
     selectedFilterOption: DateFilterOption;
     className?: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
-}> = ({ filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
+}> = ({ dateFormat, filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
     const relativePresets = granularityOrder
         .filter((granularity) =>
             Boolean(filterOption && filterOption[granularity] && filterOption[granularity].length > 0),
@@ -46,7 +47,7 @@ export const RelativePresetFilterItems: React.FC<{
                             onClick={() => onSelectedFilterOptionChange(item)}
                             className={cx(`s-relative-preset-${kebabCase(item.localIdentifier)}`, className)}
                         >
-                            <DateFilterTextLocalized filter={item} />
+                            <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
                         </ListItem>
                     ))}
                 </React.Fragment>

@@ -38,6 +38,7 @@ const MARGIN_BOTTOM = 8;
 const MOBILE_WIDTH = 414; // iPhone 11 Pro Max
 
 export interface IDateFilterBodyProps {
+    dateFormat: string;
     filterOptions: IDateFilterOptionsByType;
     selectedFilterOption: DateFilterOption;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
@@ -299,9 +300,16 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
     };
 
     private renderAbsolutePreset = () => {
-        const { filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } = this.props;
+        const {
+            dateFormat,
+            filterOptions,
+            selectedFilterOption,
+            onSelectedFilterOptionChange,
+            isMobile,
+        } = this.props;
         return filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (
             <AbsolutePresetFilterItems
+                dateFormat={dateFormat}
                 filterOptions={filterOptions.absolutePreset}
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
@@ -311,9 +319,16 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
     };
 
     private renderRelativePreset = () => {
-        const { filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } = this.props;
+        const {
+            dateFormat,
+            filterOptions,
+            selectedFilterOption,
+            onSelectedFilterOptionChange,
+            isMobile,
+        } = this.props;
         return filterOptions.relativePreset ? (
             <RelativePresetFilterItems
+                dateFormat={dateFormat}
                 filterOption={filterOptions.relativePreset}
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}

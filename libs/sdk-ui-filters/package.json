@@ -53,7 +53,8 @@
         "react-intl": "^3.6.0",
         "react-responsive": "^8.0.1",
         "react-window": "^1.8.5",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "date-fns": "^2.8.1"
     },
     "peerDependencies": {
         "react": "^16.10.0",

@@ -1,5 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
-import { getDateFilterTitleUsingTranslator, getDateFilterTitle } from "../DateFilterTitle";
+import { DEFAULT_DATE_FORMAT } from "../../../DateFilter";
+import {
+    getDateFilterRepresentation,
+    getDateFilterTitleUsingTranslator,
+    getDateFilterTitle,
+} from "../DateFilterTitle";
 import { IDateAndMessageTranslator } from "../Translators";
 import {
     allTimeFilter,
@@ -8,7 +13,6 @@ import {
     absolutePresetFilter,
     relativePresetFilter,
 } from "./fixtures";
-import { convertPlatformDateStringToDate } from "../../DateConversions";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import { IUiRelativeDateFilterForm } from "../../../interfaces";
 
@@ -20,37 +24,39 @@ const serializingTranslator: IDateAndMessageTranslator = {
 describe("getDateFilterTitleUsingTranslator", () => {
     it("should return the correct translation for allTime filter", () => {
         const expected = "filters.allTime.title__undefined";
-        const actual = getDateFilterTitleUsingTranslator(allTimeFilter, serializingTranslator);
+        const actual = getDateFilterTitleUsingTranslator(
+            allTimeFilter,
+            serializingTranslator,
+            DEFAULT_DATE_FORMAT,
+        );
         expect(actual).toEqual(expected);
     });
 
     it("should return the correct translation for absolute form filter", () => {
-        // make sure the formatter receives proper formatting options
-        const expectedOptions = { year: "numeric", month: "numeric", day: "numeric" };
-        const expectedFrom = `${convertPlatformDateStringToDate("2019-01-01")}__${JSON.stringify(
-            expectedOptions,
-        )}`;
-        const expectedTo = `${convertPlatformDateStringToDate("2019-02-01")}__${JSON.stringify(
-            expectedOptions,
-        )}`;
-        const expected = `${expectedFrom}\u2013${expectedTo}`;
-        const actual = getDateFilterTitleUsingTranslator(absoluteFormFilter, serializingTranslator);
-        expect(actual).toEqual(expected);
+        const actual = getDateFilterTitleUsingTranslator(
+            absoluteFormFilter,
+            serializingTranslator,
+            DEFAULT_DATE_FORMAT,
+        );
+        expect(actual).toEqual("01/01/2019–02/01/2019");
     });
 
     it("should return the correct translation for absolute form filter for one day", () => {
-        // make sure the formatter receives proper formatting options
-        const expectedOptions = { year: "numeric", month: "numeric", day: "numeric" };
-        const expected = `${convertPlatformDateStringToDate("2019-01-01")}__${JSON.stringify(
-            expectedOptions,
-        )}`;
-        const actual = getDateFilterTitleUsingTranslator(absoluteFormFilterOneDay, serializingTranslator);
-        expect(actual).toEqual(expected);
+        const actual = getDateFilterTitleUsingTranslator(
+            absoluteFormFilterOneDay,
+            serializingTranslator,
+            DEFAULT_DATE_FORMAT,
+        );
+        expect(actual).toEqual("01/01/2019");
     });
 
     it("should return the correct translation for absolute preset filter", () => {
         const expected = "foo";
-        const actual = getDateFilterTitleUsingTranslator(absolutePresetFilter, serializingTranslator);
+        const actual = getDateFilterTitleUsingTranslator(
+            absolutePresetFilter,
+            serializingTranslator,
+            DEFAULT_DATE_FORMAT,
+        );
         expect(actual).toEqual(expected);
     });
 
@@ -122,14 +128,22 @@ describe("getDateFilterTitleUsingTranslator", () => {
             };
 
             const expected = `${expectedId}__${JSON.stringify(expectedValues)}`;
-            const actual = getDateFilterTitleUsingTranslator(filter, serializingTranslator);
+            const actual = getDateFilterTitleUsingTranslator(
+                filter,
+                serializingTranslator,
+                DEFAULT_DATE_FORMAT,
+            );
             expect(actual).toEqual(expected);
         },
     );
 
     it("should return the correct translation for relative preset filter with name", () => {
         const expected = "foo";
-        const actual = getDateFilterTitleUsingTranslator(relativePresetFilter, serializingTranslator);
+        const actual = getDateFilterTitleUsingTranslator(
+            relativePresetFilter,
+            serializingTranslator,
+            DEFAULT_DATE_FORMAT,
+        );
         expect(actual).toEqual(expected);
     });
 
@@ -138,7 +152,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const expectedId = "filters.interval.days.mixed";
         const expectedValues = { from: 5, to: 5 };
         const expected = `${expectedId}__${JSON.stringify(expectedValues)}`;
-        const actual = getDateFilterTitleUsingTranslator(filter, serializingTranslator);
+        const actual = getDateFilterTitleUsingTranslator(filter, serializingTranslator, DEFAULT_DATE_FORMAT);
         expect(actual).toEqual(expected);
     });
 });
@@ -147,7 +161,23 @@ describe("getDateFilterTitle", () => {
     it("should return title build using real translations for some date option", () => {
         const filter = { ...relativePresetFilter, name: "" };
         const expected = "From 5 days ago to 5 days ahead";
-        const actual = getDateFilterTitle(filter, "en-US");
+        const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
+        expect(actual).toEqual(expected);
+    });
+
+    it("should return title with desired format", () => {
+        const filter = { ...absoluteFormFilter };
+        const expected = "01/01/2019–02/01/2019";
+        const actual = getDateFilterTitle(filter, "en-US", DEFAULT_DATE_FORMAT);
+        expect(actual).toEqual(expected);
+    });
+});
+
+describe("getDateFilterRepresentation", () => {
+    it("should return title with desired format", () => {
+        const filter = { ...absoluteFormFilter };
+        const expected = "01/01/2019–02/01/2019";
+        const actual = getDateFilterRepresentation(filter, "en-US", DEFAULT_DATE_FORMAT);
         expect(actual).toEqual(expected);
     });
 });

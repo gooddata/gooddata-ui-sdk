@@ -8,7 +8,7 @@ import {
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { FilterStories } from "../../../_infra/storyGroups";
 
 import "@gooddata/sdk-ui-filters/styles/css/dateFilter.css";
@@ -95,5 +95,19 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                     postInteractionWait: 200,
                 },
             },
+        );
+    })
+    .add("dateFormat", () => {
+        return withScreenshot(
+            <div style={wrapperStyle} className="screenshot-target">
+                <DateFilter
+                    excludeCurrentPeriod={false}
+                    selectedFilterOption={defaultDateFilterOptions.absoluteForm}
+                    filterOptions={filterOptions}
+                    isEditMode={false}
+                    dateFilterMode="active"
+                    dateFormat="yyyy/MM/dd"
+                />
+            </div>,
         );
     });

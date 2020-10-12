@@ -11,6 +11,7 @@ import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 
 export interface IDateFilterCoreProps {
+    dateFormat: string;
     filterOptions: IDateFilterOptionsByType;
     /**
      * Filter option currently selected, it would be applied on Apply click.
@@ -58,6 +59,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     originalExcludeCurrentPeriod,
     onDropdownOpenChanged,
     customFilterName,
+    dateFormat,
     disabled,
     locale,
     ...dropdownBodyProps
@@ -73,6 +75,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 originalSelectedFilterOption,
                                 originalExcludeCurrentPeriod,
                             )}
+                            dateFormat={dateFormat}
                             customFilterName={customFilterName}
                         />
                     );
@@ -107,6 +110,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                             isMobile={isMobile}
                                             closeDropdown={closeDropdown}
                                             dateFilterButton={dateFilterButton}
+                                            dateFormat={dateFormat}
                                         />
                                     )}
                                 </DropdownBody>

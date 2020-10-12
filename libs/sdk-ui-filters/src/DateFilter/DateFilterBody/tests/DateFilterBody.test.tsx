@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
+import { DEFAULT_DATE_FORMAT } from "../../DateFilter";
 import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody";
 import { ExcludeCurrentPeriodToggle } from "../../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
 import { EditModeMessage } from "../EditModeMessage";
@@ -22,6 +23,7 @@ describe("ExtendedDateFilterBody", () => {
         const defaultProps: IDateFilterButtonLocalizedProps = {
             isMobile: false,
             dateFilterOption: allTime,
+            dateFormat: DEFAULT_DATE_FORMAT,
         };
         return <DateFilterButtonLocalized {...defaultProps} {...props} />;
     };
@@ -29,6 +31,7 @@ describe("ExtendedDateFilterBody", () => {
     const mockProps: IDateFilterBodyProps = {
         filterOptions: {},
         dateFilterButton: createDateFilterButton(),
+        dateFormat: DEFAULT_DATE_FORMAT,
         selectedFilterOption: allTime,
         onSelectedFilterOptionChange: jest.fn(),
 

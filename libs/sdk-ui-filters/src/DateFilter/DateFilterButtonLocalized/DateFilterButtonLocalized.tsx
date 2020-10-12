@@ -7,6 +7,7 @@ import { DateFilterOption } from "../interfaces";
 
 export interface IDateFilterButtonLocalizedProps {
     dateFilterOption: DateFilterOption;
+    dateFormat: string;
     isOpen?: boolean;
     isMobile: boolean;
     customFilterName?: string;
@@ -15,6 +16,7 @@ export interface IDateFilterButtonLocalizedProps {
 
 export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
     dateFilterOption,
+    dateFormat,
     isOpen = false,
     isMobile = true,
     customFilterName,
@@ -28,7 +30,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             disabled={disabled}
         >
             <span className="s-button-text">
-                <DateFilterTextLocalized filter={dateFilterOption} />
+                <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />
             </span>
         </DateFilterButton>
     );
