@@ -641,7 +641,7 @@ export interface ISyntaxHighlightingInputProps {
 }
 
 // @internal (undocumented)
-export interface ITimePickerOwnProps {
+export interface ITimepickerOwnProps {
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -721,7 +721,7 @@ export enum SnapPoint {
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)
-export class TimePicker extends React_2.PureComponent<ITimePickerOwnProps> {
+export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
