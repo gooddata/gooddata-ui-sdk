@@ -21,7 +21,7 @@ $cell-border: 1px dashed transparent;
 $cell-border-color: transparentize($gd-color-disabled, 0.5);
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
-    --gd-palette-primary-dimmed-darken03,
+    --gd-palette-primary-base-dimmed-darken03,
     darken(mix($gd-color-highlight, $gd-color-text-light, 10%), 3%)
 );
 
