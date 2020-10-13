@@ -783,14 +783,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "rollup",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "rollup-plugin-typescript2",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "sass-loader",
       "allowedCategories": [ "examples", "production" ]
     },
