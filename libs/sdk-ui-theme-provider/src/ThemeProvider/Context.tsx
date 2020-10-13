@@ -67,7 +67,7 @@ export const useThemeIsLoading = (): boolean | undefined => {
  */
 export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+): React.ComponentType<Omit<T, "theme">> {
     const ComponentWithInjectedThemeObject: React.FC<T> = (props) => {
         return (
             <ThemeContext.Consumer>{(theme) => <Component theme={theme} {...props} />}</ThemeContext.Consumer>
@@ -82,7 +82,7 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
  */
 export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
     Component: React.ComponentType<T>,
-): React.ComponentType<T> {
+): React.ComponentType<Omit<T, "themeIsLoading">> {
     const ComponentWithInjectedThemeIsLoading: React.FC<T> = (props) => {
         return (
             <ThemeIsLoadingContext.Consumer>
@@ -101,6 +101,6 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
  */
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
     Chart: React.ComponentType<T>,
-): React.ComponentType<T> {
+): React.ComponentType<Omit<T, "theme" | "themeIsLoading">> {
     return compose(wrapDisplayName("withContexts"), withThemeObject, withThemeIsLoading)(Chart);
 }

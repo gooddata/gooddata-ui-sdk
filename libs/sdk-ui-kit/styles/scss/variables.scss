@@ -42,7 +42,8 @@ $gd-color-warning-label-dimmed: mix($gd-color-warning, $gd-color-text, 40%);
 $gd-color-warning-label: mix($gd-color-warning, $gd-color-text, 20%);
 
 // font and typo
-$gd-font-primary: avenir, "Helvetica Neue", arial, sans-serif;
+$gd-font-primary: GDCustomFont, avenir, "Helvetica Neue", arial, sans-serif;
+$gd-font-primary-without-custom: avenir, "Helvetica Neue", arial, sans-serif;
 
 $gd-typo: (
     font-weights: (
