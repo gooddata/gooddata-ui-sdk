@@ -3,9 +3,9 @@
     "include": ["src/index.ts", "src/internal/**/*.*"],
     "exclude": ["src/internal/**/tests/*.*"],
     "compilerOptions": {
-        "module": "ESNext",
         "baseUrl": null,
         "paths": null,
-        "declaration": true
+        "declaration": true,
+        "incremental": true
     }
 }
