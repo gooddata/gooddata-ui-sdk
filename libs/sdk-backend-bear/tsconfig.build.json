@@ -2,9 +2,9 @@
     "extends": "./tsconfig.json",
     "include": ["src/index.ts"],
     "compilerOptions": {
-        "module": "commonjs",
-        "outDir": "./dist/cjs/",
         "baseUrl": null,
-        "paths": null
+        "paths": null,
+        "declaration": true,
+        "incremental": true
     }
 }
