@@ -36,7 +36,7 @@ export const useThemeIsLoading: () => boolean | undefined;
 export function withTheme<T extends {
     theme?: ITheme;
     workspace?: string;
-}>(Chart: React_2.ComponentType<T>): React_2.ComponentType<T>;
+}>(Chart: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "theme" | "themeIsLoading">>;
 
 
 // (No @packageDocumentation comment for this package)
