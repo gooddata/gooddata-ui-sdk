@@ -9,7 +9,8 @@ import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
  * @param {string} number - Font weight
  */
 function createfontFace(src: string, weight: number): undefined {
-    const newStyle = document.createElement("style").appendChild(
+    const styleTag = document.createElement("style");
+    styleTag.appendChild(
         document.createTextNode(`
             @font-face {
                 font-family: GDCustomFont;
@@ -18,7 +19,7 @@ function createfontFace(src: string, weight: number): undefined {
             }
         `),
     );
-    document.head.appendChild(newStyle);
+    document.head.appendChild(styleTag);
 
     return undefined; // undefined values are skipped while generating CSS properties
 }
@@ -104,20 +105,15 @@ const getMeasureNumberFormatDialogDerivedColors = (palette: IThemePalette): CssP
     getCssProperty("palette-primary-base-darken20", darken(0.2, palette.primary.base)),
 ];
 
-/**
- * @internal
- */
-export function generateDerivedColors(palette: IThemePalette): CssProperty[] {
-    return (
-        palette?.primary?.base && [
-            ...getDashboardsDerivedColors(palette),
-            ...getButtonDerivedColors(palette),
-            ...getBubbleDerivedColors(palette),
-            ...getDateFilterDerivedColors(palette),
-            ...getMeasureNumberFormatDialogDerivedColors(palette),
-        ]
-    );
-}
+const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
+    (palette?.primary?.base && [
+        ...getDashboardsDerivedColors(palette),
+        ...getButtonDerivedColors(palette),
+        ...getBubbleDerivedColors(palette),
+        ...getDateFilterDerivedColors(palette),
+        ...getMeasureNumberFormatDialogDerivedColors(palette),
+    ]) ||
+    [];
 
 /**
  * Converts properties from theme object into CSS variables and injects them into <body>
