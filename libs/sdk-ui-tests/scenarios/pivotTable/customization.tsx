@@ -37,14 +37,14 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     })
     .addScenario("no totals and no grouping", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
-        groupRows: false,
+        config: { groupRows: false },
     })
     .addScenario(
         "measure format with colors",
         {
             ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
             measures: [MeasureWithCustomFormat],
-            groupRows: false,
+            config: { groupRows: false },
         },
         (m) => {
             // measure formatting needs to be looped through backend.. thus clearing up the vis-config-only flag to

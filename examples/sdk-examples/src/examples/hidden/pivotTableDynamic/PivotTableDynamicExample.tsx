@@ -770,9 +770,9 @@ export class PivotTableDrillingExample extends React.Component<unknown, IPivotTa
                         config={{
                             maxHeight: maxHeightPresets[maxHeightPresetKey].value,
                             menu: menuPresets[menuPresetKey].menuConfig,
+                            groupRows,
                         }}
                         totals={totals}
-                        groupRows={groupRows}
                     />
                 </div>
 

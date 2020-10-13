@@ -88,7 +88,6 @@ export class PivotTableManualResizingExample extends Component {
                         }}
                         pageSize={20}
                         onColumnResized={this.onColumnResized}
-                        groupRows
                     />
                 </div>
             </div>
