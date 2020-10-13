@@ -25,7 +25,7 @@ export const normalizeTime = normalizeTimeForPicker;
 /**
  * @internal
  */
-export interface ITimePickerOwnProps {
+export interface ITimepickerOwnProps {
     time: Date;
     className?: string;
     maxVisibleItemsCount?: number;
@@ -35,7 +35,7 @@ export interface ITimePickerOwnProps {
     locale?: string;
 }
 
-export type TimePickerProps = ITimePickerOwnProps & WrappedComponentProps;
+export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
 
 interface ITimePickerState {
     dropdownWidth: number;
@@ -158,7 +158,7 @@ const TimePickerWithIntl = injectIntl(WrappedTimepicker);
 /**
  * @internal
  */
-export class TimePicker extends React.PureComponent<ITimePickerOwnProps> {
+export class Timepicker extends React.PureComponent<ITimepickerOwnProps> {
     public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
