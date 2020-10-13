@@ -179,14 +179,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@rollup/plugin-commonjs",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@rollup/plugin-json",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@storybook/addon-actions",
       "allowedCategories": [ "production" ]
     },
@@ -449,6 +441,10 @@
     {
       "name": "compression-webpack-plugin",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "concurrently",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "core-js",
