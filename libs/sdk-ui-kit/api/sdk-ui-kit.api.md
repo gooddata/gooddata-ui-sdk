@@ -641,6 +641,24 @@ export interface ISyntaxHighlightingInputProps {
 }
 
 // @internal (undocumented)
+export interface ITimePickerOwnProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    maxVisibleItemsCount?: number;
+    // (undocumented)
+    onChange?: (selectedTime: Date) => void;
+    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
+    // (undocumented)
+    overlayZIndex?: number;
+    // (undocumented)
+    time: Date;
+}
+
+// @internal (undocumented)
 export interface IToggleButtonProps {
     // (undocumented)
     isOpened: boolean;
@@ -657,10 +675,19 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 }
 
 // @internal (undocumented)
+export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
+
+// @internal (undocumented)
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export type SelectedTime = {
+    h: number;
+    m: number;
+};
 
 // @internal (undocumented)
 export type Separators = {
@@ -692,6 +719,12 @@ export enum SnapPoint {
 
 // @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
+
+// @internal (undocumented)
+export class TimePicker extends React_2.PureComponent<ITimePickerOwnProps> {
+    // (undocumented)
+    render(): React_2.ReactNode;
+}
 
 
 // (No @packageDocumentation comment for this package)
