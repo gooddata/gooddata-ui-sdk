@@ -61,6 +61,7 @@ export interface IVisProps {
     dimensions?: IDimensions;
     custom?: ICustomProps;
     locale?: ILocale;
+    dateFormat?: string;
     config?: IGdcConfig;
 
     /*

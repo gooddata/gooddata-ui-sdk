@@ -50,6 +50,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     width?: number;
     height?: number;
     locale?: ILocale;
+    dateFormat?: string;
     drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     totalsEditAllowed?: boolean;
     featureFlags?: ISettings;
@@ -211,6 +212,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         this.visualization.update(
             {
                 locale: this.props.locale,
+                dateFormat: this.props.dateFormat,
                 dimensions: {
                     width: this.props.width,
                     height: this.props.height,
