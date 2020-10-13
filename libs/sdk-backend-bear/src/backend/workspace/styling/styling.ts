@@ -5,6 +5,7 @@ import { GdcMetadataObject, GdcMetadata } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 
 const SELECTED_UI_THEME_SETTINGS_KEY = "selectedUiTheme";
+const ENABLED_THEMING_FEATURE_FLAG_SETTINGS_KEY = "enableUiTheming";
 
 export class BearWorkspaceStyling implements IWorkspaceStylingService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -15,6 +16,12 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
     };
 
     public getTheme = async (): Promise<ITheme> => {
+        const featureFlags = await this.authCall((sdk) => sdk.user.getFeatureFlags());
+        const enabledByFeatureFlag = featureFlags?.[ENABLED_THEMING_FEATURE_FLAG_SETTINGS_KEY];
+        if (!enabledByFeatureFlag) {
+            return {};
+        }
+
         const config = await this.authCall((sdk) => sdk.project.getConfig(this.workspace));
         const identifier = config.find((item) => item.settingItem.key === SELECTED_UI_THEME_SETTINGS_KEY)
             ?.settingItem?.value;
