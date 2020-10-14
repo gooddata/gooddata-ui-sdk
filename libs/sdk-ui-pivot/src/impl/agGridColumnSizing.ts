@@ -10,25 +10,25 @@ import {
     getLastFieldId,
     getLastFieldType,
     getMappingHeaderMeasureItemLocalIdentifier,
+    getMeasureFormat,
     getParsedFields,
     getTreeLeaves,
     isMeasureColumn,
-    getMeasureFormat,
     isSomeTotal,
 } from "./agGridUtils";
 import {
-    FIELD_SEPARATOR,
-    FIELD_TYPE_ATTRIBUTE,
-    FIELD_TYPE_MEASURE,
-    ID_SEPARATOR,
-    VALUE_CLASS,
-    HEADER_LABEL_CLASS,
-    ROW_TOTAL_CLASS,
-    ROW_SUBTOTAL_CLASS,
     DEFAULT_HEADER_FONT,
     DEFAULT_ROW_FONT,
     DEFAULT_SUBTOTAL_FONT,
     DEFAULT_TOTAL_FONT,
+    FIELD_SEPARATOR,
+    FIELD_TYPE_ATTRIBUTE,
+    FIELD_TYPE_MEASURE,
+    HEADER_LABEL_CLASS,
+    ID_SEPARATOR,
+    ROW_SUBTOTAL_CLASS,
+    ROW_TOTAL_CLASS,
+    VALUE_CLASS,
 } from "./agGridConst";
 import { identifyResponseHeader } from "./agGridHeaders";
 
@@ -37,24 +37,25 @@ import { ColDef, Column, ColumnApi, GridApi } from "@ag-grid-community/all-modul
 import {
     ColumnWidth,
     ColumnWidthItem,
+    IAbsoluteColumnWidth,
     IAllMeasureColumnWidthItem,
     IAttributeColumnWidthItem,
+    IManuallyResizedColumnsItem,
+    IMeasureColumnLocator,
     IMeasureColumnWidthItem,
+    IResizedColumns,
     isAbsoluteColumnWidth,
     isAllMeasureColumnWidthItem,
     isAttributeColumnWidthItem,
-    isMeasureColumnWidthItem,
-    IResizedColumns,
-    IAbsoluteColumnWidth,
-    IManuallyResizedColumnsItem,
-    IWeakMeasureColumnWidthItem,
-    isWeakMeasureColumnWidthItem,
     isMeasureColumnLocator,
-    IMeasureColumnLocator,
+    isMeasureColumnWidthItem,
+    isWeakMeasureColumnWidthItem,
+    IWeakMeasureColumnWidthItem,
 } from "../columnWidths";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, IExecutionResult, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { getMeasureCellFormattedValue } from "./tableCell";
+import isEmpty from "lodash/isEmpty";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -843,11 +844,12 @@ const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
 
 const getTableFont = (containerRef: HTMLDivElement, className: string, defaultFont: string) => {
     const element = containerRef.getElementsByClassName(className)[0];
-    let font = defaultFont;
-    if (element) {
-        font = window.getComputedStyle(element).font;
+    if (!element) {
+        return defaultFont;
     }
-    return font;
+
+    const { font, fontWeight, fontSize, fontFamily } = window.getComputedStyle(element);
+    return isEmpty(font) ? `${fontWeight} ${fontSize} ${fontFamily}` : font;
 };
 
 const getTableFonts = (
