@@ -12,7 +12,8 @@ const GD_COLOR_TEXT_LIGHT = "#fff";
  * @param {string} number - Font weight
  */
 function createfontFace(src: string, weight: number): undefined {
-    const styleTag = document.createElement("style");
+    const styleTag = document.getElementById("gdc-theme-custom-font") || document.createElement("style");
+    styleTag.id = "gdc-theme-custom-font";
     styleTag.appendChild(
         document.createTextNode(`
             @font-face {
@@ -131,6 +132,14 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     ]) ||
     [];
 
+const clearCssProperties = () => {
+    const themePropertiesElement = document.getElementById("gdc-theme-properties");
+    themePropertiesElement && themePropertiesElement.remove();
+
+    const customFontElement = document.getElementById("gdc-theme-custom-font");
+    customFontElement && customFontElement.remove();
+};
+
 /**
  * Converts properties from theme object into CSS variables and injects them into <body>
  *
@@ -147,10 +156,21 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
  * @beta
  */
 export function setCssProperties(theme: ITheme): void {
+    clearCssProperties();
+
     const cssProperties = [
         ...parseThemeToCssProperties(theme, customParserFunctions),
         ...generateDerivedColors(theme.palette),
     ];
-    const bodyStyles = document.body.style;
-    cssProperties.map(({ key, value }) => bodyStyles.setProperty(key, value));
+
+    const styleTag = document.createElement("style");
+    styleTag.id = "gdc-theme-properties";
+    styleTag.appendChild(
+        document.createTextNode(`
+            :root {
+                ${cssProperties.map(({ key, value }) => `${key}: ${value};`).join("")}
+            }
+        `),
+    );
+    document.head.appendChild(styleTag);
 }

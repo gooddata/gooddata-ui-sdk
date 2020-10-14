@@ -59,7 +59,8 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const [theme, setTheme] = useState<ITheme>({});
     const [isLoading, setIsLoading] = useState(true);
 
-    const lastWorkspace = useRef(workspace);
+    const lastWorkspace = useRef<string>();
+    lastWorkspace.current = workspace;
 
     useEffect(() => {
         const fetchData = async () => {
