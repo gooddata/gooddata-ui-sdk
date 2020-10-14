@@ -71,6 +71,14 @@ export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
 
     /**
+     * Optionally specify whether the table should group rows. If this is turned on and the table is sorted
+     * by the first row attribute, then the grouping will take effect.
+     *
+     * Default: true
+     */
+    groupRows?: boolean;
+
+    /**
      * Optionally customize number segment separators (thousands, decimals)
      */
     separators?: ISeparators;
@@ -208,14 +216,6 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      * Optionally customize how pivot table capabilities and behavior.
      */
     config?: IPivotTableConfig;
-
-    /**
-     * Optionally specify whether the table should group rows. If this is turned on and the table is sorted
-     * by the first row attribute, then the grouping will take effect.
-     *
-     * Default: true
-     */
-    groupRows?: boolean;
 
     /**
      * Optionally specify function to call when user manually resizes a table column.

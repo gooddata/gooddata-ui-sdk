@@ -94,10 +94,6 @@ function pivotDimensions(def: IExecutionDefinition): IDimension[] {
 type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketProps>;
 
 class RenderPivotTable extends React.Component<IPivotTableProps> {
-    public static defaultProps: Partial<IPivotTableProps> = {
-        groupRows: true,
-    };
-
     public render() {
         const { exportTitle } = this.props;
 

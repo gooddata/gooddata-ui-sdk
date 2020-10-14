@@ -172,7 +172,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         LoadingComponent,
         pageSize: 100,
         config: {},
-        groupRows: true,
         onColumnResized: noop,
     };
 
@@ -372,7 +371,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.agGridDataSource = createAgGridDatasource(
             {
                 headers: this.tableHeaders,
-                getGroupRows: () => this.props.groupRows!,
+                getGroupRows: this.getGroupRows,
                 getColumnTotals: this.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
                 dataViewTransform: (dataView) => {
@@ -682,6 +681,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.visibleData;
     };
 
+    private getGroupRows = (): boolean => {
+        return this.props.config?.groupRows ?? true;
+    };
+
     private getMenuConfig = (): IMenu => {
         return this.props.config?.menu ?? {};
     };
@@ -950,7 +953,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.setGridDataSource(this.agGridDataSource!);
         this.updateDesiredHeight(this.visibleData);
 
-        if (this.props.groupRows) {
+        if (this.getGroupRows()) {
             initializeStickyRow(this.gridApi);
         }
     };
@@ -1507,7 +1510,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private isStickyRowAvailable(): boolean {
         const gridApi = this.getGridApi();
-        return Boolean(this.props.groupRows && gridApi && stickyRowExists(gridApi));
+        return Boolean(this.getGroupRows() && gridApi && stickyRowExists(gridApi));
     }
 
     private updateStickyRow(): void {

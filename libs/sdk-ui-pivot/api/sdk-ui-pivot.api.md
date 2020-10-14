@@ -113,7 +113,6 @@ export interface IMenu {
 // @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
-    groupRows?: boolean;
     onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
     pageSize?: number;
 }
@@ -131,6 +130,7 @@ export interface IPivotTableBucketProps {
 // @public (undocumented)
 export interface IPivotTableConfig {
     columnSizing?: IColumnSizing;
+    groupRows?: boolean;
     maxHeight?: number;
     menu?: IMenu;
     separators?: ISeparators;

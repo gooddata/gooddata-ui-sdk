@@ -12,11 +12,18 @@ const measures = [
 const attributes = [Ldm.LocationState, Ldm.LocationName.Default, Ldm.MenuCategory];
 const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 const style = { height: 500 };
+const config = { groupRows: true };
 
 export const PivotTableRowGroupingExample: React.FC = () => {
     return (
         <div style={style} className="s-pivot-table-row-grouping">
-            <PivotTable measures={measures} rows={attributes} columns={columns} pageSize={20} groupRows />
+            <PivotTable
+                measures={measures}
+                rows={attributes}
+                columns={columns}
+                config={config}
+                pageSize={20}
+            />
         </div>
     );
 };
