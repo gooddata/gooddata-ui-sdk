@@ -5,6 +5,7 @@ import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";
+const GD_COLOR_STATE_BLANK = "#94a1ad";
 
 /**
  *
@@ -88,6 +89,7 @@ const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-base-t50", transparentize(0.5, palette.primary.base)),
     getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base)),
     getCssProperty("palette-primary-base-t90", transparentize(0.9, palette.primary.base)),
+    getCssProperty("kpiDashboards-navigation-borderColor-t80", transparentize(0.8, GD_COLOR_STATE_BLANK)),
 ];
 
 const getButtonDerivedColors = (palette: IThemePalette): CssProperty[] => [
