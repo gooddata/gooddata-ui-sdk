@@ -7,6 +7,7 @@ import {
     IDimension,
     DimensionGenerator,
     ISortItem,
+    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
 } from "@gooddata/sdk-model";
@@ -81,6 +82,10 @@ class CustomPreparedExecution implements IPreparedExecution {
 
     public withSorting = (...items: ISortItem[]): IPreparedExecution => {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+    };
+
+    public withDateFormat = (dateFormat: string): IPreparedExecution => {
+        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     };
 
     public equals = (other: IPreparedExecution): boolean => {

@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 
 import {
+    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
     emptyDef,
@@ -99,4 +100,13 @@ describe("convertDimensions", () => {
             expect(convertDimensions(defWithSorts)).toMatchSnapshot();
         },
     );
+
+    it.each(Scenarios)("should correctly convert %s with date formats", (_desc, def) => {
+        const dateFormats = ["MM/dd/yyyy", "dd/MM/yyyy", "dd-MM-yyyy", "yyyy-MM-dd", "M/d/yy", "dd.MM.yyyy"];
+        dateFormats.forEach((dateFormat: string) => {
+            const newDef = defWithDateFormat(def, dateFormat);
+            expect(newDef).not.toBe(def);
+            expect(newDef.dateFormat).toBe(dateFormat);
+        });
+    });
 });

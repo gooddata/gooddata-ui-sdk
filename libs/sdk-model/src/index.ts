@@ -267,6 +267,7 @@ export {
     newDefForInsight,
     defWithDimensions,
     defWithSorting,
+    defWithDateFormat,
     defaultDimensionsGenerator,
     emptyDef,
 } from "./execution/executionDefinition/factory";

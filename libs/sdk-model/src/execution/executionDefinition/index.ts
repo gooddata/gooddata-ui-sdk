@@ -65,6 +65,11 @@ export interface IExecutionDefinition {
      * used to slice the row dimension, in which dimension should the measures be located.
      */
     readonly dimensions: IDimension[];
+
+    /**
+     * Format to be applied to the dates in an AFM execution response.
+     */
+    readonly dateFormat?: string;
 }
 
 /**
@@ -112,6 +117,23 @@ export function defSetSorts(def: IExecutionDefinition, sortBy: ISortItem[] = [])
     return {
         ...def,
         sortBy,
+    };
+}
+
+/**
+ * Creates new execution definition by setting a new date format.
+ *
+ * @param def - existing definition
+ * @param dateFormat - format to be applied to the dates in an AFM execution response
+ * @returns always new instance
+ * @public
+ */
+export function defSetDateFormat(def: IExecutionDefinition, dateFormat: string): IExecutionDefinition {
+    invariant(def, "execution definition to set date format in must be defined");
+
+    return {
+        ...def,
+        dateFormat,
     };
 }
 

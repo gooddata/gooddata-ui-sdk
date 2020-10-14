@@ -34,6 +34,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
+    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
@@ -286,6 +287,9 @@ function dummyPreparedExecution(
         },
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
+        },
+        withDateFormat(dateFormat: string): IPreparedExecution {
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((r) => r(dummyExecutionResult(definition, executionFactory, config)));

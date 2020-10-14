@@ -285,7 +285,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom, dimensions, config = {}, customVisualizationConfig = {} } = options;
+        const {
+            locale,
+            dateFormat,
+            custom,
+            dimensions,
+            config = {},
+            customVisualizationConfig = {},
+        } = options;
         const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
         const { drillableItems } = custom;
@@ -293,7 +300,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
-            .withSorting(...getPivotTableSortItems(insight));
+            .withSorting(...getPivotTableSortItems(insight))
+            .withDateFormat(dateFormat);
 
         const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
             insightProperties(insight),

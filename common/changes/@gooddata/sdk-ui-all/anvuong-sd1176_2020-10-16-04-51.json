@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Passes \"dateFormat\" from BaseVisualization to the definition of an IPreparedExecution and do the transformation in BearDataView so that the dates in an AFM execution response can be displayed in the desired format",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "an.vuong@gooddata.com"
+}

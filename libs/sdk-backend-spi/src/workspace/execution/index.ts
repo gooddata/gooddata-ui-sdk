@@ -142,6 +142,14 @@ export interface IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
 
     /**
+     * Changes date format of the resulting data.
+     *
+     * @param dateFormat - Format to be applied to the dates in an AFM execution response.
+     * @returns new execution with the updated date format
+     */
+    withDateFormat(dateFormat: string): IPreparedExecution;
+
+    /**
      * Starts the execution.
      */
     execute(): Promise<IExecutionResult>;

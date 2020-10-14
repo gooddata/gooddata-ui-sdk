@@ -14,6 +14,7 @@ import { INullableFilter } from "../filter";
 import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
 import { isMeasure } from "../measure";
 import {
+    defSetDateFormat,
     defSetDimensions,
     defSetSorts,
     defWithFilters,
@@ -153,6 +154,20 @@ export function newDefForInsight(
  */
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition {
     return defSetSorts(definition, sorts);
+}
+
+/**
+ * Changes dateFormat in the definition.
+ *
+ * @param definition - execution definition to alter
+ * @param dateFormat - the date format to apply
+ * @public
+ */
+export function defWithDateFormat(
+    definition: IExecutionDefinition,
+    dateFormat: string,
+): IExecutionDefinition {
+    return defSetDateFormat(definition, dateFormat);
 }
 
 /**

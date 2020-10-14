@@ -3,6 +3,7 @@
 import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
+    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
     DimensionGenerator,
@@ -50,6 +51,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+    }
+
+    public withDateFormat(dateFormat: string): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     }
 
     public fingerprint(): string {

@@ -109,8 +109,12 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.createNew(this.decorated.withSorting(...items));
     }
 
+    public withDateFormat(dateFormat: string): IPreparedExecution {
+        return this.createNew(this.decorated.withDateFormat(dateFormat));
+    }
+
     /**
-     * Methods that create new instances of prepared executions (withDimensions, withSorting) will
+     * Methods that create new instances of prepared executions (withDimensions, withSorting, withDateFormat) will
      * call out to this method to create decorated execution. This is essential to maintain the decoration
      * during immutable operations where decorated implementation creates new instances.
      *
