@@ -181,7 +181,7 @@ describe("DateFilter", () => {
 
             setPropsFromOnApply(wrapper, onApply, 0);
 
-            expect(getDateFilterButtonText(wrapper)).toEqual("1/1/2017–1/1/2018");
+            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2017–01/01/2018");
 
             clickDateFilterButton(wrapper);
 
@@ -447,6 +447,25 @@ describe("DateFilter", () => {
             expect(getDateFilterButtonText(wrapper)).toEqual("10/15/2019–10/25/2019");
         });
 
+        it("should set correct values with desired format", () => {
+            const onApply = jest.fn();
+            const wrapper = createDateFilter({ dateFormat: "yyyy/MM/dd", onApply });
+
+            const from = "2019-10-15";
+            const to = "2019-10-25";
+            clickDateFilterButton(wrapper);
+            clickAbsoluteFormFilter(wrapper);
+
+            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from));
+            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to));
+
+            clickApplyButton(wrapper);
+
+            setPropsFromOnApply(wrapper, onApply, 0);
+
+            expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15–2019/10/25");
+        });
+
         it("should render Absolute date filter with no errors when it is opened", () => {
             const wrapper = createDateFilter();
             clickDateFilterButton(wrapper);
@@ -513,7 +532,7 @@ describe("DateFilter", () => {
             clickApplyButton(wrapper);
 
             setPropsFromOnApply(wrapper, onApply, 0);
-            expect(getDateFilterButtonText(wrapper)).toEqual("1/1/2019–12/31/2019");
+            expect(getDateFilterButtonText(wrapper)).toEqual("01/01/2019–12/31/2019");
         });
 
         it("should set default value from last month to current month", () => {

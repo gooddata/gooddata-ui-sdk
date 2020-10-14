@@ -13,6 +13,8 @@ import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
 import { DateFilterOption, IDateFilterOptionsByType } from "./interfaces";
 
+export const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+
 const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
     if (
         isRelativeDateFilterForm(selectedFilterOption) &&
@@ -44,6 +46,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     isEditMode?: boolean;
     customFilterName?: string;
     dateFilterMode: DashboardDateFilterConfigMode;
+    dateFormat?: string;
     locale?: string;
 }
 
@@ -76,6 +79,7 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
  */
 export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
     public static defaultProps: Partial<IDateFilterProps> = {
+        dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,
         locale: "en-US",
         onCancel: noop,
@@ -134,6 +138,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         const {
             customFilterName,
             dateFilterMode,
+            dateFormat,
             filterOptions,
             selectedFilterOption: originalSelectedFilterOption,
             excludeCurrentPeriod: originalExcludeCurrentPeriod,
@@ -146,6 +151,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             <DateFilterCore
                 availableGranularities={availableGranularities}
                 customFilterName={customFilterName}
+                dateFormat={dateFormat}
                 disabled={dateFilterMode === "readonly"}
                 excludeCurrentPeriod={excludeCurrentPeriod}
                 originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}

@@ -9,6 +9,7 @@ import { DateFilterOption } from "../interfaces";
 
 interface IAbsolutePresetFilterItemsProps {
     filterOptions: IAbsoluteDateFilterPreset[];
+    dateFormat: string;
     selectedFilterOption: DateFilterOption;
     className?: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
@@ -16,6 +17,7 @@ interface IAbsolutePresetFilterItemsProps {
 
 export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps> = ({
     filterOptions,
+    dateFormat,
     selectedFilterOption,
     onSelectedFilterOptionChange,
     className,
@@ -28,7 +30,7 @@ export const AbsolutePresetFilterItems: React.FC<IAbsolutePresetFilterItemsProps
                 onClick={() => onSelectedFilterOptionChange(item)}
                 className={cx(`s-absolute-preset-${kebabCase(item.localIdentifier)}`, className)}
             >
-                <DateFilterTextLocalized filter={item} />
+                <DateFilterTextLocalized filter={item} dateFormat={dateFormat} />
             </ListItem>
         ))}
     </>

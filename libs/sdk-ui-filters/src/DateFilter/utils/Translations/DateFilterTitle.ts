@@ -1,9 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
+import format from "date-fns/format";
 import capitalize from "lodash/capitalize";
 import isEqual from "lodash/isEqual";
 import { ILocale, getIntl } from "@gooddata/sdk-ui";
 import { granularityIntlCodes } from "../../constants/i18n";
-import { IMessageTranslator, IDateTranslator, IDateAndMessageTranslator } from "./Translators";
+import { IMessageTranslator, IDateAndMessageTranslator } from "./Translators";
 import { convertPlatformDateStringToDate } from "../DateConversions";
 import {
     DateFilterGranularity,
@@ -17,22 +18,13 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
 
-const formatAbsoluteDate = (date: Date | string, translator: IDateTranslator) =>
-    translator.formatDate(date, {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-    });
+const formatAbsoluteDate = (date: Date, dateFormat: string) => format(date, dateFormat);
 
-const formatAbsoluteDateRange = (
-    from: Date | string,
-    to: Date | string,
-    translator: IDateTranslator,
-): string => {
+const formatAbsoluteDateRange = (from: Date | string, to: Date | string, dateFormat: string): string => {
     const fromDate = convertPlatformDateStringToDate(from);
     const toDate = convertPlatformDateStringToDate(to);
-    const fromTitle = formatAbsoluteDate(fromDate, translator);
-    const toTitle = formatAbsoluteDate(toDate, translator);
+    const fromTitle = formatAbsoluteDate(fromDate, dateFormat);
+    const toTitle = formatAbsoluteDate(toDate, dateFormat);
 
     if (isEqual(fromTitle, toTitle)) {
         return fromTitle;
@@ -138,15 +130,13 @@ const formatRelativeDateRange = (
 const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string =>
     translator.formatMessage({ id: "filters.allTime.title" });
 
-const getAbsoluteFormFilterRepresentation = (
-    filter: IUiAbsoluteDateFilterForm,
-    translator: IDateAndMessageTranslator,
-): string => (filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, translator) : "");
+const getAbsoluteFormFilterRepresentation = (filter: IUiAbsoluteDateFilterForm, dateFormat: string): string =>
+    filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "";
 
 const getAbsolutePresetFilterRepresentation = (
     filter: IAbsoluteDateFilterPreset,
-    translator: IDateAndMessageTranslator,
-): string => formatAbsoluteDateRange(filter.from, filter.to, translator);
+    dateFormat: string,
+): string => formatAbsoluteDateRange(filter.from, filter.to, dateFormat);
 
 const getRelativeFormFilterRepresentation = (
     filter: IUiRelativeDateFilterForm,
@@ -164,15 +154,16 @@ const getRelativePresetFilterRepresentation = (
 const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
+    dateFormat: string,
 ) => {
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
-        return getDateFilterRepresentationUsingTranslator(filter, translator);
+        return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
     } else if (
         isAllTimeDateFilterOption(filter) ||
         isAbsoluteDateFilterPreset(filter) ||
         isRelativeDateFilterPreset(filter)
     ) {
-        return filter.name || getDateFilterRepresentationUsingTranslator(filter, translator);
+        return filter.name || getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
     } else {
         throw new Error("Unknown DateFilterOption type");
     }
@@ -190,10 +181,10 @@ const getDateFilterRepresentationByFilterType = (
  * Gets the filter title favoring custom name if specified.
  * @returns {string} Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
-export const getDateFilterTitle = (filter: DateFilterOption, locale: ILocale): string => {
+export const getDateFilterTitle = (filter: DateFilterOption, locale: ILocale, dateFormat: string): string => {
     const translator = getIntl(locale);
 
-    return getDateFilterRepresentationByFilterType(filter, translator);
+    return getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
 };
 
 /**
@@ -203,7 +194,8 @@ export const getDateFilterTitle = (filter: DateFilterOption, locale: ILocale): s
 export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
-): string => getDateFilterRepresentationByFilterType(filter, translator);
+    dateFormat: string,
+): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
 
 /**
  * Gets the filter representation regardless of custom name.
@@ -212,11 +204,12 @@ export const getDateFilterTitleUsingTranslator = (
 const getDateFilterRepresentationUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
+    dateFormat: string,
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
-        return getAbsoluteFormFilterRepresentation(filter, translator);
+        return getAbsoluteFormFilterRepresentation(filter, dateFormat);
     } else if (isAbsoluteDateFilterPreset(filter)) {
-        return getAbsolutePresetFilterRepresentation(filter, translator);
+        return getAbsolutePresetFilterRepresentation(filter, dateFormat);
     } else if (isAllTimeDateFilterOption(filter)) {
         return getAllTimeFilterRepresentation(translator);
     } else if (isRelativeDateFilterForm(filter)) {
@@ -228,8 +221,12 @@ const getDateFilterRepresentationUsingTranslator = (
     }
 };
 
-export const getDateFilterRepresentation = (filter: DateFilterOption, locale: ILocale): string => {
+export const getDateFilterRepresentation = (
+    filter: DateFilterOption,
+    locale: ILocale,
+    dateFormat: string,
+): string => {
     const translator = getIntl(locale);
 
-    return getDateFilterRepresentationUsingTranslator(filter, translator);
+    return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat);
 };

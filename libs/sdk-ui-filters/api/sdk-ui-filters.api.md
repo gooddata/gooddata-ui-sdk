@@ -50,9 +50,9 @@ export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFil
 // @beta (undocumented)
 export const DateFilterHelpers: {
     validateFilterOption: (filterOption: import("./interfaces").DateFilterOption) => import("./interfaces").IExtendedDateFilterErrors;
-    getDateFilterTitle: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale) => string;
-    getDateFilterTitleUsingTranslator: (filter: import("./interfaces").DateFilterOption, translator: import("./utils/Translations/Translators").IDateAndMessageTranslator) => string;
-    getDateFilterRepresentation: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale) => string;
+    getDateFilterTitle: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale, dateFormat: string) => string;
+    getDateFilterTitleUsingTranslator: (filter: import("./interfaces").DateFilterOption, translator: import("./utils/Translations/Translators").IDateAndMessageTranslator, dateFormat: string) => string;
+    getDateFilterRepresentation: (filter: import("./interfaces").DateFilterOption, locale: import("@gooddata/sdk-ui").ILocale, dateFormat: string) => string;
     granularityIntlCodes: {
         "GDC.time.year": import("./constants/i18n").GranularityIntlKey;
         "GDC.time.week_us": import("./constants/i18n").GranularityIntlKey;
@@ -165,6 +165,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     customFilterName?: string;
     // (undocumented)
     dateFilterMode: DashboardDateFilterConfigMode;
+    // (undocumented)
+    dateFormat?: string;
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
     // (undocumented)

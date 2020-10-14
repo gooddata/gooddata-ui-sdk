@@ -6,12 +6,14 @@ import { DateFilterOption } from "../interfaces";
 import { getDateFilterTitle } from "../utils/Translations/DateFilterTitle";
 
 interface IDateFilterTextLocalizedProps {
+    dateFormat: string;
     filter: DateFilterOption;
 }
 
 const DateFilterTextLocalizedComponent: React.FC<IDateFilterTextLocalizedProps & WrappedComponentProps> = ({
+    dateFormat,
     filter,
     intl,
-}) => <>{getDateFilterTitle(filter, intl.locale as ILocale)}</>;
+}) => <>{getDateFilterTitle(filter, intl.locale as ILocale, dateFormat)}</>;
 
 export const DateFilterTextLocalized = injectIntl(DateFilterTextLocalizedComponent);

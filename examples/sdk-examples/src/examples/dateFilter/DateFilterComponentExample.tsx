@@ -196,6 +196,7 @@ export const DateFilterComponentExample: React.FC = () => {
                 availableGranularities={availableGranularities}
                 customFilterName="Selected date"
                 dateFilterMode="active"
+                dateFormat="MM/dd/yyyy"
                 onApply={onApply}
             />
         </div>
