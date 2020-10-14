@@ -1,13 +1,13 @@
 // (C) 2019 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/core/styles/variables.scss";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables.scss";
 
 .gd-extended-date-filter-header {
     display: block;
     width: 100%;
     padding: 10px;
     border: none;
-    border-top: 1px solid $border-color;
-    border-bottom: 1px solid $border-color;
+    border-top: 1px solid $gd-border-color;
+    border-bottom: 1px solid $gd-border-color;
     font-size: nth(map-get($gd-typo, font-sizes), 4);
     text-align: left;
     font-weight: bold;

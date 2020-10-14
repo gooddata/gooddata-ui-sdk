@@ -1,7 +1,10 @@
 // (C) 2020 GoodData Corporation
 import { isObject } from "lodash";
-import { transparentize, darken, lighten } from "polished";
+import { transparentize, darken, lighten, mix } from "polished";
 import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
+
+// keep it in sync with SCSS:$gd-color-text-light
+const GD_COLOR_TEXT_LIGHT = "#fff";
 
 /**
  *
@@ -77,6 +80,10 @@ const getCssProperty = (key: string, value: string): CssProperty => ({
     value,
 });
 
+const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
+    getCssProperty("palette-primary-dimmed", mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+];
+
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-base-t50", transparentize(0.5, palette.primary.base)),
     getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base)),
@@ -105,13 +112,22 @@ const getMeasureNumberFormatDialogDerivedColors = (palette: IThemePalette): CssP
     getCssProperty("palette-primary-base-darken20", darken(0.2, palette.primary.base)),
 ];
 
+const getPivotTableDerivedColors = (palette: IThemePalette): CssProperty[] => [
+    getCssProperty(
+        "palette-primary-base-dimmed-darken03",
+        darken(0.03, mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    ),
+];
+
 const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     (palette?.primary?.base && [
+        ...getCommonDerivedColors(palette),
         ...getDashboardsDerivedColors(palette),
         ...getButtonDerivedColors(palette),
         ...getBubbleDerivedColors(palette),
         ...getDateFilterDerivedColors(palette),
         ...getMeasureNumberFormatDialogDerivedColors(palette),
+        ...getPivotTableDerivedColors(palette),
     ]) ||
     [];
 

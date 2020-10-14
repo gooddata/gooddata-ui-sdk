@@ -14,7 +14,7 @@ import * as ptBR from "./bundles/pt-BR.json";
 import * as ptPT from "./bundles/pt-PT.json";
 import * as zhHans from "./bundles/zh-Hans.json";
 
-interface ITranslations {
+export interface ITranslations {
     [key: string]: string;
 }
 

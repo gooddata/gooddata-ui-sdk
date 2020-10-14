@@ -57,10 +57,10 @@ type IAttributeDropdownProps = IAttributeDropdownOwnProps & WrappedComponentProp
 export interface IAttributeDropdownState {
     validElements?: IElementQueryResultWithEmptyItems;
 
-    selectedItems: Array<Partial<IAttributeElement>>;
+    selectedItems: Array<IAttributeElement>;
     isInverted: boolean;
 
-    prevSelectedItems: Array<Partial<IAttributeElement>>;
+    prevSelectedItems: Array<IAttributeElement>;
     prevIsInverted: boolean;
     firstLoad: boolean;
 
@@ -103,7 +103,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     constructor(props: IAttributeDropdownProps) {
         super(props);
 
-        const selectedItems = props.selectedItems || [];
+        const selectedItems = this.updateSelectedItemsWithData(props.selectedItems || [], []);
         const isInverted = props.isInverted ?? false;
 
         this.state = {
@@ -187,8 +187,12 @@ export class AttributeDropdownCore extends React.PureComponent<
     private updateSelectedItemsWithData = (
         selection: Array<Partial<IAttributeElement>>,
         items: AttributeListItem[],
-    ) => {
+    ): Array<IAttributeElement> => {
         const nonEmptyItems = items.filter(isNonEmptyListItem);
+        const createFullItem = (item: Partial<IAttributeElement>): IAttributeElement => ({
+            uri: item.uri ? item.uri : "",
+            title: item.title ? item.title : "",
+        });
 
         return selection.map((selectedItem) => {
             const foundItem = nonEmptyItems.find(
@@ -196,7 +200,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                     (selectedItem.uri && item.uri === selectedItem.uri) ||
                     (selectedItem.title && item.title === selectedItem.title),
             );
-            return foundItem || selectedItem;
+            return foundItem || createFullItem(selectedItem);
         });
     };
 

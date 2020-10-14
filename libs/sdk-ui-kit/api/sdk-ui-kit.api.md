@@ -4,7 +4,11 @@
 
 ```ts
 
+import { Component } from 'react';
+import { guidFor } from '@gooddata/goodstrap/lib/core/Guid';
+import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 
@@ -150,6 +154,9 @@ export interface CheckboxProps {
 }
 
 // @internal (undocumented)
+export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
+
+// @internal (undocumented)
 export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
@@ -187,6 +194,9 @@ export type GetPositionedSelfRegion = {
     selfRegion: IRegion;
     alignPoint: IAlignPoint;
 };
+
+// @internal (undocumented)
+export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
 export interface IAlignPoint {
@@ -285,6 +295,22 @@ export interface IButtonProps {
 }
 
 // @internal (undocumented)
+export interface IDateDatasetsListItemProps {
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    isHeader?: boolean;
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    isUnrelated?: boolean;
+    // (undocumented)
+    onClick: (e: React_2.MouseEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
 export interface IDatePickerOwnProps {
     // (undocumented)
     alignPoints?: IAlignPoint[];
@@ -337,6 +363,418 @@ export interface IFormatTemplate {
 }
 
 // @internal (undocumented)
+export interface IHeaderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IInsightListItemDateProps {
+    // (undocumented)
+    config: {
+        isCurrentYear: boolean;
+        isToday: boolean;
+        isYesterday: boolean;
+        date: Date;
+    };
+}
+
+// @internal (undocumented)
+export interface IInsightListItemProps {
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onDelete?: () => void;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    type?: string;
+    // (undocumented)
+    updated?: string;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableListProps<T> {
+    // (undocumented)
+    actionsAsCheckboxes?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    filteredItemsCount: number;
+    // (undocumented)
+    getItemKey?: (item: T) => string;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isInverted?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    items: T[];
+    // (undocumented)
+    itemsCount: number;
+    // (undocumented)
+    maxSelectionSize: number;
+    // (undocumented)
+    noItemsFound?: boolean;
+    // (undocumented)
+    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    onSelect?: (items: T[], selectAll: boolean) => void;
+    // (undocumented)
+    renderItem: (props: IInvertableListRenderItemProps<T>) => React_2.ReactNode;
+    // (undocumented)
+    renderLimitHit?: (props: {
+        limit: number;
+        bounce: boolean;
+    }) => React_2.ReactNode;
+    // (undocumented)
+    renderLoading?: (props: {
+        height: number;
+    }) => React_2.ReactNode;
+    // (undocumented)
+    renderNoItems?: (props: {
+        height: number;
+    }) => React_2.ReactNode;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+    // (undocumented)
+    selectedItems?: T[];
+    // (undocumented)
+    showSearchField?: boolean;
+    // (undocumented)
+    smallSearch?: boolean;
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
+export interface IInvertableListRenderItemProps<T> {
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: T;
+    // (undocumented)
+    onSelect: (item: T) => void;
+    // (undocumented)
+    onSelectOnly: (item: T) => void;
+}
+
+// @internal (undocumented)
+export interface IItemProps {
+    // (undocumented)
+    checked?: boolean;
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    subMenu?: boolean;
+}
+
+// @internal (undocumented)
+export interface IItemsWrapperProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    smallItemsSpacing?: boolean;
+}
+
+// @internal (undocumented)
+export interface ILegacyInvertableListProps<T> {
+    // (undocumented)
+    actionsAsCheckboxes?: boolean;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    filteredItemsCount: number;
+    // (undocumented)
+    getItemKey?: (item: T) => string;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    isInverted?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isLoadingClass?: React_2.ElementType;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    items: ReadonlyArray<T>;
+    // (undocumented)
+    itemsCount: number;
+    // (undocumented)
+    limitHitWarningClass?: React_2.ElementType;
+    // (undocumented)
+    listItemClass?: React_2.ElementType;
+    // (undocumented)
+    maxSelectionSize: number;
+    // (undocumented)
+    noItemsFound?: boolean;
+    // (undocumented)
+    noItemsFoundClass?: React_2.ElementType;
+    // (undocumented)
+    onRangeChange?: (searchString: string, start: number, end: number) => void;
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    onSelect?: (selectedElements: Array<T>, isInverted: boolean) => void;
+    // (undocumented)
+    rowItem?: React_2.ReactElement;
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+    // (undocumented)
+    selectAllCheckbox?: boolean;
+    // (undocumented)
+    selection?: Array<T>;
+    // (undocumented)
+    showSearchField?: boolean;
+    // (undocumented)
+    smallSearch?: boolean;
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface ILegacyListItemProps<T> {
+    // (undocumented)
+    item?: T;
+    // (undocumented)
+    listItemClass: React_2.ElementType;
+}
+
+// @internal (undocumented)
+export interface ILegacyListProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    compensateBorder?: boolean;
+    // (undocumented)
+    dataSource: any;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    itemHeightGetter?: () => number;
+    // (undocumented)
+    onScroll?: ScrollCallback;
+    // (undocumented)
+    onScrollStart?: ScrollCallback;
+    // (undocumented)
+    onSelect?: (item: any) => void;
+    // (undocumented)
+    rowItem: React_2.ReactElement;
+    // (undocumented)
+    scrollToSelected?: boolean;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface ILegacyListState {
+    // (undocumented)
+    selected: number;
+}
+
+// @internal (undocumented)
+export interface ILegacyMultiSelectListItemProps {
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    onMouseOut?: (source: any) => void;
+    // (undocumented)
+    onMouseOver?: (source: any) => void;
+    // (undocumented)
+    onOnly?: (source: any) => void;
+    // (undocumented)
+    onSelect?: (source: any) => void;
+    // (undocumented)
+    selected?: boolean;
+    // (undocumented)
+    source?: any;
+}
+
+// @internal (undocumented)
+export interface ILegacyMultiSelectListProps<T> {
+    // (undocumented)
+    filtered?: boolean;
+    // (undocumented)
+    filteredItemsCount?: number;
+    // (undocumented)
+    getItemKey?: (item: T) => string;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    isFiltered?: boolean;
+    // (undocumented)
+    isInverted?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    isSearching?: boolean;
+    // (undocumented)
+    isSelected?: (item: T) => boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    items: ReadonlyArray<T>;
+    // (undocumented)
+    itemsCount: number;
+    // (undocumented)
+    listItemClass?: React_2.ElementType;
+    // (undocumented)
+    maxSelectionSize?: number;
+    // (undocumented)
+    onItemMouseOut?: () => void;
+    // (undocumented)
+    onItemMouseOver?: () => void;
+    // (undocumented)
+    onRangeChange?: ScrollCallback;
+    // (undocumented)
+    onSelect?: (item: T) => void;
+    // (undocumented)
+    onSelectAll?: () => void;
+    // (undocumented)
+    onSelectNone?: () => void;
+    // (undocumented)
+    onSelectOnly?: (item: T) => void;
+    // (undocumented)
+    rowItem?: React_2.ReactElement;
+    // (undocumented)
+    selectAllCheckbox?: boolean;
+    // (undocumented)
+    selection?: T[];
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface ILegacySingleSelectListItemProps {
+    // (undocumented)
+    onMouseOut?: (source: any) => void;
+    // (undocumented)
+    onMouseOver?: (source: any) => void;
+    // (undocumented)
+    onSelect: (source: any) => void;
+    // (undocumented)
+    selected: boolean;
+    // (undocumented)
+    source: any;
+}
+
+// @internal (undocumented)
+export interface ILegacySingleSelectListItemState {
+    // (undocumented)
+    isOverflowed: boolean;
+}
+
+// @internal (undocumented)
+export interface ILegacySingleSelectListProps<T> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    getItemKey?: (item: T) => string;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsCount?: number;
+    // (undocumented)
+    listItemClass?: React_2.ElementType;
+    // (undocumented)
+    onItemMouseEnter?: (id: string) => void;
+    // (undocumented)
+    onItemMouseLeave?: () => void;
+    // (undocumented)
+    onItemMouseOut?: () => void;
+    // (undocumented)
+    onItemMouseOver?: () => void;
+    // (undocumented)
+    onRangeChange?: () => void;
+    // (undocumented)
+    onScrollStart?: () => void;
+    // (undocumented)
+    onSelect?: (item: T) => void;
+    // (undocumented)
+    rowItem?: React_2.ReactElement;
+    // (undocumented)
+    scrollToSelected?: boolean;
+    // (undocumented)
+    selection?: T;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
+export interface IListProps<T> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    compensateBorder?: boolean;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    itemHeightGetter?: (index: number) => number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsCount?: number;
+    // (undocumented)
+    maxVisibleItemsCount?: number;
+    // (undocumented)
+    onScrollEnd?: ScrollCallback;
+    // (undocumented)
+    onScrollStart?: ScrollCallback;
+    // (undocumented)
+    renderItem: (props: IRenderItemProps<T>) => React_2.ReactNode;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -362,6 +800,56 @@ export interface IMeasureNumberFormatOwnProps {
     templates?: ReadonlyArray<IFormatTemplate>;
     // (undocumented)
     toggleButton: React_2.ComponentType<IToggleButtonProps>;
+}
+
+// @internal (undocumented)
+export interface IMultiSelectListProps<T> {
+    // (undocumented)
+    filteredItemsCount?: number;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isInverted?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    isSearching?: boolean;
+    // (undocumented)
+    isSelected?: (item: T) => boolean;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsCount?: number;
+    // (undocumented)
+    maxSelectionSize?: number;
+    // (undocumented)
+    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    // (undocumented)
+    onSelectAll?: () => void;
+    // (undocumented)
+    onSelectNone?: () => void;
+    // (undocumented)
+    renderItem: (props: IMultiSelectRenderItemProps<T>) => React_2.ReactNode;
+    // (undocumented)
+    selectAllCheckbox?: boolean;
+    // (undocumented)
+    selectedItems?: T[];
+    // (undocumented)
+    tagName?: string;
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IMultiSelectRenderItemProps<T> {
+    // (undocumented)
+    isSelected: boolean;
+    // (undocumented)
+    item: T;
 }
 
 // @internal (undocumented)
@@ -572,6 +1060,26 @@ export interface InputWithNumberFormatState {
 }
 
 // @internal (undocumented)
+export class InsightListItem extends Component<IInsightListItemProps> {
+    // (undocumented)
+    componentDidUpdate(prevProps: IInsightListItemProps): void;
+    // (undocumented)
+    handleClickDelete: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    render(): JSX.Element;
+    }
+
+// @internal (undocumented)
+export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
+
+// @internal (undocumented)
+export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "className" | "onSelect" | "items" | "isLoading" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
+};
+
+// @internal (undocumented)
 export interface IOffset {
     // (undocumented)
     x?: number;
@@ -617,6 +1125,40 @@ export interface IRegion {
 }
 
 // @internal (undocumented)
+export interface IRenderItemProps<T> {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    item: T;
+    // (undocumented)
+    rowIndex: number;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
+export interface ISingleSelectListItemProps {
+    // (undocumented)
+    icon?: string;
+    // (undocumented)
+    isSelected?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    onMouseOut?: () => void;
+    // (undocumented)
+    onMouseOver?: () => void;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal (undocumented)
+export interface ISingleSelectListItemState {
+    // (undocumented)
+    isOverflowed: boolean;
+}
+
+// @internal (undocumented)
 export interface ISnapPoints {
     // (undocumented)
     child: SnapPoint;
@@ -639,6 +1181,12 @@ export interface ISyntaxHighlightingInputProps {
     // (undocumented)
     value: string;
 }
+
+// @internal (undocumented)
+export const Item: React_2.FC<IItemProps>;
+
+// @internal (undocumented)
+export const ItemsWrapper: React_2.FC<IItemsWrapperProps>;
 
 // @internal (undocumented)
 export interface ITimepickerOwnProps {
@@ -668,11 +1216,127 @@ export interface IToggleButtonProps {
     toggleDropdown: (e: React_2.SyntheticEvent) => void;
 }
 
+// @internal @deprecated (undocumented)
+export const LegacyInvertableList: <T>(props: ILegacyInvertableListProps<T>) => any;
+
+// @internal @deprecated (undocumented)
+export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
+    constructor(props: ILegacyListProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: Partial<ILegacyListProps>;
+    // (undocumented)
+    render(): JSX.Element;
+    }
+
+// @internal @deprecated (undocumented)
+export class LegacyListItem<T> extends Component<ILegacyListItemProps<T>> {
+    // (undocumented)
+    static defaultProps: {
+        item: {};
+    };
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal @deprecated (undocumented)
+export const LegacyMultiSelectList: <T>(props: ILegacyMultiSelectListProps<T>) => any;
+
+// @internal @deprecated (undocumented)
+export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
+    constructor(props: ILegacyMultiSelectListItemProps);
+    // (undocumented)
+    static defaultProps: {
+        isLoading: boolean;
+        onMouseOver: () => void;
+        onMouseOut: () => void;
+        onOnly: () => void;
+        onSelect: () => void;
+        selected: boolean;
+        source: {};
+    };
+    // (undocumented)
+    protected getClassNames(): string;
+    // (undocumented)
+    protected handleMouseOut: () => void;
+    // (undocumented)
+    protected handleMouseOver: () => void;
+    // (undocumented)
+    protected handleSelect: () => void;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    protected renderOnly(): JSX.Element;
+}
+
+// @internal @deprecated (undocumented)
+export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectListProps<T>> {
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+        getItemKey: typeof guidFor;
+        items: any[];
+        itemsCount: number;
+        listItemClass: typeof LegacySingleSelectListItem;
+        onItemMouseOut: () => void;
+        onItemMouseOver: () => void;
+        onItemMouseEnter: () => void;
+        onItemMouseLeave: () => void;
+        onRangeChange: () => void;
+        onScrollStart: () => void;
+        onSelect: () => void;
+        rowItem: React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)>) | (new (props: any) => React_2.Component<any, any, any>)>;
+        scrollToSelected: boolean;
+        selection: {};
+    };
+    // (undocumented)
+    render(): JSX.Element;
+}
+
+// @internal @deprecated (undocumented)
+export class LegacySingleSelectListItem extends Component<ILegacySingleSelectListItemProps, ILegacySingleSelectListItemState> {
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentDidUpdate(): void;
+    // (undocumented)
+    static defaultProps: {
+        onMouseOver: () => void;
+        onMouseOut: () => void;
+    };
+    // (undocumented)
+    node: HTMLSpanElement;
+    // (undocumented)
+    render(): JSX.Element;
+    // (undocumented)
+    readonly state: {
+        isOverflowed: boolean;
+    };
+}
+
+// @internal (undocumented)
+export class List<T> extends Component<IListProps<T>> {
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    render(): JSX.Element;
+}
+
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @internal (undocumented)
+export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "isSelected" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
+};
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
@@ -684,16 +1348,31 @@ export enum PresetType {
 }
 
 // @internal (undocumented)
+export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+
+// @internal (undocumented)
 export type SelectedTime = {
     h: number;
     m: number;
 };
 
 // @internal (undocumented)
+export const Separator: React_2.FC;
+
+// @internal (undocumented)
 export type Separators = {
     thousand: string;
     decimal: string;
 };
+
+// @internal (undocumented)
+export class SingleSelectListItem extends Component<ISingleSelectListItemProps, ISingleSelectListItemState> {
+    constructor(props: ISingleSelectListItemProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    render(): JSX.Element;
+    }
 
 // @internal (undocumented)
 export enum SnapPoint {

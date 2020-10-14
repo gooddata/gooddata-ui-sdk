@@ -19,10 +19,11 @@ $gd-color-link: #6d7680;
 $gd-color-label: $gd-color-link;
 $gd-color-text: #464e56;
 $gd-color-text-dimmed: $gd-color-disabled;
+// keep it in sync with ThemeProvider:GD_COLOR_TEXT_LIGHT
 $gd-color-text-light: #fff;
 $gd-color-dark: #000;
 
-$border-color: #dde4eb;
+$gd-border-color: #dde4eb;
 // primary color - must not be used to create derived colors by scss color function
 $gd-palette-primary-base: var(--gd-palette-primary-base, $gd-color-highlight);
 

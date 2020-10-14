@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import { Header, Item, ItemsWrapper } from "@gooddata/goodstrap/lib/List/MenuList";
 import { attributeDescriptorLocalId, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
@@ -12,7 +11,7 @@ import {
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Header, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop";
 
 import Menu from "../menu/Menu";

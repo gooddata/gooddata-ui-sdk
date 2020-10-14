@@ -5,7 +5,7 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
 @import "~@gooddata/goodstrap/lib/core/styles/Overlay";
 @import "~@gooddata/goodstrap/lib/Dialog/styles/Dialog";
-@import "~@gooddata/goodstrap/lib/List/styles/List";
+@import "~@gooddata/sdk-ui-kit/styles/scss/list";
 @import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
 
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";

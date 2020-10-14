@@ -189,7 +189,7 @@ describe("AttributeDropdown", () => {
         await waitForDebounce();
 
         wrapper.update();
-        expect(wrapper.find("InvertableList").prop("searchString")).toBe("CompuSci");
+        expect(wrapper.find("LegacyInvertableList").prop("searchString")).toBe("CompuSci");
 
         /**
          * Debounce is needed here because we need to slow down the cancelation;
@@ -203,7 +203,7 @@ describe("AttributeDropdown", () => {
 
         await waitForAsync();
         wrapper.update();
-        expect(wrapper.find("InvertableList").prop("searchString")).toBe("");
+        expect(wrapper.find("LegacyInvertableList").prop("searchString")).toBe("");
     });
 
     it("should render dropdown button customized title with selected items and count", async () => {

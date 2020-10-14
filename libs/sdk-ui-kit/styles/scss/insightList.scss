@@ -1,0 +1,122 @@
+// (C) 2007-2020 GoodData Corporation
+@import "./variables.scss";
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+$base-path: $gdc-goodstrap-basepath + "./core/styles/images/visualization-types/";
+$visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, headline, heatmap, line,
+    pie, scatter, table, treemap, unknown, xirr, pushpin, region, bullet;
+
+%visualisation-icon {
+    display: inline-block;
+    width: 32px;
+    height: 30px;
+    vertical-align: top;
+    margin-right: 9px;
+    background-repeat: no-repeat;
+    background-position: center, -999px -999px;
+
+    .is-selected & {
+        background-position: -999px -999px, center;
+    }
+}
+
+.gd-vis-type {
+    @extend %visualisation-icon;
+
+    background-image: url($base-path + "unknown.svg"), url($base-path + "unknown-active.svg");
+}
+
+@each $icon in $visualization-types {
+    .gd-vis-type-#{$icon} {
+        @extend %visualisation-icon;
+
+        background-image: url($base-path + $icon + ".svg"), url($base-path + $icon + "-active.svg");
+    }
+}
+
+.gd-visualizations-list {
+    .public_fixedDataTableRow_main,
+    .public_fixedDataTableCell_main,
+    .fixedDataTableCellGroupLayout_cellGroup {
+        overflow: visible;
+    }
+}
+
+.gd-visualizations-list-item {
+    display: flex;
+    align-items: stretch;
+    margin: 0 3px 0 15px;
+    padding: 5px 2px;
+    cursor: pointer;
+    align-content: stretch;
+    border-radius: 3px;
+
+    > * {
+        flex: 1 1 auto;
+    }
+
+    &:hover {
+        position: relative;
+        box-shadow: 0 1px 3px 0 rgba(20, 56, 93, 0.1), 0 2px 9px 0 rgba(20, 56, 93, 0.15);
+        background-color: #fff;
+    }
+
+    &.is-selected {
+        .gd-visualizations-list-item-content {
+            font-weight: bold;
+
+            .gd-visualizations-list-item-content-name {
+                color: $gd-palette-primary-base;
+            }
+        }
+    }
+
+    .gd-visualizations-list-item-content {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+
+        .gd-visualizations-list-item-content-name,
+        .gd-visualizations-list-item-content-date {
+            margin-top: 2px;
+        }
+
+        .gd-visualizations-list-item-content-name {
+            line-height: 14px;
+            color: $gd-color-text;
+            font-size: 12px;
+
+            span {
+                display: inline-block;
+                width: 100%;
+            }
+        }
+
+        .gd-visualizations-list-item-content-date {
+            line-height: 12px;
+            color: $gd-color-state-blank;
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+    }
+
+    .gd-vis-type {
+        flex: 0 0 32px;
+    }
+
+    .gd-visualizations-list-item-actions {
+        flex: 0 0 40px;
+    }
+
+    .icon-lock {
+        color: $gd-color-state-blank;
+        margin-right: 4px;
+    }
+}
+
+.gd-visualizations-list-item-actions {
+    opacity: 0;
+
+    .gd-visualizations-list-item:hover & {
+        opacity: 1;
+    }
+}
