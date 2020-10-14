@@ -42,7 +42,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         getItemKey: guidFor,
         items: [] as any[],
         itemsCount: 0,
-        listItemClass: LegacySingleSelectListItem, // TODO add tests
+        listItemClass: LegacySingleSelectListItem,
         onItemMouseOut: (): void => {},
         onItemMouseOver: (): void => {},
         onItemMouseEnter: (): void => {},
