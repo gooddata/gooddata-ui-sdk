@@ -49,12 +49,20 @@ if [ $dry_run_rc -ne 0 ]; then
 fi
 
 #
+# Default to `prerelease`
+#
+if [ -z ${TAG_NPM} ]; then
+  echo "Please specify TAG_NPM env variable. This is used to tag the release on NPM (latest for major and minor, prerelease for alpha or beta)."
+  exit 1
+fi
+
+#
 # All good, do the real thing
 #
 echo "Publishing to NPM"
 
 # forcing restricted access level; switch this to public
-${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all --set-access-level public
+${_RUSH} publish -n "${NPM_PUBLISH_TOKEN}" -p --include-all --tag "${TAG_NPM}" --set-access-level public
 publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
