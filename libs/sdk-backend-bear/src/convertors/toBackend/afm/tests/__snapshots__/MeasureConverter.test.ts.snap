@@ -105,22 +105,6 @@ Object {
 }
 `;
 
-exports[`measure converter should return custom format: count measure override 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "aggregation": "count",
-      "computeRatio": true,
-      "item": Object {
-        "identifier": "foo",
-      },
-    },
-  },
-  "format": "#,##0.00%",
-  "localIdentifier": "m_061abd71_foo_count_ratio",
-}
-`;
-
 exports[`measure converter should return custom format: pop measure 1`] = `
 Object {
   "definition": Object {
@@ -167,22 +151,6 @@ Object {
   },
   "format": "custom #,##0,00",
   "localIdentifier": "m_e70a9702_foo",
-}
-`;
-
-exports[`measure converter should return custom format: sum measure override 1`] = `
-Object {
-  "definition": Object {
-    "measure": Object {
-      "aggregation": "sum",
-      "computeRatio": true,
-      "item": Object {
-        "identifier": "foo",
-      },
-    },
-  },
-  "format": "#,##0.00%",
-  "localIdentifier": "m_a183b5ef_foo_sum_ratio",
 }
 `;
 
