@@ -10,6 +10,7 @@ const getFromInput = childGetter(".s-date-range-picker-from .s-date-range-picker
 const getToInput = childGetter(".s-date-range-picker-to .s-date-range-picker-input-field");
 const getTenthOfMay = childGetter('[aria-label="Fri May 10, 2019"]');
 
+const defaultDateFormat = "MM/dd/yyyy";
 const defaultRange: IDateRange = {
     from: new Date(2019, 4, 5),
     to: new Date(2019, 4, 15),
@@ -19,7 +20,14 @@ describe("DateRangePicker", () => {
     it("should call the appropriate callback when from input changes", () => {
         const onChange = jest.fn();
         const rendered = mount(
-            IntlDecorator(<DateRangePicker range={defaultRange} onRangeChange={onChange} isMobile={false} />),
+            IntlDecorator(
+                <DateRangePicker
+                    dateFormat={defaultDateFormat}
+                    range={defaultRange}
+                    onRangeChange={onChange}
+                    isMobile={false}
+                />,
+            ),
         );
 
         writeTo("05/01/2019", getFromInput(rendered));
@@ -30,7 +38,14 @@ describe("DateRangePicker", () => {
     it("should call the appropriate callback when to input changes", () => {
         const onChange = jest.fn();
         const rendered = mount(
-            IntlDecorator(<DateRangePicker range={defaultRange} onRangeChange={onChange} isMobile={false} />),
+            IntlDecorator(
+                <DateRangePicker
+                    dateFormat={defaultDateFormat}
+                    range={defaultRange}
+                    onRangeChange={onChange}
+                    isMobile={false}
+                />,
+            ),
         );
 
         writeTo("06/01/2019", getToInput(rendered));
@@ -41,7 +56,14 @@ describe("DateRangePicker", () => {
     it("should call the appropriate callback when from picker is clicked", () => {
         const onChange = jest.fn();
         const rendered = mount(
-            IntlDecorator(<DateRangePicker range={defaultRange} onRangeChange={onChange} isMobile={false} />),
+            IntlDecorator(
+                <DateRangePicker
+                    dateFormat={defaultDateFormat}
+                    range={defaultRange}
+                    onRangeChange={onChange}
+                    isMobile={false}
+                />,
+            ),
         );
 
         clickOn(getFromInput(rendered));
@@ -58,7 +80,14 @@ describe("DateRangePicker", () => {
     it("should call the appropriate callback when to picker is clicked", () => {
         const onChange = jest.fn();
         const rendered = mount(
-            IntlDecorator(<DateRangePicker range={defaultRange} onRangeChange={onChange} isMobile={false} />),
+            IntlDecorator(
+                <DateRangePicker
+                    dateFormat={defaultDateFormat}
+                    range={defaultRange}
+                    onRangeChange={onChange}
+                    isMobile={false}
+                />,
+            ),
         );
 
         clickOn(getToInput(rendered));

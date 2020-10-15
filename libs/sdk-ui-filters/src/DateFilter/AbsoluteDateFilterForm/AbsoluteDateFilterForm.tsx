@@ -7,6 +7,7 @@ import { IExtendedDateFilterErrors, DateFilterOption } from "../interfaces";
 import { IAbsoluteDateFilterForm } from "@gooddata/sdk-backend-spi";
 
 interface IAbsoluteDateFilterFormProps {
+    dateFormat: string;
     selectedFilterOption: IAbsoluteDateFilterForm;
     isMobile: boolean;
     errors: IExtendedDateFilterErrors["absoluteForm"];
@@ -19,9 +20,10 @@ const dayPickerProps = {
 
 export class AbsoluteDateFilterForm extends React.Component<IAbsoluteDateFilterFormProps> {
     public render(): React.ReactNode {
-        const { isMobile, selectedFilterOption, errors } = this.props;
+        const { dateFormat, isMobile, selectedFilterOption, errors } = this.props;
         return (
             <DateRangePicker
+                dateFormat={dateFormat}
                 onRangeChange={this.handleRangeChange}
                 range={dateFilterValueToDateRange(selectedFilterOption)}
                 errors={errors}

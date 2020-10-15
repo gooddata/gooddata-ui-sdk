@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
-import { DEFAULT_DATE_FORMAT } from "../../DateFilter";
+import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 import { DateFilterBody, IDateFilterBodyProps } from "../DateFilterBody";
 import { ExcludeCurrentPeriodToggle } from "../../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle";
 import { EditModeMessage } from "../EditModeMessage";

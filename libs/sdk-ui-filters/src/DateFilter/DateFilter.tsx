@@ -12,8 +12,7 @@ import { canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
 import { DateFilterOption, IDateFilterOptionsByType } from "./interfaces";
-
-export const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
+import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 
 const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
     if (

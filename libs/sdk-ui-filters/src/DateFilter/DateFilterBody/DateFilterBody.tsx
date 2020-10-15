@@ -191,6 +191,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
 
     private renderAbsoluteForm = () => {
         const {
+            dateFormat,
             filterOptions,
             selectedFilterOption,
             onSelectedFilterOptionChange,
@@ -229,6 +230,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 {isSelected && (!isMobile || isOnRoute) && (
                     <DateFilterFormWrapper isMobile={isMobile}>
                         <AbsoluteDateFilterForm
+                            dateFormat={dateFormat}
                             errors={(errors && errors.absoluteForm) || undefined}
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                             selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}

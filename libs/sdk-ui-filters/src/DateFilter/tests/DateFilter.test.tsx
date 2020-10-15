@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import moment = require("moment");
 import { testAPI } from "../DateFilter";
 import {
     createDateFilter,
@@ -448,16 +447,20 @@ describe("DateFilter", () => {
         });
 
         it("should set correct values with desired format", () => {
+            const dateFormat = "yyyy/MM/dd";
             const onApply = jest.fn();
-            const wrapper = createDateFilter({ dateFormat: "yyyy/MM/dd", onApply });
+            const wrapper = createDateFilter({
+                dateFormat,
+                onApply,
+            });
 
             const from = "2019-10-15";
             const to = "2019-10-25";
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from));
-            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to));
+            writeToAbsoluteFormInputFrom(wrapper, dateToAbsoluteInputFormat(from, dateFormat));
+            writeToAbsoluteFormInputTo(wrapper, dateToAbsoluteInputFormat(to, dateFormat));
 
             clickApplyButton(wrapper);
 
@@ -540,8 +543,8 @@ describe("DateFilter", () => {
             clickDateFilterButton(wrapper);
             clickAbsoluteFormFilter(wrapper);
 
-            const expectedFrom = dateToAbsoluteInputFormat(moment().subtract(1, "month"));
-            const expectedTo = dateToAbsoluteInputFormat(moment());
+            const expectedFrom = dateToAbsoluteInputFormat(getMonthAgo());
+            const expectedTo = dateToAbsoluteInputFormat(getTodayDate());
             expect(getAbsoluteFormInputFromValue(wrapper)).toEqual(expectedFrom);
             expect(getAbsoluteFormInputToValue(wrapper)).toEqual(expectedTo);
         });

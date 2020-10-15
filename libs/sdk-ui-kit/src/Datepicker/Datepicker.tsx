@@ -2,7 +2,9 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
 import debounce from "lodash/debounce";
-import moment from "moment";
+import format from "date-fns/format";
+import parse from "date-fns/parse";
+import isValid from "date-fns/isValid";
 import classNames from "classnames";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { translationUtils } from "@gooddata/util";
@@ -43,19 +45,22 @@ interface IDatePickerState {
     focused: boolean;
 }
 
-function formatDate(date: Date, format: string, locale: string): string {
-    return moment(date).locale(locale).format(format);
+function formatDate(date: Date, dateFormat: string): string {
+    return format(date, dateFormat);
 }
 
-function parseDate(str: string, format: string, locale: string): Date | void {
-    const result = moment(str, format, locale, true);
-
-    if (result.isValid()) {
-        return result.toDate();
+function parseDate(str: string, dateFormat: string): Date | undefined {
+    try {
+        const parsedDate: Date = parse(str, dateFormat, new Date());
+        if (isValid(parsedDate)) {
+            return parsedDate;
+        }
+        return;
+    } catch {
+        return;
     }
-
-    return;
 }
+
 export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDatePickerState> {
     private rootRef: HTMLElement;
     private datePickerContainer: HTMLElement;
@@ -90,16 +95,16 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     }
 
     public componentDidMount(): void {
-        const { date, intl } = this.props;
+        const { date } = this.props;
 
-        this.setState({ selectedDate: this.updateDate(date || new Date(), intl.locale) });
+        this.setState({ selectedDate: this.updateDate(date || new Date()) });
         window.addEventListener("resize", this.resizeHandler);
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: DatePickerProps): void {
         const { props } = this;
-        if (props.date > nextProps.date || props.date < nextProps.date || props.intl !== nextProps.intl) {
-            const selectedDate = this.updateDate(nextProps.date, nextProps.intl.locale);
+        if (props.date > nextProps.date || props.date < nextProps.date) {
+            const selectedDate = this.updateDate(nextProps.date);
             this.setState({ selectedDate });
         }
     }
@@ -148,20 +153,18 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
 
     resizeHandler = debounce(() => this.alignDatePicker(), 100);
 
-    private updateDate(date: Date, locale: string) {
-        moment.locale(translationUtils.sanitizeLocaleForMoment(locale));
-
+    private updateDate(date: Date) {
         return this.normalizeDate(date);
     }
 
     private handleInputChanged(e: React.MouseEvent<HTMLInputElement>) {
         const { value } = e.target as HTMLInputElement;
-        const momentDate = moment(value, "l", true);
+        const parsedDate = parseDate(value, this.props.dateFormat);
 
-        if (momentDate.isValid()) {
+        if (parsedDate) {
             this.setState(
                 {
-                    selectedDate: momentDate.toDate(),
+                    selectedDate: parsedDate,
                     focused: false,
                 },
                 () => {
@@ -172,7 +175,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
             if (this.props.resetOnInvalidValue) {
                 this.setState({
                     focused: false,
-                    selectedDate: moment(this.state.selectedDate).toDate(),
+                    selectedDate: this.state.selectedDate,
                 });
                 return;
             }
@@ -246,6 +249,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
     }
 
     public render(): React.ReactNode {
+        const { dateFormat } = this.props;
         const classNamesProps = {
             overlay: "gd-datepicker-picker",
             overlayWrapper: this.getOverlayWrapperClasses(),
@@ -284,7 +288,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                     inputProps={inputProps}
                     formatDate={formatDate}
                     parseDate={parseDate}
-                    format="L"
+                    format={dateFormat}
                     placeholder={this.props.placeholder}
                 />
                 <span className="gd-datepicker-icon icon-calendar" />
