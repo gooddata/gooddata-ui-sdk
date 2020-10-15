@@ -1362,6 +1362,9 @@ export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelec
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
 };
 
+// @internal
+export function normalizeTime(time: Date): Date;
+
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
 
