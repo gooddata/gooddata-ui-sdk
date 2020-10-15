@@ -1167,6 +1167,7 @@ function getZoomingAndPanningConfiguration(
     return chartConfig?.zoomInsight
         ? {
               chart: {
+                  animation: true,
                   zoomType: "x",
                   panKey: "shift",
                   panning: true,

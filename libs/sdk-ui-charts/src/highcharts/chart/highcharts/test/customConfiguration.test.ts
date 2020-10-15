@@ -216,6 +216,7 @@ describe("getCustomizedConfiguration", () => {
             };
             const chartResult = {
                 ...result.chart,
+                animation: true,
                 zoomType: "x",
                 panKey: "shift",
                 panning: true,
