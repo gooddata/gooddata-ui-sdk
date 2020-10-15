@@ -20,6 +20,7 @@
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "build-all": "npm run build",
         "test": "jest --watch",
         "test-once": "jest  --passWithNoTests",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js  --passWithNoTests",

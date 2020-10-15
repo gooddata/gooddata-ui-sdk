@@ -18,6 +18,7 @@
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
         "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build-all": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest",

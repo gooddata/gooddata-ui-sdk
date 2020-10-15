@@ -19,6 +19,7 @@
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh && npm run api-extractor",
         "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build-all": "npm run build",
         "build-dev": "bash scripts/build.sh --dev",
         "dev": "bash scripts/build.sh --dev-watch",
         "styles": "bash scripts/build.sh --styles",

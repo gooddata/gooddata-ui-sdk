@@ -16,6 +16,7 @@
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "rm -rf dist && tsc -p tsconfig.build.json",
+        "build-all": "npm run build",
         "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "test": "jest --watch",
         "test-once": "jest && npm run story-extractor",

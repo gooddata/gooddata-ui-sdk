@@ -19,6 +19,7 @@
         "copy-data": "mkdir -p dist/recordings && cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts dist/recordings/dataSample.ts",
         "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
         "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build-all": "npm run build",
         "test": "jest --watch",
         "test-once": "jest --passWithNoTests",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js --passWithNoTests",
