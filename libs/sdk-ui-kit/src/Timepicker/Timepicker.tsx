@@ -6,21 +6,15 @@ import { translationUtils } from "@gooddata/util";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 
-import {
-    formatTime,
-    normalizeTime as normalizeTimeForPicker,
-    updateTime,
-    HOURS_IN_DAY,
-    TIME_ANCHOR,
-} from "./utils/timeUtilities";
+import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities";
 import { SelectedTime } from "./typings";
 import { OverlayPositionType } from "../typings/overlay";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
 const MAX_VISIBLE_ITEMS_COUNT = 10;
-// export normalizeTime function for use outside this component
-export const normalizeTime = normalizeTimeForPicker;
+
+export { normalizeTime };
 
 /**
  * @internal
@@ -60,7 +54,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
 
         this.state = {
             dropdownWidth: DEFAULT_WIDTH,
-            selectedTime: normalizeTimeForPicker(props.time || new Date()),
+            selectedTime: normalizeTime(props.time || new Date()),
         };
     }
 

@@ -1183,6 +1183,30 @@ export interface ISyntaxHighlightingInputProps {
 }
 
 // @internal (undocumented)
+export interface ITab {
+    // (undocumented)
+    id: string;
+}
+
+// @internal (undocumented)
+export interface ITabsProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    onTabSelect?: (tab: ITab) => void;
+    // (undocumented)
+    selectedTabId?: string;
+    // (undocumented)
+    tabs?: Array<ITab>;
+}
+
+// @internal (undocumented)
+export interface ITabsState {
+    // (undocumented)
+    selectedTabId: string;
+}
+
+// @internal (undocumented)
 export const Item: React_2.FC<IItemProps>;
 
 // @internal (undocumented)
@@ -1338,6 +1362,9 @@ export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelec
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
 };
 
+// @internal
+export function normalizeTime(time: Date): Date;
+
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
 
@@ -1398,6 +1425,20 @@ export enum SnapPoint {
 
 // @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
+
+// @internal (undocumented)
+export class Tabs extends Component<ITabsProps, ITabsState> {
+    constructor(props: ITabsProps);
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+        onTabSelect: () => void;
+        selectedTabId: string;
+        tabs: ITab[];
+    };
+    // (undocumented)
+    render(): JSX.Element;
+    }
 
 // @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {

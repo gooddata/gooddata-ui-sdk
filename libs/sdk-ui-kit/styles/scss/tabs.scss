@@ -1,0 +1,51 @@
+// (C) 2007-2020 GoodData Corporation
+@import "typo-mixins";
+@import "variables";
+
+.gd-tabs {
+    display: flex;
+    border-bottom: 1px solid $gd-border-color;
+
+    &.small .gd-tab {
+        padding: 3px 6px;
+        line-height: 14px;
+        margin-right: 14px;
+        font-size: 12px;
+    }
+}
+
+.gd-tab {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: flex-end;
+    margin: 0 20px -1px 0;
+    padding: 3px 0;
+    @include gd-font-base;
+
+    line-height: 16px;
+    color: $gd-color-link;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    font-size: 14px;
+    text-align: center;
+
+    &:hover {
+        color: $is-focused-color;
+        border-bottom: 3px solid $gd-border-color;
+    }
+
+    &.is-active {
+        color: $is-focused-color;
+        border-bottom: 3px solid $gd-palette-primary-base;
+        font-weight: 700;
+    }
+
+    &:hover,
+    &.is-active {
+        text-decoration: none;
+    }
+
+    span {
+        overflow: hidden;
+    }
+}

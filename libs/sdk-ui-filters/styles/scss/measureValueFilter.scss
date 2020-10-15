@@ -2,11 +2,11 @@
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
 @import "~@gooddata/sdk-ui/styles/scss/settings";
-@import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
 @import "~@gooddata/goodstrap/lib/core/styles/Overlay";
 @import "~@gooddata/goodstrap/lib/core/styles/SVGIcons";
 @import "~@gooddata/goodstrap/lib/Dropdown/styles/Dropdown";
 @import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
+@import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
 @import "~@gooddata/sdk-ui-kit/styles/scss/button";
 
