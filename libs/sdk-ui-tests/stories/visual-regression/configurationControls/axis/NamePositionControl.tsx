@@ -3,8 +3,8 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import NamePositionControl from "@gooddata/sdk-ui-ext/dist/internal/components/configurationControls/axis/NamePositionControl";
-import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/internal/utils/internalIntlProvider";
+import NamePositionControl from "@gooddata/sdk-ui-ext/dist/cjs/internal/components/configurationControls/axis/NamePositionControl";
+import { InternalIntlWrapper } from "@gooddata/sdk-ui-ext/dist/cjs/internal/utils/internalIntlProvider";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import { ConfigurationControls } from "../../../_infra/storyGroups";
 import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";

@@ -7,7 +7,7 @@ import {
     IVisualizationClass,
     uriRef,
 } from "@gooddata/sdk-model";
-import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/internal";
+import { BaseVisualization, FullVisualizationCatalog } from "@gooddata/sdk-ui-ext/dist/cjs/internal";
 import { backendWithCapturing, ChartInteractions } from "./backendWithCapturing";
 import { mount, ReactWrapper } from "enzyme";
 import React from "react";
