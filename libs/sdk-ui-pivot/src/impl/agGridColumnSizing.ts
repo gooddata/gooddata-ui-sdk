@@ -866,14 +866,33 @@ const getTableFonts = (
 };
 
 /**
- * Custom implementation of columns autoresizing according content: https://en.morzel.net/post/resizing-all-ag-gird-react-columns
- * Calculate the width of text for each grid cell and collect the minimum width needed for each of the gird columns.
- * Ag-Grid API set desired column sizes (it mutates pivot table columns data).
- * Text width calculation is done efficiently with measureText method on Canvas.
+ * Ag-Grid API set desired column sizes (it *mutates* pivot table columns data).
  */
 export const autoresizeAllColumns = (
-    gridApi: GridApi,
-    columnApi: ColumnApi,
+    columnApi: ColumnApi | null,
+    autoResizedColumns: IResizedColumns,
+): void => {
+    if (columnApi) {
+        const columns = columnApi.getPrimaryColumns();
+
+        columns.forEach((column: Column) => {
+            const columnDef = column.getColDef();
+            const autoResizedColumn = autoResizedColumns[getColumnIdentifier(columnDef)];
+            if (columnDef.field && columnDef.width !== undefined && autoResizedColumn.width) {
+                columnApi.setColumnWidth(columnDef.field, autoResizedColumn.width);
+            }
+        });
+    }
+};
+
+/**
+ * Custom implementation of columns autoresizing according content: https://en.morzel.net/post/resizing-all-ag-gird-react-columns
+ * Calculate the width of text for each grid cell and collect the minimum width needed for each of the gird columns.
+ * Text width calculation is done efficiently with measureText method on Canvas.
+ */
+export const getAutoResizedColumns = (
+    gridApi: GridApi | null,
+    columnApi: ColumnApi | null,
     execution: IExecutionResult | null,
     containerRef: HTMLDivElement,
     options: {
@@ -908,12 +927,12 @@ export const autoresizeAllColumns = (
 
         updatedColumDefs.forEach((columnDef: ColDef) => {
             if (columnDef.field && columnDef.width !== undefined) {
-                columnApi.setColumnWidth(columnDef.field, columnDef.width);
                 autoResizedColumns[getColumnIdentifier(columnDef)] = {
                     width: columnDef.width,
                 };
             }
         });
+
         return autoResizedColumns;
     }
     return {};

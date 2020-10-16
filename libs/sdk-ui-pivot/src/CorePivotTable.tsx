@@ -122,6 +122,7 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
     autoresizeAllColumns,
+    getAutoResizedColumns,
     AUTO_SIZED_MAX_WIDTH,
 } from "./impl/agGridColumnSizing";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
@@ -745,14 +746,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
     }
 
-    private autoresizeAllColumns = async (gridApi: GridApi, columnApi: ColumnApi) => {
-        if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
-            return Promise.resolve();
-        }
-
-        await sleep(COLUMN_RESIZE_TIMEOUT);
-        const separators = get(this.props, ["config", "separators"], undefined);
-        this.autoResizedColumns = autoresizeAllColumns(
+    private updateAutoResizedColumns = (gridApi: GridApi, columnApi: ColumnApi): void => {
+        this.autoResizedColumns = getAutoResizedColumns(
             gridApi,
             columnApi,
             this.currentResult,
@@ -760,9 +755,23 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             {
                 measureHeaders: true,
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
-                separators,
+                separators: this.getSeparators(),
             },
         );
+    };
+
+    private autoresizeAllColumns = async (gridApi: GridApi, columnApi: ColumnApi) => {
+        if (!this.shouldPerformAutoresize() || !this.isColumnAutoresizeEnabled()) {
+            return Promise.resolve();
+        }
+
+        await sleep(COLUMN_RESIZE_TIMEOUT);
+
+        /*
+         * Ensures correct autoResizeColumns
+         */
+        this.updateAutoResizedColumns(gridApi, columnApi);
+        autoresizeAllColumns(this.columnApi!, this.autoResizedColumns);
     };
 
     private shouldPerformAutoresize() {
@@ -1179,8 +1188,20 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.columnApi!.getAllColumns().filter((col) => isMeasureColumn(col));
     }
 
+    private getSeparators() {
+        return get(this.props, ["config", "separators"], undefined);
+    }
+
     private onColumnsManualReset = async (columns: Column[]) => {
         let columnsToReset = columns;
+
+        /*
+         * Ensures that all columns have the correct width to use during column reset
+         * resetResizedColumn uses updateAutoResizedColumns to properly reset columns
+         */
+        if (!Object.keys(this.autoResizedColumns).length) {
+            this.updateAutoResizedColumns(this.gridApi!, this.columnApi!);
+        }
 
         if (this.isAllMeasureResizeOperation(columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
