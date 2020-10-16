@@ -11,6 +11,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "outDir": "dist",
+        "strict": true,
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true
     },

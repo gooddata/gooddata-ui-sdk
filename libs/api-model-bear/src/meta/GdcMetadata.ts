@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
+import has from "lodash/has";
 import {
     Timestamp,
     MaqlExpression,
@@ -502,12 +503,12 @@ export namespace GdcMetadata {
 
     export function isWrappedAttribute(obj: unknown): obj is IWrappedAttribute {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("attribute");
+        return !isEmpty(obj) && has(obj, "attribute");
     }
 
     export function isWrappedAttributeDisplayForm(obj: unknown): obj is IWrappedAttributeDisplayForm {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("attributeDisplayForm");
+        return !isEmpty(obj) && has(obj, "attributeDisplayForm");
     }
 
     export function isAttributeDisplayForm(obj: unknown): obj is IAttributeDisplayForm {
@@ -516,7 +517,7 @@ export namespace GdcMetadata {
 
     export function isWrappedMetric(obj: unknown): obj is IWrappedMetric {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("metric");
+        return !isEmpty(obj) && has(obj, "metric");
     }
 
     export function isMetric(obj: unknown): obj is IMetric {
@@ -525,7 +526,7 @@ export namespace GdcMetadata {
 
     export function isWrappedFact(obj: unknown): obj is IWrappedFact {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("fact");
+        return !isEmpty(obj) && has(obj, "fact");
     }
 
     export function isFact(obj: unknown): obj is IFact {
@@ -538,7 +539,7 @@ export namespace GdcMetadata {
 
     export function isWrappedKpiAlert(obj: unknown): obj is IWrappedKpiAlert {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("kpiAlert");
+        return !isEmpty(obj) && has(obj, "kpiAlert");
     }
 
     export function isDataSet(obj: unknown): obj is IDataSet {
@@ -547,7 +548,7 @@ export namespace GdcMetadata {
 
     export function isWrappedDataSet(obj: unknown): obj is IWrappedDataSet {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("dataSet");
+        return !isEmpty(obj) && has(obj, "dataSet");
     }
 
     export function isPrompt(obj: unknown): obj is IPrompt {
@@ -556,7 +557,7 @@ export namespace GdcMetadata {
 
     export function isWrappedPrompt(obj: unknown): obj is IWrappedPrompt {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("prompt");
+        return !isEmpty(obj) && has(obj, "prompt");
     }
 
     export function isTheme(obj: unknown): obj is ITheme {
@@ -565,6 +566,6 @@ export namespace GdcMetadata {
 
     export function isWrappedTheme(obj: unknown): obj is IWrappedTheme {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("theme");
+        return !isEmpty(obj) && has(obj, "theme");
     }
 }

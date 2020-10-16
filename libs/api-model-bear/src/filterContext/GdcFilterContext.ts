@@ -82,7 +82,7 @@ export namespace GdcFilterContext {
     }
 
     export function isTempFilterContext(obj: unknown): obj is ITempFilterContext {
-        return (
+        return !!(
             !isEmpty(obj) &&
             (obj as ITempFilterContext).created &&
             (obj as ITempFilterContext).uri &&
