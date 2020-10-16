@@ -70,14 +70,15 @@ $button-border-radius: var(--gd-button-borderRadius, 3px);
 $button-group-border-radius: 0;
 
 // text-capitalization
-$button-text-capitalization: var(--gd-button-text-capitalization, none);
+$button-text-capitalization: var(--gd-button-textCapitalization, none);
 
 // box-shadow - remove it from all states except 'hover' if customer specifies
-$button-box-shadow-x-offset: var(--gd-button-box-shadow, 0 1px 1px 0);
-$button-box-shadow-focus-x-offset: var(--gd-button-box-shadow, 0 0 3px 1px);
-$button-box-shadow-focus-y-offset: var(--gd-button-box-shadow, 0 1px 2px 0);
-$button-action-box-shadow-x-offset: var(--gd-button-box-shadow, 1px 1px 0);
-$button-link-box-shadow-x-offset: var(--gd-button-box-shadow, 0 0 3px 0);
-$button-positive-box-shadow-focus-y-offset: var(--gd-button-box-shadow, 0 1px 1px 0);
-$button-negative-box-shadow-focus-y-offset: var(--gd-button-box-shadow, 0 1px 1px 0);
-$button-action-box-shadow-focus-y-offset: var(--gd-button-box-shadow, 0 1px 1px 0);
+
+$button-box-shadow-x-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-box-shadow-focus-x-offset: var(--gd-button-dropShadow, 0 0 3px 1px);
+$button-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 2px 0);
+$button-action-box-shadow-x-offset: var(--gd-button-dropShadow, 1px 1px 0);
+$button-link-box-shadow-x-offset: var(--gd-button-dropShadow, 0 0 3px 0);
+$button-positive-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-negative-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
+$button-action-box-shadow-focus-y-offset: var(--gd-button-dropShadow, 0 1px 1px 0);
