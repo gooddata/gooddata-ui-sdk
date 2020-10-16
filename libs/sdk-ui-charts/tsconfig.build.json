@@ -6,6 +6,5 @@
         "paths": null,
         "declaration": true,
         "incremental": true
-    },
-    "exclude": ["**/_defunct/**/*.*"]
+    }
 }

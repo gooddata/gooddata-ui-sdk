@@ -1,6 +1,6 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/typings.d.ts", "src/internal/index.ts"],
+    "include": ["src/index.ts", "src/typings.d.ts"],
     "compilerOptions": {
         "noImplicitAny": false,
         "noUnusedLocals": false,
@@ -8,6 +8,5 @@
         "pretty": true,
         "baseUrl": null,
         "paths": null
-    },
-    "exclude": ["src/_defunct/**/*"]
+    }
 }
