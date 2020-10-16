@@ -3,6 +3,8 @@
     "include": ["src/index.ts"],
     "compilerOptions": {
         "baseUrl": null,
-        "paths": null
+        "paths": null,
+        "declaration": true,
+        "incremental": true
     }
 }
