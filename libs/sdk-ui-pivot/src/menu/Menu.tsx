@@ -5,8 +5,6 @@ import { ISubMenuProps } from "./SubMenu";
 import MenuState from "./MenuState";
 import ControlledMenu from "./ControlledMenu";
 
-import "../../styles/css/menu.css";
-
 export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;

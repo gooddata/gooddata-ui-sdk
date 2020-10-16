@@ -14,9 +14,14 @@ _common-build() {
 }
 
 build() {
+    _common-build
+    npm run build-esm && npm run api-extractor
+}
+
+build-all() {
     _clean
     _common-build
-    tsc -p tsconfig.build.json
+    concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
 }
 
 build-dev() {
@@ -38,6 +43,8 @@ elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
 elif [ "$FLAG" = "--styles" ]; then
     _build_styles
+elif [ "$FLAG" = "--all" ]; then
+    build-all
 else
     build
 fi
