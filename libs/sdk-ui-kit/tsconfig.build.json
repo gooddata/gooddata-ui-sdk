@@ -1,8 +1,9 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
-        "noImplicitAny": true,
         "baseUrl": null,
-        "paths": null
+        "paths": null,
+        "declaration": true,
+        "incremental": true
     }
 }
