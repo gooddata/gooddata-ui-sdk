@@ -11,6 +11,12 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
+import { WrappedComponentProps } from 'react-intl';
+
+// @internal (undocumented)
+export const AppHeader: React_2.FC<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>> & {
+    WrappedComponent: React_2.ComponentType<IAppHeaderProps & WrappedComponentProps<"intl">>;
+};
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -199,11 +205,66 @@ export type GetPositionedSelfRegion = {
 export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
+export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
+};
+
+// @internal (undocumented)
 export interface IAlignPoint {
     // (undocumented)
     align: string;
     // (undocumented)
     offset?: IOffset;
+}
+
+// @internal (undocumented)
+export interface IAppHeaderProps {
+    // (undocumented)
+    accountMenuItems?: IHeaderMenuItem[];
+    // (undocumented)
+    activeColor?: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    documentationUrl?: string;
+    // (undocumented)
+    headerColor?: string;
+    // (undocumented)
+    headerTextColor?: string;
+    // (undocumented)
+    helpMenuItems?: IHeaderMenuItem[];
+    // (undocumented)
+    logoHref?: string;
+    // (undocumented)
+    logoTitle?: string;
+    // (undocumented)
+    logoUrl?: string;
+    // (undocumented)
+    menuItemsGroups?: IHeaderMenuItem[][];
+    // (undocumented)
+    onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    // (undocumented)
+    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    // (undocumented)
+    userName: string;
+    // (undocumented)
+    workspacePicker: React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IAppHeaderState {
+    // (undocumented)
+    childrenWidth: number;
+    // (undocumented)
+    guid: string;
+    // (undocumented)
+    isHelpMenuOpen: boolean;
+    // (undocumented)
+    isOverlayMenuOpen: boolean;
+    // (undocumented)
+    responsiveMode: boolean;
 }
 
 // @internal (undocumented)
@@ -363,9 +424,67 @@ export interface IFormatTemplate {
 }
 
 // @internal (undocumented)
+export interface IHeaderMenuItem {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    href?: string;
+    // (undocumented)
+    isActive?: boolean;
+    // (undocumented)
+    key: string;
+    // (undocumented)
+    onClick?: (obj: any) => void;
+    // (undocumented)
+    target?: string;
+}
+
+// @internal (undocumented)
 export interface IHeaderProps {
     // (undocumented)
     children: React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IHeaderWorkspace {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isDemo?: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderWorkspacePickerProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    onOpen?: () => void;
+    // (undocumented)
+    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    // (undocumented)
+    onSearch?: (searchString: string) => void;
+    // (undocumented)
+    onSelect?: (item: IHeaderWorkspace) => void;
+    // (undocumented)
+    projectPickerFooter?: React_2.ReactNode;
+    // (undocumented)
+    searchString?: string;
+    // (undocumented)
+    selectedWorkspace?: IHeaderWorkspace;
+    // (undocumented)
+    showSearch?: boolean;
+    // (undocumented)
+    totalWorkspacesCount?: number;
+    // (undocumented)
+    workspaces?: IHeaderWorkspace[];
 }
 
 // @internal (undocumented)

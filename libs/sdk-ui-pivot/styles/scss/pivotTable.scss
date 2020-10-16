@@ -153,7 +153,7 @@ $table-menu-hover: var(
         .gd-column-group-header:hover {
             .gd-pivot-table-header-label--clickable,
             .gd-pivot-table-header-menu ~ .gd-pivot-table-header-label {
-                background-color: $gd-palette-primary-base-dimmed;
+                background-color: $gd-palette-primary-dimmed;
             }
 
             .ag-header-cell-resize {
@@ -338,7 +338,7 @@ $table-menu-hover: var(
         align-items: center;
         overflow: hidden;
         border-top: 2px solid transparent;
-        background-color: $gd-palette-primary-base-dimmed;
+        background-color: $gd-palette-primary-dimmed;
         opacity: 0;
         cursor: pointer;
         transition: width 200ms, opacity 100ms;

@@ -339,6 +339,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@types/react-transition-group",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-window",
       "allowedCategories": [ "production" ]
     },
@@ -757,6 +761,10 @@
     {
       "name": "react-syntax-highlighter",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "react-transition-group",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "react-window",
