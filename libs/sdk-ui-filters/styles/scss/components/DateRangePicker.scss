@@ -3,10 +3,7 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/variables.scss";
 
 $gd-date-range-picker-hover-bgcolor: $is-focused-background;
-$gd-date-range-picker-interval-bgcolor: var(
-    --gd-palette-primary-base-lighten45,
-    lighten($gd-color-highlight, 45%)
-);
+$gd-date-range-picker-interval-bgcolor: var(--gd-palette-primary-lightest, lighten($gd-color-highlight, 45%));
 $gd-date-range-picker-shadow-color: #1f354a;
 
 $gd-color-warning-text: #888;
