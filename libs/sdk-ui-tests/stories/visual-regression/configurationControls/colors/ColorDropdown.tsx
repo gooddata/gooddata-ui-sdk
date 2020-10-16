@@ -3,7 +3,7 @@
 import { action } from "@storybook/addon-actions";
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/base";
+import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/cjs/base";
 import ColorDropdown from "@gooddata/sdk-ui-ext/dist/cjs/internal/components/configurationControls/colors/colorDropdown/ColorDropdown";
 import ColoredItemContent from "@gooddata/sdk-ui-ext/dist/cjs/internal/components/configurationControls/colors/coloredItemsList/ColoredItemContent";
 import { getLargePalette } from "../mocks/testColorHelper";
