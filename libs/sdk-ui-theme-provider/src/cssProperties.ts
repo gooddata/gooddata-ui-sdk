@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { isObject } from "lodash";
-import { transparentize, darken, lighten, mix } from "polished";
+import { transparentize, darken, lighten, mix, setLightness } from "polished";
 import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 
 // keep it in sync with SCSS:$gd-color-text-light
@@ -84,6 +84,7 @@ const getCssProperty = (key: string, value: string): CssProperty => ({
 
 const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-dimmed", mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    getCssProperty("palette-primary-lightest", setLightness(0.96, palette.primary.base)),
 ];
 
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
@@ -91,6 +92,10 @@ const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base)),
     getCssProperty("palette-primary-base-t90", transparentize(0.9, palette.primary.base)),
     getCssProperty("kpiDashboards-navigation-borderColor-t80", transparentize(0.8, GD_COLOR_STATE_BLANK)),
+    getCssProperty(
+        "palette-primary-base-mix15-white",
+        transparentize(0.075, mix(0.15, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    ),
 ];
 
 const getButtonDerivedColors = (palette: IThemePalette): CssProperty[] => [
