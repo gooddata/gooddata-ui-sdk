@@ -2,23 +2,36 @@
     "name": "@gooddata/sdk-skel-tsx",
     "version": "1.0.0",
     "description": "GoodData SDK TypeScript & React skeleton",
-    "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-tsx",
     "author": "GoodData Corporation",
     "license": "MIT",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "browser": "dist/cjs/index.js",
+    "typings": "dist/esm/index.d.ts",
+    "sideEffects": [
+        "*.css"
+    ],
     "files": [
-        "dist"
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map",
+        "dist/**/*.svg",
+        "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-incremental": "tsc -p tsconfig.build.json --incremental",
-        "build-all": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",
+        "build-all": "bash scripts/build.sh --all",
+        "build-cjs": "tsc -p tsconfig.build.cjs.json",
+        "build-esm": "tsc -p tsconfig.build.esm.json",
+        "build-incremental": "npm run build",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
         "test-once": "jest",
@@ -32,7 +45,6 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
-    "typings": "dist/index.d.ts",
     "dependencies": {
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
@@ -56,6 +68,7 @@
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
+        "concurrently": "^5.3.0",
         "dependency-cruiser": "^9.9.5",
         "enzyme-adapter-react-16": "^1.15.1",
         "enzyme": "^3.10.0",
