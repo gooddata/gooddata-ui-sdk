@@ -196,6 +196,11 @@ export interface IBackendCapabilities {
     supportsRankingFilter?: boolean;
 
     /**
+     * Indicates whether backend supports element query parent filtering.
+     */
+    supportsElementsQueryParentFiltering?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

@@ -262,6 +262,7 @@ export interface IBackendCapabilities {
     canTransformExistingResult?: boolean;
     maxDimensions?: number;
     supportsCsvUploader?: boolean;
+    supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;

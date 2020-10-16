@@ -45,6 +45,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsObjectUris: false,
     supportsCsvUploader: false,
     supportsRankingFilter: false,
+    supportsElementsQueryParentFiltering: false,
 };
 
 /**
