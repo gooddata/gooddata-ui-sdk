@@ -9,11 +9,15 @@
     "module": "dist/esm/index.js",
     "browser": "dist/cjs/index.js",
     "typings": "dist/esm/index.d.ts",
+    "sideEffects": [
+        "*.css"
+    ],
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
         "dist/**/*.map",
+        "dist/**/*.svg",
         "styles"
     ],
     "config": {
