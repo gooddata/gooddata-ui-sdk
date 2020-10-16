@@ -444,7 +444,7 @@
     },
     {
       "name": "concurrently",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "core-js",
