@@ -10,8 +10,6 @@ _clean() {
 }
 
 _common-build() {
-    mkdir dist
-
     _build_styles
 }
 
@@ -21,7 +19,6 @@ build() {
 }
 
 build-all() {
-    _clean
     _common-build
     concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
 }

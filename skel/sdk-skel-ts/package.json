@@ -12,6 +12,7 @@
     "sideEffects": false,
     "files": [
         "dist/**/*.js",
+        "dist/**/*.json",
         "dist/**/*.d.ts",
         "dist/**/*.map"
     ],
@@ -25,7 +26,6 @@
         "build-all": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
         "build-cjs": "tsc -p tsconfig.build.cjs.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
-        "build-incremental": "npm run build",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest",

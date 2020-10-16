@@ -11,7 +11,10 @@
         "gdc-mock-handling": "dist/index.js"
     },
     "files": [
-        "dist"
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
@@ -19,8 +22,7 @@
     "scripts": {
         "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
-        "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build": "tsc -p tsconfig.build.json",
         "build-all": "npm run build",
         "test": "jest --watch",
         "test-once": "jest",

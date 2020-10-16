@@ -18,7 +18,7 @@ const StderrFilename = "applink.error.log";
 
 /**
  * Package builder initialized itself after SourceInitialized event. And then as BuildRequested events appear,
- * it will trigger the 'build-incremental' target in the respective package. Whatever happens during the build-incremental
+ * it will trigger the 'build' target in the respective package. Whatever happens during the build
  * is at the discretion of each package.
  */
 export class PackageBuilder implements IEventListener {
@@ -60,7 +60,7 @@ export class PackageBuilder implements IEventListener {
         const stderr = fs.openSync(stderrPath, "w+");
 
         const startTime = Date.now();
-        const build = spawn("npm", ["run", "build-incremental"], {
+        const build = spawn("npm", ["run", "build"], {
             cwd: directory,
             stdio: ["ignore", stdout, stderr],
         });

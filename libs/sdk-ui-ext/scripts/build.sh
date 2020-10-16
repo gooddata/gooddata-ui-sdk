@@ -26,7 +26,6 @@ build() {
 }
 
 build-all() {
-    _clean
     _common-build
     concurrently "npm run build-cjs" "npm run build-esm"
 }

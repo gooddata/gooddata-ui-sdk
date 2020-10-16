@@ -31,7 +31,6 @@
         "build-all": "bash scripts/build.sh --all",
         "build-cjs": "tsc -p tsconfig.build.cjs.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
-        "build-incremental": "npm run build",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
         "test-once": "jest",

@@ -102,8 +102,7 @@
       "summary": "Builds all versions of the packages (CJS and ESM)",
       "safeForSimultaneousRushProcesses": true,
       "enableParallelism": true,
-      "ignoreDependencyOrder": false,
-      "ignoreMissingScript": false
+      "ignoreDependencyOrder": false
     },
     {
       "commandKind": "global",
