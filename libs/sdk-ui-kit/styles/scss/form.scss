@@ -391,7 +391,7 @@ textarea {
 
     &:active .input-label-text::before {
         border-color: $gd-palette-primary-base;
-        background-color: $gd-palette-primary-base-dimmed;
+        background-color: $gd-palette-primary-dimmed;
     }
 
     input {

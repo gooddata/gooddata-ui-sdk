@@ -28,7 +28,7 @@ $gd-border-color: #dde4eb;
 $gd-palette-primary-base: var(--gd-palette-primary-base, $gd-color-highlight);
 
 // primary derived colors
-$gd-palette-primary-base-dimmed: var(
+$gd-palette-primary-dimmed: var(
     --gd-palette-primary-dimmed,
     mix($gd-color-highlight, $gd-color-text-light, 10%)
 );
@@ -64,7 +64,7 @@ $is-selected-color: $gd-palette-primary-base;
 $is-selected-background: none;
 
 $is-selected-focused-color: $gd-palette-primary-base;
-$is-selected-focused-background: $gd-palette-primary-base-dimmed;
+$is-selected-focused-background: $gd-palette-primary-dimmed;
 
 $is-negative-focused-color: #fff;
 $is-negative-focused-background: mix($gd-color-negative, $gd-color-text-light, 90%);
