@@ -10,6 +10,7 @@ import { withIntl } from "@gooddata/sdk-ui";
 import { LegacyInvertableList, ILegacyInvertableListProps } from "../LegacyInvertableList";
 import { LegacyMultiSelectList } from "../LegacyMultiSelectList";
 import { customMessages } from "./customDictionary";
+import { Message } from "../../Messages";
 
 interface IItem {
     title: string;
@@ -222,7 +223,7 @@ describe("LegacyInvertableList", () => {
                 maxSelectionSize: 4,
                 selection: items.slice(0, 4),
             });
-            expect(wrapper.find("Message")).toHaveLength(1);
+            expect(wrapper.find(Message)).toHaveLength(1);
         });
     });
 });

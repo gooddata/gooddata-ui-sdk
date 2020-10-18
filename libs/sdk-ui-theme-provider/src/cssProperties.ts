@@ -88,6 +88,10 @@ const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-lightest", setLightness(0.96, palette.primary.base)),
 ];
 
+const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
+    getCssProperty("palette-primary-base-t02", transparentize(0.02, palette.primary.base)),
+];
+
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-base-t50", transparentize(0.5, palette.primary.base)),
     getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base)),
@@ -131,6 +135,7 @@ const getPivotTableDerivedColors = (palette: IThemePalette): CssProperty[] => [
 const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     (palette?.primary?.base && [
         ...getCommonDerivedColors(palette),
+        ...getMessagesDerivedColors(palette),
         ...getDashboardsDerivedColors(palette),
         ...getButtonDerivedColors(palette),
         ...getBubbleDerivedColors(palette),

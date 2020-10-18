@@ -13,3 +13,4 @@ export * from "./Timepicker";
 export * from "./List";
 export * from "./Tabs";
 export * from "./Header";
+export * from "./Messages";
