@@ -17,8 +17,8 @@ export { AnonymousAuthProvider }
 export const BackendToBearConvertors: {
     convertVisualization: (visualization: import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualization, visualizationClassUri: string) => import("@gooddata/sdk-model").IInsight;
     convertReferencesToUris: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
-    convertFilterContext: (filterContext: import("@gooddata/api-model-bear").GdcFilterContext.IWrappedFilterContext) => import("@gooddata/sdk-backend-spi").IFilterContext | import("@gooddata/sdk-backend-spi").IFilterContextDefinition;
-    convertFilterContextItem: (filterContextItem: import("@gooddata/api-model-bear").GdcFilterContext.IDateFilter | import("@gooddata/api-model-bear").GdcFilterContext.IAttributeFilter) => import("@gooddata/sdk-backend-spi").FilterContextItem;
+    convertFilterContext: (filterContext: import("@gooddata/api-model-bear").GdcFilterContext.IWrappedFilterContext) => import("@gooddata/sdk-backend-spi").IFilterContextDefinition | import("@gooddata/sdk-backend-spi").IFilterContext;
+    convertFilterContextItem: (filterContextItem: import("@gooddata/api-model-bear").GdcFilterContext.FilterContextItem) => import("@gooddata/sdk-backend-spi").FilterContextItem;
     convertFilterReference: (filterReference: import("@gooddata/api-model-bear").GdcExtendedDateFilters.IDateFilterReference | import("@gooddata/api-model-bear").GdcExtendedDateFilters.IAttributeFilterReference) => import("@gooddata/sdk-backend-spi").IDashboardFilterReference;
     convertKpiDrill: (kpi: import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI) => import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard;
     convertVisualizationWidgetDrill: (drill: import("@gooddata/api-model-bear").GdcVisualizationWidget.IDrillDefinition) => import("@gooddata/sdk-backend-spi").DrillDefinition;
@@ -60,7 +60,7 @@ export const BearToBackendConvertors: {
     convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
     toAfmExecution: (def: import("@gooddata/sdk-model").IExecutionDefinition) => import("@gooddata/api-model-bear").GdcExecuteAFM.IExecution;
     convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail) => import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail;
-    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IWidget | import("@gooddata/sdk-backend-spi").IWidgetDefinition) => import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI | import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget;
+    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IWidgetDefinition | import("@gooddata/sdk-backend-spi").IWidget) => import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget | import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI;
 };
 
 // @public
