@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/cjs/base";
+import { DefaultColorPalette } from "@gooddata/sdk-ui/dist/base";
 import { IColorPalette } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep";
 

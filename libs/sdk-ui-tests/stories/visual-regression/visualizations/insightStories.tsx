@@ -11,11 +11,7 @@ import {
     IVisualizationClass,
 } from "@gooddata/sdk-model";
 
-import {
-    BaseVisualization,
-    FullVisualizationCatalog,
-    IGdcConfig,
-} from "@gooddata/sdk-ui-ext/dist/cjs/internal";
+import { BaseVisualization, FullVisualizationCatalog, IGdcConfig } from "@gooddata/sdk-ui-ext/dist/internal";
 
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
