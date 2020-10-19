@@ -84,6 +84,7 @@ const getCssProperty = (key: string, value: string): CssProperty => ({
 
 const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty("palette-primary-dimmed", mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    getCssProperty("palette-primary-dimmed50", mix(0.5, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
     getCssProperty("palette-primary-lightest", setLightness(0.96, palette.primary.base)),
 ];
 
