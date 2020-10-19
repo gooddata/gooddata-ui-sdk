@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "Added hooks alternative for Execute component - useCancelablePromise, useDataView, useExecution and useDataExport",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "matyas.kandl@gooddata.com"
+}
