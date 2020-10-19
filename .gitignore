@@ -38,6 +38,7 @@ jspm_packages/
 
 #
 dist/
+esm/
 dist-storybook
 
 # Optional npm cache directory

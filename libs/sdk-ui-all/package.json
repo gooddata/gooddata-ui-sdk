@@ -5,23 +5,27 @@
     "description": "GoodData SDK - All-In-One",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-all",
     "license": "LicenseRef-LICENSE",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "browser": "dist/cjs/index.js",
-    "typings": "dist/esm/index.d.ts",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "browser": "dist/index.js",
+    "typings": "esm/index.d.ts",
     "sideEffects": false,
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
         "dist/**/*.map",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map",
         "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "npm run build-esm && npm run api-extractor",
         "build-all": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",

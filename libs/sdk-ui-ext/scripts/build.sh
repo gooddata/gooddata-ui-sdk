@@ -6,16 +6,18 @@ _build_styles() {
 
 _clean() {
     rm -rf dist
+    rm -rf esm
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist/cjs/internal
-    mkdir -p dist/esm/internal
-    cp -rf src/internal/assets dist/cjs/internal/
-    cp -rf src/internal/translations dist/cjs/internal/
-    cp -rf src/internal/assets dist/esm/internal/
-    cp -rf src/internal/translations dist/esm/internal/
+    mkdir -p dist/internal
+    cp -rf src/internal/assets dist/internal/
+    cp -rf src/internal/translations dist/internal/
+
+    mkdir -p esm/internal
+    cp -rf src/internal/assets esm/internal/
+    cp -rf src/internal/translations esm/internal/
 
     _build_styles
 }

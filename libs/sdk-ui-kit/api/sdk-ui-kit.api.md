@@ -205,7 +205,7 @@ export type GetPositionedSelfRegion = {
 export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "searchString" | "showSearch" | "onOpen" | "onSearch" | "onScrollEnd" | "projectPickerFooter"> & {
+export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onSearch" | "searchString" | "onScrollEnd" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "showSearch" | "onOpen" | "projectPickerFooter"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
@@ -1479,7 +1479,7 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 }
 
 // @internal (undocumented)
-export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "isSelected" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {
+export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "items" | "width" | "tagName" | "isSelected" | "filteredItemsCount" | "height" | "isInverted" | "isMobile" | "itemHeight" | "itemsCount" | "maxSelectionSize" | "selectAllCheckbox" | "onSelectAll" | "onSelectNone" | "isSearching" | "selectedItems" | "onScrollEnd" | "renderItem"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;

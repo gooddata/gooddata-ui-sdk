@@ -5,16 +5,20 @@
     "description": "GoodData Backend SPI implementation for the Bear platform",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-bear",
     "license": "MIT",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "browser": "dist/cjs/index.js",
-    "typings": "dist/esm/index.d.ts",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "browser": "dist/index.js",
+    "typings": "esm/index.d.ts",
     "sideEffects": false,
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
-        "dist/**/*.map"
+        "dist/**/*.map",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
@@ -24,7 +28,7 @@
         "start-wiremock": "./tests/wiremock/start_wiremock.sh detached",
         "start-wiremock-recording": "mkdir -p ./tests/wiremock/recordings && ./tests/wiremock/start_wiremock.sh detached && ./tests/wiremock/start_recording.sh",
         "stop-wiremock": "./tests/wiremock/stop_wiremock.sh",
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "build": "npm run build-esm && npm run api-extractor",
         "build-all": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",

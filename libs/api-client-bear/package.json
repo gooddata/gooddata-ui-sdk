@@ -4,23 +4,27 @@
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "license": "MIT",
-    "main": "dist/cjs/gooddata-node.js",
-    "module": "dist/esm/gooddata-browser.js",
-    "browser": "dist/cjs/gooddata-browser.js",
-    "typings": "dist/esm/gooddata-browser.d.ts",
+    "main": "dist/gooddata-node.js",
+    "module": "esm/gooddata-browser.js",
+    "browser": "dist/gooddata-browser.js",
+    "typings": "esm/gooddata-browser.d.ts",
     "sideEffects": false,
     "files": [
         "dist/**/*.js",
         "dist/**/*.json",
         "dist/**/*.d.ts",
         "dist/**/*.map",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map",
         "umd"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
-        "clean": "rm -rf ci umd coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm umd coverage *.log && jest --clearCache",
         "dev": "bash scripts/build.sh --dev-watch",
         "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",

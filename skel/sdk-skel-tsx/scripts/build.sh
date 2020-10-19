@@ -2,18 +2,11 @@
 
 _build_styles() {
     echo
-
-    # copy styles to dist to preserve relative import from GeoChartOptionsWrapper
-    # there is no reasonable way to do this with TypeScript, see https://github.com/microsoft/TypeScript/issues/10866
-    # we also need to keep them in root as we are referencing that place from documentation
-    # (for customer imports of the styles without the /dist/)
-    # UNCOMMENT THIS ONCE YOU HAVE SOME STYLES BUILDING
-    # mkdir -p dist/styles
-    # cp -r styles/ dist/styles/
 }
 
 _clean() {
     rm -rf dist
+    rm -rf esm
 }
 
 _common-build() {

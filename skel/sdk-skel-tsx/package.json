@@ -5,10 +5,10 @@
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-tsx",
     "author": "GoodData Corporation",
     "license": "MIT",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "browser": "dist/cjs/index.js",
-    "typings": "dist/esm/index.d.ts",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "browser": "dist/index.js",
+    "typings": "esm/index.d.ts",
     "sideEffects": [
         "*.css"
     ],
@@ -18,13 +18,18 @@
         "dist/**/*.d.ts",
         "dist/**/*.map",
         "dist/**/*.svg",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map",
+        "esm/**/*.svg",
         "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",

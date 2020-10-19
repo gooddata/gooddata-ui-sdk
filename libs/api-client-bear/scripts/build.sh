@@ -2,13 +2,11 @@
 
 _clean() {
     rm -rf dist
+    rm -rf esm
     rm -rf umd
 }
 
 _common-build() {
-    # copy package.json to dis, xhr.ts depends on it using ../package.json
-    mkdir -p dist
-    cp package.json dist
 }
 
 build() {

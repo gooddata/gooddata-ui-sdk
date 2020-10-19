@@ -2,15 +2,16 @@
 
 _clean() {
     rm -rf dist
+    rm -rf esm
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist/cjs/base/localization/bundles
-    mkdir -p dist/esm/base/localization/bundles
+    mkdir -p dist/base/localization/bundles
+    cp -rf src/base/localization/bundles dist/base/localization
 
-    cp -rf src/base/localization/bundles dist/cjs/base/localization
-    cp -rf src/base/localization/bundles dist/esm/base/localization
+    mkdir -p esm/base/localization/bundles
+    cp -rf src/base/localization/bundles esm/base/localization
 }
 
 build() {
