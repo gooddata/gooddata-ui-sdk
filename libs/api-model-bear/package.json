@@ -21,7 +21,7 @@
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "build": "npm run build-esm",
         "build-all": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
-        "build-cjs": "tsc -p tsconfig.build.cjs.json",
+        "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "prepublishOnly": "npm run build-all",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",

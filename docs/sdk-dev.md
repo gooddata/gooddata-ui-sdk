@@ -173,9 +173,9 @@ There are couple of hard rules for utility package(s):
 
 ## TypeScript setup
 
-Each project has five TS Config files:
+Each project has four TS Config files:
 
--   tsconfig.build.json, tsconfig.build.cjs.json, tsconfig.build.esm.json - used for production builds
+-   tsconfig.build.json, tsconfig.build.esm.json - used for production builds
 -   tsconfig.dev.json - used for builds on dev workstation, typically used in conjunction with --watch
 -   tsconfig.json - base file, used for IDEs
 
