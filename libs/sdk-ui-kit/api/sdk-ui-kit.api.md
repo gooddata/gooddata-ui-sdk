@@ -610,7 +610,9 @@ export interface IItemProps {
     // (undocumented)
     disabled?: boolean;
     // (undocumented)
-    onClick?: () => void;
+    onClick?: (e: React_2.MouseEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    style?: React_2.CSSProperties;
     // (undocumented)
     subMenu?: boolean;
 }
@@ -623,6 +625,8 @@ export interface IItemsWrapperProps {
     className?: string;
     // (undocumented)
     smallItemsSpacing?: boolean;
+    // (undocumented)
+    style?: React_2.CSSProperties;
 }
 
 // @internal (undocumented)

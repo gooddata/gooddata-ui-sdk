@@ -9,6 +9,7 @@ export interface IItemsWrapperProps {
     smallItemsSpacing?: boolean;
     children: React.ReactNode;
     className?: string;
+    style?: React.CSSProperties;
 }
 /**
  * @internal
@@ -59,7 +60,8 @@ export interface IItemProps {
     disabled?: boolean;
     children: React.ReactNode;
     className?: string;
-    onClick?: () => void;
+    style?: React.CSSProperties;
+    onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 /**
  * @internal
