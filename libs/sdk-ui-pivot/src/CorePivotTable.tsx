@@ -35,6 +35,7 @@ import flatMap from "lodash/fp/flatMap";
 import filter from "lodash/fp/filter";
 import flow from "lodash/fp/flow";
 
+import "../styles/css/pivotTable.css";
 import {
     convertDrillableItemsToPredicates,
     convertError,
