@@ -16,7 +16,7 @@ _common-build() {
 
 build() {
     _common-build
-    npm run build-esm && npm run api-extractor
+    npm run build-esm
 }
 
 build-all() {

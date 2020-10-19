@@ -26,7 +26,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "npm run build-esm && npm run api-extractor",
+        "build": "npm run build-esm",
         "build-all": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
         "build-cjs": "tsc -p tsconfig.build.cjs.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",

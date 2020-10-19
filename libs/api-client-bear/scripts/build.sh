@@ -7,6 +7,7 @@ _clean() {
 }
 
 _common-build() {
+    echo
 }
 
 build() {
