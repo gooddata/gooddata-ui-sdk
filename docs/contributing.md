@@ -38,8 +38,10 @@ Long story short, here are facts and commands you need to know:
     resulting in a massive change to the lockfile. There is no need to run this as part of typical feature
     development.
 
--   `rush build` - builds all the projects, in the right order, possibly skipping those that have no changes since
+-   `rush build` - builds all the projects' ESM builds, in the right order, possibly skipping those that have no changes since
     the last build.
+
+-   `rush build-all` - builds all the projects' ESM and CommonJS builds, in the right order (this is technically a custom command but it is important to note near the `rush build`).
 
 -   `rush link` and `rush link --force` - builds or rebuilds symlinks between projects in the repository.
 
@@ -113,6 +115,9 @@ If you want to build _just_ single subproject, you can navigate to the subprojec
 ```bash
 rushx build
 ```
+
+> Note: `rush build` will only build ESM version of the packages (which is OK for local development and testing in most apps).
+> To build both ESM and CommonJS versions, use `rush build-all` and `rushx build-all`, respectively.
 
 > Hint: starting package.json **scripts** using npm/yarn/pnpm also works and there is nothing wrong with it.
 
