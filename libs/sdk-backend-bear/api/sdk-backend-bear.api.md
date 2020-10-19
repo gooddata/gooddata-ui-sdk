@@ -60,7 +60,7 @@ export const BearToBackendConvertors: {
     convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
     toAfmExecution: (def: import("@gooddata/sdk-model").IExecutionDefinition) => import("@gooddata/api-model-bear").GdcExecuteAFM.IExecution;
     convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMail | import("@gooddata/sdk-backend-spi").IScheduledMailDefinition) => import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail;
-    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IWidget | import("@gooddata/sdk-backend-spi").IWidgetDefinition) => import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget | import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI;
+    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IWidget | import("@gooddata/sdk-backend-spi").IWidgetDefinition) => import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI | import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget;
 };
 
 // @public
