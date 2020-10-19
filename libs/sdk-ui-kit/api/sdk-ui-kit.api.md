@@ -205,7 +205,7 @@ export type GetPositionedSelfRegion = {
 export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
-export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter"> & {
+export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "searchString" | "showSearch" | "onOpen" | "onSearch" | "onScrollEnd" | "projectPickerFooter"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
