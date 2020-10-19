@@ -10,7 +10,8 @@
     "browser": "dist/index.js",
     "typings": "esm/index.d.ts",
     "sideEffects": [
-        "*.css"
+        "*.css",
+        "*.svg"
     ],
     "files": [
         "dist/**/*.js",
