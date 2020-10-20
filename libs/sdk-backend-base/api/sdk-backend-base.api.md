@@ -43,6 +43,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -329,9 +330,9 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
-    withDateFormat(dateFormat: string): IPreparedExecution;
-    // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    // (undocumented)
+    withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }

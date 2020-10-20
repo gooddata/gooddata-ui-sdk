@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 
 import {
-    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
+    defWithPostProcessing,
     emptyDef,
     IExecutionDefinition,
     MeasureGroupIdentifier,
@@ -11,6 +11,7 @@ import {
     newAttributeSort,
     newDimension,
     newMeasureSort,
+    IPostProcessing,
 } from "@gooddata/sdk-model";
 import { convertDimensions } from "../DimensionsConverter";
 
@@ -104,9 +105,10 @@ describe("convertDimensions", () => {
     it.each(Scenarios)("should correctly convert %s with date formats", (_desc, def) => {
         const dateFormats = ["MM/dd/yyyy", "dd/MM/yyyy", "dd-MM-yyyy", "yyyy-MM-dd", "M/d/yy", "dd.MM.yyyy"];
         dateFormats.forEach((dateFormat: string) => {
-            const newDef = defWithDateFormat(def, dateFormat);
+            const postProcessing: IPostProcessing = { dateFormat };
+            const newDef = defWithPostProcessing(def, postProcessing);
             expect(newDef).not.toBe(def);
-            expect(newDef.dateFormat).toBe(dateFormat);
+            expect(newDef.postProcessing?.dateFormat).toBe(dateFormat);
         });
     });
 });

@@ -25,7 +25,7 @@ import {
 } from "../../../index";
 import { Account, Activity, Won } from "../../../../__mocks__/model";
 import { IFilter } from "../../filter";
-import { defSetDateFormat, defWithFilters } from "../index";
+import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index";
 
 const Workspace = "testWorkspace";
 
@@ -168,7 +168,7 @@ describe("defFingerprint", () => {
     });
 });
 
-describe("defSetDateFormat", () => {
+describe("defSetPostProcessing", () => {
     const Scenarios: Array<[string, any]> = [
         ["MM/dd/yyyy", EmptyDef],
         ["dd/MM/yyyy", EmptyDef],
@@ -181,9 +181,10 @@ describe("defSetDateFormat", () => {
     it.each(Scenarios)(
         'should return a new instance of execution definition with date format "%s"',
         (dateFormat, definition) => {
-            const newDefWithDateFormat = defSetDateFormat(definition, dateFormat);
+            const postProcessing: IPostProcessing = { dateFormat };
+            const newDefWithDateFormat = defSetPostProcessing(definition, postProcessing);
             expect(newDefWithDateFormat).not.toBe(definition);
-            expect(newDefWithDateFormat.dateFormat).toEqual(dateFormat);
+            expect(newDefWithDateFormat.postProcessing).toEqual(postProcessing);
         },
     );
 });

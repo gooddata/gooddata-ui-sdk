@@ -17,6 +17,19 @@ import { dimensionFingerprint } from "../base/fingerprint";
 import { filterFingerprint } from "../filter/fingerprint";
 
 /**
+ * Contains any configuration that should be done with the data after they are obtained from the server
+ * and before they are passed to the user.
+ *
+ * @public
+ */
+export interface IPostProcessing {
+    /**
+     * Format to be applied to the dates in an AFM execution response.
+     */
+    readonly dateFormat?: string;
+}
+
+/**
  * Execution definition contains 100% complete description of what will the execution compute and how will
  * the resulting data look like.
  *
@@ -67,9 +80,10 @@ export interface IExecutionDefinition {
     readonly dimensions: IDimension[];
 
     /**
-     * Format to be applied to the dates in an AFM execution response.
+     * Contains any configuration that should be done with the data after they are obtained from the server
+     * and before they are passed to the user.
      */
-    readonly dateFormat?: string;
+    readonly postProcessing?: IPostProcessing;
 }
 
 /**
@@ -121,19 +135,23 @@ export function defSetSorts(def: IExecutionDefinition, sortBy: ISortItem[] = [])
 }
 
 /**
- * Creates new execution definition by setting a new date format.
+ * Creates new execution definition by setting a new post processing.
  *
  * @param def - existing definition
- * @param dateFormat - format to be applied to the dates in an AFM execution response
+ * @param postProcessing - configuration that should be done with the data after they are obtained from the server
+ *  and before they are passed to the user
  * @returns always new instance
  * @public
  */
-export function defSetDateFormat(def: IExecutionDefinition, dateFormat: string): IExecutionDefinition {
-    invariant(def, "execution definition to set date format in must be defined");
+export function defSetPostProcessing(
+    def: IExecutionDefinition,
+    postProcessing: IPostProcessing,
+): IExecutionDefinition {
+    invariant(def, "execution definition to set post processing in must be defined");
 
     return {
         ...def,
-        dateFormat,
+        postProcessing,
     };
 }
 

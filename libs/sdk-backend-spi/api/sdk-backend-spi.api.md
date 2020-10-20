@@ -17,6 +17,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IPostProcessing } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
@@ -916,8 +917,8 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
-    withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
 

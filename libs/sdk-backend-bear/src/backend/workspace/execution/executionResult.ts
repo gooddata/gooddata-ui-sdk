@@ -22,7 +22,6 @@ import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
 import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
-import { createDefaultDateFormatter } from "../../../convertors/dateFormatting/defaultDateFormatter";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -153,10 +152,7 @@ class BearDataView implements IDataView {
         this.result = result;
         this.definition = result.definition;
 
-        const transformedResult = transformExecutionResult(
-            dataResult,
-            createDefaultDateFormatter(this.definition.dateFormat),
-        );
+        const transformedResult = transformExecutionResult(dataResult, this.definition.postProcessing);
 
         this.data = transformedResult.data;
         this.headerItems = transformedResult.headerItems ? transformedResult.headerItems : [];

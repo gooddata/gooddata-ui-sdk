@@ -1,6 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import { createDefaultDateFormatter } from "../../dateFormatting/defaultDateFormatter";
-import { DateFormatter } from "../../dateFormatting/types";
 import { transformHeaderItems } from "../afm/result";
 import {
     dimensionHeaders,
@@ -24,8 +22,7 @@ describe("AfmResultConverter", () => {
     it.each(Scenarios)(
         "should apply format %s to all dates in an AFM execution result",
         (dateFormat, expectedResult) => {
-            const dateFormatter: DateFormatter = createDefaultDateFormatter(dateFormat);
-            expect(transformHeaderItems(dateFormatter, dimensionHeaders)).toEqual(expectedResult);
+            expect(transformHeaderItems(dimensionHeaders, { dateFormat })).toEqual(expectedResult);
         },
     );
 });

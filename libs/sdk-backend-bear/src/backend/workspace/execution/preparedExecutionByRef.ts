@@ -3,9 +3,9 @@
 import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
-    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
+    defWithPostProcessing,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
@@ -13,6 +13,7 @@ import {
     IInsight,
     insightRef,
     ISortItem,
+    IPostProcessing,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -78,8 +79,8 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     }
 
-    public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
+    public withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithPostProcessing(this.definition, postProcessing));
     }
 
     public fingerprint(): string {

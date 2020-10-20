@@ -36,14 +36,15 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
-    defWithDateFormat,
     defWithDimensions,
     defWithSorting,
+    defWithPostProcessing,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
     ISortItem,
     uriRef,
+    IPostProcessing,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
@@ -328,8 +329,8 @@ function recordedPreparedExecution(
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
-        withDateFormat(dateFormat: string): IPreparedExecution {
-            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+        withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution {
+            return executionFactory.forDefinition(defWithPostProcessing(definition, postProcessing));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {

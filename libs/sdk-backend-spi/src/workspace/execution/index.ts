@@ -9,6 +9,7 @@ import {
     DimensionGenerator,
     IInsight,
     INullableFilter,
+    IPostProcessing,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export";
 import { DataValue, IDimensionDescriptor, IResultHeader, IResultWarning } from "./results";
@@ -142,12 +143,13 @@ export interface IPreparedExecution {
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
 
     /**
-     * Changes date format of the resulting data.
+     * Changes postProcessing of an IPreparedExecution.
      *
-     * @param dateFormat - Format to be applied to the dates in an AFM execution response.
-     * @returns new execution with the updated date format
+     * @param postProcessing - Configuration that should be done with the data after they are obtained from the server
+     *  and before they are passed to the user.
+     * @returns new execution with the updated postProcessing
      */
-    withDateFormat(dateFormat: string): IPreparedExecution;
+    withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution;
 
     /**
      * Starts the execution.

@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-backend-spi";
 import { GdcExecution } from "@gooddata/api-model-bear";
-import { DateFormatter } from "../../dateFormatting/types";
-import { createDateValueFormatter } from "../../dateFormatting/dateValueFormatter";
+import { IPostProcessing } from "@gooddata/sdk-model";
+import { transformDateFormat } from "../../dateFormatting/dateFormatter";
 
-export type TransformerResult = {
-    readonly headerItems: GdcExecution.IResultHeaderItem[][][];
+export type TransformedResult = {
+    readonly headerItems?: GdcExecution.IResultHeaderItem[][][];
     readonly data: DataValue[][] | DataValue[];
     readonly total: number[];
     readonly offset: number[];
@@ -15,29 +15,19 @@ export type TransformerResult = {
 };
 
 export function transformHeaderItems(
-    dateFormatter: DateFormatter,
-    dimensionHeaders?: GdcExecution.IResultHeaderItem[][][],
-): GdcExecution.IResultHeaderItem[][][] {
-    if (!dimensionHeaders) {
-        return [[[]]];
+    headerItems?: GdcExecution.IResultHeaderItem[][][],
+    postProcessing?: IPostProcessing,
+): GdcExecution.IResultHeaderItem[][][] | undefined {
+    if (!headerItems || !postProcessing) {
+        return headerItems;
     }
-    const dateValueFormatter = createDateValueFormatter(dateFormatter);
-    return dimensionHeaders.map((dimHeader1: GdcExecution.IResultHeaderItem[][]) => {
-        return dimHeader1.map((dimHeader2: GdcExecution.IResultHeaderItem[]) => {
-            return dimHeader2.map((headerItem: GdcExecution.IResultHeaderItem) => {
-                if (!GdcExecution.isAttributeHeaderItem(headerItem)) {
-                    return headerItem;
+    return headerItems.map((headerItems1: GdcExecution.IResultHeaderItem[][]) => {
+        return headerItems1.map((headerItems2: GdcExecution.IResultHeaderItem[]) => {
+            return headerItems2.map((headerItem: GdcExecution.IResultHeaderItem) => {
+                if (postProcessing.dateFormat) {
+                    return transformDateFormat(headerItem, postProcessing.dateFormat);
                 }
-                try {
-                    return {
-                        attributeHeaderItem: {
-                            name: dateValueFormatter(headerItem.attributeHeaderItem.name),
-                            uri: headerItem.attributeHeaderItem.uri,
-                        },
-                    };
-                } catch {
-                    return headerItem;
-                }
+                return headerItem;
             });
         });
     });
@@ -45,11 +35,11 @@ export function transformHeaderItems(
 
 export function transformExecutionResult(
     result: GdcExecution.IExecutionResult,
-    dateFormatter: DateFormatter,
-): TransformerResult {
+    postProcessing?: IPostProcessing,
+): TransformedResult {
     return {
         data: result.data,
-        headerItems: transformHeaderItems(dateFormatter, result.headerItems),
+        headerItems: transformHeaderItems(result.headerItems, postProcessing),
         offset: result.paging.offset,
         count: result.paging.count,
         total: result.paging.total,

@@ -219,13 +219,13 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: ISortItem[]): IE
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 
 // @public
-export function defWithDateFormat(definition: IExecutionDefinition, dateFormat: string): IExecutionDefinition;
-
-// @public
 export function defWithDimensions(definition: IExecutionDefinition, ...dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
 
 // @public
 export function defWithFilters(def: IExecutionDefinition, filters?: INullableFilter[]): IExecutionDefinition;
+
+// @public
+export function defWithPostProcessing(definition: IExecutionDefinition, postProcessing: IPostProcessing): IExecutionDefinition;
 
 // @public
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition;
@@ -433,10 +433,10 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 export interface IExecutionDefinition {
     readonly attributes: IAttribute[];
     readonly buckets: IBucket[];
-    readonly dateFormat?: string;
     readonly dimensions: IDimension[];
     readonly filters: IFilter[];
     readonly measures: IMeasure[];
+    readonly postProcessing?: IPostProcessing;
     readonly sortBy: ISortItem[];
     readonly workspace: string;
 }
@@ -662,6 +662,11 @@ export interface IPositiveAttributeFilter {
         displayForm: ObjRef;
         in: IAttributeElements;
     };
+}
+
+// @public
+export interface IPostProcessing {
+    readonly dateFormat?: string;
 }
 
 // @public

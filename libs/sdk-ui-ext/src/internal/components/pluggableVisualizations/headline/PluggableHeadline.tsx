@@ -144,7 +144,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions({ itemIdentifiers: ["measureGroup"] })
-            .withDateFormat(dateFormat);
+            .withPostProcessing(dateFormat ? { dateFormat } : undefined);
 
         this.renderFun(
             <CoreHeadline

@@ -14,12 +14,13 @@ import { INullableFilter } from "../filter";
 import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from "../../insight";
 import { isMeasure } from "../measure";
 import {
-    defSetDateFormat,
     defSetDimensions,
+    defSetPostProcessing,
     defSetSorts,
     defWithFilters,
     DimensionGenerator,
     IExecutionDefinition,
+    IPostProcessing,
 } from "./index";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
@@ -157,17 +158,21 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: ISortIte
 }
 
 /**
- * Changes dateFormat in the definition.
+ * Changes the postProcessing of a definition.
  *
- * @param definition - execution definition to alter
- * @param dateFormat - the date format to apply
+ * This function MUST be used to implement IPreparedExecution.withPostProcessing();
+ *
+ * @param definition - execution definition to alter with postProcessing
+ * @param postProcessing - configuration that should be done with the data after they are obtained from the server
+ *  and before they are passed to the user
+ * @returns new execution with the specified postProcessing
  * @public
  */
-export function defWithDateFormat(
+export function defWithPostProcessing(
     definition: IExecutionDefinition,
-    dateFormat: string,
+    postProcessing: IPostProcessing,
 ): IExecutionDefinition {
-    return defSetDateFormat(definition, dateFormat);
+    return defSetPostProcessing(definition, postProcessing);
 }
 
 /**

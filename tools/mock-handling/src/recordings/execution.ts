@@ -179,6 +179,7 @@ export class ExecutionRecording implements IRecording {
         const workspaceBoundDef: IExecutionDefinition = {
             ...this.definition,
             workspace,
+            postProcessing: undefined, // Ignore postProcessing property as it is irrelevant to the server side
         };
 
         const replaceString: [string, string] | undefined = newWorkspaceId

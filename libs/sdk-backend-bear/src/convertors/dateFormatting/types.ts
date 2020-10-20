@@ -1,2 +1,4 @@
 // (C) 2020 GoodData Corporation
-export type DateFormatter = (value: Date, format?: string) => string;
+import { DateFormat } from "./dateValueParser";
+
+export type DateFormatter = (value: Date, format?: DateFormat) => string;

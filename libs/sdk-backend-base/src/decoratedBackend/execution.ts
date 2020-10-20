@@ -20,6 +20,7 @@ import {
     ISortItem,
     IInsight,
     INullableFilter,
+    IPostProcessing,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity";
 
@@ -109,12 +110,12 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
         return this.createNew(this.decorated.withSorting(...items));
     }
 
-    public withDateFormat(dateFormat: string): IPreparedExecution {
-        return this.createNew(this.decorated.withDateFormat(dateFormat));
+    public withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution {
+        return this.createNew(this.decorated.withPostProcessing(postProcessing));
     }
 
     /**
-     * Methods that create new instances of prepared executions (withDimensions, withSorting, withDateFormat) will
+     * Methods that create new instances of prepared executions (withDimensions, withSorting, withPostProcessing) will
      * call out to this method to create decorated execution. This is essential to maintain the decoration
      * during immutable operations where decorated implementation creates new instances.
      *
