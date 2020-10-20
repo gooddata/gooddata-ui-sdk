@@ -2,25 +2,11 @@
 import React from "react";
 import { withExecution } from "./withExecution";
 import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExecutionLoading";
-import {
-    attributeLocalId,
-    DimensionItem,
-    IAttribute,
-    IAttributeOrMeasure,
-    IDimension,
-    INullableFilter,
-    isAttribute,
-    ISortItem,
-    ITotal,
-    MeasureGroupIdentifier,
-    newDimension,
-    newTwoDimensional,
-} from "@gooddata/sdk-model";
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import isEmpty from "lodash/isEmpty";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
 import { withContexts } from "../base";
-import { InvariantError } from "ts-invariant";
+import { createExecution } from "./createExecution";
 
 /**
  * @public
@@ -126,68 +112,12 @@ const CoreExecute: React.FC<Props> = (props: Props) => {
     });
 };
 
-/**
- * When caller desires just data series and no slicing, create a single-dim result.
- */
-function seriesOnlyDim(seriesBy: IAttributeOrMeasure[]): IDimension[] {
-    return [newDimension(seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier))];
-}
-
-/**
- * When caller desires data series to be sliced further by some attributes (and perhaps with totals as well)
- * then create two-dim result resembling a pivot table:
- *
- * -  slices are in rows (first dim)
- * -  measures & scoping attributes will be in columns (second dim)
- */
-function seriesAndSlicesDim(
-    seriesBy: IAttributeOrMeasure[],
-    slices: IAttribute[],
-    totals: ITotal[],
-): IDimension[] {
-    const firstDimItems: DimensionItem[] = slices.map(attributeLocalId);
-    firstDimItems.push(...totals);
-
-    return newTwoDimensional(
-        firstDimItems,
-        seriesBy.filter(isAttribute).map(attributeLocalId).concat(MeasureGroupIdentifier),
-    );
-}
-
 function componentName(props: IExecuteProps): string {
     return props.componentName || "Execute";
 }
 
 function exportTitle(props: IExecuteProps): string {
     return props.exportTitle || componentName(props);
-}
-
-/**
- * Given execute props, this will prepare execution to send to backend.
- *
- * @param props - execute component props
- * @internal
- */
-export function createExecution(props: IExecuteProps): IPreparedExecution {
-    const { backend, workspace, seriesBy, slicesBy = [], filters = [], sortBy = [], totals = [] } = props;
-
-    if (!backend || !workspace) {
-        throw new InvariantError(
-            "backend and workspace must be either specified explicitly or be provided by context",
-        );
-    }
-
-    const dimensions = isEmpty(slicesBy)
-        ? seriesOnlyDim(seriesBy)
-        : seriesAndSlicesDim(seriesBy, slicesBy, totals);
-
-    return backend
-        .withTelemetry(componentName(props), props)
-        .workspace(workspace)
-        .execution()
-        .forItems(seriesBy.concat(slicesBy), filters)
-        .withSorting(...sortBy)
-        .withDimensions(...dimensions);
 }
 
 /**
@@ -206,7 +136,7 @@ export function createExecution(props: IExecuteProps): IPreparedExecution {
 export const Execute = withContexts(
     withExecution<IExecuteProps>({
         exportTitle,
-        execution: createExecution,
+        execution: (props) => createExecution({ componentName: componentName(props), ...props }),
         events: (props: IExecuteProps) => {
             const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;
 

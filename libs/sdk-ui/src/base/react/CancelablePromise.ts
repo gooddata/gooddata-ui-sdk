@@ -8,6 +8,7 @@ export interface ICancelablePromise<T> {
     promise: Promise<T>;
     cancel: (reason?: string) => void;
     getHasFulfilled: () => boolean;
+    getHasCanceled: () => boolean;
 }
 
 /**
@@ -86,6 +87,7 @@ export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {
             hasCanceled = true;
             cancelReason = reason;
         },
+        getHasCanceled: () => hasCanceled,
         getHasFulfilled: () => hasFulfilled,
     };
 }

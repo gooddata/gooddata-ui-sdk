@@ -56,6 +56,12 @@ export { ErrorComponent, IErrorProps } from "./react/ErrorComponent";
 export { BackendProvider, useBackend, withBackend } from "./react/BackendContext";
 export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/WorkspaceContext";
 export { usePagedResource } from "./react/usePagedResource";
+export {
+    UseCancelablePromiseStatus,
+    useCancelablePromise,
+    UseCancelablePromiseCallbacks,
+    UseCancelablePromiseState,
+} from "./react/useCancelablePromise";
 export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
 export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise";

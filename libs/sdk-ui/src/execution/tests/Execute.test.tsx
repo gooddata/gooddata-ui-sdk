@@ -5,9 +5,10 @@ import { dummyBackend, dummyBackendEmptyData } from "@gooddata/sdk-backend-mocki
 import { createDummyPromise } from "../../base/react/tests/toolkit";
 import { DataViewFacade } from "../../base/results/facade";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { createExecution, Execute, IExecuteProps } from "../Execute";
+import { Execute, IExecuteProps } from "../Execute";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
+import { createExecution } from "../createExecution";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
