@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import { getBulletChartSeries } from "../bulletChartOptions";
 import { IColorPalette } from "@gooddata/sdk-model";
-import BulletChartColorStrategy from "../bulletChart";
+import BulletChartColorStrategy from "../bulletChartColoring";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import cloneDeep from "lodash/cloneDeep";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";

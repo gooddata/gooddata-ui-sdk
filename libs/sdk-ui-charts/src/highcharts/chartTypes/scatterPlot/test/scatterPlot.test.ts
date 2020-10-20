@@ -6,7 +6,7 @@ import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { ColorFactory } from "../../../_to_refactor/colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
-import { ScatterPlotColorStrategy } from "../scatterPlot";
+import { ScatterPlotColorStrategy } from "../scatterPlotColoring";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";

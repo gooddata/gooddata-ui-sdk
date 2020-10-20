@@ -10,13 +10,13 @@ import {
     isScatterPlot,
     isTreemap,
 } from "./utils/common";
-import BulletChartColorStrategy from "../chartTypes/bulletChart/bulletChart";
+import BulletChartColorStrategy from "../chartTypes/bulletChart/bulletChartColoring";
 import { MeasureColorStrategy } from "../chartTypes/_common/colorStrategies/measure";
 import { AttributeColorStrategy, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { HeatmapColorStrategy } from "../chartTypes/heatmap/heatmap";
-import { TreemapColorStrategy } from "../chartTypes/treemap/treemap";
-import { BubbleChartColorStrategy } from "../chartTypes/bubbleChart/bubbleChart";
-import { ScatterPlotColorStrategy } from "../chartTypes/scatterPlot/scatterPlot";
+import { HeatmapColorStrategy } from "../chartTypes/heatmap/heatmapColoring";
+import { TreemapColorStrategy } from "../chartTypes/treemap/treemapColoring";
+import { BubbleChartColorStrategy } from "../chartTypes/bubbleChart/bubbleChartColoring";
+import { ScatterPlotColorStrategy } from "../chartTypes/scatterPlot/scatterPlotColoring";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,

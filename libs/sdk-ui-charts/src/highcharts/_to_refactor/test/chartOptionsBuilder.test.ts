@@ -39,8 +39,8 @@ import { customEscape } from "../utils/common";
 import { NORMAL_STACK, PERCENT_STACK } from "../constants/stacking";
 import { IChartOptions, IPointData } from "../../typings/unsafe";
 import { MeasureColorStrategy } from "../../chartTypes/_common/colorStrategies/measure";
-import { HeatmapColorStrategy } from "../../chartTypes/heatmap/heatmap";
-import { TreemapColorStrategy } from "../../chartTypes/treemap/treemap";
+import { HeatmapColorStrategy } from "../../chartTypes/heatmap/heatmapColoring";
+import { TreemapColorStrategy } from "../../chartTypes/treemap/treemapColoring";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { GRAY, TRANSPARENT } from "../utils/color";
 

@@ -3,7 +3,7 @@
 import { getMVS } from "../../../_to_refactor/test/helper";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { ColorFactory } from "../../../_to_refactor/colorFactory";
-import { HeatmapColorStrategy } from "../heatmap";
+import { HeatmapColorStrategy } from "../heatmapColoring";
 import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";

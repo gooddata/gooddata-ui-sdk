@@ -5,7 +5,7 @@ import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ColorFactory } from "../../../_to_refactor/colorFactory";
 import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
-import { BubbleChartColorStrategy } from "../bubbleChart";
+import { BubbleChartColorStrategy } from "../bubbleChartColoring";
 import { ReferenceRecordings, ReferenceLdm, ReferenceData } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 

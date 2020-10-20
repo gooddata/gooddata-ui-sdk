@@ -3,7 +3,7 @@
 import { getMVS } from "../../../_to_refactor/test/helper";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
 import { ColorFactory } from "../../../_to_refactor/colorFactory";
-import { TreemapColorStrategy } from "../treemap";
+import { TreemapColorStrategy } from "../treemapColoring";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorMapping } from "../../../../interfaces";
