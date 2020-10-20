@@ -25,3 +25,28 @@ export const supportedStackingAttributesChartTypes = [
     VisualizationTypes.COMBO,
     VisualizationTypes.COMBO2,
 ];
+// types with only many measures or one measure and one attribute
+export const multiMeasuresAlternatingTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+    VisualizationTypes.TREEMAP,
+];
+export const unsupportedNegativeValuesTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+    VisualizationTypes.TREEMAP,
+];
+// charts sorted by default by measure value
+export const sortedByMeasureTypes = [
+    VisualizationTypes.PIE,
+    VisualizationTypes.DONUT,
+    VisualizationTypes.FUNNEL,
+];
+export const unsupportedStackingTypes = [
+    VisualizationTypes.LINE,
+    VisualizationTypes.AREA,
+    VisualizationTypes.SCATTER,
+    VisualizationTypes.BUBBLE,
+];

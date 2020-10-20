@@ -2,13 +2,14 @@
 import { IUnwrappedAttributeHeadersWithItems } from "../../utils/types";
 import { getCategoriesForTwoAttributes } from "../extendedStackingChartOptions";
 import { getMVSForViewByTwoAttributes } from "../../test/helper";
-import { getDrillableSeries, getSeries } from "../../chartOptionsBuilder";
 import { attributeIdentifier, measureIdentifier, uriRef } from "@gooddata/sdk-model";
 import { HeaderPredicates, DefaultColorPalette } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { MeasureColorStrategy } from "../../../chartTypes/_common/colorStrategies/measure";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { getSeries } from "../../chartSeries";
+import { getDrillableSeries } from "../../chartDrilling";
 
 describe("getCategoriesForTwoAttributes", () => {
     const attributeDescriptor: IAttributeDescriptor["attributeHeader"] = {

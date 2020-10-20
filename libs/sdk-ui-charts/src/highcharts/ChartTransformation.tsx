@@ -10,7 +10,7 @@ import {
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces";
-import { getChartOptions, validateData } from "./_to_refactor/chartOptionsBuilder";
+import { getChartOptions } from "./_to_refactor/chartOptionsBuilder";
 import { getHighchartsOptions } from "./_to_refactor/highChartsCreators";
 import {
     HighChartsRenderer,
@@ -23,6 +23,7 @@ import noop from "lodash/noop";
 import { IChartOptions } from "./typings/unsafe";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import { validateData } from "./_to_refactor/chartLimits";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;

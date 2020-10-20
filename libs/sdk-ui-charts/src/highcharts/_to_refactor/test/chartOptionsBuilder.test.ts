@@ -6,21 +6,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
 import Highcharts from "../../chartTypes/_integration/highchartsEntryPoint";
 import { findMeasureGroupInDimensions } from "../utils/executionResultHelper";
-import {
-    buildTooltipFactory,
-    buildTooltipForTwoAttributesFactory,
-    buildTooltipTreemapFactory,
-    generateTooltipHeatmapFn,
-    generateTooltipXYFn,
-    getDrillableSeries,
-    getHeatmapDataClasses,
-    getSeries,
-    getSeriesItemData,
-    getTreemapAttributes,
-    isNegativeValueIncluded,
-    IValidationResult,
-    validateData,
-} from "../chartOptionsBuilder";
+import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../chartTypes/_integration/commonConfiguration";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "./helper";
 import * as fixtures from "../../../../__mocks__/fixtures";
@@ -43,6 +29,16 @@ import { TreemapColorStrategy } from "../../chartTypes/treemap/treemapColoring";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { GRAY, TRANSPARENT } from "../utils/color";
 import { getHeatmapSeries } from "../../chartTypes/heatmap/heatmapChartSeries";
+import { isNegativeValueIncluded, IValidationResult, validateData } from "../chartLimits";
+import { getSeries, getSeriesItemData } from "../chartSeries";
+import {
+    buildTooltipFactory,
+    buildTooltipForTwoAttributesFactory,
+    buildTooltipTreemapFactory,
+    generateTooltipHeatmapFn,
+    generateTooltipXYFn,
+} from "../chartTooltips";
+import { getDrillableSeries } from "../chartDrilling";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
