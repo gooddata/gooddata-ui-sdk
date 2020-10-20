@@ -59,7 +59,7 @@ export class PackagePublisher implements IEventListener {
     };
 
     private copyBuild = (dep: TargetDependency): void => {
-        const args = [path.join(dep.pkg.directory, "dist") + "/", path.join(dep.directory, "dist")];
+        const args = [path.join(dep.pkg.directory, "esm") + "/", path.join(dep.directory, "esm")];
         const rsync = spawn("rsync", [...RsyncOptions, ...args], {});
 
         rsync.on("close", (exitCode) => {
