@@ -39,7 +39,7 @@ import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions";
 
 import { ColorFactory } from "./colorFactory";
 import { getChartProperties } from "../_chartCreators/helpers";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import {
     multiMeasuresAlternatingTypes,
     sortedByMeasureTypes,

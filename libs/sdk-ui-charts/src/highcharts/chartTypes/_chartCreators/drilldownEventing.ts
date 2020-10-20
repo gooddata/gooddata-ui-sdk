@@ -17,7 +17,7 @@ import {
     IDrillPoint,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import { isBulletChart, isComboChart, isHeatmap, isTreemap } from "../_util/common";
 import { IHighchartsPointObject, isGroupHighchartsDrillEvent } from "./isGroupHighchartsDrillEvent";
 

@@ -18,7 +18,7 @@ import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isInvertedChartType } from "../_util/common";
 import { IChartConfig, ChartAlignTypes } from "../../../interfaces";
 import { BOTTOM, MIDDLE, TOP } from "../../constants/alignments";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import { ISeriesDataItem, ISeriesItem, UnsafeInternals, IChartOptions } from "../../typings/unsafe";
 
 export interface IRectByPoints {

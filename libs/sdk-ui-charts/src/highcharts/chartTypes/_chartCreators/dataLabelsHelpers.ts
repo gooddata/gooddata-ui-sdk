@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import get from "lodash/get";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 
 import {
     isStacked,

@@ -4,7 +4,7 @@ import noop from "lodash/noop";
 import React from "react";
 import { initChartPlugins } from "./chartPlugins";
 import { IChartConfig } from "../../interfaces";
-import Highcharts from "./highcharts";
+import Highcharts from "../lib";
 
 import HighchartsMore from "highcharts/highcharts-more";
 import drillmodule from "highcharts/modules/drilldown";

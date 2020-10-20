@@ -3,7 +3,7 @@ import cloneDeep from "lodash/cloneDeep";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { newDefForItems, uriRef } from "@gooddata/sdk-model";
 import { IDrillConfig, IDrillEventIntersectionElement, VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts from "../../../adapter/highcharts";
+import Highcharts from "../../../lib";
 import { chartClick, getClickableElementNameByChartType } from "../drilldownEventing";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
 

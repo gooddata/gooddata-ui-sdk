@@ -9,7 +9,7 @@
 
 import isNil from "lodash/isNil";
 import get from "lodash/get";
-import Highcharts from "../highcharts";
+import Highcharts from "../../lib";
 import { IHighchartsAxisExtend } from "../../typings/extend";
 import { isLineChart } from "../../chartTypes/_util/common";
 

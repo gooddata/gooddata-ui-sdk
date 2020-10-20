@@ -2,7 +2,7 @@
 import pick from "lodash/pick";
 import set from "lodash/set";
 import get from "lodash/get";
-import Highcharts from "./highcharts";
+import Highcharts from "../lib";
 import {
     isAreaChart,
     isBubbleChart,

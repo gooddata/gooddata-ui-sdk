@@ -10,7 +10,7 @@
  *  - Fix bubbles is not rendered with min/max config
  */
 import isNil from "lodash/isNil";
-import Highcharts from "../highcharts";
+import Highcharts from "../../lib";
 import { IHighchartsAxisExtend } from "../../typings/extend";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;

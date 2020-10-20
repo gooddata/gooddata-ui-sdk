@@ -10,7 +10,7 @@ import { styleVariables } from "./styles/variables";
 import { isOneOfTypes } from "../_util/common";
 import { chartClick } from "./drilldownEventing";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities";
 import { IChartOptions } from "../../typings/unsafe";
 

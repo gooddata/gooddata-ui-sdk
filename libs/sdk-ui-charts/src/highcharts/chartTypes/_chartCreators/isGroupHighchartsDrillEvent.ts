@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import { IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
 export interface IHighchartsPointObject extends Highcharts.Point {

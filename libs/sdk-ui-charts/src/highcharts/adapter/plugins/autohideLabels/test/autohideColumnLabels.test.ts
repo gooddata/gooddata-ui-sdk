@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import Highcharts from "../../../highcharts";
+import Highcharts from "../../../../lib";
 import * as autohideColumnLabels from "../autohideColumnLabels";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { ISeriesDataItem, IUnsafeDataLabels, UnsafeInternals } from "../../../../typings/unsafe";
