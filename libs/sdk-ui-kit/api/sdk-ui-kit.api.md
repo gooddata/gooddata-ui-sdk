@@ -925,6 +925,56 @@ export interface IMeasureNumberFormatOwnProps {
     toggleButton: React_2.ComponentType<IToggleButtonProps>;
 }
 
+// @public (undocumented)
+export interface IMessage {
+    // (undocumented)
+    component?: React.Component;
+    // (undocumented)
+    contrast?: boolean;
+    // (undocumented)
+    errorDetail?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    intensive?: boolean;
+    // (undocumented)
+    showLess?: string;
+    // (undocumented)
+    showMore?: string;
+    // (undocumented)
+    text: string;
+    // (undocumented)
+    type: MessageType;
+}
+
+// @public (undocumented)
+export interface IMessageProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    contrast?: boolean;
+    // (undocumented)
+    intensive?: boolean;
+    // (undocumented)
+    onClose?(e: React.MouseEvent): void;
+    // (undocumented)
+    type: MessageType;
+}
+
+// @public (undocumented)
+export interface IMessagesProps {
+    // (undocumented)
+    messages: Array<IMessage>;
+    // (undocumented)
+    onMessageClose?(id: string): void;
+}
+
+// @internal (undocumented)
+export interface IMessagesState {
+    // (undocumented)
+    shouldShowMore: boolean;
+}
+
 // @internal (undocumented)
 export interface IMultiSelectListProps<T> {
     // (undocumented)
@@ -1477,6 +1527,15 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @internal (undocumented)
+export const Message: React_2.FC<IMessageProps>;
+
+// @internal (undocumented)
+export const Messages: React_2.FC<IMessagesProps>;
+
+// @public (undocumented)
+export type MessageType = "success" | "progress" | "error" | "warning";
 
 // @internal (undocumented)
 export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelectListProps<unknown>, "height" | "width" | "tagName" | "isSelected" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "isSearching" | "selectAllCheckbox" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "onSelectAll" | "onSelectNone"> & {

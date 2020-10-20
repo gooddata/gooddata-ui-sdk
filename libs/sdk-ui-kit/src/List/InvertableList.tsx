@@ -6,12 +6,12 @@ import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 import take from "lodash/take";
 import has from "lodash/has";
-import { guidFor } from "@gooddata/goodstrap/lib/core/Guid";
-import Message from "@gooddata/goodstrap/lib/Messages/Message";
-
-import { MultiSelectList } from "./MultiSelectList";
-import { Input } from "../Form";
 import { Dictionary } from "lodash";
+import { guidFor } from "@gooddata/goodstrap/lib/core/Guid";
+
+import { Message } from "../Messages";
+import { Input } from "../Form";
+import { MultiSelectList } from "./MultiSelectList";
 
 const NoItemsFound: React.FC = () => {
     return (
