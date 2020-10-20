@@ -84,7 +84,7 @@ export interface IWorkspaceDashboardsService {
      * Get the number of scheduled emails for particular dashboard
      *
      * @param ref - dashboard reference
-     * @returns promise with the number of scheduled emails connected to the dashborad
+     * @returns promise with the number of scheduled emails connected to the dashboard
      */
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
 
@@ -94,6 +94,14 @@ export interface IWorkspaceDashboardsService {
      * @returns promise with all user widget alerts
      */
     getAllWidgetAlertsForCurrentUser(): Promise<IWidgetAlert[]>;
+
+    /**
+     * Get all widget alerts for the current user for the given dashboard
+     *
+     * @param ref - dashboard reference
+     * @returns promise with all user widget alerts for the dashboard
+     */
+    getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
 
     /**
      * Get the number of widget alerts (created by any user) for particular widgets

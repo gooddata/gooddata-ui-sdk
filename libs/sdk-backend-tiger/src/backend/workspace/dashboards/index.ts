@@ -58,6 +58,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("Not supported");
     };
 
+    public getDashboardWidgetAlertsForCurrentUser = async () => {
+        throw new NotSupported("Not supported");
+    };
+
     public getWidgetAlertsCountForWidgets = async () => {
         throw new NotSupported("Not supported");
     };
