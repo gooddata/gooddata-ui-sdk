@@ -1,5 +1,5 @@
-// (C) 2007-2019 GoodData Corporation
-import Highcharts from "../chart/highcharts/highchartsEntryPoint";
+// (C) 2007-2020 GoodData Corporation
+import Highcharts from "../adapter/highcharts";
 
 export type IHighchartsAxis = Partial<Highcharts.Axis> &
     Partial<Highcharts.ExtremesObject> &

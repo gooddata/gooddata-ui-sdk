@@ -7,7 +7,7 @@ import {
     StackItemObject,
     SVGAttributes,
     SVGDOMElement,
-} from "../chart/highcharts/highchartsEntryPoint";
+} from "../adapter/highcharts";
 import { IColorAssignment } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
 

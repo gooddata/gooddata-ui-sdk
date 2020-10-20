@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import Chart from "./chart/Chart";
-import ChartTransformation from "./chart/ChartTransformation";
+import { Chart } from "./adapter/Chart";
+import { ChartTransformation } from "./ChartTransformation";
 export { Chart, ChartTransformation };
 export { Visualization } from "./Visualization";
 
@@ -9,9 +9,9 @@ export { Visualization } from "./Visualization";
  *  or moved elsewhere.
  */
 
-export { FLUID_LEGEND_THRESHOLD } from "./chart/HighChartsRenderer";
-export { COMBO_SUPPORTED_CHARTS } from "./chart/chartOptions/comboChartOptions";
-export { updateConfigWithSettings } from "./chart/chartOptions/chartOptionsForSettings";
+export { FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer";
+export { COMBO_SUPPORTED_CHARTS } from "./chartTypes/comboChart/comboChartOptions";
+export { updateConfigWithSettings } from "./chartTypes/_chartOptions/chartOptionsForSettings";
 
 export {
     isLineChart,
@@ -27,10 +27,10 @@ export {
     isPieChart,
     isPieOrDonutChart,
     isBulletChart,
-} from "./utils/common";
+} from "./chartTypes/_util/common";
 
 export { BOTTOM, MIDDLE, TOP } from "./constants/alignments";
 
 // re-exports to maintain api-compatibility
 export { ColorUtils } from "@gooddata/sdk-ui-vis-commons";
-export { getValidColorPalette } from "./utils/color";
+export { getValidColorPalette } from "./chartTypes/_util/color";

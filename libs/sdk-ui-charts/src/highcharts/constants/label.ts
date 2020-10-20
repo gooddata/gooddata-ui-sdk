@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import Highcharts from "../chart/highcharts/highchartsEntryPoint";
+import Highcharts from "../adapter/highcharts";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const WHITE_LABEL: Highcharts.CSSObject = {
