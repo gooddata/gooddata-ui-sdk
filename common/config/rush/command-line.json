@@ -100,6 +100,7 @@
       "commandKind": "bulk",
       "name": "build-all",
       "summary": "Builds all versions of the packages (CJS and ESM)",
+      "incremental": true,
       "safeForSimultaneousRushProcesses": true,
       "enableParallelism": true,
       "ignoreDependencyOrder": false
