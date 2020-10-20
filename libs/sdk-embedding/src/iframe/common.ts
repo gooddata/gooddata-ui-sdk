@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import isObject from "lodash/isObject";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 
 /**
@@ -168,7 +169,7 @@ export type CommandFailedData<Product> = IGdcMessageEnvelope<
  * @public
  */
 export function isCommandFailedData<Product>(obj: unknown): obj is CommandFailedData<Product> {
-    return getEventType(obj) === GdcEventType.AppCommandFailed;
+    return isObject(obj) && getEventType(obj) === GdcEventType.AppCommandFailed;
 }
 
 /**

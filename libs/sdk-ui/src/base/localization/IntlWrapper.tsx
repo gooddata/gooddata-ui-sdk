@@ -4,15 +4,15 @@ import { IntlProvider } from "react-intl";
 import { translationUtils } from "@gooddata/util";
 import { DefaultLocale } from "./Locale";
 
-import * as enUS from "./bundles/en-US.json";
-import * as deDE from "./bundles/de-DE.json";
-import * as esES from "./bundles/es-ES.json";
-import * as frFR from "./bundles/fr-FR.json";
-import * as jaJP from "./bundles/ja-JP.json";
-import * as nlNL from "./bundles/nl-NL.json";
-import * as ptBR from "./bundles/pt-BR.json";
-import * as ptPT from "./bundles/pt-PT.json";
-import * as zhHans from "./bundles/zh-Hans.json";
+import enUS from "./bundles/en-US.json";
+import deDE from "./bundles/de-DE.json";
+import esES from "./bundles/es-ES.json";
+import frFR from "./bundles/fr-FR.json";
+import jaJP from "./bundles/ja-JP.json";
+import nlNL from "./bundles/nl-NL.json";
+import ptBR from "./bundles/pt-BR.json";
+import ptPT from "./bundles/pt-PT.json";
+import zhHans from "./bundles/zh-Hans.json";
 
 export interface ITranslations {
     [key: string]: string;

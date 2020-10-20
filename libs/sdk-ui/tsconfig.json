@@ -27,5 +27,5 @@
         }
     },
     "compileOnSave": false,
-    "exclude": ["node_modules", "dist", "**/__mocks__/**/*", "src/_defunct/**/*"]
+    "exclude": ["node_modules", "dist", "**/__mocks__/**/*"]
 }

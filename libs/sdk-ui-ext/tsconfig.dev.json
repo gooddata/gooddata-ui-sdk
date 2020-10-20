@@ -8,6 +8,5 @@
         "pretty": true,
         "baseUrl": null,
         "paths": null
-    },
-    "exclude": ["src/_defunct/**/*"]
+    }
 }

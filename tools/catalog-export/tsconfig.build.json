@@ -1,4 +1,5 @@
 {
     "extends": "./tsconfig.json",
-    "include": ["src/index.ts", "src/typings.d.ts"]
+    "include": ["src/index.ts", "src/typings.d.ts"],
+    "compilerOptions": { "incremental": true }
 }

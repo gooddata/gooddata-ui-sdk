@@ -7,16 +7,22 @@
     "author": "GoodData Corporation",
     "license": "MIT",
     "files": [
-        "dist"
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map",
+        "backstop",
+        "stories",
+        ".storybook"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json",
-        "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build": "tsc -p tsconfig.build.json",
+        "build-all": "npm run build",
         "test": "jest --watch",
         "test-once": "jest && npm run story-extractor",
         "test-ci": "npm run story-extractor && JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",

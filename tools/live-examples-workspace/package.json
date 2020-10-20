@@ -8,17 +8,20 @@
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
     "files": [
-        "dist"
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "dev": "tsc -p tsconfig.dev.json --watch",
         "copy-data": "mkdir -p dist/recordings && cp -R src/recordings/* dist/recordings && rm -f dist/recordings/index.ts dist/recordings/dataSample.ts",
-        "build": "rm -rf dist && tsc -p tsconfig.build.json && npm run copy-data",
-        "build-incremental": "tsc -p tsconfig.build.json --incremental",
+        "build": "rm -rf dist/recordings && tsc -p tsconfig.build.json && npm run copy-data",
+        "build-all": "npm run build",
         "test": "jest --watch",
         "test-once": "jest --passWithNoTests",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js  --passWithNoTests",

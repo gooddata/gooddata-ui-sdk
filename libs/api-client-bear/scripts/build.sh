@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
-_build_styles() {
-    echo
-}
-
 _clean() {
     rm -rf dist
+    rm -rf esm
+    rm -rf umd
 }
 
 _common-build() {
-    mkdir dist
-
-    _build_styles
+    echo
 }
 
 build() {
-    _clean
     _common-build
-    tsc -p tsconfig.build.json
+    npm run build-esm
+}
+
+build-all() {
+    _common-build
+    concurrently "npm run build-cjs" "npm run build-esm" "npm run build-umd"
 }
 
 build-dev() {
@@ -28,8 +28,7 @@ build-dev() {
 
 build-dev-watch() {
     _common-build
-    tsc --watch -p tsconfig.dev.json &
-    _build_styles
+    tsc --watch -p tsconfig.dev.json
 }
 
 FLAG=$1
@@ -37,6 +36,8 @@ if [ "$FLAG" = "--dev" ]; then
     build-dev
 elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
+elif [ "$FLAG" = "--all" ]; then
+    build-all
 else
     build
 fi

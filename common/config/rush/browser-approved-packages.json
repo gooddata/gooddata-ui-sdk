@@ -443,6 +443,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "concurrently",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "core-js",
       "allowedCategories": [ "production" ]
     },

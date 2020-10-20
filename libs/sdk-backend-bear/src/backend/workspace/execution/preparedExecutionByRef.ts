@@ -18,9 +18,12 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { BearExecutionResult } from "./executionResult";
 import { convertResultSpec } from "../../../convertors/toBackend/afm/ExecutionConverter";
-import { IVisualizationExecution } from "@gooddata/api-client-bear/dist/execution/execute-afm";
+import { SDK } from "@gooddata/api-client-bear";
 import { objRefToUri } from "../../../utils/api";
 import { convertFilters } from "../../../convertors/toBackend/afm/FilterConverter";
+
+// avoid importing the type directly from some dist subdirectory of api-client-bear
+type IVisualizationExecution = Parameters<SDK["execution"]["_getVisExecutionResponse"]>[1];
 
 export class BearPreparedExecutionByRef implements IPreparedExecution {
     private _fingerprint: string | undefined;

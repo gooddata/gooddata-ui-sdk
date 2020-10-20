@@ -2,18 +2,26 @@
 
 _clean() {
     rm -rf dist
+    rm -rf esm
     rm -rf styles/css
 }
 
 _common-build() {
-    mkdir -p dist/base/localization
+    mkdir -p dist/base/localization/bundles
     cp -rf src/base/localization/bundles dist/base/localization
+
+    mkdir -p esm/base/localization/bundles
+    cp -rf src/base/localization/bundles esm/base/localization
 }
 
 build() {
-    _clean
     _common-build
-    tsc -p tsconfig.build.json
+    npm run build-esm
+}
+
+build-all() {
+    _common-build
+    concurrently "npm run build-cjs" "npm run build-esm"
 }
 
 build-dev() {
@@ -32,6 +40,8 @@ if [ "$FLAG" = "--dev" ]; then
     build-dev
 elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
+elif [ "$FLAG" = "--all" ]; then
+    build-all
 else
     build
 fi

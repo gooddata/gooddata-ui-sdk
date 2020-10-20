@@ -97,6 +97,14 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "bulk",
+      "name": "build-all",
+      "summary": "Builds all versions of the packages (CJS and ESM)",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": false
+    },
+    {
       "commandKind": "global",
       "name": "audit",
       "summary": "Performs security audit of all dependencies used by projects in this repository. This command uses pnpm audit which in the end calls out to the npmjs API.",

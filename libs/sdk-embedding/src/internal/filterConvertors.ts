@@ -1,5 +1,7 @@
 // (C) 2020 GoodData Corporation
-import { isEmpty, isString, isNumber } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import isNumber from "lodash/isNumber";
+import isString from "lodash/isString";
 import { EmbeddedGdc } from "../iframe/common";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 

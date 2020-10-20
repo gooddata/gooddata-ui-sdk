@@ -1,4 +1,4 @@
-// Copyright (C) 2007-2020, GoodData(R) Corporation. All rights reserved.
+// (C) 2007-2020 GoodData Corporation
 const webpack = require("webpack");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const path = require("path");

@@ -2,24 +2,42 @@
     "name": "@gooddata/sdk-ui-kit",
     "version": "8.1.0-alpha.20",
     "description": "GoodData SDK - UI Building Components",
-    "main": "dist/index.js",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-kit",
     "author": "GoodData Corporation",
     "license": "MIT",
+    "main": "dist/index.js",
+    "module": "esm/index.js",
+    "browser": "dist/index.js",
+    "typings": "esm/index.d.ts",
+    "sideEffects": [
+        "*.css",
+        "*.svg"
+    ],
     "files": [
-        "dist",
+        "dist/**/*.js",
+        "dist/**/*.json",
+        "dist/**/*.d.ts",
+        "dist/**/*.map",
+        "dist/**/*.svg",
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map",
+        "esm/**/*.svg",
         "styles"
     ],
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "prepublishOnly": "npm run build",
-        "build": "bash scripts/build.sh && npm run api-extractor",
-        "build-incremental": "tsc -p tsconfig.build.json --incremental",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",
+        "build-all": "bash scripts/build.sh --all",
+        "build-cjs": "tsc -p tsconfig.build.json",
+        "build-esm": "tsc -p tsconfig.build.esm.json",
         "dev": "bash scripts/build.sh --dev-watch",
         "test": "jest --watch",
         "test-once": "jest",
@@ -33,7 +51,6 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
-    "typings": "dist/index.d.ts",
     "dependencies": {
         "@gooddata/goodstrap": "^69.0.0",
         "@gooddata/numberjs": "^3.2.4",
@@ -73,6 +90,7 @@
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
+        "concurrently": "^5.3.0",
         "dependency-cruiser": "^9.9.5",
         "enzyme": "^3.10.0",
         "enzyme-adapter-react-16": "^1.15.1",

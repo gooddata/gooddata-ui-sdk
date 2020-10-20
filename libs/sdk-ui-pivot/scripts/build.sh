@@ -6,6 +6,7 @@ _build_styles() {
 
 _clean() {
     rm -rf dist
+    rm -rf esm
     rm -rf styles/css
 }
 
@@ -14,9 +15,13 @@ _common-build() {
 }
 
 build() {
-    _clean
     _common-build
-    tsc -p tsconfig.build.json
+    npm run build-esm
+}
+
+build-all() {
+    _common-build
+    concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
 }
 
 build-dev() {
@@ -38,6 +43,8 @@ elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
 elif [ "$FLAG" = "--styles" ]; then
     _build_styles
+elif [ "$FLAG" = "--all" ]; then
+    build-all
 else
     build
 fi

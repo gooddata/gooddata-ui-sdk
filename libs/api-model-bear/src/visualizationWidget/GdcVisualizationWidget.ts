@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
+import has from "lodash/has";
 import { GdcMetadata } from "../meta/GdcMetadata";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
@@ -92,6 +93,6 @@ export namespace GdcVisualizationWidget {
 
     export function isWrappedVisualizationWidget(obj: unknown): obj is IWrappedVisualizationWidget {
         // eslint-disable-next-line no-prototype-builtins
-        return !isEmpty(obj) && obj.hasOwnProperty("visualizationWidget");
+        return !isEmpty(obj) && has(obj, "visualizationWidget");
     }
 }
