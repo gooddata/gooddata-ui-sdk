@@ -119,6 +119,8 @@ module.exports = async (env, argv) => {
             alias: {
                 react: path.resolve("./node_modules/react"),
             },
+            // Prefer ESM versions of packages to enable tree shaking and easier dev experience
+            mainFields: ["module", "browser", "main"],
         },
         module: {
             rules: [

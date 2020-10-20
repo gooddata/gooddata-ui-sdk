@@ -9,6 +9,7 @@
     "**/*.api.md": true,
     "**/*.d.ts": true,
     "**/dist": true,
+    "**/esm": true,
     "**/stats.json": true,
     "**/temp": true,
     "**/umd": true,
