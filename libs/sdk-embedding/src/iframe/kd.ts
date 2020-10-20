@@ -8,6 +8,7 @@ import {
     IDrillableItemsCommandBody,
     EmbeddedGdc,
 } from "./common";
+import { ObjRef } from "@gooddata/sdk-model";
 
 /**
  * All interface, types, type-guard related to embedded KPI Dashboards
@@ -99,6 +100,11 @@ export namespace EmbeddedKpiDashboard {
          * The command to open schedule email dialog
          */
         OpenScheduleEmailDialog = "openScheduleEmailDialog",
+
+        /**
+         * The command to set attribute filter parents
+         */
+        SetFilterParents = "setFilterParents",
     }
 
     /**
@@ -231,6 +237,16 @@ export namespace EmbeddedKpiDashboard {
          * Type represent that the schedule email dialog is opened.
          */
         ScheduleEmailDialogOpened = "scheduleEmailDialogOpened",
+
+        /**
+         * The event that is emmited once setFilterParents command is successfull
+         */
+        SetFilterParentsFinished = "setFilterParentsFinished",
+
+        /**
+         * The event that is emmited if setFilterParents command is not sucessfull it contains `SetFilterParentsErrorCode`
+         */
+        SetFilterParentsFailed = "setFilterParentsFailed",
     }
 
     /**
@@ -1024,4 +1040,236 @@ export namespace EmbeddedKpiDashboard {
     ): obj is OpenScheduleEmailDialogCommandData {
         return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenScheduleEmailDialog;
     }
+
+    /**
+     * Type that represents attribute filter on a dashboard referenced by display form.
+     *
+     * @public
+     */
+    export interface ISetFilterParentsAttributeFilter {
+        attributeFilter: {
+            displayForm: ObjRef;
+        };
+    }
+
+    /**
+     * Type that represents filter on a dashboard. At the moment it can only be an attribute filter
+     *
+     * @public
+     */
+    export type SetFilterParentsItemFilter = ISetFilterParentsAttributeFilter;
+
+    /**
+     * Type that represents filter connection to its parent.
+     *
+     * @public
+     */
+    export interface ISetFilterParentsItemParent {
+        /**
+         * Parent is filter that is present on a dashboard.
+         */
+        parent: SetFilterParentsItemFilter;
+
+        /**
+         * Connecting attribute is common attribute for both child and parent attribute filter.
+         */
+        connectingAttribute: ObjRef;
+    }
+
+    /**
+     * Type that represents filter that is requested to be changed.
+     *
+     * @public
+     */
+    export interface ISetFilterParentsItem {
+        /**
+         * Filter property is reference to filter that exists on a dashboard. If filter is not on a dashboard `FilterNotFound`
+         * error will be returned.
+         */
+        filter: SetFilterParentsItemFilter;
+
+        /**
+         * Parents is array of filters that this filter depends on, parents filters also need to be present on a dashboard.
+         * If filter should not depend on any parent filters pass empty array `[]` to `parents` property.
+         */
+        parents: ISetFilterParentsItemParent[];
+    }
+
+    /**
+     * Type that represents all the changes that command `SetFilterParentsCommand` requests to change. One item per filter.
+     * If filter is not present in command it will not be changed.
+     *
+     * @public
+     */
+    export interface ISetFilterParentsDataBody {
+        filters: ISetFilterParentsItem[];
+    }
+
+    /**
+     * Command that sets filter dependencies on other filters. This command can return `SetFilterParentsFailed` event
+     * if it failed. Otherwise `SetFilterParentsFinished` is sent on success. For more information about all errors,
+     * look at`SetFilterParentsFailed` event.
+     *
+     * ## Use
+     *
+     * ### Add filter parents
+     *
+     * To connect filter `A` to parent `B` and `C` you need to know display forms of all filters, also connecting attribute
+     * of `A` with `B` and `A` with `C`. Create one `ISetFilterParentsItem` with filter display form `A` and two parent display forms
+     * `B` and `C` with their common attributes shared with `A`.
+     *
+     * ### Remove filter parents
+     *
+     * If you want to remove connection between `A`, `B`, `C` just create `ISetFilterParentsItem` with `A` filter and empty array
+     * `parents` property.
+     *
+     * ## Filter references
+     *
+     * All referenced filters need to be present on a dashboard. They are referenced by attribute display form. If filter or parent filter
+     * is not found it will result in `FilterNotFound` error
+     *
+     * ## Circular dependency
+     *
+     * One filter can have multiple parents but filters can not depend on themselves, even over another filter. For example
+     * case `A -> B -> A` will result in error `CircularDependency`
+     *
+     * ## Other invalid cases
+     *
+     * Referencing same filter multiple times in `filters` property is not allowed and will result in `DuplicateFilters`
+     * error. Referencing same parent multiple times in single filter item is also not allowed and will result in
+     * `DuplicateParents` error. If filter and its parent does not share connecting attribute it will result in
+     * `IncompatibleConnectingAttribute` error.
+     *
+     * @public
+     */
+    export type SetFilterParentsCommand = IGdcKdMessageEvent<
+        GdcKdCommandType.SetFilterParents,
+        ISetFilterParentsDataBody
+    >;
+
+    /**
+     * Type that represents `SetFilterParentsCommand` data. For more information on use look at `SetFilterParentsCommand`
+     *
+     * @public
+     */
+    export type SetFilterParentsCommandData = IGdcKdMessageEnvelope<
+        GdcKdCommandType.SetFilterParents,
+        ISetFilterParentsDataBody
+    >;
+
+    /**
+     * Type-guard that checks if event in `SetFilterParents`
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterParentsCommandData {
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.SetFilterParents;
+    }
+
+    /**
+     * Event that is sent after `SetFilterParents` is successfully finished event. It also contains availableCommands.
+     *
+     * @public
+     */
+    export type SetFilterParentsFinished = IGdcKdMessageEvent<
+        GdcKdEventType.SetFilterParentsFinished,
+        IKdAvailableCommands
+    >;
+
+    /**
+     * Type that represents `SetFilterParentsFinished` data. For more information look at `SetFilterParentsFinished`
+     *
+     * @public
+     */
+    export type SetFilterParentsFinishedData = IGdcKdMessageEnvelope<
+        GdcKdEventType.SetFilterParentsFinished,
+        IKdAvailableCommands
+    >;
+
+    /**
+     * Error type within AppCommandFailed event body when setFilterParents command is not successfull
+     *
+     * @public
+     */
+    export enum SetFilterParentsErrorCode {
+        /**
+         * Command data format is invalid e.g. missing properties or wrong types.
+         */
+        InvalidDataFormat = "invalidDataFormat",
+
+        /**
+         * Attribute filter display form has invalid ref, or display form does not exist in workspace.
+         */
+        InvalidAttributeFilterDisplayForm = "invalidAttributeFilterDisplayForm",
+
+        /**
+         * Parent filter display form has invalid ref or does not exist in workspace.
+         */
+        InvalidParentFilterDisplayForm = "invalidParentFilterDisplayForm",
+
+        /**
+         * Filter is not on a dashboard.
+         */
+        FilterNotFound = "filterNotFound",
+
+        /**
+         * Filter can not depend on itself.
+         */
+        CircularDependency = "circularDependency",
+
+        /**
+         * Connecting attribute is invalid, or does not exist in workspace.
+         */
+        InvalidConnectingAttribute = "invalidConnectingAttribute",
+
+        /**
+         * Connecting attribute is not shared between filter and parent.
+         */
+        IncompatibleConnectingAttribute = "incompatibleConnectingAttribute",
+
+        /**
+         * Multiple filters with same id in single command.
+         */
+        DuplicateFilters = "duplicateFilters",
+
+        /**
+         * Multiple parents with same id in single filter.
+         */
+        DuplicateParents = "duplicateParents",
+    }
+
+    /**
+     * Type that represents `SetFilterParentsFailed` data.
+     *
+     * @public
+     */
+    export interface ISetFilterParentsFailedDataBody {
+        /**
+         * Code that represents cause of error look at `SetFilterParentsErrorCode` for more information.
+         */
+        errorCode: SetFilterParentsErrorCode;
+    }
+
+    /**
+     * Event that is sent when `SetFilterParents` command failed. it contains error code `SetFilterParentsErrorCode` for more
+     * information about all possible error codes look at `SetFilterParentsErrorCode`.
+     *
+     * @public
+     */
+    export type SetFilterParentsFailed = IGdcKdMessageEvent<
+        GdcKdEventType.SetFilterParentsFailed,
+        ISetFilterParentsFailedDataBody
+    >;
+
+    /**
+     * Type that represents `SetFilterParentsFailed` event data. For more information look at `SetFilterParentsFailed`.
+     *
+     * @public
+     */
+    export type SetFilterParentsFailedData = IGdcKdMessageEnvelope<
+        GdcKdEventType.SetFilterParentsFailed,
+        ISetFilterParentsFailedDataBody
+    >;
 }
