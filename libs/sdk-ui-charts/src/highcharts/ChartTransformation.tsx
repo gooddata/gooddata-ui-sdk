@@ -12,7 +12,8 @@ import {
 import { IChartConfig, OnLegendReady } from "../interfaces";
 import { getChartOptions, validateData } from "./_to_refactor/chartOptionsBuilder";
 import { getHighchartsOptions } from "./_to_refactor/highChartsCreators";
-import HighChartsRenderer, {
+import {
+    HighChartsRenderer,
     IHighChartsRendererProps,
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
@@ -51,7 +52,7 @@ export interface IChartTransformationState {
     hasNegativeValue: boolean;
 }
 
-class ChartTransformation extends React.Component<IChartTransformationProps, IChartTransformationState> {
+class ChartTransformationImpl extends React.Component<IChartTransformationProps, IChartTransformationState> {
     public static defaultProps = {
         drillableItems: [] as IDrillableItem[],
         renderer: renderHighCharts,
@@ -150,4 +151,4 @@ class ChartTransformation extends React.Component<IChartTransformationProps, ICh
     }
 }
 
-export default injectIntl(ChartTransformation);
+export const ChartTransformation = injectIntl(ChartTransformationImpl);

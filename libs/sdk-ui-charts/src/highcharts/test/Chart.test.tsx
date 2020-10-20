@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 
 import Highcharts from "../chartTypes/_integration/highchartsEntryPoint";
-import Chart from "../Chart";
+import { Chart } from "../Chart";
 
 jest.mock("highcharts", () => {
     return {

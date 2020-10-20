@@ -3,7 +3,7 @@ import { IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
-import ChartTransformation, { renderHighCharts } from "./ChartTransformation";
+import { ChartTransformation, renderHighCharts } from "./ChartTransformation";
 import Highcharts from "./chartTypes/_integration/highchartsEntryPoint";
 import { IChartConfig } from "../interfaces";
 

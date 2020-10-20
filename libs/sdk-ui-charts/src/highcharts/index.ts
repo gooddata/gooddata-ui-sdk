@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
-import Chart from "./Chart";
-import ChartTransformation from "./ChartTransformation";
+import { Chart } from "./Chart";
+import { ChartTransformation } from "./ChartTransformation";
 export { Chart, ChartTransformation };
 export { Visualization } from "./Visualization";
 

@@ -31,7 +31,7 @@ export interface IChartProps {
     callback(): void;
 }
 
-export default class Chart extends React.Component<IChartProps> {
+export class Chart extends React.Component<IChartProps> {
     public static defaultProps: Partial<IChartProps> = {
         callback: noop,
         domProps: {},

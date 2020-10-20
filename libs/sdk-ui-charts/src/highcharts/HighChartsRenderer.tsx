@@ -11,7 +11,7 @@ import throttle from "lodash/throttle";
 import isNil from "lodash/isNil";
 import cx from "classnames";
 import { IChartConfig, OnLegendReady } from "../interfaces";
-import Chart, { IChartProps } from "./Chart";
+import { Chart, IChartProps } from "./Chart";
 import { TOP, LEFT, BOTTOM, RIGHT } from "./_to_refactor/legend/PositionTypes";
 import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "./_to_refactor/utils/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -64,7 +64,7 @@ function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
     });
 }
 
-export default class HighChartsRenderer extends React.PureComponent<
+export class HighChartsRenderer extends React.PureComponent<
     IHighChartsRendererProps,
     IHighChartsRendererState
 > {

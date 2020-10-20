@@ -5,9 +5,9 @@ import noop from "lodash/noop";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 
-import HighChartsRenderer, { FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer";
+import { HighChartsRenderer, FLUID_LEGEND_THRESHOLD } from "../HighChartsRenderer";
 import { getHighchartsOptions } from "../_to_refactor/highChartsCreators";
-import Chart from "../Chart";
+import { Chart } from "../Chart";
 import { TOP, BOTTOM, LEFT, RIGHT } from "../_to_refactor/legend/PositionTypes";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { Legend } from "@gooddata/sdk-ui-vis-commons";

@@ -4,12 +4,12 @@ import { mount } from "enzyme";
 import noop from "lodash/noop";
 import get from "lodash/get";
 
-import ChartTransformation from "../ChartTransformation";
-import HighChartsRenderer from "../HighChartsRenderer";
+import { ChartTransformation } from "../ChartTransformation";
+import { HighChartsRenderer } from "../HighChartsRenderer";
 import { IChartConfig } from "../../interfaces";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPaletteItem, measureLocalId } from "@gooddata/sdk-model";
-import Chart from "../Chart";
+import { Chart } from "../Chart";
 import { VisualizationTypes, IntlWrapper, withIntl } from "@gooddata/sdk-ui";
 import { TOP, BOTTOM, MIDDLE } from "../_to_refactor/constants/alignments";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
