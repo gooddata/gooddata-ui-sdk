@@ -28,7 +28,7 @@ fi
 
 
 ${_RUSH} install
-${_RUSH} build
+${_RUSH} build-all
 
 # First bump to the next major
 ${_RUSH} version --bump --override-bump major
