@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import range from "lodash/range";
-import { ColorFactory } from "../../../_to_refactor/colorFactory";
+import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { IColorPalette, IMeasure } from "@gooddata/sdk-model";
-import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { DataViewFacade, HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../../interfaces";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";

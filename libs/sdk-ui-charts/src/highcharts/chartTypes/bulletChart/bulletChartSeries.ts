@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import { parseValue, unwrap } from "../../_to_refactor/utils/common";
-import { MAX_POINT_WIDTH } from "../_integration/commonConfiguration";
+import { parseValue, unwrap } from "../_util/common";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 import { bucketIsEmpty, IBucket, Identifier } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IPointData } from "../../typings/unsafe";

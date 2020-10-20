@@ -5,9 +5,9 @@ import {
     IMeasureGroupDescriptor,
     IResultAttributeHeader,
 } from "@gooddata/sdk-backend-spi";
-import { IUnwrappedAttributeHeadersWithItems } from "../../_to_refactor/utils/types";
+import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { getLighterColor, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { parseValue, unwrap } from "../../_to_refactor/utils/common";
+import { parseValue, unwrap } from "../_util/common";
 import isEqual from "lodash/isEqual";
 import get from "lodash/get";
 import { IPointData } from "../../typings/unsafe";

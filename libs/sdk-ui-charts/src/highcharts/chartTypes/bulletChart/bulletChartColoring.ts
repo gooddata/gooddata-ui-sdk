@@ -9,7 +9,7 @@ import {
 import { IColorPalette, Identifier, isColorFromPalette, isRgbColor, IColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import { findMeasureGroupInDimensions } from "../../_to_refactor/utils/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     ColorStrategy,
@@ -20,7 +20,7 @@ import {
     getLighterColorFromRGB,
     getRgbStringFromRGB,
 } from "@gooddata/sdk-ui-vis-commons";
-import { DEFAULT_BULLET_GRAY_COLOR } from "../../_to_refactor/utils/color";
+import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color";
 
 class BulletChartColorStrategy extends ColorStrategy {
     protected createColorAssignment(

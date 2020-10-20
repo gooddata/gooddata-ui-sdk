@@ -6,8 +6,8 @@ import { IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backe
 import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
-import { isLineChart } from "../../_to_refactor/utils/common";
-import { NORMAL_STACK } from "../../_to_refactor/constants/stacking";
+import { isLineChart } from "../_util/common";
+import { NORMAL_STACK } from "../../constants/stacking";
 import { ISeriesItem } from "../../typings/unsafe";
 
 export const CHART_ORDER = {

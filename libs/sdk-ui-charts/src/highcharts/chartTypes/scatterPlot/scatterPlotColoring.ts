@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { PointsChartColorStrategy } from "../_common/colorStrategies/pointsChart";
+import { PointsChartColorStrategy } from "../_chartColoring/pointsChart";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";

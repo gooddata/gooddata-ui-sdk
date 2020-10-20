@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
-import { alignChart } from "../_integration/helpers";
+import { alignChart } from "../_chartCreators/helpers";
 
 const PIE_TEMPLATE = {
     chart: {

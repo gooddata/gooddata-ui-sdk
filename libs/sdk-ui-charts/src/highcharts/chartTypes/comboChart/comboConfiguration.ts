@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-import { MAX_POINT_WIDTH } from "../_integration/commonConfiguration";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 import { LINE_WIDTH } from "../lineChart/lineConfiguration";
 import { IChartConfig } from "../../../interfaces";
-import { isLineChart } from "../../_to_refactor/utils/common";
+import { isLineChart } from "../_util/common";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";
 import get from "lodash/get";

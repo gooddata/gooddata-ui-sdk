@@ -2,7 +2,7 @@
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { ISeriesDataItem } from "../../typings/unsafe";
-import { parseValue } from "../../_to_refactor/utils/common";
+import { parseValue } from "../_util/common";
 
 export function getScatterPlotSeries(
     dv: DataViewFacade,

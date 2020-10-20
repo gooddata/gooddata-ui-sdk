@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import last from "lodash/last";
-import Highcharts from "../_integration/highchartsEntryPoint";
+import Highcharts from "../../adapter/highcharts";
 import {
     IHighchartsAxisExtend,
     IHighchartsSeriesExtend,

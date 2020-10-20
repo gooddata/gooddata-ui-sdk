@@ -1,9 +1,9 @@
 // (C) 2020 GoodData Corporation
 import { IPatternObject, IPointData } from "../../typings/unsafe";
-import { GRAY, TRANSPARENT, WHITE } from "../../_to_refactor/utils/color";
+import { GRAY, TRANSPARENT, WHITE } from "../_util/color";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
-import { parseValue, unwrap } from "../../_to_refactor/utils/common";
+import { parseValue, unwrap } from "../_util/common";
 import isNil from "lodash/isNil";
 
 const nullColor: IPatternObject = {

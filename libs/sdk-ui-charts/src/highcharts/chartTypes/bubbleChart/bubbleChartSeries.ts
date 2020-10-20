@@ -2,7 +2,7 @@
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { parseValue, unwrap } from "../../_to_refactor/utils/common";
+import { parseValue, unwrap } from "../_util/common";
 import last from "lodash/last";
 
 function getCountOfEmptyBuckets(bucketEmptyFlags: boolean[] = []) {

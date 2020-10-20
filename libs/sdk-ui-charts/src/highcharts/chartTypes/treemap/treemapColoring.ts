@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { MeasureColorStrategy } from "../_common/colorStrategies/measure";
+import { MeasureColorStrategy } from "../_chartColoring/measure";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";

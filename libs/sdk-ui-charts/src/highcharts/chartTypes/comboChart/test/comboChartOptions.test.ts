@@ -2,7 +2,7 @@
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { NORMAL_STACK, PERCENT_STACK } from "../../../_to_refactor/constants/stacking";
+import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
 import { ISeriesItem } from "../../../typings/unsafe";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 

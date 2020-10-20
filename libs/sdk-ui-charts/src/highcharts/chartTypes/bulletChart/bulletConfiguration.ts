@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
-import { MAX_POINT_WIDTH } from "../_integration/commonConfiguration";
+import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 
 const BULLET_TEMPLATE = {
     chart: {

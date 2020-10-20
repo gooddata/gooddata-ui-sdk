@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { formatValueForTooltip, getFormattedValueForTooltip } from "../_to_refactor/tooltip";
+import { formatValueForTooltip, getFormattedValueForTooltip } from "../chartTypes/_chartOptions/tooltip";
 
 const testFormat: string = "#,##0.00";
 const testPointData = {

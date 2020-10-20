@@ -10,20 +10,20 @@ import {
     IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces";
-import { getChartOptions } from "./_to_refactor/chartOptionsBuilder";
-import { getHighchartsOptions } from "./_to_refactor/highChartsCreators";
+import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder";
+import { getHighchartsOptions } from "./chartTypes/_chartCreators/highChartsCreators";
 import {
     HighChartsRenderer,
     IHighChartsRendererProps,
     renderChart as chartRenderer,
     renderLegend as legendRenderer,
-} from "./HighChartsRenderer";
-import buildLegendOptions from "./_to_refactor/legend/legendBuilder";
+} from "./adapter/HighChartsRenderer";
+import buildLegendOptions from "./adapter/legendBuilder";
 import noop from "lodash/noop";
 import { IChartOptions } from "./typings/unsafe";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
-import { validateData } from "./_to_refactor/chartLimits";
+import { validateData } from "./chartTypes/_chartOptions/chartLimits";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;

@@ -10,10 +10,10 @@ import {
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
-import { findMeasureGroupInDimensions } from "../../_to_refactor/utils/executionResultHelper";
+import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import isEqual from "lodash/isEqual";
 import range from "lodash/range";
-import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../../_to_refactor/utils/color";
+import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../_util/color";
 
 type HighChartColorPalette = string[];
 

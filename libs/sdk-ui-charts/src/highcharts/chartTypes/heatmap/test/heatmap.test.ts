@@ -1,16 +1,16 @@
 // (C) 2020 GoodData Corporation
 
-import { getMVS } from "../../../_to_refactor/test/helper";
+import { getMVS } from "../../_util/test/helper";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ColorFactory } from "../../../_to_refactor/colorFactory";
+import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { HeatmapColorStrategy } from "../heatmapColoring";
-import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import range from "lodash/range";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
-import { HEATMAP_BLUE_COLOR_PALETTE } from "../../../_to_refactor/utils/color";
+import { HEATMAP_BLUE_COLOR_PALETTE } from "../../_util/color";
 
 describe("HeatmapColorStrategy", () => {
     it("should return HeatmapColorStrategy strategy with 7 colors from default heatmap color palette", () => {

@@ -1,14 +1,14 @@
 // (C) 2020 GoodData Corporation
 
-import { getMVS } from "../../../_to_refactor/test/helper";
+import { getMVS } from "../../_util/test/helper";
 import { IColorPalette, IColorPaletteItem } from "@gooddata/sdk-model";
-import { ColorFactory } from "../../../_to_refactor/colorFactory";
+import { ColorFactory } from "../../_chartOptions/colorFactory";
 import { TreemapColorStrategy } from "../treemapColoring";
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { getRgbString } from "@gooddata/sdk-ui-vis-commons";
 import { IColorMapping } from "../../../../interfaces";
-import { getColorsFromStrategy } from "../../_common/colorStrategies/test/helper";
-import { TwoColorPalette } from "../../_common/colorStrategies/test/color.fixture";
+import { getColorsFromStrategy } from "../../_chartColoring/test/helper";
+import { TwoColorPalette } from "../../_chartColoring/test/color.fixture";
 import { ReferenceLdm, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 

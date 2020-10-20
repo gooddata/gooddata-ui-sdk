@@ -4,10 +4,10 @@ import invariant from "ts-invariant";
 import React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { ChartTransformation, renderHighCharts } from "./ChartTransformation";
-import Highcharts from "./chartTypes/_integration/highchartsEntryPoint";
+import Highcharts from "./adapter/highcharts";
 import { IChartConfig } from "../interfaces";
 
-import { isChartSupported, stringifyChartTypes } from "./_to_refactor/utils/common";
+import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common";
 import isEqual from "lodash/isEqual";
 import isFunction from "lodash/isFunction";
 import noop from "lodash/noop";

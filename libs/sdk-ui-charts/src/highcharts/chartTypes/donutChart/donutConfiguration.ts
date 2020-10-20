@@ -2,7 +2,7 @@
 import merge from "lodash/merge";
 import get from "lodash/get";
 import { getPieConfiguration } from "../pieChart/pieConfiguration";
-import { alignChart } from "../_integration/helpers";
+import { alignChart } from "../_chartCreators/helpers";
 
 export function getDonutConfiguration(): ReturnType<typeof getPieConfiguration> {
     return merge({}, getPieConfiguration(), {

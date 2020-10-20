@@ -1,11 +1,11 @@
 // (C) 2020 GoodData Corporation
 
-import { getMVS } from "../../../_to_refactor/test/helper";
+import { getMVS } from "../../_util/test/helper";
 import { IColorMapping } from "../../../../interfaces";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
-import { ColorFactory } from "../../../_to_refactor/colorFactory";
-import { CUSTOM_COLOR_PALETTE } from "../../../_to_refactor/test/colorPalette.fixture";
+import { ColorFactory } from "../../_chartOptions/colorFactory";
+import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture";
 import { ScatterPlotColorStrategy } from "../scatterPlotColoring";
 import { ReferenceRecordings, ReferenceLdm } from "@gooddata/reference-workspace";
 import range from "lodash/range";
