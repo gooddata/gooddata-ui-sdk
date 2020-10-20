@@ -5,7 +5,7 @@ import {
     isComparativeSeries,
     isPrimarySeries,
     isTargetSeries,
-} from "./bulletChartOptions";
+} from "./bulletChartSeries";
 import { IColorPalette, Identifier, isColorFromPalette, isRgbColor, IColor } from "@gooddata/sdk-model";
 import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";

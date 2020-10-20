@@ -14,7 +14,6 @@ import {
     generateTooltipXYFn,
     getDrillableSeries,
     getHeatmapDataClasses,
-    getHeatmapSeries,
     getSeries,
     getSeriesItemData,
     getTreemapAttributes,
@@ -43,6 +42,7 @@ import { HeatmapColorStrategy } from "../../chartTypes/heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../../chartTypes/treemap/treemapColoring";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { GRAY, TRANSPARENT } from "../utils/color";
+import { getHeatmapSeries } from "../../chartTypes/heatmap/heatmapChartSeries";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);

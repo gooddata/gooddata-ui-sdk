@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { getBulletChartSeries } from "../bulletChartOptions";
+import { getBulletChartSeries } from "../bulletChartSeries";
 import { IColorPalette } from "@gooddata/sdk-model";
 import BulletChartColorStrategy from "../bulletChartColoring";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
