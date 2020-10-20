@@ -142,10 +142,10 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
 
 const clearCssProperties = () => {
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
-    themePropertiesElement && themePropertiesElement.remove();
+    themePropertiesElement && document.head.removeChild(themePropertiesElement);
 
     const customFontElement = document.getElementById("gdc-theme-custom-font");
-    customFontElement && customFontElement.remove();
+    customFontElement && document.head.removeChild(customFontElement);
 };
 
 /**
