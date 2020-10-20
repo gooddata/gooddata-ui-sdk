@@ -878,7 +878,7 @@ export const autoresizeAllColumns = (
         columns.forEach((column: Column) => {
             const columnDef = column.getColDef();
             const autoResizedColumn = autoResizedColumns[getColumnIdentifier(columnDef)];
-            if (columnDef.field && columnDef.width !== undefined && autoResizedColumn.width) {
+            if (columnDef.field && autoResizedColumn && autoResizedColumn.width) {
                 columnApi.setColumnWidth(columnDef.field, autoResizedColumn.width);
             }
         });
@@ -924,7 +924,6 @@ export const getAutoResizedColumns = (
             separators: options.separators,
             cache: new Map(),
         });
-
         updatedColumDefs.forEach((columnDef: ColDef) => {
             if (columnDef.field && columnDef.width !== undefined) {
                 autoResizedColumns[getColumnIdentifier(columnDef)] = {
