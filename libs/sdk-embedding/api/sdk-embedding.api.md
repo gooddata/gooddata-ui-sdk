@@ -8,6 +8,7 @@ import { GdcExecuteAFM } from '@gooddata/api-model-bear';
 import { GdcExport } from '@gooddata/api-model-bear';
 import { GdcVisualizationObject } from '@gooddata/api-model-bear';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { ObjRef } from '@gooddata/sdk-model';
 
 // @public
 export type CommandFailed<Product> = IGdcMessageEvent<Product, GdcEventType.AppCommandFailed, ICommandFailedBody>;
@@ -376,6 +377,7 @@ export namespace EmbeddedKpiDashboard {
         Save = "saveDashboard",
         SaveAsDashboard = "saveAsDashboard",
         SetFilterContext = "setFilterContext",
+        SetFilterParents = "setFilterParents",
         SetSize = "setSize",
         SwitchToEdit = "switchToEdit"
     }
@@ -400,6 +402,8 @@ export namespace EmbeddedKpiDashboard {
         Resized = "resized",
         ScheduleEmailDialogOpened = "scheduleEmailDialogOpened",
         SetFilterContextFinished = "setFilterContextFinished",
+        SetFilterParentsFailed = "setFilterParentsFailed",
+        SetFilterParentsFinished = "setFilterParentsFinished",
         SwitchedToEdit = "switchedToEdit",
         SwitchedToView = "switchedToView",
         WidgetAdded = "widgetAdded"
@@ -500,6 +504,27 @@ export namespace EmbeddedKpiDashboard {
     export function isAddWidgetCommandData(obj: unknown): obj is AddWidgetCommandData;
     export function isCancelEditCommandData(obj: unknown): obj is CancelEditCommandData;
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData;
+    export interface ISetFilterParentsAttributeFilter {
+        // (undocumented)
+        attributeFilter: {
+            displayForm: ObjRef;
+        };
+    }
+    export interface ISetFilterParentsDataBody {
+        // (undocumented)
+        filters: ISetFilterParentsItem[];
+    }
+    export interface ISetFilterParentsFailedDataBody {
+        errorCode: SetFilterParentsErrorCode;
+    }
+    export interface ISetFilterParentsItem {
+        filter: SetFilterParentsItemFilter;
+        parents: ISetFilterParentsItemParent[];
+    }
+    export interface ISetFilterParentsItemParent {
+        connectingAttribute: ObjRef;
+        parent: SetFilterParentsItemFilter;
+    }
     // (undocumented)
     export interface ISetSizeCommandBody {
         height: number;
@@ -511,6 +536,7 @@ export namespace EmbeddedKpiDashboard {
     export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData;
     export function isSaveDashboardCommandData(obj: unknown): obj is SaveDashboardCommandData;
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
+    export function isSetFilterParentsCommandData(obj: unknown): obj is SetFilterParentsCommandData;
     export function isSetSizeCommandData(obj: unknown): obj is SetSizeCommandData;
     export function isSwitchToEditCommandData(obj: unknown): obj is SwitchToEditCommandData;
     export function isUriInsight(obj: unknown): obj is IUriInsightRef;
@@ -538,6 +564,24 @@ export namespace EmbeddedKpiDashboard {
     export type SetFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterContext, EmbeddedGdc.IFilterContextContent>;
     export type SetFilterContextFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterContextFinished, IKdAvailableCommands>;
+    export type SetFilterParentsCommand = IGdcKdMessageEvent<GdcKdCommandType.SetFilterParents, ISetFilterParentsDataBody>;
+    export type SetFilterParentsCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.SetFilterParents, ISetFilterParentsDataBody>;
+    export enum SetFilterParentsErrorCode {
+        CircularDependency = "circularDependency",
+        DuplicateFilters = "duplicateFilters",
+        DuplicateParents = "duplicateParents",
+        FilterNotFound = "filterNotFound",
+        IncompatibleConnectingAttribute = "incompatibleConnectingAttribute",
+        InvalidAttributeFilterDisplayForm = "invalidAttributeFilterDisplayForm",
+        InvalidConnectingAttribute = "invalidConnectingAttribute",
+        InvalidDataFormat = "invalidDataFormat",
+        InvalidParentFilterDisplayForm = "invalidParentFilterDisplayForm"
+    }
+    export type SetFilterParentsFailed = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFailed, ISetFilterParentsFailedDataBody>;
+    export type SetFilterParentsFailedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFailed, ISetFilterParentsFailedDataBody>;
+    export type SetFilterParentsFinished = IGdcKdMessageEvent<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
+    export type SetFilterParentsFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.SetFilterParentsFinished, IKdAvailableCommands>;
+    export type SetFilterParentsItemFilter = ISetFilterParentsAttributeFilter;
     // (undocumented)
     export type SetSizeCommand = IGdcKdMessageEvent<GdcKdCommandType.SetSize, ISetSizeCommandBody>;
     // (undocumented)
