@@ -4,6 +4,13 @@ We are happy that you are considering contribution to GoodData.UI SDK. Before pr
 with the technical aspects of the contribution. This document gives overview how to build and test the SDK and perform
 other typical tasks related to contributing.
 
+## Environment Requirements
+
+The development process is tested on macOS and Linux and uses bash for some of the scripting.
+This means that some parts of the development process will not work on Windows.
+You can use [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+but note that this mode of development is not tested and not supported by our teams.
+
 ## IDE Settings
 
 Please check out [How to setup IntelliJ](setupIntellij.md) guide to find out about recommended settings for IntelliJ IDEA or [How to setup VS Code](setupVsCode.md) guide to find out about recommended settings for VS Code.
