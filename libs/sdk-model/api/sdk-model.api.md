@@ -682,8 +682,7 @@ export interface IPreviousPeriodDateDataSet {
 
 // @public
 export interface IPreviousPeriodDateDataSetSimple {
-    // (undocumented)
-    dataSet: string;
+    dataSet: string | ObjRef;
     // (undocumented)
     periodsAgo: number;
 }
