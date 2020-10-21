@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "8.1.0-alpha.24",
+    "version": "8.1.0-alpha.25",
     "description": "GoodData SDK - Theme provider",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-theme-provider",
     "author": "GoodData Corporation",
@@ -50,8 +50,8 @@
         "tslib": "^2.0.0",
         "polished": "^3.6.7",
         "ts-invariant": "^0.4.4",
-        "@gooddata/sdk-backend-spi": "^8.1.0-alpha.24",
-        "@gooddata/sdk-ui": "^8.1.0-alpha.24"
+        "@gooddata/sdk-backend-spi": "^8.1.0-alpha.25",
+        "@gooddata/sdk-ui": "^8.1.0-alpha.25"
     },
     "peerDependencies": {
         "react": "^16.5.2",
