@@ -233,17 +233,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getAllWidgetAlertsForCurrentUser = async (): Promise<IWidgetAlert[]> => {
         const alerts = await this.getAllBearKpiAlertsForCurrentUser();
-        const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
-        const filterContextByUri = keyBy(
-            filterContexts,
-            (filterContext) => filterContext.filterContext.meta.uri!,
-        );
-        const convertedAlerts = alerts.map((alert) => {
-            const alertFilterContext = filterContextByUri[alert.kpiAlert.content.filterContext!];
-            return toSdkModel.convertAlert(alert, alertFilterContext) as IWidgetAlert;
-        });
+        return this.getConvertedAlerts(alerts);
+    };
 
-        return convertedAlerts;
+    public getDashboardWidgetAlertsForCurrentUser = async (ref: ObjRef): Promise<IWidgetAlert[]> => {
+        const alerts = await this.getDashboardBearKpiAlertsForCurrentUser(ref);
+        return this.getConvertedAlerts(alerts);
     };
 
     public getWidgetAlertsCountForWidgets = async (refs: ObjRef[]): Promise<IWidgetAlertCount[]> => {
@@ -578,6 +573,32 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 author: await userUriFromAuthenticatedPrincipal(context.getPrincipal),
             });
         });
+    };
+
+    private getDashboardBearKpiAlertsForCurrentUser = async (
+        dashboardRef: ObjRef,
+    ): Promise<GdcMetadata.IWrappedKpiAlert[]> => {
+        const allAlerts = await this.getAllBearKpiAlertsForCurrentUser();
+        if (allAlerts.length === 0) {
+            return [];
+        }
+
+        const dashboardUri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
+        return allAlerts.filter((alert) => alert.kpiAlert.content.dashboard === dashboardUri);
+    };
+
+    private getConvertedAlerts = async (alerts: GdcMetadata.IWrappedKpiAlert[]): Promise<IWidgetAlert[]> => {
+        const filterContexts = await this.getBearKpiAlertsFilterContexts(alerts);
+        const filterContextByUri = keyBy(
+            filterContexts,
+            (filterContext) => filterContext.filterContext.meta.uri!,
+        );
+        const convertedAlerts = alerts.map((alert) => {
+            const alertFilterContext = filterContextByUri[alert.kpiAlert.content.filterContext!];
+            return toSdkModel.convertAlert(alert, alertFilterContext) as IWidgetAlert;
+        });
+
+        return convertedAlerts;
     };
 
     private getBearKpiAlertsFilterContexts = async (
