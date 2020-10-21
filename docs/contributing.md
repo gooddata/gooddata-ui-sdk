@@ -245,7 +245,7 @@ Alternatively, if you want to avoid the potential problems with links, you can u
 ```bash
 cd gooddata-ui-sdk
 rush build
-rsync -rptgD --no-links --include="/*/dist/*" ./libs/ ~/your-app/node_modules/@gooddata/
+rsync -rptgD --no-links --include="/*/esm/*" ./libs/ ~/your-app/node_modules/@gooddata/
 ```
 
 This will make sure that the SDK8 files in your app are from your local SDK8 version. To revert the changes, run `yarn install --force` or equivalent in your app.
