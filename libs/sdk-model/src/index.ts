@@ -269,6 +269,7 @@ export {
     defWithDimensions,
     defWithSorting,
     defWithPostProcessing,
+    defWithDateFormat,
     defaultDimensionsGenerator,
     emptyDef,
 } from "./execution/executionDefinition/factory";

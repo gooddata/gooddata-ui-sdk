@@ -176,6 +176,31 @@ export function defWithPostProcessing(
 }
 
 /**
+ * Changes the dateFormat of a postProcessing, other properties of postProcessing (if any) remain unchanged.
+ * This function will call defWithPostProcessing to update definition with the new postProcessing.
+ *
+ * @param definition - execution definition to alter with postProcessing
+ * @param dateFormat - Format to be applied to the dates in an AFM execution response.
+ * If dateFormat is empty, then the postProcessing will not be updated.
+ * @returns new execution with the specified postProcessing if dateFormat is not empty; or the same execution if dateFormat is empty
+ * @public
+ */
+export function defWithDateFormat(
+    definition: IExecutionDefinition,
+    dateFormat: string,
+): IExecutionDefinition {
+    if (!dateFormat) {
+        return definition;
+    }
+    const currentPostProcessing = definition.postProcessing || {};
+    const postProcessing = {
+        ...currentPostProcessing,
+        dateFormat,
+    };
+    return defSetPostProcessing(definition, postProcessing);
+}
+
+/**
  * Configures dimensions in the exec definition. Any dimension settings accumulated so far WILL be wiped out.
  * If dims is array if dimensions, they will be used as is. If it is an array whose first element is dimension
  * generation function, then the function will be called to obtain dimensions.

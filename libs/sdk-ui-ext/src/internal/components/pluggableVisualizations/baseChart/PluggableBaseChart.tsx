@@ -236,7 +236,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             .withSorting(
                 ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
             )
-            .withPostProcessing(dateFormat ? { dateFormat } : undefined);
+            .withDateFormat(dateFormat);
 
         this.renderFun(
             <BaseChart

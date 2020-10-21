@@ -301,7 +301,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             .forInsight(insight)
             .withDimensions(...this.getDimensions(insight))
             .withSorting(...getPivotTableSortItems(insight))
-            .withPostProcessing(dateFormat ? { dateFormat } : undefined);
+            .withDateFormat(dateFormat);
 
         const columnWidths: ColumnWidthItem[] | undefined = getColumnWidthsFromProperties(
             insightProperties(insight),

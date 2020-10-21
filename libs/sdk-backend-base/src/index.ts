@@ -110,3 +110,5 @@ export {
     newVariableMetadataObject,
     VariableMetadataObjectBuilder,
 } from "./ldmFactories/metadata/variableFactory";
+
+export { ResultHeaderTransformer, transformResultHeaders } from "./convertors/fromBackend/afm/result";

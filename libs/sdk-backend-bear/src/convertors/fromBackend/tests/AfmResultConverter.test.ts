@@ -1,5 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-import { transformHeaderItems } from "../afm/result";
+// (C) 2020 GoodData Corporation
+import { transformResultHeaders } from "@gooddata/sdk-backend-base";
+import { transformResultHeader } from "../afm/result";
 import {
     dimensionHeaders,
     transformedDimensionHeaders_DDMMYYYY_DashSeparated,
@@ -22,7 +23,9 @@ describe("AfmResultConverter", () => {
     it.each(Scenarios)(
         "should apply format %s to all dates in an AFM execution result",
         (dateFormat, expectedResult) => {
-            expect(transformHeaderItems(dimensionHeaders, { dateFormat })).toEqual(expectedResult);
+            expect(transformResultHeaders(dimensionHeaders, transformResultHeader, { dateFormat })).toEqual(
+                expectedResult,
+            );
         },
     );
 });

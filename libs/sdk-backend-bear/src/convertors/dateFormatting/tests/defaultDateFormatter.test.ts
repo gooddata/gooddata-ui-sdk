@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
+import { DateFormat } from "../dateValueParser";
 import { createDefaultDateFormatter } from "../defaultDateFormatter";
 
 describe("createDefaultDateFormatter", () => {
@@ -13,14 +14,16 @@ describe("createDefaultDateFormatter", () => {
     ];
 
     it.each(scenarios)("should format (%s, %s) as %s", (value, dateFormat, expected) => {
-        const formatter = createDefaultDateFormatter(dateFormat);
+        const formatter = createDefaultDateFormatter(dateFormat as DateFormat);
         const actual = formatter(value);
         expect(actual).toBe(expected);
     });
 
     it("should throw on invalid dateFormat", () => {
         expect(() =>
-            createDefaultDateFormatter("surely this is not a dateFormat")(new Date(2020, 10, 15)),
+            createDefaultDateFormatter("surely this is not a dateFormat" as DateFormat)(
+                new Date(2020, 10, 15),
+            ),
         ).toThrow();
     });
 });

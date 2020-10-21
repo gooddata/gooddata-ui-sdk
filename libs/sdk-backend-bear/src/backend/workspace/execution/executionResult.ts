@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
+import { transformResultHeaders } from "@gooddata/sdk-backend-base";
 import {
     DataValue,
     IDataView,
@@ -21,7 +22,7 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
-import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
+import { transformResultHeader } from "../../../convertors/fromBackend/afm/result";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -151,18 +152,21 @@ class BearDataView implements IDataView {
     constructor(result: IExecutionResult, dataResult: GdcExecution.IExecutionResult) {
         this.result = result;
         this.definition = result.definition;
-
-        const transformedResult = transformExecutionResult(dataResult, this.definition.postProcessing);
-
-        this.data = transformedResult.data;
-        this.headerItems = transformedResult.headerItems ? transformedResult.headerItems : [];
-        this.totals = transformedResult.totals;
-        this.totalCount = transformedResult.total;
-        this.count = transformedResult.count;
-        this.offset = transformedResult.offset;
-        this.warnings = transformedResult.warnings?.map(convertWarning) ?? [];
+        this.data = dataResult.data;
+        this.headerItems = dataResult.headerItems ? dataResult.headerItems : [];
+        this.totals = dataResult.totals;
+        this.totalCount = dataResult.paging.total;
+        this.count = dataResult.paging.count;
+        this.offset = dataResult.paging.offset;
+        this.warnings = dataResult.warnings?.map(convertWarning) ?? [];
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
+
+        this.headerItems = transformResultHeaders(
+            this.headerItems,
+            transformResultHeader,
+            this.definition.postProcessing,
+        );
     }
 
     public fingerprint(): string {

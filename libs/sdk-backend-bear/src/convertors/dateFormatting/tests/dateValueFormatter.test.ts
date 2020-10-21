@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { createDateValueFormatter } from "../dateValueFormatter";
+import { DateFormat } from "../dateValueParser";
 import { createDefaultDateFormatter } from "../defaultDateFormatter";
 
 describe("createDateValueFormatter", () => {
@@ -13,7 +14,9 @@ describe("createDateValueFormatter", () => {
     ];
 
     it.each(scenarios)("should format (%s, %s) as %s", (value, dateFormat, expected) => {
-        const defaultDateValueFormatter = createDateValueFormatter(createDefaultDateFormatter(dateFormat));
+        const defaultDateValueFormatter = createDateValueFormatter(
+            createDefaultDateFormatter(dateFormat as DateFormat),
+        );
         const actual = defaultDateValueFormatter(value);
         expect(actual).toBe(expected);
     });

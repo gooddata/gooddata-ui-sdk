@@ -2,7 +2,14 @@
 import parse from "date-fns/parse";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 
-export const dateFormats = ["MM/dd/yyyy", "dd/MM/yyyy", "dd-MM-yyyy", "yyyy-MM-dd", "M/d/yy", "dd.MM.yyyy"];
+export const dateFormats = [
+    "MM/dd/yyyy",
+    "dd/MM/yyyy",
+    "dd-MM-yyyy",
+    "yyyy-MM-dd",
+    "M/d/yy",
+    "dd.MM.yyyy",
+] as const;
 export type DateFormat = typeof dateFormats[number];
 export const DEFAULT_DATE_FORMAT: DateFormat = "MM/dd/yyyy";
 

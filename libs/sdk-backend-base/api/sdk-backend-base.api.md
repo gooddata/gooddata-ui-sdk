@@ -330,9 +330,9 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
-    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
+    withDateFormat(dateFormat: string): IPreparedExecution;
     // (undocumented)
-    withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution;
+    withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }
@@ -595,6 +595,9 @@ export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPrepa
 // @beta (undocumented)
 export type ResultFactory = (dimensions: IDimensionDescriptor[], fingerprint: string) => IExecutionResult;
 
+// @public (undocumented)
+export type ResultHeaderTransformer = (resultHeader: IResultHeader, postProcessing?: IPostProcessing) => IResultHeader;
+
 // @beta (undocumented)
 export type ResultProvider = (context: ResultProviderContext) => Promise<IExecutionResult>;
 
@@ -609,6 +612,9 @@ export type TelemetryData = {
     componentName?: string;
     props?: string[];
 };
+
+// @public
+export function transformResultHeaders(resultHeaders: IResultHeader[][][], resultHeaderTransformer?: ResultHeaderTransformer, postProcessing?: IPostProcessing): IResultHeader[][][];
 
 // @beta
 export class VariableMetadataObjectBuilder<T extends IVariableMetadataObject = IVariableMetadataObject> extends MetadataObjectBuilder<T> {

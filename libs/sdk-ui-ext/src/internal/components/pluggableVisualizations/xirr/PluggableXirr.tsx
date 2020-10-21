@@ -95,7 +95,7 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         const execution = executionFactory
             .forInsight(insight)
             .withDimensions(...this.getXirrDimensions(insight))
-            .withPostProcessing(dateFormat ? { dateFormat } : undefined);
+            .withDateFormat(dateFormat);
 
         this.renderFun(
             <CoreXirr

@@ -38,13 +38,12 @@ import {
     defFingerprint,
     defWithDimensions,
     defWithSorting,
-    defWithPostProcessing,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
     ISortItem,
     uriRef,
-    IPostProcessing,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
@@ -329,8 +328,8 @@ function recordedPreparedExecution(
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
-        withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution {
-            return executionFactory.forDefinition(defWithPostProcessing(definition, postProcessing));
+        withDateFormat(dateFormat: string): IPreparedExecution {
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
@@ -339,6 +338,12 @@ function recordedPreparedExecution(
                 if (!recording) {
                     reject(new Error("Recording not found"));
                 } else {
+                    if (definition.postProcessing) {
+                        recording.definition = {
+                            ...recording.definition,
+                            postProcessing: definition.postProcessing,
+                        };
+                    }
                     resolve(recordedExecutionResult(definition, executionFactory, recording));
                 }
             });

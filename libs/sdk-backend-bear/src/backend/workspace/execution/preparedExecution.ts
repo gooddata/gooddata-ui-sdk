@@ -5,12 +5,11 @@ import {
     defFingerprint,
     defWithDimensions,
     defWithSorting,
-    defWithPostProcessing,
     DimensionGenerator,
     IDimension,
     IExecutionDefinition,
     ISortItem,
-    IPostProcessing,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -54,8 +53,8 @@ export class BearPreparedExecution implements IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
     }
 
-    public withPostProcessing(postProcessing: IPostProcessing): IPreparedExecution {
-        return this.executionFactory.forDefinition(defWithPostProcessing(this.definition, postProcessing));
+    public withDateFormat(dateFormat: string): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     }
 
     public fingerprint(): string {

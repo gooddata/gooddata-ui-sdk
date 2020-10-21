@@ -219,6 +219,9 @@ export function defSetSorts(def: IExecutionDefinition, sortBy?: ISortItem[]): IE
 export function defTotals(def: IExecutionDefinition, dimIdx: number): ITotal[];
 
 // @public
+export function defWithDateFormat(definition: IExecutionDefinition, dateFormat: string): IExecutionDefinition;
+
+// @public
 export function defWithDimensions(definition: IExecutionDefinition, ...dims: Array<IDimension | DimensionGenerator>): IExecutionDefinition;
 
 // @public
