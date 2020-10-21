@@ -39,7 +39,7 @@ import { getCategoriesForTwoAttributes } from "./extendedStackingChartOptions";
 
 import { ColorFactory } from "./colorFactory";
 import { getChartProperties } from "../_chartCreators/helpers";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import {
     multiMeasuresAlternatingTypes,
     sortedByMeasureTypes,
@@ -179,7 +179,7 @@ export function getHeatmapDataClasses(
     return dataClasses;
 }
 
-export function getDefaultTreemapAttributes(dv: DataViewFacade): any {
+export function getDefaultTreemapAttributes(dv: DataViewFacade): ChartedAttributes {
     const dimensions = dv.meta().dimensions();
     const attributeHeaderItems = dv.meta().attributeHeaders();
 
@@ -204,7 +204,7 @@ export function getDefaultTreemapAttributes(dv: DataViewFacade): any {
     };
 }
 
-export function getTreemapAttributes(dv: DataViewFacade): any {
+export function getTreemapAttributes(dv: DataViewFacade): ChartedAttributes {
     if (!dv.def().hasBuckets()) {
         // without mdObject cant distinguish 1M 1Vb 0Sb and 1M 0Vb 1Sb
         return getDefaultTreemapAttributes(dv);
@@ -250,16 +250,65 @@ export function getTreemapAttributes(dv: DataViewFacade): any {
     };
 }
 
+type ChartedAttributes = {
+    viewByAttribute?: IUnwrappedAttributeHeadersWithItems;
+    viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
+    stackByAttribute?: IUnwrappedAttributeHeadersWithItems;
+    isViewByTwoAttributes?: boolean;
+};
+
+function defaultChartedAttributeDiscovery(dv: DataViewFacade): ChartedAttributes {
+    const attributeHeaderItems = dv.meta().attributeHeaders();
+    const dimensions = dv.meta().dimensions();
+
+    const isViewByTwoAttributes =
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX] &&
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === ViewByAttributesLimit;
+
+    let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems | undefined;
+
+    const viewByAttribute: IUnwrappedAttributeHeadersWithItems | undefined = findAttributeInDimension(
+        dimensions[VIEW_BY_DIMENSION_INDEX],
+        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+        isViewByTwoAttributes ? PRIMARY_ATTRIBUTE_INDEX : undefined,
+    );
+
+    const stackByAttribute: IUnwrappedAttributeHeadersWithItems | undefined = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+    );
+
+    if (isViewByTwoAttributes) {
+        viewByParentAttribute = findAttributeInDimension(
+            dimensions[VIEW_BY_DIMENSION_INDEX],
+            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
+            PARENT_ATTRIBUTE_INDEX,
+        );
+    }
+
+    return {
+        viewByAttribute,
+        viewByParentAttribute,
+        stackByAttribute,
+        isViewByTwoAttributes,
+    };
+}
+
+function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): ChartedAttributes {
+    if (isTreemap(chartType)) {
+        return getTreemapAttributes(dv);
+    }
+
+    return defaultChartedAttributeDiscovery(dv);
+}
+
 export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate[],
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
-
     const dimensions = dv.meta().dimensions();
-    const attributeHeaderItems = dv.meta().attributeHeaders();
-
     const config = setMeasuresToSecondaryAxis(chartConfig, dv);
 
     invariant(
@@ -270,40 +319,12 @@ export function getChartOptions(
     );
 
     const { type } = config;
-
-    const isViewByTwoAttributes =
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX] &&
-        attributeHeaderItems[VIEW_BY_DIMENSION_INDEX].length === ViewByAttributesLimit;
-    let viewByAttribute: IUnwrappedAttributeHeadersWithItems;
-    let viewByParentAttribute: IUnwrappedAttributeHeadersWithItems;
-    let stackByAttribute: IUnwrappedAttributeHeadersWithItems;
-
-    if (isTreemap(type)) {
-        const {
-            viewByAttribute: treemapViewByAttribute,
-            stackByAttribute: treemapStackByAttribute,
-        } = getTreemapAttributes(dv);
-        viewByAttribute = treemapViewByAttribute;
-        stackByAttribute = treemapStackByAttribute;
-    } else {
-        viewByAttribute = findAttributeInDimension(
-            dimensions[VIEW_BY_DIMENSION_INDEX],
-            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
-            isViewByTwoAttributes ? PRIMARY_ATTRIBUTE_INDEX : undefined,
-        );
-        stackByAttribute = findAttributeInDimension(
-            dimensions[STACK_BY_DIMENSION_INDEX],
-            attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
-        );
-    }
-
-    if (isViewByTwoAttributes) {
-        viewByParentAttribute = findAttributeInDimension(
-            dimensions[VIEW_BY_DIMENSION_INDEX],
-            attributeHeaderItems[VIEW_BY_DIMENSION_INDEX],
-            PARENT_ATTRIBUTE_INDEX,
-        );
-    }
+    const {
+        viewByAttribute,
+        viewByParentAttribute,
+        stackByAttribute,
+        isViewByTwoAttributes = false,
+    } = chartedAttributeDiscovery(dv, type);
 
     const colorStrategy = ColorFactory.getColorStrategy(
         config.colorPalette,

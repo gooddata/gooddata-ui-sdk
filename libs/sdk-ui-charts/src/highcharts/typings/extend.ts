@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import Highcharts from "../adapter/highcharts";
+import Highcharts from "../lib";
 
 export type IHighchartsAxis = Partial<Highcharts.Axis> &
     Partial<Highcharts.ExtremesObject> &

@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import partial from "lodash/partial";
 import cloneDeep from "lodash/cloneDeep";
-import Highcharts from "../../adapter/highcharts";
+import Highcharts from "../../lib";
 import { styleVariables } from "./styles/variables";
 import { tickLabelClick } from "./drilldownEventing";
 import { ChartType, IDrillConfig, IHighchartsCategoriesTree, IHighchartsParentTick } from "@gooddata/sdk-ui";

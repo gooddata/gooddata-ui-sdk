@@ -1,5 +1,5 @@
-// (C) 2019 GoodData Corporation
-import Highcharts from "../adapter/highcharts";
+// (C) 2019-2020 GoodData Corporation
+import Highcharts from "../lib";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const WHITE_LABEL: Highcharts.CSSObject = {

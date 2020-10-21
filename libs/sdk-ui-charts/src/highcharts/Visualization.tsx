@@ -4,7 +4,7 @@ import invariant from "ts-invariant";
 import React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { ChartTransformation, renderHighCharts } from "./ChartTransformation";
-import Highcharts from "./adapter/highcharts";
+import Highcharts from "./lib";
 import { IChartConfig } from "../interfaces";
 
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common";

@@ -6,7 +6,7 @@ import values from "lodash/values";
 import flatten from "lodash/flatten";
 import identity from "lodash/identity";
 import isEmpty from "lodash/isEmpty";
-import Highcharts from "../../highcharts";
+import Highcharts from "../../../lib";
 
 import {
     getAxisRangeForAxes,

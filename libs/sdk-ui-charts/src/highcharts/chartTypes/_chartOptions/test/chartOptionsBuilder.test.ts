@@ -4,7 +4,7 @@ import set from "lodash/set";
 import isNil from "lodash/isNil";
 import cloneDeep from "lodash/cloneDeep";
 import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
-import Highcharts from "../../../adapter/highcharts";
+import Highcharts from "../../../lib";
 import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper";
 import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder";
 import { DEFAULT_CATEGORIES_LIMIT } from "../../_chartCreators/commonConfiguration";

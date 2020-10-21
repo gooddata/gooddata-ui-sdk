@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import Highcharts from "../../../adapter/highcharts";
+import Highcharts from "../../../lib";
 import getOptionalStackingConfiguration, {
     convertMinMaxFromPercentToNumber,
     getParentAttributeConfiguration,

@@ -8,7 +8,7 @@ import {
     isIntersecting,
     IRectBySize,
 } from "../../../chartTypes/_chartCreators/helpers";
-import Highcharts from "../../highcharts";
+import Highcharts from "../../../lib";
 
 // delete this plugin once we upgrade to newer highcharts,
 // set allowOverlap: false to get this behaviour

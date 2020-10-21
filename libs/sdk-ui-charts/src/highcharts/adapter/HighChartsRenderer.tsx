@@ -14,7 +14,7 @@ import { IChartConfig, OnLegendReady } from "../../interfaces";
 import { Chart, IChartProps } from "./Chart";
 import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts from "./highcharts";
+import Highcharts from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
