@@ -90,7 +90,7 @@ export function getSeriesItemData(
     });
 }
 
-export function getSeries(
+function getDefaultSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
@@ -98,18 +98,6 @@ export function getSeries(
     type: string,
     colorStrategy: IColorStrategy,
 ): any {
-    if (isHeatmap(type)) {
-        return getHeatmapSeries(dv, measureGroup);
-    } else if (isScatterPlot(type)) {
-        return getScatterPlotSeries(dv, stackByAttribute, colorStrategy);
-    } else if (isBubbleChart(type)) {
-        return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy);
-    } else if (isTreemap(type) && stackByAttribute) {
-        return getTreemapStackedSeries(dv, measureGroup, viewByAttribute, stackByAttribute, colorStrategy);
-    } else if (isBulletChart(type)) {
-        return getBulletChartSeries(dv, measureGroup, colorStrategy);
-    }
-
     return dv
         .rawData()
         .twoDimData()
@@ -153,4 +141,27 @@ export function getSeries(
                 ...turboThresholdProp,
             };
         });
+}
+
+export function getSeries(
+    dv: DataViewFacade,
+    measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+    type: string,
+    colorStrategy: IColorStrategy,
+): any {
+    if (isHeatmap(type)) {
+        return getHeatmapSeries(dv, measureGroup);
+    } else if (isScatterPlot(type)) {
+        return getScatterPlotSeries(dv, stackByAttribute, colorStrategy);
+    } else if (isBubbleChart(type)) {
+        return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy);
+    } else if (isTreemap(type) && stackByAttribute) {
+        return getTreemapStackedSeries(dv, measureGroup, viewByAttribute, stackByAttribute, colorStrategy);
+    } else if (isBulletChart(type)) {
+        return getBulletChartSeries(dv, measureGroup, colorStrategy);
+    }
+
+    return getDefaultSeries(dv, measureGroup, viewByAttribute, stackByAttribute, type, colorStrategy);
 }

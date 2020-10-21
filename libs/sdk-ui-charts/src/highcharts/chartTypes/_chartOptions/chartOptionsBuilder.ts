@@ -319,7 +319,6 @@ export function getChartOptions(
     );
 
     const { type } = config;
-    // TODO: the chart attribute discovery must be parameterizable.
     const {
         viewByAttribute,
         viewByParentAttribute,
