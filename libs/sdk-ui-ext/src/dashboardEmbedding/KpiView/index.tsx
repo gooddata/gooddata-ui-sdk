@@ -3,17 +3,15 @@ import React from "react";
 import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
-    useExecution,
-    useDataView,
     IErrorProps,
     ILoadingProps,
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
 } from "@gooddata/sdk-ui";
 import { InvariantError } from "ts-invariant";
-import compact from "lodash/compact";
 
-import { getMeasures } from "./utils";
+import { useKpiMeasures } from "./utils";
+import { KpiExecutor } from "./KpiExecutor";
 
 export interface IKpiViewProps {
     kpiWidget: IWidget;
@@ -47,6 +45,7 @@ export interface IKpiViewProps {
 
 export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
+    filters,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -56,16 +55,12 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         throw new InvariantError("The provided widget is not a KPI widget.");
     }
 
-    const { primaryMeasure, secondaryMeasure } = getMeasures(kpiWidget);
-
-    // TODO memoize and invalidate?
-    const execution = useExecution({
-        seriesBy: compact([primaryMeasure, secondaryMeasure]),
+    const { error, result, status } = useKpiMeasures({
+        kpiWidget,
         backend,
+        filters,
         workspace,
     });
-
-    const { error, result, status } = useDataView({ execution });
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
@@ -75,16 +70,15 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         return <ErrorComponent message={error.message} />;
     }
 
-    const primarySeries = result.data().series().firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure
-        ? result.data().series().firstForMeasure(secondaryMeasure)
-        : null;
-
     return (
-        <div>
-            <div>{primarySeries.measureTitle()}</div>
-            <div>{primarySeries.dataPoints()[0].formattedValue()}</div>
-            {secondarySeries && <div>{secondarySeries.dataPoints()[0].formattedValue()}</div>}
-        </div>
+        <KpiExecutor
+            primaryMeasure={result.primaryMeasure}
+            secondaryMeasure={result.secondaryMeasure}
+            filters={filters}
+            backend={backend}
+            workspace={workspace}
+            ErrorComponent={ErrorComponent}
+            LoadingComponent={LoadingComponent}
+        />
     );
 };
