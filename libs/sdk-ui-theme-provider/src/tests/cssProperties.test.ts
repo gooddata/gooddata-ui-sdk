@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
-import { parseThemeToCssProperties, ParserFunction } from "../cssProperties";
+import { parseThemeToCssProperties, ParserFunction, clearCssProperties } from "../cssProperties";
 
 describe("cssProperties", () => {
     describe("parseThemeToCssProperties", () => {
@@ -72,6 +72,28 @@ describe("cssProperties", () => {
                     value: "#14b2e2",
                 },
             ]);
+        });
+    });
+
+    describe("clearCssProperties", () => {
+        it("should remove properties and custom font style elements from head", () => {
+            const propertiesTagIdentifier = "gdc-theme-properties";
+            const propertiesTag = document.createElement("style");
+            propertiesTag.id = propertiesTagIdentifier;
+            document.head.appendChild(propertiesTag);
+
+            const customFontTagIdentifier = "gdc-theme-custom-font";
+            const customFontTag = document.createElement("style");
+            customFontTag.id = customFontTagIdentifier;
+            document.head.appendChild(customFontTag);
+
+            expect(document.getElementById(propertiesTagIdentifier)).not.toEqual(null);
+            expect(document.getElementById(customFontTagIdentifier)).not.toEqual(null);
+
+            clearCssProperties();
+
+            expect(document.getElementById(propertiesTagIdentifier)).toEqual(null);
+            expect(document.getElementById(customFontTagIdentifier)).toEqual(null);
         });
     });
 });

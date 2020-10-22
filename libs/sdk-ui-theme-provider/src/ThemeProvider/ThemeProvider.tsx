@@ -1,11 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
-import { InvariantError } from "ts-invariant";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { setCssProperties } from "../cssProperties";
+import { clearCssProperties, setCssProperties } from "../cssProperties";
 import { ThemeContextProvider } from "./Context";
 
 /**
@@ -51,9 +50,9 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const workspace = workspaceParam || workspaceFromContext;
 
     if (!backend || !workspace) {
-        throw new InvariantError(
-            "backend and workspace must be either specified explicitly or be provided by context",
-        );
+        clearCssProperties();
+
+        return <>{children}</>;
     }
 
     const [theme, setTheme] = useState<ITheme>({});
@@ -65,6 +64,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
+            clearCssProperties();
             const theme = await backend.workspace(workspace).styling().getTheme();
             if (lastWorkspace.current === workspace) {
                 setTheme(theme);

@@ -145,7 +145,7 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     ]) ||
     [];
 
-const clearCssProperties = () => {
+export const clearCssProperties = (): void => {
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
     themePropertiesElement && document.head.removeChild(themePropertiesElement);
 
@@ -169,8 +169,6 @@ const clearCssProperties = () => {
  * @beta
  */
 export function setCssProperties(theme: ITheme): void {
-    clearCssProperties();
-
     const cssProperties = [
         ...parseThemeToCssProperties(theme, customParserFunctions),
         ...generateDerivedColors(theme.palette),
