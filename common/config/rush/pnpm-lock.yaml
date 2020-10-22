@@ -1471,7 +1471,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-USBFmscQBlDf7V5jL3r5qTEBt/4yekUG8G8694gWZXvT6usN+9mZyMTvxVSdTWDRFS/6PDMQ1+YT74e4kVBGdw==
-  /@gooddata/goodstrap/69.0.0_react-dom@16.13.1+react@16.13.1:
+  /@gooddata/goodstrap/70.0.0_react-dom@16.13.1+react@16.13.1:
     dependencies:
       '@babel/runtime-corejs2': 7.11.2
       '@gooddata/js-utils': 3.10.13
@@ -1498,14 +1498,14 @@ packages:
       react-responsive: 3.0.0_react@16.13.1
       react-textarea-autosize: 7.1.2_react@16.13.1
       react-transition-group: 1.2.1_react-dom@16.13.1+react@16.13.1
-      rxjs: 5.5.12
+      rxjs: 6.6.3
       tinycolor2: 1.4.2
     dev: false
     peerDependencies:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-bXHuMzFyN7Ttl+6+xfpDGyOT2gwmTEPZ62SWYACHX+ZNo6OAMMScRFPg9HQzrQmsNpep0S/sg/+msWUxD0DFaw==
+      integrity: sha512-LjTmZZf9zMZZlnIhSvlMz4ER7admbD25dqN3xpkce7duGM20TNhniYRibCiKHJ6z5qQuaxD7mUdNKKZsKY8rgw==
   /@gooddata/js-utils/3.10.13:
     dependencies:
       '@gooddata/typings': 2.27.0
@@ -16680,14 +16680,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-P4Yt+pGrdmsUiF700BEkv9oHT7Q=
-  /rxjs/5.5.12:
-    dependencies:
-      symbol-observable: 1.0.1
-    dev: false
-    engines:
-      npm: '>=2.0.0'
-    resolution:
-      integrity: sha512-xx2itnL5sBbqeeiVgNPVuQQ1nC8Jp2WfNJhXWHmElW9YmrpS9UVnNzhP3EH3HFqexO5Tlp8GhYY+WEcqcVMvGw==
   /rxjs/6.6.3:
     dependencies:
       tslib: 1.13.0
@@ -17991,12 +17983,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-w5IDpFhzhfrTyFCgvRvK+ggZdOM=
-  /symbol-observable/1.0.1:
-    dev: false
-    engines:
-      node: '>=0.10.0'
-    resolution:
-      integrity: sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=
   /symbol-tree/3.2.4:
     dev: false
     resolution:
@@ -19995,6 +19981,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       async: 2.6.3
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20026,7 +20013,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-bear'
     resolution:
-      integrity: sha512-FM2o2NIBE4tXs652oDLNGLTGHfc9BBVMvwpCsL27kr2e9r5YOKiDGhtrJIVjWwKAKod3RJ+DjdG4uIApKcwifg==
+      integrity: sha512-pWoUlcEPeUim7EtP6lCUaPOoBj3faTwZ8lhBLPcBURMrEfa2rZqOJ2CZOTpQDVMn+zHDawdWi43f0mnpyczRZA==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz':
@@ -20042,6 +20029,7 @@ packages:
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       axios: 0.19.2
       commander: 3.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       dotenv: 8.2.0
       eslint: 7.10.0
@@ -20062,7 +20050,7 @@ packages:
     dev: false
     name: '@rush-temp/api-client-tiger'
     resolution:
-      integrity: sha512-G15FXGCjGIC6MmsCcHs53a0I306Nhwa0LGTVqbcZVPmx5dDfVgs4tCPwgnbKQBJQel5rVp5NJ0XE5QdQkuP2VQ==
+      integrity: sha512-YhIXVWCE47KyHM7cM9KClRgmowNikCVCgN/6lABZNaspr2dAPRx7n6jZHcrDheWEBs9bQjoPqr2LZOI+L/ETbg==
       tarball: 'file:projects/api-client-tiger.tgz'
     version: 0.0.0
   'file:projects/api-model-bear.tgz':
@@ -20073,6 +20061,7 @@ packages:
       '@types/lodash': 4.14.161
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20089,7 +20078,7 @@ packages:
     dev: false
     name: '@rush-temp/api-model-bear'
     resolution:
-      integrity: sha512-+7NS013yyijWucLH1V+AZ2r0gMoZkjv9u791Y6ZmrIHfOtreV8x96GFYtcPFl03nkcYeLsPDYxBidASyxKIllw==
+      integrity: sha512-524aGFA/Xim7JslKyOsnDElcOIq+dU1ptqOmuO88Yg8+AXoc6XzYtfIoCZwe658RfLtuY+Jj3V/6bgFreXVNKQ==
       tarball: 'file:projects/api-model-bear.tgz'
     version: 0.0.0
   'file:projects/applink.tgz':
@@ -20167,7 +20156,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-WiyHOPosHIM2f9QRWIqJM3hyqXp36KhAZZltHTAcOjm8LzoRouXzjMOt7PGD8KcDyTM9WphkeISGJeGhsr7Mnw==
+      integrity: sha512-BimE3WWWrZEmIptO1qJhTCDIOlrdfw36xWH5DbpgUFAVJUlFvi6lyetu5Z5Z06Y6gtHtdN0hajXFAPyfWxahhg==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/experimental-workspace.tgz':
@@ -20195,7 +20184,7 @@ packages:
     dev: false
     name: '@rush-temp/experimental-workspace'
     resolution:
-      integrity: sha512-HD1d9YlesMhnOY2p+xsTgX3GIRW/G4f0TI+WEOkdQ7ljXNP1VOstY/yfQmLzHfYX/CADO6kTBxv4dj+d2cZFcg==
+      integrity: sha512-mvgIroEocC2DyMXP0tbDZLL/IJytIE+sTEwaa7nFOAYn3NrjM/3SvIkHv91WCoNa1e7vVJL0tso3fbha0WpfSQ==
       tarball: 'file:projects/experimental-workspace.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz':
@@ -20222,7 +20211,7 @@ packages:
     dev: false
     name: '@rush-temp/live-examples-workspace'
     resolution:
-      integrity: sha512-MbeOBBKGFs/p2aSksIv/PhohxwsfuPYkylEtp1RKswvxf4zFONNJpgIr2PK4SBzaN0goGUCt7k1wxGfKxltHIQ==
+      integrity: sha512-6gYCqcOntXCxF/bQ/0qIyLi7fN3/j+K6dgKWXmSZsgg+QZeKdTmq14ANz3t0GNhc9X7AUHNSop1p4PXS31ssyg==
       tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -20264,7 +20253,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-0V0DnRlmDg0uVOi8QbRj0umRJ7YSU/37HHgUm0OeuLYNexF3Ju9nH0p393rEd6mfRFNDSnpUZkjfVZ1tQKbEBA==
+      integrity: sha512-Pzl1XqgRStRULXd9PZzGFD6Vz57Hq9K2KcEdeEdfdhC0FStMR+bnVOZxIuLHvZ42djzRVfvaI5tc2mFx8hqW3g==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz':
@@ -20290,7 +20279,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace-mgmt'
     resolution:
-      integrity: sha512-0QkkbOuyezlGwTv4YckY5YiWi5jPWeNc1X5T9Skjy8kabrzn5GpNEKxvKSRugkW9jTmpu+I1Era7RISvD7drZg==
+      integrity: sha512-KEogbcMtbdUR0cWv4LKurG4Aa6n7e4U42cBKPqzx2qVeCgUfk6/z9jydFhNWC/qAGxq3616whOa/NAuqyCVxew==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz':
@@ -20317,7 +20306,7 @@ packages:
     dev: false
     name: '@rush-temp/reference-workspace'
     resolution:
-      integrity: sha512-Au625Vba0+/K7GpMN2/2bP0MD8yB+VXiukVxToMxuw056Y33zDbvijfoadCOeHPjNHSRrlxNvghKIdIEbscfTA==
+      integrity: sha512-xLMm+Cntet8CTH3vhz2SU9RHypZtfoZgvMKinKzsmZvUuf17ipwqyyZ3b6e2vRQ0atMoX/Cz8y5vUng0PHHBvQ==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz':
@@ -20331,6 +20320,7 @@ packages:
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20351,7 +20341,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-base'
     resolution:
-      integrity: sha512-7u0Xx6ZUnUpUTQ6bXBsQ/JScH/nSN9aNSWxrcuS3K52OsLH46VPdyAN30IYgNVPGCECURW1spyIk95JsQi9FKQ==
+      integrity: sha512-foC6krmQ6RyPnKqHl/pyx80P1hjpHLmu8A8PGX/NxzysFFk5sl78Dti65h+CNzwUl52PijXRjC9a3rEt2Pw+nQ==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz':
@@ -20365,6 +20355,7 @@ packages:
       '@types/uuid': 3.4.9
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       dotenv: 8.2.0
       eslint: 7.10.0
@@ -20387,7 +20378,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-bear'
     resolution:
-      integrity: sha512-iZhxPfWJDwtiRLJd4M68FoTC1b8QlGMF6A923hFKPFv8WNc4sd02liJE7ALuQ45Rm+Q7p0iVDTi+YtVtw2oudQ==
+      integrity: sha512-UhCPfd7aOOLMYFhWh6lwtE+GIsBj/zTKeyGbH/9rapwKg7f5wa/Bv1hFV3+663JieU4dGN3X0E6gBPTpmV6T4g==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz':
@@ -20399,6 +20390,7 @@ packages:
       '@types/node': 12.12.62
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20416,7 +20408,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-mockingbird'
     resolution:
-      integrity: sha512-T7DjFZIQx8koqQhG+HTabXgHtoFEAKyi+zGkgGOGJ83V3w/LyReLC9ivZZCQWNBUIJtZd0D7pwAMLpim41I3dw==
+      integrity: sha512-NHxlobaE1zN/aw5VLnsnr5nFUwxWSq5CGgJWVOpV+OmZJ+TQpjcnFmO3tjV8Yto41xRfC4A1gjt74SDScTMiTA==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz':
@@ -20428,6 +20420,7 @@ packages:
       '@types/spark-md5': 3.0.2
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20446,7 +20439,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-spi'
     resolution:
-      integrity: sha512-PylqZEGn8I6HJdHMVEbd9LYQNz8f61Yi4HWUWmrInX6S+1R3BZTcPfJ0KKEHqbGXOaVxGbJDFQCL5irYK4gDxg==
+      integrity: sha512-oZ33NL8pODy+Ym0+YkjLEm7Wlj4fbizhvW0BuJ5zxCqntrgn6C4ncOvS7RxLXIPmrmqL047RhTIt/NR+dYvlOA==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz':
@@ -20460,6 +20453,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       axios: 0.19.2
+      concurrently: 5.3.0
       date-fns: 2.16.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
@@ -20481,7 +20475,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-backend-tiger'
     resolution:
-      integrity: sha512-U0cCMDw2wykuIGn0keavGmZwzea3UdQwO1g1CLRF78lOs+llvTcIT/30PyN3VhIz6cB1sZP+Vdj32Qf4hyPuLg==
+      integrity: sha512-CdunHpD9v1uEOk7BWCoMH1YPz3tjUll1AaZ6QB3aO/GvZ5EPEuCofJCWvdrZGsDpsg6gqW2g/X1mhL+AcZBArQ==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-embedding.tgz':
@@ -20492,6 +20486,7 @@ packages:
       '@types/lodash': 4.14.161
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20510,7 +20505,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-embedding'
     resolution:
-      integrity: sha512-qa2jown0szIwG+Atuu0+weZhJmQwblv6RCybPUZUeZEl3ReYxPu5UJdyTCuuey7+tw6ZYF4o38Rc63+Ay6iM8Q==
+      integrity: sha512-QvE801gK4y41X0yZ7wDYeD7H47t1QWi5anA1Kv8zyO/K5xD4I3Bo1JA1vdCehol5148RKFMy5SNc1fMyBWWAEw==
       tarball: 'file:projects/sdk-embedding.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz':
@@ -20527,7 +20522,7 @@ packages:
       '@babel/preset-typescript': 7.10.4_@babel+core@7.11.6
       '@babel/runtime': 7.11.2
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@types/classnames': 2.2.3
       '@types/history': 4.7.8
       '@types/isomorphic-fetch': 0.0.34
@@ -20606,7 +20601,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-examples'
     resolution:
-      integrity: sha512-qAeIf9sHBjEbDss5nGnbcL+Co5AhsxmIoc5UniYEai3XH0Noz2thgnt1GNapV9ussMTzwRhrS9PWkdwz/tQMEQ==
+      integrity: sha512-wJWNdU/bp7HMMJ+rc2wCtVlcERwqWw3/BtUvlojLnn1JWan+VKUN0anOCd7D2X6nSJXXYr7XuXX9AWJeqMNyxw==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz':
@@ -20621,6 +20616,7 @@ packages:
       '@types/stringify-object': 3.3.0
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20641,7 +20637,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-model'
     resolution:
-      integrity: sha512-9Oedw9ZwVp0pizGc1wBWNSRYZw6kokn3KT83iSK0YpMVj+QREzzZnkviMJg6ijwSf8ZAlGk5adC9gZz1sHo0mg==
+      integrity: sha512-jz4SxLx3fq2gm4fC6ZECXOkJtrEOf5qritpdFt6rom5xcguS4VFwkbwlgu035tHg1QGB+caQyOavMJFpd9HcFw==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz':
@@ -20652,6 +20648,7 @@ packages:
       '@types/lodash': 4.14.161
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20668,7 +20665,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-ts'
     resolution:
-      integrity: sha512-rlsZHrVQ8KAOP1uq6TlWFrSsrcMUHAe4dFRfUvKMOjJ5M2oKXzoPHwDY/oq8OEg8wvlLQ4EP20AS7czlQDA4RQ==
+      integrity: sha512-+5r+JtX0F1dHNYom8OlMRHOslYctuDm6DWPHw7uJCEsXm4Mvwk287dg5PZP/XSlJOVNcFxyr57kOyeZVmdYJnA==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz':
@@ -20686,6 +20683,7 @@ packages:
       '@types/stringify-object': 3.3.0
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.5_df2dc313d8031f8c2dbd009d86ca7fc7
@@ -20713,7 +20711,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-skel-tsx'
     resolution:
-      integrity: sha512-3JKBy7pAMFiRnUbxDLHKnNNWX74mE81fCHqOKQrKqOksxIINDoRW1ZL520dQ4DW0svCgCKB6StqLoFZIPsYldA==
+      integrity: sha512-WRTV17uIZgaYw6OoUgyxU/vx47zwBpbjmVp59t0U1Jf8bqDSQHbNpKKvkLBZI43jxsaOCUF8/8q8fozT/7qZPQ==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-all.tgz':
@@ -20723,6 +20721,7 @@ packages:
       '@types/jest': 26.0.14
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -20738,13 +20737,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-all'
     resolution:
-      integrity: sha512-uNqlu1HpwmlDV5k3xgf8MuZvzuyfDdh2Z+cYIoNi5LHVlkRyrSC6WIJk86slP0Tajuxy19bHDAmsgZPqgFRaCQ==
+      integrity: sha512-pm2MO57HPHq+WLmpUq85eYvMEpw1oZ1EsLjz6s4uVWRxQmuPxJ1zvBDbu/lA4cEHjfR3Pbt/DUUH5gdsOGjv7w==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@types/classnames': 2.2.3
       '@types/enzyme': 3.10.7
@@ -20760,6 +20759,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
+      concurrently: 5.3.0
       custom-event: 1.0.1
       date-fns: 2.16.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
@@ -20796,14 +20796,14 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-charts'
     resolution:
-      integrity: sha512-iCQUeaOUUhtbpJZYQ/IcwlaKx9AP0jLw4dOXbmn66JjecVfo7goyV80DUQEOG5/ZtMhnQFm69kbuwpM7Fi18wg==
+      integrity: sha512-VJdPQ7LE1QHKc+Jf3LcrZKyEGysKZxEDC1b7mF9SMQJRxkm8mLbWxP3ogEV5M9Q6i8NoLJnnND1iyApzsij/kQ==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@rollup/plugin-commonjs': 15.1.0_rollup@2.32.0
@@ -20852,6 +20852,7 @@ packages:
       react-measure: 2.5.2_react-dom@16.13.1+react@16.13.1
       rollup: 2.32.0
       rollup-plugin-typescript2: 0.27.3_rollup@2.32.0+typescript@4.0.2
+      ts-invariant: 0.4.4
       ts-jest: 26.4.1_jest@26.4.2+typescript@4.0.2
       tslib: 2.0.1
       typescript: 4.0.2
@@ -20859,13 +20860,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-z7kufwkfgj5IsiVrgS8rZd0TIVpJtMxd3hzt6djJUcUiJr7g+rbIXRx7xXlQ/Mryo4x5qMmiiqxachRxh9Qpvw==
+      integrity: sha512-ed8vre9F+Q008fkWJ+X6Ve2YzK+L8M3rDlmZdG90xGBecPbWe9Y+83CitEkStl1+FA6RpfW9JRotVaYRSaf6qQ==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@types/classnames': 2.2.3
@@ -20884,6 +20885,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
+      concurrently: 5.3.0
       date-fns: 2.16.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
       downshift: 3.4.8_react@16.13.1
@@ -20922,13 +20924,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-filters'
     resolution:
-      integrity: sha512-wDyqODhvfjaJefoIgjqQjTJzo3p5SRl10PNMTBUFWWJvrjWGNbLM9PdpPFnzIaW7QL6vvHm0XCCzaIe2BKuikw==
+      integrity: sha512-WW7tIyO+yCYi2gITKVN33+SMsyrPngkUgzwRVnyLMAX+1Jwdn56TxAxbrdjmlLyWnC7Lkpi7gGTj1PGZlyac5A==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@types/classnames': 2.2.3
@@ -20945,6 +20947,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
+      concurrently: 5.3.0
       custom-event: 1.0.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
@@ -20976,13 +20979,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-geo'
     resolution:
-      integrity: sha512-GoxlVswMDu+ebBiEXIblWb2xWxWGqMeCdZEZgRb1+QUT5kW5lFjJWAdiWTxeTCPeRPl/vyRc3nfDC1FNrz3lww==
+      integrity: sha512-kkDdGrpX3DCiqEN+1nxJUm1I8sBjoLkdwD+5UzDxiOYKw4xIqGE0omo4ZGCTmJ2L4tvlyGTaugnQgBZZ0aX9iQ==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-kit.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@types/classnames': 2.2.3
@@ -21001,6 +21004,7 @@ packages:
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
       codemirror: 5.58.1
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.5_df2dc313d8031f8c2dbd009d86ca7fc7
@@ -21012,6 +21016,7 @@ packages:
       eslint-plugin-react: 7.21.2_eslint@7.10.0
       eslint-plugin-react-hooks: 4.1.2_eslint@7.10.0
       fixed-data-table-2: 0.8.28_react-dom@16.13.1+react@16.13.1
+      foundation-sites: 5.5.3
       immutable: 4.0.0-rc.12
       jest: 26.4.2
       jest-enzyme: 7.1.2_15e0646601b17205074344cb7926e40c
@@ -21035,7 +21040,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-kit'
     resolution:
-      integrity: sha512-1zeOCqIz2cc6cFd0sNvQtjGwMlNIUKXB5L9l2KfWl9kQSdhzDZZANHe/UqVTaSq/HCeoQBdTinFJgcR3LngfMA==
+      integrity: sha512-pP1zsbqgpvBiu0jpo0aVmdz8ADwlJtJSdNxFS1pY7s1EN0qTuw9wvU1OLlkOqq05L3r0Y3iRnQaqLKBBS6NXtQ==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':
@@ -21044,7 +21049,7 @@ packages:
       '@ag-grid-community/react': 22.1.2_react-dom@16.13.1+react@16.13.1
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@types/classnames': 2.2.3
@@ -21059,6 +21064,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
+      concurrently: 5.3.0
       custom-event: 1.0.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
@@ -21092,7 +21098,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-pivot'
     resolution:
-      integrity: sha512-khnVXWbJ8UttKBSLNYbQiN3Gt8JLRU+bGVGgnKC++EdZqV2gs0a7fjrPWSxiwKiYe14pk1DTkdxq2X5de3TfZQ==
+      integrity: sha512-mLky4J0e+1OcTh3aPLws2pBBFhk/sP+sPcITJp2gp78+5I32CJfcjx9DPHJKp65jtGGe+pGGbOepPnPzOdLjXQ==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz':
@@ -21159,13 +21165,12 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-tests'
     resolution:
-      integrity: sha512-vMSX8ecXQKPS1JlTcTwx6LEJPBsw3XRc1jZ81grrYpp26GO59F8DuKjaXhqXDgVO2jsI9NBthnZpMv/2LhTN9A==
+      integrity: sha512-8b/XqW4+AyXZPBGvF2d51CX8BE8xQ9D8sejLrPe9KlaUIJGWF7PbfvlfrSIeZ6PIx7sUBN8cFCCNPblxosHWdw==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-theme-provider.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
       '@microsoft/api-extractor': 7.8.1
       '@types/enzyme': 3.10.7
       '@types/enzyme-adapter-react-16': 1.0.6
@@ -21178,6 +21183,7 @@ packages:
       '@types/stringify-object': 3.3.0
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.5_df2dc313d8031f8c2dbd009d86ca7fc7
@@ -21207,13 +21213,13 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-theme-provider'
     resolution:
-      integrity: sha512-UBabYgaS54xQJ2cLkbWoNVAFbgAq2JLteq/YPdedmYNT6pLa6cccI+UnQjzmsQq/NXPVOc+ENDbjnd7Hx4O28Q==
+      integrity: sha512-mA3eYUDigjVKwHPNwjseweNtq2mlyUTaDHdNbRsl6/P/unDr6PC6i3UC6YtbGkNjPkMTYstR2Bk3YcMDvMZDQw==
       tarball: 'file:projects/sdk-ui-theme-provider.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz':
     dependencies:
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@microsoft/api-extractor': 7.8.1
       '@types/classnames': 2.2.3
@@ -21229,6 +21235,7 @@ packages:
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
       classnames: 2.2.6
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
       enzyme-adapter-react-16: 1.15.5_df2dc313d8031f8c2dbd009d86ca7fc7
@@ -21257,14 +21264,14 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-vis-commons'
     resolution:
-      integrity: sha512-fSojCzCMQ7AugRUg4ac48g8Nz28lbhdjk5lBjol8hS5U+ECOPlSjaeWkH2OXOvv1cb6k3mPM0SdY7wEJcElErQ==
+      integrity: sha512-T9FJ+zyP6R/BmbgkTYszYDHIH/3c6myMEjviSFMAgL0jjyY5OxAyxOdbjIB2/xCNyBsIBLW75DXn/MtCZWbMYA==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.0.0_73c2123a1f1739776b411b4b9316d866
-      '@gooddata/goodstrap': 69.0.0_react-dom@16.13.1+react@16.13.1
+      '@gooddata/goodstrap': 70.0.0_react-dom@16.13.1+react@16.13.1
       '@gooddata/numberjs': 3.2.4
       '@types/enzyme': 3.10.7
       '@types/enzyme-adapter-react-16': 1.0.6
@@ -21277,6 +21284,7 @@ packages:
       '@types/react-dom': 16.9.8
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       custom-event: 1.0.1
       dependency-cruiser: 9.14.1_typescript@4.0.2
       enzyme: 3.11.0
@@ -21307,7 +21315,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui'
     resolution:
-      integrity: sha512-9agiG1QXd5/I9odId2+6TS2BI2BCqd2cls198xI9Q2CBBIhQTKlTLDWAvvy/qJHbmBeLR7L+c9Fy1lqdcPzmOQ==
+      integrity: sha512-pu2HwgZ2iK0g6TEMrzcWcH7IWAqUyUFP8UOdIWD/r3AWiQhc0T8bY8/QP6vOrjLo87BaBERcxCcrrhOyTwcapg==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
   'file:projects/util.tgz':
@@ -21318,6 +21326,7 @@ packages:
       '@types/lodash': 4.14.161
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
+      concurrently: 5.3.0
       dependency-cruiser: 9.14.1_typescript@4.0.2
       eslint: 7.10.0
       eslint-plugin-header: 3.1.0_eslint@7.10.0
@@ -21334,7 +21343,7 @@ packages:
     dev: false
     name: '@rush-temp/util'
     resolution:
-      integrity: sha512-TbQw28eETuasBon+tRdIT6t48WOAVMShu5t2MPWOUkSfS5PjhES5DQ0qzKBvFHAtsO65mAvM8wDpVgtFWaQ9Lg==
+      integrity: sha512-nKOevsDlMMY0JdwCtKKK887FZULmGqjhtqbsH5cmkLFB576rMYfl+pOf455wJSGZWmpYK41DUs6ymz5hXsc3WA==
       tarball: 'file:projects/util.tgz'
     version: 0.0.0
 registry: ''
