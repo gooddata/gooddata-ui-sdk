@@ -7,6 +7,9 @@ import {
     ILoadingProps,
     ErrorComponent as DefaultError,
     LoadingComponent as DefaultLoading,
+    IDrillableItem,
+    IHeaderPredicate,
+    OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { InvariantError } from "ts-invariant";
 
@@ -16,6 +19,17 @@ import { KpiExecutor } from "./KpiExecutor";
 export interface IKpiViewProps {
     kpiWidget: IWidget;
     filters?: IFilter[];
+
+    /**
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
+     */
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+
+    /**
+     * Called when user triggers a drill on a visualization.
+     */
+    onDrill?: OnFiredDrillEvent;
+
     /**
      * Backend to work with.
      *
@@ -46,6 +60,8 @@ export interface IKpiViewProps {
 export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
     filters,
+    drillableItems,
+    onDrill,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -75,6 +91,8 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
             filters={filters}
+            onDrill={onDrill}
+            drillableItems={drillableItems}
             backend={backend}
             workspace={workspace}
             ErrorComponent={ErrorComponent}
