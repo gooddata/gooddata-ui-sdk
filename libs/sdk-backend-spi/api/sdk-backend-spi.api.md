@@ -79,6 +79,9 @@ export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset";
 // @alpha
 export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 
+// @alpha
+export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
+
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 

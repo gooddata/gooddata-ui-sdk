@@ -172,7 +172,7 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
 
 /**
  * Filter context consists of configured attribute and date filters
- * (which could be applyied to the dashboard, widget alert, or scheduled email)
+ * (which could be applied to the dashboard, widget alert, or scheduled email)
  *
  * @alpha
  */
@@ -291,6 +291,16 @@ export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashb
  * @alpha
  */
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+/**
+ * Gets reference to object being used for filtering. For attribute filters, this will be reference to the display
+ * form. For date filters this will be reference to the data set.
+ *
+ * @alpha
+ */
+export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef {
+    return isDashboardAttributeFilterReference(ref) ? ref.displayForm : ref.dataSet;
+}
 
 /**
  * @internal
