@@ -17,7 +17,14 @@ import { useKpiMeasures } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
 
 export interface IKpiViewProps {
+    /**
+     * The KPI to execute and display.
+     */
     kpiWidget: IWidget;
+
+    /**
+     * Optionally, specify filters to be applied to the KPI.
+     */
     filters?: IFilter[];
 
     /**
@@ -57,6 +64,10 @@ export interface IKpiViewProps {
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
 
+/**
+ * Takes a KPI widget and executes it and displays the result.
+ * @internal
+ */
 export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
     filters,
