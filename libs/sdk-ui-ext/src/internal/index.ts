@@ -43,3 +43,12 @@ export {
 } from "./interfaces/Visualization";
 
 export { isDateFilter, isMeasureValueFilter, isAttributeFilter, isRankingFilter } from "./utils/bucketHelper";
+
+export {
+    IKpiViewProps,
+    IUseDashboardAlertsConfig,
+    IUseDashboardConfig,
+    KpiView,
+    useDashboard,
+    useDashboardAlerts,
+} from "./dashboardEmbedding";
