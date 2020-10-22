@@ -106,6 +106,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -184,6 +185,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -259,6 +261,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -296,6 +299,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -339,6 +343,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -417,6 +422,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -518,6 +524,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -535,6 +542,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -651,6 +659,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -663,6 +672,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -741,6 +751,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -805,6 +816,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -893,6 +905,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -984,6 +997,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1085,6 +1099,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [
     Object {
       "attributeSortItem": Object {
@@ -1156,6 +1171,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [
     Object {
       "attributeSortItem": Object {
@@ -1175,6 +1191,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1211,6 +1228,7 @@ Object {
     },
   ],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1268,6 +1286,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1301,6 +1320,7 @@ Object {
     },
   ],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1332,6 +1352,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1370,6 +1391,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1406,6 +1428,7 @@ Object {
     },
   ],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1465,6 +1488,7 @@ Object {
     },
   ],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1522,6 +1546,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
@@ -1534,6 +1559,7 @@ Object {
   "dimensions": Array [],
   "filters": Array [],
   "measures": Array [],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "testWorkspace",
 }
