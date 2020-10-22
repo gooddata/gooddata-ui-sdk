@@ -19,6 +19,7 @@ $gd-header-project-width: 230px;
     padding: 0 0 0 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
     color: $gd-color-text-light;
+    font-family: $gd-font-primary-without-custom;
     background: #000;
 
     &.is-not-loaded {
