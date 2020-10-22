@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { GdcExecution, GdcExport } from "@gooddata/api-model-bear";
+import { transformResultHeaders } from "@gooddata/sdk-backend-base";
 import {
     DataValue,
     IDataView,
@@ -21,6 +22,7 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
+import { transformResultHeader } from "../../../convertors/fromBackend/afm/result";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -159,6 +161,12 @@ class BearDataView implements IDataView {
         this.warnings = dataResult.warnings?.map(convertWarning) ?? [];
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
+
+        this.headerItems = transformResultHeaders(
+            this.headerItems,
+            transformResultHeader,
+            this.definition.postProcessing,
+        );
     }
 
     public fingerprint(): string {

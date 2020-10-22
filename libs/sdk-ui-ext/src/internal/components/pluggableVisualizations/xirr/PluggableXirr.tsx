@@ -90,11 +90,12 @@ export class PluggableXirr extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { locale, custom = {}, config } = options;
+        const { locale, dateFormat, custom = {}, config } = options;
         const { drillableItems } = custom;
         const execution = executionFactory
             .forInsight(insight)
-            .withDimensions(...this.getXirrDimensions(insight));
+            .withDimensions(...this.getXirrDimensions(insight))
+            .withDateFormat(dateFormat);
 
         this.renderFun(
             <CoreXirr

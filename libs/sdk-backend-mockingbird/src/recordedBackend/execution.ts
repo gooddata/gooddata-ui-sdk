@@ -29,6 +29,7 @@ import {
     ObjectType,
     ObjRef,
     uriRef,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import {
@@ -110,6 +111,9 @@ function recordedPreparedExecution(
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
+        withDateFormat(dateFormat: string): IPreparedExecution {
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+        },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
                 const key = recordedExecutionKey(fp);
@@ -118,6 +122,12 @@ function recordedPreparedExecution(
                 if (!recording) {
                     reject(new NoDataError("recording was not found"));
                 } else {
+                    if (definition.postProcessing) {
+                        recording.definition = {
+                            ...recording.definition,
+                            postProcessing: definition.postProcessing,
+                        };
+                    }
                     resolve(
                         new RecordedExecutionResult(definition, executionFactory, resultRefType, recording),
                     );

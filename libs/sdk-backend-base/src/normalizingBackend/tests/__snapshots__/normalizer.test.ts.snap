@@ -71,6 +71,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -133,6 +134,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -200,6 +202,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -270,6 +273,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -360,6 +364,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -445,6 +450,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }
@@ -508,6 +514,7 @@ Object {
       },
     },
   ],
+  "postProcessing": Object {},
   "sortBy": Array [],
   "workspace": "test",
 }

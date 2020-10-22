@@ -9,6 +9,7 @@ import {
     IDimension,
     IExecutionDefinition,
     ISortItem,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { TigerExecutionResult } from "./executionResult";
@@ -50,6 +51,10 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+    }
+
+    public withDateFormat(dateFormat: string): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     }
 
     public fingerprint(): string {

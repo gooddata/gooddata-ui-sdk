@@ -139,11 +139,12 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, custom = {}, config } = options;
+        const { locale, dateFormat, custom = {}, config } = options;
         const { drillableItems } = custom;
         const execution = executionFactory
             .forInsight(insight)
-            .withDimensions({ itemIdentifiers: ["measureGroup"] });
+            .withDimensions({ itemIdentifiers: ["measureGroup"] })
+            .withDateFormat(dateFormat);
 
         this.renderFun(
             <CoreHeadline

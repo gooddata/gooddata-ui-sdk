@@ -259,6 +259,7 @@ export {
     defSetDimensions,
     defSetSorts,
     defTotals,
+    IPostProcessing,
 } from "./execution/executionDefinition";
 
 export {
@@ -267,6 +268,8 @@ export {
     newDefForInsight,
     defWithDimensions,
     defWithSorting,
+    defWithPostProcessing,
+    defWithDateFormat,
     defaultDimensionsGenerator,
     emptyDef,
 } from "./execution/executionDefinition/factory";

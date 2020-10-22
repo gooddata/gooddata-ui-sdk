@@ -916,6 +916,7 @@ export interface IPreparedExecution {
     equals(other: IPreparedExecution): boolean;
     execute(): Promise<IExecutionResult>;
     fingerprint(): string;
+    withDateFormat(dateFormat: string): IPreparedExecution;
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     withSorting(...items: ISortItem[]): IPreparedExecution;
 }

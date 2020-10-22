@@ -17,6 +17,19 @@ import { dimensionFingerprint } from "../base/fingerprint";
 import { filterFingerprint } from "../filter/fingerprint";
 
 /**
+ * Contains any configuration that should be done with the data after they are obtained from the server
+ * and before they are passed to the user.
+ *
+ * @public
+ */
+export interface IPostProcessing {
+    /**
+     * Format to be applied to the dates in an AFM execution response.
+     */
+    readonly dateFormat?: string;
+}
+
+/**
  * Execution definition contains 100% complete description of what will the execution compute and how will
  * the resulting data look like.
  *
@@ -65,6 +78,12 @@ export interface IExecutionDefinition {
      * used to slice the row dimension, in which dimension should the measures be located.
      */
     readonly dimensions: IDimension[];
+
+    /**
+     * Contains any configuration that should be done with the data after they are obtained from the server
+     * and before they are passed to the user.
+     */
+    readonly postProcessing?: IPostProcessing;
 }
 
 /**
@@ -112,6 +131,27 @@ export function defSetSorts(def: IExecutionDefinition, sortBy: ISortItem[] = [])
     return {
         ...def,
         sortBy,
+    };
+}
+
+/**
+ * Creates new execution definition by setting a new post processing.
+ *
+ * @param def - existing definition
+ * @param postProcessing - configuration that should be done with the data after they are obtained from the server
+ *  and before they are passed to the user
+ * @returns always new instance
+ * @public
+ */
+export function defSetPostProcessing(
+    def: IExecutionDefinition,
+    postProcessing: IPostProcessing,
+): IExecutionDefinition {
+    invariant(def, "execution definition to set post processing in must be defined");
+
+    return {
+        ...def,
+        postProcessing,
     };
 }
 

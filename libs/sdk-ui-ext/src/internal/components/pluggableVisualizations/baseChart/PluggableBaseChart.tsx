@@ -220,7 +220,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { dimensions = { height: undefined }, custom = {}, locale } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, dateFormat } = options;
         const { height } = dimensions;
 
         // keep height undef for AD; causes indigo-visualizations to pick default 100%
@@ -235,7 +235,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
             .withDimensions(...this.getDimensions(insight))
             .withSorting(
                 ...createSorts(this.type, insight, canSortStackTotalValue(insight, supportedControls)),
-            );
+            )
+            .withDateFormat(dateFormat);
 
         this.renderFun(
             <BaseChart

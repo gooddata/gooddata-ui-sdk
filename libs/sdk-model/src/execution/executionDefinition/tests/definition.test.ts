@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2020 GoodData Corporation
 
 import {
     attributeLocalId,
@@ -25,7 +25,7 @@ import {
 } from "../../../index";
 import { Account, Activity, Won } from "../../../../__mocks__/model";
 import { IFilter } from "../../filter";
-import { defWithFilters } from "../index";
+import { defSetPostProcessing, defWithFilters, IPostProcessing } from "../index";
 
 const Workspace = "testWorkspace";
 
@@ -166,4 +166,25 @@ describe("defFingerprint", () => {
 
         expect(leftFingerprint === rightFingerprint).toBe(expectedResult);
     });
+});
+
+describe("defSetPostProcessing", () => {
+    const Scenarios: Array<[string, any]> = [
+        ["MM/dd/yyyy", EmptyDef],
+        ["dd/MM/yyyy", EmptyDef],
+        ["dd-MM-yyyy", EmptyDef],
+        ["yyyy-MM-dd", EmptyDef],
+        ["M/d/y", EmptyDef],
+        ["dd.MM.yyyy", EmptyDef],
+    ];
+
+    it.each(Scenarios)(
+        'should return a new instance of execution definition with date format "%s"',
+        (dateFormat, definition) => {
+            const postProcessing: IPostProcessing = { dateFormat };
+            const newDefWithDateFormat = defSetPostProcessing(definition, postProcessing);
+            expect(newDefWithDateFormat).not.toBe(definition);
+            expect(newDefWithDateFormat.postProcessing).toEqual(postProcessing);
+        },
+    );
 });

@@ -43,6 +43,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IMetadataObject } from '@gooddata/sdk-backend-spi';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -329,6 +330,8 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
     // (undocumented)
     fingerprint(): string;
     // (undocumented)
+    withDateFormat(dateFormat: string): IPreparedExecution;
+    // (undocumented)
     withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution;
     // (undocumented)
     withSorting(...items: ISortItem[]): IPreparedExecution;
@@ -592,6 +595,9 @@ export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPrepa
 // @beta (undocumented)
 export type ResultFactory = (dimensions: IDimensionDescriptor[], fingerprint: string) => IExecutionResult;
 
+// @public (undocumented)
+export type ResultHeaderTransformer = (resultHeader: IResultHeader, postProcessing?: IPostProcessing) => IResultHeader;
+
 // @beta (undocumented)
 export type ResultProvider = (context: ResultProviderContext) => Promise<IExecutionResult>;
 
@@ -606,6 +612,9 @@ export type TelemetryData = {
     componentName?: string;
     props?: string[];
 };
+
+// @public
+export function transformResultHeaders(resultHeaders: IResultHeader[][][], resultHeaderTransformer?: ResultHeaderTransformer, postProcessing?: IPostProcessing): IResultHeader[][][];
 
 // @beta
 export class VariableMetadataObjectBuilder<T extends IVariableMetadataObject = IVariableMetadataObject> extends MetadataObjectBuilder<T> {

@@ -12,6 +12,7 @@ import {
     IInsight,
     insightRef,
     ISortItem,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
@@ -75,6 +76,10 @@ export class BearPreparedExecutionByRef implements IPreparedExecution {
 
     public withSorting(...items: ISortItem[]): IPreparedExecution {
         return this.executionFactory.forDefinition(defWithSorting(this.definition, items));
+    }
+
+    public withDateFormat(dateFormat: string): IPreparedExecution {
+        return this.executionFactory.forDefinition(defWithDateFormat(this.definition, dateFormat));
     }
 
     public fingerprint(): string {

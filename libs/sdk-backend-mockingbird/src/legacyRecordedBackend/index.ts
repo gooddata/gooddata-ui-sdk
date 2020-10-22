@@ -43,6 +43,7 @@ import {
     IExecutionDefinition,
     ISortItem,
     uriRef,
+    defWithDateFormat,
 } from "@gooddata/sdk-model";
 import { AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import isEqual from "lodash/isEqual";
@@ -327,6 +328,9 @@ function recordedPreparedExecution(
         withSorting(...items: ISortItem[]): IPreparedExecution {
             return executionFactory.forDefinition(defWithSorting(definition, items));
         },
+        withDateFormat(dateFormat: string): IPreparedExecution {
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+        },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
                 const recording = recordings.execution && recordings.execution["fp_" + fp];
@@ -334,6 +338,12 @@ function recordedPreparedExecution(
                 if (!recording) {
                     reject(new Error("Recording not found"));
                 } else {
+                    if (definition.postProcessing) {
+                        recording.definition = {
+                            ...recording.definition,
+                            postProcessing: definition.postProcessing,
+                        };
+                    }
                     resolve(recordedExecutionResult(definition, executionFactory, recording));
                 }
             });

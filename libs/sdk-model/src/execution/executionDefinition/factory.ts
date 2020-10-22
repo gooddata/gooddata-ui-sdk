@@ -15,10 +15,12 @@ import { insightBuckets, insightFilters, insightSorts, IInsightDefinition } from
 import { isMeasure } from "../measure";
 import {
     defSetDimensions,
+    defSetPostProcessing,
     defSetSorts,
     defWithFilters,
     DimensionGenerator,
     IExecutionDefinition,
+    IPostProcessing,
 } from "./index";
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
@@ -39,6 +41,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
         dimensions: [],
         filters: [],
         sortBy: [],
+        postProcessing: {},
     };
 }
 
@@ -153,6 +156,45 @@ export function newDefForInsight(
  */
 export function defWithSorting(definition: IExecutionDefinition, sorts: ISortItem[]): IExecutionDefinition {
     return defSetSorts(definition, sorts);
+}
+
+/**
+ * Changes the postProcessing of a definition.
+ *
+ * @param definition - execution definition to alter with postProcessing
+ * @param postProcessing - configuration that should be done with the data after they are obtained from the server
+ *  and before they are passed to the user
+ * @returns new execution with the specified postProcessing
+ * @public
+ */
+export function defWithPostProcessing(
+    definition: IExecutionDefinition,
+    postProcessing: IPostProcessing,
+): IExecutionDefinition {
+    return defSetPostProcessing(definition, postProcessing);
+}
+
+/**
+ * Changes the dateFormat of a postProcessing, other properties of postProcessing (if any) remain unchanged.
+ * This function will call defWithPostProcessing to update definition with the new postProcessing.
+ *
+ * This function MUST be used to implement IPreparedExecution.withDateFormat();
+ *
+ * @param definition - execution definition to alter with postProcessing
+ * @param dateFormat - Format to be applied to the dates in an AFM execution response.
+ * @returns new execution with postProcessing updated with the specified dateFormat
+ * @public
+ */
+export function defWithDateFormat(
+    definition: IExecutionDefinition,
+    dateFormat: string,
+): IExecutionDefinition {
+    const currentPostProcessing = definition.postProcessing || {};
+    const postProcessing = {
+        ...currentPostProcessing,
+        dateFormat,
+    };
+    return defWithPostProcessing(definition, postProcessing);
 }
 
 /**
