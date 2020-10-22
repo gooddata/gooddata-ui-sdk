@@ -41,6 +41,7 @@ export function emptyDef(workspace: string): IExecutionDefinition {
         dimensions: [],
         filters: [],
         sortBy: [],
+        postProcessing: {},
     };
 }
 
@@ -160,8 +161,6 @@ export function defWithSorting(definition: IExecutionDefinition, sorts: ISortIte
 /**
  * Changes the postProcessing of a definition.
  *
- * This function MUST be used to implement IPreparedExecution.withPostProcessing();
- *
  * @param definition - execution definition to alter with postProcessing
  * @param postProcessing - configuration that should be done with the data after they are obtained from the server
  *  and before they are passed to the user
@@ -179,25 +178,23 @@ export function defWithPostProcessing(
  * Changes the dateFormat of a postProcessing, other properties of postProcessing (if any) remain unchanged.
  * This function will call defWithPostProcessing to update definition with the new postProcessing.
  *
+ * This function MUST be used to implement IPreparedExecution.withDateFormat();
+ *
  * @param definition - execution definition to alter with postProcessing
  * @param dateFormat - Format to be applied to the dates in an AFM execution response.
- * If dateFormat is empty, then the postProcessing will not be updated.
- * @returns new execution with the specified postProcessing if dateFormat is not empty; or the same execution if dateFormat is empty
+ * @returns new execution with postProcessing updated with the specified dateFormat
  * @public
  */
 export function defWithDateFormat(
     definition: IExecutionDefinition,
     dateFormat: string,
 ): IExecutionDefinition {
-    if (!dateFormat) {
-        return definition;
-    }
     const currentPostProcessing = definition.postProcessing || {};
     const postProcessing = {
         ...currentPostProcessing,
         dateFormat,
     };
-    return defSetPostProcessing(definition, postProcessing);
+    return defWithPostProcessing(definition, postProcessing);
 }
 
 /**
