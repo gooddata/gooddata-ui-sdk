@@ -32,8 +32,18 @@ import {
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
     widgetType,
+    dashboardFilterReferenceObjRef,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    areObjRefsEqual,
+    uriRef,
+    objRefToString,
+    IFilter,
+    filterObjRef,
+    isAttributeFilter,
+    isDateFilter,
+} from "@gooddata/sdk-model";
 import {
     GdcDashboard,
     GdcMetadata,
@@ -48,7 +58,13 @@ import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
 import flatten from "lodash/flatten";
 import set from "lodash/set";
-import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
+import zip from "lodash/zip";
+import {
+    objRefToUri,
+    objRefsToUris,
+    getObjectIdFromUri,
+    userUriFromAuthenticatedPrincipal,
+} from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
@@ -301,6 +317,43 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         return new WidgetReferencesQuery(this.authCall, this.workspace, widget, types).run();
+    };
+
+    public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
+        if (!filters.length || !widget.ignoreDashboardFilters.length) {
+            return filters;
+        }
+
+        const ignorableFilters = filters.filter(
+            (filter) => isAttributeFilter(filter) || isDateFilter(filter),
+        );
+
+        if (!ignorableFilters.length) {
+            return filters;
+        }
+
+        // get all the necessary uris in one call by concatenating both arrays
+        const uris = await objRefsToUris(
+            [
+                ...widget.ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
+                ...ignorableFilters.map((filter) => filterObjRef(filter)!),
+            ],
+            this.workspace,
+            this.authCall,
+        );
+
+        // re-split the uris array to the two parts corresponding to the original arrays
+        const divide = widget.ignoreDashboardFilters.length;
+        const ignoredUris = uris.slice(0, divide);
+        const ignorableFilterUris = uris.slice(divide);
+
+        // find all filters that should be removed
+        const toRemove = zip(ignorableFilters, ignorableFilterUris)
+            .filter(([, uri]) => ignoredUris.includes(uri!))
+            .map(([filter]) => filter);
+
+        // filter the original filter array to maintain order of the items
+        return filters.filter((filter) => !toRemove.includes(filter));
     };
 
     // Alerts

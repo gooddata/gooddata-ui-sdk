@@ -84,10 +84,9 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
         return <ErrorComponent message={error.message} />;
     }
 
-    const primarySeries = result.data().series().firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure
-        ? result.data().series().firstForMeasure(secondaryMeasure)
-        : undefined;
+    const series = result.data().series();
+    const primarySeries = series.firstForMeasure(primaryMeasure);
+    const secondarySeries = secondaryMeasure ? series.firstForMeasure(secondaryMeasure) : undefined;
 
     const primaryValue = buildKpiValueInfo(primarySeries, result, drillableItems);
     const secondaryValue = secondarySeries && buildKpiValueInfo(secondarySeries, result, drillableItems);

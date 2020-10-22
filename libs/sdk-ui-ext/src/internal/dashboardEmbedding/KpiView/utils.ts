@@ -22,24 +22,25 @@ import {
 } from "@gooddata/sdk-ui";
 import invariant, { InvariantError } from "ts-invariant";
 
-interface IUseKpiMeasuresConfig {
+interface IUseKpiDataConfig {
     kpiWidget: IWidget;
     filters?: IFilter[];
     backend?: IAnalyticalBackend;
     workspace?: string;
 }
 
-interface IUseKpiMeasuresResult {
+interface IUseKpiDataResult {
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
+    filters: IFilter[];
 }
 
-export function useKpiMeasures({
+export function useKpiData({
     kpiWidget,
     filters,
     backend,
     workspace,
-}: IUseKpiMeasuresConfig): UseCancelablePromiseState<IUseKpiMeasuresResult, GoodDataSdkError> {
+}: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
     const backendFromContext = useBackend();
     const workspaceFromContext = useWorkspace();
 
@@ -51,16 +52,21 @@ export function useKpiMeasures({
             throw new InvariantError("The provided widget is not a KPI widget.");
         }
 
+        const relevantFilters = await effectiveBackend
+            .workspace(effectiveWorkspace)
+            .dashboards()
+            .getResolvedFiltersForWidget(kpiWidget, filters ?? []);
+
         const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 
         const comparison = kpiWidget.kpi.comparisonType;
 
         const isAllTime =
-            !filters || !filters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+            !relevantFilters ||
+            !relevantFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
 
-        // TODO irrelevant date filters detection
         if (comparison === "none" || isAllTime) {
-            return { primaryMeasure };
+            return { primaryMeasure, filters: relevantFilters };
         }
 
         if (comparison === "previousPeriod") {
@@ -68,7 +74,7 @@ export function useKpiMeasures({
                 { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
             ]);
 
-            return { primaryMeasure, secondaryMeasure };
+            return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
         }
 
         if (comparison === "lastYear") {
@@ -79,7 +85,7 @@ export function useKpiMeasures({
                 kpiWidget.dateDataSet,
             );
 
-            return { primaryMeasure, secondaryMeasure };
+            return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
         }
 
         invariant(false, `Unknown comparison ${comparison}`);

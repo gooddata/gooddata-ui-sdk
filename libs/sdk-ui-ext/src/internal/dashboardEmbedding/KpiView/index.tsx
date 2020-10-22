@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { InvariantError } from "ts-invariant";
 
-import { useKpiMeasures } from "./utils";
+import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
 
 export interface IKpiViewProps {
@@ -82,7 +82,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         throw new InvariantError("The provided widget is not a KPI widget.");
     }
 
-    const { error, result, status } = useKpiMeasures({
+    const { error, result, status } = useKpiData({
         kpiWidget,
         backend,
         filters,
@@ -101,7 +101,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         <KpiExecutor
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
-            filters={filters}
+            filters={result.filters}
             onDrill={onDrill}
             drillableItems={drillableItems}
             backend={backend}
