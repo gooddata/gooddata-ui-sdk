@@ -6,10 +6,12 @@ import {
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isAllTimeDateFilter,
+    isDateFilter,
     isUriRef,
     newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
@@ -18,7 +20,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { InvariantError } from "ts-invariant";
+import invariant, { InvariantError } from "ts-invariant";
 
 interface IUseKpiMeasuresConfig {
     kpiWidget: IWidget;
@@ -66,7 +68,9 @@ export function useKpiMeasures({
 
         const comparison = kpiWidget.kpi.comparisonType;
 
-        const isAllTime = !filters || filters.some(isAllTimeDateFilter);
+        const isAllTime =
+            !filters || !filters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+
         // TODO irrelevant date filters detection
         if (comparison === "none" || isAllTime) {
             return { primaryMeasure };
@@ -80,28 +84,41 @@ export function useKpiMeasures({
             return { primaryMeasure, secondaryMeasure };
         }
 
-        const targetDataset = kpiWidget.dateDataSet;
+        if (comparison === "lastYear") {
+            const secondaryMeasure = await getLastYearComparisonMeasure(
+                effectiveBackend,
+                effectiveWorkspace,
+                primaryMeasure,
+                kpiWidget.dateDataSet,
+            );
 
-        const catalog = await effectiveBackend
-            .workspace(effectiveWorkspace)
-            .catalog()
-            .forTypes(["dateDataset"])
-            .load();
-        const dateDatasets = catalog.dateDatasets();
-        const relevantDateDataset = dateDatasets.find((dateDataset) => {
-            if (isUriRef(targetDataset)) {
-                return dateDataset.dataSet.uri === targetDataset.uri;
-            } else {
-                return dateDataset.dataSet.id === targetDataset.identifier;
-            }
-        });
-        const yearAttribute = relevantDateDataset.dateAttributes.find(
-            (dateAttribute) => dateAttribute.granularity === "GDC.time.year",
-        );
+            return { primaryMeasure, secondaryMeasure };
+        }
 
-        const secondaryMeasure = newPopMeasure(primaryMeasure, yearAttribute.attribute);
-        return { primaryMeasure, secondaryMeasure };
+        invariant(false, `Unknown comparison ${comparison}`);
     };
 
     return useCancelablePromise({ promise });
+}
+
+async function getLastYearComparisonMeasure(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    primaryMeasure: IMeasure,
+    targetDateDataset: ObjRef,
+): Promise<IMeasure<IPoPMeasureDefinition>> {
+    const catalog = await backend.workspace(workspace).catalog().forTypes(["dateDataset"]).load();
+    const dateDatasets = catalog.dateDatasets();
+    const relevantDateDataset = dateDatasets.find((dateDataset) => {
+        if (isUriRef(targetDateDataset)) {
+            return dateDataset.dataSet.uri === targetDateDataset.uri;
+        } else {
+            return dateDataset.dataSet.id === targetDateDataset.identifier;
+        }
+    });
+    const yearAttribute = relevantDateDataset.dateAttributes.find(
+        (dateAttribute) => dateAttribute.granularity === "GDC.time.year",
+    );
+
+    return newPopMeasure(primaryMeasure, yearAttribute.attribute);
 }
