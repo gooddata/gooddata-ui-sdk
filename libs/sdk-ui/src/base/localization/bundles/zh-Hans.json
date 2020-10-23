@@ -188,7 +188,7 @@
     "rankingFilter.allRecords": "全部",
     "rankingFilter.allRecords.tooltip": "将筛选器应用于洞察中的所有属性。",
     "rankingFilter.attributeDropdown.oneAttributeTooltip": "此洞察仅按一个属性进行切片。该筛选滤器将应用于其所有值。",
-    "rankingFilter.outOf": "/",
+    "rankingFilter.outOf": "范围",
     "rankingFilter.basedOn": "基于",
     "rankingFilter.valueTooSmall": "输入值应为正数。",
     "rankingFilter.valueTooLarge": "输入值太大。",
