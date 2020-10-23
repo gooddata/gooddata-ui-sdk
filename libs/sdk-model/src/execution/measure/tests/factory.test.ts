@@ -12,7 +12,7 @@ import {
     newPreviousPeriodMeasure,
 } from "../factory";
 import { measureLocalId } from "../index";
-import { idRef } from "../../../objRef/factory";
+import { idRef, uriRef } from "../../../objRef/factory";
 
 describe("measure factories", () => {
     describe("newMeasure", () => {
@@ -144,6 +144,12 @@ describe("measure factories", () => {
 
         it("should return a simple PP measure when supplied with objects", () => {
             expect(newPreviousPeriodMeasure(Won, [{ dataSet: "bar", periodsAgo: 3 }])).toMatchSnapshot();
+        });
+
+        it("should return a simple PP measure when supplied with ObjRef datasets", () => {
+            expect(
+                newPreviousPeriodMeasure("foo", [{ dataSet: uriRef("/some/uri"), periodsAgo: 3 }]),
+            ).toMatchSnapshot();
         });
     });
 

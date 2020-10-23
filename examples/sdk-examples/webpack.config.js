@@ -110,7 +110,7 @@ module.exports = async (env, argv) => {
             path: path.join(__dirname, "dist"),
             publicPath: `${basePath}/`,
         },
-        devtool: isProduction ? false : "cheap-module-eval-source-map",
+        devtool: isProduction ? false : "cheap-module-source-map",
         node: {
             __filename: true,
         },
@@ -155,6 +155,11 @@ module.exports = async (env, argv) => {
                 {
                     test: /\.(jpe?g|gif|png|svg|ico|eot|woff2?|ttf|wav|mp3)$/,
                     use: "file-loader",
+                },
+                {
+                    test: /\.js$/,
+                    enforce: "pre",
+                    use: ["source-map-loader"],
                 },
             ],
         },

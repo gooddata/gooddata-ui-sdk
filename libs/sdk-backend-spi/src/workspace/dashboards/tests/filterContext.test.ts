@@ -11,6 +11,8 @@ import {
     dashboardDateFilterReference,
 } from "./filterContext.fixtures";
 import {
+    dashboardFilterReferenceObjRef,
+    IDashboardFilterReference,
     isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
@@ -19,6 +21,7 @@ import {
     isFilterContextDefinition,
     isTempFilterContext,
 } from "../filterContext";
+import { ObjRef } from "@gooddata/sdk-model";
 
 describe("filter context type guards", () => {
     describe("isDashboardAttributeFilter", () => {
@@ -62,6 +65,25 @@ describe("filter context type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isDashboardDateFilterReference(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("dashboardFilterReferenceObjRef", () => {
+        const Scenarios: Array<[ObjRef, string, IDashboardFilterReference]> = [
+            [
+                dashboardDateFilterReference.dataSet,
+                "dashboard date filter reference",
+                dashboardDateFilterReference,
+            ],
+            [
+                dashboardAttributeFilterReference.displayForm,
+                "dashboard attribute filter reference",
+                dashboardAttributeFilterReference,
+            ],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(dashboardFilterReferenceObjRef(input)).toBe(expectedResult);
         });
     });
 

@@ -70,6 +70,7 @@
         "prettier": "~2.0.5",
         "raw-loader": "^4.0.1",
         "sass-loader": "^8.0.0",
+        "source-map-loader": "^1.1.1",
         "stats-webpack-plugin": "^0.7.0",
         "style-loader": "^1.2.1",
         "styled-jsx": "^3.2.5",

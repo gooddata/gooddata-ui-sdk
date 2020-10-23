@@ -31,7 +31,10 @@ import invariant, { InvariantError } from "ts-invariant";
  * @public
  */
 export interface IPreviousPeriodDateDataSetSimple {
-    dataSet: string;
+    /**
+     * Identifier or reference to the date data set.
+     */
+    dataSet: string | ObjRef;
     periodsAgo: number;
 }
 
@@ -627,7 +630,7 @@ export class PreviousPeriodMeasureBuilder extends MeasureBuilderBase<IPreviousPe
         return dd.map(
             (d): IPreviousPeriodDateDataSet => ({
                 ...d,
-                dataSet: typeof d.dataSet === "string" ? { identifier: d.dataSet } : d.dataSet,
+                dataSet: typeof d.dataSet === "string" ? idRef(d.dataSet) : d.dataSet,
             }),
         );
     };

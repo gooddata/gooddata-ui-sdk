@@ -191,6 +191,7 @@ export {
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
     IFilterContextBase,
+    dashboardFilterReferenceObjRef,
 } from "./workspace/dashboards/filterContext";
 export {
     Layout,

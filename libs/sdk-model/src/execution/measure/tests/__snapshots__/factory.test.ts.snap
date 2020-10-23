@@ -323,6 +323,27 @@ Object {
 }
 `;
 
+exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with ObjRef datasets 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "previousPeriodMeasure": Object {
+        "dateDataSets": Array [
+          Object {
+            "dataSet": Object {
+              "uri": "/some/uri",
+            },
+            "periodsAgo": 3,
+          },
+        ],
+        "measureIdentifier": "foo",
+      },
+    },
+    "localIdentifier": "m_foo_previous_period",
+  },
+}
+`;
+
 exports[`measure factories newPreviousPeriodMeasure should return a simple PP measure when supplied with objects 1`] = `
 Object {
   "measure": Object {

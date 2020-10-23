@@ -85,4 +85,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public getWidgetReferencedObjects = async () => {
         throw new NotSupported("Not supported");
     };
+
+    public getResolvedFiltersForWidget = async () => {
+        throw new NotSupported("Not supported");
+    };
 }

@@ -33,7 +33,7 @@ import {
     IWidgetReferences,
     widgetType,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, areObjRefsEqual, uriRef, objRefToString } from "@gooddata/sdk-model";
+import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
     GdcMetadata,
@@ -44,14 +44,20 @@ import {
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
 import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
-import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
 import flatten from "lodash/flatten";
+import isEqual from "lodash/isEqual";
 import set from "lodash/set";
-import { objRefToUri, getObjectIdFromUri, userUriFromAuthenticatedPrincipal } from "../../../utils/api";
+import {
+    objRefToUri,
+    objRefsToUris,
+    getObjectIdFromUri,
+    userUriFromAuthenticatedPrincipal,
+} from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
+import { resolveWidgetFilters } from "./widgetFilters";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -301,6 +307,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         return new WidgetReferencesQuery(this.authCall, this.workspace, widget, types).run();
+    };
+
+    public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
+        return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
+            objRefsToUris(refs, this.workspace, this.authCall),
+        );
     };
 
     // Alerts

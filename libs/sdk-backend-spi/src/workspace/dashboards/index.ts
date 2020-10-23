@@ -1,5 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
-import { ObjRef } from "@gooddata/sdk-model";
+import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
@@ -154,4 +154,19 @@ export interface IWorkspaceDashboardsService {
         widget: IWidget,
         types?: SupportedWidgetReferenceTypes[],
     ): Promise<IWidgetReferences>;
+
+    /**
+     * Takes a widget and a list of filters and returns filters that can be used for the widget.
+     * - for attribute filters, these are filters that should NOT be ignored according to the ignoreDashboardFilters property.
+     * - for date filters it is the last filter with the same date dimension as specified in dateDataSet property.
+     *
+     * The implementation MUST take different ObjRef types into account, for example if an incoming filter
+     * uses idRef and an ignoreDashboardFilters item uses uriRef but they point to the same metadata object,
+     * the filter MUST NOT be included in the result.
+     *
+     * @param widget - widget to get filters for
+     * @param filters - filters to apply on the widget
+     * @returns promise with the filters with the ignored filters removed
+     */
+    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
 }
