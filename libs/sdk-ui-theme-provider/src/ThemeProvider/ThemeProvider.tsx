@@ -49,35 +49,32 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const workspaceFromContext = useWorkspace();
     const workspace = workspaceParam || workspaceFromContext;
 
-    if (!backend || !workspace) {
-        clearCssProperties();
-
-        return <>{children}</>;
-    }
-
     const [theme, setTheme] = useState<ITheme>({});
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
     const lastWorkspace = useRef<string>();
     lastWorkspace.current = workspace;
 
     useEffect(() => {
         const fetchData = async () => {
-            setIsLoading(true);
             clearCssProperties();
-            const theme = await backend.workspace(workspace).styling().getTheme();
+
+            if (!backend || !workspace) {
+                return;
+            }
+
+            setIsLoading(true);
+
+            const selectedTheme = await backend.workspace(workspace).styling().getTheme();
             if (lastWorkspace.current === workspace) {
-                setTheme(theme);
+                setTheme(selectedTheme);
                 setIsLoading(false);
+                setCssProperties(selectedTheme);
             }
         };
 
         fetchData();
     }, [workspace, backend]);
-
-    if (!isLoading) {
-        setCssProperties(theme);
-    }
 
     return (
         <ThemeContextProvider theme={theme} themeIsLoading={isLoading}>
