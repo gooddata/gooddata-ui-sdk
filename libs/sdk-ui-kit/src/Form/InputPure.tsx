@@ -4,7 +4,7 @@ import cx from "classnames";
 import NativeListener from "react-native-listener";
 import noop from "lodash/noop";
 
-import { ENUM_KEY_CODE } from "./typings";
+import { ENUM_KEY_CODE } from "../typings/utilities";
 
 /**
  * @internal

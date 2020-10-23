@@ -56,6 +56,8 @@ const customParserFunctions: ParserFunction[] = [
         key: "--gd-kpiDashboards-content-widget-dropShadow",
         fn: (value: boolean) => (value ? undefined : "none"),
     },
+    { key: "--gd-modal-borderRadius", fn: (value: string) => `${value}px` },
+    { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
 ];
 
 /**

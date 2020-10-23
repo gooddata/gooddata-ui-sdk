@@ -1,0 +1,60 @@
+// (C) 2020 GoodData Corporation
+
+/**
+ * @internal
+ */
+export interface IDialogBaseProps {
+    children?: React.ReactNode;
+    className?: string;
+    displayCloseButton?: boolean;
+    submitOnEnterKey?: boolean;
+    onCancel?: () => void;
+    onSubmit?: (data?: any) => void;
+}
+
+/**
+ * @internal
+ */
+export interface IConfirmDialogBaseProps extends IDialogBaseProps {
+    isSubmitDisabled?: boolean;
+    isPositive?: boolean;
+    headline?: string;
+    cancelButtonText?: string;
+    submitButtonText?: string;
+    warning?: string | React.ReactElement;
+}
+
+/**
+ * @internal
+ */
+export interface IExportDialogBaseProps extends IDialogBaseProps {
+    isSubmitDisabled?: boolean;
+    isPositive?: boolean;
+    headline?: string;
+    cancelButtonText?: string;
+    submitButtonText?: string;
+    filterContextText?: string;
+    filterContextTitle?: string;
+    filterContextVisible?: boolean;
+    includeFilterContext?: boolean;
+    mergeHeaders?: boolean;
+    mergeHeadersDisabled?: boolean;
+    mergeHeadersText?: string;
+    mergeHeadersTitle?: string;
+}
+
+/**
+ * @internal
+ */
+export interface IExportDialogBaseState {
+    includeFilterContext: boolean;
+    mergeHeaders: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IExportDialogData {
+    includeFilterContext: boolean;
+    mergeHeaders: boolean;
+}
