@@ -46,7 +46,7 @@ export interface IKpiViewProps {
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace where the insight exists.
+     * Workspace where the KPI exists.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
@@ -59,7 +59,7 @@ export interface IKpiViewProps {
     ErrorComponent?: React.ComponentType<IErrorProps>;
 
     /**
-     * Component to render while the insight is loading.
+     * Component to render while the KPI is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 }
