@@ -411,7 +411,7 @@ export interface ITheme {
             /**
              * Navigation header specific properties
              */
-            header?: {
+            title?: {
                 /**
                  * Header foreground color
                  */
