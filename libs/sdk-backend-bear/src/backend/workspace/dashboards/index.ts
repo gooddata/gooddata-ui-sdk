@@ -32,21 +32,8 @@ import {
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
     widgetType,
-    dashboardFilterReferenceObjRef,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    areObjRefsEqual,
-    uriRef,
-    objRefToString,
-    IFilter,
-    filterObjRef,
-    isAttributeFilter,
-    isDateFilter,
-    IDateFilter,
-    isAllTimeDateFilter,
-    IAttributeFilter,
-} from "@gooddata/sdk-model";
+import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
     GdcMetadata,
@@ -60,9 +47,7 @@ import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter"
 import clone from "lodash/clone";
 import flatten from "lodash/flatten";
 import isEqual from "lodash/isEqual";
-import last from "lodash/last";
 import set from "lodash/set";
-import zip from "lodash/zip";
 import {
     objRefToUri,
     objRefsToUris,
@@ -72,6 +57,7 @@ import {
 import keyBy from "lodash/keyBy";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
+import { resolveWidgetFilters } from "./widgetFilters";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -324,79 +310,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
-        if (!filters.length || !widget.ignoreDashboardFilters.length) {
-            return filters;
-        }
-
-        const dateFilters = filters.filter(isDateFilter);
-        const attributeFilters = filters.filter(isAttributeFilter);
-
-        const isIgnorableFilter = (obj: unknown): obj is IDateFilter | IAttributeFilter =>
-            isDateFilter(obj) || isAttributeFilter(obj);
-
-        if (!dateFilters.length && !attributeFilters.length) {
-            return filters;
-        }
-
-        const [dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
-            this.getRelevantDateFiltersForWidget(widget, dateFilters),
-            this.getRelevantAttributeFiltersForWidget(widget, attributeFilters),
-        ]);
-
-        const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
-
-        // filter the original filter array to maintain order of the items
-        return filters.filter((filter) => !isIgnorableFilter(filter) || filtersToKeep.includes(filter));
-    };
-
-    private getRelevantDateFiltersForWidget = async (
-        widget: IWidget,
-        filters: IDateFilter[],
-    ): Promise<IDateFilter[]> => {
-        if (!widget.dateDataSet || !filters.length || filters.every(isAllTimeDateFilter)) {
-            return [];
-        }
-
-        const [dateDatasetUri, ...filterUris] = await objRefsToUris(
-            [widget.dateDataSet, ...filters.map((filter) => filterObjRef(filter)!)],
-            this.workspace,
-            this.authCall,
+        return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
+            objRefsToUris(refs, this.workspace, this.authCall),
         );
-
-        const withRelevantDimension = zip(filters, filterUris)
-            .filter(([, uri]) => dateDatasetUri === uri)
-            .map(([filter]) => filter!);
-
-        const candidate = last(withRelevantDimension);
-        return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
-    };
-
-    private getRelevantAttributeFiltersForWidget = async (
-        widget: IWidget,
-        filters: IAttributeFilter[],
-    ): Promise<IAttributeFilter[]> => {
-        if (!widget.ignoreDashboardFilters.length || !filters.length) {
-            return [];
-        }
-
-        // get all the necessary uris in one call by concatenating both arrays
-        const uris = await objRefsToUris(
-            [
-                ...widget.ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
-                ...filters.map((filter) => filterObjRef(filter)!),
-            ],
-            this.workspace,
-            this.authCall,
-        );
-
-        // re-split the uris array to the two parts corresponding to the original arrays
-        const divide = widget.ignoreDashboardFilters.length;
-        const ignoredUris = uris.slice(0, divide);
-        const filterUris = uris.slice(divide);
-
-        return zip(filters, filterUris)
-            .filter(([, uri]) => !ignoredUris.includes(uri!))
-            .map(([filter]) => filter!);
     };
 
     // Alerts
