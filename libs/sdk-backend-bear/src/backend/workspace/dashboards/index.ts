@@ -43,6 +43,9 @@ import {
     filterObjRef,
     isAttributeFilter,
     isDateFilter,
+    IDateFilter,
+    isAllTimeDateFilter,
+    IAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
     GdcDashboard,
@@ -54,9 +57,10 @@ import {
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
 import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
-import isEqual from "lodash/isEqual";
 import clone from "lodash/clone";
 import flatten from "lodash/flatten";
+import isEqual from "lodash/isEqual";
+import last from "lodash/last";
 import set from "lodash/set";
 import zip from "lodash/zip";
 import {
@@ -324,19 +328,62 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             return filters;
         }
 
-        const ignorableFilters = filters.filter(
-            (filter) => isAttributeFilter(filter) || isDateFilter(filter),
+        const dateFilters = filters.filter(isDateFilter);
+        const attributeFilters = filters.filter(isAttributeFilter);
+
+        const isIgnorableFilter = (obj: unknown): obj is IDateFilter | IAttributeFilter =>
+            isDateFilter(obj) || isAttributeFilter(obj);
+
+        if (!dateFilters.length && !attributeFilters.length) {
+            return filters;
+        }
+
+        const [dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
+            this.getRelevantDateFiltersForWidget(widget, dateFilters),
+            this.getRelevantAttributeFiltersForWidget(widget, attributeFilters),
+        ]);
+
+        const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
+
+        // filter the original filter array to maintain order of the items
+        return filters.filter((filter) => !isIgnorableFilter(filter) || filtersToKeep.includes(filter));
+    };
+
+    private getRelevantDateFiltersForWidget = async (
+        widget: IWidget,
+        filters: IDateFilter[],
+    ): Promise<IDateFilter[]> => {
+        if (!widget.dateDataSet || !filters.length || filters.every(isAllTimeDateFilter)) {
+            return [];
+        }
+
+        const [dateDatasetUri, ...filterUris] = await objRefsToUris(
+            [widget.dateDataSet, ...filters.map((filter) => filterObjRef(filter)!)],
+            this.workspace,
+            this.authCall,
         );
 
-        if (!ignorableFilters.length) {
-            return filters;
+        const withRelevantDimension = zip(filters, filterUris)
+            .filter(([, uri]) => dateDatasetUri === uri)
+            .map(([filter]) => filter!);
+
+        const candidate = last(withRelevantDimension);
+        return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
+    };
+
+    private getRelevantAttributeFiltersForWidget = async (
+        widget: IWidget,
+        filters: IAttributeFilter[],
+    ): Promise<IAttributeFilter[]> => {
+        if (!widget.ignoreDashboardFilters.length || !filters.length) {
+            return [];
         }
 
         // get all the necessary uris in one call by concatenating both arrays
         const uris = await objRefsToUris(
             [
                 ...widget.ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
-                ...ignorableFilters.map((filter) => filterObjRef(filter)!),
+                ...filters.map((filter) => filterObjRef(filter)!),
             ],
             this.workspace,
             this.authCall,
@@ -345,15 +392,11 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         // re-split the uris array to the two parts corresponding to the original arrays
         const divide = widget.ignoreDashboardFilters.length;
         const ignoredUris = uris.slice(0, divide);
-        const ignorableFilterUris = uris.slice(divide);
+        const filterUris = uris.slice(divide);
 
-        // find all filters that should be removed
-        const toRemove = zip(ignorableFilters, ignorableFilterUris)
-            .filter(([, uri]) => ignoredUris.includes(uri!))
-            .map(([filter]) => filter);
-
-        // filter the original filter array to maintain order of the items
-        return filters.filter((filter) => !toRemove.includes(filter));
+        return zip(filters, filterUris)
+            .filter(([, uri]) => !ignoredUris.includes(uri!))
+            .map(([filter]) => filter!);
     };
 
     // Alerts
