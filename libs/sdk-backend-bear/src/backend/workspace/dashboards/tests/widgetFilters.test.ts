@@ -11,7 +11,7 @@ import {
 import { resolveWidgetFilters } from "../widgetFilters";
 
 describe("resolveWidgetFilters", () => {
-    const uriResolver: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>
+    const objRefsToUrisMock: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>
         Promise.resolve(refs.map((ref) => (isIdentifierRef(ref) ? `/gdc/md/${ref.identifier}` : ref.uri)));
 
     it("should remove ignored attribute filters", async () => {
@@ -27,7 +27,7 @@ describe("resolveWidgetFilters", () => {
             filters,
             [{ type: "attributeFilterReference", displayForm: uriRef("/gdc/md/to-ignore") }],
             undefined,
-            uriResolver,
+            objRefsToUrisMock,
         );
 
         expect(actual).toEqual([filterToKeep]);
@@ -42,7 +42,12 @@ describe("resolveWidgetFilters", () => {
             newRelativeDateFilter(idRef("other2"), "GDC.time.date", 3, 3),
         ];
 
-        const actual = await resolveWidgetFilters(filters, [], uriRef("/gdc/md/dimension"), uriResolver);
+        const actual = await resolveWidgetFilters(
+            filters,
+            [],
+            uriRef("/gdc/md/dimension"),
+            objRefsToUrisMock,
+        );
 
         expect(actual).toEqual([filterToKeep]);
     });
@@ -53,7 +58,12 @@ describe("resolveWidgetFilters", () => {
             newAllTimeFilter(idRef("dimension")),
         ];
 
-        const actual = await resolveWidgetFilters(filters, [], uriRef("/gdc/md/dimension"), uriResolver);
+        const actual = await resolveWidgetFilters(
+            filters,
+            [],
+            uriRef("/gdc/md/dimension"),
+            objRefsToUrisMock,
+        );
 
         expect(actual).toEqual([]);
     });
@@ -62,7 +72,12 @@ describe("resolveWidgetFilters", () => {
         const filterToKeep = newRelativeDateFilter(idRef("dimension"), "GDC.time.date", 1, 1);
         const filters = [newAllTimeFilter(idRef("dimension")), filterToKeep];
 
-        const actual = await resolveWidgetFilters(filters, [], uriRef("/gdc/md/dimension"), uriResolver);
+        const actual = await resolveWidgetFilters(
+            filters,
+            [],
+            uriRef("/gdc/md/dimension"),
+            objRefsToUrisMock,
+        );
 
         expect(actual).toEqual([filterToKeep]);
     });

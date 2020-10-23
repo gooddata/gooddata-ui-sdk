@@ -14,7 +14,7 @@ import {
 import last from "lodash/last";
 import zip from "lodash/zip";
 
-type ObjRefNormalizer = (refs: ObjRef[]) => Promise<string[]>;
+type ObjRefsToUris = (refs: ObjRef[]) => Promise<string[]>;
 
 /**
  * Performs widget filter resolution:
@@ -26,14 +26,14 @@ type ObjRefNormalizer = (refs: ObjRef[]) => Promise<string[]>;
  *
  * @param widget - widget to resolve filters for
  * @param filters - filters to try
- * @param objRefNormalizer - function providing canonical ref value
+ * @param objRefsToUris - function providing conversion of any ObjRef to URI
  * @internal
  */
 export async function resolveWidgetFilters(
     filters: IFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     dateDataSet: IWidget["dateDataSet"],
-    objRefNormalizer: ObjRefNormalizer,
+    objRefsToUris: ObjRefsToUris,
 ): Promise<IFilter[]> {
     const dateFilters = filters.filter(isDateFilter);
     const attributeFilters = filters.filter(isAttributeFilter);
@@ -46,8 +46,8 @@ export async function resolveWidgetFilters(
     }
 
     const [dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
-        getRelevantDateFiltersForWidget(dateFilters, dateDataSet, objRefNormalizer),
-        getRelevantAttributeFiltersForWidget(attributeFilters, ignoreDashboardFilters, objRefNormalizer),
+        getRelevantDateFiltersForWidget(dateFilters, dateDataSet, objRefsToUris),
+        getRelevantAttributeFiltersForWidget(attributeFilters, ignoreDashboardFilters, objRefsToUris),
     ]);
 
     const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
@@ -59,13 +59,13 @@ export async function resolveWidgetFilters(
 async function getRelevantDateFiltersForWidget(
     filters: IDateFilter[],
     dateDataSet: IWidget["dateDataSet"],
-    objRefNormalizer: ObjRefNormalizer,
+    objRefsToUris: ObjRefsToUris,
 ): Promise<IDateFilter[]> {
     if (!dateDataSet || !filters.length || filters.every(isAllTimeDateFilter)) {
         return [];
     }
 
-    const [dateDatasetUri, ...filterUris] = await objRefNormalizer([
+    const [dateDatasetUri, ...filterUris] = await objRefsToUris([
         dateDataSet,
         ...filters.map((filter) => filterObjRef(filter)!),
     ]);
@@ -81,14 +81,14 @@ async function getRelevantDateFiltersForWidget(
 async function getRelevantAttributeFiltersForWidget(
     filters: IAttributeFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
-    objRefNormalizer: ObjRefNormalizer,
+    objRefsToUris: ObjRefsToUris,
 ): Promise<IAttributeFilter[]> {
     if (!ignoreDashboardFilters.length || !filters.length) {
         return [];
     }
 
     // get all the necessary uris in one call by concatenating both arrays
-    const uris = await objRefNormalizer([
+    const uris = await objRefsToUris([
         ...ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
         ...filters.map((filter) => filterObjRef(filter)!),
     ]);
