@@ -1269,7 +1269,7 @@ export interface ITheme {
         navigation?: {
             backgroundColor?: ThemeColor;
             borderColor?: ThemeColor;
-            header?: {
+            title?: {
                 color?: ThemeColor;
             };
             item?: {
