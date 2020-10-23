@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -27,6 +27,7 @@ import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
 
 interface IKpiExecutorProps {
+    title: string;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     filters?: IFilter[];
@@ -43,6 +44,7 @@ interface IKpiExecutorProps {
  * @internal
  */
 export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
+    title,
     primaryMeasure,
     secondaryMeasure,
     filters,
@@ -81,7 +83,11 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     }
 
     if (status === "error") {
-        return <ErrorComponent message={error.message} />;
+        return isNoDataError(error) ? (
+            <KpiRenderer title={title} onDrill={handleOnDrill} />
+        ) : (
+            <ErrorComponent message={error.message} />
+        );
     }
 
     const series = result.data().series();
@@ -92,7 +98,12 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     const secondaryValue = secondarySeries && buildKpiValueInfo(secondarySeries, result, drillableItems);
 
     return (
-        <KpiRenderer primaryValue={primaryValue} secondaryValue={secondaryValue} onDrill={handleOnDrill} />
+        <KpiRenderer
+            primaryValue={primaryValue}
+            secondaryValue={secondaryValue}
+            onDrill={handleOnDrill}
+            title={title}
+        />
     );
 };
 

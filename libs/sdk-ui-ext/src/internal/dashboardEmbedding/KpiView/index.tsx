@@ -99,6 +99,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
 
     return (
         <KpiExecutor
+            title={kpiWidget.title}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
             filters={result.filters}

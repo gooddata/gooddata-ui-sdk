@@ -12,7 +12,8 @@ export interface IKpiValueInfo {
 }
 
 interface IKpiRendererProps {
-    primaryValue: IKpiValueInfo;
+    title: string;
+    primaryValue?: IKpiValueInfo;
     secondaryValue?: IKpiValueInfo;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDrillEvent>;
 }
@@ -21,9 +22,14 @@ interface IKpiRendererProps {
  * @remarks The rendered part will be replaced by the "real" KPI component once that is ready.
  * @internal
  */
-export const KpiRenderer: React.FC<IKpiRendererProps> = ({ primaryValue, secondaryValue, onDrill }) => {
+export const KpiRenderer: React.FC<IKpiRendererProps> = ({
+    title,
+    primaryValue,
+    secondaryValue,
+    onDrill,
+}) => {
     const onPrimaryValueClick = useCallback(() => {
-        if (!primaryValue.isDrillable || !onDrill) {
+        if (!primaryValue?.isDrillable || !onDrill) {
             return;
         }
         return onDrill(getDrillEventContext(primaryValue, "primaryValue"));
@@ -39,8 +45,8 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({ primaryValue, seconda
     return (
         <div>
             <div onClick={onPrimaryValueClick}>
-                <div>{primaryValue.title}</div>
-                <div>{primaryValue.formattedValue}</div>
+                <div>{title}</div>
+                <div>{primaryValue?.formattedValue ?? "—"}</div>
             </div>
             {secondaryValue && <div onClick={onSecondaryValueClick}>{secondaryValue.formattedValue}</div>}
         </div>
