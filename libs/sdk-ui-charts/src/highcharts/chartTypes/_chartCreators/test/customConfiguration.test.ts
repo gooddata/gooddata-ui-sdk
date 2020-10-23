@@ -201,10 +201,14 @@ describe("getCustomizedConfiguration", () => {
             expect(result.chart).toEqual(undefined);
         });
 
-        it("should set chart and X axis configurations when the zooming is enabled", () => {
+        it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
             const result = getCustomizedConfiguration(
                 {
                     ...chartOptions,
+                    data: {
+                        ...chartOptions.data,
+                        categories: ["column 1", "column 2", "column 3"],
+                    },
                 },
                 {
                     zoomInsight: true,
@@ -213,6 +217,40 @@ describe("getCustomizedConfiguration", () => {
             const expectedResult = {
                 ...result.xAxis[0],
                 minRange: 2,
+            };
+            const chartResult = {
+                ...result.chart,
+                animation: true,
+                zoomType: "x",
+                panKey: "shift",
+                panning: true,
+                resetZoomButton: {
+                    theme: {
+                        display: "none",
+                    },
+                },
+            };
+
+            expect(result.xAxis[0]).toEqual(expectedResult);
+            expect(result.chart).toEqual(chartResult);
+        });
+
+        it("should set chart and X axis configurations with the minRange is default value (undefined) when the zooming is enabled and the categories <= 2", () => {
+            const result = getCustomizedConfiguration(
+                {
+                    ...chartOptions,
+                    data: {
+                        ...chartOptions.data,
+                        categories: ["column 1", "column 2"],
+                    },
+                },
+                {
+                    zoomInsight: true,
+                },
+            );
+            const expectedResult = {
+                ...result.xAxis[0],
+                minRange: undefined,
             };
             const chartResult = {
                 ...result.chart,

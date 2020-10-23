@@ -1106,7 +1106,10 @@ function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartCo
 
             const tickConfiguration = getXAxisTickConfiguration(chartOptions);
             // for minimum zoom level value
-            const minRange = get(chartConfig, "zoomInsight", false) ? MIN_RANGE : undefined;
+            const minRange =
+                get(chartConfig, "zoomInsight", false) && get(chartOptions, "data.categories", []).length > 2
+                    ? MIN_RANGE
+                    : undefined;
 
             // for bar chart take y axis options
             return {
