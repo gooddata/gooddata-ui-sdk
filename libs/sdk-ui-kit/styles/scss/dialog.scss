@@ -61,7 +61,7 @@
             border-color: transparent;
 
             &::before {
-                color: $gd-color-highlight;
+                color: $gd-palette-primary-base;
             }
         }
     }
@@ -131,7 +131,7 @@
     vertical-align: middle;
 
     &::before {
-        color: $gd-color-highlight;
+        color: $gd-palette-primary-base;
     }
 }
 
