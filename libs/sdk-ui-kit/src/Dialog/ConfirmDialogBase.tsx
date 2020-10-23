@@ -17,10 +17,6 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
         isSubmitDisabled: false,
     };
 
-    onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-        this.onKeyDown(event);
-    };
-
     render(): JSX.Element {
         const dialogClasses = cx(
             {

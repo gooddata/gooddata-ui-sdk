@@ -4,55 +4,6 @@
 
 @import "variables";
 
-// base mixins
-@mixin gd-font-family {
-    font-family: $gd-font-primary;
-}
-
-@mixin gd-font-regular {
-    font-weight: map-get(map-get($gd-typo, font-weights), regular);
-}
-
-@mixin gd-font-bold {
-    font-weight: map-get(map-get($gd-typo, font-weights), bold);
-}
-
-@mixin gd-font-base {
-    @include gd-font-family;
-    @include gd-font-regular;
-}
-
-@mixin gd-heading-base {
-    color: $gd-color-dark;
-
-    @include gd-font-base;
-}
-
-// headings
-@mixin gd-heading-1 {
-    @include gd-heading-base;
-    @include gd-font-bold;
-
-    line-height: nth(map-get($gd-typo, heading-line-heights), 1);
-    font-size: nth(map-get($gd-typo, font-sizes), 1);
-}
-
-@mixin gd-heading-2 {
-    @include gd-heading-base;
-    @include gd-font-bold;
-
-    line-height: nth(map-get($gd-typo, heading-line-heights), 2);
-    font-size: nth(map-get($gd-typo, font-sizes), 2);
-}
-
-@mixin gd-heading-3 {
-    @include gd-heading-base;
-    @include gd-font-regular;
-
-    line-height: nth(map-get($gd-typo, heading-line-heights), 3);
-    font-size: nth(map-get($gd-typo, font-sizes), 3);
-}
-
 // core mixins
 
 @mixin background($filename, $color: transparent, $position: left top, $repeat: no-repeat) {
