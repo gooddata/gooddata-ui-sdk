@@ -170,8 +170,6 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
     // (undocumented)
     static defaultProps: Partial<IConfirmDialogBaseProps>;
     // (undocumented)
-    onKeyDown: (event: React_2.KeyboardEvent<HTMLDivElement>) => void;
-    // (undocumented)
     render(): JSX.Element;
 }
 
@@ -474,7 +472,7 @@ export interface IDialogBaseProps {
     // (undocumented)
     displayCloseButton?: boolean;
     // (undocumented)
-    onCancel?: () => void;
+    onCancel?: (data?: any) => void;
     // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)

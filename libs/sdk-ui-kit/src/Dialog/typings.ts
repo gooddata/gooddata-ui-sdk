@@ -8,7 +8,7 @@ export interface IDialogBaseProps {
     className?: string;
     displayCloseButton?: boolean;
     submitOnEnterKey?: boolean;
-    onCancel?: () => void;
+    onCancel?: (data?: any) => void;
     onSubmit?: (data?: any) => void;
 }
 
