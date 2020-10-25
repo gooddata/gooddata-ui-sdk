@@ -46,6 +46,8 @@ $dialog_width: 250px;
         .gd-mvf-treat-null-values-as-zero {
             margin-top: 8px;
             font-size: 12px;
+            font-family: $gd-font-primary;
+            font-weight: 400;
 
             .inlineBubbleHelp {
                 margin: 0 0 2px 5px;

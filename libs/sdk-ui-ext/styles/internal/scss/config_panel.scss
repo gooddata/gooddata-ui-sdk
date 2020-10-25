@@ -6,6 +6,8 @@ $color-picker-item-size: 20px;
 $color-picker-spacing: 5px;
 
 .gd-color-drop-down {
+    font-family: $gd-font-primary;
+    font-weight: 400;
     margin: $color-picker-spacing;
 }
 

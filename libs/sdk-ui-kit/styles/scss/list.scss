@@ -47,6 +47,8 @@ $menu-item-icon-width: 30px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    font-family: $gd-font-primary;
+    font-weight: 400;
     height: 20px;
     margin: 5px 10px;
     line-height: 20px;
@@ -90,6 +92,8 @@ $menu-item-icon-width: 30px;
     &.gd-list-actions-invertable {
         display: flex;
         justify-content: flex-start;
+        font-family: $gd-font-primary;
+        font-weight: 400;
         align-items: center;
         margin-bottom: 5px;
         padding-bottom: 5px;
@@ -496,6 +500,8 @@ $menu-item-icon-width: 30px;
 }
 
 .gd-list-footer {
+    font-family: $gd-font-primary;
+    font-weight: 400;
     padding-top: 10px;
     border-top: 1px solid $gd-border-color;
 }
