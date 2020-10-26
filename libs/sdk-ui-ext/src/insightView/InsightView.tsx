@@ -21,7 +21,8 @@ import {
     insightTitle,
 } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisCallbacks, FullVisualizationCatalog, IVisProps } from "../internal";
+import type { IVisualization, IVisCallbacks, IVisProps } from "../internal";
+import { FullVisualizationCatalog } from "../internal/components/VisualizationCatalog";
 import {
     GoodDataSdkError,
     fillMissingTitles,
