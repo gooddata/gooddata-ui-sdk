@@ -17,6 +17,7 @@ import DayPickerInput from "react-day-picker/DayPickerInput";
 import { IAlignPoint } from "../typings/positioning";
 import { getOptimalAlignment } from "../utils/overlay";
 import { elementRegion } from "../utils/domUtilities";
+import { DEFAULT_DATE_FORMAT } from "../constants/platform";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "DayPicker-Day--outside";
 
@@ -75,6 +76,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         tabIndex: 0,
         alignPoints: [{ align: "bl tl" }, { align: "br tr" }, { align: "tl bl" }, { align: "tr br" }],
         onAlign: (): void => {},
+        dateFormat: DEFAULT_DATE_FORMAT,
     };
     constructor(props: DatePickerProps) {
         super(props);
