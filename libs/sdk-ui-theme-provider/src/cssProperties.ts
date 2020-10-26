@@ -5,6 +5,7 @@ import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";
+const DEFAULT_WIDGET_SHADOW = "1px 2px 8px rgba(20, 56, 93, 0.2)";
 
 /**
  *
@@ -54,10 +55,19 @@ const customParserFunctions: ParserFunction[] = [
     { key: "--gd-kpiDashboards-content-widget-borderRadius", fn: (value: string) => `${value}px` },
     {
         key: "--gd-kpiDashboards-content-widget-dropShadow",
-        fn: (value: boolean) => (value ? undefined : "none"),
+        fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
     { key: "--gd-modal-borderRadius", fn: (value: string) => `${value}px` },
     { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
+    {
+        key: "--gd-kpiDashboards-content-headline-borderWidth",
+        fn: (value: string) => (value !== undefined ? `${value}px` : undefined),
+    },
+    { key: "--gd-kpiDashboards-content-headline-borderRadius", fn: (value: string) => `${value}px` },
+    {
+        key: "--gd-kpiDashboards-content-headline-dropShadow",
+        fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
+    },
 ];
 
 /**
