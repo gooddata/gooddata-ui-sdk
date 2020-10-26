@@ -41,11 +41,8 @@ export function useKpiData({
     backend,
     workspace,
 }: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
-
-    const effectiveBackend = backend ?? backendFromContext;
-    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    const effectiveBackend = useBackend(backend);
+    const effectiveWorkspace = useWorkspace(workspace);
 
     const promise = async () => {
         if (!kpiWidget.kpi) {

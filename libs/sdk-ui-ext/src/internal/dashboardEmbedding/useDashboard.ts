@@ -52,20 +52,17 @@ export function useDashboard({
     onSuccess,
     workspace,
 }: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any> {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
-
-    const effectiveBackend = backend ?? backendFromContext;
-    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    const effectiveBackend = useBackend(backend);
+    const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useLoadDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useLoadDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
     const promise = () => effectiveBackend.workspace(effectiveWorkspace).dashboards().getDashboard(dashboard);

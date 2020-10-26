@@ -53,20 +53,17 @@ export function useDashboardAlerts({
     onSuccess,
     workspace,
 }: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError> {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
-
-    const effectiveBackend = backend ?? backendFromContext;
-    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    const effectiveBackend = useBackend(backend);
+    const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useLoadDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useLoadDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
     const promise = () =>

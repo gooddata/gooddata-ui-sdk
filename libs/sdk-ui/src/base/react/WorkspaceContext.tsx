@@ -26,12 +26,22 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 
 /**
  * Hook to get workspace instance provided to BackendProvider.
+ * You can optionally set a workspace override that will be returned if defined.
+ * This makes the usage more ergonomic (see the following example).
  *
+ * @example
+ * // instead of
+ * const fromContext = useWorkspace();
+ * const effectiveWorkspace = fromArguments ?? fromContext.
+ * // you can write
+ * const workspace = useWorkspace(fromArguments);
+ *
+ * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
  * @public
  */
-export const useWorkspace = (): string | undefined => {
-    const workspace = React.useContext(WorkspaceContext);
-    return workspace;
+export const useWorkspace = (workspace?: string): string | undefined => {
+    const workspaceFromContext = React.useContext(WorkspaceContext);
+    return workspace ?? workspaceFromContext;
 };
 
 /**

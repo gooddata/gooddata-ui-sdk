@@ -49,10 +49,8 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     backend: backendParam,
     workspace: workspaceParam,
 }) => {
-    const backendFromContext = useBackend();
-    const backend = backendParam || backendFromContext;
-    const workspaceFromContext = useWorkspace();
-    const workspace = workspaceParam || workspaceFromContext;
+    const backend = useBackend(backendParam);
+    const workspace = useWorkspace(workspaceParam);
 
     const [theme, setTheme] = useState<ITheme>(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
