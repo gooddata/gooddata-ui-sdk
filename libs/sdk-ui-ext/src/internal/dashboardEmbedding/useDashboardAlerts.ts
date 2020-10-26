@@ -19,7 +19,7 @@ export interface IUseDashboardAlertsConfig
     /**
      * Reference to the dashboard to get alerts for.
      */
-    ref: ObjRef;
+    dashboard: ObjRef;
 
     /**
      * Backend to work with.
@@ -44,7 +44,7 @@ export interface IUseDashboardAlertsConfig
  * @beta
  */
 export function useDashboardAlerts({
-    ref,
+    dashboard,
     backend,
     onCancel,
     onError,
@@ -73,10 +73,10 @@ export function useDashboardAlerts({
         effectiveBackend
             .workspace(effectiveWorkspace)
             .dashboards()
-            .getDashboardWidgetAlertsForCurrentUser(ref);
+            .getDashboardWidgetAlertsForCurrentUser(dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveWorkspace,
-        objRefToString(ref),
+        objRefToString(dashboard),
     ]);
 }

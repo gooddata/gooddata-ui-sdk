@@ -18,7 +18,7 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
     /**
      * Reference to the dashboard to get.
      */
-    ref: ObjRef;
+    dashboard: ObjRef;
 
     /**
      * Backend to work with.
@@ -43,7 +43,7 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
  * @beta
  */
 export function useDashboard({
-    ref,
+    dashboard,
     backend,
     onCancel,
     onError,
@@ -68,10 +68,10 @@ export function useDashboard({
         "The workspace in useLoadDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const promise = () => effectiveBackend.workspace(effectiveWorkspace).dashboards().getDashboard(ref);
+    const promise = () => effectiveBackend.workspace(effectiveWorkspace).dashboards().getDashboard(dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveWorkspace,
-        objRefToString(ref),
+        objRefToString(dashboard),
     ]);
 }
