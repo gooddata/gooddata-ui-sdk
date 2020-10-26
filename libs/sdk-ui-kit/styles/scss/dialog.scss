@@ -19,8 +19,8 @@
 }
 //
 
-.gd-dialog,
-.overlay.gd-dialog {
+.gd-dialog:not(.gd-dropdown),
+.overlay.gd-dialog:not(.gd-dropdown) {
     position: relative;
     z-index: 2;
     padding: 20px;
@@ -65,10 +65,6 @@
             }
         }
     }
-}
-
-.overlay.gd-dialog.gd-dropdown {
-    padding: 0;
 }
 
 .gd-dialog.gd-confirm {
