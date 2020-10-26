@@ -64,6 +64,11 @@ export interface ISettings {
      */
     enableHidingOfDataPoints?: boolean;
 
+    /**
+     * Indicates the format in which the dates will be displayed
+     */
+    responsiveUiDateFormat?: string;
+
     [key: string]: number | boolean | string | undefined;
 }
 

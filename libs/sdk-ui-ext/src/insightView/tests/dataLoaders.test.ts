@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import noop from "lodash/noop";
 import { dummyBackendEmptyData } from "@gooddata/sdk-backend-mockingbird";
-import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { idRef, IColorPalette, ObjRef, IInsight } from "@gooddata/sdk-model";
 
 import { getInsightViewDataLoader, clearInsightViewCaches, InsightViewDataLoader } from "../dataLoaders";
@@ -88,49 +88,59 @@ describe("InsightViewDataLoader", () => {
         });
     });
 
-    describe("workspaceSettings calls", () => {
-        const getMockBackend = (getSettings: () => Promise<IWorkspaceSettings>): IAnalyticalBackend => ({
+    describe("userWorkspaceSettings calls", () => {
+        const defaultUserSettings = {
+            userId: "userId",
+            locale: "en-US",
+        };
+        const getMockBackend = (
+            getSettingsForCurrentUser: () => Promise<IUserWorkspaceSettings>,
+        ): IAnalyticalBackend => ({
             ...baseBackend,
             workspace: () => ({
                 ...baseBackend.workspace(workspace),
                 settings: () => ({
-                    getSettingsForCurrentUser: noop as any,
-                    getSettings: getSettings,
+                    getSettingsForCurrentUser: getSettingsForCurrentUser,
+                    getSettings: noop as any,
                 }),
             }),
         });
 
-        it("should cache workspaceSettings calls", async () => {
+        it("should cache userWorkspaceSettings calls", async () => {
             const loader = new InsightViewDataLoader(workspace);
-            const getSettings = jest.fn(() => Promise.resolve({ workspace }));
-            const backend = getMockBackend(getSettings);
+            const getSettingsForCurrentUser = jest.fn(() =>
+                Promise.resolve({ ...defaultUserSettings, workspace }),
+            );
+            const backend = getMockBackend(getSettingsForCurrentUser);
 
-            const first = loader.getWorkspaceSettings(backend);
-            const second = loader.getWorkspaceSettings(backend);
+            const first = loader.getUserWorkspaceSettings(backend);
+            const second = loader.getUserWorkspaceSettings(backend);
 
             const [firstResult, secondResult] = await Promise.all([first, second]);
 
             expect(secondResult).toBe(firstResult);
-            expect(getSettings).toHaveBeenCalledTimes(1);
+            expect(getSettingsForCurrentUser).toHaveBeenCalledTimes(1);
         });
 
-        it("should not cache workspaceSettings errors", async () => {
+        it("should not cache userWorkspaceSettings errors", async () => {
             const loader = new InsightViewDataLoader(workspace);
-            const getSettings = jest.fn(() => Promise.resolve({ workspace }));
+            const getSettingsForCurrentUser = jest.fn(() =>
+                Promise.resolve({ ...defaultUserSettings, workspace }),
+            );
             const errorBackend = getMockBackend(() => {
                 throw new Error("FAIL");
             });
-            const successBackend = getMockBackend(getSettings);
+            const successBackend = getMockBackend(getSettingsForCurrentUser);
 
             try {
-                await loader.getWorkspaceSettings(errorBackend);
+                await loader.getUserWorkspaceSettings(errorBackend);
             } catch {
                 // do nothing
             }
 
-            await loader.getWorkspaceSettings(successBackend);
+            await loader.getUserWorkspaceSettings(successBackend);
 
-            expect(getSettings).toHaveBeenCalledTimes(1);
+            expect(getSettingsForCurrentUser).toHaveBeenCalledTimes(1);
         });
     });
 

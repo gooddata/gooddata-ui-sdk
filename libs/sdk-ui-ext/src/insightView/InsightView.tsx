@@ -9,7 +9,7 @@ import {
     IAnalyticalBackend,
     IExecutionFactory,
     IExportResult,
-    IWorkspaceSettings,
+    IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
@@ -155,7 +155,7 @@ class RenderInsightView extends React.Component<
     private visualization: IVisualization | undefined;
     private insight: IInsight | undefined;
     private colorPalette: IColorPalette | undefined;
-    private settings: IWorkspaceSettings | undefined;
+    private settings: IUserWorkspaceSettings | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
     private locale: string | undefined;
     private errorMap: IErrorDescriptors;
@@ -214,9 +214,11 @@ class RenderInsightView extends React.Component<
         }
 
         const { config = {} } = this.props;
+        const { responsiveUiDateFormat } = this.settings;
 
         const visProps: IVisProps = {
             locale: this.getLocale(),
+            dateFormat: responsiveUiDateFormat,
             custom: {
                 drillableItems: this.props.drillableItems,
             },
@@ -361,16 +363,16 @@ class RenderInsightView extends React.Component<
         return this.getRemoteResource((loader) => loader.getColorPalette(this.props.backend));
     };
 
-    private getWorkspaceSettings = (): Promise<IWorkspaceSettings> => {
-        return this.getRemoteResource((loader) => loader.getWorkspaceSettings(this.props.backend));
+    private getUserWorkspaceSettings = (): Promise<IUserWorkspaceSettings> => {
+        return this.getRemoteResource((loader) => loader.getUserWorkspaceSettings(this.props.backend));
     };
 
     private getUserProfileLocale = (): Promise<string> => {
         return this.getRemoteResource((loader) => loader.getLocale(this.props.backend));
     };
 
-    private updateWorkspaceSettings = async () => {
-        this.settings = await this.getWorkspaceSettings();
+    private updateUserWorkspaceSettings = async () => {
+        this.settings = await this.getUserWorkspaceSettings();
     };
 
     private updateColorPalette = async () => {
@@ -406,7 +408,7 @@ class RenderInsightView extends React.Component<
 
     private componentDidMountInner = async () => {
         await this.updateColorPalette();
-        await this.updateWorkspaceSettings();
+        await this.updateUserWorkspaceSettings();
         await this.setupVisualization();
 
         return this.updateVisualization();
