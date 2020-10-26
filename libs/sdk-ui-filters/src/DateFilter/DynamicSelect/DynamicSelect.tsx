@@ -37,7 +37,11 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
 
         const selectedItem =
             props.value !== undefined
-                ? findRelativeDateFilterOptionByValue(props.getItems(""), props.value)
+                ? findRelativeDateFilterOptionByValue(
+                      // pass the current value to make sure the searched options include it even if it is outside the default range
+                      props.getItems(props.value.toString()),
+                      props.value,
+                  )
                 : null;
 
         this.state = {
