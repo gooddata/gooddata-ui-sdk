@@ -4,6 +4,8 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { platformDateFormat } from "../constants/Platform";
 import moment = require("moment");
+import addDate from "date-fns/add";
+import formatDate from "date-fns/format";
 import noop from "lodash/noop";
 import { IDateFilterProps, DateFilter } from "../DateFilter";
 import { IDateFilterOptionsByType } from "../interfaces";
@@ -211,6 +213,8 @@ const relativeFormInputFrom = ".s-relative-range-picker-from input";
 const relativeFormInputTo = ".s-relative-range-picker-to input";
 const relativeFormGranularityTab = (intlGranularity: string) => `.gd-tab.s-granularity-${intlGranularity}`;
 
+const defaultDateFormat: string = "MM/dd/yyyy";
+
 export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}) => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
@@ -334,8 +338,8 @@ export const isAbsoluteFormVisible = (wrapper: WrapperType) => {
     return picker.exists();
 };
 
-export const dateToAbsoluteInputFormat = (dateString: string | moment.Moment) => {
-    return moment(dateString).format("MM/DD/YYYY");
+export const dateToAbsoluteInputFormat = (dateString: string, dateFormat: string = defaultDateFormat) => {
+    return formatDate(new Date(dateString), dateFormat);
 };
 
 export const getAbsoluteFormInputFromValue = (wrapper: WrapperType) => {
@@ -358,12 +362,17 @@ export const writeToAbsoluteFormInputTo = (wrapper: WrapperType, value: string) 
     input.simulate("change", { target: { value } });
 };
 
-export const getTodayDate = () => {
-    return moment(new Date());
+export const getTodayDate = (dateFormat: string = defaultDateFormat) => {
+    return formatDate(new Date(), dateFormat);
 };
 
-export const getMonthAgo = () => {
-    return moment(new Date()).add(-1, "month");
+export const getMonthAgo = (dateFormat: string = defaultDateFormat) => {
+    return formatDate(
+        addDate(new Date(), {
+            months: -1,
+        }),
+        dateFormat,
+    );
 };
 
 export const isAbsoluteFormErrorVisible = (wrapper: WrapperType) => {

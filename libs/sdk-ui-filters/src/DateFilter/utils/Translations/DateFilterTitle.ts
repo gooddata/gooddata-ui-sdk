@@ -17,6 +17,7 @@ import {
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-backend-spi";
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
+import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 
 const formatAbsoluteDate = (date: Date, dateFormat: string) => format(date, dateFormat);
 
@@ -181,7 +182,11 @@ const getDateFilterRepresentationByFilterType = (
  * Gets the filter title favoring custom name if specified.
  * @returns {string} Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
-export const getDateFilterTitle = (filter: DateFilterOption, locale: ILocale, dateFormat: string): string => {
+export const getDateFilterTitle = (
+    filter: DateFilterOption,
+    locale: ILocale,
+    dateFormat: string = DEFAULT_DATE_FORMAT,
+): string => {
     const translator = getIntl(locale);
 
     return getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
@@ -194,7 +199,7 @@ export const getDateFilterTitle = (filter: DateFilterOption, locale: ILocale, da
 export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
-    dateFormat: string,
+    dateFormat: string = DEFAULT_DATE_FORMAT,
 ): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat);
 
 /**
@@ -224,7 +229,7 @@ const getDateFilterRepresentationUsingTranslator = (
 export const getDateFilterRepresentation = (
     filter: DateFilterOption,
     locale: ILocale,
-    dateFormat: string,
+    dateFormat: string = DEFAULT_DATE_FORMAT,
 ): string => {
     const translator = getIntl(locale);
 

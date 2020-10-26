@@ -1,13 +1,16 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
-import moment from "moment";
+import parseDate from "date-fns/parse";
 import { WrappedDatePicker, DatePickerProps } from "../Datepicker";
 import { createIntlMock } from "@gooddata/sdk-ui";
+
+const defaultDateFormat = "MM/dd/yyyy";
 
 describe("DatePicker", () => {
     const defaultProps = {
         intl: createIntlMock(),
+        dateFormat: defaultDateFormat,
     };
 
     function mountComponent(customProps: Partial<DatePickerProps> = {}) {
@@ -135,7 +138,7 @@ describe("DatePicker", () => {
         describe("props", () => {
             it("should process date property", () => {
                 const component = mountComponent({
-                    date: moment("01/01/2015", "l", true).toDate(),
+                    date: parseDate("01/01/2015", defaultDateFormat, new Date()),
                 });
 
                 const dateValue = getDatePickerInputField(component).prop("value");
@@ -145,11 +148,12 @@ describe("DatePicker", () => {
             it("should show date in provided format", () => {
                 const component = mountComponent({
                     intl: createIntlMock({}, "cs"),
-                    date: moment("02/01/2015", "l", true).toDate(),
+                    date: parseDate("02/01/2015", defaultDateFormat, new Date()),
+                    dateFormat: "yyyy/MM/dd",
                 });
 
                 const dateValue = getDatePickerInputField(component).prop("value");
-                expect(dateValue).toEqual("01.02.2015");
+                expect(dateValue).toEqual("2015/02/01");
             });
 
             it("should use provided className", () => {
@@ -202,7 +206,9 @@ describe("DatePicker", () => {
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
-                    expect(onChange).toHaveBeenCalledWith(moment("01/01/2015", "l", true).toDate());
+                    expect(onChange).toHaveBeenCalledWith(
+                        parseDate("01/01/2015", defaultDateFormat, new Date()),
+                    );
                 });
 
                 it("should call onChange with date when input value is valid format D/M/YYYY", () => {
@@ -218,13 +224,16 @@ describe("DatePicker", () => {
 
                     const onChange = component.prop("onChange");
                     expect(onChange).toHaveBeenCalledTimes(1);
-                    expect(onChange).toHaveBeenCalledWith(moment("01/01/2015", "l", true).toDate());
+                    expect(onChange).toHaveBeenCalledWith(
+                        parseDate("01/01/2015", defaultDateFormat, new Date()),
+                    );
                 });
 
                 it("should call onChange with valid date in zh-Hans locale", () => {
                     const component = mountComponent({
                         onChange: jest.fn(),
                         intl: createIntlMock({}, "zh-Hans"),
+                        dateFormat: "yyyy/MM/dd",
                     });
                     const event = {
                         target: {

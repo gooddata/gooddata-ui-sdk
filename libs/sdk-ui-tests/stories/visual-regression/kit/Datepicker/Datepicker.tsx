@@ -8,16 +8,22 @@ import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
 
+const defaultDateFormat = "MM/dd/yyyy";
+
 const DatePickerTest: React.FC = () => {
     const [date, setDate] = useState<Date>(new Date(2015, 2, 15));
+    const defaultProps = {
+        date,
+        dateFormat: defaultDateFormat,
+    };
 
     return (
         <div className="library-component screenshot-target gd-datepicker">
             <h4>Basic picker</h4>
-            <Datepicker date={date} />
+            <Datepicker {...defaultProps} />
 
             <h4>Small version</h4>
-            <Datepicker size="small" date={date} />
+            <Datepicker size="small" {...defaultProps} />
 
             <h4>Viewport fitting</h4>
             <div className="pickerExampleFlexRow">
@@ -26,7 +32,7 @@ const DatePickerTest: React.FC = () => {
                     it it aligned to the right edge of date input.
                 </div>
                 <div>
-                    <Datepicker date={date} />
+                    <Datepicker {...defaultProps} />
                 </div>
             </div>
             <div className="pickerExampleFlexRow">
@@ -42,13 +48,13 @@ const DatePickerTest: React.FC = () => {
                     </p>
                 </div>
                 <div>
-                    <Datepicker alignPoints={[{ align: "bl tl" }]} date={date} />
+                    <Datepicker alignPoints={[{ align: "bl tl" }]} {...defaultProps} />
                 </div>
             </div>
 
             <h4>Set date externally</h4>
             <div id="external-date">
-                <Datepicker date={date} />
+                <Datepicker {...defaultProps} />
                 <br />
                 <button
                     onClick={() => {
