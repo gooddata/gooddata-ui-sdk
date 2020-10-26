@@ -47,7 +47,7 @@ export function withBackend<T extends { backend?: IAnalyticalBackend }>(
     const ComponentWithInjectedBackend: React.FC<T> = (props) => {
         return (
             <BackendContext.Consumer>
-                {(backend) => <Component backend={backend} {...props} />}
+                {(backend) => <Component {...props} backend={props.backend ?? backend} />}
             </BackendContext.Consumer>
         );
     };

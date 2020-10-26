@@ -70,7 +70,9 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
 ): React.ComponentType<Omit<T, "theme">> {
     const ComponentWithInjectedThemeObject: React.FC<T> = (props) => {
         return (
-            <ThemeContext.Consumer>{(theme) => <Component theme={theme} {...props} />}</ThemeContext.Consumer>
+            <ThemeContext.Consumer>
+                {(theme) => <Component {...props} theme={props.theme ?? theme} />}
+            </ThemeContext.Consumer>
         );
     };
 

@@ -46,7 +46,7 @@ export function withWorkspace<T extends { workspace?: string }>(
     const ComponentWithInjectedWorkspace: React.FC<T> = (props) => {
         return (
             <WorkspaceContext.Consumer>
-                {(workspace) => <Component workspace={workspace} {...props} />}
+                {(workspace) => <Component {...props} workspace={props.workspace ?? workspace} />}
             </WorkspaceContext.Consumer>
         );
     };
