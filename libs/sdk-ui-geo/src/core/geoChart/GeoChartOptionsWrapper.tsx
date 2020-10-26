@@ -33,7 +33,7 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
 
     constructor(props: IGeoChartInnerProps) {
         super(props);
-        this.emptyHeaderString = this.getEmptyHeaderString();
+        this.emptyHeaderString = props.intl.formatMessage({ id: "visualization.emptyValue" });
         this.errorMap = newErrorMapping(props.intl);
     }
 
@@ -127,10 +127,6 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
             ...this.props,
             dataView,
         };
-    }
-
-    private getEmptyHeaderString(): string {
-        return `(${this.props.intl.formatMessage({ id: "visualization.emptyValue" })})`;
     }
 }
 
