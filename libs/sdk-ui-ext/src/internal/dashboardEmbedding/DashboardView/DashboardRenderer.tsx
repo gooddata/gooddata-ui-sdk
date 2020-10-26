@@ -7,6 +7,7 @@ import {
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
+    OnError,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { KpiView } from "../KpiView";
@@ -21,6 +22,7 @@ interface IDashboardRendererProps {
     onDrill?: OnFiredDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
+    onError?: OnError;
 }
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
@@ -32,6 +34,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     onDrill,
     ErrorComponent,
     LoadingComponent,
+    onError,
 }) => {
     return (
         <>
@@ -56,6 +59,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
                                                 filters={filters}
                                                 drillableItems={drillableItems}
                                                 onDrill={onDrill}
+                                                onError={onError}
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
                                             />
@@ -67,6 +71,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
                                                 filters={filters}
                                                 drillableItems={drillableItems}
                                                 onDrill={onDrill}
+                                                onError={onError}
                                                 ErrorComponent={ErrorComponent}
                                                 LoadingComponent={LoadingComponent}
                                             />

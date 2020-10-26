@@ -22,6 +22,7 @@ import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
     DataViewFacade,
+    OnError,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
@@ -33,6 +34,7 @@ interface IKpiExecutorProps {
     filters?: IFilter[];
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
+    onError?: OnError;
     backend: IAnalyticalBackend;
     workspace: string;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -50,6 +52,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     filters,
     drillableItems,
     onDrill,
+    onError,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -62,7 +65,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
         workspace,
     });
 
-    const { error, result, status } = useDataView({ execution });
+    const { error, result, status } = useDataView({ execution, onError });
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {

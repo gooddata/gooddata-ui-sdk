@@ -10,6 +10,7 @@ import {
     IDrillableItem,
     IHeaderPredicate,
     OnFiredDrillEvent,
+    OnError,
 } from "@gooddata/sdk-ui";
 import { InvariantError } from "ts-invariant";
 
@@ -36,6 +37,11 @@ export interface IKpiViewProps {
      * Called when user triggers a drill on a visualization.
      */
     onDrill?: OnFiredDrillEvent;
+
+    /**
+     * Called in case of any error, either in the dashboard loading or any of the widgets execution.
+     */
+    onError?: OnError;
 
     /**
      * Backend to work with.
@@ -73,6 +79,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     filters,
     drillableItems,
     onDrill,
+    onError,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -87,6 +94,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         backend,
         filters,
         workspace,
+        onError,
     });
 
     if (status === "loading" || status === "pending") {
@@ -104,6 +112,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             secondaryMeasure={result.secondaryMeasure}
             filters={result.filters}
             onDrill={onDrill}
+            onError={onError}
             drillableItems={drillableItems}
             backend={backend}
             workspace={workspace}

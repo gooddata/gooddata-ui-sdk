@@ -102,11 +102,13 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     filters,
     onDrill,
     drillableItems,
+    onError,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
         dashboard,
+        onError,
     });
     // TODO dashboard alerts
 

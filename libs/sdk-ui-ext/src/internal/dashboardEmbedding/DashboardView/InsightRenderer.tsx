@@ -7,6 +7,7 @@ import {
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
+    OnError,
     OnFiredDrillEvent,
     useBackend,
     useCancelablePromise,
@@ -21,6 +22,7 @@ interface IInsightRendererProps {
     filters?: IFilter[];
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
+    onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
 }
@@ -30,6 +32,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     filters,
     drillableItems,
     onDrill,
+    onError,
     backend,
     workspace,
     ErrorComponent,
@@ -44,6 +47,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 .workspace(effectiveWorkspace)
                 .dashboards()
                 .getResolvedFiltersForWidget(insightWidget, filters ?? []),
+        onError,
     });
 
     if (status === "loading" || status === "pending") {
@@ -62,6 +66,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             workspace={workspace}
             drillableItems={drillableItems}
             onDrill={onDrill}
+            onError={onError}
         />
     );
 };

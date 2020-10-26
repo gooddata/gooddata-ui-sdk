@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
+    OnError,
     useBackend,
     useCancelablePromise,
     UseCancelablePromiseState,
@@ -27,6 +28,7 @@ interface IUseKpiDataConfig {
     filters?: IFilter[];
     backend?: IAnalyticalBackend;
     workspace?: string;
+    onError?: OnError;
 }
 
 interface IUseKpiDataResult {
