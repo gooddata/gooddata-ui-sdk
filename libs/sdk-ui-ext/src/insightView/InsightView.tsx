@@ -41,6 +41,7 @@ import {
     newErrorMapping,
     isGoodDataSdkError,
     UnexpectedSdkError,
+    IHeaderPredicate,
 } from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
@@ -86,7 +87,7 @@ export interface IInsightViewProps extends Partial<IVisCallbacks> {
     /**
      * Configure chart drillability; e.g. which parts of the charts can be clicked.
      */
-    drillableItems?: IDrillableItem[];
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
 
     /**
      * Configure color palette to use for the chart. If you do not specify this, then the palette will be
