@@ -26,7 +26,9 @@ function formatDate(date: Date, dateFormat: string): string {
 function parseDate(str: string, dateFormat: string): Date | undefined {
     try {
         const parsedDate: Date = parse(str, dateFormat, new Date());
-        if (isValid(parsedDate)) {
+        // parse only dates with 4-digit years. this mimics moment.js behavior - it parses only dates above 1900
+        // this is to make sure that the picker input is not overwritten in the middle of writing the year with year "0002" when writing 2020
+        if (isValid(parsedDate) && parsedDate.getFullYear() >= 1000) {
             return parsedDate;
         }
         return;
