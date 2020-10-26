@@ -21,6 +21,8 @@ import {
     isMeasureValueFilter,
     isRankingFilter,
     mergeFilters,
+    IMeasureValueFilter,
+    IRankingFilter,
 } from "@gooddata/sdk-model";
 import partition from "lodash/fp/partition";
 import zip from "lodash/fp/zip";
@@ -51,7 +53,8 @@ export async function appendFilters(
     return mergeFilters(normalizedOriginalFilters, normalizedAddedFilters);
 }
 
-const isFilterWithoutRefs = (filter: IFilter) => isMeasureValueFilter(filter) || isRankingFilter(filter);
+const isFilterWithoutRefs = (filter: IFilter): filter is IMeasureValueFilter | IRankingFilter =>
+    isMeasureValueFilter(filter) || isRankingFilter(filter);
 
 /**
  * Detects if all the filters with refs use the same ObjRef type.
@@ -83,7 +86,7 @@ async function normalizeFilterRefs(
 
     const uris = await objRefNormalizer(refs);
 
-    const normalized = zip(filters, uris).map(([filter, uri]) => {
+    const normalized = zip(filtersWithRefs, uris).map(([filter, uri]) => {
         if (isAbsoluteDateFilter(filter)) {
             const { from, to } = absoluteDateFilterValues(filter);
             return newAbsoluteDateFilter(uriRef(uri!), from, to);
