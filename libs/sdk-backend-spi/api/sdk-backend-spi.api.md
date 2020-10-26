@@ -1100,6 +1100,7 @@ export interface ISettings {
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
     enableWeekFilters?: boolean;
+    responsiveUiDateFormat?: string;
 }
 
 // @public

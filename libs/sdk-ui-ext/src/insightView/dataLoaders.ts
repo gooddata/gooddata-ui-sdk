@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import LRUCache from "lru-cache";
-import { IAnalyticalBackend, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, IInsight, ObjRef, objRefToString } from "@gooddata/sdk-model";
 
 /**
@@ -31,10 +31,10 @@ export interface IInsightViewDataLoader {
      */
     getColorPalette(backend: IAnalyticalBackend): Promise<IColorPalette>;
     /**
-     * Obtains the workspace settings for the current workspace.
+     * Obtains the user workspace settings for the current user workspace.
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend
      */
-    getWorkspaceSettings(backend: IAnalyticalBackend): Promise<IWorkspaceSettings>;
+    getUserWorkspaceSettings(backend: IAnalyticalBackend): Promise<IUserWorkspaceSettings>;
     /**
      * Obtains the locale that is set in user's account
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend
@@ -49,7 +49,7 @@ export interface IInsightViewDataLoader {
  */
 export class InsightViewDataLoader implements IInsightViewDataLoader {
     private cachedColorPalette: Promise<IColorPalette> | undefined;
-    private cachedWorkspaceSettings: Promise<IWorkspaceSettings> | undefined;
+    private cachedUserWorkspaceSettings: Promise<IUserWorkspaceSettings> | undefined;
     private cachedLocale: Promise<string> | undefined;
     private insightCache: LRUCache<string, Promise<IInsight>> = new LRUCache({ max: INSIGHT_CACHE_SIZE });
 
@@ -90,19 +90,19 @@ export class InsightViewDataLoader implements IInsightViewDataLoader {
         return this.cachedColorPalette;
     }
 
-    public getWorkspaceSettings(backend: IAnalyticalBackend): Promise<IWorkspaceSettings> {
-        if (!this.cachedWorkspaceSettings) {
-            this.cachedWorkspaceSettings = backend
+    public getUserWorkspaceSettings(backend: IAnalyticalBackend): Promise<IUserWorkspaceSettings> {
+        if (!this.cachedUserWorkspaceSettings) {
+            this.cachedUserWorkspaceSettings = backend
                 .workspace(this.workspace)
                 .settings()
-                .getSettings()
+                .getSettingsForCurrentUser()
                 .catch((error) => {
-                    this.cachedWorkspaceSettings = undefined;
+                    this.cachedUserWorkspaceSettings = undefined;
                     throw error;
                 });
         }
 
-        return this.cachedWorkspaceSettings;
+        return this.cachedUserWorkspaceSettings;
     }
 
     public getLocale(backend: IAnalyticalBackend): Promise<string> {
