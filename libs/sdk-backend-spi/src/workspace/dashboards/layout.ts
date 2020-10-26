@@ -311,6 +311,14 @@ export function isLayoutWidgetDefinition(obj: unknown): obj is ILayoutWidgetDefi
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link ISectionHeader}.
+ * @alpha
+ */
+export function isSectionHeader(obj: unknown): obj is ISectionHeader {
+    return !isEmpty(obj) && !!(obj as ISectionHeader).title;
+}
+
+/**
  * Represents nested path in layout
  * It's useful to track the layout location of the widget
  * @alpha
