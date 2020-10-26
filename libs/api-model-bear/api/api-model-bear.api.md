@@ -1489,7 +1489,7 @@ export namespace GdcMetadata {
                 borderColor?: ThemeColor;
                 borderRadius?: string;
             };
-            kpiDashboards?: {
+            dashboards?: {
                 title?: {
                     color?: ThemeColor;
                 };
@@ -1521,7 +1521,7 @@ export namespace GdcMetadata {
                         borderRadius?: string;
                         dropShadow?: boolean;
                     };
-                    headline?: {
+                    kpiWidget?: {
                         title?: {
                             color?: ThemeColor;
                             textAlign?: string;
@@ -1531,13 +1531,15 @@ export namespace GdcMetadata {
                         borderWidth?: string;
                         borderRadius?: string;
                         dropShadow?: boolean;
-                        value?: {
-                            textAlign?: string;
-                            positiveColor?: ThemeColor;
-                            negativeColor?: ThemeColor;
+                        kpi?: {
+                            value?: {
+                                textAlign?: string;
+                                positiveColor?: ThemeColor;
+                                negativeColor?: ThemeColor;
+                            };
+                            primaryMeasureColor?: ThemeColor;
+                            secondaryInfoColor?: ThemeColor;
                         };
-                        primaryMeasureColor?: ThemeColor;
-                        secondaryInfoColor?: ThemeColor;
                     };
                 };
                 navigation?: {

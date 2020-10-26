@@ -107,6 +107,43 @@ export interface IThemeWidgetTitle {
 }
 
 /**
+ * Kpi values customization
+ *
+ * @beta
+ */
+export interface IThemeKpi {
+    /**
+     * Kpi value specific properties
+     */
+    value?: {
+        /**
+         * Value align
+         */
+        textAlign?: string;
+
+        /**
+         * Color of the value considered to be positive
+         */
+        positiveColor?: ThemeColor;
+
+        /**
+         * Color of the value considered to be negative
+         */
+        negativeColor?: ThemeColor;
+    };
+
+    /**
+     * Color of the primary measure value (main)
+     */
+    primaryMeasureColor?: ThemeColor;
+
+    /**
+     * Color of the secondary measure value (informative)
+     */
+    secondaryInfoColor?: ThemeColor;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * Only the primary color main value is mandatory
@@ -213,7 +250,7 @@ export interface ITheme {
     /**
      * KPI dashboards specific properties
      */
-    kpiDashboards?: {
+    dashboards?: {
         /**
          * Title specific properties
          */
@@ -327,70 +364,42 @@ export interface ITheme {
             };
 
             /**
-             * Headline widget specific properties
+             * Kpi widget specific properties
              */
 
-            headline?: {
+            kpiWidget?: {
                 /**
-                 * Headline title color and alignment
+                 * Kpi widget title color and alignment
                  */
 
                 title?: IThemeWidgetTitle;
 
                 /**
-                 * Headline background color
+                 * Kpi widget background color
                  */
                 backgroundColor?: ThemeColor;
 
                 /**
-                 * Headline border color
+                 * Kpi widget border color
                  */
                 borderColor?: ThemeColor;
 
                 /**
-                 * Headline border width
+                 * Kpi widget border width
                  */
                 borderWidth?: string;
 
                 /**
-                 * Headline border radius in px
+                 * Kpi widget border radius in px
                  */
                 borderRadius?: string;
 
                 /**
-                 * Flag determining whether the headline has a shadow or not
+                 * Flag determining whether the kpi widget has a shadow or not
                  */
                 dropShadow?: boolean;
 
-                /**
-                 * Headline value specific properties
-                 */
-                value?: {
-                    /**
-                     * Value align
-                     */
-                    textAlign?: string;
-
-                    /**
-                     * Color of the value considered to be positive
-                     */
-                    positiveColor?: ThemeColor;
-
-                    /**
-                     * Color of the value considered to be negative
-                     */
-                    negativeColor?: ThemeColor;
-                };
-
-                /**
-                 * Color of the primary measure value (main)
-                 */
-                primaryMeasureColor?: ThemeColor;
-
-                /**
-                 * Color of the secondary measure value (informative)
-                 */
-                secondaryInfoColor?: ThemeColor;
+                kpi?: IThemeKpi;
             };
         };
 

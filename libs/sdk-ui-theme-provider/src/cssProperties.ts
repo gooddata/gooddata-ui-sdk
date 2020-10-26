@@ -29,6 +29,16 @@ function createfontFace(src: string, weight: number): undefined {
     return undefined; // undefined values are skipped while generating CSS properties
 }
 
+export function handleUnits(value: string): string {
+    if (value !== undefined && value !== "NaN") {
+        // just number
+        if (parseFloat(value).toString() === value) {
+            return `${value}px`;
+        }
+    }
+    return value;
+}
+
 type CssProperty = {
     key: string;
     value: string;
@@ -45,27 +55,22 @@ export type ParserFunction = {
 const customParserFunctions: ParserFunction[] = [
     { key: "--gd-typography-font", fn: (value: string) => createfontFace(value, 400) },
     { key: "--gd-typography-fontBold", fn: (value: string) => createfontFace(value, 700) },
-    { key: "--gd-button-borderRadius", fn: (value: string) => `${value}px` },
+    { key: "--gd-button-borderRadius", fn: handleUnits },
     { key: "--gd-button-textCapitalization", fn: (value: boolean) => (value ? "capitalize" : undefined) },
     { key: "--gd-button-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
+    { key: "--gd-dashboards-content-widget-borderWidth", fn: handleUnits },
+    { key: "--gd-dashboards-content-widget-borderRadius", fn: handleUnits },
     {
-        key: "--gd-kpiDashboards-content-widget-borderWidth",
-        fn: (value: string) => (value !== undefined ? `${value}px` : undefined),
-    },
-    { key: "--gd-kpiDashboards-content-widget-borderRadius", fn: (value: string) => `${value}px` },
-    {
-        key: "--gd-kpiDashboards-content-widget-dropShadow",
+        key: "--gd-dashboards-content-widget-dropShadow",
         fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
-    { key: "--gd-modal-borderRadius", fn: (value: string) => `${value}px` },
+    { key: "--gd-modal-borderRadius", fn: handleUnits },
+    { key: "--gd-modal-borderWidth", fn: handleUnits },
     { key: "--gd-modal-dropShadow", fn: (value: boolean) => (value ? undefined : "none") },
+    { key: "--gd-dashboards-content-kpiWidget-borderWidth", fn: handleUnits },
+    { key: "--gd-dashboards-content-kpiWidget-borderRadius", fn: handleUnits },
     {
-        key: "--gd-kpiDashboards-content-headline-borderWidth",
-        fn: (value: string) => (value !== undefined ? `${value}px` : undefined),
-    },
-    { key: "--gd-kpiDashboards-content-headline-borderRadius", fn: (value: string) => `${value}px` },
-    {
-        key: "--gd-kpiDashboards-content-headline-dropShadow",
+        key: "--gd-dashboards-content-kpiWidget-dropShadow",
         fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
 ];
