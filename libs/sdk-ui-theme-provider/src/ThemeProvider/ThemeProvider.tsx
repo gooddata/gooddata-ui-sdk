@@ -13,9 +13,12 @@ import { ThemeContextProvider } from "./Context";
  */
 export interface IThemeProviderProps {
     /**
-     * Theme object to use. If not specified, provider will load theme from workspace. If specified, backend and workspace props are ignored and don't have to be provided.
+     * Theme that will be used if defined. If not defined here, the theme will be obtained from the backend.
+     *
+     * Note: either the theme or both backend and workspace MUST be provided (either directly or via their contexts).
      */
     theme?: ITheme;
+
     /**
      * Analytical backend, from which the ThemeProvider will obtain selected theme object
      *
@@ -52,7 +55,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
 
-    const [theme, setTheme] = useState<ITheme>(themeParam ?? {});
+    const [theme, setTheme] = useState(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
 
     const lastWorkspace = useRef<string>();
