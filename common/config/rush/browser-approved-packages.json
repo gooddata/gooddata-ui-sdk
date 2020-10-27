@@ -751,6 +751,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-portal",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-responsive",
       "allowedCategories": [ "production" ]
     },

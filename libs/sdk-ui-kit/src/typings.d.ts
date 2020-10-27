@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 declare module "react-native-listener";
 declare module "fixed-data-table-2";
+declare module "react-portal";
 declare module "@gooddata/goodstrap/lib/core/addCSS";
 declare module "@gooddata/goodstrap/lib/core/domUtilities";
 declare module "@gooddata/goodstrap/lib/core/immutable" {

@@ -33,6 +33,8 @@
         flex: 0 0 auto;
         padding: 10px 12px;
         background-color: $is-focused-background;
+        font-family: $gd-font-primary;
+        font-weight: 400;
         border-bottom: 1px solid $gd-border-color;
 
         & > span {
@@ -54,6 +56,8 @@
         .gd-measure-custom-format-dialog-section-title {
             display: flex;
             justify-content: space-between;
+            font-family: $gd-font-primary;
+            font-weight: 400;
         }
 
         .gd-measure-custom-format-dialog-section-help {

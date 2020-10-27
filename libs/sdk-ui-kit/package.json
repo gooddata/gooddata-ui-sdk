@@ -70,7 +70,8 @@
         "immutable": "~4.0.0-rc.12",
         "react-transition-group": "^1.2.1",
         "@types/react-transition-group": "^1.1.0",
-        "date-fns": "^2.8.1"
+        "date-fns": "^2.8.1",
+        "react-portal": "~4.2.1"
     },
     "peerDependencies": {
         "react": "^16.5.2",
