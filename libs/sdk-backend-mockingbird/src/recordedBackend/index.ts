@@ -154,7 +154,7 @@ function recordedWorkspace(
                     return implConfig.globalPalette ?? [];
                 },
                 async getTheme(): Promise<ITheme> {
-                    return {};
+                    return implConfig.theme ?? {};
                 },
             };
         },
