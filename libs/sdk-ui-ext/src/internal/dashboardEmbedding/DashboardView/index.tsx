@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
-import { IAnalyticalBackend, IDashboard, ITheme } from "@gooddata/sdk-backend-spi";
+import React, { useEffect } from "react";
+import { IAnalyticalBackend, IDashboard, ITheme, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -16,10 +16,6 @@ import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provide
 import { useDashboard } from "../useDashboard";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { useDashboardAlerts } from "../useDashboardAlerts";
-
-interface IOnDashboardViewLoadedParams {
-    dashboard: IDashboard;
-}
 
 export interface IDashboardViewProps {
     /**
@@ -91,7 +87,7 @@ export interface IDashboardViewProps {
      * Called when the dashboard is loaded. This is to allow the imbedding code to read the dashboard data
      * (for example to adapt its filter UI according to the filters saved in the dashboard).
      */
-    onDashboardLoaded?: (params: IOnDashboardViewLoadedParams) => void;
+    onDashboardLoaded?: (params: { dashboard: IDashboard; alerts: IWidgetAlert[] }) => void;
 
     /**
      * Called in case of any error, either in the dashboard loading or any of the widgets execution.
@@ -108,6 +104,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     onDrill,
     drillableItems,
     onError,
+    onDashboardLoaded,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
@@ -123,6 +120,15 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
+
+    useEffect(() => {
+        if (alertsData && dashboardData) {
+            onDashboardLoaded?.({
+                alerts: alertsData,
+                dashboard: dashboardData,
+            });
+        }
+    }, [onDashboardLoaded, alertsData, dashboardData]);
 
     const statuses = [dashboardStatus, alertsStatus];
 
