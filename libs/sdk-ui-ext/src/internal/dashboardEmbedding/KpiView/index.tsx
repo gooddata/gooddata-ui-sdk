@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
+import compact from "lodash/compact";
 import { IAnalyticalBackend, IWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
@@ -83,7 +84,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
     alert,
     filters,
-    drillableItems,
+    drillableItems = [],
     onDrill,
     onError,
     backend,
@@ -103,6 +104,12 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         onError,
     });
 
+    // add drilling predicate for the metric if the KPI has any drills defined from KPI dashboards
+    const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(
+        () => compact([...drillableItems, kpiWidget.drills.length > 0 && kpiWidget.kpi.metric]),
+        [kpiWidget, drillableItems],
+    );
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -120,7 +127,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             filters={result.filters}
             onDrill={onDrill}
             onError={onError}
-            drillableItems={drillableItems}
+            drillableItems={effectiveDrillableItems}
             backend={backend}
             workspace={workspace}
             ErrorComponent={ErrorComponent}
