@@ -197,6 +197,7 @@ export interface IAttributeDescriptor {
         ref: ObjRef;
         name: string;
         totalItems?: ITotalDescriptor[];
+        type?: string;
         formOf: {
             ref: ObjRef;
             uri: string;
