@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IErrorProps,
@@ -22,6 +22,11 @@ export interface IKpiViewProps {
      * The KPI to execute and display.
      */
     kpiWidget: IWidget;
+
+    /**
+     * Optionally, specify alert set by the current user to this KPI.
+     */
+    alert?: IWidgetAlert;
 
     /**
      * Optionally, specify filters to be applied to the KPI.
@@ -76,6 +81,7 @@ export interface IKpiViewProps {
  */
 export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
+    alert,
     filters,
     drillableItems,
     onDrill,
@@ -110,6 +116,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             title={kpiWidget.title}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
+            alert={alert}
             filters={result.filters}
             onDrill={onDrill}
             onError={onError}

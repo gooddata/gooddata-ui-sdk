@@ -1,7 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { IAnalyticalBackend, IDashboard, isLayoutWidget, isSectionHeader } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import {
+    IAnalyticalBackend,
+    IDashboard,
+    isLayoutWidget,
+    isSectionHeader,
+    IWidgetAlert,
+} from "@gooddata/sdk-backend-spi";
+import { areObjRefsEqual, IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -15,6 +21,7 @@ import { InsightRenderer } from "./InsightRenderer";
 
 interface IDashboardRendererProps {
     dashboard: IDashboard;
+    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
@@ -27,6 +34,7 @@ interface IDashboardRendererProps {
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     dashboard,
+    alerts,
     filters,
     backend,
     workspace,
@@ -48,38 +56,47 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
                             </div>
                         )}
                         {row.columns.map((column, columnIndex) => {
+                            if (!isLayoutWidget(column.content)) {
+                                return <div key={columnIndex}>Not a widget</div>;
+                            }
+
+                            const { widget } = column.content;
+
+                            if (widget.type === "insight") {
+                                return (
+                                    <InsightRenderer
+                                        key={widget.identifier}
+                                        insightWidget={widget}
+                                        backend={backend}
+                                        workspace={workspace}
+                                        filters={filters}
+                                        drillableItems={drillableItems}
+                                        onDrill={onDrill}
+                                        onError={onError}
+                                        ErrorComponent={ErrorComponent}
+                                        LoadingComponent={LoadingComponent}
+                                    />
+                                );
+                            }
+
+                            const relevantAlert = alerts?.find((alert) =>
+                                areObjRefsEqual(alert.widget, widget),
+                            );
+
                             return (
-                                <div key={columnIndex}>
-                                    {isLayoutWidget(column.content) ? (
-                                        column.content.widget.type === "insight" ? (
-                                            <InsightRenderer
-                                                insightWidget={column.content.widget}
-                                                backend={backend}
-                                                workspace={workspace}
-                                                filters={filters}
-                                                drillableItems={drillableItems}
-                                                onDrill={onDrill}
-                                                onError={onError}
-                                                ErrorComponent={ErrorComponent}
-                                                LoadingComponent={LoadingComponent}
-                                            />
-                                        ) : (
-                                            <KpiView
-                                                kpiWidget={column.content.widget}
-                                                backend={backend}
-                                                workspace={workspace}
-                                                filters={filters}
-                                                drillableItems={drillableItems}
-                                                onDrill={onDrill}
-                                                onError={onError}
-                                                ErrorComponent={ErrorComponent}
-                                                LoadingComponent={LoadingComponent}
-                                            />
-                                        )
-                                    ) : (
-                                        "Not a widget"
-                                    )}
-                                </div>
+                                <KpiView
+                                    key={widget.identifier}
+                                    kpiWidget={column.content.widget}
+                                    alert={relevantAlert}
+                                    backend={backend}
+                                    workspace={workspace}
+                                    filters={filters}
+                                    drillableItems={drillableItems}
+                                    onDrill={onDrill}
+                                    onError={onError}
+                                    ErrorComponent={ErrorComponent}
+                                    LoadingComponent={LoadingComponent}
+                                />
                             );
                         })}
                     </div>

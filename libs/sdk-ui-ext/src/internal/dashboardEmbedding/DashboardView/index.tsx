@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { useDashboard } from "../useDashboard";
 import { DashboardRenderer } from "./DashboardRenderer";
+import { useDashboardAlerts } from "../useDashboardAlerts";
 
 interface IOnDashboardViewLoadedParams {
     dashboard: IDashboard;
@@ -110,9 +111,14 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         dashboard,
         onError,
     });
-    // TODO dashboard alerts
+    const { error: alertsError, result: alertsData, status: alertsStatus } = useDashboardAlerts({
+        dashboard,
+        onError,
+    });
 
-    if (dashboardStatus === "loading" || dashboardStatus === "pending") {
+    const statuses = [dashboardStatus, alertsStatus];
+
+    if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
     }
 
@@ -120,9 +126,14 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         return <ErrorComponent message={dashboardError.message} />;
     }
 
+    if (alertsStatus === "error") {
+        return <ErrorComponent message={alertsError.message} />;
+    }
+
     return (
         <DashboardRenderer
             dashboard={dashboardData}
+            alerts={alertsData}
             filters={filters}
             onDrill={onDrill}
             drillableItems={drillableItems}
