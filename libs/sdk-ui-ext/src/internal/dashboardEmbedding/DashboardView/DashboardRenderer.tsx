@@ -16,6 +16,7 @@ import {
     OnError,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
+import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { KpiView } from "../KpiView";
 import { InsightRenderer } from "./InsightRenderer";
 
@@ -44,6 +45,12 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     LoadingComponent,
     onError,
 }) => {
+    const isThemeLoading = useThemeIsLoading();
+    if (isThemeLoading) {
+        // do not render the dashboard until you have the theme to avoid flash of un-styled content
+        return <LoadingComponent />;
+    }
+
     return (
         <>
             {dashboard.layout.fluidLayout.rows.map((row, rowIndex) => {

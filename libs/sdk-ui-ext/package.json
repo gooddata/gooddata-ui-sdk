@@ -64,6 +64,7 @@
         "@gooddata/sdk-ui-geo": "^8.1.0-alpha.48",
         "@gooddata/sdk-ui-kit": "^8.1.0-alpha.48",
         "@gooddata/sdk-ui-pivot": "^8.1.0-alpha.48",
+        "@gooddata/sdk-ui-theme-provider": "^8.1.0-alpha.48",
         "@gooddata/sdk-ui-vis-commons": "^8.1.0-alpha.48",
         "@gooddata/util": "^8.1.0-alpha.48",
         "classnames": "^2.2.6",

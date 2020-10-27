@@ -12,6 +12,7 @@ import {
     OnError,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
+import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../useDashboard";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { useDashboardAlerts } from "../useDashboardAlerts";
@@ -101,6 +102,9 @@ export interface IDashboardViewProps {
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
+    theme,
+    backend,
+    workspace,
     onDrill,
     drillableItems,
     onError,
@@ -111,10 +115,14 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         dashboard,
         onError,
     });
+
     const { error: alertsError, result: alertsData, status: alertsStatus } = useDashboardAlerts({
         dashboard,
         onError,
     });
+
+    const isThemeLoading = useThemeIsLoading();
+    const hasThemeProvider = isThemeLoading !== undefined;
 
     const statuses = [dashboardStatus, alertsStatus];
 
@@ -130,7 +138,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         return <ErrorComponent message={alertsError.message} />;
     }
 
-    return (
+    const dashboardRender = (
         <DashboardRenderer
             dashboard={dashboardData}
             alerts={alertsData}
@@ -141,4 +149,14 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             LoadingComponent={LoadingComponent}
         />
     );
+
+    if (!hasThemeProvider) {
+        return (
+            <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
+                {dashboardRender}
+            </ThemeProvider>
+        );
+    }
+
+    return dashboardRender;
 };
