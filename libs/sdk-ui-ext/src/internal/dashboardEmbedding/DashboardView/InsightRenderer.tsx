@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
@@ -7,6 +7,7 @@ import {
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
+    IPushData,
     OnError,
     OnFiredDrillEvent,
     useBackend,
@@ -14,6 +15,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { InsightView } from "../../../insightView";
+import { availableDrillTargetsToDrillPredicates, widgetDrillsToDrillPredicates } from "./convertors";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -30,7 +32,7 @@ interface IInsightRendererProps {
 export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     insightWidget,
     filters,
-    drillableItems,
+    drillableItems = [],
     onDrill,
     onError,
     backend,
@@ -50,6 +52,23 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         onError,
     });
 
+    const [drillsFromInsight, setDrillsFromInsight] = useState<IHeaderPredicate[]>([]);
+
+    const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(() => {
+        const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
+        return [
+            ...drillsFromWidget, // drills specified in the widget definition
+            ...drillableItems, // drills specified by the caller
+            ...drillsFromInsight, // drills specified in the insight itself
+        ];
+    }, [insightWidget.drills, drillableItems, drillsFromInsight]);
+
+    const handlePushData = useCallback((data: IPushData) => {
+        if (data.availableDrillTargets) {
+            setDrillsFromInsight(availableDrillTargetsToDrillPredicates(data.availableDrillTargets));
+        }
+    }, []);
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -64,9 +83,10 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             filters={result}
             backend={backend}
             workspace={workspace}
-            drillableItems={drillableItems}
+            drillableItems={effectiveDrillableItems}
             onDrill={onDrill}
             onError={onError}
+            pushData={handlePushData}
         />
     );
 };
