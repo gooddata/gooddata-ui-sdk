@@ -8,12 +8,12 @@ WINDOW_WIDTH=1280
 WINDOW_HEIGHT=800
 # For some reason testcafe has problems using globstar so we need to specify
 # maximum directory depth, otherwise it just picks up tests in the deepest directory.
-TESTS_PATH="test/**/**/*_test*" 
+TESTS_PATH="test/**/**/*_test*"
 
 CHROME_HEADLESS_DOCKER="chrome:headless --window-size='$WINDOW_WIDTH,$WINDOW_HEIGHT' --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-breakpad --disable-client-side-phishing-detection --disable-component-update --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=site-per-process --disable-hang-monitor --disable-infobars --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-sync --disable-translate --disable-web-resource --enable-automation --metrics-recording-only --mute-audio --no-first-run --no-sandbox --safebrowsing-disable-auto-update"
 CHROME_HEADLESS_LOCAL="chrome:headless --window-size='$WINDOW_WIDTH,$WINDOW_HEIGHT' --no-sandbox"
 CHROME_LOCAL="chrome --window-size='$WINDOW_WIDTH,$WINDOW_HEIGHT' --no-sandbox --disable-background-timer-throttling"
-CAPTURE_PATH="examples/_screenshots"
+CAPTURE_PATH="_screenshots"
 CAPTURE_BASE_PATTERN='${DATE}_${TIME}/${TEST_ID}_${FIXTURE}/${RUN_ID}/${FILE_INDEX}_${TEST}'
 SCREENSHOT_PATTERN="$CAPTURE_BASE_PATTERN.png"
 VIDEO_PATTERN="$CAPTURE_BASE_PATTERN.mp4"
