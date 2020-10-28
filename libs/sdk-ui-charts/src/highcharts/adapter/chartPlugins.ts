@@ -6,6 +6,7 @@ import { linearTickPositions } from "./plugins/linearTickPositions";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper";
 import { renderBubbles } from "./plugins/renderBubbles";
 import { adjustTickAmount } from "./plugins/adjustTickAmount";
+import { customAfterDrawDataLabels } from "./plugins/customAfterDrawDataLabels";
 
 const extendRenderStackTotals = (Highcharts: any) => {
     Highcharts.wrap(Highcharts.Axis.prototype, "renderStackTotals", function (proceed: any) {
@@ -44,4 +45,5 @@ export function initChartPlugins(Highcharts: any): void {
     adjustTickAmount(Highcharts);
     // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
     renderBubbles(Highcharts);
+    customAfterDrawDataLabels(Highcharts);
 }
