@@ -39,14 +39,20 @@ export type GetOptimalAlignmentForRegion = {
 /**
  * @internal
  */
+
+export type Alignment = {
+    left: number;
+    top: number;
+    right: number;
+    align: string;
+};
+
+/**
+ * @internal
+ */
 export interface IOptimalAlignment {
-    alignment: {
-        left: number;
-        top: number;
-        right: number;
-        align: string;
-    };
-    visiblePart: number;
+    alignment: Alignment;
+    visiblePart?: number;
 }
 
 /**

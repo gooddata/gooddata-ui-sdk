@@ -1,0 +1,23 @@
+// (C) 2007-2020 GoodData Corporation
+@import "mixins";
+@import "typo-mixins";
+
+.overlay-wrapper {
+    z-index: 5001;
+}
+
+.overlay {
+    @include gd-paragraph;
+
+    position: relative;
+    padding: 0.1px; // Prevent collapsing margins
+    border-radius: 3px;
+    font-family: $gd-font-primary;
+    background-color: #fff;
+
+    @include box-shadow("0 1px 20px rgba(20,56,93,.2)");
+
+    @media #{$small-only} {
+        border-radius: 0;
+    }
+}

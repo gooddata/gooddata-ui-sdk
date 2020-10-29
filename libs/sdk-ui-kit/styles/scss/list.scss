@@ -3,6 +3,7 @@
 @import "./List/_mixins";
 @import "./variables.scss";
 @import "./mixins.scss";
+@import "~fixed-data-table-2/dist/fixed-data-table.css";
 
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 $base_path: $gdc-goodstrap-basepath + "./core/styles/";
