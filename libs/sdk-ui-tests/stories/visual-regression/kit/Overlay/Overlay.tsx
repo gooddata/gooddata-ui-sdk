@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { injectIntl, FormattedMessage, IntlShape } from "react-intl";
+import { injectIntl, FormattedMessage, IntlShape, IntlProvider } from "react-intl";
 import MediaQuery from "react-responsive";
 import bindAll from "lodash/bindAll";
 import { storiesOf } from "@storybook/react";
@@ -8,6 +8,8 @@ import { UiKit } from "../../../_infra/storyGroups";
 // eslint-disable-next-line import/no-unresolved, import/extensions
 import { Button, Overlay } from "@gooddata/sdk-ui-kit";
 // import FullScreenOverlay from "../FullScreenOverlay";
+
+import "./styles.scss";
 /**
  * @internal
  */
@@ -143,54 +145,68 @@ const InjectedOverlayExample = injectIntl(OverlayExample);
 export default class OverlayExamples extends React.Component {
     render() {
         return (
-            <div>
-                <div style={{ float: "right" }}>
-                    <InjectedOverlayExample index={2} />
+            <IntlProvider
+                locale="en"
+                messages={{
+                    "gs.examples.overlay.openOverlay": "Open Overlay n.",
+                    "gs.examples.overlay.closeOverlay": "Close Overlay n.",
+                    "gs.examples.overlay.resizeBelow":
+                        "Resize the window width below 640px to show my fullscreen version.",
+                    "gs.examples.overlay.resizeAbove":
+                        "Resize the window width above 640px to show standard version.",
+                }}
+            >
+                <div className="library-component">
+                    <div style={{ float: "right" }}>
+                        <InjectedOverlayExample index={2} />
+                    </div>
+                    <InjectedOverlayExample index={1} />
+                    <p>
+                        Overlay accepts <code>alignTo</code> (selector of the element to which you want to
+                        align the overlay) and array of align points. Align point has multiple properties -{" "}
+                        <code>align</code> in form of string <code>bl tl</code>
+                        (align bottom left corner of target element to top left corner of aligned element) and{" "}
+                        <code>offset</code> consisting of x & y properties (number of pixels, which can be
+                        negative). Align consist of two points which should be aligned one over another -
+                        first specifies position of the point on target element, the second on the current -
+                        aligned - overlay. The point is described in form of string (<code>bl</code>), where
+                        first letter means one of 3 possible positions on vertical axis ((t)op, (c)enter,
+                        (b)ottom) and second means position in horizontal axis ((l)eft, (c)enter, (r)ight).
+                        These points will be aligned and moved by specified offset, which can be defined for
+                        each align point.
+                    </p>
+                    <p>
+                        When multiple align points are specified, we try to choose the most optimal one
+                        respecting given order. (Overlay could be outside the viewport or partially visible
+                        using some of the align points). Aligning consists of two steps: aligning in the
+                        viewport and aligning in the page.
+                    </p>
+                    <p>
+                        Usually, only first step is used for aligning the bubbles, dropdowns, etc., second
+                        step is necessary for programmatically opened overlays outside of the viewport or
+                        overlays which need to be realigned after orientation change of the device (thereby
+                        appearing outside of the viewport after layout change).
+                    </p>
+                    <p>
+                        Align classes of chosen align point will be generated and added to the aligned
+                        overlay, which can be useful for positioning the arrow on the bubble or dialog. There
+                        are generated two css classes - one for chosen align point of target element (
+                        <code>target-tr</code>), the second one for chosen align point of current positioned
+                        overlay (<code>self-tl</code>
+                        ).
+                    </p>
+                    <p>
+                        In the first step, overlay will try to align itself to most optimal position in the
+                        viewport. It measures itself and target element and tries to align to first position,
+                        where it will be fully visible. If there is not such position, it will choose the
+                        position where the most of the aligned element is in the viewport.
+                    </p>
+                    <p>
+                        Second step - aligning in the whole page - is used when aligned element is fully
+                        hidden in the viewport using all possible align points.
+                    </p>
                 </div>
-                <InjectedOverlayExample index={1} />
-                <p>
-                    Overlay accepts <code>alignTo</code> (selector of the element to which you want to align
-                    the overlay) and array of align points. Align point has multiple properties -{" "}
-                    <code>align</code> in form of string <code>bl tl</code>
-                    (align bottom left corner of target element to top left corner of aligned element) and{" "}
-                    <code>offset</code> consisting of x & y properties (number of pixels, which can be
-                    negative). Align consist of two points which should be aligned one over another - first
-                    specifies position of the point on target element, the second on the current - aligned -
-                    overlay. The point is described in form of string (<code>bl</code>), where first letter
-                    means one of 3 possible positions on vertical axis ((t)op, (c)enter, (b)ottom) and second
-                    means position in horizontal axis ((l)eft, (c)enter, (r)ight). These points will be
-                    aligned and moved by specified offset, which can be defined for each align point.
-                </p>
-                <p>
-                    When multiple align points are specified, we try to choose the most optimal one respecting
-                    given order. (Overlay could be outside the viewport or partially visible using some of the
-                    align points). Aligning consists of two steps: aligning in the viewport and aligning in
-                    the page.
-                </p>
-                <p>
-                    Usually, only first step is used for aligning the bubbles, dropdowns, etc., second step is
-                    necessary for programmatically opened overlays outside of the viewport or overlays which
-                    need to be realigned after orientation change of the device (thereby appearing outside of
-                    the viewport after layout change).
-                </p>
-                <p>
-                    Align classes of chosen align point will be generated and added to the aligned overlay,
-                    which can be useful for positioning the arrow on the bubble or dialog. There are generated
-                    two css classes - one for chosen align point of target element (<code>target-tr</code>),
-                    the second one for chosen align point of current positioned overlay (<code>self-tl</code>
-                    ).
-                </p>
-                <p>
-                    In the first step, overlay will try to align itself to most optimal position in the
-                    viewport. It measures itself and target element and tries to align to first position,
-                    where it will be fully visible. If there is not such position, it will choose the position
-                    where the most of the aligned element is in the viewport.
-                </p>
-                <p>
-                    Second step - aligning in the whole page - is used when aligned element is fully hidden in
-                    the viewport using all possible align points.
-                </p>
-            </div>
+            </IntlProvider>
         );
     }
 }
