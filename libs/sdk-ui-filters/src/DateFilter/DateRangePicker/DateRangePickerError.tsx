@@ -5,17 +5,21 @@ import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl"
 import { getLocalizedDateFormat } from "../utils/FormattingUtils";
 
 interface IDateRangePickerErrorProps {
+    dateFormat?: string;
     errorId: string;
 }
 
 const DateRangePickerErrorComponent: React.FC<IDateRangePickerErrorProps & WrappedComponentProps> = (
     props,
 ) => {
-    const { errorId, intl } = props;
+    const { dateFormat, errorId, intl } = props;
 
     return (
         <div className="gd-date-range-picker-error-message s-absolute-range-error">
-            <FormattedMessage id={errorId} values={{ format: getLocalizedDateFormat(intl.locale) }} />
+            <FormattedMessage
+                id={errorId}
+                values={{ format: dateFormat || getLocalizedDateFormat(intl.locale) }}
+            />
         </div>
     );
 };

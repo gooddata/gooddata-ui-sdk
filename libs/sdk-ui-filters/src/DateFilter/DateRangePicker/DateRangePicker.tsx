@@ -22,7 +22,7 @@ interface IDateRangePickerProps {
     range: IDateRange;
     onRangeChange: (newRange: IDateRange) => void;
     errors?: IExtendedDateFilterErrors["absoluteForm"];
-    dateFormat?: string | string[];
+    dateFormat?: string;
     dayPickerProps?: DayPickerProps;
     isMobile: boolean;
 }
@@ -121,6 +121,7 @@ class DateRangePickerComponent extends React.Component<IDateRangePickerProps & W
                 </div>
                 {(errorFrom || errorTo) && (
                     <DateRangePickerError
+                        dateFormat={dateFormat}
                         errorId={
                             // This means that when both inputs are invalid, error is shown only for "from"
                             errorFrom || errorTo
