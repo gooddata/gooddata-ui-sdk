@@ -2,6 +2,7 @@
 import get from "lodash/get";
 import set from "lodash/set";
 import noop from "lodash/noop";
+import { IntlShape } from "react-intl";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
     escapeCategories,
@@ -14,7 +15,7 @@ import {
     TOOLTIP_VIEWPORT_MARGIN_TOP,
     TOOLTIP_PADDING,
 } from "../customConfiguration";
-import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
+import { VisualizationTypes, IDrillConfig, createIntlMock } from "@gooddata/sdk-ui";
 import { immutableSet } from "../../_util/common";
 import {
     supportedStackingAttributesChartTypes,
@@ -31,6 +32,22 @@ function getData(dataValues: ISeriesDataItem[]) {
                 data: dataValues,
             },
         ],
+    };
+}
+
+function getChartZoomConfig(chartConfig: any, intl?: IntlShape): void {
+    return {
+        ...chartConfig,
+        animation: true,
+        zoomType: "x",
+        panKey: "shift",
+        panning: true,
+        resetZoomButton: {
+            theme: {
+                display: "none",
+            },
+            tooltip: intl.formatMessage({ id: "visualization.tooltip.resetZoom" }),
+        },
     };
 }
 
@@ -202,6 +219,7 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should set chart and X axis configurations with the minRange = 2 when the zooming is enabled and the categories are larger than 2", () => {
+            const intl = createIntlMock();
             const result = getCustomizedConfiguration(
                 {
                     ...chartOptions,
@@ -213,29 +231,21 @@ describe("getCustomizedConfiguration", () => {
                 {
                     zoomInsight: true,
                 },
+                null,
+                intl,
             );
             const expectedResult = {
                 ...result.xAxis[0],
                 minRange: 2,
             };
-            const chartResult = {
-                ...result.chart,
-                animation: true,
-                zoomType: "x",
-                panKey: "shift",
-                panning: true,
-                resetZoomButton: {
-                    theme: {
-                        display: "none",
-                    },
-                },
-            };
+            const chartResult = getChartZoomConfig(result.chart, intl);
 
             expect(result.xAxis[0]).toEqual(expectedResult);
             expect(result.chart).toEqual(chartResult);
         });
 
         it("should set chart and X axis configurations with the minRange is default value (undefined) when the zooming is enabled and the categories <= 2", () => {
+            const intl = createIntlMock();
             const result = getCustomizedConfiguration(
                 {
                     ...chartOptions,
@@ -247,23 +257,14 @@ describe("getCustomizedConfiguration", () => {
                 {
                     zoomInsight: true,
                 },
+                null,
+                intl,
             );
             const expectedResult = {
                 ...result.xAxis[0],
                 minRange: undefined,
             };
-            const chartResult = {
-                ...result.chart,
-                animation: true,
-                zoomType: "x",
-                panKey: "shift",
-                panning: true,
-                resetZoomButton: {
-                    theme: {
-                        display: "none",
-                    },
-                },
-            };
+            const chartResult = getChartZoomConfig(result.chart, intl);
 
             expect(result.xAxis[0]).toEqual(expectedResult);
             expect(result.chart).toEqual(chartResult);

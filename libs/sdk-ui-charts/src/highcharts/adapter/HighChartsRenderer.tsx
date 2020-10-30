@@ -310,6 +310,7 @@ export class HighChartsRenderer extends React.PureComponent<
                     className="viz-zoom-out s-zoom-out"
                     onClick={this.onZoomOutButtonClick}
                     style={{ display: "none" }}
+                    title={chart.resetZoomButton?.tooltip}
                 ></button>
             );
         }
