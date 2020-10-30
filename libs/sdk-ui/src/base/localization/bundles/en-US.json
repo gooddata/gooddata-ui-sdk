@@ -996,5 +996,10 @@
         "value": "Bottom {value} out of <strong>{attribute}</strong> based on <strong>{measure}</strong>",
         "comment": "Do not translate placeholder {value}, {attribute}, and {measure} or HTML markup enclosed in <>. Title describing ranking direction, number of values, attribute granularity, and measure ranking is based on. Example: 'Bottom 5 out of Product based on Revenue'",
         "limit": 0
+    },
+    "rankingFilter.valueTooltip": {
+        "value": "If multiple items have the same value, the filter shows all items with this value. The insight may then display more items than the number set.",
+        "comment": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter.",
+        "limit": 0
     }
 }

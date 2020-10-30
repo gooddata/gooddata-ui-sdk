@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
@@ -79,8 +79,19 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
                 <FormattedMessage id="rankingFilter.topBottom" />
             </div>
             <div className="gd-rf-dropdown-section">
-                <OperatorDropdown selectedValue={operator} onSelect={setOperator} />
-                <ValueDropdown selectedValue={value} onSelect={setValue} />
+                <div className="gd-rf-value-section">
+                    <OperatorDropdown selectedValue={operator} onSelect={setOperator} />
+                    <ValueDropdown selectedValue={value} onSelect={setValue} />
+                    <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+                        <span className="icon-circle-question gd-rf-value-tooltip-icon s-rf-value-tooltip-icon" />
+                        <Bubble
+                            className={`bubble-primary gd-rf-tooltip-bubble s-rf-value-tooltip`}
+                            alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}
+                        >
+                            <FormattedMessage id="rankingFilter.valueTooltip" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </div>
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.outOf" />
                 </div>

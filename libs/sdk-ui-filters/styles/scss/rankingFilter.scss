@@ -13,6 +13,16 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
     width: $ranking_filter_dropdown_width;
     margin-top: 2px;
 
+    .gd-rf-value-section {
+        display: flex;
+        align-items: center;
+
+        .gd-rf-value-tooltip-icon {
+            color: $gd-color-text-dimmed;
+            padding: 0 1px;
+        }
+    }
+
     .gd-rf-dropdown-header {
         padding: 6px 6px 6px 10px;
         background: $is-focused-background;
@@ -64,9 +74,9 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
 
 .gd-rf-value-dropdown-button {
     display: inline-block;
-    margin-left: 10px;
+    margin: 0 10px;
     width: $value_dropdown_width;
-    position: absolute;
+    position: static;
 
     .gd-input-field {
         height: 27px;
