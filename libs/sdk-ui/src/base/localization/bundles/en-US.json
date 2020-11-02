@@ -204,6 +204,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualization.tooltip.resetZoom": {
+        "value": "Reset zoom",
+        "comment": "",
+        "limit": 0
+    },
     "visualization.tooltip.interaction": {
         "value": "Click chart to drill",
         "comment": "",

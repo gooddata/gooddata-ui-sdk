@@ -1169,6 +1169,8 @@ function getZoomingAndPanningConfiguration(
     _chartOptions: IChartOptions,
     _config: any,
     chartConfig: IChartConfig,
+    _drillConfig: IDrillConfig,
+    intl?: IntlShape,
 ) {
     return chartConfig?.zoomInsight
         ? {
@@ -1181,6 +1183,7 @@ function getZoomingAndPanningConfiguration(
                       theme: {
                           display: "none",
                       },
+                      tooltip: intl ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" }) : null,
                   },
               },
           }
