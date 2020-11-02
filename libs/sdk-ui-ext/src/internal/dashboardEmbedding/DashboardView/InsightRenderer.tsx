@@ -87,6 +87,8 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             onDrill={onDrill}
             onError={onError}
             pushData={handlePushData}
+            ErrorComponent={ErrorComponent}
+            LoadingComponent={LoadingComponent}
         />
     );
 };
