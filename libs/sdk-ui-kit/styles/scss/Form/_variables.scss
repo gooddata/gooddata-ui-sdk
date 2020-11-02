@@ -1,2 +1,8 @@
 // (C) 2020 GoodData Corporation
 @import "../variables";
+
+$gd-form-error-borderColor: var(--gd-palette-error-base-t50, transparentize($gd-color-negative, 0.5));
+$gd-form-error-shadowColor: var(
+    --gd-palette-error-base-t70d20,
+    transparentize(darken($gd-color-negative, 20%), 0.7)
+);

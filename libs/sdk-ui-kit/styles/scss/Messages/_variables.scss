@@ -1,0 +1,6 @@
+// (C) 2020 GoodData Corporation
+
+$gd-messages-intensive-error-backgroundColor: var(
+    --gd-palette-error-base-t02,
+    transparentize($gd-color-negative, 0.02)
+);

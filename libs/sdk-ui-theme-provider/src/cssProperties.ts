@@ -102,71 +102,155 @@ export function parseThemeToCssProperties(
     return cssProperties;
 }
 
-const getCssProperty = (key: string, value: string): CssProperty => ({
-    key: `--gd-${key}`,
-    value,
-});
+const getCssProperty = (key: string, value: string): CssProperty =>
+    value && {
+        key: `--gd-${key}`,
+        value,
+    };
 
 const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-dimmed", mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
-    getCssProperty("palette-primary-dimmed50", mix(0.5, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
-    getCssProperty("palette-primary-lightest", setLightness(0.96, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-dimmed",
+        palette?.primary?.base && mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT),
+    ),
+    getCssProperty(
+        "palette-primary-dimmed50",
+        palette?.primary?.base && mix(0.5, palette.primary.base, GD_COLOR_TEXT_LIGHT),
+    ),
+    getCssProperty(
+        "palette-primary-lightest",
+        palette?.primary?.base && setLightness(0.96, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-error-dimmed",
+        palette?.error?.base && mix(0.1, palette.error.base, GD_COLOR_TEXT_LIGHT),
+    ),
+    getCssProperty("palette-error-lightest", palette?.error?.base && setLightness(0.96, palette.error.base)),
+    getCssProperty(
+        "palette-error-dimmed90",
+        palette?.error?.base && mix(0.9, palette.error.base, GD_COLOR_TEXT_LIGHT),
+    ),
 ];
 
 const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-t02", transparentize(0.02, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-base-t02",
+        palette?.primary?.base && transparentize(0.02, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-error-base-t02",
+        palette?.error?.base && transparentize(0.02, palette.error.base),
+    ),
+    getCssProperty(
+        "palette-error-base-t85",
+        palette?.error?.base && transparentize(0.85, palette.error.base),
+    ),
 ];
 
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-t50", transparentize(0.5, palette.primary.base)),
-    getCssProperty("palette-primary-base-t85", transparentize(0.85, palette.primary.base)),
-    getCssProperty("palette-primary-base-t90", transparentize(0.9, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-base-t50",
+        palette?.primary?.base && transparentize(0.5, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-primary-base-t85",
+        palette?.primary?.base && transparentize(0.85, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-primary-base-t90",
+        palette?.primary?.base && transparentize(0.9, palette.primary.base),
+    ),
     getCssProperty(
         "palette-primary-base-mix15-white",
-        transparentize(0.075, mix(0.15, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+        palette?.primary?.base && transparentize(0.075, mix(0.15, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
     ),
 ];
 
 const getButtonDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-t25", transparentize(0.25, palette.primary.base)),
-    getCssProperty("palette-primary-base-t70", transparentize(0.7, palette.primary.base)),
-    getCssProperty("palette-primary-base-t80", transparentize(0.8, palette.primary.base)),
-    getCssProperty("palette-primary-base-d12", darken(0.12, palette.primary.base)),
-    getCssProperty("palette-primary-base-d06", darken(0.06, palette.primary.base)),
-    getCssProperty("palette-primary-disabled", transparentize(0.4, lighten(0.12, palette.primary.base))),
-    getCssProperty("palette-primary-focus", transparentize(0.4, lighten(0.06, palette.primary.base))),
+    getCssProperty(
+        "palette-primary-base-t25",
+        palette?.primary?.base && transparentize(0.25, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-primary-base-t70",
+        palette?.primary?.base && transparentize(0.7, palette.primary.base),
+    ),
+    getCssProperty(
+        "palette-primary-base-t80",
+        palette?.primary?.base && transparentize(0.8, palette.primary.base),
+    ),
+    getCssProperty("palette-primary-base-d12", palette?.primary?.base && darken(0.12, palette.primary.base)),
+    getCssProperty("palette-primary-base-d06", palette?.primary?.base && darken(0.06, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-disabled",
+        palette?.primary?.base && transparentize(0.4, lighten(0.12, palette.primary.base)),
+    ),
+    getCssProperty(
+        "palette-primary-focus",
+        palette?.primary?.base && transparentize(0.4, lighten(0.06, palette.primary.base)),
+    ),
+    getCssProperty(
+        "palette-error-disabled",
+        palette?.error?.base && transparentize(0.4, lighten(0.2, palette.error.base)),
+    ),
+    getCssProperty(
+        "palette-error-focus",
+        palette?.error?.base && transparentize(0.4, lighten(0.1, palette.error.base)),
+    ),
+    getCssProperty("palette-error-base-d10", palette?.error?.base && darken(0.1, palette.error.base)),
+    getCssProperty("palette-error-base-d20", palette?.error?.base && darken(0.2, palette.error.base)),
 ];
 
 const getBubbleDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-t10", transparentize(0.1, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-base-t10",
+        palette?.primary?.base && transparentize(0.1, palette.primary.base),
+    ),
+    getCssProperty("palette-error-base-t10", palette?.error?.base && transparentize(0.1, palette.error.base)),
 ];
 
 const getDateFilterDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-lighten45", lighten(0.45, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-base-lighten45",
+        palette?.primary?.base && lighten(0.45, palette.primary.base),
+    ),
 ];
 
 const getMeasureNumberFormatDialogDerivedColors = (palette: IThemePalette): CssProperty[] => [
-    getCssProperty("palette-primary-base-darken20", darken(0.2, palette.primary.base)),
+    getCssProperty(
+        "palette-primary-base-darken20",
+        palette?.primary?.base && darken(0.2, palette.primary.base),
+    ),
 ];
 
 const getPivotTableDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty(
         "palette-primary-base-dimmed-darken03",
-        darken(0.03, mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+        darken(0.03, mix(0.1, palette?.primary?.base && palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    ),
+];
+
+const getFormDerivedColors = (palette: IThemePalette): CssProperty[] => [
+    getCssProperty("palette-error-base-t50", palette?.error?.base && transparentize(0.5, palette.error.base)),
+    getCssProperty(
+        "palette-error-base-t70d20",
+        palette?.error?.base && transparentize(0.7, darken(0.2, palette.error.base)),
     ),
 ];
 
 const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
-    (palette?.primary?.base && [
-        ...getCommonDerivedColors(palette),
-        ...getMessagesDerivedColors(palette),
-        ...getDashboardsDerivedColors(palette),
-        ...getButtonDerivedColors(palette),
-        ...getBubbleDerivedColors(palette),
-        ...getDateFilterDerivedColors(palette),
-        ...getMeasureNumberFormatDialogDerivedColors(palette),
-        ...getPivotTableDerivedColors(palette),
-    ]) ||
+    (palette &&
+        [
+            ...getCommonDerivedColors(palette),
+            ...getMessagesDerivedColors(palette),
+            ...getDashboardsDerivedColors(palette),
+            ...getButtonDerivedColors(palette),
+            ...getBubbleDerivedColors(palette),
+            ...getDateFilterDerivedColors(palette),
+            ...getMeasureNumberFormatDialogDerivedColors(palette),
+            ...getPivotTableDerivedColors(palette),
+            ...getFormDerivedColors(palette),
+        ].filter((property) => !!property)) ||
     [];
 
 export const clearCssProperties = (): void => {

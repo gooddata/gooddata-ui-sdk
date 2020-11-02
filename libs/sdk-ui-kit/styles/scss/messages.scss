@@ -2,6 +2,7 @@
 @import "./variables.scss";
 @import "./mixins.scss";
 @import "./layout.scss";
+@import "./Messages/_variables";
 
 /* ==========================================================================
    Messages
@@ -86,8 +87,8 @@ $gd-message-padding-vertical: 4px;
     @include clearfix();
 
     line-height: 1.4em;
-    color: $gd-color-negative;
-    background: transparentize($gd-color-negative, 0.85);
+    color: $gd-palette-error-base;
+    background: var(--gd-palette-error-base-t85, transparentize($gd-color-negative, 0.85));
     pointer-events: all;
     max-width: 100%;
     border-radius: 3px;
@@ -133,7 +134,7 @@ $gd-message-padding-vertical: 4px;
 .gd-message-overlay,
 .gd-message.intensive {
     color: $gd-color-text-light;
-    background: transparentize($gd-color-negative, 0.02);
+    background: $gd-messages-intensive-error-backgroundColor;
 
     &.success,
     &.progress,
@@ -150,7 +151,7 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.error {
-        background: transparentize($gd-color-negative, 0.02);
+        background: $gd-messages-intensive-error-backgroundColor;
     }
 
     &.warning {

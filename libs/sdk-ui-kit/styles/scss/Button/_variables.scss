@@ -58,11 +58,17 @@ $button-positive-active-gradient-top: darken($button-positive-bg, 12%);
 $button-positive-active-gradient-bottom: $button-positive-hover-bg;
 
 // negative color
-$button-negative-bg: $gd-color-negative;
-$button-negative-disabled-bg: transparentize(lighten($button-negative-bg, 20%), 0.4);
-$button-negative-hover-bg: darken($button-negative-bg, 10%);
-$button-negative-focus-shadow: transparentize(lighten($button-negative-bg, 10%), 0.4);
-$button-negative-active-gradient-top: darken($button-negative-bg, 20%);
+$button-negative-disabled-bg: var(
+    --gd-palette-error-disabled,
+    transparentize(lighten($gd-color-negative, 20%), 0.4)
+);
+$button-negative-hover-bg: var(--gd-palette-error-base-d10, darken($gd-color-negative, 10%));
+$button-negative-focus-shadow: var(
+    --gd-palette-error-focus,
+    transparentize(lighten($gd-color-negative, 10%), 0.4)
+);
+$button-negative-active-gradient-top: var(--gd-palette-error-base-d20, darken($gd-color-negative, 20%));
+
 $button-negative-active-gradient-bottom: $button-negative-hover-bg;
 
 // border-radius
