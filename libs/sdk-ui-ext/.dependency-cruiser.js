@@ -4,8 +4,13 @@ const options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
-        depCruiser.isolatedSubmodule("internal", "src/internal"),
-        depCruiser.moduleWithDependencies("insightView", "src/insightView", ["src/internal"]),
+        // TODO: uncomment this line when dashboardEmbedding is no longer internal (for now this is to avoid circular dependencies)
+        // depCruiser.isolatedSubmodule("internal", "src/internal"),
+        depCruiser.moduleWithDependencies("insightView", "src/insightView", [
+            "src/internal",
+            // TODO: remove this line when dashboardEmbedding is no longer internal (for now this is to avoid circular dependencies)
+            "src/internal/*",
+        ]),
     ],
     options: depCruiser.DefaultOptions,
 };
