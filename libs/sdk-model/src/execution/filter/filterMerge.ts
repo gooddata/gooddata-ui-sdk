@@ -53,7 +53,7 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
 /**
  * Merges two sets of filters.
  *
- * - Attribute filters and measure value filters from both sets are simply concatenated resulting
+ * - Attribute filters and ranking filters from both sets are simply concatenated resulting
  *   in the filters being ANDed together.
  * - Date filters are merged based on date data set they filter on
  *   - For Date filters for the same date data set:
@@ -61,6 +61,9 @@ function separateFiltersByType(filters: IFilter[]): FilterByType {
  *     - the last filter in this ordering is taken
  *        - if it is All time, all filters for the dimension are cleared
  *        - else the last filter is used
+ * - Measure value filters are merged so that there is at most one Measure value filter per measure
+ *   (the last one specified is used). This is to prevent errors with more than one Measure value filter
+ *   on the same measure which is not supported.
  *
  * @remarks
  * It is the responsibility of the caller to make sure all the filters use the same ObjRef type so that
@@ -99,9 +102,10 @@ export function mergeFilters(
     // merge date filters by date dataset qualifier
     const dateFilters = mergeDateFilters(original.date, added.date);
 
-    // concat measure value filters
-    const measureValueFilters = [...original.measureValue, ...added.measureValue];
+    // merge measure value filters by measure
+    const measureValueFilters = mergeMeasureValueFilters(original.measureValue, added.measureValue);
 
+    // concat ranking filters
     const rankingFilters = [...original.ranking, ...added.ranking];
 
     return [...attributeFilters, ...dateFilters, ...measureValueFilters, ...rankingFilters];
@@ -111,7 +115,7 @@ function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFil
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
 
-    return Object.values(grouped).reduce((filters: IDateFilter[], filtersForDimension) => {
+    return Object.values(grouped).reduce((filters, filtersForDimension) => {
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
         const lastFilterForDimension = last(filtersForDimension)!;
@@ -123,4 +127,14 @@ function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFil
 
         return filters;
     }, []);
+}
+
+function mergeMeasureValueFilters(
+    originalFilters: IMeasureValueFilter[],
+    addedFilters: IMeasureValueFilter[],
+): IMeasureValueFilter[] {
+    const allFilters = [...originalFilters, ...addedFilters];
+    const grouped = groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
+
+    return Object.values(grouped).map((filters) => last(filters)!);
 }

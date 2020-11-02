@@ -19,7 +19,7 @@ describe("mergeFilters", () => {
         expect(actual).toEqual([...insightFilters, ...addedFilters]);
     });
 
-    it("should append measure value filters", () => {
+    it("should append measure value filters for different measures", () => {
         const insightFilters = [newMeasureValueFilter("foo", "EQUAL_TO", 42)];
         const addedFilters = [newMeasureValueFilter("bar", "BETWEEN", 0, 100)];
 
@@ -28,9 +28,27 @@ describe("mergeFilters", () => {
         expect(actual).toEqual([...insightFilters, ...addedFilters]);
     });
 
-    it("should append ranking filters", () => {
+    it("should merge measure value filters for the same measure", () => {
+        const insightFilters = [newMeasureValueFilter("foo", "EQUAL_TO", 42)];
+        const addedFilters = [newMeasureValueFilter("foo", "BETWEEN", 0, 100)];
+
+        const actual = mergeFilters(insightFilters, addedFilters);
+
+        expect(actual).toEqual(addedFilters);
+    });
+
+    it("should append ranking filters for different measures", () => {
         const insightFilters = [newRankingFilter("foo", "TOP", 5)];
         const addedFilters = [newRankingFilter("bar", "TOP", 3)];
+
+        const actual = mergeFilters(insightFilters, addedFilters);
+
+        expect(actual).toEqual([...insightFilters, ...addedFilters]);
+    });
+
+    it("should append ranking filters the same measure", () => {
+        const insightFilters = [newRankingFilter("foo", "TOP", 5)];
+        const addedFilters = [newRankingFilter("foo", "BOTTOM", 3)];
 
         const actual = mergeFilters(insightFilters, addedFilters);
 
