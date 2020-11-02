@@ -323,6 +323,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@types/react-portal",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-responsive",
       "allowedCategories": [ "production" ]
     },
@@ -480,6 +484,10 @@
     },
     {
       "name": "downshift",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "element-closest-polyfill",
       "allowedCategories": [ "production" ]
     },
     {
@@ -748,6 +756,10 @@
     },
     {
       "name": "react-native-listener",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-portal",
       "allowedCategories": [ "production" ]
     },
     {

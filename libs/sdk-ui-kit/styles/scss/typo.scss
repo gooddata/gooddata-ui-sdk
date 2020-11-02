@@ -1,0 +1,33 @@
+// (C) 2007-2020 GoodData Corporation
+@import "typo-mixins";
+
+// Headings
+.gd-heading-1 {
+    @include gd-heading-1;
+}
+
+.gd-heading-2 {
+    @include gd-heading-2;
+}
+
+.gd-heading-3 {
+    @include gd-heading-3;
+}
+
+// Paragraphs
+.gd-paragraph {
+    @include gd-paragraph;
+}
+
+// Labels
+.gd-label-top {
+    @include gd-label-top;
+}
+
+.gd-label {
+    @include gd-label;
+}
+
+.gd-label-small {
+    @include gd-label-small;
+}

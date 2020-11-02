@@ -529,6 +529,8 @@ $gd-header-project-width: 230px;
 .gd-list-item.gd-project-list-item {
     justify-content: flex-start;
     font-size: 14px;
+    font-family: $gd-font-primary-without-custom;
+    font-weight: 400;
 
     .project-title {
         flex: 0 1 auto;
@@ -561,6 +563,11 @@ $gd-header-project-width: 230px;
 
     .gd-list {
         min-width: 210px;
+
+        .gd-list-item {
+            font-family: $gd-font-primary-without-custom;
+            font-weight: 400;
+        }
     }
 }
 
@@ -569,6 +576,11 @@ $gd-header-project-width: 230px;
 
     .gd-list {
         min-width: 150px;
+
+        .gd-list-item {
+            font-family: $gd-font-primary-without-custom;
+            font-weight: 400;
+        }
     }
 }
 

@@ -14,6 +14,14 @@ import * as React_3 from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
+export type Alignment = {
+    left: number;
+    top: number;
+    right: number;
+    align: string;
+};
+
+// @internal (undocumented)
 export const AppHeader: React_2.FC<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>> & {
     WrappedComponent: React_2.ComponentType<IAppHeaderProps & WrappedComponentProps<"intl">>;
 };
@@ -224,6 +232,23 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
     render(): JSX.Element;
     // (undocumented)
     state: IExportDialogBaseState;
+}
+
+// @internal (undocumented)
+export class FullScreenOverlay extends Overlay<IOverlayState> {
+    constructor(props: IOverlayProps<any>);
+    // (undocumented)
+    componentWillMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    getOverlayStyles(): {
+        position: string;
+        left: number;
+        top: number;
+        bottom: number;
+        right: number;
+    };
 }
 
 // @internal (undocumented)
@@ -1391,6 +1416,56 @@ export interface IOffset {
 // @internal (undocumented)
 export interface IOptimalAlignment {
     // (undocumented)
+    alignment: Alignment;
+    // (undocumented)
+    visiblePart?: number;
+}
+
+// @internal (undocumented)
+export interface IOverlayProps<T> {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    alignTo?: string | HTMLElement;
+    // (undocumented)
+    children?: React.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    closeOnEscape?: boolean;
+    // (undocumented)
+    closeOnMouseDrag?: boolean;
+    // (undocumented)
+    closeOnOutsideClick?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
+    // (undocumented)
+    containerClassName?: string;
+    ignoreClicksOn?: T[];
+    // (undocumented)
+    ignoreClicksOnByClass?: string[];
+    // (undocumented)
+    isModal?: boolean;
+    // (undocumented)
+    onAlign?: (optiimalAlign: Alignment) => void;
+    // (undocumented)
+    onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    // (undocumented)
+    onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+    positionType?: string;
+    // (undocumented)
+    shouldCloseOnClick?: (e: React.MouseEvent) => boolean;
+    // (undocumented)
+    zIndex?: number | undefined;
+}
+
+// @internal (undocumented)
+export interface IOverlayState {
+    // (undocumented)
     alignment: {
         left: number;
         top: number;
@@ -1398,7 +1473,9 @@ export interface IOptimalAlignment {
         align: string;
     };
     // (undocumented)
-    visiblePart: number;
+    overflow?: string;
+    // (undocumented)
+    scrollTop?: number;
 }
 
 // @internal (undocumented)
@@ -1674,6 +1751,45 @@ export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelec
 
 // @internal
 export function normalizeTime(time: Date): Date;
+
+// @internal (undocumented)
+export class Overlay<T> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
+    constructor(props: IOverlayProps<T>);
+    // (undocumented)
+    clickedInside: boolean;
+    // (undocumented)
+    closeOnEscape(e: React_2.KeyboardEvent): void;
+    // (undocumented)
+    closeOnMouseDrag(): void;
+    // (undocumented)
+    closeOnOutsideClick(e: React_2.MouseEvent): void;
+    // (undocumented)
+    closeOnParentScroll(e: React_2.MouseEvent): void;
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentDidUpdate(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: Partial<IOverlayProps<any>>;
+    // (undocumented)
+    getOverlayClasses(): string;
+    // (undocumented)
+    getOverlayStyles(): any;
+    // (undocumented)
+    isComponentMounted: boolean;
+    // (undocumented)
+    onDocumentMouseDown(e: React_2.MouseEvent): void;
+    // (undocumented)
+    portalNode: HTMLDivElement;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(nextProps: IOverlayProps<T>): void;
+    }
 
 // @internal (undocumented)
 export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";

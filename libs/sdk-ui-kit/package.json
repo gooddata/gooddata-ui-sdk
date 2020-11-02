@@ -70,7 +70,9 @@
         "immutable": "~4.0.0-rc.12",
         "react-transition-group": "^1.2.1",
         "@types/react-transition-group": "^1.1.0",
-        "date-fns": "^2.8.1"
+        "date-fns": "^2.8.1",
+        "react-portal": "^4.1.5",
+        "element-closest-polyfill": "^1.0.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",
@@ -113,6 +115,7 @@
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
         "ts-jest": "^26.3.0",
-        "typescript": "4.0.2"
+        "typescript": "4.0.2",
+        "@types/react-portal": "^4.0.2"
     }
 }
