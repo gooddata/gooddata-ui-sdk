@@ -10,6 +10,7 @@ export {
     IThemeWidgetTitle,
     IThemeTypography,
     IThemePalette,
+    IThemeKpi,
     ITheme,
 } from "./theme";
 

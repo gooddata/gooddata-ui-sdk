@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
-import { parseThemeToCssProperties, ParserFunction, clearCssProperties } from "../cssProperties";
+import { parseThemeToCssProperties, ParserFunction, clearCssProperties, handleUnits } from "../cssProperties";
 
 describe("cssProperties", () => {
     describe("parseThemeToCssProperties", () => {
@@ -94,6 +94,24 @@ describe("cssProperties", () => {
 
             expect(document.getElementById(propertiesTagIdentifier)).toEqual(null);
             expect(document.getElementById(customFontTagIdentifier)).toEqual(null);
+        });
+    });
+
+    describe("handleUnits", () => {
+        it("should add px to the number", () => {
+            expect(handleUnits("15.5")).toBe("15.5px");
+        });
+        it("should let through number with unit", () => {
+            expect(handleUnits("15.5%")).toBe("15.5%");
+        });
+        it("should work with undefined", () => {
+            expect(handleUnits(undefined)).toBeUndefined();
+        });
+        it("should work with non numeric value", () => {
+            expect(handleUnits("right")).toBe("right");
+        });
+        it("should work with NaN value", () => {
+            expect(handleUnits("NaN")).toBe("NaN");
         });
     });
 });

@@ -1225,7 +1225,7 @@ export interface ITheme {
         dropShadow?: boolean;
         textCapitalization?: boolean;
     };
-    kpiDashboards?: {
+    dashboards?: {
         title?: {
             color?: ThemeColor;
         };
@@ -1254,20 +1254,14 @@ export interface ITheme {
                 borderRadius?: string;
                 dropShadow?: boolean;
             };
-            headline?: {
+            kpiWidget?: {
                 title?: IThemeWidgetTitle;
                 backgroundColor?: ThemeColor;
                 borderColor?: ThemeColor;
                 borderWidth?: string;
                 borderRadius?: string;
                 dropShadow?: boolean;
-                value?: {
-                    textAlign?: string;
-                    positiveColor?: ThemeColor;
-                    negativeColor?: ThemeColor;
-                };
-                primaryMeasureColor?: ThemeColor;
-                secondaryInfoColor?: ThemeColor;
+                kpi?: IThemeKpi;
             };
         };
         navigation?: {
@@ -1312,6 +1306,17 @@ export interface IThemeColorFamily {
     contrast?: ThemeColor;
     dark?: ThemeColor;
     light?: ThemeColor;
+}
+
+// @beta
+export interface IThemeKpi {
+    primaryMeasureColor?: ThemeColor;
+    secondaryInfoColor?: ThemeColor;
+    value?: {
+        textAlign?: string;
+        positiveColor?: ThemeColor;
+        negativeColor?: ThemeColor;
+    };
 }
 
 // @beta
