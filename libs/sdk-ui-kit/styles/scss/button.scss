@@ -106,7 +106,7 @@
 
 .gd-button-negative {
     box-shadow: $button-box-shadow-x-offset $button-shadow-lighter;
-    background: $gd-color-negative;
+    background: $gd-palette-error-base;
 
     @extend %btn;
 
