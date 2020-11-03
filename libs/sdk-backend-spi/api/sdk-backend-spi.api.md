@@ -1322,6 +1322,7 @@ export interface IThemeKpi {
 // @beta
 export interface IThemePalette {
     error?: IThemeColorFamily;
+    info?: IThemeColorFamily;
     primary?: IThemeColorFamily;
     success?: IThemeColorFamily;
     warning?: IThemeColorFamily;

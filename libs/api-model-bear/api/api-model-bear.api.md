@@ -1582,6 +1582,8 @@ export namespace GdcMetadata {
         // (undocumented)
         error?: IThemeColorFamily;
         // (undocumented)
+        info?: IThemeColorFamily;
+        // (undocumented)
         primary?: IThemeColorFamily;
         // (undocumented)
         success?: IThemeColorFamily;
