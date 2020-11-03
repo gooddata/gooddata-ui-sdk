@@ -105,6 +105,11 @@ export namespace EmbeddedKpiDashboard {
          * The command to set attribute filter parents
          */
         SetFilterParents = "setFilterParents",
+
+        /**
+         * The command open delete existed dashboard dialog
+         */
+        OpenDeleteDashboardDialog = "openDeleteDashboardDialog",
     }
 
     /**
@@ -247,6 +252,11 @@ export namespace EmbeddedKpiDashboard {
          * The event that is emmited if setFilterParents command is not sucessfull it contains `SetFilterParentsErrorCode`
          */
         SetFilterParentsFailed = "setFilterParentsFailed",
+
+        /**
+         * Type represent that the delete dashboard dialog is opened
+         */
+        DeleteDashboardDialogOpened = "deleteDashboardDialogOpened",
     }
 
     /**
@@ -1272,4 +1282,45 @@ export namespace EmbeddedKpiDashboard {
         GdcKdEventType.SetFilterParentsFailed,
         ISetFilterParentsFailedDataBody
     >;
+
+    /**
+     * Open delete dashboard dialog, user will be able to delete the current existed dashboard
+     *
+     * Contract:
+     *
+     * if KD is currently editing dashboard, this command will try to open the dialog to delete the current existed dashboard,
+     *      on success DeleteDashboardDialogOpened will be posted
+     * commandFailed will be posted when:
+     *      KD is currently viewing dashboard or
+     *      No dashboard showing or
+     *      Donnot have permission delete existing object or
+     *      Delete dashboard dialog is opened
+     *
+     * @public
+     */
+    export type OpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<
+        GdcKdCommandType.OpenDeleteDashboardDialog,
+        null
+    >;
+
+    /**
+     * @public
+     */
+    export type OpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<
+        GdcKdCommandType.OpenDeleteDashboardDialog,
+        null
+    >;
+
+    /**
+     * Type-guard checking whether object is an instance of {@link EmbeddedKpiDashboard.OpenDeleteDashboardDialogCommandData}.
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isOpenDeleteDashboardDialogCommandData(
+        obj: unknown,
+    ): obj is OpenDeleteDashboardDialogCommandData {
+        return isObject(obj) && getEventType(obj) === GdcKdCommandType.OpenDeleteDashboardDialog;
+    }
 }
