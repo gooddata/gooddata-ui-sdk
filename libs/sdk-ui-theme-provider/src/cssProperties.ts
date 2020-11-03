@@ -5,6 +5,7 @@ import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";
+const GD_COLOR_TEXT = "#464e56";
 const DEFAULT_WIDGET_SHADOW = "1px 2px 8px rgba(20, 56, 93, 0.2)";
 
 /**
@@ -130,6 +131,18 @@ const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
         "palette-error-dimmed90",
         palette?.error?.base && mix(0.9, palette.error.base, GD_COLOR_TEXT_LIGHT),
     ),
+    getCssProperty(
+        "palette-warning-dimmed",
+        palette?.warning?.base && mix(0.2, palette.warning.base, GD_COLOR_TEXT_LIGHT),
+    ),
+    getCssProperty(
+        "palette-warning-dimmed40",
+        palette?.warning?.base && mix(0.4, palette.warning.base, GD_COLOR_TEXT),
+    ),
+    getCssProperty(
+        "palette-warning-text-dimmed",
+        palette?.warning?.base && mix(0.2, palette.warning.base, GD_COLOR_TEXT),
+    ),
 ];
 
 const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
@@ -144,6 +157,10 @@ const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty(
         "palette-error-base-t85",
         palette?.error?.base && transparentize(0.85, palette.error.base),
+    ),
+    getCssProperty(
+        "palette-warning-base-t85",
+        palette?.warning?.base && transparentize(0.85, palette.warning.base),
     ),
 ];
 
@@ -163,6 +180,10 @@ const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty(
         "palette-primary-base-mix15-white",
         palette?.primary?.base && transparentize(0.075, mix(0.15, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+    ),
+    getCssProperty(
+        "palette-warning-base-t50",
+        palette?.warning?.base && transparentize(0.5, palette.warning.base),
     ),
 ];
 
@@ -235,6 +256,10 @@ const getFormDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty(
         "palette-error-base-t70d20",
         palette?.error?.base && transparentize(0.7, darken(0.2, palette.error.base)),
+    ),
+    getCssProperty(
+        "palette-warning-base-t70d20",
+        palette?.warning?.base && transparentize(0.7, darken(0.2, palette.warning.base)),
     ),
 ];
 

@@ -113,7 +113,7 @@ $gd-message-padding-vertical: 4px;
 
     &.warning {
         color: $gd-color-warning-text;
-        background: transparentize($gd-color-warning, 0.85);
+        background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
     }
 
     &.contrast {
@@ -156,7 +156,7 @@ $gd-message-padding-vertical: 4px;
 
     &.warning {
         color: $gd-color-warning-label;
-        background: $gd-color-warning;
+        background: $gd-palette-warning-base;
     }
 }
 

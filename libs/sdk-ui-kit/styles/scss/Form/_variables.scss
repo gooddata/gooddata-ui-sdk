@@ -6,3 +6,7 @@ $gd-form-error-shadowColor: var(
     --gd-palette-error-base-t70d20,
     transparentize(darken($gd-color-negative, 20%), 0.7)
 );
+$gd-form-warning-shadowColor: var(
+    --gd-palette-warning-base-t70d20,
+    transparentize(darken($gd-color-warning, 20%), 0.7)
+);
