@@ -1284,16 +1284,16 @@ export namespace EmbeddedKpiDashboard {
     >;
 
     /**
-     * Open delete dashboard dialog, user will be able to delete the current existed dashboard
+     * Open delete dashboard dialog, user will be able to delete currently existing dashboard
      *
      * Contract:
      *
-     * if KD is currently editing dashboard, this command will try to open the dialog to delete the current existed dashboard,
+     * if KD is currently editing dashboard, this command will try to open the dialog to delete currently existing dashboard,
      *      on success DeleteDashboardDialogOpened will be posted
      * commandFailed will be posted when:
      *      KD is currently viewing dashboard or
      *      No dashboard showing or
-     *      Donnot have permission delete existing object or
+     *      The current user does not have the permission to delete existing objects or,
      *      Delete dashboard dialog is opened
      *
      * @public
