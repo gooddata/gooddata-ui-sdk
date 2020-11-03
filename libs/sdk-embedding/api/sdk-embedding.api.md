@@ -372,6 +372,7 @@ export namespace EmbeddedKpiDashboard {
         Delete = "deleteDashboard",
         DrillableItems = "drillableItems",
         ExportToPdf = "exportToPdf",
+        OpenDeleteDashboardDialog = "openDeleteDashboardDialog",
         OpenScheduleEmailDialog = "openScheduleEmailDialog",
         RemoveFilterContext = "removeFilterContext",
         Save = "saveDashboard",
@@ -388,6 +389,7 @@ export namespace EmbeddedKpiDashboard {
         DashboardLoaded = "loaded",
         DashboardSaved = "dashboardSaved",
         DashboardUpdated = "dashboardUpdated",
+        DeleteDashboardDialogOpened = "deleteDashboardDialogOpened",
         Drill = "drill",
         DrillToUrlResolved = "drillToUrlResolved",
         DrillToUrlStarted = "drillToUrlStarted",
@@ -531,6 +533,7 @@ export namespace EmbeddedKpiDashboard {
     }
     export function isExportToPdfCommandData(obj: unknown): obj is ExportToPdfCommandData;
     export function isIdentifierInsight(obj: unknown): obj is IIdentifierInsightRef;
+    export function isOpenDeleteDashboardDialogCommandData(obj: unknown): obj is OpenDeleteDashboardDialogCommandData;
     export function isOpenScheduleEmailDialogCommandData(obj: unknown): obj is OpenScheduleEmailDialogCommandData;
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData;
     export function isSaveAsDashboardCommandData(obj: unknown): obj is SaveAsDashboardCommandData;
@@ -546,6 +549,9 @@ export namespace EmbeddedKpiDashboard {
         uri: string;
     }
     export type NoPermissionsEventData = IGdcKdMessageEnvelope<GdcKdEventType.NoPermissions, INoPermissionsBody>;
+    export type OpenDeleteDashboardDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
+    // (undocumented)
+    export type OpenDeleteDashboardDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenDeleteDashboardDialog, null>;
     export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
     // (undocumented)
     export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
