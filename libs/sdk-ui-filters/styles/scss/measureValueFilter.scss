@@ -33,7 +33,7 @@ $dialog_width: 250px;
             }
 
             &.gd-mvf-warning-message-medium {
-                background: transparentize($gd-color-warning, 0.85);
+                background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
                 color: $gd-color-warning-text;
             }
 
