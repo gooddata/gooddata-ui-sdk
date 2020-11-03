@@ -102,8 +102,8 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.progress {
-        color: var(--gd-palette-primary-base, $gd-color-highlight);
-        background: var(--gd-palette-primary-base-t85, transparentize($gd-color-highlight, 0.85));
+        color: $gd-messages-progress-color;
+        background: $gd-messages-progress-background-color;
     }
 
     &.success {
@@ -147,7 +147,7 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.progress {
-        background: var(--gd-palette-primary-base-t02, transparentize($gd-color-highlight, 0.02));
+        background: $gd-messages-intensive-progress-background-color;
     }
 
     &.error {

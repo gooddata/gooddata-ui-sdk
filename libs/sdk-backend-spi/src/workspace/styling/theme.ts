@@ -87,6 +87,11 @@ export interface IThemePalette {
      * Used to express success
      */
     success?: IThemeColorFamily;
+
+    /**
+     * Used to express info or progress
+     */
+    info?: IThemeColorFamily;
 }
 
 /**

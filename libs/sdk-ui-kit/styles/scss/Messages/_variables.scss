@@ -4,3 +4,13 @@ $gd-messages-intensive-error-backgroundColor: var(
     --gd-palette-error-base-t02,
     transparentize($gd-color-negative, 0.02)
 );
+
+$gd-messages-progress-color: var(--gd-palette-info-base, $gd-palette-primary-base);
+$gd-messages-progress-background-color: var(
+    --gd-palette-info-base-t85,
+    var(--gd-palette-primary-base-t85, transparentize($gd-color-highlight, 0.85))
+);
+$gd-messages-intensive-progress-background-color: var(
+    --gd-palette-info-base-t02,
+    var(--gd-palette-primary-base-t02, transparentize($gd-color-highlight, 0.02))
+);

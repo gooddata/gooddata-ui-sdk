@@ -160,6 +160,7 @@ export namespace GdcMetadata {
         error?: IThemeColorFamily;
         warning?: IThemeColorFamily;
         success?: IThemeColorFamily;
+        info?: IThemeColorFamily;
     }
 
     export interface ITheme extends IMetadataObject {

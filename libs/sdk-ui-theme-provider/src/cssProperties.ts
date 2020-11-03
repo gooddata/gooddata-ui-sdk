@@ -162,6 +162,8 @@ const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
         "palette-warning-base-t85",
         palette?.warning?.base && transparentize(0.85, palette.warning.base),
     ),
+    getCssProperty("palette-info-base-t85", palette?.info?.base && transparentize(0.85, palette.info.base)),
+    getCssProperty("palette-info-base-t02", palette?.info?.base && transparentize(0.02, palette.info.base)),
 ];
 
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
@@ -247,7 +249,7 @@ const getMeasureNumberFormatDialogDerivedColors = (palette: IThemePalette): CssP
 const getPivotTableDerivedColors = (palette: IThemePalette): CssProperty[] => [
     getCssProperty(
         "palette-primary-base-dimmed-darken03",
-        darken(0.03, mix(0.1, palette?.primary?.base && palette.primary.base, GD_COLOR_TEXT_LIGHT)),
+        palette?.primary?.base && darken(0.03, mix(0.1, palette.primary.base, GD_COLOR_TEXT_LIGHT)),
     ),
 ];
 
