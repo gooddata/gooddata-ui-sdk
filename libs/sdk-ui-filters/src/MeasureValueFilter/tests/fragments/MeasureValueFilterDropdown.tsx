@@ -53,12 +53,16 @@ export default class MeasureValueFilterFragment {
 
     public getRangeFromInput = () => this.component.find(".s-mvf-range-from-input input");
 
+    public getRangeFromInputValue = () => this.getRangeFromInput().props().value;
+
     public setRangeFrom = (value: string) => {
         this.getRangeFromInput().simulate("change", { target: { value } });
         return this;
     };
 
     public getRangeToInput = () => this.component.find(".s-mvf-range-to-input input");
+
+    public getRangeToInputValue = () => this.getRangeToInput().props().value;
 
     public setRangeTo = (value: string) => {
         this.getRangeToInput().simulate("change", { target: { value } });
