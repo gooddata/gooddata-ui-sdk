@@ -1,7 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import get from "lodash/get";
-import ExportDialog, { IExportDialogData } from "@gooddata/goodstrap/lib/Dialog/ExportDialog";
+import { ExportDialog, IExportDialogData } from "@gooddata/sdk-ui-kit";
 import { IExtendedExportConfig, IExportFunction } from "@gooddata/sdk-ui";
 import { IFilter } from "@gooddata/sdk-model";
 
@@ -159,7 +159,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
                     cancelButtonText="Cancel"
                     submitButtonText="Export"
                     isPositive
-                    seleniumClass="s-dialog"
+                    className="s-dialog"
                     mergeHeaders
                     mergeHeadersDisabled={false}
                     mergeHeadersText="Keep attribute cells merged"
