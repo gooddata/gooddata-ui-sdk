@@ -141,26 +141,28 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
 
+        const afmValidObjectsQuery = {
+            types: relevantRestrictingTypes.map(mapToTigerType),
+            afm: {
+                attributes: relevantItems.filter(isAttribute).map(convertAttribute),
+                measures: relevantItems.filter(isMeasure).map(convertMeasure),
+                filters: compact(
+                    relevantItems
+                        .filter(
+                            (filter): filter is IFilter =>
+                                isDateFilter(filter) ||
+                                isAttributeFilter(filter) ||
+                                isMeasureValueFilter(filter),
+                        )
+                        .map(convertVisualizationObjectFilter),
+                ),
+            },
+        };
+
         const availableItemsResponse = await this.authCall((sdk) =>
             sdk.validObjects.processAfmValidObjectsQuery({
                 workspaceId: this.workspace,
-                afmValidObjectsQuery: {
-                    types: relevantRestrictingTypes.map(mapToTigerType),
-                    afm: {
-                        attributes: relevantItems.filter(isAttribute).map(convertAttribute),
-                        measures: relevantItems.filter(isMeasure).map(convertMeasure),
-                        filters: compact(
-                            relevantItems
-                                .filter(
-                                    (filter): filter is IFilter =>
-                                        isDateFilter(filter) ||
-                                        isAttributeFilter(filter) ||
-                                        isMeasureValueFilter(filter),
-                                )
-                                .map(convertVisualizationObjectFilter),
-                        ),
-                    },
-                },
+                afmValidObjectsQuery,
             }),
         );
 
@@ -172,6 +174,10 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
 }
 
 export function convertResponseToObjRefs(availableItemIds: any[]): ObjRef[] {
+    if (availableItemIds.length === 0) {
+        return [];
+    }
+
     if (isJsonApiId(availableItemIds[0])) {
         // Forward-compatibility branch. This will be hit once tiger changes land. Tiger sends { id: string, type: string }
 
