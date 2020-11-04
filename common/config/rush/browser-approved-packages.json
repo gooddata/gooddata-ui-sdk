@@ -152,7 +152,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-kit",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-pivot",
@@ -160,7 +160,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-theme-provider",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-vis-commons",
