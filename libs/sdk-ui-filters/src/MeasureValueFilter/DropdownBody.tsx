@@ -219,9 +219,15 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
 
     private trimToPrecision = (n: number): number => {
         const { valuePrecision = DefaultValuePrecision } = this.props;
-
+        if (!n) {
+            return n;
+        }
         return parseFloat(n.toFixed(valuePrecision));
     };
+
+    private fromPercentToDecimal = (n: number): number => (n ? n / 100 : n);
+
+    private fromDecimalToPercent = (n: number): number => (n ? n * 100 : n);
 
     private convertToRawValue = (
         value: IMeasureValueFilterValue,
@@ -231,8 +237,11 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
             return value;
         }
         return isComparisonConditionOperator(operator)
-            ? { value: this.trimToPrecision(value.value / 100) }
-            : { from: this.trimToPrecision(value.from / 100), to: this.trimToPrecision(value.to / 100) };
+            ? { value: this.trimToPrecision(this.fromPercentToDecimal(value.value)) }
+            : {
+                  from: this.trimToPrecision(this.fromPercentToDecimal(value.from)),
+                  to: this.trimToPrecision(this.fromPercentToDecimal(value.to)),
+              };
     };
 
     private convertToPercentageValue = (
@@ -244,8 +253,11 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
         }
 
         return isComparisonConditionOperator(operator)
-            ? { value: this.trimToPrecision(value.value * 100) }
-            : { from: this.trimToPrecision(value.from * 100), to: this.trimToPrecision(value.to * 100) };
+            ? { value: this.trimToPrecision(this.fromDecimalToPercent(value.value)) }
+            : {
+                  from: this.trimToPrecision(this.fromDecimalToPercent(value.from)),
+                  to: this.trimToPrecision(this.fromDecimalToPercent(value.to)),
+              };
     };
 
     private onApply = () => {

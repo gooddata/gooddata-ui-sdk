@@ -74,6 +74,24 @@ describe("Measure value filter dropdown", () => {
         );
     });
 
+    it("should have empty from and to inputs when filter is empty when using percentage with between operator", () => {
+        const component = renderComponent({ usePercentage: true });
+
+        component.openOperatorDropdown().selectOperator("BETWEEN");
+
+        expect(component.getRangeFromInputValue()).toEqual("");
+        expect(component.getRangeToInputValue()).toEqual("");
+    });
+
+    it("should have empty from and to inputs when filter is empty when using percentage with not between operator", () => {
+        const component = renderComponent({ usePercentage: true });
+
+        component.openOperatorDropdown().selectOperator("NOT_BETWEEN");
+
+        expect(component.getRangeFromInputValue()).toEqual("");
+        expect(component.getRangeToInputValue()).toEqual("");
+    });
+
     it("should render an input suffix for comparison value input field to display percentage sign if the measure is native percent", () => {
         const component = renderComponent({ usePercentage: true });
 
