@@ -19,11 +19,11 @@ $bubble-secondary-base: var(--gd-palette-primary-base-t10, transparentize($gd-co
 $bubble-light-base: rgba(255, 255, 255, 0.95);
 $bubble-light-border-base: #c9d5e0;
 $bubble-primary-borderWidth: $bubble-borderWidth;
-$bubble-primary-color: $gd-color-text-light;
+$bubble-primary-color: var(--gd-tooltip-color, $gd-color-text-light);
 $bubble-primary-borderColor: $bubble-bg-color;
-$bubble-primary-arrowColor: $bubble-bg-color;
+$bubble-primary-arrowColor: var(--gd-tooltip-backgroundColor, $bubble-bg-color);
 $bubble-primary-arrowBorderColor: $bubble-bg-color;
-$bubble-primary-bgcolor: $bubble-bg-color;
+$bubble-primary-bgcolor: var(--gd-tooltip-backgroundColor, $bubble-bg-color);
 $bubble-secondary-borderWidth: $bubble-borderWidth;
 $bubble-secondary-color: $gd-color-text-light;
 $bubble-secondary-borderColor: $bubble-secondary-base;
