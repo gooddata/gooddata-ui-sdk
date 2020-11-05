@@ -1,0 +1,41 @@
+// (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
+import React from "react";
+import { ExampleWithSource } from "../../../components/ExampleWithSource";
+
+import { DatePickerExample_DDMMYYYY } from "./DatePickerExample_DDMMYYYY";
+import DatePickerExample_DDMMYYYYSRC from "!raw-loader!./DatePickerExample_DDMMYYYY";
+import DatePickerExample_DDMMYYYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/datePicker/DatePickerExample_DDMMYYYY";
+
+import { DatePickerExample_MDYY } from "./DatePickerExample_MDYY";
+import DatePickerExample_MDYYSRC from "!raw-loader!./DatePickerExample_MDYY";
+import DatePickerExample_MDYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/datePicker/DatePickerExample_MDYY";
+
+export const InternationalDatePickerExample: React.FC = () => (
+    <div>
+        <h1>Date Picker</h1>
+
+        <p>
+            These examples show how to pass dateFormat property to a Datepicker component for dates to be
+            displayed in the desired format. For more details about date formats, please see{" "}
+            <a href="https://date-fns.org/docs/format" target="_blank" rel="noopener noreferrer">
+                here
+            </a>
+            .
+        </p>
+
+        <h2>Datepicker with dates displayed in dd/MM/yyyy format</h2>
+        <ExampleWithSource
+            for={DatePickerExample_DDMMYYYY}
+            source={DatePickerExample_DDMMYYYYSRC}
+            sourceJS={DatePickerExample_DDMMYYYYSRCJS}
+        />
+
+        <h2>Datepicker with dates displayed in M/d/yy format</h2>
+        <ExampleWithSource
+            for={DatePickerExample_MDYY}
+            source={DatePickerExample_MDYYSRC}
+            sourceJS={DatePickerExample_MDYYSRCJS}
+        />
+    </div>
+);

@@ -26,6 +26,9 @@ import { MeasureValueFilterComponent } from "../examples/measureValueFilter/meas
 
 import { GeoPushpin } from "../examples/geoPushpin";
 
+import { InternationalDateFilterExample } from "../examples/internationalDateFormat/dateFilter";
+import { InternationalDatePickerExample } from "../examples/internationalDateFormat/datePicker";
+
 // import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 // import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
@@ -53,6 +56,19 @@ export const advancedUseCasesRoutes = [
         Component: LoadingAndError,
     },
     { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
+];
+
+export const internationalDateFormatUseCasesRoutes = [
+    {
+        path: "/international-date-format/date-filter",
+        title: "Date Filter",
+        Component: InternationalDateFilterExample,
+    },
+    {
+        path: "/international-date-format/date-picker",
+        title: "Date Picker",
+        Component: InternationalDatePickerExample,
+    },
 ];
 
 export const insightViewUseCasesRoutes = [
@@ -105,6 +121,10 @@ const DrillingUseCasesRoutes = (props: any): JSX.Element =>
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const MeasureValueFilterUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: measureValueFilterUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const InternationalDateFormatUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: internationalDateFormatUseCasesRoutes });
 
 export type RouteDefinition = {
     path: string;
@@ -173,6 +193,13 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         title: "Drilling",
         Component: DrillingUseCasesRoutes,
     },
+    {
+        path: "/international-date-format",
+        pathMatch: "full",
+        redirectTo: internationalDateFormatUseCasesRoutes[0].path,
+        title: "International Date Format",
+        Component: InternationalDateFormatUseCasesRoutes,
+    },
 ];
 
 export const hiddenPaths = [
@@ -203,6 +230,7 @@ export const routes = [
     ...measureValueFilterUseCasesRoutes,
     ...hiddenPaths,
     ...backendInfoRoutes,
+    ...internationalDateFormatUseCasesRoutes,
 ];
 
 export const navigation = sideNavigationRoutes.map(({ path, title }) => ({
