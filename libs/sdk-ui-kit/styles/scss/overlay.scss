@@ -2,6 +2,11 @@
 @import "mixins";
 @import "typo-mixins";
 
+.gd-dropdown.overlay {
+    // reset overlays padding
+    padding: 0;
+}
+
 .overlay-wrapper {
     z-index: 5001;
 }
