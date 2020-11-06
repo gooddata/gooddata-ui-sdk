@@ -13,6 +13,7 @@ import {
     isNoDataError,
     isUnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
+import { defFingerprint } from "@gooddata/sdk-model";
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop";
@@ -104,6 +105,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public static defaultProps: Partial<T & ILoadingInjectedProps> = InnerComponent.defaultProps || {};
 
         private hasUnmounted: boolean = false;
+
+        /**
+         * Fingerprint of the last execution definition the initialize was called with.
+         */
+        private lastInitRequestFingerprint: string | null = null;
 
         constructor(props: T & ILoadingInjectedProps) {
             super(props);
@@ -251,6 +257,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
+            this.lastInitRequestFingerprint = defFingerprint(execution.definition);
 
             try {
                 const executionResult = await execution.execute();
@@ -276,6 +283,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 });
 
                 if (this.hasUnmounted) {
+                    return;
+                }
+
+                if (this.lastInitRequestFingerprint !== defFingerprint(dataView.definition)) {
+                    /*
+                     * Stop right now if the data are not relevant anymore because there was another
+                     * initialize request in the meantime.
+                     */
                     return;
                 }
 
