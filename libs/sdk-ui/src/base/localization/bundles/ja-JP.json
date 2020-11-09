@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "申し訳ございません。このインサイトが見つかりません。",
     "visualization.ErrorDescriptionNotFound": "この URL の解析は存在しません。",
     "visualization.ErrorDescriptionMissingMapboxToken": "Geochart 設定には有効な API アクセストークンが必要です。",
+    "visualization.tooltip.resetZoom": "ズームをリセット",
     "visualization.tooltip.interaction": "チャートをクリックしてドリル",
     "gs.filter.loading": "フィルターを読み込み中…",
     "gs.filter.error": "フィルターの読み込みエラー",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "上位{value}の<strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "下位{value}の<strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "上位{value}の<strong>{attribute}</strong>でベースが<strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "下位{value}の<strong>{attribute}</strong>でベースが<strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "下位{value}の<strong>{attribute}</strong>でベースが<strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "複数の項目に同じ値が設定されている場合は、この値を持つすべての項目がフィルターで表示されます。 インサイトには、設定数よりも多くのアイテムが表示される場合があります。"
 }

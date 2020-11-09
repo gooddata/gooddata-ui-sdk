@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "Désolé, cette perception est introuvable",
     "visualization.ErrorDescriptionNotFound": "La perception avec cette URL n'existe pas.",
     "visualization.ErrorDescriptionMissingMapboxToken": "La configuration de graphique géographique nécessite un jeton d'accès à l'API valide.",
+    "visualization.tooltip.resetZoom": "Réinitialiser le zoom",
     "visualization.tooltip.interaction": "Cliquez sur le graphique pour l'explorer",
     "gs.filter.loading": "Chargement du filtre en cours …",
     "gs.filter.error": "Erreur lors du chargement du filtre",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "{value} meilleurs éléments de la mesure <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "{value} moins bons éléments de la mesure <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "{value} meilleurs éléments de l'attribut <strong>{attribute}</strong> sur la base de la mesure <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "{value} moins bons éléments de l'attribut <strong>{attribute}</strong> sur la base de la mesure <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "{value} moins bons éléments de l'attribut <strong>{attribute}</strong> sur la base de la mesure <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "Si plusieurs éléments ont la même valeur, le filtre affiche tous les éléments avec cette valeur. La perception peut alors montrer plus d'éléments que le nombre défini."
 }

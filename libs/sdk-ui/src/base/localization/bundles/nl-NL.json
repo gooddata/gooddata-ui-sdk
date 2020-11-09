@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "Sorry, we kunnen dit inzicht niet vinden",
     "visualization.ErrorDescriptionNotFound": "Het inzicht met deze url bestaat niet.",
     "visualization.ErrorDescriptionMissingMapboxToken": "U hebt een API-toegangstoken nodig voor de configuratie met de geografische kaart.",
+    "visualization.tooltip.resetZoom": "Zoomen resetten",
     "visualization.tooltip.interaction": "Klik op grafiek om in te zoomen",
     "gs.filter.loading": "Filter wordt ingelezen…",
     "gs.filter.error": "Fout bij inlezen filter",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "Boven {value} van <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "Onder {value} van <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "Boven {value} van <strong>{attribute}</strong> gebaseerd op <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "Onder {value} van <strong>{attribute}</strong> gebaseerd op <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "Onder {value} van <strong>{attribute}</strong> gebaseerd op <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "Als meerdere items dezelfde waarde hebben, toont het filter alle items met deze waarde. Het inzicht geeft dan mogelijk meer items weer dan het ingestelde aantal."
 }

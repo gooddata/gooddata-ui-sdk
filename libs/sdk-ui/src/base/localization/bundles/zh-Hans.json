@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "抱歉，我们找不到此洞察",
     "visualization.ErrorDescriptionNotFound": "带此 URL 的洞察不存在。",
     "visualization.ErrorDescriptionMissingMapboxToken": "Geochart 配置需要有效的 API 访问令牌。",
+    "visualization.tooltip.resetZoom": "重置缩放",
     "visualization.tooltip.interaction": "点击图表以深入查看",
     "gs.filter.loading": "正在加载筛选器...",
     "gs.filter.error": "加载筛选器时出错",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "顶部 {value} / <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "底部 {value} / <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "顶部 {value} / <strong>{attribute}</strong> 基于 <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "底部 {value} / <strong>{attribute}</strong> 基于 <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "底部 {value} / <strong>{attribute}</strong> 基于 <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "如果有多项具有相同值，则筛选器将显示具有该值的所有项。洞察可显示比所设数量更多的项。"
 }
