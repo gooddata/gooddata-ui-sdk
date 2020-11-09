@@ -45,6 +45,14 @@ $gd-palette-error-base: var(--gd-palette-error-base, $gd-color-negative);
 // error derived colors
 $gd-palette-error-dimmed: var(--gd-palette-error-dimmed, mix($gd-color-negative, $gd-color-text-light, 10%));
 
+// success color
+$gd-palette-success-base: var(--gd-palette-success-base, $gd-color-positive);
+// error derived colors
+$gd-palette-success-dimmed: var(
+    --gd-palette-success-dimmed,
+    mix($gd-color-positive, $gd-color-text-light, 10%)
+);
+
 // secondary colors
 $gd-color-positive-dimmed: mix($gd-color-positive, $gd-color-text-light, 10%);
 

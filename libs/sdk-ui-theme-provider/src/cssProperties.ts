@@ -143,6 +143,10 @@ const getCommonDerivedColors = (palette: IThemePalette): CssProperty[] => [
         "palette-warning-text-dimmed",
         palette?.warning?.base && mix(0.2, palette.warning.base, GD_COLOR_TEXT),
     ),
+    getCssProperty(
+        "palette-success-dimmed",
+        palette?.success?.base && mix(0.1, palette.success.base, GD_COLOR_TEXT_LIGHT),
+    ),
 ];
 
 const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
@@ -155,6 +159,10 @@ const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
         palette?.error?.base && transparentize(0.02, palette.error.base),
     ),
     getCssProperty(
+        "palette-success-base-t02",
+        palette?.success?.base && transparentize(0.02, palette.success.base),
+    ),
+    getCssProperty(
         "palette-error-base-t85",
         palette?.error?.base && transparentize(0.85, palette.error.base),
     ),
@@ -164,6 +172,10 @@ const getMessagesDerivedColors = (palette: IThemePalette): CssProperty[] => [
     ),
     getCssProperty("palette-info-base-t85", palette?.info?.base && transparentize(0.85, palette.info.base)),
     getCssProperty("palette-info-base-t02", palette?.info?.base && transparentize(0.02, palette.info.base)),
+    getCssProperty(
+        "palette-success-base-t85",
+        palette?.success?.base && transparentize(0.85, palette.success.base),
+    ),
 ];
 
 const getDashboardsDerivedColors = (palette: IThemePalette): CssProperty[] => [
@@ -222,6 +234,17 @@ const getButtonDerivedColors = (palette: IThemePalette): CssProperty[] => [
     ),
     getCssProperty("palette-error-base-d10", palette?.error?.base && darken(0.1, palette.error.base)),
     getCssProperty("palette-error-base-d20", palette?.error?.base && darken(0.2, palette.error.base)),
+
+    getCssProperty(
+        "palette-success-disabled",
+        palette?.success?.base && transparentize(0.5, lighten(0.06, palette.success.base)),
+    ),
+    getCssProperty(
+        "palette-success-focus",
+        palette?.success?.base && transparentize(0.5, lighten(0.06, palette.success.base)),
+    ),
+    getCssProperty("palette-success-base-d06", palette?.success?.base && darken(0.06, palette.success.base)),
+    getCssProperty("palette-success-base-d12", palette?.success?.base && darken(0.12, palette.success.base)),
 ];
 
 const getBubbleDerivedColors = (palette: IThemePalette): CssProperty[] => [
