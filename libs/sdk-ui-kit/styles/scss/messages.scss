@@ -88,7 +88,7 @@ $gd-message-padding-vertical: 4px;
 
     line-height: 1.4em;
     color: $gd-palette-error-base;
-    background: var(--gd-palette-error-base-t85, transparentize($gd-color-negative, 0.85));
+    background: $gd-message-error-backgroundColor;
     pointer-events: all;
     max-width: 100%;
     border-radius: 3px;
@@ -102,18 +102,18 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.progress {
-        color: $gd-messages-progress-color;
-        background: $gd-messages-progress-background-color;
+        color: $gd-message-progress-color;
+        background: $gd-message-progress-backgroundColor;
     }
 
     &.success {
-        color: $gd-color-positive;
-        background: transparentize($gd-color-positive, 0.85);
+        color: $gd-palette-success-base;
+        background: $gd-message-success-backgroundColor;
     }
 
     &.warning {
         color: $gd-color-warning-text;
-        background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
+        background: $gd-message-warning-backgroundColor;
     }
 
     &.contrast {
@@ -134,7 +134,7 @@ $gd-message-padding-vertical: 4px;
 .gd-message-overlay,
 .gd-message.intensive {
     color: $gd-color-text-light;
-    background: $gd-messages-intensive-error-backgroundColor;
+    background: $gd-message-overlay-error-backgroundColor;
 
     &.success,
     &.progress,
@@ -143,20 +143,20 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.success {
-        background: transparentize($gd-color-positive, 0.02);
+        background: $gd-message-overlay-success-backgroundColor;
     }
 
     &.progress {
-        background: $gd-messages-intensive-progress-background-color;
+        background: $gd-message-overlay-progress-backgroundColor;
     }
 
     &.error {
-        background: $gd-messages-intensive-error-backgroundColor;
+        background: $gd-message-overlay-error-backgroundColor;
     }
 
     &.warning {
         color: $gd-color-warning-label;
-        background: $gd-palette-warning-base;
+        background: $gd-message-overlay-warning-backgroundColor;
     }
 }
 

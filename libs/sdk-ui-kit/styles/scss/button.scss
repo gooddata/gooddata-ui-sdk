@@ -78,7 +78,7 @@
 
 .gd-button-positive {
     box-shadow: $button-box-shadow-x-offset $button-shadow-lighter;
-    background: $gd-color-positive;
+    background: $gd-palette-success-base;
 
     @extend %btn;
 

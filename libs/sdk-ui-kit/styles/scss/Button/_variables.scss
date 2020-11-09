@@ -50,11 +50,17 @@ $button-action-active-gradient-bottom: $button-action-hover-bg;
 $button-normal-focus-shadow: transparentize($button-action-disabled-color, 0.7);
 
 // positive color
-$button-positive-bg: $gd-color-positive;
-$button-positive-disabled-bg: transparentize(lighten($button-positive-bg, 6%), 0.5);
-$button-positive-hover-bg: darken($button-positive-bg, 6%);
-$button-positive-focus-shadow: transparentize(lighten($button-positive-bg, 6%), 0.5);
-$button-positive-active-gradient-top: darken($button-positive-bg, 12%);
+$button-positive-disabled-bg: var(
+    --gd-palette-success-disabled,
+    transparentize(lighten($gd-color-positive, 6%), 0.5)
+);
+$button-positive-hover-bg: var(--gd-palette-success-base-d06, darken($gd-color-positive, 6%));
+$button-positive-focus-shadow: var(
+    --gd-palette-success-focus,
+    transparentize(lighten($gd-color-positive, 6%), 0.5)
+);
+
+$button-positive-active-gradient-top: var(--gd-palette-success-base-d12, darken($gd-color-positive, 12%));
 $button-positive-active-gradient-bottom: $button-positive-hover-bg;
 
 // negative color

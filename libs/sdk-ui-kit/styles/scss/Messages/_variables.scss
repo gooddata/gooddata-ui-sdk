@@ -1,16 +1,32 @@
 // (C) 2020 GoodData Corporation
 
-$gd-messages-intensive-error-backgroundColor: var(
+$gd-message-error-backgroundColor: var(--gd-palette-error-base-t85, transparentize($gd-color-negative, 0.85));
+$gd-message-overlay-error-backgroundColor: var(
     --gd-palette-error-base-t02,
     transparentize($gd-color-negative, 0.02)
 );
 
-$gd-messages-progress-color: var(--gd-palette-info-base, $gd-palette-primary-base);
-$gd-messages-progress-background-color: var(
+$gd-message-success-backgroundColor: var(
+    --gd-palette-success-base-t85,
+    transparentize($gd-color-positive, 0.85)
+);
+$gd-message-overlay-success-backgroundColor: var(
+    --gd-palette-success-base-t02,
+    transparentize($gd-color-positive, 0.02)
+);
+
+$gd-message-warning-backgroundColor: var(
+    --gd-palette-warning-base-t85,
+    transparentize($gd-color-warning, 0.85)
+);
+$gd-message-overlay-warning-backgroundColor: var(--gd-palette-warning-base, $gd-color-warning);
+
+$gd-message-progress-color: var(--gd-palette-info-base, $gd-palette-primary-base);
+$gd-message-progress-backgroundColor: var(
     --gd-palette-info-base-t85,
     var(--gd-palette-primary-base-t85, transparentize($gd-color-highlight, 0.85))
 );
-$gd-messages-intensive-progress-background-color: var(
+$gd-message-overlay-progress-backgroundColor: var(
     --gd-palette-info-base-t02,
     var(--gd-palette-primary-base-t02, transparentize($gd-color-highlight, 0.02))
 );
