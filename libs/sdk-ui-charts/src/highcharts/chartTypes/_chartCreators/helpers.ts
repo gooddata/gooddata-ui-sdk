@@ -13,6 +13,7 @@ import minBy from "lodash/minBy";
 import min from "lodash/min";
 import max from "lodash/max";
 import isNil from "lodash/isNil";
+import compact from "lodash/compact";
 
 import { VisualizationTypes, VisType } from "@gooddata/sdk-ui";
 import { isInvertedChartType } from "../_util/common";
@@ -60,7 +61,7 @@ export const getHiddenSeries = (chart: Highcharts.Chart): Highcharts.Series[] =>
     chart.series && chart.series.filter((s: Highcharts.Series) => !s.visible);
 
 export const getDataPoints = (series: Highcharts.Series[]): Highcharts.Point[] =>
-    flatten(unzip(map(series, (s: Highcharts.Series) => s.points)));
+    compact(flatten(unzip(map(series, (s: Highcharts.Series) => s.points))));
 
 export const getDataPointsOfVisibleSeries = (chart: Highcharts.Chart): Highcharts.Point[] =>
     getDataPoints(getVisibleSeries(chart));
