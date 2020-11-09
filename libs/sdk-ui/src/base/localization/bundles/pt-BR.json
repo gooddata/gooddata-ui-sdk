@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "Desculpe, não foi possível localizar este insight",
     "visualization.ErrorDescriptionNotFound": "Não existe um insight com esta URL.",
     "visualization.ErrorDescriptionMissingMapboxToken": "A configuração de Geochart requer um token de acesso válido à API.",
+    "visualization.tooltip.resetZoom": "Redefinir zoom",
     "visualization.tooltip.interaction": "Clique no gráfico para detalhar",
     "gs.filter.loading": "Carregando filtro…",
     "gs.filter.error": "Erro ao carregar filtro",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "{value} primeiros de <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "{value} últimos de <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "{value} primeiros de <strong>{attribute}</strong> com base em <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "{value} últimos de <strong>{attribute}</strong> com base em <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "{value} últimos de <strong>{attribute}</strong> com base em <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "Se vários itens tiverem o mesmo valor, o filtro mostrará todos os itens com esse valor. O insight poderá então exibir mais itens do que o número definido."
 }

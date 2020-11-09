@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "Lamentamos, mas não foi possível encontrar este insight",
     "visualization.ErrorDescriptionNotFound": "O insight com este URL não existe.",
     "visualization.ErrorDescriptionMissingMapboxToken": "A configuração do gráfico geográfico exige um token de acesso à API válido.",
+    "visualization.tooltip.resetZoom": "Repor zoom",
     "visualization.tooltip.interaction": "Clique no gráfico para explorar",
     "gs.filter.loading": "A carregar filtro…",
     "gs.filter.error": "Erro ao carregar filtro",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "{value} superiores de <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "{value} inferiores de <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "{value} superiores de <strong>{attribute}</strong> com base em <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "{value} inferiores de <strong>{attribute}</strong> com base em <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "{value} inferiores de <strong>{attribute}</strong> com base em <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "Se vários itens tiverem o mesmo valor, o filtro apresenta todos os itens com este valor. O insight poderá então apresentar mais itens do que o número definido."
 }

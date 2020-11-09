@@ -40,6 +40,7 @@
     "visualization.ErrorMessageNotFound": "No podemos encontrar esta perspectiva",
     "visualization.ErrorDescriptionNotFound": "No existe una perspectiva con esta URL.",
     "visualization.ErrorDescriptionMissingMapboxToken": "La configuración del gráfico geográfico requiere un token de acceso a la API válido.",
+    "visualization.tooltip.resetZoom": "Restablecer acercar/alejar",
     "visualization.tooltip.interaction": "Haga clic en el gráfico para explorar",
     "gs.filter.loading": "Cargando filtro…",
     "gs.filter.error": "Error al cargar filtro",
@@ -196,5 +197,6 @@
     "rankingFilter.preview.top_without_attribute": "{value} superiores de <strong>{measure}</strong>",
     "rankingFilter.preview.bottom_without_attribute": "{value} inferiores de <strong>{measure}</strong>",
     "rankingFilter.preview.top_with_attribute": "{value} superiores de <strong>{attribute}</strong> según <strong>{measure}</strong>",
-    "rankingFilter.preview.bottom_with_attribute": "{value} inferiores de <strong>{attribute}</strong> según <strong>{measure}</strong>"
+    "rankingFilter.preview.bottom_with_attribute": "{value} inferiores de <strong>{attribute}</strong> según <strong>{measure}</strong>",
+    "rankingFilter.valueTooltip": "Si varios elementos tienen el mismo valor, el filtro muestra todos los elementos con ese valor. Después, la perspectiva puede mostrar más elementos que el número establecido."
 }
