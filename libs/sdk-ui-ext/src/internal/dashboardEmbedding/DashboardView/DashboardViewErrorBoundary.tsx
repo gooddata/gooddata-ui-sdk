@@ -8,6 +8,10 @@ interface IDashboardViewErrorBoundaryState {
     error: Error | undefined;
 }
 
+/**
+ * Component allowing you to embed a KPI dashboard into your application.
+ * @beta
+ */
 export class DashboardViewErrorBoundary extends React.Component<
     IDashboardViewProps,
     IDashboardViewErrorBoundaryState

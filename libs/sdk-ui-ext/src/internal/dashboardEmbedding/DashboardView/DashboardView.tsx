@@ -11,6 +11,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
     theme,
+    disableThemeLoading = false,
     backend,
     workspace,
     onDrill,
@@ -68,7 +69,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         />
     );
 
-    if (!hasThemeProvider) {
+    if (!hasThemeProvider && !disableThemeLoading) {
         return (
             <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
                 {dashboardRender}
