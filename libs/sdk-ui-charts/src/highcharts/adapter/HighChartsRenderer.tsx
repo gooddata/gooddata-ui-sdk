@@ -17,6 +17,8 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 
 /**
@@ -306,12 +308,21 @@ export class HighChartsRenderer extends React.PureComponent<
         } = this.props;
         if (chart && chart.zoomType) {
             return (
-                <button
-                    className="viz-zoom-out s-zoom-out"
-                    onClick={this.onZoomOutButtonClick}
-                    style={{ display: "none" }}
-                    title={chart.resetZoomButton?.tooltip}
-                ></button>
+                <BubbleHoverTrigger
+                    tagName="abbr"
+                    hideDelay={100}
+                    showDelay={100}
+                    className="gd-bubble-trigger-zoom-out"
+                >
+                    <button
+                        className="viz-zoom-out s-zoom-out"
+                        onClick={this.onZoomOutButtonClick}
+                        style={{ display: "none" }}
+                    ></button>
+                    <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
+                        {chart.resetZoomButton?.tooltip}
+                    </Bubble>
+                </BubbleHoverTrigger>
             );
         }
         return null;
