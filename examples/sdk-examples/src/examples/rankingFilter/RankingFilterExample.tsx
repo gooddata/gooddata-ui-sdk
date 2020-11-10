@@ -15,7 +15,7 @@ import { RankingFilter, IMeasureDropdownItem, IAttributeDropdownItem } from "@go
 const measures = [LdmExt.TotalSales2, LdmExt.FranchisedSales];
 const attributes = [LdmExt.LocationState, LdmExt.LocationName];
 
-const measureDropdownItems: IMeasureDropdownItem[] = [
+export const measureDropdownItems: IMeasureDropdownItem[] = [
     {
         title: "$ Total sales",
         ref: localIdRef(measureLocalId(LdmExt.TotalSales2)),
@@ -28,7 +28,7 @@ const measureDropdownItems: IMeasureDropdownItem[] = [
     },
 ];
 
-const attributeDropdownItems: IAttributeDropdownItem[] = [
+export const attributeDropdownItems: IAttributeDropdownItem[] = [
     {
         title: "Location state",
         ref: localIdRef(attributeLocalId(LdmExt.LocationState)),

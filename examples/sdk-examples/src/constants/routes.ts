@@ -29,6 +29,8 @@ import { GeoPushpin } from "../examples/geoPushpin";
 import { InternationalDateFilterExample } from "../examples/internationalDateFormat/dateFilter";
 import { InternationalDatePickerExample } from "../examples/internationalDateFormat/datePicker";
 
+import { ThemedComponents } from "../examples/theming";
+
 // import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 // import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
@@ -200,6 +202,7 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         title: "International Date Format",
         Component: InternationalDateFormatUseCasesRoutes,
     },
+    { path: "/theming", title: "Custom Theming", Component: ThemedComponents },
 ];
 
 export const hiddenPaths = [

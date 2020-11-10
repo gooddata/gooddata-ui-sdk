@@ -60,6 +60,25 @@ describe("ThemeProvider", () => {
         `);
     });
 
+    it("should not load the theme and use custom theme from prop instead", async () => {
+        const customTheme: ITheme = {
+            button: {
+                borderRadius: "15",
+            },
+        };
+        await renderComponent(
+            <ThemeProvider theme={customTheme} backend={backend} workspace={workspace}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
+            :root {
+                --gd-button-borderRadius: 15px;
+            }
+        `);
+    });
+
     it("should not load the theme and not set the properties if backend is missing", async () => {
         await renderComponent(
             <ThemeProvider workspace={workspace}>
