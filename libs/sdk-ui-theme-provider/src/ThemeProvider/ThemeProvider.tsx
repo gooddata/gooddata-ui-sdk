@@ -13,6 +13,10 @@ import { ThemeContextProvider } from "./Context";
  */
 export interface IThemeProviderProps {
     /**
+     * Theme object to use. If not specified, provider will load theme from workspace. If specified, backend and workspace props are ignored and don't have to be provided.
+     */
+    theme?: ITheme;
+    /**
      * Analytical backend, from which the ThemeProvider will obtain selected theme object
      *
      * If you do not specify instance of analytical backend using this prop, then you MUST have
@@ -41,6 +45,7 @@ export interface IThemeProviderProps {
  */
 export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     children,
+    theme: themeParam,
     backend: backendParam,
     workspace: workspaceParam,
 }) => {
@@ -49,22 +54,26 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     const workspaceFromContext = useWorkspace();
     const workspace = workspaceParam || workspaceFromContext;
 
-    const [theme, setTheme] = useState<ITheme>({});
+    const [theme, setTheme] = useState<ITheme>(themeParam ?? {});
     const [isLoading, setIsLoading] = useState(false);
 
     const lastWorkspace = useRef<string>();
     lastWorkspace.current = workspace;
 
     useEffect(() => {
-        const fetchData = async () => {
-            clearCssProperties();
+        clearCssProperties();
+        // no need to load anything if the themeParam is present
+        if (themeParam) {
+            setCssProperties(themeParam);
+            return;
+        }
 
+        const fetchData = async () => {
             if (!backend || !workspace) {
                 return;
             }
 
             setIsLoading(true);
-
             const selectedTheme = await backend.workspace(workspace).styling().getTheme();
             if (lastWorkspace.current === workspace) {
                 setTheme(selectedTheme);
@@ -74,7 +83,13 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
         };
 
         fetchData();
-    }, [workspace, backend]);
+    }, [themeParam, workspace, backend]);
+
+    useEffect(() => {
+        return () => {
+            clearCssProperties();
+        };
+    }, []);
 
     return (
         <ThemeContextProvider theme={theme} themeIsLoading={isLoading}>
