@@ -1,5 +1,69 @@
 // (C) 2020 GoodData Corporation
+import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
 import { GdcExecution } from "@gooddata/api-model-bear";
+
+export const dimensions: IDimensionDescriptor[] = [
+    {
+        headers: [
+            {
+                measureGroupHeader: {
+                    items: [
+                        {
+                            measureHeaderItem: {
+                                name: "Sum of Cases 1",
+                                format: "#,##0.00",
+                                localIdentifier: "2199f77137f842be9068f42cc60ba4cb",
+                            },
+                        },
+                    ],
+                },
+            },
+        ],
+    },
+    {
+        headers: [
+            {
+                attributeHeader: {
+                    name: "Continent",
+                    localIdentifier: "c6270652abe94c23b86317df2d1c9413",
+                    uri: "/gdc/md/projectId/obj/322",
+                    identifier: "label.csv_coronavirusdate.continent",
+                    ref: {
+                        uri: "/gdc/md/projectId/obj/322",
+                    },
+                    formOf: {
+                        ref: {
+                            uri: "/gdc/md/projectId/obj/321",
+                        },
+                        name: "Continent",
+                        uri: "/gdc/md/projectId/obj/321",
+                        identifier: "attr.csv_coronavirusdate.continent",
+                    },
+                },
+            },
+            {
+                attributeHeader: {
+                    name: "mm/dd/yyyy (Date)",
+                    localIdentifier: "d836083066194d519780fb3ed59698f8",
+                    uri: "/gdc/md/projectId/obj/311",
+                    identifier: "date.date.mmddyyyy",
+                    type: "GDC.time.day_us",
+                    ref: {
+                        uri: "/gdc/md/projectId/obj/311",
+                    },
+                    formOf: {
+                        ref: {
+                            uri: "/gdc/md/projectId/obj/272",
+                        },
+                        name: "Date (Date)",
+                        uri: "/gdc/md/projectId/obj/272",
+                        identifier: "date.date",
+                    },
+                },
+            },
+        ],
+    },
+];
 
 export const dimensionHeaders: GdcExecution.IResultHeaderItem[][][] = [
     [

@@ -120,6 +120,11 @@ export interface IAttributeDescriptor {
         totalItems?: ITotalDescriptor[];
 
         /**
+         * Display form type
+         */
+        type?: string;
+
+        /**
          * Describes attributes to which the display form belongs.
          */
         formOf: {

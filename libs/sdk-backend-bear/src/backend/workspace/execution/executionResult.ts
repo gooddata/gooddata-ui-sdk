@@ -22,7 +22,8 @@ import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { convertExecutionApiError } from "../../../utils/errorHandling";
 import { toAfmExecution } from "../../../convertors/toBackend/afm/ExecutionConverter";
 import { convertWarning, convertDimensions } from "../../../convertors/fromBackend/ExecutionResultConverter";
-import { transformResultHeader } from "../../../convertors/fromBackend/afm/result";
+import { createResultHeaderTransformer } from "../../../convertors/fromBackend/afm/result";
+import { findDateAttributeUri } from "../../../convertors/dateFormatting/dateFormatter";
 
 export class BearExecutionResult implements IExecutionResult {
     public readonly dimensions: IDimensionDescriptor[];
@@ -164,7 +165,7 @@ class BearDataView implements IDataView {
 
         this.headerItems = transformResultHeaders(
             this.headerItems,
-            transformResultHeader,
+            createResultHeaderTransformer(findDateAttributeUri(result.dimensions)),
             this.definition.postProcessing,
         );
     }
