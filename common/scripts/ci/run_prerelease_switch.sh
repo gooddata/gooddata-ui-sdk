@@ -38,7 +38,7 @@ fi
 
 
 ${_RUSH} install
-${_RUSH} build-all
+${_RUSH} build
 
 ${_RUSH} version --bump --override-bump prerelease --override-prerelease-id ${PRERELEASE_ID}
 bump_rc=$?

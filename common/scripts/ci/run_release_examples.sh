@@ -22,7 +22,7 @@ export EXAMPLES_BUILD_TYPE=${EXAMPLES_BUILD_TYPE:-"public"}
 export EXAMPLE_MAPBOX_ACCESS_TOKEN=${MAPBOX_TOKEN}
 
 $_RUSH install
-$_RUSH build-all -t @gooddata/sdk-examples
+$_RUSH build -t @gooddata/sdk-examples
 
 #
 # Create ${PUBLIC_APP_NAME} application

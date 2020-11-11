@@ -31,10 +31,8 @@
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
-        "prepublishOnly": "npm run build-all",
         "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",
-        "build-all": "bash scripts/build.sh --all",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "dev": "bash scripts/build.sh --dev-watch",

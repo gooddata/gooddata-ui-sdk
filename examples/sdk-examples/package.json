@@ -136,7 +136,6 @@
         "examples?": "# Default is developer domain, other options: npm run examples [sec,secure,stg,stg2,stg3,demo,developer or URL]",
         "examples": "npm run refresh-examplesjs && bash scripts/run-examples.sh",
         "build": "npm run refresh-examplesjs && bash scripts/build-examples.sh ${EXAMPLES_BUILD_TYPE}",
-        "build-all": "npm run build",
         "examples-server": "node server/src/index.js",
         "examples-testcafe": "./scripts/run-testcafe.sh visual",
         "examples-testcafe-live": "./scripts/run-testcafe.sh live",

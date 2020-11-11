@@ -56,7 +56,7 @@ RC=1
   RC=$?
 
   if [ $RC -eq 0 ]; then
-    $_RUSH build-all
+    $_RUSH build
     RC=$?
   fi;
 
