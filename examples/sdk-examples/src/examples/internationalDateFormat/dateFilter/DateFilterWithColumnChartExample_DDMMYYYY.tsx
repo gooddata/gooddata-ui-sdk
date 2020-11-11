@@ -104,7 +104,7 @@ interface IDateFilterComponentExampleState {
     excludeCurrentPeriod: boolean;
 }
 
-const dateFilterContainerStyle = { width: 200 };
+const dateFilterContainerStyle = { width: 300 };
 const columnChartContainerStyle = { height: 300 };
 
 export const DateFilterWithColumnChartExample_DDMMYYYY: React.FC = () => {
