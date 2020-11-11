@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
-import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
+import React, { useMemo } from "react";
+import compact from "lodash/compact";
+import { IAnalyticalBackend, IWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IErrorProps,
@@ -10,6 +11,7 @@ import {
     IDrillableItem,
     IHeaderPredicate,
     OnFiredDrillEvent,
+    OnError,
 } from "@gooddata/sdk-ui";
 import { InvariantError } from "ts-invariant";
 
@@ -21,6 +23,11 @@ export interface IKpiViewProps {
      * The KPI to execute and display.
      */
     kpiWidget: IWidget;
+
+    /**
+     * Optionally, specify alert set by the current user to this KPI.
+     */
+    alert?: IWidgetAlert;
 
     /**
      * Optionally, specify filters to be applied to the KPI.
@@ -36,6 +43,11 @@ export interface IKpiViewProps {
      * Called when user triggers a drill on a visualization.
      */
     onDrill?: OnFiredDrillEvent;
+
+    /**
+     * Called in case of any error, either in the dashboard loading or any of the widgets execution.
+     */
+    onError?: OnError;
 
     /**
      * Backend to work with.
@@ -70,9 +82,11 @@ export interface IKpiViewProps {
  */
 export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
+    alert,
     filters,
-    drillableItems,
+    drillableItems = [],
     onDrill,
+    onError,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -87,7 +101,14 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         backend,
         filters,
         workspace,
+        onError,
     });
+
+    // add drilling predicate for the metric if the KPI has any drills defined from KPI dashboards
+    const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(
+        () => compact([...drillableItems, kpiWidget.drills.length > 0 && kpiWidget.kpi.metric]),
+        [kpiWidget, drillableItems],
+    );
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
@@ -102,9 +123,11 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             title={kpiWidget.title}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
+            alert={alert}
             filters={result.filters}
             onDrill={onDrill}
-            drillableItems={drillableItems}
+            onError={onError}
+            drillableItems={effectiveDrillableItems}
             backend={backend}
             workspace={workspace}
             ErrorComponent={ErrorComponent}

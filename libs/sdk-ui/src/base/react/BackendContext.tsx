@@ -27,12 +27,22 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
 
 /**
  * Hook to get analytical backend instance provided to BackendProvider.
+ * You can optionally set a backend override that will be returned if defined.
+ * This makes the usage more ergonomic (see the following example).
  *
+ * @example
+ * // instead of
+ * const fromContext = useBackend();
+ * const effectiveBackend = fromArguments ?? fromContext.
+ * // you can write
+ * const backend = useBackend(fromArguments);
+ *
+ * @param backend - backend to use instead of context value. If undefined, the context value is used.
  * @public
  */
-export const useBackend = (): IAnalyticalBackend | undefined => {
-    const backend = React.useContext(BackendContext);
-    return backend;
+export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | undefined => {
+    const backendFromContext = React.useContext(BackendContext);
+    return backend ?? backendFromContext;
 };
 
 /**
@@ -47,7 +57,7 @@ export function withBackend<T extends { backend?: IAnalyticalBackend }>(
     const ComponentWithInjectedBackend: React.FC<T> = (props) => {
         return (
             <BackendContext.Consumer>
-                {(backend) => <Component backend={backend} {...props} />}
+                {(backend) => <Component {...props} backend={props.backend ?? backend} />}
             </BackendContext.Consumer>
         );
     };

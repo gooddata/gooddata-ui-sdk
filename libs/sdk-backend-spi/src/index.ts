@@ -219,6 +219,7 @@ export {
     LayoutDefinitionContent,
     LayoutWidgetDefinition,
     isLayoutWidgetDefinition,
+    isSectionHeader,
     walkLayout,
     layoutWidgetsWithPaths,
     IWidgetDefinitionWithLayoutPath,

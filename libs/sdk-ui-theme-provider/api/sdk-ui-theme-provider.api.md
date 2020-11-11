@@ -28,7 +28,7 @@ export const ThemeContextProvider: React_2.FC<IThemeContextProviderProps>;
 export const ThemeProvider: React_2.FC<IThemeProviderProps>;
 
 // @beta
-export const useTheme: () => ITheme | undefined;
+export const useTheme: (theme?: ITheme) => ITheme | undefined;
 
 // @beta
 export const useThemeIsLoading: () => boolean | undefined;

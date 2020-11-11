@@ -99,9 +99,34 @@ describe("areObjRefsEqual", () => {
         // nullish and non-nullish
         [false, "null, uri", null, { uri: "foo" }],
         [false, "undefined, identifier", undefined, { identifier: "foo" }],
+        // one has both id and uri, the other just one of those
+        [
+            true,
+            "uri & identifier, identifier, matching identifier",
+            { identifier: "foo", uri: "/foo/bar" },
+            { identifier: "foo" },
+        ],
+        [
+            true,
+            "uri & identifier, uri, matching uri",
+            { identifier: "foo", uri: "/foo/bar" },
+            { uri: "/foo/bar" },
+        ],
+        [
+            true,
+            "identifier, uri & identifier, matching identifier",
+            { identifier: "foo" },
+            { identifier: "foo", uri: "/foo/bar" },
+        ],
+        [
+            true,
+            "uri, uri & identifier, matching uri",
+            { uri: "/foo/bar" },
+            { identifier: "foo", uri: "/foo/bar" },
+        ],
     ];
 
-    it.each(Scenarios)("should return %s for ", (expected, _desc, a, b) => {
+    it.each(Scenarios)("should return %s for %s", (expected, _desc, a, b) => {
         expect(areObjRefsEqual(a, b)).toEqual(expected);
     });
 });

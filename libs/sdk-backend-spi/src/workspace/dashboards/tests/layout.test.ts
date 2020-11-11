@@ -1,7 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards";
-import { isFluidLayout, isFluidLayoutDefinition, isLayoutWidget, isLayoutWidgetDefinition } from "../layout";
+import {
+    isFluidLayout,
+    isFluidLayoutDefinition,
+    isLayoutWidget,
+    isLayoutWidgetDefinition,
+    isSectionHeader,
+    SectionHeader,
+} from "../layout";
 import { fluidLayout, fluidLayoutDefinition, layoutWidget, layoutWidgetDefinition } from "./layout.fixtures";
 
 describe("layout type guards", () => {
@@ -48,6 +55,18 @@ describe("layout type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isFluidLayoutDefinition(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isSectionHeader", () => {
+        const Scenarios: Array<[boolean, string, SectionHeader]> = [
+            ...InvalidInputTestCases,
+            [true, "section header", { title: "Title" }],
+            [false, "section description", { description: "Title" }],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isSectionHeader(input)).toBe(expectedResult);
         });
     });
 });

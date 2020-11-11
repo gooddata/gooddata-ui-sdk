@@ -45,11 +45,22 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
 /**
  * Hook for reaching the theme from context
  *
+ * You can optionally set a theme override that will be returned if defined.
+ * This makes the usage more ergonomic (see the following example).
+ *
+ * @example
+ * // instead of
+ * const fromContext = useTheme();
+ * const effectiveTheme = fromArguments ?? fromContext.
+ * // you can write
+ * const theme = useTheme(fromArguments);
+ *
+ * @param theme - theme to use instead of context value. If undefined, the context value is used.
  * @beta
  */
-export const useTheme = (): ITheme | undefined => {
-    const theme = React.useContext(ThemeContext);
-    return theme;
+export const useTheme = (theme?: ITheme): ITheme | undefined => {
+    const themeFromContext = React.useContext(ThemeContext);
+    return theme ?? themeFromContext;
 };
 
 /**
@@ -70,7 +81,9 @@ export function withThemeObject<T extends { theme?: ITheme; themeIsLoading?: boo
 ): React.ComponentType<Omit<T, "theme">> {
     const ComponentWithInjectedThemeObject: React.FC<T> = (props) => {
         return (
-            <ThemeContext.Consumer>{(theme) => <Component theme={theme} {...props} />}</ThemeContext.Consumer>
+            <ThemeContext.Consumer>
+                {(theme) => <Component {...props} theme={props.theme ?? theme} />}
+            </ThemeContext.Consumer>
         );
     };
 

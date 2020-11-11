@@ -19,7 +19,7 @@ export interface IUseDashboardAlertsConfig
     /**
      * Reference to the dashboard to get alerts for.
      */
-    ref: ObjRef;
+    dashboard: ObjRef;
 
     /**
      * Backend to work with.
@@ -44,7 +44,7 @@ export interface IUseDashboardAlertsConfig
  * @beta
  */
 export function useDashboardAlerts({
-    ref,
+    dashboard,
     backend,
     onCancel,
     onError,
@@ -53,30 +53,27 @@ export function useDashboardAlerts({
     onSuccess,
     workspace,
 }: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError> {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
-
-    const effectiveBackend = backend ?? backendFromContext;
-    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    const effectiveBackend = useBackend(backend);
+    const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useLoadDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useLoadDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
     const promise = () =>
         effectiveBackend
             .workspace(effectiveWorkspace)
             .dashboards()
-            .getDashboardWidgetAlertsForCurrentUser(ref);
+            .getDashboardWidgetAlertsForCurrentUser(dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveWorkspace,
-        objRefToString(ref),
+        objRefToString(dashboard),
     ]);
 }

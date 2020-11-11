@@ -166,17 +166,26 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
  * Returns a value indicating whether the two ObjRef instances are semantically equal (i.e. are of the same type and have the same value).
  * Null and undefined are considered equal to each other.
  *
+ * @remarks If the objects are ObjRefs of multiple types at once (for example they have identifiers and URIs),
+ * the match is tested in the following sequence:
+ * 1. identifier
+ * 2. URI
+ * 3. localIdentifier
+ *
  * @public
  */
 export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T, b: T): boolean {
     if (a == null) {
         return b == null;
     }
-    if (isIdentifierRef(a)) {
-        return isIdentifierRef(b) && a.identifier === b.identifier && a.type === b.type;
+
+    if (isIdentifierRef(a) && isIdentifierRef(b)) {
+        return a.identifier === b.identifier && a.type === b.type;
     }
-    if (isUriRef(a)) {
-        return isUriRef(b) && a.uri === b.uri;
+
+    if (isUriRef(a) && isUriRef(b)) {
+        return a.uri === b.uri;
     }
-    return isLocalIdRef(b) && a.localIdentifier === b.localIdentifier;
+
+    return isLocalIdRef(a) && isLocalIdRef(b) && a.localIdentifier === b.localIdentifier;
 }

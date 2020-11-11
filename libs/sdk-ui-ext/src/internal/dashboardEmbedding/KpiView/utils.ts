@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
+    OnError,
     useBackend,
     useCancelablePromise,
     UseCancelablePromiseState,
@@ -27,6 +28,7 @@ interface IUseKpiDataConfig {
     filters?: IFilter[];
     backend?: IAnalyticalBackend;
     workspace?: string;
+    onError?: OnError;
 }
 
 interface IUseKpiDataResult {
@@ -41,11 +43,8 @@ export function useKpiData({
     backend,
     workspace,
 }: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
-
-    const effectiveBackend = backend ?? backendFromContext;
-    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    const effectiveBackend = useBackend(backend);
+    const effectiveWorkspace = useWorkspace(workspace);
 
     const promise = async () => {
         if (!kpiWidget.kpi) {

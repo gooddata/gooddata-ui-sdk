@@ -62,13 +62,13 @@ export function useExecution(options: {
      */
     workspace?: string;
 }): IPreparedExecution {
-    const backendFromContext = useBackend();
-    const workspaceFromContext = useWorkspace();
+    const backend = useBackend(options.backend);
+    const workspace = useWorkspace(options.workspace);
 
     const execution = createExecution({
         ...options,
-        backend: options.backend ?? backendFromContext,
-        workspace: options.workspace ?? workspaceFromContext,
+        backend,
+        workspace,
     });
 
     return execution;

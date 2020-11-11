@@ -1173,6 +1173,9 @@ export function isResultMeasureHeader(obj: unknown): obj is IResultMeasureHeader
 export function isResultTotalHeader(obj: unknown): obj is IResultTotalHeader;
 
 // @alpha
+export function isSectionHeader(obj: unknown): obj is ISectionHeader;
+
+// @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public

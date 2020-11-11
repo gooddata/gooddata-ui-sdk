@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IAnalyticalBackend, isNoDataError } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, isNoDataError, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -22,6 +22,7 @@ import {
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
     DataViewFacade,
+    OnError,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
@@ -30,9 +31,11 @@ interface IKpiExecutorProps {
     title: string;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
+    alert?: IWidgetAlert;
     filters?: IFilter[];
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
+    onError?: OnError;
     backend: IAnalyticalBackend;
     workspace: string;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -47,9 +50,11 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     title,
     primaryMeasure,
     secondaryMeasure,
+    alert,
     filters,
     drillableItems,
     onDrill,
+    onError,
     backend,
     workspace,
     ErrorComponent = DefaultError,
@@ -62,7 +67,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
         workspace,
     });
 
-    const { error, result, status } = useDataView({ execution });
+    const { error, result, status } = useDataView({ execution, onError });
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
@@ -101,6 +106,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
         <KpiRenderer
             primaryValue={primaryValue}
             secondaryValue={secondaryValue}
+            alert={alert}
             onDrill={handleOnDrill}
             title={title}
         />

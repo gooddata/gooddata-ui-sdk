@@ -155,4 +155,24 @@ describe("ThemeProvider", () => {
 
         expect(component.find(TestComponent).props().themeIsLoading).toEqual(false);
     });
+
+    it("should use the theme from props if provided and not load anything", async () => {
+        const themeFromProps: ITheme = {
+            modal: {
+                dropShadow: false,
+            },
+        };
+
+        await renderComponent(
+            <ThemeProvider theme={themeFromProps}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
+            :root {
+                --gd-modal-dropShadow: none;
+            }
+        `);
+    });
 });

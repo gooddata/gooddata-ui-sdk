@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
 import { IDrillEventContext, OnFiredDrillEvent } from "@gooddata/sdk-ui";
-import { DataValue, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
+import { DataValue, IMeasureDescriptor, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 
 export interface IKpiValueInfo {
     formattedValue: string;
@@ -15,6 +15,7 @@ interface IKpiRendererProps {
     title: string;
     primaryValue?: IKpiValueInfo;
     secondaryValue?: IKpiValueInfo;
+    alert?: IWidgetAlert;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDrillEvent>;
 }
 
@@ -26,6 +27,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     title,
     primaryValue,
     secondaryValue,
+    alert,
     onDrill,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
@@ -45,7 +47,10 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     return (
         <div>
             <div onClick={onPrimaryValueClick}>
-                <div>{title}</div>
+                <div>
+                    {title}
+                    {!!alert && <span>{alert.isTriggered ? "Triggered alert" : "Not triggered alert"}</span>}
+                </div>
                 <div>{primaryValue?.formattedValue ?? "—"}</div>
             </div>
             {secondaryValue && <div onClick={onSecondaryValueClick}>{secondaryValue.formattedValue}</div>}
