@@ -4,7 +4,6 @@
     "compilerOptions": {
         "noImplicitAny": false,
         "noUnusedLocals": false,
-        "noUnusedParameters": false,
         "pretty": true,
         "baseUrl": null,
         "paths": null
