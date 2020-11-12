@@ -10,6 +10,8 @@ import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highCharts
 import { Chart } from "../Chart";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { Legend } from "@gooddata/sdk-ui-vis-commons";
+import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+
 import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess";
 
 function createComponent(customProps: any = {}, zoomable = false) {
@@ -41,6 +43,9 @@ function createComponent(customProps: any = {}, zoomable = false) {
                 ? {
                       chart: {
                           zoomType: "x",
+                          resetZoomButton: {
+                              tooltip: "Reset zoom",
+                          },
                       },
                   }
                 : undefined,
@@ -505,7 +510,7 @@ describe("HighChartsRenderer", () => {
     });
 
     describe("Zoom Out Button", () => {
-        it("should render the zoom out button", () => {
+        it("should render the zoom out button with the Goodstrap tooltip", () => {
             const chartRenderer = jest.fn().mockReturnValue(<div className="chart" />);
             const legendRenderer = jest.fn().mockReturnValue(<div className="legend" />);
             const wrapper = mount(
@@ -529,7 +534,8 @@ describe("HighChartsRenderer", () => {
             );
             const chartWrapper = wrapper.find(".viz-line-family-chart-wrap");
 
-            expect(chartWrapper.childAt(0).hasClass("s-zoom-out")).toBe(true);
+            expect(chartWrapper.childAt(0).find("button.s-zoom-out")).toHaveLength(1);
+            expect(chartWrapper.find(BubbleHoverTrigger)).toHaveLength(1);
             expect(chartWrapper.childAt(1).prop("className")).toBe("legend");
             expect(chartWrapper.childAt(2).prop("className")).toBe("chart");
         });

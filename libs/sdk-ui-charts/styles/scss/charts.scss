@@ -64,5 +64,23 @@
     display: none;
 }
 
+.gd-bubble-trigger-zoom-out {
+    position: absolute;
+    top: -85px;
+    right: 35px;
+
+    @media only screen and (max-width: 640px) {
+        top: -73px;
+    }
+
+    .viz-zoom-out {
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 36px;
+        height: 36px;
+    }
+}
+
 @import "~@gooddata/sdk-ui-vis-commons/styles/scss/legend.scss";
 @import "tooltip";
