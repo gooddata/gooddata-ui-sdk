@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Timepicker } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -27,3 +28,4 @@ const TimePickerExamples: React.FC = () => {
 };
 
 storiesOf(`${UiKit}/TimePicker`, module).add("full-featured", () => <TimePickerExamples />);
+storiesOf(`${UiKit}/TimePicker`, module).add("themed", () => wrapWithTheme(<TimePickerExamples />));

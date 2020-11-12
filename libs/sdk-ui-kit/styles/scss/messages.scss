@@ -112,7 +112,7 @@ $gd-message-padding-vertical: 4px;
     }
 
     &.warning {
-        color: $gd-color-warning-text;
+        color: $gd-palette-warning-base-text;
         background: $gd-message-warning-backgroundColor;
     }
 

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Bubble, BubbleHoverTrigger, BubbleFocusTrigger, Button } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "./styles.scss";
 
@@ -169,3 +170,4 @@ class BubbleExamples extends Component {
 }
 
 storiesOf(`${UiKit}/Bubble`, module).add("full-featured", () => <BubbleExamples />);
+storiesOf(`${UiKit}/Bubble`, module).add("themed", () => wrapWithTheme(<BubbleExamples />));

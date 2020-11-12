@@ -9,6 +9,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import { ISeparators } from "@gooddata/sdk-ui";
@@ -73,30 +74,35 @@ const separators: ISeparators = {
     decimal: ".",
 };
 
-storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
-    const ToggleButton: React.FC<IToggleButtonProps> = ({ toggleDropdown, text }) => (
-        <button
-            type="button"
-            className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
-            onClick={toggleDropdown}
-        >
-            {text}
-        </button>
-    );
+const ToggleButton: React.FC<IToggleButtonProps> = ({ toggleDropdown, text }) => (
+    <button
+        type="button"
+        className="s-measure-number-format-button gd-button gd-button-secondary gd-button-small"
+        onClick={toggleDropdown}
+    >
+        {text}
+    </button>
+);
 
-    return (
-        <div style={wrapperStyle} className="screenshot-target">
-            <MeasureNumberFormat
-                toggleButton={ToggleButton}
-                presets={presets}
-                separators={separators}
-                templates={templates}
-                selectedFormat={null}
-                setFormat={action(`selected format`)}
-                documentationLink={documentationLink}
-            />
-        </div>
-    ); /*
+const MeasureNumberFormatTest = () => (
+    <div style={wrapperStyle} className="screenshot-target">
+        <MeasureNumberFormat
+            toggleButton={ToggleButton}
+            presets={presets}
+            separators={separators}
+            templates={templates}
+            selectedFormat={null}
+            setFormat={action(`selected format`)}
+            documentationLink={documentationLink}
+        />
+    </div>
+);
+
+storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => <MeasureNumberFormatTest />);
+storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("themed", () =>
+    wrapWithTheme(<MeasureNumberFormatTest />),
+);
+/*
         {
             closed: {},
             opened: {
@@ -133,4 +139,3 @@ storiesOf(`${UiKit}/MeasureNumberFormat`, module).add("full-featured", () => {
             },
         },
     );*/
-});

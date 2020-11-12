@@ -2,9 +2,10 @@
 import React, { Component } from "react";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { withIntl } from "@gooddata/sdk-ui";
 import { AppHeader, IAppHeaderProps, HeaderWorkspacePicker } from "@gooddata/sdk-ui-kit";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -254,36 +255,42 @@ class HeaderExamples extends Component {
     }
 }
 
-storiesOf(`${UiKit}/AppHeader`, module).add("full-featured", () => {
-    const messages = {
-        "gs.header.dashboards": "Dashboards",
-        "gs.header.reports": "Reports",
-        "gs.header.kpis": "KPIs",
-        "gs.header.analyze": "Analyze",
-        "gs.header.load": "Load",
-        "gs.header.manage": "Manage",
-        "gs.header.help": "Help",
-        "gs.header.documentation": "Documentation",
-        "gs.header.visitSupportPortal": "Visit Support Portal",
-        "gs.header.submitTicket": "Submit Ticket",
-        "gs.header.account": "Account",
-        "gs.header.logout": "Logout",
-        "gs.header.projectPicker.demo": "Demo",
-    };
-    const WithIntl = withIntl(HeaderExamples, "en-US", messages);
-    return withMultipleScreenshots(<WithIntl />, {
-        closed: {},
-        openedProjectPicker: {
-            clickSelector: ".s-default-header .s-goodsales",
-            postInteractionWait: 200,
-        },
-        openedHelp: {
-            clickSelector: ".s-default-header .gd-header-help",
-            postInteractionWait: 200,
-        },
-        openedAccount: {
-            clickSelector: ".s-default-header .gd-header-account",
-            postInteractionWait: 200,
-        },
-    });
-});
+const messages = {
+    "gs.header.dashboards": "Dashboards",
+    "gs.header.reports": "Reports",
+    "gs.header.kpis": "KPIs",
+    "gs.header.analyze": "Analyze",
+    "gs.header.load": "Load",
+    "gs.header.manage": "Manage",
+    "gs.header.help": "Help",
+    "gs.header.documentation": "Documentation",
+    "gs.header.visitSupportPortal": "Visit Support Portal",
+    "gs.header.submitTicket": "Submit Ticket",
+    "gs.header.account": "Account",
+    "gs.header.logout": "Logout",
+    "gs.header.projectPicker.demo": "Demo",
+};
+const WithIntl = withIntl(HeaderExamples, "en-US", messages);
+
+const screenshotProps = {
+    closed: {},
+    openedProjectPicker: {
+        clickSelector: ".s-default-header .s-goodsales",
+        postInteractionWait: 200,
+    },
+    openedHelp: {
+        clickSelector: ".s-default-header .gd-header-help",
+        postInteractionWait: 200,
+    },
+    openedAccount: {
+        clickSelector: ".s-default-header .gd-header-account",
+        postInteractionWait: 200,
+    },
+};
+
+storiesOf(`${UiKit}/AppHeader`, module).add("full-featured", () =>
+    withMultipleScreenshots(<WithIntl />, screenshotProps),
+);
+storiesOf(`${UiKit}/AppHeader`, module).add("themed", () =>
+    withScreenshot(wrapWithTheme(<WithIntl />), screenshotProps.openedProjectPicker),
+);

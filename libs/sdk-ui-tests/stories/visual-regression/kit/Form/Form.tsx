@@ -4,6 +4,7 @@ import { Input } from "@gooddata/sdk-ui-kit";
 import { InputWithNumberFormat } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -176,3 +177,4 @@ class FormExamples extends React.PureComponent {
 }
 
 storiesOf(`${UiKit}/Form`, module).add("full-featured", () => <FormExamples />);
+storiesOf(`${UiKit}/Form`, module).add("themed", () => wrapWithTheme(<FormExamples />));
