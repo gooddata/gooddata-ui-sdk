@@ -253,6 +253,11 @@ export interface ITheme {
     };
 
     /**
+     * Global Kpi/Headline customizable UI properties
+     */
+    kpi?: IThemeKpi;
+
+    /**
      * KPI dashboards specific properties
      */
     dashboards?: {
@@ -404,6 +409,9 @@ export interface ITheme {
                  */
                 dropShadow?: boolean;
 
+                /**
+                 * Dashboards specific Kpi/Headline customizable UI properties
+                 */
                 kpi?: IThemeKpi;
             };
         };

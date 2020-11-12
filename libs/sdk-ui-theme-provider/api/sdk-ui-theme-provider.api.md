@@ -17,12 +17,16 @@ export interface IThemeContextProviderProps {
 // @beta (undocumented)
 export interface IThemeProviderProps {
     backend?: IAnalyticalBackend;
+    modifier?: ThemeModifier;
     theme?: ITheme;
     workspace?: string;
 }
 
 // @beta
 export const ThemeContextProvider: React_2.FC<IThemeContextProviderProps>;
+
+// @beta (undocumented)
+export type ThemeModifier = (theme: ITheme) => ITheme;
 
 // @beta
 export const ThemeProvider: React_2.FC<IThemeProviderProps>;

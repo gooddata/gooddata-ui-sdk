@@ -11,6 +11,12 @@ import { ThemeContextProvider } from "./Context";
  *
  * @beta
  */
+export type ThemeModifier = (theme: ITheme) => ITheme;
+
+/**
+ *
+ * @beta
+ */
 export interface IThemeProviderProps {
     /**
      * Theme that will be used if defined. If not defined here, the theme will be obtained from the backend.
@@ -34,6 +40,11 @@ export interface IThemeProviderProps {
      * component tree.
      */
     workspace?: string;
+
+    /**
+     * If provided it is called with loaded theme to allow its modification according to the app needs.
+     */
+    modifier?: ThemeModifier;
 }
 
 /**
@@ -51,6 +62,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     theme: themeParam,
     backend: backendParam,
     workspace: workspaceParam,
+    modifier = (theme: ITheme): ITheme => theme,
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
@@ -77,9 +89,10 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
             setIsLoading(true);
             const selectedTheme = await backend.workspace(workspace).styling().getTheme();
             if (lastWorkspace.current === workspace) {
-                setTheme(selectedTheme);
+                const modifiedTheme = modifier(selectedTheme);
+                setTheme(modifiedTheme);
                 setIsLoading(false);
-                setCssProperties(selectedTheme);
+                setCssProperties(modifiedTheme);
             }
         };
 
