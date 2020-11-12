@@ -90,8 +90,6 @@ describe("ThemeProvider", () => {
     });
 
     it("should not load the theme and not set the properties if workspace is missing", async () => {
-        const backend = recordedBackend(ReferenceRecordings.Recordings, { theme });
-
         await renderComponent(
             <ThemeProvider backend={backend}>
                 <div>Test</div>
