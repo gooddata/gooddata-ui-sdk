@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "8.1.0-alpha.48",
+    "version": "8.1.0-alpha.49",
     "description": "GoodData SDK - UI Building Components",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-kit",
     "author": "GoodData Corporation",
@@ -54,8 +54,8 @@
     "dependencies": {
         "@gooddata/goodstrap": "^70.0.0",
         "@gooddata/numberjs": "^3.2.4",
-        "@gooddata/sdk-ui": "^8.1.0-alpha.48",
-        "@gooddata/util": "^8.1.0-alpha.48",
+        "@gooddata/sdk-ui": "^8.1.0-alpha.49",
+        "@gooddata/util": "^8.1.0-alpha.49",
         "classnames": "^2.2.6",
         "codemirror": "^5.54.0",
         "foundation-sites": "^5.5.3",
