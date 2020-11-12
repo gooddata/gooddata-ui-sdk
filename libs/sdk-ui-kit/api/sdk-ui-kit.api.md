@@ -182,6 +182,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
+export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
+
+// @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
@@ -444,6 +447,16 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     submitButtonText?: string;
     // (undocumented)
     warning?: string | React.ReactElement;
+}
+
+// @internal (undocumented)
+export interface ICustomizableCheckmarkProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    width?: number;
 }
 
 // @internal (undocumented)

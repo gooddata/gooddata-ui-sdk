@@ -170,15 +170,10 @@ $menu-item-icon-width: 30px;
         color: $gd-palette-primary-base;
         font-weight: bold;
 
-        .gd-mobile-dropdown-content &::after {
-            content: "";
-            position: absolute;
-            top: 0;
+        .gd-customizable-checkmark-mobile-navigation {
+            top: 18px;
             right: 13px;
             bottom: 0;
-            display: block;
-            width: 13px;
-            background: url($base_path + "images/checkmark.svg") no-repeat center;
         }
     }
 
