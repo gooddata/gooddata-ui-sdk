@@ -94,6 +94,7 @@
         "@gooddata/sdk-ui-geo": "^8.1.0-alpha.51",
         "@gooddata/sdk-ui-kit": "^8.1.0-alpha.51",
         "@gooddata/sdk-ui-pivot": "^8.1.0-alpha.51",
+        "@gooddata/sdk-ui-theme-provider": "^8.1.0-alpha.51",
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
         "typescript": ">= 2.5.3"
@@ -107,6 +108,7 @@
         "@gooddata/sdk-ui-geo": "^8.1.0-alpha.51",
         "@gooddata/sdk-ui-kit": "^8.1.0-alpha.51",
         "@gooddata/sdk-ui-pivot": "^8.1.0-alpha.51",
+        "@gooddata/sdk-ui-theme-provider": "^8.1.0-alpha.51",
         "@types/enzyme": "^3.10.3",
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/jest": "^26.0.12",

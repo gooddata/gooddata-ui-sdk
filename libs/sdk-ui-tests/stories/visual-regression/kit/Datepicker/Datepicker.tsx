@@ -3,7 +3,8 @@ import { Datepicker } from "@gooddata/sdk-ui-kit";
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -68,16 +69,23 @@ const DatePickerTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/DatePicker`, module).add("full-featured", () => {
-    return withMultipleScreenshots(<DatePickerTest />, {
-        closed: {},
-        opened: {
-            clickSelector: "#external-date input",
-            postInteractionWait: 200,
-        },
-        "next-month": {
-            clickSelectors: ["#external-date input", ".DayPicker-NavButton--next"],
-            postInteractionWait: 200,
-        },
-    });
-});
+const openedProps = {
+    clickSelector: "#external-date input",
+    postInteractionWait: 200,
+};
+
+const screenshotProps = {
+    closed: {},
+    opened: openedProps,
+    "next-month": {
+        clickSelectors: ["#external-date input", ".DayPicker-NavButton--next"],
+        postInteractionWait: 200,
+    },
+};
+
+storiesOf(`${UiKit}/DatePicker`, module).add("full-featured", () =>
+    withMultipleScreenshots(<DatePickerTest />, screenshotProps),
+);
+storiesOf(`${UiKit}/DatePicker`, module).add("themed", () =>
+    withScreenshot(wrapWithTheme(<DatePickerTest />), openedProps),
+);

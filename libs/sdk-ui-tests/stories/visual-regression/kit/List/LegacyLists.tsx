@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import times from "lodash/times";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
@@ -130,22 +131,23 @@ export class LegacyListExamples extends Component<unknown, ILegacyListExamplesSt
     }
 }
 
-storiesOf(`${UiKit}/Legacy Lists`, module).add("full-featured", () => {
-    // TODO remove this adhoc translations when List components will have own dictionary and dont rely on provided Intl from top
-    const customMessages = {
-        "gs.list.clear": "Clear",
-        "gs.list.only": "Only",
-        "gs.list.all": "All",
-        "gs.list.is": "is",
-        "gs.list.searchResults": "search results",
-        "gs.list.selectAll": "Select all",
-        "gs.list.except": "except",
-        "gs.list.selected": "selected",
-        "gs.list.limitExceeded": "Sorry, you have exceeded the limit ({limit}).",
-        "gs.list.noItemsFound": "No items found.",
-        "gs.list.empty.value": "empty value",
-        "gs.list.notAvailableAbbreviation": "N/A",
-    };
-    const WithIntl = withIntl<unknown>(LegacyListExamples, undefined, customMessages);
-    return <WithIntl />;
-});
+// TODO remove this adhoc translations when List components will have own dictionary and dont rely on provided Intl from top
+const customMessages = {
+    "gs.list.clear": "Clear",
+    "gs.list.only": "Only",
+    "gs.list.all": "All",
+    "gs.list.is": "is",
+    "gs.list.searchResults": "search results",
+    "gs.list.selectAll": "Select all",
+    "gs.list.except": "except",
+    "gs.list.selected": "selected",
+    "gs.list.limitExceeded": "Sorry, you have exceeded the limit ({limit}).",
+    "gs.list.noItemsFound": "No items found.",
+    "gs.list.empty.value": "empty value",
+    "gs.list.notAvailableAbbreviation": "N/A",
+};
+
+const WithIntl = withIntl<unknown>(LegacyListExamples, undefined, customMessages);
+
+storiesOf(`${UiKit}/Legacy Lists`, module).add("full-featured", () => <WithIntl />);
+storiesOf(`${UiKit}/Legacy Lists`, module).add("themed", () => wrapWithTheme(<WithIntl />));

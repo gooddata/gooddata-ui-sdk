@@ -6,6 +6,7 @@ import uniqueId from "lodash/uniqueId";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/button.css";
 import "./styles.scss";
@@ -233,86 +234,85 @@ const icons = [
     "date",
 ];
 
-storiesOf(`${UiKit}/Button`, module).add("full-featured button", () => {
-    const getButtons = () => {
-        return types.map((item) => {
-            return (
-                <tr key={uniqueId("button-")}>
-                    <td>
-                        <Button
-                            value={item.title}
-                            className={item.className}
-                            iconLeft={item.iconLeft}
-                            iconRight={item.iconRight}
-                        />
-                        <Button
-                            value={item.title}
-                            className={item.className}
-                            iconLeft={item.iconLeft}
-                            iconRight={item.iconRight}
-                            disabled
-                        />
-                    </td>
-                    <td className="example-buttons-button-class">
-                        <code>{item.className}</code>
-                        {item.iconLeft && (
-                            <div>
-                                <code>{item.iconLeft}</code>
-                            </div>
-                        )}
-                        {item.iconRight && (
-                            <div>
-                                <code>{item.iconRight}</code>
-                            </div>
-                        )}
-                    </td>
+const getButtons = () => {
+    return types.map((item) => {
+        return (
+            <tr key={uniqueId("button-")}>
+                <td>
+                    <Button
+                        value={item.title}
+                        className={item.className}
+                        iconLeft={item.iconLeft}
+                        iconRight={item.iconRight}
+                    />
+                    <Button
+                        value={item.title}
+                        className={item.className}
+                        iconLeft={item.iconLeft}
+                        iconRight={item.iconRight}
+                        disabled
+                    />
+                </td>
+                <td className="example-buttons-button-class">
+                    <code>{item.className}</code>
+                    {item.iconLeft && (
+                        <div>
+                            <code>{item.iconLeft}</code>
+                        </div>
+                    )}
+                    {item.iconRight && (
+                        <div>
+                            <code>{item.iconRight}</code>
+                        </div>
+                    )}
+                </td>
+            </tr>
+        );
+    });
+};
+
+const getGroupButtons = () => (
+    <tr key={uniqueId("button-")}>
+        <td>
+            <div className="gd-button-group">
+                <Button className="gd-button-secondary" value="1" />
+                <Button className="gd-button-secondary" value="2" />
+                <Button className="gd-button-secondary" value="3" />
+            </div>
+        </td>
+        <td className="example-buttons-button-class">
+            <code>gd-button-group</code>
+        </td>
+    </tr>
+);
+
+const getIcons = () => {
+    return icons.map((item) => {
+        return <Button key={uniqueId("button-")} value={item} className={`gd-button-link icon-${item}`} />;
+    });
+};
+
+const ButtonTest: React.FC = () => (
+    <div className="library-component screenshot-target">
+        <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
+        <h4>Links</h4>
+        Use <code>a</code> as a tagName.
+        <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
+        <h4>Buttons</h4>
+        <table className="example-table">
+            <tbody>
+                <tr key="header">
+                    <th>Example</th>
+                    <th>ClassNames</th>
                 </tr>
-            );
-        });
-    };
+                {getButtons()}
+                {getGroupButtons()}
+            </tbody>
+        </table>
+        <h4>Icons</h4>
+        <div className="icons-list">{getIcons()}</div>
+    </div>
+);
 
-    const getGroupButtons = () => (
-        <tr key={uniqueId("button-")}>
-            <td>
-                <div className="gd-button-group">
-                    <Button className="gd-button-secondary" value="1" />
-                    <Button className="gd-button-secondary" value="2" />
-                    <Button className="gd-button-secondary" value="3" />
-                </div>
-            </td>
-            <td className="example-buttons-button-class">
-                <code>gd-button-group</code>
-            </td>
-        </tr>
-    );
-
-    const getIcons = () => {
-        return icons.map((item) => {
-            return (
-                <Button key={uniqueId("button-")} value={item} className={`gd-button-link icon-${item}`} />
-            );
-        });
-    };
-
-    return withScreenshot(
-        <div className="library-component screenshot-target">
-            <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
-            <h4>Links</h4>
-            Use <code>a</code> as a tagName.
-            <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
-            <h4>Buttons</h4>
-            <table className="example-table">
-                <tbody>
-                    <tr key="header">
-                        <th>Example</th>
-                        <th>ClassNames</th>
-                    </tr>
-                    {getButtons()}
-                    {getGroupButtons()}
-                </tbody>
-            </table>
-            <h4>Icons</h4>
-            <div className="icons-list">{getIcons()}</div>
-        </div>,
-    );
-});
+storiesOf(`${UiKit}/Button`, module).add("full-featured button", () => withScreenshot(<ButtonTest />));
+storiesOf(`${UiKit}/Button`, module).add("themed", () => withScreenshot(wrapWithTheme(<ButtonTest />)));

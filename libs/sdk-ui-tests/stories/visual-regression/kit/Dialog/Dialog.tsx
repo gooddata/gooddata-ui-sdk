@@ -4,6 +4,7 @@ import { Button, Dialog, ConfirmDialog, ExportDialog } from "@gooddata/sdk-ui-ki
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
@@ -189,23 +190,37 @@ class DialogExamples extends PureComponent {
     }
 }
 
-storiesOf(`${UiKit}/Dialog`, module).add("full-featured", () => {
-    return withMultipleScreenshots(<DialogExamples />, {
-        dialog: {
-            clickSelector: "#dialog-example button",
-            postInteractionWait: 200,
-        },
-        "confirm-dialog": {
-            clickSelector: "#confirm-dialog-example button",
-            postInteractionWait: 200,
-        },
-        "confirm-dialog-with-warning": {
-            clickSelector: "#confirm-dialog-with-warning-example button",
-            postInteractionWait: 200,
-        },
-        "export-dialog": {
-            clickSelector: "#export-dialog-example button",
-            postInteractionWait: 200,
-        },
-    });
-});
+const confirmDialogWithWarningProps = {
+    clickSelector: "#confirm-dialog-with-warning-example button",
+    postInteractionWait: 200,
+};
+
+const exportDialogProps = {
+    clickSelector: "#export-dialog-example button",
+    postInteractionWait: 200,
+};
+
+const screenshotProps = {
+    dialog: {
+        clickSelector: "#dialog-example button",
+        postInteractionWait: 200,
+    },
+    "confirm-dialog": {
+        clickSelector: "#confirm-dialog-example button",
+        postInteractionWait: 200,
+    },
+    "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+    "export-dialog": exportDialogProps,
+};
+
+const screenshotPropsThemed = {
+    "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+    "export-dialog": exportDialogProps,
+};
+
+storiesOf(`${UiKit}/Dialog`, module).add("full-featured", () =>
+    withMultipleScreenshots(<DialogExamples />, screenshotProps),
+);
+storiesOf(`${UiKit}/Dialog`, module).add("themed", () =>
+    withMultipleScreenshots(wrapWithTheme(<DialogExamples />), screenshotPropsThemed),
+);

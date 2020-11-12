@@ -4,6 +4,7 @@ import reject from "lodash/reject";
 import keys from "lodash/keys";
 import uniqueId from "lodash/uniqueId";
 import { Button, Messages, Message, IMessage, MessageType } from "@gooddata/sdk-ui-kit";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
@@ -127,3 +128,4 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
 }
 
 storiesOf(`${UiKit}/Messages`, module).add("full-featured", () => <MessagesExamples />);
+storiesOf(`${UiKit}/Messages`, module).add("themed", () => wrapWithTheme(<MessagesExamples />));

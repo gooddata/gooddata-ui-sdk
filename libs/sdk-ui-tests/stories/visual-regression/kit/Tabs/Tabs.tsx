@@ -5,6 +5,7 @@ import { IntlProvider } from "react-intl";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 
@@ -27,6 +28,5 @@ const TabsTest: React.FC = () => {
     );
 };
 
-storiesOf(`${UiKit}/Tabs`, module).add("full-featured", () => {
-    return withScreenshot(<TabsTest />);
-});
+storiesOf(`${UiKit}/Tabs`, module).add("full-featured", () => withScreenshot(<TabsTest />));
+storiesOf(`${UiKit}/Tabs`, module).add("themed", () => withScreenshot(wrapWithTheme(<TabsTest />)));

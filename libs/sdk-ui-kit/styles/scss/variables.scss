@@ -58,6 +58,7 @@ $gd-color-positive-dimmed: mix($gd-color-positive, $gd-color-text-light, 10%);
 
 // warning colors
 $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
+$gd-palette-warning-base-text: var(--gd-palette-warning-base, $gd-color-warning-text);
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
     mix($gd-color-warning, $gd-color-text-light, 20%)
