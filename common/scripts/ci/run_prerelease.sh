@@ -33,7 +33,7 @@ fi
 
 
 ${_RUSH} install
-${_RUSH} build-all
+${_RUSH} build
 
 ${_RUSH} version --bump --override-bump prerelease
 bump_rc=$?

@@ -13,7 +13,7 @@ _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
 $_RUSH install
-$_RUSH build-all
+$_RUSH build
 $_RUSHX libs/sdk-ui-tests build-storybook
 $_RUSHX libs/sdk-ui-tests story-extractor
 

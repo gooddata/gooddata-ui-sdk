@@ -28,7 +28,7 @@ fi
 
 
 ${_RUSH} install
-${_RUSH} build-all
+${_RUSH} build
 
 #
 # First bump to the next minor

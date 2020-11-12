@@ -12,11 +12,6 @@ _common-build() {
 
 build() {
     _common-build
-    npm run build-esm
-}
-
-build-all() {
-    _common-build
     concurrently "npm run build-cjs" "npm run build-esm" "npm run build-umd"
 }
 
@@ -36,8 +31,6 @@ if [ "$FLAG" = "--dev" ]; then
     build-dev
 elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
-elif [ "$FLAG" = "--all" ]; then
-    build-all
 else
     build
 fi

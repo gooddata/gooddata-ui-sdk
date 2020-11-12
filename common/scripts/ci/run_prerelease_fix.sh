@@ -17,7 +17,7 @@ _RUSH="${DIR}/docker_rush.sh"
 source ${DIR}/utils.sh
 
 ${_RUSH} install
-${_RUSH} build-all
+${_RUSH} build
 
 export TAG_NPM="hotfix"
 ${DIR}/do_publish.sh

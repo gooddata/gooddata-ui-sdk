@@ -194,7 +194,7 @@ Docker installation has RAM limit set to at least 4 GiB (Settings > Advanced).
 
 Tests can be triggered as follows:
 
--   Make sure you have run `rush build-all -t sdk-ui-tests` because for technical reasons, this library needs CommonJS builds.
+-   Make sure you have run `rush build -t sdk-ui-tests`.
 
 -   Run BackstopJS in 'test' mode: `npm run backstop-test`
 

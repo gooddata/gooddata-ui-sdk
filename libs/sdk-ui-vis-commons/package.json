@@ -34,7 +34,6 @@
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
         "build-dev": "bash scripts/build.sh --dev",
-        "build-all": "bash scripts/build.sh --all",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "dev": "bash scripts/build.sh --dev-watch",
