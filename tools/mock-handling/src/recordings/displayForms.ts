@@ -7,7 +7,7 @@ import {
     IElementsQuery,
     IAttributeDisplayFormMetadataObject,
 } from "@gooddata/sdk-backend-spi";
-import { isEqual } from "lodash";
+import isEqual from "lodash/isEqual";
 import fs from "fs";
 import path from "path";
 import { idRef } from "@gooddata/sdk-model";

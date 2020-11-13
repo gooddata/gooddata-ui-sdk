@@ -14,7 +14,8 @@ import {
 } from "../events";
 import { DependencyGraph, SourceDescriptor } from "../../base/types";
 import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/dependencyGraph";
-import { flatten, uniq } from "lodash";
+import flatten from "lodash/flatten";
+import uniq from "lodash/uniq";
 import { appLogError, appLogWarn } from "../ui/utils";
 
 type PackageState = {

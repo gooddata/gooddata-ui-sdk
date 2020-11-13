@@ -60,7 +60,8 @@ import {
 import { ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
-import { omitBy, isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
+import omitBy from "lodash/omitBy";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
 
 const refToUri = (ref: ObjRef) => {

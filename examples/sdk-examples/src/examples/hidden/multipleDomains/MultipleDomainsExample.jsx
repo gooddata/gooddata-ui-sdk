@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import { keyBy, mapValues } from "lodash";
+import keyBy from "lodash/keyBy";
+import mapValues from "lodash/mapValues";
 import { Kpi } from "@gooddata/sdk-ui";
 import { factory } from "@gooddata/api-client-bear";
 import { Ldm } from "../../../ldm";

@@ -6,7 +6,6 @@ import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 import take from "lodash/take";
 import has from "lodash/has";
-import { Dictionary } from "lodash";
 import { guidFor } from "@gooddata/goodstrap/lib/core/Guid";
 
 import { Message } from "../Messages";
@@ -267,7 +266,7 @@ export class InvertableList<T> extends Component<IInvertableListProps<T>, IInver
         this.props.onSelect(selection, isInverted);
     };
 
-    private isItemChecked = (selectionMap: Dictionary<any>, item: T) => {
+    private isItemChecked = (selectionMap: Record<string, any>, item: T) => {
         const key = this.props.getItemKey(item);
         const itemInSelection = has(selectionMap, key);
 

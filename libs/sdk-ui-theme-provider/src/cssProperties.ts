@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { isObject } from "lodash";
+import isObject from "lodash/isObject";
 import { transparentize, darken, lighten, mix, setLightness } from "polished";
 import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 

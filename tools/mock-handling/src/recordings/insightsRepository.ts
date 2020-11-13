@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { flatMap } from "lodash";
+import flatMap from "lodash/flatMap";
 import * as path from "path";
 import { findFiles } from "../base/utils";
 import { logWarn } from "../cli/loggers";

@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { flatten } from "lodash";
+import flatten from "lodash/flatten";
 import {
     ImportDeclarationStructure,
     OptionalKind,

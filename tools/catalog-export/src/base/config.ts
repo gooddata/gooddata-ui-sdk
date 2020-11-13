@@ -1,5 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-import { get, pick, pickBy, identity } from "lodash";
+import get from "lodash/get";
+import identity from "lodash/identity";
+import pick from "lodash/pick";
+import pickBy from "lodash/pickBy";
 import * as fs from "fs";
 import * as path from "path";
 import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME } from "./constants";

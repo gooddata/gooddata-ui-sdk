@@ -25,7 +25,7 @@ import {
     naiveFilterDependencyGraph,
 } from "../../base/dependencyGraph";
 import flatten from "lodash/flatten";
-import { intersection } from "lodash";
+import intersection from "lodash/intersection";
 import { ColorCodes } from "./colors";
 
 type PackageListItem = {

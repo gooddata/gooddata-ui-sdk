@@ -5,7 +5,8 @@ import process from "process";
 import { readJsonSync } from "./utils";
 import { PackageDescriptor, RushPackageDescriptor, SourceDescriptor } from "./types";
 import { createDependencyGraph } from "./dependencyGraph";
-import { identity, keyBy } from "lodash";
+import identity from "lodash/identity";
+import keyBy from "lodash/keyBy";
 
 /*
  * Singleton sdk package descriptor. Loaded the first time it is needed by `getSdkPackages`.
