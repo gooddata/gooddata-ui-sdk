@@ -76,12 +76,13 @@ const DefaultRules = [
     {
         name: "no-duplicate-dep-types",
         comment:
-            "Likley this module depends on an external ('npm') package that occurs more than once " +
+            "Likely this module depends on an external ('npm') package that occurs more than once " +
             "in your package.json i.e. bot as a devDependencies and in dependencies. This will cause " +
             "maintenance problems later on.",
         severity: "warn",
         from: {},
         to: {
+            pathNot: ["react"], // react is often both peer and dev dependency (for tests) and that is ok
             moreThanOneDependencyType: true,
         },
     },
@@ -127,6 +128,7 @@ const DefaultRules = [
             pathNot: "\\.spec\\.(js|ts|ls|coffee|litcoffee|coffee\\.md)$",
         },
         to: {
+            pathNot: ["react"], // react is often both peer and dev dependency (for tests) and this triggers false positives
             dependencyTypes: ["npm-dev"],
         },
     },
@@ -153,8 +155,19 @@ const DefaultRules = [
         severity: "warn",
         from: {},
         to: {
+            pathNot: ["react"], // react is often peer dependency and we are aware of that
             dependencyTypes: ["npm-peer"],
         },
+    },
+    {
+        name: "not-to-whole-lodash",
+        comment:
+            "This module depends on the whole lodash. Please use individual imports - eg." +
+            ' `import isEqual from "lodash/isEqual";` instead of `import { isEqual } from "lodash";`' +
+            "This helps to keep the resulting bundles smaller for the users",
+        severity: "error",
+        from: {},
+        to: { path: "lodash/lodash.js", dependencyTypes: ["npm"] },
     },
 ];
 
@@ -171,7 +184,7 @@ const DefaultOptions = {
     },
 
     exclude: {
-        path: "((.*(node_modules|__mocks__|test|tests).*)|../(api-|sdk-|util/).*)",
+        path: "((.*(__mocks__|test|tests).*)|../(api-|sdk-|util/).*)",
         //, dynamic: true
     },
 
@@ -259,6 +272,7 @@ function isolatedSubmodule(module, dir) {
         },
         to: {
             pathNot: `^(${dir})`,
+            dependencyTypes: ["local"],
         },
     };
 }
@@ -297,6 +311,7 @@ function moduleWithDependencies(module, dir, deps) {
         },
         to: {
             pathNot: `^(${allowedDeps.join("|")})`,
+            dependencyTypes: ["local"],
         },
     };
 }
