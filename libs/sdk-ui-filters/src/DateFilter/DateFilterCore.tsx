@@ -9,6 +9,8 @@ import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";
+import { formatAbsoluteDate } from "./utils/Translations/DateFilterTitle";
+import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;
@@ -54,6 +56,21 @@ const DropdownBody: React.FC<{
     });
 };
 
+export const verifyDateFormat = (dateFormat: string): string => {
+    try {
+        // Try to format the current date to verify if dateFormat is a valid format.
+        formatAbsoluteDate(new Date(), dateFormat);
+        return dateFormat;
+    } catch {
+        // If an error occurs, then dateFormat is invalid and the default format should be used instead. Also, a warning is written in the console.
+        // eslint-disable-next-line no-console
+        console.warn(
+            `Unsupported date format ${dateFormat}, the default format ${DEFAULT_DATE_FORMAT} is used instead.`,
+        );
+        return DEFAULT_DATE_FORMAT;
+    }
+};
+
 export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     originalSelectedFilterOption,
     originalExcludeCurrentPeriod,
@@ -64,6 +81,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
     locale,
     ...dropdownBodyProps
 }) => {
+    const verifiedDateFormat = verifyDateFormat(dateFormat);
     return (
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
@@ -75,7 +93,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                 originalSelectedFilterOption,
                                 originalExcludeCurrentPeriod,
                             )}
-                            dateFormat={dateFormat}
+                            dateFormat={verifiedDateFormat}
                             customFilterName={customFilterName}
                         />
                     );
@@ -110,7 +128,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                                             isMobile={isMobile}
                                             closeDropdown={closeDropdown}
                                             dateFilterButton={dateFilterButton}
-                                            dateFormat={dateFormat}
+                                            dateFormat={verifiedDateFormat}
                                         />
                                     )}
                                 </DropdownBody>

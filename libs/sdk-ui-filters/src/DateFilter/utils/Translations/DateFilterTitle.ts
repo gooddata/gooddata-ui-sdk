@@ -19,7 +19,7 @@ import {
 import { IUiAbsoluteDateFilterForm, IUiRelativeDateFilterForm, DateFilterOption } from "../../interfaces";
 import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 
-const formatAbsoluteDate = (date: Date, dateFormat: string) => format(date, dateFormat);
+export const formatAbsoluteDate = (date: Date, dateFormat: string): string => format(date, dateFormat);
 
 const formatAbsoluteDateRange = (from: Date | string, to: Date | string, dateFormat: string): string => {
     const fromDate = convertPlatformDateStringToDate(from);

@@ -44,6 +44,8 @@ import {
 } from "./extendedDateFilters_helpers";
 import { IRelativeDateFilterPreset } from "@gooddata/sdk-backend-spi";
 import { IUiRelativeDateFilterForm } from "../interfaces";
+import { DEFAULT_DATE_FORMAT } from "../constants/Platform";
+import { verifyDateFormat } from "../DateFilterCore";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -467,6 +469,12 @@ describe("DateFilter", () => {
             setPropsFromOnApply(wrapper, onApply, 0);
 
             expect(getDateFilterButtonText(wrapper)).toEqual("2019/10/15–2019/10/25");
+        });
+
+        it("should use the default date format MM/dd/yyyy if the input date format is invalid", () => {
+            const dateFormat = "ffff";
+            const verifiedDateFormat = verifyDateFormat(dateFormat);
+            expect(verifiedDateFormat).toEqual(DEFAULT_DATE_FORMAT);
         });
 
         it("should render Absolute date filter with no errors when it is opened", () => {
