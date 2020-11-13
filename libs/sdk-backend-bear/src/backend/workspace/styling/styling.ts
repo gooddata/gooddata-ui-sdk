@@ -3,6 +3,7 @@ import { IWorkspaceStylingService, ITheme } from "@gooddata/sdk-backend-spi";
 import { IColorPaletteItem } from "@gooddata/sdk-model";
 import { GdcMetadataObject, GdcMetadata } from "@gooddata/api-model-bear";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import { isApiResponseError } from "../../../utils/errorHandling";
 
 const SELECTED_UI_THEME_SETTINGS_KEY = "selectedUiTheme";
 const ENABLED_THEMING_FEATURE_FLAG_SETTINGS_KEY = "enableUiTheming";
@@ -30,8 +31,20 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
             return {};
         }
 
-        const object = await this.authCall((sdk) => sdk.md.getObjectByIdentifier(this.workspace, identifier));
-        const unwrappedObject = GdcMetadataObject.unwrapMetadataObject(object);
-        return (GdcMetadata.isTheme(unwrappedObject) && unwrappedObject.content) || {};
+        return this.authCall((sdk) =>
+            sdk.md
+                .getObjectByIdentifier(this.workspace, identifier)
+                .then((object) => {
+                    const unwrappedObject = GdcMetadataObject.unwrapMetadataObject(object);
+                    return (GdcMetadata.isTheme(unwrappedObject) && unwrappedObject.content) || {};
+                })
+                .catch((err) => {
+                    if (isApiResponseError(err)) {
+                        return {};
+                    }
+
+                    throw err;
+                }),
+        );
     };
 }

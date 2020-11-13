@@ -88,6 +88,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
 
             setIsLoading(true);
             const selectedTheme = await backend.workspace(workspace).styling().getTheme();
+
             if (lastWorkspace.current === workspace) {
                 const modifiedTheme = modifier(selectedTheme);
                 setTheme(modifiedTheme);
