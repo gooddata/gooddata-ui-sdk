@@ -9,7 +9,7 @@ import {
     LabelResourceReference,
     AttributeResourceSchema,
 } from "@gooddata/api-client-tiger";
-import { keyBy } from "lodash";
+import keyBy from "lodash/keyBy";
 import { Attribute, DisplayForm } from "../../base/types";
 
 export type TagMap = { [id: string]: TagResourceSchema };

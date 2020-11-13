@@ -1,7 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
 import { ProjectMetadata, Attribute } from "../base/types";
 import { createUniqueName } from "./titles";
-import { get, set, cloneDeep, findKey, forOwn, isEmpty } from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import findKey from "lodash/findKey";
+import forOwn from "lodash/forOwn";
+import get from "lodash/get";
+import isEmpty from "lodash/isEmpty";
+import set from "lodash/set";
 /*
  * This transformation takes project metadata and creates an object that matches the required input of CatalogHelper.
  */

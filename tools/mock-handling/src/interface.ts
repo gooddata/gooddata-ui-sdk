@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { range } from "lodash";
+import range from "lodash/range";
 import { IExecutionDefinition, IBucket } from "@gooddata/sdk-model";
 
 /*

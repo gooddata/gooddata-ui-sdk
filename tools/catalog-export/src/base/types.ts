@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { isEmpty } from "lodash";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * This exception is thrown when a fatal error occurs during the export processing - be it during interfacing with

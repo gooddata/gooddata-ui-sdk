@@ -3,7 +3,11 @@
 import { readJsonSync } from "./utils";
 import path from "path";
 import { AllDepdencyTypes, DependencyGraph, DependencyType, PackageDescriptor } from "./types";
-import { difference, flatMap, fromPairs, groupBy, intersection } from "lodash";
+import difference from "lodash/difference";
+import flatMap from "lodash/flatMap";
+import fromPairs from "lodash/fromPairs";
+import groupBy from "lodash/groupBy";
+import intersection from "lodash/intersection";
 
 function addDependencies(
     graph: DependencyGraph,

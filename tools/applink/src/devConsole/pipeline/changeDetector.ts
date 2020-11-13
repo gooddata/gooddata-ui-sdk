@@ -12,7 +12,7 @@ import {
     packagesChanged,
 } from "../events";
 import { appLogImportant, appLogWarn } from "../ui/utils";
-import { intersection } from "lodash";
+import intersection from "lodash/intersection";
 
 /**
  * Change detector will wait until it has both source & target descriptors. After that it will determine
