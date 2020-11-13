@@ -1,8 +1,11 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import cx from "classnames";
+import MediaQuery from "react-responsive";
 
 import { CustomizableCheckmark } from "@gooddata/sdk-ui-kit";
+
+import { MediaQueries } from "../../constants";
 
 export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLButtonElement>> = ({
     isSelected: isActive,
@@ -24,7 +27,11 @@ export const ListItem: React.FC<{ isSelected?: boolean } & React.HTMLProps<HTMLB
             {...(restProps as any)}
         >
             {children}
-            {isActive && <CustomizableCheckmark className="gd-customizable-checkmark-mobile-date-filter" />}
+            {isActive && (
+                <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
+                    <CustomizableCheckmark className="gd-customizable-checkmark-mobile-date-filter" />
+                </MediaQuery>
+            )}
         </button>
     </>
 );
