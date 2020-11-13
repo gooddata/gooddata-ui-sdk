@@ -1,8 +1,7 @@
 #!/bin/bash
 
 #
-# This script bumps from prerelease to real minor, creates release, makes commit, tags, updates changelogs. After
-# that it creates prerelease for the next minor and creates commit.
+# This script bumps from prerelease to real minor, creates release, makes commit, tags, updates changelogs.
 #
 # See docs/releases.md for more information how rush version bump behaves
 #
@@ -52,15 +51,4 @@ publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
   echo "Publishing minor version failed. Please investigate the impact of this catastrophe and correct manually. Good luck."
-else
-  #
-  # Now that the mior is published and commit created, prepare for the next minor release.
-  # This is done by using the 'preminor' bump (see docs/releases.md for more info about the bump behavior)
-  #
-
-  ${_RUSH} version --bump --override-bump preminor --override-prerelease-id alpha
-  NEXT_MINOR=$(get_current_version)
-  # stage all modified json files
-  git ls-files | grep '\.json' | xargs git add
-  git commit -m "Prepare for next minor release ${NEXT_MINOR}"
 fi
