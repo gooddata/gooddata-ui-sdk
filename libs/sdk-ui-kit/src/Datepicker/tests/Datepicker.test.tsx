@@ -217,7 +217,7 @@ describe("DatePicker", () => {
                     });
                     const event = {
                         target: {
-                            value: "1/1/2015",
+                            value: "01/01/2015",
                         },
                     };
                     getDatePickerInputField(component).simulate("blur", event);
