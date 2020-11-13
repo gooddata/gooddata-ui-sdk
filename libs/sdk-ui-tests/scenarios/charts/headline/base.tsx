@@ -5,18 +5,19 @@ import { scenariosFor } from "../../../src";
 import { GermanNumberFormat } from "../../_infra/formatting";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
+export const HeadlineWithTwoMeasures = {
+    primaryMeasure: ReferenceLdm.Won,
+    secondaryMeasure: ReferenceLdm.Amount,
+};
+
 export default scenariosFor<IHeadlineProps>("Headline", Headline)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {
         primaryMeasure: ReferenceLdm.Won,
     })
-    .addScenario("two measures", {
-        primaryMeasure: ReferenceLdm.Won,
-        secondaryMeasure: ReferenceLdm.Amount,
-    })
+    .addScenario("two measures", HeadlineWithTwoMeasures)
     .addScenario("two measures with german separators", {
-        primaryMeasure: ReferenceLdm.Won,
-        secondaryMeasure: ReferenceLdm.Amount,
+        ...HeadlineWithTwoMeasures,
         config: {
             separators: GermanNumberFormat,
         },

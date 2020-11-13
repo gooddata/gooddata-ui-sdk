@@ -6,8 +6,9 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
+import cloneDeep from "lodash/cloneDeep";
 
-import { ThemeProvider } from "../ThemeProvider";
+import { ThemeModifier, ThemeProvider } from "../ThemeProvider";
 import { IThemeContextProviderProps, withTheme } from "../Context";
 
 const renderComponent = async (component: React.ReactElement) => {
@@ -68,6 +69,30 @@ describe("ThemeProvider", () => {
         };
         await renderComponent(
             <ThemeProvider theme={customTheme} backend={backend} workspace={workspace}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
+            :root {
+                --gd-button-borderRadius: 15px;
+            }
+        `);
+    });
+
+    it("should use theme modifier if provided after load", async () => {
+        const themeModifier: ThemeModifier = (theme: ITheme): ITheme => {
+            if (theme?.button?.dropShadow === false) {
+                const modifiedTheme = cloneDeep(theme);
+                modifiedTheme.button = {
+                    borderRadius: "15px",
+                };
+                return modifiedTheme;
+            }
+            return theme;
+        };
+        await renderComponent(
+            <ThemeProvider modifier={themeModifier} backend={backend} workspace={workspace}>
                 <div>Test</div>
             </ThemeProvider>,
         );

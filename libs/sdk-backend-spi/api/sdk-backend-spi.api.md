@@ -1285,6 +1285,7 @@ export interface ITheme {
             backgroundColor?: ThemeColor;
         };
     };
+    kpi?: IThemeKpi;
     modal?: {
         title?: {
             color?: ThemeColor;

@@ -8,6 +8,7 @@
     .headline-primary-item {
         @include gd-heading-1;
 
+        color: var(--gd-kpi-primaryMeasureColor, $gd-color-dark);
         overflow: hidden;
         height: 60px;
         line-height: 60px;
@@ -34,7 +35,7 @@
     .headline-secondary-item {
         flex-shrink: 1;
         padding-right: 0;
-        border-left: 1px dashed transparentize($gd-color-disabled, 0.5);
+        border-left: 1px dashed var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
 
         &.is-drillable {
             cursor: pointer;
@@ -61,7 +62,7 @@
     }
 
     .headline-value--empty {
-        color: $gd-color-disabled;
+        color: var(--gd-kpi-secondaryInfoColor, $gd-color-disabled);
     }
 
     .headline-item-link {
@@ -100,14 +101,14 @@
         overflow: hidden;
         margin-top: 10px;
         margin-bottom: 15px;
-        color: $gd-color-state-blank;
+        color: var(--gd-kpi-secondaryInfoColor, $gd-color-state-blank);
     }
 
     .headline-compare-section-item {
         overflow: hidden;
         margin: 0;
         padding: 0 15px;
-        color: $gd-color-state-blank;
+        color: var(--gd-kpi-secondaryInfoColor, $gd-color-state-blank);
 
         .headline-title-wrapper,
         .headline-value-wrapper {
