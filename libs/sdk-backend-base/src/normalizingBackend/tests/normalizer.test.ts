@@ -19,6 +19,7 @@ import {
     newDefForItems,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
+    newRankingFilter,
 } from "@gooddata/sdk-model";
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { Normalizer } from "../normalizer";
@@ -98,6 +99,25 @@ describe("Normalizer", () => {
                     ReferenceLdmExt.CalculatedWonLostRatio,
                 ],
                 [newMeasureValueFilter(ReferenceLdmExt.CalculatedWonLostRatio, "EQUAL_TO", 1)],
+            ),
+        ],
+        [
+            "ranking filters",
+            newDefForItems(
+                "test",
+                [
+                    modifyMeasure(ReferenceLdm.Won, (m) => m.localId("someMeasure")),
+                    modifyAttribute(ReferenceLdm.Region, (a) => a.localId("someAttr")),
+                    ReferenceLdm.Product.Name,
+                ],
+                [
+                    newRankingFilter(
+                        { localIdentifier: "someMeasure" },
+                        [{ localIdentifier: "someAttr" }],
+                        "TOP",
+                        1,
+                    ),
+                ],
             ),
         ],
     ];

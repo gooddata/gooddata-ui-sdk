@@ -370,6 +370,79 @@ Object {
 }
 `;
 
+exports[`Normalizer should normalize ranking filters 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "rankingFilter": Object {
+        "attributes": Array [
+          Object {
+            "localIdentifier": "a_label.owner.region",
+          },
+        ],
+        "measure": Object {
+          "localIdentifier": "m_acugFHNJgsBy",
+        },
+        "operator": "TOP",
+        "value": 1,
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "test",
+}
+`;
+
 exports[`Normalizer should normalize simple attributes and measures 1`] = `
 Object {
   "attributes": Array [
