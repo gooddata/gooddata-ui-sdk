@@ -4,6 +4,7 @@ import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     isIdentifierRef,
     isLocalIdRef,
+    isObjRef,
     isUriRef,
     ObjectType,
     ObjRef,
@@ -107,6 +108,19 @@ export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope): LocalI
     } else {
         throw new UnexpectedError(
             `The measure property of measure value filter must be either object reference or local identifier`,
+        );
+    }
+}
+
+/**
+ * @internal
+ */
+export function toRankingFilterDimensionalityIdentifier(ref: ObjRefInScope): ObjectIdentifier {
+    if (isObjRef(ref)) {
+        return toObjQualifier(ref);
+    } else {
+        throw new NotSupported(
+            "Tiger backend only allows specifying ranking attributes by object identifiers",
         );
     }
 }

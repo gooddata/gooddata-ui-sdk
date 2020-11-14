@@ -11,14 +11,32 @@ import { ITotal } from '@gooddata/sdk-model';
 
 // @public
 export interface AbsoluteDateFilter {
-    absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
+    absoluteDateFilter: AbsoluteDateFilterBody;
 }
 
 // @public
-export interface AbsoluteDateFilterAbsoluteDateFilter {
+export interface AbsoluteDateFilterBody {
+    applyOnResult?: boolean;
     dataset: ObjectIdentifier;
     from: string;
     to: string;
+}
+
+// @public
+export interface AbsoluteDateFilterBodyAllOf {
+    from: string;
+    to: string;
+}
+
+// @public
+export interface AbstractMeasureValueFilter {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ObjectIdentifier>;
+}
+
+// @public
+export interface AbstractMeasureValueFilterAllOf {
+    dimensionality?: Array<ObjectIdentifier>;
 }
 
 // @public
@@ -513,20 +531,85 @@ export interface AttributeResultHeader {
 }
 
 // @public
-export interface ComparisonMeasureValueFilter {
-    comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
+export interface CommonAttributeFilter {
+    applyOnResult?: boolean;
+    displayForm: ObjectIdentifier;
 }
 
 // @public
-export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+export interface CommonAttributeFilterAllOf {
+    displayForm: ObjectIdentifier;
+}
+
+// @public
+export interface CommonDateFilter {
+    applyOnResult?: boolean;
+    dataset: ObjectIdentifier;
+}
+
+// @public
+export interface CommonDateFilterAllOf {
+    dataset: ObjectIdentifier;
+}
+
+// @public
+export interface CommonFilter {
+    applyOnResult?: boolean;
+}
+
+// @public
+export interface CommonMeasureValueFilter {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ObjectIdentifier>;
     measure: Identifier;
-    operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    treatNullValuesAs?: number;
+}
+
+// @public
+export interface CommonMeasureValueFilterAllOf {
+    measure: Identifier;
+    treatNullValuesAs?: number;
+}
+
+// @public
+export interface ComparisonMeasureValueFilter {
+    comparisonMeasureValueFilter: ComparisonMeasureValueFilterBody;
+}
+
+// @public
+export interface ComparisonMeasureValueFilterBody {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ObjectIdentifier>;
+    measure: Identifier;
+    operator: ComparisonMeasureValueFilterBodyOperatorEnum;
     treatNullValuesAs?: number;
     value: number;
 }
 
 // @public
-export enum ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum {
+export interface ComparisonMeasureValueFilterBodyAllOf {
+    operator: ComparisonMeasureValueFilterBodyAllOfOperatorEnum;
+    value: number;
+}
+
+// @public
+export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
+    // (undocumented)
+    EQUALTO = "EQUAL_TO",
+    // (undocumented)
+    GREATERTHAN = "GREATER_THAN",
+    // (undocumented)
+    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    // (undocumented)
+    LESSTHAN = "LESS_THAN",
+    // (undocumented)
+    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    // (undocumented)
+    NOTEQUALTO = "NOT_EQUAL_TO"
+}
+
+// @public
+export enum ComparisonMeasureValueFilterBodyOperatorEnum {
     // (undocumented)
     EQUALTO = "EQUAL_TO",
     // (undocumented)
@@ -9069,7 +9152,7 @@ export interface Failure {
 }
 
 // @public
-export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter;
+export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter | RankingFilter;
 
 // @public
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
@@ -9135,11 +9218,17 @@ export interface Info {
 
 // @public
 export interface InlineFilterDefinition {
-    inline: InlineFilterDefinitionInline;
+    inline: InlineFilterDefinitionBody;
 }
 
 // @public
-export interface InlineFilterDefinitionInline {
+export interface InlineFilterDefinitionBody {
+    applyOnResult?: boolean;
+    filter: string;
+}
+
+// @public
+export interface InlineFilterDefinitionBodyAllOf {
     filter: string;
 }
 
@@ -9613,12 +9702,18 @@ export interface MetricResourcesResponseSchemaAllOf {
 
 // @public
 export interface NegativeAttributeFilter {
-    negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
+    negativeAttributeFilter: NegativeAttributeFilterBody;
 }
 
 // @public
-export interface NegativeAttributeFilterNegativeAttributeFilter {
+export interface NegativeAttributeFilterBody {
+    applyOnResult?: boolean;
     displayForm: ObjectIdentifier;
+    notIn: AttributeFilterElements;
+}
+
+// @public
+export interface NegativeAttributeFilterBodyAllOf {
     notIn: AttributeFilterElements;
 }
 
@@ -9690,31 +9785,46 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
 
 // @public
 export interface PositiveAttributeFilter {
-    positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
+    positiveAttributeFilter: PositiveAttributeFilterBody;
 }
 
 // @public
-export interface PositiveAttributeFilterPositiveAttributeFilter {
+export interface PositiveAttributeFilterBody {
+    applyOnResult?: boolean;
     displayForm: ObjectIdentifier;
     in: AttributeFilterElements;
 }
 
 // @public
-export interface RangeMeasureValueFilter {
-    rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
+export interface PositiveAttributeFilterBodyAllOf {
+    in: AttributeFilterElements;
 }
 
 // @public
-export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+export interface RangeMeasureValueFilter {
+    rangeMeasureValueFilter: RangeMeasureValueFilterBody;
+}
+
+// @public
+export interface RangeMeasureValueFilterBody {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ObjectIdentifier>;
     from: number;
     measure: Identifier;
-    operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    operator: RangeMeasureValueFilterBodyOperatorEnum;
     to: number;
     treatNullValuesAs?: number;
 }
 
 // @public
-export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
+export interface RangeMeasureValueFilterBodyAllOf {
+    from: number;
+    operator: RangeMeasureValueFilterBodyAllOfOperatorEnum;
+    to: number;
+}
+
+// @public
+export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
     // (undocumented)
     BETWEEN = "BETWEEN",
     // (undocumented)
@@ -9722,13 +9832,66 @@ export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
 }
 
 // @public
-export interface RelativeDateFilter {
-    relativeDateFilter: RelativeDateFilterRelativeDateFilter;
+export enum RangeMeasureValueFilterBodyOperatorEnum {
+    // (undocumented)
+    BETWEEN = "BETWEEN",
+    // (undocumented)
+    NOTBETWEEN = "NOT_BETWEEN"
 }
 
 // @public
-export interface RelativeDateFilterRelativeDateFilter {
+export interface RankingFilter {
+    rankingFilter: RankingFilterBody;
+}
+
+// @public
+export interface RankingFilterBody {
+    applyOnResult?: boolean;
+    dimensionality?: Array<ObjectIdentifier>;
+    measures: Array<Identifier>;
+    operator: RankingFilterBodyOperatorEnum;
+    value: number;
+}
+
+// @public
+export interface RankingFilterBodyAllOf {
+    measures: Array<Identifier>;
+    operator: RankingFilterBodyAllOfOperatorEnum;
+    value: number;
+}
+
+// @public
+export enum RankingFilterBodyAllOfOperatorEnum {
+    // (undocumented)
+    BOTTOM = "BOTTOM",
+    // (undocumented)
+    TOP = "TOP"
+}
+
+// @public
+export enum RankingFilterBodyOperatorEnum {
+    // (undocumented)
+    BOTTOM = "BOTTOM",
+    // (undocumented)
+    TOP = "TOP"
+}
+
+// @public
+export interface RelativeDateFilter {
+    relativeDateFilter: RelativeDateFilterBody;
+}
+
+// @public
+export interface RelativeDateFilterBody {
+    applyOnResult?: boolean;
     dataset: ObjectIdentifier;
+    from: number;
+    granularity: string;
+    to: number;
+}
+
+// @public
+export interface RelativeDateFilterBodyAllOf {
     from: number;
     granularity: string;
     to: number;

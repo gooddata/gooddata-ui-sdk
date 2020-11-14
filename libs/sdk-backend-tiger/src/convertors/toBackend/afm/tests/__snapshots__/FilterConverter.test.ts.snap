@@ -296,6 +296,42 @@ Object {
 }
 `;
 
+exports[`tiger filter converter from model to AFM convert visualization object filter should return ranking filter 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    ],
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert visualization object filter should return ranking filter with attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "dimensionality": Array [
+      Object {
+        "identifier": Object {
+          "id": "label.stage.isactive",
+          "type": "label",
+        },
+      },
+    ],
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    ],
+    "operator": "TOP",
+    "value": 3,
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM convert visualization object filter should return relative date filter 1`] = `
 Object {
   "relativeDateFilter": Object {
