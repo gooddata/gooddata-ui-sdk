@@ -58,8 +58,8 @@ const downloadAndGenerate = async (specMeta, outputDir, outputFile) => {
 const main = async () => {
     const {
         baseUrl = process.env.BASE_URL,
-        username = process.env.USERNAME,
-        password = process.env.PASSWORD,
+        username = process.env.GD_USER,
+        password = process.env.GD_PASSWORD,
         outputDir = process.env.OUTPUT_DIR || DEFAULT_OUTPUT_DIR,
         outputFile = process.env.OUTPUT_FILE || DEFAULT_OUTPUT_FILE,
     } = program;
