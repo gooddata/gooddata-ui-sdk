@@ -4,7 +4,6 @@ import {
     AttributeFilter,
     ComparisonMeasureValueFilterBodyOperatorEnum,
     FilterDefinition,
-    FilterDefinitionForSimpleMeasure,
     MeasureValueFilter,
     NegativeAttributeFilter,
     PositiveAttributeFilter,
@@ -19,7 +18,6 @@ import {
     IAbsoluteDateFilter,
     IAttributeFilter,
     IFilter,
-    IMeasureFilter,
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
@@ -175,9 +173,7 @@ export function convertRankingFilter(filter: IRankingFilter): RankingFilter {
     };
 }
 
-export function convertVisualizationObjectFilter(
-    filter: IMeasureFilter | IFilter,
-): FilterDefinition | FilterDefinitionForSimpleMeasure | null {
+export function convertVisualizationObjectFilter(filter: IFilter): FilterDefinition | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {
