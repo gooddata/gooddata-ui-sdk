@@ -23,10 +23,29 @@ import {
     isComparisonConditionOperator,
     isRangeConditionOperator,
     isRankingFilter,
+    isFilter,
 } from "../index";
 import { DateGranularity } from "../../../base/dateGranularities";
 
 describe("filter type guards", () => {
+    describe("isFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "positive filter", newPositiveAttributeFilter(Account.Name, ["value"])],
+            [true, "negative filter", newNegativeAttributeFilter(Activity.Subject, ["otherValue"])],
+            [true, "relative date filter", newRelativeDateFilter("dd1", DateGranularity.month, 0, -1)],
+            [true, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+            [true, "measure value filter", newMeasureValueFilter(Won, "BETWEEN", 0, 100)],
+            [true, "ranking filter", newRankingFilter(Won, "TOP", 10)],
+            [false, "attribute", Account.Name],
+            [false, "measure", Won],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isFilter(input)).toBe(expectedResult);
+        });
+    });
+
     describe("isPositiveAttributeFilter", () => {
         const Scenarios: Array<[boolean, string, any]> = [
             ...InvalidInputTestCases,

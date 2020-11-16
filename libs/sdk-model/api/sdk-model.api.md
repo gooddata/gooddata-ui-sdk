@@ -818,6 +818,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 export function isDimension(obj: unknown): obj is IDimension;
 
 // @public
+export function isFilter(obj: unknown): obj is IFilter;
+
+// @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
 
 // @public

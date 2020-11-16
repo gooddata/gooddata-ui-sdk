@@ -16,12 +16,9 @@ import {
     insightMeasures,
     insightAttributes,
     isAttribute,
+    isFilter,
     isMeasure,
     insightFilters,
-    IFilter,
-    isDateFilter,
-    isAttributeFilter,
-    isMeasureValueFilter,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
@@ -146,16 +143,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             afm: {
                 attributes: relevantItems.filter(isAttribute).map(convertAttribute),
                 measures: relevantItems.filter(isMeasure).map(convertMeasure),
-                filters: compact(
-                    relevantItems
-                        .filter(
-                            (filter): filter is IFilter =>
-                                isDateFilter(filter) ||
-                                isAttributeFilter(filter) ||
-                                isMeasureValueFilter(filter),
-                        )
-                        .map(convertVisualizationObjectFilter),
-                ),
+                filters: compact(relevantItems.filter(isFilter).map(convertVisualizationObjectFilter)),
             },
         };
 

@@ -354,6 +354,15 @@ export function isRankingFilter(obj: unknown): obj is IRankingFilter {
 }
 
 /**
+ * Type guard checking whether the provided object is a filter.
+ *
+ * @public
+ */
+export function isFilter(obj: unknown): obj is IFilter {
+    return isDateFilter(obj) || isAttributeFilter(obj) || isMeasureValueFilter(obj) || isRankingFilter(obj);
+}
+
+/**
  * Type guard checking whether the provided object is a measure value filter's comparison condition.
  *
  * @public

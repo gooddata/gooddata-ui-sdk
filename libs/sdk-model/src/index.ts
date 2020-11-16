@@ -117,6 +117,7 @@ export {
     isAttributeElementsByValue,
     isComparisonCondition,
     isComparisonConditionOperator,
+    isFilter,
     isRangeCondition,
     isRangeConditionOperator,
     filterIsEmpty,
