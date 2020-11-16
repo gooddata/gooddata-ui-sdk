@@ -4,6 +4,7 @@ export * from "./typings/utilities";
 export * from "./typings/positioning";
 export * from "./typings/domUtilities";
 export * from "./typings/overlay";
+export * from "./utils/constants";
 export * from "./measureNumberFormat";
 export * from "./syntaxHighlightingInput";
 export * from "./Button";
