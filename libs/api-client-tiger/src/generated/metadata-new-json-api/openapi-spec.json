@@ -1,0 +1,2903 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "OpenAPI definition",
+        "version": "v0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "GoodData Anywhere endpoint"
+        }
+    ],
+    "paths": {
+        "/api/layout/organization": {
+            "get": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Get organization layout",
+                "description": "Retrieve complete layout of organization, workspaces, user-groups, etc.",
+                "operationId": "getOrganizationLayout",
+                "responses": {
+                    "501": {
+                        "description": "Resource was not implemented yet."
+                    }
+                }
+            },
+            "put": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Set organization layout",
+                "description": "Sets complete layout of organization, like workspaces, user-groups, etc.",
+                "operationId": "setOrganizationLayout",
+                "responses": {
+                    "501": {
+                        "description": "Resource was not implemented yet."
+                    }
+                }
+            }
+        },
+        "/api/layout/workspaces/{workspaceId}": {
+            "get": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Get workspace layout",
+                "description": "Retrieve current model of the workspace in declarative form.",
+                "operationId": "getWorkspaceLayout",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieved the workspace model.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeclarativeWorkspace"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Set workspace layout",
+                "description": "Set complete layout of workspace, like model, ACLs, etc.",
+                "operationId": "putWorkspaceLayout",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeclarativeWorkspace"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "The model of the workspace was set."
+                    }
+                }
+            }
+        },
+        "/api/layout/workspaces/{workspaceId}/logical-model": {
+            "get": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Get logical model",
+                "description": "Retrieve current logical model of the workspace in declarative form.",
+                "operationId": "getLogicalModel",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieved current logical model.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeclarativeModel"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Set logical model",
+                "description": "Set effective logical model of the workspace.",
+                "operationId": "setLogicalModel",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeclarativeModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Logical model successfully set."
+                    }
+                }
+            }
+        },
+        "/api/layout/workspaces/{workspaceId}/analytics-model": {
+            "get": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Get analytics model",
+                "description": "Retrieve current analytics model of the workspace.",
+                "operationId": "getAnalyticsModel",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retrieved current analytics model.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeclarativeAnalytics"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["declarative-layout-controller"],
+                "summary": "Set analytics model",
+                "description": "Set effective analytics model of the workspace.",
+                "operationId": "setAnalyticsModel",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeclarativeAnalytics"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Analytics model successfully set."
+                    }
+                }
+            }
+        },
+        "/api/data-sources/{dataSourceId}/upload-notification": {
+            "post": {
+                "tags": ["notification-controller"],
+                "summary": "Register an upload notification",
+                "description": "Notification sets up all reports to be computed again with new data.",
+                "operationId": "registerUploadNotification",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "An upload notification has been successfully registered."
+                    },
+                    "404": {
+                        "description": "Data source with given name does not exist."
+                    }
+                }
+            }
+        },
+        "/api/options": {
+            "get": {
+                "tags": ["options-controller"],
+                "summary": "Links for all configuration options",
+                "description": "Retrieves links for all options for different configurations.",
+                "operationId": "getAllOptions",
+                "responses": {
+                    "200": {
+                        "description": "Links for all configuration options.",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "All options": {
+                                        "description": "All options",
+                                        "value": {
+                                            "options": {
+                                                "description": "Options resources",
+                                                "links": {
+                                                    "available-drivers": "/api/options/available-drivers"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/options/available-drivers": {
+            "get": {
+                "tags": ["options-controller"],
+                "summary": "Get all available data source drivers",
+                "description": "Retrieves a list of all supported data sources along with information about the used drivers.",
+                "operationId": "getDataSourceDrivers",
+                "responses": {
+                    "200": {
+                        "description": "A list of all available data source drivers.",
+                        "content": {
+                            "application/json": {
+                                "examples": {
+                                    "All available drivers": {
+                                        "description": "All available drivers",
+                                        "value": {
+                                            "POSTGRESQL": "org.postgresql.Driver",
+                                            "REDSHIFT": "com.amazon.redshift.jdbc42.Driver"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/organization": {
+            "get": {
+                "tags": ["organization-controller"],
+                "summary": "Get organization info",
+                "description": "Gets a basic information about organization.",
+                "operationId": "getOrganization",
+                "responses": {
+                    "200": {
+                        "description": "Current information about organization.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Organization"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["organization-controller"],
+                "summary": "Update organization info",
+                "description": "Sets a basic information about organization.",
+                "operationId": "updateOrganization",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Organization"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "A new info was successfully set.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict on organization id.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["organization-controller"],
+                "summary": "Drop organization",
+                "description": "Completely remove and discontinue the organization.",
+                "operationId": "dropOrganization",
+                "responses": {
+                    "204": {
+                        "description": "Organization was successfully discarded.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/workspaces/{workspaceId}/model/{entity}/{id}": {
+            "get": {
+                "tags": ["workspace-model-controller"],
+                "operationId": "getEntity",
+                "parameters": [
+                    {
+                        "name": "entity",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "analyticalDashboards",
+                                "metrics",
+                                "visualizationObjects",
+                                "attributes",
+                                "datasets",
+                                "facts",
+                                "labels",
+                                "tables",
+                                "sources"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MetadataModelObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["workspace-model-controller"],
+                "operationId": "updateEntity",
+                "parameters": [
+                    {
+                        "name": "entity",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnalyticsObject"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnalyticsObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["workspace-model-controller"],
+                "operationId": "deleteEntity",
+                "parameters": [
+                    {
+                        "name": "entity",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/workspaces/{workspaceId}/model/{entity}": {
+            "get": {
+                "tags": ["workspace-model-controller"],
+                "operationId": "getEntities",
+                "parameters": [
+                    {
+                        "name": "entity",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "analyticalDashboards",
+                                "metrics",
+                                "visualizationObjects",
+                                "attributes",
+                                "datasets",
+                                "facts",
+                                "labels",
+                                "tables",
+                                "sources"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MetadataModelObjects"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["workspace-model-controller"],
+                "operationId": "createEntity",
+                "parameters": [
+                    {
+                        "name": "entity",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                        }
+                    },
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnalyticsObject"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnalyticsObject"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/workspaces/{workspaceId}/model": {
+            "get": {
+                "tags": ["workspace-root-model-controller"],
+                "operationId": "getRootLinks",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "organizationId",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "default"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RootLinks"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "DeclarativeAnalyticalDashboard": {
+                "required": ["content", "description", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Analytical dashboard ID.",
+                        "example": "revenues-analysis"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Analytical dashboard title.",
+                        "example": "Revenues analysis"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Analytical dashboard description.",
+                        "example": "Period to period comparison of revenues in main sectors."
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                }
+            },
+            "DeclarativeAnalyticsLayer": {
+                "required": ["analyticalDashboards", "metrics", "visualizationObjects"],
+                "type": "object",
+                "properties": {
+                    "analyticalDashboards": {
+                        "type": "array",
+                        "description": "A list of analytical dashboards available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeAnalyticalDashboard"
+                        }
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "A list of metrics available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeMetric"
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "array",
+                        "description": "A list of visualization objects available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeVisualizationObject"
+                        }
+                    }
+                }
+            },
+            "DeclarativeAttribute": {
+                "required": ["description", "id", "labels", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Attribute ID.",
+                        "example": "attr.customers.customer_name"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Attribute title.",
+                        "example": "Customer name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Attribute description.",
+                        "example": "Customer name including first and last name."
+                    },
+                    "labels": {
+                        "type": "array",
+                        "description": "An array of attribute labels.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeLabel"
+                        }
+                    }
+                },
+                "description": "A dataset attribute."
+            },
+            "DeclarativeColumn": {
+                "required": ["dataType", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Column name",
+                        "example": "customer_id"
+                    },
+                    "dataType": {
+                        "type": "string",
+                        "description": "Column type",
+                        "example": "INT",
+                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "BOOLEAN"]
+                    }
+                },
+                "description": "A table column."
+            },
+            "DeclarativeDataSource": {
+                "required": ["name", "tables"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Data source name.",
+                        "example": "sampleDataSource"
+                    },
+                    "tables": {
+                        "type": "array",
+                        "description": "An array of physical database tables.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeTable"
+                        }
+                    }
+                },
+                "description": "A data source."
+            },
+            "DeclarativeDataset": {
+                "required": [
+                    "attributes",
+                    "description",
+                    "facts",
+                    "grain",
+                    "id",
+                    "references",
+                    "sourceTable",
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "The Dataset ID. This ID is further used to refer to this instance of dataset.",
+                        "example": "customers"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "A dataset title.",
+                        "example": "Customers"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "A dataset description.",
+                        "example": "The customers of ours."
+                    },
+                    "grain": {
+                        "type": "array",
+                        "description": "An array of grain identifiers.",
+                        "items": {
+                            "$ref": "#/components/schemas/GrainIdentifier"
+                        }
+                    },
+                    "attributes": {
+                        "type": "array",
+                        "description": "An array of attributes.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeAttribute"
+                        }
+                    },
+                    "facts": {
+                        "type": "array",
+                        "description": "An array of facts.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeFact"
+                        }
+                    },
+                    "references": {
+                        "type": "array",
+                        "description": "An array of references.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeReference"
+                        }
+                    },
+                    "sourceTable": {
+                        "type": "string",
+                        "description": "A name of the source/originating table for the dataset from the physical data model.",
+                        "example": "customers"
+                    }
+                },
+                "description": "A dataset defined by its properties."
+            },
+            "DeclarativeDateDataset": {
+                "required": ["description", "granularities", "granularitiesFormatting", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Date dataset ID.",
+                        "example": "date"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Date dataset title.",
+                        "example": "Date"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Date dataset description.",
+                        "example": "A customer order date"
+                    },
+                    "granularitiesFormatting": {
+                        "$ref": "#/components/schemas/GranularitiesFormatting"
+                    },
+                    "granularities": {
+                        "type": "array",
+                        "description": "An array of date granularities. All listed granularities will be available for date dataset.",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "minute",
+                                "hour",
+                                "day",
+                                "week",
+                                "month",
+                                "quarter",
+                                "year",
+                                "minuteOfHour",
+                                "hourOfDay",
+                                "dayOfWeek",
+                                "dayOfMonth",
+                                "dayOfYear",
+                                "weekOfYear",
+                                "monthOfYear",
+                                "quarterOfYear"
+                            ]
+                        }
+                    }
+                },
+                "description": "A date dataset."
+            },
+            "DeclarativeFact": {
+                "required": ["description", "id", "sourceColumn", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Fact ID.",
+                        "example": "fact.customer_order_count"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Fact title.",
+                        "example": "Customer order count"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Fact description.",
+                        "example": "A number of orders created by the customer - including all orders, even the non-delivered ones."
+                    },
+                    "sourceColumn": {
+                        "type": "string",
+                        "description": "A name of the source column in the table.",
+                        "example": "customer_order_count"
+                    }
+                },
+                "description": "A dataset fact."
+            },
+            "DeclarativeLabel": {
+                "required": ["description", "id", "primary", "sourceColumn", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Label ID.",
+                        "example": "label.customer_name"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Label title.",
+                        "example": "Customer name"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Label description.",
+                        "example": "Customer name"
+                    },
+                    "primary": {
+                        "type": "boolean",
+                        "description": "A flag indicating whether the label should be treated as a primary one.",
+                        "example": false
+                    },
+                    "sourceColumn": {
+                        "type": "string",
+                        "description": "A name of the source column in the table.",
+                        "example": "customer_name"
+                    }
+                },
+                "description": "A attribute label."
+            },
+            "DeclarativeLdm": {
+                "required": ["datasets", "dateInstances"],
+                "type": "object",
+                "properties": {
+                    "datasets": {
+                        "type": "array",
+                        "description": "An array containing datasets.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeDataset"
+                        }
+                    },
+                    "dateInstances": {
+                        "type": "array",
+                        "description": "An array containing date-related datasets.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeDateDataset"
+                        }
+                    }
+                },
+                "description": "A logical data model (LDM) representation."
+            },
+            "DeclarativeMetric": {
+                "required": ["content", "description", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Metric ID.",
+                        "example": "total-sales"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Metric title.",
+                        "example": "Total sales"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Metric description.",
+                        "example": "Sales for all the data available."
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                }
+            },
+            "DeclarativePdm": {
+                "required": ["sources"],
+                "type": "object",
+                "properties": {
+                    "sources": {
+                        "type": "array",
+                        "description": "An array of data sources.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeDataSource"
+                        }
+                    }
+                },
+                "description": "A physical data model (PDM) representation."
+            },
+            "DeclarativeReference": {
+                "required": ["identifier", "multivalue", "sourceColumns"],
+                "type": "object",
+                "properties": {
+                    "identifier": {
+                        "$ref": "#/components/schemas/ReferenceIdentifier"
+                    },
+                    "multivalue": {
+                        "type": "boolean",
+                        "description": "The multi-value flag enables many-to-many cardinality for references.",
+                        "example": false
+                    },
+                    "sourceColumns": {
+                        "type": "array",
+                        "description": "An array of source column names for a given reference.",
+                        "example": ["customer_id"],
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "description": "A dataset reference."
+            },
+            "DeclarativeTable": {
+                "required": ["columns", "name"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Table name.",
+                        "example": "customers"
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "An array of physical columns",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeColumn"
+                        }
+                    }
+                },
+                "description": "A database table."
+            },
+            "DeclarativeVisualizationObject": {
+                "required": ["content", "description", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Visualization object ID.",
+                        "example": "visualization-1"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Visualization object title.",
+                        "example": "Count of goods"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Visualization object description.",
+                        "example": "Simple number for total goods in current production."
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                }
+            },
+            "DeclarativeWorkspace": {
+                "required": ["analytics", "ldm", "pdm"],
+                "type": "object",
+                "properties": {
+                    "ldm": {
+                        "$ref": "#/components/schemas/DeclarativeLdm"
+                    },
+                    "pdm": {
+                        "$ref": "#/components/schemas/DeclarativePdm"
+                    },
+                    "analytics": {
+                        "$ref": "#/components/schemas/DeclarativeAnalyticsLayer"
+                    }
+                }
+            },
+            "GrainIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Grain ID.",
+                        "example": "attr.customers.customer_name"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A type of the grain.",
+                        "example": "ATTRIBUTE",
+                        "enum": ["attribute", "dataset"]
+                    }
+                },
+                "description": "A grain identifier."
+            },
+            "GranularitiesFormatting": {
+                "required": ["titleBase", "titlePattern"],
+                "type": "object",
+                "properties": {
+                    "titleBase": {
+                        "type": "string",
+                        "description": "Title base is used as a token in title pattern. If left empty, it is replaced by date dataset title."
+                    },
+                    "titlePattern": {
+                        "type": "string",
+                        "description": "This pattern is used to generate the title of attributes and labels that result from the granularities.\nThere are two tokens available: \n* `%titleBase` - represents shared part by all titles, or title of Date Dataset if left empty\n* `%granularityTitle` - represents `DateGranularity` built-in title",
+                        "example": "%titleBase - %granularityTitle"
+                    }
+                },
+                "description": "A date dataset granularities title formatting rules."
+            },
+            "JsonNode": {
+                "type": "object",
+                "description": "A server agnostic definition of the visualization object in JSON format.",
+                "example": {}
+            },
+            "ReferenceIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Reference ID.",
+                        "example": "customers"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "A type of the reference.",
+                        "example": "DATASET",
+                        "enum": ["dataset"]
+                    }
+                },
+                "description": "A reference identifier."
+            },
+            "DeclarativeModel": {
+                "required": ["ldm", "pdm"],
+                "type": "object",
+                "properties": {
+                    "ldm": {
+                        "$ref": "#/components/schemas/DeclarativeLdm"
+                    },
+                    "pdm": {
+                        "$ref": "#/components/schemas/DeclarativePdm"
+                    }
+                },
+                "description": "A data model structured as a set of its attributes."
+            },
+            "DeclarativeAnalytics": {
+                "required": ["analytics"],
+                "type": "object",
+                "properties": {
+                    "analytics": {
+                        "$ref": "#/components/schemas/DeclarativeAnalyticsLayer"
+                    }
+                },
+                "description": "Entities describing users' view on data."
+            },
+            "Organization": {
+                "required": ["stockId"],
+                "type": "object",
+                "properties": {
+                    "stockId": {
+                        "$ref": "#/components/schemas/StockIdOrganizationScope"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "OrganizationScope": {
+                "type": "object"
+            },
+            "StockIdOrganizationScope": {
+                "required": ["apiId"],
+                "type": "object",
+                "properties": {
+                    "apiId": {
+                        "type": "string"
+                    },
+                    "scope": {
+                        "$ref": "#/components/schemas/OrganizationScope"
+                    }
+                }
+            },
+            "Unit": {
+                "type": "object"
+            },
+            "MandatoryObjectFields": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Unique identifier of object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "BasicObjectAttributes": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "example": "Best object from all objects."
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Object title for better UI naming.",
+                        "example": "Object nr.1"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "private"
+                        }
+                    }
+                }
+            },
+            "Success": {
+                "description": "A JSON:API document with a single resource",
+                "properties": {
+                    "included": {
+                        "description": "Included resources",
+                        "items": {
+                            "properties": {
+                                "attributes": {
+                                    "additionalProperties": true,
+                                    "type": "object"
+                                },
+                                "id": {
+                                    "description": "The JSON:API resource ID",
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "description": "The JSON:API resource type",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "required": ["data"],
+                "type": "object"
+            },
+            "ListLinks": {
+                "required": ["self"],
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "description": "A string containing the link's URL.",
+                        "type": "string",
+                        "format": "uri"
+                    },
+                    "next": {
+                        "description": "A string containing the link's URL for the next page of data.",
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            },
+            "MetadataModelObjects": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AnalyticalDashboards"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Metrics"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationObjects"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Attributes"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Datasets"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Facts"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Labels"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Sources"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Tables"
+                    }
+                ]
+            },
+            "AnalyticalDashboards": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/AnalyticalDashboardsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "AnalyticalDashboardsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/AnalyticalDashboardData"
+                    }
+                ]
+            },
+            "Metrics": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/MetricsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/MetricData"
+                    }
+                ]
+            },
+            "VisualizationObjects": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/VisualizationObjectsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "VisualizationObjectsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationObjectData"
+                    }
+                ]
+            },
+            "Attributes": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributesItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "AttributesItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/AttributeData"
+                    }
+                ]
+            },
+            "Datasets": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/DatasetsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "DatasetsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/DatasetData"
+                    }
+                ]
+            },
+            "Facts": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/FactsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "FactsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/FactData"
+                    }
+                ]
+            },
+            "Labels": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/LabelsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "LabelsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/LabelData"
+                    }
+                ]
+            },
+            "Sources": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/SourcesItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "SourcesItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/SourceData"
+                    }
+                ]
+            },
+            "Tables": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/TablesItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "TablesItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/TableData"
+                    }
+                ]
+            },
+            "MetadataModelObject": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AnalyticsObject"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Attribute"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Dataset"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Fact"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Label"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Source"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Table"
+                    }
+                ]
+            },
+            "AnalyticsObject": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AnalyticalDashboard"
+                    },
+                    {
+                        "$ref": "#/components/schemas/Metric"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationObject"
+                    }
+                ]
+            },
+            "AnalyticalDashboard": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/AnalyticalDashboardData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AnalyticalDashboardRelationships": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Metric": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/MetricData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "VisualizationObject": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/VisualizationObjectData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Attribute": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/AttributeData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AttributeData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/AttributeAttributes"
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/AttributeRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AttributeAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "AttributeRelationships": {
+                "type": "object",
+                "properties": {
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "dataset": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/relationshipToOne"
+                            }
+                        }
+                    }
+                }
+            },
+            "Dataset": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/DatasetData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "DatasetData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/DatasetAttributes"
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/DatasetRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DatasetAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["NORMAL", "DATE"]
+                            },
+                            "sourceTable": {
+                                "type": "string",
+                                "example": "products"
+                            },
+                            "grain": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "example": "id1"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["ATTRIBUTE", "DATASET"]
+                                        }
+                                    }
+                                }
+                            },
+                            "referenceProperties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string",
+                                                    "example": "id1"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": ["DATASET"]
+                                                }
+                                            }
+                                        },
+                                        "multivalue": {
+                                            "type": "boolean"
+                                        },
+                                        "sourceColumns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "DatasetRelationships": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "facts": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "references": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Fact": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/FactData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FactData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/FactAttributes"
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/FactRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "FactAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "sourceColumn": {
+                                "type": "string",
+                                "example": "category"
+                            }
+                        }
+                    }
+                ]
+            },
+            "FactRelationships": {
+                "type": "object",
+                "properties": {
+                    "dataset": {
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/relationshipToOne"
+                            }
+                        }
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Label": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/LabelData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "LabelData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/LabelAttributes"
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/LabelRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "LabelAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "primary": {
+                                "type": "boolean"
+                            },
+                            "sourceColumn": {
+                                "type": "string",
+                                "example": "category"
+                            }
+                        }
+                    }
+                ]
+            },
+            "LabelRelationships": {
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "properties": {
+                            "data": {
+                                "$ref": "#/components/schemas/relationshipToOne"
+                            }
+                        }
+                    },
+                    "analyticalDashboards": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Source": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/SourceData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "SourceData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/SourceRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "SourceRelationships": {
+                "type": "object",
+                "properties": {
+                    "tables": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "Table": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/TableData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "TableData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/TableAttributes"
+                            }
+                        }
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/TableRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "TableAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "columns": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string",
+                                            "description": "Column name",
+                                            "example": "customer_id"
+                                        },
+                                        "dataType": {
+                                            "type": "string",
+                                            "description": "Column type",
+                                            "example": "INT",
+                                            "enum": [
+                                                "INT",
+                                                "STRING",
+                                                "DATE",
+                                                "NUMERIC",
+                                                "TIMESTAMP",
+                                                "BOOLEAN"
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "TableRelationships": {
+                "type": "object",
+                "properties": {
+                    "source": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "AnalyticsObjectRequest": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AnalyticalDashboardRequest"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MetricRequest"
+                    },
+                    {
+                        "$ref": "#/components/schemas/VisualizationObjectRequest"
+                    }
+                ]
+            },
+            "AnalyticalDashboardRequest": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/AnalyticalDashboardDataRequest"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AnalyticalDashboardDataRequest": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/AnalyticalDashboardAttributes"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AnalyticalDashboardData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AnalyticalDashboardDataRequest"
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/AnalyticalDashboardRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "AnalyticalDashboardAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricRequest": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/MetricDataRequest"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "MetricDataRequest": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/MetricAttributes"
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MetricDataRequest"
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/MetricRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "MetricRelationships": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "facts": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "MetricAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object",
+                                "properties": {
+                                    "format": {
+                                        "type": "string",
+                                        "example": "$#,##0"
+                                    },
+                                    "maql": {
+                                        "type": "string",
+                                        "example": "SELECT SUM({fact/fact.one})"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "VisualizationObjectRequest": {
+                "required": ["data"],
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/VisualizationObjectDataRequest"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "VisualizationObjectDataRequest": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/VisualizationObjectAttributes"
+                            }
+                        }
+                    }
+                ]
+            },
+            "VisualizationObjectData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/VisualizationObjectDataRequest"
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/VisualizationObjectRelationShips"
+                            }
+                        }
+                    }
+                ]
+            },
+            "VisualizationObjectRelationShips": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "facts": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "metrics": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "visualizationObjects": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "VisualizationObjectAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                ]
+            },
+            "includedResource": {
+                "description": "\"Resource objects\" appear in a JSON:API document to represent resources.",
+                "type": "object",
+                "required": ["type", "id"],
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/includedResourceAttributes"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "includedResourceAttributes": {
+                "description": "Members of the attributes object (\"attributes\") represent information about the resource object in which it's defined.",
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Object title for better UI naming.",
+                        "example": "Object One"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "First object from all objects."
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "example": "private"
+                        }
+                    }
+                },
+                "not": {
+                    "anyOf": [
+                        {
+                            "required": ["relationships"]
+                        },
+                        {
+                            "required": ["links"]
+                        },
+                        {
+                            "required": ["id"]
+                        }
+                    ]
+                }
+            },
+            "relationshipToOne": {
+                "description": "References to other resource objects in a to-one (\"relationship\"). Relationships can be specified by including a member in a resource's links object.",
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/empty"
+                    },
+                    {
+                        "$ref": "#/components/schemas/linkage"
+                    }
+                ]
+            },
+            "relationshipToMany": {
+                "description": "An array of objects each containing \"type\" and \"id\" members for to-many relationships.",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/linkage"
+                },
+                "uniqueItems": true
+            },
+            "empty": {
+                "description": "Describes an empty to-one relationship.",
+                "type": "null"
+            },
+            "linkage": {
+                "description": "The \"type\" and \"id\" to non-empty members.",
+                "type": "object",
+                "required": ["type", "id"],
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "links": {
+                "required": ["self"],
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "description": "A string containing the link's URL.",
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            },
+            "RootLinks": {
+                "required": ["meta"],
+                "type": "object",
+                "properties": {
+                    "meta": {
+                        "required": ["links"],
+                        "type": "object",
+                        "properties": {
+                            "links": {
+                                "type": "array",
+                                "description": "Links to all relevant objects on current path.",
+                                "uniqueItems": true,
+                                "items": {
+                                    "required": ["rel", "href"],
+                                    "type": "object",
+                                    "properties": {
+                                        "rel": {
+                                            "type": "string",
+                                            "description": "Type of relation (object type collection)",
+                                            "example": "metrics"
+                                        },
+                                        "href": {
+                                            "type": "string",
+                                            "format": "uri",
+                                            "example": "http://localhost/api/workspaces/ws1/model/metrics"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

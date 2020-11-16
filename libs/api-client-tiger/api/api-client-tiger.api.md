@@ -132,6 +132,51 @@ export interface AfmValidObjectsResponse {
 }
 
 // @public
+export interface AnalyticalDashboard {
+    data: AnalyticalDashboardData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface AnalyticalDashboardAttributes {
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface AnalyticalDashboardAttributesAllOf {
+    content?: object;
+}
+
+// @public
+export interface AnalyticalDashboardData {
+    attributes?: AnalyticalDashboardAttributes;
+    id: string;
+    relationships?: AnalyticalDashboardRelationships;
+    type: string;
+}
+
+// @public
+export interface AnalyticalDashboardDataAllOf {
+    relationships?: AnalyticalDashboardRelationships;
+}
+
+// @public
+export interface AnalyticalDashboardDataRequest {
+    attributes?: AnalyticalDashboardAttributes;
+    id: string;
+    type: string;
+}
+
+// @public
+export interface AnalyticalDashboardDataRequestAllOf {
+    attributes?: AnalyticalDashboardAttributes;
+}
+
+// @public
 export interface AnalyticalDashboardPatchResource {
     attributes?: AnalyticalDashboardResourcePatchAttributesAttributes;
     id: string;
@@ -167,6 +212,22 @@ export enum AnalyticalDashboardPostResourceReferenceTypeEnum {
 export enum AnalyticalDashboardPostResourceTypeEnum {
     // (undocumented)
     AnalyticalDashboard = "AnalyticalDashboard"
+}
+
+// @public
+export interface AnalyticalDashboardRelationships {
+    labels?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
+export interface AnalyticalDashboardRelationshipsLabels {
+    data?: Array<string> | RelationshipToOne;
+}
+
+// @public
+export interface AnalyticalDashboardRequest {
+    data: AnalyticalDashboardDataRequest;
 }
 
 // @public
@@ -227,9 +288,9 @@ export enum AnalyticalDashboardResourceReferenceTypeEnum {
 // @public
 export interface AnalyticalDashboardResourceResponseSchema {
     data: AnalyticalDashboardResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -264,9 +325,9 @@ export enum AnalyticalDashboardResourceSchemaTypeEnum {
 // @public
 export interface AnalyticalDashboardResourcesResponseSchema {
     data: Array<AnalyticalDashboardResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -276,6 +337,38 @@ export interface AnalyticalDashboardResourcesResponseSchema {
 export interface AnalyticalDashboardResourcesResponseSchemaAllOf {
     data: Array<AnalyticalDashboardResourceSchema>;
 }
+
+// @public
+export interface AnalyticalDashboards {
+    data: Array<AnalyticalDashboardsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface AnalyticalDashboardsAllOf {
+    data?: Array<AnalyticalDashboardsItem>;
+}
+
+// @public
+export interface AnalyticalDashboardsItem {
+    attributes?: AnalyticalDashboardAttributes;
+    id: string;
+    links?: Links;
+    relationships?: AnalyticalDashboardRelationships;
+    type: string;
+}
+
+// @public
+export interface AnalyticalDashboardsItemAllOf {
+    links?: Links;
+}
+
+// @public
+export type AnalyticsObject = AnalyticalDashboard | Metric | VisualizationObjectSchema;
+
+// @public
+export type AnalyticsObjectRequest = AnalyticalDashboardRequest | MetricRequest | VisualizationObjectRequest;
 
 // @public
 export interface ApiError {
@@ -325,6 +418,112 @@ export enum ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
     RATIO = "RATIO",
     // (undocumented)
     SUM = "SUM"
+}
+
+// @public
+export interface Attribute {
+    data: AttributeData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface AttributeAttributes {
+    description?: string;
+    granularity?: AttributeAttributesGranularityEnum;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface AttributeAttributesAllOf {
+    granularity?: AttributeAttributesAllOfGranularityEnum;
+}
+
+// @public
+export enum AttributeAttributesAllOfGranularityEnum {
+    // (undocumented)
+    DAY = "DAY",
+    // (undocumented)
+    DAYOFMONTH = "DAY_OF_MONTH",
+    // (undocumented)
+    DAYOFWEEK = "DAY_OF_WEEK",
+    // (undocumented)
+    DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    // (undocumented)
+    MONTH = "MONTH",
+    // (undocumented)
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    // (undocumented)
+    QUARTER = "QUARTER",
+    // (undocumented)
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    // (undocumented)
+    WEEK = "WEEK",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    YEAR = "YEAR"
+}
+
+// @public
+export enum AttributeAttributesGranularityEnum {
+    // (undocumented)
+    DAY = "DAY",
+    // (undocumented)
+    DAYOFMONTH = "DAY_OF_MONTH",
+    // (undocumented)
+    DAYOFWEEK = "DAY_OF_WEEK",
+    // (undocumented)
+    DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    // (undocumented)
+    MONTH = "MONTH",
+    // (undocumented)
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    // (undocumented)
+    QUARTER = "QUARTER",
+    // (undocumented)
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    // (undocumented)
+    WEEK = "WEEK",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    YEAR = "YEAR"
+}
+
+// @public
+export interface AttributeData {
+    attributes?: AttributeAttributes;
+    id: string;
+    relationships?: AttributeRelationships;
+    type: string;
+}
+
+// @public
+export interface AttributeDataAllOf {
+    attributes?: AttributeAttributes;
+}
+
+// @public
+export interface AttributeDataAllOf1 {
+    relationships?: AttributeRelationships;
 }
 
 // @public
@@ -432,6 +631,17 @@ export enum AttributePostResourceTypeEnum {
 }
 
 // @public
+export interface AttributeRelationships {
+    dataset?: AttributeRelationshipsDataset;
+    labels?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
+export interface AttributeRelationshipsDataset {
+    data?: RelationshipToOne;
+}
+
+// @public
 export interface AttributeResourceAttributes {
     attributes?: AttributeResourceAttributesAttributes;
 }
@@ -481,9 +691,9 @@ export enum AttributeResourceReferenceTypeEnum {
 // @public
 export interface AttributeResourceResponseSchema {
     data: AttributeResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -512,9 +722,9 @@ export enum AttributeResourceSchemaTypeEnum {
 // @public
 export interface AttributeResourcesResponseSchema {
     data: Array<AttributeResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -529,6 +739,34 @@ export interface AttributeResourcesResponseSchemaAllOf {
 export interface AttributeResultHeader {
     labelValue: string;
     primaryLabelValue: string;
+}
+
+// @public
+export interface Attributes {
+    data: Array<AttributesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface AttributesAllOf {
+    data?: Array<AttributesItem>;
+}
+
+// @public
+export interface AttributesItem {
+    attributes?: AttributeAttributes;
+    id: string;
+    links?: Links;
+    relationships?: AttributeRelationships;
+    type: string;
+}
+
+// @public
+export interface BasicObjectAttributes {
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
 }
 
 // @public
@@ -626,6 +864,99 @@ export enum ComparisonMeasureValueFilterBodyOperatorEnum {
 }
 
 // @public
+export interface Dataset {
+    data: DatasetData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface DatasetAttributes {
+    description?: string;
+    grain?: Array<DatasetAttributesAllOfGrain>;
+    referenceProperties?: Array<DatasetAttributesAllOfReferenceProperties>;
+    sourceTable?: string;
+    tags?: Array<string>;
+    title?: string;
+    type?: DatasetAttributesTypeEnum;
+}
+
+// @public
+export interface DatasetAttributesAllOf {
+    grain?: Array<DatasetAttributesAllOfGrain>;
+    referenceProperties?: Array<DatasetAttributesAllOfReferenceProperties>;
+    sourceTable?: string;
+    type?: DatasetAttributesAllOfTypeEnum;
+}
+
+// @public
+export interface DatasetAttributesAllOfGrain {
+    id?: string;
+    type?: DatasetAttributesAllOfGrainTypeEnum;
+}
+
+// @public
+export enum DatasetAttributesAllOfGrainTypeEnum {
+    // (undocumented)
+    ATTRIBUTE = "ATTRIBUTE",
+    // (undocumented)
+    DATASET = "DATASET"
+}
+
+// @public
+export interface DatasetAttributesAllOfIdentifier {
+    id?: string;
+    type?: DatasetAttributesAllOfIdentifierTypeEnum;
+}
+
+// @public
+export enum DatasetAttributesAllOfIdentifierTypeEnum {
+    // (undocumented)
+    DATASET = "DATASET"
+}
+
+// @public
+export interface DatasetAttributesAllOfReferenceProperties {
+    identifier?: DatasetAttributesAllOfIdentifier;
+    multivalue?: boolean;
+    sourceColumns?: Array<string>;
+}
+
+// @public
+export enum DatasetAttributesAllOfTypeEnum {
+    // (undocumented)
+    DATE = "DATE",
+    // (undocumented)
+    NORMAL = "NORMAL"
+}
+
+// @public
+export enum DatasetAttributesTypeEnum {
+    // (undocumented)
+    DATE = "DATE",
+    // (undocumented)
+    NORMAL = "NORMAL"
+}
+
+// @public
+export interface DatasetData {
+    attributes?: DatasetAttributes;
+    id: string;
+    relationships?: DatasetRelationships;
+    type: string;
+}
+
+// @public
+export interface DatasetDataAllOf {
+    attributes?: DatasetAttributes;
+}
+
+// @public
+export interface DatasetDataAllOf1 {
+    relationships?: DatasetRelationships;
+}
+
+// @public
 export interface DatasetPatchResource {
     attributes?: object;
     id: string;
@@ -661,6 +992,13 @@ export enum DatasetPostResourceReferenceTypeEnum {
 export enum DatasetPostResourceTypeEnum {
     // (undocumented)
     Dataset = "Dataset"
+}
+
+// @public
+export interface DatasetRelationships {
+    attributes?: AnalyticalDashboardRelationshipsLabels;
+    facts?: AnalyticalDashboardRelationshipsLabels;
+    references?: AnalyticalDashboardRelationshipsLabels;
 }
 
 // @public
@@ -719,9 +1057,9 @@ export enum DatasetResourceReferenceTypeEnum {
 // @public
 export interface DatasetResourceResponseSchema {
     data: DatasetResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -750,9 +1088,9 @@ export enum DatasetResourceSchemaTypeEnum {
 // @public
 export interface DatasetResourcesResponseSchema {
     data: Array<DatasetResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -761,6 +1099,27 @@ export interface DatasetResourcesResponseSchema {
 // @public
 export interface DatasetResourcesResponseSchemaAllOf {
     data: Array<DatasetResourceSchema>;
+}
+
+// @public
+export interface Datasets {
+    data: Array<DatasetsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface DatasetsAllOf {
+    data?: Array<DatasetsItem>;
+}
+
+// @public
+export interface DatasetsItem {
+    attributes?: DatasetAttributes;
+    id: string;
+    links?: Links;
+    relationships?: DatasetRelationships;
+    type: string;
 }
 
 // @public
@@ -773,6 +1132,322 @@ export enum DatasetTypeResourceAttribute {
 
 // @public
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
+// @public
+export interface DeclarativeAnalyticalDashboard {
+    content: object;
+    description: string;
+    id: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeAnalytics {
+    analytics: DeclarativeAnalyticsLayer;
+}
+
+// @public
+export interface DeclarativeAnalyticsLayer {
+    analyticalDashboards: Array<DeclarativeAnalyticalDashboard>;
+    metrics: Array<DeclarativeMetric>;
+    visualizationObjects: Array<DeclarativeVisualizationObject>;
+}
+
+// @public
+export interface DeclarativeAttribute {
+    description: string;
+    id: string;
+    labels: Array<DeclarativeLabel>;
+    title: string;
+}
+
+// @public
+export interface DeclarativeColumn {
+    dataType: DeclarativeColumnDataTypeEnum;
+    name: string;
+}
+
+// @public
+export enum DeclarativeColumnDataTypeEnum {
+    // (undocumented)
+    BOOLEAN = "BOOLEAN",
+    // (undocumented)
+    DATE = "DATE",
+    // (undocumented)
+    INT = "INT",
+    // (undocumented)
+    NUMERIC = "NUMERIC",
+    // (undocumented)
+    STRING = "STRING",
+    // (undocumented)
+    TIMESTAMP = "TIMESTAMP"
+}
+
+// @public
+export interface DeclarativeDataset {
+    attributes: Array<DeclarativeAttribute>;
+    description: string;
+    facts: Array<DeclarativeFact>;
+    grain: Array<GrainIdentifier>;
+    id: string;
+    references: Array<DeclarativeReference>;
+    sourceTable: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeDataSource {
+    name: string;
+    tables: Array<DeclarativeTable>;
+}
+
+// @public
+export interface DeclarativeDateDataset {
+    description: string;
+    granularities: Array<DeclarativeDateDatasetGranularitiesEnum>;
+    granularitiesFormatting: GranularitiesFormatting;
+    id: string;
+    title: string;
+}
+
+// @public
+export enum DeclarativeDateDatasetGranularitiesEnum {
+    // (undocumented)
+    Day = "day",
+    // (undocumented)
+    DayOfMonth = "dayOfMonth",
+    // (undocumented)
+    DayOfWeek = "dayOfWeek",
+    // (undocumented)
+    DayOfYear = "dayOfYear",
+    // (undocumented)
+    Hour = "hour",
+    // (undocumented)
+    HourOfDay = "hourOfDay",
+    // (undocumented)
+    Minute = "minute",
+    // (undocumented)
+    MinuteOfHour = "minuteOfHour",
+    // (undocumented)
+    Month = "month",
+    // (undocumented)
+    MonthOfYear = "monthOfYear",
+    // (undocumented)
+    Quarter = "quarter",
+    // (undocumented)
+    QuarterOfYear = "quarterOfYear",
+    // (undocumented)
+    Week = "week",
+    // (undocumented)
+    WeekOfYear = "weekOfYear",
+    // (undocumented)
+    Year = "year"
+}
+
+// @public
+export interface DeclarativeFact {
+    description: string;
+    id: string;
+    sourceColumn: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeLabel {
+    description: string;
+    id: string;
+    primary: boolean;
+    sourceColumn: string;
+    title: string;
+}
+
+// @public
+export class DeclarativeLayoutControllerApi extends MetadataNewBaseApi implements DeclarativeLayoutControllerApiInterface {
+    getAnalyticsModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeAnalytics>;
+    getLogicalModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeModel>;
+    getOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+    getWorkspaceLayout(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeWorkspace>;
+    putWorkspaceLayout(params: {
+        workspaceId: string;
+        declarativeWorkspace: DeclarativeWorkspace;
+    }, options?: any): AxiosPromise<void>;
+    setAnalyticsModel(params: {
+        workspaceId: string;
+        declarativeAnalytics: DeclarativeAnalytics;
+    }, options?: any): AxiosPromise<void>;
+    setLogicalModel(params: {
+        workspaceId: string;
+        declarativeModel: DeclarativeModel;
+    }, options?: any): AxiosPromise<void>;
+    setOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+}
+
+// @public
+export const DeclarativeLayoutControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    getAnalyticsModel(params: {
+        workspaceId: string;
+    }, options?: any): MetadataNewRequestArgs;
+    getLogicalModel(params: {
+        workspaceId: string;
+    }, options?: any): MetadataNewRequestArgs;
+    getOrganizationLayout(params: {}, options?: any): MetadataNewRequestArgs;
+    getWorkspaceLayout(params: {
+        workspaceId: string;
+    }, options?: any): MetadataNewRequestArgs;
+    putWorkspaceLayout(params: {
+        workspaceId: string;
+        declarativeWorkspace: DeclarativeWorkspace;
+    }, options?: any): MetadataNewRequestArgs;
+    setAnalyticsModel(params: {
+        workspaceId: string;
+        declarativeAnalytics: DeclarativeAnalytics;
+    }, options?: any): MetadataNewRequestArgs;
+    setLogicalModel(params: {
+        workspaceId: string;
+        declarativeModel: DeclarativeModel;
+    }, options?: any): MetadataNewRequestArgs;
+    setOrganizationLayout(params: {}, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const DeclarativeLayoutControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAnalyticsModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeAnalytics>;
+    getLogicalModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeModel>;
+    getOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+    getWorkspaceLayout(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeWorkspace>;
+    putWorkspaceLayout(params: {
+        workspaceId: string;
+        declarativeWorkspace: DeclarativeWorkspace;
+    }, options?: any): AxiosPromise<void>;
+    setAnalyticsModel(params: {
+        workspaceId: string;
+        declarativeAnalytics: DeclarativeAnalytics;
+    }, options?: any): AxiosPromise<void>;
+    setLogicalModel(params: {
+        workspaceId: string;
+        declarativeModel: DeclarativeModel;
+    }, options?: any): AxiosPromise<void>;
+    setOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+};
+
+// @public
+export const DeclarativeLayoutControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    getAnalyticsModel(params: {
+        workspaceId: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeAnalytics>;
+    getLogicalModel(params: {
+        workspaceId: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeModel>;
+    getOrganizationLayout(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    getWorkspaceLayout(params: {
+        workspaceId: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeWorkspace>;
+    putWorkspaceLayout(params: {
+        workspaceId: string;
+        declarativeWorkspace: DeclarativeWorkspace;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    setAnalyticsModel(params: {
+        workspaceId: string;
+        declarativeAnalytics: DeclarativeAnalytics;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    setLogicalModel(params: {
+        workspaceId: string;
+        declarativeModel: DeclarativeModel;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    setOrganizationLayout(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+};
+
+// @public
+export interface DeclarativeLayoutControllerApiInterface {
+    getAnalyticsModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeAnalytics>;
+    getLogicalModel(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeModel>;
+    getOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+    getWorkspaceLayout(params: {
+        workspaceId: string;
+    }, options?: any): AxiosPromise<DeclarativeWorkspace>;
+    putWorkspaceLayout(params: {
+        workspaceId: string;
+        declarativeWorkspace: DeclarativeWorkspace;
+    }, options?: any): AxiosPromise<void>;
+    setAnalyticsModel(params: {
+        workspaceId: string;
+        declarativeAnalytics: DeclarativeAnalytics;
+    }, options?: any): AxiosPromise<void>;
+    setLogicalModel(params: {
+        workspaceId: string;
+        declarativeModel: DeclarativeModel;
+    }, options?: any): AxiosPromise<void>;
+    setOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
+}
+
+// @public
+export interface DeclarativeLdm {
+    datasets: Array<DeclarativeDataset>;
+    dateInstances: Array<DeclarativeDateDataset>;
+}
+
+// @public
+export interface DeclarativeMetric {
+    content: object;
+    description: string;
+    id: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeModel {
+    ldm: DeclarativeLdm;
+    pdm: DeclarativePdm;
+}
+
+// @public
+export interface DeclarativePdm {
+    sources: Array<DeclarativeDataSource>;
+}
+
+// @public
+export interface DeclarativeReference {
+    identifier: ReferenceIdentifier;
+    multivalue: boolean;
+    sourceColumns: Array<string>;
+}
+
+// @public
+export interface DeclarativeTable {
+    columns: Array<DeclarativeColumn>;
+    name: string;
+}
+
+// @public
+export interface DeclarativeVisualizationObject {
+    content: object;
+    description: string;
+    id: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeWorkspace {
+    analytics: DeclarativeAnalyticsLayer;
+    ldm: DeclarativeLdm;
+    pdm: DeclarativePdm;
+}
 
 // @public
 export class DefaultApi extends MetadataBaseApi implements DefaultApiInterface {
@@ -9012,6 +9687,44 @@ export interface ExecutionResultPaging {
 }
 
 // @public
+export interface Fact {
+    data: FactData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface FactAttributes {
+    description?: string;
+    sourceColumn?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface FactAttributesAllOf {
+    sourceColumn?: string;
+}
+
+// @public
+export interface FactData {
+    attributes?: FactAttributes;
+    id: string;
+    relationships?: FactRelationships;
+    type: string;
+}
+
+// @public
+export interface FactDataAllOf {
+    attributes?: FactAttributes;
+}
+
+// @public
+export interface FactDataAllOf1 {
+    relationships?: FactRelationships;
+}
+
+// @public
 export interface FactPatchResource {
     attributes?: object;
     id: string;
@@ -9047,6 +9760,13 @@ export enum FactPostResourceReferenceTypeEnum {
 export enum FactPostResourceTypeEnum {
     // (undocumented)
     Fact = "Fact"
+}
+
+// @public
+export interface FactRelationships {
+    dataset?: object;
+    metrics?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
 }
 
 // @public
@@ -9098,9 +9818,9 @@ export enum FactResourceReferenceTypeEnum {
 // @public
 export interface FactResourceResponseSchema {
     data: FactResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9129,9 +9849,9 @@ export enum FactResourceSchemaTypeEnum {
 // @public
 export interface FactResourcesResponseSchema {
     data: Array<FactResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9143,10 +9863,31 @@ export interface FactResourcesResponseSchemaAllOf {
 }
 
 // @public
+export interface Facts {
+    data: Array<FactsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface FactsAllOf {
+    data?: Array<FactsItem>;
+}
+
+// @public
+export interface FactsItem {
+    attributes?: FactAttributes;
+    id: string;
+    links?: Links;
+    relationships?: FactRelationships;
+    type: string;
+}
+
+// @public
 export interface Failure {
     errors: Array<ApiError>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9201,6 +9942,26 @@ export enum FormOfGranularityEnum {
 }
 
 // @public
+export interface GrainIdentifier {
+    id: string;
+    type: GrainIdentifierTypeEnum;
+}
+
+// @public
+export enum GrainIdentifierTypeEnum {
+    // (undocumented)
+    Attribute = "attribute",
+    // (undocumented)
+    Dataset = "dataset"
+}
+
+// @public
+export interface GranularitiesFormatting {
+    titleBase: string;
+    titlePattern: string;
+}
+
+// @public
 export interface HeaderGroup {
     headers: Array<ExecutionResultHeader>;
 }
@@ -9209,9 +9970,24 @@ export interface HeaderGroup {
 export type Identifier = LocalIdentifier | ObjectIdentifier;
 
 // @public
+export interface IncludedResource {
+    attributes?: IncludedResourceAttributes;
+    id: string;
+    links?: Links;
+    type: string;
+}
+
+// @public
+export interface IncludedResourceAttributes {
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
 export interface Info {
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta: {
         [key: string]: object;
     };
@@ -9262,11 +10038,53 @@ export interface ITigerClient {
     metadata: ReturnType<typeof tigerMetadataClientFactory>;
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+    // (undocumented)
+    workspaceModel: ReturnType<typeof tigerWorkspaceModelClientFactory>;
 }
 
 // @public
 export interface JsonApi {
     version?: string;
+}
+
+// @public
+export interface Label {
+    data: LabelData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface LabelAttributes {
+    description?: string;
+    primary?: boolean;
+    sourceColumn?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface LabelAttributesAllOf {
+    primary?: boolean;
+    sourceColumn?: string;
+}
+
+// @public
+export interface LabelData {
+    attributes?: LabelAttributes;
+    id: string;
+    relationships?: LabelRelationships;
+    type: string;
+}
+
+// @public
+export interface LabelDataAllOf {
+    attributes?: LabelAttributes;
+}
+
+// @public
+export interface LabelDataAllOf1 {
+    relationships?: LabelRelationships;
 }
 
 // @public
@@ -9354,6 +10172,14 @@ export enum LabelPostResourceTypeEnum {
 }
 
 // @public
+export interface LabelRelationships {
+    analyticalDashboards?: AnalyticalDashboardRelationshipsLabels;
+    attribute?: object;
+    metrics?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
 export interface LabelResourceAttributes {
     attributes?: LabelResourceAttributesAttributes;
 }
@@ -9403,9 +10229,9 @@ export enum LabelResourceReferenceTypeEnum {
 // @public
 export interface LabelResourceResponseSchema {
     data: LabelResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9434,9 +10260,9 @@ export enum LabelResourceSchemaTypeEnum {
 // @public
 export interface LabelResourcesResponseSchema {
     data: Array<LabelResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9448,10 +10274,37 @@ export interface LabelResourcesResponseSchemaAllOf {
 }
 
 // @public
-export type Link = LinkOneOf | string;
+export interface Labels {
+    data: Array<LabelsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
 
 // @public
-export interface LinkOneOf {
+export interface LabelsAllOf {
+    data?: Array<LabelsItem>;
+}
+
+// @public
+export interface LabelsItem {
+    attributes?: LabelAttributes;
+    id: string;
+    links?: Links;
+    relationships?: LabelRelationships;
+    type: string;
+}
+
+// @public
+export interface Linkage {
+    id: string;
+    type: string;
+}
+
+// @public
+export type LinkCrnk = LinkCrnkOneOf | string;
+
+// @public
+export interface LinkCrnkOneOf {
     href: string;
     meta?: {
         [key: string]: object;
@@ -9459,12 +10312,29 @@ export interface LinkOneOf {
 }
 
 // @public
-export interface Links extends Pagination {
+export interface Links {
+    self: string;
+}
+
+// @public
+export interface LinksCrnk extends PaginationCrnk {
+}
+
+// @public
+export interface ListLinks {
+    next?: string;
+    self: string;
 }
 
 // @public
 export interface LocalIdentifier {
     localIdentifier: string;
+}
+
+// @public
+export interface MandatoryObjectFields {
+    id: string;
+    type: string;
 }
 
 // @public
@@ -9549,11 +10419,114 @@ export interface MetadataConfigurationParameters {
 }
 
 // @public
+export type MetadataModelObject = AnalyticsObject | Attribute | Dataset | Fact | Label | Source | Table;
+
+// @public
+export type MetadataModelObjects = AnalyticalDashboards | Attributes | Datasets | Facts | Labels | Metrics | Sources | Tables | VisualizationObjects;
+
+// @public
+export class MetadataNewBaseApi {
+    constructor(configuration?: MetadataNewConfiguration, basePath?: string, axios?: AxiosInstance);
+    // (undocumented)
+    protected axios: AxiosInstance;
+    // (undocumented)
+    protected basePath: string;
+    // (undocumented)
+    protected configuration: MetadataNewConfiguration | undefined;
+}
+
+// @public (undocumented)
+export class MetadataNewConfiguration {
+    constructor(param?: MetadataNewConfigurationParameters);
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    apiKey?: string | ((name: string) => string);
+    baseOptions?: any;
+    basePath?: string;
+    password?: string;
+    username?: string;
+}
+
+// @public
+export interface MetadataNewConfigurationParameters {
+    // (undocumented)
+    accessToken?: string | ((name?: string, scopes?: string[]) => string);
+    // (undocumented)
+    apiKey?: string | ((name: string) => string);
+    // (undocumented)
+    baseOptions?: any;
+    // (undocumented)
+    basePath?: string;
+    // (undocumented)
+    password?: string;
+    // (undocumented)
+    username?: string;
+}
+
+// @public
+export interface MetadataNewRequestArgs {
+    // (undocumented)
+    options: any;
+    // (undocumented)
+    url: string;
+}
+
+// @public
 export interface MetadataRequestArgs {
     // (undocumented)
     options: any;
     // (undocumented)
     url: string;
+}
+
+// @public
+export interface Metric {
+    data: MetricData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface MetricAttributes {
+    content?: MetricAttributesAllOfContent;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface MetricAttributesAllOf {
+    content?: MetricAttributesAllOfContent;
+}
+
+// @public
+export interface MetricAttributesAllOfContent {
+    format?: string;
+    maql?: string;
+}
+
+// @public
+export interface MetricData {
+    attributes?: MetricAttributes;
+    id: string;
+    relationships?: MetricRelationships;
+    type: string;
+}
+
+// @public
+export interface MetricDataAllOf {
+    relationships?: MetricRelationships;
+}
+
+// @public
+export interface MetricDataRequest {
+    attributes?: MetricAttributes;
+    id: string;
+    type: string;
+}
+
+// @public
+export interface MetricDataRequestAllOf {
+    attributes?: MetricAttributes;
 }
 
 // @public
@@ -9592,6 +10565,20 @@ export enum MetricPostResourceReferenceTypeEnum {
 export enum MetricPostResourceTypeEnum {
     // (undocumented)
     Metric = "Metric"
+}
+
+// @public
+export interface MetricRelationships {
+    attributes?: AnalyticalDashboardRelationshipsLabels;
+    facts?: AnalyticalDashboardRelationshipsLabels;
+    labels?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
+export interface MetricRequest {
+    data: MetricDataRequest;
 }
 
 // @public
@@ -9657,9 +10644,9 @@ export enum MetricResourceReferenceTypeEnum {
 // @public
 export interface MetricResourceResponseSchema {
     data: MetricResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9688,9 +10675,9 @@ export enum MetricResourceSchemaTypeEnum {
 // @public
 export interface MetricResourcesResponseSchema {
     data: Array<MetricResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -9699,6 +10686,27 @@ export interface MetricResourcesResponseSchema {
 // @public
 export interface MetricResourcesResponseSchemaAllOf {
     data: Array<MetricResourceSchema>;
+}
+
+// @public
+export interface Metrics {
+    data: Array<MetricsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface MetricsAllOf {
+    data?: Array<MetricsItem>;
+}
+
+// @public
+export interface MetricsItem {
+    attributes?: MetricAttributes;
+    id: string;
+    links?: Links;
+    relationships?: MetricRelationships;
+    type: string;
 }
 
 // @public
@@ -9724,6 +10732,41 @@ export function newAxios(baseUrl?: string, headers?: {
 }): AxiosInstance;
 
 // @public
+export class NotificationControllerApi extends MetadataNewBaseApi implements NotificationControllerApiInterface {
+    registerUploadNotification(params: {
+        dataSourceId: string;
+    }, options?: any): AxiosPromise<void>;
+}
+
+// @public
+export const NotificationControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    registerUploadNotification(params: {
+        dataSourceId: string;
+    }, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const NotificationControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    registerUploadNotification(params: {
+        dataSourceId: string;
+    }, options?: any): AxiosPromise<void>;
+};
+
+// @public
+export const NotificationControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    registerUploadNotification(params: {
+        dataSourceId: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+};
+
+// @public
+export interface NotificationControllerApiInterface {
+    registerUploadNotification(params: {
+        dataSourceId: string;
+    }, options?: any): AxiosPromise<void>;
+}
+
+// @public
 export interface ObjectIdentifier {
     identifier: ObjectIdentifierIdentifier;
 }
@@ -9735,7 +10778,89 @@ export interface ObjectIdentifierIdentifier {
 }
 
 // @public
-export interface Pagination {
+export class OptionsControllerApi extends MetadataNewBaseApi implements OptionsControllerApiInterface {
+    getAllOptions(params: {}, options?: any): AxiosPromise<void>;
+    getDataSourceDrivers(params: {}, options?: any): AxiosPromise<void>;
+}
+
+// @public
+export const OptionsControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    getAllOptions(params: {}, options?: any): MetadataNewRequestArgs;
+    getDataSourceDrivers(params: {}, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const OptionsControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getAllOptions(params: {}, options?: any): AxiosPromise<void>;
+    getDataSourceDrivers(params: {}, options?: any): AxiosPromise<void>;
+};
+
+// @public
+export const OptionsControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    getAllOptions(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    getDataSourceDrivers(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+};
+
+// @public
+export interface OptionsControllerApiInterface {
+    getAllOptions(params: {}, options?: any): AxiosPromise<void>;
+    getDataSourceDrivers(params: {}, options?: any): AxiosPromise<void>;
+}
+
+// @public
+export interface Organization {
+    id?: string;
+    name?: string;
+    stockId: StockIdOrganizationScope;
+}
+
+// @public
+export class OrganizationControllerApi extends MetadataNewBaseApi implements OrganizationControllerApiInterface {
+    dropOrganization(params: {}, options?: any): AxiosPromise<object>;
+    getOrganization(params: {}, options?: any): AxiosPromise<Organization>;
+    updateOrganization(params: {
+        organization: Organization;
+    }, options?: any): AxiosPromise<object>;
+}
+
+// @public
+export const OrganizationControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    dropOrganization(params: {}, options?: any): MetadataNewRequestArgs;
+    getOrganization(params: {}, options?: any): MetadataNewRequestArgs;
+    updateOrganization(params: {
+        organization: Organization;
+    }, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const OrganizationControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    dropOrganization(params: {}, options?: any): AxiosPromise<object>;
+    getOrganization(params: {}, options?: any): AxiosPromise<Organization>;
+    updateOrganization(params: {
+        organization: Organization;
+    }, options?: any): AxiosPromise<object>;
+};
+
+// @public
+export const OrganizationControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    dropOrganization(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>;
+    getOrganization(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<Organization>;
+    updateOrganization(params: {
+        organization: Organization;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<object>;
+};
+
+// @public
+export interface OrganizationControllerApiInterface {
+    dropOrganization(params: {}, options?: any): AxiosPromise<object>;
+    getOrganization(params: {}, options?: any): AxiosPromise<Organization>;
+    updateOrganization(params: {
+        organization: Organization;
+    }, options?: any): AxiosPromise<object>;
+}
+
+// @public
+export interface PaginationCrnk {
     first?: string | null;
     last?: string | null;
     next?: string | null;
@@ -9878,6 +11003,24 @@ export enum RankingFilterBodyOperatorEnum {
 }
 
 // @public
+export interface ReferenceIdentifier {
+    id: string;
+    type: ReferenceIdentifierTypeEnum;
+}
+
+// @public
+export enum ReferenceIdentifierTypeEnum {
+    // (undocumented)
+    Dataset = "dataset"
+}
+
+// @public
+export interface RelationshipToOne {
+    id: string;
+    type: string;
+}
+
+// @public
 export interface RelativeDateFilter {
     relativeDateFilter: RelativeDateFilterBody;
 }
@@ -9962,6 +11105,22 @@ export interface ResultSpec {
 }
 
 // @public
+export interface RootLinks {
+    meta: RootLinksMeta;
+}
+
+// @public
+export interface RootLinksMeta {
+    links: Array<RootLinksMetaLinks>;
+}
+
+// @public
+export interface RootLinksMetaLinks {
+    href: string;
+    rel: string;
+}
+
+// @public
 export interface SimpleMeasureDefinition {
     measure: SimpleMeasureDefinitionMeasure;
 }
@@ -10023,6 +11182,25 @@ export interface SortKeyValueValue {
 }
 
 // @public
+export interface Source {
+    data: SourceData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface SourceData {
+    id: string;
+    relationships?: SourceRelationships;
+    type: string;
+}
+
+// @public
+export interface SourceDataAllOf {
+    relationships?: SourceRelationships;
+}
+
+// @public
 export interface SourcePatchResource {
     attributes?: object;
     id: string;
@@ -10058,6 +11236,11 @@ export enum SourcePostResourceReferenceTypeEnum {
 export enum SourcePostResourceTypeEnum {
     // (undocumented)
     Source = "Source"
+}
+
+// @public
+export interface SourceRelationships {
+    tables?: AnalyticalDashboardRelationshipsLabels;
 }
 
 // @public
@@ -10105,9 +11288,9 @@ export enum SourceResourceReferenceTypeEnum {
 // @public
 export interface SourceResourceResponseSchema {
     data: SourceResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10136,9 +11319,9 @@ export enum SourceResourceSchemaTypeEnum {
 // @public
 export interface SourceResourcesResponseSchema {
     data: Array<SourceResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10150,13 +11333,54 @@ export interface SourceResourcesResponseSchemaAllOf {
 }
 
 // @public
+export interface Sources {
+    data: Array<SourcesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface SourcesAllOf {
+    data?: Array<SourcesItem>;
+}
+
+// @public
+export interface SourcesItem {
+    id: string;
+    links?: Links;
+    relationships?: SourceRelationships;
+    type: string;
+}
+
+// @public
+export interface StockIdOrganizationScope {
+    apiId: string;
+    scope?: object;
+}
+
+// @public
 export interface Success {
     included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface SuccessCrnk {
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
+}
+
+// @public
+export interface SuccessCrnkIncluded {
+    attributes?: {
+        [key: string]: object;
+    };
+    id?: string;
+    type?: string;
 }
 
 // @public
@@ -10166,6 +11390,66 @@ export interface SuccessIncluded {
     };
     id?: string;
     type?: string;
+}
+
+// @public
+export interface Table {
+    data: TableData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface TableAttributes {
+    columns?: Array<TableAttributesAllOfColumns>;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface TableAttributesAllOf {
+    columns?: Array<TableAttributesAllOfColumns>;
+}
+
+// @public
+export interface TableAttributesAllOfColumns {
+    dataType?: TableAttributesAllOfColumnsDataTypeEnum;
+    name?: string;
+}
+
+// @public
+export enum TableAttributesAllOfColumnsDataTypeEnum {
+    // (undocumented)
+    BOOLEAN = "BOOLEAN",
+    // (undocumented)
+    DATE = "DATE",
+    // (undocumented)
+    INT = "INT",
+    // (undocumented)
+    NUMERIC = "NUMERIC",
+    // (undocumented)
+    STRING = "STRING",
+    // (undocumented)
+    TIMESTAMP = "TIMESTAMP"
+}
+
+// @public
+export interface TableData {
+    attributes?: TableAttributes;
+    id: string;
+    relationships?: TableRelationships;
+    type: string;
+}
+
+// @public
+export interface TableDataAllOf {
+    attributes?: TableAttributes;
+}
+
+// @public
+export interface TableDataAllOf1 {
+    relationships?: TableRelationships;
 }
 
 // @public
@@ -10204,6 +11488,16 @@ export enum TablePostResourceReferenceTypeEnum {
 export enum TablePostResourceTypeEnum {
     // (undocumented)
     Table = "Table"
+}
+
+// @public
+export interface TableRelationships {
+    source?: TableRelationshipsSource;
+}
+
+// @public
+export interface TableRelationshipsSource {
+    data?: RelationshipToOne;
 }
 
 // @public
@@ -10252,9 +11546,9 @@ export enum TableResourceReferenceTypeEnum {
 // @public
 export interface TableResourceResponseSchema {
     data: TableResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10283,9 +11577,9 @@ export enum TableResourceSchemaTypeEnum {
 // @public
 export interface TableResourcesResponseSchema {
     data: Array<TableResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10294,6 +11588,27 @@ export interface TableResourcesResponseSchema {
 // @public
 export interface TableResourcesResponseSchemaAllOf {
     data: Array<TableResourceSchema>;
+}
+
+// @public
+export interface Tables {
+    data: Array<TablesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface TablesAllOf {
+    data?: Array<TablesItem>;
+}
+
+// @public
+export interface TablesItem {
+    attributes?: TableAttributes;
+    id: string;
+    links?: Links;
+    relationships?: TableRelationships;
+    type: string;
 }
 
 // @public
@@ -10386,9 +11701,9 @@ export enum TagResourceReferenceTypeEnum {
 // @public
 export interface TagResourceResponseSchema {
     data: TagResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10417,9 +11732,9 @@ export enum TagResourceSchemaTypeEnum {
 // @public
 export interface TagResourcesResponseSchema {
     data: Array<TagResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10447,6 +11762,9 @@ export const tigerMetadataClientFactory: (axios: AxiosInstance) => DefaultApiInt
 
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObjectsControllerApiInterface;
+
+// @public (undocumented)
+export const tigerWorkspaceModelClientFactory: (axios: AxiosInstance) => WorkspaceModelControllerApiInterface;
 
 // @public
 export class ValidObjectsControllerApi extends LabelElementsBaseApi implements ValidObjectsControllerApiInterface {
@@ -10567,6 +11885,39 @@ export namespace VisualizationObject {
 }
 
 // @public
+export interface VisualizationObjectAttributes {
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface VisualizationObjectData {
+    attributes?: VisualizationObjectAttributes;
+    id: string;
+    relationships?: VisualizationObjectRelationShips;
+    type: string;
+}
+
+// @public
+export interface VisualizationObjectDataAllOf {
+    relationships?: VisualizationObjectRelationShips;
+}
+
+// @public
+export interface VisualizationObjectDataRequest {
+    attributes?: VisualizationObjectAttributes;
+    id: string;
+    type: string;
+}
+
+// @public
+export interface VisualizationObjectDataRequestAllOf {
+    attributes?: VisualizationObjectAttributes;
+}
+
+// @public
 export interface VisualizationObjectPatchResource {
     attributes?: VisualizationObjectResourcePatchAttributesAttributes;
     id: string;
@@ -10602,6 +11953,20 @@ export enum VisualizationObjectPostResourceReferenceTypeEnum {
 export enum VisualizationObjectPostResourceTypeEnum {
     // (undocumented)
     VisualizationObject = "VisualizationObject"
+}
+
+// @public
+export interface VisualizationObjectRelationShips {
+    attributes?: AnalyticalDashboardRelationshipsLabels;
+    facts?: AnalyticalDashboardRelationshipsLabels;
+    labels?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
+export interface VisualizationObjectRequest {
+    data: VisualizationObjectDataRequest;
 }
 
 // @public
@@ -10664,9 +12029,9 @@ export enum VisualizationObjectResourceReferenceTypeEnum {
 // @public
 export interface VisualizationObjectResourceResponseSchema {
     data: VisualizationObjectResourceSchema;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10695,9 +12060,9 @@ export enum VisualizationObjectResourceSchemaTypeEnum {
 // @public
 export interface VisualizationObjectResourcesResponseSchema {
     data: Array<VisualizationObjectResourceSchema>;
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     jsonapi?: JsonApi;
-    links?: Links;
+    links?: LinksCrnk;
     meta?: {
         [key: string]: object;
     };
@@ -10706,6 +12071,256 @@ export interface VisualizationObjectResourcesResponseSchema {
 // @public
 export interface VisualizationObjectResourcesResponseSchemaAllOf {
     data: Array<VisualizationObjectResourceSchema>;
+}
+
+// @public
+export interface VisualizationObjects {
+    data: Array<VisualizationObjectsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface VisualizationObjectsAllOf {
+    data?: Array<VisualizationObjectsItem>;
+}
+
+// @public
+export interface VisualizationObjectSchema {
+    data: VisualizationObjectData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface VisualizationObjectsItem {
+    attributes?: VisualizationObjectAttributes;
+    id: string;
+    links?: Links;
+    relationships?: VisualizationObjectRelationShips;
+    type: string;
+}
+
+// @public
+export class WorkspaceModelControllerApi extends MetadataNewBaseApi implements WorkspaceModelControllerApiInterface {
+    // (undocumented)
+    createEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+    // (undocumented)
+    deleteEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<void>;
+    // (undocumented)
+    getEntities(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObjects>;
+    // (undocumented)
+    getEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObject>;
+    // (undocumented)
+    updateEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+}
+
+// @public
+export const WorkspaceModelControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    createEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        workspaceId: string;
+        organizationId?: string | undefined;
+        analyticsObject?: AnalyticalDashboard | Metric | VisualizationObjectSchema | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+    deleteEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+    getEntities(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        workspaceId: string;
+        organizationId?: string | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+    getEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        id: string;
+        workspaceId: string;
+        organizationId?: string | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+    updateEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string | undefined;
+        analyticsObject?: AnalyticalDashboard | Metric | VisualizationObjectSchema | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const WorkspaceModelControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    createEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+    deleteEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<void>;
+    getEntities(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObjects>;
+    getEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObject>;
+    updateEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+};
+
+// @public
+export const WorkspaceModelControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    createEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticsObject>;
+    deleteEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    getEntities(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetadataModelObjects>;
+    getEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetadataModelObject>;
+    updateEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticsObject>;
+};
+
+// @public
+export interface WorkspaceModelControllerApiInterface {
+    // (undocumented)
+    createEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+    // (undocumented)
+    deleteEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<void>;
+    // (undocumented)
+    getEntities(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObjects>;
+    // (undocumented)
+    getEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<MetadataModelObject>;
+    // (undocumented)
+    updateEntity(params: {
+        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        id: string;
+        workspaceId: string;
+        organizationId?: string;
+        analyticsObject?: AnalyticsObject;
+    }, options?: any): AxiosPromise<AnalyticsObject>;
+}
+
+// @public
+export class WorkspaceRootModelControllerApi extends MetadataNewBaseApi implements WorkspaceRootModelControllerApiInterface {
+    // (undocumented)
+    getRootLinks(params: {
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<RootLinks>;
+}
+
+// @public
+export const WorkspaceRootModelControllerApiAxiosParamCreator: (configuration?: MetadataNewConfiguration | undefined) => {
+    getRootLinks(params: {
+        workspaceId: string;
+        organizationId?: string | undefined;
+    }, options?: any): MetadataNewRequestArgs;
+};
+
+// @public
+export const WorkspaceRootModelControllerApiFactory: (configuration?: MetadataNewConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getRootLinks(params: {
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<RootLinks>;
+};
+
+// @public
+export const WorkspaceRootModelControllerApiFp: (configuration?: MetadataNewConfiguration | undefined) => {
+    getRootLinks(params: {
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<RootLinks>;
+};
+
+// @public
+export interface WorkspaceRootModelControllerApiInterface {
+    // (undocumented)
+    getRootLinks(params: {
+        workspaceId: string;
+        organizationId?: string;
+    }, options?: any): AxiosPromise<RootLinks>;
 }
 
 
