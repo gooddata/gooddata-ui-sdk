@@ -255,6 +255,12 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 }
 
 // @internal (undocumented)
+export const GD_COLOR_HIGHLIGHT = "#14b2e2";
+
+// @internal (undocumented)
+export const GD_COLOR_WHITE = "#fff";
+
+// @internal (undocumented)
 export type GetOptimalAlignment = {
     targetRegion: IRegion;
     selfRegion: IRegion;
@@ -1190,6 +1196,9 @@ export interface IMultiSelectRenderItemProps<T> {
     // (undocumented)
     item: T;
 }
+
+// @internal (undocumented)
+export const INFO_TEXT_COLOR = "#909293";
 
 // @internal (undocumented)
 export class Input extends React_2.PureComponent<InputPureProps, InputState> {

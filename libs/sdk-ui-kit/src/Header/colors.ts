@@ -1,4 +1,6 @@
 // (C) 2020 GoodData Corporation
+import { GD_COLOR_HIGHLIGHT } from "../utils/constants";
+
 const HEX3_REGEX = /^#([\da-f])([\da-f])([\da-f])/i;
 const HEX6_REGEX = /^#([\da-fA-F]{2})([\da-fA-F]{2})([\da-fA-F]{2})/;
 
@@ -80,6 +82,10 @@ export function getTextColor(headerTextColor: string, headerColor: string): stri
 }
 
 export function getItemActiveColor(activeColor: string, headerColor: string): string {
+    if (!activeColor && !headerColor) {
+        return `${GD_COLOR_HIGHLIGHT}`;
+    }
+
     const detectedColor = chooseColor(headerColor, 128, "#000", "#FFF");
 
     return activeColor || detectedColor;
