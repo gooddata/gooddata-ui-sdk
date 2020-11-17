@@ -107,7 +107,6 @@ describe("tiger filter converter from model to AFM", () => {
                 "negative attribute filter",
                 newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["other value"]),
             ],
-            ["null when filter is empty", newNegativeAttributeFilter(ReferenceLdm.Product.Name, [])],
             [
                 "absolute date filter",
                 newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),

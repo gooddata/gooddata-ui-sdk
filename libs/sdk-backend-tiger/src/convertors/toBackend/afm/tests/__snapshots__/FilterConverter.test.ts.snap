@@ -234,8 +234,6 @@ Object {
 }
 `;
 
-exports[`tiger filter converter from model to AFM convert visualization object filter should return null when filter is empty 1`] = `null`;
-
 exports[`tiger filter converter from model to AFM convert visualization object filter should return positive attribute filter 1`] = `
 Object {
   "positiveAttributeFilter": Object {
