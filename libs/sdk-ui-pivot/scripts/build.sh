@@ -31,13 +31,18 @@ build-dev-watch() {
     tsc --watch -p tsconfig.dev.json
 }
 
+build-styles() {
+  rm -rf styles/css
+  _build_styles
+}
+
 FLAG=$1
 if [ "$FLAG" = "--dev" ]; then
     build-dev
 elif [ "$FLAG" = "--dev-watch" ]; then
     build-dev-watch
 elif [ "$FLAG" = "--styles" ]; then
-    _build_styles
+    build-styles
 else
     build
 fi
