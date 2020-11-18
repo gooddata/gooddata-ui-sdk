@@ -3,7 +3,7 @@ import path from "path";
 import findUp from "find-up";
 import process from "process";
 import { readJsonSync } from "./utils";
-import { PackageDescriptor, RushPackageDescriptor, SourceDescriptor } from "./types";
+import { PackageDescriptor, PackageJson, RushPackageDescriptor, SourceDescriptor } from "./types";
 import { createDependencyGraph } from "./dependencyGraph";
 import identity from "lodash/identity";
 import keyBy from "lodash/keyBy";
@@ -47,11 +47,12 @@ export async function getSourceDescriptor(
             .filter(predicate)
             .map((rushPackage: RushPackageDescriptor) => {
                 const { packageName, projectFolder } = rushPackage;
-
+                const directory = path.join(rootDir, projectFolder);
                 return {
                     packageName,
+                    packageJson: readJsonSync(path.join(directory, "package.json")) as PackageJson,
                     installDir: packageName.split("/"),
-                    directory: path.join(rootDir, projectFolder),
+                    directory,
                     rushPackage,
                 };
             });
