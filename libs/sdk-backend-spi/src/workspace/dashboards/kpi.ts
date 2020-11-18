@@ -60,7 +60,7 @@ export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWit
 export type ILegacyKpiComparisonTypeNoComparison = "none";
 
 /**
- * Kpi comparison type comparison
+ * Kpi comparison type
  * @alpha
  */
 export type ILegacyKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
