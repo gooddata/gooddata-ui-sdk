@@ -134,29 +134,33 @@ export interface IFluidLayoutColumn {
  */
 export interface IFluidLayoutColSize {
     /**
-     * TODO: docs
-     */
-    xl: IFluidLayoutSize;
-
-    /**
-     * TODO: docs
+     * The size configuration to use for a screen with a width less than the set xs breakpoint.
      */
     xs?: IFluidLayoutSize;
 
     /**
-     * TODO: docs
+     * The size configuration to use for a screen larger than the set xs breakpoint,
+     * but smaller than the set sm breakpoint.
      */
     sm?: IFluidLayoutSize;
 
     /**
-     * TODO: docs
+     * The size configuration to use for a screen larger than the set sm breakpoint,
+     * but smaller than the set md breakpoint.
      */
     md?: IFluidLayoutSize;
 
     /**
-     * TODO: docs
+     * The size configuration to use for a screen larger than the set md breakpoint,
+     * but smaller than the set xl breakpoint.
      */
     lg?: IFluidLayoutSize;
+
+    /**
+     * The size configuration to use for a screen larger than the set xl breakpoint.
+     * This is also default configuration
+     */
+    xl: IFluidLayoutSize;
 }
 
 /**
@@ -165,12 +169,16 @@ export interface IFluidLayoutColSize {
  */
 export interface IFluidLayoutSize {
     /**
-     * Width
+     * Width, defined as a count of grid columns.
      */
     width: number;
 
     /**
-     * Height, defined as ratio
+     * Height defined as the ratio to the width in percent.
+     * Examples:
+     * - When heightAsRatio is 100, the column has a 1:1 ratio.
+     * - When heightAsRatio is 200, the column has a 1:2 ratio.
+     * - When heightAsRatio is 50, the column has a 2:1 ratio.
      */
     heightAsRatio?: number;
 }

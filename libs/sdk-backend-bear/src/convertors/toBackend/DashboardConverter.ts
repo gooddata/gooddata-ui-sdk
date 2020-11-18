@@ -560,7 +560,7 @@ export const convertScheduledMail = (
         to,
         when,
         bcc,
-        lastSuccessfull,
+        lastSuccessful,
         unsubscribed,
         attachments,
         unlisted,
@@ -573,9 +573,12 @@ export const convertScheduledMail = (
                 body,
                 subject,
                 to,
-                when,
+                when: {
+                    ...when,
+                    recurrency: when.recurrence,
+                },
                 bcc,
-                lastSuccessfull,
+                lastSuccessfull: lastSuccessful,
                 unsubscribed,
             },
             meta: {

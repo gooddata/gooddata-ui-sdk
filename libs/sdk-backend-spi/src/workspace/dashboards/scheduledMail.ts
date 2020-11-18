@@ -22,22 +22,20 @@ export interface IScheduledMailBase {
      */
     when: {
         /**
-         * Start date
-         * e.g. YYYY-MM-DD
+         * Start date in YYYY-MM-DD format.
          */
         startDate: string;
 
         /**
-         * End date
-         * e.g. YYYY-MM-DD
+         * End date in YYYY-MM-DD format.
          */
         endDate?: string;
 
         /**
-         * Recurrency
+         * Recurrence specification string
          * e.g. 0:0:1*3:12:30:0
          */
-        recurrency: string;
+        recurrence: string;
 
         /**
          * Timezone
@@ -77,9 +75,9 @@ export interface IScheduledMailBase {
     attachments: ScheduledMailAttachment[];
 
     /**
-     * Last successfull job
+     * Date of the last successful email processing job run
      */
-    lastSuccessfull?: string;
+    lastSuccessful?: string;
 
     /**
      * Is unlisted?

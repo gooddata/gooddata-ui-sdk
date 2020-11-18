@@ -1024,7 +1024,7 @@ export interface IScheduledMailBase {
     bcc?: string[];
     body: string;
     description: string;
-    lastSuccessfull?: string;
+    lastSuccessful?: string;
     subject: string;
     title: string;
     to: string[];
@@ -1033,7 +1033,7 @@ export interface IScheduledMailBase {
     when: {
         startDate: string;
         endDate?: string;
-        recurrency: string;
+        recurrence: string;
         timeZone: string;
     };
 }
