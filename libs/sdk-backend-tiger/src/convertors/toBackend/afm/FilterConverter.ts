@@ -2,13 +2,15 @@
 import {
     AbsoluteDateFilter,
     AttributeFilter,
-    ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
+    ComparisonMeasureValueFilterBodyOperatorEnum,
     FilterDefinition,
     FilterDefinitionForSimpleMeasure,
     MeasureValueFilter,
     NegativeAttributeFilter,
     PositiveAttributeFilter,
-    RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
+    RangeMeasureValueFilterBodyOperatorEnum,
+    RankingFilter,
+    RankingFilterBodyOperatorEnum,
     RelativeDateFilter,
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
@@ -21,6 +23,7 @@ import {
     IMeasureValueFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
+    IRankingFilter,
     IRelativeDateFilter,
     isAbsoluteDateFilter,
     isAttributeElementsByValue,
@@ -37,6 +40,7 @@ import {
     toDateDataSetQualifier,
     toDisplayFormQualifier,
     toMeasureValueFilterMeasureQualifier,
+    toRankingFilterDimensionalityIdentifier,
 } from "../ObjRefConverter";
 
 function convertPositiveFilter(filter: IPositiveAttributeFilter): PositiveAttributeFilter {
@@ -130,7 +134,7 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureV
             comparisonMeasureValueFilter: {
                 measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
-                operator: operator as ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
+                operator: operator as ComparisonMeasureValueFilterBodyOperatorEnum,
                 value,
                 treatNullValuesAs,
             },
@@ -143,7 +147,7 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureV
             rangeMeasureValueFilter: {
                 measure: toMeasureValueFilterMeasureQualifier(measureValueFilter.measure),
                 // Operator has same values, we only need type assertion
-                operator: operator as RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
+                operator: operator as RangeMeasureValueFilterBodyOperatorEnum,
                 // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
                 // this is effectively the same behavior as in bear
                 from: Math.min(originalFrom, originalTo),
@@ -154,6 +158,21 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureV
     }
 
     return null;
+}
+
+export function convertRankingFilter(filter: IRankingFilter): RankingFilter {
+    const { measure, attributes, operator, value } = filter.rankingFilter;
+    const dimensionalityProp = attributes
+        ? { dimensionality: attributes.map(toRankingFilterDimensionalityIdentifier) }
+        : {};
+    return {
+        rankingFilter: {
+            measures: [toMeasureValueFilterMeasureQualifier(measure)],
+            ...dimensionalityProp,
+            operator: operator as RankingFilterBodyOperatorEnum,
+            value,
+        },
+    };
 }
 
 export function convertVisualizationObjectFilter(
@@ -168,9 +187,7 @@ export function convertVisualizationObjectFilter(
     } else if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter);
     } else if (isRankingFilter(filter)) {
-        // eslint-disable-next-line no-console
-        console.warn("Tiger does not support ranking filters. The filter will be ignored");
-        return null;
+        return convertRankingFilter(filter);
     } else {
         // eslint-disable-next-line no-console
         console.warn("Tiger does not support this filter. The filter will be ignored");

@@ -130,6 +130,11 @@ describe("tiger filter converter from model to AFM", () => {
                 "range measure value filter with crossed boundaries",
                 newMeasureValueFilter(ReferenceLdm.Won, "BETWEEN", 128, 64),
             ],
+            ["ranking filter", newRankingFilter(ReferenceLdm.Won, "BOTTOM", 3)],
+            [
+                "ranking filter with attributes",
+                newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive.attribute.displayForm], "TOP", 3),
+            ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
@@ -153,13 +158,6 @@ describe("tiger filter converter from model to AFM", () => {
 
             expect(convertVisualizationObjectFilter(emptyPositiveFilter)).toBeNull();
             expect(convertVisualizationObjectFilter(emptyNegativeFilter)).toBeNull();
-        });
-    });
-
-    describe("ranking filters", () => {
-        it("should return null since tiger does not support ranking filters", () => {
-            const rankingFilter = newRankingFilter(ReferenceLdm.Won, "TOP", 10);
-            expect(convertVisualizationObjectFilter(rankingFilter)).toBeNull();
         });
     });
 });

@@ -30,7 +30,7 @@
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
         "openapi-generate": "./scripts/generate.js",
-        "generate-client": "rm -rf src/generated/* && npm run openapi-generate",
+        "generate-client": "rm -rf src/generated/* && npm run openapi-generate && npm run prettier-write",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest",

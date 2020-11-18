@@ -524,6 +524,15 @@
                     }
                 }
             },
+            "CommonFilter": {
+                "type": "object",
+                "properties": {
+                    "applyOnResult": {
+                        "type": "boolean",
+                        "description": "Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used."
+                    }
+                }
+            },
             "FilterDefinition": {
                 "type": "object",
                 "description": "Abstract filter definition type",
@@ -535,10 +544,29 @@
                         "$ref": "#/components/schemas/MeasureValueFilter"
                     },
                     {
+                        "$ref": "#/components/schemas/RankingFilter"
+                    },
+                    {
                         "$ref": "#/components/schemas/DateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/InlineFilterDefinition"
+                    }
+                ]
+            },
+            "CommonAttributeFilter": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonFilter"
+                    },
+                    {
+                        "required": ["displayForm"],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            }
+                        }
                     }
                 ]
             },
@@ -560,18 +588,25 @@
                 "description": "Filter able to limit element values by displayForm and related selected elements.",
                 "properties": {
                     "positiveAttributeFilter": {
-                        "required": ["displayForm", "in"],
+                        "$ref": "#/components/schemas/PositiveAttributeFilterBody"
+                    }
+                }
+            },
+            "PositiveAttributeFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonAttributeFilter"
+                    },
+                    {
+                        "required": ["in"],
                         "type": "object",
                         "properties": {
-                            "displayForm": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
-                            },
                             "in": {
                                 "$ref": "#/components/schemas/AttributeFilterElements"
                             }
                         }
                     }
-                }
+                ]
             },
             "NegativeAttributeFilter": {
                 "required": ["negativeAttributeFilter"],
@@ -579,18 +614,63 @@
                 "description": "Filter able to limit element values by displayForm and related selected negated elements.",
                 "properties": {
                     "negativeAttributeFilter": {
-                        "required": ["displayForm", "notIn"],
+                        "$ref": "#/components/schemas/NegativeAttributeFilterBody"
+                    }
+                }
+            },
+            "NegativeAttributeFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonAttributeFilter"
+                    },
+                    {
+                        "required": ["notIn"],
                         "type": "object",
                         "properties": {
-                            "displayForm": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
-                            },
                             "notIn": {
                                 "$ref": "#/components/schemas/AttributeFilterElements"
                             }
                         }
                     }
-                }
+                ]
+            },
+            "AbstractMeasureValueFilter": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonFilter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "dimensionality": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/ObjectIdentifier"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "CommonMeasureValueFilter": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                    },
+                    {
+                        "required": ["measure"],
+                        "type": "object",
+                        "properties": {
+                            "measure": {
+                                "$ref": "#/components/schemas/Identifier"
+                            },
+                            "treatNullValuesAs": {
+                                "type": "number",
+                                "example": 0
+                            }
+                        }
+                    }
+                ]
             },
             "MeasureValueFilter": {
                 "type": "object",
@@ -610,12 +690,19 @@
                 "description": "Filter the result by comparing specified measure to given constant value, using given comparison operator.",
                 "properties": {
                     "comparisonMeasureValueFilter": {
-                        "required": ["measure", "operator", "value"],
+                        "$ref": "#/components/schemas/ComparisonMeasureValueFilterBody"
+                    }
+                }
+            },
+            "ComparisonMeasureValueFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonMeasureValueFilter"
+                    },
+                    {
+                        "required": ["operator", "value"],
                         "type": "object",
                         "properties": {
-                            "measure": {
-                                "$ref": "#/components/schemas/Identifier"
-                            },
                             "operator": {
                                 "type": "string",
                                 "example": "GREATER_THAN",
@@ -631,14 +718,10 @@
                             "value": {
                                 "type": "number",
                                 "example": 1327
-                            },
-                            "treatNullValuesAs": {
-                                "type": "number",
-                                "example": 0
                             }
                         }
                     }
-                }
+                ]
             },
             "RangeMeasureValueFilter": {
                 "required": ["rangeMeasureValueFilter"],
@@ -646,12 +729,19 @@
                 "description": "Filter the result by comparing specified measure to given range of values.",
                 "properties": {
                     "rangeMeasureValueFilter": {
-                        "required": ["from", "measure", "operator", "to"],
+                        "$ref": "#/components/schemas/RangeMeasureValueFilterBody"
+                    }
+                }
+            },
+            "RangeMeasureValueFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonMeasureValueFilter"
+                    },
+                    {
+                        "required": ["from", "operator", "to"],
                         "type": "object",
                         "properties": {
-                            "measure": {
-                                "$ref": "#/components/schemas/Identifier"
-                            },
                             "operator": {
                                 "type": "string",
                                 "example": "BETWEEN",
@@ -664,14 +754,63 @@
                             "to": {
                                 "type": "number",
                                 "example": 999
-                            },
-                            "treatNullValuesAs": {
-                                "type": "number",
-                                "example": 0
                             }
                         }
                     }
+                ]
+            },
+            "RankingFilter": {
+                "required": ["rankingFilter"],
+                "type": "object",
+                "description": "Filter the result on top/bottom N values according to given measure(s).",
+                "properties": {
+                    "rankingFilter": {
+                        "$ref": "#/components/schemas/RankingFilterBody"
+                    }
                 }
+            },
+            "RankingFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/AbstractMeasureValueFilter"
+                    },
+                    {
+                        "required": ["measures", "operator", "value"],
+                        "type": "object",
+                        "properties": {
+                            "measures": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/Identifier"
+                                }
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": ["TOP", "BOTTOM"]
+                            },
+                            "value": {
+                                "type": "integer",
+                                "example": 5
+                            }
+                        }
+                    }
+                ]
+            },
+            "CommonDateFilter": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonFilter"
+                    },
+                    {
+                        "required": ["dataset"],
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            }
+                        }
+                    }
+                ]
             },
             "DateFilter": {
                 "type": "object",
@@ -691,12 +830,19 @@
                 "description": "A date filter specifying exact from and to dates.",
                 "properties": {
                     "absoluteDateFilter": {
-                        "required": ["dataset", "from", "to"],
+                        "$ref": "#/components/schemas/AbsoluteDateFilterBody"
+                    }
+                }
+            },
+            "AbsoluteDateFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonDateFilter"
+                    },
+                    {
+                        "required": ["from", "to"],
                         "type": "object",
                         "properties": {
-                            "dataset": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
-                            },
                             "from": {
                                 "type": "string",
                                 "format": "date",
@@ -709,20 +855,27 @@
                             }
                         }
                     }
-                }
+                ]
             },
             "RelativeDateFilter": {
                 "required": ["relativeDateFilter"],
                 "type": "object",
                 "properties": {
                     "relativeDateFilter": {
-                        "required": ["dataset", "from", "granularity", "to"],
+                        "$ref": "#/components/schemas/RelativeDateFilterBody"
+                    }
+                }
+            },
+            "RelativeDateFilterBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonDateFilter"
+                    },
+                    {
+                        "required": ["from", "granularity", "to"],
                         "type": "object",
                         "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.",
                         "properties": {
-                            "dataset": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
-                            },
                             "granularity": {
                                 "type": "string",
                                 "description": "Date granularity specifying particular date attribute in given dimension.",
@@ -742,7 +895,7 @@
                             }
                         }
                     }
-                }
+                ]
             },
             "InlineFilterDefinition": {
                 "required": ["inline"],
@@ -750,6 +903,16 @@
                 "description": "Filter in form of direct MAQL query.",
                 "properties": {
                     "inline": {
+                        "$ref": "#/components/schemas/InlineFilterDefinitionBody"
+                    }
+                }
+            },
+            "InlineFilterDefinitionBody": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/CommonFilter"
+                    },
+                    {
                         "required": ["filter"],
                         "type": "object",
                         "properties": {
@@ -758,7 +921,7 @@
                             }
                         }
                     }
-                }
+                ]
             },
             "FilterDefinitionForSimpleMeasure": {
                 "type": "object",

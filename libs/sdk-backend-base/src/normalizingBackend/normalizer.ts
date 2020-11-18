@@ -29,6 +29,7 @@ import {
     modifyMeasure,
     IMeasureDefinition,
     isAttributeFilter,
+    isRankingFilter,
 } from "@gooddata/sdk-model";
 import {
     IDimensionDescriptor,
@@ -402,6 +403,14 @@ export class Normalizer {
                 if (isLocalIdRef(ref)) {
                     ref.localIdentifier = this.normalizedLocalId(ref.localIdentifier);
                 }
+            }
+
+            if (isRankingFilter(filter)) {
+                const { measure, attributes = [] } = filter.rankingFilter;
+
+                [...attributes, measure].filter(isLocalIdRef).forEach((ref) => {
+                    ref.localIdentifier = this.normalizedLocalId(ref.localIdentifier);
+                });
             }
         });
     };

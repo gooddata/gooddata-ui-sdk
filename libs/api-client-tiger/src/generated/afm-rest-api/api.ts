@@ -63,35 +63,92 @@ export interface AFM {
 export interface AbsoluteDateFilter {
     /**
      *
-     * @type {AbsoluteDateFilterAbsoluteDateFilter}
+     * @type {AbsoluteDateFilterBody}
      * @memberof AbsoluteDateFilter
      */
-    absoluteDateFilter: AbsoluteDateFilterAbsoluteDateFilter;
+    absoluteDateFilter: AbsoluteDateFilterBody;
 }
 /**
  *
  * @export
- * @interface AbsoluteDateFilterAbsoluteDateFilter
+ * @interface AbsoluteDateFilterBody
  */
-export interface AbsoluteDateFilterAbsoluteDateFilter {
+export interface AbsoluteDateFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof AbsoluteDateFilterBody
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {ObjectIdentifier}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     * @memberof AbsoluteDateFilterBody
      */
     dataset: ObjectIdentifier;
     /**
      *
      * @type {string}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     * @memberof AbsoluteDateFilterBody
      */
     from: string;
     /**
      *
      * @type {string}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     * @memberof AbsoluteDateFilterBody
      */
     to: string;
+}
+/**
+ *
+ * @export
+ * @interface AbsoluteDateFilterBodyAllOf
+ */
+export interface AbsoluteDateFilterBodyAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterBodyAllOf
+     */
+    from: string;
+    /**
+     *
+     * @type {string}
+     * @memberof AbsoluteDateFilterBodyAllOf
+     */
+    to: string;
+}
+/**
+ *
+ * @export
+ * @interface AbstractMeasureValueFilter
+ */
+export interface AbstractMeasureValueFilter {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof AbstractMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof AbstractMeasureValueFilter
+     */
+    dimensionality?: Array<ObjectIdentifier>;
+}
+/**
+ *
+ * @export
+ * @interface AbstractMeasureValueFilterAllOf
+ */
+export interface AbstractMeasureValueFilterAllOf {
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof AbstractMeasureValueFilterAllOf
+     */
+    dimensionality?: Array<ObjectIdentifier>;
 }
 /**
  *
@@ -329,6 +386,133 @@ export interface AttributeResultHeader {
     primaryLabelValue: string;
 }
 /**
+ *
+ * @export
+ * @interface CommonAttributeFilter
+ */
+export interface CommonAttributeFilter {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof CommonAttributeFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof CommonAttributeFilter
+     */
+    displayForm: ObjectIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface CommonAttributeFilterAllOf
+ */
+export interface CommonAttributeFilterAllOf {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof CommonAttributeFilterAllOf
+     */
+    displayForm: ObjectIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface CommonDateFilter
+ */
+export interface CommonDateFilter {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof CommonDateFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof CommonDateFilter
+     */
+    dataset: ObjectIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface CommonDateFilterAllOf
+ */
+export interface CommonDateFilterAllOf {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof CommonDateFilterAllOf
+     */
+    dataset: ObjectIdentifier;
+}
+/**
+ *
+ * @export
+ * @interface CommonFilter
+ */
+export interface CommonFilter {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof CommonFilter
+     */
+    applyOnResult?: boolean;
+}
+/**
+ *
+ * @export
+ * @interface CommonMeasureValueFilter
+ */
+export interface CommonMeasureValueFilter {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof CommonMeasureValueFilter
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof CommonMeasureValueFilter
+     */
+    dimensionality?: Array<ObjectIdentifier>;
+    /**
+     *
+     * @type {Identifier}
+     * @memberof CommonMeasureValueFilter
+     */
+    measure: Identifier;
+    /**
+     *
+     * @type {number}
+     * @memberof CommonMeasureValueFilter
+     */
+    treatNullValuesAs?: number;
+}
+/**
+ *
+ * @export
+ * @interface CommonMeasureValueFilterAllOf
+ */
+export interface CommonMeasureValueFilterAllOf {
+    /**
+     *
+     * @type {Identifier}
+     * @memberof CommonMeasureValueFilterAllOf
+     */
+    measure: Identifier;
+    /**
+     *
+     * @type {number}
+     * @memberof CommonMeasureValueFilterAllOf
+     */
+    treatNullValuesAs?: number;
+}
+/**
  * Filter the result by comparing specified measure to given constant value, using given comparison operator.
  * @export
  * @interface ComparisonMeasureValueFilter
@@ -336,48 +520,93 @@ export interface AttributeResultHeader {
 export interface ComparisonMeasureValueFilter {
     /**
      *
-     * @type {ComparisonMeasureValueFilterComparisonMeasureValueFilter}
+     * @type {ComparisonMeasureValueFilterBody}
      * @memberof ComparisonMeasureValueFilter
      */
-    comparisonMeasureValueFilter: ComparisonMeasureValueFilterComparisonMeasureValueFilter;
+    comparisonMeasureValueFilter: ComparisonMeasureValueFilterBody;
 }
 /**
  *
  * @export
- * @interface ComparisonMeasureValueFilterComparisonMeasureValueFilter
+ * @interface ComparisonMeasureValueFilterBody
  */
-export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
+export interface ComparisonMeasureValueFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof ComparisonMeasureValueFilterBody
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof ComparisonMeasureValueFilterBody
+     */
+    dimensionality?: Array<ObjectIdentifier>;
     /**
      *
      * @type {Identifier}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     * @memberof ComparisonMeasureValueFilterBody
      */
     measure: Identifier;
     /**
      *
-     * @type {string}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
-    operator: ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    /**
-     *
      * @type {number}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
-    value: number;
-    /**
-     *
-     * @type {number}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     * @memberof ComparisonMeasureValueFilterBody
      */
     treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterBody
+     */
+    operator: ComparisonMeasureValueFilterBodyOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterBody
+     */
+    value: number;
 }
 
 /**
  * @export
  * @enum {string}
  */
-export enum ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum {
+export enum ComparisonMeasureValueFilterBodyOperatorEnum {
+    GREATERTHAN = "GREATER_THAN",
+    GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
+    LESSTHAN = "LESS_THAN",
+    LESSTHANOREQUALTO = "LESS_THAN_OR_EQUAL_TO",
+    EQUALTO = "EQUAL_TO",
+    NOTEQUALTO = "NOT_EQUAL_TO",
+}
+
+/**
+ *
+ * @export
+ * @interface ComparisonMeasureValueFilterBodyAllOf
+ */
+export interface ComparisonMeasureValueFilterBodyAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterBodyAllOf
+     */
+    operator: ComparisonMeasureValueFilterBodyAllOfOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof ComparisonMeasureValueFilterBodyAllOf
+     */
+    value: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum ComparisonMeasureValueFilterBodyAllOfOperatorEnum {
     GREATERTHAN = "GREATER_THAN",
     GREATERTHANOREQUALTO = "GREATER_THAN_OR_EQUAL_TO",
     LESSTHAN = "LESS_THAN",
@@ -648,7 +877,12 @@ export interface ExecutionResultPaging {
  * Abstract filter definition type
  * @export
  */
-export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter;
+export type FilterDefinition =
+    | AttributeFilter
+    | DateFilter
+    | InlineFilterDefinition
+    | MeasureValueFilter
+    | RankingFilter;
 /**
  * @type FilterDefinitionForSimpleMeasure
  * Abstract filter definition type for simple measure.
@@ -736,21 +970,40 @@ export type Identifier = LocalIdentifier | ObjectIdentifier;
 export interface InlineFilterDefinition {
     /**
      *
-     * @type {InlineFilterDefinitionInline}
+     * @type {InlineFilterDefinitionBody}
      * @memberof InlineFilterDefinition
      */
-    inline: InlineFilterDefinitionInline;
+    inline: InlineFilterDefinitionBody;
 }
 /**
  *
  * @export
- * @interface InlineFilterDefinitionInline
+ * @interface InlineFilterDefinitionBody
  */
-export interface InlineFilterDefinitionInline {
+export interface InlineFilterDefinitionBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof InlineFilterDefinitionBody
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {string}
-     * @memberof InlineFilterDefinitionInline
+     * @memberof InlineFilterDefinitionBody
+     */
+    filter: string;
+}
+/**
+ *
+ * @export
+ * @interface InlineFilterDefinitionBodyAllOf
+ */
+export interface InlineFilterDefinitionBodyAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionBodyAllOf
      */
     filter: string;
 }
@@ -921,27 +1174,46 @@ export type MeasureValueFilter = ComparisonMeasureValueFilter | RangeMeasureValu
 export interface NegativeAttributeFilter {
     /**
      *
-     * @type {NegativeAttributeFilterNegativeAttributeFilter}
+     * @type {NegativeAttributeFilterBody}
      * @memberof NegativeAttributeFilter
      */
-    negativeAttributeFilter: NegativeAttributeFilterNegativeAttributeFilter;
+    negativeAttributeFilter: NegativeAttributeFilterBody;
 }
 /**
  *
  * @export
- * @interface NegativeAttributeFilterNegativeAttributeFilter
+ * @interface NegativeAttributeFilterBody
  */
-export interface NegativeAttributeFilterNegativeAttributeFilter {
+export interface NegativeAttributeFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof NegativeAttributeFilterBody
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {ObjectIdentifier}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     * @memberof NegativeAttributeFilterBody
      */
     displayForm: ObjectIdentifier;
     /**
      *
      * @type {AttributeFilterElements}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     * @memberof NegativeAttributeFilterBody
+     */
+    notIn: AttributeFilterElements;
+}
+/**
+ *
+ * @export
+ * @interface NegativeAttributeFilterBodyAllOf
+ */
+export interface NegativeAttributeFilterBodyAllOf {
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof NegativeAttributeFilterBodyAllOf
      */
     notIn: AttributeFilterElements;
 }
@@ -1118,27 +1390,46 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
 export interface PositiveAttributeFilter {
     /**
      *
-     * @type {PositiveAttributeFilterPositiveAttributeFilter}
+     * @type {PositiveAttributeFilterBody}
      * @memberof PositiveAttributeFilter
      */
-    positiveAttributeFilter: PositiveAttributeFilterPositiveAttributeFilter;
+    positiveAttributeFilter: PositiveAttributeFilterBody;
 }
 /**
  *
  * @export
- * @interface PositiveAttributeFilterPositiveAttributeFilter
+ * @interface PositiveAttributeFilterBody
  */
-export interface PositiveAttributeFilterPositiveAttributeFilter {
+export interface PositiveAttributeFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof PositiveAttributeFilterBody
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {ObjectIdentifier}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     * @memberof PositiveAttributeFilterBody
      */
     displayForm: ObjectIdentifier;
     /**
      *
      * @type {AttributeFilterElements}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     * @memberof PositiveAttributeFilterBody
+     */
+    in: AttributeFilterElements;
+}
+/**
+ *
+ * @export
+ * @interface PositiveAttributeFilterBodyAllOf
+ */
+export interface PositiveAttributeFilterBodyAllOf {
+    /**
+     *
+     * @type {AttributeFilterElements}
+     * @memberof PositiveAttributeFilterBodyAllOf
      */
     in: AttributeFilterElements;
 }
@@ -1150,56 +1441,198 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
 export interface RangeMeasureValueFilter {
     /**
      *
-     * @type {RangeMeasureValueFilterRangeMeasureValueFilter}
+     * @type {RangeMeasureValueFilterBody}
      * @memberof RangeMeasureValueFilter
      */
-    rangeMeasureValueFilter: RangeMeasureValueFilterRangeMeasureValueFilter;
+    rangeMeasureValueFilter: RangeMeasureValueFilterBody;
 }
 /**
  *
  * @export
- * @interface RangeMeasureValueFilterRangeMeasureValueFilter
+ * @interface RangeMeasureValueFilterBody
  */
-export interface RangeMeasureValueFilterRangeMeasureValueFilter {
+export interface RangeMeasureValueFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof RangeMeasureValueFilterBody
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof RangeMeasureValueFilterBody
+     */
+    dimensionality?: Array<ObjectIdentifier>;
     /**
      *
      * @type {Identifier}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     * @memberof RangeMeasureValueFilterBody
      */
     measure: Identifier;
     /**
      *
-     * @type {string}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     * @type {number}
+     * @memberof RangeMeasureValueFilterBody
      */
-    operator: RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    treatNullValuesAs?: number;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterBody
+     */
+    operator: RangeMeasureValueFilterBodyOperatorEnum;
     /**
      *
      * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     * @memberof RangeMeasureValueFilterBody
      */
     from: number;
     /**
      *
      * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     * @memberof RangeMeasureValueFilterBody
      */
     to: number;
-    /**
-     *
-     * @type {number}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
-    treatNullValuesAs?: number;
 }
 
 /**
  * @export
  * @enum {string}
  */
-export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
+export enum RangeMeasureValueFilterBodyOperatorEnum {
     BETWEEN = "BETWEEN",
     NOTBETWEEN = "NOT_BETWEEN",
+}
+
+/**
+ *
+ * @export
+ * @interface RangeMeasureValueFilterBodyAllOf
+ */
+export interface RangeMeasureValueFilterBodyAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterBodyAllOf
+     */
+    operator: RangeMeasureValueFilterBodyAllOfOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterBodyAllOf
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof RangeMeasureValueFilterBodyAllOf
+     */
+    to: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RangeMeasureValueFilterBodyAllOfOperatorEnum {
+    BETWEEN = "BETWEEN",
+    NOTBETWEEN = "NOT_BETWEEN",
+}
+
+/**
+ * Filter the result on top/bottom N values according to given measure(s).
+ * @export
+ * @interface RankingFilter
+ */
+export interface RankingFilter {
+    /**
+     *
+     * @type {RankingFilterBody}
+     * @memberof RankingFilter
+     */
+    rankingFilter: RankingFilterBody;
+}
+/**
+ *
+ * @export
+ * @interface RankingFilterBody
+ */
+export interface RankingFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof RankingFilterBody
+     */
+    applyOnResult?: boolean;
+    /**
+     *
+     * @type {Array<ObjectIdentifier>}
+     * @memberof RankingFilterBody
+     */
+    dimensionality?: Array<ObjectIdentifier>;
+    /**
+     *
+     * @type {Array<Identifier>}
+     * @memberof RankingFilterBody
+     */
+    measures: Array<Identifier>;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterBody
+     */
+    operator: RankingFilterBodyOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof RankingFilterBody
+     */
+    value: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RankingFilterBodyOperatorEnum {
+    TOP = "TOP",
+    BOTTOM = "BOTTOM",
+}
+
+/**
+ *
+ * @export
+ * @interface RankingFilterBodyAllOf
+ */
+export interface RankingFilterBodyAllOf {
+    /**
+     *
+     * @type {Array<Identifier>}
+     * @memberof RankingFilterBodyAllOf
+     */
+    measures: Array<Identifier>;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterBodyAllOf
+     */
+    operator: RankingFilterBodyAllOfOperatorEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof RankingFilterBodyAllOf
+     */
+    value: number;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RankingFilterBodyAllOfOperatorEnum {
+    TOP = "TOP",
+    BOTTOM = "BOTTOM",
 }
 
 /**
@@ -1210,39 +1643,70 @@ export enum RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum {
 export interface RelativeDateFilter {
     /**
      *
-     * @type {RelativeDateFilterRelativeDateFilter}
+     * @type {RelativeDateFilterBody}
      * @memberof RelativeDateFilter
      */
-    relativeDateFilter: RelativeDateFilterRelativeDateFilter;
+    relativeDateFilter: RelativeDateFilterBody;
 }
 /**
- * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
+ *
  * @export
- * @interface RelativeDateFilterRelativeDateFilter
+ * @interface RelativeDateFilterBody
  */
-export interface RelativeDateFilterRelativeDateFilter {
+export interface RelativeDateFilterBody {
+    /**
+     * Force the filter to be applied on the result (true) or source data (false). If not specified at all the default behaviour specific to each type of filter is used.
+     * @type {boolean}
+     * @memberof RelativeDateFilterBody
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {ObjectIdentifier}
-     * @memberof RelativeDateFilterRelativeDateFilter
+     * @memberof RelativeDateFilterBody
      */
     dataset: ObjectIdentifier;
     /**
      * Date granularity specifying particular date attribute in given dimension.
      * @type {string}
-     * @memberof RelativeDateFilterRelativeDateFilter
+     * @memberof RelativeDateFilterBody
      */
     granularity: string;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
+     * @memberof RelativeDateFilterBody
      */
     from: number;
     /**
      * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
      * @type {number}
-     * @memberof RelativeDateFilterRelativeDateFilter
+     * @memberof RelativeDateFilterBody
+     */
+    to: number;
+}
+/**
+ * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
+ * @export
+ * @interface RelativeDateFilterBodyAllOf
+ */
+export interface RelativeDateFilterBodyAllOf {
+    /**
+     * Date granularity specifying particular date attribute in given dimension.
+     * @type {string}
+     * @memberof RelativeDateFilterBodyAllOf
+     */
+    granularity: string;
+    /**
+     * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
+     * @type {number}
+     * @memberof RelativeDateFilterBodyAllOf
+     */
+    from: number;
+    /**
+     * End of the filtering interval. Specified by number of periods (with respect to given granularity). Value \'O\' is representing current time-interval (current day, week, ...).
+     * @type {number}
+     * @memberof RelativeDateFilterBodyAllOf
      */
     to: number;
 }
