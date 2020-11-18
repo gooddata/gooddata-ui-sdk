@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# This script creates prerelease version for the next minor, creates release and creates commit.
+# This script creates prerelease version for the next minor and creates commit.
 #
 # See docs/releases.md for more information how rush version bump behaves
 #
@@ -20,5 +20,7 @@ if [ $bump_rc -ne 0 ]; then
     exit 1
 fi
 
-export TAG_NPM="prerelease"
-${DIR}/do_publish.sh
+NEXT_MINOR=$(get_current_version)
+# stage all modified json files
+git ls-files | grep '\.json' | xargs git add
+git commit -m "Prepare for next minor release ${NEXT_MINOR}"
