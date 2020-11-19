@@ -1,13 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
-import { IdentifierRef, idRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 import {
-    AttributeResourceSchema,
-    DatasetResourceSchema,
-    FactResourceSchema,
-    LabelResourceSchema,
-    MetricResourceSchema,
-    TagResourceReference,
-    TagResourceSchema,
+    AttributeAttributesGranularityEnum,
+    AttributesItem,
+    DatasetsItem,
+    FactsItem,
+    LabelsItem,
+    MetricsItem,
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
 import {
@@ -25,46 +24,36 @@ import {
     ICatalogDateAttribute,
     ICatalogDateDataset,
     ICatalogFact,
-    ICatalogGroup,
     ICatalogMeasure,
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
 
-type MetadataObjectResourceSchema =
-    | AttributeResourceSchema
-    | FactResourceSchema
-    | MetricResourceSchema
-    | LabelResourceSchema;
+type MetadataObject = AttributesItem | FactsItem | MetricsItem | LabelsItem;
 
-const commonMetadataObjectModifications = <
-    TItem extends MetadataObjectResourceSchema,
-    T extends IMetadataObjectBuilder
->(
+const commonMetadataObjectModifications = <TItem extends MetadataObject, T extends IMetadataObjectBuilder>(
     item: TItem,
 ) => (builder: T) =>
     builder
         .id(item.id)
-        .uri((item.links as any).self)
-        .title(item.attributes.title || "")
-        .description(item.attributes.description || "");
+        .uri(item.links?.self || "")
+        .title(item.attributes?.title || "")
+        .description(item.attributes?.description || "");
 
 const commonGroupableCatalogItemModifications = <
     TItem extends IGroupableCatalogItemBase,
     T extends IGroupableCatalogItemBuilder<TItem>
 >(
-    item: MetadataObjectResourceSchema,
+    item: MetadataObject,
 ) => (builder: T) => {
-    const tagRefs = (((item.relationships as any)?.tags?.data ||
-        []) as TagResourceReference[]).map((tagRef) => idRef(tagRef.id, "tag"));
-
-    return builder.groups(tagRefs);
+    const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
+    return builder.groups(tags);
 };
 
 export const convertAttribute = (
-    attribute: AttributeResourceSchema,
-    defaultLabel: LabelResourceSchema,
-    geoLabels: LabelResourceSchema[],
-    allLabels: LabelResourceSchema[],
+    attribute: AttributesItem,
+    defaultLabel: LabelsItem,
+    geoLabels: LabelsItem[],
+    allLabels: LabelsItem[],
 ): ICatalogAttribute => {
     const geoPinDisplayForms = geoLabels.map((label) => {
         return newAttributeDisplayFormMetadataObject(
@@ -93,10 +82,8 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (measure: MetricResourceSchema): ICatalogMeasure => {
-    const {
-        attributes: { maql },
-    } = measure;
+export const convertMeasure = (measure: MetricsItem): ICatalogMeasure => {
+    const maql = measure.attributes?.content?.maql;
 
     return newCatalogMeasure((catalogM) =>
         catalogM
@@ -107,7 +94,7 @@ export const convertMeasure = (measure: MetricResourceSchema): ICatalogMeasure =
     );
 };
 
-export const convertFact = (fact: FactResourceSchema): ICatalogFact => {
+export const convertFact = (fact: FactsItem): ICatalogFact => {
     return newCatalogFact((catalogF) =>
         catalogF
             .fact(idRef(fact.id, "fact"), (f) => f.modify(commonMetadataObjectModifications(fact)))
@@ -115,13 +102,12 @@ export const convertFact = (fact: FactResourceSchema): ICatalogFact => {
     );
 };
 
-export const convertDateAttribute = (
-    attribute: AttributeResourceSchema,
-    label: LabelResourceSchema,
-): ICatalogDateAttribute => {
+export const convertDateAttribute = (attribute: AttributesItem, label: LabelsItem): ICatalogDateAttribute => {
     return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
-            .granularity(toSdkGranularity(attribute.attributes.granularity!))
+            .granularity(
+                toSdkGranularity(attribute.attributes?.granularity as AttributeAttributesGranularityEnum),
+            )
             .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
@@ -132,7 +118,7 @@ export const convertDateAttribute = (
 };
 
 export const convertDateDataset = (
-    dataset: DatasetResourceSchema,
+    dataset: DatasetsItem,
     attributes: ICatalogDateAttribute[],
 ): ICatalogDateDataset => {
     return newCatalogDateDataset((dateDataset) => {
@@ -141,26 +127,12 @@ export const convertDateDataset = (
             .dataSet(idRef(dataset.id, "dataSet"), (m) => {
                 return m
                     .id(dataset.id)
-                    .uri((dataset.links as any)?.self)
-                    .title(dataset.attributes.title || "")
-                    .description(dataset.attributes.description || "")
+                    .uri(dataset.links!.self)
+                    .title(dataset.attributes?.title || "")
+                    .description(dataset.attributes?.description || "")
                     .production(true)
                     .unlisted(false);
             })
             .dateAttributes(attributes);
     });
-};
-
-export const convertGroup = (tag: TagResourceSchema): ICatalogGroup => {
-    const tagRef: IdentifierRef = {
-        identifier: tag.id,
-        type: "tag",
-    };
-
-    const group: ICatalogGroup = {
-        title: tag.attributes.title || "",
-        tag: tagRef,
-    };
-
-    return group;
 };

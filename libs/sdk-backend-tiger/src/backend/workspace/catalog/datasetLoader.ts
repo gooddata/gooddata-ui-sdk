@@ -1,12 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    AttributeResourceSchema,
-    AttributeResourcesResponseSchema,
-    DatasetResourceSchema,
+    Attributes,
+    AttributesItem,
+    DatasetsItem,
     ITigerClient,
-    LabelResourceReference,
-    LabelResourceSchema,
+    LabelsItem,
+    RelationshipToOne,
     SuccessIncluded,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
@@ -25,26 +25,30 @@ function lookupRelatedObject(included: SuccessIncluded[] | undefined, id: string
 }
 
 function getAttributeLabels(
-    attribute: AttributeResourceSchema,
+    attribute: AttributesItem,
     included: SuccessIncluded[] | undefined,
-): LabelResourceSchema[] {
-    const labelsRefs = (attribute.relationships as any).labels.data as LabelResourceReference[];
-    const allLabels: LabelResourceSchema[] = labelsRefs
+): LabelsItem[] {
+    const labelsRefs = attribute.relationships?.labels?.data;
+    let labelsArray: RelationshipToOne[] = [];
+    if (Array.isArray(labelsRefs)) {
+        labelsArray = (labelsRefs as unknown) as RelationshipToOne[];
+    } else if (typeof labelsRefs === "object" && Object.keys(labelsRefs).length > 0) {
+        labelsArray.push({ id: labelsRefs.id, type: labelsRefs.type });
+    }
+    const allLabels: LabelsItem[] = labelsArray
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
-
             if (!obj) {
                 return;
             }
-
-            return obj as LabelResourceSchema;
+            return obj as LabelsItem;
         })
-        .filter((obj): obj is LabelResourceSchema => obj !== undefined);
+        .filter((obj): obj is LabelsItem => obj !== undefined);
 
     return allLabels;
 }
 
-function isGeoLabel(label: LabelResourceSchema): boolean {
+function isGeoLabel(label: LabelsItem): boolean {
     /*
      * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
      *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
@@ -53,8 +57,8 @@ function isGeoLabel(label: LabelResourceSchema): boolean {
     return label.id.search(/^.*\.geo__/) > -1;
 }
 
-function createNonDateAttributes(attributes: AttributeResourcesResponseSchema): ICatalogAttribute[] {
-    const nonDateAttributes = attributes.data.filter((attr) => attr.attributes.granularity === undefined);
+function createNonDateAttributes(attributes: Attributes): ICatalogAttribute[] {
+    const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
@@ -67,31 +71,23 @@ function createNonDateAttributes(attributes: AttributeResourcesResponseSchema): 
 }
 
 type DatasetWithAttributes = {
-    dataset: DatasetResourceSchema;
-    attributes: AttributeResourceSchema[];
+    dataset: DatasetsItem;
+    attributes: AttributesItem[];
 };
 
-function identifyDateDatasets(
-    dateAttributes: AttributeResourceSchema[],
-    included: SuccessIncluded[] | undefined,
-) {
+function identifyDateDatasets(dateAttributes: AttributesItem[], included: SuccessIncluded[] | undefined) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
 
     dateAttributes.forEach((attribute) => {
-        const ref = (attribute.relationships as any)?.dataset?.data;
-
+        const ref = attribute.relationships?.dataset?.data;
         if (!ref) {
             return;
         }
-
-        const dataset = lookupRelatedObject(included, ref.id, ref.type) as DatasetResourceSchema;
-
+        const dataset = lookupRelatedObject(included, ref.id, ref.type) as DatasetsItem;
         if (!dataset) {
             return;
         }
-
         const entry = datasets[ref.id];
-
         if (!entry) {
             datasets[ref.id] = {
                 dataset,
@@ -105,8 +101,8 @@ function identifyDateDatasets(
     return Object.values(datasets);
 }
 
-function createDateDatasets(attributes: AttributeResourcesResponseSchema): ICatalogDateDataset[] {
-    const dateAttributes = attributes.data.filter((attr) => attr.attributes.granularity !== undefined);
+function createDateDatasets(attributes: Attributes): ICatalogDateDataset[] {
+    const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
     return dateDatasets.map((dd) => {
@@ -122,21 +118,27 @@ function createDateDatasets(attributes: AttributeResourcesResponseSchema): ICata
 }
 
 export async function loadAttributesAndDateDatasets(
-    client: ITigerClient,
+    sdk: ITigerClient,
+    workspaceId: string,
     includeTags: string[],
 ): Promise<CatalogItem[]> {
-    const attributes = await client.metadata.attributesGet(
+    const attributesResponse = await sdk.workspaceModel.getEntities(
         {
-            contentType: "application/json",
-            include: "tags,labels,dataset",
+            entity: "attributes",
+            workspaceId: workspaceId,
         },
         {
-            "filter[tags.id]": includeTags,
+            headers: { Accept: "application/vnd.gooddata.api+json" },
+            query: {
+                include: "labels,datasets",
+                tags: includeTags.join(","),
+            },
         },
     );
 
-    const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes.data);
-    const dateDatasets: CatalogItem[] = createDateDatasets(attributes.data);
+    const attributes = attributesResponse.data as Attributes;
+    const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes);
+    const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
 
     return nonDateAttributes.concat(dateDatasets);
 }

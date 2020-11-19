@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import {
-    AttributeGranularityResourceAttribute,
+    AttributeAttributesGranularityEnum,
     DimensionHeader,
     ExecutionResult,
     isResultAttributeHeader,
@@ -30,12 +30,9 @@ export type TransformerResult = {
 };
 
 // gets all the enum values
-const supportedSuffixes: string[] = Object.keys(AttributeGranularityResourceAttribute)
+const supportedSuffixes: string[] = Object.keys(AttributeAttributesGranularityEnum)
     .filter((item) => isNaN(Number(item)))
-    .map(
-        (key) =>
-            AttributeGranularityResourceAttribute[key as keyof typeof AttributeGranularityResourceAttribute],
-    );
+    .map((key) => AttributeAttributesGranularityEnum[key as keyof typeof AttributeAttributesGranularityEnum]);
 
 function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranularity | undefined {
     if (!isAttributeDescriptor(header)) {
@@ -46,7 +43,7 @@ function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranular
     const suffix = identifier.substr(identifier.lastIndexOf(".") + 1);
 
     return supportedSuffixes.includes(suffix)
-        ? toSdkGranularity(suffix as AttributeGranularityResourceAttribute)
+        ? toSdkGranularity(suffix as AttributeAttributesGranularityEnum)
         : undefined; // not a date attribute
 }
 

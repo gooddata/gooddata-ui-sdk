@@ -6,15 +6,19 @@ import {
     CatalogItem,
     CatalogItemType,
     ICatalogFact,
+    ICatalogGroup,
     ICatalogMeasure,
+    IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertFact, convertGroup, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
+import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";
-import { objRefToIdentifier } from "../../../utils/api";
 import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
+import flatMap from "lodash/flatMap";
+import uniqBy from "lodash/uniqBy";
+import { Facts, Metrics } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -68,58 +72,60 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const catalogItems: CatalogItem[] = flatten<CatalogItem>(loadersResults);
 
-        const groups = await this.loadGroups();
+        const groups = this.extractGroups(catalogItems);
 
         return new TigerWorkspaceCatalog(this.authCall, this.workspace, groups, catalogItems, this.options);
     };
 
     private loadAttributesAndDates = async (): Promise<CatalogItem[]> => {
-        const { includeTags = [] } = this.options;
-        const tagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
-
-        return this.authCall((sdk) => loadAttributesAndDateDatasets(sdk, tagsIdentifiers));
+        // TODO convert objRef[] to tags (string[])
+        //const { includeTags = [] } = this.options;
+        const includeTags: string[] = [];
+        return this.authCall((sdk) => loadAttributesAndDateDatasets(sdk, this.workspace, includeTags));
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
         const measures = await this.authCall((sdk) =>
-            sdk.metadata.metricsGet({
-                contentType: "application/json",
-            }),
-        );
-
-        return measures.data.data.map(convertMeasure);
-    };
-
-    private loadFacts = async (): Promise<ICatalogFact[]> => {
-        const { includeTags = [] } = this.options;
-        const tagsIdentifiers = await this.objRefsToIdentifiers(includeTags);
-
-        const facts = await this.authCall((sdk) =>
-            sdk.metadata.factsGet(
+            sdk.workspaceModel.getEntities(
                 {
-                    contentType: "application/json",
-                    include: "tags",
+                    entity: "metrics",
+                    workspaceId: this.workspace,
                 },
                 {
-                    "filter[tags.id]": tagsIdentifiers,
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
                 },
             ),
         );
 
-        return facts.data.data.map(convertFact);
+        return (measures.data as Metrics).data.map(convertMeasure);
     };
 
-    private loadGroups = async () => {
-        const groups = await this.authCall((sdk) =>
-            sdk.metadata.tagsGet({
-                contentType: "application/json",
-            }),
+    private loadFacts = async (): Promise<ICatalogFact[]> => {
+        const { includeTags = [] } = this.options;
+        const facts = await this.authCall((sdk) =>
+            sdk.workspaceModel.getEntities(
+                {
+                    entity: "facts",
+                    workspaceId: this.workspace,
+                },
+                {
+                    query: { tags: includeTags.join(",") },
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                },
+            ),
         );
-
-        return groups.data.data.map(convertGroup);
+        return (facts.data as Facts).data.map(convertFact);
     };
 
-    private objRefsToIdentifiers = async (objRefs: ObjRef[]) => {
-        return Promise.all(objRefs.map((ref) => objRefToIdentifier(ref, this.authCall)));
-    };
+    // Groups are collected from all catalog entities.
+    // There is no separate endpoint for the tags anymore.
+    private extractGroups(catalogItems: CatalogItem[]): ICatalogGroup[] {
+        const allTags = flatMap(catalogItems, (item): ICatalogGroup[] => {
+            return (item as IGroupableCatalogItemBase).groups.map((tag) => ({
+                title: (tag as IdentifierRef).identifier,
+                tag: tag,
+            }));
+        });
+        return uniqBy(allTags, (tag) => tag.title);
+    }
 }
