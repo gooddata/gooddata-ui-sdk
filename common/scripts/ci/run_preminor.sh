@@ -24,3 +24,7 @@ NEXT_MINOR=$(get_current_version)
 # stage all modified json files
 git ls-files | grep '\.json' | xargs git add
 git commit -m "Prepare for next minor release ${NEXT_MINOR}"
+
+# we do not want to use slack for this but the template fails the build because of this missing file
+# so we create an empty file to make the check happy
+touch slack-vars.properties
