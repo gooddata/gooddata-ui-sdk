@@ -1,8 +1,15 @@
 // (C) 2020 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-04-30T12:04:51.660Z; */
-import { newAttribute, newMeasure, IAttribute, IMeasure, IMeasureDefinition } from "@gooddata/sdk-model";
+
+/* eslint-disable */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-11-19T12:37:09.776Z; */
+import {
+    newAttribute,
+    newMeasure,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinition,
+    idRef,
+} from "@gooddata/sdk-model";
 
 export const City = {
     /**
@@ -15,6 +22,11 @@ export const City = {
      * Display Form ID: label.uscities.city.location
      */ Location: newAttribute("label.uscities.city.location"),
 };
+/**
+ * Attribute Title: Computed Attribute
+ * Display Form ID: attr.comp.MUkNnlZ
+ */
+export const ComputedAttribute: IAttribute = newAttribute("label.comp.MUkNnlZ");
 /**
  * Attribute Title: Cost Type
  * Display Form ID: attr.restaurantcostsfact.costtype
@@ -127,395 +139,459 @@ export const TransactionId: IAttribute = newAttribute("label.salesdetailfact.tra
  * Metric ID: aaIHiWZjfWNA
  * Metric Type: MAQL Metric
  */
-export const FilterLast4Quarter: IMeasure<IMeasureDefinition> = newMeasure("aaIHiWZjfWNA");
+export const FilterLast4Quarter: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaIHiWZjfWNA", "measure"));
 /**
  * Metric Title: _Filter Quarter
  * Metric ID: aaiF4bffe4yn
  * Metric Type: MAQL Metric
  */
-export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure("aaiF4bffe4yn");
+export const FilterQuarter: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaiF4bffe4yn", "measure"));
 /**
  * Metric Title: _TIMELINE Q
  * Metric ID: aaJF1ktqc10F
  * Metric Type: MAQL Metric
  */
-export const TIMELINEQ: IMeasure<IMeasureDefinition> = newMeasure("aaJF1ktqc10F");
+export const TIMELINEQ: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaJF1ktqc10F", "measure"));
 /**
  * Metric Title: [AVG] Same Store Sales Growth MoM
  * Metric ID: aasApLbucFp0
  * Metric Type: MAQL Metric
  */
-export const AVGSameStoreSalesGrowthMoM: IMeasure<IMeasureDefinition> = newMeasure("aasApLbucFp0");
+export const AVGSameStoreSalesGrowthMoM: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aasApLbucFp0", "measure"),
+);
 /**
  * Metric Title: # Checks
  * Metric ID: aeOt50ngicOD
  * Metric Type: MAQL Metric
  */
-export const NrChecks: IMeasure<IMeasureDefinition> = newMeasure("aeOt50ngicOD");
+export const NrChecks: IMeasure<IMeasureDefinition> = newMeasure(idRef("aeOt50ngicOD", "measure"));
 /**
  * Metric Title: # Employees
  * Metric ID: aaTJSTfSaRBg
  * Metric Type: MAQL Metric
  */
-export const NrEmployees: IMeasure<IMeasureDefinition> = newMeasure("aaTJSTfSaRBg");
+export const NrEmployees: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaTJSTfSaRBg", "measure"));
 /**
  * Metric Title: # Franchise Locations
  * Metric ID: ackJFayteCFG
  * Metric Type: MAQL Metric
  */
-export const NrFranchiseLocations: IMeasure<IMeasureDefinition> = newMeasure("ackJFayteCFG");
+export const NrFranchiseLocations: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("ackJFayteCFG", "measure"),
+);
 /**
  * Metric Title: # Items on Check
  * Metric ID: adFurWGrd2H8
  * Metric Type: MAQL Metric
  */
-export const NrItemsOnCheck: IMeasure<IMeasureDefinition> = newMeasure("adFurWGrd2H8");
+export const NrItemsOnCheck: IMeasure<IMeasureDefinition> = newMeasure(idRef("adFurWGrd2H8", "measure"));
 /**
  * Metric Title: # Location City
  * Metric ID: aafmUcxXd17M
  * Metric Type: MAQL Metric
  */
-export const NrLocationCity: IMeasure<IMeasureDefinition> = newMeasure("aafmUcxXd17M");
+export const NrLocationCity: IMeasure<IMeasureDefinition> = newMeasure(idRef("aafmUcxXd17M", "measure"));
 /**
  * Metric Title: # Owned Locations
  * Metric ID: aaBJGIyWbxfO
  * Metric Type: MAQL Metric
  */
-export const NrOwnedLocations: IMeasure<IMeasureDefinition> = newMeasure("aaBJGIyWbxfO");
+export const NrOwnedLocations: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaBJGIyWbxfO", "measure"));
 /**
  * Metric Title: # Restaurants
  * Metric ID: aawAq8YqhM3o
  * Metric Type: MAQL Metric
  */
-export const NrRestaurants: IMeasure<IMeasureDefinition> = newMeasure("aawAq8YqhM3o");
+export const NrRestaurants: IMeasure<IMeasureDefinition> = newMeasure(idRef("aawAq8YqhM3o", "measure"));
 /**
  * Metric Title: % Change $ Avg Total Sales
  * Metric ID: afxBqOrPc5Zh
  * Metric Type: MAQL Metric
  */
-export const PercentChange$AvgTotalSales: IMeasure<IMeasureDefinition> = newMeasure("afxBqOrPc5Zh");
+export const PercentChange$AvgTotalSales: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("afxBqOrPc5Zh", "measure"),
+);
 /**
  * Metric Title: % Change $ Avg Total Sales by Server
  * Metric ID: acMCYQZbbwJg
  * Metric Type: MAQL Metric
  */
-export const PercentChange$AvgTotalSalesByServer: IMeasure<IMeasureDefinition> = newMeasure("acMCYQZbbwJg");
+export const PercentChange$AvgTotalSalesByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("acMCYQZbbwJg", "measure"),
+);
 /**
  * Metric Title: % of Entree on Total Check Size
  * Metric ID: aagurTlZd1Ul
  * Metric Type: MAQL Metric
  */
-export const PercentOfEntreeOnTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure("aagurTlZd1Ul");
+export const PercentOfEntreeOnTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aagurTlZd1Ul", "measure"),
+);
 /**
  * Metric Title: $ Avg Check Size
  * Metric ID: agGujhRmcjQD
  * Metric Type: MAQL Metric
  */
-export const $AvgCheckSize: IMeasure<IMeasureDefinition> = newMeasure("agGujhRmcjQD");
+export const $AvgCheckSize: IMeasure<IMeasureDefinition> = newMeasure(idRef("agGujhRmcjQD", "measure"));
 /**
  * Metric Title: $ Avg Daily Total Sales
  * Metric ID: aagJGHg1bxap
  * Metric Type: MAQL Metric
  */
-export const $AvgDailyTotalSales: IMeasure<IMeasureDefinition> = newMeasure("aagJGHg1bxap");
+export const $AvgDailyTotalSales: IMeasure<IMeasureDefinition> = newMeasure(idRef("aagJGHg1bxap", "measure"));
 /**
  * Metric Title: $ Avg Daily Total Sales by Server
  * Metric ID: aaAwXH5UfVBx
  * Metric Type: MAQL Metric
  */
-export const $AvgDailyTotalSalesByServer: IMeasure<IMeasureDefinition> = newMeasure("aaAwXH5UfVBx");
+export const $AvgDailyTotalSalesByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaAwXH5UfVBx", "measure"),
+);
 /**
  * Metric Title: $ Avg Daily Total Sales by Server - For Previous
  * Metric ID: aeiCXq43bzcl
  * Metric Type: MAQL Metric
  */
 export const $AvgDailyTotalSalesByServerForPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    "aeiCXq43bzcl",
+    idRef("aeiCXq43bzcl", "measure"),
 );
 /**
  * Metric Title: $ Avg Restaurant Daily Total Sales
  * Metric ID: acEvQdUMiEAd
  * Metric Type: MAQL Metric
  */
-export const $AvgRestaurantDailyTotalSales: IMeasure<IMeasureDefinition> = newMeasure("acEvQdUMiEAd");
+export const $AvgRestaurantDailyTotalSales: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("acEvQdUMiEAd", "measure"),
+);
 /**
  * Metric Title: $ Avg Restaurant Daily Total Sales - For Previous
  * Metric ID: agbBoXF6haIe
  * Metric Type: MAQL Metric
  */
 export const $AvgRestaurantDailyTotalSalesForPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    "agbBoXF6haIe",
+    idRef("agbBoXF6haIe", "measure"),
 );
 /**
  * Metric Title: $ Avg Total Sales by Restaurant
  * Metric ID: aaAHkMhRgp7S
  * Metric Type: MAQL Metric
  */
-export const $AvgTotalSalesByRestaurant: IMeasure<IMeasureDefinition> = newMeasure("aaAHkMhRgp7S");
+export const $AvgTotalSalesByRestaurant: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaAHkMhRgp7S", "measure"),
+);
 /**
  * Metric Title: $ Entree of Total Check Size
  * Metric ID: aavuqQNNaDdc
  * Metric Type: MAQL Metric
  */
-export const $EntreeOfTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure("aavuqQNNaDdc");
+export const $EntreeOfTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aavuqQNNaDdc", "measure"),
+);
 /**
  * Metric Title: $ Franchise Fees
  * Metric ID: aaEGaXAEgB7U
  * Metric Type: MAQL Metric
  */
-export const $FranchiseFees: IMeasure<IMeasureDefinition> = newMeasure("aaEGaXAEgB7U");
+export const $FranchiseFees: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaEGaXAEgB7U", "measure"));
 /**
  * Metric Title: $ Franchise Fees (Ad Royalty)
  * Metric ID: aabHeqImaK0d
  * Metric Type: MAQL Metric
  */
-export const $FranchiseFeesAdRoyalty: IMeasure<IMeasureDefinition> = newMeasure("aabHeqImaK0d");
+export const $FranchiseFeesAdRoyalty: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aabHeqImaK0d", "measure"),
+);
 /**
  * Metric Title: $ Franchise Fees (Initial Fee) Last Quarter Timeline
  * Metric ID: aayHf60BfkfS
  * Metric Type: MAQL Metric
  */
 export const $FranchiseFeesInitialFeeLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure(
-    "aayHf60BfkfS",
+    idRef("aayHf60BfkfS", "measure"),
 );
 /**
  * Metric Title: $ Franchise Fees (Initial Franchise Fee)
  * Metric ID: aaDHcv6wevkl
  * Metric Type: MAQL Metric
  */
-export const $FranchiseFeesInitialFranchiseFee: IMeasure<IMeasureDefinition> = newMeasure("aaDHcv6wevkl");
+export const $FranchiseFeesInitialFranchiseFee: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaDHcv6wevkl", "measure"),
+);
 /**
  * Metric Title: $ Franchise Fees (Ongoing Royalty)
  * Metric ID: aaWGcgnsfxIg
  * Metric Type: MAQL Metric
  */
-export const $FranchiseFeesOngoingRoyalty: IMeasure<IMeasureDefinition> = newMeasure("aaWGcgnsfxIg");
+export const $FranchiseFeesOngoingRoyalty: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaWGcgnsfxIg", "measure"),
+);
 /**
  * Metric Title: $ Franchise Fees (Ongoing Royalty) Last Quarter Timeline
  * Metric ID: aaeHf3Mofjir
  * Metric Type: MAQL Metric
  */
 export const $FranchiseFeesOngoingRoyaltyLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure(
-    "aaeHf3Mofjir",
+    idRef("aaeHf3Mofjir", "measure"),
 );
 /**
  * Metric Title: $ Franchised Sales
  * Metric ID: aclF4oDIe5hP
  * Metric Type: MAQL Metric
  */
-export const $FranchisedSales: IMeasure<IMeasureDefinition> = newMeasure("aclF4oDIe5hP");
+export const $FranchisedSales: IMeasure<IMeasureDefinition> = newMeasure(idRef("aclF4oDIe5hP", "measure"));
 /**
  * Metric Title: $ Gross Profit
  * Metric ID: aa5JBkFDa7sJ
  * Metric Type: MAQL Metric
  */
-export const $GrossProfit: IMeasure<IMeasureDefinition> = newMeasure("aa5JBkFDa7sJ");
+export const $GrossProfit: IMeasure<IMeasureDefinition> = newMeasure(idRef("aa5JBkFDa7sJ", "measure"));
 /**
  * Metric Title: $ Owned Sales
  * Metric ID: aaMF7AZGbALB
  * Metric Type: MAQL Metric
  */
-export const $OwnedSales: IMeasure<IMeasureDefinition> = newMeasure("aaMF7AZGbALB");
+export const $OwnedSales: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaMF7AZGbALB", "measure"));
 /**
  * Metric Title: $ Owned Sales Last Quarter Timeline
  * Metric ID: abHF4LCfdNdt
  * Metric Type: MAQL Metric
  */
-export const $OwnedSalesLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure("abHF4LCfdNdt");
+export const $OwnedSalesLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("abHF4LCfdNdt", "measure"),
+);
 /**
  * Metric Title: $ Scheduled Costs
  * Metric ID: aclJxvAlhCp0
  * Metric Type: MAQL Metric
  */
-export const $ScheduledCosts: IMeasure<IMeasureDefinition> = newMeasure("aclJxvAlhCp0");
+export const $ScheduledCosts: IMeasure<IMeasureDefinition> = newMeasure(idRef("aclJxvAlhCp0", "measure"));
 /**
  * Metric Title: $ Scheduled Labor Costs
  * Metric ID: aaGJzwrDdbfQ
  * Metric Type: MAQL Metric
  */
-export const $ScheduledLaborCosts: IMeasure<IMeasureDefinition> = newMeasure("aaGJzwrDdbfQ");
+export const $ScheduledLaborCosts: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaGJzwrDdbfQ", "measure"),
+);
 /**
  * Metric Title: $ Total Check Value
  * Metric ID: aattxAMVg2YU
  * Metric Type: MAQL Metric
  */
-export const $TotalCheckValue: IMeasure<IMeasureDefinition> = newMeasure("aattxAMVg2YU");
+export const $TotalCheckValue: IMeasure<IMeasureDefinition> = newMeasure(idRef("aattxAMVg2YU", "measure"));
 /**
  * Metric Title: $ Total Costs
  * Metric ID: aaQHncjzfrtR
  * Metric Type: MAQL Metric
  */
-export const $TotalCosts: IMeasure<IMeasureDefinition> = newMeasure("aaQHncjzfrtR");
+export const $TotalCosts: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaQHncjzfrtR", "measure"));
 /**
  * Metric Title: $ Total Costs - COGs
  * Metric ID: aafHpxx0f3gL
  * Metric Type: MAQL Metric
  */
-export const $TotalCostsCOGs: IMeasure<IMeasureDefinition> = newMeasure("aafHpxx0f3gL");
+export const $TotalCostsCOGs: IMeasure<IMeasureDefinition> = newMeasure(idRef("aafHpxx0f3gL", "measure"));
 /**
  * Metric Title: $ Total Costs - Labor
  * Metric ID: aamHpELXdotY
  * Metric Type: MAQL Metric
  */
-export const $TotalCostsLabor: IMeasure<IMeasureDefinition> = newMeasure("aamHpELXdotY");
+export const $TotalCostsLabor: IMeasure<IMeasureDefinition> = newMeasure(idRef("aamHpELXdotY", "measure"));
 /**
  * Metric Title: $ Total Costs - Occupany
  * Metric ID: aagHqrJ6iAhD
  * Metric Type: MAQL Metric
  */
-export const $TotalCostsOccupany: IMeasure<IMeasureDefinition> = newMeasure("aagHqrJ6iAhD");
+export const $TotalCostsOccupany: IMeasure<IMeasureDefinition> = newMeasure(idRef("aagHqrJ6iAhD", "measure"));
 /**
  * Metric Title: $ Total Costs - Operating
  * Metric ID: aaeHqv2qhEE1
  * Metric Type: MAQL Metric
  */
-export const $TotalCostsOperating: IMeasure<IMeasureDefinition> = newMeasure("aaeHqv2qhEE1");
+export const $TotalCostsOperating: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaeHqv2qhEE1", "measure"),
+);
 /**
  * Metric Title: $ Total Sales
  * Metric ID: aa7ulGyKhIE5
  * Metric Type: MAQL Metric
  */
-export const $TotalSales: IMeasure<IMeasureDefinition> = newMeasure("aa7ulGyKhIE5");
+export const $TotalSales: IMeasure<IMeasureDefinition> = newMeasure(idRef("aa7ulGyKhIE5", "measure"));
 /**
  * Metric Title: $ Total Sales Last Quarter Timeline
  * Metric ID: aajFRfDPaJrB
  * Metric Type: MAQL Metric
  */
-export const $TotalSalesLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure("aajFRfDPaJrB");
+export const $TotalSalesLastQuarterTimeline: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aajFRfDPaJrB", "measure"),
+);
 /**
  * Metric Title: Avg # Checks
  * Metric ID: aakujkP2g68f
  * Metric Type: MAQL Metric
  */
-export const AvgNrChecks: IMeasure<IMeasureDefinition> = newMeasure("aakujkP2g68f");
+export const AvgNrChecks: IMeasure<IMeasureDefinition> = newMeasure(idRef("aakujkP2g68f", "measure"));
 /**
  * Metric Title: Avg # Employees - Franchised
  * Metric ID: aciJJMmDfGYG
  * Metric Type: MAQL Metric
  */
-export const AvgNrEmployeesFranchised: IMeasure<IMeasureDefinition> = newMeasure("aciJJMmDfGYG");
+export const AvgNrEmployeesFranchised: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aciJJMmDfGYG", "measure"),
+);
 /**
  * Metric Title: Avg # Employees - Owned
  * Metric ID: abQJKPrmcvPv
  * Metric Type: MAQL Metric
  */
-export const AvgNrEmployeesOwned: IMeasure<IMeasureDefinition> = newMeasure("abQJKPrmcvPv");
+export const AvgNrEmployeesOwned: IMeasure<IMeasureDefinition> = newMeasure(idRef("abQJKPrmcvPv", "measure"));
 /**
  * Metric Title: Avg # Items on Check
  * Metric ID: adFurSoPaUaF
  * Metric Type: MAQL Metric
  */
-export const AvgNrItemsOnCheck: IMeasure<IMeasureDefinition> = newMeasure("adFurSoPaUaF");
+export const AvgNrItemsOnCheck: IMeasure<IMeasureDefinition> = newMeasure(idRef("adFurSoPaUaF", "measure"));
 /**
  * Metric Title: Avg # Items on Check By Server
  * Metric ID: aaKwQwBIg1WY
  * Metric Type: MAQL Metric
  */
-export const AvgNrItemsOnCheckByServer: IMeasure<IMeasureDefinition> = newMeasure("aaKwQwBIg1WY");
+export const AvgNrItemsOnCheckByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaKwQwBIg1WY", "measure"),
+);
 /**
  * Metric Title: Avg % of Entree on Total Check size
  * Metric ID: adQvRqlFawrq
  * Metric Type: MAQL Metric
  */
-export const AvgPercentOfEntreeOnTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure("adQvRqlFawrq");
+export const AvgPercentOfEntreeOnTotalCheckSize: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("adQvRqlFawrq", "measure"),
+);
 /**
  * Metric Title: Avg Check Size by Restaurant
  * Metric ID: abmxly1WgN0A
  * Metric Type: MAQL Metric
  */
-export const AvgCheckSizeByRestaurant: IMeasure<IMeasureDefinition> = newMeasure("abmxly1WgN0A");
+export const AvgCheckSizeByRestaurant: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("abmxly1WgN0A", "measure"),
+);
 /**
  * Metric Title: Avg Check Size by Server
  * Metric ID: afewRzGAersh
  * Metric Type: MAQL Metric
  */
-export const AvgCheckSizeByServer: IMeasure<IMeasureDefinition> = newMeasure("afewRzGAersh");
+export const AvgCheckSizeByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("afewRzGAersh", "measure"),
+);
 /**
  * Metric Title: Avg Daily # Checks by Restaurant
  * Metric ID: aaKvTDSga0Qc
  * Metric Type: MAQL Metric
  */
-export const AvgDailyNrChecksByRestaurant: IMeasure<IMeasureDefinition> = newMeasure("aaKvTDSga0Qc");
+export const AvgDailyNrChecksByRestaurant: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aaKvTDSga0Qc", "measure"),
+);
 /**
  * Metric Title: Avg Daily # of Check by Server
  * Metric ID: afgwRbw8ekwA
  * Metric Type: MAQL Metric
  */
-export const AvgDailyNrOfCheckByServer: IMeasure<IMeasureDefinition> = newMeasure("afgwRbw8ekwA");
+export const AvgDailyNrOfCheckByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("afgwRbw8ekwA", "measure"),
+);
 /**
  * Metric Title: Avg Entree % By Restaurant
  * Metric ID: afQHUg8AfYdl
  * Metric Type: MAQL Metric
  */
-export const AvgEntreePercentByRestaurant: IMeasure<IMeasureDefinition> = newMeasure("afQHUg8AfYdl");
+export const AvgEntreePercentByRestaurant: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("afQHUg8AfYdl", "measure"),
+);
 /**
  * Metric Title: Avg Entree % By Server
  * Metric ID: aexwEtn0eHwB
  * Metric Type: MAQL Metric
  */
-export const AvgEntreePercentByServer: IMeasure<IMeasureDefinition> = newMeasure("aexwEtn0eHwB");
+export const AvgEntreePercentByServer: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aexwEtn0eHwB", "measure"),
+);
 /**
  * Metric Title: Franchise Fee (Initial Fee) % Change
  * Metric ID: aabHgIqabggQ
  * Metric Type: MAQL Metric
  */
-export const FranchiseFeeInitialFeePercentChange: IMeasure<IMeasureDefinition> = newMeasure("aabHgIqabggQ");
+export const FranchiseFeeInitialFeePercentChange: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aabHgIqabggQ", "measure"),
+);
 /**
  * Metric Title: Franchise Fee (Ongoing Royalty) % Change
  * Metric ID: aacHgvmIfZOX
  * Metric Type: MAQL Metric
  */
 export const FranchiseFeeOngoingRoyaltyPercentChange: IMeasure<IMeasureDefinition> = newMeasure(
-    "aacHgvmIfZOX",
+    idRef("aacHgvmIfZOX", "measure"),
 );
 /**
  * Metric Title: Gross Profit %
  * Metric ID: abBJBoqTe5IH
  * Metric Type: MAQL Metric
  */
-export const GrossProfitPercent: IMeasure<IMeasureDefinition> = newMeasure("abBJBoqTe5IH");
+export const GrossProfitPercent: IMeasure<IMeasureDefinition> = newMeasure(idRef("abBJBoqTe5IH", "measure"));
 /**
  * Metric Title: Owned Sales % Change
  * Metric ID: aacF8F2Me67e
  * Metric Type: MAQL Metric
  */
-export const OwnedSalesPercentChange: IMeasure<IMeasureDefinition> = newMeasure("aacF8F2Me67e");
+export const OwnedSalesPercentChange: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aacF8F2Me67e", "measure"),
+);
 /**
  * Metric Title: Same Store Sales
  * Metric ID: aaXAnw7hcbFY
  * Metric Type: MAQL Metric
  */
-export const SameStoreSales: IMeasure<IMeasureDefinition> = newMeasure("aaXAnw7hcbFY");
+export const SameStoreSales: IMeasure<IMeasureDefinition> = newMeasure(idRef("aaXAnw7hcbFY", "measure"));
 /**
  * Metric Title: Same Store Sales MoM Growth
  * Metric ID: aciAmeQCfGmo
  * Metric Type: MAQL Metric
  */
-export const SameStoreSalesMoMGrowth: IMeasure<IMeasureDefinition> = newMeasure("aciAmeQCfGmo");
+export const SameStoreSalesMoMGrowth: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aciAmeQCfGmo", "measure"),
+);
 /**
  * Metric Title: Same Store Sales Previous Month
  * Metric ID: aagAoGqjcuCZ
  * Metric Type: MAQL Metric
  */
-export const SameStoreSalesPreviousMonth: IMeasure<IMeasureDefinition> = newMeasure("aagAoGqjcuCZ");
+export const SameStoreSalesPreviousMonth: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aagAoGqjcuCZ", "measure"),
+);
 /**
  * Metric Title: Total # Franchised Employees
  * Metric ID: afrJGKajgogi
  * Metric Type: MAQL Metric
  */
-export const TotalNrFranchisedEmployees: IMeasure<IMeasureDefinition> = newMeasure("afrJGKajgogi");
+export const TotalNrFranchisedEmployees: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("afrJGKajgogi", "measure"),
+);
 /**
  * Metric Title: Total # Owned Employees
  * Metric ID: aazJLFHCdCBh
  * Metric Type: MAQL Metric
  */
-export const TotalNrOwnedEmployees: IMeasure<IMeasureDefinition> = newMeasure("aazJLFHCdCBh");
+export const TotalNrOwnedEmployees: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("aazJLFHCdCBh", "measure"),
+);
 /**
  * Metric Title: Total Sales % Change
  * Metric ID: abhFQRhibZKx
  * Metric Type: MAQL Metric
  */
-export const TotalSalesPercentChange: IMeasure<IMeasureDefinition> = newMeasure("abhFQRhibZKx");
+export const TotalSalesPercentChange: IMeasure<IMeasureDefinition> = newMeasure(
+    idRef("abhFQRhibZKx", "measure"),
+);
 /**
  * Fact Title: $ Menu Item Sales
  * Fact ID: fact.salesdetailfact.menuitemsales
@@ -526,37 +602,41 @@ export const $MenuItemSales = {
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: $ Menu Item Sales
      * Fact ID: fact.salesdetailfact.menuitemsales
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.salesdetailfact.menuitemsales", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.salesdetailfact.menuitemsales", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Fact Title: Cost
@@ -568,37 +648,37 @@ export const Cost = {
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Cost
      * Fact ID: fact.restaurantcostsfact.cost
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.restaurantcostsfact.cost", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.restaurantcostsfact.cost", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Density
@@ -610,37 +690,37 @@ export const Density = {
      * Fact ID: fact.uscities.density
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.uscities.density", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.uscities.density", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.uscities.density", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.uscities.density", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.uscities.density", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.uscities.density", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Density
      * Fact ID: fact.uscities.density
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.uscities.density", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.uscities.density", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Menu Item Quantity
@@ -652,37 +732,43 @@ export const MenuItemQuantity = {
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) =>
+        m.aggregation("count"),
+    ),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: Menu Item Quantity
      * Fact ID: fact.salesdetailfact.menuitemquantity
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.salesdetailfact.menuitemquantity", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.salesdetailfact.menuitemquantity", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Fact Title: Population
@@ -694,37 +780,37 @@ export const Population = {
      * Fact ID: fact.uscities.population
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.uscities.population", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.uscities.population", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("count")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.uscities.population", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.uscities.population", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.uscities.population", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.uscities.population", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("median")),
     /**
      * Fact Title: Population
      * Fact ID: fact.uscities.population
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.uscities.population", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.uscities.population", "fact"), (m) => m.aggregation("runsum")),
 };
 /**
  * Fact Title: Scheduled Cost
@@ -736,37 +822,43 @@ export const ScheduledCost = {
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: sum
      */
-    Sum: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("sum")),
+    Sum: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) => m.aggregation("sum")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: count
-     */ Count: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("count")),
+     */ Count: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) =>
+        m.aggregation("count"),
+    ),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: avg
-     */ Avg: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("avg")),
+     */ Avg: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) => m.aggregation("avg")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: min
-     */ Min: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("min")),
+     */ Min: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) => m.aggregation("min")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: max
-     */ Max: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("max")),
+     */ Max: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) => m.aggregation("max")),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: median
-     */ Median: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("median")),
+     */ Median: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) =>
+        m.aggregation("median"),
+    ),
     /**
      * Fact Title: Scheduled Cost
      * Fact ID: fact.restaurantcostsfact.scheduledcost
      * Fact Aggregation: runsum
-     */ Runsum: newMeasure("fact.restaurantcostsfact.scheduledcost", (m) => m.aggregation("runsum")),
+     */ Runsum: newMeasure(idRef("fact.restaurantcostsfact.scheduledcost", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
 };
 /**
  * Attribute Title: Year (Date)
@@ -1332,6 +1424,1317 @@ export const FiscalDateDate = {
      * Display Form ID: fiscaldate.fiscaljun1_date.eddmmyyyy
      */ DdMmYyyy_1: newAttribute("fiscaldate.fiscaljun1_date.eddmmyyyy"),
 };
+/**
+ * Attribute Title: Year (Date 1)
+ * Display Form ID: date_1.year
+ */
+export const Date1Year: IAttribute = newAttribute("date_1.aag81lMifn6q");
+/**
+ * Attribute Title: Quarter (Date 1)
+ * Display Form ID: date_1.quarter.in.year
+ */
+export const Date1Quarter: IAttribute = newAttribute("date_1.aam81lMifn6q");
+export const Date1WeekSunSatYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 1)
+     * Display Form ID: date_1.aaA81lMifn6q
+     */
+    WeekNrYear: newAttribute("date_1.aaA81lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 1)
+     * Display Form ID: date_1.aaw81lMifn6q
+     */ WeekStarting: newAttribute("date_1.aaw81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 1)
+     * Display Form ID: date_1.aau81lMifn6q
+     */ FromTo: newAttribute("date_1.aau81lMifn6q"),
+    /**
+     * Display Form Title: Week #/Year (Cont.) (Date 1)
+     * Display Form ID: date_1.aay81lMifn6q
+     */ WeekNrYear_1: newAttribute("date_1.aay81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Cont.) (Date 1)
+     * Display Form ID: date_1.aaC81lMifn6q
+     */ WkQtrYear: newAttribute("date_1.aaC81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Date 1)
+     * Display Form ID: date_1.aas81lMifn6q
+     */ WkQtrYear_1: newAttribute("date_1.aas81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Sun-Sat) (Date 1)
+ * Display Form ID: date_1.week.in.year
+ */
+export const Date1WeekSunSat: IAttribute = newAttribute("date_1.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Date 1)
+ * Display Form ID: date_1.week.in.quarter
+ */
+export const Date1WeekSunSatOfQtr: IAttribute = newAttribute("date_1.aaO81lMifn6q");
+export const Date1WeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 1)
+     * Display Form ID: date_1.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("date_1.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 1)
+     * Display Form ID: date_1.aaY81lMifn6q
+     */ WeekStarting: newAttribute("date_1.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 1)
+     * Display Form ID: date_1.aaW81lMifn6q
+     */ FromTo: newAttribute("date_1.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Date 1)
+ * Display Form ID: date_1.euweek.in.year
+ */
+export const Date1WeekMonSun: IAttribute = newAttribute("date_1.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Date 1)
+ * Display Form ID: date_1.euweek.in.quarter
+ */
+export const Date1WeekMonSunOfQtr: IAttribute = newAttribute("date_1.abg81lMifn6q");
+export const Date1Month = {
+    /**
+     * Display Form Title: Short (Jan) (Date 1)
+     * Display Form ID: date_1.abm81lMifn6q
+     */
+    Short: newAttribute("date_1.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Date 1)
+     * Display Form ID: date_1.abs81lMifn6q
+     */ Long: newAttribute("date_1.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Date 1)
+     * Display Form ID: date_1.abq81lMifn6q
+     */ Number: newAttribute("date_1.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Date 1)
+     * Display Form ID: date_1.abo81lMifn6q
+     */ MQ: newAttribute("date_1.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Date 1)
+ * Display Form ID: date_1.month.in.quarter
+ */
+export const Date1MonthOfQuarter: IAttribute = newAttribute("date_1.aby81lMifn6q");
+/**
+ * Attribute Title: Day of Year (Date 1)
+ * Display Form ID: date_1.day.in.year
+ */
+export const Date1DayOfYear: IAttribute = newAttribute("date_1.abE81lMifn6q");
+export const Date1DayOfWeekSunSat = {
+    /**
+     * Display Form Title: Short (Sun) (Date 1)
+     * Display Form ID: date_1.abK81lMifn6q
+     */
+    Short: newAttribute("date_1.abK81lMifn6q"),
+    /**
+     * Display Form Title: Long (Sunday) (Date 1)
+     * Display Form ID: date_1.abO81lMifn6q
+     */ Long: newAttribute("date_1.abO81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Sunday) (Date 1)
+     * Display Form ID: date_1.abM81lMifn6q
+     */ Number: newAttribute("date_1.abM81lMifn6q"),
+};
+export const Date1DayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Date 1)
+     * Display Form ID: date_1.abU81lMifn6q
+     */
+    Short: newAttribute("date_1.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Date 1)
+     * Display Form ID: date_1.abY81lMifn6q
+     */ Long: newAttribute("date_1.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Date 1)
+     * Display Form ID: date_1.abW81lMifn6q
+     */ Number: newAttribute("date_1.abW81lMifn6q"),
+};
+/**
+ * Attribute Title: Day of Quarter (Date 1)
+ * Display Form ID: date_1.day.in.quarter
+ */
+export const Date1DayOfQuarter: IAttribute = newAttribute("date_1.ab481lMifn6q");
+/**
+ * Attribute Title: Day of Month (Date 1)
+ * Display Form ID: date_1.day.in.month
+ */
+export const Date1DayOfMonth: IAttribute = newAttribute("date_1.aca81lMifn6q");
+/**
+ * Attribute Title: Quarter/Year (Date 1)
+ * Display Form ID: date_1.quarter
+ */
+export const Date1QuarterYear: IAttribute = newAttribute("date_1.aci81lMifn6q");
+export const Date1MonthYear = {
+    /**
+     * Display Form Title: Short (Jan 2010) (Date 1)
+     * Display Form ID: date_1.act81lMifn6q
+     */
+    Short: newAttribute("date_1.act81lMifn6q"),
+    /**
+     * Display Form Title: Long (January 2010) (Date 1)
+     * Display Form ID: date_1.acx81lMifn6q
+     */ Long: newAttribute("date_1.acx81lMifn6q"),
+    /**
+     * Display Form Title: Number (1/2010) (Date 1)
+     * Display Form ID: date_1.acv81lMifn6q
+     */ Number: newAttribute("date_1.acv81lMifn6q"),
+};
+export const Date1Date = {
+    /**
+     * Display Form Title: mm/dd/yyyy (Date 1)
+     * Display Form ID: date_1.date.mmddyyyy
+     */
+    MmDdYyyy: newAttribute("date_1.date.mmddyyyy"),
+    /**
+     * Display Form Title: yyyy-mm-dd (Date 1)
+     * Display Form ID: date_1.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("date_1.date.yyyymmdd"),
+    /**
+     * Display Form Title: m/d/yy (no leading zeroes) (Date 1)
+     * Display Form ID: date_1.date.mdyy
+     */ MDYy: newAttribute("date_1.date.mdyy"),
+    /**
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Date 1)
+     * Display Form ID: date_1.date.long
+     */ Long: newAttribute("date_1.date.long"),
+    /**
+     * Display Form Title: dd/mm/yyyy (Date 1)
+     * Display Form ID: date_1.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("date_1.date.ddmmyyyy"),
+    /**
+     * Display Form Title: dd-mm-yyyy (Date 1)
+     * Display Form ID: date_1.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("date_1.date.eddmmyyyy"),
+};
+/**
+ * Attribute Title: Year (Date 2)
+ * Display Form ID: date_2.year
+ */
+export const Date2Year: IAttribute = newAttribute("date_2.aag81lMifn6q");
+/**
+ * Attribute Title: Quarter (Date 2)
+ * Display Form ID: date_2.quarter.in.year
+ */
+export const Date2Quarter: IAttribute = newAttribute("date_2.aam81lMifn6q");
+export const Date2WeekSunSatYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 2)
+     * Display Form ID: date_2.aaA81lMifn6q
+     */
+    WeekNrYear: newAttribute("date_2.aaA81lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 2)
+     * Display Form ID: date_2.aaw81lMifn6q
+     */ WeekStarting: newAttribute("date_2.aaw81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 2)
+     * Display Form ID: date_2.aau81lMifn6q
+     */ FromTo: newAttribute("date_2.aau81lMifn6q"),
+    /**
+     * Display Form Title: Week #/Year (Cont.) (Date 2)
+     * Display Form ID: date_2.aay81lMifn6q
+     */ WeekNrYear_1: newAttribute("date_2.aay81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Cont.) (Date 2)
+     * Display Form ID: date_2.aaC81lMifn6q
+     */ WkQtrYear: newAttribute("date_2.aaC81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Date 2)
+     * Display Form ID: date_2.aas81lMifn6q
+     */ WkQtrYear_1: newAttribute("date_2.aas81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Sun-Sat) (Date 2)
+ * Display Form ID: date_2.week.in.year
+ */
+export const Date2WeekSunSat: IAttribute = newAttribute("date_2.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Date 2)
+ * Display Form ID: date_2.week.in.quarter
+ */
+export const Date2WeekSunSatOfQtr: IAttribute = newAttribute("date_2.aaO81lMifn6q");
+export const Date2WeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 2)
+     * Display Form ID: date_2.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("date_2.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 2)
+     * Display Form ID: date_2.aaY81lMifn6q
+     */ WeekStarting: newAttribute("date_2.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 2)
+     * Display Form ID: date_2.aaW81lMifn6q
+     */ FromTo: newAttribute("date_2.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Date 2)
+ * Display Form ID: date_2.euweek.in.year
+ */
+export const Date2WeekMonSun: IAttribute = newAttribute("date_2.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Date 2)
+ * Display Form ID: date_2.euweek.in.quarter
+ */
+export const Date2WeekMonSunOfQtr: IAttribute = newAttribute("date_2.abg81lMifn6q");
+export const Date2Month = {
+    /**
+     * Display Form Title: Short (Jan) (Date 2)
+     * Display Form ID: date_2.abm81lMifn6q
+     */
+    Short: newAttribute("date_2.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Date 2)
+     * Display Form ID: date_2.abs81lMifn6q
+     */ Long: newAttribute("date_2.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Date 2)
+     * Display Form ID: date_2.abq81lMifn6q
+     */ Number: newAttribute("date_2.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Date 2)
+     * Display Form ID: date_2.abo81lMifn6q
+     */ MQ: newAttribute("date_2.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Date 2)
+ * Display Form ID: date_2.month.in.quarter
+ */
+export const Date2MonthOfQuarter: IAttribute = newAttribute("date_2.aby81lMifn6q");
+/**
+ * Attribute Title: Day of Year (Date 2)
+ * Display Form ID: date_2.day.in.year
+ */
+export const Date2DayOfYear: IAttribute = newAttribute("date_2.abE81lMifn6q");
+export const Date2DayOfWeekSunSat = {
+    /**
+     * Display Form Title: Short (Sun) (Date 2)
+     * Display Form ID: date_2.abK81lMifn6q
+     */
+    Short: newAttribute("date_2.abK81lMifn6q"),
+    /**
+     * Display Form Title: Long (Sunday) (Date 2)
+     * Display Form ID: date_2.abO81lMifn6q
+     */ Long: newAttribute("date_2.abO81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Sunday) (Date 2)
+     * Display Form ID: date_2.abM81lMifn6q
+     */ Number: newAttribute("date_2.abM81lMifn6q"),
+};
+export const Date2DayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Date 2)
+     * Display Form ID: date_2.abU81lMifn6q
+     */
+    Short: newAttribute("date_2.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Date 2)
+     * Display Form ID: date_2.abY81lMifn6q
+     */ Long: newAttribute("date_2.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Date 2)
+     * Display Form ID: date_2.abW81lMifn6q
+     */ Number: newAttribute("date_2.abW81lMifn6q"),
+};
+/**
+ * Attribute Title: Day of Quarter (Date 2)
+ * Display Form ID: date_2.day.in.quarter
+ */
+export const Date2DayOfQuarter: IAttribute = newAttribute("date_2.ab481lMifn6q");
+/**
+ * Attribute Title: Day of Month (Date 2)
+ * Display Form ID: date_2.day.in.month
+ */
+export const Date2DayOfMonth: IAttribute = newAttribute("date_2.aca81lMifn6q");
+/**
+ * Attribute Title: Quarter/Year (Date 2)
+ * Display Form ID: date_2.quarter
+ */
+export const Date2QuarterYear: IAttribute = newAttribute("date_2.aci81lMifn6q");
+export const Date2MonthYear = {
+    /**
+     * Display Form Title: Short (Jan 2010) (Date 2)
+     * Display Form ID: date_2.act81lMifn6q
+     */
+    Short: newAttribute("date_2.act81lMifn6q"),
+    /**
+     * Display Form Title: Long (January 2010) (Date 2)
+     * Display Form ID: date_2.acx81lMifn6q
+     */ Long: newAttribute("date_2.acx81lMifn6q"),
+    /**
+     * Display Form Title: Number (1/2010) (Date 2)
+     * Display Form ID: date_2.acv81lMifn6q
+     */ Number: newAttribute("date_2.acv81lMifn6q"),
+};
+export const Date2Date = {
+    /**
+     * Display Form Title: mm/dd/yyyy (Date 2)
+     * Display Form ID: date_2.date.mmddyyyy
+     */
+    MmDdYyyy: newAttribute("date_2.date.mmddyyyy"),
+    /**
+     * Display Form Title: yyyy-mm-dd (Date 2)
+     * Display Form ID: date_2.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("date_2.date.yyyymmdd"),
+    /**
+     * Display Form Title: m/d/yy (no leading zeroes) (Date 2)
+     * Display Form ID: date_2.date.mdyy
+     */ MDYy: newAttribute("date_2.date.mdyy"),
+    /**
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Date 2)
+     * Display Form ID: date_2.date.long
+     */ Long: newAttribute("date_2.date.long"),
+    /**
+     * Display Form Title: dd/mm/yyyy (Date 2)
+     * Display Form ID: date_2.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("date_2.date.ddmmyyyy"),
+    /**
+     * Display Form Title: dd-mm-yyyy (Date 2)
+     * Display Form ID: date_2.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("date_2.date.eddmmyyyy"),
+};
+/**
+ * Attribute Title: Year (Date 3)
+ * Display Form ID: date_3.year
+ */
+export const Date3Year: IAttribute = newAttribute("date_3.aag81lMifn6q");
+/**
+ * Attribute Title: Quarter (Date 3)
+ * Display Form ID: date_3.quarter.in.year
+ */
+export const Date3Quarter: IAttribute = newAttribute("date_3.aam81lMifn6q");
+export const Date3WeekSunSatYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 3)
+     * Display Form ID: date_3.aaA81lMifn6q
+     */
+    WeekNrYear: newAttribute("date_3.aaA81lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 3)
+     * Display Form ID: date_3.aaw81lMifn6q
+     */ WeekStarting: newAttribute("date_3.aaw81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 3)
+     * Display Form ID: date_3.aau81lMifn6q
+     */ FromTo: newAttribute("date_3.aau81lMifn6q"),
+    /**
+     * Display Form Title: Week #/Year (Cont.) (Date 3)
+     * Display Form ID: date_3.aay81lMifn6q
+     */ WeekNrYear_1: newAttribute("date_3.aay81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Cont.) (Date 3)
+     * Display Form ID: date_3.aaC81lMifn6q
+     */ WkQtrYear: newAttribute("date_3.aaC81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Date 3)
+     * Display Form ID: date_3.aas81lMifn6q
+     */ WkQtrYear_1: newAttribute("date_3.aas81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Sun-Sat) (Date 3)
+ * Display Form ID: date_3.week.in.year
+ */
+export const Date3WeekSunSat: IAttribute = newAttribute("date_3.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Date 3)
+ * Display Form ID: date_3.week.in.quarter
+ */
+export const Date3WeekSunSatOfQtr: IAttribute = newAttribute("date_3.aaO81lMifn6q");
+export const Date3WeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 3)
+     * Display Form ID: date_3.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("date_3.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 3)
+     * Display Form ID: date_3.aaY81lMifn6q
+     */ WeekStarting: newAttribute("date_3.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 3)
+     * Display Form ID: date_3.aaW81lMifn6q
+     */ FromTo: newAttribute("date_3.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Date 3)
+ * Display Form ID: date_3.euweek.in.year
+ */
+export const Date3WeekMonSun: IAttribute = newAttribute("date_3.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Date 3)
+ * Display Form ID: date_3.euweek.in.quarter
+ */
+export const Date3WeekMonSunOfQtr: IAttribute = newAttribute("date_3.abg81lMifn6q");
+export const Date3Month = {
+    /**
+     * Display Form Title: Short (Jan) (Date 3)
+     * Display Form ID: date_3.abm81lMifn6q
+     */
+    Short: newAttribute("date_3.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Date 3)
+     * Display Form ID: date_3.abs81lMifn6q
+     */ Long: newAttribute("date_3.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Date 3)
+     * Display Form ID: date_3.abq81lMifn6q
+     */ Number: newAttribute("date_3.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Date 3)
+     * Display Form ID: date_3.abo81lMifn6q
+     */ MQ: newAttribute("date_3.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Date 3)
+ * Display Form ID: date_3.month.in.quarter
+ */
+export const Date3MonthOfQuarter: IAttribute = newAttribute("date_3.aby81lMifn6q");
+/**
+ * Attribute Title: Day of Year (Date 3)
+ * Display Form ID: date_3.day.in.year
+ */
+export const Date3DayOfYear: IAttribute = newAttribute("date_3.abE81lMifn6q");
+export const Date3DayOfWeekSunSat = {
+    /**
+     * Display Form Title: Short (Sun) (Date 3)
+     * Display Form ID: date_3.abK81lMifn6q
+     */
+    Short: newAttribute("date_3.abK81lMifn6q"),
+    /**
+     * Display Form Title: Long (Sunday) (Date 3)
+     * Display Form ID: date_3.abO81lMifn6q
+     */ Long: newAttribute("date_3.abO81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Sunday) (Date 3)
+     * Display Form ID: date_3.abM81lMifn6q
+     */ Number: newAttribute("date_3.abM81lMifn6q"),
+};
+export const Date3DayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Date 3)
+     * Display Form ID: date_3.abU81lMifn6q
+     */
+    Short: newAttribute("date_3.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Date 3)
+     * Display Form ID: date_3.abY81lMifn6q
+     */ Long: newAttribute("date_3.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Date 3)
+     * Display Form ID: date_3.abW81lMifn6q
+     */ Number: newAttribute("date_3.abW81lMifn6q"),
+};
+/**
+ * Attribute Title: Day of Quarter (Date 3)
+ * Display Form ID: date_3.day.in.quarter
+ */
+export const Date3DayOfQuarter: IAttribute = newAttribute("date_3.ab481lMifn6q");
+/**
+ * Attribute Title: Day of Month (Date 3)
+ * Display Form ID: date_3.day.in.month
+ */
+export const Date3DayOfMonth: IAttribute = newAttribute("date_3.aca81lMifn6q");
+/**
+ * Attribute Title: Quarter/Year (Date 3)
+ * Display Form ID: date_3.quarter
+ */
+export const Date3QuarterYear: IAttribute = newAttribute("date_3.aci81lMifn6q");
+export const Date3MonthYear = {
+    /**
+     * Display Form Title: Short (Jan 2010) (Date 3)
+     * Display Form ID: date_3.act81lMifn6q
+     */
+    Short: newAttribute("date_3.act81lMifn6q"),
+    /**
+     * Display Form Title: Long (January 2010) (Date 3)
+     * Display Form ID: date_3.acx81lMifn6q
+     */ Long: newAttribute("date_3.acx81lMifn6q"),
+    /**
+     * Display Form Title: Number (1/2010) (Date 3)
+     * Display Form ID: date_3.acv81lMifn6q
+     */ Number: newAttribute("date_3.acv81lMifn6q"),
+};
+export const Date3Date = {
+    /**
+     * Display Form Title: mm/dd/yyyy (Date 3)
+     * Display Form ID: date_3.date.mmddyyyy
+     */
+    MmDdYyyy: newAttribute("date_3.date.mmddyyyy"),
+    /**
+     * Display Form Title: yyyy-mm-dd (Date 3)
+     * Display Form ID: date_3.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("date_3.date.yyyymmdd"),
+    /**
+     * Display Form Title: m/d/yy (no leading zeroes) (Date 3)
+     * Display Form ID: date_3.date.mdyy
+     */ MDYy: newAttribute("date_3.date.mdyy"),
+    /**
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Date 3)
+     * Display Form ID: date_3.date.long
+     */ Long: newAttribute("date_3.date.long"),
+    /**
+     * Display Form Title: dd/mm/yyyy (Date 3)
+     * Display Form ID: date_3.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("date_3.date.ddmmyyyy"),
+    /**
+     * Display Form Title: dd-mm-yyyy (Date 3)
+     * Display Form ID: date_3.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("date_3.date.eddmmyyyy"),
+};
+/**
+ * Attribute Title: Year (Date 4)
+ * Display Form ID: date_4.year
+ */
+export const Date4Year: IAttribute = newAttribute("date_4.aag81lMifn6q");
+/**
+ * Attribute Title: Quarter (Date 4)
+ * Display Form ID: date_4.quarter.in.year
+ */
+export const Date4Quarter: IAttribute = newAttribute("date_4.aam81lMifn6q");
+export const Date4WeekSunSatYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 4)
+     * Display Form ID: date_4.aaA81lMifn6q
+     */
+    WeekNrYear: newAttribute("date_4.aaA81lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 4)
+     * Display Form ID: date_4.aaw81lMifn6q
+     */ WeekStarting: newAttribute("date_4.aaw81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 4)
+     * Display Form ID: date_4.aau81lMifn6q
+     */ FromTo: newAttribute("date_4.aau81lMifn6q"),
+    /**
+     * Display Form Title: Week #/Year (Cont.) (Date 4)
+     * Display Form ID: date_4.aay81lMifn6q
+     */ WeekNrYear_1: newAttribute("date_4.aay81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Cont.) (Date 4)
+     * Display Form ID: date_4.aaC81lMifn6q
+     */ WkQtrYear: newAttribute("date_4.aaC81lMifn6q"),
+    /**
+     * Display Form Title: Wk/Qtr/Year (Date 4)
+     * Display Form ID: date_4.aas81lMifn6q
+     */ WkQtrYear_1: newAttribute("date_4.aas81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Sun-Sat) (Date 4)
+ * Display Form ID: date_4.week.in.year
+ */
+export const Date4WeekSunSat: IAttribute = newAttribute("date_4.aaI81lMifn6q");
+/**
+ * Attribute Title: Week (Sun-Sat) of Qtr (Date 4)
+ * Display Form ID: date_4.week.in.quarter
+ */
+export const Date4WeekSunSatOfQtr: IAttribute = newAttribute("date_4.aaO81lMifn6q");
+export const Date4WeekMonSunYear = {
+    /**
+     * Display Form Title: Week #/Year (W1/2010) (Date 4)
+     * Display Form ID: date_4.aa281lMifn6q
+     */
+    WeekNrYear: newAttribute("date_4.aa281lMifn6q"),
+    /**
+     * Display Form Title: Week Starting (Date 4)
+     * Display Form ID: date_4.aaY81lMifn6q
+     */ WeekStarting: newAttribute("date_4.aaY81lMifn6q"),
+    /**
+     * Display Form Title: From - To (Date 4)
+     * Display Form ID: date_4.aaW81lMifn6q
+     */ FromTo: newAttribute("date_4.aaW81lMifn6q"),
+};
+/**
+ * Attribute Title: Week (Mon-Sun) (Date 4)
+ * Display Form ID: date_4.euweek.in.year
+ */
+export const Date4WeekMonSun: IAttribute = newAttribute("date_4.aba81lMifn6q");
+/**
+ * Attribute Title: Week (Mon-Sun) of Qtr (Date 4)
+ * Display Form ID: date_4.euweek.in.quarter
+ */
+export const Date4WeekMonSunOfQtr: IAttribute = newAttribute("date_4.abg81lMifn6q");
+export const Date4Month = {
+    /**
+     * Display Form Title: Short (Jan) (Date 4)
+     * Display Form ID: date_4.abm81lMifn6q
+     */
+    Short: newAttribute("date_4.abm81lMifn6q"),
+    /**
+     * Display Form Title: Long (January) (Date 4)
+     * Display Form ID: date_4.abs81lMifn6q
+     */ Long: newAttribute("date_4.abs81lMifn6q"),
+    /**
+     * Display Form Title: Number (M1) (Date 4)
+     * Display Form ID: date_4.abq81lMifn6q
+     */ Number: newAttribute("date_4.abq81lMifn6q"),
+    /**
+     * Display Form Title: M/Q (M1/Q1) (Date 4)
+     * Display Form ID: date_4.abo81lMifn6q
+     */ MQ: newAttribute("date_4.abo81lMifn6q"),
+};
+/**
+ * Attribute Title: Month of Quarter (Date 4)
+ * Display Form ID: date_4.month.in.quarter
+ */
+export const Date4MonthOfQuarter: IAttribute = newAttribute("date_4.aby81lMifn6q");
+/**
+ * Attribute Title: Day of Year (Date 4)
+ * Display Form ID: date_4.day.in.year
+ */
+export const Date4DayOfYear: IAttribute = newAttribute("date_4.abE81lMifn6q");
+export const Date4DayOfWeekSunSat = {
+    /**
+     * Display Form Title: Short (Sun) (Date 4)
+     * Display Form ID: date_4.abK81lMifn6q
+     */
+    Short: newAttribute("date_4.abK81lMifn6q"),
+    /**
+     * Display Form Title: Long (Sunday) (Date 4)
+     * Display Form ID: date_4.abO81lMifn6q
+     */ Long: newAttribute("date_4.abO81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Sunday) (Date 4)
+     * Display Form ID: date_4.abM81lMifn6q
+     */ Number: newAttribute("date_4.abM81lMifn6q"),
+};
+export const Date4DayOfWeekMonSun = {
+    /**
+     * Display Form Title: Short (Mon) (Date 4)
+     * Display Form ID: date_4.abU81lMifn6q
+     */
+    Short: newAttribute("date_4.abU81lMifn6q"),
+    /**
+     * Display Form Title: Long (Monday) (Date 4)
+     * Display Form ID: date_4.abY81lMifn6q
+     */ Long: newAttribute("date_4.abY81lMifn6q"),
+    /**
+     * Display Form Title: Number (1=Monday) (Date 4)
+     * Display Form ID: date_4.abW81lMifn6q
+     */ Number: newAttribute("date_4.abW81lMifn6q"),
+};
+/**
+ * Attribute Title: Day of Quarter (Date 4)
+ * Display Form ID: date_4.day.in.quarter
+ */
+export const Date4DayOfQuarter: IAttribute = newAttribute("date_4.ab481lMifn6q");
+/**
+ * Attribute Title: Day of Month (Date 4)
+ * Display Form ID: date_4.day.in.month
+ */
+export const Date4DayOfMonth: IAttribute = newAttribute("date_4.aca81lMifn6q");
+/**
+ * Attribute Title: Quarter/Year (Date 4)
+ * Display Form ID: date_4.quarter
+ */
+export const Date4QuarterYear: IAttribute = newAttribute("date_4.aci81lMifn6q");
+export const Date4MonthYear = {
+    /**
+     * Display Form Title: Short (Jan 2010) (Date 4)
+     * Display Form ID: date_4.act81lMifn6q
+     */
+    Short: newAttribute("date_4.act81lMifn6q"),
+    /**
+     * Display Form Title: Long (January 2010) (Date 4)
+     * Display Form ID: date_4.acx81lMifn6q
+     */ Long: newAttribute("date_4.acx81lMifn6q"),
+    /**
+     * Display Form Title: Number (1/2010) (Date 4)
+     * Display Form ID: date_4.acv81lMifn6q
+     */ Number: newAttribute("date_4.acv81lMifn6q"),
+};
+export const Date4Date = {
+    /**
+     * Display Form Title: mm/dd/yyyy (Date 4)
+     * Display Form ID: date_4.date.mmddyyyy
+     */
+    MmDdYyyy: newAttribute("date_4.date.mmddyyyy"),
+    /**
+     * Display Form Title: yyyy-mm-dd (Date 4)
+     * Display Form ID: date_4.date.yyyymmdd
+     */ YyyyMmDd: newAttribute("date_4.date.yyyymmdd"),
+    /**
+     * Display Form Title: m/d/yy (no leading zeroes) (Date 4)
+     * Display Form ID: date_4.date.mdyy
+     */ MDYy: newAttribute("date_4.date.mdyy"),
+    /**
+     * Display Form Title: Long (Mon, Jan 1, 2010) (Date 4)
+     * Display Form ID: date_4.date.long
+     */ Long: newAttribute("date_4.date.long"),
+    /**
+     * Display Form Title: dd/mm/yyyy (Date 4)
+     * Display Form ID: date_4.date.ddmmyyyy
+     */ DdMmYyyy: newAttribute("date_4.date.ddmmyyyy"),
+    /**
+     * Display Form Title: dd-mm-yyyy (Date 4)
+     * Display Form ID: date_4.date.eddmmyyyy
+     */ DdMmYyyy_1: newAttribute("date_4.date.eddmmyyyy"),
+};
+/**
+ * Available Date Data Sets
+ */
+export const DateDatasets = {
+    /**
+     * Date Data Set Title: Date (Date)
+     * Date Data Set ID: date.dataset.dt
+     */
+    Date: {
+        ref: idRef("date.dataset.dt", "dataSet"),
+        identifier: "date.dataset.dt",
+        /**
+         * Date Attribute: Year (Date)
+         * Date Attribute ID: date.year
+         */ Year: DateYear,
+        /**
+         * Date Attribute: Quarter (Date)
+         * Date Attribute ID: date.quarter.in.year
+         */ Quarter: DateQuarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Date)
+         * Date Attribute ID: date.week
+         */ WeekSunSatYear: DateWeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Date)
+         * Date Attribute ID: date.week.in.year
+         */ WeekSunSat: DateWeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Date)
+         * Date Attribute ID: date.week.in.quarter
+         */ WeekSunSatOfQtr: DateWeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Date)
+         * Date Attribute ID: date.euweek
+         */ WeekMonSunYear: DateWeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Date)
+         * Date Attribute ID: date.euweek.in.year
+         */ WeekMonSun: DateWeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Date)
+         * Date Attribute ID: date.euweek.in.quarter
+         */ WeekMonSunOfQtr: DateWeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Date)
+         * Date Attribute ID: date.month.in.year
+         */ Month: DateMonth,
+        /**
+         * Date Attribute: Month of Quarter (Date)
+         * Date Attribute ID: date.month.in.quarter
+         */ MonthOfQuarter: DateMonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Date)
+         * Date Attribute ID: date.day.in.year
+         */ DayOfYear: DateDayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Date)
+         * Date Attribute ID: date.day.in.week
+         */ DayOfWeekSunSat: DateDayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Date)
+         * Date Attribute ID: date.day.in.euweek
+         */ DayOfWeekMonSun: DateDayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Date)
+         * Date Attribute ID: date.day.in.quarter
+         */ DayOfQuarter: DateDayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Date)
+         * Date Attribute ID: date.day.in.month
+         */ DayOfMonth: DateDayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Date)
+         * Date Attribute ID: date.quarter
+         */ QuarterYear: DateQuarterYear,
+        /**
+         * Date Attribute: Month/Year (Date)
+         * Date Attribute ID: date.month
+         */ MonthYear: DateMonthYear,
+        /**
+         * Date Attribute: Date (Date)
+         * Date Attribute ID: date.date
+         */ Date: DateDate,
+    },
+    /**
+     * Date Data Set Title: Date (Timeline)
+     * Date Data Set ID: timeline.dataset.dt
+     */ Timeline: {
+        ref: idRef("timeline.dataset.dt", "dataSet"),
+        identifier: "timeline.dataset.dt",
+        /**
+         * Date Attribute: Year (Timeline)
+         * Date Attribute ID: timeline.year
+         */ Year: TimelineYear,
+        /**
+         * Date Attribute: Quarter (Timeline)
+         * Date Attribute ID: timeline.quarter.in.year
+         */ Quarter: TimelineQuarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Timeline)
+         * Date Attribute ID: timeline.week
+         */ WeekSunSatYear: TimelineWeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Timeline)
+         * Date Attribute ID: timeline.week.in.year
+         */ WeekSunSat: TimelineWeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Timeline)
+         * Date Attribute ID: timeline.week.in.quarter
+         */ WeekSunSatOfQtr: TimelineWeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Timeline)
+         * Date Attribute ID: timeline.euweek
+         */ WeekMonSunYear: TimelineWeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Timeline)
+         * Date Attribute ID: timeline.euweek.in.year
+         */ WeekMonSun: TimelineWeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Timeline)
+         * Date Attribute ID: timeline.euweek.in.quarter
+         */ WeekMonSunOfQtr: TimelineWeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Timeline)
+         * Date Attribute ID: timeline.month.in.year
+         */ Month: TimelineMonth,
+        /**
+         * Date Attribute: Month of Quarter (Timeline)
+         * Date Attribute ID: timeline.month.in.quarter
+         */ MonthOfQuarter: TimelineMonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Timeline)
+         * Date Attribute ID: timeline.day.in.year
+         */ DayOfYear: TimelineDayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Timeline)
+         * Date Attribute ID: timeline.day.in.week
+         */ DayOfWeekSunSat: TimelineDayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Timeline)
+         * Date Attribute ID: timeline.day.in.euweek
+         */ DayOfWeekMonSun: TimelineDayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Timeline)
+         * Date Attribute ID: timeline.day.in.quarter
+         */ DayOfQuarter: TimelineDayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Timeline)
+         * Date Attribute ID: timeline.day.in.month
+         */ DayOfMonth: TimelineDayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Timeline)
+         * Date Attribute ID: timeline.quarter
+         */ QuarterYear: TimelineQuarterYear,
+        /**
+         * Date Attribute: Month/Year (Timeline)
+         * Date Attribute ID: timeline.month
+         */ MonthYear: TimelineMonthYear,
+        /**
+         * Date Attribute: Date (Timeline)
+         * Date Attribute ID: timeline.date
+         */ Date: TimelineDate,
+    },
+    /**
+     * Date Data Set Title: Date (Fiscal Date)
+     * Date Data Set ID: fiscaldate.fiscaljun1_dataset.dt
+     */ FiscalDate: {
+        ref: idRef("fiscaldate.fiscaljun1_dataset.dt", "dataSet"),
+        identifier: "fiscaldate.fiscaljun1_dataset.dt",
+        /**
+         * Date Attribute: Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_year
+         */ Year: FiscalDateYear,
+        /**
+         * Date Attribute: Quarter (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_quarter.in.year
+         */ Quarter: FiscalDateQuarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_week
+         */ WeekSunSatYear: FiscalDateWeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_week.in.year
+         */ WeekSunSat: FiscalDateWeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_week.in.quarter
+         */ WeekSunSatOfQtr: FiscalDateWeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_euweek
+         */ WeekMonSunYear: FiscalDateWeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_euweek.in.year
+         */ WeekMonSun: FiscalDateWeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_euweek.in.quarter
+         */ WeekMonSunOfQtr: FiscalDateWeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_month.in.year
+         */ Month: FiscalDateMonth,
+        /**
+         * Date Attribute: Month of Quarter (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_month.in.quarter
+         */ MonthOfQuarter: FiscalDateMonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_day.in.year
+         */ DayOfYear: FiscalDateDayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_day.in.week
+         */ DayOfWeekSunSat: FiscalDateDayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_day.in.euweek
+         */ DayOfWeekMonSun: FiscalDateDayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_day.in.quarter
+         */ DayOfQuarter: FiscalDateDayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_day.in.month
+         */ DayOfMonth: FiscalDateDayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_quarter
+         */ QuarterYear: FiscalDateQuarterYear,
+        /**
+         * Date Attribute: Month/Year (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_month
+         */ MonthYear: FiscalDateMonthYear,
+        /**
+         * Date Attribute: Date (Fiscal Date)
+         * Date Attribute ID: fiscaldate.fiscaljun1_date
+         */ Date: FiscalDateDate,
+    },
+    /**
+     * Date Data Set Title: Date (Date 1)
+     * Date Data Set ID: date_1.dataset.dt
+     */ Date1: {
+        ref: idRef("date_1.dataset.dt", "dataSet"),
+        identifier: "date_1.dataset.dt",
+        /**
+         * Date Attribute: Year (Date 1)
+         * Date Attribute ID: date_1.year
+         */ Year: Date1Year,
+        /**
+         * Date Attribute: Quarter (Date 1)
+         * Date Attribute ID: date_1.quarter.in.year
+         */ Quarter: Date1Quarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Date 1)
+         * Date Attribute ID: date_1.week
+         */ WeekSunSatYear: Date1WeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Date 1)
+         * Date Attribute ID: date_1.week.in.year
+         */ WeekSunSat: Date1WeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Date 1)
+         * Date Attribute ID: date_1.week.in.quarter
+         */ WeekSunSatOfQtr: Date1WeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Date 1)
+         * Date Attribute ID: date_1.euweek
+         */ WeekMonSunYear: Date1WeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Date 1)
+         * Date Attribute ID: date_1.euweek.in.year
+         */ WeekMonSun: Date1WeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Date 1)
+         * Date Attribute ID: date_1.euweek.in.quarter
+         */ WeekMonSunOfQtr: Date1WeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Date 1)
+         * Date Attribute ID: date_1.month.in.year
+         */ Month: Date1Month,
+        /**
+         * Date Attribute: Month of Quarter (Date 1)
+         * Date Attribute ID: date_1.month.in.quarter
+         */ MonthOfQuarter: Date1MonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Date 1)
+         * Date Attribute ID: date_1.day.in.year
+         */ DayOfYear: Date1DayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Date 1)
+         * Date Attribute ID: date_1.day.in.week
+         */ DayOfWeekSunSat: Date1DayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Date 1)
+         * Date Attribute ID: date_1.day.in.euweek
+         */ DayOfWeekMonSun: Date1DayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Date 1)
+         * Date Attribute ID: date_1.day.in.quarter
+         */ DayOfQuarter: Date1DayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Date 1)
+         * Date Attribute ID: date_1.day.in.month
+         */ DayOfMonth: Date1DayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Date 1)
+         * Date Attribute ID: date_1.quarter
+         */ QuarterYear: Date1QuarterYear,
+        /**
+         * Date Attribute: Month/Year (Date 1)
+         * Date Attribute ID: date_1.month
+         */ MonthYear: Date1MonthYear,
+        /**
+         * Date Attribute: Date (Date 1)
+         * Date Attribute ID: date_1.date
+         */ Date: Date1Date,
+    },
+    /**
+     * Date Data Set Title: Date (Date 2)
+     * Date Data Set ID: date_2.dataset.dt
+     */ Date2: {
+        ref: idRef("date_2.dataset.dt", "dataSet"),
+        identifier: "date_2.dataset.dt",
+        /**
+         * Date Attribute: Year (Date 2)
+         * Date Attribute ID: date_2.year
+         */ Year: Date2Year,
+        /**
+         * Date Attribute: Quarter (Date 2)
+         * Date Attribute ID: date_2.quarter.in.year
+         */ Quarter: Date2Quarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Date 2)
+         * Date Attribute ID: date_2.week
+         */ WeekSunSatYear: Date2WeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Date 2)
+         * Date Attribute ID: date_2.week.in.year
+         */ WeekSunSat: Date2WeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Date 2)
+         * Date Attribute ID: date_2.week.in.quarter
+         */ WeekSunSatOfQtr: Date2WeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Date 2)
+         * Date Attribute ID: date_2.euweek
+         */ WeekMonSunYear: Date2WeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Date 2)
+         * Date Attribute ID: date_2.euweek.in.year
+         */ WeekMonSun: Date2WeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Date 2)
+         * Date Attribute ID: date_2.euweek.in.quarter
+         */ WeekMonSunOfQtr: Date2WeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Date 2)
+         * Date Attribute ID: date_2.month.in.year
+         */ Month: Date2Month,
+        /**
+         * Date Attribute: Month of Quarter (Date 2)
+         * Date Attribute ID: date_2.month.in.quarter
+         */ MonthOfQuarter: Date2MonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Date 2)
+         * Date Attribute ID: date_2.day.in.year
+         */ DayOfYear: Date2DayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Date 2)
+         * Date Attribute ID: date_2.day.in.week
+         */ DayOfWeekSunSat: Date2DayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Date 2)
+         * Date Attribute ID: date_2.day.in.euweek
+         */ DayOfWeekMonSun: Date2DayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Date 2)
+         * Date Attribute ID: date_2.day.in.quarter
+         */ DayOfQuarter: Date2DayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Date 2)
+         * Date Attribute ID: date_2.day.in.month
+         */ DayOfMonth: Date2DayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Date 2)
+         * Date Attribute ID: date_2.quarter
+         */ QuarterYear: Date2QuarterYear,
+        /**
+         * Date Attribute: Month/Year (Date 2)
+         * Date Attribute ID: date_2.month
+         */ MonthYear: Date2MonthYear,
+        /**
+         * Date Attribute: Date (Date 2)
+         * Date Attribute ID: date_2.date
+         */ Date: Date2Date,
+    },
+    /**
+     * Date Data Set Title: Date (Date 3)
+     * Date Data Set ID: date_3.dataset.dt
+     */ Date3: {
+        ref: idRef("date_3.dataset.dt", "dataSet"),
+        identifier: "date_3.dataset.dt",
+        /**
+         * Date Attribute: Year (Date 3)
+         * Date Attribute ID: date_3.year
+         */ Year: Date3Year,
+        /**
+         * Date Attribute: Quarter (Date 3)
+         * Date Attribute ID: date_3.quarter.in.year
+         */ Quarter: Date3Quarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Date 3)
+         * Date Attribute ID: date_3.week
+         */ WeekSunSatYear: Date3WeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Date 3)
+         * Date Attribute ID: date_3.week.in.year
+         */ WeekSunSat: Date3WeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Date 3)
+         * Date Attribute ID: date_3.week.in.quarter
+         */ WeekSunSatOfQtr: Date3WeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Date 3)
+         * Date Attribute ID: date_3.euweek
+         */ WeekMonSunYear: Date3WeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Date 3)
+         * Date Attribute ID: date_3.euweek.in.year
+         */ WeekMonSun: Date3WeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Date 3)
+         * Date Attribute ID: date_3.euweek.in.quarter
+         */ WeekMonSunOfQtr: Date3WeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Date 3)
+         * Date Attribute ID: date_3.month.in.year
+         */ Month: Date3Month,
+        /**
+         * Date Attribute: Month of Quarter (Date 3)
+         * Date Attribute ID: date_3.month.in.quarter
+         */ MonthOfQuarter: Date3MonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Date 3)
+         * Date Attribute ID: date_3.day.in.year
+         */ DayOfYear: Date3DayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Date 3)
+         * Date Attribute ID: date_3.day.in.week
+         */ DayOfWeekSunSat: Date3DayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Date 3)
+         * Date Attribute ID: date_3.day.in.euweek
+         */ DayOfWeekMonSun: Date3DayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Date 3)
+         * Date Attribute ID: date_3.day.in.quarter
+         */ DayOfQuarter: Date3DayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Date 3)
+         * Date Attribute ID: date_3.day.in.month
+         */ DayOfMonth: Date3DayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Date 3)
+         * Date Attribute ID: date_3.quarter
+         */ QuarterYear: Date3QuarterYear,
+        /**
+         * Date Attribute: Month/Year (Date 3)
+         * Date Attribute ID: date_3.month
+         */ MonthYear: Date3MonthYear,
+        /**
+         * Date Attribute: Date (Date 3)
+         * Date Attribute ID: date_3.date
+         */ Date: Date3Date,
+    },
+    /**
+     * Date Data Set Title: Date (Date 4)
+     * Date Data Set ID: date_4.dataset.dt
+     */ Date4: {
+        ref: idRef("date_4.dataset.dt", "dataSet"),
+        identifier: "date_4.dataset.dt",
+        /**
+         * Date Attribute: Year (Date 4)
+         * Date Attribute ID: date_4.year
+         */ Year: Date4Year,
+        /**
+         * Date Attribute: Quarter (Date 4)
+         * Date Attribute ID: date_4.quarter.in.year
+         */ Quarter: Date4Quarter,
+        /**
+         * Date Attribute: Week (Sun-Sat)/Year (Date 4)
+         * Date Attribute ID: date_4.week
+         */ WeekSunSatYear: Date4WeekSunSatYear,
+        /**
+         * Date Attribute: Week (Sun-Sat) (Date 4)
+         * Date Attribute ID: date_4.week.in.year
+         */ WeekSunSat: Date4WeekSunSat,
+        /**
+         * Date Attribute: Week (Sun-Sat) of Qtr (Date 4)
+         * Date Attribute ID: date_4.week.in.quarter
+         */ WeekSunSatOfQtr: Date4WeekSunSatOfQtr,
+        /**
+         * Date Attribute: Week (Mon-Sun)/Year (Date 4)
+         * Date Attribute ID: date_4.euweek
+         */ WeekMonSunYear: Date4WeekMonSunYear,
+        /**
+         * Date Attribute: Week (Mon-Sun) (Date 4)
+         * Date Attribute ID: date_4.euweek.in.year
+         */ WeekMonSun: Date4WeekMonSun,
+        /**
+         * Date Attribute: Week (Mon-Sun) of Qtr (Date 4)
+         * Date Attribute ID: date_4.euweek.in.quarter
+         */ WeekMonSunOfQtr: Date4WeekMonSunOfQtr,
+        /**
+         * Date Attribute: Month (Date 4)
+         * Date Attribute ID: date_4.month.in.year
+         */ Month: Date4Month,
+        /**
+         * Date Attribute: Month of Quarter (Date 4)
+         * Date Attribute ID: date_4.month.in.quarter
+         */ MonthOfQuarter: Date4MonthOfQuarter,
+        /**
+         * Date Attribute: Day of Year (Date 4)
+         * Date Attribute ID: date_4.day.in.year
+         */ DayOfYear: Date4DayOfYear,
+        /**
+         * Date Attribute: Day of Week (Sun-Sat) (Date 4)
+         * Date Attribute ID: date_4.day.in.week
+         */ DayOfWeekSunSat: Date4DayOfWeekSunSat,
+        /**
+         * Date Attribute: Day of Week (Mon-Sun) (Date 4)
+         * Date Attribute ID: date_4.day.in.euweek
+         */ DayOfWeekMonSun: Date4DayOfWeekMonSun,
+        /**
+         * Date Attribute: Day of Quarter (Date 4)
+         * Date Attribute ID: date_4.day.in.quarter
+         */ DayOfQuarter: Date4DayOfQuarter,
+        /**
+         * Date Attribute: Day of Month (Date 4)
+         * Date Attribute ID: date_4.day.in.month
+         */ DayOfMonth: Date4DayOfMonth,
+        /**
+         * Date Attribute: Quarter/Year (Date 4)
+         * Date Attribute ID: date_4.quarter
+         */ QuarterYear: Date4QuarterYear,
+        /**
+         * Date Attribute: Month/Year (Date 4)
+         * Date Attribute ID: date_4.month
+         */ MonthYear: Date4MonthYear,
+        /**
+         * Date Attribute: Date (Date 4)
+         * Date Attribute ID: date_4.date
+         */ Date: Date4Date,
+    },
+};
 export const Insights = {
     /**
      * Insight Title: Avg Entree %
@@ -1683,11 +3086,51 @@ export const Insights = {
      * Insight ID: acebcI3fhaRI
      */ GeoPushpinChart: "acebcI3fhaRI",
     /**
-     * Insight Title: Bullet Chart
+     * Insight Title: bullet
      * Insight ID: aaQxY4PLbBsQ
-     */ BulletChart: "aaQxY4PLbBsQ",
+     */ Bullet: "aaQxY4PLbBsQ",
     /**
-     * Insight Title: Test
-     * Insight ID: aagQ0cgwbOSi
-     */ Test_2: "aagQ0cgwbOSi",
+     * Insight Title: Measure Value Filter Column Chart
+     * Insight ID: aapcLmQzeIAz
+     */ MeasureValueFilterColumnChart: "aapcLmQzeIAz",
+    /**
+     * Insight Title: Measure Value Filter treat null values as 0
+     * Insight ID: ab8GBmYngtMa
+     */ MeasureValueFilterTreatNullValuesAs0: "ab8GBmYngtMa",
+    /**
+     * Insight Title: VisualBI #1
+     * Insight ID: aazG5vCZbY25
+     */ VisualBINr1: "aazG5vCZbY25",
+    /**
+     * Insight Title: Pivot insight
+     * Insight ID: ab1Kx7lUaHvU
+     */ PivotInsight: "ab1Kx7lUaHvU",
+    /**
+     * Insight Title: yxcv
+     * Insight ID: abSTN5NZh4xW
+     */ Yxcv_1: "abSTN5NZh4xW",
+    /**
+     * Insight Title: Dual
+     * Insight ID: aaiiYGtUims2
+     */ Dual: "aaiiYGtUims2",
+    /**
+     * Insight Title: Test #1
+     * Insight ID: aasWddUAawmK
+     */ TestNr1: "aasWddUAawmK",
+    /**
+     * Insight Title: Tets #111
+     * Insight ID: ablreDhFdKwH
+     */ TetsNr111: "ablreDhFdKwH",
+    /**
+     * Insight Title: BulletChart
+     * Insight ID: aatkydZzat7h
+     */ BulletChart: "aatkydZzat7h",
+    /**
+     * Insight Title: Table report Labor Costs Vs Scheduled Costs test
+     * Insight ID: aaqx9Ak0g28v
+     */ TableReportLaborCostsVsScheduledCostsTest: "aaqx9Ak0g28v",
+    /**
+     * Insight Title: # Checks viewed by City stacked by Location - Table
+     * Insight ID: aaJlFFkiaChA
+     */ NrChecksViewedByCityStackedByLocationTable: "aaJlFFkiaChA",
 };
