@@ -23,6 +23,7 @@ export type TypescriptOutput = {
 const FILE_DIRECTIVES = ["/* eslint-disable */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 const INSIGHT_MAP_VARNAME = "Insights";
+const DATE_DATASETS_MAP_VARNAME = "DateDatasets";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
 
 //
@@ -283,6 +284,29 @@ function generateDateDataSet(
     return content.attributes.map((a) => generateAttribute(a, naming));
 }
 
+function generateDateDataSetMapping(dds: DateDataSet[]): OptionalKind<VariableStatementStructure> {
+    const mappingScope = {};
+    const ddMappings = dds.map((dd) => {
+        const { title, identifier } = dd.dateDataSet.meta;
+        const propName = uniqueVariable(title, mappingScope);
+        const jsDoc = `/** \n* Date Data Set Title: ${title}  \n* Date Data Set ID: ${identifier}\n*/`;
+
+        return `${jsDoc}\n${propName}: idRef('${identifier}')`;
+    });
+
+    return {
+        declarationKind: VariableDeclarationKind.Const,
+        isExported: true,
+        docs: ["Available Date Data Sets"],
+        declarations: [
+            {
+                name: DATE_DATASETS_MAP_VARNAME,
+                initializer: `{ ${ddMappings.join(", ")} }`,
+            },
+        ],
+    };
+}
+
 function generateDateDataSets(
     projectMeta: ProjectMetadata,
     tiger: boolean,
@@ -293,7 +317,9 @@ function generateDateDataSets(
         naming = DefaultNaming;
     }
 
-    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming)));
+    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming))).concat(
+        generateDateDataSetMapping(projectMeta.dateDataSets),
+    );
 }
 
 /**
