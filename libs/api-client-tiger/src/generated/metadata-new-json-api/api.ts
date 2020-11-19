@@ -212,7 +212,7 @@ export interface AnalyticalDashboardRelationshipsLabels {
      * @type {Array | RelationshipToOne}
      * @memberof AnalyticalDashboardRelationshipsLabels
      */
-    data?: Array | RelationshipToOne;
+    data?: Array<string> | RelationshipToOne;
 }
 /**
  *
