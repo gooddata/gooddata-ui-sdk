@@ -45,6 +45,11 @@ export type PackageDescriptor = {
     installDir: string[];
 
     /**
+     * Package's package.json - as read directly from the package's directory.
+     */
+    packageJson: PackageJson;
+
+    /**
      * Package metadata from `rush.json`.
      */
     rushPackage: RushPackageDescriptor;
@@ -78,6 +83,14 @@ export type RushPackageDescriptor = {
      * Indicates whether package should be published.
      */
     shouldPublish: boolean;
+};
+
+/**
+ * Minimalistic typing for the package json. Contains just the properties that applink needs.
+ */
+export type PackageJson = {
+    scripts?: Record<string, string>;
+    files?: string[];
 };
 
 /**

@@ -11,13 +11,20 @@ import {
     PackagesRebuilt,
     publishFinished,
 } from "../events";
-import { appLogError } from "../ui/utils";
+import { appLogError, appLogInfo, appLogWarn } from "../ui/utils";
+import max from "lodash/max";
+import min from "lodash/min";
+import uniq from "lodash/uniq";
 
 const RsyncOptions = ["-rptgD", "--no-links", "--include=/*"];
 
 /**
  * Package publisher initializes itself as the target for publishing is selected. Then, once it receives PackagesRebuilt
- * event, it will use rsync to copy dist-to-dist from source to target.
+ * event, it will use rsync to copy files from source to target.
+ *
+ * To determine what to copy, the publisher with look at 'files' entry in package.json. Identify top-level dirs and
+ * rsync them in entirety. This is not ideal - it would be safer to use entry in files as-is however i cannot be
+ * bothered with fiddling with rsync arguments right now.
  */
 export class PackagePublisher implements IEventListener {
     private dependencyIndex: Record<string, TargetDependency> = {};
@@ -59,15 +66,66 @@ export class PackagePublisher implements IEventListener {
     };
 
     private copyBuild = (dep: TargetDependency): void => {
-        const args = [path.join(dep.pkg.directory, "esm") + "/", path.join(dep.directory, "esm")];
-        const rsync = spawn("rsync", [...RsyncOptions, ...args], {});
+        const allTargetArgs = this.rsyncArguments(dep);
 
-        rsync.on("close", (exitCode) => {
+        if (!allTargetArgs) {
+            appLogWarn(
+                `There are no 'files' to sync for ${dep.pkg.packageName}. Assuming no publish needed. Skipping.`,
+            );
+
+            this.eventBus.post(publishFinished(dep.pkg.packageName, 0));
+
+            return;
+        }
+
+        const latch = countdownLatch(allTargetArgs.length, (exitCodes) => {
+            // see if there is any non-zero return code. either positive or negative number. if not assume success
+            const exitCode = max(exitCodes) || min(exitCodes) || 0;
+
             this.eventBus.post(publishFinished(dep.pkg.packageName, exitCode));
         });
 
-        rsync.stderr?.on("data", (msg) => {
-            appLogError(`Error while syncing ${dep.pkg.packageName}: ${msg}`);
+        allTargetArgs.forEach((args) => {
+            const rsync = spawn("rsync", [...RsyncOptions, ...args], {});
+            appLogInfo(`Syncing ${args[0]}`);
+            rsync.on("close", (exitCode) => {
+                latch(exitCode);
+            });
+
+            rsync.stderr?.on("data", (msg) => {
+                appLogError(`Error while syncing ${dep.pkg.packageName}: ${msg}`);
+            });
         });
+    };
+
+    private rsyncArguments = (dep: TargetDependency): [string, string][] | undefined => {
+        if (!dep.pkg.packageJson.files) {
+            return;
+        }
+
+        const prefixes: string[] = [];
+
+        dep.pkg.packageJson.files.forEach((fileEntry) => {
+            prefixes.push(fileEntry.split("/")[0]);
+        });
+
+        return uniq(prefixes).map((dir) => [
+            path.join(dep.pkg.directory, dir) + path.sep,
+            path.join(dep.directory, dir),
+        ]);
+    };
+}
+
+function countdownLatch(max: number, fun: (exitCodes: number[]) => void): (exitCode: number) => void {
+    let tickets = max;
+    const exitCodes: number[] = [];
+
+    return (exitCode: number): void => {
+        tickets -= 1;
+        exitCodes.push(exitCode);
+
+        if (!tickets) {
+            fun(exitCodes);
+        }
     };
 }

@@ -11,10 +11,16 @@ import {
     EventBus,
     GlobalEventBus,
     IEventListener,
+    SourceInitialized,
 } from "../events";
+import intersection from "lodash/intersection";
+import isEmpty from "lodash/isEmpty";
+import { appLogInfo, appLogWarn } from "../ui/utils";
 
 const StdoutFilename = "applink.log";
 const StderrFilename = "applink.error.log";
+
+const BuildScriptPreference = ["build-incremental", "build-esm", "build"];
 
 /**
  * Package builder initialized itself after SourceInitialized event. And then as BuildRequested events appear,
@@ -23,6 +29,7 @@ const StderrFilename = "applink.error.log";
  */
 export class PackageBuilder implements IEventListener {
     private sourceDescriptor: SourceDescriptor | undefined;
+    private packageBuildScripts: Record<string, string> = {};
 
     constructor(private readonly eventBus: EventBus) {
         this.eventBus.register(this);
@@ -35,8 +42,7 @@ export class PackageBuilder implements IEventListener {
     public onEvent = (event: DcEvent): void => {
         switch (event.type) {
             case "sourceInitialized": {
-                this.sourceDescriptor = event.body.sourceDescriptor;
-
+                this.onSourceInitialized(event);
                 break;
             }
             case "buildRequested": {
@@ -44,6 +50,24 @@ export class PackageBuilder implements IEventListener {
                 break;
             }
         }
+    };
+
+    private onSourceInitialized = (event: SourceInitialized): void => {
+        this.sourceDescriptor = event.body.sourceDescriptor;
+        this.packageBuildScripts = {};
+
+        const packages = Object.values(this.sourceDescriptor.packages);
+
+        packages.forEach((pkg) => {
+            const scripts = Object.keys(pkg.packageJson.scripts ?? {});
+            const candidates = intersection(BuildScriptPreference, scripts);
+
+            if (isEmpty(candidates)) {
+                appLogWarn(`Unable to determine build script to use for package ${pkg.packageName}`);
+            } else {
+                this.packageBuildScripts[pkg.packageName] = candidates[0];
+            }
+        });
     };
 
     private onBuildRequested = (event: BuildRequested): void => {
@@ -54,13 +78,35 @@ export class PackageBuilder implements IEventListener {
 
     private doBuild = (packageDescriptor: PackageDescriptor): void => {
         const { directory, packageName } = packageDescriptor;
+
+        const buildScript = this.packageBuildScripts[packageName];
         const stdoutPath = path.join(directory, StdoutFilename);
         const stderrPath = path.join(directory, StderrFilename);
+
+        if (!buildScript) {
+            appLogWarn(`Unable to determine build script to use for package ${packageName}. Skipping build.`);
+
+            this.eventBus.post(buildStarted(packageName));
+            this.eventBus.post(
+                buildFinished({
+                    packageName,
+                    exitCode: 0,
+                    stdoutPath,
+                    stderrPath,
+                    duration: 0,
+                }),
+            );
+
+            return;
+        }
+
+        appLogInfo(`Running ${buildScript} for ${packageName}`);
+
         const stdout = fs.openSync(stdoutPath, "w+");
         const stderr = fs.openSync(stderrPath, "w+");
-
         const startTime = Date.now();
-        const build = spawn("npm", ["run", "build"], {
+
+        const build = spawn("npm", ["run", buildScript], {
             cwd: directory,
             stdio: ["ignore", stdout, stderr],
         });
@@ -70,7 +116,10 @@ export class PackageBuilder implements IEventListener {
         build.on("close", (exitCode) => {
             const duration = Date.now() - startTime;
 
-            GlobalEventBus.post(
+            fs.closeSync(stdout);
+            fs.closeSync(stderr);
+
+            this.eventBus.post(
                 buildFinished({
                     packageName,
                     exitCode,
