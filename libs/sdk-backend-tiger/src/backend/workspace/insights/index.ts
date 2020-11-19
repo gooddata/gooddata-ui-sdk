@@ -22,7 +22,11 @@ import {
     insightSetFilters,
     idRef,
 } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/api-client-tiger";
+import {
+    VisualizationObject,
+    VisualizationObjects,
+    VisualizationObjectSchema,
+} from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -62,9 +66,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
-        const {
-            data: { data: visualizationObjects, links, meta },
-        } = await this.authCall((sdk) => {
+        const insightsResponse = await this.authCall((sdk) => {
             const orderBy = options?.orderBy;
             if (orderBy === "updated") {
                 // eslint-disable-next-line no-console
@@ -82,27 +84,38 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                   }
                 : undefined;
 
-            return sdk.metadata.visualizationObjectsGet({
-                contentType: "application/json",
-                ...(options?.limit ? { pageLimit: options?.limit } : {}),
-                pageOffset: options?.offset ?? 0,
-                ...((filter ? { filter } : {}) as any),
-                ...(sanitizedOrderBy ? { sort: sanitizedOrderBy } : {}),
-            });
+            return sdk.workspaceModel.getEntities(
+                {
+                    entity: "visualizationObjects",
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    ...(options?.limit ? { pageLimit: options?.limit } : {}),
+                    pageOffset: options?.offset ?? 0,
+                    ...((filter ? { filter } : {}) as any),
+                    ...(sanitizedOrderBy ? { sort: sanitizedOrderBy } : {}),
+                },
+            );
         });
-
-        const insights = visualizationObjects.map((value) => {
+        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjects;
+        const insights = visualizationObjects.map((visualizationObject) => {
             return insightFromInsightDefinition(
                 convertVisualizationObject(
-                    value.attributes.content! as VisualizationObject.IVisualizationObject,
+                    visualizationObject!.attributes!.content! as VisualizationObject.IVisualizationObject,
                 ),
-                value.id,
-                (value.links as any)?.self,
+                visualizationObject.id,
+                visualizationObject.links!.self,
             );
         });
 
-        const totalCount = (meta?.totalResourceCount as unknown) as number;
-        const hasNextPage = !!links?.next;
+        // TODO - where to get this "meta" information in new MD?
+        // Count the objects from API vs get it from backend?
+        const totalCount = insights.length;
+        //const totalCount = (meta?.totalResourceCount as unknown) as number;
+        // TODO - how to deal with pagination?
+        //const hasNextPage = !!links?.next;
+        const hasNextPage = false;
 
         const emptyResult: IInsightsQueryResult = {
             items: [],
@@ -131,20 +144,25 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-
         const response = await this.authCall((sdk) =>
-            sdk.metadata.visualizationObjectsIdGet({
-                contentType: "application/json",
-                id,
-            }),
+            sdk.workspaceModel.getEntity(
+                {
+                    entity: "visualizationObjects",
+                    id: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                },
+            ),
         );
-
+        const { data: visualizationObject, links } = response.data as VisualizationObjectSchema;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
-                response.data.data.attributes.content! as VisualizationObject.IVisualizationObject,
+                visualizationObject.attributes!.content! as VisualizationObject.IVisualizationObject,
             ),
-            response.data.data.id,
-            (response.data.data.links as any)?.self,
+            visualizationObject.id,
+            links!.self,
         );
 
         if (!insight) {
@@ -156,37 +174,39 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((sdk) => {
-            return sdk.metadata.visualizationObjectsPost({
-                contentType: "application/json",
-                visualizationObjectPostResource: {
+            return sdk.workspaceModel.createEntity({
+                entity: "visualizationObjects",
+                workspaceId: this.workspace,
+                analyticsObject: {
                     data: {
                         id: uuid4(),
-                        type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
+                        type: "visualizationObject",
                         attributes: {
+                            description: insightTitle(insight),
                             content: convertInsight(insight),
                             title: insightTitle(insight),
                         },
                     },
-                } as any, // The OpenAPI is wrong for now, waiting for a fix on backend 3rd party dependency fix release
+                },
             });
         });
 
         return insightFromInsightDefinition(
             insight,
             createResponse.data.data.id,
-            (createResponse.data.data.links as any)?.self,
+            createResponse.data.links!.self,
         );
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((sdk) =>
+            // TODO - update to PUT in new MD
             sdk.metadata.visualizationObjectsIdPatch({
                 contentType: "application/json",
                 id: insightId(insight),
                 visualizationObjectPatchResource: {
                     data: {
                         id: insightId(insight),
-                        type: "visualizationObject", // should be VisualizationObjectPostResourceTypeEnum.VisualizationObject,
                         attributes: {
                             content: convertInsight(insight),
                             title: insightTitle(insight),
@@ -203,9 +223,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.metadata.visualizationObjectsIdDelete({
-                contentType: "application/json",
-                id,
+            sdk.workspaceModel.deleteEntity({
+                entity: "visualizationObjects",
+                id: id,
+                workspaceId: this.workspace,
             }),
         );
     };
