@@ -152,7 +152,7 @@ const drillingPresets: any = {
     attributeValueJanuary: {
         label: "Attribute value January",
         key: "attributeValueJanuary",
-        drillableItem: HeaderPredicates.uriMatch(LdmExt.monthDateIdentifierJanuary),
+        drillableItem: HeaderPredicates.uriMatch(LdmExt.monthDateJanuaryUri),
     },
 };
 const totalPresets: any = {
@@ -211,12 +211,12 @@ const filterPresets: any = {
     lastYear: {
         label: "Last year",
         key: "lastYear",
-        filterItem: newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", -1, -1),
+        filterItem: newRelativeDateFilter(Ldm.DateDatasets.Date, "GDC.time.year", -1, -1),
     },
     noData: {
         label: "No Data",
         key: "noData",
-        filterItem: newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", 1, 1),
+        filterItem: newRelativeDateFilter(Ldm.DateDatasets.Date, "GDC.time.year", 1, 1),
     },
     franchiseFeesCalifornia: {
         label: "Franchise Fees California",

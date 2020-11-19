@@ -122,9 +122,7 @@ export const DateFilterWithColumnChartExample_DDMMYYYY: React.FC = () => {
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         state.selectedFilterOption,
-        {
-            identifier: LdmExt.dateDatasetIdentifier,
-        },
+        Ldm.DateDatasets.Date.ref,
         state.excludeCurrentPeriod,
     );
 
