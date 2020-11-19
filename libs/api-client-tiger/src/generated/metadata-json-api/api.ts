@@ -301,10 +301,10 @@ export interface AnalyticalDashboardResourceReferencesResponseSchema {
 export interface AnalyticalDashboardResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof AnalyticalDashboardResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -313,10 +313,10 @@ export interface AnalyticalDashboardResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof AnalyticalDashboardResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -416,10 +416,10 @@ export interface AnalyticalDashboardResourceSchemaAllOf {
 export interface AnalyticalDashboardResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof AnalyticalDashboardResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -428,10 +428,10 @@ export interface AnalyticalDashboardResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof AnalyticalDashboardResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -807,10 +807,10 @@ export interface AttributeResourceReferencesResponseSchema {
 export interface AttributeResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof AttributeResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -819,10 +819,10 @@ export interface AttributeResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof AttributeResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -903,10 +903,10 @@ export enum AttributeResourceSchemaTypeEnum {
 export interface AttributeResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof AttributeResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -915,10 +915,10 @@ export interface AttributeResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof AttributeResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1221,10 +1221,10 @@ export interface DatasetResourceReferencesResponseSchema {
 export interface DatasetResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof DatasetResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -1233,10 +1233,10 @@ export interface DatasetResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof DatasetResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1317,10 +1317,10 @@ export enum DatasetResourceSchemaTypeEnum {
 export interface DatasetResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof DatasetResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -1329,10 +1329,10 @@ export interface DatasetResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof DatasetResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1602,10 +1602,10 @@ export interface FactResourceReferencesResponseSchema {
 export interface FactResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof FactResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -1614,10 +1614,10 @@ export interface FactResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof FactResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1698,10 +1698,10 @@ export enum FactResourceSchemaTypeEnum {
 export interface FactResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof FactResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -1710,10 +1710,10 @@ export interface FactResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof FactResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1760,10 +1760,10 @@ export interface Failure {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof Failure
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -1785,10 +1785,10 @@ export interface Info {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof Info
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2049,10 +2049,10 @@ export interface LabelResourceReferencesResponseSchema {
 export interface LabelResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof LabelResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -2061,10 +2061,10 @@ export interface LabelResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof LabelResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2145,10 +2145,10 @@ export enum LabelResourceSchemaTypeEnum {
 export interface LabelResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof LabelResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -2157,10 +2157,10 @@ export interface LabelResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof LabelResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2188,36 +2188,36 @@ export interface LabelResourcesResponseSchemaAllOf {
     data: Array<LabelResourceSchema>;
 }
 /**
- * @type Link
+ * @type LinkCrnk
  * A link **MUST** be represented as either: a string containing the link\'s URL or a link object.
  * @export
  */
-export type Link = LinkOneOf | string;
+export type LinkCrnk = LinkCrnkOneOf | string;
 /**
  *
  * @export
- * @interface LinkOneOf
+ * @interface LinkCrnkOneOf
  */
-export interface LinkOneOf {
+export interface LinkCrnkOneOf {
     /**
      * A string containing the link\'s URL.
      * @type {string}
-     * @memberof LinkOneOf
+     * @memberof LinkCrnkOneOf
      */
     href: string;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
-     * @memberof LinkOneOf
+     * @memberof LinkCrnkOneOf
      */
     meta?: { [key: string]: object };
 }
 /**
  * Link members related to the primary data.
  * @export
- * @interface Links
+ * @interface LinksCrnk
  */
-export interface Links extends Pagination {}
+export interface LinksCrnk extends PaginationCrnk {}
 /**
  *
  * @export
@@ -2519,10 +2519,10 @@ export interface MetricResourceReferencesResponseSchema {
 export interface MetricResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof MetricResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -2531,10 +2531,10 @@ export interface MetricResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof MetricResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2615,10 +2615,10 @@ export enum MetricResourceSchemaTypeEnum {
 export interface MetricResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof MetricResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -2627,10 +2627,10 @@ export interface MetricResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof MetricResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2660,31 +2660,31 @@ export interface MetricResourcesResponseSchemaAllOf {
 /**
  *
  * @export
- * @interface Pagination
+ * @interface PaginationCrnk
  */
-export interface Pagination {
+export interface PaginationCrnk {
     /**
      * The first page of data
      * @type {string}
-     * @memberof Pagination
+     * @memberof PaginationCrnk
      */
     first?: string | null;
     /**
      * The last page of data
      * @type {string}
-     * @memberof Pagination
+     * @memberof PaginationCrnk
      */
     last?: string | null;
     /**
      * The next page of data
      * @type {string}
-     * @memberof Pagination
+     * @memberof PaginationCrnk
      */
     next?: string | null;
     /**
      * The previous page of data
      * @type {string}
-     * @memberof Pagination
+     * @memberof PaginationCrnk
      */
     prev?: string | null;
 }
@@ -2898,10 +2898,10 @@ export interface SourceResourceReferencesResponseSchema {
 export interface SourceResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof SourceResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -2910,10 +2910,10 @@ export interface SourceResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof SourceResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -2994,10 +2994,10 @@ export enum SourceResourceSchemaTypeEnum {
 export interface SourceResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof SourceResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -3006,10 +3006,10 @@ export interface SourceResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof SourceResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -3039,56 +3039,56 @@ export interface SourceResourcesResponseSchemaAllOf {
 /**
  * A JSON:API document with a single resource
  * @export
- * @interface Success
+ * @interface SuccessCrnk
  */
-export interface Success {
+export interface SuccessCrnk {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Success
+     * @type {Array<SuccessCrnkIncluded>}
+     * @memberof SuccessCrnk
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
-     * @memberof Success
+     * @memberof SuccessCrnk
      */
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
-     * @memberof Success
+     * @type {LinksCrnk}
+     * @memberof SuccessCrnk
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
-     * @memberof Success
+     * @memberof SuccessCrnk
      */
     meta?: { [key: string]: object };
 }
 /**
  *
  * @export
- * @interface SuccessIncluded
+ * @interface SuccessCrnkIncluded
  */
-export interface SuccessIncluded {
+export interface SuccessCrnkIncluded {
     /**
      *
      * @type {{ [key: string]: object; }}
-     * @memberof SuccessIncluded
+     * @memberof SuccessCrnkIncluded
      */
     attributes?: { [key: string]: object };
     /**
      * The JSON:API resource ID
      * @type {string}
-     * @memberof SuccessIncluded
+     * @memberof SuccessCrnkIncluded
      */
     id?: string;
     /**
      * The JSON:API resource type
      * @type {string}
-     * @memberof SuccessIncluded
+     * @memberof SuccessCrnkIncluded
      */
     type?: string;
 }
@@ -3308,10 +3308,10 @@ export interface TableResourceReferencesResponseSchema {
 export interface TableResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof TableResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -3320,10 +3320,10 @@ export interface TableResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof TableResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -3404,10 +3404,10 @@ export enum TableResourceSchemaTypeEnum {
 export interface TableResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof TableResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -3416,10 +3416,10 @@ export interface TableResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof TableResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -3698,10 +3698,10 @@ export interface TagResourceReferencesResponseSchema {
 export interface TagResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof TagResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -3710,10 +3710,10 @@ export interface TagResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof TagResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -3794,10 +3794,10 @@ export enum TagResourceSchemaTypeEnum {
 export interface TagResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof TagResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -3806,10 +3806,10 @@ export interface TagResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof TagResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -4119,10 +4119,10 @@ export interface VisualizationObjectResourceReferencesResponseSchema {
 export interface VisualizationObjectResourceResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof VisualizationObjectResourceResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -4131,10 +4131,10 @@ export interface VisualizationObjectResourceResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof VisualizationObjectResourceResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}
@@ -4215,10 +4215,10 @@ export enum VisualizationObjectResourceSchemaTypeEnum {
 export interface VisualizationObjectResourcesResponseSchema {
     /**
      * Included resources
-     * @type {Array<SuccessIncluded>}
+     * @type {Array<SuccessCrnkIncluded>}
      * @memberof VisualizationObjectResourcesResponseSchema
      */
-    included?: Array<SuccessIncluded>;
+    included?: Array<SuccessCrnkIncluded>;
     /**
      *
      * @type {JsonApi}
@@ -4227,10 +4227,10 @@ export interface VisualizationObjectResourcesResponseSchema {
     jsonapi?: JsonApi;
     /**
      *
-     * @type {Links}
+     * @type {LinksCrnk}
      * @memberof VisualizationObjectResourcesResponseSchema
      */
-    links?: Links;
+    links?: LinksCrnk;
     /**
      * Non-standard meta-information that can not be represented as an attribute or relationship.
      * @type {{ [key: string]: object; }}

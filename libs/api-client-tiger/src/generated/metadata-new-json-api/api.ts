@@ -23,6 +23,7 @@ import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from "./base";
 
 // utility function that adds support for nested objects in query
+// @ts-ignore
 const addFlattenedObjectTo = (object: any, target: any): void => {
     const flattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
     Object.keys(flattened).forEach((key) => {
