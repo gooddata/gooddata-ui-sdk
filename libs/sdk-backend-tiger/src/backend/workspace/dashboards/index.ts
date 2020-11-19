@@ -4,6 +4,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { objRefToIdentifier } from "../../../utils/api";
+import { AnalyticalDashboards } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -12,11 +13,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getDashboards = async (): Promise<IListedDashboard[]> => {
         const result = await this.authCall((sdk) => {
-            return sdk.metadata.analyticalDashboardsGet({
-                contentType: "application/json",
-            });
+            return sdk.workspaceModel.getEntities(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                },
+            );
         });
-        return convertAnalyticalDashboardToListItems(result.data);
+        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboards);
     };
 
     public getDashboard = async () => {
@@ -35,9 +42,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.metadata.analyticalDashboardsIdDelete({
-                contentType: "application/json",
-                id,
+            sdk.workspaceModel.deleteEntity({
+                entity: "analyticalDashboards",
+                id: id,
+                workspaceId: this.workspace,
             }),
         );
     };
