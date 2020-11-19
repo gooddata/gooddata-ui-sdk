@@ -89,6 +89,11 @@ export type Attribute = {
         content: {
             displayForms: DisplayForm[];
         };
+        /**
+         * If/when this attribute is added to the generated catalog, it constant under which it lives
+         * will be stored here.
+         */
+        generatedConstant?: string;
     };
 };
 

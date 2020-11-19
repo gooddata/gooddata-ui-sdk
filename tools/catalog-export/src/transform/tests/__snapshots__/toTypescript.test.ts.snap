@@ -290,7 +290,79 @@ export const DateDatasets = { /**
     * Date Data Set Title: Date (Timeline)  
     * Date Data Set ID: timeline.dataset.dt
     */
-    DateTimeline: idRef('timeline.dataset.dt') };
+    Timeline: { ref: idRef('timeline.dataset.dt', 'dataSet'), identifier: 'timeline.dataset.dt', /** 
+    * Date Attribute: Year (Timeline)  
+    * Date Attribute ID: timeline.year
+    */
+    Year: TimelineYear, /** 
+    * Date Attribute: Quarter (Timeline)  
+    * Date Attribute ID: timeline.quarter.in.year
+    */
+    Quarter: TimelineQuarter, /** 
+    * Date Attribute: Week (Sun-Sat)/Year (Timeline)  
+    * Date Attribute ID: timeline.week
+    */
+    WeekSunSatYear: TimelineWeekSunSatYear, /** 
+    * Date Attribute: Week (Sun-Sat) (Timeline)  
+    * Date Attribute ID: timeline.week.in.year
+    */
+    WeekSunSat: TimelineWeekSunSat, /** 
+    * Date Attribute: Week (Sun-Sat) of Qtr (Timeline)  
+    * Date Attribute ID: timeline.week.in.quarter
+    */
+    WeekSunSatOfQtr: TimelineWeekSunSatOfQtr, /** 
+    * Date Attribute: Week (Mon-Sun)/Year (Timeline)  
+    * Date Attribute ID: timeline.euweek
+    */
+    WeekMonSunYear: TimelineWeekMonSunYear, /** 
+    * Date Attribute: Week (Mon-Sun) (Timeline)  
+    * Date Attribute ID: timeline.euweek.in.year
+    */
+    WeekMonSun: TimelineWeekMonSun, /** 
+    * Date Attribute: Week (Mon-Sun) of Qtr (Timeline)  
+    * Date Attribute ID: timeline.euweek.in.quarter
+    */
+    WeekMonSunOfQtr: TimelineWeekMonSunOfQtr, /** 
+    * Date Attribute: Month (Timeline)  
+    * Date Attribute ID: timeline.month.in.year
+    */
+    Month: TimelineMonth, /** 
+    * Date Attribute: Month of Quarter (Timeline)  
+    * Date Attribute ID: timeline.month.in.quarter
+    */
+    MonthOfQuarter: TimelineMonthOfQuarter, /** 
+    * Date Attribute: Day of Year (Timeline)  
+    * Date Attribute ID: timeline.day.in.year
+    */
+    DayOfYear: TimelineDayOfYear, /** 
+    * Date Attribute: Day of Week (Sun-Sat) (Timeline)  
+    * Date Attribute ID: timeline.day.in.week
+    */
+    DayOfWeekSunSat: TimelineDayOfWeekSunSat, /** 
+    * Date Attribute: Day of Week (Mon-Sun) (Timeline)  
+    * Date Attribute ID: timeline.day.in.euweek
+    */
+    DayOfWeekMonSun: TimelineDayOfWeekMonSun, /** 
+    * Date Attribute: Day of Quarter (Timeline)  
+    * Date Attribute ID: timeline.day.in.quarter
+    */
+    DayOfQuarter: TimelineDayOfQuarter, /** 
+    * Date Attribute: Day of Month (Timeline)  
+    * Date Attribute ID: timeline.day.in.month
+    */
+    DayOfMonth: TimelineDayOfMonth, /** 
+    * Date Attribute: Quarter/Year (Timeline)  
+    * Date Attribute ID: timeline.quarter
+    */
+    QuarterYear: TimelineQuarterYear, /** 
+    * Date Attribute: Month/Year (Timeline)  
+    * Date Attribute ID: timeline.month
+    */
+    MonthYear: TimelineMonthYear, /** 
+    * Date Attribute: Date (Timeline)  
+    * Date Attribute ID: timeline.date
+    */
+    Date: TimelineDate } };
 export const Insights = { /** 
     * Insight Title: Labor Costs vs Scheduled Costs  
     * Insight ID: abhJpedgcfU2
