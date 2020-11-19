@@ -3,9 +3,9 @@
 import React from "react";
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { newPopMeasure } from "@gooddata/sdk-model";
-import { Ldm, LdmExt } from "../../ldm";
+import { Ldm } from "../../ldm";
 
-const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, LdmExt.yearDateDataSetAttributeIdentifier, (m) =>
+const totalSalesYearAgo = newPopMeasure(Ldm.$TotalSales, Ldm.DateDatasets.Date.Year.ref, (m) =>
     m.alias("$ Total Sales - SP year ago"),
 );
 

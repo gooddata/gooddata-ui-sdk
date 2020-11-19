@@ -4,7 +4,7 @@ import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { Datepicker } from "@gooddata/sdk-ui-kit";
 import moment from "moment";
 import { ErrorComponent } from "@gooddata/sdk-ui";
-import { LdmExt } from "../../../ldm";
+import { Ldm, LdmExt } from "../../../ldm";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 const dateFormat = "YYYY-MM-DD";
@@ -53,7 +53,7 @@ export const DatePickerExample_MDYY: React.FC = () => {
     const { from, to, error } = state;
 
     const filters = [
-        newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, from.format(dateFormat), to.format(dateFormat)),
+        newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, from.format(dateFormat), to.format(dateFormat)),
     ];
 
     return (

@@ -6,7 +6,7 @@ import { Ldm, LdmExt } from "../../ldm";
 
 const totalSalesYearAgoBucketItem = newPreviousPeriodMeasure(
     LdmExt.TotalSales1,
-    [{ dataSet: LdmExt.dateDatasetIdentifier, periodsAgo: 1 }],
+    [{ dataSet: Ldm.DateDatasets.Date.identifier, periodsAgo: 1 }],
     (m) => m.alias("$ Total Sales - year ago"),
 );
 
@@ -18,7 +18,7 @@ const measures = [totalSalesYearAgoBucketItem, LdmExt.TotalSales1, changeMeasure
 
 const rows = [Ldm.DateMonth.Short];
 
-const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
 
 const style = { height: 200 };
 

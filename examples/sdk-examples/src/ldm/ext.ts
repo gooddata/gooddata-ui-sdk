@@ -44,7 +44,7 @@ export const nameAttributeLocalId = "e8e31d6083c44de9b9bcdd84def972f7";
 export const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
 export const EmployeeNameIdentifier = "label.employee.employeename";
 export const totalSalesIdentifier = "aa7ulGyKhIE5";
-export const dateDatasetIdentifier = "date.dataset.dt";
+//export const dateDatasetIdentifier = "date.dataset.dt";
 export const franchiseFeesTag = "franchise_fees";
 export const yearDateDataSetAttributeIdentifier = "date.year";
 export const totalSalesLocalIdentifier = "c11c27a0b0314a83bfe5b64ab9de7b89";
@@ -110,10 +110,12 @@ export const LocationResort = modifyAttribute(Ldm.LocationResort, (a) => a.local
 export const MenuCategory = modifyAttribute(Ldm.MenuCategory, (a) => a.localId(MenuCategoryLocalId));
 export const LocationState = modifyAttribute(Ldm.LocationState, (a) => a.localId(LocationStateLocalId));
 export const LocationCity = modifyAttribute(Ldm.LocationCity, (a) => a.localId(LocationCityLocalId));
-export const monthDate = modifyAttribute(Ldm.DateMonth.Short, (a) =>
+export const monthDate = modifyAttribute(Ldm.DateDatasets.Date.Month.Short, (a) =>
     a.alias("Month").localId(monthDateLocalId),
 );
-export const quarterDate = modifyAttribute(Ldm.DateQuarter, (a) => a.localId(quarterDateLocalId));
+export const quarterDate = modifyAttribute(Ldm.DateDatasets.Date.Quarter.Default, (a) =>
+    a.localId(quarterDateLocalId),
+);
 export const MenuItemName = modifyAttribute(Ldm.MenuItemName, (a) => a.alias("Menu Item name"));
 export const AvgDailyTotalSales = modifyMeasure(Ldm.$AvgDailyTotalSales, (m) =>
     m.alias("$ Avg Daily Total Sales").format("$#,##0").localId(averageDailyTotalSalesLocalId),
@@ -145,7 +147,7 @@ export const nameAttribute = newAttribute(nameAttributeIdentifier, (a) => a.loca
 
 export const locationStateAttributeUri = `/gdc/md/${workspace}/obj/2210`;
 export const locationStateAttributeCaliforniaUri = `/gdc/md/${workspace}/obj/2210/elements?id=6340116`;
-export const monthDateIdentifierJanuary = `/gdc/md/${workspace}/obj/2071/elements?id=1`;
+export const monthDateJanuaryUri = `/gdc/md/${workspace}/obj/2071/elements?id=1`;
 export const dateDataSetUri = `/gdc/md/${workspace}/obj/2180`;
 export const locationNameAttributeUri = `/gdc/md/${workspace}/obj/2204`;
 export const locationResortUri = `/gdc/md/${workspace}/obj/2206`;

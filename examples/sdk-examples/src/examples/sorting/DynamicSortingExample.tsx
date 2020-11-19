@@ -116,7 +116,7 @@ export const DynamicSortingExample: React.FC = () => {
                 )} order.`,
             sortBy: (dir) => [
                 newMeasureSort(LdmExt.TotalSales1, dir, [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateIdentifierJanuary),
+                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
                 ]),
             ],
         },
@@ -130,7 +130,7 @@ export const DynamicSortingExample: React.FC = () => {
             sortBy: (dir) => [
                 newAttributeAreaSort(LdmExt.monthDate),
                 newMeasureSort(LdmExt.TotalSales1, dir, [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateIdentifierJanuary),
+                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
                 ]),
             ],
         },
@@ -145,7 +145,7 @@ export const DynamicSortingExample: React.FC = () => {
                     newAttributeLocator(LdmExt.LocationState, LdmExt.locationStateAttributeCaliforniaUri),
                 ]),
                 newMeasureSort(LdmExt.TotalSales1, "desc", [
-                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateIdentifierJanuary),
+                    newAttributeLocator(LdmExt.monthDate, LdmExt.monthDateJanuaryUri),
                 ]),
             ],
         },
