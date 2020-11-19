@@ -1,5 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
-import { IWorkspaceDatasetsService, IDataset } from "@gooddata/sdk-backend-spi";
+import { GdcMetadata } from "@gooddata/api-model-bear";
+import { IWorkspaceDatasetsService, IDataset, IMetadataObject } from "@gooddata/sdk-backend-spi";
+import { convertMetadataObjectXrefEntry } from "../../../convertors/fromBackend/MetaConverter";
 import { convertDataSet } from "../../../convertors/fromBackend/DataSetConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 
@@ -9,5 +11,15 @@ export class BearWorkspaceDataSets implements IWorkspaceDatasetsService {
     public async getDatasets(): Promise<IDataset[]> {
         const result = await this.authCall((sdk) => sdk.catalogue.loadDataSets(this.workspace));
         return result.map(convertDataSet);
+    }
+
+    public async getAllDatasets(): Promise<IMetadataObject[]> {
+        const datasetsResult: GdcMetadata.IObjectXrefEntry[] = await this.authCall((sdk) =>
+            sdk.project.getDatasets(this.workspace),
+        );
+
+        return datasetsResult.map((dataset: GdcMetadata.IObjectXrefEntry) =>
+            convertMetadataObjectXrefEntry("dataSet", dataset),
+        );
     }
 }

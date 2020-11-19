@@ -1,6 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { IDataset } from "../fromModel/ldm/datasets";
+import { IMetadataObject } from "../fromModel/ldm/metadata";
 
 /**
  * Service for querying workspace datasets
@@ -9,9 +10,16 @@ import { IDataset } from "../fromModel/ldm/datasets";
  */
 export interface IWorkspaceDatasetsService {
     /**
-     * Receive all workspace datasets
+     * Receive all workspace csv datasets
+     *
+     * @returns promise of workspace csv datasets
+     */
+    getDatasets(): Promise<IDataset[]>;
+
+    /**
+     * Receive all workspace all datasets
      *
      * @returns promise of workspace datasets
      */
-    getDatasets(): Promise<IDataset[]>;
+    getAllDatasets(): Promise<IMetadataObject[]>;
 }
