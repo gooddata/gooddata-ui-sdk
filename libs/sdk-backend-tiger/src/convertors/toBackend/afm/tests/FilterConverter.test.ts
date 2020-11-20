@@ -1,10 +1,5 @@
 // (C) 2020 GoodData Corporation
-import {
-    convertAbsoluteDateFilter,
-    convertMeasureValueFilter,
-    convertRelativeDateFilter,
-    convertFilter,
-} from "../FilterConverter";
+import { convertFilter } from "../FilterConverter";
 import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
 import {
     DateGranularity,
@@ -42,18 +37,18 @@ describe("tiger filter converter from model to AFM", () => {
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, filter) => {
-            expect(convertMeasureValueFilter(filter)).toMatchSnapshot();
+            expect(convertFilter(filter)).toMatchSnapshot();
         });
 
         it("should throw exception if filter has idRef without type", () => {
             expect(() => {
-                convertMeasureValueFilter(newMeasureValueFilter(idRef("ambiguous"), "GREATER_THAN", 10));
+                convertFilter(newMeasureValueFilter(idRef("ambiguous"), "GREATER_THAN", 10));
             }).toThrow();
         });
 
         it("should throw exception if filter is using uriRef", () => {
             expect(() => {
-                convertMeasureValueFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
+                convertFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
             }).toThrow();
         });
     });
@@ -68,7 +63,7 @@ describe("tiger filter converter from model to AFM", () => {
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, input) => {
-            expect(convertAbsoluteDateFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
     });
     describe("convert relative date filter", () => {
@@ -97,7 +92,7 @@ describe("tiger filter converter from model to AFM", () => {
             ["mission 'from' parameter", relativeFilter.withoutFrom],
         ];
         it.each(Scenarios)("should return AFM relative date filter with %s", (_desc, input) => {
-            expect(convertRelativeDateFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
     });
     describe("convert filter", () => {

@@ -85,7 +85,7 @@ function convertAttributeFilter(filter: IAttributeFilter): AttributeFilter | nul
     return convertNegativeFilter(filter);
 }
 
-export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): AbsoluteDateFilter | null {
+function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): AbsoluteDateFilter | null {
     const { absoluteDateFilter } = filter;
 
     if (absoluteDateFilter.from === undefined || absoluteDateFilter.to === undefined) {
@@ -103,7 +103,7 @@ export function convertAbsoluteDateFilter(filter: IAbsoluteDateFilter): Absolute
     };
 }
 
-export function convertRelativeDateFilter(filter: IRelativeDateFilter): RelativeDateFilter | null {
+function convertRelativeDateFilter(filter: IRelativeDateFilter): RelativeDateFilter | null {
     const { relativeDateFilter } = filter;
 
     if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
@@ -122,7 +122,7 @@ export function convertRelativeDateFilter(filter: IRelativeDateFilter): Relative
     };
 }
 
-export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureValueFilter | null {
+function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureValueFilter | null {
     const { measureValueFilter } = filter;
     const condition = measureValueFilter.condition;
 
@@ -158,7 +158,7 @@ export function convertMeasureValueFilter(filter: IMeasureValueFilter): MeasureV
     return null;
 }
 
-export function convertRankingFilter(filter: IRankingFilter): RankingFilter {
+function convertRankingFilter(filter: IRankingFilter): RankingFilter {
     const { measure, attributes, operator, value } = filter.rankingFilter;
     const dimensionalityProp = attributes
         ? { dimensionality: attributes.map(toRankingFilterDimensionalityIdentifier) }
