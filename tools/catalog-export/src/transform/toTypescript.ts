@@ -180,7 +180,33 @@ function generateAttributeDisplayForm(
 }
 
 /**
- * Generates attribute definitions. Works as follows:
+ * Generates display form property initializers for an attribute. When naming the display form properties, the naming strategy will
+ * be used; the name returned from the strategy will be further tweaked to improve readability of the generated mapping:
+ *
+ * - if it equals to name of attribute, the display form key will be 'Default' (indicating default display form, preventing
+ *   weird mapping of say Product.Product)
+ *
+ * - if the label is prefixed with attribute name, the prefix will be trimmed (going from say Product.ProductName to Product.Name)
+ *
+ * @param attribute - attribute to work with
+ * @param attributeVariableName - variable name assigned to the attribute
+ * @param naming - naming strategy to use
+ */
+function generateDisplayFormPropertyInitializers(
+    attribute: Attribute,
+    attributeVariableName: string,
+    naming: NamingStrategies = DefaultNaming,
+): string[] {
+    const localNameScope: TakenNamesSet = {};
+    const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
+        generateAttributeDisplayForm(df, attributeVariableName, localNameScope, naming),
+    );
+
+    return displayFormInits;
+}
+
+/**
+ * Generates attribute constant. Works as follows:
  *
  * - If the attribute has single display form, generates a constant of DfTitle => newAttribute(id)
  * - If the attribute has multiple display forms, generates a constant that is an object mapping different
@@ -191,16 +217,23 @@ function generateAttributeDisplayForm(
  *
  * @param attribute - attribute to generate definitions for
  * @param naming - naming scope to ensure variable name uniqueness
+ * @param deprecation - if specified, add `@deprecated` doc with this message
  */
-function generateAttribute(
+function generateAttributeConstant(
     attribute: Attribute,
     naming: NamingStrategies = DefaultNaming,
+    deprecated?: string,
 ): OptionalKind<VariableStatementStructure> {
     const { meta } = attribute.attribute;
     const variableName = naming.attribute(meta.title, GlobalNameScope);
     const { displayForms } = attribute.attribute.content;
+    const comments = [`Attribute Title: ${meta.title}`, `Attribute ID: ${meta.identifier}`];
 
-    attribute.attribute.generatedConstant = variableName;
+    if (deprecated) {
+        comments.push(`@deprecated ${deprecated}`);
+    }
+
+    const docs = [comments.join("\n")];
 
     if (displayForms.length === 1) {
         /*
@@ -211,7 +244,7 @@ function generateAttribute(
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
-            docs: [`Attribute Title: ${meta.title}\nDisplay Form ID: ${meta.identifier}`],
+            docs,
             declarations: [
                 {
                     name: variableName,
@@ -224,14 +257,16 @@ function generateAttribute(
         /*
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
-        const localNameScope: TakenNamesSet = {};
-        const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
-            generateAttributeDisplayForm(df, variableName, localNameScope, naming),
+        const displayFormInits: string[] = generateDisplayFormPropertyInitializers(
+            attribute,
+            variableName,
+            naming,
         );
 
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
+            docs,
             declarations: [
                 {
                     name: variableName,
@@ -245,7 +280,7 @@ function generateAttribute(
 function generateAttributes(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return projectMeta.catalog.attributes.map((a) => generateAttribute(a));
+    return projectMeta.catalog.attributes.map((a) => generateAttributeConstant(a));
 }
 
 function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStatementStructure> {
@@ -328,19 +363,29 @@ function generateDateDataSet(
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const { content } = dd.dateDataSet;
 
-    return content.attributes.map((a) => generateAttribute(a, naming));
+    return content.attributes.map((a) =>
+        generateAttributeConstant(
+            a,
+            naming,
+            "constants generated for date attributes are deprecated in favor of DateDatasets mapping",
+        ),
+    );
 }
 
 function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies): string[] {
     const ddScope = {};
 
     return dd.dateDataSet.content.attributes.map((a) => {
-        const { generatedConstant, meta } = a.attribute;
+        const { meta } = a.attribute;
+        const { title, identifier } = meta;
 
         const attributePropertyName = naming.dataSetAttributeProperty(meta.title, ddScope);
-        const jsDoc = `/** \n* Date Attribute: ${meta.title}  \n* Date Attribute ID: ${meta.identifier}\n*/`;
+        const jsDoc = `/** \n* Date Attribute: ${title}  \n* Date Attribute ID: ${identifier}\n*/`;
+        const displayFormProps = generateDisplayFormPropertyInitializers(a, attributePropertyName, naming);
 
-        return `${jsDoc}\n${attributePropertyName}: ${generatedConstant}`;
+        return `${jsDoc}\n${attributePropertyName}: { ref: idRef('${identifier}', 'attribute'), identifier: '${identifier}', ${displayFormProps.join(
+            ",",
+        )} }`;
     });
 }
 
