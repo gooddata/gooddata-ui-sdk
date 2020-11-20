@@ -108,7 +108,7 @@ const CoreLoginForm: React.FC<ILoginProps & FormikProps<IFormValues>> = (props) 
                 className="LoginLogo"
             />
             <form className="LoginForm s-loginForm" onSubmit={handleSubmit}>
-                <h1>Sign in to the Live&nbsp;Examples</h1>
+                <h1>Sign in to the Examples&nbsp;Gallery</h1>
 
                 <div className="gd-input">
                     <label htmlFor="email">E-mail</label>

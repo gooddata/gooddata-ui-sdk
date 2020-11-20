@@ -7,9 +7,10 @@ import { CustomLoading } from "./CustomLoading";
 import { workspace, backendUrlForInfo } from "../constants/fixtures";
 import favicon from "../static/favicon.ico";
 import logo from "../static/gooddata.svg";
+import ogImage from "../static/og-image.png";
 import { ANONYMOUS_ACCESS } from "../constants/env";
 
-const appName = "GoodData.UI Examples";
+const appName = "GoodData.UI Examples Gallery";
 
 interface IHeaderProps extends RouteComponentProps {
     location: any;
@@ -315,6 +316,7 @@ const CoreHeader: React.FC<IHeaderProps> = ({
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
                 <link rel="shortcut icon" type="image/x-icon" href={favicon} />
+                <meta property="og:image" content={`https://gdui-examples.herokuapp.com${ogImage}`} />
             </Helmet>
             <div className="gd-header header-6 is-loaded">
                 <div className="gd-header-inner">
