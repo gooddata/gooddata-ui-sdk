@@ -1,14 +1,20 @@
 // (C) 2020 GoodData Corporation
 import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
-import { userLoginMd5FromAuthenticatedPrincipal } from "../../utils/api";
+import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../utils/api";
 import { BearAuthenticatedCallGuard } from "../../types/auth";
+import { ANONYMOUS_USER_SETTINGS } from "../constants";
 
 export class BearUserSettingsService implements IUserSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard) {}
 
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (sdk, { getPrincipal }) => {
-            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipalWithAnonymous(getPrincipal);
+
+            // for anonymous users, return defaults
+            if (!userLoginMd5) {
+                return ANONYMOUS_USER_SETTINGS;
+            }
 
             const [flags, currentProfile] = await Promise.all([
                 sdk.user.getUserFeatureFlags(userLoginMd5),
