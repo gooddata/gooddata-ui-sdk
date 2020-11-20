@@ -216,7 +216,7 @@ class RenderInsightView extends React.Component<
         }
 
         const { config = {} } = this.props;
-        const { responsiveUiDateFormat } = this.settings;
+        const { responsiveUiDateFormat } = this.settings || {};
 
         const visProps: IVisProps = {
             locale: this.getLocale(),
