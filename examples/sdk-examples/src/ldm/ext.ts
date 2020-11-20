@@ -44,7 +44,6 @@ export const nameAttributeLocalId = "e8e31d6083c44de9b9bcdd84def972f7";
 export const averageRestaurantDailyCostsIdentifier = "aaQJzQzoeKwZ";
 export const EmployeeNameIdentifier = "label.employee.employeename";
 export const totalSalesIdentifier = "aa7ulGyKhIE5";
-//export const dateDatasetIdentifier = "date.dataset.dt";
 export const franchiseFeesTag = "franchise_fees";
 export const yearDateDataSetAttributeIdentifier = "date.year";
 export const totalSalesLocalIdentifier = "c11c27a0b0314a83bfe5b64ab9de7b89";

@@ -44,19 +44,18 @@ export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Refe
 
 /**
  * A PoP measure derived from 'Won' measure, comparing same period previous year
- *
- * NOTE: popAttrId is hardcoded like this because PoP measure needs attribute ID and not display form ID and
- * attribute ids are not yet in the generated LDM catalog.
  */
-export const WonPopClosedYear = newPopMeasure(ReferenceLdm.Won, "closed.year", (m) =>
-    m.alias("Won Last Year"),
+export const WonPopClosedYear = newPopMeasure(
+    ReferenceLdm.Won,
+    ReferenceLdm.DateDatasets.Closed.Year.ref,
+    (m) => m.alias("Won Last Year"),
 );
 
 /**
  * A previous period measure derived from 'Won' measure
  */
 export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
-    { dataSet: "closed", periodsAgo: 1 },
+    { dataSet: ReferenceLdm.DateDatasets.Closed.identifier, periodsAgo: 1 },
 ]);
 /**
  * Measure that computes ratio
@@ -64,12 +63,6 @@ export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceLdm.Won, [
 export const AmountWithRatio = modifySimpleMeasure(ReferenceLdm.Amount, (m) =>
     m.alias("Amount with Ratio").ratio().localId("Amount with Ratio"),
 );
-/**
- * A reference to date data set of the 'Closed' dimension
- */
-export const ClosedDataDatasetRef: ObjRef = {
-    identifier: "closed",
-};
 /**
  * A reference to Stage History Attribute
  */
