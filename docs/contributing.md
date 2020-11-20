@@ -76,6 +76,10 @@ On top of Rush built-in commands, we have added our own custom commands (see [co
 | `rush prettier-write` | Formats code in all projects.                                                                               |
 | `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                                     |
 
+## How do I...?
+
+This section should answer most of the contribution questions for the practical side of things.
+
 ### How do I add new / update existing dependency in a project?
 
 You must use Rush to add a new dependency to a project and use the `make-consistent` parameter. This parameter
@@ -181,6 +185,21 @@ RELATED: RAIL-1234 add [feature name] to [package]
 This is to keep the PR title structure in line with our other frontend repositories.
 
 In the PR body, please follow the checklist and really try to explain the changes happening in the PR (for single commit PR this will be pre-filled from your well described commit already). All the communication about the PR should happen in the PR via comments so that the process is transparent and traceable.
+
+### How do I tell if my Pull Request needs approval by a Code Owner?
+
+If your Pull Request meets **any** of the following points, please ask some [Code Owner](../.github/CODEOWNERS) for review before merging:
+
+-   introduces a breaking change
+-   adds a new package
+-   adds a new feature
+-   adds a new dependency to any package published to NPM or upgrades it to a new major
+-   changes the architecture in a non-trivial way
+-   changes the implementation/behavior of any public functionality in a non-trivial way
+-   changes CI scripts
+-   changes package.json scripts
+
+If your PR does not meet any of the aforementioned criteria, it can be merged by anyone with the necessary rights.
 
 ### How do I describe my changes for the CHANGELOG?
 
