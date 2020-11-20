@@ -3,7 +3,7 @@ import {
     convertAbsoluteDateFilter,
     convertMeasureValueFilter,
     convertRelativeDateFilter,
-    convertVisualizationObjectFilter,
+    convertFilter,
 } from "../FilterConverter";
 import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
 import {
@@ -100,7 +100,7 @@ describe("tiger filter converter from model to AFM", () => {
             expect(convertRelativeDateFilter(input)).toMatchSnapshot();
         });
     });
-    describe("convert visualization object filter", () => {
+    describe("convert filter", () => {
         const Scenarios: Array<[string, any]> = [
             ["positive attribute filter", newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"])],
             [
@@ -136,18 +136,18 @@ describe("tiger filter converter from model to AFM", () => {
             ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
-            expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
 
         it("should throw an error since tiger database only supports specifying positive attribute elements by value", () => {
             expect(() =>
-                convertVisualizationObjectFilter(visualizationObjectFilter.positiveAttributeFilter),
+                convertFilter(visualizationObjectFilter.positiveAttributeFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 
         it("should throw an error since tiger database only supports specifying negative attribute elements by value", () => {
             expect(() =>
-                convertVisualizationObjectFilter(visualizationObjectFilter.negativeAttributeFilter),
+                convertFilter(visualizationObjectFilter.negativeAttributeFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 
@@ -155,8 +155,8 @@ describe("tiger filter converter from model to AFM", () => {
             const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
             const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
 
-            expect(convertVisualizationObjectFilter(emptyPositiveFilter)).toBeNull();
-            expect(convertVisualizationObjectFilter(emptyNegativeFilter)).toBeNull();
+            expect(convertFilter(emptyPositiveFilter)).toBeNull();
+            expect(convertFilter(emptyNegativeFilter)).toBeNull();
         });
     });
 });

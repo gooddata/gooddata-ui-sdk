@@ -9,7 +9,7 @@ import {
     MeasureItem,
     ResultSpec,
 } from "@gooddata/api-client-tiger";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { convertFilter } from "./FilterConverter";
 import { convertMeasure } from "./MeasureConverter";
 import { convertAttribute } from "./AttributeConverter";
 import { convertDimensions } from "./DimensionsConverter";
@@ -21,9 +21,7 @@ function convertAFM(def: IExecutionDefinition): AFM {
     const measures: MeasureItem[] = def.measures.map(convertMeasure);
     const measuresProp = { measures };
 
-    const filters: FilterDefinition[] = def.filters
-        ? compact(def.filters.map(convertVisualizationObjectFilter))
-        : [];
+    const filters: FilterDefinition[] = def.filters ? compact(def.filters.map(convertFilter)) : [];
     const filtersProp = { filters };
 
     return {

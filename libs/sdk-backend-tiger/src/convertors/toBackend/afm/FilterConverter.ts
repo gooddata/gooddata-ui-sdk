@@ -173,7 +173,7 @@ export function convertRankingFilter(filter: IRankingFilter): RankingFilter {
     };
 }
 
-export function convertVisualizationObjectFilter(filter: IFilter): FilterDefinition | null {
+export function convertFilter(filter: IFilter): FilterDefinition | null {
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter);
     } else if (isAbsoluteDateFilter(filter)) {
