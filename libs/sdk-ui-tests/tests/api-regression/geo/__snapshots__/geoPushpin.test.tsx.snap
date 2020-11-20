@@ -42,6 +42,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -62,6 +63,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -139,6 +141,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -154,6 +157,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -263,6 +267,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -283,6 +288,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -360,6 +366,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -375,6 +382,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -470,6 +478,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -521,6 +530,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -612,6 +622,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -678,6 +689,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -1039,6 +1051,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -1109,6 +1122,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -1196,6 +1210,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -1251,6 +1266,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -1567,6 +1583,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -1629,6 +1646,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -1716,6 +1734,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -1782,6 +1801,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -1882,6 +1902,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -1959,6 +1980,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -2055,6 +2077,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -2075,6 +2098,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -2137,6 +2161,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -2152,6 +2177,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -2248,6 +2274,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -2268,6 +2295,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -2361,6 +2389,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -2376,6 +2405,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -2481,6 +2511,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -2501,6 +2532,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -2578,6 +2610,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -2593,6 +2626,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -2698,6 +2732,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -2779,6 +2814,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -2866,6 +2902,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -2886,6 +2923,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -2937,6 +2975,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -2952,6 +2991,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
@@ -3039,6 +3079,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.population",
+                  "type": "fact",
                 },
               },
             },
@@ -3059,6 +3100,7 @@ Object {
                 "aggregation": "sum",
                 "item": Object {
                   "identifier": "fact.uscities.density",
+                  "type": "fact",
                 },
               },
             },
@@ -3125,6 +3167,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.population",
+              "type": "fact",
             },
           },
         },
@@ -3140,6 +3183,7 @@ Object {
             "aggregation": "sum",
             "item": Object {
               "identifier": "fact.uscities.density",
+              "type": "fact",
             },
           },
         },
