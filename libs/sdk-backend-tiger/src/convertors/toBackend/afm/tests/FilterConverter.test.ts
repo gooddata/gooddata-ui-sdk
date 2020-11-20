@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { convertFilter } from "../FilterConverter";
+import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter";
 import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
 import {
     DateGranularity,
@@ -96,11 +96,18 @@ describe("tiger filter converter from model to AFM", () => {
         });
     });
     describe("convert filter", () => {
+        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
+        const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
         const Scenarios: Array<[string, any]> = [
-            ["positive attribute filter", newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"])],
+            ["positive attribute filter", positiveAttributeFilter],
             [
-                "negative attribute filter",
-                newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["other value"]),
+                "positive attribute filter with applyOnResult true",
+                newFilterWithApplyOnResult(positiveAttributeFilter, true),
+            ],
+            ["negative attribute filter", negativeAttributeFilter],
+            [
+                "negative attribute filter with applyOnResult false",
+                newFilterWithApplyOnResult(negativeAttributeFilter, false),
             ],
             [
                 "absolute date filter",

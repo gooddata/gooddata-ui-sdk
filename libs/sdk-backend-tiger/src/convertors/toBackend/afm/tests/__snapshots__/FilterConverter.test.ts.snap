@@ -71,7 +71,26 @@ Object {
     },
     "notIn": Object {
       "values": Array [
-        "other value",
+        "value 2",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with applyOnResult false 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "applyOnResult": false,
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "notIn": Object {
+      "values": Array [
+        "value 2",
       ],
     },
   },
@@ -81,6 +100,25 @@ Object {
 exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter 1`] = `
 Object {
   "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "in": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with applyOnResult true 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "applyOnResult": true,
     "displayForm": Object {
       "identifier": Object {
         "id": "label.product.id.name",
