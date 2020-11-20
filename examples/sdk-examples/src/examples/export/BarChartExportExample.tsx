@@ -7,7 +7,7 @@ import { ExampleWithExport } from "./ExampleWithExport";
 import { Ldm, LdmExt } from "../../ldm";
 
 const measures = [LdmExt.TotalSales1];
-const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };
 

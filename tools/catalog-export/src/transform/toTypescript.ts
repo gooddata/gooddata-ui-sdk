@@ -23,6 +23,7 @@ export type TypescriptOutput = {
 const FILE_DIRECTIVES = ["/* eslint-disable */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 const INSIGHT_MAP_VARNAME = "Insights";
+const DATE_DATASETS_MAP_VARNAME = "DateDatasets";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
 
 //
@@ -33,17 +34,23 @@ let GlobalNameScope: TakenNamesSet = {};
 
 type NamingStrategy = (title: string, scope: TakenNamesSet) => string;
 
-type AttributeNaming = {
+type NamingStrategies = {
+    dataSetProperty: NamingStrategy;
+    dataSetAttributeProperty: NamingStrategy;
     attribute: NamingStrategy;
     displayForm: NamingStrategy;
 };
 
-const DefaultNaming: AttributeNaming = {
+const DefaultNaming: NamingStrategies = {
+    dataSetProperty: uniqueVariable,
+    dataSetAttributeProperty: uniqueVariable,
     attribute: uniqueVariable,
     displayForm: uniqueVariable,
 };
 
-const DateDataSetNaming: AttributeNaming = {
+const DateDataSetNaming: NamingStrategies = {
+    dataSetProperty: dateDataSetProperty,
+    dataSetAttributeProperty: dateDataSetAttributeProperty,
     attribute: dateAttributeSwitcharoo,
     displayForm: dateDisplayFormStrip,
 };
@@ -63,6 +70,37 @@ function uniqueVariable(title: string, nameScope: TakenNamesSet = GlobalNameScop
 }
 
 /**
+ * This is a wrapper on top of uniqueVariable. It is useful when naming date data set properties within the DateDatasets mapping.
+ *
+ * Date data sets have a convention where date data set title is "Date (data set name)". As the context of date data sets
+ * is already established, noone cares about "Date" in the property name.
+ *
+ * This function will use just the title in parenthesis for the data set property name.
+ *
+ * @param title
+ * @param nameScope
+ */
+function dateDataSetProperty(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
+    const datasetStart = title.lastIndexOf("(");
+
+    if (datasetStart === -1) {
+        return uniqueVariable(title, nameScope);
+    }
+
+    return uniqueVariable(title.substr(datasetStart), nameScope);
+}
+
+function dateDataSetAttributeProperty(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
+    const datasetStart = title.lastIndexOf("(");
+
+    if (datasetStart === -1) {
+        return uniqueVariable(title, nameScope);
+    }
+
+    return uniqueVariable(title.substr(0, datasetStart), nameScope);
+}
+
+/**
  * This is a wrapper on top of uniqueVariable and is useful when naming date data set attributes. They have
  * a convention where date data set name is in parenthesis at the end of the attr/df title. This function
  * takes the ds name and moves it at the beginning of the title. That way all variables for same date data set
@@ -73,6 +111,11 @@ function uniqueVariable(title: string, nameScope: TakenNamesSet = GlobalNameScop
  */
 function dateAttributeSwitcharoo(title: string, nameScope: TakenNamesSet = GlobalNameScope): string {
     const datasetStart = title.lastIndexOf("(");
+
+    if (datasetStart === -1) {
+        return uniqueVariable(title, nameScope);
+    }
+
     const switchedTitle = `${title.substr(datasetStart)} ${title.substr(0, datasetStart)}`;
 
     return uniqueVariable(switchedTitle, nameScope);
@@ -123,7 +166,7 @@ function generateAttributeDisplayForm(
     displayForm: DisplayForm,
     attributeVariableName: string,
     nameScope: TakenNamesSet,
-    naming: AttributeNaming,
+    naming: NamingStrategies,
 ): string {
     const { meta } = displayForm;
     const dfVariableName = naming.displayForm(meta.title, nameScope);
@@ -137,22 +180,60 @@ function generateAttributeDisplayForm(
 }
 
 /**
- * Generates attribute definitions. Works as follows:
+ * Generates display form property initializers for an attribute. When naming the display form properties, the naming strategy will
+ * be used; the name returned from the strategy will be further tweaked to improve readability of the generated mapping:
+ *
+ * - if it equals to name of attribute, the display form key will be 'Default' (indicating default display form, preventing
+ *   weird mapping of say Product.Product)
+ *
+ * - if the label is prefixed with attribute name, the prefix will be trimmed (going from say Product.ProductName to Product.Name)
+ *
+ * @param attribute - attribute to work with
+ * @param attributeVariableName - variable name assigned to the attribute
+ * @param naming - naming strategy to use
+ */
+function generateDisplayFormPropertyInitializers(
+    attribute: Attribute,
+    attributeVariableName: string,
+    naming: NamingStrategies = DefaultNaming,
+): string[] {
+    const localNameScope: TakenNamesSet = {};
+    const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
+        generateAttributeDisplayForm(df, attributeVariableName, localNameScope, naming),
+    );
+
+    return displayFormInits;
+}
+
+/**
+ * Generates attribute constant. Works as follows:
  *
  * - If the attribute has single display form, generates a constant of DfTitle => newAttribute(id)
  * - If the attribute has multiple display forms, generates a constant that is an object mapping different
  *   DfTitles => newAttribute(dfId)
  *
+ * **NOTE**: this function has side effect. as it generates the statement (which it returns) it will update the
+ * attribute instance with name of the generated constant.
+ *
  * @param attribute - attribute to generate definitions for
  * @param naming - naming scope to ensure variable name uniqueness
+ * @param deprecation - if specified, add `@deprecated` doc with this message
  */
-function generateAttribute(
+function generateAttributeConstant(
     attribute: Attribute,
-    naming: AttributeNaming = DefaultNaming,
+    naming: NamingStrategies = DefaultNaming,
+    deprecated?: string,
 ): OptionalKind<VariableStatementStructure> {
     const { meta } = attribute.attribute;
     const variableName = naming.attribute(meta.title, GlobalNameScope);
     const { displayForms } = attribute.attribute.content;
+    const comments = [`Attribute Title: ${meta.title}`, `Attribute ID: ${meta.identifier}`];
+
+    if (deprecated) {
+        comments.push(`@deprecated ${deprecated}`);
+    }
+
+    const docs = [comments.join("\n")];
 
     if (displayForms.length === 1) {
         /*
@@ -163,7 +244,7 @@ function generateAttribute(
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
-            docs: [`Attribute Title: ${meta.title}\nDisplay Form ID: ${meta.identifier}`],
+            docs,
             declarations: [
                 {
                     name: variableName,
@@ -176,14 +257,16 @@ function generateAttribute(
         /*
          * If there are multiple DFs, have mapping of const AttrName = { DfName: newAttribute(), OtherDfName: newAttribute()}
          */
-        const localNameScope: TakenNamesSet = {};
-        const displayFormInits: string[] = attribute.attribute.content.displayForms.map((df) =>
-            generateAttributeDisplayForm(df, variableName, localNameScope, naming),
+        const displayFormInits: string[] = generateDisplayFormPropertyInitializers(
+            attribute,
+            variableName,
+            naming,
         );
 
         return {
             declarationKind: VariableDeclarationKind.Const,
             isExported: true,
+            docs,
             declarations: [
                 {
                     name: variableName,
@@ -197,7 +280,7 @@ function generateAttribute(
 function generateAttributes(
     projectMeta: ProjectMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
-    return projectMeta.catalog.attributes.map((a) => generateAttribute(a));
+    return projectMeta.catalog.attributes.map((a) => generateAttributeConstant(a));
 }
 
 function generateMeasureFromMetric(metric: Metric): OptionalKind<VariableStatementStructure> {
@@ -276,11 +359,79 @@ function generateMeasures(
  */
 function generateDateDataSet(
     dd: DateDataSet,
-    naming: AttributeNaming,
+    naming: NamingStrategies,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const { content } = dd.dateDataSet;
 
-    return content.attributes.map((a) => generateAttribute(a, naming));
+    return content.attributes.map((a) =>
+        generateAttributeConstant(
+            a,
+            naming,
+            "constants generated for date attributes are deprecated in favor of DateDatasets mapping",
+        ),
+    );
+}
+
+function generateDateDataSetAttributes(dd: DateDataSet, naming: NamingStrategies): string[] {
+    const ddScope = {};
+
+    return dd.dateDataSet.content.attributes.map((a) => {
+        const { meta } = a.attribute;
+        const { title, identifier } = meta;
+
+        const attributePropertyName = naming.dataSetAttributeProperty(meta.title, ddScope);
+        const jsDoc = `/** \n* Date Attribute: ${title}  \n* Date Attribute ID: ${identifier}\n*/`;
+        const displayFormProps = generateDisplayFormPropertyInitializers(a, attributePropertyName, naming);
+
+        return `${jsDoc}\n${attributePropertyName}: { ref: idRef('${identifier}', 'attribute'), identifier: '${identifier}', ${displayFormProps.join(
+            ",",
+        )} }`;
+    });
+}
+
+function generateDateDataSetInitialzier(
+    dd: DateDataSet,
+    naming: NamingStrategies,
+    namingScope: TakenNamesSet,
+): string {
+    const { title, identifier } = dd.dateDataSet.meta;
+    const propName = naming.dataSetProperty(title, namingScope);
+    const jsDoc = `/** \n* Date Data Set Title: ${title}  \n* Date Data Set ID: ${identifier}\n*/`;
+    const attributes = generateDateDataSetAttributes(dd, naming);
+
+    return `${jsDoc}\n${propName}: { ref: idRef('${identifier}', 'dataSet'), identifier: '${identifier}', ${attributes.join(
+        ", ",
+    )} }`;
+}
+
+/**
+ * Given date datasets, this generates a DateDataSets constants which is an object with a property per-dataset. For each
+ * data set, there is another object with: `ref` property which contains data set's idRef and then property per-attribute.
+ *
+ * These per-attribute properties reference existing constants generated for the date attributes => this function MUST
+ * be called after generateAttributes.
+ *
+ * @param dds - date data sets
+ * @param naming - naming strategy
+ */
+function generateDateDataSetMapping(
+    dds: DateDataSet[],
+    naming: NamingStrategies,
+): OptionalKind<VariableStatementStructure> {
+    const mappingScope = {};
+    const ddMappings = dds.map((dd) => generateDateDataSetInitialzier(dd, naming, mappingScope));
+
+    return {
+        declarationKind: VariableDeclarationKind.Const,
+        isExported: true,
+        docs: ["Available Date Data Sets"],
+        declarations: [
+            {
+                name: DATE_DATASETS_MAP_VARNAME,
+                initializer: `{ ${ddMappings.join(", ")} }`,
+            },
+        ],
+    };
 }
 
 function generateDateDataSets(
@@ -293,7 +444,9 @@ function generateDateDataSets(
         naming = DefaultNaming;
     }
 
-    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming)));
+    return flatten(projectMeta.dateDataSets.map((dd) => generateDateDataSet(dd, naming))).concat(
+        generateDateDataSetMapping(projectMeta.dateDataSets, naming),
+    );
 }
 
 /**

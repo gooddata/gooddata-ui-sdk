@@ -56,7 +56,7 @@ export const MonthPickerExample: React.FC = () => {
 
     const filters = [
         newRelativeDateFilter(
-            LdmExt.dateDatasetIdentifier,
+            Ldm.DateDatasets.Date.ref,
             "GDC.time.month",
             Math.floor(from.diff(currentDate, "months", true)),
             Math.floor(to.diff(currentDate, "months", true)),

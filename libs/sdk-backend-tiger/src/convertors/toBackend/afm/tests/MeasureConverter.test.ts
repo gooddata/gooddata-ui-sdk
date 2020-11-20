@@ -1,15 +1,15 @@
 // (C) 2020 GoodData Corporation
 
 import { convertMeasure } from "../MeasureConverter";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 import {
-    newMeasure,
+    DateGranularity,
+    newAbsoluteDateFilter,
     newArithmeticMeasure,
+    newMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
-    newAbsoluteDateFilter,
     newRelativeDateFilter,
-    DateGranularity,
 } from "@gooddata/sdk-model";
 import { invalidMeasureDefinition, invalidObjQualifier } from "./InvalidInputs.fixture";
 
@@ -38,8 +38,8 @@ describe("measure converter", () => {
             "measure with two filters",
             newMeasure("foo", (m) =>
                 m.filters(
-                    newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
-                    newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 5, 22),
+                    newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
+                    newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
                 ),
             ),
         ],

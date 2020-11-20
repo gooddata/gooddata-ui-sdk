@@ -2,10 +2,10 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add explanation tooltip to ranking filter value",
+            "comment": "Enhance catalog-export to generate comprehensive DateDatasets mapping",
             "type": "none"
         }
     ],
     "packageName": "@gooddata/sdk-ui-all",
-    "email": "petr.dolejsi@gooddata.com"
+    "email": "lubomir.slivka@gooddata.com"
 }

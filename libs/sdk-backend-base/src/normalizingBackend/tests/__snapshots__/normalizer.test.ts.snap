@@ -190,7 +190,7 @@ Object {
             "dateDataSets": Array [
               Object {
                 "dataSet": Object {
-                  "identifier": "closed",
+                  "identifier": "closed.dataset.dt",
                 },
                 "periodsAgo": 1,
               },

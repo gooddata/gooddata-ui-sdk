@@ -4,13 +4,13 @@ import { Headline } from "@gooddata/sdk-ui-charts";
 import { newAbsoluteDateFilter } from "@gooddata/sdk-model";
 
 import { ExampleWithExport } from "./ExampleWithExport";
-import { LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../ldm";
 
 const primaryMeasure = LdmExt.FranchiseFees;
 
 const secondaryMeasure = LdmExt.FranchiseFeesAdRoyalty;
 
-const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
 const style = { display: "flex" };
 

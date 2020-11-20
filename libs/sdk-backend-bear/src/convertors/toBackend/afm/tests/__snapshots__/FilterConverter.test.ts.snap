@@ -4,7 +4,7 @@ exports[`bear filter converter from model to AFM convert absolute date filter it
 Object {
   "absoluteDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -20,7 +20,7 @@ exports[`bear filter converter from model to AFM convert filter returns AFM meas
 Object {
   "absoluteDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -62,7 +62,7 @@ exports[`bear filter converter from model to AFM convert filter returns AFM meas
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 2,
     "granularity": "GDC.time.date",
@@ -92,7 +92,7 @@ exports[`bear filter converter from model to AFM convert measure filter returns 
 Object {
   "absoluteDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -134,7 +134,7 @@ exports[`bear filter converter from model to AFM convert measure filter returns 
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 5,
     "granularity": "GDC.time.date",
@@ -352,7 +352,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": -11,
     "granularity": "GDC.time.date",
@@ -365,7 +365,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": -3,
     "granularity": "GDC.time.month",
@@ -378,7 +378,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 25,
     "granularity": "GDC.time.quarter",
@@ -391,7 +391,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 50,
     "granularity": "GDC.time.week_us",
@@ -404,7 +404,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 2,
     "granularity": "GDC.time.year",
@@ -419,7 +419,7 @@ exports[`bear filter converter from model to AFM convert relative date filter sh
 Object {
   "relativeDateFilter": Object {
     "dataSet": Object {
-      "identifier": "closed",
+      "identifier": "closed.dataset.dt",
     },
     "from": 5,
     "granularity": "GDC.time.date",
