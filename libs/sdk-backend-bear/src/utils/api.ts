@@ -25,6 +25,23 @@ export const userUriFromAuthenticatedPrincipal = async (
 
 /**
  * Returns a user login md5. This is used in some bear client calls as a userId.
+ * If there is no user available, returns null instead.
+ * @param getPrincipal - function to obtain currently authenticated principal to get the data from
+ *
+ * @internal
+ */
+export const userLoginMd5FromAuthenticatedPrincipalWithAnonymous = async (
+    getPrincipal: () => Promise<IAuthenticatedPrincipal>,
+): Promise<string | null> => {
+    const principal = await getPrincipal();
+    const selfLink: string = principal.userMeta?.links?.self ?? "";
+    const userLoginMd5 = last(selfLink.split("/"));
+    return userLoginMd5 ?? null;
+};
+
+/**
+ * Returns a user login md5. This is used in some bear client calls as a userId.
+ * If there is no user available, throws an error.
  * @param getPrincipal - function to obtain currently authenticated principal to get the data from
  *
  * @internal
@@ -32,9 +49,7 @@ export const userUriFromAuthenticatedPrincipal = async (
 export const userLoginMd5FromAuthenticatedPrincipal = async (
     getPrincipal: () => Promise<IAuthenticatedPrincipal>,
 ): Promise<string> => {
-    const principal = await getPrincipal();
-    const selfLink: string = principal.userMeta?.links?.self ?? "";
-    const userLoginMd5 = last(selfLink.split("/"));
+    const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipalWithAnonymous(getPrincipal);
 
     if (!userLoginMd5) {
         throw new UnexpectedError("Cannot obtain the current user login md5");

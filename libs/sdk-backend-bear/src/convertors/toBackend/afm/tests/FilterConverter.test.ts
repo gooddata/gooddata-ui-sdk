@@ -22,14 +22,14 @@ import {
     newNegativeAttributeFilter,
     newRankingFilter,
 } from "@gooddata/sdk-model";
-import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("bear filter converter from model to AFM", () => {
     describe("convert absolute date filter", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "convert absolute date filter from model to AFM",
-                newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             ["return null when from is undefined", absoluteFilter.withoutFrom],
             ["return null when to is undefined", absoluteFilter.withoutTo],
@@ -43,23 +43,23 @@ describe("bear filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "AFM relative date filter with year granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.year, 2, 7),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
             ],
             [
                 "AFM relative date filter with month granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.month, -3, 9),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
             ],
             [
                 "AFM relative date filter with quarter granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.quarter, 25, -2),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
             ],
             [
                 "AFM relative date filter with date granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, -11, 0),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
             ],
             [
                 "AFM relative date filter with week granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.week, 50, 100),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
             ],
             ["null when from is undefined", relativeFilter.withoutFrom],
             ["null when to is undefined", relativeFilter.withoutTo],
@@ -142,7 +142,7 @@ describe("bear filter converter from model to AFM", () => {
             ["value filter", newMeasureValueFilter(ReferenceLdm.Amount, "BETWEEN", 3, 9)],
             [
                 "filter returns absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             [
                 "filter returns positive attribute filter",
@@ -154,7 +154,7 @@ describe("bear filter converter from model to AFM", () => {
             ],
             [
                 "filter returns relative date filter",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 2, 55),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 2, 55),
             ],
         ];
         it.each(Scenarios)("returns AFM measure %s", (_desc, input) => {
@@ -174,7 +174,7 @@ describe("bear filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "AFM measure filter returns relative date filter",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 5, 22),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5, 22),
             ],
             [
                 "AFM measure filter returns positive attribute filter",
@@ -186,7 +186,7 @@ describe("bear filter converter from model to AFM", () => {
             ],
             [
                 "AFM measure filter returns absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             ["null when attribute filter is negative and empty", negativeEmptyAttributeFilter],
         ];

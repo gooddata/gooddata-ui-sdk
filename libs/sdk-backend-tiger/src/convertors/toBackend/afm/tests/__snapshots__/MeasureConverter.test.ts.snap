@@ -267,7 +267,7 @@ Object {
           "absoluteDateFilter": Object {
             "dataset": Object {
               "identifier": Object {
-                "id": "closed",
+                "id": "closed.dataset.dt",
                 "type": "dataset",
               },
             },
@@ -279,7 +279,7 @@ Object {
           "relativeDateFilter": Object {
             "dataset": Object {
               "identifier": Object {
-                "id": "closed",
+                "id": "closed.dataset.dt",
                 "type": "dataset",
               },
             },
@@ -297,7 +297,7 @@ Object {
       },
     },
   },
-  "localIdentifier": "m_foo_cde8881b",
+  "localIdentifier": "m_foo_a10d4a0d",
 }
 `;
 

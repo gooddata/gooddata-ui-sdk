@@ -7,18 +7,18 @@ import {
 } from "../FilterConverter";
 import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
 import {
-    newAbsoluteDateFilter,
     DateGranularity,
-    newRelativeDateFilter,
-    newPositiveAttributeFilter,
-    newNegativeAttributeFilter,
-    newMeasureValueFilter,
-    IMeasureValueFilter,
-    newRankingFilter,
     idRef,
+    IMeasureValueFilter,
+    newAbsoluteDateFilter,
+    newMeasureValueFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newRankingFilter,
+    newRelativeDateFilter,
     uriRef,
 } from "@gooddata/sdk-model";
-import { ReferenceLdmExt, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {
@@ -63,7 +63,7 @@ describe("tiger filter converter from model to AFM", () => {
             ["absolute date filter without 'from' attribute", absoluteFilter.withoutFrom],
             [
                 "absolute date filter from model to AFM with all attributes",
-                newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
         ];
 
@@ -75,23 +75,23 @@ describe("tiger filter converter from model to AFM", () => {
         const Scenarios: Array<[string, any]> = [
             [
                 "year granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.year, 2, 7),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.year, 2, 7),
             ],
             [
                 "month granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.month, -3, 9),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.month, -3, 9),
             ],
             [
                 "quarter granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.quarter, 25, -2),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.quarter, 25, -2),
             ],
             [
                 "date granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, -11, 0),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, -11, 0),
             ],
             [
                 "week granularity",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.week, 50, 100),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.week, 50, 100),
             ],
             ["missing 'to' parameter", relativeFilter.withoutTo],
             ["mission 'from' parameter", relativeFilter.withoutFrom],
@@ -110,11 +110,11 @@ describe("tiger filter converter from model to AFM", () => {
             ["null when filter is empty", newNegativeAttributeFilter(ReferenceLdm.Product.Name, [])],
             [
                 "absolute date filter",
-                newAbsoluteDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, "2019-08-06", "2019-08-12"),
+                newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
             [
                 "relative date filter",
-                newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 20, 30),
+                newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 20, 30),
             ],
             ["comparison measure value filter", newMeasureValueFilter(ReferenceLdm.Won, "GREATER_THAN", 128)],
             [

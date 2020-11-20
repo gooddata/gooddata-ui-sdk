@@ -5,9 +5,13 @@ exports[`transformToCatalog creates new catalog 1`] = `
 
 /**
  * Attribute Title: Channel
- * Display Form ID: attr.orders.channel
+ * Attribute ID: attr.orders.channel
  */
 export const Channel: IAttribute = newAttribute('label.orders.channel');
+/**
+ * Attribute Title: Employee Name
+ * Attribute ID: attr.employee.employeename
+ */
 export const EmployeeName = { /** 
     * Display Form Title: Employee Name  
     * Display Form ID: label.employee.employeename
@@ -111,14 +115,21 @@ export const Cost = { /**
     Runsum: newMeasure(idRef('fact.restaurantcostsfact.cost', \\"fact\\"), m => m.aggregation('runsum')) } ;
 /**
  * Attribute Title: Year (Timeline)
- * Display Form ID: timeline.year
+ * Attribute ID: timeline.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineYear: IAttribute = newAttribute('timeline.aag81lMifn6q');
 /**
  * Attribute Title: Quarter (Timeline)
- * Display Form ID: timeline.quarter.in.year
+ * Attribute ID: timeline.quarter.in.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineQuarter: IAttribute = newAttribute('timeline.aam81lMifn6q');
+/**
+ * Attribute Title: Week (Sun-Sat)/Year (Timeline)
+ * Attribute ID: timeline.week
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineWeekSunSatYear = { /** 
     * Display Form Title: Week #/Year (W1/2010) (Timeline)  
     * Display Form ID: timeline.aaA81lMifn6q
@@ -146,14 +157,21 @@ export const TimelineWeekSunSatYear = { /**
     WkQtrYear_1: newAttribute('timeline.aas81lMifn6q') };
 /**
  * Attribute Title: Week (Sun-Sat) (Timeline)
- * Display Form ID: timeline.week.in.year
+ * Attribute ID: timeline.week.in.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineWeekSunSat: IAttribute = newAttribute('timeline.aaI81lMifn6q');
 /**
  * Attribute Title: Week (Sun-Sat) of Qtr (Timeline)
- * Display Form ID: timeline.week.in.quarter
+ * Attribute ID: timeline.week.in.quarter
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineWeekSunSatOfQtr: IAttribute = newAttribute('timeline.aaO81lMifn6q');
+/**
+ * Attribute Title: Week (Mon-Sun)/Year (Timeline)
+ * Attribute ID: timeline.euweek
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineWeekMonSunYear = { /** 
     * Display Form Title: Week #/Year (W1/2010) (Timeline)  
     * Display Form ID: timeline.aa281lMifn6q
@@ -169,14 +187,21 @@ export const TimelineWeekMonSunYear = { /**
     FromTo: newAttribute('timeline.aaW81lMifn6q') };
 /**
  * Attribute Title: Week (Mon-Sun) (Timeline)
- * Display Form ID: timeline.euweek.in.year
+ * Attribute ID: timeline.euweek.in.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineWeekMonSun: IAttribute = newAttribute('timeline.aba81lMifn6q');
 /**
  * Attribute Title: Week (Mon-Sun) of Qtr (Timeline)
- * Display Form ID: timeline.euweek.in.quarter
+ * Attribute ID: timeline.euweek.in.quarter
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineWeekMonSunOfQtr: IAttribute = newAttribute('timeline.abg81lMifn6q');
+/**
+ * Attribute Title: Month (Timeline)
+ * Attribute ID: timeline.month.in.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineMonth = { /** 
     * Display Form Title: Short (Jan) (Timeline)  
     * Display Form ID: timeline.abm81lMifn6q
@@ -196,14 +221,21 @@ export const TimelineMonth = { /**
     MQ: newAttribute('timeline.abo81lMifn6q') };
 /**
  * Attribute Title: Month of Quarter (Timeline)
- * Display Form ID: timeline.month.in.quarter
+ * Attribute ID: timeline.month.in.quarter
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineMonthOfQuarter: IAttribute = newAttribute('timeline.aby81lMifn6q');
 /**
  * Attribute Title: Day of Year (Timeline)
- * Display Form ID: timeline.day.in.year
+ * Attribute ID: timeline.day.in.year
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineDayOfYear: IAttribute = newAttribute('timeline.abE81lMifn6q');
+/**
+ * Attribute Title: Day of Week (Sun-Sat) (Timeline)
+ * Attribute ID: timeline.day.in.week
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineDayOfWeekSunSat = { /** 
     * Display Form Title: Short (Sun) (Timeline)  
     * Display Form ID: timeline.abK81lMifn6q
@@ -217,6 +249,11 @@ export const TimelineDayOfWeekSunSat = { /**
     * Display Form ID: timeline.abM81lMifn6q
     */
     Number: newAttribute('timeline.abM81lMifn6q') };
+/**
+ * Attribute Title: Day of Week (Mon-Sun) (Timeline)
+ * Attribute ID: timeline.day.in.euweek
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineDayOfWeekMonSun = { /** 
     * Display Form Title: Short (Mon) (Timeline)  
     * Display Form ID: timeline.abU81lMifn6q
@@ -232,19 +269,27 @@ export const TimelineDayOfWeekMonSun = { /**
     Number: newAttribute('timeline.abW81lMifn6q') };
 /**
  * Attribute Title: Day of Quarter (Timeline)
- * Display Form ID: timeline.day.in.quarter
+ * Attribute ID: timeline.day.in.quarter
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineDayOfQuarter: IAttribute = newAttribute('timeline.ab481lMifn6q');
 /**
  * Attribute Title: Day of Month (Timeline)
- * Display Form ID: timeline.day.in.month
+ * Attribute ID: timeline.day.in.month
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineDayOfMonth: IAttribute = newAttribute('timeline.aca81lMifn6q');
 /**
  * Attribute Title: Quarter/Year (Timeline)
- * Display Form ID: timeline.quarter
+ * Attribute ID: timeline.quarter
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
  */
 export const TimelineQuarterYear: IAttribute = newAttribute('timeline.aci81lMifn6q');
+/**
+ * Attribute Title: Month/Year (Timeline)
+ * Attribute ID: timeline.month
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineMonthYear = { /** 
     * Display Form Title: Short (Jan 2010) (Timeline)  
     * Display Form ID: timeline.act81lMifn6q
@@ -258,6 +303,11 @@ export const TimelineMonthYear = { /**
     * Display Form ID: timeline.acv81lMifn6q
     */
     Number: newAttribute('timeline.acv81lMifn6q') };
+/**
+ * Attribute Title: Date (Timeline)
+ * Attribute ID: timeline.date
+ * @deprecated constants generated for date attributes are deprecated in favor of DateDatasets mapping
+ */
 export const TimelineDate = { /** 
     * Display Form Title: mm/dd/yyyy (Timeline)  
     * Display Form ID: timeline.date.mmddyyyy
@@ -283,6 +333,242 @@ export const TimelineDate = { /**
     * Display Form ID: timeline.date.eddmmyyyy
     */
     DdMmYyyy_1: newAttribute('timeline.date.eddmmyyyy') };
+/**
+ * Available Date Data Sets
+ */
+export const DateDatasets = { /** 
+    * Date Data Set Title: Date (Timeline)  
+    * Date Data Set ID: timeline.dataset.dt
+    */
+    Timeline: { ref: idRef('timeline.dataset.dt', 'dataSet'), identifier: 'timeline.dataset.dt', /** 
+    * Date Attribute: Year (Timeline)  
+    * Date Attribute ID: timeline.year
+    */
+    Year: { ref: idRef('timeline.year', 'attribute'), identifier: 'timeline.year', /** 
+    * Display Form Title: Year (Timeline)  
+    * Display Form ID: timeline.aag81lMifn6q
+    */
+    Default: newAttribute('timeline.aag81lMifn6q') }, /** 
+    * Date Attribute: Quarter (Timeline)  
+    * Date Attribute ID: timeline.quarter.in.year
+    */
+    Quarter: { ref: idRef('timeline.quarter.in.year', 'attribute'), identifier: 'timeline.quarter.in.year', /** 
+    * Display Form Title: default (Timeline)  
+    * Display Form ID: timeline.aam81lMifn6q
+    */
+    Default: newAttribute('timeline.aam81lMifn6q') }, /** 
+    * Date Attribute: Week (Sun-Sat)/Year (Timeline)  
+    * Date Attribute ID: timeline.week
+    */
+    WeekSunSatYear: { ref: idRef('timeline.week', 'attribute'), identifier: 'timeline.week', /** 
+    * Display Form Title: Week #/Year (W1/2010) (Timeline)  
+    * Display Form ID: timeline.aaA81lMifn6q
+    */
+    WeekNrYear: newAttribute('timeline.aaA81lMifn6q'),/** 
+    * Display Form Title: Week Starting (Timeline)  
+    * Display Form ID: timeline.aaw81lMifn6q
+    */
+    WeekStarting: newAttribute('timeline.aaw81lMifn6q'),/** 
+    * Display Form Title: From - To (Timeline)  
+    * Display Form ID: timeline.aau81lMifn6q
+    */
+    FromTo: newAttribute('timeline.aau81lMifn6q'),/** 
+    * Display Form Title: Week #/Year (Cont.) (Timeline)  
+    * Display Form ID: timeline.aay81lMifn6q
+    */
+    WeekNrYear_1: newAttribute('timeline.aay81lMifn6q'),/** 
+    * Display Form Title: Wk/Qtr/Year (Cont.) (Timeline)  
+    * Display Form ID: timeline.aaC81lMifn6q
+    */
+    WkQtrYear: newAttribute('timeline.aaC81lMifn6q'),/** 
+    * Display Form Title: Wk/Qtr/Year (Timeline)  
+    * Display Form ID: timeline.aas81lMifn6q
+    */
+    WkQtrYear_1: newAttribute('timeline.aas81lMifn6q') }, /** 
+    * Date Attribute: Week (Sun-Sat) (Timeline)  
+    * Date Attribute ID: timeline.week.in.year
+    */
+    WeekSunSat: { ref: idRef('timeline.week.in.year', 'attribute'), identifier: 'timeline.week.in.year', /** 
+    * Display Form Title: Number US (Timeline)  
+    * Display Form ID: timeline.aaI81lMifn6q
+    */
+    NumberUS: newAttribute('timeline.aaI81lMifn6q') }, /** 
+    * Date Attribute: Week (Sun-Sat) of Qtr (Timeline)  
+    * Date Attribute ID: timeline.week.in.quarter
+    */
+    WeekSunSatOfQtr: { ref: idRef('timeline.week.in.quarter', 'attribute'), identifier: 'timeline.week.in.quarter', /** 
+    * Display Form Title: Number US (Timeline)  
+    * Display Form ID: timeline.aaO81lMifn6q
+    */
+    NumberUS: newAttribute('timeline.aaO81lMifn6q') }, /** 
+    * Date Attribute: Week (Mon-Sun)/Year (Timeline)  
+    * Date Attribute ID: timeline.euweek
+    */
+    WeekMonSunYear: { ref: idRef('timeline.euweek', 'attribute'), identifier: 'timeline.euweek', /** 
+    * Display Form Title: Week #/Year (W1/2010) (Timeline)  
+    * Display Form ID: timeline.aa281lMifn6q
+    */
+    WeekNrYear: newAttribute('timeline.aa281lMifn6q'),/** 
+    * Display Form Title: Week Starting (Timeline)  
+    * Display Form ID: timeline.aaY81lMifn6q
+    */
+    WeekStarting: newAttribute('timeline.aaY81lMifn6q'),/** 
+    * Display Form Title: From - To (Timeline)  
+    * Display Form ID: timeline.aaW81lMifn6q
+    */
+    FromTo: newAttribute('timeline.aaW81lMifn6q') }, /** 
+    * Date Attribute: Week (Mon-Sun) (Timeline)  
+    * Date Attribute ID: timeline.euweek.in.year
+    */
+    WeekMonSun: { ref: idRef('timeline.euweek.in.year', 'attribute'), identifier: 'timeline.euweek.in.year', /** 
+    * Display Form Title: Number EU (Timeline)  
+    * Display Form ID: timeline.aba81lMifn6q
+    */
+    NumberEU: newAttribute('timeline.aba81lMifn6q') }, /** 
+    * Date Attribute: Week (Mon-Sun) of Qtr (Timeline)  
+    * Date Attribute ID: timeline.euweek.in.quarter
+    */
+    WeekMonSunOfQtr: { ref: idRef('timeline.euweek.in.quarter', 'attribute'), identifier: 'timeline.euweek.in.quarter', /** 
+    * Display Form Title: Number EU (Timeline)  
+    * Display Form ID: timeline.abg81lMifn6q
+    */
+    NumberEU: newAttribute('timeline.abg81lMifn6q') }, /** 
+    * Date Attribute: Month (Timeline)  
+    * Date Attribute ID: timeline.month.in.year
+    */
+    Month: { ref: idRef('timeline.month.in.year', 'attribute'), identifier: 'timeline.month.in.year', /** 
+    * Display Form Title: Short (Jan) (Timeline)  
+    * Display Form ID: timeline.abm81lMifn6q
+    */
+    Short: newAttribute('timeline.abm81lMifn6q'),/** 
+    * Display Form Title: Long (January) (Timeline)  
+    * Display Form ID: timeline.abs81lMifn6q
+    */
+    Long: newAttribute('timeline.abs81lMifn6q'),/** 
+    * Display Form Title: Number (M1) (Timeline)  
+    * Display Form ID: timeline.abq81lMifn6q
+    */
+    Number: newAttribute('timeline.abq81lMifn6q'),/** 
+    * Display Form Title: M/Q (M1/Q1) (Timeline)  
+    * Display Form ID: timeline.abo81lMifn6q
+    */
+    MQ: newAttribute('timeline.abo81lMifn6q') }, /** 
+    * Date Attribute: Month of Quarter (Timeline)  
+    * Date Attribute ID: timeline.month.in.quarter
+    */
+    MonthOfQuarter: { ref: idRef('timeline.month.in.quarter', 'attribute'), identifier: 'timeline.month.in.quarter', /** 
+    * Display Form Title: Number (Timeline)  
+    * Display Form ID: timeline.aby81lMifn6q
+    */
+    Number: newAttribute('timeline.aby81lMifn6q') }, /** 
+    * Date Attribute: Day of Year (Timeline)  
+    * Date Attribute ID: timeline.day.in.year
+    */
+    DayOfYear: { ref: idRef('timeline.day.in.year', 'attribute'), identifier: 'timeline.day.in.year', /** 
+    * Display Form Title: default (Timeline)  
+    * Display Form ID: timeline.abE81lMifn6q
+    */
+    Default: newAttribute('timeline.abE81lMifn6q') }, /** 
+    * Date Attribute: Day of Week (Sun-Sat) (Timeline)  
+    * Date Attribute ID: timeline.day.in.week
+    */
+    DayOfWeekSunSat: { ref: idRef('timeline.day.in.week', 'attribute'), identifier: 'timeline.day.in.week', /** 
+    * Display Form Title: Short (Sun) (Timeline)  
+    * Display Form ID: timeline.abK81lMifn6q
+    */
+    Short: newAttribute('timeline.abK81lMifn6q'),/** 
+    * Display Form Title: Long (Sunday) (Timeline)  
+    * Display Form ID: timeline.abO81lMifn6q
+    */
+    Long: newAttribute('timeline.abO81lMifn6q'),/** 
+    * Display Form Title: Number (1=Sunday) (Timeline)  
+    * Display Form ID: timeline.abM81lMifn6q
+    */
+    Number: newAttribute('timeline.abM81lMifn6q') }, /** 
+    * Date Attribute: Day of Week (Mon-Sun) (Timeline)  
+    * Date Attribute ID: timeline.day.in.euweek
+    */
+    DayOfWeekMonSun: { ref: idRef('timeline.day.in.euweek', 'attribute'), identifier: 'timeline.day.in.euweek', /** 
+    * Display Form Title: Short (Mon) (Timeline)  
+    * Display Form ID: timeline.abU81lMifn6q
+    */
+    Short: newAttribute('timeline.abU81lMifn6q'),/** 
+    * Display Form Title: Long (Monday) (Timeline)  
+    * Display Form ID: timeline.abY81lMifn6q
+    */
+    Long: newAttribute('timeline.abY81lMifn6q'),/** 
+    * Display Form Title: Number (1=Monday) (Timeline)  
+    * Display Form ID: timeline.abW81lMifn6q
+    */
+    Number: newAttribute('timeline.abW81lMifn6q') }, /** 
+    * Date Attribute: Day of Quarter (Timeline)  
+    * Date Attribute ID: timeline.day.in.quarter
+    */
+    DayOfQuarter: { ref: idRef('timeline.day.in.quarter', 'attribute'), identifier: 'timeline.day.in.quarter', /** 
+    * Display Form Title: default (Timeline)  
+    * Display Form ID: timeline.ab481lMifn6q
+    */
+    Default: newAttribute('timeline.ab481lMifn6q') }, /** 
+    * Date Attribute: Day of Month (Timeline)  
+    * Date Attribute ID: timeline.day.in.month
+    */
+    DayOfMonth: { ref: idRef('timeline.day.in.month', 'attribute'), identifier: 'timeline.day.in.month', /** 
+    * Display Form Title: default (Timeline)  
+    * Display Form ID: timeline.aca81lMifn6q
+    */
+    Default: newAttribute('timeline.aca81lMifn6q') }, /** 
+    * Date Attribute: Quarter/Year (Timeline)  
+    * Date Attribute ID: timeline.quarter
+    */
+    QuarterYear: { ref: idRef('timeline.quarter', 'attribute'), identifier: 'timeline.quarter', /** 
+    * Display Form Title: US Short (Timeline)  
+    * Display Form ID: timeline.aci81lMifn6q
+    */
+    USShort: newAttribute('timeline.aci81lMifn6q') }, /** 
+    * Date Attribute: Month/Year (Timeline)  
+    * Date Attribute ID: timeline.month
+    */
+    MonthYear: { ref: idRef('timeline.month', 'attribute'), identifier: 'timeline.month', /** 
+    * Display Form Title: Short (Jan 2010) (Timeline)  
+    * Display Form ID: timeline.act81lMifn6q
+    */
+    Short: newAttribute('timeline.act81lMifn6q'),/** 
+    * Display Form Title: Long (January 2010) (Timeline)  
+    * Display Form ID: timeline.acx81lMifn6q
+    */
+    Long: newAttribute('timeline.acx81lMifn6q'),/** 
+    * Display Form Title: Number (1/2010) (Timeline)  
+    * Display Form ID: timeline.acv81lMifn6q
+    */
+    Number: newAttribute('timeline.acv81lMifn6q') }, /** 
+    * Date Attribute: Date (Timeline)  
+    * Date Attribute ID: timeline.date
+    */
+    Date: { ref: idRef('timeline.date', 'attribute'), identifier: 'timeline.date', /** 
+    * Display Form Title: mm/dd/yyyy (Timeline)  
+    * Display Form ID: timeline.date.mmddyyyy
+    */
+    MmDdYyyy: newAttribute('timeline.date.mmddyyyy'),/** 
+    * Display Form Title: yyyy-mm-dd (Timeline)  
+    * Display Form ID: timeline.date.yyyymmdd
+    */
+    YyyyMmDd: newAttribute('timeline.date.yyyymmdd'),/** 
+    * Display Form Title: m/d/yy (no leading zeroes) (Timeline)  
+    * Display Form ID: timeline.date.mdyy
+    */
+    MDYy: newAttribute('timeline.date.mdyy'),/** 
+    * Display Form Title: Long (Mon, Jan 1, 2010) (Timeline)  
+    * Display Form ID: timeline.date.long
+    */
+    Long: newAttribute('timeline.date.long'),/** 
+    * Display Form Title: dd/mm/yyyy (Timeline)  
+    * Display Form ID: timeline.date.ddmmyyyy
+    */
+    DdMmYyyy: newAttribute('timeline.date.ddmmyyyy'),/** 
+    * Display Form Title: dd-mm-yyyy (Timeline)  
+    * Display Form ID: timeline.date.eddmmyyyy
+    */
+    DdMmYyyy_1: newAttribute('timeline.date.eddmmyyyy') } } };
 export const Insights = { /** 
     * Insight Title: Labor Costs vs Scheduled Costs  
     * Insight ID: abhJpedgcfU2

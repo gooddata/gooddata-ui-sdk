@@ -18,7 +18,7 @@ const columns = [Ldm.DateQuarter, Ldm.DateMonth.Short];
 
 const sortBy = [newAttributeSort("menu", "asc")];
 
-const filters = [newAbsoluteDateFilter(LdmExt.dateDatasetIdentifier, "2017-01-01", "2017-12-31")];
+const filters = [newAbsoluteDateFilter(Ldm.DateDatasets.Date, "2017-01-01", "2017-12-31")];
 
 const style = { height: 300 };
 

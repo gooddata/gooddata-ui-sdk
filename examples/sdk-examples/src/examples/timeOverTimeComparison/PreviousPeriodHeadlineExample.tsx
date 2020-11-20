@@ -3,7 +3,7 @@
 import React, { Component } from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
 import { newPreviousPeriodMeasure, newRelativeDateFilter } from "@gooddata/sdk-model";
-import { LdmExt } from "../../ldm";
+import { Ldm, LdmExt } from "../../ldm";
 import { OnLoadingChanged, OnError } from "@gooddata/sdk-ui";
 
 export class PreviousPeriodHeadlineExample extends Component {
@@ -21,7 +21,7 @@ export class PreviousPeriodHeadlineExample extends Component {
         const primaryMeasure = LdmExt.TotalSales2;
         const secondaryMeasure = newPreviousPeriodMeasure(
             LdmExt.TotalSales2,
-            [{ dataSet: LdmExt.dateDatasetIdentifier, periodsAgo: 1 }],
+            [{ dataSet: Ldm.DateDatasets.Date.identifier, periodsAgo: 1 }],
             (m) => m.alias("$ Total Sales - period ago"),
         );
 
@@ -30,7 +30,7 @@ export class PreviousPeriodHeadlineExample extends Component {
                 <Headline
                     primaryMeasure={primaryMeasure}
                     secondaryMeasure={secondaryMeasure}
-                    filters={[newRelativeDateFilter(LdmExt.dateDatasetIdentifier, "GDC.time.year", -2, -1)]}
+                    filters={[newRelativeDateFilter(Ldm.DateDatasets.Date.ref, "GDC.time.year", -4, -3)]}
                     onLoadingChanged={this.onLoadingChanged}
                     onError={this.onError}
                 />

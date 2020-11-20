@@ -18,21 +18,21 @@ import {
     newAttribute,
     IExecutionDefinition,
 } from "@gooddata/sdk-model";
-import { ReferenceLdmExt, ReferenceLdm } from "@gooddata/reference-workspace";
+import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 export const absoluteFilter = {
     // Invalid "To" input
-    withoutTo: newAbsoluteDateFilter(ReferenceLdmExt.dataSet, "2019-08-06"),
+    withoutTo: newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06"),
     // Invalid "From" input
-    withoutFrom: newAbsoluteDateFilter(ReferenceLdmExt.dataSet, undefined, "2019-08-12"),
+    withoutFrom: newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, undefined, "2019-08-12"),
 };
 
 export const relativeFilter = {
     // Invalid "To" input
-    withoutTo: newRelativeDateFilter(ReferenceLdmExt.ClosedDataDatasetRef, DateGranularity.date, 5),
+    withoutTo: newRelativeDateFilter(ReferenceLdm.DateDatasets.Closed.ref, DateGranularity.date, 5),
     // Invalid "From" input
     withoutFrom: newRelativeDateFilter(
-        ReferenceLdmExt.ClosedDataDatasetRef,
+        ReferenceLdm.DateDatasets.Closed.ref,
         DateGranularity.date,
         undefined,
         30,

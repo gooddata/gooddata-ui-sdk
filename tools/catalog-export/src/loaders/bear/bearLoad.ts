@@ -1,9 +1,9 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { CatalogExportError, ProjectMetadata } from "../../base/types";
 import { loadCatalog } from "./bearCatalog";
-import { loadDateDataSets } from "./bearDataDatasets";
+import { loadDateDataSets } from "./bearDateDatasets";
 import { loadInsights } from "./bearInsights";
 
 /**

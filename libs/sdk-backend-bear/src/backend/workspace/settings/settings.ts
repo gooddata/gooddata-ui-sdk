@@ -5,7 +5,8 @@ import {
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
-import { userLoginMd5FromAuthenticatedPrincipal } from "../../../utils/api";
+import { userLoginMd5FromAuthenticatedPrincipalWithAnonymous } from "../../../utils/api";
+import { ANONYMOUS_USER_SETTINGS } from "../../constants";
 
 export class BearWorkspaceSettings implements IWorkspaceSettingsService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -23,7 +24,17 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
 
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return this.authCall(async (sdk, { getPrincipal }) => {
-            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipal(getPrincipal);
+            const userLoginMd5 = await userLoginMd5FromAuthenticatedPrincipalWithAnonymous(getPrincipal);
+
+            // for anonymous users, return defaults with just the workspace settings
+            if (!userLoginMd5) {
+                const workspaceSettings = await this.getSettings();
+                return {
+                    // the order is important here, we want workspace settings to overwrite anonymous user settings
+                    ...ANONYMOUS_USER_SETTINGS,
+                    ...workspaceSettings,
+                };
+            }
 
             const [workspaceFeatureFlags, userFeatureFlags, currentProfile] = await Promise.all([
                 sdk.project.getProjectFeatureFlags(this.workspace),
