@@ -25,13 +25,11 @@ export const definedOptions = [
         key: "username",
         param: "--username <email>",
         description: "Your username that you use to log in to GoodData platform.",
-        isRequired: true,
     },
     {
         key: "password",
         param: "--password <value>",
         description: "Your password that you use to log in to GoodData platform.",
-        isRequired: true,
     },
 ];
 export const definedOptionKeys = definedOptions.map((definedOption) => definedOption.key);
