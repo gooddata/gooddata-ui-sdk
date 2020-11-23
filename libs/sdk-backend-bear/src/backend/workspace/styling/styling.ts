@@ -17,18 +17,15 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
     };
 
     public getTheme = async (): Promise<ITheme> => {
-        const config = await this.authCall((sdk) => sdk.project.getConfig(this.workspace));
+        const config = await this.authCall((sdk) => sdk.project.getProjectFeatureFlags(this.workspace));
 
-        const enabledByFeatureFlag = config.find(
-            (item) => item.settingItem.key === ENABLED_THEMING_FEATURE_FLAG_SETTINGS_KEY,
-        )?.settingItem?.value;
+        const enabledByFeatureFlag = config[ENABLED_THEMING_FEATURE_FLAG_SETTINGS_KEY];
 
         if (!enabledByFeatureFlag) {
             return {};
         }
 
-        const identifier = config.find((item) => item.settingItem.key === SELECTED_UI_THEME_SETTINGS_KEY)
-            ?.settingItem?.value;
+        const identifier: string = config[SELECTED_UI_THEME_SETTINGS_KEY] as string;
 
         if (!identifier) {
             return {};
