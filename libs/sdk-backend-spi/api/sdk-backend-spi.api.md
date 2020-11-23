@@ -1232,6 +1232,7 @@ export interface ITheme {
     dashboards?: {
         title?: {
             color?: ThemeColor;
+            backgroundColor?: ThemeColor;
         };
         section?: {
             title?: {

@@ -1492,6 +1492,7 @@ export namespace GdcMetadata {
             dashboards?: {
                 title?: {
                     color?: ThemeColor;
+                    backgroundColor?: ThemeColor;
                 };
                 section?: {
                     title?: {
