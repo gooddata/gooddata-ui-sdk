@@ -146,145 +146,138 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": Object {
-    "fluidLayout": Object {
-      "rows": Array [
-        Object {
-          "columns": Array [
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "localIdentifier": "m1",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "target": Object {
-                        "identifier": "dashboardId",
-                      },
-                      "transition": "in-place",
-                      "type": "drillToDashboard",
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
                     },
-                  ],
-                  "identifier": "visualizationWidgetHeadline",
-                  "ignoreDashboardFilters": Array [
-                    Object {
-                      "displayForm": Object {
-                        "uri": "/gdc/md/displayForm",
-                      },
-                      "type": "attributeFilterReference",
-                    },
-                  ],
-                  "insight": Object {
-                    "uri": "/gdc/md/obj/visualizationHeadline",
+                    "type": "drillFromMeasure",
                   },
-                  "properties": Object {},
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  "target": Object {
+                    "identifier": "dashboardId",
                   },
-                  "title": "visualizationWidgetHeadline",
-                  "type": "insight",
-                  "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  "transition": "in-place",
+                  "type": "drillToDashboard",
                 },
+              ],
+              "identifier": "visualizationWidgetHeadline",
+              "ignoreDashboardFilters": Array [
+                Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/displayForm",
+                  },
+                  "type": "attributeFilterReference",
+                },
+              ],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationHeadline",
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 12,
-                },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+              },
+              "title": "visualizationWidgetHeadline",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 12,
               },
             },
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "localIdentifier": "m1",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "target": Object {
-                        "uri": "/targetVisualization",
-                      },
-                      "transition": "pop-up",
-                      "type": "drillToInsight",
+          },
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
                     },
-                  ],
-                  "identifier": "visualizationWidgetBarChart",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
-                    "uri": "/gdc/md/obj/visualizationBarChart",
+                    "type": "drillFromMeasure",
                   },
-                  "properties": Object {},
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  "target": Object {
+                    "uri": "/targetVisualization",
                   },
-                  "title": "visualizationWidgetBarChart",
-                  "type": "insight",
-                  "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  "transition": "pop-up",
+                  "type": "drillToInsight",
                 },
+              ],
+              "identifier": "visualizationWidgetBarChart",
+              "ignoreDashboardFilters": Array [],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationBarChart",
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 6,
-                },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+              },
+              "title": "visualizationWidgetBarChart",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 6,
               },
             },
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "uri": "/measure",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "tab": "testTab",
-                      "target": Object {
-                        "uri": "test",
-                      },
-                      "transition": "in-place",
-                      "type": "drillToLegacyDashboard",
-                    },
-                  ],
-                  "identifier": "kpiWidget",
-                  "ignoreDashboardFilters": Array [],
-                  "kpi": Object {
-                    "comparisonDirection": "growIsGood",
-                    "comparisonType": "previousPeriod",
-                    "metric": Object {
+          },
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
                       "uri": "/measure",
                     },
+                    "type": "drillFromMeasure",
                   },
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/kpiWidget",
+                  "tab": "testTab",
+                  "target": Object {
+                    "uri": "test",
                   },
-                  "title": "kpiWidget",
-                  "type": "kpi",
-                  "uri": "/gdc/md/obj/kpiWidget",
+                  "transition": "in-place",
+                  "type": "drillToLegacyDashboard",
+                },
+              ],
+              "identifier": "kpiWidget",
+              "ignoreDashboardFilters": Array [],
+              "kpi": Object {
+                "comparisonDirection": "growIsGood",
+                "comparisonType": "previousPeriod",
+                "metric": Object {
+                  "uri": "/measure",
                 },
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 2,
-                },
+              "ref": Object {
+                "uri": "/gdc/md/obj/kpiWidget",
+              },
+              "title": "kpiWidget",
+              "type": "kpi",
+              "uri": "/gdc/md/obj/kpiWidget",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 2,
               },
             },
-          ],
-        },
-      ],
-    },
+          },
+        ],
+      },
+    ],
+    "type": "fluidLayout",
   },
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -304,145 +297,138 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": Object {
-    "fluidLayout": Object {
-      "rows": Array [
-        Object {
-          "columns": Array [
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "localIdentifier": "m1",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "target": Object {
-                        "uri": "/targetVisualization",
-                      },
-                      "transition": "pop-up",
-                      "type": "drillToInsight",
+    "rows": Array [
+      Object {
+        "columns": Array [
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
                     },
-                  ],
-                  "identifier": "visualizationWidgetBarChart",
-                  "ignoreDashboardFilters": Array [],
-                  "insight": Object {
-                    "uri": "/gdc/md/obj/visualizationBarChart",
+                    "type": "drillFromMeasure",
                   },
-                  "properties": Object {},
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  "target": Object {
+                    "uri": "/targetVisualization",
                   },
-                  "title": "visualizationWidgetBarChart",
-                  "type": "insight",
-                  "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+                  "transition": "pop-up",
+                  "type": "drillToInsight",
                 },
+              ],
+              "identifier": "visualizationWidgetBarChart",
+              "ignoreDashboardFilters": Array [],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationBarChart",
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 12,
-                },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+              },
+              "title": "visualizationWidgetBarChart",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 12,
               },
             },
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "uri": "/measure",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "tab": "testTab",
-                      "target": Object {
-                        "uri": "test",
-                      },
-                      "transition": "in-place",
-                      "type": "drillToLegacyDashboard",
-                    },
-                  ],
-                  "identifier": "kpiWidget",
-                  "ignoreDashboardFilters": Array [],
-                  "kpi": Object {
-                    "comparisonDirection": "growIsGood",
-                    "comparisonType": "previousPeriod",
-                    "metric": Object {
+          },
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
                       "uri": "/measure",
                     },
+                    "type": "drillFromMeasure",
                   },
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/kpiWidget",
+                  "tab": "testTab",
+                  "target": Object {
+                    "uri": "test",
                   },
-                  "title": "kpiWidget",
-                  "type": "kpi",
-                  "uri": "/gdc/md/obj/kpiWidget",
+                  "transition": "in-place",
+                  "type": "drillToLegacyDashboard",
+                },
+              ],
+              "identifier": "kpiWidget",
+              "ignoreDashboardFilters": Array [],
+              "kpi": Object {
+                "comparisonDirection": "growIsGood",
+                "comparisonType": "previousPeriod",
+                "metric": Object {
+                  "uri": "/measure",
                 },
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 2,
-                },
+              "ref": Object {
+                "uri": "/gdc/md/obj/kpiWidget",
+              },
+              "title": "kpiWidget",
+              "type": "kpi",
+              "uri": "/gdc/md/obj/kpiWidget",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 2,
               },
             },
-            Object {
-              "content": Object {
-                "widget": Object {
-                  "dateDataSet": undefined,
-                  "description": "",
-                  "drills": Array [
-                    Object {
-                      "origin": Object {
-                        "measure": Object {
-                          "localIdentifier": "m1",
-                        },
-                        "type": "drillFromMeasure",
-                      },
-                      "target": Object {
-                        "identifier": "dashboardId",
-                      },
-                      "transition": "in-place",
-                      "type": "drillToDashboard",
+          },
+          Object {
+            "content": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
                     },
-                  ],
-                  "identifier": "visualizationWidgetHeadline",
-                  "ignoreDashboardFilters": Array [
-                    Object {
-                      "displayForm": Object {
-                        "uri": "/gdc/md/displayForm",
-                      },
-                      "type": "attributeFilterReference",
-                    },
-                  ],
-                  "insight": Object {
-                    "uri": "/gdc/md/obj/visualizationHeadline",
+                    "type": "drillFromMeasure",
                   },
-                  "properties": Object {},
-                  "ref": Object {
-                    "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  "target": Object {
+                    "identifier": "dashboardId",
                   },
-                  "title": "visualizationWidgetHeadline",
-                  "type": "insight",
-                  "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+                  "transition": "in-place",
+                  "type": "drillToDashboard",
                 },
+              ],
+              "identifier": "visualizationWidgetHeadline",
+              "ignoreDashboardFilters": Array [
+                Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/displayForm",
+                  },
+                  "type": "attributeFilterReference",
+                },
+              ],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationHeadline",
               },
-              "size": Object {
-                "xl": Object {
-                  "width": 2,
-                },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+              },
+              "title": "visualizationWidgetHeadline",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+            },
+            "size": Object {
+              "xl": Object {
+                "widthAsGridColumnsCount": 2,
               },
             },
-          ],
-        },
-      ],
-    },
+          },
+        ],
+      },
+    ],
+    "type": "fluidLayout",
   },
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",

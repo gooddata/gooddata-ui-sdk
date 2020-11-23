@@ -24,11 +24,15 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
         dashboard,
         onError,
+        backend,
+        workspace,
     });
 
     const { error: alertsError, result: alertsData, status: alertsStatus } = useDashboardAlerts({
         dashboard,
         onError,
+        backend,
+        workspace,
     });
 
     const isThemeLoading = useThemeIsLoading();
@@ -59,6 +63,8 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     const dashboardRender = (
         <DashboardRenderer
+            backend={backend}
+            workspace={workspace}
             dashboard={dashboardData}
             alerts={alertsData}
             filters={filters}

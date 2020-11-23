@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef, Identifier } from "@gooddata/sdk-model";
-import { Layout, LayoutDefinition } from "./layout";
+import { IDashboardLayout } from "./layout/dashboardLayout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
 import {
@@ -106,7 +106,7 @@ export interface IDashboard extends IDashboardBase, IDashboardObjectIdentity {
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
-    readonly layout?: Layout;
+    readonly layout?: IDashboardLayout;
 
     /**
      * Dashboard filter context, or temporary filter context
@@ -129,7 +129,7 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
     /**
      * The layout of the dashboard determines the dashboard widgets {@link IWidget} and where they are rendered
      */
-    readonly layout?: Layout | LayoutDefinition;
+    readonly layout?: IDashboardLayout;
 
     /**
      * Dashboard filter context, or temporary filter context

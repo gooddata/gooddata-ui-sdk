@@ -743,6 +743,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "react-grid-system",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-helmet",
       "allowedCategories": [ "examples" ]
     },

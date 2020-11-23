@@ -3,11 +3,13 @@
 import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/api-model-bear";
 import { uriRef, idRef, UriRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
+    IFluidLayoutSize,
+    IFluidLayoutSizeByScreen,
+    IDashboardLayout,
+    IDashboardLayoutColumn,
+    IDashboardLayoutRow,
     IWidget,
-    Layout,
-    IFluidLayoutColumn,
-    IFluidLayoutRow,
-    IFluidLayout,
+    ResponsiveScreenType,
 } from "@gooddata/sdk-backend-spi";
 import { BearDashboardDependency } from "./types";
 
@@ -16,10 +18,39 @@ const KPI_SIZE = 2;
 // Default layout column size for the visualization widget, when generating implicit layout
 const VISUALIZATION_SIZE = 12;
 
+export const convertResponsiveSize = (size: GdcDashboardLayout.IFluidLayoutSize): IFluidLayoutSize => {
+    const converted: IFluidLayoutSize = {
+        widthAsGridColumnsCount: size.width,
+    };
+    if (size.heightAsRatio) {
+        converted.heightAsRatio = size.heightAsRatio;
+    }
+
+    return converted;
+};
+
+export const convertLayoutColumnSize = (
+    column: GdcDashboardLayout.IFluidLayoutColSize,
+): IFluidLayoutSizeByScreen => {
+    const allScreens: ResponsiveScreenType[] = ["xl", "md", "lg", "sm", "xs"];
+
+    return allScreens.reduce((acc: IFluidLayoutSizeByScreen, el) => {
+        const size = column[el];
+        if (size) {
+            return {
+                ...acc,
+                [el]: convertResponsiveSize(size),
+            };
+        }
+
+        return acc;
+    }, {} as IFluidLayoutSizeByScreen);
+};
+
 const convertLayoutColumn = (
     column: GdcDashboardLayout.IFluidLayoutColumn,
     widgetDependencies: IWidget[],
-): IFluidLayoutColumn => {
+): IDashboardLayoutColumn => {
     const { content } = column;
     if (GdcDashboardLayout.isLayoutWidget(content)) {
         const widget = widgetDependencies.find((dep) => {
@@ -33,43 +64,51 @@ const convertLayoutColumn = (
 
         return {
             ...column,
-            content: {
-                widget,
-            },
+            size: convertLayoutColumnSize(column.size),
+            content: widget,
         };
     }
+
     return {
-        ...column,
         content: content && convertLayout(content, widgetDependencies),
+        style: column.style,
+        size: convertLayoutColumnSize(column.size),
     };
 };
 
 const convertLayoutRow = (
     row: GdcDashboardLayout.IFluidLayoutRow,
     widgetDependencies: IWidget[],
-): IFluidLayoutRow => {
+): IDashboardLayoutRow => {
     return {
         ...row,
         columns: row.columns.map((column) => convertLayoutColumn(column, widgetDependencies)),
     };
 };
 
-export const convertLayout = (layout: GdcDashboardLayout.Layout, widgetDependencies: IWidget[]): Layout => {
+export const convertLayout = (
+    layout: GdcDashboardLayout.Layout,
+    widgetDependencies: IWidget[],
+): IDashboardLayout => {
     const {
         fluidLayout: { rows },
         fluidLayout,
     } = layout;
-    const convertedLayout: Layout = {
-        fluidLayout: {
-            ...fluidLayout,
-            rows: rows.map((row) => convertLayoutRow(row, widgetDependencies)),
-        },
+    const convertedLayout: IDashboardLayout = {
+        type: "fluidLayout",
+        rows: rows.map((row) => convertLayoutRow(row, widgetDependencies)),
     };
+    if (fluidLayout.size) {
+        convertedLayout.size = convertResponsiveSize(fluidLayout.size);
+    }
+    if (fluidLayout.style) {
+        convertedLayout.style = fluidLayout.style;
+    }
     return convertedLayout;
 };
 
 /**
- * Create {@link IFluidLayout} from {@link IWidget} items. As widgets do not contain any layout information,
+ * Create {@link ILegacyDashboardLayout} from {@link IWidget} items. As widgets do not contain any layout information,
  * implicit layout with a single row will be generated.
  *
  * @returns fluid layout created from the widgets
@@ -78,16 +117,15 @@ export function createImplicitDashboardLayout(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
-): IFluidLayout | undefined {
+): IDashboardLayout | undefined {
     if (widgets.length < 1) {
         return undefined;
     }
     const rows = createRows(widgets, dependencies, visualizationClasses);
 
     return {
-        fluidLayout: {
-            rows,
-        },
+        type: "fluidLayout",
+        rows,
     };
 }
 
@@ -95,7 +133,7 @@ function createRows(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
-): IFluidLayoutRow[] {
+): IDashboardLayoutRow[] {
     return [{ columns: createColumns(widgets, dependencies, visualizationClasses) }];
 }
 
@@ -103,7 +141,7 @@ function createColumns(
     widgets: IWidget[],
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
-): IFluidLayoutColumn[] {
+): IDashboardLayoutColumn[] {
     return widgets.map((widget) => createColumn(widget, dependencies, visualizationClasses));
 }
 
@@ -111,12 +149,14 @@ function createColumn(
     widget: IWidget,
     dependencies: BearDashboardDependency[],
     visualizationClasses: GdcVisualizationClass.IVisualizationClassWrapped[],
-): IFluidLayoutColumn {
+): IDashboardLayoutColumn {
     return {
-        content: {
-            widget,
+        content: widget,
+        size: {
+            xl: {
+                widthAsGridColumnsCount: findImplicitWidgetWidth(widget, dependencies, visualizationClasses),
+            },
         },
-        size: { xl: { width: findImplicitWidgetWidth(widget, dependencies, visualizationClasses) } },
     };
 }
 

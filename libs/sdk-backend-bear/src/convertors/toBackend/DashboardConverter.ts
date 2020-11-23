@@ -1,9 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import {
-    Layout,
-    IFluidLayoutRow,
-    IFluidLayoutColumn,
-    isLayoutWidget,
     isFluidLayout,
     IDashboard,
     layoutWidgets,
@@ -21,11 +17,6 @@ import {
     IFilterContextDefinition,
     isFilterContext,
     IDashboardDefinition,
-    LayoutDefinition,
-    IFluidLayoutRowDefinition,
-    IFluidLayoutColumnDefinition,
-    isLayoutWidgetDefinition,
-    isFluidLayoutDefinition,
     UnexpectedError,
     DrillDefinition,
     IDrillToLegacyDashboard,
@@ -46,6 +37,13 @@ import {
     IDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToAttributeUrl,
+    IDashboardLayoutColumn,
+    IFluidLayoutSizeByScreen,
+    IFluidLayoutSize,
+    isWidgetDefinition,
+    IDashboardLayoutRow,
+    ResponsiveScreenType,
+    IDashboardLayout,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -74,56 +72,101 @@ const refToUri = (ref: ObjRef) => {
     );
 };
 
-const convertLayoutColumn = (
-    column: IFluidLayoutColumn | IFluidLayoutColumnDefinition,
-): GdcDashboardLayout.IFluidLayoutColumn => {
+export const convertResponsiveSize = (size: IFluidLayoutSize): GdcDashboardLayout.IFluidLayoutSize => {
+    const converted: GdcDashboardLayout.IFluidLayoutSize = {
+        width: size.widthAsGridColumnsCount,
+    };
+    if (size.heightAsRatio) {
+        converted.heightAsRatio = size.heightAsRatio;
+    }
+
+    return converted;
+};
+
+export const convertLayoutColumnSize = (
+    column: IFluidLayoutSizeByScreen,
+): GdcDashboardLayout.IFluidLayoutColSize => {
+    const allScreens: ResponsiveScreenType[] = ["xl", "md", "lg", "sm", "xs"];
+    return allScreens.reduce((acc: GdcDashboardLayout.IFluidLayoutColSize, el) => {
+        const size = column[el];
+        if (size) {
+            return {
+                ...acc,
+                [el]: convertResponsiveSize(size),
+            };
+        }
+
+        return acc;
+    }, {} as GdcDashboardLayout.IFluidLayoutColSize);
+};
+
+const convertLayoutColumn = (column: IDashboardLayoutColumn): GdcDashboardLayout.IFluidLayoutColumn => {
     const { content, size, style } = column;
-    if (isLayoutWidget(content)) {
-        return {
-            ...column,
+    if (isWidget(content)) {
+        const converted: GdcDashboardLayout.IFluidLayoutColumn = {
+            size: convertLayoutColumnSize(size),
             content: {
-                widget: { qualifier: { uri: refToUri(content.widget.ref) } },
+                widget: { qualifier: { uri: refToUri(content!.ref!) } },
             },
         };
-    } else if (isFluidLayout(content) || isFluidLayoutDefinition(content)) {
+        if (style) {
+            converted.style = style;
+        }
+
+        return converted;
+    } else if (isFluidLayout(content)) {
         return {
             ...column,
+            size: convertLayoutColumnSize(size),
             content: convertLayout(content),
         };
-    } else if (isLayoutWidgetDefinition(content)) {
+    } else if (isWidgetDefinition(content)) {
         // This should never happen -> widgets in the layout should be already saved
         throw new Error("Cannot convert layout widget definition to bear model!");
     }
 
     return {
-        size,
-        content,
+        size: convertLayoutColumnSize(size),
         style,
     };
 };
 
-const convertLayoutRow = (
-    row: IFluidLayoutRow | IFluidLayoutRowDefinition,
-): GdcDashboardLayout.IFluidLayoutRow => {
-    return {
-        ...row,
-        columns: (row.columns as Array<IFluidLayoutColumn | IFluidLayoutColumnDefinition>).map((column) =>
-            convertLayoutColumn(column),
-        ),
+const convertLayoutRow = (row: IDashboardLayoutRow): GdcDashboardLayout.IFluidLayoutRow => {
+    const convertedRow: GdcDashboardLayout.IFluidLayoutRow = {
+        columns: row.columns.map((column) => convertLayoutColumn(column)),
     };
+    if (row.header) {
+        const header = {} as GdcDashboardLayout.ISectionHeader;
+        if (row.header?.title) {
+            header.title = row.header.title;
+        }
+        if (row.header?.description) {
+            header.description = row.header.description;
+        }
+        convertedRow.header = header;
+    }
+    if (row.style) {
+        convertedRow.style = row.style;
+    }
+
+    return convertedRow;
 };
 
-const convertLayout = (layout: Layout | LayoutDefinition): GdcDashboardLayout.Layout => {
-    const {
-        fluidLayout: { rows },
-        fluidLayout,
-    } = layout;
+const convertLayout = (layout: IDashboardLayout): GdcDashboardLayout.Layout => {
+    const { rows } = layout;
     const convertedLayout: GdcDashboardLayout.Layout = {
         fluidLayout: {
-            ...fluidLayout,
-            rows: (rows as Array<IFluidLayoutRow | IFluidLayoutRowDefinition>).map(convertLayoutRow),
+            rows: rows.map(convertLayoutRow),
         },
     };
+    if (layout.size) {
+        convertedLayout.fluidLayout.size = convertResponsiveSize(layout.size);
+    }
+
+    if (layout.style) {
+        convertedLayout.fluidLayout.style = layout.style;
+    }
+
     return convertedLayout;
 };
 

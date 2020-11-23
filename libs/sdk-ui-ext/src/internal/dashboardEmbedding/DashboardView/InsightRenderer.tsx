@@ -81,8 +81,8 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         <InsightView
             insight={insightWidget.insight}
             filters={result}
-            backend={backend}
-            workspace={workspace}
+            backend={effectiveBackend}
+            workspace={effectiveWorkspace}
             drillableItems={effectiveDrillableItems}
             onDrill={onDrill}
             onError={onError}
