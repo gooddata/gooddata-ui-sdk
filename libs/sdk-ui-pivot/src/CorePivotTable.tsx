@@ -154,6 +154,14 @@ export interface ICorePivotTableState {
     resized: boolean;
 }
 
+function uuidv4() {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c == "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+
 /**
  * Pivot Table react component
  *
@@ -212,9 +220,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private numberOfColumnResizedCalls = 0;
     private isMetaOrCtrlKeyPressed = false;
     private isAltKeyPressed = false;
+    private uuid: string = "";
 
     constructor(props: ICorePivotTableProps) {
         super(props);
+
+        this.uuid = uuidv4();
 
         const { execution, config } = props;
 
@@ -263,6 +274,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private reinitialize = (execution: IPreparedExecution): void => {
+        // eslint-disable-next-line no-console
+        console.log(`LOG uid=${this.uuid} method=REINIT`);
         this.setState(
             {
                 tableReady: false,
@@ -345,6 +358,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private initializeNonReactState = (result: IExecutionResult, dataView: IDataView) => {
+        // eslint-disable-next-line no-console
+        console.log(`LOG uid=${this.uuid} method=INITIALIZENONREACTSTATE`);
+
         this.currentResult = result;
         this.visibleData = DataViewFacade.for(dataView);
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
@@ -421,6 +437,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         this.props.onExportReady!(
                             createExportFunction(this.currentResult!, this.props.exportTitle),
                         );
+                        // eslint-disable-next-line no-console
+                        console.log(`LOG uid=${this.uuid} method=INITIALIZE tableReady=true`);
                         this.setState({ tableReady: true });
 
                         const availableDrillTargets = this.getAvailableDrillTargets(this.visibleData!);
@@ -485,6 +503,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
         if (this.isReinitNeeded(prevProps)) {
+            // eslint-disable-next-line no-console
+            console.log(`LOG uid=${this.uuid} method=COMPONENTDIDUPDATE reinit=true`);
             /*
              * This triggers when execution changes (new measures / attributes). In that case,
              * a complete re-init of the table is in order.
@@ -497,6 +517,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
              */
             this.reinitialize(this.props.execution);
         } else {
+            // eslint-disable-next-line no-console
+            console.log(`LOG uid=${this.uuid} method=COMPONENTDIDUPDATE reinit=false`);
             /*
              * When in this branch, the ag-grid instance is up and running and is already showing some data and
              * it _should_ be possible to normally use the ag-grid APIs.
@@ -517,6 +539,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             const columnWidths = this.getColumnWidths(this.props);
 
             if (!isEqual(prevColumnWidths, columnWidths)) {
+                // eslint-disable-next-line no-console
+                console.log(`LOG uid=${this.uuid} method=COMPONENTDIDUPDATE call=applyColumnSizes`);
                 this.applyColumnSizes(columnWidths);
             }
         }
@@ -578,6 +602,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             overflow: "hidden",
         };
 
+        // eslint-disable-next-line no-console
+        console.log(`LOG uid=${this.uuid} method=RENDER isInitializing=${this.isTableInitializing()}`);
         if (this.isTableInitializing()) {
             return (
                 <div className="gd-table-component" style={style}>
@@ -597,6 +623,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
          */
         const shouldRenderLoadingOverlay =
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
+        // eslint-disable-next-line no-console
+        console.log(
+            `LOG uid=${this.uuid} method=RENDER shouldRenderLoadingOverlay=${shouldRenderLoadingOverlay} resized=${this.state.resized}`,
+        );
 
         return (
             <div className="gd-table-component" style={style}>
@@ -765,6 +795,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return Promise.resolve();
         }
 
+        // eslint-disable-next-line no-console
+        console.log(`LOG uid=${this.uuid} method=AUTOSIZEALLCOLUMNS`);
+
         await sleep(COLUMN_RESIZE_TIMEOUT);
 
         /*
@@ -816,15 +849,30 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (this.isPivotTableReady(api) && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
             // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
+            // eslint-disable-next-line no-console
+            console.log(
+                `LOG uid=${this.uuid} method=AUTOSIZECOLUMNS call=this.autoresizeAllColumns started=true`,
+            );
             await this.autoresizeAllColumns(api, columnApi);
+            // eslint-disable-next-line no-console
+            console.log(
+                `LOG uid=${this.uuid} method=AUTOSIZECOLUMNS call=this.autoresizeAllColumns finished=true`,
+            );
             // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
             if (this.isGrowToFitEnabled()) {
+                // eslint-disable-next-line no-console
+                console.log(`LOG uid=${this.uuid} method=AUTOSIZECOLUMNS call=growToFit`);
                 this.growToFit(columnApi);
             } else if (this.shouldPerformAutoresize() && this.isColumnAutoresizeEnabled()) {
+                // eslint-disable-next-line no-console
+                console.log(`LOG uid=${this.uuid} method=AUTOSIZECOLUMNS call=resetColumnsWidthToDefault`);
                 const columns = this.columnApi!.getAllColumns();
                 this.resetColumnsWidthToDefault(this.columnApi!, columns);
             }
             this.resizing = false;
+
+            // eslint-disable-next-line no-console
+            console.log(`LOG uid=${this.uuid} method=AUTOSIZECOLUMNS resized=true`);
             this.setState({
                 resized: true,
             });
@@ -1296,6 +1344,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     // TODO: refactor to move all this outside of the file
     //
     private createGridOptions = (): ICustomGridOptions => {
+        // eslint-disable-next-line no-console
+        console.log(`LOG uid=${this.uuid} method=CREATEGRIDOPTIONS`);
         const tableHeaders = this.tableHeaders;
         const { pageSize } = this.props;
         const totalRowCount = this.visibleData!.rawData().firstDimSize();
