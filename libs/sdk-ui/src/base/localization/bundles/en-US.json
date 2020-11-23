@@ -803,8 +803,8 @@
         "limit": 0
     },
     "filters.staticPeriod.incorrectFormat": {
-        "value": "Date is not in {format} format",
-        "comment": "Placeholder '{format}' is used for showing date format. Example 'Date is not in MMMM/YY/DD format'. Don't translate placeholder '{format}'.",
+        "value": "The date must be in {format} format",
+        "comment": "Placeholder '{format}' is used for showing date format. Example 'The date must be in MM/dd/yyyy format'. Don't translate placeholder '{format}'.",
         "limit": 0
     },
     "mvf.operator.all": {
