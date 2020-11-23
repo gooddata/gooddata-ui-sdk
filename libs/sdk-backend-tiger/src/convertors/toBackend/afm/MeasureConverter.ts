@@ -33,7 +33,7 @@ import {
     toFactQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter";
-import { convertVisualizationObjectFilter } from "./FilterConverter";
+import { convertFilter } from "./FilterConverter";
 
 export function convertMeasure(measure: IMeasure): VisualizationObject.IMeasure {
     const {
@@ -102,9 +102,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleM
     const { measureDefinition } = definition;
 
     const filters: FilterDefinitionForSimpleMeasure[] = measureDefinition.filters
-        ? (compact(
-              measureDefinition.filters.map(convertVisualizationObjectFilter),
-          ) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only date and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
+        ? (compact(measureDefinition.filters.map(convertFilter)) as FilterDefinitionForSimpleMeasure[]) // measureDefinition.filters is IMeasureFilter, it contains only date and attribute filter, equally result contains this subset, it corresponds to type FilterDefinitionForSimpleMeasure
         : [];
     const filtersProp = filters.length ? { filters } : {};
 

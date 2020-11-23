@@ -1,10 +1,5 @@
 // (C) 2020 GoodData Corporation
-import {
-    convertAbsoluteDateFilter,
-    convertMeasureValueFilter,
-    convertRelativeDateFilter,
-    convertVisualizationObjectFilter,
-} from "../FilterConverter";
+import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter";
 import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
 import {
     DateGranularity,
@@ -42,18 +37,18 @@ describe("tiger filter converter from model to AFM", () => {
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, filter) => {
-            expect(convertMeasureValueFilter(filter)).toMatchSnapshot();
+            expect(convertFilter(filter)).toMatchSnapshot();
         });
 
         it("should throw exception if filter has idRef without type", () => {
             expect(() => {
-                convertMeasureValueFilter(newMeasureValueFilter(idRef("ambiguous"), "GREATER_THAN", 10));
+                convertFilter(newMeasureValueFilter(idRef("ambiguous"), "GREATER_THAN", 10));
             }).toThrow();
         });
 
         it("should throw exception if filter is using uriRef", () => {
             expect(() => {
-                convertMeasureValueFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
+                convertFilter(newMeasureValueFilter(uriRef("unsupported"), "GREATER_THAN", 10));
             }).toThrow();
         });
     });
@@ -68,7 +63,7 @@ describe("tiger filter converter from model to AFM", () => {
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, input) => {
-            expect(convertAbsoluteDateFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
     });
     describe("convert relative date filter", () => {
@@ -97,17 +92,23 @@ describe("tiger filter converter from model to AFM", () => {
             ["mission 'from' parameter", relativeFilter.withoutFrom],
         ];
         it.each(Scenarios)("should return AFM relative date filter with %s", (_desc, input) => {
-            expect(convertRelativeDateFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
     });
-    describe("convert visualization object filter", () => {
+    describe("convert filter", () => {
+        const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
+        const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
         const Scenarios: Array<[string, any]> = [
-            ["positive attribute filter", newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"])],
+            ["positive attribute filter", positiveAttributeFilter],
             [
-                "negative attribute filter",
-                newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["other value"]),
+                "positive attribute filter with applyOnResult true",
+                newFilterWithApplyOnResult(positiveAttributeFilter, true),
             ],
-            ["null when filter is empty", newNegativeAttributeFilter(ReferenceLdm.Product.Name, [])],
+            ["negative attribute filter", negativeAttributeFilter],
+            [
+                "negative attribute filter with applyOnResult false",
+                newFilterWithApplyOnResult(negativeAttributeFilter, false),
+            ],
             [
                 "absolute date filter",
                 newAbsoluteDateFilter(ReferenceLdm.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
@@ -137,18 +138,18 @@ describe("tiger filter converter from model to AFM", () => {
             ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
-            expect(convertVisualizationObjectFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input)).toMatchSnapshot();
         });
 
         it("should throw an error since tiger database only supports specifying positive attribute elements by value", () => {
             expect(() =>
-                convertVisualizationObjectFilter(visualizationObjectFilter.positiveAttributeFilter),
+                convertFilter(visualizationObjectFilter.positiveAttributeFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 
         it("should throw an error since tiger database only supports specifying negative attribute elements by value", () => {
             expect(() =>
-                convertVisualizationObjectFilter(visualizationObjectFilter.negativeAttributeFilter),
+                convertFilter(visualizationObjectFilter.negativeAttributeFilter),
             ).toThrowErrorMatchingSnapshot();
         });
 
@@ -156,8 +157,8 @@ describe("tiger filter converter from model to AFM", () => {
             const emptyPositiveFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, []);
             const emptyNegativeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, []);
 
-            expect(convertVisualizationObjectFilter(emptyPositiveFilter)).toBeNull();
-            expect(convertVisualizationObjectFilter(emptyNegativeFilter)).toBeNull();
+            expect(convertFilter(emptyPositiveFilter)).toBeNull();
+            expect(convertFilter(emptyNegativeFilter)).toBeNull();
         });
     });
 });

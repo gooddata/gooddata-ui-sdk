@@ -58,6 +58,7 @@ Object {
         "localIdentifier": "a_label.activity.id.subject",
       },
     ],
+    "auxMeasures": Array [],
     "filters": Array [
       Object {
         "positiveAttributeFilter": Object {
@@ -101,6 +102,7 @@ exports[`converts execution definition to AFM Execution should return AFM Execut
 Object {
   "execution": Object {
     "attributes": Array [],
+    "auxMeasures": Array [],
     "filters": Array [],
     "measures": Array [],
   },
@@ -134,6 +136,7 @@ Object {
         "localIdentifier": "a_attribute2",
       },
     ],
+    "auxMeasures": Array [],
     "filters": Array [],
     "measures": Array [],
   },
@@ -147,6 +150,7 @@ exports[`converts execution definition to AFM Execution should return AFM Execut
 Object {
   "execution": Object {
     "attributes": Array [],
+    "auxMeasures": Array [],
     "filters": Array [],
     "measures": Array [],
   },
@@ -167,6 +171,7 @@ exports[`converts execution definition to AFM Execution should return AFM Execut
 Object {
   "execution": Object {
     "attributes": Array [],
+    "auxMeasures": Array [],
     "filters": Array [],
     "measures": Array [],
   },
@@ -180,6 +185,7 @@ exports[`converts execution definition to AFM Execution should return AFM Execut
 Object {
   "execution": Object {
     "attributes": Array [],
+    "auxMeasures": Array [],
     "filters": Array [],
     "measures": Array [],
   },

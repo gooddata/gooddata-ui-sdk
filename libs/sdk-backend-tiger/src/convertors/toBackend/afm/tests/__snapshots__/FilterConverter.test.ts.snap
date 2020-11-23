@@ -19,6 +19,219 @@ exports[`tiger filter converter from model to AFM convert absolute date filter s
 
 exports[`tiger filter converter from model to AFM convert absolute date filter should convert absolute date filter without 'to' attribute 1`] = `null`;
 
+exports[`tiger filter converter from model to AFM convert filter should return absolute date filter 1`] = `
+Object {
+  "absoluteDateFilter": Object {
+    "dataset": Object {
+      "identifier": Object {
+        "id": "closed.dataset.dt",
+        "type": "dataset",
+      },
+    },
+    "from": "2019-08-06",
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return comparison measure value filter 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": undefined,
+    "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return comparison measure value filter with treatNullValueAs 1`] = `
+Object {
+  "comparisonMeasureValueFilter": Object {
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "GREATER_THAN",
+    "treatNullValuesAs": 0,
+    "value": 128,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "notIn": Object {
+      "values": Array [
+        "value 2",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with applyOnResult false 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "applyOnResult": false,
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "notIn": Object {
+      "values": Array [
+        "value 2",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "in": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with applyOnResult true 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
+    "applyOnResult": true,
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "in": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return range measure value filter 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return range measure value filter with crossed boundaries 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return range measure value filter with treatNullValueAs 1`] = `
+Object {
+  "rangeMeasureValueFilter": Object {
+    "from": 64,
+    "measure": Object {
+      "localIdentifier": "m_acugFHNJgsBy",
+    },
+    "operator": "BETWEEN",
+    "to": 128,
+    "treatNullValuesAs": 0,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return ranking filter 1`] = `
+Object {
+  "rankingFilter": Object {
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    ],
+    "operator": "BOTTOM",
+    "value": 3,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return ranking filter with attributes 1`] = `
+Object {
+  "rankingFilter": Object {
+    "dimensionality": Array [
+      Object {
+        "identifier": Object {
+          "id": "label.stage.isactive",
+          "type": "label",
+        },
+      },
+    ],
+    "measures": Array [
+      Object {
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    ],
+    "operator": "TOP",
+    "value": 3,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return relative date filter 1`] = `
+Object {
+  "relativeDateFilter": Object {
+    "dataset": Object {
+      "identifier": Object {
+        "id": "closed.dataset.dt",
+        "type": "dataset",
+      },
+    },
+    "from": 20,
+    "granularity": "day",
+    "to": 30,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should throw an error since tiger database only supports specifying negative attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
+
+exports[`tiger filter converter from model to AFM convert filter should throw an error since tiger database only supports specifying positive attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
+
 exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 1`] = `
 Object {
   "comparisonMeasureValueFilter": Object {
@@ -174,180 +387,3 @@ Object {
   },
 }
 `;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return absolute date filter 1`] = `
-Object {
-  "absoluteDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
-        "id": "closed.dataset.dt",
-        "type": "dataset",
-      },
-    },
-    "from": "2019-08-06",
-    "to": "2019-08-12",
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return comparison measure value filter 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
-      "localIdentifier": "m_acugFHNJgsBy",
-    },
-    "operator": "GREATER_THAN",
-    "treatNullValuesAs": undefined,
-    "value": 128,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return comparison measure value filter with treatNullValueAs 1`] = `
-Object {
-  "comparisonMeasureValueFilter": Object {
-    "measure": Object {
-      "localIdentifier": "m_acugFHNJgsBy",
-    },
-    "operator": "GREATER_THAN",
-    "treatNullValuesAs": 0,
-    "value": 128,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return negative attribute filter 1`] = `
-Object {
-  "negativeAttributeFilter": Object {
-    "displayForm": Object {
-      "identifier": Object {
-        "id": "label.product.id.name",
-        "type": "label",
-      },
-    },
-    "notIn": Object {
-      "values": Array [
-        "other value",
-      ],
-    },
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return null when filter is empty 1`] = `null`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return positive attribute filter 1`] = `
-Object {
-  "positiveAttributeFilter": Object {
-    "displayForm": Object {
-      "identifier": Object {
-        "id": "label.product.id.name",
-        "type": "label",
-      },
-    },
-    "in": Object {
-      "values": Array [
-        "value",
-      ],
-    },
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
-    "from": 64,
-    "measure": Object {
-      "localIdentifier": "m_acugFHNJgsBy",
-    },
-    "operator": "BETWEEN",
-    "to": 128,
-    "treatNullValuesAs": undefined,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter with crossed boundaries 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
-    "from": 64,
-    "measure": Object {
-      "localIdentifier": "m_acugFHNJgsBy",
-    },
-    "operator": "BETWEEN",
-    "to": 128,
-    "treatNullValuesAs": undefined,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return range measure value filter with treatNullValueAs 1`] = `
-Object {
-  "rangeMeasureValueFilter": Object {
-    "from": 64,
-    "measure": Object {
-      "localIdentifier": "m_acugFHNJgsBy",
-    },
-    "operator": "BETWEEN",
-    "to": 128,
-    "treatNullValuesAs": 0,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return ranking filter 1`] = `
-Object {
-  "rankingFilter": Object {
-    "measures": Array [
-      Object {
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    ],
-    "operator": "BOTTOM",
-    "value": 3,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return ranking filter with attributes 1`] = `
-Object {
-  "rankingFilter": Object {
-    "dimensionality": Array [
-      Object {
-        "identifier": Object {
-          "id": "label.stage.isactive",
-          "type": "label",
-        },
-      },
-    ],
-    "measures": Array [
-      Object {
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    ],
-    "operator": "TOP",
-    "value": 3,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should return relative date filter 1`] = `
-Object {
-  "relativeDateFilter": Object {
-    "dataset": Object {
-      "identifier": Object {
-        "id": "closed.dataset.dt",
-        "type": "dataset",
-      },
-    },
-    "from": 20,
-    "granularity": "day",
-    "to": 30,
-  },
-}
-`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying negative attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
-
-exports[`tiger filter converter from model to AFM convert visualization object filter should throw an error since tiger database only supports specifying positive attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;

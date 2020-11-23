@@ -354,6 +354,15 @@ export function isRankingFilter(obj: unknown): obj is IRankingFilter {
 }
 
 /**
+ * Type guard checking whether the provided object is a filter.
+ *
+ * @public
+ */
+export function isFilter(obj: unknown): obj is IFilter {
+    return isDateFilter(obj) || isAttributeFilter(obj) || isMeasureValueFilter(obj) || isRankingFilter(obj);
+}
+
+/**
  * Type guard checking whether the provided object is a measure value filter's comparison condition.
  *
  * @public
@@ -520,6 +529,19 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
         return filter.relativeDateFilter.dataSet;
     }
     return undefined;
+}
+
+/**
+ * Gets reference to a measure being used for filtering if the provided filter is measure based. For other filters return undefined.
+ *
+ * @public
+ */
+export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
+    return isRankingFilter(filter)
+        ? filter.rankingFilter.measure
+        : isMeasureValueFilter(filter)
+        ? filter.measureValueFilter.measure
+        : undefined;
 }
 
 /**

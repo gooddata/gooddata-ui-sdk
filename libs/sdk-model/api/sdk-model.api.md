@@ -267,6 +267,9 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
+export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
+
+// @public
 export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter): ObjRef;
 
 // @public
@@ -818,6 +821,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 export function isDimension(obj: unknown): obj is IDimension;
 
 // @public
+export function isFilter(obj: unknown): obj is IFilter;
+
+// @public
 export function isIdentifierRef(obj: unknown): obj is IdentifierRef;
 
 // @public
@@ -987,7 +993,7 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
 }
 
 // @public
-export function measureDoesComputeRatio(measure: IMeasure): boolean;
+export function measureDoesComputeRatio(measure: IMeasure): measure is IMeasure<IMeasureDefinition>;
 
 // @public
 export type MeasureEnvelope = Omit<IMeasure["measure"], "definition">;
