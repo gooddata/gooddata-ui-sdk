@@ -372,7 +372,7 @@ export function measureItem(measure: IMeasure): ObjRef | undefined {
  * @returns true if computes ratio, false otherwise
  * @public
  */
-export function measureDoesComputeRatio(measure: IMeasure): boolean {
+export function measureDoesComputeRatio(measure: IMeasure): measure is IMeasure<IMeasureDefinition> {
     invariant(measure, "measure must be specified");
 
     if (!isSimpleMeasure(measure)) {

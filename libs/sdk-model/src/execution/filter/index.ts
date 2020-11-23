@@ -532,6 +532,19 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
 }
 
 /**
+ * Gets reference to a measure being used for filtering if the provided filter is measure based. For other filters return undefined.
+ *
+ * @public
+ */
+export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined {
+    return isRankingFilter(filter)
+        ? filter.rankingFilter.measure
+        : isMeasureValueFilter(filter)
+        ? filter.measureValueFilter.measure
+        : undefined;
+}
+
+/**
  * Represents values of an absolute filter.
  *
  * @public

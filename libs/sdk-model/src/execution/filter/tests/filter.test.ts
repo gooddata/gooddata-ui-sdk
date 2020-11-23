@@ -7,6 +7,7 @@ import {
     newAbsoluteDateFilter,
     newMeasureValueFilter,
     newRelativeDateFilter,
+    newRankingFilter,
 } from "../factory";
 import {
     filterIsEmpty,
@@ -18,8 +19,10 @@ import {
     measureValueFilterMeasure,
     absoluteDateFilterValues,
     relativeDateFilterValues,
+    filterMeasureRef,
 } from "../index";
-import { ObjRef } from "../../../objRef";
+import { ObjRef, ObjRefInScope } from "../../../objRef";
+import { localIdRef } from "../../..";
 
 const AbsoluteDateFilter = newAbsoluteDateFilter(ClosedDate.MmDdYyyy.attribute.displayForm, "2018", "2019");
 
@@ -31,6 +34,7 @@ const RelativeDateFilter = newRelativeDateFilter(
 );
 
 const MeasureValueFilter = newMeasureValueFilter(Won, "EQUAL_TO", 42);
+const RankingFilter = newRankingFilter(Won, "TOP", 5);
 
 const InvalidScenarios: Array<[string, any]> = [
     ["filter undefined", undefined],
@@ -121,6 +125,19 @@ describe("filterAttributeDisplayForm", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => filterObjRef(input)).toThrow();
+    });
+});
+
+describe("filterMeasureRef", () => {
+    const Scenarios: Array<[string, IFilter, ObjRefInScope | undefined]> = [
+        ["undefined for absolute date filter", AbsoluteDateFilter, undefined],
+        ["undefined for negative attribute filter", newNegativeAttributeFilter(Account.Name, []), undefined],
+        ["measure for ranking filter", RankingFilter, localIdRef(Won.measure.localIdentifier)],
+        ["measure for measure value filter", MeasureValueFilter, localIdRef(Won.measure.localIdentifier)],
+    ];
+
+    it.each(Scenarios)("should return %s", (_, input, expectedResult) => {
+        expect(filterMeasureRef(input)).toEqual(expectedResult);
     });
 });
 

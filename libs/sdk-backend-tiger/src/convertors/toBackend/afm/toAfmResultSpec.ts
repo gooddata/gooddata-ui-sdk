@@ -1,18 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
-import compact from "lodash/compact";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import {
-    AFM,
-    AfmExecution,
-    AttributeItem,
-    FilterDefinition,
-    MeasureItem,
-    ResultSpec,
-} from "@gooddata/api-client-tiger";
-import { convertFilter } from "./FilterConverter";
+import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
 import { convertMeasure } from "./MeasureConverter";
 import { convertAttribute } from "./AttributeConverter";
 import { convertDimensions } from "./DimensionsConverter";
+import { convertAfmFilters } from "./AfmFiltersConverter";
 
 function convertAFM(def: IExecutionDefinition): AFM {
     const attributes: AttributeItem[] = def.attributes.map(convertAttribute);
@@ -21,13 +13,15 @@ function convertAFM(def: IExecutionDefinition): AFM {
     const measures: MeasureItem[] = def.measures.map(convertMeasure);
     const measuresProp = { measures };
 
-    const filters: FilterDefinition[] = def.filters ? compact(def.filters.map(convertFilter)) : [];
+    const { filters, auxMeasures } = convertAfmFilters(def.measures, def.filters || []);
     const filtersProp = { filters };
+    const auxMeasuresProp = { auxMeasures };
 
     return {
         ...measuresProp,
         ...attrProp,
         ...filtersProp,
+        ...auxMeasuresProp,
     };
 }
 

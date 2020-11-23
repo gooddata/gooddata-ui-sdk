@@ -54,6 +54,12 @@ export interface AFM {
      * @memberof AFM
      */
     measures: Array<MeasureItem>;
+    /**
+     * Measures to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     * @type {Array<MeasureItem>}
+     * @memberof AFM
+     */
+    auxMeasures?: Array<MeasureItem>;
 }
 /**
  * A date filter specifying exact from and to dates.

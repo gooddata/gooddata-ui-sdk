@@ -353,6 +353,13 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureItem"
                         }
+                    },
+                    "auxMeasures": {
+                        "type": "array",
+                        "description": "Measures to be referenced from other AFM objects (e.g. filters) but not included in the result.",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureItem"
+                        }
                     }
                 }
             },

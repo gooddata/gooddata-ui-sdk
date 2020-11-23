@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convertAfmFilters should keep non-measure based filter 1`] = `
+Object {
+  "auxMeasures": Array [],
+  "filters": Array [
+    Object {
+      "positiveAttributeFilter": Object {
+        "displayForm": Object {
+          "identifier": Object {
+            "id": "label.product.id.name",
+            "type": "label",
+          },
+        },
+        "in": Object {
+          "values": Array [
+            "value",
+          ],
+        },
+      },
+    },
+  ],
+}
+`;
+
+exports[`convertAfmFilters should not transform measure based filter of non-ratio measure 1`] = `
+Object {
+  "auxMeasures": Array [],
+  "filters": Array [
+    Object {
+      "rankingFilter": Object {
+        "dimensionality": Array [
+          Object {
+            "identifier": Object {
+              "id": "label.stage.isactive",
+              "type": "label",
+            },
+          },
+        ],
+        "measures": Array [
+          Object {
+            "localIdentifier": "nonRatio",
+          },
+        ],
+        "operator": "TOP",
+        "value": 3,
+      },
+    },
+  ],
+}
+`;
+
+exports[`convertAfmFilters should transform measure based filter of ratio measure 1`] = `
+Object {
+  "auxMeasures": Array [
+    Object {
+      "definition": Object {
+        "measure": Object {
+          "item": Object {
+            "identifier": Object {
+              "id": "test",
+              "type": "fact",
+            },
+          },
+        },
+      },
+      "localIdentifier": "m_test",
+    },
+  ],
+  "filters": Array [
+    Object {
+      "comparisonMeasureValueFilter": Object {
+        "applyOnResult": false,
+        "measure": Object {
+          "localIdentifier": "m_test",
+        },
+        "operator": "GREATER_THAN",
+        "treatNullValuesAs": undefined,
+        "value": 128,
+      },
+    },
+  ],
+}
+`;

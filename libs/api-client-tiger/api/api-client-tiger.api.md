@@ -42,6 +42,7 @@ export interface AbstractMeasureValueFilterAllOf {
 // @public
 export interface AFM {
     attributes: Array<AttributeItem>;
+    auxMeasures?: Array<MeasureItem>;
     filters: Array<FilterDefinition>;
     measures: Array<MeasureItem>;
 }

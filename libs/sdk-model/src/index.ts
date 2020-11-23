@@ -122,6 +122,7 @@ export {
     isRangeConditionOperator,
     filterIsEmpty,
     filterAttributeElements,
+    filterMeasureRef,
     filterObjRef,
     IAbsoluteDateFilterValues,
     IRelativeDateFilterValues,

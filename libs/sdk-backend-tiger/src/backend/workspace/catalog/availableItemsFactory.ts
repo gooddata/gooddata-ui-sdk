@@ -22,17 +22,16 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
-import compact from "lodash/compact";
 import intersectionWith from "lodash/intersectionWith";
 import uniq from "lodash/uniq";
 
 import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableItems";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter";
-import { convertFilter } from "../../../convertors/toBackend/afm/FilterConverter";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter";
 import { jsonApiIdToObjRef, isJsonApiId } from "../../../convertors/fromBackend/afm/ObjRefConverter";
 import { InvariantError } from "ts-invariant";
+import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
 
 const typesMatching: Partial<{ [T in CatalogItemType]: AfmValidObjectsQueryTypesEnum }> = {
     attribute: AfmValidObjectsQueryTypesEnum.Attributes,
@@ -137,13 +136,19 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         const relevantItems = insight
             ? [...insightMeasures(insight), ...insightAttributes(insight), ...insightFilters(insight)]
             : items;
+        const attributes = relevantItems.filter(isAttribute);
+        const measures = relevantItems.filter(isMeasure);
+        const filters = relevantItems.filter(isFilter);
+
+        const { filters: afmFilters, auxMeasures } = convertAfmFilters(measures, filters);
 
         const afmValidObjectsQuery = {
             types: relevantRestrictingTypes.map(mapToTigerType),
             afm: {
-                attributes: relevantItems.filter(isAttribute).map(convertAttribute),
-                measures: relevantItems.filter(isMeasure).map(convertMeasure),
-                filters: compact(relevantItems.filter(isFilter).map(convertFilter)),
+                attributes: attributes.map(convertAttribute),
+                measures: measures.map(convertMeasure),
+                filters: afmFilters,
+                auxMeasures,
             },
         };
 
