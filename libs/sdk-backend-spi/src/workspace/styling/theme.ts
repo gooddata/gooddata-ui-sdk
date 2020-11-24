@@ -270,6 +270,11 @@ export interface ITheme {
              * Foreground color of the title
              */
             color?: ThemeColor;
+
+            /**
+             * Background color of the title
+             */
+            backgroundColor?: ThemeColor;
         };
 
         /**
