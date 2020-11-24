@@ -30,6 +30,9 @@
                 opacity: 0.6;
             }
         }
+        .headline-value--empty {
+            color: var(--gd-kpi-primaryMeasureColor, $gd-color-disabled);
+        }
     }
 
     .headline-secondary-item {
