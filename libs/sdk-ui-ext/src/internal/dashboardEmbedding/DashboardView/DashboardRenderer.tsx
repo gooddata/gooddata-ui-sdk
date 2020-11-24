@@ -1,13 +1,15 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { useMemo, useCallback } from "react";
 import {
     IAnalyticalBackend,
     IDashboard,
-    isLayoutWidget,
-    isSectionHeader,
     IWidgetAlert,
+    FluidLayoutTransforms,
+    isWidget,
+    isWidgetDefinition,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, IFilter } from "@gooddata/sdk-model";
+import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -17,8 +19,10 @@ import {
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { KpiView } from "../KpiView";
-import { InsightRenderer } from "./InsightRenderer";
+import { DashboardLayout, DashboardLayoutColumnRenderer, DashboardLayoutRowHeader } from "../DashboardLayout";
+import { IDashboardViewLayout } from "../DashboardLayout/interfaces/dashboardLayout";
+import { DashboardContentRenderer } from "./DashboardContentRenderer";
+import { IDashboardViewLayoutColumnRenderProps } from "../DashboardLayout/interfaces/dashboardLayoutComponents";
 
 interface IDashboardRendererProps {
     dashboard: IDashboard;
@@ -42,8 +46,8 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     drillableItems,
     onDrill,
     ErrorComponent,
-    LoadingComponent,
     onError,
+    LoadingComponent,
 }) => {
     const isThemeLoading = useThemeIsLoading();
     if (isThemeLoading) {
@@ -51,64 +55,97 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
         return <LoadingComponent />;
     }
 
+    // Convert current layout model to "legacy" layout model,
+    // to keep it backward compatible with KD
+    const emptyLayout: IDashboardViewLayout = {
+        ...dashboard.layout,
+        rows: [],
+    };
+
+    const layout = useMemo(
+        () =>
+            FluidLayoutTransforms.for(dashboard.layout).reduceColumns(
+                (acc: IDashboardViewLayout, { column, columnIndex, row, rowIndex }) => {
+                    if (!acc.rows[rowIndex]) {
+                        acc.rows[rowIndex] = {
+                            ...row,
+                            columns: [],
+                        };
+                    }
+                    const currentContent = column.content;
+                    if (isWidget(currentContent) || isWidgetDefinition(currentContent)) {
+                        acc.rows[rowIndex].columns[columnIndex] = {
+                            ...column,
+                            content: {
+                                type: "widget",
+                                widget: currentContent,
+                            },
+                        };
+                    } else {
+                        throw new UnexpectedError("Unknown widget");
+                    }
+
+                    return acc;
+                },
+                emptyLayout,
+            ),
+        [dashboard.layout],
+    );
+
+    const contentWithProps = useCallback(
+        (props: IDashboardViewLayoutColumnRenderProps) => {
+            const { column } = props;
+            return (
+                <DashboardContentRenderer
+                    {...props}
+                    content={column.content}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                    alerts={alerts}
+                    drillableItems={drillableItems}
+                    filters={filters}
+                    onDrill={onDrill}
+                    onError={onError}
+                    workspace={workspace}
+                    backend={backend}
+                />
+            );
+        },
+        [
+            ErrorComponent,
+            LoadingComponent,
+            alerts,
+            backend,
+            drillableItems,
+            filters,
+            onDrill,
+            onError,
+            workspace,
+        ],
+    );
+
     return (
-        <>
-            {dashboard.layout.fluidLayout.rows.map((row, rowIndex) => {
+        <DashboardLayout
+            layout={layout}
+            contentRenderer={contentWithProps}
+            columnRenderer={(props) => {
                 return (
-                    <div key={rowIndex}>
-                        {row.header && (
-                            <div>
-                                {isSectionHeader(row.header) && <h2>{row.header.title}</h2>}
-                                {!!row.header?.description && <div>{row.header.description}</div>}
-                            </div>
-                        )}
-                        {row.columns.map((column, columnIndex) => {
-                            if (!isLayoutWidget(column.content)) {
-                                return <div key={columnIndex}>Not a widget</div>;
-                            }
-
-                            const { widget } = column.content;
-
-                            if (widget.type === "insight") {
-                                return (
-                                    <InsightRenderer
-                                        key={widget.identifier}
-                                        insightWidget={widget}
-                                        backend={backend}
-                                        workspace={workspace}
-                                        filters={filters}
-                                        drillableItems={drillableItems}
-                                        onDrill={onDrill}
-                                        onError={onError}
-                                        ErrorComponent={ErrorComponent}
-                                        LoadingComponent={LoadingComponent}
-                                    />
-                                );
-                            }
-
-                            const relevantAlert = alerts?.find((alert) =>
-                                areObjRefsEqual(alert.widget, widget),
-                            );
-
-                            return (
-                                <KpiView
-                                    key={widget.identifier}
-                                    kpiWidget={column.content.widget}
-                                    alert={relevantAlert}
-                                    backend={backend}
-                                    workspace={workspace}
-                                    filters={filters}
-                                    drillableItems={drillableItems}
-                                    onDrill={onDrill}
-                                    onError={onError}
-                                    ErrorComponent={ErrorComponent}
-                                    LoadingComponent={LoadingComponent}
+                    <>
+                        {props.columnIndex === 0 && props.row.header && (
+                            <DashboardLayoutColumnRenderer
+                                {...props}
+                                column={{ size: { xl: { widthAsGridColumnsCount: 12 } } }}
+                            >
+                                <DashboardLayoutRowHeader
+                                    title={props.row.header.title}
+                                    description={props.row.header.description}
                                 />
-                            );
-                        })}
-                    </div>
+                            </DashboardLayoutColumnRenderer>
+                        )}
+                        <DashboardLayoutColumnRenderer {...props} />
+                    </>
                 );
-            })}
-        </>
+            }}
+        />
     );
 };

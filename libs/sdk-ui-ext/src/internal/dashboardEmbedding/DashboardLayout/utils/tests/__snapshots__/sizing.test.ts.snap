@@ -1,0 +1,1293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 2`] = `55.083333333333336`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 3`] = `110.16666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 4`] = `165.25`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 5`] = `220.33333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 6`] = `275.4166666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 7`] = `330.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 8`] = `385.58333333333337`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 9`] = `440.6666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 10`] = `495.75`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 11`] = `550.8333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 12`] = `605.9166666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 2`] = `110.16666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 3`] = `220.33333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 4`] = `330.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 5`] = `440.6666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 6`] = `550.8333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 7`] = `661`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 8`] = `771.1666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 9`] = `881.3333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 10`] = `991.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 11`] = `1101.6666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for lg screen with ratio 100 12`] = `1211.8333333333335`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 2`] = `40.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 3`] = `81`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 4`] = `121.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 5`] = `162`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 6`] = `202.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 7`] = `243`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 8`] = `283.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 9`] = `324`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 10`] = `364.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 11`] = `405`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 50 12`] = `445.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 2`] = `81`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 3`] = `162`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 4`] = `243`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 5`] = `324`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 6`] = `405`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 7`] = `486`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 8`] = `567`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 9`] = `648`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 10`] = `729`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 11`] = `810`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for md screen with ratio 100 12`] = `891`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 2`] = `25.916666666666668`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 3`] = `51.833333333333336`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 4`] = `77.75`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 5`] = `103.66666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 6`] = `129.58333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 7`] = `155.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 8`] = `181.41666666666669`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 9`] = `207.33333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 10`] = `233.25`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 11`] = `259.1666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 50 12`] = `285.08333333333337`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 2`] = `51.833333333333336`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 3`] = `103.66666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 4`] = `155.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 5`] = `207.33333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 6`] = `259.1666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 7`] = `311`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 8`] = `362.83333333333337`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 9`] = `414.6666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 10`] = `466.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 11`] = `518.3333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for sm screen with ratio 100 12`] = `570.1666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 2`] = `68.83333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 3`] = `137.66666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 4`] = `206.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 5`] = `275.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 6`] = `344.16666666666663`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 7`] = `413`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 8`] = `481.8333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 9`] = `550.6666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 10`] = `619.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 11`] = `688.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 50 12`] = `757.1666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 2`] = `137.66666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 3`] = `275.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 4`] = `413`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 5`] = `550.6666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 6`] = `688.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 7`] = `826`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 8`] = `963.6666666666666`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 9`] = `1101.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 10`] = `1239`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 11`] = `1376.6666666666665`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xl screen with ratio 100 12`] = `1514.3333333333333`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 2`] = `12.583333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 3`] = `25.166666666666668`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 4`] = `37.75`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 5`] = `50.333333333333336`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 6`] = `62.91666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 7`] = `75.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 8`] = `88.08333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 9`] = `100.66666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 10`] = `113.25`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 11`] = `125.83333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 50 12`] = `138.41666666666669`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 1`] = `0`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 2`] = `25.166666666666668`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 3`] = `50.333333333333336`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 4`] = `75.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 5`] = `100.66666666666667`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 6`] = `125.83333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 7`] = `151`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 8`] = `176.16666666666669`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 9`] = `201.33333333333334`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 10`] = `226.5`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 11`] = `251.66666666666669`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for xs screen with ratio 100 12`] = `276.83333333333337`;
+
+exports[`sizing getDashboardLayoutContentHeightForRatioAndScreen should calculate widget height for zero width and ratio 1`] = `0`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for alluvial 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for area 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for bar 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for bubble 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for bullet 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for column 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for combo 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for combo2 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for donut 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for funnel 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for geo 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for headline 1`] = `240`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for heatmap 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for histogram 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for kpi 1`] = `240`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for line 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for pareto 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for pie 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for pushpin 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for scatter 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for table 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for treemap 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for unknown widget 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for waterfall 1`] = `450`;
+
+exports[`sizing getDashboardLayoutMinimumWidgetHeight should get default height for xirr 1`] = `240`;
+
+exports[`sizing unifyDashboardLayoutColumnHeights should unify dashboard layout column heights for various widgets and sizes 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "alluvial",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "alluvial",
+              },
+              "title": "alluvial alluvial",
+              "type": "insight",
+              "uri": "alluvial",
+            },
+            "widgetClass": "alluvial",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "md": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "sm": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "xl": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "xs": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "area",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "area",
+              },
+              "title": "area area",
+              "type": "insight",
+              "uri": "area",
+            },
+            "widgetClass": "area",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 200,
+              "widthAsGridColumnsCount": 1,
+            },
+            "md": Object {
+              "heightAsRatio": 150,
+              "widthAsGridColumnsCount": 2,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xl": Object {
+              "heightAsRatio": 200,
+              "widthAsGridColumnsCount": 1,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "bar",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "bar",
+              },
+              "title": "bar bar",
+              "type": "insight",
+              "uri": "bar",
+            },
+            "widgetClass": "bar",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 100,
+              "widthAsGridColumnsCount": 2,
+            },
+            "md": Object {
+              "heightAsRatio": 75,
+              "widthAsGridColumnsCount": 4,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xl": Object {
+              "heightAsRatio": 100,
+              "widthAsGridColumnsCount": 2,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "bubble",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "bubble",
+              },
+              "title": "bubble bubble",
+              "type": "insight",
+              "uri": "bubble",
+            },
+            "widgetClass": "bubble",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 66.67,
+              "widthAsGridColumnsCount": 3,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 66.67,
+              "widthAsGridColumnsCount": 3,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "bullet",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "bullet",
+              },
+              "title": "bullet bullet",
+              "type": "insight",
+              "uri": "bullet",
+            },
+            "widgetClass": "bullet",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 4,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 4,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "column",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "column",
+              },
+              "title": "column column",
+              "type": "insight",
+              "uri": "column",
+            },
+            "widgetClass": "column",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 60,
+              "widthAsGridColumnsCount": 5,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 60,
+              "widthAsGridColumnsCount": 5,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "combo",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "combo",
+              },
+              "title": "combo combo",
+              "type": "insight",
+              "uri": "combo",
+            },
+            "widgetClass": "combo",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "combo2",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "combo2",
+              },
+              "title": "combo2 combo2",
+              "type": "insight",
+              "uri": "combo2",
+            },
+            "widgetClass": "combo2",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 7,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 7,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "donut",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "donut",
+              },
+              "title": "donut donut",
+              "type": "insight",
+              "uri": "donut",
+            },
+            "widgetClass": "donut",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 8,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 8,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "funnel",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "funnel",
+              },
+              "title": "funnel funnel",
+              "type": "insight",
+              "uri": "funnel",
+            },
+            "widgetClass": "funnel",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 9,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 9,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "geo",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "geo",
+              },
+              "title": "geo geo",
+              "type": "insight",
+              "uri": "geo",
+            },
+            "widgetClass": "geo",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 10,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 10,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "headline",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "headline",
+              },
+              "title": "headline headline",
+              "type": "insight",
+              "uri": "headline",
+            },
+            "widgetClass": "headline",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 11,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 11,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "heatmap",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "heatmap",
+              },
+              "title": "heatmap heatmap",
+              "type": "insight",
+              "uri": "heatmap",
+            },
+            "widgetClass": "heatmap",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "md": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "sm": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "xl": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+            "xs": Object {
+              "heightAsRatio": 0,
+              "widthAsGridColumnsCount": 0,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "histogram",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "histogram",
+              },
+              "title": "histogram histogram",
+              "type": "insight",
+              "uri": "histogram",
+            },
+            "widgetClass": "histogram",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 200,
+              "widthAsGridColumnsCount": 1,
+            },
+            "md": Object {
+              "heightAsRatio": 150,
+              "widthAsGridColumnsCount": 2,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xl": Object {
+              "heightAsRatio": 200,
+              "widthAsGridColumnsCount": 1,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "line",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "line",
+              },
+              "title": "line line",
+              "type": "insight",
+              "uri": "line",
+            },
+            "widgetClass": "line",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 100,
+              "widthAsGridColumnsCount": 2,
+            },
+            "md": Object {
+              "heightAsRatio": 75,
+              "widthAsGridColumnsCount": 4,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xl": Object {
+              "heightAsRatio": 100,
+              "widthAsGridColumnsCount": 2,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "pareto",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "pareto",
+              },
+              "title": "pareto pareto",
+              "type": "insight",
+              "uri": "pareto",
+            },
+            "widgetClass": "pareto",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 66.67,
+              "widthAsGridColumnsCount": 3,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 66.67,
+              "widthAsGridColumnsCount": 3,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "pushpin",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "pushpin",
+              },
+              "title": "pushpin pushpin",
+              "type": "insight",
+              "uri": "pushpin",
+            },
+            "widgetClass": "pushpin",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 4,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 4,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": true,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "pie",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "pie",
+              },
+              "title": "pie pie",
+              "type": "insight",
+              "uri": "pie",
+            },
+            "widgetClass": "pie",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 60,
+              "widthAsGridColumnsCount": 5,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 60,
+              "widthAsGridColumnsCount": 5,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "scatter",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "scatter",
+              },
+              "title": "scatter scatter",
+              "type": "insight",
+              "uri": "scatter",
+            },
+            "widgetClass": "scatter",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "table",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "table",
+              },
+              "title": "table table",
+              "type": "insight",
+              "uri": "table",
+            },
+            "widgetClass": "table",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 7,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 7,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "treemap",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "treemap",
+              },
+              "title": "treemap treemap",
+              "type": "insight",
+              "uri": "treemap",
+            },
+            "widgetClass": "treemap",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 8,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 8,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "waterfall",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "waterfall",
+              },
+              "title": "waterfall waterfall",
+              "type": "insight",
+              "uri": "waterfall",
+            },
+            "widgetClass": "waterfall",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 9,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 6,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 9,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "xirr",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "xirr",
+              },
+              "title": "xirr xirr",
+              "type": "insight",
+              "uri": "xirr",
+            },
+            "widgetClass": "xirr",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 10,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 10,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "resizedByLayout": false,
+            "type": "widget",
+            "widget": Object {
+              "description": "",
+              "drills": Array [],
+              "identifier": "kpi",
+              "ignoreDashboardFilters": Array [],
+              "ref": Object {
+                "identifier": "kpi",
+              },
+              "title": "kpi kpi",
+              "type": "kpi",
+              "uri": "kpi",
+            },
+            "widgetClass": "kpi",
+          },
+          "size": Object {
+            "lg": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 11,
+            },
+            "md": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "sm": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 11,
+            },
+            "xs": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "type": "fluidLayout",
+}
+`;

@@ -8,7 +8,6 @@ import {
     IWidgetDefinition,
     isWidgetDefinition,
     isWidget,
-    IFluidLayout,
     IFilterContext,
     IFilterContextDefinition,
     isFilterContextDefinition,
@@ -16,10 +15,6 @@ import {
     isFilterContext,
     layoutWidgetsWithPaths,
     IWidgetWithLayoutPath,
-    IWidgetOrDefinitionWithLayoutPath,
-    Layout,
-    LayoutDefinition,
-    IWidgetDefinitionWithLayoutPath,
     layoutWidgets,
     IWidgetAlert,
     IWidgetAlertDefinition,
@@ -32,6 +27,7 @@ import {
     SupportedWidgetReferenceTypes,
     IWidgetReferences,
     widgetType,
+    IDashboardLayout,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter } from "@gooddata/sdk-model";
 import {
@@ -385,9 +381,9 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Layout
 
     private updateLayoutAndWidgets = async (
-        originalLayout: Layout | undefined,
-        updatedLayout: Layout | LayoutDefinition | undefined,
-    ): Promise<Layout | undefined> => {
+        originalLayout: IDashboardLayout | undefined,
+        updatedLayout: IDashboardLayout | undefined,
+    ): Promise<IDashboardLayout | undefined> => {
         if (!updatedLayout) {
             return;
         }
@@ -410,7 +406,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 })),
             ),
             ...updatedWidgetsWithLayoutPaths.map((widgetWithpath) =>
-                this.updateBearWidget(widgetWithpath.widget).then((widget) => ({
+                this.updateBearWidget(widgetWithpath.widget as IWidget).then((widget) => ({
                     ...widgetWithpath,
                     widget,
                 })),
@@ -421,7 +417,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
         const layout = createdAndUpdatedWidgetsWithLayoutPaths.reduce((acc, widgetWithPath) => {
             const updated = set(acc, widgetWithPath.path, widgetWithPath.widget);
             return updated;
-        }, clone(updatedLayout) as IFluidLayout);
+        }, clone(updatedLayout));
 
         return layout;
     };
@@ -527,11 +523,11 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private collectCreatedWidgetsWithLayoutPaths = (
-        updatedLayout: Layout | LayoutDefinition | undefined,
-    ): IWidgetOrDefinitionWithLayoutPath[] => {
+        updatedLayout: IDashboardLayout | undefined,
+    ): IWidgetWithLayoutPath[] => {
         const widgetsWithPath = updatedLayout ? layoutWidgetsWithPaths(updatedLayout) : [];
 
-        const createdWidgets: IWidgetDefinitionWithLayoutPath[] = widgetsWithPath.filter(({ widget }) =>
+        const createdWidgets: IWidgetWithLayoutPath[] = widgetsWithPath.filter(({ widget }) =>
             isWidgetDefinition(widget),
         );
 
@@ -539,8 +535,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private collectUpdatedWidgetsWithLayoutPaths = (
-        originalLayout: Layout | undefined,
-        updatedLayout: Layout | LayoutDefinition | undefined,
+        originalLayout: IDashboardLayout | undefined,
+        updatedLayout: IDashboardLayout | undefined,
     ) => {
         const originalLayoutWidgetsWithPath = originalLayout ? layoutWidgetsWithPaths(originalLayout) : [];
 
@@ -562,8 +558,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private collectDeletedWidgets = (
-        originalLayout: Layout | undefined,
-        updatedLayout: Layout | LayoutDefinition | undefined,
+        originalLayout: IDashboardLayout | undefined,
+        updatedLayout: IDashboardLayout | undefined,
     ): IWidget[] => {
         const originalLayoutWidgets = originalLayout ? layoutWidgets(originalLayout) : [];
         const updatedLayoutWidgets = updatedLayout ? layoutWidgets(updatedLayout) : [];
@@ -574,7 +570,7 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return deletedWidgets;
+        return deletedWidgets as IWidget[];
     };
 
     // Alerts

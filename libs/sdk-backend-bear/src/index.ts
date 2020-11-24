@@ -31,7 +31,12 @@ export default bearFactory;
 // Exports to support legacy state in AD / KD
 //
 
-import { convertScheduledMail, convertWidget } from "./convertors/toBackend/DashboardConverter";
+import {
+    convertScheduledMail,
+    convertWidget,
+    convertResponsiveSize,
+    convertLayoutColumnSize,
+} from "./convertors/toBackend/DashboardConverter";
 import { convertInsight, convertInsightDefinition } from "./convertors/toBackend/InsightConverter";
 import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter";
 
@@ -49,6 +54,8 @@ export const BearToBackendConvertors = {
     toAfmExecution,
     convertScheduledMail,
     convertWidget,
+    convertResponsiveSize,
+    convertLayoutColumnSize,
 };
 
 import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
@@ -66,6 +73,8 @@ import {
     convertVisualizationWidgetDrill,
     convertScheduledMail as convertScheduledMailFromBackend,
     convertDashboardDateFilterConfig,
+    convertResponsiveSize as convertResponsiveSizeFromBackend,
+    convertLayoutColumnSize as convertLayoutColumnSizeFromBackend,
 } from "./convertors/fromBackend/DashboardConverter";
 
 /**
@@ -89,4 +98,6 @@ export const BackendToBearConvertors = {
     convertUrisToReferences,
     serializeProperties,
     deserializeProperties,
+    convertResponsiveSize: convertResponsiveSizeFromBackend,
+    convertLayoutColumnSize: convertLayoutColumnSizeFromBackend,
 };

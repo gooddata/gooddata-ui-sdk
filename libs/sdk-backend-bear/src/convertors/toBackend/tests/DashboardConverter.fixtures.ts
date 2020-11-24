@@ -126,44 +126,37 @@ export const widgetKpi: IWidget = {
 export const dashboardWithLayout: IDashboard = {
     ...emptyDashboard,
     layout: {
-        fluidLayout: {
-            rows: [
-                {
-                    columns: [
-                        {
-                            size: {
-                                xl: {
-                                    width: 12,
-                                },
-                            },
-                            content: {
-                                widget: widgetHeadline,
+        type: "fluidLayout",
+        rows: [
+            {
+                columns: [
+                    {
+                        size: {
+                            xl: {
+                                widthAsGridColumnsCount: 12,
                             },
                         },
-                        {
-                            size: {
-                                xl: {
-                                    width: 6,
-                                },
-                            },
-                            content: {
-                                widget: widgetKpi,
+                        content: widgetHeadline,
+                    },
+                    {
+                        size: {
+                            xl: {
+                                widthAsGridColumnsCount: 6,
                             },
                         },
-                        {
-                            size: {
-                                xl: {
-                                    width: 2,
-                                },
-                            },
-                            content: {
-                                widget: widgetBarChart,
+                        content: widgetKpi,
+                    },
+                    {
+                        size: {
+                            xl: {
+                                widthAsGridColumnsCount: 2,
                             },
                         },
-                    ],
-                },
-            ],
-        },
+                        content: widgetBarChart,
+                    },
+                ],
+            },
+        ],
     },
 };
 
