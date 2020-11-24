@@ -9,7 +9,7 @@ export const FluidLayoutRowRenderer: IFluidLayoutRowRenderer<
     IFluidLayoutColumn<any>,
     IFluidLayoutRow<any, IFluidLayoutColumn<any>>
 > = (props) => {
-    const { children, row: _row, rowIndex: _rowIndex, screen: _screen, ...htmlProps } = props;
+    const { row: _row, rowIndex: _rowIndex, screen: _screen, ...otherProps } = props;
 
-    return <Row {...htmlProps}>{children}</Row>;
+    return <Row {...otherProps} />;
 };

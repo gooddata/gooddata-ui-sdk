@@ -22,8 +22,8 @@ export const DashboardLayoutRowRenderer: IDashboardViewLayoutRowRenderer = (prop
 
     return (
         <FluidLayoutRowRenderer
-            className={cx(["gd-fluidlayout-row", "s-fluid-layout-row", className])}
             {...props}
+            className={cx(["gd-fluidlayout-row", "s-fluid-layout-row", className])}
             style={updatedStyle}
         >
             {children}
