@@ -574,7 +574,9 @@ export const convertScheduledMail = (
                 subject,
                 to,
                 when: {
-                    ...when,
+                    startDate: when.startDate,
+                    endDate: when.endDate,
+                    timeZone: when.timeZone,
                     recurrency: when.recurrence,
                 },
                 bcc,
