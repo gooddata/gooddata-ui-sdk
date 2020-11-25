@@ -100,5 +100,9 @@ export const regularUser = Role(`${config.url}`, async (tc = testController) => 
 });
 
 export const loginUserAndNavigate = (redirectUri = "/") => async (tc = testController) => {
-    await tc.useRole(regularUser).navigateTo(redirectUri);
+    if (config.username === undefined) {
+        await tc.navigateTo(redirectUri);
+    } else {
+        await tc.useRole(regularUser).navigateTo(redirectUri);
+    }
 };
