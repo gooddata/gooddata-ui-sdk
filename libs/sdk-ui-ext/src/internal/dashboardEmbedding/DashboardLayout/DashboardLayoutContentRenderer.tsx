@@ -8,8 +8,19 @@ import {
 } from "./utils/sizing";
 
 export const DashboardLayoutContentRenderer: IDashboardViewLayoutContentRenderer = (props) => {
-    const { style, debug, className, ...otherProps } = props;
-    const { screen, layoutContentRef, column } = otherProps;
+    const {
+        style,
+        debug,
+        className,
+        column,
+        screen,
+        layoutContentRef,
+        // Keep only html props
+        row: _row,
+        columnIndex: _columnIndex,
+        rowIndex: _rowIndex,
+        ...otherProps
+    } = props;
     const { content } = column;
 
     const { heightAsRatio, widthAsGridColumnsCount } = column.size[screen];
