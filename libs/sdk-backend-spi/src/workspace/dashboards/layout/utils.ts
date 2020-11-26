@@ -140,7 +140,7 @@ export function walkLayout(
         columnCallback?: (column: IDashboardLayoutColumn, columnPath: LayoutPath) => void;
         widgetCallback?: (widget: IWidget | IWidgetDefinition, widgetPath: LayoutPath) => void;
     },
-    path: LayoutPath = ["fluidLayout", "rows"],
+    path: LayoutPath = ["rows"],
 ): void {
     layout.rows.forEach((row, rowIndex) => {
         const rowPath = [...path, rowIndex];
