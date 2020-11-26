@@ -6,6 +6,7 @@ import { useDashboard } from "../useDashboard";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { useDashboardAlerts } from "../useDashboardAlerts";
 import { IDashboardViewProps } from "./types";
+import { useDashboardViewLayout } from "../useDashboardViewLayout";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -35,11 +36,22 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
+    const {
+        error: dashboardViewLayoutError,
+        result: dashboardViewLayout,
+        status: dashboardViewLayoutStatus,
+    } = useDashboardViewLayout({
+        dashboardLayout: dashboardData?.layout,
+        onError,
+        backend,
+        workspace,
+    });
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
     useEffect(() => {
-        if (alertsData && dashboardData) {
+        if (alertsData && dashboardData && dashboardViewLayout) {
             onDashboardLoaded?.({
                 alerts: alertsData,
                 dashboard: dashboardData,
@@ -47,7 +59,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onDashboardLoaded, alertsData, dashboardData]);
 
-    const statuses = [dashboardStatus, alertsStatus];
+    const statuses = [dashboardStatus, alertsStatus, dashboardViewLayoutStatus];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
@@ -61,11 +73,15 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         return <ErrorComponent message={alertsError.message} />;
     }
 
+    if (dashboardViewLayoutError === "error") {
+        return <ErrorComponent message={dashboardViewLayoutError.message} />;
+    }
+
     const dashboardRender = (
         <DashboardRenderer
             backend={backend}
             workspace={workspace}
-            dashboard={dashboardData}
+            dashboardViewLayout={dashboardViewLayout}
             alerts={alertsData}
             filters={filters}
             onDrill={onDrill}

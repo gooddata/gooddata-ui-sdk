@@ -116,16 +116,6 @@ export function useCancelablePromise<TResult, TError = any>(
     });
     const [state, setState] = useState(getInitialState());
 
-    // We want to avoid the return of the old state when some dependency has changed,
-    // before another useEffect hook round starts.
-    const [prevDeps, setDeps] = useState<DependencyList>(deps);
-    if (deps.some((dep, i) => dep !== prevDeps[i])) {
-        setDeps(deps);
-        const currentState = getInitialState();
-        setState(currentState);
-        return currentState;
-    }
-
     useEffect(() => {
         if (!promise) {
             setState({
@@ -183,6 +173,16 @@ export function useCancelablePromise<TResult, TError = any>(
             }
         };
     }, deps);
+
+    // We want to avoid the return of the old state when some dependency has changed,
+    // before another useEffect hook round starts.
+    const [prevDeps, setDeps] = useState<DependencyList>(deps);
+    if (deps.some((dep, i) => dep !== prevDeps[i])) {
+        setDeps(deps);
+        const currentState = getInitialState();
+        setState(currentState);
+        return currentState;
+    }
 
     return state;
 }
