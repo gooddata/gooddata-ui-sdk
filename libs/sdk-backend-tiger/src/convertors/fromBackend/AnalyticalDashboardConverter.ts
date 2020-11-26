@@ -2,20 +2,22 @@
 import { IListedDashboard } from "@gooddata/sdk-backend-spi";
 
 import {
-    AnalyticalDashboardResourceSchema,
-    AnalyticalDashboardResourcesResponseSchema,
+    AnalyticalDashboardAttributes,
+    AnalyticalDashboards,
+    AnalyticalDashboardsItem,
 } from "@gooddata/api-client-tiger";
+
 import { idRef } from "@gooddata/sdk-model";
 
 export const convertAnalyticalDashboard = (
-    analyticalDashboard: AnalyticalDashboardResourceSchema,
+    analyticalDashboard: AnalyticalDashboardsItem,
 ): IListedDashboard => {
-    const { id, attributes, links } = analyticalDashboard;
+    const attributes = analyticalDashboard.attributes as AnalyticalDashboardAttributes;
     const { title, description } = attributes;
     return {
-        ref: idRef(id, "analyticalDashboard"),
-        uri: (links as any).self,
-        identifier: id,
+        ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
+        uri: analyticalDashboard.links!.self,
+        identifier: analyticalDashboard.id,
         title: title ?? "",
         description: description ?? "",
         created: "",
@@ -24,7 +26,7 @@ export const convertAnalyticalDashboard = (
 };
 
 export const convertAnalyticalDashboardToListItems = (
-    analyticalDashboards: AnalyticalDashboardResourcesResponseSchema,
+    analyticalDashboards: AnalyticalDashboards,
 ): IListedDashboard[] => {
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };

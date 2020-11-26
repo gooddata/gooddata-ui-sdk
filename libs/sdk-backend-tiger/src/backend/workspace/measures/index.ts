@@ -1,14 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
 import {
-    MetricResourceResponseSchema,
-    MetricResourceSchema,
-    AttributeResourceSchema,
-    FactResourceSchema,
-    LabelResourceSchema,
-    SuccessIncluded,
+    AttributeData,
+    FactData,
+    IncludedResource,
+    LabelData,
+    Metric,
+    MetricData,
 } from "@gooddata/api-client-tiger";
-import { AxiosResponse } from "axios";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
@@ -22,33 +21,32 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }
 
         const metricMetadata = await this.authCall((sdk) =>
-            sdk.metadata.metricsIdGet({
-                contentType: "application/json",
-                id: ref.identifier,
-                include: "facts,metrics,attributes,labels",
-            }),
+            sdk.workspaceModel.getEntity(
+                {
+                    entity: "metrics",
+                    id: ref.identifier,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    query: { include: "facts,metrics,attributes,labels" },
+                },
+            ),
         );
-        const maql = metricMetadata.data.data.attributes.maql || "";
+        const metric = metricMetadata.data as Metric;
+        const maql = metric.data.attributes!.content!.maql || "";
 
         const regexTokens = tokenizeExpression(maql);
-        return regexTokens.map((regexToken) => this.resolveToken(regexToken, metricMetadata));
+        return regexTokens.map((regexToken) => this.resolveToken(regexToken, metric));
     }
 
-    private resolveToken(
-        regexToken: IExpressionToken,
-        metricMetadata: AxiosResponse<MetricResourceResponseSchema>,
-    ): IMeasureExpressionToken {
+    private resolveToken(regexToken: IExpressionToken, metric: Metric): IMeasureExpressionToken {
         if (regexToken.type === "text" || regexToken.type === "quoted_text") {
             return { type: "text", value: regexToken.value };
         }
         const [type, id] = regexToken.value.split("/");
         if (type === "metric" || type === "fact" || type === "attribute" || type === "label") {
-            return this.resolveObjectToken(
-                id,
-                type,
-                metricMetadata.data.included || [],
-                metricMetadata.data.data.id,
-            );
+            return this.resolveObjectToken(id, type, metric.included || [], metric.data.id);
         }
         throw new Error(`Cannot resolve title of object type ${type}`);
     }
@@ -56,12 +54,12 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     private resolveObjectToken(
         objectId: string,
         objectType: "metric" | "fact" | "attribute" | "label",
-        includedObjects: ReadonlyArray<SuccessIncluded>,
+        includedObjects: ReadonlyArray<IncludedResource>,
         identifier: string,
     ): IMeasureExpressionToken {
         const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
-        }) as MetricResourceSchema | LabelResourceSchema | AttributeResourceSchema | FactResourceSchema;
+        }) as MetricData | LabelData | AttributeData | FactData;
 
         interface ITypeMapping {
             [tokenObjectType: string]: IMeasureExpressionToken["type"];
@@ -73,7 +71,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             label: "attribute",
         };
 
-        const value = includedObject?.attributes.title || `${objectType}/${objectId}`;
+        const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;
         return {
             type: typeMapping[objectType],
             value,
