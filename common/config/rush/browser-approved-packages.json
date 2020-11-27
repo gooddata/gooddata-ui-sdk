@@ -347,6 +347,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/react-truncate",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-window",
       "allowedCategories": [ "production" ]
     },
@@ -784,6 +788,10 @@
     },
     {
       "name": "react-transition-group",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-truncate",
       "allowedCategories": [ "production" ]
     },
     {
