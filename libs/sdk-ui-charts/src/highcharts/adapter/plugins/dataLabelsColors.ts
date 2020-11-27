@@ -16,15 +16,23 @@ import { isOneOfTypes } from "../../chartTypes/_util/common";
 const setWhiteColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = "#fff";
     point.dataLabel.element.childNodes[0].style["text-shadow"] = "rgb(0, 0, 0) 0px 0px 1px";
+    point.dataLabel.element.classList.remove("gd-contrast-label");
 };
 
 const setBlackColor = (point: any) => {
     point.dataLabel.element.childNodes[0].style.fill = "#000";
     point.dataLabel.element.childNodes[0].style["text-shadow"] = "none";
+    point.dataLabel.element.classList.remove("gd-contrast-label");
+};
+
+const setContrastColor = (point: any) => {
+    point.dataLabel.element.childNodes[0].style.fill = "";
+    point.dataLabel.element.childNodes[0].style["text-shadow"] = "none";
+    point.dataLabel.element.classList.add("gd-contrast-label");
 };
 
 const changeDataLabelsColor = (condition: boolean, point: any) =>
-    condition ? setWhiteColor(point) : setBlackColor(point);
+    condition ? setWhiteColor(point) : setContrastColor(point);
 
 function getVisiblePointsWithLabel(chart: any) {
     return flatMap(getVisibleSeries(chart), (series: any) => series.points).filter(
@@ -47,13 +55,13 @@ function setBarDataLabelsColor(chart: any) {
                 // labelRight is overlapping bar even it is outside of it
                 setWhiteColor(point);
             } else {
-                setBlackColor(point);
+                setContrastColor(point);
             }
         } else {
             if (labelLeft < barRight) {
                 setWhiteColor(point);
             } else {
-                setBlackColor(point);
+                setContrastColor(point);
             }
         }
     });

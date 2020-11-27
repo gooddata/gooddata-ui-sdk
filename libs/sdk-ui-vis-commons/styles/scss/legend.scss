@@ -39,6 +39,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
 .viz-legend {
     display: flex;
+    background-color: var(--gd-chart-backgroundColor-base, $gd-color-white);
 
     .series {
         display: flex;
@@ -65,7 +66,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
             flex: 1 1 auto;
             font-size: 12px;
             line-height: 20px;
-            color: $gd-color-link;
+            color: var(--gd-chart-textColor-dark, $gd-color-link);
 
             @include text-overflow();
         }
@@ -75,7 +76,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
         cursor: default;
         margin-right: -10px;
         .series-text {
-            color: $gd-color-text-dimmed;
+            color: var(--gd-chart-textColor-light, $gd-color-text-dimmed);
         }
     }
 

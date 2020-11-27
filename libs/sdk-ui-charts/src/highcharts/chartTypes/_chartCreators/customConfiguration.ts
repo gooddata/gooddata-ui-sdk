@@ -14,6 +14,7 @@ import isNil from "lodash/isNil";
 import pickBy from "lodash/pickBy";
 import numberJS from "@gooddata/numberjs";
 import cx from "classnames";
+import { transparentize } from "polished";
 
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -56,6 +57,7 @@ import {
 import { IAxis, IChartOptions, IPointData, ISeriesItem } from "../../typings/unsafe";
 import { AXIS_LINE_COLOR } from "../_util/color";
 import { IntlShape } from "react-intl";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const { stripColors, numberFormat }: any = numberJS;
 
@@ -913,11 +915,21 @@ function getHoverStyles({ type }: any, config: any) {
     };
 }
 
-function getGridConfiguration(chartOptions: IChartOptions) {
+function getGridConfiguration(
+    chartOptions: IChartOptions,
+    _config: any,
+    _chartConfig: IChartConfig,
+    _drillConfig: any,
+    _intl: any,
+    theme: ITheme,
+) {
     const gridEnabled = get(chartOptions, "grid.enabled", true);
     const { yAxes = [], xAxes = [] } = chartOptions;
+    const gridColor = theme?.chart?.textColor?.base
+        ? transparentize(0.9, theme?.chart?.textColor.base)
+        : styleVariables.gdColorGrid;
 
-    const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: "#ebebeb" } : { gridLineWidth: 0 };
+    const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: gridColor } : { gridLineWidth: 0 };
 
     const yAxis = yAxes.map(() => config);
 
@@ -1003,7 +1015,14 @@ function getYAxisTickConfiguration(chartOptions: IChartOptions, axisPropsKey: st
     };
 }
 
-function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartConfig: IChartConfig) {
+function getAxesConfiguration(
+    chartOptions: IChartOptions,
+    _config: any,
+    chartConfig: IChartConfig,
+    _drillConfig: any,
+    _intl: any,
+    theme: ITheme,
+) {
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
 
@@ -1052,7 +1071,7 @@ function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartCo
                 labels: {
                     ...labelsEnabled,
                     style: {
-                        color: styleVariables.gdColorStateBlank,
+                        color: theme?.chart?.textColor?.base || styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                     ...rotationProp,
@@ -1061,7 +1080,7 @@ function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartCo
                     enabled: visible,
                     margin: 15,
                     style: {
-                        color: styleVariables.gdColorLink,
+                        color: theme?.chart?.textColor?.dark || styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                 },
@@ -1126,7 +1145,7 @@ function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartCo
                 labels: {
                     ...labelsEnabled,
                     style: {
-                        color: styleVariables.gdColorStateBlank,
+                        color: theme?.chart?.textColor?.base || styleVariables.gdColorStateBlank,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                     autoRotation: [-90],
@@ -1138,7 +1157,7 @@ function getAxesConfiguration(chartOptions: IChartOptions, _config: any, chartCo
                     margin: 10,
                     style: {
                         textOverflow: "ellipsis",
-                        color: styleVariables.gdColorLink,
+                        color: theme?.chart?.textColor?.dark || styleVariables.gdColorLink,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                 },
@@ -1195,6 +1214,7 @@ export function getCustomizedConfiguration(
     chartConfig?: IChartConfig,
     drillConfig?: IDrillConfig,
     intl?: IntlShape,
+    theme?: ITheme,
 ): any {
     const configurators = [
         getAxesConfiguration,
@@ -1218,9 +1238,8 @@ export function getCustomizedConfiguration(
         getTargetCursorConfigurationForBulletChart,
         getZoomingAndPanningConfiguration,
     ];
-
     const commonData = configurators.reduce((config: any, configurator: any) => {
-        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl));
+        return merge(config, configurator(chartOptions, config, chartConfig, drillConfig, intl, theme));
     }, {});
 
     return merge({}, commonData);

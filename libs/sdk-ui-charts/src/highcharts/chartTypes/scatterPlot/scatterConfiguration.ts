@@ -1,5 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IChartOptions } from "../../typings/unsafe";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { styleVariables } from "../_chartCreators/styles/variables";
 
 export const LINE_WIDTH = 3;
 
@@ -15,7 +19,7 @@ const SCATTER_TEMPLATE = {
                 states: {
                     hover: {
                         enabled: true,
-                        lineColor: "white",
+                        lineColor: styleVariables.gdColorBackground,
                     },
                 },
             },
@@ -47,6 +51,13 @@ const SCATTER_TEMPLATE = {
     },
 };
 
-export function getScatterConfiguration(): typeof SCATTER_TEMPLATE {
-    return cloneDeep(SCATTER_TEMPLATE);
+export function getScatterConfiguration(
+    _config: IChartOptions,
+    _definition: IExecutionDefinition,
+    theme: ITheme,
+): typeof SCATTER_TEMPLATE {
+    const config = cloneDeep(SCATTER_TEMPLATE);
+    config.plotOptions.scatter.marker.states.hover.lineColor =
+        theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground;
+    return config;
 }

@@ -4,8 +4,8 @@
     position: relative;
     border-radius: 3px;
     font-family: $font-stack-roman;
-    color: $gd-color-dark;
-    background-color: transparentize($gd-color-white, 0.05);
+    color: var(--gd-chart-backgroundColor-contrast, $gd-color-dark);
+    background-color: var(--gd-chart-backgroundColor-base-t05, transparentize($gd-color-white, 0.05));
 
     .tt-name {
         font-family: $font-stack-roman;
@@ -37,7 +37,8 @@
     display: block;
     padding: 10px 9px 9px;
     border-radius: 3px;
-    border: 1px solid transparentize($bubble-light-border-base, 0.3);
+    border: 1px solid;
+    border-color: var(--gd-chart-textColor-light, transparentize($bubble-light-border-base, 0.3));
     box-shadow: 0 1px 3px 0 rgba(20, 56, 93, 0.1), 0 2px 9px 0 rgba(20, 56, 93, 0.15);
     line-height: 1.3;
     white-space: normal;
@@ -64,7 +65,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: left;
-    color: $gd-color-label;
+    color: var(--gd-chart-textColor-dark, $gd-color-label);
 }
 
 .gd-viz-tooltip-value-wraper {
@@ -151,9 +152,9 @@
 
 .gd-viz-tooltip-interaction {
     white-space: nowrap;
-    color: #94a1ad;
+    color: $gd-color-state-blank;
     font-size: 12px;
     text-align: left;
-    border-top: 1px solid #dde4eb;
+    border-top: 1px solid $gd-border-color;
     padding-top: 9px;
 }

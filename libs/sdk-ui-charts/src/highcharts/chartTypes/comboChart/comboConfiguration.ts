@@ -6,6 +6,8 @@ import { isLineChart } from "../_util/common";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";
 import get from "lodash/get";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { styleVariables } from "../_chartCreators/styles/variables";
 
 const { COLUMN, LINE } = VisualizationTypes;
 
@@ -45,7 +47,11 @@ function isOnlyLineSeries(config: IChartConfig, definition?: IExecutionDefinitio
     );
 }
 
-export function getComboConfiguration(config?: IChartConfig, definition?: IExecutionDefinition): any {
+export function getComboConfiguration(
+    config?: IChartConfig,
+    definition?: IExecutionDefinition,
+    theme?: ITheme,
+): any {
     const series = isOnlyLineSeries(config, definition)
         ? {
               series: {
@@ -54,9 +60,14 @@ export function getComboConfiguration(config?: IChartConfig, definition?: IExecu
                           opacity: 1,
                       },
                   },
+                  borderColor: "#00000000",
               },
           }
-        : {};
+        : {
+              series: {
+                  borderColor: "#00000000",
+              },
+          };
     const COMBO_TEMPLATE = {
         chart: {
             type: getDefaultChartType(config),
@@ -77,6 +88,7 @@ export function getComboConfiguration(config?: IChartConfig, definition?: IExecu
                 marker: {
                     symbol: "circle",
                     radius: 4.5,
+                    lineColor: theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.3,
@@ -96,6 +108,7 @@ export function getComboConfiguration(config?: IChartConfig, definition?: IExecu
                 marker: {
                     symbol: "circle",
                     radius: 4.5,
+                    lineColor: theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.6,

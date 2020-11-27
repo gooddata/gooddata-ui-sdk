@@ -2,7 +2,6 @@
 import React from "react";
 import unescape from "lodash/unescape";
 
-const VISIBLE_COLOR = "#6D7680";
 const DISABLED_COLOR = "#CCCCCC";
 
 interface ILegendItemProps {
@@ -20,9 +19,12 @@ export class LegendItem extends React.Component<ILegendItemProps> {
             backgroundColor: item.isVisible ? item.color : DISABLED_COLOR,
         };
 
-        const nameStyle = {
-            color: item.isVisible ? VISIBLE_COLOR : DISABLED_COLOR,
-        };
+        // normal state styled by css
+        const nameStyle = item.isVisible
+            ? {}
+            : {
+                  color: DISABLED_COLOR,
+              };
 
         const style = width ? { width: `${width}px` } : {};
 

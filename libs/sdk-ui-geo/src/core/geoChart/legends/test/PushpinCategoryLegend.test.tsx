@@ -40,7 +40,7 @@ describe("PushpinCategoryLegend", () => {
     it("should render StaticLegend component", () => {
         const wrapper = createComponent();
         const staticLegend = wrapper.find(StaticLegend);
-        expect(staticLegend.find(".series .series-name").first().prop("style")).toEqual({ color: "#6D7680" });
+        expect(staticLegend.find(".series .series-name").first().prop("style")).toEqual({});
         expect(staticLegend.find(".series .series-name").last().prop("style")).toEqual({ color: "#CCCCCC" });
     });
 
@@ -50,7 +50,7 @@ describe("PushpinCategoryLegend", () => {
             showFluidLegend: true,
         });
         const fluidLegend = wrapper.find(FluidLegend);
-        expect(fluidLegend.find(".series .series-name").first().prop("style")).toEqual({ color: "#6D7680" });
+        expect(fluidLegend.find(".series .series-name").first().prop("style")).toEqual({});
         expect(fluidLegend.find(".series .series-name").last().prop("style")).toEqual({ color: "#CCCCCC" });
     });
 });

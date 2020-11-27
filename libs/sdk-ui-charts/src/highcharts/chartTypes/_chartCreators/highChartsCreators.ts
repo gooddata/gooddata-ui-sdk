@@ -26,6 +26,7 @@ import { getBubbleConfiguration } from "../bubbleChart/bubbleConfiguration";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
@@ -50,6 +51,7 @@ export function getHighchartsOptions(
     config?: IChartConfig,
     definition?: IExecutionDefinition,
     intl?: IntlShape,
+    theme?: ITheme,
 ): any {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
@@ -58,9 +60,9 @@ export function getHighchartsOptions(
     );
     return merge(
         {},
-        getCommonConfiguration(chartOptions, drillConfig),
-        getConfigurationByType.call(null, config, definition),
-        getCustomizedConfiguration(chartOptions, config, drillConfig, intl),
+        getCommonConfiguration(chartOptions, drillConfig, theme),
+        getConfigurationByType.call(null, config, definition, theme),
+        getCustomizedConfiguration(chartOptions, config, drillConfig, intl, theme),
     );
 }
 

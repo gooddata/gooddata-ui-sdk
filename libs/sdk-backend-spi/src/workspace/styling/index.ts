@@ -11,6 +11,7 @@ export {
     IThemeTypography,
     IThemePalette,
     IThemeKpi,
+    IThemeChart,
     ITheme,
 } from "./theme";
 
