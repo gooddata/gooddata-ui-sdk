@@ -3,7 +3,7 @@
 import * as path from "path";
 import * as fs from "fs";
 import { readJsonSync } from "../base/utils";
-import { SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
+import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
 
 /**
  * Given app's root directory, this function finds all source packages on which the app depends. This is done
@@ -20,11 +20,12 @@ export function getTargetDescriptor(target: string, sourceDescriptor: SourceDesc
         const directory = path.join(root, "node_modules", ...pkg.installDir);
 
         if (fs.existsSync(directory) && fs.statSync(directory).isDirectory()) {
-            const packageJson = readJsonSync(path.join(directory, "package.json"));
+            const installedPackageJson = readJsonSync(path.join(directory, "package.json")) as PackageJson;
 
             dependencies.push({
                 directory,
-                version: packageJson.version,
+                packageJson: installedPackageJson,
+                version: installedPackageJson.version,
                 pkg,
             });
         }

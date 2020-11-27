@@ -2,7 +2,7 @@
 import blessed from "blessed";
 import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
-import { getTerminalSize } from "./utils";
+import { appLogWarn, getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
 import {
     autobuildToggled,
@@ -14,6 +14,9 @@ import {
     packagesChanged,
 } from "../events";
 import { BuildOutput } from "./buildOutput";
+import { PackageJson, TargetDependency } from "../../base/types";
+import difference from "lodash/difference";
+import isEmpty from "lodash/isEmpty";
 
 export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;
@@ -52,11 +55,47 @@ export class TerminalUi implements IEventListener {
                 break;
             }
             case "targetSelected": {
-                this.allPackages = event.body.targetDescriptor.dependencies.map((dep) => dep.pkg.packageName);
+                const { targetDescriptor } = event.body;
+                this.allPackages = targetDescriptor.dependencies.map((dep) => dep.pkg.packageName);
+
+                const different3rdParty = findMissing3rdPartyDependencies(targetDescriptor.dependencies);
+
+                if (!isEmpty(different3rdParty)) {
+                    this.onDifferent3rdParty(different3rdParty);
+                }
 
                 break;
             }
         }
+    };
+
+    private onDifferent3rdParty = (diff: Record<string, string[]>): void => {
+        const problems = Object.entries(diff).map(([packageName, missing]) => {
+            return (
+                `Version of ${packageName} that is installed in the target has different dependencies compared to current version of ${packageName} which you are trying to sync. ` +
+                `The following packages are missing in the target: ${missing.join(", ")}.`
+            );
+        });
+
+        const message = blessed.message({
+            border: "line",
+            scrollable: true,
+            height: 2 + problems.length * 3,
+        });
+
+        this.screen.append(message);
+        this.screen.render();
+
+        const content = problems.join("\n");
+
+        message.log(content, () => {
+            appLogWarn(content);
+            appLogWarn(
+                "Applink does not do anything with the 3rd party dependencies. It will continue to sync the code but you will likely run into errors in the app.",
+            );
+
+            this.screen.remove(message);
+        });
     };
 
     private createScreen(): blessed.Widgets.Screen {
@@ -199,4 +238,25 @@ export class TerminalUi implements IEventListener {
 
         return new AppMenu(this.screen, items);
     }
+}
+
+function findMissing3rdPartyDependencies(targets: TargetDependency[]): Record<string, string[]> {
+    const result: Record<string, string[]> = {};
+
+    targets.forEach((target) => {
+        const missing = identifyMissingDependencies(target.pkg.packageJson, target.packageJson);
+
+        if (!isEmpty(missing)) {
+            result[target.pkg.packageName] = missing;
+        }
+    });
+
+    return result;
+}
+
+function identifyMissingDependencies(src: PackageJson, target: PackageJson): string[] {
+    const sourceDependencies = Object.keys(src.dependencies || {});
+    const targetDependencies = Object.keys(target.dependencies || {});
+
+    return difference(sourceDependencies, targetDependencies);
 }
