@@ -1,14 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React, { useMemo, useCallback } from "react";
-import {
-    IAnalyticalBackend,
-    IDashboard,
-    IWidgetAlert,
-    FluidLayoutTransforms,
-    isWidget,
-    isWidgetDefinition,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
+import React, { useCallback } from "react";
+import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -25,7 +17,7 @@ import { DashboardContentRenderer } from "./DashboardContentRenderer";
 import { IDashboardViewLayoutColumnRenderProps } from "../DashboardLayout/interfaces/dashboardLayoutComponents";
 
 interface IDashboardRendererProps {
-    dashboard: IDashboard;
+    dashboardViewLayout: IDashboardViewLayout;
     alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -38,7 +30,7 @@ interface IDashboardRendererProps {
 }
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
-    dashboard,
+    dashboardViewLayout,
     alerts,
     filters,
     backend,
@@ -54,43 +46,6 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
         // do not render the dashboard until you have the theme to avoid flash of un-styled content
         return <LoadingComponent />;
     }
-
-    // Convert current layout model to "legacy" layout model,
-    // to keep it backward compatible with KD
-    const emptyLayout: IDashboardViewLayout = {
-        ...dashboard.layout,
-        rows: [],
-    };
-
-    const layout = useMemo(
-        () =>
-            FluidLayoutTransforms.for(dashboard.layout).reduceColumns(
-                (acc: IDashboardViewLayout, { column, columnIndex, row, rowIndex }) => {
-                    if (!acc.rows[rowIndex]) {
-                        acc.rows[rowIndex] = {
-                            ...row,
-                            columns: [],
-                        };
-                    }
-                    const currentContent = column.content;
-                    if (isWidget(currentContent) || isWidgetDefinition(currentContent)) {
-                        acc.rows[rowIndex].columns[columnIndex] = {
-                            ...column,
-                            content: {
-                                type: "widget",
-                                widget: currentContent,
-                            },
-                        };
-                    } else {
-                        throw new UnexpectedError("Unknown widget");
-                    }
-
-                    return acc;
-                },
-                emptyLayout,
-            ),
-        [dashboard.layout],
-    );
 
     const contentWithProps = useCallback(
         (props: IDashboardViewLayoutColumnRenderProps) => {
@@ -126,7 +81,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
 
     return (
         <DashboardLayout
-            layout={layout}
+            layout={dashboardViewLayout}
             contentRenderer={contentWithProps}
             columnRenderer={(props) => {
                 return (
