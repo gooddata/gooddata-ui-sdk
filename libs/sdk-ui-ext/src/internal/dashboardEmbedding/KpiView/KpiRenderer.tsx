@@ -12,7 +12,6 @@ export interface IKpiValueInfo {
 }
 
 interface IKpiRendererProps {
-    title: string;
     primaryValue?: IKpiValueInfo;
     secondaryValue?: IKpiValueInfo;
     alert?: IWidgetAlert;
@@ -24,7 +23,6 @@ interface IKpiRendererProps {
  * @internal
  */
 export const KpiRenderer: React.FC<IKpiRendererProps> = ({
-    title,
     primaryValue,
     secondaryValue,
     alert,
@@ -48,7 +46,6 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
         <div>
             <div onClick={onPrimaryValueClick}>
                 <div>
-                    {title}
                     {!!alert && <span>{alert.isTriggered ? "Triggered alert" : "Not triggered alert"}</span>}
                 </div>
                 <div>{primaryValue?.formattedValue ?? "—"}</div>

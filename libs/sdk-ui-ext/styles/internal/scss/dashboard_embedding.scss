@@ -1,0 +1,159 @@
+// (C) 2007-2020 GoodData Corporation
+@import "./variables";
+
+.dash-item {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    align-items: stretch;
+    min-height: $item-min-height;
+    padding: $item-outer-padding;
+    // Grid definition
+
+    @media #{$small-up} {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    @media #{$medium-up} {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    @media #{$large-up} {
+        flex: 0 0 25%;
+        max-width: 25%;
+    }
+
+    @media #{$xxlarge-up} {
+        flex: 0 0 percentage(1/6);
+        max-width: percentage(1/6);
+    }
+
+    @media #{$xsmall-only}, #{$small-only} {
+        flex-direction: column;
+
+        &::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            bottom: 5px;
+            left: 10px;
+            height: 0;
+            border-bottom: 1px dashed $gd-color-disabled;
+        }
+
+        &:last-child::after {
+            display: none;
+        }
+    }
+
+    &.layout-xl {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    &.type-visualization {
+        .viz-line-family-chart {
+            width: 100%;
+            min-width: 0;
+        }
+    }
+
+    &:hover {
+        a.kpi-link {
+            .kpi-value {
+                color: $gd-kpi-primaryMeasureColor;
+            }
+        }
+    }
+}
+
+.dash-item-content-wrapper,
+.dash-item-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
+}
+
+.dash-item-content {
+    position: relative;
+    padding: $item-inner-padding;
+    border-width: $gd-dashboards-content-widget-borderWidth;
+    border-style: solid;
+    border-color: $gd-dashboards-content-widget-borderColor;
+    border-radius: $gd-dashboards-content-widget-borderRadius;
+    box-shadow: $gd-dashboards-content-widget-dropShadow;
+    line-height: 0;
+    background-color: $gd-color-white;
+    transition: $transition-length;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        padding: 5px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 50%;
+        bottom: 50%;
+        left: 50%;
+        display: block;
+        border-radius: inherit;
+    }
+}
+
+.type-kpi,
+.viz-type-headline {
+    .dash-item-content {
+        border-width: $gd-dashboards-content-kpiWidget-borderWidth;
+        border-style: solid;
+        border-color: $gd-dashboards-content-kpiWidget-borderColor;
+        border-radius: $gd-dashboards-content-kpiWidget-borderRadius;
+        background-color: $gd-dashboards-content-kpiWidget-backgroundColor;
+        box-shadow: $gd-dashboards-content-kpiWidget-dropShadow;
+    }
+
+    .item-headline {
+        text-align: $gd-dashboards-content-kpiWidget-title-textAlign;
+        color: $gd-dashboards-content-kpiWidget-title-color;
+    }
+}
+
+.item-headline-outer {
+    position: relative;
+    z-index: 1;
+    height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
+    margin-top: 10px;
+    line-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .visualization & {
+        margin-bottom: 10px;
+    }
+}
+
+.item-headline {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
+    font-size: 17px;
+    line-height: $item-headline-lineHeight;
+    vertical-align: middle;
+    text-align: $gd-dashboards-content-widget-title-textAlign;
+    color: $gd-dashboards-content-widget-title-color;
+}
+
+.item-headline-inner {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+}
