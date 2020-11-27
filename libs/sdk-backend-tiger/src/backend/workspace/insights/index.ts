@@ -174,28 +174,32 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((sdk) => {
-            return sdk.workspaceModel.createEntity({
-                entity: "visualizationObjects",
-                workspaceId: this.workspace,
-                analyticsObject: {
-                    data: {
-                        id: uuid4(),
-                        type: "visualizationObject",
-                        attributes: {
-                            description: insightTitle(insight),
-                            content: convertInsight(insight),
-                            title: insightTitle(insight),
+            return sdk.workspaceModel.createEntity(
+                {
+                    entity: "visualizationObjects",
+                    workspaceId: this.workspace,
+                    analyticsObject: {
+                        data: {
+                            id: uuid4(),
+                            type: "visualizationObject",
+                            attributes: {
+                                description: insightTitle(insight),
+                                content: convertInsight(insight),
+                                title: insightTitle(insight),
+                            },
                         },
                     },
                 },
-            });
+                {
+                    headers: {
+                        Accept: "application/vnd.gooddata.api+json",
+                        "Content-Type": "application/vnd.gooddata.api+json",
+                    },
+                },
+            );
         });
-
-        return insightFromInsightDefinition(
-            insight,
-            createResponse.data.data.id,
-            createResponse.data.links!.self,
-        );
+        const insightData = createResponse.data as VisualizationObjectSchema;
+        return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
