@@ -18,6 +18,18 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
     };
 
     render(): JSX.Element {
+        const {
+            isPositive,
+            displayCloseButton,
+            headline,
+            warning,
+            children,
+            cancelButtonText,
+            submitButtonText,
+            isSubmitDisabled,
+            onSubmit,
+            onCancel,
+        } = this.props;
         const dialogClasses = cx(
             {
                 "gd-confirm": true,
@@ -27,35 +39,35 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 
         const submitButtonClasses = cx({
             "s-dialog-submit-button": true,
-            "gd-button-action": this.props.isPositive,
-            "gd-button-negative": !this.props.isPositive,
+            "gd-button-action": isPositive,
+            "gd-button-negative": !isPositive,
         });
 
         return (
             <div tabIndex={0} onKeyDown={this.onKeyDown}>
                 <div className={dialogClasses}>
-                    {this.props.displayCloseButton && this.renderCloseButton()}
+                    {displayCloseButton && this.renderCloseButton()}
 
                     <div className="gd-dialog-header">
-                        <h3>{this.props.headline}</h3>
+                        <h3>{headline}</h3>
                     </div>
 
-                    {!!this.props.warning && <div className="gd-dialog-warning">{this.props.warning}</div>}
+                    {!!warning && <div className="gd-dialog-warning">{warning}</div>}
 
-                    <div className="gd-dialog-content">{this.props.children}</div>
+                    <div className="gd-dialog-content">{children}</div>
 
                     <div className="gd-dialog-footer">
                         <Button
-                            onClick={this.props.onCancel}
+                            onClick={onCancel}
                             className="gd-button-secondary s-dialog-cancel-button"
-                            value={this.props.cancelButtonText}
+                            value={cancelButtonText}
                         />
 
                         <Button
-                            onClick={this.props.onSubmit}
+                            onClick={onSubmit}
                             className={submitButtonClasses}
-                            value={this.props.submitButtonText}
-                            disabled={this.props.isSubmitDisabled}
+                            value={submitButtonText}
+                            disabled={isSubmitDisabled}
                         />
                     </div>
                 </div>

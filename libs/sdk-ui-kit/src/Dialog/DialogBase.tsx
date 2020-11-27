@@ -62,7 +62,7 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
                 <Button
                     className="gd-button-link gd-button-icon-only icon-cross s-dialog-close-button"
                     value=""
-                    onClick={this.props.onCancel}
+                    onClick={this.props.onClose || this.props.onCancel}
                 />
             </div>
         );

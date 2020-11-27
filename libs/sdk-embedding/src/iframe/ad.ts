@@ -108,6 +108,11 @@ export namespace EmbeddedAnalyticalDesigner {
          * The command to remove filter item from current filter context
          */
         RemoveFilterContext = "removeFilterContext",
+
+        /**
+         * The command to request cancellation
+         */
+        RequestCancellation = "requestCancellation",
     }
 
     /**
@@ -392,6 +397,43 @@ export namespace EmbeddedAnalyticalDesigner {
      */
     export function isClearCommandData(obj: unknown): obj is ClearCommandData {
         return isObject(obj) && getEventType(obj) === GdcAdCommandType.Clear;
+    }
+
+    //
+    // RequestCancellation command
+    //
+
+    /**
+     * Triggers the action to request cancellation
+     *
+     * @public
+     */
+    export type RequestCancellationCommand = IGdcAdMessageEvent<
+        GdcAdCommandType.RequestCancellation,
+        undefined
+    >;
+
+    /**
+     * Data type of RequestCancellation command
+     *
+     * Note: it has empty content and just wrapped to application and product data structure
+     *
+     * @public
+     */
+    export type RequestCancellationCommandData = IGdcAdMessageEnvelope<
+        GdcAdCommandType.RequestCancellation,
+        undefined
+    >;
+
+    /**
+     * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.RequestCancellationCommandData}
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData {
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.RequestCancellation;
     }
 
     //
