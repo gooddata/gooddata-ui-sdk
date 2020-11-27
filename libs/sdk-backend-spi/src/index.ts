@@ -88,6 +88,7 @@ export {
     IThemeTypography,
     IThemePalette,
     IThemeKpi,
+    IThemeChart,
     ITheme,
 } from "./workspace/styling";
 

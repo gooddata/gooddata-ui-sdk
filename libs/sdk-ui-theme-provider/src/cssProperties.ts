@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import isObject from "lodash/isObject";
 import { transparentize, darken, lighten, mix, setLightness } from "polished";
-import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
+import { IThemePalette, ITheme, IThemeChart } from "@gooddata/sdk-backend-spi";
 
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";
@@ -288,6 +288,13 @@ const getFormDerivedColors = (palette: IThemePalette): CssProperty[] => [
     ),
 ];
 
+const getChartDerivedColors = (chart: IThemeChart): CssProperty[] => [
+    getCssProperty(
+        "chart-backgroundColor-base-t05",
+        chart?.backgroundColor?.base && transparentize(0.05, chart?.backgroundColor?.base),
+    ),
+];
+
 const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
     (palette &&
         [
@@ -302,6 +309,9 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
             ...getFormDerivedColors(palette),
         ].filter((property) => !!property)) ||
     [];
+
+const generateChartDerivedColors = (chart: IThemeChart): CssProperty[] =>
+    (chart && [...getChartDerivedColors(chart)].filter((property) => !!property)) || [];
 
 export const clearCssProperties = (): void => {
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
@@ -330,6 +340,7 @@ export function setCssProperties(theme: ITheme): void {
     const cssProperties = [
         ...parseThemeToCssProperties(theme, customParserFunctions),
         ...generateDerivedColors(theme.palette),
+        ...generateChartDerivedColors(theme.chart),
     ];
 
     const styleTag = document.createElement("style");

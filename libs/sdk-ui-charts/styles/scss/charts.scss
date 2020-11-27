@@ -7,6 +7,7 @@
     align-items: stretch;
     width: 100%;
     height: 100%;
+    background-color: var(--gd-chart-backgroundColor-base);
 
     &.flex-direction-row {
         flex-direction: row;
@@ -84,3 +85,8 @@
 
 @import "~@gooddata/sdk-ui-vis-commons/styles/scss/legend.scss";
 @import "tooltip";
+
+.gd-contrast-label,
+.gd-contrast-label text {
+    fill: var(--gd-chart-backgroundColor-contrast, "#000");
+}

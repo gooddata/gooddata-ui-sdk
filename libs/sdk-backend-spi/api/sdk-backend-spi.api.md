@@ -1225,6 +1225,7 @@ export interface ITheme {
         dropShadow?: boolean;
         textCapitalization?: boolean;
     };
+    chart?: IThemeChart;
     dashboards?: {
         title?: {
             color?: ThemeColor;
@@ -1300,6 +1301,12 @@ export interface ITheme {
         color?: ThemeColor;
     };
     typography?: IThemeTypography;
+}
+
+// @internal
+export interface IThemeChart {
+    backgroundColor?: IThemeColorFamily;
+    textColor?: IThemeColorFamily;
 }
 
 // @beta

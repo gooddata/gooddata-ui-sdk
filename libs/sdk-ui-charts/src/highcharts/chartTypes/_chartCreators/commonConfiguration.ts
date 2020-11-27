@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import invoke from "lodash/invoke";
 import isEmpty from "lodash/isEmpty";
@@ -13,6 +12,7 @@ import { setupDrilldown } from "./setupDrilldownToParentAttribute";
 import Highcharts from "../../lib";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities";
 import { IChartOptions } from "../../typings/unsafe";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
@@ -39,100 +39,112 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 
 let previousChart: any = null;
 
-const BASE_TEMPLATE: any = {
-    credits: {
-        enabled: false,
-    },
-    title: {
-        // setting title to empty string prevents it from being shown
-        text: "",
-    },
-    series: [],
-    legend: {
-        enabled: false,
-    },
-    drilldown: {
-        activeDataLabelStyle: {
-            color: "#000",
-            textDecoration: "none",
-        },
-        activeAxisLabelStyle: {
-            color: styleVariables.gdColorText,
-            textDecoration: "none",
-        },
-        drillUpButton: {
-            theme: {
-                style: {
-                    // https://forum.highcharts.com/highcharts-usage/empty-checkbox-
-                    // after-drilldown-with-x-axis-label-t33414/
-                    display: "none",
-                },
-            },
-        },
-    },
-    plotOptions: {
-        series: {
-            animation: false,
-            enableMouseTracking: true, // !Status.exportMode,
-            turboThreshold: DEFAULT_CATEGORIES_LIMIT,
-            dataLabels: {
-                style: {
-                    textOutline: "none",
-                },
-            },
-            events: {
-                legendItemClick() {
-                    if (this.visible) {
-                        this.points.forEach((point: any) => point.dataLabel && point.dataLabel.hide());
-                    }
-                },
-            },
-            point: {
-                events: {
-                    click() {
-                        if (isTouchDevice) {
-                            // Close opened tooltip on previous clicked chart
-                            // (click between multiple charts on dashboards)
-                            const currentChart = this.series.chart;
-                            const currentId = get(currentChart, "container.id");
-                            const prevId = get(previousChart, "container.id");
-                            const previousChartDisconnected = isEmpty(previousChart);
-                            if (previousChart && !previousChartDisconnected && prevId !== currentId) {
-                                // Remove line chart point bubble
-                                invoke(previousChart, "hoverSeries.onMouseOut");
-                                previousChart.tooltip.hide();
-                            }
+function getThemedConfiguration(theme: ITheme): any {
+    const backgroundColor = theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground;
 
-                            if (!previousChart || prevId !== currentId) {
-                                previousChart = currentChart;
-                            }
-                        }
+    return {
+        credits: {
+            enabled: false,
+        },
+        title: {
+            // setting title to empty string prevents it from being shown
+            text: "",
+        },
+        series: [],
+        legend: {
+            enabled: false,
+        },
+        drilldown: {
+            activeDataLabelStyle: {
+                color: "#000",
+                textDecoration: "none",
+            },
+            activeAxisLabelStyle: {
+                color: styleVariables.gdColorText,
+                textDecoration: "none",
+            },
+            drillUpButton: {
+                theme: {
+                    style: {
+                        // https://forum.highcharts.com/highcharts-usage/empty-checkbox-
+                        // after-drilldown-with-x-axis-label-t33414/
+                        display: "none",
                     },
                 },
             },
         },
-    },
-    chart: {
-        animation: false,
-        style: {
-            fontFamily: 'Avenir, "Helvetica Neue", Arial, sans-serif',
-        },
-        events: {
-            afterGetContainer() {
-                handleTooltipOffScreen(this.renderTo);
-            },
-        },
-    },
-    xAxis: [
-        {
-            events: {
-                afterSetAxisTranslation() {
-                    fixNumericalAxisOutOfMinMaxRange(this);
+        plotOptions: {
+            series: {
+                animation: false,
+                enableMouseTracking: true, // !Status.exportMode,
+                turboThreshold: DEFAULT_CATEGORIES_LIMIT,
+                borderColor: backgroundColor,
+                dataLabels: {
+                    style: {
+                        textOutline: "none",
+                    },
+                },
+                events: {
+                    legendItemClick() {
+                        if (this.visible) {
+                            this.points.forEach((point: any) => point.dataLabel && point.dataLabel.hide());
+                        }
+                    },
+                },
+                point: {
+                    events: {
+                        click() {
+                            if (isTouchDevice) {
+                                // Close opened tooltip on previous clicked chart
+                                // (click between multiple charts on dashboards)
+                                const currentChart = this.series.chart;
+                                const currentId = get(currentChart, "container.id");
+                                const prevId = get(previousChart, "container.id");
+                                const previousChartDisconnected = isEmpty(previousChart);
+                                if (previousChart && !previousChartDisconnected && prevId !== currentId) {
+                                    // Remove line chart point bubble
+                                    invoke(previousChart, "hoverSeries.onMouseOut");
+                                    previousChart.tooltip.hide();
+                                }
+
+                                if (!previousChart || prevId !== currentId) {
+                                    previousChart = currentChart;
+                                }
+                            }
+                        },
+                    },
                 },
             },
         },
-    ],
-};
+        chart: {
+            animation: false,
+            backgroundColor,
+            style: {
+                fontFamily: 'Avenir, "Helvetica Neue", Arial, sans-serif',
+            },
+            events: {
+                afterGetContainer() {
+                    handleTooltipOffScreen(this.renderTo);
+                },
+            },
+        },
+        xAxis: [
+            {
+                lineColor: theme?.chart?.textColor?.base || styleVariables.gdColorAxisLine,
+                events: {
+                    afterSetAxisTranslation() {
+                        fixNumericalAxisOutOfMinMaxRange(this);
+                    },
+                },
+            },
+        ],
+        yAxis: [
+            {
+                lineColor: theme?.chart?.textColor?.base || styleVariables.gdColorAxisLine,
+            },
+        ],
+    };
+}
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
     set(configuration, "chart.events.drilldown", function chartDrilldownHandler(
@@ -157,8 +169,13 @@ function registerRenderHandler(configuration: any, chartOptions: any) {
     return configuration;
 }
 
-export function getCommonConfiguration(chartOptions: IChartOptions, drillConfig: IDrillConfig): any {
-    const commonConfiguration = cloneDeep(BASE_TEMPLATE);
+export function getCommonConfiguration(
+    chartOptions: IChartOptions,
+    drillConfig: IDrillConfig,
+    theme?: ITheme,
+): any {
+    const commonConfiguration = getThemedConfiguration(theme);
+
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 
     return handlers.reduce(

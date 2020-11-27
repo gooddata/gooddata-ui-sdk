@@ -543,20 +543,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const { LoadingComponent } = this.props;
 
         return (
-            <div
-                style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    background: "white",
-                    zIndex: 1, // we need zIndex of at least 1, otherwise some table cells can show through the overlay
-                }}
-                className="s-loading"
-            >
-                {LoadingComponent ? <LoadingComponent /> : null}
-            </div>
+            <div className="s-loading gd-table-loading">{LoadingComponent ? <LoadingComponent /> : null}</div>
         );
     }
 

@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { IDataView } from "@gooddata/sdk-backend-spi";
+import { IDataView, ITheme } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 import React from "react";
 
@@ -24,6 +24,7 @@ import { IChartOptions } from "./typings/unsafe";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import { validateData } from "./chartTypes/_chartOptions/chartLimits";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
@@ -31,6 +32,7 @@ export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
 
 export interface IChartTransformationProps extends WrappedComponentProps {
     config: IChartConfig;
+    theme?: ITheme;
     drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
     width: number;
@@ -89,9 +91,17 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
             locale,
             config,
             intl,
+            theme,
         } = this.props;
         const drillConfig = { dataView, onDrill };
-        const hcOptions = getHighchartsOptions(chartOptions, drillConfig, config, dataView.definition, intl);
+        const hcOptions = getHighchartsOptions(
+            chartOptions,
+            drillConfig,
+            config,
+            dataView.definition,
+            intl,
+            theme,
+        );
 
         return {
             chartOptions,
@@ -152,4 +162,4 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
     }
 }
 
-export const ChartTransformation = injectIntl(ChartTransformationImpl);
+export const ChartTransformation = injectIntl(withTheme(ChartTransformationImpl));

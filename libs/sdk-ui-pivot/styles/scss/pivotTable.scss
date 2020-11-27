@@ -5,20 +5,24 @@
 
 $ag-icons-path: "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/icons/";
 
+$custom-foreground-color: var(--gd-chart-textColor-base, $gd-color-text);
+$custom-secondary-foreground-color: var(--gd-chart-textColor-light, $gd-color-label);
+
 $border-color: transparent;
 $font-size: 12px;
 $font-family: $gd-font-primary-without-custom;
-$foreground-color: $gd-color-text;
+$foreground-color: $custom-foreground-color;
 $default-background: $gd-color-white;
+$custom-background-color: var(--gd-chart-backgroundColor-base, $default-background);
 $header-background-color: $gd-color-white;
 $odd-row-background-color: transparent;
 $primary-color: transparent;
-$secondary-foreground-color: $gd-color-label;
+$secondary-foreground-color: $custom-secondary-foreground-color;
 $secondary-font-weight: normal;
 $hover-color: transparentize($gd-color-label, 0.9);
 $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
-$cell-border-color: transparentize($gd-color-disabled, 0.5);
+$cell-border-color: var(--gd-chart-textColor-base, transparentize($gd-color-disabled, 0.5));
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
     --gd-palette-primary-base-dimmed-darken03,
@@ -30,6 +34,13 @@ $table-menu-hover: var(
     @import "~@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham";
 
     .gd-table {
+        // TODO remove once css variables can modify theme
+        background-color: $custom-background-color;
+        // TODO remove once css variables can modify theme
+        .ag-row-even {
+            background-color: $custom-background-color;
+        }
+
         .ag-root-wrapper {
             text-align: left;
         }
@@ -57,6 +68,7 @@ $table-menu-hover: var(
 
         .ag-header {
             border-bottom: none;
+            background-color: $custom-background-color !important; // TODO remove once css variables can modify theme
         }
 
         .ag-cell {
@@ -212,8 +224,8 @@ $table-menu-hover: var(
                 background-color: transparent;
 
                 .ag-cell {
-                    background-color: #fff;
-                    border-top-color: white;
+                    background-color: $custom-background-color;
+                    border-top-color: $custom-background-color;
 
                     &.gd-hidden-sticky-column {
                         border-top-color: transparent;
@@ -246,13 +258,23 @@ $table-menu-hover: var(
         .gd-cell-hide {
             color: transparent;
             border-top: 1px solid transparent;
-            background-color: white;
+            background-color: $custom-background-color;
         }
 
         .gd-cell-show-hidden {
             color: inherit;
             font-weight: normal;
         }
+    }
+
+    .gd-table-loading {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: $custom-background-color;
+        z-index: 1; // we need zIndex of at least 1, otherwise some table cells can show through the overlay
     }
 }
 

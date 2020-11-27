@@ -1,5 +1,9 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
+import { IExecutionDefinition } from "@gooddata/sdk-model";
+import { IChartOptions } from "../../typings/unsafe";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { styleVariables } from "../_chartCreators/styles/variables";
 
 export const LINE_WIDTH = 3;
 
@@ -12,6 +16,7 @@ const LINE_TEMPLATE = {
             marker: {
                 symbol: "circle",
                 radius: 4.5,
+                lineColor: styleVariables.gdColorBackground,
             },
             lineWidth: LINE_WIDTH,
             fillOpacity: 0.3,
@@ -30,7 +35,7 @@ const LINE_TEMPLATE = {
     },
     xAxis: [
         {
-            categories: [],
+            categories: [] as string[],
         },
     ],
     yAxis: [
@@ -40,8 +45,15 @@ const LINE_TEMPLATE = {
             },
         },
     ],
-} as const;
+};
 
-export function getLineConfiguration(): typeof LINE_TEMPLATE {
-    return cloneDeep(LINE_TEMPLATE);
+export function getLineConfiguration(
+    _config: IChartOptions,
+    _definition: IExecutionDefinition,
+    theme: ITheme,
+): typeof LINE_TEMPLATE {
+    const config = cloneDeep(LINE_TEMPLATE);
+    config.plotOptions.series.marker.lineColor =
+        theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground;
+    return config;
 }

@@ -149,6 +149,24 @@ export interface IThemeKpi {
 }
 
 /**
+ * Charts customization
+ * Experimental support for theming of charts.
+ * Not production ready yet!
+ *
+ * @internal
+ */
+export interface IThemeChart {
+    /**
+     * Background color
+     */
+    backgroundColor?: IThemeColorFamily;
+    /**
+     * Texts color
+     */
+    textColor?: IThemeColorFamily;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * Only the primary color main value is mandatory
@@ -256,6 +274,11 @@ export interface ITheme {
      * Global Kpi/Headline customizable UI properties
      */
     kpi?: IThemeKpi;
+
+    /**
+     * Chart customizable UI properties
+     */
+    chart?: IThemeChart;
 
     /**
      * KPI dashboards specific properties
