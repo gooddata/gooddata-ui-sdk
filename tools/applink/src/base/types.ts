@@ -89,7 +89,9 @@ export type RushPackageDescriptor = {
  * Minimalistic typing for the package json. Contains just the properties that applink needs.
  */
 export type PackageJson = {
+    version: string;
     scripts?: Record<string, string>;
+    dependencies?: Record<string, string>;
     files?: string[];
 };
 
@@ -174,7 +176,12 @@ export type TargetDependency = {
     version: string;
 
     /**
-     * Full information about the SDK package on which the app depends.
+     * Package JSON of the installed package.
+     */
+    packageJson: PackageJson;
+
+    /**
+     * Full information about the source SDK package on which the app depends.
      */
     pkg: PackageDescriptor;
 };
