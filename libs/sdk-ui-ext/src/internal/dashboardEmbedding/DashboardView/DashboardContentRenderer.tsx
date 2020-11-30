@@ -11,7 +11,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { KpiView } from "../KpiView";
 import { InsightRenderer } from "./InsightRenderer";
-import { IWidget, IWidgetAlert, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    IWidget,
+    IWidgetAlert,
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+} from "@gooddata/sdk-backend-spi";
 import {
     DashboardLayoutContentRenderer,
     IDashboardViewLayoutContent,
@@ -38,6 +44,7 @@ export type IDashboardContentRenderer = IFluidLayoutContentRenderer<
         backend?: IAnalyticalBackend;
         workspace?: string;
         filters?: IFilter[];
+        filterContext: IFilterContext | ITempFilterContext;
         drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
         onDrill?: OnFiredDrillEvent;
         ErrorComponent: React.ComponentType<IErrorProps>;
@@ -75,6 +82,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         backend,
         drillableItems,
         filters,
+        filterContext,
         onDrill,
         onError,
         workspace,
@@ -102,6 +110,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                                     backend={backend}
                                     workspace={workspace}
                                     filters={filters}
+                                    filterContext={filterContext}
                                     drillableItems={drillableItems}
                                     onDrill={onDrill}
                                     onError={onError}
@@ -124,6 +133,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                         {() => (
                             <KpiView
                                 kpiWidget={content.widget as IWidget}
+                                filterContext={filterContext}
                                 alert={relevantAlert}
                                 backend={backend}
                                 workspace={workspace}

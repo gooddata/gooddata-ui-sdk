@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -16,12 +16,14 @@ import {
 } from "@gooddata/sdk-ui";
 import { InsightView } from "../../../insightView";
 import { availableDrillTargetsToDrillPredicates, widgetDrillsToDrillPredicates } from "./convertors";
+import { filterContextToFiltersForWidget } from "../converters";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
+    filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
     onError?: OnError;
@@ -32,6 +34,7 @@ interface IInsightRendererProps {
 export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     insightWidget,
     filters,
+    filterContext,
     drillableItems = [],
     onDrill,
     onError,
@@ -43,14 +46,22 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    const { error, result, status } = useCancelablePromise({
-        promise: () =>
-            effectiveBackend
-                .workspace(effectiveWorkspace)
-                .dashboards()
-                .getResolvedFiltersForWidget(insightWidget, filters ?? []),
-        onError,
-    });
+    const inputFilters = useMemo(() => {
+        const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, insightWidget);
+        return [...filtersFromFilterContext, ...(filters ?? [])];
+    }, [filters, filterContext, insightWidget]);
+
+    const { error, result, status } = useCancelablePromise(
+        {
+            promise: () =>
+                effectiveBackend
+                    .workspace(effectiveWorkspace)
+                    .dashboards()
+                    .getResolvedFiltersForWidget(insightWidget, inputFilters),
+            onError,
+        },
+        [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
+    );
 
     const [drillsFromInsight, setDrillsFromInsight] = useState<IHeaderPredicate[]>([]);
 

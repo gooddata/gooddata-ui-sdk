@@ -14,6 +14,16 @@ describe("resolveWidgetFilters", () => {
     const objRefsToUrisMock: Parameters<typeof resolveWidgetFilters>[3] = (refs) =>
         Promise.resolve(refs.map((ref) => (isIdentifierRef(ref) ? `/gdc/md/${ref.identifier}` : ref.uri)));
 
+    it("should return all attribute filters if ignoredFilters are empty", async () => {
+        const filterToKeep = newPositiveAttributeFilter(idRef("to-keep"), ["foo"]);
+
+        const filters = [filterToKeep];
+
+        const actual = await resolveWidgetFilters(filters, [], undefined, objRefsToUrisMock);
+
+        expect(actual).toEqual([filterToKeep]);
+    });
+
     it("should remove ignored attribute filters", async () => {
         const filterToKeep = newPositiveAttributeFilter(idRef("to-keep"), ["foo"]);
 

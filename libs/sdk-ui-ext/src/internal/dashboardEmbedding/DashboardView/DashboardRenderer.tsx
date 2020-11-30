@@ -1,6 +1,11 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+    IWidgetAlert,
+} from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -22,6 +27,7 @@ interface IDashboardRendererProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
+    filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -33,6 +39,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     dashboardViewLayout,
     alerts,
     filters,
+    filterContext,
     backend,
     workspace,
     drillableItems,
@@ -59,6 +66,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
                     alerts={alerts}
                     drillableItems={drillableItems}
                     filters={filters}
+                    filterContext={filterContext}
                     onDrill={onDrill}
                     onError={onError}
                     workspace={workspace}

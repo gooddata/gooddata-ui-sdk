@@ -1,7 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
 import compact from "lodash/compact";
-import { IAnalyticalBackend, IWidget, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+    IWidget,
+    IWidgetAlert,
+} from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IErrorProps,
@@ -33,6 +39,11 @@ export interface IKpiViewProps {
      * Optionally, specify filters to be applied to the KPI.
      */
     filters?: IFilter[];
+
+    /**
+     * The filter context used in the parent dashboard.
+     */
+    filterContext?: IFilterContext | ITempFilterContext;
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
@@ -84,6 +95,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
     alert,
     filters,
+    filterContext,
     drillableItems = [],
     onDrill,
     onError,
@@ -98,6 +110,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         kpiWidget,
         backend,
         filters,
+        filterContext,
         workspace,
         onError,
     });
