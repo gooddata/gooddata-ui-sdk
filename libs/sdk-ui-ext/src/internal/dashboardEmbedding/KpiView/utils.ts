@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, IWidget } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -22,9 +22,11 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
+import { filterContextToFiltersForWidget } from "../converters";
 
 interface IUseKpiDataConfig {
     kpiWidget: IWidget;
+    filterContext?: IFilterContext | ITempFilterContext;
     filters?: IFilter[];
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -40,6 +42,7 @@ interface IUseKpiDataResult {
 export function useKpiData({
     kpiWidget,
     filters,
+    filterContext,
     backend,
     workspace,
 }: IUseKpiDataConfig): UseCancelablePromiseState<IUseKpiDataResult, GoodDataSdkError> {
@@ -49,10 +52,14 @@ export function useKpiData({
     const promise = async () => {
         invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
+        const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, kpiWidget);
+
+        const inputFilters = [...filtersFromFilterContext, ...(filters ?? [])];
+
         const relevantFilters = await effectiveBackend
             .workspace(effectiveWorkspace)
             .dashboards()
-            .getResolvedFiltersForWidget(kpiWidget, filters ?? []);
+            .getResolvedFiltersForWidget(kpiWidget, inputFilters);
 
         const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 
@@ -88,7 +95,13 @@ export function useKpiData({
         invariant(false, `Unknown comparison ${comparison}`);
     };
 
-    return useCancelablePromise({ promise });
+    return useCancelablePromise({ promise }, [
+        effectiveBackend,
+        effectiveWorkspace,
+        filters,
+        filterContext,
+        kpiWidget,
+    ]);
 }
 
 async function getLastYearComparisonMeasure(

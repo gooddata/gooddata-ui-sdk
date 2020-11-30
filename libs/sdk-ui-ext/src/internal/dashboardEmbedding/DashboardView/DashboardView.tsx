@@ -57,7 +57,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                 dashboard: dashboardData,
             });
         }
-    }, [onDashboardLoaded, alertsData, dashboardData]);
+    }, [onDashboardLoaded, alertsData, dashboardData, dashboardViewLayout]);
 
     const statuses = [dashboardStatus, alertsStatus, dashboardViewLayoutStatus];
 
@@ -84,6 +84,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             dashboardViewLayout={dashboardViewLayout}
             alerts={alertsData}
             filters={filters}
+            filterContext={dashboardData.filterContext}
             onDrill={onDrill}
             drillableItems={drillableItems}
             ErrorComponent={ErrorComponent}
