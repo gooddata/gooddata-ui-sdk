@@ -17,9 +17,9 @@ export interface IWorkspaceDatasetsService {
     getDatasets(): Promise<IDataset[]>;
 
     /**
-     * Receive all workspace all datasets
+     * Receive all workspace datasets metadata
      *
-     * @returns promise of workspace datasets
+     * @returns promise of workspace datasets metadata
      */
-    getAllDatasets(): Promise<IMetadataObject[]>;
+    getAllDatasetsMeta(): Promise<IMetadataObject[]>;
 }

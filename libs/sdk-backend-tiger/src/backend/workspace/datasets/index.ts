@@ -9,7 +9,7 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
         return this.authCall(async () => []);
     }
 
-    public async getAllDatasets(): Promise<IMetadataObject[]> {
+    public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
         return this.authCall(async () => []);
     }
 }

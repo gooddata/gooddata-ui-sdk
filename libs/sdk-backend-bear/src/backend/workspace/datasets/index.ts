@@ -13,7 +13,7 @@ export class BearWorkspaceDataSets implements IWorkspaceDatasetsService {
         return result.map(convertDataSet);
     }
 
-    public async getAllDatasets(): Promise<IMetadataObject[]> {
+    public async getAllDatasetsMeta(): Promise<IMetadataObject[]> {
         const datasetsResult: GdcMetadata.IObjectXrefEntry[] = await this.authCall((sdk) =>
             sdk.project.getDatasets(this.workspace),
         );
