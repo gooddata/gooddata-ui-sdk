@@ -13,7 +13,7 @@ $transition-length: 0.2s;
 
 // WIDGETS
 $gd-dashboards-content-widget-title-color: var(--gd-dashboards-content-widget-title-color, $gd-color-text);
-$gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, "center");
+$gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
 $gd-dashboards-content-widget-borderRadius: var(--gd-dashboards-content-widget-borderRadius, 15px);
 $gd-dashboards-content-widget-borderColor: var(--gd-dashboards-content-widget-borderColor, transparent);
 $gd-dashboards-content-widget-borderWidth: var(--gd-dashboards-content-widget-borderWidth, $item-border);
