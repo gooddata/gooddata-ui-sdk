@@ -76,7 +76,7 @@ module.exports = async (env, argv) => {
     const plugins = [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            title: "GoodData React Components",
+            title: "GoodData.UI Examples Gallery",
         }),
         new CircularDependencyPlugin({
             exclude: /node_modules|dist/,
