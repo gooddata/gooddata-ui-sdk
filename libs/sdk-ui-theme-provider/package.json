@@ -48,7 +48,7 @@
         "react-intl": "^3.6.0",
         "tslib": "^2.0.0",
         "polished": "^3.6.7",
-        "ts-invariant": "^0.4.4",
+        "ts-invariant": "^0.5.1",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.11",
         "@gooddata/sdk-ui": "^8.2.0-alpha.11"
     },

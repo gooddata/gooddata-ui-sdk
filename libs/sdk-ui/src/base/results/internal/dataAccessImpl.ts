@@ -401,10 +401,7 @@ export class DataAccessImpl {
     private createDataSeriesDescriptor = (seriesIdx: number): DataSeriesDescriptor => {
         const { series: seriesDigest } = this.digest;
 
-        invariant(seriesDigest);
-        if (!seriesDigest) {
-            throw new InvariantError("trying to create data series descriptor when there are no data series");
-        }
+        invariant(seriesDigest, "trying to create data series descriptor when there are no data series");
 
         const {
             fromMeasures,
@@ -448,9 +445,7 @@ export class DataAccessImpl {
     private createDataSliceDescriptor = (sliceIdx: number): DataSliceDescriptor => {
         const { slices: slicesDigest } = this.digest;
 
-        if (!slicesDigest) {
-            throw new InvariantError("trying to create data slice descriptor when there are no data slices");
-        }
+        invariant(slicesDigest, "trying to create data slice descriptor when there are no data slices");
 
         const { descriptors, headerItems, descriptorsDef } = slicesDigest;
         const headers: Array<IResultAttributeHeader | IResultTotalHeader> = [];

@@ -24,7 +24,7 @@ import {
     IntlWrapper,
 } from "@gooddata/sdk-ui";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 /**
  * Prepares new execution matching pivot table props.
@@ -35,17 +35,14 @@ import { InvariantError } from "ts-invariant";
 function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     const { backend, workspace, filters, sortBy = [] } = props;
 
-    if (!backend) {
-        throw new InvariantError(
-            "Backend was not provided in prepareExecution. Either pass it as a prop or use BackendContext.",
-        );
-    }
-
-    if (!workspace) {
-        throw new InvariantError(
-            "Workspace was not provided in prepareExecution. Either pass it as a prop or use WorkspaceContext.",
-        );
-    }
+    invariant(
+        backend,
+        "Backend was not provided in prepareExecution. Either pass it as a prop or use BackendContext.",
+    );
+    invariant(
+        workspace,
+        "Workspace was not provided in prepareExecution. Either pass it as a prop or use WorkspaceContext.",
+    );
 
     return backend
         .workspace(workspace)

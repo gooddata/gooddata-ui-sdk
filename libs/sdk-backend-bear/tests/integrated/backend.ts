@@ -8,7 +8,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import bearFactory, { BearAuthProviderBase, FixedLoginAndPasswordAuthProvider } from "../../src";
 import { config } from "dotenv";
-import { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 let GlobalBackend: IAnalyticalBackend | undefined;
 
@@ -39,17 +39,16 @@ function createBackend(): IAnalyticalBackend {
     if (process.env.GD_BEAR_REC) {
         const credentials = config();
 
-        if (!credentials.parsed?.GD_USERNAME || !credentials.parsed?.GD_PASSWORD) {
-            throw new InvariantError(
-                "You have started integrated tests in recording mode - this mode requires " +
-                    "credentials in order to log into platform. The credentials must be stored in .env file located " +
-                    "in sdk-backend-bear directory. This a dotenv file and should contain GD_USERNAME and GD_PASSWORD.",
-            );
-        }
+        invariant(
+            credentials.parsed?.GD_USERNAME && credentials.parsed?.GD_PASSWORD,
+            "You have started integrated tests in recording mode - this mode requires " +
+                "credentials in order to log into platform. The credentials must be stored in .env file located " +
+                "in sdk-backend-bear directory. This a dotenv file and should contain GD_USERNAME and GD_PASSWORD.",
+        );
 
         const authProvider = new FixedLoginAndPasswordAuthProvider(
-            credentials.parsed!.GD_USERNAME,
-            credentials.parsed!.GD_PASSWORD,
+            credentials.parsed.GD_USERNAME,
+            credentials.parsed.GD_PASSWORD,
         );
 
         return backend.withAuthentication(authProvider);
