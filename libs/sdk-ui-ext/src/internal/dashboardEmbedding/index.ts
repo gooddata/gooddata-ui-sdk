@@ -80,3 +80,4 @@ export {
     IFluidLayoutComponentProps,
     IFluidLayoutRowProps,
 } from "./FluidLayout";
+export * from "./DashboardItem";

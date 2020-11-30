@@ -28,7 +28,6 @@ import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
 
 interface IKpiExecutorProps {
-    title: string;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     alert?: IWidgetAlert;
@@ -47,7 +46,6 @@ interface IKpiExecutorProps {
  * @internal
  */
 export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
-    title,
     primaryMeasure,
     secondaryMeasure,
     alert,
@@ -89,7 +87,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
 
     if (status === "error") {
         return isNoDataError(error) ? (
-            <KpiRenderer title={title} onDrill={handleOnDrill} />
+            <KpiRenderer onDrill={handleOnDrill} />
         ) : (
             <ErrorComponent message={error.message} />
         );
@@ -108,7 +106,6 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
             secondaryValue={secondaryValue}
             alert={alert}
             onDrill={handleOnDrill}
-            title={title}
         />
     );
 };

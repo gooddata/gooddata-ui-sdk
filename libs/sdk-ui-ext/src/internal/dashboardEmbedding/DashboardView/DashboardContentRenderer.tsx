@@ -19,6 +19,10 @@ import {
     IDashboardViewLayoutRow,
 } from "../DashboardLayout";
 import { IFluidLayoutContentRenderer } from "../FluidLayout";
+import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
+import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
+import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
+import { DashboardItem } from "../DashboardItem/DashboardItem";
 
 export type IDashboardContentRenderer = IFluidLayoutContentRenderer<
     IDashboardViewLayoutContent,
@@ -74,6 +78,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         onDrill,
         onError,
         workspace,
+        screen,
     } = props;
     switch (content.type) {
         case "rowHeader": {
@@ -87,35 +92,51 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         case "widget": {
             if (content.widget.type === "insight") {
                 return (
-                    <InsightRenderer
-                        insightWidget={content.widget as IWidget}
-                        backend={backend}
-                        workspace={workspace}
-                        filters={filters}
-                        drillableItems={drillableItems}
-                        onDrill={onDrill}
-                        onError={onError}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
-                    />
+                    <DashboardItem className="type-visualization" screen={screen}>
+                        <DashboardItemVisualization
+                            renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
+                        >
+                            {() => (
+                                <InsightRenderer
+                                    insightWidget={content.widget as IWidget}
+                                    backend={backend}
+                                    workspace={workspace}
+                                    filters={filters}
+                                    drillableItems={drillableItems}
+                                    onDrill={onDrill}
+                                    onError={onError}
+                                    ErrorComponent={ErrorComponent}
+                                    LoadingComponent={LoadingComponent}
+                                />
+                            )}
+                        </DashboardItemVisualization>
+                    </DashboardItem>
                 );
             }
 
             const relevantAlert = alerts?.find((alert) => areObjRefsEqual(alert.widget, content.widget.ref));
 
             return (
-                <KpiView
-                    kpiWidget={content.widget as IWidget}
-                    alert={relevantAlert}
-                    backend={backend}
-                    workspace={workspace}
-                    filters={filters}
-                    drillableItems={drillableItems}
-                    onDrill={onDrill}
-                    onError={onError}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                />
+                <DashboardItem className="type-kpi" screen={screen}>
+                    <DashboardItemKpi
+                        renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
+                    >
+                        {() => (
+                            <KpiView
+                                kpiWidget={content.widget as IWidget}
+                                alert={relevantAlert}
+                                backend={backend}
+                                workspace={workspace}
+                                filters={filters}
+                                drillableItems={drillableItems}
+                                onDrill={onDrill}
+                                onError={onError}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                            />
+                        )}
+                    </DashboardItemKpi>
+                </DashboardItem>
             );
         }
         case "custom": {
