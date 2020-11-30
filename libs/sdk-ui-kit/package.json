@@ -32,7 +32,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "bash scripts/build.sh",
+        "build": "bash scripts/build.sh && npm run api-extractor",
         "build-dev": "bash scripts/build.sh --dev",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
