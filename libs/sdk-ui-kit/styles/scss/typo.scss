@@ -31,3 +31,23 @@
 .gd-label-small {
     @include gd-label-small;
 }
+
+.gd-typography {
+    margin: 0;
+
+    &--h1 {
+        @include gd-heading-1;
+    }
+
+    &--h2 {
+        @include gd-heading-2;
+    }
+
+    &--h3 {
+        @include gd-heading-3;
+    }
+
+    &--p {
+        @include gd-paragraph;
+    }
+}

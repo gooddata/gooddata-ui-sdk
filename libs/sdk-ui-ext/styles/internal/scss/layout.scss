@@ -10,34 +10,6 @@ $gd-dashboards-section-description-color: var(
     $gd-color-state-blank
 );
 
-// namespace for shared global scope css classes in gooddata-ui-sdk and gdc-dashboards
-.gd-dashboards {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    p {
-        margin: 0;
-    }
-
-    h1 {
-        @include gd-heading-1;
-    }
-
-    h2 {
-        @include gd-heading-2;
-    }
-
-    h3 {
-        @include gd-heading-3;
-    }
-
-    p {
-        @include gd-paragraph;
-    }
-}
-
 .gd-fluidlayout-container {
     width: 100%;
 
