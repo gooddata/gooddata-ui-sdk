@@ -10,8 +10,6 @@ _clean() {
 }
 
 _common-build() {
-    mkdir dist
-
     _build_styles
 }
 
