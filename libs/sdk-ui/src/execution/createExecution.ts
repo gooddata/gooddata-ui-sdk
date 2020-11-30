@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
-import { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 /**
  * @internal
@@ -118,11 +118,10 @@ export function createExecution(options: CreateExecutionOptions): IPreparedExecu
         totals = [],
         componentName = "Execution",
     } = options;
-    if (!backend || !workspace) {
-        throw new InvariantError(
-            "backend and workspace must be either specified explicitly or be provided by context",
-        );
-    }
+    invariant(
+        backend && workspace,
+        "backend and workspace must be either specified explicitly or be provided by context",
+    );
 
     const dimensions = isEmpty(slicesBy)
         ? seriesOnlyDim(seriesBy)

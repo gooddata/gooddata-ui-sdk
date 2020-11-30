@@ -17,7 +17,7 @@ import {
     LoadingComponent,
     withContexts,
 } from "../base";
-import { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 //
 // Internals
@@ -41,11 +41,10 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
         intl,
     } = props;
 
-    if (!backend || !workspace) {
-        throw new InvariantError(
-            "backend and workspace must be either specified explicitly or be provided by context",
-        );
-    }
+    invariant(
+        backend && workspace,
+        "backend and workspace must be either specified explicitly or be provided by context",
+    );
 
     const execution = backend
         .withTelemetry("KPI", props)

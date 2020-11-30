@@ -5,7 +5,7 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import mapboxgl from "mapbox-gl";
-import invariant, { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 import {
     createClusterLabels,
     createClusterPoints,
@@ -289,9 +289,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     private handleMapEvent = () => {
         const { chart } = this;
 
-        if (!chart) {
-            throw new InvariantError("illegal state - setting map event handlers while map not initialized");
-        }
+        invariant(chart, "illegal state - setting map event handlers while map not initialized");
 
         chart.on("click", DEFAULT_LAYER_NAME, this.handleMapClick);
         chart.on("idle", this.handleMapIdle);
@@ -325,9 +323,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
     private setupMap = (): void => {
         const { chart, handleLayerLoaded, props } = this;
 
-        if (!chart) {
-            throw new InvariantError("illegal state - setting up map but with no existing map instance");
-        }
+        invariant(chart, "illegal state - setting up map but with no existing map instance");
 
         const { colorStrategy, config, geoData } = props;
         const { points: { groupNearbyPoints = true } = {}, showLabels = true } = config || {};

@@ -21,7 +21,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant, { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 interface IUseKpiDataConfig {
     kpiWidget: IWidget;
@@ -47,9 +47,7 @@ export function useKpiData({
     const effectiveWorkspace = useWorkspace(workspace);
 
     const promise = async () => {
-        if (!kpiWidget.kpi) {
-            throw new InvariantError("The provided widget is not a KPI widget.");
-        }
+        invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
         const relevantFilters = await effectiveBackend
             .workspace(effectiveWorkspace)

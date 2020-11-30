@@ -4,7 +4,7 @@ import cx from "classnames";
 import get from "lodash/get";
 import throttle from "lodash/throttle";
 import noop from "lodash/noop";
-import invariant, { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 import { WrappedComponentProps } from "react-intl";
 import Measure, { MeasuredComponentProps } from "react-measure";
@@ -189,9 +189,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     private syncWithLegendItemStates(
         geoChartOptions: IGeoChartInnerOptions | undefined,
     ): IGeoChartInnerOptions {
-        if (!geoChartOptions) {
-            throw new InvariantError("illegal state - trying to sync legend with no geo options");
-        }
+        invariant(geoChartOptions, "illegal state - trying to sync legend with no geo options");
 
         const { categoryItems } = geoChartOptions!;
         const { enabledLegendItems } = this.state;
@@ -307,11 +305,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             intl,
         } = this.props;
 
-        if (!dataView) {
-            throw new InvariantError(
-                "invalid state - trying to render geo chart but there is no data to visualize",
-            );
-        }
+        invariant(dataView, "invalid state - trying to render geo chart but there is no data to visualize");
 
         const { geoData, colorStrategy, categoryItems } = geoChartOptions;
         const segmentIndex: number = get(geoChartOptions, "geoData.segment.index");

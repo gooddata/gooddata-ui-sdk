@@ -13,7 +13,7 @@ import {
     OnFiredDrillEvent,
     OnError,
 } from "@gooddata/sdk-ui";
-import { InvariantError } from "ts-invariant";
+import invariant from "ts-invariant";
 
 import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
@@ -92,9 +92,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
-    if (!kpiWidget.kpi) {
-        throw new InvariantError("The provided widget is not a KPI widget.");
-    }
+    invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
     const { error, result, status } = useKpiData({
         kpiWidget,

@@ -65,7 +65,7 @@
         "mapbox-gl": "^1.9.1",
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
-        "ts-invariant": "^0.4.4",
+        "ts-invariant": "^0.5.1",
         "tslib": "^2.0.0"
     },
     "peerDependencies": {
