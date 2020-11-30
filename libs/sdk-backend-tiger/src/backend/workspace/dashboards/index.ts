@@ -1,10 +1,25 @@
 // (C) 2020 GoodData Corporation
-import { IWorkspaceDashboardsService, IListedDashboard, NotSupported } from "@gooddata/sdk-backend-spi";
+import {
+    AnalyticalDashboard,
+    AnalyticalDashboardPostResourceTypeEnum,
+    AnalyticalDashboards,
+} from "@gooddata/api-client-tiger";
+import {
+    IDashboard,
+    IDashboardDefinition,
+    IListedDashboard,
+    IWorkspaceDashboardsService,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
+import uuid4 from "uuid/v4";
+import {
+    convertAnalyticalDashboardToListItems,
+    convertDashboard,
+} from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
+import { convertAnalyticalDashboard } from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { objRefToIdentifier } from "../../../utils/api";
-import { AnalyticalDashboards } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -26,12 +41,61 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboards);
     };
 
-    public getDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    organizationId: "dummy",
+                    id,
+                },
+                {
+                    headers: {
+                        Accept: "application/vnd.gooddata.api+json",
+                        "Content-Type": "application/vnd.gooddata.api+json",
+                    },
+                },
+            );
+        });
+
+        if (filterContextRef) {
+            throw new NotSupported("Not supported property 'filterContextRef'");
+        }
+
+        return convertDashboard(result.data as AnalyticalDashboard);
     };
 
-    public createDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public createDashboard = async (dashboard: IDashboardDefinition) => {
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.createEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    organizationId: "dummy",
+                    analyticsObject: {
+                        data: {
+                            id: uuid4(),
+                            type: AnalyticalDashboardPostResourceTypeEnum.AnalyticalDashboard,
+                            attributes: {
+                                content: convertAnalyticalDashboard(dashboard),
+                                title: dashboard.title,
+                                description: dashboard.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: {
+                        Accept: "application/vnd.gooddata.api+json",
+                        "Content-Type": "application/vnd.gooddata.api+json",
+                    },
+                },
+            );
+        });
+        return convertDashboard(result.data);
     };
 
     public updateDashboard = async () => {
@@ -46,6 +110,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 entity: "analyticalDashboards",
                 id: id,
                 workspaceId: this.workspace,
+                organizationId: "dummy",
             }),
         );
     };
@@ -63,7 +128,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getAllWidgetAlertsForCurrentUser = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return [];
     };
 
     public getDashboardWidgetAlertsForCurrentUser = async () => {

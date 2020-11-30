@@ -19,6 +19,8 @@ import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
 export { VisualizationObject } from "./gd-tiger-model/VisualizationObject";
+export { AnalyticalDashboardObject } from "./gd-tiger-model/AnalyticalDashboardObject";
+
 export {
     isAttributeHeader,
     isObjectIdentifier,
