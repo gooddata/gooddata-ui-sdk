@@ -1,5 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
+import { Typography } from "@gooddata/sdk-ui-kit";
 import { DashboardLayoutRowHeaderDescription } from "./DashboardLayoutRowHeaderDescription";
 
 export interface IDashboardLayoutRowHeaderProps {
@@ -37,7 +38,9 @@ export const DashboardLayoutRowHeader: React.FC<IDashboardLayoutRowHeaderProps> 
                         {title && (
                             <div className="gd-row-header-title-wrapper">
                                 <span className="title">
-                                    <h2 className="s-fluid-layout-row-title">{title}</h2>
+                                    <Typography tagName="h2" className="s-fluid-layout-row-title">
+                                        {title}
+                                    </Typography>
                                 </span>
                             </div>
                         )}

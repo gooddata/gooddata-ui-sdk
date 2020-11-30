@@ -18,4 +18,5 @@ export * from "./Header";
 export * from "./Messages";
 export * from "./Dialog";
 export * from "./Overlay";
+export * from "./Typography";
 export * from "./CustomizableCheckmark";

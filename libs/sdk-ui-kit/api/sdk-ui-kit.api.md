@@ -1640,6 +1640,18 @@ export interface IToggleButtonProps {
     toggleDropdown: (e: React_2.SyntheticEvent) => void;
 }
 
+// @internal (undocumented)
+export interface ITypographyProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    tagName: "h1" | "h2" | "h3" | "p";
+}
+
 // @internal @deprecated (undocumented)
 export const LegacyInvertableList: <T>(props: ILegacyInvertableListProps<T>) => any;
 
@@ -1893,6 +1905,9 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @internal (undocumented)
+export const Typography: React_2.FC<ITypographyProps>;
 
 
 // (No @packageDocumentation comment for this package)
