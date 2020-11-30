@@ -83,7 +83,11 @@ async function getRelevantAttributeFiltersForWidget(
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     objRefsToUris: ObjRefsToUris,
 ): Promise<IAttributeFilter[]> {
-    if (!ignoreDashboardFilters.length || !filters.length) {
+    if (!ignoreDashboardFilters.length) {
+        return filters;
+    }
+
+    if (!filters.length) {
         return [];
     }
 
