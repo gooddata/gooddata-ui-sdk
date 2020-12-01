@@ -1542,6 +1542,7 @@ export interface IWorkspaceDashboardsService {
 
 // @public
 export interface IWorkspaceDatasetsService {
+    getAllDatasetsMeta(): Promise<IMetadataObject[]>;
     getDatasets(): Promise<IDataset[]>;
 }
 
