@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add ESM builds so that bundlers supporting it can employ tree-shaking to reduce bundle sizes",
+            "comment": "ESM builds are added to allow the bundlers supporting them to employ tree shaking and reduce the size of the bundles.",
             "type": "none"
         }
     ],
