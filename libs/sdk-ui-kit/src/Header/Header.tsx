@@ -75,6 +75,9 @@ export interface IAppHeaderProps {
     activeColor?: string;
 
     userName: string;
+
+    disableHelpDropdown?: boolean;
+    onHelpClick?: boolean;
 }
 /**
  * @internal
@@ -369,6 +372,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         onMenuItemClick={this.props.onMenuItemClick}
                         className="gd-header-measure"
                         items={this.props.helpMenuItems}
+                        disableDropdown={this.props.disableHelpDropdown}
+                        onHelpClicked={this.props.onHelpClick}
                     />
                 )}
 
