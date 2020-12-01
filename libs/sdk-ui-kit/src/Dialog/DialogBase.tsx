@@ -15,12 +15,13 @@ const checkKeyHandler = (event: React.KeyboardEvent, keyCode: number, handler: (
     }
 };
 
-const isTextInputComponent = ({ target }: React.KeyboardEvent): boolean => {
+const shouldSubmitOnEnterPress = ({ target }: React.KeyboardEvent): boolean => {
     const { tagName, type } = target as any;
     const tagNameInLowercase = tagName.toLowerCase();
     const typeInLowercase = type ? type.toLowerCase() : "";
     return (
-        tagNameInLowercase === "textarea" || (tagNameInLowercase === "input" && typeInLowercase === "text")
+        tagNameInLowercase === "textarea" ||
+        (tagNameInLowercase === "input" && (typeInLowercase === "text" || typeInLowercase === "number"))
     );
 };
 
@@ -42,7 +43,7 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
 
         // don't call onSubmit when pressing enter key on input fields
         const isEnterKeyDownOnInputField =
-            event.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER && isTextInputComponent(event);
+            event.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER && shouldSubmitOnEnterPress(event);
         if (submitOnEnterKey === false && isEnterKeyDownOnInputField) {
             return;
         }
