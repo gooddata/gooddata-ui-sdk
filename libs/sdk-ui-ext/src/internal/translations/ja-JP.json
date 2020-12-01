@@ -159,5 +159,6 @@
     "dashboard.bucket.tertiary_measures_title.bullet": "測定値",
     "dashboard.bucket.measures_subtitle.bullet": "プライマリ",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "ターゲット",
-    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比較"
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比較",
+    "filters.allTime.previousPeriod": "前期"
 }

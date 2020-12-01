@@ -803,5 +803,10 @@
         "value": "Comparative",
         "comment": "Comparative measures of a bullet chart",
         "limit": 0
+    },
+    "filters.allTime.previousPeriod": {
+        "value": "prev. period",
+        "comment": "",
+        "limit": 0
     }
 }

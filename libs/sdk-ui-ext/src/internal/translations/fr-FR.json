@@ -159,5 +159,6 @@
     "dashboard.bucket.tertiary_measures_title.bullet": "Mesure",
     "dashboard.bucket.measures_subtitle.bullet": "Principal",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Objectif",
-    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparaison"
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparaison",
+    "filters.allTime.previousPeriod": "période préc."
 }

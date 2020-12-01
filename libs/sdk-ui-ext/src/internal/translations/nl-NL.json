@@ -159,5 +159,6 @@
     "dashboard.bucket.tertiary_measures_title.bullet": "Maat",
     "dashboard.bucket.measures_subtitle.bullet": "Primair",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Doel",
-    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Relatief"
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Relatief",
+    "filters.allTime.previousPeriod": "vorige periode"
 }

@@ -159,5 +159,6 @@
     "dashboard.bucket.tertiary_measures_title.bullet": "Medida",
     "dashboard.bucket.measures_subtitle.bullet": "Principal",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Destino",
-    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativas"
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativas",
+    "filters.allTime.previousPeriod": "period. prev."
 }

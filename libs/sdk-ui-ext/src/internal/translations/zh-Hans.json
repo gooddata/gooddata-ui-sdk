@@ -159,5 +159,6 @@
     "dashboard.bucket.tertiary_measures_title.bullet": "度量",
     "dashboard.bucket.measures_subtitle.bullet": "主要",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "目标",
-    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比较"
+    "dashboard.bucket.tertiary_measures_subtitle.bullet": "比较",
+    "filters.allTime.previousPeriod": "前一时间段"
 }

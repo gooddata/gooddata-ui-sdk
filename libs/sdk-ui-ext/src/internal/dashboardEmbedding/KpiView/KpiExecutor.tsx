@@ -26,6 +26,7 @@ import {
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 interface IKpiExecutorProps {
     primaryMeasure: IMeasure;
@@ -45,7 +46,7 @@ interface IKpiExecutorProps {
  * Executes the given measures and displays them as KPI
  * @internal
  */
-export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
+export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     primaryMeasure,
     secondaryMeasure,
     alert,
@@ -57,6 +58,7 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     workspace,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
+    intl,
 }) => {
     const execution = useExecution({
         seriesBy: compact([primaryMeasure, secondaryMeasure]),
@@ -97,8 +99,20 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     const primarySeries = series.firstForMeasure(primaryMeasure);
     const secondarySeries = secondaryMeasure ? series.firstForMeasure(secondaryMeasure) : undefined;
 
-    const primaryValue = buildKpiValueInfo(primarySeries, result, drillableItems);
-    const secondaryValue = secondarySeries && buildKpiValueInfo(secondarySeries, result, drillableItems);
+    const primaryValue = buildKpiValueInfo(
+        primarySeries,
+        result,
+        primarySeries.measureTitle(),
+        drillableItems,
+    );
+    const secondaryValue =
+        secondarySeries &&
+        buildKpiValueInfo(
+            secondarySeries,
+            result,
+            intl.formatMessage({ id: "filters.allTime.previousPeriod" }), // TODO use the complex logic from KD when we migrate to KPI component
+            drillableItems,
+        );
 
     return (
         <KpiRenderer
@@ -110,9 +124,12 @@ export const KpiExecutor: React.FC<IKpiExecutorProps> = ({
     );
 };
 
+export const KpiExecutor = injectIntl(KpiExecutorCore);
+
 function buildKpiValueInfo(
     series: IDataSeries,
     dv: DataViewFacade,
+    title: string,
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>,
 ): IKpiValueInfo {
     const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
@@ -121,7 +138,7 @@ function buildKpiValueInfo(
     return {
         formattedValue: series.dataPoints()[0].formattedValue(),
         isDrillable,
-        title: series.measureTitle(),
+        title,
         value: series.dataPoints()[0].rawValue,
         measureDescriptor: series.descriptor.measureDescriptor,
     };
