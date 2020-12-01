@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import {
     IAnalyticalBackend,
     IFilterContext,
@@ -13,7 +13,6 @@ import {
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
-    IPushData,
     OnError,
     OnFiredDrillEvent,
     useBackend,
@@ -21,7 +20,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { InsightView } from "../../../insightView";
-import { availableDrillTargetsToDrillPredicates, widgetDrillsToDrillPredicates } from "./convertors";
+import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
 
 interface IInsightRendererProps {
@@ -71,22 +70,13 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
     );
 
-    const [drillsFromInsight, setDrillsFromInsight] = useState<IHeaderPredicate[]>([]);
-
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(() => {
         const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
         return [
             ...drillsFromWidget, // drills specified in the widget definition
             ...drillableItems, // drills specified by the caller
-            ...drillsFromInsight, // drills specified in the insight itself
         ];
-    }, [insightWidget.drills, drillableItems, drillsFromInsight]);
-
-    const handlePushData = useCallback((data: IPushData) => {
-        if (data.availableDrillTargets) {
-            setDrillsFromInsight(availableDrillTargetsToDrillPredicates(data.availableDrillTargets));
-        }
-    }, []);
+    }, [insightWidget.drills, drillableItems]);
 
     const chartConfig = useMemo(
         () => ({
@@ -113,7 +103,6 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             onDrill={onDrill}
             config={chartConfig}
             onError={onError}
-            pushData={handlePushData}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
         />
