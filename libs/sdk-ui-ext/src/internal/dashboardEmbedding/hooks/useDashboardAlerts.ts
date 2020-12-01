@@ -73,6 +73,7 @@ export function useDashboardAlerts({
             .getDashboardWidgetAlertsForCurrentUser(dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
+        effectiveBackend,
         effectiveWorkspace,
         objRefToString(dashboard),
     ]);

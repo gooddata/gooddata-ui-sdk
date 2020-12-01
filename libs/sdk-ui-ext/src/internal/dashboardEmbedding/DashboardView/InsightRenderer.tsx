@@ -1,6 +1,12 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
-import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+    IWidget,
+    ISeparators,
+} from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -25,6 +31,7 @@ interface IInsightRendererProps {
     filters?: IFilter[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    separators: ISeparators;
     onDrill?: OnFiredDrillEvent;
     onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -36,6 +43,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     filters,
     filterContext,
     drillableItems = [],
+    separators,
     onDrill,
     onError,
     backend,
@@ -80,6 +88,13 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         }
     }, []);
 
+    const chartConfig = useMemo(
+        () => ({
+            separators,
+        }),
+        [separators],
+    );
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -96,6 +111,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             workspace={effectiveWorkspace}
             drillableItems={effectiveDrillableItems}
             onDrill={onDrill}
+            config={chartConfig}
             onError={onError}
             pushData={handlePushData}
             ErrorComponent={ErrorComponent}

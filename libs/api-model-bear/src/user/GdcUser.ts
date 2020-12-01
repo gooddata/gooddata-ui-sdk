@@ -444,4 +444,17 @@ export namespace GdcUser {
             items: IUserListItem[];
         };
     }
+
+    /**
+     * Response for GET /gdc/account/profile/\{userId\}/settings/separators
+     */
+    export interface ISeparatorsResponse {
+        separators: {
+            decimal: string;
+            thousand: string;
+            links: {
+                self: string;
+            };
+        };
+    }
 }

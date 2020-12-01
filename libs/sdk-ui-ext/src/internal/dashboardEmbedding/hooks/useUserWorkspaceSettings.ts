@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,18 +8,13 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 /**
  * @beta
  */
-export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
-    /**
-     * Reference to the dashboard to get.
-     */
-    dashboard: ObjRef;
-
+export interface IUseUserWorkspaceSettingsConfig
+    extends UseCancelablePromiseCallbacks<IUserWorkspaceSettings, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -38,12 +33,11 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
 }
 
 /**
- * Hook allowing to download dashboard data
+ * Hook allowing to download user workspace settings
  * @param config - configuration of the hook
  * @beta
  */
-export function useDashboard({
-    dashboard,
+export function useUserWorkspaceSettings({
     backend,
     onCancel,
     onError,
@@ -51,24 +45,25 @@ export function useDashboard({
     onPending,
     onSuccess,
     workspace,
-}: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any> {
+}: IUseUserWorkspaceSettingsConfig): UseCancelablePromiseState<IUserWorkspaceSettings, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useUserWorkspaceSettings must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useUserWorkspaceSettings must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const promise = () => effectiveBackend.workspace(effectiveWorkspace).dashboards().getDashboard(dashboard);
+    const promise = () =>
+        effectiveBackend.workspace(effectiveWorkspace).settings().getSettingsForCurrentUser();
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
+        effectiveBackend,
         effectiveWorkspace,
-        objRefToString(dashboard),
     ]);
 }

@@ -11,6 +11,10 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 userId: "dummy",
 
                 locale: "en-US",
+                separators: {
+                    thousand: ",",
+                    decimal: ".",
+                },
 
                 activeFiltersByDefault: true,
                 enableActiveFilterContext: true,

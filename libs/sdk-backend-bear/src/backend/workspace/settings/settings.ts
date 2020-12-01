@@ -36,12 +36,13 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
                 };
             }
 
-            const [workspaceFeatureFlags, userFeatureFlags, currentProfile] = await Promise.all([
+            const [workspaceFeatureFlags, userFeatureFlags, currentProfile, separators] = await Promise.all([
                 sdk.project.getProjectFeatureFlags(this.workspace),
                 // the getUserFeatureFlags returns all the feature flags (including the defaults)
                 // so we have to filter only the user specific values so as not to use defaults everywhere
                 sdk.user.getUserFeatureFlags(userLoginMd5, ["user"]),
                 sdk.user.getCurrentProfile(),
+                sdk.user.getUserRegionalNumberFormatting(userLoginMd5),
             ]);
 
             const { language } = currentProfile;
@@ -50,6 +51,7 @@ export class BearWorkspaceSettings implements IWorkspaceSettingsService {
                 userId: userLoginMd5,
                 workspace: this.workspace,
                 locale: language!,
+                separators: separators,
                 // the order is important here, user configs with the "user" source should override the workspace settings
                 ...workspaceFeatureFlags,
                 ...userFeatureFlags,

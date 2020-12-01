@@ -5,6 +5,7 @@ import {
     IFilterContext,
     ITempFilterContext,
     IWidgetAlert,
+    ISeparators,
 } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
@@ -26,6 +27,8 @@ interface IDashboardRendererProps {
     alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
+    separators: ISeparators;
+    disableKpiDrillUnderline?: boolean;
     filters?: IFilter[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
@@ -42,6 +45,8 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     filterContext,
     backend,
     workspace,
+    separators,
+    disableKpiDrillUnderline,
     drillableItems,
     onDrill,
     ErrorComponent,
@@ -60,6 +65,8 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
             return (
                 <DashboardContentRenderer
                     {...props}
+                    separators={separators}
+                    disableKpiDrillUnderline={disableKpiDrillUnderline}
                     content={column.content}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}

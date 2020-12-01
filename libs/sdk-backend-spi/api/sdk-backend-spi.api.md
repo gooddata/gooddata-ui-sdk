@@ -1092,9 +1092,15 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @public
+export interface ISeparators {
+    decimal: string;
+    thousand: string;
+}
+
+// @public
 export interface ISettings {
     // (undocumented)
-    [key: string]: number | boolean | string | undefined;
+    [key: string]: number | boolean | string | object | undefined;
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAxisNameConfiguration?: boolean;
@@ -1365,6 +1371,7 @@ export interface IUserService {
 // @public
 export interface IUserSettings extends ISettings {
     locale: string;
+    separators: ISeparators;
     userId: string;
 }
 

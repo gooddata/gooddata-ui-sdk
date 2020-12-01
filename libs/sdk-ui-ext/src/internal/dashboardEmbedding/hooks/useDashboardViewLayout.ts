@@ -16,9 +16,9 @@ import {
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { IDashboardViewLayout } from "./DashboardLayout";
+import { IDashboardViewLayout } from "../DashboardLayout";
 import { FluidLayoutTransforms } from "@gooddata/sdk-backend-spi";
-import { DashboardViewLayoutWidgetClass } from "./DashboardLayout/interfaces/dashboardLayout";
+import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayout";
 
 /**
  * @beta
@@ -132,6 +132,7 @@ export const useDashboardViewLayout = ({
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
+        effectiveBackend,
         effectiveWorkspace,
         dashboardLayout,
     ]);

@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, ITheme, IDashboard, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, ITheme, IDashboard, IWidgetAlert, ISeparators } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -70,6 +70,12 @@ export interface IDashboardViewProps {
      * Note: text values coming from the data itself are not localized.
      */
     locale?: ILocale;
+
+    /**
+     * Regional number formatting to use for measures on the dashboard.
+     *
+     */
+    separators?: ISeparators;
 
     /**
      * When true, disables the loading of the workspace theme and creation of a ThemeProvider (if there is none

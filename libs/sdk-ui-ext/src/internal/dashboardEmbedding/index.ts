@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
-export { useDashboard, IUseDashboardConfig } from "./useDashboard";
-export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./useDashboardAlerts";
+export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
+export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
 export { KpiView, IKpiViewProps } from "./KpiView";
 export { DashboardView, IDashboardViewProps } from "./DashboardView";
 // TODO: export only necessary and not internal constants

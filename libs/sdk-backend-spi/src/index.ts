@@ -10,7 +10,13 @@ export {
 
 export { IAuthenticatedPrincipal, IAuthenticationContext, IAuthenticationProvider } from "./auth";
 
-export { ISettings, IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings";
+export {
+    ISettings,
+    IUserSettings,
+    IWorkspaceSettings,
+    IUserWorkspaceSettings,
+    ISeparators,
+} from "./common/settings";
 
 export { IUserService } from "./user";
 export { IUserSettingsService } from "./user/settings";
