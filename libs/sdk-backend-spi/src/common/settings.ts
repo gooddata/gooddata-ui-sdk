@@ -69,7 +69,24 @@ export interface ISettings {
      */
     responsiveUiDateFormat?: string;
 
-    [key: string]: number | boolean | string | undefined;
+    [key: string]: number | boolean | string | object | undefined;
+}
+
+/**
+ * Settings for regional number formatting
+ *
+ * @public
+ */
+export interface ISeparators {
+    /**
+     * Thousand separator (e.g. " " or ",")
+     */
+    thousand: string;
+
+    /**
+     * Decimal separator (e.g. "," or ".")
+     */
+    decimal: string;
 }
 
 /**
@@ -87,6 +104,11 @@ export interface IUserSettings extends ISettings {
      * User locale
      */
     locale: string;
+
+    /**
+     * Regional number formatting
+     */
+    separators: ISeparators;
 }
 
 /**

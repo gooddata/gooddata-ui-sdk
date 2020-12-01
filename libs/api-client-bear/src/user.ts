@@ -166,6 +166,23 @@ export class UserModule {
     }
 
     /**
+     * Gets user's regional number formatting configuration
+     * @method getUserRegionalNumberFormatting
+     * @param {String} userId - loginMD5
+     * @return {Promise} Resolves with separators setting object
+     */
+    public getUserRegionalNumberFormatting(userId: string): Promise<GdcUser.ISeparators> {
+        return this.xhr
+            .getParsed<GdcUser.ISeparatorsResponse>(`/gdc/account/profile/${userId}/settings/separators`)
+            .then(
+                (res): GdcUser.ISeparators => ({
+                    decimal: res.separators.decimal,
+                    thousand: res.separators.thousand,
+                }),
+            );
+    }
+
+    /**
      * Updates user's profile settings
      * @method updateProfileSettings
      * @param {String} profileId - User profile identifier

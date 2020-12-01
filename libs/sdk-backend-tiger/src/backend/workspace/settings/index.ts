@@ -44,6 +44,10 @@ export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
             return {
                 userId: "dummy",
                 locale: "en-US",
+                separators: {
+                    thousand: ",",
+                    decimal: ".",
+                },
                 workspace: this.workspace,
                 ...HardcodedSettings,
             };

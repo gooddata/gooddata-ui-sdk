@@ -22,6 +22,7 @@ import {
     IUserSettingsService,
     IWorkspaceDashboardsService,
     IUserWorkspaceSettings,
+    ISeparators,
     IWorkspaceUsersQuery,
     IDateFilterConfigsQuery,
     IBackendCapabilities,
@@ -44,6 +45,10 @@ const defaultConfig: RecordedBackendConfig = {
 
 const USER_ID = "recordedUser";
 const locale = "en-US";
+const separators: ISeparators = {
+    thousand: ",",
+    decimal: ".",
+};
 
 /**
  * Creates new backend that will be providing recorded results to the caller. The recorded results are provided
@@ -143,6 +148,7 @@ function recordedWorkspace(
                         userId: USER_ID,
                         workspace,
                         locale,
+                        separators,
                         ...(implConfig.globalSettings ?? {}),
                     };
                 },
@@ -184,6 +190,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                 getSettings: async () => ({
                     userId: USER_ID,
                     locale,
+                    separators,
                     ...(implConfig.globalSettings ?? {}),
                 }),
             };

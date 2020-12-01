@@ -92,6 +92,10 @@ describe("InsightViewDataLoader", () => {
         const defaultUserSettings = {
             userId: "userId",
             locale: "en-US",
+            separators: {
+                thousand: ",",
+                decimal: ".",
+            },
         };
         const getMockBackend = (
             getSettingsForCurrentUser: () => Promise<IUserWorkspaceSettings>,

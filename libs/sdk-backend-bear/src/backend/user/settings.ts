@@ -16,9 +16,10 @@ export class BearUserSettingsService implements IUserSettingsService {
                 return ANONYMOUS_USER_SETTINGS;
             }
 
-            const [flags, currentProfile] = await Promise.all([
+            const [flags, currentProfile, separators] = await Promise.all([
                 sdk.user.getUserFeatureFlags(userLoginMd5),
                 sdk.user.getCurrentProfile(),
+                sdk.user.getUserRegionalNumberFormatting(userLoginMd5),
             ]);
 
             const { language } = currentProfile;
@@ -26,6 +27,7 @@ export class BearUserSettingsService implements IUserSettingsService {
             return {
                 userId: userLoginMd5,
                 locale: language!,
+                separators,
                 ...flags,
             };
         });

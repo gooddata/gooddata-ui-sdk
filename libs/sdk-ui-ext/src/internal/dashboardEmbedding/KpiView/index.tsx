@@ -7,6 +7,7 @@ import {
     ITempFilterContext,
     IWidget,
     IWidgetAlert,
+    ISeparators,
 } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
@@ -49,6 +50,16 @@ export interface IKpiViewProps {
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
      */
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+
+    /**
+     * Regional number formatting
+     */
+    separators: ISeparators;
+
+    /**
+     * Headline component will not be underlined when it is set up with drilling.
+     */
+    disableDrillUnderline?: boolean;
 
     /**
      * Called when user triggers a drill on a visualization.
@@ -97,6 +108,8 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     filters,
     filterContext,
     drillableItems = [],
+    separators,
+    disableDrillUnderline,
     onDrill,
     onError,
     backend,
@@ -138,6 +151,8 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             onDrill={onDrill}
             onError={onError}
             drillableItems={effectiveDrillableItems}
+            separators={separators}
+            disableDrillUnderline={disableDrillUnderline}
             backend={backend}
             workspace={workspace}
             ErrorComponent={ErrorComponent}

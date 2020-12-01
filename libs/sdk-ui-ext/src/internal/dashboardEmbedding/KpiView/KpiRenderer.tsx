@@ -18,24 +18,25 @@ interface IKpiRendererProps {
     primaryValue?: IKpiValueInfo;
     secondaryValue?: IKpiValueInfo;
     alert?: IWidgetAlert;
+    disableDrillUnderline?: boolean;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDrillEvent>;
 }
 
-const KpiItemAsValue = ({ value }: { value: IKpiValueInfo }) => (
+const KpiItemAsValue = ({ value, underline = true }: { value: IKpiValueInfo; underline?: boolean }) => (
     <div
         className={cx("headline-value", "s-headline-value", {
             "headline-value--empty": isNil(value?.formattedValue),
             "s-headline-value--empty": isNil(value?.formattedValue),
-            "headline-link-style-underline": true, // TODO parametrize this
+            "headline-link-style-underline": underline,
         })}
     >
         {value?.formattedValue ?? "—"}
     </div>
 );
 
-const KpiItemAsLink = ({ value }: { value: IKpiValueInfo }) => (
+const KpiItemAsLink = ({ value, underline }: { value: IKpiValueInfo; underline?: boolean }) => (
     <div className="headline-item-link s-headline-item-link">
-        <KpiItemAsValue value={value} />
+        <KpiItemAsValue value={value} underline={underline} />
     </div>
 );
 
@@ -47,6 +48,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     primaryValue,
     secondaryValue,
     alert,
+    disableDrillUnderline,
     onDrill,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
@@ -73,7 +75,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
                 <ResponsiveText>
                     <div className="headline-value-wrapper" onClick={onPrimaryValueClick}>
                         {primaryValue?.isDrillable ? (
-                            <KpiItemAsLink value={primaryValue} />
+                            <KpiItemAsLink value={primaryValue} underline={!disableDrillUnderline} />
                         ) : (
                             <KpiItemAsValue value={primaryValue} />
                         )}

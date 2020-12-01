@@ -2161,6 +2161,16 @@ export namespace GdcUser {
         // (undocumented)
         thousand: string;
     }
+    export interface ISeparatorsResponse {
+        // (undocumented)
+        separators: {
+            decimal: string;
+            thousand: string;
+            links: {
+                self: string;
+            };
+        };
+    }
     // (undocumented)
     export interface IStatus {
         // (undocumented)

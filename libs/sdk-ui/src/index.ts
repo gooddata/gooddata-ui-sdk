@@ -10,4 +10,4 @@ export * from "./kpi";
  * Common interface uses to specify number separators for the different SDK components.
  * @public
  */
-export { ISeparators } from "@gooddata/numberjs";
+export { ISeparators } from "@gooddata/sdk-backend-spi";

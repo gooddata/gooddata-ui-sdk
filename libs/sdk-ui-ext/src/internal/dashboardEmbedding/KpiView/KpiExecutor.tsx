@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IAnalyticalBackend, isNoDataError, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, isNoDataError, IWidgetAlert, ISeparators } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -23,6 +23,7 @@ import {
     isSomeHeaderPredicateMatched,
     DataViewFacade,
     OnError,
+    createNumberJsFormatter,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
@@ -38,6 +39,8 @@ interface IKpiExecutorProps {
     onError?: OnError;
     backend: IAnalyticalBackend;
     workspace: string;
+    separators: ISeparators;
+    disableDrillUnderline?: boolean;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
 }
@@ -56,6 +59,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     onError,
     backend,
     workspace,
+    separators,
+    disableDrillUnderline,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
     intl,
@@ -67,7 +72,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         workspace,
     });
 
-    const { error, result, status } = useDataView({ execution, onError });
+    const { error, result, status } = useDataView({ execution, onError }, [execution]);
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
@@ -95,7 +100,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         );
     }
 
-    const series = result.data().series();
+    const series = result.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
     const primarySeries = series.firstForMeasure(primaryMeasure);
     const secondarySeries = secondaryMeasure ? series.firstForMeasure(secondaryMeasure) : undefined;
 
@@ -116,6 +121,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     return (
         <KpiRenderer
+            disableDrillUnderline={disableDrillUnderline}
             primaryValue={primaryValue}
             secondaryValue={secondaryValue}
             alert={alert}
