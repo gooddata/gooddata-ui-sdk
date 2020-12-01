@@ -83,22 +83,13 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             {secondaryValue ? (
                 <div className="gd-flex-container headline-compare-section">
                     <div
-                        className={cx([
-                            "gd-flex-item",
-                            "headline-compare-section-item",
-                            "headline-secondary-item",
-                            "s-headline-secondary-item",
-                            { "is-drillable": secondaryValue.isDrillable },
-                        ])}
+                        className="gd-flex-item headline-compare-section-item headline-secondary-item s-headline-secondary-item"
+                        style={{ borderLeft: "none" }} // temporary override of the original Headline styles
                         onClick={onSecondaryValueClick}
                     >
                         <div className="headline-value-wrapper s-headline-value-wrapper">
                             <ResponsiveText>
-                                {secondaryValue.isDrillable ? (
-                                    <KpiItemAsLink value={secondaryValue} />
-                                ) : (
-                                    <KpiItemAsValue value={secondaryValue} />
-                                )}
+                                <KpiItemAsValue value={secondaryValue} />
                             </ResponsiveText>
                         </div>
                         <div
@@ -110,7 +101,6 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
                     </div>
                 </div>
             ) : null}
-            {secondaryValue && <div onClick={onSecondaryValueClick}>{secondaryValue.formattedValue}</div>}
         </div>
     );
 };

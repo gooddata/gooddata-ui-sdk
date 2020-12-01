@@ -7,11 +7,14 @@ import { DashboardRenderer } from "./DashboardRenderer";
 import { useDashboardAlerts } from "../useDashboardAlerts";
 import { IDashboardViewProps } from "./types";
 import { useDashboardViewLayout } from "../useDashboardViewLayout";
+import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
+import { useLocale } from "./useLocale";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
     theme,
+    locale,
     disableThemeLoading = false,
     backend,
     workspace,
@@ -47,6 +50,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
+    const { error: localeError, result: localeData, status: localeStatus } = useLocale({
+        onError,
+        backend,
+        locale,
+    });
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -59,7 +68,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onDashboardLoaded, alertsData, dashboardData, dashboardViewLayout]);
 
-    const statuses = [dashboardStatus, alertsStatus, dashboardViewLayoutStatus];
+    const statuses = [dashboardStatus, alertsStatus, dashboardViewLayoutStatus, localeStatus];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
@@ -73,8 +82,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         return <ErrorComponent message={alertsError.message} />;
     }
 
-    if (dashboardViewLayoutError === "error") {
+    if (dashboardViewLayoutStatus === "error") {
         return <ErrorComponent message={dashboardViewLayoutError.message} />;
+    }
+
+    if (localeStatus === "error") {
+        return <ErrorComponent message={localeError.message} />;
     }
 
     const dashboardRender = (
@@ -94,9 +107,11 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     if (!hasThemeProvider && !disableThemeLoading) {
         return (
-            <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
-                {dashboardRender}
-            </ThemeProvider>
+            <InternalIntlWrapper locale={localeData}>
+                <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
+                    {dashboardRender}
+                </ThemeProvider>
+            </InternalIntlWrapper>
         );
     }
 

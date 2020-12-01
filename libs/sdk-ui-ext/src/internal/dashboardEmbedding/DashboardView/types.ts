@@ -8,6 +8,7 @@ import {
     IErrorProps,
     ILoadingProps,
     OnError,
+    ILocale,
 } from "@gooddata/sdk-ui";
 
 /**
@@ -62,6 +63,13 @@ export interface IDashboardViewProps {
      * it will be loaded for the dashboard.
      */
     theme?: ITheme;
+
+    /**
+     * Locale to use for localization of texts appearing in the dashboard.
+     *
+     * Note: text values coming from the data itself are not localized.
+     */
+    locale?: ILocale;
 
     /**
      * When true, disables the loading of the workspace theme and creation of a ThemeProvider (if there is none
