@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Add explanation tooltip to ranking filter value",
+            "comment": "A tooltip is added to the value of a ranking filter.",
             "type": "none"
         }
     ],

@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Enhance catalog-export to generate comprehensive DateDatasets mapping",
+            "comment": "The catalog-export tool generates comprehensive DateDataset mapping.",
             "type": "none"
         }
     ],

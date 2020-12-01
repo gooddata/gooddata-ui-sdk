@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "DateFilter now allows custom dateFormat",
+            "comment": "The date format option is added to the Date Filter component.",
             "type": "none"
         }
     ],

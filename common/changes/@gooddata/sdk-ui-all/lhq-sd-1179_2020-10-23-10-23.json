@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Load date format for InsightView component",
+            "comment": "The date format settings are loaded from the backend to the InsightView component.",
             "type": "none"
         }
     ],
