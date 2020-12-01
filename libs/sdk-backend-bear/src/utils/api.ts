@@ -5,7 +5,23 @@ import { Identifier, isIdentifierRef, isUriRef, ObjRef, Uri } from "@gooddata/sd
 import { BearAuthenticatedCallGuard } from "../types/auth";
 
 /**
+ * Returns a user uri. This is used in some bear client calls.
+ * If there is no user available, returns null instead.
+ * @param getPrincipal - function to obtain currently authenticated principal to get the data from
+ *
+ * @internal
+ */
+export const userUriFromAuthenticatedPrincipalWithAnonymous = async (
+    getPrincipal: () => Promise<IAuthenticatedPrincipal>,
+): Promise<string | null> => {
+    const principal = await getPrincipal();
+    const selfLink: string = principal.userMeta?.links?.self;
+    return selfLink ?? null;
+};
+
+/**
  * Returns a user uri. This is used in some bear client calls
+ * If there is no user available, throws an error.
  * @param getPrincipal - function to obtain currently authenticated principal to get the data from
  *
  * @internal
@@ -13,8 +29,7 @@ import { BearAuthenticatedCallGuard } from "../types/auth";
 export const userUriFromAuthenticatedPrincipal = async (
     getPrincipal: () => Promise<IAuthenticatedPrincipal>,
 ): Promise<string> => {
-    const principal = await getPrincipal();
-    const selfLink: string = principal.userMeta?.links?.self;
+    const selfLink = await userUriFromAuthenticatedPrincipalWithAnonymous(getPrincipal);
 
     if (!selfLink) {
         throw new UnexpectedError("Cannot obtain the current user uri");
