@@ -3,23 +3,52 @@
 import React, { useState } from "react";
 import { SourceContainer } from "./SourceContainer";
 
-interface IExampleWithSourceProps {
-    for: React.ComponentType;
+interface ISourceSectionProps {
     source: string;
     sourceJS?: string;
 }
+
+interface IExampleWithSourceProps extends ISourceSectionProps {
+    for: React.ComponentType;
+}
+
+const SourceSection: React.FC<ISourceSectionProps> = ({ source, sourceJS }) => {
+    const [hidden, setState] = useState(true);
+    const [viewJS, setViewJS] = useState(true);
+    const switchLang = (switchToJS: boolean) => setViewJS(switchToJS);
+    const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
+
+    return (
+        <div className="source">
+            <style jsx>{`
+                .source {
+                    margin: 20px 0;
+                }
+
+                :global(pre) {
+                    overflow: auto;
+                }
+            `}</style>
+            <button
+                className={`gd-button gd-button-secondary button-dropdown icon-right ${iconClassName}`}
+                onClick={() => setState(!hidden)}
+            >
+                source code
+            </button>
+            {hidden ? (
+                ""
+            ) : (
+                <SourceContainer toggleIsJS={switchLang} isJS={viewJS} source={source} sourceJS={sourceJS} />
+            )}
+        </div>
+    );
+};
 
 export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
     for: Component,
     source,
     sourceJS,
 }) => {
-    const [hidden, setState] = useState<boolean>(true);
-    const [viewJS, setViewJS] = useState<boolean>(true);
-    const toggle = () => setState(!hidden);
-    const switchLang = (switchToJS: boolean) => setViewJS(switchToJS);
-    const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
-
     return (
         <div className="example-with-source">
             <style jsx>{`
@@ -37,36 +66,11 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
                     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
                     background-color: white;
                 }
-
-                .source {
-                    margin: 20px 0;
-                }
-
-                :global(pre) {
-                    overflow: auto;
-                }
             `}</style>
             <div className="example">
                 <Component />
             </div>
-            <div className="source">
-                <button
-                    className={`gd-button gd-button-secondary button-dropdown icon-right ${iconClassName}`}
-                    onClick={toggle}
-                >
-                    source code
-                </button>
-                {hidden ? (
-                    ""
-                ) : (
-                    <SourceContainer
-                        toggleIsJS={switchLang}
-                        isJS={viewJS}
-                        source={source}
-                        sourceJS={sourceJS}
-                    />
-                )}
-            </div>
+            <SourceSection source={source} sourceJS={sourceJS} />
         </div>
     );
 };

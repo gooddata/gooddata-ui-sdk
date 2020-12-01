@@ -3,27 +3,7 @@ import compact from "lodash/compact";
 import flatMap from "lodash/flatMap";
 import { DrillDefinition } from "@gooddata/sdk-backend-spi";
 import { isLocalIdRef, isIdentifierRef, isUriRef } from "@gooddata/sdk-model";
-import { HeaderPredicates, IAvailableDrillTargets, IHeaderPredicate } from "@gooddata/sdk-ui";
-
-export function availableDrillTargetsToDrillPredicates(
-    availableDrillTargets: IAvailableDrillTargets,
-): IHeaderPredicate[] {
-    const attributeDrills =
-        availableDrillTargets.attributes?.map((attr) =>
-            HeaderPredicates.localIdentifierMatch(attr.attribute.attributeHeader.localIdentifier),
-        ) ?? [];
-
-    const measureDrills = flatMap(availableDrillTargets.measures, (measure) => {
-        return [
-            HeaderPredicates.localIdentifierMatch(measure.measure.measureHeaderItem.localIdentifier),
-            ...measure.attributes.map((attr) =>
-                HeaderPredicates.localIdentifierMatch(attr.attributeHeader.localIdentifier),
-            ),
-        ];
-    });
-
-    return compact([...attributeDrills, ...measureDrills]);
-}
+import { HeaderPredicates, IHeaderPredicate } from "@gooddata/sdk-ui";
 
 export function widgetDrillsToDrillPredicates(drills: DrillDefinition[]): IHeaderPredicate[] {
     return flatMap(drills, (drill): IHeaderPredicate[] => {

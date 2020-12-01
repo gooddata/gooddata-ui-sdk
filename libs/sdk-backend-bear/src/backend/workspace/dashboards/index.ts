@@ -48,7 +48,7 @@ import {
     objRefToUri,
     objRefsToUris,
     getObjectIdFromUri,
-    userUriFromAuthenticatedPrincipal,
+    userUriFromAuthenticatedPrincipalWithAnonymous,
 } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
 import { WidgetReferencesQuery } from "./widgetReferences";
@@ -576,9 +576,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Alerts
     private getAllBearKpiAlertsForCurrentUser = async (): Promise<GdcMetadata.IWrappedKpiAlert[]> => {
         return this.authCall(async (sdk, context) => {
+            const author = await userUriFromAuthenticatedPrincipalWithAnonymous(context.getPrincipal);
+            if (!author) {
+                return [];
+            }
             return sdk.md.getObjectsByQuery<GdcMetadata.IWrappedKpiAlert>(this.workspace, {
                 category: "kpiAlert",
-                author: await userUriFromAuthenticatedPrincipal(context.getPrincipal),
+                author,
             });
         });
     };

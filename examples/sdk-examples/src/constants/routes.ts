@@ -40,6 +40,7 @@ import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
 import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
+import { DashboardView } from "../examples/dashboardEmbedding";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -215,6 +216,7 @@ export const hiddenPaths = [
         Component: PivotTableSizing,
     },
     { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
+    { path: "/hidden/dashboard-view", title: "DashboardView", Component: DashboardView },
 ];
 
 export const backendInfoRoutes = [
