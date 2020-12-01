@@ -194,6 +194,7 @@ export namespace GdcMetadata {
                 title?: {
                     color?: ThemeColor;
                     backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
                 };
                 section?: {
                     title?: {
@@ -206,6 +207,7 @@ export namespace GdcMetadata {
                 };
                 filterBar?: {
                     backgroundColor?: ThemeColor;
+                    borderColor?: ThemeColor;
                     filterButton?: {
                         backgroundColor?: ThemeColor;
                     };
