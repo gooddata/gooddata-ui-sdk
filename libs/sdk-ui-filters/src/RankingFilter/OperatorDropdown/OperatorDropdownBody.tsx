@@ -1,9 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
-import { RankingFilterOperator } from "@gooddata/sdk-model";
-import { OperatorDropdownItem } from "./OperatorDropdownItem";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import { RankingFilterOperator } from "@gooddata/sdk-model";
+import { Overlay } from "@gooddata/sdk-ui-kit";
+
+import { OperatorDropdownItem } from "./OperatorDropdownItem";
 import { IOperatorDropdownItem } from "../types";
 
 interface IOperatorDropdownBodyComponentOwnProps {

@@ -58,5 +58,9 @@ export interface IOptimalAlignment {
 /**
  * @internal
  */
+export type SameAsTargetPosition = "sameAsTarget";
 
-export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
+/**
+ * @internal
+ */
+export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;

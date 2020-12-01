@@ -2,7 +2,7 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IntlWrapper, ISeparators } from "@gooddata/sdk-ui";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 import { DropdownBody } from "./DropdownBody";
 import { MeasureValueFilterOperator, IMeasureValueFilterValue } from "./types";
 import { WarningMessage } from "./typings";
@@ -23,7 +23,7 @@ interface IDropdownOwnProps {
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
-    anchorEl: EventTarget | string;
+    anchorEl: HTMLElement | string;
     separators?: ISeparators;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;

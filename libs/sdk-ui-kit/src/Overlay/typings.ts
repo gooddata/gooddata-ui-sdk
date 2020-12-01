@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import { IAlignPoint } from "../typings/positioning";
-import { Alignment } from "../typings/overlay";
+import { Alignment, OverlayPositionType } from "../typings/overlay";
 
 /**
  * @internal
@@ -24,7 +24,7 @@ export interface IOverlayProps<T> {
     ignoreClicksOnByClass?: string[];
 
     isModal?: boolean;
-    onAlign?: (optiimalAlign: Alignment) => void;
+    onAlign?: (optimalAlign: Alignment) => void;
     onClose?: () => void;
     /**
      * positionType: sameAsTarget
@@ -34,7 +34,8 @@ export interface IOverlayProps<T> {
      *  - the overlay's offsets (top, left) will be calculated based on
      *    target's offsets (top, left), without scroll offsets
      */
-    positionType?: string;
+    positionType?: OverlayPositionType;
+
     shouldCloseOnClick?: (e: React.MouseEvent) => boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;

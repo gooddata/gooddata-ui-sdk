@@ -3,10 +3,10 @@ import React, { useState, useCallback } from "react";
 import { CSSTransitionGroup } from "react-transition-group";
 import noop from "lodash/noop";
 import cx from "classnames";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 
 import { Message } from "./Message";
 import { IMessage, IMessagesProps } from "./typings";
+import { Overlay } from "../Overlay";
 
 /**
  * @internal

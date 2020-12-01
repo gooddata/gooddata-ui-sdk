@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
+import { Overlay } from "../Overlay";
 import { ConfirmDialogBase } from "./ConfirmDialogBase";
 import { IConfirmDialogBaseProps } from "./typings";
 

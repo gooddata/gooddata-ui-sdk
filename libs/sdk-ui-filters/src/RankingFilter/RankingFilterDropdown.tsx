@@ -1,8 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React, { useState } from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 import { RankingFilterDropdownBody } from "./RankingFilterDropdownBody";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IMeasureDropdownItem, IAttributeDropdownItem, ICustomGranularitySelection } from "./types";
@@ -37,7 +37,7 @@ export interface IRankingFilterDropdownProps {
     onCancel?: () => void;
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
-    anchorEl?: EventTarget | string;
+    anchorEl?: HTMLElement | string;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
 }

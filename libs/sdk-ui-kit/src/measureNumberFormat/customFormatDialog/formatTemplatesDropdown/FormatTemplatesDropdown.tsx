@@ -1,10 +1,10 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ISeparators } from "@gooddata/sdk-ui";
 import DropdownItem from "./DropdownItem";
 import DropdownToggleButton from "./DropdownToggleButton";
 import { IFormatTemplate } from "../../typings";
+import { Overlay } from "../../../Overlay";
 
 interface ICustomFormatTemplatesState {
     isOpened: boolean;

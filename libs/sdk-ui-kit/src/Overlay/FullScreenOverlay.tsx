@@ -18,7 +18,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         });
     }
 
-    componentWillMount() {
+    componentWillMount(): void {
         const { body } = document;
 
         const { overflow } = getComputedStyle(body);
@@ -33,7 +33,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         body.scrollTop = 0;
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         super.componentWillUnmount();
 
         const { body } = document;
@@ -41,7 +41,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         body.scrollTop = this.state.scrollTop;
     }
 
-    getOverlayStyles() {
+    protected getOverlayStyles = (): React.CSSProperties => {
         return {
             position: "fixed",
             left: 0,
@@ -49,5 +49,5 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
             bottom: 0,
             right: 0,
         };
-    }
+    };
 }
