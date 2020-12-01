@@ -49,7 +49,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     entity: "analyticalDashboards",
                     workspaceId: this.workspace,
-                    organizationId: "dummy",
                     id,
                 },
                 {
@@ -74,7 +73,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     entity: "analyticalDashboards",
                     workspaceId: this.workspace,
-                    organizationId: "dummy",
                     analyticsObject: {
                         data: {
                             id: uuid4(),
@@ -110,7 +108,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 entity: "analyticalDashboards",
                 id: id,
                 workspaceId: this.workspace,
-                organizationId: "dummy",
             }),
         );
     };
