@@ -8,13 +8,13 @@ import uniqueId from "lodash/uniqueId";
 import debounce from "lodash/debounce";
 
 import addCSS from "@gooddata/goodstrap/lib/core/addCSS";
-import { removeFromDom } from "@gooddata/goodstrap/lib/core/domUtilities";
+
 import HeaderMenu from "@gooddata/goodstrap/lib/Header/HeaderMenu";
 import HeaderAccount from "@gooddata/goodstrap/lib/Header/HeaderAccount";
 import HeaderHelp from "@gooddata/goodstrap/lib/Header/HeaderHelp";
-import Overlay from "@gooddata/goodstrap/lib/@next/Overlay";
 
 import { Button } from "../Button";
+import { Overlay } from "../Overlay";
 
 import {
     getItemActiveColor,
@@ -23,6 +23,7 @@ import {
     getSeparatorColor,
     getWorkspacePickerHoverColor,
 } from "./colors";
+import { removeFromDom } from "../utils/domUtilities";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;

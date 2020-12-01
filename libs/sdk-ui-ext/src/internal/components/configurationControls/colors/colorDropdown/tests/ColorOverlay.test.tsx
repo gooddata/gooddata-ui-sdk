@@ -3,7 +3,8 @@ import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
+import { Overlay } from "@gooddata/sdk-ui-kit";
+
 import ColorOverlay, { IColorOverlayProps, DropdownVersionType } from "../ColorOverlay";
 
 const defaultProps: IColorOverlayProps = {

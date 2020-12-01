@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { shallow } from "enzyme";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { Dialog } from "../Dialog";
+import { Overlay } from "../../Overlay";
 
 describe("Dialog", () => {
     it("should render content", () => {

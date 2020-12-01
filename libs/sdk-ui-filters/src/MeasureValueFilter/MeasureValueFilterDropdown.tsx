@@ -19,7 +19,7 @@ import { IMeasureValueFilterCommonProps } from "./typings";
  */
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     onCancel: () => void;
-    anchorEl?: EventTarget | string;
+    anchorEl?: HTMLElement | string;
 }
 
 const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {

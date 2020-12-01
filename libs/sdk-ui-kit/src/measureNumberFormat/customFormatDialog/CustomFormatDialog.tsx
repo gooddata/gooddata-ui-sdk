@@ -1,12 +1,12 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { IPositioning, SnapPoint } from "../../typings/positioning";
 import { positioningToAlignPoints } from "../../utils/positioning";
 import { Button } from "../../Button";
+import { Overlay } from "../../Overlay";
 import { IFormatTemplate } from "../typings";
 import Preview from "./previewSection/Preview";
 import FormatInput from "./FormatInput";
@@ -17,7 +17,7 @@ interface ICustomFormatDialogOwnProps {
     onCancel: () => void;
     formatString: string;
     documentationLink?: string;
-    anchorEl?: string | EventTarget;
+    anchorEl?: string | HTMLElement;
     positioning?: IPositioning[];
     separators?: ISeparators;
     locale?: string;

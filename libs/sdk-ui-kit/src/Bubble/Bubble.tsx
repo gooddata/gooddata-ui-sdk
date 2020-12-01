@@ -5,11 +5,11 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import result from "lodash/result";
 import cx from "classnames";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { propsEqual } from "@gooddata/goodstrap/lib/core/immutable";
 
 import { IAlignPoint } from "../typings/positioning";
 import { ArrowDirections, ArrowOffsets } from "./typings";
+import { Overlay } from "../Overlay";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",

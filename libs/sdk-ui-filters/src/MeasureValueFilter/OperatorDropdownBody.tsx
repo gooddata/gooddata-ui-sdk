@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
-import { Separator } from "@gooddata/sdk-ui-kit";
+import { Separator, Overlay } from "@gooddata/sdk-ui-kit";
 
 import OperatorDropdownItem from "./OperatorDropdownItem";
 import { MeasureValueFilterOperator } from "./types";

@@ -1,8 +1,10 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import get from "lodash/get";
-import Message from "@gooddata/goodstrap/lib/Messages/Message";
+
 import { WrappedComponentProps, injectIntl } from "react-intl";
+
+import { Message } from "@gooddata/sdk-ui-kit";
 
 import ConfigSubsection from "../configurationControls/ConfigSubsection";
 import InputControl from "../configurationControls/InputControl";

@@ -245,13 +245,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
-    getOverlayStyles(): {
-        position: string;
-        left: number;
-        top: number;
-        bottom: number;
-        right: number;
-    };
+    protected getOverlayStyles: () => React.CSSProperties;
 }
 
 // @internal (undocumented)
@@ -1469,7 +1463,7 @@ export interface IOverlayProps<T> {
     // (undocumented)
     isModal?: boolean;
     // (undocumented)
-    onAlign?: (optiimalAlign: Alignment) => void;
+    onAlign?: (optimalAlign: Alignment) => void;
     // (undocumented)
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)
@@ -1478,7 +1472,7 @@ export interface IOverlayProps<T> {
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-    positionType?: string;
+    positionType?: OverlayPositionType;
     // (undocumented)
     shouldCloseOnClick?: (e: React.MouseEvent) => boolean;
     // (undocumented)
@@ -1787,14 +1781,14 @@ export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelec
 export function normalizeTime(time: Date): Date;
 
 // @internal (undocumented)
-export class Overlay<T> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
+export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
     constructor(props: IOverlayProps<T>);
     // (undocumented)
-    clickedInside: boolean;
+    align: () => void;
     // (undocumented)
     closeOnEscape(e: React_2.KeyboardEvent): void;
     // (undocumented)
-    closeOnMouseDrag(): void;
+    closeOnMouseDrag: () => void;
     // (undocumented)
     closeOnOutsideClick(e: React_2.MouseEvent): void;
     // (undocumented)
@@ -1808,15 +1802,9 @@ export class Overlay<T> extends React_2.Component<IOverlayProps<T>, IOverlayStat
     // (undocumented)
     static defaultProps: Partial<IOverlayProps<any>>;
     // (undocumented)
-    getOverlayClasses(): string;
-    // (undocumented)
-    getOverlayStyles(): any;
-    // (undocumented)
-    isComponentMounted: boolean;
+    protected getOverlayStyles: () => React_2.CSSProperties;
     // (undocumented)
     onDocumentMouseDown(e: React_2.MouseEvent): void;
-    // (undocumented)
-    portalNode: HTMLDivElement;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)
@@ -1826,13 +1814,16 @@ export class Overlay<T> extends React_2.Component<IOverlayProps<T>, IOverlayStat
     }
 
 // @internal (undocumented)
-export type OverlayPositionType = "absolute" | "fixed" | "sameAsTarget";
+export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export type SameAsTargetPosition = "sameAsTarget";
 
 // @internal (undocumented)
 export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;

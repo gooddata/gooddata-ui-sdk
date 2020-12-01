@@ -1,19 +1,21 @@
-// (C) 2007-2020 GoodData Corporation
-import React from "react";
+// (C) 2020 GoodData Corporation
+import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
+
 import bindAll from "lodash/bindAll";
 import pick from "lodash/pick";
 import isEqual from "lodash/isEqual";
 import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
+import noop from "lodash/noop";
 import "element-closest-polyfill";
 import { propsEqual } from "@gooddata/goodstrap/lib/core/immutable";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
-import { Alignment } from "../typings/overlay";
+import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },
@@ -46,43 +48,38 @@ function alignExceedsThreshold(firstAlignment: Alignment, secondAlignment: Align
     );
 }
 
-const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
-};
+const stopPropagation = (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => e.stopPropagation();
 
 /**
  * @internal
  */
-export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState> {
-    private containerRef = React.createRef<HTMLElement>();
-    private overlayRef = React.createRef<HTMLDivElement>();
-
-    static defaultProps: Partial<IOverlayProps<any>> = {
+export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, IOverlayState> {
+    public static defaultProps: Partial<IOverlayProps<any>> = {
         alignPoints: DEFAULT_ALIGN_POINTS,
         alignTo: "body",
         children: false,
         className: "",
         containerClassName: "",
-        closeOnMouseDrag: false,
-        closeOnOutsideClick: false,
-        closeOnParentScroll: false,
-        closeOnEscape: false,
+        positionType: "absolute",
+
         ignoreClicksOn: [],
         ignoreClicksOnByClass: [],
-        isModal: false,
-        onAlign: (): void => {},
-        onClose: (): void => {},
-        positionType: "absolute",
+
         shouldCloseOnClick: () => true,
+
         onClick: stopPropagation,
         onMouseOver: stopPropagation,
         onMouseUp: stopPropagation,
-        zIndex: undefined,
+        onAlign: noop,
+        onClose: noop,
     };
 
-    isComponentMounted: boolean;
-    clickedInside: boolean;
-    portalNode: HTMLDivElement;
+    private overlayRef = createRef<HTMLDivElement>();
+    private containerRef = createRef<HTMLSpanElement>();
+    private resizeHandler = debounce(() => this.align(), 100);
+    private portalNode: HTMLDivElement | null = null;
+    private isComponentMounted: boolean;
+    private clickedInside: boolean;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -99,9 +96,6 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         this.isComponentMounted = false;
         this.clickedInside = false;
 
-        this.align = this.align.bind(this);
-        this.onMaskClick = this.onMaskClick.bind(this);
-
         bindAll(
             this,
             events.map((event) => event.handler),
@@ -110,7 +104,7 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         this.createPortalNode();
     }
 
-    public componentDidMount() {
+    public componentDidMount(): void {
         this.isComponentMounted = true;
 
         window.addEventListener("resize", this.resizeHandler);
@@ -129,7 +123,7 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         }
     }
 
-    public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState) {
+    public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
         const propsChanged = !propsEqual(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
 
@@ -152,141 +146,40 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         this.removePortalNodeAfterAllTreeUnmount();
     }
 
-    private onMaskClick(e: React.MouseEvent<HTMLDivElement>) {
-        if (!this.props.closeOnOutsideClick) {
-            e.stopPropagation();
-        }
-    }
-
-    public getOverlayStyles(): any {
-        const { alignTo, positionType, zIndex } = this.props;
-        const { alignment } = this.state;
-
-        let position = positionType;
-        if (this.isSameAsTargetPosition(positionType)) {
-            position = isFixedPosition(alignTo) ? "fixed" : "absolute";
-        }
-
-        return {
-            position,
-            left: alignment.left,
-            top: alignment.top,
-            zIndex,
-        };
-    }
-
-    getOverlayClasses(): string {
-        return cx(this.props.className, this.getAlignClasses(), {
-            "overlay-wrapper": true,
-        });
-    }
-
-    /**
-     * Add CSS classes to overlay wrapper, so they can be used
-     * for position of arrows and stuff
-     */
-    private getAlignClasses(): string {
-        const align = this.state.alignment.align.split(" ");
-
-        return `target-${align[0]} self-${align[1]}`;
-    }
-
-    private createPortalNode(): void {
-        this.portalNode = document.createElement("div");
-        document.body.appendChild(this.portalNode);
-    }
-
-    private removePortalNodeAfterAllTreeUnmount(): void {
-        setTimeout(() => {
-            if (this.portalNode && document.body.contains(this.portalNode)) {
-                document.body.removeChild(this.portalNode);
-            }
-            this.portalNode = null;
-        });
-    }
-
-    private isSameAsTargetPosition = (positionType: string): boolean => {
-        return positionType === POSITION_SAME_AS_TARGET;
-    };
-
-    private resizeHandler = debounce(() => this.align(), 100);
-
-    private isEventOnParent(event: any) {
-        const node = this.containerRef.current;
-        const eventNode = (event.detail && event.detail.node) || event.target;
-        return eventNode.contains(node);
-    }
-
-    private shouldCloseOnClick(e: React.MouseEvent) {
-        if (!this.isComponentMounted) {
-            return false;
-        }
-
-        if (!this.isAligned()) {
-            return false;
-        }
-
-        // an ignored node has been clicked, always keep the overlay open
-        if (this.hasClickedOnIgnoredNode(e)) {
-            return false;
-        }
-
-        // non-ignored node clicked, give shouldCloseOnClick the chance
-        // to override closing the dialog
-        if (!this.props.shouldCloseOnClick(e)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private hasClickedOnIgnoredNode(e: any) {
-        if (e.defaultPrevented) {
-            // Ignore event if it should be prevented (e.q. by click in child component)
-            return true;
-        }
-
-        const clickedElement = e.target;
-
-        if (this.isElementInChildOverlay(clickedElement) || this.clickedInside) {
-            return true;
-        }
-
-        const ignoredRefElements = [this.overlayRef.current, ...this.props.ignoreClicksOn];
-        const clickInsideIgnoredRefElement = ignoredRefElements.some((ref: any) => {
-            return ref && ref.contains(clickedElement);
-        });
-        if (clickInsideIgnoredRefElement) {
-            return true;
-        }
-
-        const clickInsideIgnoredClassElement = this.props.ignoreClicksOnByClass.some((selector: string) =>
-            clickedElement.closest(selector),
+    public render(): React.ReactNode {
+        // Need stop propagation of events from Portal thats new behavior of react 16
+        // https://github.com/facebook/react/issues/11387
+        return (
+            <span className="s-portal-scroll-anchor" ref={this.containerRef}>
+                <Portal node={this.portalNode}>
+                    {/* Do not prevent onScroll events - see ONE-4189 for details */}
+                    <div
+                        className={this.props.containerClassName}
+                        onClick={this.props.onClick}
+                        onMouseOver={this.props.onMouseOver}
+                        onMouseUp={this.props.onMouseUp}
+                    >
+                        {this.renderMask()}
+                        <div
+                            ref={this.overlayRef}
+                            style={this.getOverlayStyles()}
+                            className={this.getOverlayClasses()}
+                        >
+                            {this.props.children}
+                        </div>
+                    </div>
+                </Portal>
+            </span>
         );
-        if (clickInsideIgnoredClassElement) {
-            return true;
-        }
-
-        return false;
     }
 
-    private isAligned() {
-        return this.state.alignment.left !== INIT_STATE_ALIGN && this.state.alignment.top != INIT_STATE_ALIGN;
-    }
-
-    // makes assumption that overlays later in the DOM are child overlays
-    private isElementInChildOverlay(element: HTMLElement) {
-        const overlays = Array.from(document.querySelectorAll(".overlay-wrapper"));
-        const thisOverlayIndex = findIndex(overlays, (overlay) => overlay === this.overlayRef.current);
-
-        return overlays.slice(thisOverlayIndex + 1).some((overlay) => overlay.contains(element));
-    }
-
-    private align(): void {
+    public align = (): void => {
         const { alignPoints, alignTo, positionType } = this.props;
-        const overlay: any = this.overlayRef.current;
+        const overlay = this.overlayRef.current;
 
-        if (!alignPoints || !overlay) return;
+        if (!alignPoints || !overlay) {
+            return;
+        }
 
         const isSameAsTarget = this.isSameAsTargetPosition(positionType);
         const optimalAlign = getOptimalAlignment({
@@ -308,6 +201,141 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         } else {
             this.props.onAlign(optimalAlign.alignment);
         }
+    };
+
+    private onMaskClick(e: React.MouseEvent<HTMLDivElement>) {
+        if (!this.props.closeOnOutsideClick) {
+            e.stopPropagation();
+        }
+    }
+
+    protected getOverlayStyles = (): React.CSSProperties => {
+        const { alignTo, positionType, zIndex } = this.props;
+        const { alignment } = this.state;
+
+        const position = this.isSameAsTargetPosition(positionType)
+            ? isFixedPosition(alignTo)
+                ? "fixed"
+                : "absolute"
+            : positionType;
+
+        return {
+            position,
+            left: alignment.left,
+            top: alignment.top,
+            zIndex,
+        };
+    };
+
+    private getOverlayClasses = (): string => {
+        return cx(this.props.className, this.getAlignClasses(), {
+            "overlay-wrapper": true,
+        });
+    };
+
+    /**
+     * Add CSS classes to overlay wrapper, so they can be used
+     * for position of arrows and stuff
+     */
+    private getAlignClasses = (): string => {
+        const align = this.state.alignment.align.split(" ");
+
+        return `target-${align[0]} self-${align[1]}`;
+    };
+
+    private createPortalNode(): void {
+        this.portalNode = document.createElement("div");
+        document.body.appendChild(this.portalNode);
+    }
+
+    private removePortalNodeAfterAllTreeUnmount(): void {
+        setTimeout(() => {
+            if (this.portalNode && document.body.contains(this.portalNode)) {
+                document.body.removeChild(this.portalNode);
+            }
+            this.portalNode = null;
+        });
+    }
+
+    private isSameAsTargetPosition = (
+        positionType: OverlayPositionType,
+    ): positionType is SameAsTargetPosition => {
+        return positionType === POSITION_SAME_AS_TARGET;
+    };
+
+    private isEventOnParent = (event: any) => {
+        const node = this.containerRef.current;
+        const eventNode = (event.detail && event.detail.node) || event.target;
+        return eventNode.contains(node);
+    };
+
+    private shouldCloseOnClick = (e: React.MouseEvent) => {
+        if (!this.isComponentMounted) {
+            return false;
+        }
+
+        if (!this.isAligned()) {
+            return false;
+        }
+
+        // an ignored node has been clicked, always keep the overlay open
+        if (this.hasClickedOnIgnoredNode(e)) {
+            return false;
+        }
+
+        // non-ignored node clicked, give shouldCloseOnClick the chance
+        // to override closing the dialog
+        if (!this.props.shouldCloseOnClick(e)) {
+            return false;
+        }
+
+        return true;
+    };
+
+    private hasClickedOnIgnoredNode = (e: any) => {
+        if (e.defaultPrevented) {
+            // Ignore event if it should be prevented (e.q. by click in child component)
+            return true;
+        }
+
+        const clickedElement = e.target;
+
+        if (this.isElementInChildOverlay(clickedElement) || this.clickedInside) {
+            return true;
+        }
+
+        const ignoredRefElements = [this.overlayRef.current, ...this.props.ignoreClicksOn];
+        const clickInsideIgnoredRefElement = ignoredRefElements.some((ref: any) => {
+            return ref && ref.contains(clickedElement);
+        });
+        if (clickInsideIgnoredRefElement) {
+            return true;
+        }
+
+        const clickInsideIgnoredClassElement = this.props.ignoreClicksOnByClass.some((selector) =>
+            clickedElement.closest(selector),
+        );
+        if (clickInsideIgnoredClassElement) {
+            return true;
+        }
+
+        return false;
+    };
+
+    private isAligned = () => {
+        return this.state.alignment.left !== INIT_STATE_ALIGN && this.state.alignment.top != INIT_STATE_ALIGN;
+    };
+
+    // makes assumption that overlays later in the DOM are child overlays
+    private isElementInChildOverlay = (element: HTMLElement) => {
+        const overlays = Array.from(document.querySelectorAll(".overlay-wrapper"));
+        const thisOverlayIndex = findIndex(overlays, (overlay) => overlay === this.overlayRef.current);
+
+        return overlays.slice(thisOverlayIndex + 1).some((overlay) => overlay.contains(element));
+    };
+
+    public onDocumentMouseDown(e: React.MouseEvent): void {
+        this.clickedInside = (this.overlayRef.current as any).contains(e.target);
     }
 
     public closeOnParentScroll(e: React.MouseEvent): void {
@@ -320,22 +348,18 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         }
     }
 
-    public closeOnMouseDrag(): void {
+    public closeOnMouseDrag = (): void => {
         if (!this.isComponentMounted) {
             return;
         }
 
         this.props.onClose();
-    }
+    };
 
     public closeOnOutsideClick(e: React.MouseEvent): void {
         if (this.shouldCloseOnClick(e)) {
             this.props.onClose();
         }
-    }
-
-    public onDocumentMouseDown(e: React.MouseEvent): void {
-        this.clickedInside = (this.overlayRef.current as any).contains(e.target);
     }
 
     public closeOnEscape(e: React.KeyboardEvent): void {
@@ -348,7 +372,7 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
         }
     }
 
-    private updateListeners(method: string, props: IOverlayProps<T>) {
+    private updateListeners = (method: string, props: IOverlayProps<T>) => {
         events.forEach((event) => {
             if (props[event.handler] || props[event.requiredProp]) {
                 const handler = this[event.handler];
@@ -357,49 +381,21 @@ export class Overlay<T> extends React.Component<IOverlayProps<T>, IOverlayState>
                 }
             }
         });
-    }
+    };
 
-    private addListeners(props: IOverlayProps<T>): void {
+    private addListeners = (props: IOverlayProps<T>) => {
         this.updateListeners("add", props);
-    }
+    };
 
-    private removeListeners(props: IOverlayProps<T>): void {
+    private removeListeners = (props: IOverlayProps<T>) => {
         this.updateListeners("remove", props);
-    }
+    };
 
-    private renderMask(): false | JSX.Element {
+    private renderMask = (): false | JSX.Element => {
         return this.props.isModal ? (
             <div className="modalityPlugin-mask modalityPlugin-mask-visible" onClick={this.onMaskClick} />
         ) : (
             false
         );
-    }
-
-    public render(): React.ReactNode {
-        // Need stop propagation of events from Portal thats new behavior of react 16
-        // https://github.com/facebook/react/issues/11387
-        return (
-            <span className="s-portal-scroll-anchor" ref={this.containerRef}>
-                <Portal node={this.portalNode}>
-                    {/* Do not prevent onScroll events - see ONE-4189 for details */}
-                    <div
-                        className={this.props.containerClassName}
-                        onClick={this.props.onClick}
-                        onMouseOver={this.props.onMouseOver}
-                        onMouseUp={this.props.onMouseUp}
-                    >
-                        {this.renderMask()}
-
-                        <div
-                            ref={this.overlayRef}
-                            style={this.getOverlayStyles()}
-                            className={this.getOverlayClasses()}
-                        >
-                            {this.props.children}
-                        </div>
-                    </div>
-                </Portal>
-            </span>
-        );
-    }
+    };
 }

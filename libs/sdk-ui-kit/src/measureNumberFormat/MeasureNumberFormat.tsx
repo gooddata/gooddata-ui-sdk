@@ -40,7 +40,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
     MeasureNumberFormatProps,
     IMeasureNumberFormatState
 > {
-    private toggleButtonEl?: EventTarget;
+    private toggleButtonEl?: HTMLElement;
 
     constructor(props: MeasureNumberFormatProps) {
         super(props);
@@ -116,7 +116,7 @@ class WrappedMeasureNumberFormat extends React.PureComponent<
         this.props.presets.find((preset: IFormatPreset) => preset.format === this.props.selectedFormat) ||
         this.getCustomFormatPreset();
 
-    private toggleDropdownOpened = (e: React.SyntheticEvent) => {
+    private toggleDropdownOpened = (e: React.SyntheticEvent<HTMLElement>) => {
         this.toggleButtonEl = e.currentTarget;
 
         this.setState((state) => ({

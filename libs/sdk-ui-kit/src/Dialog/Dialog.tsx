@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { Component } from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
+import { Overlay } from "../Overlay";
 import { DialogBase } from "./DialogBase";
 import { IDialogBaseProps } from "./typings";
 

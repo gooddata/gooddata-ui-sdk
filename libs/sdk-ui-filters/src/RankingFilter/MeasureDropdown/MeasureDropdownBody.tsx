@@ -1,7 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { objRefToString, areObjRefsEqual, ObjRefInScope } from "@gooddata/sdk-model";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 import { MeasureDropdownItem } from "./MeasureDropdownItem";
 import { IMeasureDropdownItem } from "../types";
 

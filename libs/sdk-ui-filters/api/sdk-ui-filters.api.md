@@ -246,7 +246,7 @@ export interface IMeasureValueFilterCommonProps {
 // @beta (undocumented)
 export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCommonProps {
     // (undocumented)
-    anchorEl?: EventTarget | string;
+    anchorEl?: HTMLElement | string;
     // (undocumented)
     onCancel: () => void;
 }
@@ -268,7 +268,7 @@ export interface IMeasureValueFilterState {
 // @beta (undocumented)
 export interface IRankingFilterDropdownProps {
     // (undocumented)
-    anchorEl?: EventTarget | string;
+    anchorEl?: HTMLElement | string;
     // (undocumented)
     attributeItems: IAttributeDropdownItem[];
     // (undocumented)

@@ -1,13 +1,13 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps } from "react-intl";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
 import { ISeparators } from "@gooddata/sdk-ui";
 
 import { IFormatPreset } from "../typings";
 import { PresetsDropdownItem } from "./PresetsDropdownItem";
 import { IPositioning, SnapPoint } from "../../typings/positioning";
 import { positioningToAlignPoints } from "../../utils/positioning";
+import { Overlay } from "../../Overlay";
 
 interface IMeasureNumberFormatDropdownOwnProps {
     presets: ReadonlyArray<IFormatPreset>;
@@ -16,7 +16,7 @@ interface IMeasureNumberFormatDropdownOwnProps {
     separators: ISeparators;
     onSelect: (selectedPreset: IFormatPreset) => void;
     onClose: () => void;
-    anchorEl?: string | EventTarget;
+    anchorEl?: string | HTMLElement;
     positioning?: IPositioning[];
 }
 

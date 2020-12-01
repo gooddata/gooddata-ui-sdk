@@ -1,6 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import Overlay from "@gooddata/goodstrap/lib/core/Overlay";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 
 export enum DropdownVersionType {
     ColorPalette,
