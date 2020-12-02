@@ -808,5 +808,45 @@
         "value": "prev. period",
         "comment": "",
         "limit": 0
+    },
+    "filters.allTime.lastYear": {
+        "value": "prev. year",
+        "comment": "",
+        "limit": 0
+    },
+    "filters.day.previousPeriod": {
+        "value": "prev. {n, plural, one {day} other {#d}}",
+        "comment": "In '{n, plural, one {DAY} other {#D}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#d}', wrong '{#d.}').",
+        "limit": 0
+    },
+    "filters.week.previousPeriod": {
+        "value": "prev. {n, plural, one {week} other {#w}}",
+        "comment": "In '{n, plural, one {WEEK} other {#W}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#w}', wrong '{#w.}').",
+        "limit": 0
+    },
+    "filters.month.previousPeriod": {
+        "value": "prev. {n, plural, one {month} other {#m}}",
+        "comment": "In '{n, plural, one {MONTH} other {#M}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#m}', wrong '{#m.}').",
+        "limit": 0
+    },
+    "filters.quarter.previousPeriod": {
+        "value": "prev. {n, plural, one {quarter} other {#q}}",
+        "comment": "In '{n, plural, one {QUARTER} other {#Q}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#q}', wrong '{#q.}').",
+        "limit": 0
+    },
+    "filters.year.previousPeriod": {
+        "value": "prev. {n, plural, one {year} other {#y}}",
+        "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
+        "limit": 0
+    },
+    "kpi.noData": {
+        "value": "No data for current filter settings. Try changing the filters.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiPop.change": {
+        "value": "change",
+        "comment": "",
+        "limit": 0
     }
 }

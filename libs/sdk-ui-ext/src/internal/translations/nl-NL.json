@@ -160,5 +160,13 @@
     "dashboard.bucket.measures_subtitle.bullet": "Primair",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Doel",
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Relatief",
-    "filters.allTime.previousPeriod": "vorige periode"
+    "filters.allTime.previousPeriod": "vorige periode",
+    "filters.allTime.lastYear": "vorig jaar",
+    "filters.day.previousPeriod": "vorige {n, plural, one {dag} other {#d}}",
+    "filters.week.previousPeriod": "vorige {n, plural, one {week} other {#w}}",
+    "filters.month.previousPeriod": "vorige {n, plural, one {maand} other {#m}}",
+    "filters.quarter.previousPeriod": "vorig {n, plural, one {kwartaal} other {#k}}",
+    "filters.year.previousPeriod": "vorig {n, plural, one {jaar} other {#j}}",
+    "kpi.noData": "Geen data voor de huidige filterinstellingen. Probeer om de filters te wijzigen.",
+    "kpiPop.change": "Wijzigen"
 }

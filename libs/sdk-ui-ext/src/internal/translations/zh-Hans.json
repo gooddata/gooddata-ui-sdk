@@ -160,5 +160,13 @@
     "dashboard.bucket.measures_subtitle.bullet": "主要",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "目标",
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "比较",
-    "filters.allTime.previousPeriod": "前一时间段"
+    "filters.allTime.previousPeriod": "前一时间段",
+    "filters.allTime.lastYear": "前一年",
+    "filters.day.previousPeriod": "前 {n, plural, one {天} other {#天}}",
+    "filters.week.previousPeriod": "前 {n, plural, one {周} other {#周}}",
+    "filters.month.previousPeriod": "前 {n, plural, one {月} other {#月}}",
+    "filters.quarter.previousPeriod": "前 {n, plural, one {季度} other {#季度}}",
+    "filters.year.previousPeriod": "前 {n, plural, one {年} other {#年}}",
+    "kpi.noData": "当前筛选器设置无数据。请更改筛选器。",
+    "kpiPop.change": "变化"
 }

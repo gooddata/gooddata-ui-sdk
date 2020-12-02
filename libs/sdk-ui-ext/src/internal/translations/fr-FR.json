@@ -160,5 +160,13 @@
     "dashboard.bucket.measures_subtitle.bullet": "Principal",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Objectif",
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparaison",
-    "filters.allTime.previousPeriod": "période préc."
+    "filters.allTime.previousPeriod": "période préc.",
+    "filters.allTime.lastYear": "année préc.",
+    "filters.day.previousPeriod": "préc. {n, plural, one {jour} other {#j}}",
+    "filters.week.previousPeriod": "préc. {n, plural, one {semaine} other {#s}}",
+    "filters.month.previousPeriod": "préc. {n, plural, one {mois} other {#m}}",
+    "filters.quarter.previousPeriod": "préc. {n, plural, one {trimestre} other {#t}}",
+    "filters.year.previousPeriod": "préc. {n, plural, one {année} other {#a}}",
+    "kpi.noData": "Aucune donnée pour les paramètres de filtre actuels. Essayez de modifier les filtres.",
+    "kpiPop.change": "modifier"
 }

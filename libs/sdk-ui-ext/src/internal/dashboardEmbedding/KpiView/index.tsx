@@ -96,6 +96,11 @@ export interface IKpiViewProps {
      * Component to render while the KPI is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
+
+    /**
+     * Width of the parent element as measured when rendered.
+     */
+    clientWidth?: number;
 }
 
 /**
@@ -116,6 +121,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     workspace,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
+    clientWidth,
 }) => {
     invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
@@ -144,6 +150,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
 
     return (
         <KpiExecutor
+            kpiWidget={kpiWidget}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
             alert={alert}
@@ -157,6 +164,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             workspace={workspace}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
+            clientWidth={clientWidth}
         />
     );
 };

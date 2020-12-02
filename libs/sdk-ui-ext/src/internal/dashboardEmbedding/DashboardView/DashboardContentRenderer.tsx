@@ -136,7 +136,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                     <DashboardItemKpi
                         renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
                     >
-                        {() => (
+                        {({ clientWidth }) => (
                             <KpiView
                                 kpiWidget={content.widget as IWidget}
                                 filterContext={filterContext}
@@ -151,6 +151,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                                 onError={onError}
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
+                                clientWidth={clientWidth}
                             />
                         )}
                     </DashboardItemKpi>

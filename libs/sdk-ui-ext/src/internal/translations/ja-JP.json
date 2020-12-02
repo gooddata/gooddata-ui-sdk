@@ -160,5 +160,13 @@
     "dashboard.bucket.measures_subtitle.bullet": "プライマリ",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "ターゲット",
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "比較",
-    "filters.allTime.previousPeriod": "前期"
+    "filters.allTime.previousPeriod": "前期",
+    "filters.allTime.lastYear": "前年",
+    "filters.day.previousPeriod": "前の {n, plural, one {日} other {#日}}",
+    "filters.week.previousPeriod": "前の {n, plural, one {週間} other {#週間}}",
+    "filters.month.previousPeriod": "前の {n, plural, one {ヶ月} other {#ヶ月}}",
+    "filters.quarter.previousPeriod": "前の {n, plural, one {四半期} other {#四半期}}",
+    "filters.year.previousPeriod": "前の {n, plural, one {年間} other {#年}}",
+    "kpi.noData": "現在のフィルター設定に対するデータがありません。フィルターを変更してみてください。",
+    "kpiPop.change": "変更"
 }
