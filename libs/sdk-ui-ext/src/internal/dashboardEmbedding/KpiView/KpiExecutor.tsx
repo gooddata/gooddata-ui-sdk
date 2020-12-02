@@ -72,7 +72,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         workspace,
     });
 
-    const { error, result, status } = useDataView({ execution, onError }, [execution]);
+    const { error, result, status } = useDataView({ execution, onError }, [execution.fingerprint()]);
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
