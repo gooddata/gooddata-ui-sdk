@@ -306,6 +306,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    disableHelpDropdown?: boolean;
+    // (undocumented)
     documentationUrl?: string;
     // (undocumented)
     headerColor?: string;
@@ -321,6 +323,8 @@ export interface IAppHeaderProps {
     logoUrl?: string;
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
+    // (undocumented)
+    onHelpClick?: boolean;
     // (undocumented)
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
