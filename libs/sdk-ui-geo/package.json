@@ -54,7 +54,7 @@
     },
     "dependencies": {
         "@gooddata/goodstrap": "^70.1.0",
-        "@gooddata/numberjs": "^3.2.4",
+        "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.20",
         "@gooddata/sdk-model": "^8.2.0-alpha.20",
         "@gooddata/sdk-ui": "^8.2.0-alpha.20",

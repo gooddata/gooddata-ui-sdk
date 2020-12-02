@@ -54,7 +54,7 @@
     "dependencies": {
         "@formatjs/intl-pluralrules": "~1.3.7",
         "@gooddata/goodstrap": "^70.1.0",
-        "@gooddata/numberjs": "^3.2.4",
+        "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.20",
         "@gooddata/sdk-backend-base": "^8.2.0-alpha.20",
         "@gooddata/sdk-embedding": "^8.2.0-alpha.20",
