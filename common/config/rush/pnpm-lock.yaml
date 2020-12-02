@@ -37,7 +37,7 @@ dependencies:
   '@types/node': 12.12.62
   lru-cache: 4.1.5
   prettier: 2.0.5
-  pretty-quick: 2.0.2
+  pretty-quick: 2.0.2_prettier@2.0.5
   ts-node: 8.10.2_typescript@4.0.2
   tslib: 2.0.1
   typescript: 4.0.2
@@ -3713,12 +3713,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-PiDL83kPMTolyZAWW3lyzO6ktooTb9tFTntVy7CA83/qFLWKLJ5bLeRboy6J6j3b1e8h2Eec6gBTEOOJRjV14A==
-  /@types/react-transition-group/1.1.6:
+  /@types/react-transition-group/2.9.2:
     dependencies:
       '@types/react': 16.9.49
     dev: false
     resolution:
-      integrity: sha512-zzoJIWFAqvI3EwDizpeJoShUEe6dVIw3EDRmnqLlpmQgfbaw6XUmJYFVOiAyZVnO/9L7zPSe3kN8aZ2q3JP2DA==
+      integrity: sha512-5Fv2DQNO+GpdPZcxp2x/OQG/H19A01WlmpjVD9cKvVFmoVLOZ9LvBgSWG6pSXIU4og5fgbvGPaCV5+VGkWAEHA==
   /@types/react-transition-group/4.4.0:
     dependencies:
       '@types/react': 16.9.49
@@ -15022,7 +15022,7 @@ packages:
       node: '>= 0.8'
     resolution:
       integrity: sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
-  /pretty-quick/2.0.2:
+  /pretty-quick/2.0.2_prettier@2.0.5:
     dependencies:
       chalk: 2.4.2
       execa: 2.1.0
@@ -15030,6 +15030,7 @@ packages:
       ignore: 5.1.8
       mri: 1.1.6
       multimatch: 4.0.0
+      prettier: 2.0.5
     dev: false
     engines:
       node: '>=8'
@@ -20878,6 +20879,7 @@ packages:
       '@types/react': 16.9.49
       '@types/react-dom': 16.9.8
       '@types/react-measure': 2.0.5
+      '@types/react-transition-group': 2.9.2
       '@types/react-truncate': 2.3.3
       '@types/uuid': 3.4.9
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
@@ -20912,6 +20914,7 @@ packages:
       react-grid-system: 7.1.1_react@16.13.1
       react-intl: 3.12.1_react@16.13.1
       react-measure: 2.5.2_react-dom@16.13.1+react@16.13.1
+      react-transition-group: 2.9.0_react-dom@16.13.1+react@16.13.1
       react-truncate: 2.4.0_react@16.13.1
       rollup: 2.32.0
       rollup-plugin-typescript2: 0.27.3_rollup@2.32.0+typescript@4.0.2
@@ -20923,7 +20926,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-ext'
     resolution:
-      integrity: sha512-HkcVMUkW5C6D3vvbluOBXIwfUZXHEqX/Q7jF3yXqH06wxgTjia3CD+xwr2UKjq/z2IGfsNXED79mWd5pq+tWjA==
+      integrity: sha512-GiI9WzXAXOUfn1sqctz6rJryibuQH2aHbkBvCmK1/ID5zbzcG4lit0IVcKLvsoFPVsTvyIGnv58G6s3/3atAoQ==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz':
@@ -21062,7 +21065,7 @@ packages:
       '@types/react': 16.9.49
       '@types/react-dom': 16.9.8
       '@types/react-portal': 4.0.2
-      '@types/react-transition-group': 1.1.6
+      '@types/react-transition-group': 2.9.2
       '@types/stringify-object': 3.3.0
       '@typescript-eslint/eslint-plugin': 3.10.1_08da1fbcd1c22c8d57ca8c2ea832e291
       '@typescript-eslint/parser': 3.10.1_eslint@7.10.0+typescript@4.0.2
@@ -21100,14 +21103,14 @@ packages:
       react-intl: 3.12.1_react@16.13.1
       react-native-listener: 1.1.0
       react-portal: 4.2.1_react@16.13.1
-      react-transition-group: 1.2.1_react-dom@16.13.1+react@16.13.1
+      react-transition-group: 2.9.0_react-dom@16.13.1+react@16.13.1
       ts-jest: 26.4.1_jest@26.4.2+typescript@4.0.2
       tslib: 2.0.1
       typescript: 4.0.2
     dev: false
     name: '@rush-temp/sdk-ui-kit'
     resolution:
-      integrity: sha512-r/M5s52k9SGzbusyZs+Tj7a7w7uUs+n3Eo1WOBIQtBHfeITrAGTXd1lbue1SAH6RrEsVz263rNvpssH71rGdbw==
+      integrity: sha512-oBYv3Vl7oCJACwQcuBuPhqOk9dvlW9L+BbR/cs5JeD21b/mbeHYC8laBLXnt0DTRji8eyhfk8BEpJ6Nq5Ja7Gg==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz':

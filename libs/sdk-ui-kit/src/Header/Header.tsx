@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import { CSSTransitionGroup } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 
 import uniqueId from "lodash/uniqueId";
@@ -298,14 +298,11 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     this.setOverlayMenu(false);
                 }}
             >
-                <CSSTransitionGroup
-                    transitionName="gd-header"
-                    transitionEnterTimeout={300}
-                    transitionLeaveTimeout={300}
-                    component="div"
-                >
-                    {this.renderVerticalMenu()}
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                    <CSSTransition classNames="gd-header" timeout={300}>
+                        {this.renderVerticalMenu()}
+                    </CSSTransition>
+                </TransitionGroup>
             </Overlay>
         );
     };

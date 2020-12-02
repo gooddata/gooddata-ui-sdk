@@ -58,21 +58,20 @@
         "@gooddata/util": "^8.2.0-alpha.20",
         "classnames": "^2.2.6",
         "codemirror": "^5.54.0",
+        "date-fns": "^2.8.1",
+        "element-closest-polyfill": "^1.0.0",
+        "fixed-data-table-2": "^0.8.21",
         "foundation-sites": "^5.5.3",
+        "immutable": "~4.0.0-rc.12",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
         "react-codemirror2": "^7.2.0",
         "react-day-picker": "7.3.0",
         "react-intl": "^3.6.0",
         "react-native-listener": "~1.1.0",
-        "tslib": "^2.0.0",
-        "fixed-data-table-2": "^0.8.21",
-        "immutable": "~4.0.0-rc.12",
-        "react-transition-group": "^1.2.1",
-        "@types/react-transition-group": "^1.1.0",
-        "date-fns": "^2.8.1",
         "react-portal": "^4.1.5",
-        "element-closest-polyfill": "^1.0.0"
+        "react-transition-group": "^2.4.0",
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",
@@ -91,6 +90,8 @@
         "@types/raf": "^3.4.0",
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.3",
+        "@types/react-portal": "^4.0.2",
+        "@types/react-transition-group": "^2.9.2",
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
         "@typescript-eslint/parser": "^3.7.1",
@@ -115,7 +116,6 @@
         "react": "^16.10.0",
         "react-dom": "^16.10.0",
         "ts-jest": "^26.3.0",
-        "typescript": "4.0.2",
-        "@types/react-portal": "^4.0.2"
+        "typescript": "4.0.2"
     }
 }

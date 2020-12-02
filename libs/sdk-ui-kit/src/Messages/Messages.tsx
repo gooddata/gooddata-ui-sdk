@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useState, useCallback } from "react";
-import { CSSTransitionGroup } from "react-transition-group";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import noop from "lodash/noop";
 import cx from "classnames";
 
@@ -58,40 +58,40 @@ export const Messages: React.FC<IMessagesProps> = ({ messages = [], onMessageClo
     return (
         <Overlay>
             <div className="gd-messages">
-                <CSSTransitionGroup
-                    transitionName="gd-message"
-                    transitionEnterTimeout={220}
-                    transitionLeaveTimeout={220}
-                >
-                    {messages.map((message) => {
-                        const { id, component, showMore, text, type, contrast, intensive } = message;
-                        return (
-                            <div key={id}>
-                                <Message
-                                    className={`gd-message-overlay gd-message-overlay${
-                                        showMore && "-custom"
-                                    }`}
-                                    type={type}
-                                    onClose={() => {
-                                        handleMessageClose(id);
-                                    }}
-                                    contrast={contrast}
-                                    intensive={intensive}
-                                >
-                                    {component ||
-                                        (showMore ? (
-                                            renderMessageWithShowMore(message)
-                                        ) : (
-                                            <div
-                                                className="s-message-text-header-value"
-                                                dangerouslySetInnerHTML={{ __html: text }}
-                                            />
-                                        ))}
-                                </Message>
-                            </div>
-                        );
-                    })}
-                </CSSTransitionGroup>
+                <TransitionGroup>
+                    <CSSTransition classNames="gd-message" timeout={220}>
+                        <div>
+                            {messages.map((message) => {
+                                const { id, component, showMore, text, type, contrast, intensive } = message;
+                                return (
+                                    <div key={id}>
+                                        <Message
+                                            className={`gd-message-overlay gd-message-overlay${
+                                                showMore && "-custom"
+                                            }`}
+                                            type={type}
+                                            onClose={() => {
+                                                handleMessageClose(id);
+                                            }}
+                                            contrast={contrast}
+                                            intensive={intensive}
+                                        >
+                                            {component ||
+                                                (showMore ? (
+                                                    renderMessageWithShowMore(message)
+                                                ) : (
+                                                    <div
+                                                        className="s-message-text-header-value"
+                                                        dangerouslySetInnerHTML={{ __html: text }}
+                                                    />
+                                                ))}
+                                        </Message>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </CSSTransition>
+                </TransitionGroup>
             </div>
         </Overlay>
     );
