@@ -36,7 +36,7 @@ export class BearWorkspaceStyling implements IWorkspaceStylingService {
 
         const enabledByFeatureFlag = config[SETTINGS_KEY.ENABLED_THEMING_FEATURE_FLAG];
 
-        if (!enabledByFeatureFlag && isPlatformEditionWithPaidWL) {
+        if (!enabledByFeatureFlag && isPlatformEditionWithPaidWL()) {
             return false;
         }
 

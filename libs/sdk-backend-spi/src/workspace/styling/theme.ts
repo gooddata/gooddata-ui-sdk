@@ -298,6 +298,11 @@ export interface ITheme {
              * Background color of the title
              */
             backgroundColor?: ThemeColor;
+
+            /**
+             * Border color of the title
+             */
+            borderColor?: ThemeColor;
         };
 
         /**
@@ -341,6 +346,11 @@ export interface ITheme {
              * Background color of the filter bar
              */
             backgroundColor?: ThemeColor;
+
+            /**
+             * Border color of the filter bar
+             */
+            borderColor?: ThemeColor;
 
             /**
              * Filter bar button specific properties

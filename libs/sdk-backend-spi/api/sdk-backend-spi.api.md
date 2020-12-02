@@ -1236,6 +1236,7 @@ export interface ITheme {
         title?: {
             color?: ThemeColor;
             backgroundColor?: ThemeColor;
+            borderColor?: ThemeColor;
         };
         section?: {
             title?: {
@@ -1248,6 +1249,7 @@ export interface ITheme {
         };
         filterBar?: {
             backgroundColor?: ThemeColor;
+            borderColor?: ThemeColor;
             filterButton?: {
                 backgroundColor?: ThemeColor;
             };
