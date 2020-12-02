@@ -120,7 +120,8 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     // Groups are collected from all catalog entities.
     // There is no separate endpoint for the tags anymore.
     private extractGroups(catalogItems: CatalogItem[]): ICatalogGroup[] {
-        const allTags = flatMap(catalogItems, (item): ICatalogGroup[] => {
+        const groupableItems = catalogItems.filter((item) => item.type !== "dateDataset");
+        const allTags = flatMap(groupableItems, (item): ICatalogGroup[] => {
             return (item as IGroupableCatalogItemBase).groups.map((tag) => ({
                 title: (tag as IdentifierRef).identifier,
                 tag: tag,

@@ -127,9 +127,9 @@ export const convertDateDataset = (
             .dataSet(idRef(dataset.id, "dataSet"), (m) => {
                 return m
                     .id(dataset.id)
-                    .uri(dataset.links!.self)
                     .title(dataset.attributes?.title || "")
                     .description(dataset.attributes?.description || "")
+                    .uri("") // we don't have links in included entities
                     .production(true)
                     .unlisted(false);
             })
