@@ -387,21 +387,21 @@ export interface AttributeAttributes {
  * @enum {string}
  */
 export enum AttributeAttributesGranularityEnum {
-    MINUTE = "MINUTE",
-    HOUR = "HOUR",
-    DAY = "DAY",
-    WEEK = "WEEK",
-    MONTH = "MONTH",
-    QUARTER = "QUARTER",
-    YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE = "minute",
+    HOUR = "hour",
+    DAY = "day",
+    WEEK = "week",
+    MONTH = "month",
+    QUARTER = "quarter",
+    YEAR = "year",
+    MINUTEOFHOUR = "minuteOfHour",
+    HOUROFDAY = "hourOfDay",
+    DAYOFWEEK = "dayOfWeek",
+    DAYOFMONTH = "dayOfMonth",
+    DAYOFYEAR = "dayOfYear",
+    WEEKOFYEAR = "weekOfYear",
+    MONTHOFYEAR = "monthOfYear",
+    QUARTEROFYEAR = "quarterOfYear",
 }
 
 /**
@@ -423,21 +423,21 @@ export interface AttributeAttributesAllOf {
  * @enum {string}
  */
 export enum AttributeAttributesAllOfGranularityEnum {
-    MINUTE = "MINUTE",
-    HOUR = "HOUR",
-    DAY = "DAY",
-    WEEK = "WEEK",
-    MONTH = "MONTH",
-    QUARTER = "QUARTER",
-    YEAR = "YEAR",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    HOUROFDAY = "HOUR_OF_DAY",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MINUTE = "minute",
+    HOUR = "hour",
+    DAY = "day",
+    WEEK = "week",
+    MONTH = "month",
+    QUARTER = "quarter",
+    YEAR = "year",
+    MINUTEOFHOUR = "minuteOfHour",
+    HOUROFDAY = "hourOfDay",
+    DAYOFWEEK = "dayOfWeek",
+    DAYOFMONTH = "dayOfMonth",
+    DAYOFYEAR = "dayOfYear",
+    WEEKOFYEAR = "weekOfYear",
+    MONTHOFYEAR = "monthOfYear",
+    QUARTEROFYEAR = "quarterOfYear",
 }
 
 /**
