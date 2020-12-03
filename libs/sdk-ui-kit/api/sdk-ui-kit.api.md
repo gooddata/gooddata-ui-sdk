@@ -1537,6 +1537,32 @@ export interface IRenderItemProps<T> {
 }
 
 // @internal (undocumented)
+export interface IResponsiveTextProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    tagClassName?: string;
+    // (undocumented)
+    tagName?: "div" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "p" | "dt";
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    window?: {
+        addEventListener: Window["addEventListener"];
+        getComputedStyle: Window["getComputedStyle"];
+        removeEventListener: Window["removeEventListener"];
+    };
+    // (undocumented)
+    windowResizeRefreshDelay?: number;
+}
+
+// @internal (undocumented)
+export interface IResponsiveTextState {
+    // (undocumented)
+    fontSize: number | null;
+}
+
+// @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string;
@@ -1828,6 +1854,33 @@ export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
+}
+
+// @internal (undocumented)
+export class ResponsiveText extends React_2.PureComponent<IResponsiveTextProps, IResponsiveTextState> {
+    constructor(props: IResponsiveTextProps);
+    // (undocumented)
+    adjustTextSize(): void;
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentDidUpdate(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    containerRef: React_2.RefObject<HTMLDivElement>;
+    // (undocumented)
+    static defaultProps: Partial<IResponsiveTextProps>;
+    // (undocumented)
+    handleWindowResize: () => void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    resetFontSize: () => void;
+    // (undocumented)
+    state: IResponsiveTextState;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(): void;
 }
 
 // @internal (undocumented)
