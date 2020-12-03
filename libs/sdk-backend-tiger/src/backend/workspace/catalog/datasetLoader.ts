@@ -131,6 +131,8 @@ export async function loadAttributesAndDateDatasets(
             headers: { Accept: "application/vnd.gooddata.api+json" },
             query: {
                 include: "labels,datasets",
+                // TODO - update after paging is fixed in MDC-354
+                size: "500",
                 tags: includeTags.join(","),
             },
         },

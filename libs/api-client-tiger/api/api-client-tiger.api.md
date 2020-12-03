@@ -443,69 +443,69 @@ export interface AttributeAttributesAllOf {
 // @public
 export enum AttributeAttributesAllOfGranularityEnum {
     // (undocumented)
-    DAY = "DAY",
+    DAY = "day",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFMONTH = "dayOfMonth",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFWEEK = "dayOfWeek",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAYOFYEAR = "dayOfYear",
     // (undocumented)
-    HOUR = "HOUR",
+    HOUR = "hour",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUROFDAY = "hourOfDay",
     // (undocumented)
-    MINUTE = "MINUTE",
+    MINUTE = "minute",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTEOFHOUR = "minuteOfHour",
     // (undocumented)
-    MONTH = "MONTH",
+    MONTH = "month",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTHOFYEAR = "monthOfYear",
     // (undocumented)
-    QUARTER = "QUARTER",
+    QUARTER = "quarter",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTEROFYEAR = "quarterOfYear",
     // (undocumented)
-    WEEK = "WEEK",
+    WEEK = "week",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEKOFYEAR = "weekOfYear",
     // (undocumented)
-    YEAR = "YEAR"
+    YEAR = "year"
 }
 
 // @public
 export enum AttributeAttributesGranularityEnum {
     // (undocumented)
-    DAY = "DAY",
+    DAY = "day",
     // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFMONTH = "dayOfMonth",
     // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFWEEK = "dayOfWeek",
     // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
+    DAYOFYEAR = "dayOfYear",
     // (undocumented)
-    HOUR = "HOUR",
+    HOUR = "hour",
     // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
+    HOUROFDAY = "hourOfDay",
     // (undocumented)
-    MINUTE = "MINUTE",
+    MINUTE = "minute",
     // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    MINUTEOFHOUR = "minuteOfHour",
     // (undocumented)
-    MONTH = "MONTH",
+    MONTH = "month",
     // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
+    MONTHOFYEAR = "monthOfYear",
     // (undocumented)
-    QUARTER = "QUARTER",
+    QUARTER = "quarter",
     // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    QUARTEROFYEAR = "quarterOfYear",
     // (undocumented)
-    WEEK = "WEEK",
+    WEEK = "week",
     // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
+    WEEKOFYEAR = "weekOfYear",
     // (undocumented)
-    YEAR = "YEAR"
+    YEAR = "year"
 }
 
 // @public

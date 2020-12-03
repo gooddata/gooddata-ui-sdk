@@ -222,7 +222,7 @@ Object {
       },
     },
     "from": 20,
-    "granularity": "DAY",
+    "granularity": "day",
     "to": 30,
   },
 }
@@ -300,7 +300,7 @@ Object {
       },
     },
     "from": -11,
-    "granularity": "DAY",
+    "granularity": "day",
     "to": 0,
   },
 }
@@ -316,7 +316,7 @@ Object {
       },
     },
     "from": 5,
-    "granularity": "DAY",
+    "granularity": "day",
     "to": NaN,
   },
 }
@@ -334,7 +334,7 @@ Object {
       },
     },
     "from": -3,
-    "granularity": "MONTH",
+    "granularity": "month",
     "to": 9,
   },
 }
@@ -350,7 +350,7 @@ Object {
       },
     },
     "from": 25,
-    "granularity": "QUARTER",
+    "granularity": "quarter",
     "to": -2,
   },
 }
@@ -366,7 +366,7 @@ Object {
       },
     },
     "from": 50,
-    "granularity": "WEEK",
+    "granularity": "week",
     "to": 100,
   },
 }
@@ -382,7 +382,7 @@ Object {
       },
     },
     "from": 2,
-    "granularity": "YEAR",
+    "granularity": "year",
     "to": 7,
   },
 }
