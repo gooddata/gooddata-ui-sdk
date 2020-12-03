@@ -12,7 +12,6 @@ import {
 export namespace VisualizationObject {
     export interface IVisualizationObject {
         visualizationObject: {
-            title: string;
             visualizationUrl: string;
             buckets: IBucket[];
             filters: FilterDefinition[]; // TODO make sure this includes Measure value filters when they land in tiger

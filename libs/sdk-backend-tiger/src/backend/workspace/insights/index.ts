@@ -36,10 +36,16 @@ import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 
-const insightFromInsightDefinition = (insight: IInsightDefinition, id: string, uri: string): IInsight => {
+const insightFromInsightDefinition = (
+    insight: IInsightDefinition,
+    id: string,
+    title: string,
+    uri: string,
+): IInsight => {
     return {
         insight: {
             ...insight.insight,
+            title: title,
             identifier: id,
             uri,
             ref: idRef(id),
@@ -100,11 +106,14 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         });
         const { data: visualizationObjects } = insightsResponse.data as VisualizationObjects;
         const insights = visualizationObjects.map((visualizationObject) => {
+            const title = visualizationObject.attributes?.title as string;
             return insightFromInsightDefinition(
                 convertVisualizationObject(
+                    title,
                     visualizationObject!.attributes!.content! as VisualizationObject.IVisualizationObject,
                 ),
                 visualizationObject.id,
+                title,
                 visualizationObject.links!.self,
             );
         });
@@ -157,10 +166,13 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             ),
         );
         const { data: visualizationObject, links } = response.data as VisualizationObjectSchema;
+        const title = visualizationObject.attributes?.title as string;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
+                title,
                 visualizationObject.attributes!.content! as VisualizationObject.IVisualizationObject,
             ),
+            title,
             visualizationObject.id,
             links!.self,
         );
@@ -199,7 +211,12 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             );
         });
         const insightData = createResponse.data as VisualizationObjectSchema;
-        return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
+        return insightFromInsightDefinition(
+            insight,
+            insightData.data.id,
+            insightData.data.attributes?.title as string,
+            insightData.links!.self,
+        );
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {

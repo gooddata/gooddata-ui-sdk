@@ -15,14 +15,17 @@ const cloneWithSanitizedIds = (item: any) =>
     });
 
 export const convertVisualizationObject = (
+    title: string,
     visualizationObject: VisualizationObject.IVisualizationObject,
 ): IInsightDefinition => {
     return {
         insight: {
-            ...visualizationObject.visualizationObject,
+            title: title,
+            visualizationUrl: visualizationObject.visualizationObject.visualizationUrl,
             buckets: cloneWithSanitizedIds(visualizationObject.visualizationObject.buckets),
             filters: cloneWithSanitizedIds(visualizationObject.visualizationObject.filters),
             sorts: cloneWithSanitizedIds(visualizationObject.visualizationObject.sorts),
+            properties: visualizationObject.visualizationObject.properties,
         },
     };
 };

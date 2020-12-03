@@ -17,7 +17,8 @@ const cloneWithSanitizedIds = (item: any) =>
 export const convertInsight = (insight: IInsightDefinition): VisualizationObject.IVisualizationObject => {
     return {
         visualizationObject: {
-            ...insight.insight,
+            properties: insight.insight.properties,
+            visualizationUrl: insight.insight.visualizationUrl,
             buckets: cloneWithSanitizedIds(insight.insight.buckets),
             filters: cloneWithSanitizedIds(insight.insight.filters),
             sorts: cloneWithSanitizedIds(insight.insight.sorts),
