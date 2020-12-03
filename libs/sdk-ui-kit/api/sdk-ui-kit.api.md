@@ -324,7 +324,7 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
-    onHelpClick?: boolean;
+    onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)

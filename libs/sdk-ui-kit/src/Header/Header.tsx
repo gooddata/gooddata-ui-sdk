@@ -77,7 +77,7 @@ export interface IAppHeaderProps {
     userName: string;
 
     disableHelpDropdown?: boolean;
-    onHelpClick?: boolean;
+    onHelpClick?: (isOpen: boolean) => void;
 }
 /**
  * @internal
