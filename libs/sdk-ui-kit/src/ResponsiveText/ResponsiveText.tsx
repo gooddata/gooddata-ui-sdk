@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import React from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import debounce from "lodash/debounce";
 import isNumber from "lodash/isNumber";
 
@@ -22,96 +22,54 @@ export interface IResponsiveTextProps {
 /**
  * @internal
  */
-export interface IResponsiveTextState {
-    fontSize: number | null;
-}
+export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
+    tagName: Tag = "div",
+    tagClassName,
+    title,
+    children,
+    windowResizeRefreshDelay = 50,
+    window: windowInstance = window,
+}) => {
+    const [fontSize, setFontSize] = useState<number | null>(null);
+    const containerRef = useRef<HTMLDivElement>();
 
-/**
- * @internal
- */
-export class ResponsiveText extends React.PureComponent<IResponsiveTextProps, IResponsiveTextState> {
-    static defaultProps: Partial<IResponsiveTextProps> = {
-        tagName: "div",
-        tagClassName: null,
-        windowResizeRefreshDelay: 50,
-        title: null,
-        children: null,
-        window,
-    };
-
-    state: IResponsiveTextState = {
-        fontSize: null,
-    };
-
-    containerRef = React.createRef<HTMLDivElement>();
-    handleWindowResize: () => void;
-
-    constructor(props: IResponsiveTextProps) {
-        super(props);
-
-        this.handleWindowResize = debounce(this.resetFontSize, props.windowResizeRefreshDelay);
-    }
-
-    resetFontSize = (): void => {
-        this.setState({
-            fontSize: null,
-        });
-    };
-
-    componentDidMount(): void {
-        const { window } = this.props;
-
-        window.addEventListener("resize", this.handleWindowResize);
-
-        this.adjustTextSize();
-    }
-
-    UNSAFE_componentWillReceiveProps(): void {
-        this.resetFontSize();
-    }
-
-    componentDidUpdate(): void {
-        this.adjustTextSize();
-    }
-
-    componentWillUnmount(): void {
-        const { window } = this.props;
-
-        window.removeEventListener("resize", this.handleWindowResize);
-    }
-
-    adjustTextSize(): void {
-        const currentStyle = this.props.window.getComputedStyle(this.containerRef.current, null);
+    const adjustFontSize = () => {
+        const currentStyle = windowInstance.getComputedStyle(containerRef.current, null);
         const currentFontSize = parseFloat(currentStyle.fontSize);
 
-        if (!this.state.fontSize && isNumber(currentFontSize)) {
-            const { scrollWidth } = this.containerRef.current;
-            const width = this.containerRef.current
-                ? this.containerRef.current.getBoundingClientRect().width
-                : 0;
+        if (!fontSize && isNumber(currentFontSize)) {
+            const { scrollWidth } = containerRef.current;
+            const width = containerRef.current ? containerRef.current.getBoundingClientRect().width : 0;
 
             const ratio = width / scrollWidth;
             const size = Math.floor(currentFontSize * ratio);
-
-            this.setState({
-                fontSize: size,
-            });
+            setFontSize(size);
         }
-    }
+    };
 
-    render(): React.ReactNode {
-        const { tagName: Tag, tagClassName, title, children } = this.props;
-        const { fontSize } = this.state;
+    useLayoutEffect(() => {
+        adjustFontSize();
 
-        return (
-            <Tag
-                className={tagClassName}
-                ref={this.containerRef}
-                style={fontSize ? { fontSize: `${fontSize}px` } : undefined}
-                title={title}
-            >
-                {children}
-            </Tag>
-        );
-    }
-}
+        const handleWindowResize = debounce(() => {
+            // reset font size so that we can read the default fontSize in adjustFontSize later
+            setFontSize(null);
+            // then adjust the font again
+            adjustFontSize();
+        }, windowResizeRefreshDelay);
+
+        windowInstance.addEventListener("resize", handleWindowResize);
+
+        return () => windowInstance.removeEventListener("resize", handleWindowResize);
+    }, [windowResizeRefreshDelay]);
+
+    return (
+        <Tag
+            className={tagClassName}
+            ref={containerRef}
+            style={fontSize ? { fontSize: `${fontSize}px` } : undefined}
+            title={title}
+        >
+            {children}
+        </Tag>
+    );
+};
