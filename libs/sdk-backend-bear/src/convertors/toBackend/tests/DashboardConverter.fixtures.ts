@@ -1,5 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import { IDashboard, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboard,
+    IDashboardLayoutColumn,
+    IFilterContext,
+    ITempFilterContext,
+    IWidget,
+} from "@gooddata/sdk-backend-spi";
 
 const createObjectMeta = (id: string) => {
     const uri = `/gdc/md/obj/${id}`;
@@ -123,38 +129,71 @@ export const widgetKpi: IWidget = {
     drills: [],
 };
 
-export const dashboardWithLayout: IDashboard = {
+const columns: IDashboardLayoutColumn[] = [
+    {
+        size: {
+            xl: {
+                widthAsGridColumnsCount: 12,
+            },
+        },
+        content: widgetHeadline,
+    },
+    {
+        size: {
+            xl: {
+                widthAsGridColumnsCount: 6,
+            },
+        },
+        content: widgetKpi,
+    },
+    {
+        size: {
+            xl: {
+                widthAsGridColumnsCount: 2,
+            },
+        },
+        content: widgetBarChart,
+    },
+];
+
+export const dashboardWithLayoutAndRowHeaders: IDashboard = {
     ...emptyDashboard,
     layout: {
         type: "fluidLayout",
         rows: [
             {
-                columns: [
-                    {
-                        size: {
-                            xl: {
-                                widthAsGridColumnsCount: 12,
-                            },
-                        },
-                        content: widgetHeadline,
-                    },
-                    {
-                        size: {
-                            xl: {
-                                widthAsGridColumnsCount: 6,
-                            },
-                        },
-                        content: widgetKpi,
-                    },
-                    {
-                        size: {
-                            xl: {
-                                widthAsGridColumnsCount: 2,
-                            },
-                        },
-                        content: widgetBarChart,
-                    },
-                ],
+                header: {
+                    title: "Row 1",
+                },
+                columns,
+            },
+            {
+                header: {
+                    description: "Row 2 description",
+                },
+                columns: [],
+            },
+        ],
+    },
+};
+
+export const dashboardWithLayoutAndEmptyRowHeaders: IDashboard = {
+    ...emptyDashboard,
+    layout: {
+        type: "fluidLayout",
+        rows: [
+            {
+                // Test, that empty headers are removed (or it throws error on the backend)
+                header: {
+                    title: "",
+                    description: "",
+                },
+                columns,
+            },
+            {
+                // Test, that empty headers are removed (or it throws error on the backend)
+                header: {},
+                columns: [],
             },
         ],
     },
