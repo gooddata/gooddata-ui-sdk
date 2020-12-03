@@ -203,11 +203,11 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         }
     };
 
-    private onMaskClick(e: React.MouseEvent<HTMLDivElement>) {
+    private onMaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!this.props.closeOnOutsideClick) {
             e.stopPropagation();
         }
-    }
+    };
 
     protected getOverlayStyles = (): React.CSSProperties => {
         const { alignTo, positionType, zIndex } = this.props;

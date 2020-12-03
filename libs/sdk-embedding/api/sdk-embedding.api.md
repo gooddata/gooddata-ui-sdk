@@ -42,6 +42,7 @@ export namespace EmbeddedAnalyticalDesigner {
         OpenInsight = "openInsight",
         Redo = "redo",
         RemoveFilterContext = "removeFilterContext",
+        RequestCancellation = "requestCancellation",
         Save = "saveInsight",
         SaveAs = "saveAsInsight",
         SetFilterContext = "setFilterContext",
@@ -128,6 +129,7 @@ export namespace EmbeddedAnalyticalDesigner {
     export function isRedoCommandData(obj: unknown): obj is RedoCommandData;
     export function isRedoFinishedData(obj: unknown): obj is RedoFinishedData;
     export function isRemoveFilterContextCommandData(obj: unknown): obj is RemoveFilterContextCommandData;
+    export function isRequestCancellationCommandData(obj: unknown): obj is RequestCancellationCommandData;
     export function isSaveAsInsightCommandData(obj: unknown): obj is SaveAsInsightCommandData;
     export function isSaveInsightCommandData(obj: unknown): obj is SaveInsightCommandData;
     export function isSetFilterContextCommandData(obj: unknown): obj is SetFilterContextCommandData;
@@ -146,6 +148,8 @@ export namespace EmbeddedAnalyticalDesigner {
     export type RemoveFilterContextCommand = IGdcAdMessageEvent<GdcAdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
     export type RemoveFilterContextCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
     export type RemoveFilterContextFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.RemoveFilterContextFinished, IAvailableCommands>;
+    export type RequestCancellationCommand = IGdcAdMessageEvent<GdcAdCommandType.RequestCancellation, undefined>;
+    export type RequestCancellationCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.RequestCancellation, undefined>;
     export type SaveAsInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
     export type SaveAsInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.SaveAs, ISaveAsInsightCommandBody>;
     export type SaveInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.Save, ISaveCommandBody>;

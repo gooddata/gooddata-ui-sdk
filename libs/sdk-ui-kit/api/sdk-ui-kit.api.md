@@ -516,6 +516,8 @@ export interface IDialogBaseProps {
     // (undocumented)
     onCancel?: (data?: any) => void;
     // (undocumented)
+    onClose?: (data?: any) => void;
+    // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)
     submitOnEnterKey?: boolean;
