@@ -136,15 +136,21 @@ const convertLayoutRow = (row: IDashboardLayoutRow): GdcDashboardLayout.IFluidLa
         columns: row.columns.map((column) => convertLayoutColumn(column)),
     };
     if (row.header) {
-        const header = {} as GdcDashboardLayout.ISectionHeader;
-        if (row.header?.title) {
-            header.title = row.header.title;
+        // Ignore empty strings in header
+        const headerWithoutEmptyStrings = omitBy(row.header, (x) => !x);
+        const isEmptyHeader = isEmpty(headerWithoutEmptyStrings);
+        if (!isEmptyHeader) {
+            const header = {} as GdcDashboardLayout.ISectionHeader;
+            if (row.header?.title) {
+                header.title = row.header.title;
+            }
+            if (row.header?.description) {
+                header.description = row.header.description;
+            }
+            convertedRow.header = header;
         }
-        if (row.header?.description) {
-            header.description = row.header.description;
-        }
-        convertedRow.header = header;
     }
+
     if (row.style) {
         convertedRow.style = row.style;
     }

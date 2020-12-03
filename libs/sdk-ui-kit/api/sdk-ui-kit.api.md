@@ -1648,6 +1648,8 @@ export interface ITypographyProps {
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     tagName: "h1" | "h2" | "h3" | "p";
+    // (undocumented)
+    title?: string;
 }
 
 // @internal @deprecated (undocumented)
