@@ -1070,6 +1070,12 @@ export interface IListProps<T> {
 }
 
 // @internal (undocumented)
+export interface ILoadingDotsProps {
+    // (undocumented)
+    className?: string;
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -1788,6 +1794,9 @@ export class List<T> extends Component<IListProps<T>> {
     // (undocumented)
     render(): JSX.Element;
 }
+
+// @internal (undocumented)
+export const LoadingDots: React_2.FC<ILoadingDotsProps>;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
