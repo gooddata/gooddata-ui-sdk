@@ -266,20 +266,22 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             "is-open": this.state.isOverlayMenuOpen,
         });
 
-        return [
-            <div className="hamburger-wrapper" key="hamburger-wrapper">
-                <div
-                    className={iconClasses}
-                    key="hamburger-icon"
-                    onClick={() => {
-                        this.setOverlayMenu(!this.state.isOverlayMenuOpen);
-                    }}
-                >
-                    <i />
+        return (
+            <>
+                <div className="hamburger-wrapper" key="hamburger-wrapper">
+                    <div
+                        className={iconClasses}
+                        key="hamburger-icon"
+                        onClick={() => {
+                            this.setOverlayMenu(!this.state.isOverlayMenuOpen);
+                        }}
+                    >
+                        <i />
+                    </div>
                 </div>
-            </div>,
-            this.renderOverlayMenu(),
-        ];
+                {this.state.isOverlayMenuOpen && this.renderOverlayMenu()}
+            </>
+        );
     };
 
     private renderOverlayMenu = () => {
@@ -308,10 +310,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderVerticalMenu = () => {
-        if (!this.state.isOverlayMenuOpen) {
-            return false;
-        }
-
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.addHelpItemGroup(this.props.menuItemsGroups)
             : this.getHelpMenu();
