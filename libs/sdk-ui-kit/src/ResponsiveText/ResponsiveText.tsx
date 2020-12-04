@@ -34,12 +34,16 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
     const containerRef = useRef<HTMLDivElement>();
 
     const adjustFontSize = () => {
+        if (!containerRef.current) {
+            return;
+        }
+
         const currentStyle = windowInstance.getComputedStyle(containerRef.current, null);
         const currentFontSize = parseFloat(currentStyle.fontSize);
 
         if (!fontSize && isNumber(currentFontSize)) {
             const { scrollWidth } = containerRef.current;
-            const width = containerRef.current ? containerRef.current.getBoundingClientRect().width : 0;
+            const width = containerRef.current.getBoundingClientRect().width;
 
             const ratio = width / scrollWidth;
             const size = Math.floor(currentFontSize * ratio);
