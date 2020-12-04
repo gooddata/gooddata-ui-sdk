@@ -13,12 +13,22 @@ import {
 import isEmpty from "lodash/isEmpty";
 import { TigerAfmType } from "../../types";
 
-type AfmObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
+type TigerObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
 
-const allValidAfmTypes: AfmObjectType[] = ["measure", "displayForm", "fact", "dataSet", "attribute"];
+const allValidAfmTypes: TigerObjectType[] = [
+    "measure",
+    "displayForm",
+    "fact",
+    "dataSet",
+    "attribute",
+    "visualizationObject",
+];
+
+type TigerIdType = TigerAfmType | "visualizationObject";
 
 const tigerAfmTypeByObjectAfmType: {
-    [objectType in AfmObjectType]: TigerAfmType;
+    // TODO clear types
+    [objectType in TigerObjectType]: TigerIdType;
 } = {
     attribute: "attribute",
     measure: "metric",
@@ -26,14 +36,15 @@ const tigerAfmTypeByObjectAfmType: {
     dataSet: "dataset",
     fact: "fact",
     variable: "variable",
+    visualizationObject: "visualizationObject",
 };
 
-const isValidAfmType = (obj: any): obj is AfmObjectType => {
+const isValidAfmType = (obj: any): obj is TigerObjectType => {
     return !isEmpty(obj) && allValidAfmTypes.some((afmType) => afmType === obj);
 };
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
-function toTigerAfmType(value: ObjectType | undefined, defaultValue?: TigerAfmType): TigerAfmType {
+function toTigerAfmType(value: ObjectType | undefined, defaultValue?: TigerAfmType): TigerIdType {
     if (!value) {
         if (!defaultValue) {
             throw new UnexpectedError("No value or default value was provided to toTigerAfmType ");

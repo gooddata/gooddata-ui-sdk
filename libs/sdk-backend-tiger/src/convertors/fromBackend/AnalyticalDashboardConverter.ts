@@ -10,6 +10,8 @@ import { IDashboard, IListedDashboard } from "@gooddata/sdk-backend-spi";
 
 import { idRef } from "@gooddata/sdk-model";
 
+import { cloneWithSanitizedIds } from "./IdSanitization";
+
 export const convertAnalyticalDashboard = (
     analyticalDashboard: AnalyticalDashboardsItem,
 ): IListedDashboard => {
@@ -32,10 +34,24 @@ export const convertAnalyticalDashboardToListItems = (
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };
 
+export function convertAnalyticalDashboardContent(
+    analyticalDashboard: AnalyticalDashboardObject.IAnalyticalDashboard["analyticalDashboard"],
+): AnalyticalDashboardObject.IAnalyticalDashboard["analyticalDashboard"] {
+    return {
+        isLocked: analyticalDashboard.isLocked,
+        dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
+        filterContext: cloneWithSanitizedIds(analyticalDashboard.filterContext),
+        layout: cloneWithSanitizedIds(analyticalDashboard.layout),
+    };
+}
+
 export function convertDashboard(analyticalDashboard: AnalyticalDashboard): IDashboard {
     const { id, attributes = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
-    const dashboardData = (content as AnalyticalDashboardObject.IAnalyticalDashboard).analyticalDashboard;
+
+    const dashboardData = convertAnalyticalDashboardContent(
+        (content as AnalyticalDashboardObject.IAnalyticalDashboard).analyticalDashboard,
+    );
 
     return {
         ref: idRef(id, "analyticalDashboard"),

@@ -1,15 +1,22 @@
 // (C) 2007-2020 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
 import { ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { isUriRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
+import isEmpty from "lodash/isEmpty";
 
-import { TigerAfmType } from "../../../types";
+import { TigerObjectType } from "../../../types";
 
-const allValidTigerAfmTypes: TigerAfmType[] = ["metric", "label", "fact", "dataset", "attribute"];
+const allValidTigerAfmTypes: TigerObjectType[] = [
+    "metric",
+    "label",
+    "fact",
+    "dataset",
+    "attribute",
+    "visualizationObject",
+];
 
 const objRefTypeByTigerType: {
-    [objectType in TigerAfmType]: ObjectType;
+    [objectType in TigerObjectType]: ObjectType;
 } = {
     attribute: "attribute",
     metric: "measure",
@@ -17,19 +24,20 @@ const objRefTypeByTigerType: {
     dataset: "dataSet",
     fact: "fact",
     variable: "variable",
+    visualizationObject: "visualizationObject",
+    analyticalDashboard: "analyticalDashboard",
 };
 
-const isValidTigerAfmType = (obj: any): obj is TigerAfmType => {
+const isValidTigerAfmType = (obj: any): obj is TigerObjectType => {
     return !isEmpty(obj) && allValidTigerAfmTypes.some((afmType) => afmType === obj);
 };
 
-function toObjectType(value: TigerAfmType): ObjectType {
+function toObjectType(value: TigerObjectType): ObjectType {
     if (!isValidTigerAfmType(value)) {
         throw new UnexpectedError(`Cannot convert ${value} to ObjRef, ${value} is not valid TigerAfmType`);
     }
 
-    const type = objRefTypeByTigerType[value];
-    return type;
+    return objRefTypeByTigerType[value];
 }
 
 export function toObjRef(qualifier: ObjectIdentifier): ObjRef {
@@ -39,7 +47,7 @@ export function toObjRef(qualifier: ObjectIdentifier): ObjRef {
 
     return {
         identifier: qualifier.identifier.id,
-        type: toObjectType(qualifier.identifier.type as TigerAfmType),
+        type: toObjectType(qualifier.identifier.type as TigerObjectType),
     };
 }
 
@@ -55,6 +63,6 @@ export function isJsonApiId(obj: unknown): obj is JsonApiId {
 export function jsonApiIdToObjRef(idAndType: JsonApiId): ObjRef {
     return {
         identifier: idAndType.id,
-        type: toObjectType(idAndType.type as TigerAfmType),
+        type: toObjectType(idAndType.type as TigerObjectType),
     };
 }

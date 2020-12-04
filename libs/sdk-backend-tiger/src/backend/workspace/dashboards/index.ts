@@ -104,11 +104,19 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.workspaceModel.deleteEntity({
-                entity: "analyticalDashboards",
-                id: id,
-                workspaceId: this.workspace,
-            }),
+            sdk.workspaceModel.deleteEntity(
+                {
+                    entity: "analyticalDashboards",
+                    id: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: {
+                        Accept: "application/vnd.gooddata.api+json",
+                        "Content-Type": "application/vnd.gooddata.api+json",
+                    },
+                },
+            ),
         );
     };
 
@@ -121,7 +129,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getScheduledMailsCountForDashboard = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return 0;
     };
 
     public getAllWidgetAlertsForCurrentUser = async () => {
@@ -134,7 +143,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getWidgetAlertsCountForWidgets = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return [];
     };
 
     public createWidgetAlert = async () => {

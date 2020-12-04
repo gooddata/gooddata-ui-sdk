@@ -10,6 +10,15 @@ import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "variable";
 
 /**
+ * Tiger metadata types
+ *
+ * @public
+ */
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject";
+
+export type TigerObjectType = TigerAfmType | TigerMetadataType;
+
+/**
  * Tiger authenticated call guard
  *
  * @public
