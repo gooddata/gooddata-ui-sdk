@@ -48,10 +48,7 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
         );
 
         const dateFilter = this.props.filters.find(isDateFilter); // for now we use the first date filter available for this
-        const popLabel = dateFilter
-            ? getKpiPopLabel(dateFilter, this.props.kpi.kpi.comparisonType, this.props.intl)
-            : undefined;
-
+        const popLabel = getKpiPopLabel(dateFilter, this.props.kpi.kpi.comparisonType, this.props.intl);
         const popDisabled = isDateFilterAllTime || isDateFilterNotRelevant || isDateFilterAbsolute;
         const isSdkError = isGoodDataSdkError(this.props.error);
         const isNoData = isSdkError && this.props.error.message === ErrorCodes.NO_DATA;

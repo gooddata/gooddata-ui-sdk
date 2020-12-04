@@ -3,11 +3,11 @@ import { IntlShape } from "react-intl";
 import {
     IDateFilter,
     IRelativeDateFilter,
-    isAbsoluteDateFilter,
     isAllTimeDateFilter,
+    isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
-import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity, ILegacyKpiComparisonTypeComparison } from "@gooddata/sdk-backend-spi";
 
 const granularityIntlCodes: {
     [key in DateFilterGranularity]: string;
@@ -36,8 +36,8 @@ const getRelativeFilterKpiPopLabel = (filter: IRelativeDateFilter, intl: IntlSha
 };
 
 export const getKpiPopLabel = (
-    filter: IDateFilter,
-    comparisonType: "previousPeriod" | "lastYear",
+    filter: IDateFilter | undefined,
+    comparisonType: ILegacyKpiComparisonTypeComparison,
     intl: IntlShape,
 ): string => {
     if (comparisonType === "lastYear") {
@@ -45,9 +45,9 @@ export const getKpiPopLabel = (
         return intl.formatMessage({ id: "filters.allTime.lastYear" });
     }
 
-    if (isAbsoluteDateFilter(filter) || isAllTimeDateFilter(filter)) {
-        return getGeneralKpiPopLabel(intl);
-    } else {
+    if (isRelativeDateFilter(filter) && !isAllTimeDateFilter(filter)) {
         return getRelativeFilterKpiPopLabel(filter, intl);
     }
+
+    return getGeneralKpiPopLabel(intl);
 };
