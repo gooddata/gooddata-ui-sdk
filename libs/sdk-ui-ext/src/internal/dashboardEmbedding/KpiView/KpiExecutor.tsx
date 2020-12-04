@@ -154,7 +154,11 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
 export const KpiExecutor = injectIntl(KpiExecutorCore);
 
-function getSeriesResult(series: IDataSeries): number | null {
+function getSeriesResult(series: IDataSeries | undefined): number | null {
+    if (!series) {
+        return null;
+    }
+
     const value = series.dataPoints()[0].rawValue;
 
     if (isNil(value)) {
