@@ -112,13 +112,13 @@ $gd-header-project-width: 230px;
 }
 
 .gd-header-enter.gd-header-enter-active,
-.gd-header-leave {
+.gd-header-exit {
     right: 0;
     transition: right 0.3s $gd-header-animation-easing;
 }
 
 .gd-header-enter,
-.gd-header-leave-active {
+.gd-header-exit-active {
     right: -240px;
     transition: right 0.3s $gd-header-animation-easing;
 }

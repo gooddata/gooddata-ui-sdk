@@ -9,13 +9,13 @@
    ========================================================================== */
 
 .gd-message-enter,
-.gd-message-leave.gd-message-leave-active {
+.gd-message-exit.gd-message-exit-active {
     opacity: 0;
     transition: opacity 0.22s ease-in;
 }
 
 .gd-message-enter.gd-message-enter-active,
-.gd-message-leave {
+.gd-message-exit {
     opacity: 1;
 }
 

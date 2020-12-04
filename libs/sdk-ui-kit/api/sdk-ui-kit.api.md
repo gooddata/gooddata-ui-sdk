@@ -1070,6 +1070,12 @@ export interface IListProps<T> {
 }
 
 // @internal (undocumented)
+export interface ILoadingDotsProps {
+    // (undocumented)
+    className?: string;
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -1537,6 +1543,26 @@ export interface IRenderItemProps<T> {
 }
 
 // @internal (undocumented)
+export interface IResponsiveTextProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    tagClassName?: string;
+    // (undocumented)
+    tagName?: "div" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "p" | "dt";
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    window?: {
+        addEventListener: Window["addEventListener"];
+        getComputedStyle: Window["getComputedStyle"];
+        removeEventListener: Window["removeEventListener"];
+    };
+    // (undocumented)
+    windowResizeRefreshDelay?: number;
+}
+
+// @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string;
@@ -1764,6 +1790,9 @@ export class List<T> extends Component<IListProps<T>> {
 }
 
 // @internal (undocumented)
+export const LoadingDots: React_2.FC<ILoadingDotsProps>;
+
+// @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
@@ -1829,6 +1858,9 @@ export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";

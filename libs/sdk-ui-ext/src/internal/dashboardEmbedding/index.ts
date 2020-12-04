@@ -81,3 +81,4 @@ export {
     IFluidLayoutRowProps,
 } from "./FluidLayout";
 export * from "./DashboardItem";
+export * from "./KpiContent";

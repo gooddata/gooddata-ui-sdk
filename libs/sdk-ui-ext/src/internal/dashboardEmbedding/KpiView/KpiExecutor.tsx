@@ -1,6 +1,12 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
-import { IAnalyticalBackend, isNoDataError, IWidgetAlert, ISeparators } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    isNoDataError,
+    IWidgetAlert,
+    ISeparators,
+    IWidgetDefinition,
+} from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -18,18 +24,21 @@ import {
     IHeaderPredicate,
     OnFiredDrillEvent,
     IDrillEventContext,
-    IDataSeries,
     convertDrillableItemsToPredicates,
     isSomeHeaderPredicateMatched,
-    DataViewFacade,
     OnError,
     createNumberJsFormatter,
+    IDataSeries,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
-import { IKpiValueInfo, KpiRenderer } from "./KpiRenderer";
+import isNil from "lodash/isNil";
+import isNumber from "lodash/isNumber";
+import { KpiRenderer } from "./KpiRenderer";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import { IKpiResult } from "../KpiContent";
 
 interface IKpiExecutorProps {
+    kpiWidget: IWidgetDefinition;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     alert?: IWidgetAlert;
@@ -43,6 +52,7 @@ interface IKpiExecutorProps {
     disableDrillUnderline?: boolean;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
+    clientWidth?: number;
 }
 
 /**
@@ -50,6 +60,7 @@ interface IKpiExecutorProps {
  * @internal
  */
 export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
+    kpiWidget,
     primaryMeasure,
     secondaryMeasure,
     alert,
@@ -63,7 +74,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     disableDrillUnderline,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
-    intl,
+    clientWidth,
 }) => {
     const execution = useExecution({
         seriesBy: compact([primaryMeasure, secondaryMeasure]),
@@ -94,7 +105,17 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     if (status === "error") {
         return isNoDataError(error) ? (
-            <KpiRenderer onDrill={handleOnDrill} />
+            <KpiRenderer
+                kpi={kpiWidget}
+                kpiResult={null}
+                filters={filters}
+                disableDrillUnderline={disableDrillUnderline}
+                isDrillable={false}
+                onDrill={onDrill && handleOnDrill}
+                alert={alert}
+                clientWidth={clientWidth}
+                separators={separators}
+            />
         ) : (
             <ErrorComponent message={error.message} />
         );
@@ -104,48 +125,45 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     const primarySeries = series.firstForMeasure(primaryMeasure);
     const secondarySeries = secondaryMeasure ? series.firstForMeasure(secondaryMeasure) : undefined;
 
-    const primaryValue = buildKpiValueInfo(
-        primarySeries,
-        result,
-        primarySeries.measureTitle(),
-        drillableItems,
-    );
-    const secondaryValue =
-        secondarySeries &&
-        buildKpiValueInfo(
-            secondarySeries,
-            result,
-            intl.formatMessage({ id: "filters.allTime.previousPeriod" }), // TODO use the complex logic from KD when we migrate to KPI component
-            drillableItems,
-        );
+    const kpiResult: IKpiResult = {
+        measureDescriptor: primarySeries.descriptor.measureDescriptor,
+        measureFormat: primarySeries.measureFormat(),
+        measureResult: getSeriesResult(primarySeries),
+        measureForComparisonResult: getSeriesResult(secondarySeries),
+    };
+
+    const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
+    const isDrillable =
+        kpiWidget.drills.length > 0 ||
+        isSomeHeaderPredicateMatched(predicates, primarySeries.descriptor.measureDescriptor, result);
 
     return (
         <KpiRenderer
+            kpi={kpiWidget}
+            kpiResult={kpiResult}
+            filters={filters}
             disableDrillUnderline={disableDrillUnderline}
-            primaryValue={primaryValue}
-            secondaryValue={secondaryValue}
+            isDrillable={isDrillable}
+            onDrill={onDrill && handleOnDrill}
             alert={alert}
-            onDrill={handleOnDrill}
+            clientWidth={clientWidth}
+            separators={separators}
         />
     );
 };
 
 export const KpiExecutor = injectIntl(KpiExecutorCore);
 
-function buildKpiValueInfo(
-    series: IDataSeries,
-    dv: DataViewFacade,
-    title: string,
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>,
-): IKpiValueInfo {
-    const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
-    const isDrillable = isSomeHeaderPredicateMatched(predicates, series.descriptor.measureDescriptor, dv);
+function getSeriesResult(series: IDataSeries): number | null {
+    const value = series.dataPoints()[0].rawValue;
 
-    return {
-        formattedValue: series.dataPoints()[0].formattedValue(),
-        isDrillable,
-        title,
-        value: series.dataPoints()[0].rawValue,
-        measureDescriptor: series.descriptor.measureDescriptor,
-    };
+    if (isNil(value)) {
+        return null;
+    }
+
+    if (isNumber(value)) {
+        return value;
+    }
+
+    return Number.parseFloat(value);
 }
