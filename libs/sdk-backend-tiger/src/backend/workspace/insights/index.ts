@@ -203,23 +203,32 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
-        await this.authCall((sdk) =>
-            // TODO - update to PUT in new MD
-            sdk.metadata.visualizationObjectsIdPatch({
-                contentType: "application/json",
-                id: insightId(insight),
-                visualizationObjectPatchResource: {
-                    data: {
-                        id: insightId(insight),
-                        attributes: {
-                            content: convertInsight(insight),
-                            title: insightTitle(insight),
+        await this.authCall((sdk) => {
+            return sdk.workspaceModel.updateEntity(
+                {
+                    entity: "visualizationObjects",
+                    id: insightId(insight),
+                    workspaceId: this.workspace,
+                    analyticsObject: {
+                        data: {
+                            id: insightId(insight),
+                            type: "visualizationObject",
+                            attributes: {
+                                description: insightTitle(insight),
+                                content: convertInsight(insight),
+                                title: insightTitle(insight),
+                            },
                         },
                     },
-                } as any, // The OpenAPI is wrong for now, waiting for a fix on backend 3rd party dependency fix release
-            }),
-        );
-
+                },
+                {
+                    headers: {
+                        Accept: "application/vnd.gooddata.api+json",
+                        "Content-Type": "application/vnd.gooddata.api+json",
+                    },
+                },
+            );
+        });
         return insight;
     };
 
