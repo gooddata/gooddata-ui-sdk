@@ -17,6 +17,11 @@ describe("getKpiPopLabel", () => {
     });
 
     describe("previousPeriod comparison", () => {
+        it("should return the correct popLabel for no filter", () => {
+            const actual = getKpiPopLabel(undefined, "previousPeriod", intl);
+            expect(actual).toEqual("prev. period");
+        });
+
         it("should return the correct popLabel for allTime filter", () => {
             const actual = getKpiPopLabel(allTimeFilter, "previousPeriod", intl);
             expect(actual).toEqual("prev. period");
