@@ -9,7 +9,7 @@ import {
     OnError,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import { KpiView } from "../KpiView";
+import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer";
 import {
     IWidget,
@@ -17,7 +17,6 @@ import {
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
-    ISeparators,
 } from "@gooddata/sdk-backend-spi";
 import {
     DashboardLayoutContentRenderer,
@@ -47,8 +46,6 @@ export type IDashboardContentRenderer = IFluidLayoutContentRenderer<
         filters?: IFilter[];
         filterContext: IFilterContext | ITempFilterContext;
         drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-        separators: ISeparators;
-        disableKpiDrillUnderline?: boolean;
         onDrill?: OnFiredDrillEvent;
         ErrorComponent: React.ComponentType<IErrorProps>;
         LoadingComponent: React.ComponentType<ILoadingProps>;
@@ -90,8 +87,6 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         onError,
         workspace,
         screen,
-        separators,
-        disableKpiDrillUnderline,
     } = props;
     switch (content.type) {
         case "rowHeader": {
@@ -119,7 +114,6 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                                     drillableItems={drillableItems}
                                     onDrill={onDrill}
                                     onError={onError}
-                                    separators={separators}
                                     ErrorComponent={ErrorComponent}
                                     LoadingComponent={LoadingComponent}
                                 />
@@ -145,8 +139,6 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                                 workspace={workspace}
                                 filters={filters}
                                 drillableItems={drillableItems}
-                                separators={separators}
-                                disableDrillUnderline={disableKpiDrillUnderline}
                                 onDrill={onDrill}
                                 onError={onError}
                                 ErrorComponent={ErrorComponent}

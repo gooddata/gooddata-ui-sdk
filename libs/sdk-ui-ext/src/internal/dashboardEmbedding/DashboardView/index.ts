@@ -2,3 +2,4 @@
 import { DashboardViewErrorBoundary } from "./DashboardViewErrorBoundary";
 export { DashboardViewErrorBoundary as DashboardView };
 export { IDashboardViewProps } from "./types";
+export { KpiView, IKpiViewProps } from "./KpiView";

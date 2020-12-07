@@ -14,7 +14,6 @@ import {
     IAnalyticalBackend,
     IDashboard,
     IFilterContext,
-    ISeparators,
     ITempFilterContext,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
@@ -25,8 +24,6 @@ interface IDashboardLayoutObtainerProps {
     alerts: IWidgetAlert[];
     backend: IAnalyticalBackend;
     workspace: string;
-    separators: ISeparators;
-    disableKpiDrillUnderline?: boolean;
     filters?: IFilter[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
@@ -41,14 +38,12 @@ export const DashboardLayoutObtainer: React.FC<IDashboardLayoutObtainerProps> = 
     dashboard,
     alerts,
     filters,
-    separators,
     backend,
     workspace,
     onDrill,
     drillableItems,
     onError,
     onDashboardLoaded,
-    disableKpiDrillUnderline,
     ErrorComponent,
     LoadingComponent,
 }) => {
@@ -88,8 +83,6 @@ export const DashboardLayoutObtainer: React.FC<IDashboardLayoutObtainerProps> = 
             filterContext={dashboard.filterContext}
             onDrill={onDrill}
             drillableItems={drillableItems}
-            separators={separators}
-            disableKpiDrillUnderline={disableKpiDrillUnderline}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
         />

@@ -1,20 +1,20 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../hooks/useDashboard";
 import { useDashboardAlerts } from "../hooks/useDashboardAlerts";
-import { IDashboardViewProps } from "./types";
+import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { useUserWorkspaceSettings } from "../hooks/useUserWorkspaceSettings";
 import { DashboardLayoutObtainer } from "./DashboardLayoutObtainer";
+import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
     theme,
     locale,
-    separators,
     disableThemeLoading = false,
     backend,
     workspace,
@@ -22,6 +22,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     drillableItems,
     onError,
     onDashboardLoaded,
+    config,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
@@ -64,6 +65,18 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onError, error]);
 
+    const effectiveConfig = useMemo<IDashboardViewConfig | undefined>(() => {
+        if (!config && !userWorkspaceSettings) {
+            return undefined;
+        }
+
+        return {
+            mapboxToken: config?.mapboxToken,
+            separators: config?.separators ?? userWorkspaceSettings?.separators,
+            disableKpiDrillUnderline: userWorkspaceSettings?.disableKpiDashboardHeadlineUnderline,
+        };
+    }, [config, userWorkspaceSettings]);
+
     const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
@@ -75,21 +88,21 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     }
 
     let dashboardRender = (
-        <DashboardLayoutObtainer
-            backend={backend}
-            workspace={workspace}
-            dashboard={dashboardData}
-            alerts={alertsData}
-            filters={filters}
-            filterContext={dashboardData.filterContext}
-            onDrill={onDrill}
-            drillableItems={drillableItems}
-            separators={separators ?? userWorkspaceSettings.separators}
-            disableKpiDrillUnderline={userWorkspaceSettings.disableKpiDashboardHeadlineUnderline}
-            ErrorComponent={ErrorComponent}
-            LoadingComponent={LoadingComponent}
-            onDashboardLoaded={handleDashboardLoaded}
-        />
+        <DashboardViewConfigProvider config={effectiveConfig}>
+            <DashboardLayoutObtainer
+                backend={backend}
+                workspace={workspace}
+                dashboard={dashboardData}
+                alerts={alertsData}
+                filters={filters}
+                filterContext={dashboardData.filterContext}
+                onDrill={onDrill}
+                drillableItems={drillableItems}
+                ErrorComponent={ErrorComponent}
+                LoadingComponent={LoadingComponent}
+                onDashboardLoaded={handleDashboardLoaded}
+            />
+        </DashboardViewConfigProvider>
     );
 
     if (!hasThemeProvider && !disableThemeLoading) {

@@ -1,12 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useMemo } from "react";
-import {
-    IAnalyticalBackend,
-    IFilterContext,
-    ITempFilterContext,
-    IWidget,
-    ISeparators,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -23,6 +17,7 @@ import { InsightView } from "../../../insightView";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
+import { useDashboardViewConfig } from "./DashboardViewConfigContext";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -31,7 +26,6 @@ interface IInsightRendererProps {
     filters?: IFilter[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    separators: ISeparators;
     onDrill?: OnFiredDrillEvent;
     onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;
@@ -43,7 +37,6 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     filters,
     filterContext,
     drillableItems = [],
-    separators,
     onDrill,
     onError,
     backend,
@@ -53,6 +46,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 }) => {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
+    const dashboardViewConfig = useDashboardViewConfig();
 
     const inputFilters = useMemo(() => {
         const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, insightWidget);
@@ -84,9 +78,10 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const chartConfig = useMemo(
         () => ({
-            separators,
+            mapboxToken: dashboardViewConfig?.mapboxToken,
+            separators: dashboardViewConfig?.separators,
         }),
-        [separators],
+        [dashboardViewConfig],
     );
 
     if (status === "loading" || status === "pending") {

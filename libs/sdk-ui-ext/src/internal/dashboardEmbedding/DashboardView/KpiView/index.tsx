@@ -7,7 +7,6 @@ import {
     ITempFilterContext,
     IWidget,
     IWidgetAlert,
-    ISeparators,
 } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import {
@@ -24,6 +23,7 @@ import invariant from "ts-invariant";
 
 import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
+import { useDashboardViewConfig } from "../DashboardViewConfigContext";
 
 export interface IKpiViewProps {
     /**
@@ -50,16 +50,6 @@ export interface IKpiViewProps {
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
      */
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-
-    /**
-     * Regional number formatting
-     */
-    separators: ISeparators;
-
-    /**
-     * Headline component will not be underlined when it is set up with drilling.
-     */
-    disableDrillUnderline?: boolean;
 
     /**
      * Called when user triggers a drill on a visualization.
@@ -113,8 +103,6 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     filters,
     filterContext,
     drillableItems = [],
-    separators,
-    disableDrillUnderline,
     onDrill,
     onError,
     backend,
@@ -133,6 +121,8 @@ export const KpiView: React.FC<IKpiViewProps> = ({
         workspace,
         onError,
     });
+
+    const config = useDashboardViewConfig();
 
     // add drilling predicate for the metric if the KPI has any drills defined from KPI dashboards
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(
@@ -158,8 +148,8 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             onDrill={onDrill}
             onError={onError}
             drillableItems={effectiveDrillableItems}
-            separators={separators}
-            disableDrillUnderline={disableDrillUnderline}
+            separators={config?.separators}
+            disableDrillUnderline={config?.disableKpiDrillUnderline}
             backend={backend}
             workspace={workspace}
             ErrorComponent={ErrorComponent}

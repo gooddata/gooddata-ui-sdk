@@ -14,6 +14,30 @@ import {
 /**
  * @beta
  */
+export interface IDashboardViewConfig {
+    /**
+     * Token for Mapbox API. You need this to use GeoCharts in your dashboards.
+     *
+     * @remarks To create a Mapbox account and an access token, see [this guide](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
+     */
+    mapboxToken: string;
+
+    /**
+     * Regional number formatting to use for measures on the dashboard.
+     */
+    separators?: ISeparators;
+
+    /**
+     * If true, drillable items in KPI's will not be underlined.
+     *
+     * @default false
+     */
+    disableKpiDrillUnderline?: boolean;
+}
+
+/**
+ * @beta
+ */
 export interface IDashboardViewProps {
     /**
      * Reference to the dashboard to display.
@@ -72,12 +96,6 @@ export interface IDashboardViewProps {
     locale?: ILocale;
 
     /**
-     * Regional number formatting to use for measures on the dashboard.
-     *
-     */
-    separators?: ISeparators;
-
-    /**
      * When true, disables the loading of the workspace theme and creation of a ThemeProvider (if there is none
      * already present in the parent scope). Currently – for technical reasons – the ThemeProvider changes the theme
      * globally (i.e. the theme is NOT constrained inside of a ThemeProvider).
@@ -113,4 +131,10 @@ export interface IDashboardViewProps {
      * Called in case of any error, either in the dashboard loading or any of the widgets execution.
      */
     onError?: OnError;
+
+    /**
+     * When embedding a dashboard that contains insights, you can specify extra options to merge with existing
+     * options saved for the insights.
+     */
+    config?: IDashboardViewConfig;
 }
