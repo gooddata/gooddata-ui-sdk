@@ -2,10 +2,18 @@
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
-import { BucketNames } from "@gooddata/sdk-ui";
-import { IExtendedReferencePoint } from "../../interfaces/Visualization";
+import { BucketNames, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
+import { IExtendedReferencePoint, IUiConfig } from "../../interfaces/Visualization";
 
-import { UICONFIG } from "../../constants/uiConfig";
+import {
+    UICONFIG,
+    MAX_TABLE_CATEGORIES_COUNT,
+    measuresBase,
+    viewBase,
+    defaultFilters,
+    defaultRootUiConfigProperties,
+    disabledOpenAsReportConfig,
+} from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
 import { setBucketTitles } from "./../bucketHelper";
@@ -27,4 +35,41 @@ export function setPivotTableUiConfig(
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"], tableMeasuresIcon);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], tableRowsIcon);
     set(referencePoint, [UICONFIG, BUCKETS, BucketNames.COLUMNS, "icon"], tableColumnsIcon);
+}
+
+export function getPivotTableDefaultUiConfig(multipleDatesEnabled: boolean): IUiConfig {
+    return {
+        buckets: {
+            measures: {
+                ...measuresBase,
+            },
+            attribute: {
+                ...viewBase,
+                allowsSwapping: true,
+                allowsReordering: true,
+                itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
+                allowsDuplicateDates: multipleDatesEnabled,
+                itemsLimitByType: {
+                    date: multipleDatesEnabled ? MAX_TABLE_CATEGORIES_COUNT : 1,
+                },
+            },
+            columns: {
+                ...viewBase,
+                allowsSwapping: true,
+                allowsReordering: true,
+                itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
+                allowsDuplicateDates: multipleDatesEnabled,
+                itemsLimitByType: {
+                    date: multipleDatesEnabled ? MAX_TABLE_CATEGORIES_COUNT : 1,
+                },
+            },
+            ...defaultFilters,
+        },
+        ...defaultRootUiConfigProperties,
+        ...disabledOpenAsReportConfig,
+        supportedOverTimeComparisonTypes: [
+            OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
+            OverTimeComparisonTypes.PREVIOUS_PERIOD,
+        ],
+    };
 }

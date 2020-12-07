@@ -16,6 +16,7 @@ export const getMockReferencePoint = (
     sortItems: ISortItem[] = [],
     measuresIsShowInPercentEnabled = false,
     columnWidths: ColumnWidthItem[] = [],
+    multipleDatesEnabled = false,
 ): IExtendedReferencePoint => ({
     buckets: [
         {
@@ -52,7 +53,11 @@ export const getMockReferencePoint = (
                 icon: "",
                 isShowInPercentEnabled: false,
                 itemsLimit: 20,
+                itemsLimitByType: {
+                    date: multipleDatesEnabled ? 20 : 1,
+                },
                 title: "Rows",
+                allowsDuplicateDates: multipleDatesEnabled,
             },
             columns: {
                 accepts: ["attribute", "date"],
@@ -63,7 +68,11 @@ export const getMockReferencePoint = (
                 icon: "",
                 isShowInPercentEnabled: false,
                 itemsLimit: 20,
+                itemsLimitByType: {
+                    date: multipleDatesEnabled ? 20 : 1,
+                },
                 title: "Columns",
+                allowsDuplicateDates: multipleDatesEnabled,
             },
             filters: {
                 accepts: ["attribute", "date"],
@@ -71,6 +80,9 @@ export const getMockReferencePoint = (
                 enabled: true,
                 isShowInPercentEnabled: false,
                 itemsLimit: 20,
+                itemsLimitByType: {
+                    date: 1,
+                },
             },
             measures: {
                 accepts: ["metric", "fact", "attribute"],

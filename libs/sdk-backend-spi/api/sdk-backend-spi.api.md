@@ -1107,6 +1107,7 @@ export interface ISettings {
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
     enableHidingOfDataPoints?: boolean;
+    enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
