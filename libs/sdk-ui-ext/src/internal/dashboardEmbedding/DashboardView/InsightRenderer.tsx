@@ -7,7 +7,7 @@ import {
     IWidget,
     ISeparators,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, newAllTimeFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -22,6 +22,7 @@ import {
 import { InsightView } from "../../../insightView";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
+import { hasDateFilterForDateDataset } from "./utils";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -60,11 +61,24 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const { error, result, status } = useCancelablePromise(
         {
-            promise: () =>
-                effectiveBackend
+            promise: async () => {
+                const resolvedFilters = await effectiveBackend
                     .workspace(effectiveWorkspace)
                     .dashboards()
-                    .getResolvedFiltersForWidget(insightWidget, inputFilters),
+                    .getResolvedFiltersForWidget(insightWidget, inputFilters);
+
+                // if the widget is connected to a dateDataset and has no date filters for it in the context,
+                // add an implicit All time filter for that dimension - this will cause the InsightView to ignore
+                // any date filters on that dimension - this is how KPI dashboards behave
+                if (
+                    insightWidget.dateDataSet &&
+                    !hasDateFilterForDateDataset(resolvedFilters, insightWidget.dateDataSet)
+                ) {
+                    resolvedFilters.push(newAllTimeFilter(insightWidget.dateDataSet));
+                }
+
+                return resolvedFilters;
+            },
             onError,
         },
         [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
