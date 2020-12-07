@@ -7,7 +7,7 @@ import {
     IWidget,
     ISeparators,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter, newAllTimeFilter } from "@gooddata/sdk-model";
+import { IFilter } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -22,7 +22,7 @@ import {
 import { InsightView } from "../../../insightView";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
-import { hasDateFilterForDateDataset } from "./utils";
+import { addImplicitAllTimeFilter } from "./utils";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -67,17 +67,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                     .dashboards()
                     .getResolvedFiltersForWidget(insightWidget, inputFilters);
 
-                // if the widget is connected to a dateDataset and has no date filters for it in the context,
-                // add an implicit All time filter for that dimension - this will cause the InsightView to ignore
-                // any date filters on that dimension - this is how KPI dashboards behave
-                if (
-                    insightWidget.dateDataSet &&
-                    !hasDateFilterForDateDataset(resolvedFilters, insightWidget.dateDataSet)
-                ) {
-                    resolvedFilters.push(newAllTimeFilter(insightWidget.dateDataSet));
-                }
-
-                return resolvedFilters;
+                return addImplicitAllTimeFilter(insightWidget, resolvedFilters);
             },
             onError,
         },
