@@ -1,14 +1,13 @@
 // (C) 2020 GoodData Corporation
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../hooks/useDashboard";
-import { DashboardRenderer } from "./DashboardRenderer";
 import { useDashboardAlerts } from "../hooks/useDashboardAlerts";
 import { IDashboardViewProps } from "./types";
-import { useDashboardViewLayout } from "../hooks/useDashboardViewLayout";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { useUserWorkspaceSettings } from "../hooks/useUserWorkspaceSettings";
+import { DashboardLayoutObtainer } from "./DashboardLayoutObtainer";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -47,35 +46,17 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
-    const {
-        error: dashboardViewLayoutError,
-        result: dashboardViewLayout,
-        status: dashboardViewLayoutStatus,
-    } = useDashboardViewLayout({
-        dashboardLayout: dashboardData?.layout,
-        backend,
-        workspace,
-    });
+    const handleDashboardLoaded = useCallback(() => {
+        onDashboardLoaded?.({
+            alerts: alertsData,
+            dashboard: dashboardData,
+        });
+    }, [onDashboardLoaded, alertsData, dashboardData]);
 
-    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? dashboardViewLayoutError;
+    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
-
-    useEffect(() => {
-        if (
-            alertsData &&
-            dashboardData &&
-            userWorkspaceSettings &&
-            dashboardViewLayout &&
-            onDashboardLoaded
-        ) {
-            onDashboardLoaded({
-                alerts: alertsData,
-                dashboard: dashboardData,
-            });
-        }
-    }, [onDashboardLoaded, alertsData, dashboardData, dashboardViewLayout]);
 
     useEffect(() => {
         if (error && onError) {
@@ -83,7 +64,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onError, error]);
 
-    const statuses = [dashboardStatus, alertsStatus, dashboardViewLayoutStatus, userWorkspaceSettingsStatus];
+    const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
@@ -94,10 +75,10 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     }
 
     let dashboardRender = (
-        <DashboardRenderer
+        <DashboardLayoutObtainer
             backend={backend}
             workspace={workspace}
-            dashboardViewLayout={dashboardViewLayout}
+            dashboard={dashboardData}
             alerts={alertsData}
             filters={filters}
             filterContext={dashboardData.filterContext}
@@ -107,6 +88,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             disableKpiDrillUnderline={userWorkspaceSettings.disableKpiDashboardHeadlineUnderline}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
+            onDashboardLoaded={handleDashboardLoaded}
         />
     );
 
