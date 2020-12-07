@@ -22,6 +22,7 @@ import {
 import { InsightView } from "../../../insightView";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
+import { addImplicitAllTimeFilter } from "./utils";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -60,11 +61,14 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const { error, result, status } = useCancelablePromise(
         {
-            promise: () =>
-                effectiveBackend
+            promise: async () => {
+                const resolvedFilters = await effectiveBackend
                     .workspace(effectiveWorkspace)
                     .dashboards()
-                    .getResolvedFiltersForWidget(insightWidget, inputFilters),
+                    .getResolvedFiltersForWidget(insightWidget, inputFilters);
+
+                return addImplicitAllTimeFilter(insightWidget, resolvedFilters);
+            },
             onError,
         },
         [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
