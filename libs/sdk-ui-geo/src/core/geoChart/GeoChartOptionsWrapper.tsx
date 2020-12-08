@@ -40,8 +40,13 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
     public render(): React.ReactNode {
         const { dataView, error, isLoading } = this.props;
 
-        const ErrorComponent = this.props.ErrorComponent ?? DefaultErrorComponent;
-        const LoadingComponent = this.props.LoadingComponent ?? DefaultLoadingComponent;
+        // if explicitly null, do not default the components to allow them to be disabled
+        const ErrorComponent =
+            this.props.ErrorComponent === null ? null : this.props.ErrorComponent ?? DefaultErrorComponent;
+        const LoadingComponent =
+            this.props.LoadingComponent === null
+                ? null
+                : this.props.LoadingComponent ?? DefaultLoadingComponent;
 
         if (error) {
             const errorProps = this.errorMap[
