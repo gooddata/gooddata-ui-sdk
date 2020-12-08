@@ -49,10 +49,6 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     LoadingComponent,
 }) => {
     const isThemeLoading = useThemeIsLoading();
-    if (isThemeLoading) {
-        // do not render the dashboard until you have the theme to avoid flash of un-styled content
-        return <LoadingComponent />;
-    }
 
     const contentWithProps = useCallback(
         (props: IDashboardViewLayoutColumnRenderProps) => {
@@ -86,6 +82,11 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
             workspace,
         ],
     );
+
+    if (isThemeLoading) {
+        // do not render the dashboard until you have the theme to avoid flash of un-styled content
+        return <LoadingComponent />;
+    }
 
     return (
         <DashboardLayout
