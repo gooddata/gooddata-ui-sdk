@@ -1365,8 +1365,18 @@ export interface ITotalDescriptor {
     };
 }
 
+// @alpha
+export interface IUser {
+    email?: string;
+    firstName?: string;
+    lastName?: string;
+    login: string;
+    ref: ObjRef;
+}
+
 // @public
 export interface IUserService {
+    getUser(): Promise<IUser>;
     settings(): IUserSettingsService;
 }
 

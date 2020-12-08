@@ -45,7 +45,7 @@ export interface IScheduledMailBase {
     };
 
     /**
-     * Recipients email addresses
+     * Recipients unique login identifiers - should be equal to login property in {@link IWorkspaceUser} / {@link IUser}
      */
     to: string[];
 

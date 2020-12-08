@@ -185,6 +185,9 @@ function recordedWorkspace(
 // returns the same settings as the global ones
 function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
+        getUser() {
+            throw new NotSupported("not supported");
+        },
         settings(): IUserSettingsService {
             return {
                 getSettings: async () => ({
