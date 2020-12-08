@@ -1,4 +1,5 @@
 // (C) 2020 GoodData Corporation
 
-export { InsightView, IInsightViewProps } from "./InsightView";
+export { InsightView } from "./InsightView";
+export { IInsightViewProps } from "./types";
 export { clearInsightViewCaches } from "./dataLoaders";
