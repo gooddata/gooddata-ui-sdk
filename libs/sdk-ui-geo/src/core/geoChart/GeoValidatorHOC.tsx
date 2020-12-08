@@ -10,6 +10,7 @@ import {
     ErrorCodes,
     ErrorComponent as DefaultErrorComponent,
     GeoLocationMissingSdkError,
+    GeoTokenMissingSdkError,
     IErrorDescriptors,
     IntlWrapper,
     newErrorMapping,
@@ -80,8 +81,11 @@ export function geoValidatorHOC<T>(InnerComponent: React.ComponentClass<T>): Rea
 
         private handleError() {
             const { onError } = this.props;
-            if (onError && this.isLocationMissing) {
-                onError(new GeoLocationMissingSdkError());
+            if (this.isLocationMissing) {
+                onError?.(new GeoLocationMissingSdkError());
+            }
+            if (this.isMapboxTokenMissing) {
+                onError?.(new GeoTokenMissingSdkError());
             }
         }
 

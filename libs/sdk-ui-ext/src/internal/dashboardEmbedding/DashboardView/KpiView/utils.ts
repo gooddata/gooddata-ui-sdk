@@ -22,7 +22,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { filterContextToFiltersForWidget } from "../converters";
+import { filterContextToFiltersForWidget } from "../../converters";
 
 interface IUseKpiDataConfig {
     kpiWidget: IWidget;
