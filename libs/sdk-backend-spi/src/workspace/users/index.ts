@@ -15,12 +15,14 @@ export interface IWorkspaceUser {
      * User uri
      */
     uri: string;
+
     /**
-     * Login
+     * Login - unique user ID for logging into the platform
      */
     login: string;
+
     /**
-     * Email
+     * Contact email of the user
      */
     email: string;
     /**
