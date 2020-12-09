@@ -15,7 +15,7 @@
             "get": {
                 "tags": ["declarative-layout-controller"],
                 "summary": "Get organization layout",
-                "description": "Retrieve complete layout of organization, workspaces, user-groups, etc.",
+                "description": "Retrieve complete layout of the organization, workspaces, user-groups, etc.",
                 "operationId": "getOrganizationLayout",
                 "responses": {
                     "501": {
@@ -26,7 +26,7 @@
             "put": {
                 "tags": ["declarative-layout-controller"],
                 "summary": "Set organization layout",
-                "description": "Sets complete layout of organization, like workspaces, user-groups, etc.",
+                "description": "Sets complete layout of the organization, like workspaces, user-groups, etc.",
                 "operationId": "setOrganizationLayout",
                 "responses": {
                     "501": {
@@ -39,7 +39,7 @@
             "get": {
                 "tags": ["declarative-layout-controller"],
                 "summary": "Get workspace layout",
-                "description": "Retrieve current model of the workspace in declarative form.",
+                "description": "Retrieve current model of the workspace in a declarative form.",
                 "operationId": "getWorkspaceLayout",
                 "parameters": [
                     {
@@ -67,7 +67,7 @@
             "put": {
                 "tags": ["declarative-layout-controller"],
                 "summary": "Set workspace layout",
-                "description": "Set complete layout of workspace, like model, ACLs, etc.",
+                "description": "Set complete layout of the workspace, like model, related ACLs, etc.",
                 "operationId": "putWorkspaceLayout",
                 "parameters": [
                     {
@@ -100,7 +100,7 @@
             "get": {
                 "tags": ["declarative-layout-controller"],
                 "summary": "Get logical model",
-                "description": "Retrieve current logical model of the workspace in declarative form.",
+                "description": "Retrieve current logical model of the workspace in a declarative form.",
                 "operationId": "getLogicalModel",
                 "parameters": [
                     {
@@ -222,7 +222,7 @@
             "post": {
                 "tags": ["notification-controller"],
                 "summary": "Register an upload notification",
-                "description": "Notification sets up all reports to be computed again with new data.",
+                "description": "Notification sets up all reports to be computed again with a new data.",
                 "operationId": "registerUploadNotification",
                 "parameters": [
                     {
@@ -304,11 +304,11 @@
             "get": {
                 "tags": ["organization-controller"],
                 "summary": "Get organization info",
-                "description": "Gets a basic information about organization.",
+                "description": "Gets a basic information about the organization.",
                 "operationId": "getOrganization",
                 "responses": {
                     "200": {
-                        "description": "Current information about organization.",
+                        "description": "Current information about the organization.",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -322,7 +322,7 @@
             "put": {
                 "tags": ["organization-controller"],
                 "summary": "Update organization info",
-                "description": "Sets a basic information about organization.",
+                "description": "Sets a basic information about the organization.",
                 "operationId": "updateOrganization",
                 "requestBody": {
                     "content": {
@@ -720,7 +720,7 @@
                 }
             },
             "DeclarativeAnalyticsLayer": {
-                "required": ["analyticalDashboards", "metrics", "visualizationObjects"],
+                "required": ["analyticalDashboards", "filterContexts", "metrics", "visualizationObjects"],
                 "type": "object",
                 "properties": {
                     "analyticalDashboards": {
@@ -728,6 +728,13 @@
                         "description": "A list of analytical dashboards available in the model.",
                         "items": {
                             "$ref": "#/components/schemas/DeclarativeAnalyticalDashboard"
+                        }
+                    },
+                    "filterContexts": {
+                        "type": "array",
+                        "description": "A list of filter contexts available in the model.",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeFilterContext"
                         }
                     },
                     "metrics": {
@@ -763,7 +770,7 @@
                     "description": {
                         "type": "string",
                         "description": "Attribute description.",
-                        "example": "Customer name including first and last name."
+                        "example": "Customer name including the first and the last name."
                     },
                     "labels": {
                         "type": "array",
@@ -827,7 +834,7 @@
                 "properties": {
                     "id": {
                         "type": "string",
-                        "description": "The Dataset ID. This ID is further used to refer to this instance of dataset.",
+                        "description": "The Dataset ID. This ID is further used to refer to this instance of the dataset.",
                         "example": "customers"
                     },
                     "title": {
@@ -863,7 +870,7 @@
                     },
                     "references": {
                         "type": "array",
-                        "description": "An array of references.",
+                        "description": "An array of references to other datasets.",
                         "items": {
                             "$ref": "#/components/schemas/DeclarativeReference"
                         }
@@ -951,6 +958,30 @@
                     }
                 },
                 "description": "A dataset fact."
+            },
+            "DeclarativeFilterContext": {
+                "required": ["content", "description", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Filter Context ID.",
+                        "example": "filter-sales"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Filter Context title.",
+                        "example": "Filter Context for Sales team"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Filter Context description.",
+                        "example": "Filter Context for Sales team."
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                }
             },
             "DeclarativeLabel": {
                 "required": ["description", "id", "primary", "sourceColumn", "title"],
@@ -1844,7 +1875,9 @@
                                     "DAY_OF_YEAR",
                                     "WEEK_OF_YEAR",
                                     "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
+                                    "QUARTER_OF_YEAR",
+                                    "WEEK_OF_YEAR_EU",
+                                    "DAY_OF_WEEK_EU"
                                 ]
                             }
                         }

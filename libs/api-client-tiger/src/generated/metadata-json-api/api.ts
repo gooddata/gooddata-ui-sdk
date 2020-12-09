@@ -1050,6 +1050,12 @@ export interface DeclarativeAnalyticsLayer {
      */
     analyticalDashboards: Array<DeclarativeAnalyticalDashboard>;
     /**
+     * A list of filter contexts available in the model.
+     * @type {Array<DeclarativeFilterContext>}
+     * @memberof DeclarativeAnalyticsLayer
+     */
+    filterContexts: Array<DeclarativeFilterContext>;
+    /**
      * A list of metrics available in the model.
      * @type {Array<DeclarativeMetric>}
      * @memberof DeclarativeAnalyticsLayer
@@ -1152,7 +1158,7 @@ export interface DeclarativeDataSource {
  */
 export interface DeclarativeDataset {
     /**
-     * The Dataset ID. This ID is further used to refer to this instance of dataset.
+     * The Dataset ID. This ID is further used to refer to this instance of the dataset.
      * @type {string}
      * @memberof DeclarativeDataset
      */
@@ -1188,7 +1194,7 @@ export interface DeclarativeDataset {
      */
     facts: Array<DeclarativeFact>;
     /**
-     * An array of references.
+     * An array of references to other datasets.
      * @type {Array<DeclarativeReference>}
      * @memberof DeclarativeDataset
      */
@@ -1290,6 +1296,37 @@ export interface DeclarativeFact {
      * @memberof DeclarativeFact
      */
     sourceColumn: string;
+}
+/**
+ *
+ * @export
+ * @interface DeclarativeFilterContext
+ */
+export interface DeclarativeFilterContext {
+    /**
+     * Filter Context ID.
+     * @type {string}
+     * @memberof DeclarativeFilterContext
+     */
+    id: string;
+    /**
+     * Filter Context title.
+     * @type {string}
+     * @memberof DeclarativeFilterContext
+     */
+    title: string;
+    /**
+     * Filter Context description.
+     * @type {string}
+     * @memberof DeclarativeFilterContext
+     */
+    description: string;
+    /**
+     * A server agnostic definition of the visualization object in JSON format.
+     * @type {object}
+     * @memberof DeclarativeFilterContext
+     */
+    content: object;
 }
 /**
  * A attribute label.
@@ -3368,7 +3405,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Retrieve current logical model of the workspace in declarative form.
+         * Retrieve current logical model of the workspace in a declarative form.
          * @summary Get logical model
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3412,7 +3449,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Retrieve complete layout of organization, workspaces, user-groups, etc.
+         * Retrieve complete layout of the organization, workspaces, user-groups, etc.
          * @summary Get organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3440,7 +3477,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Retrieve current model of the workspace in declarative form.
+         * Retrieve current model of the workspace in a declarative form.
          * @summary Get workspace layout
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3484,7 +3521,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Set complete layout of workspace, like model, ACLs, etc.
+         * Set complete layout of the workspace, like model, related ACLs, etc.
          * @summary Set workspace layout
          * @param {string} workspaceId
          * @param {DeclarativeWorkspace} declarativeWorkspace
@@ -3667,7 +3704,7 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Sets complete layout of organization, like workspaces, user-groups, etc.
+         * Sets complete layout of the organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3728,7 +3765,7 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Retrieve current logical model of the workspace in declarative form.
+         * Retrieve current logical model of the workspace in a declarative form.
          * @summary Get logical model
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3752,7 +3789,7 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Retrieve complete layout of organization, workspaces, user-groups, etc.
+         * Retrieve complete layout of the organization, workspaces, user-groups, etc.
          * @summary Get organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3773,7 +3810,7 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Retrieve current model of the workspace in declarative form.
+         * Retrieve current model of the workspace in a declarative form.
          * @summary Get workspace layout
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3797,7 +3834,7 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Set complete layout of workspace, like model, ACLs, etc.
+         * Set complete layout of the workspace, like model, related ACLs, etc.
          * @summary Set workspace layout
          * @param {string} workspaceId
          * @param {DeclarativeWorkspace} declarativeWorkspace
@@ -3875,7 +3912,7 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Sets complete layout of organization, like workspaces, user-groups, etc.
+         * Sets complete layout of the organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3927,7 +3964,7 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Retrieve current logical model of the workspace in declarative form.
+         * Retrieve current logical model of the workspace in a declarative form.
          * @summary Get logical model
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3945,7 +3982,7 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Retrieve complete layout of organization, workspaces, user-groups, etc.
+         * Retrieve complete layout of the organization, workspaces, user-groups, etc.
          * @summary Get organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -3957,7 +3994,7 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Retrieve current model of the workspace in declarative form.
+         * Retrieve current model of the workspace in a declarative form.
          * @summary Get workspace layout
          * @param {string} workspaceId
          * @param {*} [options] Override http request option.
@@ -3975,7 +4012,7 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Set complete layout of workspace, like model, ACLs, etc.
+         * Set complete layout of the workspace, like model, related ACLs, etc.
          * @summary Set workspace layout
          * @param {string} workspaceId
          * @param {DeclarativeWorkspace} declarativeWorkspace
@@ -4035,7 +4072,7 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Sets complete layout of organization, like workspaces, user-groups, etc.
+         * Sets complete layout of the organization, like workspaces, user-groups, etc.
          * @summary Set organization layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4071,7 +4108,7 @@ export interface DeclarativeLayoutControllerApiInterface {
     ): AxiosPromise<DeclarativeAnalytics>;
 
     /**
-     * Retrieve current logical model of the workspace in declarative form.
+     * Retrieve current logical model of the workspace in a declarative form.
      * @summary Get logical model
      * @param {string} workspaceId
      * @param {*} [options] Override http request option.
@@ -4086,7 +4123,7 @@ export interface DeclarativeLayoutControllerApiInterface {
     ): AxiosPromise<DeclarativeModel>;
 
     /**
-     * Retrieve complete layout of organization, workspaces, user-groups, etc.
+     * Retrieve complete layout of the organization, workspaces, user-groups, etc.
      * @summary Get organization layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4095,7 +4132,7 @@ export interface DeclarativeLayoutControllerApiInterface {
     getOrganizationLayout(params: {}, options?: any): AxiosPromise<void>;
 
     /**
-     * Retrieve current model of the workspace in declarative form.
+     * Retrieve current model of the workspace in a declarative form.
      * @summary Get workspace layout
      * @param {string} workspaceId
      * @param {*} [options] Override http request option.
@@ -4110,7 +4147,7 @@ export interface DeclarativeLayoutControllerApiInterface {
     ): AxiosPromise<DeclarativeWorkspace>;
 
     /**
-     * Set complete layout of workspace, like model, ACLs, etc.
+     * Set complete layout of the workspace, like model, related ACLs, etc.
      * @summary Set workspace layout
      * @param {string} workspaceId
      * @param {DeclarativeWorkspace} declarativeWorkspace
@@ -4161,7 +4198,7 @@ export interface DeclarativeLayoutControllerApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     * Sets complete layout of organization, like workspaces, user-groups, etc.
+     * Sets complete layout of the organization, like workspaces, user-groups, etc.
      * @summary Set organization layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4199,7 +4236,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
     }
 
     /**
-     * Retrieve current logical model of the workspace in declarative form.
+     * Retrieve current logical model of the workspace in a declarative form.
      * @summary Get logical model
      * @param {string} workspaceId
      * @param {*} [options] Override http request option.
@@ -4219,7 +4256,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
     }
 
     /**
-     * Retrieve complete layout of organization, workspaces, user-groups, etc.
+     * Retrieve complete layout of the organization, workspaces, user-groups, etc.
      * @summary Get organization layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4233,7 +4270,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
     }
 
     /**
-     * Retrieve current model of the workspace in declarative form.
+     * Retrieve current model of the workspace in a declarative form.
      * @summary Get workspace layout
      * @param {string} workspaceId
      * @param {*} [options] Override http request option.
@@ -4253,7 +4290,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
     }
 
     /**
-     * Set complete layout of workspace, like model, ACLs, etc.
+     * Set complete layout of the workspace, like model, related ACLs, etc.
      * @summary Set workspace layout
      * @param {string} workspaceId
      * @param {DeclarativeWorkspace} declarativeWorkspace
@@ -4319,7 +4356,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
     }
 
     /**
-     * Sets complete layout of organization, like workspaces, user-groups, etc.
+     * Sets complete layout of the organization, like workspaces, user-groups, etc.
      * @summary Set organization layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4340,7 +4377,7 @@ export class DeclarativeLayoutControllerApi extends BaseAPI
 export const NotificationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Notification sets up all reports to be computed again with new data.
+         * Notification sets up all reports to be computed again with a new data.
          * @summary Register an upload notification
          * @param {string} dataSourceId
          * @param {*} [options] Override http request option.
@@ -4393,7 +4430,7 @@ export const NotificationControllerApiAxiosParamCreator = function (configuratio
 export const NotificationControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
-         * Notification sets up all reports to be computed again with new data.
+         * Notification sets up all reports to be computed again with a new data.
          * @summary Register an upload notification
          * @param {string} dataSourceId
          * @param {*} [options] Override http request option.
@@ -4430,7 +4467,7 @@ export const NotificationControllerApiFactory = function (
 ) {
     return {
         /**
-         * Notification sets up all reports to be computed again with new data.
+         * Notification sets up all reports to be computed again with a new data.
          * @summary Register an upload notification
          * @param {string} dataSourceId
          * @param {*} [options] Override http request option.
@@ -4457,7 +4494,7 @@ export const NotificationControllerApiFactory = function (
  */
 export interface NotificationControllerApiInterface {
     /**
-     * Notification sets up all reports to be computed again with new data.
+     * Notification sets up all reports to be computed again with a new data.
      * @summary Register an upload notification
      * @param {string} dataSourceId
      * @param {*} [options] Override http request option.
@@ -4480,7 +4517,7 @@ export interface NotificationControllerApiInterface {
  */
 export class NotificationControllerApi extends BaseAPI implements NotificationControllerApiInterface {
     /**
-     * Notification sets up all reports to be computed again with new data.
+     * Notification sets up all reports to be computed again with a new data.
      * @summary Register an upload notification
      * @param {string} dataSourceId
      * @param {*} [options] Override http request option.
@@ -4747,7 +4784,7 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * Gets a basic information about organization.
+         * Gets a basic information about the organization.
          * @summary Get organization info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4775,7 +4812,7 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * Sets a basic information about organization.
+         * Sets a basic information about the organization.
          * @summary Update organization info
          * @param {Organization} organization
          * @param {*} [options] Override http request option.
@@ -4854,7 +4891,7 @@ export const OrganizationControllerApiFp = function (configuration?: Configurati
             };
         },
         /**
-         * Gets a basic information about organization.
+         * Gets a basic information about the organization.
          * @summary Get organization info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4875,7 +4912,7 @@ export const OrganizationControllerApiFp = function (configuration?: Configurati
             };
         },
         /**
-         * Sets a basic information about organization.
+         * Sets a basic information about the organization.
          * @summary Update organization info
          * @param {Organization} organization
          * @param {*} [options] Override http request option.
@@ -4924,7 +4961,7 @@ export const OrganizationControllerApiFactory = function (
             );
         },
         /**
-         * Gets a basic information about organization.
+         * Gets a basic information about the organization.
          * @summary Get organization info
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -4936,7 +4973,7 @@ export const OrganizationControllerApiFactory = function (
             );
         },
         /**
-         * Sets a basic information about organization.
+         * Sets a basic information about the organization.
          * @summary Update organization info
          * @param {Organization} organization
          * @param {*} [options] Override http request option.
@@ -4972,7 +5009,7 @@ export interface OrganizationControllerApiInterface {
     dropOrganization(params: {}, options?: any): AxiosPromise<object>;
 
     /**
-     * Gets a basic information about organization.
+     * Gets a basic information about the organization.
      * @summary Get organization info
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -4981,7 +5018,7 @@ export interface OrganizationControllerApiInterface {
     getOrganization(params: {}, options?: any): AxiosPromise<Organization>;
 
     /**
-     * Sets a basic information about organization.
+     * Sets a basic information about the organization.
      * @summary Update organization info
      * @param {Organization} organization
      * @param {*} [options] Override http request option.
@@ -5018,7 +5055,7 @@ export class OrganizationControllerApi extends BaseAPI implements OrganizationCo
     }
 
     /**
-     * Gets a basic information about organization.
+     * Gets a basic information about the organization.
      * @summary Get organization info
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -5032,7 +5069,7 @@ export class OrganizationControllerApi extends BaseAPI implements OrganizationCo
     }
 
     /**
-     * Sets a basic information about organization.
+     * Sets a basic information about the organization.
      * @summary Update organization info
      * @param {Organization} organization
      * @param {*} [options] Override http request option.

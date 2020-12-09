@@ -666,6 +666,7 @@ export interface DeclarativeAnalytics {
 // @public
 export interface DeclarativeAnalyticsLayer {
     analyticalDashboards: Array<DeclarativeAnalyticalDashboard>;
+    filterContexts: Array<DeclarativeFilterContext>;
     metrics: Array<DeclarativeMetric>;
     visualizationObjects: Array<DeclarativeVisualizationObject>;
 }
@@ -766,6 +767,14 @@ export interface DeclarativeFact {
     description: string;
     id: string;
     sourceColumn: string;
+    title: string;
+}
+
+// @public
+export interface DeclarativeFilterContext {
+    content: object;
+    description: string;
+    id: string;
     title: string;
 }
 
