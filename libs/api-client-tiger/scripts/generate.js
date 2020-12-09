@@ -21,8 +21,6 @@ program
     .parse(process.argv);
 
 const specs = [
-    // TODO: to be removed when SDK is swiched to new MD service
-    { path: "/api/metadata/japi-schema", name: "metadata-json-api" },
     { path: "/api/schema-metadata", name: "metadata-new-json-api" },
     { path: "/api/schema-afm", name: "afm-rest-api" },
 ];
