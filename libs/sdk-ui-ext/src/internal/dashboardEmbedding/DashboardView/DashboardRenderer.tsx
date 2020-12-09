@@ -33,6 +33,7 @@ interface IDashboardRendererProps {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;
+    className?: string;
 }
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
@@ -47,6 +48,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     ErrorComponent,
     onError,
     LoadingComponent,
+    className,
 }) => {
     const isThemeLoading = useThemeIsLoading();
 
@@ -110,6 +112,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
                     </>
                 );
             }}
+            className={className}
         />
     );
 };
