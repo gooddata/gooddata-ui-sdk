@@ -106,6 +106,13 @@ export interface IDashboardViewProps {
     disableThemeLoading?: boolean;
 
     /**
+     * If provided it is called with loaded theme to allow its modification according to the app needs.
+     * This is only applied to themes loaded from the backend, it is NOT applied to themes provided using
+     * the "theme" prop.
+     */
+    themeModifier?: (theme: ITheme) => ITheme;
+
+    /**
      * Component to render if embedding fails.
      * This component is also used in all the individual widgets when they have some error occur.
      *

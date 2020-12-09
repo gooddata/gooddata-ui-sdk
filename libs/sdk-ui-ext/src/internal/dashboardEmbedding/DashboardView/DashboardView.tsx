@@ -12,12 +12,14 @@ import { DashboardLayoutObtainer } from "./DashboardLayoutObtainer";
 import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
 import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
 import { ColorPaletteProvider } from "./ColorPaletteContext";
+import { defaultThemeModifier } from "./defaultThemeModifier";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
     theme,
     disableThemeLoading = false,
+    themeModifier = defaultThemeModifier,
     backend,
     workspace,
     onDrill,
@@ -118,7 +120,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     if (!hasThemeProvider && !disableThemeLoading) {
         dashboardRender = (
-            <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
+            <ThemeProvider theme={theme} backend={backend} workspace={workspace} modifier={themeModifier}>
                 {dashboardRender}
             </ThemeProvider>
         );
