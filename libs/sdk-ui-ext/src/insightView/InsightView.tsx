@@ -6,7 +6,6 @@ import noop from "lodash/noop";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IColorPalette, idRef } from "@gooddata/sdk-model";
-
 import {
     GoodDataSdkError,
     ILocale,
@@ -19,13 +18,15 @@ import {
     newErrorMapping,
     isGoodDataSdkError,
     UnexpectedSdkError,
+    OnLoadingChanged,
 } from "@gooddata/sdk-ui";
 import { IInsightViewDataLoader, getInsightViewDataLoader } from "./dataLoaders";
 import { IInsightViewProps } from "./types";
 import { InsightRenderer } from "./InsightRenderer";
 
 interface IInsightViewState {
-    isLoading: boolean;
+    isDataLoading: boolean;
+    isVisualizationLoading: boolean;
     error: GoodDataSdkError | undefined;
     insight: IInsight | undefined;
     locale: ILocale | undefined;
@@ -50,7 +51,8 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         this.errorMap = newErrorMapping(props.intl);
 
         this.state = {
-            isLoading: false,
+            isDataLoading: false,
+            isVisualizationLoading: false,
             error: undefined,
             insight: undefined,
             locale: DefaultLocale,
@@ -59,18 +61,18 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         };
     }
 
-    private startLoading = () => {
-        this.setIsLoading(true);
+    private startDataLoading = () => {
+        this.setIsDataLoading(true);
         this.setError(undefined);
     };
 
-    private stopLoading = () => {
-        this.setIsLoading(false);
+    private stopDataLoading = () => {
+        this.setIsDataLoading(false);
     };
 
-    private setIsLoading = (isLoading: boolean) => {
-        if (this.state.isLoading !== isLoading) {
-            this.setState({ isLoading });
+    private setIsDataLoading = (isLoading: boolean) => {
+        if (this.state.isDataLoading !== isLoading) {
+            this.setState({ isDataLoading: isLoading });
         }
     };
 
@@ -92,7 +94,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                 this.setError(new UnexpectedSdkError(e));
             }
 
-            this.stopLoading();
+            this.stopDataLoading();
             return undefined;
         }
     };
@@ -184,14 +186,14 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     };
 
     private componentDidMountInner = async () => {
-        this.startLoading();
+        this.startDataLoading();
         await Promise.all([
             this.updateColorPalette(),
             this.updateUserWorkspaceSettings(),
             this.updateInsight(),
             this.updateLocale(),
         ]);
-        this.stopLoading();
+        this.stopDataLoading();
     };
 
     public componentDidMount(): void {
@@ -207,7 +209,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         const needsNewColorPalette = this.props.workspace !== prevProps.workspace;
 
         if (needsNewSetup || needsNewColorPalette) {
-            this.startLoading();
+            this.startDataLoading();
             await Promise.all(
                 compact([
                     needsNewSetup && this.updateInsight(),
@@ -215,7 +217,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                     needsNewColorPalette && this.updateColorPalette(),
                 ]),
             );
-            this.stopLoading();
+            this.stopDataLoading();
         }
     };
 
@@ -229,23 +231,29 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         }
     }
 
+    private handleLoadingChanged: OnLoadingChanged = ({ isLoading }): void => {
+        this.setState({ isVisualizationLoading: isLoading });
+        this.props.onLoadingChanged?.({ isLoading });
+    };
+
     public render(): React.ReactNode {
         const { ErrorComponent, LoadingComponent } = this.props;
-        const { error, isLoading } = this.state;
+        const { error, isDataLoading, isVisualizationLoading } = this.state;
         const errorProps = this.errorMap[error ? error.getMessage() : undefined] ?? {
             message: error?.message,
         };
 
         return (
             <>
-                {isLoading && <LoadingComponent />}
-                {error && !isLoading && <ErrorComponent {...errorProps} />}
+                {(isDataLoading || isVisualizationLoading) && <LoadingComponent />}
+                {error && !isDataLoading && <ErrorComponent {...errorProps} />}
                 <InsightRenderer
                     {...this.props}
                     colorPalette={this.props.colorPalette ?? this.state.colorPalette}
                     insight={this.state.insight}
                     locale={this.props.locale || this.state.locale || DefaultLocale}
                     settings={this.state.settings}
+                    onLoadingChanged={this.handleLoadingChanged}
                 />
             </>
         );

@@ -40,20 +40,13 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     onError?: (error: GoodDataSdkError | undefined) => void;
 }
 
-interface IInsightRendererState {
-    isLoading: boolean;
-}
-
 const getElementId = () => `gd-vis-${uuid.v4()}`;
 
 const visualizationUriRootStyle = {
     height: "100%",
 };
 
-class InsightRendererCore extends React.Component<
-    IInsightRendererProps & WrappedComponentProps,
-    IInsightRendererState
-> {
+class InsightRendererCore extends React.Component<IInsightRendererProps & WrappedComponentProps> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
@@ -65,10 +58,6 @@ class InsightRendererCore extends React.Component<
         LoadingComponent,
         pushData: noop,
         locale: DefaultLocale,
-    };
-
-    state: IInsightRendererState = {
-        isLoading: false,
     };
 
     private unmountVisualization = () => {
@@ -127,12 +116,10 @@ class InsightRendererCore extends React.Component<
             backend: this.props.backend,
             callbacks: {
                 onError: (error) => {
-                    this.setState({ isLoading: false });
                     this.props.onError?.(error);
                     this.props.onLoadingChanged?.({ isLoading: false });
                 },
                 onLoadingChanged: ({ isLoading }) => {
-                    this.setState({ isLoading });
                     this.props.onLoadingChanged?.({ isLoading });
                 },
                 pushData: this.props.pushData,
@@ -222,15 +209,12 @@ class InsightRendererCore extends React.Component<
 
     public render(): React.ReactNode {
         return (
-            <>
-                {this.state.isLoading && <this.props.LoadingComponent />}
-                <div
-                    className="visualization-uri-root"
-                    id={this.elementId}
-                    ref={this.containerRef}
-                    style={visualizationUriRootStyle}
-                />
-            </>
+            <div
+                className="visualization-uri-root"
+                id={this.elementId}
+                ref={this.containerRef}
+                style={visualizationUriRootStyle}
+            />
         );
     }
 }
