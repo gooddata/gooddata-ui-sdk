@@ -112,6 +112,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                         ErrorComponent={ErrorComponent}
                         LoadingComponent={LoadingComponent}
                         onDashboardLoaded={handleDashboardLoaded}
+                        className="gd-dashboards-root"
                     />
                 </ColorPaletteProvider>
             </UserWorkspaceSettingsProvider>

@@ -32,6 +32,7 @@ interface IDashboardLayoutObtainerProps {
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;
     onDashboardLoaded: () => void;
+    className?: string;
 }
 
 export const DashboardLayoutObtainer: React.FC<IDashboardLayoutObtainerProps> = ({
@@ -46,6 +47,7 @@ export const DashboardLayoutObtainer: React.FC<IDashboardLayoutObtainerProps> = 
     onDashboardLoaded,
     ErrorComponent,
     LoadingComponent,
+    className,
 }) => {
     const { error, result: dashboardViewLayout, status: dashboardViewLayoutStatus } = useDashboardViewLayout({
         dashboardLayout: dashboard.layout,
@@ -85,6 +87,7 @@ export const DashboardLayoutObtainer: React.FC<IDashboardLayoutObtainerProps> = 
             drillableItems={drillableItems}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
+            className={className}
         />
     );
 };
