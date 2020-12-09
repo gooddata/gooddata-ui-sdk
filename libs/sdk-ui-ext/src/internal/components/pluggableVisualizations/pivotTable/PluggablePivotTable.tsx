@@ -41,7 +41,6 @@ import ReactMeasure from "react-measure";
 
 import { ATTRIBUTE, DATE, METRIC } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
-import { DEFAULT_PIVOT_TABLE_UICONFIG } from "../../../constants/uiConfig";
 import {
     IBucketFilter,
     IBucketItem,
@@ -71,7 +70,10 @@ import {
     getReferencePointWithSupportedProperties,
 } from "../../../utils/propertiesHelper";
 
-import { setPivotTableUiConfig } from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
+import {
+    getPivotTableDefaultUiConfig,
+    setPivotTableUiConfig,
+} from "../../../utils/uiConfigHelpers/pivotTableUiConfigHelper";
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import { PIVOT_TABLE_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
@@ -137,7 +139,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
-            uiConfig: cloneDeep(DEFAULT_PIVOT_TABLE_UICONFIG),
+            uiConfig: getPivotTableDefaultUiConfig(multipleDatesEnabled(this.settings)),
         };
 
         const buckets = newReferencePoint.buckets;
@@ -448,6 +450,10 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
 function isManualResizingEnabled(settings: ISettings): boolean {
     return settings["enableTableColumnsManualResizing"] === true;
+}
+
+function multipleDatesEnabled(settings: ISettings): boolean {
+    return settings["enableMultipleDates"] === true;
 }
 
 /**

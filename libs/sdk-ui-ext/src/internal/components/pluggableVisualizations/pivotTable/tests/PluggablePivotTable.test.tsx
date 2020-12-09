@@ -571,6 +571,34 @@ describe("PluggablePivotTable", () => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
         });
+
+        it("should return a new reference point with ui config supporting mulple date dimensions when turned on", () => {
+            const pivotTable = createComponent({
+                ...defaultProps,
+                featureFlags: {
+                    enableMultipleDates: true,
+                },
+            });
+            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const mockReferencePointWithMultipleDatesAllowed = getMockReferencePoint(
+                sourceReferencePoint.buckets[0].items,
+                sourceReferencePoint.buckets[1].items,
+                sourceReferencePoint.buckets[2].items,
+                [],
+                [],
+                true,
+                [],
+                true,
+            );
+
+            return pivotTable
+                .getExtendedReferencePoint(sourceReferencePoint)
+                .then((extendedReferencePoint) => {
+                    expect(extendedReferencePoint.uiConfig).toEqual(
+                        mockReferencePointWithMultipleDatesAllowed.uiConfig,
+                    );
+                });
+        });
     });
 });
 

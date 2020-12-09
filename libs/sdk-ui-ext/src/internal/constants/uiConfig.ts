@@ -25,7 +25,7 @@ export const OPEN_AS_REPORT = "openAsReport";
 export const SUPPORTED = "supported";
 export const UICONFIG_AXIS = "uiConfig.axis";
 
-const measuresBase = {
+export const measuresBase = {
     accepts: [METRIC, FACT, ATTRIBUTE],
     allowsDuplicateItems: true,
     enabled: true,
@@ -36,9 +36,12 @@ const measuresBase = {
     isShowInPercentVisible: true,
 };
 
-const viewBase = {
+export const viewBase = {
     accepts: [ATTRIBUTE, DATE],
     itemsLimit: MAX_CATEGORIES_COUNT,
+    itemsLimitByType: {
+        date: 1,
+    },
     allowsSwapping: true,
     allowsReordering: false,
     enabled: true,
@@ -54,10 +57,13 @@ const stackBase = {
     isShowInPercentEnabled: false,
 };
 
-const defaultFilters = {
+export const defaultFilters = {
     filters: {
         accepts: [ATTRIBUTE, DATE],
         itemsLimit: MAX_FILTERS_COUNT,
+        itemsLimitByType: {
+            date: 1,
+        },
         allowsReordering: false,
         enabled: true,
         isShowInPercentEnabled: false,
@@ -84,7 +90,7 @@ const enabledOpenAsReportConfig = {
     openAsReport: { supported: true },
 };
 
-const defaultRootUiConfigProperties: Partial<IUiConfig> = {
+export const defaultRootUiConfigProperties: Partial<IUiConfig> = {
     recommendations: {},
     supportedOverTimeComparisonTypes: [],
     ...disabledOpenAsReportConfig,
@@ -340,33 +346,6 @@ export const TREEMAP_UICONFIG_WITH_ONE_MEASURE: IUiConfig = {
         ...defaultFilters,
     },
     ...defaultRootUiConfigProperties,
-};
-
-export const DEFAULT_PIVOT_TABLE_UICONFIG: IUiConfig = {
-    buckets: {
-        measures: {
-            ...measuresBase,
-        },
-        attribute: {
-            ...viewBase,
-            allowsSwapping: true,
-            allowsReordering: true,
-            itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
-        },
-        columns: {
-            ...viewBase,
-            allowsSwapping: true,
-            allowsReordering: true,
-            itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
-        },
-        ...defaultFilters,
-    },
-    ...defaultRootUiConfigProperties,
-    ...disabledOpenAsReportConfig,
-    supportedOverTimeComparisonTypes: [
-        OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
-        OverTimeComparisonTypes.PREVIOUS_PERIOD,
-    ],
 };
 
 export const DEFAULT_TABLE_UICONFIG: IUiConfig = {

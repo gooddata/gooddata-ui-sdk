@@ -45,6 +45,9 @@ const secondaryMeasuresBase = {
 const viewBase = {
     accepts: [ATTRIBUTE, DATE],
     itemsLimit: MAX_CATEGORIES_COUNT,
+    itemsLimitByType: {
+        date: 1,
+    },
     allowsSwapping: true,
     allowsReordering: false,
     enabled: true,
@@ -69,6 +72,9 @@ const stackBase = {
 const filtersBase = {
     accepts: [ATTRIBUTE, DATE],
     itemsLimit: MAX_FILTERS_COUNT,
+    itemsLimitByType: {
+        date: 1,
+    },
     allowsReordering: false,
     enabled: true,
     isShowInPercentEnabled: false,
@@ -126,6 +132,9 @@ const defaultRecommendations = {
 const attributeBase = {
     accepts: [ATTRIBUTE, DATE],
     itemsLimit: MAX_TABLE_CATEGORIES_COUNT,
+    itemsLimitByType: {
+        date: 1,
+    },
     allowsReordering: true,
     allowsSwapping: false,
     enabled: true,
@@ -389,6 +398,9 @@ export const bubbleChartUiConfig: IUiConfig = {
             canAddItems: true,
             title: "View by",
             itemsLimit: 1,
+            itemsLimitByType: {
+                date: 1,
+            },
         },
         filters: {
             ...filtersBase,
@@ -1136,6 +1148,9 @@ export const defaultHeatmapUiConfig: IUiConfig = {
         filters: {
             accepts: [ATTRIBUTE, DATE],
             itemsLimit: MAX_FILTERS_COUNT,
+            itemsLimitByType: {
+                date: 1,
+            },
             allowsReordering: false,
             enabled: true,
             isShowInPercentEnabled: false,
@@ -1155,17 +1170,22 @@ export const defaultPivotTableUiConfig: IUiConfig = {
         },
         attribute: {
             ...attributeBase,
+            allowsDuplicateDates: false,
             allowsSwapping: true,
             title: "Rows",
         },
         columns: {
             ...attributeBase,
+            allowsDuplicateDates: false,
             allowsSwapping: true,
             title: "Columns",
         },
         filters: {
             accepts: [ATTRIBUTE, DATE],
             itemsLimit: MAX_FILTERS_COUNT,
+            itemsLimitByType: {
+                date: 1,
+            },
             allowsReordering: false,
             enabled: true,
             isShowInPercentEnabled: false,
@@ -1194,6 +1214,9 @@ export const fullySpecifiedXirrUiConfig: IUiConfig = {
         filters: {
             accepts: [ATTRIBUTE, DATE],
             itemsLimit: MAX_FILTERS_COUNT,
+            itemsLimitByType: {
+                date: 1,
+            },
             allowsReordering: false,
             enabled: true,
             isShowInPercentEnabled: false,
@@ -1201,6 +1224,9 @@ export const fullySpecifiedXirrUiConfig: IUiConfig = {
         attribute: {
             accepts: [DATE],
             itemsLimit: DEFAULT_XIRR_ATTRIBUTES_COUNT,
+            itemsLimitByType: {
+                date: 1,
+            },
             allowsSwapping: true,
             allowsReordering: false,
             enabled: true,
@@ -1226,6 +1252,9 @@ export const defaultGeoPushpinUiConfig: IUiConfig = {
             isShowInPercentEnabled: false,
             canAddItems: true,
             itemsLimit: 1,
+            itemsLimitByType: {
+                date: 1,
+            },
             title: "Location",
         },
         size: {
@@ -1265,6 +1294,9 @@ export const defaultGeoPushpinUiConfig: IUiConfig = {
             isShowInPercentEnabled: false,
             canAddItems: true,
             itemsLimit: 1,
+            itemsLimitByType: {
+                date: 1,
+            },
             title: "Segment by",
         },
         filters: {
@@ -1273,6 +1305,9 @@ export const defaultGeoPushpinUiConfig: IUiConfig = {
             enabled: true,
             isShowInPercentEnabled: false,
             itemsLimit: 20,
+            itemsLimitByType: {
+                date: 1,
+            },
         },
     },
     exportConfig: enabledExportConfig,

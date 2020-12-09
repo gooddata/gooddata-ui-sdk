@@ -69,6 +69,11 @@ export interface ISettings {
      */
     responsiveUiDateFormat?: string;
 
+    /**
+     * Indicates whether multiple dates can be put into buckets
+     */
+    enableMultipleDates?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

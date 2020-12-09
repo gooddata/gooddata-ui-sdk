@@ -215,10 +215,17 @@ export interface IBucketUiConfig {
     subtitle?: string;
     icon?: string;
     allowsDuplicateItems?: boolean;
+    allowsDuplicateDates?: boolean;
     allowsReordering?: boolean;
     allowsSwapping?: boolean;
     enabled?: boolean;
     itemsLimit?: number;
+    itemsLimitByType?: {
+        date?: number;
+        metric?: number;
+        fact?: number;
+        attribute?: number;
+    };
     isShowInPercentEnabled?: boolean;
     isShowInPercentVisible?: boolean;
     isShowOnSecondaryAxisVisible?: boolean;
