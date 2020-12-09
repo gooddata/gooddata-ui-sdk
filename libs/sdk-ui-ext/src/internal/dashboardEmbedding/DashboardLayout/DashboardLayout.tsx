@@ -63,7 +63,13 @@ export const DashboardLayout: React.FC<IDashboardViewLayoutProps> = (props) => {
 
     return (
         <FluidLayout
-            className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
+            className={cx(
+                "gd-fluidlayout-container",
+                "s-fluid-layout-container",
+                "gd-dashboards",
+                "gd-dashboards-root",
+                className,
+            )}
             containerClassName="gd-fluidlayout-layout s-fluid-layout"
             layout={dashboardLayout}
             rowKeyGetter={rowKeyGetter}

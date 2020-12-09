@@ -11,6 +11,9 @@ $widget-drop-shadow: none;
 
 $transition-length: 0.2s;
 
+// KPI-DASHBOARDS
+$gd-dashboards-content-backgroundColor: var(--gd-dashboards-content-backgroundColor, $gd-color-white);
+
 // WIDGETS
 $gd-dashboards-content-widget-title-color: var(--gd-dashboards-content-widget-title-color, $gd-color-text);
 $gd-dashboards-content-widget-title-textAlign: var(--gd-dashboards-content-widget-title-textAlign, center);
