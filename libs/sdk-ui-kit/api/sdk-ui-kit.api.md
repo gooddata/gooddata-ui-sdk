@@ -1940,6 +1940,9 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
 
+// @internal (undocumented)
+export const WorkspacePickerHomeFooter: React_2.FC;
+
 
 // (No @packageDocumentation comment for this package)
 

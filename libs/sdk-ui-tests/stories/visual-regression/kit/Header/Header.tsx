@@ -4,7 +4,12 @@ import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { withIntl } from "@gooddata/sdk-ui";
-import { AppHeader, IAppHeaderProps, HeaderWorkspacePicker } from "@gooddata/sdk-ui-kit";
+import {
+    AppHeader,
+    IAppHeaderProps,
+    HeaderWorkspacePicker,
+    WorkspacePickerHomeFooter,
+} from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
@@ -79,8 +84,8 @@ const info = {
     ],
 };
 
-const getWorkspaceDescriptors = () => {
-    return times(10, (i) => ({
+const getWorkspaceDescriptors = (count: number = 10) => {
+    return times(count, (i) => ({
         id: `${i + 1}`,
         title: `Project ${i + 1}`,
         description: `This is Project ${i + 1}`,
@@ -233,6 +238,41 @@ class HeaderExamples extends Component {
         );
     }
 
+    private renderCustomWorkspacePickerExample() {
+        const workspaces = getWorkspaceDescriptors(3);
+
+        const newFreemiumWorkspacePickerFooter = (
+            <WorkspacePickerHomeFooter>
+                <a className="link-dimmed" href="/domain/home">
+                    Home
+                </a>
+            </WorkspacePickerHomeFooter>
+        );
+
+        const newFreemiumWorkspacePicker = (
+            <HeaderWorkspacePicker
+                className={"s-app-header-workspace-picker"}
+                workspaces={workspaces}
+                selectedWorkspace={workspaces[0]}
+                totalWorkspacesCount={workspaces.length}
+                projectPickerFooter={newFreemiumWorkspacePickerFooter}
+            />
+        );
+
+        return (
+            <>
+                <AppHeader
+                    {...this.getExampleProps()}
+                    className="s-freemium-header"
+                    logoUrl={gd}
+                    userName="Freemium user"
+                    workspacePicker={newFreemiumWorkspacePicker}
+                    logoHref="/custom/logo/href"
+                />
+            </>
+        );
+    }
+
     public render(): JSX.Element {
         return (
             <div className="library-component screenshot-target">
@@ -250,6 +290,10 @@ class HeaderExamples extends Component {
 
                 <br />
                 {this.renderEnergySavvyHeaderExample()}
+
+                <br />
+                <h4>Custom workspace picker footer</h4>
+                {this.renderCustomWorkspacePickerExample()}
             </div>
         );
     }
@@ -268,7 +312,9 @@ const messages = {
     "gs.header.submitTicket": "Submit Ticket",
     "gs.header.account": "Account",
     "gs.header.logout": "Logout",
-    "gs.header.projectPicker.demo": "Demo",
+    "gs.header.projectPicker.demo": "Demo data",
+    "gs.header.projectPicker.searchPlaceholder": "Search...",
+    "gs.header.projectPicker.workspaces": "Workspaces",
 };
 const WithIntl = withIntl(HeaderExamples, "en-US", messages);
 
@@ -276,6 +322,10 @@ const screenshotProps = {
     closed: {},
     openedProjectPicker: {
         clickSelector: ".s-default-header .s-goodsales",
+        postInteractionWait: 200,
+    },
+    openedProjectPickerWithFooter: {
+        clickSelector: ".s-freemium-header .s-project_1",
         postInteractionWait: 200,
     },
     openedHelp: {
