@@ -612,7 +612,7 @@ $gd-header-project-width: 230px;
     border-top: 1px solid $gd-border-color;
 
     .home-footer-icon {
-        background: url("assets/home.svg") no-repeat;
+        background: url($base_path + "./icons/home.svg") no-repeat;
         padding-left: 30px;
     }
 }
