@@ -1,26 +1,31 @@
 // (C) 2020 GoodData Corporation
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
+    ILocale,
     OnError,
     OnFiredDrillEvent,
+    OnLoadingChanged,
     useBackend,
     useCancelablePromise,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { InsightView } from "../../../insightView";
+import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
 import { useDashboardViewConfig } from "./DashboardViewConfigContext";
+import { useUserWorkspaceSettings } from "./UserWorkspaceSettingsContext";
+import { useColorPalette } from "./ColorPaletteContext";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
+    insight: IInsight;
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
@@ -34,6 +39,7 @@ interface IInsightRendererProps {
 
 export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     insightWidget,
+    insight,
     filters,
     filterContext,
     drillableItems = [],
@@ -47,6 +53,18 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
     const dashboardViewConfig = useDashboardViewConfig();
+    const userWorkspaceSettings = useUserWorkspaceSettings();
+    const colorPalette = useColorPalette();
+    const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
+
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(
+        ({ isLoading }) => {
+            if (isLoading !== isVisualizationLoading) {
+                setIsVisualizationLoading(isLoading);
+            }
+        },
+        [isVisualizationLoading],
+    );
 
     const inputFilters = useMemo(() => {
         const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, insightWidget);
@@ -61,7 +79,12 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                     .dashboards()
                     .getResolvedFiltersForWidget(insightWidget, inputFilters);
 
-                return addImplicitAllTimeFilter(insightWidget, resolvedFilters);
+                const resolvedWithImplicitAllTime = addImplicitAllTimeFilter(insightWidget, resolvedFilters);
+
+                return effectiveBackend
+                    .workspace(effectiveWorkspace)
+                    .insights()
+                    .getInsightWithAddedFilters(insight, resolvedWithImplicitAllTime);
             },
             onError,
         },
@@ -84,26 +107,25 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         [dashboardViewConfig],
     );
 
-    if (status === "loading" || status === "pending") {
-        return <LoadingComponent />;
-    }
-
-    if (status === "error") {
-        return <ErrorComponent message={error.message} />;
-    }
-
     return (
-        <InsightView
-            insight={insightWidget.insight}
-            filters={result}
-            backend={effectiveBackend}
-            workspace={effectiveWorkspace}
-            drillableItems={effectiveDrillableItems}
-            onDrill={onDrill}
-            config={chartConfig}
-            onError={onError}
-            ErrorComponent={ErrorComponent}
-            LoadingComponent={LoadingComponent}
-        />
+        <>
+            {(status === "loading" || status === "pending" || isVisualizationLoading) && <LoadingComponent />}
+            {status === "error" && <ErrorComponent message={error.message} />}
+            <InsightRendererImpl
+                insight={result}
+                backend={effectiveBackend}
+                workspace={effectiveWorkspace}
+                drillableItems={effectiveDrillableItems}
+                onDrill={onDrill}
+                config={chartConfig}
+                onLoadingChanged={handleLoadingChanged}
+                locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
+                settings={userWorkspaceSettings}
+                colorPalette={colorPalette}
+                onError={onError}
+                ErrorComponent={ErrorComponent}
+                LoadingComponent={LoadingComponent}
+            />
+        </>
     );
 };

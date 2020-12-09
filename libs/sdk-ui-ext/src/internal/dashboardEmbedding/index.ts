@@ -1,7 +1,13 @@
 // (C) 2020 GoodData Corporation
 export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
 export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
-export { DashboardView, IDashboardViewProps, IKpiViewProps, KpiView } from "./DashboardView";
+export {
+    DashboardView,
+    IDashboardViewProps,
+    IKpiViewProps,
+    KpiView,
+    defaultThemeModifier,
+} from "./DashboardView";
 // TODO: export only necessary and not internal constants
 export {
     DASHBOARD_LAYOUT_BREAKPOINT_LG,

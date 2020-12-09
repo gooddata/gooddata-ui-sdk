@@ -7,15 +7,19 @@ import { useDashboardAlerts } from "../hooks/useDashboardAlerts";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { useUserWorkspaceSettings } from "../hooks/useUserWorkspaceSettings";
+import { useColorPalette } from "../hooks/useColorPalette";
 import { DashboardLayoutObtainer } from "./DashboardLayoutObtainer";
 import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
+import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
+import { ColorPaletteProvider } from "./ColorPaletteContext";
+import { defaultThemeModifier } from "./defaultThemeModifier";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
     theme,
-    locale,
     disableThemeLoading = false,
+    themeModifier = defaultThemeModifier,
     backend,
     workspace,
     onDrill,
@@ -47,6 +51,11 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
+    const { error: colorPaletteError, result: colorPalette, status: colorPaletteStatus } = useColorPalette({
+        backend,
+        workspace,
+    });
+
     const handleDashboardLoaded = useCallback(() => {
         onDashboardLoaded?.({
             alerts: alertsData,
@@ -54,7 +63,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         });
     }, [onDashboardLoaded, alertsData, dashboardData]);
 
-    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError;
+    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? colorPaletteError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
@@ -77,7 +86,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         };
     }, [config, userWorkspaceSettings]);
 
-    const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus];
+    const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus, colorPaletteStatus];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
@@ -89,32 +98,36 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     let dashboardRender = (
         <DashboardViewConfigProvider config={effectiveConfig}>
-            <DashboardLayoutObtainer
-                backend={backend}
-                workspace={workspace}
-                dashboard={dashboardData}
-                alerts={alertsData}
-                filters={filters}
-                filterContext={dashboardData.filterContext}
-                onDrill={onDrill}
-                drillableItems={drillableItems}
-                ErrorComponent={ErrorComponent}
-                LoadingComponent={LoadingComponent}
-                onDashboardLoaded={handleDashboardLoaded}
-            />
+            <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
+                <ColorPaletteProvider palette={colorPalette}>
+                    <DashboardLayoutObtainer
+                        backend={backend}
+                        workspace={workspace}
+                        dashboard={dashboardData}
+                        alerts={alertsData}
+                        filters={filters}
+                        filterContext={dashboardData.filterContext}
+                        onDrill={onDrill}
+                        drillableItems={drillableItems}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
+                        onDashboardLoaded={handleDashboardLoaded}
+                    />
+                </ColorPaletteProvider>
+            </UserWorkspaceSettingsProvider>
         </DashboardViewConfigProvider>
     );
 
     if (!hasThemeProvider && !disableThemeLoading) {
         dashboardRender = (
-            <ThemeProvider theme={theme} backend={backend} workspace={workspace}>
+            <ThemeProvider theme={theme} backend={backend} workspace={workspace} modifier={themeModifier}>
                 {dashboardRender}
             </ThemeProvider>
         );
     }
 
     return (
-        <InternalIntlWrapper locale={locale ?? userWorkspaceSettings.locale}>
+        <InternalIntlWrapper locale={config?.locale ?? userWorkspaceSettings.locale}>
             {dashboardRender}
         </InternalIntlWrapper>
     );

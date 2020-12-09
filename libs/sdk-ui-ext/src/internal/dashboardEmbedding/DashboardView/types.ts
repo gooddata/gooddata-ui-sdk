@@ -33,6 +33,13 @@ export interface IDashboardViewConfig {
      * @default false
      */
     disableKpiDrillUnderline?: boolean;
+
+    /**
+     * Locale to use for localization of texts appearing in the dashboard.
+     *
+     * Note: text values coming from the data itself are not localized.
+     */
+    locale?: ILocale;
 }
 
 /**
@@ -89,13 +96,6 @@ export interface IDashboardViewProps {
     theme?: ITheme;
 
     /**
-     * Locale to use for localization of texts appearing in the dashboard.
-     *
-     * Note: text values coming from the data itself are not localized.
-     */
-    locale?: ILocale;
-
-    /**
      * When true, disables the loading of the workspace theme and creation of a ThemeProvider (if there is none
      * already present in the parent scope). Currently – for technical reasons – the ThemeProvider changes the theme
      * globally (i.e. the theme is NOT constrained inside of a ThemeProvider).
@@ -104,6 +104,13 @@ export interface IDashboardViewProps {
      * @default false
      */
     disableThemeLoading?: boolean;
+
+    /**
+     * If provided it is called with loaded theme to allow its modification according to the app needs.
+     * This is only applied to themes loaded from the backend, it is NOT applied to themes provided using
+     * the "theme" prop.
+     */
+    themeModifier?: (theme: ITheme) => ITheme;
 
     /**
      * Component to render if embedding fails.

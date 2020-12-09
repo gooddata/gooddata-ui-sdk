@@ -7,6 +7,7 @@ import {
     IWidget,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
+import { IInsight } from "@gooddata/sdk-model";
 
 /**
  * Dashboard layout widget classification.
@@ -59,6 +60,11 @@ export interface IDashboardViewLayoutContentWidget extends IDashboardViewLayoutC
      * Used to calculate the size of a layout column based on the widget it contains.
      */
     widgetClass?: DashboardViewLayoutWidgetClass;
+
+    /**
+     * The insight used by this widget.
+     */
+    insight?: IInsight;
 
     /**
      * The dashboard layout "unifies" the height of the columns rendered in one row (with the highest one).
