@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { IFilter, areObjRefsEqual } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -29,6 +30,7 @@ import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
 import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";
+import { getVisTypeCssClass } from "./utils";
 
 export type IDashboardContentRenderer = IFluidLayoutContentRenderer<
     IDashboardViewLayoutContent,
@@ -100,7 +102,10 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         case "widget": {
             if (content.widget.type === "insight") {
                 return (
-                    <DashboardItem className="type-visualization" screen={screen}>
+                    <DashboardItem
+                        className={cx("type-visualization", getVisTypeCssClass(content.widgetClass))}
+                        screen={screen}
+                    >
                         <DashboardItemVisualization
                             renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
                         >
