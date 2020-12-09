@@ -21,7 +21,7 @@ program
     .parse(process.argv);
 
 const specs = [
-    { path: "/api/schema-metadata", name: "metadata-new-json-api" },
+    { path: "/api/schema-metadata", name: "metadata-json-api" },
     { path: "/api/schema-afm", name: "afm-rest-api" },
 ];
 
