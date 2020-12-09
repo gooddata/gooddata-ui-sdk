@@ -1,60 +1,48 @@
 // (C) 2007-2020 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
-import { DefaultGetOptions } from "./tigerClient";
-import {
-    AttributeResourcesResponseSchema,
-    FactResourcesResponseSchema,
-    ITigerClient,
-    MetricResourcesResponseSchema,
-} from "@gooddata/api-client-tiger";
-import { convertAttribute, convertTags, createLabelMap, createTagMap } from "./tigerCommon";
+import { Attributes, Facts, Metrics, ITigerClient } from "@gooddata/api-client-tiger";
+import { convertAttribute, createLabelMap } from "./tigerCommon";
 
-function convertMetrics(metrics: MetricResourcesResponseSchema): Metric[] {
-    const tags = createTagMap(metrics.included);
-
+function convertMetrics(metrics: Metrics): Metric[] {
     return metrics.data.map((metric) => {
         return {
             metric: {
                 meta: {
                     identifier: metric.id,
-                    title: metric.attributes.title ?? metric.id,
-                    tags: convertTags(metric.relationships, tags),
+                    title: metric.attributes?.title ?? metric.id,
+                    tags: metric.attributes?.tags?.join(",") ?? "",
                 },
             },
         };
     });
 }
 
-function convertFacts(facts: FactResourcesResponseSchema): Fact[] {
-    const tags = createTagMap(facts.included);
-
+function convertFacts(facts: Facts): Fact[] {
     return facts.data.map((fact) => {
         return {
             fact: {
                 meta: {
                     identifier: fact.id,
-                    title: fact.attributes.title ?? fact.id,
-                    tags: convertTags(fact.relationships, tags),
+                    title: fact.attributes?.title ?? fact.id,
+                    tags: fact.attributes?.tags?.join(",") ?? "",
                 },
             },
         };
     });
 }
 
-function convertAttributes(attributes: AttributeResourcesResponseSchema): Attribute[] {
-    const tags = createTagMap(attributes.included);
+function convertAttributes(attributes: Attributes): Attribute[] {
     const labels = createLabelMap(attributes.included);
 
     /*
      * Filter out date data set attributes. Purely because there is special processing for them
      * in catalog & code generators. Want to stick to that.
      *
-     * TODO: find expression to filter these params via servier side query. should be simple
      */
 
     return attributes.data
-        .filter((attribute) => attribute.attributes.granularity === undefined)
-        .map((attribute) => convertAttribute(attribute, labels, tags))
+        .filter((attribute) => attribute.attributes?.granularity === undefined)
+        .map((attribute) => convertAttribute(attribute, labels))
         .filter((a): a is Attribute => a !== undefined);
 }
 
@@ -65,17 +53,43 @@ function convertAttributes(attributes: AttributeResourcesResponseSchema): Attrib
  */
 export async function loadCatalog(_projectId: string, tigerClient: ITigerClient): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
-        tigerClient.metadata.metricsGet(DefaultGetOptions),
-        tigerClient.metadata.factsGet(DefaultGetOptions),
-        tigerClient.metadata.attributesGet({
-            ...DefaultGetOptions,
-            include: "labels,tags",
-        }),
+        tigerClient.workspaceModel.getEntities(
+            {
+                entity: "metrics",
+                workspaceId: _projectId,
+            },
+            {
+                headers: { Accept: "application/vnd.gooddata.api+json" },
+            },
+        ),
+        tigerClient.workspaceModel.getEntities(
+            {
+                entity: "facts",
+                workspaceId: _projectId,
+            },
+            {
+                headers: { Accept: "application/vnd.gooddata.api+json" },
+            },
+        ),
+        tigerClient.workspaceModel.getEntities(
+            {
+                entity: "attributes",
+                workspaceId: _projectId,
+            },
+            {
+                headers: { Accept: "application/vnd.gooddata.api+json" },
+                query: {
+                    include: "labels",
+                    // TODO - update after paging is fixed in MDC-354
+                    size: "500",
+                },
+            },
+        ),
     ]);
 
     return {
-        metrics: convertMetrics(metricsResult.data),
-        facts: convertFacts(factsResult.data),
-        attributes: convertAttributes(attributesResult.data),
+        metrics: convertMetrics(metricsResult.data as Metrics),
+        facts: convertFacts(factsResult.data as Facts),
+        attributes: convertAttributes(attributesResult.data as Attributes),
     };
 }
