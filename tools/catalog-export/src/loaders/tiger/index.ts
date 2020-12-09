@@ -13,9 +13,17 @@ import { createTigerClient } from "./tigerClient";
  * Tests if the provided tiger client can access the backend.
  * @param tigerClient - tiger client to test
  */
-async function probeAccess(tigerClient: ITigerClient): Promise<boolean> {
+async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
     try {
-        await tigerClient.metadata.tagsGet({ contentType: "application/json" });
+        await tigerClient.workspaceModel.getEntities(
+            {
+                entity: "metrics",
+                workspaceId: projectId,
+            },
+            {
+                headers: { Accept: "application/vnd.gooddata.api+json" },
+            },
+        );
         return true;
     } catch (err) {
         if (err?.response?.status === 401) {
@@ -47,12 +55,13 @@ async function getTigerClient(
     hostname: string,
     usernameFromConfig: string | null,
     passwordFromConfig: string | null,
+    projectIdFromConfig: string,
 ): Promise<ITigerClient> {
     const logInSpinner = ora();
     let tigerClient = createTigerClient(hostname);
     try {
         // check if authorization is even necessary by trying a client without credentials
-        const hasAccess = await probeAccess(tigerClient);
+        const hasAccess = await probeAccess(tigerClient, projectIdFromConfig);
 
         if (!hasAccess) {
             if (usernameFromConfig) {
@@ -67,7 +76,7 @@ async function getTigerClient(
             tigerClient = createTigerClient(hostname!, username, password);
 
             // test that the provided credentials work
-            await probeAccess(tigerClient);
+            await probeAccess(tigerClient, projectIdFromConfig);
 
             logInSpinner.stop();
             clearLine();
@@ -103,7 +112,7 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
         );
     }
 
-    const tigerClient = await getTigerClient(hostname!, username, password);
+    const tigerClient = await getTigerClient(hostname!, username, password, projectId);
 
     const projectSpinner = ora();
     try {

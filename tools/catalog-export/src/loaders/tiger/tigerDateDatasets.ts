@@ -1,35 +1,30 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types";
-import { AttributeResourceSchema, DatasetResourceSchema, ITigerClient } from "@gooddata/api-client-tiger";
-import { DefaultGetOptions } from "./tigerClient";
+import { Attributes, AttributesItem, DatasetsItem, ITigerClient } from "@gooddata/api-client-tiger";
 import {
     convertAttribute,
-    convertTags,
     createDatasetMap,
     createLabelMap,
-    createTagMap,
     DatasetMap,
     getReferencedDataset,
     LabelMap,
-    TagMap,
 } from "./tigerCommon";
 
 type DatasetWithAttributes = {
-    dataset: DatasetResourceSchema;
-    attributes: AttributeResourceSchema[];
+    dataset: DatasetsItem;
+    attributes: AttributesItem[];
 };
 
 function findDateDatasetsWithAttributes(
-    attributes: AttributeResourceSchema[],
+    attributes: Attributes,
     datasetsMap: DatasetMap,
 ): DatasetWithAttributes[] {
     const res: { [id: string]: DatasetWithAttributes } = {};
 
-    /*
-     * TODO: this can be replaced with server-side filtering, need to figure out the query
-     */
-    const dateAttributes = attributes.filter((entity) => entity.attributes.granularity !== undefined);
+    const dateAttributes = attributes.data.filter(
+        (attribute) => attribute.attributes?.granularity !== undefined,
+    );
 
     dateAttributes.forEach((attribute) => {
         const dataset = getReferencedDataset(attribute.relationships, datasetsMap);
@@ -55,19 +50,18 @@ function findDateDatasetsWithAttributes(
 function convertToExportableFormat(
     dateDatasets: DatasetWithAttributes[],
     labelsMap: LabelMap,
-    tagsMap: TagMap,
 ): DateDataSet[] {
     return dateDatasets.map(({ dataset, attributes }) => {
         return {
             dateDataSet: {
                 meta: {
-                    title: dataset.attributes.title ?? dataset.id,
+                    title: dataset.attributes?.title ?? dataset.id,
                     identifier: dataset.id,
-                    tags: convertTags(dataset.relationships, tagsMap),
+                    tags: dataset.attributes?.tags?.join(",") ?? "",
                 },
                 content: {
                     attributes: attributes
-                        .map((attribute) => convertAttribute(attribute, labelsMap, tagsMap))
+                        .map((attribute) => convertAttribute(attribute, labelsMap))
                         .filter((a): a is Attribute => a !== undefined),
                 },
             },
@@ -79,16 +73,25 @@ export async function loadDateDataSets(
     _projectId: string,
     tigerClient: ITigerClient,
 ): Promise<DateDataSet[]> {
-    const result = await tigerClient.metadata.attributesGet({
-        ...DefaultGetOptions,
-        include: "labels,tags,dataset",
-    });
+    const result = await tigerClient.workspaceModel.getEntities(
+        {
+            entity: "attributes",
+            workspaceId: _projectId,
+        },
+        {
+            headers: { Accept: "application/vnd.gooddata.api+json" },
+            query: {
+                include: "labels,datasets",
+                // TODO - update after paging is fixed in MDC-354
+                size: "500",
+            },
+        },
+    );
 
-    const tagsMap = createTagMap(result.data.included);
     const labelsMap = createLabelMap(result.data.included);
     const datasetsMap = createDatasetMap(result.data.included);
 
-    const dateDatasets = findDateDatasetsWithAttributes(result.data.data, datasetsMap);
+    const dateDatasets = findDateDatasetsWithAttributes(result.data as Attributes, datasetsMap);
 
-    return convertToExportableFormat(dateDatasets, labelsMap, tagsMap);
+    return convertToExportableFormat(dateDatasets, labelsMap);
 }

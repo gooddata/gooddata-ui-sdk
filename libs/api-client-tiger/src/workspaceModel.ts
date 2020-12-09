@@ -5,18 +5,18 @@ import {
     WorkspaceModelControllerApiInterface,
     Configuration,
     ConfigurationParameters,
-} from "./generated/metadata-new-json-api";
-import { BaseAPI, RequestArgs } from "./generated/metadata-new-json-api/base";
+} from "./generated/metadata-json-api";
+import { BaseAPI, RequestArgs } from "./generated/metadata-json-api/base";
 
 export {
-    Configuration as MetadataNewConfiguration,
-    ConfigurationParameters as MetadataNewConfigurationParameters,
-    BaseAPI as MetadataNewBaseApi,
-    RequestArgs as MetadataNewRequestArgs,
+    Configuration as MetadataConfiguration,
+    ConfigurationParameters as MetadataConfigurationParameters,
+    BaseAPI as MetadataBaseApi,
+    RequestArgs as MetadataRequestArgs,
 };
 
 // TODO consider to add clients for other controllers
-// Right now only the workspace model is utilized (to work with LDM and analytics objects)
+// Right now only the workspace model is utilized (to work with LDM and analytical objects)
 export const tigerWorkspaceModelClientFactory = (
     axios: AxiosInstance,
 ): WorkspaceModelControllerApiInterface => new WorkspaceModelControllerApi({}, "", axios);
