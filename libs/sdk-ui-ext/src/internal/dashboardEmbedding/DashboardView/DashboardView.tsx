@@ -127,7 +127,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     }
 
     return (
-        <InternalIntlWrapper locale={config.locale ?? userWorkspaceSettings.locale}>
+        <InternalIntlWrapper locale={config?.locale ?? userWorkspaceSettings.locale}>
             {dashboardRender}
         </InternalIntlWrapper>
     );
