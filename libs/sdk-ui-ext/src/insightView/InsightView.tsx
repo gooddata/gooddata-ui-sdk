@@ -29,7 +29,6 @@ interface IInsightViewState {
     isVisualizationLoading: boolean;
     error: GoodDataSdkError | undefined;
     insight: IInsight | undefined;
-    locale: ILocale | undefined;
     colorPalette: IColorPalette | undefined;
     settings: IUserWorkspaceSettings | undefined;
 }
@@ -55,7 +54,6 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
             isVisualizationLoading: false,
             error: undefined,
             insight: undefined,
-            locale: DefaultLocale,
             colorPalette: undefined,
             settings: undefined,
         };
@@ -133,10 +131,6 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         return this.getRemoteResource((loader) => loader.getUserWorkspaceSettings(this.props.backend));
     };
 
-    private getUserProfileLocale = (): Promise<ILocale> => {
-        return this.getRemoteResource((loader) => loader.getLocale(this.props.backend)) as Promise<ILocale>;
-    };
-
     private updateUserWorkspaceSettings = async () => {
         const settings = await this.getUserWorkspaceSettings();
 
@@ -171,27 +165,12 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         this.setState({ insight });
     };
 
-    private updateLocale = async () => {
-        if (this.props.locale) {
-            return;
-        }
-
-        const locale = await this.getUserProfileLocale();
-
-        if (!locale || locale === this.state.locale) {
-            return;
-        }
-
-        this.setState({ locale });
-    };
-
     private componentDidMountInner = async () => {
         this.startDataLoading();
         await Promise.all([
             this.updateColorPalette(),
             this.updateUserWorkspaceSettings(),
             this.updateInsight(),
-            this.updateLocale(),
         ]);
         this.stopDataLoading();
     };
@@ -213,7 +192,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
             await Promise.all(
                 compact([
                     needsNewSetup && this.updateInsight(),
-                    needsNewSetup && this.updateLocale(),
+                    needsNewSetup && this.updateUserWorkspaceSettings(),
                     needsNewColorPalette && this.updateColorPalette(),
                 ]),
             );
@@ -251,7 +230,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                     {...this.props}
                     colorPalette={this.props.colorPalette ?? this.state.colorPalette}
                     insight={this.state.insight}
-                    locale={this.props.locale || this.state.locale || DefaultLocale}
+                    locale={this.props.locale || (this.state.settings?.locale as ILocale) || DefaultLocale}
                     settings={this.state.settings}
                     onLoadingChanged={this.handleLoadingChanged}
                 />
