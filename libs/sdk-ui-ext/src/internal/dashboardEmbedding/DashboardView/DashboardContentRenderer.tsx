@@ -111,6 +111,7 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
                         >
                             {() => (
                                 <InsightRenderer
+                                    insight={content.insight}
                                     insightWidget={content.widget as IWidget}
                                     backend={backend}
                                     workspace={workspace}

@@ -14,7 +14,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IInsight, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { IDashboardViewLayout } from "../DashboardLayout";
 import { FluidLayoutTransforms } from "@gooddata/sdk-backend-spi";
@@ -87,8 +87,11 @@ export const useDashboardViewLayout = ({
                   ),
               );
 
-              const getDashboardViewWidgetClass = (insightRef: ObjRef): DashboardViewLayoutWidgetClass => {
-                  const insight = insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
+              const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
+                  return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
+              };
+
+              const getDashboardViewWidgetClass = (insight: IInsight): DashboardViewLayoutWidgetClass => {
                   return insight.insight.visualizationUrl.split(":")[1] as DashboardViewLayoutWidgetClass;
               };
 
@@ -109,14 +112,16 @@ export const useDashboardViewLayout = ({
                       }
                       const currentContent = column.content;
                       if (isWidget(currentContent)) {
+                          const insight = getInsightByRef(currentContent.insight);
                           acc.rows[rowIndex].columns[columnIndex] = {
                               ...column,
                               content: {
                                   type: "widget",
                                   widget: currentContent,
+                                  insight,
                                   widgetClass:
                                       currentContent.type === "insight"
-                                          ? getDashboardViewWidgetClass(currentContent.insight)
+                                          ? getDashboardViewWidgetClass(insight)
                                           : "kpi",
                               },
                           };
