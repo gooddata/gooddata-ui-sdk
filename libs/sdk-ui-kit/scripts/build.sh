@@ -2,6 +2,7 @@
 
 _build_styles() {
     node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
+    cp -rf styles/scss/assets styles/css
 }
 
 _clean() {
