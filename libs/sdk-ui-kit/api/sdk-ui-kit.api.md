@@ -283,6 +283,13 @@ export type GetPositionedSelfRegion = {
 export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
+export const HeaderDataMenu: React_2.ForwardRefExoticComponent<Pick<IHeaderDataMenuProps, "className" | "onMenuItemClick" | "dataMenuItems"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
+};
+
+// @internal (undocumented)
 export const HeaderWorkspacePicker: React_2.ForwardRefExoticComponent<Pick<IHeaderWorkspacePickerProps, "className" | "onSelect" | "isLoading" | "onScrollEnd" | "searchString" | "onSearch" | "showSearch" | "workspaces" | "selectedWorkspace" | "totalWorkspacesCount" | "onOpen" | "projectPickerFooter"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
@@ -593,6 +600,26 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderDataMenuItem extends IHeaderMenuItem {
+    // (undocumented)
+    isDisable?: boolean;
+    // (undocumented)
+    tooltipText?: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderDataMenuProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    dataMenuItems: IHeaderDataMenuItem[];
+    // (undocumented)
+    intl: IntlShape;
+    // (undocumented)
+    onMenuItemClick: (item: IHeaderDataMenuItem) => void;
 }
 
 // @internal (undocumented)
