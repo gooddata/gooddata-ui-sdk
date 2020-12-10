@@ -1,12 +1,13 @@
 // (C) 2020 GoodData Corporation
 import {
     AnalyticalDashboard,
-    AnalyticalDashboardPostResourceTypeEnum,
     AnalyticalDashboards,
+    isVisualizationObjectsItem,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
     IDashboardDefinition,
+    IDashboardWithReferences,
     IListedDashboard,
     IWorkspaceDashboardsService,
     NotSupported,
@@ -17,15 +18,20 @@ import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
 } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 import { convertAnalyticalDashboard } from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
+
+const defaultHeaders = {
+    Accept: "application/vnd.gooddata.api+json",
+    "Content-Type": "application/vnd.gooddata.api+json",
+};
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
-
     public getDashboards = async (): Promise<IListedDashboard[]> => {
         const result = await this.authCall((sdk) => {
             return sdk.workspaceModel.getEntities(
@@ -42,8 +48,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
-        const id = await objRefToIdentifier(ref, this.authCall);
+        if (filterContextRef) {
+            throw new NotSupported("Not supported property 'filterContextRef'");
+        }
 
+        const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((sdk) => {
             return sdk.workspaceModel.getEntity(
                 {
@@ -52,22 +61,50 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     id,
                 },
                 {
-                    headers: {
-                        Accept: "application/vnd.gooddata.api+json",
-                        "Content-Type": "application/vnd.gooddata.api+json",
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertDashboard(result.data as AnalyticalDashboard);
+    };
+
+    public getDashboardWithReferences = async (
+        ref: ObjRef,
+        filterContextRef?: ObjRef,
+    ): Promise<IDashboardWithReferences> => {
+        if (filterContextRef) {
+            throw new NotSupported("Not supported property 'filterContextRef'");
+        }
+
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    id,
+                },
+                {
+                    headers: defaultHeaders,
+                    params: {
+                        include: "visualizationObjects",
                     },
                 },
             );
         });
 
-        if (filterContextRef) {
-            throw new NotSupported("Not supported property 'filterContextRef'");
-        }
+        const included = result.data.included || [];
 
-        return convertDashboard(result.data as AnalyticalDashboard);
+        return {
+            dashboard: convertDashboard(result.data as AnalyticalDashboard),
+            references: {
+                insights: included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight),
+            },
+        };
     };
 
-    public createDashboard = async (dashboard: IDashboardDefinition) => {
+    public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
         const result = await this.authCall((sdk) => {
             return sdk.workspaceModel.createEntity(
                 {
@@ -76,7 +113,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     analyticsObject: {
                         data: {
                             id: uuid4(),
-                            type: AnalyticalDashboardPostResourceTypeEnum.AnalyticalDashboard,
+                            type: "analyticalDashboard",
                             attributes: {
                                 content: convertAnalyticalDashboard(dashboard),
                                 title: dashboard.title,
@@ -86,13 +123,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     },
                 },
                 {
-                    headers: {
-                        Accept: "application/vnd.gooddata.api+json",
-                        "Content-Type": "application/vnd.gooddata.api+json",
-                    },
+                    headers: defaultHeaders,
                 },
             );
         });
+
         return convertDashboard(result.data);
     };
 
@@ -111,10 +146,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: {
-                        Accept: "application/vnd.gooddata.api+json",
-                        "Content-Type": "application/vnd.gooddata.api+json",
-                    },
+                    headers: defaultHeaders,
                 },
             ),
         );

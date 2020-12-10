@@ -87,6 +87,24 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         return convertVisualization(visualization, visualizationClassUri);
     };
 
+    public getVisualizationClassesByVisualizationClassUri = async (
+        options: IGetVisualizationClassesOptions = {},
+    ): Promise<{
+        [key: string]: string;
+    }> => {
+        // get also deprecated visClasses in case some insights use them
+        const visualizationClasses = await this.getVisualizationClasses(options);
+        return visualizationClasses.reduce((acc, el) => {
+            if (!el.visualizationClass.uri) {
+                return acc;
+            }
+            return {
+                ...acc,
+                [el.visualizationClass.uri]: el.visualizationClass.url,
+            };
+        }, {});
+    };
+
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const mergedOptions = { ...options, getTotalCount: true };
         const {
@@ -100,18 +118,9 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         );
 
         // get also deprecated visClasses in case some insights use them
-        const visualizationClasses = await this.getVisualizationClasses({ includeDeprecated: true });
-        const visualizationClassUrlByVisualizationClassUri: {
-            [key: string]: string;
-        } = visualizationClasses.reduce((acc, el) => {
-            if (!el.visualizationClass.uri) {
-                return acc;
-            }
-            return {
-                ...acc,
-                [el.visualizationClass.uri]: el.visualizationClass.url,
-            };
-        }, {});
+        const visualizationClassUrlByVisualizationClassUri = await this.getVisualizationClassesByVisualizationClassUri(
+            { includeDeprecated: true },
+        );
 
         const insights = visualizations.map((visualization) =>
             convertVisualization(

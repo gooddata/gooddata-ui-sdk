@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
-import { IListedDashboard, IDashboard, IDashboardDefinition } from "./dashboard";
+import { IListedDashboard, IDashboard, IDashboardDefinition, IDashboardWithReferences } from "./dashboard";
 import { IWidgetAlert, IWidgetAlertDefinition, IWidgetAlertCount } from "./alert";
 import { IScheduledMail, IScheduledMailDefinition } from "./scheduledMail";
 import { IFilterContextDefinition, FilterContextItem } from "./filterContext";
@@ -32,6 +32,16 @@ export interface IWorkspaceDashboardsService {
      * @returns promise of the dashboard
      */
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
+
+    /**
+     * Like getDashboard with loading reference objects
+     *
+     * @param ref - dashboard ref
+     * @param filterContextRef - Override dashboard filter context with the custom filter context
+     * (This allows to modify filter context when exporting the dashboard)
+     * @returns promise of the dashboard and references
+     */
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboardWithReferences>;
 
     /**
      * Create and save dashboard for the provided dashboard definition

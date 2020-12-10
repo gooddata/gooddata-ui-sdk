@@ -467,6 +467,20 @@ export interface IDashboardObjectIdentity {
     readonly uri: string;
 }
 
+// @alpha
+export interface IDashboardReferences {
+    // (undocumented)
+    insights: IInsight[];
+}
+
+// @alpha
+export interface IDashboardWithReferences {
+    // (undocumented)
+    dashboard: IDashboard;
+    // (undocumented)
+    references: IDashboardReferences;
+}
+
 // @public
 export interface IDataColumn {
     // (undocumented)
@@ -1557,6 +1571,7 @@ export interface IWorkspaceDashboardsService {
     getDashboard(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard>;
     getDashboards(): Promise<IListedDashboard[]>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
+    getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboardWithReferences>;
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;

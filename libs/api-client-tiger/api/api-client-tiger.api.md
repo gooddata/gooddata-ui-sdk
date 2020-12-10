@@ -6,6 +6,9 @@
 
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
+import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 
@@ -174,6 +177,20 @@ export interface AnalyticalDashboardDataRequest {
 // @public
 export interface AnalyticalDashboardDataRequestAllOf {
     attributes?: AnalyticalDashboardAttributes;
+}
+
+// @public (undocumented)
+export namespace AnalyticalDashboardObject {
+    // (undocumented)
+    export interface IAnalyticalDashboard {
+        // (undocumented)
+        analyticalDashboard: {
+            isLocked?: boolean;
+            layout?: IDashboardLayout;
+            filterContext?: IFilterContext;
+            dateFilterConfig?: IDashboardDateFilterConfig;
+        };
+    }
 }
 
 // @public
@@ -1392,6 +1409,9 @@ export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
 
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
+
+// @public (undocumented)
+export function isVisualizationObjectsItem(visualizationObject: VisualizationObjectsItem): visualizationObject is VisualizationObjectsItem;
 
 // @public (undocumented)
 export interface ITigerClient {

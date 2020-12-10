@@ -24,6 +24,7 @@ export const visualizationObjectsItemToInsight = (visualizationObjectsItem: Visu
             visualizationObjectsItem!.attributes!.content! as VisualizationObject.IVisualizationObject,
         ),
         visualizationObjectsItem.id,
-        visualizationObjectsItem.links?.self || "HACK link", // FIXME we always need links, but it is undefined in included
+        visualizationObjectsItem.links?.self ||
+            `https://staging.anywhere.gooddata.com/api/workspaces/demo/model/visualizationObjects/${visualizationObjectsItem.id}`, // FIXME we always need links, but it is not defined in included
     );
 };
