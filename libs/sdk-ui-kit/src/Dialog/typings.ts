@@ -1,5 +1,8 @@
 // (C) 2020 GoodData Corporation
 
+import { ArrowOffsets } from "../Bubble";
+import { IAlignPoint } from "../typings/positioning";
+
 /**
  * @internal
  */
@@ -22,6 +25,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     headline?: string;
     cancelButtonText?: string;
     submitButtonText?: string;
+    submitButtonTooltipText?: string;
+    submitButtonTooltipAlignPoints?: IAlignPoint[];
+    submitButtonTooltipArrowOffsets?: ArrowOffsets;
     warning?: string | React.ReactElement;
 }
 

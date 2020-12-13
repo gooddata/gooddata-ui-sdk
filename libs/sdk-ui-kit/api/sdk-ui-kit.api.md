@@ -450,6 +450,12 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     submitButtonText?: string;
     // (undocumented)
+    submitButtonTooltipAlignPoints?: IAlignPoint[];
+    // (undocumented)
+    submitButtonTooltipArrowOffsets?: ArrowOffsets;
+    // (undocumented)
+    submitButtonTooltipText?: string;
+    // (undocumented)
     warning?: string | React.ReactElement;
 }
 
