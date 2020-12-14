@@ -1,7 +1,8 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+import merge from "lodash/merge";
 import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
-import { IFilter, IInsight } from "@gooddata/sdk-model";
+import { IFilter, IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IDrillableItem,
@@ -83,7 +84,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         return [...filtersFromFilterContext, ...(filters ?? [])];
     }, [filters, filterContext, insightWidget]);
 
-    const { error, result, status } = useCancelablePromise(
+    const { error, result: insightWithFilters, status } = useCancelablePromise(
         {
             promise: async () => {
                 const resolvedFilters = await effectiveBackend
@@ -102,6 +103,22 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         },
         [effectiveBackend, effectiveWorkspace, insightWidget, inputFilters],
     );
+
+    const insightWithAddedWidgetProperties = useMemo(() => {
+        if (!insightWithFilters) {
+            return insightWithFilters;
+        }
+
+        const fromWidget = insightWidget.properties;
+        if (!fromWidget) {
+            return insightWithFilters;
+        }
+
+        const fromInsight = insightProperties(insightWithFilters);
+        const merged = merge({}, fromInsight, fromWidget);
+
+        return insightSetProperties(insightWithFilters, merged);
+    }, [insightWithFilters, insightWidget.properties]);
 
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(() => {
         const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
@@ -133,7 +150,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 />
             )}
             <InsightRendererImpl
-                insight={result}
+                insight={insightWithAddedWidgetProperties}
                 backend={effectiveBackend}
                 workspace={effectiveWorkspace}
                 drillableItems={effectiveDrillableItems}
