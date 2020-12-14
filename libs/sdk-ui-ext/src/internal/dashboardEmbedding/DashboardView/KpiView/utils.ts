@@ -123,5 +123,5 @@ async function getLastYearComparisonMeasure(
         (dateAttribute) => dateAttribute.granularity === "GDC.time.year",
     );
 
-    return newPopMeasure(primaryMeasure, yearAttribute.attribute);
+    return newPopMeasure(primaryMeasure, yearAttribute.attribute.ref);
 }
