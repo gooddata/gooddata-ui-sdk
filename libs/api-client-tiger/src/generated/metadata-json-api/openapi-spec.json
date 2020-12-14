@@ -389,6 +389,7 @@
                             "type": "string",
                             "enum": [
                                 "analyticalDashboards",
+                                "filterContexts",
                                 "metrics",
                                 "visualizationObjects",
                                 "attributes",
@@ -449,7 +450,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                            "enum": [
+                                "analyticalDashboards",
+                                "filterContexts",
+                                "metrics",
+                                "visualizationObjects"
+                            ]
                         }
                     },
                     {
@@ -510,7 +516,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                            "enum": [
+                                "analyticalDashboards",
+                                "filterContexts",
+                                "metrics",
+                                "visualizationObjects"
+                            ]
                         }
                     },
                     {
@@ -559,6 +570,7 @@
                             "type": "string",
                             "enum": [
                                 "analyticalDashboards",
+                                "filterContexts",
                                 "metrics",
                                 "visualizationObjects",
                                 "attributes",
@@ -611,7 +623,12 @@
                         "required": true,
                         "schema": {
                             "type": "string",
-                            "enum": ["analyticalDashboards", "metrics", "visualizationObjects"]
+                            "enum": [
+                                "analyticalDashboards",
+                                "filterContexts",
+                                "metrics",
+                                "visualizationObjects"
+                            ]
                         }
                     },
                     {
@@ -1357,6 +1374,9 @@
                         "$ref": "#/components/schemas/AnalyticalDashboards"
                     },
                     {
+                        "$ref": "#/components/schemas/FilterContexts"
+                    },
+                    {
                         "$ref": "#/components/schemas/Metrics"
                     },
                     {
@@ -1411,6 +1431,38 @@
                     },
                     {
                         "$ref": "#/components/schemas/AnalyticalDashboardData"
+                    }
+                ]
+            },
+            "FilterContexts": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Success"
+                    },
+                    {
+                        "properties": {
+                            "data": {
+                                "items": {
+                                    "$ref": "#/components/schemas/FilterContextsItem"
+                                },
+                                "type": "array",
+                                "uniqueItems": true
+                            }
+                        }
+                    }
+                ]
+            },
+            "FilterContextsItem": {
+                "allOf": [
+                    {
+                        "properties": {
+                            "links": {
+                                "$ref": "#/components/schemas/links"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/FilterContextData"
                     }
                 ]
             },
@@ -1701,6 +1753,9 @@
                         "$ref": "#/components/schemas/AnalyticalDashboard"
                     },
                     {
+                        "$ref": "#/components/schemas/FilterContext"
+                    },
+                    {
                         "$ref": "#/components/schemas/Metric"
                     },
                     {
@@ -1763,6 +1818,27 @@
                         }
                     }
                 }
+            },
+            "FilterContext": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/FilterContextData"
+                    },
+                    "included": {
+                        "description": "Compound documents.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/includedResource"
+                        },
+                        "uniqueItems": true
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/links"
+                    }
+                },
+                "additionalProperties": false
             },
             "Metric": {
                 "required": ["data"],
@@ -1877,7 +1953,8 @@
                                     "MONTH_OF_YEAR",
                                     "QUARTER_OF_YEAR",
                                     "WEEK_OF_YEAR_EU",
-                                    "DAY_OF_WEEK_EU"
+                                    "DAY_OF_WEEK_EU",
+                                    "WEEK_EU"
                                 ]
                             }
                         }
@@ -2455,6 +2532,9 @@
                         "$ref": "#/components/schemas/AnalyticalDashboardRequest"
                     },
                     {
+                        "$ref": "#/components/schemas/FilterContextRequest"
+                    },
+                    {
                         "$ref": "#/components/schemas/MetricRequest"
                     },
                     {
@@ -2502,6 +2582,111 @@
                 ]
             },
             "AnalyticalDashboardAttributes": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BasicObjectAttributes"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object"
+                            }
+                        }
+                    }
+                ]
+            },
+            "FilterContextRequest": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/FilterContextDataRequest"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FilterContextDataRequest": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/MandatoryObjectFields"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "$ref": "#/components/schemas/FilterContextAttributes"
+                            }
+                        }
+                    }
+                ]
+            },
+            "FilterContextData": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/FilterContextRequest"
+                    },
+                    {
+                        "properties": {
+                            "relationships": {
+                                "$ref": "#/components/schemas/FilterContextRelationships"
+                            }
+                        }
+                    }
+                ]
+            },
+            "FilterContextRelationships": {
+                "type": "object",
+                "properties": {
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "datasets": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "labels": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToMany"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/relationshipToOne"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            },
+            "FilterContextAttributes": {
                 "type": "object",
                 "allOf": [
                     {
