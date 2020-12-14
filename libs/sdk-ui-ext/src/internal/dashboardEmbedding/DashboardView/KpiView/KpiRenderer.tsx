@@ -8,7 +8,7 @@ import { KpiContent, IKpiResult } from "../../KpiContent";
 
 interface IKpiRendererProps {
     kpi: IWidgetDefinition;
-    kpiResult: IKpiResult;
+    kpiResult: IKpiResult | null;
     filters: IFilter[];
     separators: ISeparators;
     alert?: IWidgetAlert;
@@ -45,7 +45,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
                 },
             ],
         });
-    }, [kpiResult.measureResult, kpiResult.measureDescriptor, isDrillable, onDrill]);
+    }, [kpiResult?.measureResult, kpiResult?.measureDescriptor, isDrillable, onDrill]);
 
     return (
         <KpiContent
