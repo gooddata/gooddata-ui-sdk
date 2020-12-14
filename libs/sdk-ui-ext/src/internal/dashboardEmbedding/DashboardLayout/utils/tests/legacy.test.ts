@@ -5,14 +5,7 @@ import {
     getGeoPushpinWidgetStyle,
     getResponsiveClassName,
     isFullWidthGeoPushpin,
-    updateHeadlineClassName,
 } from "../legacy";
-
-const createDomNode = (className: string) => {
-    const visDom = document.createElement("div");
-    visDom.className = className;
-    return visDom;
-};
 
 describe("legacy", () => {
     describe("getResponsiveClassName", () => {
@@ -21,42 +14,9 @@ describe("legacy", () => {
             ["shortened-label", 170, true],
             ["medium", 200, true],
             ["large", 200, false],
-        ])("should return className is %s", (expected: string, width: number, isShorttened: boolean) => {
-            expect(getResponsiveClassName(width, isShorttened)).toEqual(expected);
+        ])("should return className is %s", (expected: string, width: number, isShortened: boolean) => {
+            expect(getResponsiveClassName(width, isShortened)).toEqual(expected);
         });
-    });
-
-    describe("updateHeadlineClassName", () => {
-        it.each([
-            ["small", " relative", 170, 14],
-            ["medium", " absolute", 200, 42],
-        ])(
-            "should update responsive className is %s and visualization content className is %s",
-            (expected: string, expectedPosition: string, width: number, height: number) => {
-                const visualizationNode = createDomNode("visualization");
-                const visualizationContent = createDomNode("gd-visualization-content");
-                const headlineNode = createDomNode("headline-compare-section");
-                const headlineSecondaryItem = createDomNode("headline-secondary-item");
-                const headlineLabel = createDomNode("headline-title-wrapper");
-                const titleNode = document.createTextNode("Metric has format #.###'00");
-                headlineLabel.appendChild(titleNode);
-                headlineSecondaryItem.appendChild(headlineLabel);
-                headlineNode.appendChild(headlineSecondaryItem);
-                visualizationContent.appendChild(headlineNode);
-                visualizationNode.appendChild(visualizationContent);
-                headlineLabel.getBoundingClientRect = jest.fn(() => {
-                    return { height } as DOMRect;
-                });
-                headlineLabel.style.lineHeight = "14px";
-
-                updateHeadlineClassName(visualizationNode, width);
-
-                expect(visualizationContent.className).toEqual(`gd-visualization-content${expectedPosition}`);
-                expect(headlineNode.className).toEqual(
-                    `gd-flex-container headline-compare-section ${expected}`,
-                );
-            },
-        );
     });
 
     describe("calculateGeoPushpinWidgetHeight", () => {

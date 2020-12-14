@@ -196,6 +196,12 @@ export interface IChartConfig {
      * @internal
      */
     type?: VisType;
+
+    /**
+     * If specified, headline makes its compare section smaller if its narrower than this.
+     * @internal
+     */
+    headlineSmallWidthThreshold?: number;
 }
 
 /**

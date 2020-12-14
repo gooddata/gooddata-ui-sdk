@@ -139,7 +139,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             return;
         }
 
-        const { locale, dateFormat, custom = {}, config } = options;
+        const { locale, dateFormat, custom = {}, config, customVisualizationConfig } = options;
         const { drillableItems } = custom;
         const execution = executionFactory
             .forInsight(insight)
@@ -152,7 +152,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                 drillableItems={drillableItems}
                 onDrill={this.onDrill}
                 locale={locale}
-                config={updateConfigWithSettings(config, this.settings)}
+                config={updateConfigWithSettings({ ...config, ...customVisualizationConfig }, this.settings)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
                 pushData={this.pushData}

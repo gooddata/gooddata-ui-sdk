@@ -64,7 +64,6 @@ export {
     isFullWidthGeoPushpin,
     isGeoPushpin,
     unifyDashboardLayoutColumnHeights,
-    updateHeadlineClassName,
     DashboardLayoutRowHeader,
 } from "./DashboardLayout";
 export {
