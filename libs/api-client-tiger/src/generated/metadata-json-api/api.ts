@@ -319,12 +319,16 @@ export interface AnalyticalDashboardsItemAllOf {
  * @type AnalyticsObject
  * @export
  */
-export type AnalyticsObject = AnalyticalDashboard | Metric | VisualizationObjectSchema;
+export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema;
 /**
  * @type AnalyticsObjectRequest
  * @export
  */
-export type AnalyticsObjectRequest = AnalyticalDashboardRequest | MetricRequest | VisualizationObjectRequest;
+export type AnalyticsObjectRequest =
+    | AnalyticalDashboardRequest
+    | FilterContextRequest
+    | MetricRequest
+    | VisualizationObjectRequest;
 /**
  *
  * @export
@@ -1774,6 +1778,233 @@ export interface FactsItem {
     relationships?: FactRelationships;
 }
 /**
+ *
+ * @export
+ * @interface FilterContext
+ */
+export interface FilterContext {
+    /**
+     *
+     * @type {FilterContextData}
+     * @memberof FilterContext
+     */
+    data: FilterContextData;
+    /**
+     * Compound documents.
+     * @type {Array<IncludedResource>}
+     * @memberof FilterContext
+     */
+    included?: Array<IncludedResource>;
+    /**
+     *
+     * @type {Links}
+     * @memberof FilterContext
+     */
+    links?: Links;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextAttributes
+ */
+export interface FilterContextAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof FilterContextAttributes
+     */
+    description?: string;
+    /**
+     * Object title for better UI naming.
+     * @type {string}
+     * @memberof FilterContextAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof FilterContextAttributes
+     */
+    tags?: Array<string>;
+    /**
+     *
+     * @type {object}
+     * @memberof FilterContextAttributes
+     */
+    content?: object;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextData
+ */
+export interface FilterContextData {
+    /**
+     *
+     * @type {FilterContextDataRequest}
+     * @memberof FilterContextData
+     */
+    data: FilterContextDataRequest;
+    /**
+     *
+     * @type {FilterContextRelationships}
+     * @memberof FilterContextData
+     */
+    relationships?: FilterContextRelationships;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextDataAllOf
+ */
+export interface FilterContextDataAllOf {
+    /**
+     *
+     * @type {FilterContextRelationships}
+     * @memberof FilterContextDataAllOf
+     */
+    relationships?: FilterContextRelationships;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextDataRequest
+ */
+export interface FilterContextDataRequest {
+    /**
+     * Unique identifier of object
+     * @type {string}
+     * @memberof FilterContextDataRequest
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FilterContextDataRequest
+     */
+    type: string;
+    /**
+     *
+     * @type {FilterContextAttributes}
+     * @memberof FilterContextDataRequest
+     */
+    attributes?: FilterContextAttributes;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextDataRequestAllOf
+ */
+export interface FilterContextDataRequestAllOf {
+    /**
+     *
+     * @type {FilterContextAttributes}
+     * @memberof FilterContextDataRequestAllOf
+     */
+    attributes?: FilterContextAttributes;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextRelationships
+ */
+export interface FilterContextRelationships {
+    /**
+     *
+     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @memberof FilterContextRelationships
+     */
+    attributes?: AnalyticalDashboardRelationshipsLabels;
+    /**
+     *
+     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @memberof FilterContextRelationships
+     */
+    datasets?: AnalyticalDashboardRelationshipsLabels;
+    /**
+     *
+     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @memberof FilterContextRelationships
+     */
+    labels?: AnalyticalDashboardRelationshipsLabels;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextRequest
+ */
+export interface FilterContextRequest {
+    /**
+     *
+     * @type {FilterContextDataRequest}
+     * @memberof FilterContextRequest
+     */
+    data: FilterContextDataRequest;
+}
+/**
+ *
+ * @export
+ * @interface FilterContexts
+ */
+export interface FilterContexts {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof FilterContexts
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof FilterContexts
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<FilterContextsItem>}
+     * @memberof FilterContexts
+     */
+    data: Array<FilterContextsItem>;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextsAllOf
+ */
+export interface FilterContextsAllOf {
+    /**
+     *
+     * @type {Array<FilterContextsItem>}
+     * @memberof FilterContextsAllOf
+     */
+    data?: Array<FilterContextsItem>;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextsItem
+ */
+export interface FilterContextsItem {
+    /**
+     *
+     * @type {Links}
+     * @memberof FilterContextsItem
+     */
+    links?: Links;
+    /**
+     *
+     * @type {FilterContextDataRequest}
+     * @memberof FilterContextsItem
+     */
+    data: FilterContextDataRequest;
+    /**
+     *
+     * @type {FilterContextRelationships}
+     * @memberof FilterContextsItem
+     */
+    relationships?: FilterContextRelationships;
+}
+/**
  * A grain identifier.
  * @export
  * @interface GrainIdentifier
@@ -2205,6 +2436,7 @@ export type MetadataModelObjects =
     | Attributes
     | Datasets
     | Facts
+    | FilterContexts
     | Labels
     | Metrics
     | Sources
@@ -5097,7 +5329,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
     return {
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {AnalyticsObject} [analyticsObject]
@@ -5106,7 +5338,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
          */
         createEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 workspaceId: string;
                 organizationId?: string;
                 analyticsObject?: AnalyticsObject;
@@ -5164,7 +5396,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5173,7 +5405,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
          */
         deleteEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5231,7 +5463,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {*} [options] Override http request option.
@@ -5241,6 +5473,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5297,7 +5530,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5308,6 +5541,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5373,7 +5607,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5383,7 +5617,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator = function (configurat
          */
         updateEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5459,7 +5693,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
     return {
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {AnalyticsObject} [analyticsObject]
@@ -5468,7 +5702,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
          */
         createEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 workspaceId: string;
                 organizationId?: string;
                 analyticsObject?: AnalyticsObject;
@@ -5488,7 +5722,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5497,7 +5731,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
          */
         deleteEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5517,7 +5751,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {*} [options] Override http request option.
@@ -5527,6 +5761,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5554,7 +5789,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5565,6 +5800,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5593,7 +5829,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5603,7 +5839,7 @@ export const WorkspaceModelControllerApiFp = function (configuration?: Configura
          */
         updateEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5637,7 +5873,7 @@ export const WorkspaceModelControllerApiFactory = function (
     return {
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {AnalyticsObject} [analyticsObject]
@@ -5646,7 +5882,7 @@ export const WorkspaceModelControllerApiFactory = function (
          */
         createEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 workspaceId: string;
                 organizationId?: string;
                 analyticsObject?: AnalyticsObject;
@@ -5660,7 +5896,7 @@ export const WorkspaceModelControllerApiFactory = function (
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5669,7 +5905,7 @@ export const WorkspaceModelControllerApiFactory = function (
          */
         deleteEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5683,7 +5919,7 @@ export const WorkspaceModelControllerApiFactory = function (
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} workspaceId
          * @param {string} [organizationId]
          * @param {*} [options] Override http request option.
@@ -5693,6 +5929,7 @@ export const WorkspaceModelControllerApiFactory = function (
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5710,7 +5947,7 @@ export const WorkspaceModelControllerApiFactory = function (
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5721,6 +5958,7 @@ export const WorkspaceModelControllerApiFactory = function (
             params: {
                 entity:
                     | "analyticalDashboards"
+                    | "filterContexts"
                     | "metrics"
                     | "visualizationObjects"
                     | "attributes"
@@ -5739,7 +5977,7 @@ export const WorkspaceModelControllerApiFactory = function (
         },
         /**
          *
-         * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+         * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
          * @param {string} id
          * @param {string} workspaceId
          * @param {string} [organizationId]
@@ -5749,7 +5987,7 @@ export const WorkspaceModelControllerApiFactory = function (
          */
         updateEntity(
             params: {
-                entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+                entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
                 id: string;
                 workspaceId: string;
                 organizationId?: string;
@@ -5773,7 +6011,7 @@ export const WorkspaceModelControllerApiFactory = function (
 export interface WorkspaceModelControllerApiInterface {
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} workspaceId
      * @param {string} [organizationId]
      * @param {AnalyticsObject} [analyticsObject]
@@ -5783,7 +6021,7 @@ export interface WorkspaceModelControllerApiInterface {
      */
     createEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             workspaceId: string;
             organizationId?: string;
             analyticsObject?: AnalyticsObject;
@@ -5793,7 +6031,7 @@ export interface WorkspaceModelControllerApiInterface {
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -5803,7 +6041,7 @@ export interface WorkspaceModelControllerApiInterface {
      */
     deleteEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             id: string;
             workspaceId: string;
             organizationId?: string;
@@ -5813,7 +6051,7 @@ export interface WorkspaceModelControllerApiInterface {
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
      * @param {string} workspaceId
      * @param {string} [organizationId]
      * @param {*} [options] Override http request option.
@@ -5824,6 +6062,7 @@ export interface WorkspaceModelControllerApiInterface {
         params: {
             entity:
                 | "analyticalDashboards"
+                | "filterContexts"
                 | "metrics"
                 | "visualizationObjects"
                 | "attributes"
@@ -5840,7 +6079,7 @@ export interface WorkspaceModelControllerApiInterface {
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -5852,6 +6091,7 @@ export interface WorkspaceModelControllerApiInterface {
         params: {
             entity:
                 | "analyticalDashboards"
+                | "filterContexts"
                 | "metrics"
                 | "visualizationObjects"
                 | "attributes"
@@ -5869,7 +6109,7 @@ export interface WorkspaceModelControllerApiInterface {
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -5880,7 +6120,7 @@ export interface WorkspaceModelControllerApiInterface {
      */
     updateEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             id: string;
             workspaceId: string;
             organizationId?: string;
@@ -5899,7 +6139,7 @@ export interface WorkspaceModelControllerApiInterface {
 export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceModelControllerApiInterface {
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} workspaceId
      * @param {string} [organizationId]
      * @param {AnalyticsObject} [analyticsObject]
@@ -5909,7 +6149,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
      */
     public createEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             workspaceId: string;
             organizationId?: string;
             analyticsObject?: AnalyticsObject;
@@ -5924,7 +6164,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -5934,7 +6174,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
      */
     public deleteEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             id: string;
             workspaceId: string;
             organizationId?: string;
@@ -5949,7 +6189,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
      * @param {string} workspaceId
      * @param {string} [organizationId]
      * @param {*} [options] Override http request option.
@@ -5960,6 +6200,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
         params: {
             entity:
                 | "analyticalDashboards"
+                | "filterContexts"
                 | "metrics"
                 | "visualizationObjects"
                 | "attributes"
@@ -5981,7 +6222,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects' | 'attributes' | 'datasets' | 'facts' | 'labels' | 'tables' | 'sources'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -5993,6 +6234,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
         params: {
             entity:
                 | "analyticalDashboards"
+                | "filterContexts"
                 | "metrics"
                 | "visualizationObjects"
                 | "attributes"
@@ -6015,7 +6257,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
 
     /**
      *
-     * @param {'analyticalDashboards' | 'metrics' | 'visualizationObjects'} entity
+     * @param {'analyticalDashboards' | 'filterContexts' | 'metrics' | 'visualizationObjects'} entity
      * @param {string} id
      * @param {string} workspaceId
      * @param {string} [organizationId]
@@ -6026,7 +6268,7 @@ export class WorkspaceModelControllerApi extends BaseAPI implements WorkspaceMod
      */
     public updateEntity(
         params: {
-            entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+            entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
             id: string;
             workspaceId: string;
             organizationId?: string;

@@ -219,10 +219,10 @@ export interface AnalyticalDashboardsItemAllOf {
 }
 
 // @public
-export type AnalyticsObject = AnalyticalDashboard | Metric | VisualizationObjectSchema;
+export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema;
 
 // @public
-export type AnalyticsObjectRequest = AnalyticalDashboardRequest | MetricRequest | VisualizationObjectRequest;
+export type AnalyticsObjectRequest = AnalyticalDashboardRequest | FilterContextRequest | MetricRequest | VisualizationObjectRequest;
 
 // @public
 export interface ArithmeticMeasureDefinition {
@@ -1199,6 +1199,75 @@ export interface FactsItem {
 }
 
 // @public
+export interface FilterContext {
+    data: FilterContextData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface FilterContextAttributes {
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface FilterContextData {
+    data: FilterContextDataRequest;
+    relationships?: FilterContextRelationships;
+}
+
+// @public
+export interface FilterContextDataAllOf {
+    relationships?: FilterContextRelationships;
+}
+
+// @public
+export interface FilterContextDataRequest {
+    attributes?: FilterContextAttributes;
+    id: string;
+    type: string;
+}
+
+// @public
+export interface FilterContextDataRequestAllOf {
+    attributes?: FilterContextAttributes;
+}
+
+// @public
+export interface FilterContextRelationships {
+    attributes?: AnalyticalDashboardRelationshipsLabels;
+    datasets?: AnalyticalDashboardRelationshipsLabels;
+    labels?: AnalyticalDashboardRelationshipsLabels;
+}
+
+// @public
+export interface FilterContextRequest {
+    data: FilterContextDataRequest;
+}
+
+// @public
+export interface FilterContexts {
+    data: Array<FilterContextsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface FilterContextsAllOf {
+    data?: Array<FilterContextsItem>;
+}
+
+// @public
+export interface FilterContextsItem {
+    data: FilterContextDataRequest;
+    links?: Links;
+    relationships?: FilterContextRelationships;
+}
+
+// @public
 export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefinition | MeasureValueFilter | RankingFilter;
 
 // @public
@@ -1564,7 +1633,7 @@ export interface MetadataConfigurationParameters {
 export type MetadataModelObject = AnalyticsObject | Attribute | Dataset | Fact | Label | Source | Table;
 
 // @public
-export type MetadataModelObjects = AnalyticalDashboards | Attributes | Datasets | Facts | Labels | Metrics | Sources | Tables | VisualizationObjects;
+export type MetadataModelObjects = AnalyticalDashboards | Attributes | Datasets | Facts | FilterContexts | Labels | Metrics | Sources | Tables | VisualizationObjects;
 
 // @public
 export interface MetadataRequestArgs {
@@ -2495,34 +2564,34 @@ export interface VisualizationObjectsItem {
 export class WorkspaceModelControllerApi extends MetadataBaseApi implements WorkspaceModelControllerApiInterface {
     // (undocumented)
     createEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string;
         analyticsObject?: AnalyticsObject;
     }, options?: any): AxiosPromise<AnalyticsObject>;
     // (undocumented)
     deleteEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<void>;
     // (undocumented)
     getEntities(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObjects>;
     // (undocumented)
     getEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObject>;
     // (undocumented)
     updateEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
@@ -2533,64 +2602,64 @@ export class WorkspaceModelControllerApi extends MetadataBaseApi implements Work
 // @public
 export const WorkspaceModelControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
     createEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string | undefined;
-        analyticsObject?: AnalyticalDashboard | Metric | VisualizationObjectSchema | undefined;
+        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema | undefined;
     }, options?: any): MetadataRequestArgs;
     deleteEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     getEntities(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         workspaceId: string;
         organizationId?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     getEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         id: string;
         workspaceId: string;
         organizationId?: string | undefined;
     }, options?: any): MetadataRequestArgs;
     updateEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string | undefined;
-        analyticsObject?: AnalyticalDashboard | Metric | VisualizationObjectSchema | undefined;
+        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema | undefined;
     }, options?: any): MetadataRequestArgs;
 };
 
 // @public
 export const WorkspaceModelControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     createEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string;
         analyticsObject?: AnalyticsObject;
     }, options?: any): AxiosPromise<AnalyticsObject>;
     deleteEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<void>;
     getEntities(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObjects>;
     getEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObject>;
     updateEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
@@ -2601,30 +2670,30 @@ export const WorkspaceModelControllerApiFactory: (configuration?: MetadataConfig
 // @public
 export const WorkspaceModelControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
     createEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string;
         analyticsObject?: AnalyticsObject;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<AnalyticsObject>;
     deleteEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     getEntities(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         workspaceId: string;
         organizationId?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetadataModelObjects>;
     getEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<MetadataModelObject>;
     updateEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
@@ -2636,34 +2705,34 @@ export const WorkspaceModelControllerApiFp: (configuration?: MetadataConfigurati
 export interface WorkspaceModelControllerApiInterface {
     // (undocumented)
     createEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string;
         analyticsObject?: AnalyticsObject;
     }, options?: any): AxiosPromise<AnalyticsObject>;
     // (undocumented)
     deleteEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<void>;
     // (undocumented)
     getEntities(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObjects>;
     // (undocumented)
     getEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects" | "attributes" | "datasets" | "facts" | "labels" | "tables" | "sources";
         id: string;
         workspaceId: string;
         organizationId?: string;
     }, options?: any): AxiosPromise<MetadataModelObject>;
     // (undocumented)
     updateEntity(params: {
-        entity: "analyticalDashboards" | "metrics" | "visualizationObjects";
+        entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         id: string;
         workspaceId: string;
         organizationId?: string;
