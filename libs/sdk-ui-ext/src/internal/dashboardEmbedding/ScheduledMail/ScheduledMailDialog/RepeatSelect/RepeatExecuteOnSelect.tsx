@@ -1,0 +1,77 @@
+// (C) 2019-2020 GoodData Corporation
+import * as React from "react";
+import { injectIntl, WrappedComponentProps } from "react-intl";
+// TODO: RAIL-2760: Migrate to sdk-ui-kit
+import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+
+import { IDropdownItem } from "../../interfaces";
+import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_EXECUTE_ON } from "../../constants";
+import { getDate, getDayName, getWeek } from "../../utils/datetime";
+
+const DROPDOWN_WIDTH = 154;
+
+interface IRepeatExecuteOnSelectOwnProps {
+    repeatExecuteOn: string;
+    startDate: Date;
+    onChange: (repeatExecuteOn: string) => void;
+}
+
+export type IRepeatExecuteOnSelectProps = IRepeatExecuteOnSelectOwnProps & WrappedComponentProps;
+
+class RenderRepeatExecuteOnSelect extends React.PureComponent<IRepeatExecuteOnSelectProps> {
+    public render(): React.ReactNode {
+        const repeatExecuteOnItems = this.getRepeatExecuteOnItems();
+        const repeatExecuteOnItem = repeatExecuteOnItems.find(this.isRepeatExecuteOnItemSelected);
+
+        return (
+            <Dropdown
+                alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
+                className="gd-schedule-email-dialog-repeat-execute-on s-gd-schedule-email-dialog-repeat-execute-on"
+                button={<DropdownButton value={repeatExecuteOnItem.title} />}
+                body={
+                    <DropdownBody
+                        width={DROPDOWN_WIDTH}
+                        items={repeatExecuteOnItems}
+                        selection={repeatExecuteOnItem}
+                        onSelect={this.onRepeatExecuteOnChange}
+                    />
+                }
+                overlayPositionType="sameAsTarget"
+                overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+            />
+        );
+    }
+
+    private isRepeatExecuteOnItemSelected = (item: IDropdownItem): boolean => {
+        return item.id === this.props.repeatExecuteOn;
+    };
+
+    private getRepeatExecuteOnItem = (repeatExecuteOn: string): IDropdownItem => {
+        const { intl, startDate } = this.props;
+        return {
+            id: repeatExecuteOn,
+            title: intl.formatMessage(
+                {
+                    id: `dialogs.schedule.email.repeats.execute.on.${repeatExecuteOn}`,
+                },
+                {
+                    date: getDate(startDate),
+                    day: getDayName(startDate),
+                    week: getWeek(startDate),
+                },
+            ),
+        };
+    };
+
+    private getRepeatExecuteOnItems = (): IDropdownItem[] => {
+        return [REPEAT_EXECUTE_ON.DAY_OF_MONTH, REPEAT_EXECUTE_ON.DAY_OF_WEEK].map(
+            this.getRepeatExecuteOnItem,
+        );
+    };
+
+    private onRepeatExecuteOnChange = (item: IDropdownItem) => {
+        this.props.onChange(item.id);
+    };
+}
+
+export const RepeatExecuteOnSelect = injectIntl(RenderRepeatExecuteOnSelect);

@@ -2,6 +2,13 @@
 export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
 export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
 export {
+    DASHBOARD_TITLE_MAX_LENGTH,
+    PLATFORM_DATE_FORMAT,
+    IScheduledMailDialogRendererOwnProps,
+    ScheduledMailDialog,
+    ScheduledMailDialogRenderer,
+} from "./ScheduledMail";
+export {
     DashboardView,
     IDashboardViewProps,
     IKpiViewProps,
