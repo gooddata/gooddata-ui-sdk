@@ -2,6 +2,8 @@
 @import "./variables";
 @import "./layout";
 @import "./kpi";
+@import "./scheduled_mail.scss";
+@import "./scheduled_mail_recipients.scss";
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {

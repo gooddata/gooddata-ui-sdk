@@ -1,0 +1,220 @@
+// (C) 2019-2020 GoodData Corporation
+@import "~@gooddata/sdk-ui-kit/styles/scss/Button/_variables";
+
+$horizontal-space: 20px;
+$vertical-space: 10px;
+
+@mixin input-styles {
+    color: $button-normal-color;
+    font-size: 12px;
+}
+
+@media #{$small-only} {
+    .gd-schedule-email-dialog-overlay {
+        // override the static position in case of dialog with long content, on mobile view
+        // stylelint-disable-next-line declaration-no-important
+        position: absolute !important;
+    }
+}
+
+.gd-dialog.gd-schedule-email-dialog {
+    // TODO: test this with IE https://caniuse.com/#search=calc
+    // responsive layout: viewport's width - 20px
+    width: calc(100vw - 20px);
+    max-width: 620px;
+
+    .hr {
+        height: 0;
+        margin: 12px 0 14px;
+        border-top: 1px solid $gd-border-color;
+    }
+}
+
+.gd-input-component {
+    margin-bottom: $vertical-space;
+
+    @media #{$small-only} {
+        .gd-label {
+            display: block;
+            margin-bottom: 7px;
+            margin-top: -3px;
+        }
+        .gd-label:first-child {
+            margin-top: 0;
+        }
+    }
+
+    @media #{$medium-up} {
+        display: flex;
+        align-items: center;
+
+        .gd-label {
+            width: 100px;
+        }
+
+        .gd-input {
+            flex-grow: 1;
+            max-width: 480px;
+        }
+    }
+}
+
+.gd-textarea-component {
+    @media #{$medium-up} {
+        align-items: flex-start;
+    }
+
+    .gd-input-field {
+        resize: vertical;
+        min-height: 30px;
+
+        @media #{$small-only} {
+            resize: none;
+        }
+    }
+
+    .gd-input-component-indicator {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: $gd-color-text;
+        font-size: 14px;
+        font-family: avenir, "Helvetica Neue", arial, sans-serif;
+    }
+}
+
+.gd-textarea-component-collapsed {
+    .gd-input-field {
+        overflow: hidden;
+    }
+}
+
+.gd-attachment-component {
+    @media #{$medium-up} {
+        align-items: flex-start;
+    }
+
+    > span {
+        flex: 1;
+        background: url("../icons/icon-pdf.svg") no-repeat left 0;
+        padding-left: 18px;
+
+        @media #{$medium-up} {
+            margin-top: 3px;
+            background-position: left 1px;
+            word-break: break-all;
+        }
+    }
+}
+
+.gd-schedule-email-dialog-datetime,
+.gd-schedule-email-dialog-repeat {
+    align-items: flex-start;
+    flex-direction: column;
+
+    @media #{$small-only} {
+        .gd-label {
+            margin-bottom: 0;
+        }
+    }
+
+    > div {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+}
+
+.gd-schedule-email-dialog-datetime {
+    > div {
+        .gd-datepicker {
+            width: 119px;
+
+            @media #{$small-only} {
+                width: calc((100vw - 20px - 20px - 20px - 20px) / 2);
+            }
+
+            .input-text {
+                @include input-styles;
+            }
+
+            .gd-datepicker-icon {
+                top: -2px;
+            }
+        }
+
+        .gd-schedule-email-dialog-datetime-time {
+            margin-left: $horizontal-space;
+        }
+
+        .gd-schedule-email-dialog-datetime-timezone {
+            @media #{$small-only} {
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            @media #{$medium-up} {
+                margin-left: $horizontal-space;
+            }
+        }
+    }
+}
+
+.gd-schedule-email-dialog-repeat {
+    @media #{$small-only} {
+        .gd-schedule-email-dialog-repeat-type {
+            width: 100%;
+            margin-bottom: $vertical-space;
+
+            .button-dropdown {
+                width: 100%;
+            }
+        }
+    }
+
+    .gd-schedule-email-dialog-repeat-custom {
+        display: flex;
+        align-items: center;
+
+        @media #{$small-only} {
+            flex-wrap: wrap;
+            border-left: 2px dotted $gd-border-color;
+        }
+
+        .gd-schedule-email-dialog-repeat-every {
+            margin-left: $horizontal-space;
+        }
+
+        .gd-schedule-email-dialog-repeat-period {
+            width: 42px;
+            margin-left: $horizontal-space;
+
+            .gd-input-field {
+                @include input-styles;
+
+                text-align: center;
+                padding-right: 0;
+                padding-left: 0;
+            }
+        }
+
+        .gd-schedule-email-dialog-repeat-frequency {
+            margin-left: $horizontal-space;
+        }
+
+        @media #{$small-only} {
+            .break-the-row {
+                height: 0;
+                flex-basis: 100%;
+            }
+        }
+
+        .gd-schedule-email-dialog-repeat-execute-on {
+            margin-left: $horizontal-space;
+
+            @media #{$small-only} {
+                margin-top: $vertical-space;
+            }
+        }
+    }
+}
