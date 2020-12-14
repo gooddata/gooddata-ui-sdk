@@ -93,49 +93,56 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
                 />
             )}
             renderBody={({ closeDropdown, isMobile }) => (
-                <DropdownList
-                    footer={renderProjectPickerFooter(projectPickerFooter)}
-                    closeDropdown={closeDropdown}
-                    className="project-picker-dropdown"
-                    width={350}
-                    isMobile={isMobile}
-                    showSearch={showSearch}
-                    searchString={searchString}
-                    items={workspaces}
-                    itemsCount={totalWorkspacesCount}
-                    isLoading={isLoading}
-                    onSearch={onSearch}
-                    searchFieldSize="normal"
-                    searchPlaceholder={t({ id: "gs.header.projectPicker.searchPlaceholder" })}
-                    renderNoData={({ hasNoMatchingData }) => (
-                        <NoData
-                            className="s-noMatchingProjects"
-                            noDataLabel={t({ id: "gs.noData.noDataAvailable" })}
-                            notFoundLabel={t({ id: "gs.header.projectPicker.noMatchingProjects" })}
-                            hasNoMatchingData={hasNoMatchingData}
-                        />
+                <>
+                    {isMobile || (
+                        <div className="project-picker-header">
+                            {t({ id: "gs.header.projectPicker.workspaces" })}
+                        </div>
                     )}
-                    renderItem={({ item }) => {
-                        const title = get(item, "title");
-                        const isDemo = get(item, "isDemo");
-                        const isSelected = selectedWorkspace && item && selectedWorkspace.id === item.id;
-                        return (
-                            <HeaderWorkspacePickerItem
-                                title={title}
-                                isDemo={isDemo}
-                                isSelected={isSelected}
-                                isLoading={!item}
-                                onClick={() => {
-                                    if (item && onSelect) {
-                                        onSelect(item);
-                                        closeDropdown();
-                                    }
-                                }}
+                    <DropdownList
+                        footer={renderProjectPickerFooter(projectPickerFooter)}
+                        closeDropdown={closeDropdown}
+                        className="project-picker-dropdown"
+                        width={350}
+                        isMobile={isMobile}
+                        showSearch={showSearch}
+                        searchString={searchString}
+                        items={workspaces}
+                        itemsCount={totalWorkspacesCount}
+                        isLoading={isLoading}
+                        onSearch={onSearch}
+                        searchFieldSize="normal"
+                        searchPlaceholder={t({ id: "gs.header.projectPicker.searchPlaceholder" })}
+                        renderNoData={({ hasNoMatchingData }) => (
+                            <NoData
+                                className="s-noMatchingProjects"
+                                noDataLabel={t({ id: "gs.noData.noDataAvailable" })}
+                                notFoundLabel={t({ id: "gs.header.projectPicker.noMatchingProjects" })}
+                                hasNoMatchingData={hasNoMatchingData}
                             />
-                        );
-                    }}
-                    onScrollEnd={onScrollEnd}
-                />
+                        )}
+                        renderItem={({ item }) => {
+                            const title = get(item, "title");
+                            const isDemo = get(item, "isDemo");
+                            const isSelected = selectedWorkspace && item && selectedWorkspace.id === item.id;
+                            return (
+                                <HeaderWorkspacePickerItem
+                                    title={title}
+                                    isDemo={isDemo}
+                                    isSelected={isSelected}
+                                    isLoading={!item}
+                                    onClick={() => {
+                                        if (item && onSelect) {
+                                            onSelect(item);
+                                            closeDropdown();
+                                        }
+                                    }}
+                                />
+                            );
+                        }}
+                        onScrollEnd={onScrollEnd}
+                    />
+                </>
             )}
         />
     );
