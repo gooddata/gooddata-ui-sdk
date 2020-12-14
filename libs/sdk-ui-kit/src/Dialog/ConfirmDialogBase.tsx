@@ -5,6 +5,7 @@ import noop from "lodash/noop";
 import { Button } from "../Button";
 import { DialogBase } from "./DialogBase";
 import { IConfirmDialogBaseProps } from "./typings";
+import { Bubble, BubbleHoverTrigger } from "../Bubble";
 
 /**
  * @internal
@@ -26,6 +27,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             children,
             cancelButtonText,
             submitButtonText,
+            submitButtonTooltipText,
+            submitButtonTooltipAlignPoints,
+            submitButtonTooltipArrowOffsets,
             isSubmitDisabled,
             onSubmit,
             onCancel,
@@ -63,12 +67,23 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                             value={cancelButtonText}
                         />
 
-                        <Button
-                            onClick={onSubmit}
-                            className={submitButtonClasses}
-                            value={submitButtonText}
-                            disabled={isSubmitDisabled}
-                        />
+                        <BubbleHoverTrigger className="gd-button" showDelay={0} hideDelay={0}>
+                            <Button
+                                onClick={onSubmit}
+                                className={submitButtonClasses}
+                                value={submitButtonText}
+                                disabled={isSubmitDisabled}
+                            />
+                            {submitButtonTooltipText && (
+                                <Bubble
+                                    className="bubble-primary"
+                                    alignPoints={submitButtonTooltipAlignPoints || [{ align: "bc tc" }]}
+                                    arrowOffsets={submitButtonTooltipArrowOffsets || { "bc tc": [0, 15] }}
+                                >
+                                    {submitButtonTooltipText}
+                                </Bubble>
+                            )}
+                        </BubbleHoverTrigger>
                     </div>
                 </div>
             </div>
