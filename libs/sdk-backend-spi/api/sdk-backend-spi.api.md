@@ -1107,6 +1107,8 @@ export interface ISettings {
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
     enableHidingOfDataPoints?: boolean;
+    enableKPIDashboardSchedule?: boolean;
+    enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
     enableTableColumnsAutoResizing?: boolean;

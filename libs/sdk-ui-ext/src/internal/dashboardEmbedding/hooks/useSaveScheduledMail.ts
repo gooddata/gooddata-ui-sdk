@@ -22,13 +22,14 @@ export interface IUseSaveScheduledMailConfig
     extends UseCancelablePromiseCallbacks<IScheduledMail, GoodDataSdkError> {
     /**
      * Definition of the scheduled e-mail to save.
+     * Missing scheduled mail definition indicates that there is nothing to save.
      */
-    scheduledMail: IScheduledMailDefinition;
+    scheduledMail?: IScheduledMailDefinition;
 
     /**
      * Filter context, that will be applied to the attached dashboard.
      */
-    filterContext: IFilterContextDefinition;
+    filterContext?: IFilterContextDefinition;
 
     /**
      * Backend to work with.
@@ -76,11 +77,13 @@ export function useSaveScheduledMail({
         "The workspace in useSaveScheduledMail must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const promise = () =>
-        effectiveBackend
-            .workspace(effectiveWorkspace)
-            .dashboards()
-            .createScheduledMail(scheduledMail, filterContext);
+    const promise = scheduledMail
+        ? () =>
+              effectiveBackend
+                  .workspace(effectiveWorkspace)
+                  .dashboards()
+                  .createScheduledMail(scheduledMail, filterContext)
+        : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
