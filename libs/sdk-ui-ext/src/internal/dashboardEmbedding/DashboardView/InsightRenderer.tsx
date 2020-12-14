@@ -3,11 +3,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter, IInsight } from "@gooddata/sdk-model";
 import {
+    GoodDataSdkError,
     IDrillableItem,
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
     ILocale,
+    IntlWrapper,
     OnError,
     OnFiredDrillEvent,
     OnLoadingChanged,
@@ -16,6 +18,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
+import { InsightError } from "../../../insightView/InsightError";
 import { widgetDrillsToDrillPredicates } from "./convertors";
 import { filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
@@ -56,6 +59,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const userWorkspaceSettings = useUserWorkspaceSettings();
     const colorPalette = useColorPalette();
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
+    const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | null>(null);
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
@@ -64,6 +68,14 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             }
         },
         [isVisualizationLoading],
+    );
+
+    const handleError = useCallback<OnError>(
+        (error) => {
+            setVisualizationError(error);
+            onError?.(error);
+        },
+        [onError],
     );
 
     const inputFilters = useMemo(() => {
@@ -107,10 +119,19 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         [dashboardViewConfig],
     );
 
+    // we need sdk-ui intl wrapper (this is how InsightView does this as well) for error messages etc.
+    // ideally, we would merge InternalIntlWrapper and sdk-ui intl wrapper, but there is no clean way to do that
+    const locale = dashboardViewConfig?.locale ?? userWorkspaceSettings?.locale;
     return (
-        <>
+        <IntlWrapper locale={locale}>
             {(status === "loading" || status === "pending" || isVisualizationLoading) && <LoadingComponent />}
-            {status === "error" && <ErrorComponent message={error.message} />}
+            {(error || visualizationError) && (
+                <InsightError
+                    error={error || visualizationError}
+                    ErrorComponent={ErrorComponent}
+                    height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
+                />
+            )}
             <InsightRendererImpl
                 insight={result}
                 backend={effectiveBackend}
@@ -122,10 +143,10 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
                 settings={userWorkspaceSettings}
                 colorPalette={colorPalette}
-                onError={onError}
+                onError={handleError}
                 ErrorComponent={ErrorComponent}
                 LoadingComponent={LoadingComponent}
             />
-        </>
+        </IntlWrapper>
     );
 };

@@ -11,11 +11,9 @@ import {
     ILocale,
     withContexts,
     DefaultLocale,
-    LoadingComponent,
-    ErrorComponent,
-    IErrorDescriptors,
+    LoadingComponent as DefaultLoading,
+    ErrorComponent as DefaultError,
     IntlWrapper,
-    newErrorMapping,
     isGoodDataSdkError,
     UnexpectedSdkError,
     OnLoadingChanged,
@@ -23,6 +21,7 @@ import {
 import { IInsightViewDataLoader, getInsightViewDataLoader } from "./dataLoaders";
 import { IInsightViewProps } from "./types";
 import { InsightRenderer } from "./InsightRenderer";
+import { InsightError } from "./InsightError";
 
 interface IInsightViewState {
     isDataLoading: boolean;
@@ -34,30 +33,22 @@ interface IInsightViewState {
 }
 
 class InsightViewCore extends React.Component<IInsightViewProps & WrappedComponentProps, IInsightViewState> {
-    private errorMap: IErrorDescriptors;
-
     public static defaultProps: Partial<IInsightViewProps & WrappedComponentProps> = {
-        ErrorComponent,
+        ErrorComponent: DefaultError,
         filters: [],
         drillableItems: [],
-        LoadingComponent,
+        LoadingComponent: DefaultLoading,
         pushData: noop,
     };
 
-    constructor(props: IInsightViewProps & WrappedComponentProps) {
-        super(props);
-
-        this.errorMap = newErrorMapping(props.intl);
-
-        this.state = {
-            isDataLoading: false,
-            isVisualizationLoading: false,
-            error: undefined,
-            insight: undefined,
-            colorPalette: undefined,
-            settings: undefined,
-        };
-    }
+    state: IInsightViewState = {
+        isDataLoading: false,
+        isVisualizationLoading: false,
+        error: undefined,
+        insight: undefined,
+        colorPalette: undefined,
+        settings: undefined,
+    };
 
     private startDataLoading = () => {
         this.setIsDataLoading(true);
@@ -201,13 +192,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     };
 
     public componentDidUpdate(prevProps: IInsightViewProps & WrappedComponentProps): void {
-        const { intl } = this.props;
-
         this.componentDidUpdateInner(prevProps);
-
-        if (!isEqual(prevProps.intl, intl)) {
-            this.errorMap = newErrorMapping(intl);
-        }
     }
 
     private handleLoadingChanged: OnLoadingChanged = ({ isLoading }): void => {
@@ -216,16 +201,15 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     };
 
     public render(): React.ReactNode {
-        const { ErrorComponent, LoadingComponent } = this.props;
+        const { LoadingComponent } = this.props;
         const { error, isDataLoading, isVisualizationLoading } = this.state;
-        const errorProps = this.errorMap[error ? error.getMessage() : undefined] ?? {
-            message: error?.message,
-        };
 
         return (
             <>
                 {(isDataLoading || isVisualizationLoading) && <LoadingComponent />}
-                {error && !isDataLoading && <ErrorComponent {...errorProps} />}
+                {error && !isDataLoading && (
+                    <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
+                )}
                 <InsightRenderer
                     {...this.props}
                     colorPalette={this.props.colorPalette ?? this.state.colorPalette}
