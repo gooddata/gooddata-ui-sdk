@@ -35,7 +35,7 @@ export type ScheduledMailDialogProps = {
     locale?: string;
 
     /**
-     * Filters to apply to the exported dashboard, attached in the scheduled mail.
+     * Filters to apply to the exported dashboard attached to the scheduled email.
      *
      * Note: By default, exported dashboard in the scheduled mail will use the original stored dashboard filter context,
      * with this prop, you can override it.
@@ -59,7 +59,7 @@ export type ScheduledMailDialogProps = {
     workspace?: string;
 
     /**
-     * Callback to be called, when we submit the scheduled email dialog.
+     * Callback to be called, when user submit the scheduled email dialog.
      */
     onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
 
@@ -74,7 +74,7 @@ export type ScheduledMailDialogProps = {
     onSubmitError?: (error: GoodDataSdkError) => void;
 
     /**
-     * Callback to be called, when we close the scheduled email dialog.
+     * Callback to be called, when user close the scheduled email dialog.
      */
     onCancel?: () => void;
 

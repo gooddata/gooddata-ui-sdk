@@ -100,17 +100,17 @@ export type IScheduledMailDialogRendererOwnProps = {
     workspace?: string;
 
     /**
-     * Callback to be called, when we close the scheduled email dialog.
+     * Callback to be called, when user close the scheduled email dialog.
      */
     onCancel?: () => void;
 
     /**
-     * Callback to be called, when we submit the scheduled email dialog.
+     * Callback to be called, when user submit the scheduled email dialog.
      */
     onSubmit?: (scheduledEmailData: IScheduledMailDefinition) => void;
 
     /**
-     * Callback to be called, when error occurs when loading the recipients
+     * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
 };

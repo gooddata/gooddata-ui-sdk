@@ -47,18 +47,39 @@ export interface IRecipientsSelectRendererOwnProps {
      */
     currentUser: IScheduleEmailRecipient;
 
+    /**
+     * Currently selected recipients.
+     */
     value: IScheduleEmailRecipient[];
 
+    /**
+     * Recipients to display in the autocomplete.
+     */
     options: IScheduleEmailRecipient[];
 
+    /**
+     * Allow multiple recipients to select?
+     */
     isMulti?: boolean;
 
+    /**
+     * Callback to be called, when recipients are changed.
+     */
     onChange?: (selectedUsers: IScheduleEmailRecipient[]) => void;
 
+    /**
+     * Callback to load autocomplete options.
+     */
     onLoad?: (queryOptions?: IWorkspaceUsersQueryOptions) => void;
 
+    /**
+     * Show autocomplete loading indicator?
+     */
     isLoading?: boolean;
 
+    /**
+     * Has user canListUsersInProject permission?
+     */
     canListUsersInProject?: boolean;
 }
 

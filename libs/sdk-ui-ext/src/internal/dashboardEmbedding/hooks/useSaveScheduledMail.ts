@@ -21,8 +21,8 @@ import invariant from "ts-invariant";
 export interface IUseSaveScheduledMailConfig
     extends UseCancelablePromiseCallbacks<IScheduledMail, GoodDataSdkError> {
     /**
-     * Definition of the scheduled e-mail to save.
-     * Missing scheduled mail definition indicates that there is nothing to save.
+     * Definition of the scheduled email to save.
+     * Saves the scheduled email every time the reference equality of scheduledMail/filterContext changes.
      */
     scheduledMail?: IScheduledMailDefinition;
 

@@ -189,12 +189,12 @@ export interface IDashboardViewProps {
     applyFiltersToScheduledMail?: boolean;
 
     /**
-     * Callback to be called, when we submit the scheduled email dialog.
+     * Callback to be called, when user submit the scheduled email dialog.
      */
     onScheduledMailDialogSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
 
     /**
-     * Callback to be called, when we close the scheduled email dialog.
+     * Callback to be called, when user close the scheduled email dialog.
      */
     onScheduledMailDialogCancel?: () => void;
 

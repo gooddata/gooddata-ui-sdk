@@ -33,7 +33,7 @@ export interface IUseUserWorkspacePermissionsConfig
 }
 
 /**
- * Hook allowing to download user workspace settings
+ * Hook allowing to download user workspace permissions
  * @param config - configuration of the hook
  * @beta
  */

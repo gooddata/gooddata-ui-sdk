@@ -8,8 +8,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-// TODO: uncomment once moved to SDK
-// import invariant from "ts-invariant";
+import invariant from "ts-invariant";
 
 /**
  * @beta
@@ -17,7 +16,7 @@ import {
 export interface IUseWorkspaceUsersConfig
     extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
     /**
-     *  Option to filter users by the provided string
+     *  Option to filter users by the provided string.
      */
     search?: string;
 
@@ -39,7 +38,7 @@ export interface IUseWorkspaceUsersConfig
 }
 
 /**
- * Hook allowing to download dashboard data
+ * Hook allowing to download workspace users
  * @param config - configuration of the hook
  * @beta
  */
@@ -56,17 +55,15 @@ export function useWorkspaceUsers({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    // TODO: uncomment once moved to SDK
-    // invariant(
-    //     effectiveBackend,
-    //     "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    // );
+    invariant(
+        effectiveBackend,
+        "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+    );
 
-    // TODO: uncomment once moved to SDK
-    // invariant(
-    //     effectiveWorkspace,
-    //     "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    // );
+    invariant(
+        effectiveWorkspace,
+        "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+    );
 
     const promise = () => {
         let loader = effectiveBackend.workspace(effectiveWorkspace).users();

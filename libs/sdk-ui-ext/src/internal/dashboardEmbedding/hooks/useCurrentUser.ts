@@ -23,7 +23,7 @@ export interface IUseCurrentUserConfig extends UseCancelablePromiseCallbacks<IUs
 }
 
 /**
- * Hook allowing to download dashboard data
+ * Hook allowing to get current user details
  * @param config - configuration of the hook
  * @beta
  */
