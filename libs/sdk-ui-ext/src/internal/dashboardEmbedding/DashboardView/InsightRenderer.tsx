@@ -25,7 +25,6 @@ import { addImplicitAllTimeFilter } from "./utils";
 import { useDashboardViewConfig } from "./DashboardViewConfigContext";
 import { useUserWorkspaceSettings } from "./UserWorkspaceSettingsContext";
 import { useColorPalette } from "./ColorPaletteContext";
-import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../DashboardLayout/constants";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -116,7 +115,6 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         () => ({
             mapboxToken: dashboardViewConfig?.mapboxToken,
             separators: dashboardViewConfig?.separators,
-            headlineSmallWidthThreshold: DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
         }),
         [dashboardViewConfig],
     );

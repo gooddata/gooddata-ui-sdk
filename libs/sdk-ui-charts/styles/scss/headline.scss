@@ -105,6 +105,37 @@
         margin-top: 10px;
         margin-bottom: 15px;
         color: var(--gd-kpi-secondaryInfoColor, $gd-color-state-blank);
+
+        &.gd-small,
+        &.gd-shortened-label {
+            display: flex;
+            flex-flow: column-reverse wrap;
+
+            .headline-compare-section-item {
+                width: 100%;
+
+                &.headline-tertiary-item {
+                    padding: 10px 0 0;
+                    text-align: center;
+                }
+
+                &.headline-secondary-item {
+                    border-left: 0;
+                    border-bottom: 1px dashed
+                        var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
+                    padding: 0 0 10px;
+                    text-align: center;
+                }
+            }
+        }
+
+        &.gd-shortened-label,
+        &.gd-medium {
+            .headline-compare-section-item .headline-title-wrapper {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
     }
 
     .headline-compare-section-item {

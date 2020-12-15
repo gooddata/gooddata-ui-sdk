@@ -29,6 +29,10 @@ export interface IHeadlineVisualizationProps {
     disableDrillUnderline?: boolean;
 }
 
+// If the headline is narrower than this, the compare section will be rendered
+// vertically to save horizontal space
+const SMALL_COMPARE_SECTION_THRESHOLD = 160;
+
 /**
  * The React component that renders the Headline visualisation.
  */
@@ -51,15 +55,6 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     private secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
 
     public render(): React.ReactNode {
-        if (!this.props.config?.headlineSmallWidthThreshold) {
-            return (
-                <div className="headline">
-                    {this.renderPrimaryItem()}
-                    {this.renderCompareItems()}
-                </div>
-            );
-        }
-
         return (
             <Measure client>
                 {({ measureRef, contentRect }) => {
@@ -252,16 +247,16 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private getResponsiveClassName(sectionDOMWidth: number): string {
-        if (!sectionDOMWidth || !this.props.config?.headlineSmallWidthThreshold) {
+        if (!sectionDOMWidth) {
             return "";
         }
 
         const isShortened = this.isShortenedLabel();
-        if (sectionDOMWidth < this.props.config.headlineSmallWidthThreshold) {
-            return isShortened ? "shortened-label" : "small";
+        if (sectionDOMWidth < SMALL_COMPARE_SECTION_THRESHOLD) {
+            return isShortened ? "gd-shortened-label" : "gd-small";
         }
 
-        return isShortened ? "medium" : "large";
+        return isShortened ? "gd-medium" : "gd-large";
     }
 
     private isShortenedLabel(): boolean {
