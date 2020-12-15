@@ -204,7 +204,7 @@ export class HighChartsRenderer extends React.PureComponent<
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     private onChartSelection = (event: any): void => {
         const chartWrapper = event.target.renderTo.parentElement;
-        const resetZoomButton = chartWrapper.closest(".gd-base-visualization").querySelector(".viz-zoom-out");
+        const resetZoomButton = chartWrapper.closest(".visualization").querySelector(".viz-zoom-out");
         if (event.resetSelection) {
             resetZoomButton.style.display = "none";
         } else {
