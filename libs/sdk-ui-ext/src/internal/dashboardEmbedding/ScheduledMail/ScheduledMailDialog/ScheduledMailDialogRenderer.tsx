@@ -48,24 +48,9 @@ const MAX_HYPHEN_LENGTH = 3;
 
 export type IScheduledMailDialogRendererOwnProps = {
     /**
-     * Callback to be called, when we close the scheduled email dialog.
-     */
-    onCancel?: () => void;
-
-    /**
-     * Callback to be called, when we submit the scheduled email dialog.
-     */
-    onSubmit?: (scheduledEmailData: IScheduledMailDefinition) => void;
-
-    /**
-     * Callback to be called, when error occurs when loading the recipients
-     */
-    onError?: (error: GoodDataSdkError) => void;
-
-    /**
      * Reference of the dashboard to be attached to the scheduled email.
      */
-    dashboardRef: ObjRef;
+    dashboard: ObjRef;
 
     /**
      * Title of the attached dashboard. Used to create the default subject of a scheduled email.
@@ -75,7 +60,7 @@ export type IScheduledMailDialogRendererOwnProps = {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
-    owner: IUser;
+    currentUser: IUser;
 
     /**
      * Date format to use in DatePicker. To check the supported tokens,
@@ -113,6 +98,21 @@ export type IScheduledMailDialogRendererOwnProps = {
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
+
+    /**
+     * Callback to be called, when we close the scheduled email dialog.
+     */
+    onCancel?: () => void;
+
+    /**
+     * Callback to be called, when we submit the scheduled email dialog.
+     */
+    onSubmit?: (scheduledEmailData: IScheduledMailDefinition) => void;
+
+    /**
+     * Callback to be called, when error occurs when loading the recipients
+     */
+    onError?: (error: GoodDataSdkError) => void;
 };
 
 export type IScheduledMailDialogRendererProps = IScheduledMailDialogRendererOwnProps & WrappedComponentProps;
@@ -146,7 +146,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
         this.state = {
             alignment: "cc cc",
             startDate: now,
-            selectedRecipients: [userToRecipient(this.props.owner)],
+            selectedRecipients: [userToRecipient(this.props.currentUser)],
             isValidScheduleEmailData: true,
         };
 
@@ -277,12 +277,12 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             workspace,
             canListUsersInProject,
             enableKPIDashboardScheduleRecipients,
-            owner,
+            currentUser,
         } = this.props;
 
         return (
             <RecipientsSelect
-                owner={userToRecipient(owner)}
+                currentUser={userToRecipient(currentUser)}
                 canListUsersInProject={canListUsersInProject}
                 enableKPIDashboardScheduleRecipients={enableKPIDashboardScheduleRecipients}
                 value={selectedRecipients}
@@ -420,7 +420,7 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             .filter(isScheduleEmailExternalRecipient)
             .map((recipient) => recipient.email);
 
-        const { dashboardRef } = this.props;
+        const { dashboard } = this.props;
         const { emailSubject, emailBody } = this;
         const subject = emailSubject || this.getDefaultSubject();
         const body = emailBody || this.getDefaultEmailBody();
@@ -434,14 +434,14 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
             body,
             attachments: [
                 {
-                    dashboard: dashboardRef,
+                    dashboard,
                     format: "pdf",
                     // TODO: filterContext
                 },
             ],
             description,
             title: subject,
-            // Is private?
+            // Every scheduled email is private for the logged in user.
             unlisted: true,
         };
     };

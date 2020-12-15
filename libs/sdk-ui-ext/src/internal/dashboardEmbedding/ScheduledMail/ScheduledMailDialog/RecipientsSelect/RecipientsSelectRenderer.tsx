@@ -45,21 +45,21 @@ export interface IRecipientsSelectRendererOwnProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
-    owner: IScheduleEmailRecipient;
+    currentUser: IScheduleEmailRecipient;
 
     value: IScheduleEmailRecipient[];
 
     options: IScheduleEmailRecipient[];
 
-    isMulti: boolean;
+    isMulti?: boolean;
 
-    onChange: (selectedUsers: IScheduleEmailRecipient[]) => void;
+    onChange?: (selectedUsers: IScheduleEmailRecipient[]) => void;
 
-    onLoad: (queryOptions?: IWorkspaceUsersQueryOptions) => void;
+    onLoad?: (queryOptions?: IWorkspaceUsersQueryOptions) => void;
 
-    isLoading: boolean;
+    isLoading?: boolean;
 
-    canListUsersInProject: boolean;
+    canListUsersInProject?: boolean;
 }
 
 export type IRecipientsSelectRendererProps = IRecipientsSelectRendererOwnProps & WrappedComponentProps;
@@ -166,7 +166,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
     };
 
     private renderMenuOptions = (menuProps: MenuProps<any>): React.ReactElement => {
-        const { isLoading, owner } = this.props;
+        const { isLoading, currentUser } = this.props;
         const {
             options,
             getValue,
@@ -178,7 +178,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
             options.length &&
             options.every(
                 (option: IScheduleEmailRecipient) =>
-                    (isScheduleEmailExistingRecipient(option) && isEqual(option, owner)) ||
+                    (isScheduleEmailExistingRecipient(option) && isEqual(option, currentUser)) ||
                     this.isRecipientAdded(selectedValues, getScheduledEmailRecipientEmail(option)),
             );
 
@@ -277,7 +277,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         // MultiValueRemove component from react-select
         const removeIcon: React.ReactNode = children[1];
 
-        if (isScheduleEmailExistingRecipient(data) && isEqual(data, this.props.owner)) {
+        if (isScheduleEmailExistingRecipient(data) && isEqual(data, this.props.currentUser)) {
             return this.renderOwnerValueContainer(getScheduledEmailRecipientDisplayName(data));
         }
 

@@ -4,9 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { RepeatPeriodSelect, IRepeatPeriodSelectProps } from "../RepeatPeriodSelect";
-// TODO: RAIL-2760 Remove once moved to SDK8
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 describe("RepeatPeriodSelect", () => {
     function renderComponent(customProps: Partial<IRepeatPeriodSelectProps> = {}): ReactWrapper {
@@ -16,8 +14,11 @@ describe("RepeatPeriodSelect", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RepeatPeriodSelect));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RepeatPeriodSelect {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

@@ -30,12 +30,12 @@ export function getDropdownTitle(wrapper: ReactWrapper): string {
     return dropdown.find(".gd-button-text").text();
 }
 
-export function openDropdown(wrapper: ReactWrapper) {
+export function openDropdown(wrapper: ReactWrapper): void {
     const dropdown = wrapper.find(DropdownButton);
     dropdown.simulate("click");
 }
 
-export function selectDropdownItem(wrapper: ReactWrapper, index: number) {
+export function selectDropdownItem(wrapper: ReactWrapper, index: number): void {
     const dropdownItem = wrapper.find(DropdownBody).find(".fixedDataTableRowLayout_rowWrapper").at(index);
     dropdownItem.find(".gd-list-item span").simulate("click");
 }

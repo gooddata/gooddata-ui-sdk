@@ -9,9 +9,7 @@ import { RepeatFrequencySelect } from "../RepeatFrequencySelect";
 import { RepeatPeriodSelect } from "../RepeatPeriodSelect";
 import { RepeatTypeSelect } from "../RepeatTypeSelect";
 import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants";
-// TODO: RAIL-2760 Remove once moved to SDK8
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 import {
     openDropdown,
@@ -39,8 +37,11 @@ describe("RepeatSelect", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RepeatSelect));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RepeatSelect {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     let component: ReactWrapper;

@@ -3,8 +3,7 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
 import { Attachment, IAttachmentProps } from "../Attachment";
-import withIntlProvider from "../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("Attachment", () => {
     const FILE_NAME = "ABC.pdf";
@@ -17,8 +16,11 @@ describe("Attachment", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(Attachment));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <Attachment {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

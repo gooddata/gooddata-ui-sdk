@@ -6,9 +6,7 @@ import { mount, ReactWrapper } from "enzyme";
 import { REPEAT_EXECUTE_ON } from "../../../constants";
 import { getDate, getDayName, getWeek } from "../../../utils/datetime";
 import { RepeatExecuteOnSelect, IRepeatExecuteOnSelectProps } from "../RepeatExecuteOnSelect";
-// TODO: RAIL-2760 Remove once moved to SDK8
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 import {
     getDropdownTitle,
@@ -31,8 +29,11 @@ describe("RepeatExecuteOnSelect", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RepeatExecuteOnSelect));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RepeatExecuteOnSelect {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

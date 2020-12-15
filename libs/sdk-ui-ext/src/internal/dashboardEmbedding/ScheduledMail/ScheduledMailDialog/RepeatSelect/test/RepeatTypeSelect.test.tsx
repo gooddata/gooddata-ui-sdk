@@ -6,9 +6,7 @@ import noop from "lodash/noop";
 import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect";
 import { getDayName, getWeek } from "../../../utils/datetime";
 import { REPEAT_TYPES } from "../../../constants";
-// TODO: RAIL-2760 Remove once moved to SDK8
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 import {
     getDropdownTitle,
@@ -33,8 +31,11 @@ describe("RepeatTypeSelect", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RepeatTypeSelect));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RepeatTypeSelect {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

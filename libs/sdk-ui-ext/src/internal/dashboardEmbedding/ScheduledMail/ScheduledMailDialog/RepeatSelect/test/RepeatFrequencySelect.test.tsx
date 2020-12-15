@@ -5,9 +5,7 @@ import { mount, ReactWrapper } from "enzyme";
 
 import { REPEAT_FREQUENCIES } from "../../../constants";
 import { RepeatFrequencySelect, IRepeatFrequencySelectProps } from "../RepeatFrequencySelect";
-// TODO: RAIL-2760 Remove once moved to SDK8
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 import { getDropdownTitle, openDropdown, selectDropdownItem, REPEAT_FREQUENCY_INDEX } from "./testUtils";
 
@@ -24,8 +22,11 @@ describe("RepeatFrequencySelect", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RepeatFrequencySelect));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RepeatFrequencySelect {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

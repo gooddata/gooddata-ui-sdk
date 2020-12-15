@@ -14,7 +14,7 @@ export interface IRecipientsSelectProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */
-    owner: IScheduleEmailRecipient;
+    currentUser: IScheduleEmailRecipient;
 
     /**
      * Currently selected recipients.
@@ -62,7 +62,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const {
         backend,
         workspace,
-        owner,
+        currentUser,
         value,
         onChange,
         onError,
@@ -85,7 +85,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             options={options}
             value={value}
             onChange={onChange}
-            owner={owner}
+            currentUser={currentUser}
             onLoad={(queryOptions) => {
                 setSearch(queryOptions?.search);
             }}

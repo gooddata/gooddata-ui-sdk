@@ -5,11 +5,10 @@ import { ReactWrapper, mount } from "enzyme";
 import { uriRef } from "@gooddata/sdk-model";
 
 import { IRecipientsSelectRendererOwnProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
-import withRedux from "../../../../Core/utils/testUtils/withRedux";
-import withIntlProvider from "../../../../Core/utils/testUtils/withIntlProvider";
 import { IScheduleEmailRecipient } from "../../../interfaces";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
-const owner: IScheduleEmailRecipient = {
+const currentUser: IScheduleEmailRecipient = {
     user: {
         login: "user@gooddata.com",
         ref: uriRef("/gdc/user"),
@@ -36,18 +35,21 @@ const options: IScheduleEmailRecipient[] = [
 
 describe("RecipientsSelect", () => {
     function renderComponent(customProps: Partial<IRecipientsSelectRendererOwnProps> = {}): ReactWrapper {
-        const defaultProps: Partial<IRecipientsSelectRendererOwnProps> = {
+        const defaultProps = {
             options,
-            value: [owner],
-            owner,
+            value: [currentUser],
+            currentUser,
             isMulti: false,
             onChange: noop,
             onLoad: noop,
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(RecipientsSelectRenderer));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <RecipientsSelectRenderer {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render single Select component", () => {

@@ -5,8 +5,7 @@ import noop from "lodash/noop";
 import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
 import { DateTime, IDateTimeProps } from "../DateTime";
-import withIntlProvider from "../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("DateTime", () => {
     function renderComponent(customProps: Partial<IDateTimeProps> = {}): ReactWrapper {
@@ -21,8 +20,11 @@ describe("DateTime", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(DateTime));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <DateTime {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

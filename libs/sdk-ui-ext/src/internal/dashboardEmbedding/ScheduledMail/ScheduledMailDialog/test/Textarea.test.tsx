@@ -4,8 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { Textarea, ITextareaProps } from "../Textarea";
-import withIntlProvider from "../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("Textarea", () => {
     function renderComponent(customProps: Partial<ITextareaProps> = {}): ReactWrapper {
@@ -20,8 +19,11 @@ describe("Textarea", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(Textarea));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <Textarea {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {

@@ -13,11 +13,9 @@ import {
 import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
 import { useWorkspaceUsers } from "../../../hooks/useWorkspaceUsers";
-// TODO: replace once moved to SDK8
-import withIntlProvider from "../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
-jest.mock("../../hooks/useWorkspaceUsers", () => ({
+jest.mock("../../../hooks/useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
         status: "success",
         result: [],
@@ -28,22 +26,21 @@ jest.mock("../../hooks/useWorkspaceUsers", () => ({
 describe("ScheduledMailDialogRenderer", () => {
     const SUBJECT_REGEX = /^ - (0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d\d$/;
     const DATE_FORMART_REGEX = /^(19|20)\d\d-(0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])$/;
-    const dashboardRef = uriRef("/dashboard");
+    const dashboard = uriRef("/dashboard");
 
     function renderComponent(customProps: Partial<IScheduledMailDialogRendererProps> = {}) {
-        const defaultProps: Partial<IScheduledMailDialogRendererProps> = {
+        const defaultProps = {
             onCancel: noop,
             onSubmit: noop,
-            dashboardRef,
+            dashboard,
             dashboardTitle: "",
-            owner: {
+            currentUser: {
                 login: "user@gooddata.com",
                 ref: uriRef("/gdc/user"),
                 email: "user@gooddata.com",
                 firstName: "John",
                 lastName: "Doe",
             },
-
             dateFormat: "MM/dd/yyyy",
             enableKPIDashboardScheduleRecipients: true,
             canListUsersInProject: true,
@@ -52,8 +49,11 @@ describe("ScheduledMailDialogRenderer", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(ScheduledMailDialogRenderer));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <ScheduledMailDialogRenderer {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     function clickButtonCancel(wrapper: ReactWrapper) {
@@ -130,7 +130,7 @@ describe("ScheduledMailDialogRenderer", () => {
         expect(attachments).toEqual([
             {
                 format: "pdf",
-                dashboard: dashboardRef,
+                dashboard,
             },
         ]);
     });

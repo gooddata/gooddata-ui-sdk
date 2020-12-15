@@ -5,7 +5,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { isMobileView } from "../utils/responsive";
 
 interface IAttachmentOwnProps {
-    className: string;
+    className?: string;
     label: string;
     fileName: string;
 }

@@ -4,8 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { Input, IInputProps } from "../Input";
-import withIntlProvider from "../../../Core/utils/testUtils/withIntlProvider";
-import withRedux from "../../../Core/utils/testUtils/withRedux";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("Input", () => {
     function renderComponent(customProps: Partial<IInputProps> = {}): ReactWrapper {
@@ -17,8 +16,11 @@ describe("Input", () => {
             ...customProps,
         };
 
-        const Wrapped = withRedux(withIntlProvider(Input));
-        return mount(<Wrapped {...defaultProps} />);
+        return mount(
+            <InternalIntlWrapper>
+                <Input {...defaultProps} />
+            </InternalIntlWrapper>,
+        );
     }
 
     it("should render component", () => {
