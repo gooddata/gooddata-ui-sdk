@@ -608,11 +608,19 @@ $gd-header-project-width: 230px;
 }
 
 .gd-header-project-picker-footer {
-    padding: 12px 15px;
+    padding: 15px;
     border-top: 1px solid $gd-border-color;
 
-    .home-footer-icon {
+    .gd-workspace-picker-home-footer {
         background: url($base_path + "./icons/home.svg") no-repeat;
         padding-left: 30px;
+        color: $gd-color-text;
+        text-decoration: none;
+        display: block;
+
+        &:hover {
+            color: $is-focused-color;
+            text-decoration: underline;
+        }
     }
 }

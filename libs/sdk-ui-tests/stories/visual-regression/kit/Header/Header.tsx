@@ -242,11 +242,7 @@ class HeaderExamples extends Component {
         const workspaces = getWorkspaceDescriptors(3);
 
         const newFreemiumWorkspacePickerFooter = (
-            <WorkspacePickerHomeFooter>
-                <a className="link-dimmed" href="/domain/home">
-                    Home
-                </a>
-            </WorkspacePickerHomeFooter>
+            <WorkspacePickerHomeFooter href="/domain/home">Home</WorkspacePickerHomeFooter>
         );
 
         const newFreemiumWorkspacePicker = (
