@@ -5,7 +5,6 @@ export {
     DASHBOARD_TITLE_MAX_LENGTH,
     PLATFORM_DATE_FORMAT,
     IScheduledMailDialogRendererOwnProps,
-    ScheduledMailDialog,
     ScheduledMailDialogRenderer,
 } from "./ScheduledMail";
 export {

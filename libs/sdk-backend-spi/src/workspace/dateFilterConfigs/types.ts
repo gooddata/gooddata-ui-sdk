@@ -58,7 +58,7 @@ export type OptionType =
 export type RelativeGranularityOffset = number;
 
 /**
- * Supported date filter granularities for the relative date filter
+ * Supported date filter granularity for the relative date filter
  * @alpha
  */
 export type DateFilterGranularity =
@@ -67,6 +67,20 @@ export type DateFilterGranularity =
     | "GDC.time.month"
     | "GDC.time.quarter"
     | "GDC.time.year";
+
+const dateFilterGranularity: DateFilterGranularity[] = [
+    "GDC.time.date",
+    "GDC.time.month",
+    "GDC.time.quarter",
+    "GDC.time.year",
+];
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link DateFilterGranularity}.
+ * @alpha
+ */
+export const isDateFilterGranularity = (obj: unknown): obj is DateFilterGranularity =>
+    !isEmpty(obj) && dateFilterGranularity.some((granularity) => granularity === obj);
 
 /**
  * Common props for date filter options

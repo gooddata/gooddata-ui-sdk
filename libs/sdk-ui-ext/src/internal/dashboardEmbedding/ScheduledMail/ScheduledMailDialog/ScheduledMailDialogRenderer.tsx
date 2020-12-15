@@ -139,6 +139,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     private emailSubject: string;
     private emailBody: string;
 
+    static defaultProps: Partial<IScheduledMailDialogRendererProps> = {
+        dateFormat: "MM/dd/yyyy",
+    };
+
     constructor(props: IScheduledMailDialogRendererProps) {
         super(props);
 
@@ -327,7 +331,9 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     // Listeners
     private onScheduleDialogSubmit = (): void => {
         const { onSubmit } = this.props;
-        onSubmit(this.getScheduleEmailData());
+        if (onSubmit) {
+            onSubmit(this.getScheduleEmailData());
+        }
     };
 
     private onDateChange = (selectedDateObject: Date): void => {
@@ -436,7 +442,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
                 {
                     dashboard,
                     format: "pdf",
-                    // TODO: filterContext
                 },
             ],
             description,

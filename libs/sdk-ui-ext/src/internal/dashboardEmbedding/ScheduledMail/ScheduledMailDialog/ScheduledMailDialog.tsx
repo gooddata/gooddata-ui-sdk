@@ -4,11 +4,12 @@ import invariant from "ts-invariant";
 import {
     IScheduledMailDefinition,
     IScheduledMail,
-    IUser,
     IAnalyticalBackend,
+    IFilterContextDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { GoodDataSdkError, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
+import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
@@ -19,6 +20,8 @@ import { useDashboard } from "../../hooks/useDashboard";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer";
 import { uriRef } from "@gooddata/sdk-model";
+import { IDashboardFilter } from "../../DashboardView/types";
+import { dashboardFilterToFilterContextItem } from "../utils/filters";
 
 export type ScheduledMailDialogProps = {
     /**
@@ -27,35 +30,17 @@ export type ScheduledMailDialogProps = {
     dashboard: ObjRef;
 
     /**
-     * Title of the attached dashboard. Used to create the default subject of a scheduled email.
-     */
-    dashboardTitle: string;
-
-    /**
-     * Author of the scheduled email - is always recipient of the scheduled email.
-     */
-    currentUser: IUser;
-
-    /**
-     * Date format to use in DatePicker. To check the supported tokens,
-     * see the `format` method of the https://date-fns.org/ library.
-     */
-    dateFormat?: string;
-
-    /**
      * Locale to use for localization of texts appearing in the scheduled email dialog.
      */
     locale?: string;
 
     /**
-     * Has user canListUsersInProject permission?
+     * Filters to apply to the exported dashboard, attached in the scheduled mail.
+     *
+     * Note: By default, exported dashboard in the scheduled mail will use the original stored dashboard filter context,
+     * with this prop, you can override it.
      */
-    canListUsersInProject?: boolean;
-
-    /**
-     * Is enableKPIDashboardScheduleRecipients feature flag turned on?
-     */
-    enableKPIDashboardScheduleRecipients?: boolean;
+    filters?: IDashboardFilter[];
 
     /**
      * Backend to work with.
@@ -86,7 +71,7 @@ export type ScheduledMailDialogProps = {
     /**
      * Callback to be called, when submitting of the scheduled email failed.
      */
-    onSubmitError: (error: GoodDataSdkError) => void;
+    onSubmitError?: (error: GoodDataSdkError) => void;
 
     /**
      * Callback to be called, when we close the scheduled email dialog.
@@ -104,8 +89,8 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         backend,
         workspace,
         locale,
-        dateFormat,
         dashboard: dashboardRef,
+        filters,
         onSubmit,
         onSubmitSuccess,
         onSubmitError,
@@ -132,9 +117,23 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     } = useUserWorkspaceSettings({ backend, workspace });
     const [submittedScheduledMail, setSubmittedScheduledMail] = useState<IScheduledMailDefinition>();
 
+    const filterContextToSave = useMemo(() => {
+        if (filters) {
+            const filterContext: IFilterContextDefinition = {
+                title: "filterContext",
+                description: "",
+                filters: filters.map(dashboardFilterToFilterContextItem),
+            };
+
+            return filterContext;
+        }
+
+        return undefined;
+    }, [filters]);
+
     useSaveScheduledMail({
         scheduledMail: submittedScheduledMail,
-        // filterContext, TODO: RAIL-2760 check, whether filterContext is different than the original dashboard filter context
+        filterContext: filterContextToSave,
         onSuccess: onSubmitSuccess,
         onError: onSubmitError,
         backend,
@@ -156,7 +155,9 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     const handleSubmit = useCallback(
         (scheduledMail: IScheduledMailDefinition) => {
             setSubmittedScheduledMail(scheduledMail);
-            onSubmit(scheduledMail);
+            if (onSubmit) {
+                onSubmit(scheduledMail);
+            }
         },
         [onSubmit],
     );
@@ -172,7 +173,19 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     }
 
     if (isLoading) {
-        return null;
+        return (
+            <Overlay className="gd-schedule-email-dialog-overlay" isModal positionType="fixed">
+                <LoadingComponent />
+            </Overlay>
+        );
+    }
+
+    if (error) {
+        return (
+            <Overlay className="gd-schedule-email-dialog-overlay" isModal positionType="fixed">
+                <ErrorComponent message={error.message} />
+            </Overlay>
+        );
     }
 
     return currentUser ? (
@@ -183,7 +196,7 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
                 locale={effectiveLocale}
                 canListUsersInProject={permissions?.canListUsersInProject}
                 enableKPIDashboardScheduleRecipients={featureFlags?.enableKPIDashboardScheduleRecipients}
-                dateFormat={dateFormat ?? featureFlags?.responsiveUiDateFormat ?? "MM/dd/yyyy"}
+                dateFormat={featureFlags?.responsiveUiDateFormat}
                 currentUser={currentUser}
                 dashboard={dashboardUriRef}
                 dashboardTitle={dashboard?.title}
