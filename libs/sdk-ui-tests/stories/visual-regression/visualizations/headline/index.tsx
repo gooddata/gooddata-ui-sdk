@@ -21,11 +21,27 @@ const backend = StorybookBackend({
     },
 });
 
-storiesOf(`${CustomStories}/Headline`, module).add("themed", () =>
-    withScreenshot(
-        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-            <ThemeProvider backend={backend} workspace={ReferenceWorkspaceId}>
-                <div className="dashboard-like-6">
+storiesOf(`${CustomStories}/Headline`, module)
+    .add("themed", () =>
+        withScreenshot(
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <ThemeProvider backend={backend} workspace={ReferenceWorkspaceId}>
+                    <div className="dashboard-like-6">
+                        <Headline
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                            secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                        />
+                    </div>
+                </ThemeProvider>
+            </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("responsive", () =>
+        withScreenshot(
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                <div style={{ width: 250, border: "1px solid black" }}>
                     <Headline
                         backend={backend}
                         workspace={ReferenceWorkspaceId}
@@ -33,7 +49,14 @@ storiesOf(`${CustomStories}/Headline`, module).add("themed", () =>
                         secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
                     />
                 </div>
-            </ThemeProvider>
-        </ScreenshotReadyWrapper>,
-    ),
-);
+                <div style={{ width: 150, border: "1px solid black" }}>
+                    <Headline
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                        secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>,
+        ),
+    );

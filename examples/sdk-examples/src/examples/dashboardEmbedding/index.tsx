@@ -12,6 +12,10 @@ import DashboardViewWithFilters from "./DashboardViewWithFilters";
 import DashboardViewWithFiltersSRC from "!raw-loader!./DashboardViewWithFilters";
 import DashboardViewWithFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithFilters";
 
+import DashboardViewWithDrilling from "./DashboardViewWithDrilling";
+import DashboardViewWithDrillingSRC from "!raw-loader!./DashboardViewWithDrilling";
+import DashboardViewWithDrillingSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithDrilling";
+
 export const DashboardView = (): JSX.Element => (
     <div>
         <h1>DashboardView</h1>
@@ -35,6 +39,20 @@ export const DashboardView = (): JSX.Element => (
             for={DashboardViewWithFilters}
             source={DashboardViewWithFiltersSRC}
             sourceJS={DashboardViewWithFiltersSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <p>
+            Example of how to embed a Dashboard into your application with added drilling – the same Dashboard
+            as in the previous examples wit Aventura with enabled drilling (check the console logs for
+            results).
+        </p>
+
+        <ExampleWithSource
+            for={DashboardViewWithDrilling}
+            source={DashboardViewWithDrillingSRC}
+            sourceJS={DashboardViewWithDrillingSRCJS}
         />
     </div>
 );

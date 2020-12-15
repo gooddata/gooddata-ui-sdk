@@ -55,7 +55,6 @@ export {
     getResponsiveClassName,
     isFullWidthGeoPushpin,
     isGeoPushpin,
-    updateHeadlineClassName,
 } from "./utils/legacy";
 export {
     getDashboardLayoutContentHeightForRatioAndScreen,

@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import { VisType } from "@gooddata/sdk-ui";
-import cx from "classnames";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
@@ -57,45 +56,6 @@ const RESPONSIVE_SMALL = "small";
 const RESPONSIVE_MEDIUM = "medium";
 const RESPONSIVE_LARGE = "large";
 const RESPONSIVE_SHORTENED_LABEL = "shortened-label";
-
-function isShortenedLabel(headlineItem: HTMLDivElement, dashboardItemWidth: number): boolean {
-    const headlineLabelNode = headlineItem.querySelector(".headline-secondary-item .headline-title-wrapper");
-
-    const isSmaller = dashboardItemWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH;
-    headlineItem.className = cx("gd-flex-container", "headline-compare-section", {
-        small: isSmaller,
-        large: !isSmaller,
-    });
-    const { height } = headlineLabelNode.getBoundingClientRect();
-    const { lineHeight } = window.getComputedStyle(headlineLabelNode);
-    return height > parseFloat(lineHeight) * 2;
-}
-
-export const updateHeadlineClassName = (
-    visualizationNode: HTMLDivElement,
-    dashboardItemWidth: number,
-): void => {
-    const headlineSectionItem: HTMLDivElement = visualizationNode.querySelector(".headline-compare-section");
-
-    if (headlineSectionItem) {
-        const headlineItemContent: HTMLDivElement = visualizationNode.querySelector(
-            ".gd-visualization-content",
-        );
-        const isSmaller: boolean = dashboardItemWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH;
-        headlineItemContent.className = cx("gd-visualization-content", {
-            relative: isSmaller,
-            absolute: !isSmaller,
-        });
-
-        const isShortened = isShortenedLabel(headlineSectionItem, dashboardItemWidth);
-        const responsiveClassName: string = getResponsiveClassName(dashboardItemWidth, isShortened);
-        headlineSectionItem.className = cx(
-            "gd-flex-container",
-            "headline-compare-section",
-            responsiveClassName,
-        );
-    }
-};
 
 export const getResponsiveClassName = (sectionDOMWidth: number, isShorttened?: boolean): string => {
     if (sectionDOMWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH) {

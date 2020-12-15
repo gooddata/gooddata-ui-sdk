@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
+import React, { createRef } from "react";
+import Measure from "react-measure";
 import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText";
 import cx from "classnames";
-import React from "react";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
@@ -28,6 +29,10 @@ export interface IHeadlineVisualizationProps {
     disableDrillUnderline?: boolean;
 }
 
+// If the headline is narrower than this, the compare section will be rendered
+// vertically to save horizontal space
+const SMALL_COMPARE_SECTION_THRESHOLD = 160;
+
 /**
  * The React component that renders the Headline visualisation.
  */
@@ -39,13 +44,6 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         disableDrillUnderline: false,
     };
 
-    constructor(props: IHeadlineVisualizationProps) {
-        super(props);
-
-        this.handleClickOnPrimaryItem = this.handleClickOnPrimaryItem.bind(this);
-        this.handleClickOnSecondaryItem = this.handleClickOnSecondaryItem.bind(this);
-    }
-
     public componentDidMount(): void {
         this.props.onAfterRender();
     }
@@ -54,12 +52,20 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         this.props.onAfterRender();
     }
 
+    private secondaryItemTitleWrapperRef = createRef<HTMLDivElement>();
+
     public render(): React.ReactNode {
         return (
-            <div className="headline">
-                {this.renderPrimaryItem()}
-                {this.renderCompareItems()}
-            </div>
+            <Measure client>
+                {({ measureRef, contentRect }) => {
+                    return (
+                        <div className="headline" ref={measureRef}>
+                            {this.renderPrimaryItem()}
+                            {this.renderCompareItems(contentRect.client?.width)}
+                        </div>
+                    );
+                }}
+            </Measure>
         );
     }
 
@@ -110,21 +116,21 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         }
     }
 
-    private handleClickOnPrimaryItem(event: React.MouseEvent<EventTarget>) {
+    private handleClickOnPrimaryItem = (event: React.MouseEvent<EventTarget>) => {
         const {
             data: { primaryItem },
         } = this.props;
 
         this.fireDrillEvent(primaryItem, "primaryValue", event.target);
-    }
+    };
 
-    private handleClickOnSecondaryItem(event: React.MouseEvent<EventTarget>) {
+    private handleClickOnSecondaryItem = (event: React.MouseEvent<EventTarget>) => {
         const {
             data: { secondaryItem },
         } = this.props;
 
         this.fireDrillEvent(secondaryItem, "secondaryValue", event.target);
-    }
+    };
 
     private renderTertiaryItem() {
         const {
@@ -163,14 +169,18 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 >
                     <ResponsiveText>{secondaryValue}</ResponsiveText>
                 </div>
-                <div className="headline-title-wrapper s-headline-title-wrapper" title={secondaryItem.title}>
+                <div
+                    className="headline-title-wrapper s-headline-title-wrapper"
+                    title={secondaryItem.title}
+                    ref={this.secondaryItemTitleWrapperRef}
+                >
                     {secondaryItem.title}
                 </div>
             </div>
         );
     }
 
-    private renderCompareItems() {
+    private renderCompareItems(clientWidth?: number) {
         const {
             data: { secondaryItem },
         } = this.props;
@@ -180,7 +190,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         }
 
         return (
-            <div className="gd-flex-container headline-compare-section">
+            <div className={this.getCompareSectionClasses(clientWidth)}>
                 {this.renderTertiaryItem()}
                 {this.renderSecondaryItem()}
             </div>
@@ -229,5 +239,33 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 </ResponsiveText>
             </div>
         );
+    }
+
+    private getCompareSectionClasses(clientWidth?: number): string {
+        const responsiveClassName = this.getResponsiveClassName(clientWidth);
+        return cx("gd-flex-container", "headline-compare-section", responsiveClassName);
+    }
+
+    private getResponsiveClassName(sectionDOMWidth: number): string {
+        if (!sectionDOMWidth) {
+            return "";
+        }
+
+        const isShortened = this.isShortenedLabel();
+        if (sectionDOMWidth < SMALL_COMPARE_SECTION_THRESHOLD) {
+            return isShortened ? "gd-shortened-label" : "gd-small";
+        }
+
+        return isShortened ? "gd-medium" : "gd-large";
+    }
+
+    private isShortenedLabel(): boolean {
+        if (!this.secondaryItemTitleWrapperRef.current) {
+            return false;
+        }
+
+        const { height } = this.secondaryItemTitleWrapperRef.current.getBoundingClientRect();
+        const { lineHeight } = window.getComputedStyle(this.secondaryItemTitleWrapperRef.current);
+        return height > parseFloat(lineHeight) * 2;
     }
 }
