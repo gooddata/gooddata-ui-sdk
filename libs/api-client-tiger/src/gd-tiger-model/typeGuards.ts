@@ -29,7 +29,7 @@ export function isResultAttributeHeader(
 }
 
 export function isVisualizationObjectsItem(
-    visualizationObject: VisualizationObjectsItem,
+    visualizationObject: unknown,
 ): visualizationObject is VisualizationObjectsItem {
     return (visualizationObject as VisualizationObjectsItem).type === "visualizationObject";
 }

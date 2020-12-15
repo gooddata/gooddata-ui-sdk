@@ -9,8 +9,8 @@ export function convertAnalyticalDashboard(
     return {
         analyticalDashboard: {
             isLocked: dashboard.isLocked,
-            dateFilterConfig: cloneWithSanitizedIds(dashboard.filterContext),
-            filterContext: cloneWithSanitizedIds(dashboard.filterContext), // TODO jak správně zpracovat a typovat?
+            dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
+            filterContext: cloneWithSanitizedIds(dashboard.filterContext),
             layout: cloneWithSanitizedIds(dashboard.layout),
         },
     };
