@@ -158,7 +158,7 @@
     "filters.year.excludeCurrentPeriod": "Dit jaar uitsluiten",
     "filters.excludeCurrentPeriod.unavailable": "Niet beschikbaar voor het geselecteerde datumbereik",
     "filters.staticPeriod": "Statische periode",
-    "filters.staticPeriod.incorrectFormat": "Datum is niet in indeling {format}",
+    "filters.staticPeriod.incorrectFormat": "De datum moet de indeling {format} hebben",
     "mvf.operator.all": "alle",
     "mvf.operator.greaterThan": "groter dan",
     "mvf.operator.greaterThanOrEqualTo": "groter dan of gelijk aan",
