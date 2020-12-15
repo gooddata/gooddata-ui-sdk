@@ -158,7 +158,7 @@
     "filters.year.excludeCurrentPeriod": "Excluir este ano",
     "filters.excludeCurrentPeriod.unavailable": "Não disponível para o período selecionado",
     "filters.staticPeriod": "Período estático",
-    "filters.staticPeriod.incorrectFormat": "A data não está em {format} formato",
+    "filters.staticPeriod.incorrectFormat": "A data deve estar no formato {format}",
     "mvf.operator.all": "todos",
     "mvf.operator.greaterThan": "maior que",
     "mvf.operator.greaterThanOrEqualTo": "maior que ou igual a",

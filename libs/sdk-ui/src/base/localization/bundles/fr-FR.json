@@ -158,7 +158,7 @@
     "filters.year.excludeCurrentPeriod": "Exclure cette année",
     "filters.excludeCurrentPeriod.unavailable": "Indisponible pour la plage de dates sélectionnée",
     "filters.staticPeriod": "Période statique",
-    "filters.staticPeriod.incorrectFormat": "La date n'est pas au format {format}.",
+    "filters.staticPeriod.incorrectFormat": "La date doit être au format {format}",
     "mvf.operator.all": "tout",
     "mvf.operator.greaterThan": "supérieur à",
     "mvf.operator.greaterThanOrEqualTo": "supérieur ou égal à",

@@ -160,7 +160,7 @@
     "dashboard.bucket.measures_subtitle.bullet": "Primário",
     "dashboard.bucket.secondary_measures_subtitle.bullet": "Meta",
     "dashboard.bucket.tertiary_measures_subtitle.bullet": "Comparativo",
-    "filters.allTime.previousPeriod": "vorige periode",
+    "filters.allTime.previousPeriod": "período ant.",
     "filters.allTime.lastYear": "ano anter.",
     "filters.day.previousPeriod": "{n, plural, one {dia} other {#d}} ant.",
     "filters.week.previousPeriod": "{n, plural, one {semana} other {#s}} ant.",
@@ -168,5 +168,5 @@
     "filters.quarter.previousPeriod": "{n, plural, one {trimestre} other {#t}} ant.",
     "filters.year.previousPeriod": "{n, plural, one {ano} other {#a}} ant.",
     "kpi.noData": "Sem dados para configurações atuais do filtro. Tente alterar os filtros.",
-    "kpiPop.change": "alterado(s)"
+    "kpiPop.change": "alterado"
 }

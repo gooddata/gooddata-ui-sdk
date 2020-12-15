@@ -158,7 +158,7 @@
     "filters.year.excludeCurrentPeriod": "今年を除外",
     "filters.excludeCurrentPeriod.unavailable": "選択したデータ範囲ではご利用いただけません",
     "filters.staticPeriod": "スタティック期間",
-    "filters.staticPeriod.incorrectFormat": "日付が {format} 形式でありません",
+    "filters.staticPeriod.incorrectFormat": "日付形式は {format} にする必要があります",
     "mvf.operator.all": "すべて",
     "mvf.operator.greaterThan": "より大きい",
     "mvf.operator.greaterThanOrEqualTo": "以上",

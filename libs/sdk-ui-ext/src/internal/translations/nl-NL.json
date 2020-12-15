@@ -168,5 +168,5 @@
     "filters.quarter.previousPeriod": "vorig {n, plural, one {kwartaal} other {#k}}",
     "filters.year.previousPeriod": "vorig {n, plural, one {jaar} other {#j}}",
     "kpi.noData": "Geen data voor de huidige filterinstellingen. Probeer om de filters te wijzigen.",
-    "kpiPop.change": "Wijzigen"
+    "kpiPop.change": "Wijziging"
 }
