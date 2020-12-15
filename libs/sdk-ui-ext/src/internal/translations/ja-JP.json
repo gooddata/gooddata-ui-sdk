@@ -192,5 +192,6 @@
     "options.menu.schedule.email.recipient.invalid": "これは有効なメールアドレスではありません。",
     "options.menu.schedule.email.recipient.warning.existed": "この受信者はすでに追加されています。",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "このメールアドレスはワークスペースに属していません。受信者は機密データを受け取る可能性があります。",
-    "cancel": "キャンセル"
+    "cancel": "キャンセル",
+    "gs.date.at": "の時刻"
 }

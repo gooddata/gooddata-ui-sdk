@@ -192,5 +192,6 @@
     "options.menu.schedule.email.recipient.invalid": "Debe introducir una dirección de correo electrónico válida.",
     "options.menu.schedule.email.recipient.warning.existed": "Ya ha añadido a este destinatario.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Esta dirección de correo electrónico no pertenece al espacio de trabajo. El destinatario puede recibir datos confidenciales.",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "gs.date.at": "en"
 }

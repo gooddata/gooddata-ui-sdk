@@ -192,5 +192,6 @@
     "options.menu.schedule.email.recipient.invalid": "此电子邮件地址无效。",
     "options.menu.schedule.email.recipient.warning.existed": "您已经添加了此收件人。",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "此电子邮件地址不属于该工作空间。收件人可能会收到敏感数据。",
-    "cancel": "取消"
+    "cancel": "取消",
+    "gs.date.at": "在"
 }

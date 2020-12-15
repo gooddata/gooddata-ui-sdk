@@ -192,5 +192,6 @@
     "options.menu.schedule.email.recipient.invalid": "Dit is geen geldig e-mailadres.",
     "options.menu.schedule.email.recipient.warning.existed": "U hebt deze ontvanger al toegevoegd.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Dit e-mailadres hoort niet bij de workspace. De ontvanger ontvangt mogelijk vertrouwelijke gegevens.",
-    "cancel": "Annuleren"
+    "cancel": "Annuleren",
+    "gs.date.at": "bij"
 }

@@ -192,5 +192,6 @@
     "options.menu.schedule.email.recipient.invalid": "Ceci n'est pas une adresse e-mail valide.",
     "options.menu.schedule.email.recipient.warning.existed": "Vous avez déjà ajouté ce destinataire.",
     "options.menu.schedule.email.recipient.warning.belong.workspace": "Cette adresse e-mail n'appartient pas à l'espace de travail. Le destinataire peut recevoir des données sensibles. ",
-    "cancel": "Annuler"
+    "cancel": "Annuler",
+    "gs.date.at": "à"
 }

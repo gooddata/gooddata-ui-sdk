@@ -968,5 +968,10 @@
         "value": "Cancel",
         "comment": "",
         "limit": 0
+    },
+    "gs.date.at": {
+        "value": "at",
+        "comment": "",
+        "limit": 0
     }
 }
