@@ -6,3 +6,4 @@ export {
     HeaderWorkspacePicker,
     IHeaderWorkspacePickerProps,
 } from "./HeaderWorkspacePicker";
+export { IHeaderDataMenuItem, IHeaderDataMenuProps, HeaderDataMenu } from "./HeaderDataMenu";
