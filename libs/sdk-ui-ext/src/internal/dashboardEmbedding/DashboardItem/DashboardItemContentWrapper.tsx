@@ -1,18 +1,19 @@
 // (C) 2020 GoodData Corporation
-import React, { useRef } from "react";
+import React from "react";
+import Measure from "react-measure";
 
 interface IDashboardItemContentWrapperProps {
     children: (params: { clientWidth: number }) => React.ReactNode;
 }
 
 export const DashboardItemContentWrapper: React.FC<IDashboardItemContentWrapperProps> = ({ children }) => {
-    const containerRef = useRef<HTMLDivElement>();
-
-    const clientWidth = containerRef.current?.clientWidth ?? 0;
-
     return (
-        <div className="dash-item-content-wrapper" ref={containerRef}>
-            {children({ clientWidth })}
-        </div>
+        <Measure client>
+            {({ measureRef, contentRect }) => (
+                <div className="dash-item-content-wrapper" ref={measureRef}>
+                    {children({ clientWidth: contentRect.client?.width })}
+                </div>
+            )}
+        </Measure>
     );
 };
