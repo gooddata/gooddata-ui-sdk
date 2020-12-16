@@ -848,5 +848,130 @@
         "value": "change",
         "comment": "",
         "limit": 0
+    },
+    "dialogs.schedule.email.attachment.filter": {
+        "value": "(with currently set filters)",
+        "comment": "Keep the parentheses. Attachment with filters included.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.attachment.label": {
+        "value": "Attachment:",
+        "comment": "Attachment of the scheduled email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.headline": {
+        "value": "Schedule email delivery",
+        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.message.label": {
+        "value": "Message:",
+        "comment": "Message of the scheduled email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.label": {
+        "value": "Repeats:",
+        "comment": "Count of repeats of the scheduled email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.execute.on.dayOfMonth": {
+        "value": "on day {date}",
+        "comment": "Example 'on day 2 of January'. Placeholder '{date}' refers to ordinal number of day of the month. Don't translate placeholder '{date}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.execute.on.dayOfWeek": {
+        "value": "on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
+        "comment": "Example: 'on the first Friday'. Translate only uppercase in 'ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.every": {
+        "value": "every",
+        "comment": "Example 'every 1 month'. FIXME: This needs to be split into variants 'every day', 'every week', ... since some languages uses different gramatical gender for the 'every' based on the subject.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.frequencies.day": {
+        "value": "{n, plural, one {day} other {days}}",
+        "comment": "Translate only uppercase in '{n, plural, one {DAY} other {DAYS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.frequencies.month": {
+        "value": "{n, plural, one {month} other {months}}",
+        "comment": "Translate only uppercase in '{n, plural, one {MONTH} other {MONTHS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.frequencies.week": {
+        "value": "{n, plural, one {week} other {weeks}}",
+        "comment": "Translate only uppercase in '{n, plural, one {WEEK} other {WEEKS}}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.types.custom": {
+        "value": "Custom",
+        "comment": "Repeats the schedule email using custom rules defined by the user.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.types.daily": {
+        "value": "Daily",
+        "comment": "Repeats the schedule email daily.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.types.monthly": {
+        "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
+        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
+        "limit": 0
+    },
+    "dialogs.schedule.email.repeats.types.weekly": {
+        "value": "Weekly on {day}",
+        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.subject.label": {
+        "value": "Subject:",
+        "comment": "Subject of the schedule email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.time.label": {
+        "value": "First occurence:",
+        "comment": "Translate as imperative. Date time of the schedule email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.to.label": {
+        "value": "To:",
+        "comment": "Emails of the schedule email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.message.placeholder": {
+        "value": "Hello,\n\nYour scheduled email is ready. You can download the dashboard in attachments.",
+        "comment": "Don't translate '\n\n' which adds 2 new lines to the text.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.submit": {
+        "value": "Schedule",
+        "comment": "Translate as imperative. Submit the schedule config form.",
+        "limit": 0
+    },
+    "options.menu.schedule.email.recipient.invalid": {
+        "value": "This is not a valid email address.",
+        "comment": "Translate as imperative. Error message for recipient email address",
+        "limit": 0
+    },
+    "options.menu.schedule.email.recipient.warning.existed": {
+        "value": "You have already added this recipient.",
+        "comment": "Translate as imperative. Warning email has been existed on recipient field in schedule email dialog",
+        "limit": 0
+    },
+    "options.menu.schedule.email.recipient.warning.belong.workspace": {
+        "value": "This email address does not belong to the workspace. Recipient may receive sensitive data.",
+        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
+        "limit": 0
+    },
+    "cancel": {
+        "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.at": {
+        "value": "at",
+        "comment": "",
+        "limit": 0
     }
 }

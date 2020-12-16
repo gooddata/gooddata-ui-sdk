@@ -336,7 +336,7 @@
     },
     {
       "name": "@types/react-select",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@types/react-syntax-highlighter",
@@ -780,7 +780,7 @@
     },
     {
       "name": "react-select",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "react-syntax-highlighter",

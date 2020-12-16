@@ -74,6 +74,17 @@ export interface ISettings {
      */
     enableMultipleDates?: boolean;
 
+    /**
+     * Indicates whether dashboard scheduled mails are enabled.
+     */
+    enableKPIDashboardSchedule?: boolean;
+
+    /**
+     * Indicates whether the user can select recipients of scheduled e-mails.
+     * If not, scheduled mail can only be sent to a logged in user.
+     */
+    enableKPIDashboardScheduleRecipients?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

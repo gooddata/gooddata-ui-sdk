@@ -1077,6 +1077,9 @@ export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataOb
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
 
 // @alpha
+export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
+
+// @alpha
 export function isDrillToAttributeUrl(obj: unknown): obj is IDrillToAttributeUrl;
 
 // @alpha
@@ -1107,6 +1110,8 @@ export interface ISettings {
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
     enableHidingOfDataPoints?: boolean;
+    enableKPIDashboardSchedule?: boolean;
+    enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
     enableTableColumnsAutoResizing?: boolean;

@@ -289,6 +289,7 @@ export {
     isAllTimeDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
+    isDateFilterGranularity,
 } from "./workspace/dateFilterConfigs/types";
 
 export {

@@ -13,6 +13,7 @@ import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
 import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
 import { ColorPaletteProvider } from "./ColorPaletteContext";
 import { defaultThemeModifier } from "./defaultThemeModifier";
+import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -27,6 +28,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     onError,
     onDashboardLoaded,
     config,
+    isScheduledMailDialogVisible,
+    applyFiltersToScheduledMail = true,
+    onScheduledMailDialogCancel,
+    onScheduledMailDialogSubmit,
+    onScheduledMailSubmitError,
+    onScheduledMailSubmitSuccess,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
@@ -74,6 +81,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onError, error]);
 
+    const effectiveLocale = config?.locale ?? userWorkspaceSettings.locale;
     const effectiveConfig = useMemo<IDashboardViewConfig | undefined>(() => {
         if (!config && !userWorkspaceSettings) {
             return undefined;
@@ -100,6 +108,20 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         <DashboardViewConfigProvider config={effectiveConfig}>
             <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
                 <ColorPaletteProvider palette={colorPalette}>
+                    {isScheduledMailDialogVisible && (
+                        <ScheduledMailDialog
+                            backend={backend}
+                            workspace={workspace}
+                            locale={effectiveLocale}
+                            dashboard={dashboard}
+                            filters={applyFiltersToScheduledMail ? filters : undefined}
+                            onSubmit={onScheduledMailDialogSubmit}
+                            onSubmitSuccess={onScheduledMailSubmitSuccess}
+                            onSubmitError={onScheduledMailSubmitError}
+                            onCancel={onScheduledMailDialogCancel}
+                            onError={onError}
+                        />
+                    )}
                     <DashboardLayoutObtainer
                         backend={backend}
                         workspace={workspace}
@@ -127,9 +149,5 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         );
     }
 
-    return (
-        <InternalIntlWrapper locale={config?.locale ?? userWorkspaceSettings.locale}>
-            {dashboardRender}
-        </InternalIntlWrapper>
-    );
+    return <InternalIntlWrapper locale={effectiveLocale}>{dashboardRender}</InternalIntlWrapper>;
 };

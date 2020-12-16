@@ -1,6 +1,20 @@
 // (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, ITheme, IDashboard, IWidgetAlert, ISeparators } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IFilter } from "@gooddata/sdk-model";
+import {
+    IAnalyticalBackend,
+    ITheme,
+    IDashboard,
+    IWidgetAlert,
+    ISeparators,
+    IScheduledMailDefinition,
+    IScheduledMail,
+} from "@gooddata/sdk-backend-spi";
+import {
+    ObjRef,
+    IAbsoluteDateFilter,
+    IRelativeDateFilter,
+    IPositiveAttributeFilter,
+    INegativeAttributeFilter,
+} from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -10,6 +24,16 @@ import {
     OnError,
     ILocale,
 } from "@gooddata/sdk-ui";
+
+/**
+ * Supported dashboard filter type.
+ * @alpha
+ */
+export type IDashboardFilter =
+    | IAbsoluteDateFilter
+    | IRelativeDateFilter
+    | IPositiveAttributeFilter
+    | INegativeAttributeFilter;
 
 /**
  * @beta
@@ -54,8 +78,13 @@ export interface IDashboardViewProps {
     /**
      * Optionally, specify filters to be applied to all the widgets in the dashboard
      * on top of any filters the dashboard already has saved within.
+     *
+     * Note: These filters are also applied to created scheduled e-mails.
+     * (the attached dashboard will use the filters that are set at the time we schedule it)
+     * To suppress this behavior, set applyFiltersToScheduledMail property to false.
+     * (and then the attached dashboard will use the original filters stored on the dashboard)
      */
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
@@ -144,4 +173,38 @@ export interface IDashboardViewProps {
      * options saved for the insights.
      */
     config?: IDashboardViewConfig;
+
+    /**
+     * Indicates, whether the dialog for scheduling emails with the exported dashboard as an attachment is visible.
+     */
+    isScheduledMailDialogVisible?: boolean;
+
+    /**
+     * Indicates whether the scheduled e-mail should contain the current filter configuration.
+     * True - the exported dashboard in the scheduled email will be filtered in the same way as when the scheduled email was created.
+     * False - the dashboard will be filtered according to the filters stored on the dashboard.
+     *
+     * Default value: true
+     */
+    applyFiltersToScheduledMail?: boolean;
+
+    /**
+     * Callback to be called, when user submit the scheduled email dialog.
+     */
+    onScheduledMailDialogSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+
+    /**
+     * Callback to be called, when user close the scheduled email dialog.
+     */
+    onScheduledMailDialogCancel?: () => void;
+
+    /**
+     * Callback to be called, when submitting of the scheduled email was successful.
+     */
+    onScheduledMailSubmitSuccess?: (scheduledEmail: IScheduledMail) => void;
+
+    /**
+     * Callback to be called, when submitting of the scheduled email failed.
+     */
+    onScheduledMailSubmitError?: OnError;
 }
