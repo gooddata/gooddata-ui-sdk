@@ -103,7 +103,11 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
             if (content.widget.type === "insight") {
                 return (
                     <DashboardItem
-                        className={cx("type-visualization", getVisTypeCssClass(content.widgetClass))}
+                        className={cx(
+                            "type-visualization",
+                            "gd-dashboard-view-widget",
+                            getVisTypeCssClass(content.widgetClass),
+                        )}
                         screen={screen}
                     >
                         <DashboardItemVisualization

@@ -84,30 +84,27 @@ export class HighChartsRenderer extends React.PureComponent<
         documentObj: document,
     };
 
-    private highchartsRendererRef: any;
+    private highchartsRendererRef = React.createRef<HTMLDivElement>();
     private chartRef: IChartHTMLElement;
-    private throttledOnWindowResize: any;
 
     constructor(props: IHighChartsRendererProps) {
         super(props);
 
-        this.highchartsRendererRef = React.createRef<HTMLDivElement>();
         this.state = {
             legendItemsEnabled: [],
             showFluidLegend: this.shouldShowFluid(),
         };
-        this.setChartRef = this.setChartRef.bind(this);
-        this.onLegendItemClick = this.onLegendItemClick.bind(this);
-        this.throttledOnWindowResize = throttle(this.onWindowResize.bind(this), 100);
     }
 
-    public onWindowResize(): void {
+    public onWindowResize = (): void => {
         this.setState({
             showFluidLegend: this.shouldShowFluid(),
         });
 
         this.realignPieOrDonutChart();
-    }
+    };
+
+    private throttledOnWindowResize = throttle(this.onWindowResize, 100);
 
     public shouldShowFluid(): boolean {
         const { documentObj } = this.props;
@@ -160,7 +157,7 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    public onLegendItemClick(item: any): void {
+    public onLegendItemClick = (item: any): void => {
         this.setState({
             legendItemsEnabled: set<boolean[]>(
                 [...this.state.legendItemsEnabled],
@@ -168,11 +165,11 @@ export class HighChartsRenderer extends React.PureComponent<
                 !this.state.legendItemsEnabled[item.legendIndex],
             ),
         });
-    }
+    };
 
-    public setChartRef(chartRef: IChartHTMLElement): void {
+    public setChartRef = (chartRef: IChartHTMLElement): void => {
         this.chartRef = chartRef;
-    }
+    };
 
     public getFlexDirection(): React.CSSProperties["flexDirection"] {
         const { legend } = this.props;
@@ -204,7 +201,7 @@ export class HighChartsRenderer extends React.PureComponent<
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     private onChartSelection = (event: any): void => {
         const chartWrapper = event.target.renderTo.parentElement;
-        const resetZoomButton = chartWrapper.closest(".gd-base-visualization").querySelector(".viz-zoom-out");
+        const resetZoomButton = chartWrapper.closest(".visualization").querySelector(".viz-zoom-out");
         if (event.resetSelection) {
             resetZoomButton.style.display = "none";
         } else {
