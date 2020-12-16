@@ -120,13 +120,17 @@ export function generateRepeatString(repeatData: IScheduleEmailRepeat): string {
     return repeatString;
 }
 
-export function setDailyRepeat(repeatData: IScheduleEmailRepeat) {
+export function setDailyRepeat(repeatData: IScheduleEmailRepeat): void {
     repeatData.repeatFrequency = {
         day: true,
     };
 }
 
-export function setMonthlyRepeat(repeatData: IScheduleEmailRepeat, repeatExecuteOn: string, startDate: Date) {
+export function setMonthlyRepeat(
+    repeatData: IScheduleEmailRepeat,
+    repeatExecuteOn: string,
+    startDate: Date,
+): void {
     let repeatExecuteOnData;
     if (repeatExecuteOn === REPEAT_EXECUTE_ON.DAY_OF_MONTH) {
         repeatExecuteOnData = getDate(startDate);
@@ -146,7 +150,7 @@ export function setMonthlyRepeat(repeatData: IScheduleEmailRepeat, repeatExecute
     };
 }
 
-export function setWeeklyRepeat(repeatData: IScheduleEmailRepeat, startDate: Date) {
+export function setWeeklyRepeat(repeatData: IScheduleEmailRepeat, startDate: Date): void {
     repeatData.repeatFrequency = {
         week: {
             days: [getDay(startDate)],

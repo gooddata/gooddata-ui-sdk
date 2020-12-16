@@ -6,7 +6,6 @@ import { REPEAT_EXECUTE_ON, REPEAT_TYPES } from "../../constants";
 import {
     IScheduleEmailRepeat,
     IScheduleEmailRepeatDate,
-    IScheduleEmailRepeatFrequency,
     IScheduleEmailRepeatFrequencyDayOfWeek,
     IScheduleEmailRepeatTime,
 } from "../../interfaces";
@@ -38,40 +37,44 @@ describe("RepeatGenerator", () => {
 
     describe("generateRepeatString", () => {
         it.each([
-            ["0:0:0:1*10:30:0", REPEAT_TYPES.DAILY],
-            ["0:0:1*4:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }],
-            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4, 5] } }],
+            ["0:0:0:1*10:30:0", REPEAT_TYPES.DAILY, undefined, undefined, undefined],
+            ["0:0:1*4:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4] } }, undefined, undefined],
+            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.WEEKLY, { week: { days: [4, 5] } }, undefined, undefined],
             [
                 "0:1*0:10:10:30:0",
                 REPEAT_TYPES.MONTHLY,
-                { month: { dayOfMonth: 10 }, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH },
+                { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
                 REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                undefined,
             ],
             [
                 "0:1*2:4:10:30:0",
                 REPEAT_TYPES.MONTHLY,
                 { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
                 REPEAT_EXECUTE_ON.DAY_OF_WEEK,
+                undefined,
             ],
-            ["0:0:0:1*10:30:0", REPEAT_TYPES.CUSTOM, { day: null }],
-            ["0:0:1*4:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4] } }],
-            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4, 5] } }],
+            ["0:0:0:1*10:30:0", REPEAT_TYPES.CUSTOM, { day: null }, undefined, undefined],
+            ["0:0:1*4:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4] } }, undefined, undefined],
+            ["0:0:1*4,5:10:30:0", REPEAT_TYPES.CUSTOM, { week: { days: [4, 5] } }, undefined, undefined],
             [
                 "0:1*0:10:10:30:0",
                 REPEAT_TYPES.CUSTOM,
-                { month: { dayOfMonth: 10 }, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH },
+                { month: { dayOfMonth: 10, type: REPEAT_EXECUTE_ON.DAY_OF_MONTH } },
                 REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                undefined,
             ],
             [
                 "0:1*2:4:10:30:0",
                 REPEAT_TYPES.CUSTOM,
-                { month: { dayOfWeek: { day: 4, week: 2 } }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK },
+                { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
                 REPEAT_EXECUTE_ON.DAY_OF_WEEK,
+                undefined,
             ],
             [
                 "0:9*2:4:10:30:0",
                 REPEAT_TYPES.CUSTOM,
-                { month: { dayOfWeek: { day: 4, week: 2 } }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK },
+                { month: { dayOfWeek: { day: 4, week: 2 }, type: REPEAT_EXECUTE_ON.DAY_OF_WEEK } },
                 REPEAT_EXECUTE_ON.DAY_OF_WEEK,
                 9,
             ],
@@ -79,10 +82,10 @@ describe("RepeatGenerator", () => {
             "should generate repeat string %s when repeat type is %s",
             (
                 expectedRepeatString: string,
-                repeatType: string,
-                repeatFrequency: IScheduleEmailRepeatFrequency = { day: true },
-                repeatExecuteOn: string = REPEAT_EXECUTE_ON.DAY_OF_MONTH,
-                repeatPeriod = 1,
+                repeatType: IScheduleEmailRepeat["repeatType"],
+                repeatFrequency: IScheduleEmailRepeat["repeatFrequency"] = { day: true },
+                repeatExecuteOn: IScheduleEmailRepeat["repeatExecuteOn"] = REPEAT_EXECUTE_ON.DAY_OF_MONTH,
+                repeatPeriod: IScheduleEmailRepeat["repeatPeriod"] = 1,
             ) => {
                 expect(
                     generateRepeatString({

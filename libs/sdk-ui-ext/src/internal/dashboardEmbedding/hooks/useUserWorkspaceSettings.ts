@@ -19,7 +19,7 @@ export interface IUseUserWorkspaceSettingsConfig
      * Backend to work with.
      *
      * Note: the backend must come either from this property or from BackendContext. If you do not specify
-     * backend here, then the executor MUST be rendered within an existing BackendContext.
+     * backend here, then the hook MUST be called within an existing BackendContext.
      */
     backend?: IAnalyticalBackend;
 
@@ -27,7 +27,7 @@ export interface IUseUserWorkspaceSettingsConfig
      * Workspace where the insight exists.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
-     * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
+     * workspace here, then the hook MUST be called within an existing WorkspaceContext.
      */
     workspace?: string;
 }

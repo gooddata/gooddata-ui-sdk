@@ -2,14 +2,16 @@
 /* eslint-disable import/named,import/namespace */
 import React from "react";
 import { WrappedComponentProps, injectIntl, FormattedHTMLMessage } from "react-intl";
-import { components as ReactSelectComponents } from "react-select";
 import CreatableSelect from "react-select/creatable";
-import { ActionMeta } from "react-select/src/types";
-import { SelectComponentsConfig } from "react-select/src/components";
-import { InputProps } from "react-select/src/components/Input";
-import { MenuProps } from "react-select/src/components/Menu";
-import { MultiValueProps } from "react-select/src/components/MultiValue";
-import { SingleValueProps } from "react-select/src/components/SingleValue";
+import {
+    ActionMeta,
+    SelectComponentsConfig,
+    InputProps,
+    MenuProps,
+    MultiValueProps,
+    SingleValueProps,
+    components as ReactSelectComponents,
+} from "react-select";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";

@@ -96,7 +96,7 @@ $vertical-space: 10px;
 
     > span {
         flex: 1;
-        background: url("../icons/icon-pdf.svg") no-repeat left 0;
+        background: url("../../../src/internal/assets/icons/icon-pdf.svg") no-repeat left 0;
         padding-left: 18px;
 
         @media #{$medium-up} {

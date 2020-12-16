@@ -81,6 +81,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onError, error]);
 
+    const effectiveLocale = config?.locale ?? userWorkspaceSettings.locale;
     const effectiveConfig = useMemo<IDashboardViewConfig | undefined>(() => {
         if (!config && !userWorkspaceSettings) {
             return undefined;
@@ -111,7 +112,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                         <ScheduledMailDialog
                             backend={backend}
                             workspace={workspace}
-                            locale={config?.locale}
+                            locale={effectiveLocale}
                             dashboard={dashboard}
                             filters={applyFiltersToScheduledMail ? filters : undefined}
                             onSubmit={onScheduledMailDialogSubmit}
@@ -148,9 +149,5 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         );
     }
 
-    return (
-        <InternalIntlWrapper locale={config?.locale ?? userWorkspaceSettings.locale}>
-            {dashboardRender}
-        </InternalIntlWrapper>
-    );
+    return <InternalIntlWrapper locale={effectiveLocale}>{dashboardRender}</InternalIntlWrapper>;
 };

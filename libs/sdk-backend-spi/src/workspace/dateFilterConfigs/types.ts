@@ -70,6 +70,7 @@ export type DateFilterGranularity =
 
 const dateFilterGranularity: DateFilterGranularity[] = [
     "GDC.time.date",
+    "GDC.time.week_us",
     "GDC.time.month",
     "GDC.time.quarter",
     "GDC.time.year",

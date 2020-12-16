@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import { IntlShape } from "react-intl";
-
-import { createIntlMock } from "../../../Core/utils/translations";
+import { createInternalIntl } from "../../../../utils/internalIntlProvider";
 import { getScheduledEmailSummaryString } from "../scheduledMailSummary";
 import { IScheduleEmailRepeatOptions } from "../../interfaces";
 import { REPEAT_TYPES } from "../../constants";
@@ -20,7 +19,7 @@ interface ICustomRepeatOptions {
 }
 
 describe("schedule email utils", () => {
-    const intl: IntlShape = createIntlMock();
+    const intl: IntlShape = createInternalIntl();
 
     const getScheduleEmailRepeatOptions = (
         customOptions: ICustomRepeatOptions,

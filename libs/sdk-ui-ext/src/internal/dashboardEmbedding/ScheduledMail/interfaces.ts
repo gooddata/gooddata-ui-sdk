@@ -77,7 +77,7 @@ export interface IScheduleEmailExternalRecipient {
 /**
  * @internal
  */
-export const isScheduleEmailExternalRecipient = (obj: any): obj is IScheduleEmailExternalRecipient =>
+export const isScheduleEmailExternalRecipient = (obj: unknown): obj is IScheduleEmailExternalRecipient =>
     !isEmpty(obj) && typeof (obj as IScheduleEmailExternalRecipient).email === "string";
 
 /**
@@ -93,7 +93,7 @@ export interface IScheduleEmailExistingRecipient {
 /**
  * @internal
  */
-export const isScheduleEmailExistingRecipient = (obj: any): obj is IScheduleEmailExistingRecipient =>
+export const isScheduleEmailExistingRecipient = (obj: unknown): obj is IScheduleEmailExistingRecipient =>
     !isEmpty(obj) && typeof (obj as IScheduleEmailExistingRecipient).user === "object";
 
 /**
