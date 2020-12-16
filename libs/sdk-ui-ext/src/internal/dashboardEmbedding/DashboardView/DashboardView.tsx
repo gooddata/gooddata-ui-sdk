@@ -127,7 +127,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         }
     }, [onError, error]);
 
-    const effectiveLocale = config?.locale ?? userWorkspaceSettings.locale;
+    const effectiveLocale = config?.locale ?? userWorkspaceSettings?.locale;
     const effectiveConfig = useMemo<IDashboardViewConfig | undefined>(() => {
         if (!config && !userWorkspaceSettings) {
             return undefined;

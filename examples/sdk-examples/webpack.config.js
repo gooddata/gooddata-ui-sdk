@@ -118,6 +118,8 @@ module.exports = async (env, argv) => {
             extensions: [".js", ".jsx", ".ts", ".tsx"],
             alias: {
                 react: path.resolve("./node_modules/react"),
+                // fixes tilde imports in CSS from sdk-ui-ext
+                "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
             },
             // Prefer ESM versions of packages to enable tree shaking and easier dev experience
             mainFields: ["module", "browser", "main"],
