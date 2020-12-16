@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
-import flatMap from "lodash/flatMap";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../hooks/useDashboard";
@@ -15,18 +14,8 @@ import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
 import { ColorPaletteProvider } from "./ColorPaletteContext";
 import { defaultThemeModifier } from "./defaultThemeModifier";
 import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
-import { useCatalog } from "../hooks/useCatalog";
-import {
-    ICatalogAttribute,
-    ICatalogDateAttribute,
-    IWorkspaceCatalogFactoryOptions,
-} from "@gooddata/sdk-backend-spi";
 import { AttributesWithDrillDownProvider } from "./AttributesWithDrillDownContext";
-import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-
-const catalogOptions: Partial<IWorkspaceCatalogFactoryOptions> = {
-    types: ["attribute", "dateDataset"],
-};
+import { useAttributesWithDrillDown } from "../hooks/useAttributesWithDrillDown";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -76,8 +65,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
-    const { error: catalogError, result: catalog, status: catalogStatus } = useCatalog({
-        catalogOptions,
+    const {
+        error: drillDownAttributesError,
+        result: drillDownAttributes,
+        status: drillDownAttributesStatus,
+    } = useAttributesWithDrillDown({
+        hasDrillingEnabled: !!onDrill,
         backend,
         workspace,
     });
@@ -90,7 +83,11 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     }, [onDashboardLoaded, alertsData, dashboardData]);
 
     const error =
-        dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? colorPaletteError ?? catalogError;
+        dashboardError ??
+        alertsError ??
+        userWorkspaceSettingsError ??
+        colorPaletteError ??
+        drillDownAttributesError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
@@ -119,7 +116,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         alertsStatus,
         userWorkspaceSettingsStatus,
         colorPaletteStatus,
-        catalogStatus,
+        drillDownAttributesStatus,
     ];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
@@ -134,7 +131,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         <DashboardViewConfigProvider config={effectiveConfig}>
             <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
                 <ColorPaletteProvider palette={colorPalette}>
-                    <AttributesWithDrillDownProvider attributes={getAttributesWithDrillDown(catalog)}>
+                    <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
                         {isScheduledMailDialogVisible && (
                             <ScheduledMailDialog
                                 backend={backend}
@@ -179,13 +176,3 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     return <InternalIntlWrapper locale={effectiveLocale}>{dashboardRender}</InternalIntlWrapper>;
 };
-
-function getAttributesWithDrillDown(
-    catalog: IWorkspaceCatalog,
-): Array<ICatalogAttribute | ICatalogDateAttribute> {
-    const attributesWithDrillDown = catalog.attributes().filter((attr) => attr.attribute.drillDownStep);
-    const dateAttributesWithDrillDown = flatMap(catalog.dateDatasets(), (dd) => dd.dateAttributes).filter(
-        (attr) => attr.attribute.drillDownStep,
-    );
-    return [...attributesWithDrillDown, ...dateAttributesWithDrillDown];
-}
