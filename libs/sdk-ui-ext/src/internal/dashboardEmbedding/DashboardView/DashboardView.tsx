@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../hooks/useDashboard";
@@ -8,12 +8,15 @@ import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { useUserWorkspaceSettings } from "../hooks/useUserWorkspaceSettings";
 import { useColorPalette } from "../hooks/useColorPalette";
-import { DashboardLayoutObtainer } from "./DashboardLayoutObtainer";
 import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
 import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
 import { ColorPaletteProvider } from "./ColorPaletteContext";
 import { defaultThemeModifier } from "./defaultThemeModifier";
 import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
+import { AttributesWithDrillDownProvider } from "./AttributesWithDrillDownContext";
+import { useAttributesWithDrillDown } from "../hooks/useAttributesWithDrillDown";
+import { useDashboardViewLayout } from "../hooks/useDashboardViewLayout";
+import { DashboardRenderer } from "./DashboardRenderer";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -63,17 +66,60 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
-    const handleDashboardLoaded = useCallback(() => {
-        onDashboardLoaded?.({
-            alerts: alertsData,
-            dashboard: dashboardData,
-        });
-    }, [onDashboardLoaded, alertsData, dashboardData]);
+    const {
+        error: drillDownAttributesError,
+        result: drillDownAttributes,
+        status: drillDownAttributesStatus,
+    } = useAttributesWithDrillDown({
+        hasDrillingEnabled: !!onDrill,
+        backend,
+        workspace,
+    });
 
-    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? colorPaletteError;
+    const {
+        error: dashboardViewLayoutError,
+        result: dashboardViewLayout,
+        status: dashboardViewLayoutStatus,
+    } = useDashboardViewLayout({
+        dashboardLayout: dashboardData?.layout,
+        backend,
+        workspace,
+    });
+
+    const error =
+        dashboardError ??
+        alertsError ??
+        userWorkspaceSettingsError ??
+        colorPaletteError ??
+        drillDownAttributesError ??
+        dashboardViewLayoutError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
+
+    useEffect(() => {
+        if (
+            dashboardData &&
+            alertsData &&
+            userWorkspaceSettings &&
+            colorPalette &&
+            drillDownAttributes &&
+            dashboardViewLayout
+        ) {
+            onDashboardLoaded?.({
+                alerts: alertsData,
+                dashboard: dashboardData,
+            });
+        }
+    }, [
+        onDashboardLoaded,
+        dashboardData,
+        alertsData,
+        userWorkspaceSettings,
+        colorPalette,
+        drillDownAttributes,
+        dashboardViewLayout,
+    ]);
 
     useEffect(() => {
         if (error && onError) {
@@ -94,48 +140,56 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         };
     }, [config, userWorkspaceSettings]);
 
-    const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus, colorPaletteStatus];
-
-    if (statuses.includes("loading") || statuses.includes("pending")) {
-        return <LoadingComponent />;
-    }
+    const statuses = [
+        dashboardStatus,
+        alertsStatus,
+        userWorkspaceSettingsStatus,
+        colorPaletteStatus,
+        drillDownAttributesStatus,
+        dashboardViewLayoutStatus,
+    ];
 
     if (error) {
         return <ErrorComponent message={error.message} />;
+    }
+
+    if (statuses.includes("loading") || statuses.includes("pending")) {
+        return <LoadingComponent />;
     }
 
     let dashboardRender = (
         <DashboardViewConfigProvider config={effectiveConfig}>
             <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
                 <ColorPaletteProvider palette={colorPalette}>
-                    {isScheduledMailDialogVisible && (
-                        <ScheduledMailDialog
+                    <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
+                        {isScheduledMailDialogVisible && (
+                            <ScheduledMailDialog
+                                backend={backend}
+                                workspace={workspace}
+                                locale={effectiveLocale}
+                                dashboard={dashboard}
+                                filters={applyFiltersToScheduledMail ? filters : undefined}
+                                onSubmit={onScheduledMailDialogSubmit}
+                                onSubmitSuccess={onScheduledMailSubmitSuccess}
+                                onSubmitError={onScheduledMailSubmitError}
+                                onCancel={onScheduledMailDialogCancel}
+                                onError={onError}
+                            />
+                        )}
+                        <DashboardRenderer
                             backend={backend}
                             workspace={workspace}
-                            locale={effectiveLocale}
-                            dashboard={dashboard}
-                            filters={applyFiltersToScheduledMail ? filters : undefined}
-                            onSubmit={onScheduledMailDialogSubmit}
-                            onSubmitSuccess={onScheduledMailSubmitSuccess}
-                            onSubmitError={onScheduledMailSubmitError}
-                            onCancel={onScheduledMailDialogCancel}
-                            onError={onError}
+                            dashboardViewLayout={dashboardViewLayout}
+                            alerts={alertsData}
+                            filters={filters}
+                            filterContext={dashboardData.filterContext}
+                            onDrill={onDrill}
+                            drillableItems={drillableItems}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                            className="gd-dashboards-root"
                         />
-                    )}
-                    <DashboardLayoutObtainer
-                        backend={backend}
-                        workspace={workspace}
-                        dashboard={dashboardData}
-                        alerts={alertsData}
-                        filters={filters}
-                        filterContext={dashboardData.filterContext}
-                        onDrill={onDrill}
-                        drillableItems={drillableItems}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
-                        onDashboardLoaded={handleDashboardLoaded}
-                        className="gd-dashboards-root"
-                    />
+                    </AttributesWithDrillDownProvider>
                 </ColorPaletteProvider>
             </UserWorkspaceSettingsProvider>
         </DashboardViewConfigProvider>
