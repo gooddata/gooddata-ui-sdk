@@ -5,12 +5,14 @@ import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from 
 import { IFilter, IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
+    IAvailableDrillTargetAttribute,
     IDrillableItem,
     IErrorProps,
     IHeaderPredicate,
     ILoadingProps,
     ILocale,
     IntlWrapper,
+    IPushData,
     OnError,
     OnFiredDrillEvent,
     OnLoadingChanged,
@@ -20,12 +22,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
 import { InsightError } from "../../../insightView/InsightError";
-import { widgetDrillsToDrillPredicates } from "./convertors";
+import { widgetDrillsToDrillPredicates, insightDrillDownPredicates } from "./drillingUtils";
 import { filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
 import { useDashboardViewConfig } from "./DashboardViewConfigContext";
 import { useUserWorkspaceSettings } from "./UserWorkspaceSettingsContext";
 import { useColorPalette } from "./ColorPaletteContext";
+import { useAttributesWithDrillDown } from "./AttributesWithDrillDownContext";
 
 interface IInsightRendererProps {
     insightWidget: IWidget;
@@ -59,7 +62,9 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const dashboardViewConfig = useDashboardViewConfig();
     const userWorkspaceSettings = useUserWorkspaceSettings();
     const colorPalette = useColorPalette();
+    const attributesWithDrillDown = useAttributesWithDrillDown();
     const [isVisualizationLoading, setIsVisualizationLoading] = useState(false);
+    const [possibleDrills, setPossibleDrills] = useState<IAvailableDrillTargetAttribute[]>([]);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | null>(null);
 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
@@ -122,11 +127,19 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(() => {
         const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
+        const drillsFromDrillDown = insightDrillDownPredicates(possibleDrills, attributesWithDrillDown);
         return [
             ...drillsFromWidget, // drills specified in the widget definition
             ...drillableItems, // drills specified by the caller
+            ...drillsFromDrillDown, // drills from drill downs specified on attributes
         ];
-    }, [insightWidget.drills, drillableItems]);
+    }, [insightWidget.drills, drillableItems, possibleDrills, attributesWithDrillDown]);
+
+    const handlePushData = useCallback((data: IPushData): void => {
+        if (data.availableDrillTargets?.attributes) {
+            setPossibleDrills(data.availableDrillTargets.attributes);
+        }
+    }, []);
 
     const chartConfig = useMemo(
         () => ({
@@ -161,6 +174,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 settings={userWorkspaceSettings}
                 colorPalette={colorPalette}
                 onError={handleError}
+                pushData={handlePushData}
                 ErrorComponent={ErrorComponent}
                 LoadingComponent={LoadingComponent}
             />

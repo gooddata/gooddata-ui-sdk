@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
+import flatMap from "lodash/flatMap";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { useDashboard } from "../hooks/useDashboard";
@@ -14,6 +15,18 @@ import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
 import { ColorPaletteProvider } from "./ColorPaletteContext";
 import { defaultThemeModifier } from "./defaultThemeModifier";
 import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
+import { useCatalog } from "../hooks/useCatalog";
+import {
+    ICatalogAttribute,
+    ICatalogDateAttribute,
+    IWorkspaceCatalogFactoryOptions,
+} from "@gooddata/sdk-backend-spi";
+import { AttributesWithDrillDownProvider } from "./AttributesWithDrillDownContext";
+import { IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
+
+const catalogOptions: Partial<IWorkspaceCatalogFactoryOptions> = {
+    types: ["attribute", "dateDataset"],
+};
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -63,6 +76,12 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
+    const { error: catalogError, result: catalog, status: catalogStatus } = useCatalog({
+        catalogOptions,
+        backend,
+        workspace,
+    });
+
     const handleDashboardLoaded = useCallback(() => {
         onDashboardLoaded?.({
             alerts: alertsData,
@@ -70,7 +89,8 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         });
     }, [onDashboardLoaded, alertsData, dashboardData]);
 
-    const error = dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? colorPaletteError;
+    const error =
+        dashboardError ?? alertsError ?? userWorkspaceSettingsError ?? colorPaletteError ?? catalogError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
@@ -94,7 +114,13 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         };
     }, [config, userWorkspaceSettings]);
 
-    const statuses = [dashboardStatus, alertsStatus, userWorkspaceSettingsStatus, colorPaletteStatus];
+    const statuses = [
+        dashboardStatus,
+        alertsStatus,
+        userWorkspaceSettingsStatus,
+        colorPaletteStatus,
+        catalogStatus,
+    ];
 
     if (statuses.includes("loading") || statuses.includes("pending")) {
         return <LoadingComponent />;
@@ -108,34 +134,36 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         <DashboardViewConfigProvider config={effectiveConfig}>
             <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
                 <ColorPaletteProvider palette={colorPalette}>
-                    {isScheduledMailDialogVisible && (
-                        <ScheduledMailDialog
+                    <AttributesWithDrillDownProvider attributes={getAttributesWithDrillDown(catalog)}>
+                        {isScheduledMailDialogVisible && (
+                            <ScheduledMailDialog
+                                backend={backend}
+                                workspace={workspace}
+                                locale={effectiveLocale}
+                                dashboard={dashboard}
+                                filters={applyFiltersToScheduledMail ? filters : undefined}
+                                onSubmit={onScheduledMailDialogSubmit}
+                                onSubmitSuccess={onScheduledMailSubmitSuccess}
+                                onSubmitError={onScheduledMailSubmitError}
+                                onCancel={onScheduledMailDialogCancel}
+                                onError={onError}
+                            />
+                        )}
+                        <DashboardLayoutObtainer
                             backend={backend}
                             workspace={workspace}
-                            locale={effectiveLocale}
-                            dashboard={dashboard}
-                            filters={applyFiltersToScheduledMail ? filters : undefined}
-                            onSubmit={onScheduledMailDialogSubmit}
-                            onSubmitSuccess={onScheduledMailSubmitSuccess}
-                            onSubmitError={onScheduledMailSubmitError}
-                            onCancel={onScheduledMailDialogCancel}
-                            onError={onError}
+                            dashboard={dashboardData}
+                            alerts={alertsData}
+                            filters={filters}
+                            filterContext={dashboardData.filterContext}
+                            onDrill={onDrill}
+                            drillableItems={drillableItems}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                            onDashboardLoaded={handleDashboardLoaded}
+                            className="gd-dashboards-root"
                         />
-                    )}
-                    <DashboardLayoutObtainer
-                        backend={backend}
-                        workspace={workspace}
-                        dashboard={dashboardData}
-                        alerts={alertsData}
-                        filters={filters}
-                        filterContext={dashboardData.filterContext}
-                        onDrill={onDrill}
-                        drillableItems={drillableItems}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
-                        onDashboardLoaded={handleDashboardLoaded}
-                        className="gd-dashboards-root"
-                    />
+                    </AttributesWithDrillDownProvider>
                 </ColorPaletteProvider>
             </UserWorkspaceSettingsProvider>
         </DashboardViewConfigProvider>
@@ -151,3 +179,13 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     return <InternalIntlWrapper locale={effectiveLocale}>{dashboardRender}</InternalIntlWrapper>;
 };
+
+function getAttributesWithDrillDown(
+    catalog: IWorkspaceCatalog,
+): Array<ICatalogAttribute | ICatalogDateAttribute> {
+    const attributesWithDrillDown = catalog.attributes().filter((attr) => attr.attribute.drillDownStep);
+    const dateAttributesWithDrillDown = flatMap(catalog.dateDatasets(), (dd) => dd.dateAttributes).filter(
+        (attr) => attr.attribute.drillDownStep,
+    );
+    return [...attributesWithDrillDown, ...dateAttributesWithDrillDown];
+}
