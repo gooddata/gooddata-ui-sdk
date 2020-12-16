@@ -1,13 +1,24 @@
 // (C) 2020 GoodData Corporation
-import { IDashboardDateFilterConfig, IFilterContext, IDashboardLayout } from "@gooddata/sdk-backend-spi";
+import {
+    IDashboardDateFilterConfig,
+    IDashboardLayout,
+    IFilterContext as IFilterContextSPI,
+} from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 
 export namespace AnalyticalDashboardObject {
     export interface IAnalyticalDashboard {
         analyticalDashboard: {
             isLocked?: boolean;
             layout?: IDashboardLayout;
-            filterContext?: IFilterContext;
+            filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;
+        };
+    }
+
+    export interface IFilterContext {
+        filterContext: {
+            filters: IFilterContextSPI["filters"];
         };
     }
 }

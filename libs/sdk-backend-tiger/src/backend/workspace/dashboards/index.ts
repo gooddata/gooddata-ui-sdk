@@ -2,13 +2,17 @@
 import {
     AnalyticalDashboard,
     AnalyticalDashboards,
+    FilterContext,
     isVisualizationObjectsItem,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
     IDashboardDefinition,
     IDashboardWithReferences,
+    IFilterContext,
+    IFilterContextDefinition,
     IListedDashboard,
+    isFilterContextDefinition,
     IWorkspaceDashboardsService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -17,9 +21,13 @@ import uuid4 from "uuid/v4";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
+    convertFilterContextFromBackend,
 } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
-import { convertAnalyticalDashboard } from "../../../convertors/toBackend/AnalyticalDashboardConverter";
+import {
+    convertAnalyticalDashboard,
+    convertFilterContextToBackend,
+} from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
 
@@ -105,6 +113,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+        let filterContext;
+        if (dashboard.filterContext) {
+            filterContext = isFilterContextDefinition(dashboard.filterContext)
+                ? await this.createFilterContext(dashboard.filterContext)
+                : dashboard.filterContext;
+        }
+
+        const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
         const result = await this.authCall((sdk) => {
             return sdk.workspaceModel.createEntity(
                 {
@@ -115,7 +131,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                             id: uuid4(),
                             type: "analyticalDashboard",
                             attributes: {
-                                content: convertAnalyticalDashboard(dashboard),
+                                content: dashboardContent,
                                 title: dashboard.title,
                                 description: dashboard.description || "",
                             },
@@ -128,7 +144,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data);
+        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
     };
 
     public updateDashboard = async () => {
@@ -201,5 +217,36 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getResolvedFiltersForWidget = async () => {
         throw new NotSupported("Not supported");
+    };
+
+    private createFilterContext = async (
+        filterContext: IFilterContextDefinition,
+    ): Promise<IFilterContext> => {
+        const tigerFilterContext = convertFilterContextToBackend(filterContext);
+
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.createEntity(
+                {
+                    entity: "filterContexts",
+                    workspaceId: this.workspace,
+                    analyticsObject: {
+                        data: {
+                            id: uuid4(),
+                            type: "filterContext",
+                            attributes: {
+                                content: tigerFilterContext,
+                                title: filterContext.title || "",
+                                description: filterContext.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertFilterContextFromBackend(result.data as FilterContext);
     };
 }

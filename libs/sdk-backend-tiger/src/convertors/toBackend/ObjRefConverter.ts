@@ -24,7 +24,7 @@ const allValidAfmTypes: TigerObjectType[] = [
     "visualizationObject",
 ];
 
-type TigerIdType = TigerAfmType | "visualizationObject";
+type TigerIdType = TigerAfmType | "visualizationObject" | "filterContext";
 
 const tigerAfmTypeByObjectAfmType: {
     // TODO clear types
@@ -37,6 +37,7 @@ const tigerAfmTypeByObjectAfmType: {
     fact: "fact",
     variable: "variable",
     visualizationObject: "visualizationObject",
+    filterContext: "filterContext",
 };
 
 const isValidAfmType = (obj: any): obj is TigerObjectType => {

@@ -1,17 +1,29 @@
 // (C) 2020 GoodData Corporation
 import { AnalyticalDashboardObject } from "@gooddata/api-client-tiger";
-import { IDashboardDefinition } from "@gooddata/sdk-backend-spi";
+import { IDashboardDefinition, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
+    filterContextRef?: ObjRef,
 ): AnalyticalDashboardObject.IAnalyticalDashboard {
     return {
         analyticalDashboard: {
             isLocked: dashboard.isLocked,
             dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
-            filterContext: cloneWithSanitizedIds(dashboard.filterContext),
+            filterContextRef: filterContextRef,
             layout: cloneWithSanitizedIds(dashboard.layout),
+        },
+    };
+}
+
+export function convertFilterContextToBackend(
+    filterContext: IFilterContextDefinition,
+): AnalyticalDashboardObject.IFilterContext {
+    return {
+        filterContext: {
+            filters: cloneWithSanitizedIds(filterContext.filters),
         },
     };
 }

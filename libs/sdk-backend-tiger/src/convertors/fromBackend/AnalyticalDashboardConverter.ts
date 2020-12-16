@@ -5,11 +5,13 @@ import {
     AnalyticalDashboardObject,
     AnalyticalDashboards,
     AnalyticalDashboardsItem,
+    FilterContext,
+    FilterContextDataRequest,
 } from "@gooddata/api-client-tiger";
-import { IDashboard, IListedDashboard } from "@gooddata/sdk-backend-spi";
+import { IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
 
-import { idRef } from "@gooddata/sdk-model";
-
+import { idRef, ObjectType } from "@gooddata/sdk-model";
+import omit from "lodash/omit";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export const convertAnalyticalDashboard = (
@@ -40,12 +42,15 @@ export function convertAnalyticalDashboardContent(
     return {
         isLocked: analyticalDashboard.isLocked,
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
-        filterContext: cloneWithSanitizedIds(analyticalDashboard.filterContext),
+        filterContextRef: cloneWithSanitizedIds(analyticalDashboard.filterContextRef),
         layout: cloneWithSanitizedIds(analyticalDashboard.layout),
     };
 }
 
-export function convertDashboard(analyticalDashboard: AnalyticalDashboard): IDashboard {
+export function convertDashboard(
+    analyticalDashboard: AnalyticalDashboard,
+    filterContext?: IFilterContext,
+): IDashboard {
     const { id, attributes = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
 
@@ -61,6 +66,23 @@ export function convertDashboard(analyticalDashboard: AnalyticalDashboard): IDas
         description,
         created: "",
         updated: "",
-        ...dashboardData,
+        filterContext,
+        ...omit(dashboardData, ["filterContextRef"]),
+    };
+}
+
+export function convertFilterContextFromBackend(filterContext: FilterContext): IFilterContext {
+    const { id, type, attributes } = (filterContext.data as unknown) as FilterContextDataRequest; // FIXME bad API type
+    const { title = "", description = "", content } = attributes!;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: (filterContext.links as any).self,
+        title,
+        description,
+        filters: cloneWithSanitizedIds(
+            (content as AnalyticalDashboardObject.IFilterContext).filterContext.filters,
+        ),
     };
 }

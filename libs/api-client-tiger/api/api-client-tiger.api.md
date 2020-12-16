@@ -11,6 +11,7 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
+import { ObjRef } from '@gooddata/sdk-model';
 
 // @public
 export interface AbsoluteDateFilter {
@@ -187,8 +188,15 @@ export namespace AnalyticalDashboardObject {
         analyticalDashboard: {
             isLocked?: boolean;
             layout?: IDashboardLayout;
-            filterContext?: IFilterContext;
+            filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;
+        };
+    }
+    // (undocumented)
+    export interface IFilterContext {
+        // (undocumented)
+        filterContext: {
+            filters: IFilterContext["filters"];
         };
     }
 }
@@ -1405,13 +1413,16 @@ export interface InlineMeasureDefinitionInline {
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
 
 // @public (undocumented)
+export function isFilterContextData(filterContext: unknown): filterContext is FilterContextData;
+
+// @public (undocumented)
 export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
 
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
 
 // @public (undocumented)
-export function isVisualizationObjectsItem(visualizationObject: VisualizationObjectsItem): visualizationObject is VisualizationObjectsItem;
+export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is VisualizationObjectsItem;
 
 // @public (undocumented)
 export interface ITigerClient {

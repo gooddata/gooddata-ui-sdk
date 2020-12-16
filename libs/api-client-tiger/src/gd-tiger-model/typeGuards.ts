@@ -7,7 +7,7 @@ import {
     ObjectIdentifier,
     ResultDimension,
 } from "../generated/afm-rest-api";
-import { VisualizationObjectsItem } from "../generated/metadata-json-api";
+import { FilterContextData, VisualizationObjectsItem } from "../generated/metadata-json-api";
 
 export type ResultDimensionHeader = ResultDimension["headers"][number];
 
@@ -32,4 +32,8 @@ export function isVisualizationObjectsItem(
     visualizationObject: unknown,
 ): visualizationObject is VisualizationObjectsItem {
     return (visualizationObject as VisualizationObjectsItem).type === "visualizationObject";
+}
+
+export function isFilterContextData(filterContext: unknown): filterContext is FilterContextData {
+    return (filterContext as FilterContextData).data.type === "filterContext";
 }
