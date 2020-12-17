@@ -4,9 +4,12 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IBucketOfFun } from "../../../interfaces/Visualization";
 import {
     getAllAttributeItems,
+    getDateItems,
+    removeDivergentDateItems,
     IMeasureBucketItemsLimit,
     limitNumberOfMeasuresInBuckets,
     transformMeasureBuckets,
+    getMainDateItem,
 } from "../../../utils/bucketHelper";
 
 const measureBucketItemsLimit: IMeasureBucketItemsLimit[] = [
@@ -29,9 +32,12 @@ export const transformBuckets = (buckets: IBucketOfFun[]): IBucketOfFun[] => {
 
     const measureBuckets = transformMeasureBuckets(measureBucketItemsLimit, bucketsWithLimitedMeasures);
 
+    const dateItems = getDateItems(buckets);
+    const mainDateItem = getMainDateItem(dateItems);
+
     const viewByBucket = {
         localIdentifier: BucketNames.VIEW,
-        items: getAllAttributeItems(buckets).slice(0, 2),
+        items: removeDivergentDateItems(getAllAttributeItems(buckets), mainDateItem).slice(0, 2),
     };
 
     return [...measureBuckets, viewByBucket];

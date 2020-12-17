@@ -1683,7 +1683,7 @@ export const dateAttributeOnStackBucketReferencePoint: IReferencePoint = {
     },
 };
 
-export const dateAttributeOnRowAndColumnReferencePoint: IReferencePoint = {
+export const dateAttributeOnViewAndStackReferencePoint: IReferencePoint = {
     buckets: [
         {
             localIdentifier: "measures",
@@ -1703,6 +1703,47 @@ export const dateAttributeOnRowAndColumnReferencePoint: IReferencePoint = {
             items: [
                 {
                     ...dateItem,
+                    localIdentifier: "date2",
+                },
+            ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const dateAttributeOnRowsAndColumnsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "attribute",
+            items: [
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "created",
+                        },
+                    },
+                    localIdentifier: "date1",
+                },
+            ],
+        },
+        {
+            localIdentifier: "columns",
+            items: [
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "created",
+                        },
+                    },
                     localIdentifier: "date2",
                 },
             ],

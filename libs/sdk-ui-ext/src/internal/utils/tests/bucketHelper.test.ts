@@ -6,7 +6,6 @@ import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes
 import { ATTRIBUTE, METRIC } from "../../constants/bucket";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import {
-    DATE_DATASET_ATTRIBUTE,
     IBucketItem,
     IBucketOfFun,
     IExtendedReferencePoint,
@@ -364,7 +363,7 @@ describe("isDateBucketItem", () => {
     it("should return true if the attribute prop matches date id", () => {
         const bucketItem: IBucketItem = {
             localIdentifier: "",
-            attribute: DATE_DATASET_ATTRIBUTE,
+            type: "date",
         };
         expect(isDateBucketItem(bucketItem)).toBe(true);
     });
@@ -372,13 +371,17 @@ describe("isDateBucketItem", () => {
     it("should return false if the attribute prop does not match date id", () => {
         const bucketItem: IBucketItem = {
             localIdentifier: "",
-            attribute: "something",
+            type: "metric",
         };
         expect(isDateBucketItem(bucketItem)).toBe(false);
     });
 });
 
 describe("getDateFilter", () => {
+    it("should handle empty filter bucket", () => {
+        expect(getDateFilter(undefined)).toBeNull();
+    });
+
     it("should get date filter from filter bucket", () => {
         const filterBucket: IFilters = {
             localIdentifier: "filters",

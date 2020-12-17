@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import noop from "lodash/noop";
+import cloneDeep from "lodash/cloneDeep";
 import { PluggableBulletChart } from "../PluggableBulletChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IReferencePoint, IVisConstruct } from "../../../../interfaces/Visualization";
@@ -228,6 +229,74 @@ describe("PluggableBulletChart", () => {
             filters: expectedFilters,
             uiConfig: expectedUiConfig,
             properties: {},
+        });
+    });
+
+    describe("handling date items", () => {
+        it("should keep Date items with the same dimension", async () => {
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: [
+                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[0].items,
+                    ],
+                },
+                {
+                    localIdentifier: "secondary_measures",
+                    items: [],
+                },
+                {
+                    localIdentifier: "tertiary_measures",
+                    items: [],
+                },
+                {
+                    localIdentifier: "view",
+                    items: [
+                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[1].items,
+                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[2].items,
+                    ],
+                },
+            ];
+
+            const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
+                referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint,
+            );
+
+            expect(extendedReferencePoint).toMatchObject({
+                buckets: expectedBuckets,
+            });
+        });
+
+        it("should keep first Date item when items have different dimensions", async () => {
+            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
+            mockRefPoint.buckets[2].items[0].dateDataset.ref = {
+                uri: "closed",
+            };
+
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: [...mockRefPoint.buckets[0].items],
+                },
+                {
+                    localIdentifier: "secondary_measures",
+                    items: [],
+                },
+                {
+                    localIdentifier: "tertiary_measures",
+                    items: [],
+                },
+                {
+                    localIdentifier: "view",
+                    items: [...mockRefPoint.buckets[1].items],
+                },
+            ];
+
+            const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(mockRefPoint);
+
+            expect(extendedReferencePoint).toMatchObject({
+                buckets: expectedBuckets,
+            });
         });
     });
 
