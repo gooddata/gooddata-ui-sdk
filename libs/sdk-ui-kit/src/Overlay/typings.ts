@@ -36,7 +36,7 @@ export interface IOverlayProps<T> {
      */
     positionType?: OverlayPositionType;
 
-    shouldCloseOnClick?: (e: React.MouseEvent) => boolean;
+    shouldCloseOnClick?: (e: Event) => boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;

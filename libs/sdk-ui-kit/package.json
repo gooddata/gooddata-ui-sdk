@@ -70,7 +70,9 @@
         "react-intl": "^3.6.0",
         "react-native-listener": "~1.1.0",
         "react-portal": "^4.1.5",
+        "react-responsive": "^8.0.1",
         "react-transition-group": "^2.4.0",
+        "ts-invariant": "^0.5.1",
         "tslib": "^2.0.0"
     },
     "peerDependencies": {
@@ -91,6 +93,7 @@
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.3",
         "@types/react-portal": "^4.0.2",
+        "@types/react-responsive": "^8.0.2",
         "@types/react-transition-group": "^2.9.2",
         "@types/stringify-object": "^3.2.0",
         "@typescript-eslint/eslint-plugin": "^3.7.1",
