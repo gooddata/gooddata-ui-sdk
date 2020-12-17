@@ -40,6 +40,7 @@ import { Input } from "./Input";
 import { DateTime } from "./DateTime";
 import { Attachment } from "./Attachment";
 import { RecipientsSelect } from "./RecipientsSelect/RecipientsSelect";
+import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -475,4 +476,10 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
     };
 }
 
-export const ScheduledMailDialogRenderer = injectIntl(ScheduledMailDialogRendererUI);
+export const ScheduledMailDialogRendererIntl = injectIntl(ScheduledMailDialogRendererUI);
+
+export const ScheduledMailDialogRenderer: React.FC<IScheduledMailDialogRendererOwnProps> = (props) => (
+    <InternalIntlWrapper locale={props.locale}>
+        <ScheduledMailDialogRendererIntl {...props} />
+    </InternalIntlWrapper>
+);

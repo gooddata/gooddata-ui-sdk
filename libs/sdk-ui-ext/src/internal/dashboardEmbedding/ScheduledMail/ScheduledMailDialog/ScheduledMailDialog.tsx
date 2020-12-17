@@ -12,7 +12,6 @@ import { GoodDataSdkError, LoadingComponent, ErrorComponent } from "@gooddata/sd
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
 import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
 import { useUserWorkspaceSettings } from "../../hooks/useUserWorkspaceSettings";
 import { useSaveScheduledMail } from "../../hooks/useSaveScheduledMail";
@@ -189,21 +188,19 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     }
 
     return currentUser ? (
-        <InternalIntlWrapper locale={effectiveLocale}>
-            <ScheduledMailDialogRenderer
-                backend={backend}
-                workspace={workspace}
-                locale={effectiveLocale}
-                canListUsersInProject={permissions?.canListUsersInProject}
-                enableKPIDashboardScheduleRecipients={featureFlags?.enableKPIDashboardScheduleRecipients}
-                dateFormat={featureFlags?.responsiveUiDateFormat}
-                currentUser={currentUser}
-                dashboard={dashboardUriRef}
-                dashboardTitle={dashboard?.title}
-                onSubmit={handleSubmit}
-                onCancel={onCancel}
-                onError={onError}
-            />
-        </InternalIntlWrapper>
+        <ScheduledMailDialogRenderer
+            backend={backend}
+            workspace={workspace}
+            locale={effectiveLocale}
+            canListUsersInProject={permissions?.canListUsersInProject}
+            enableKPIDashboardScheduleRecipients={featureFlags?.enableKPIDashboardScheduleRecipients}
+            dateFormat={featureFlags?.responsiveUiDateFormat}
+            currentUser={currentUser}
+            dashboard={dashboardUriRef}
+            dashboardTitle={dashboard?.title}
+            onSubmit={handleSubmit}
+            onCancel={onCancel}
+            onError={onError}
+        />
     ) : null;
 };
