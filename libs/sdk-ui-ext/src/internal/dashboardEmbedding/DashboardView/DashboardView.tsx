@@ -2,6 +2,7 @@
 import React, { useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
+import { isFluidLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { useDashboard } from "../hooks/useDashboard";
 import { useDashboardAlerts } from "../hooks/useDashboardAlerts";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
@@ -17,6 +18,7 @@ import { AttributesWithDrillDownProvider } from "./AttributesWithDrillDownContex
 import { useAttributesWithDrillDown } from "../hooks/useAttributesWithDrillDown";
 import { useDashboardViewLayout } from "../hooks/useDashboardViewLayout";
 import { DashboardRenderer } from "./DashboardRenderer";
+import { EmptyDashboardError } from "./EmptyDashboardError";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -176,19 +178,23 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                 onError={onError}
                             />
                         )}
-                        <DashboardRenderer
-                            backend={backend}
-                            workspace={workspace}
-                            dashboardViewLayout={dashboardViewLayout}
-                            alerts={alertsData}
-                            filters={filters}
-                            filterContext={dashboardData.filterContext}
-                            onDrill={onDrill}
-                            drillableItems={drillableItems}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            className="gd-dashboards-root"
-                        />
+                        {isFluidLayoutEmpty(dashboardViewLayout) ? (
+                            <EmptyDashboardError ErrorComponent={ErrorComponent} />
+                        ) : (
+                            <DashboardRenderer
+                                backend={backend}
+                                workspace={workspace}
+                                dashboardViewLayout={dashboardViewLayout}
+                                alerts={alertsData}
+                                filters={filters}
+                                filterContext={dashboardData.filterContext}
+                                onDrill={onDrill}
+                                drillableItems={drillableItems}
+                                ErrorComponent={ErrorComponent}
+                                LoadingComponent={LoadingComponent}
+                                className="gd-dashboards-root"
+                            />
+                        )}
                     </AttributesWithDrillDownProvider>
                 </ColorPaletteProvider>
             </UserWorkspaceSettingsProvider>
