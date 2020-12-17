@@ -374,6 +374,16 @@
         "comment": "The user should be instructed to review that they have added one measure and one date attribute to the insight",
         "limit": 0
     },
+    "dashboard.embedded.error.empty.heading": {
+        "value": "No widgets in the dashboard",
+        "comment": "The user embedded a dashboard that contains no widgets.",
+        "limit": 0
+    },
+    "dashboard.embedded.error.empty.text": {
+        "value": "Make sure the dashboard you are embedding is correct.",
+        "comment": "The user embedded a dashboard that contains no widgets.",
+        "limit": 0
+    },
     "properties.unsupported": {
         "value": "This visualization doesn’t support configuration",
         "comment": "",

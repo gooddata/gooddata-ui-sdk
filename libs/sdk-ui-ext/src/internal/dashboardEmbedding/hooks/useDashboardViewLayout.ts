@@ -1,11 +1,5 @@
 // (C) 2020 GoodData Corporation
-import {
-    IAnalyticalBackend,
-    IDashboardLayout,
-    layoutWidgets,
-    isWidget,
-    UnexpectedError,
-} from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardLayout, layoutWidgets, isWidget } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -126,7 +120,10 @@ export const useDashboardViewLayout = ({
                               },
                           };
                       } else {
-                          throw new UnexpectedError("Unknown widget");
+                          // eslint-disable-next-line no-console
+                          console.warn(
+                              `Encountered an unknown widget, please check the dashboard data. Skipping for layout.`,
+                          );
                       }
 
                       return acc;
