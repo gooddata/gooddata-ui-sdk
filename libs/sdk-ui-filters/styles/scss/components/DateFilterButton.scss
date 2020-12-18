@@ -13,15 +13,13 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
 .gd-date-filter-button {
     @include gd-font-base;
-    font-size: nth(map-get($gd-typo, font-sizes), 5);
-    line-height: nth(map-get($gd-typo, line-heights), 1);
+    font-size: 12px;
+    line-height: 16px;
     max-width: none !important;
     position: relative;
     height: 41px;
     margin: 7px 11px 7px 0;
     padding: 5px 10px;
-    font-size: 12px;
-    line-height: 16px;
     cursor: pointer;
     user-select: none;
 

@@ -14,14 +14,14 @@ $cm-color-keyword: #ab55a3;
         // start of gd-input-base mixin body
         box-sizing: border-box;
         margin: 0;
-        padding: 6px 7px 5px;
+        padding: 2px 2px 0 3px;
         border: 1px solid $gd-input-text-border;
         line-height: normal;
         vertical-align: middle;
         color: $gd-color-text;
         background: #fff;
         font-size: 14px;
-        font-family: $gd-font-primary;
+        font-family: monospace;
         font-weight: 200;
 
         @include transition(all, 0.25s, ease-in-out);
@@ -36,9 +36,7 @@ $cm-color-keyword: #ab55a3;
             @include transition(color, 0.25s, ease-in-out);
         }
 
-        font-family: monospace;
         height: 100px;
-        padding: 2px 2px 0 3px;
 
         &:hover {
             border-color: $gd-input-text-hover-border;

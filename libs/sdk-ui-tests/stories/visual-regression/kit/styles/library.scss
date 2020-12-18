@@ -12,7 +12,7 @@ $goodstrap-bg-color: #fff;
     background-image: -moz-linear-gradient(top, $topColor, $bottomColor); /* FF3.6 */
     background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
     background-image: -o-linear-gradient(top, $topColor, $bottomColor); /* Opera 11.10+ */
-    background-image: linear-gradient(top, $topColor, $bottomColor);
+    background-image: linear-gradient(to top, $topColor, $bottomColor);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$topColor}', EndColorStr='#{$bottomColor}'); /* IE6-IE9 */
 }
 
@@ -29,9 +29,9 @@ $goodstrap-bg-color: #fff;
 }
 
 @mixin transition-timing-function($easing) {
-    -webkit-timing-function: $easing;
-    -moz-timing-function: $easing;
-    timing-function: $easing;
+    -webkit-transition-timing-function: $easing;
+    -moz-transition-timing-function: $easing;
+    transition-timing-function: $easing;
 }
 
 @mixin transition-delay($delay) {

@@ -111,36 +111,38 @@ export function getTreemapStackedSeriesDataWithMeasures(
     stackByAttribute: any,
     colorStrategy: IColorStrategy,
 ): any[] {
-    let data: any = [];
-
-    measureGroup.items.reduce((data: any[], measureGroupItem: any, index: number) => {
-        data.push({
-            id: `${index}`,
-            name: measureGroupItem.measureHeaderItem.name,
-            format: measureGroupItem.measureHeaderItem.format,
-            color: colorStrategy.getColorByIndex(index),
-            showInLegend: true,
-            legendIndex: index,
-        });
-        return data;
-    }, data);
+    let data = measureGroup.items.map(
+        (measureGroupItem, index): IPointData => {
+            return {
+                id: `${index}`,
+                name: measureGroupItem.measureHeaderItem.name,
+                format: measureGroupItem.measureHeaderItem.format,
+                color: colorStrategy.getColorByIndex(index),
+                showInLegend: true,
+                legendIndex: index,
+            };
+        },
+    );
 
     dv.rawData()
         .twoDimData()
         .forEach((seriesItems: string[], seriesIndex: number) => {
             const colorChange = getColorStep(seriesItems.length);
-            const unsortedLeafs: any[] = [];
-            seriesItems.forEach((seriesItem: string, seriesItemIndex: number) => {
-                unsortedLeafs.push({
-                    name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
-                    parent: `${seriesIndex}`,
-                    format: unwrap(measureGroup.items[seriesIndex]).format,
-                    value: parseValue(seriesItem),
-                    x: seriesIndex,
-                    y: seriesItemIndex,
-                    showInLegend: false,
-                });
-            });
+
+            const unsortedLeafs = seriesItems.map(
+                (seriesItem, seriesItemIndex): IPointData => {
+                    return {
+                        name: stackByAttribute.items[seriesItemIndex].attributeHeaderItem.name,
+                        parent: `${seriesIndex}`,
+                        format: unwrap(measureGroup.items[seriesIndex]).format,
+                        value: parseValue(seriesItem),
+                        x: seriesIndex,
+                        y: seriesItemIndex,
+                        showInLegend: false,
+                    };
+                },
+            );
+
             const sortedLeafs = unsortedLeafs.sort((a: IPointData, b: IPointData) => b.value - a.value);
 
             data = [
