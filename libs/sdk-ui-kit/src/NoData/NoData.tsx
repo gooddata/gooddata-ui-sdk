@@ -22,8 +22,8 @@ export const NoData: React.FC<INoDataProps> = ({
     noDataLabel,
 }) => {
     const classNames = cx(
+        "gd-no-data",
         {
-            "gd-no-data": true,
             "gd-no-matching-data": hasNoMatchingData,
             "gd-no-data-available": !hasNoMatchingData,
         },

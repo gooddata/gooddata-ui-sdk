@@ -37,13 +37,13 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     onClick,
 }) => {
     const buttonClasses = cx(
+        "gd-button-primary",
+        "button-dropdown",
+        "dropdown-button",
         {
-            "gd-button-primary": true,
             "gd-button-small": isSmall,
-            "button-dropdown": true,
             "is-dropdown-open": isOpen,
             "is-active": isOpen,
-            "dropdown-button": true,
         },
         className,
     );

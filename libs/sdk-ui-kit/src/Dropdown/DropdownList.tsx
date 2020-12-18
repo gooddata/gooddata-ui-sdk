@@ -101,10 +101,7 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element {
 
     const listClassNames = cx("gd-infinite-list", className);
 
-    const searchFieldClassNames = cx({
-        "gd-list-searchfield": true,
-        "gd-flex-item": true,
-    });
+    const searchFieldClassNames = cx("gd-list-searchfield", "gd-flex-item");
 
     const renderFooter = () => {
         const { footer, closeDropdown } = props;
