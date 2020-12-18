@@ -3,12 +3,20 @@ import { MetadataModule } from "./metadata";
 import { XhrModule } from "./xhr";
 import { UserModule } from "./user";
 import cloneDeepWith from "lodash/cloneDeepWith";
-import { GdcKpi, GdcDashboard, GdcFilterContext, GdcVisualizationWidget } from "@gooddata/api-model-bear";
+import compact from "lodash/compact";
+import omit from "lodash/omit";
+import {
+    GdcKpi,
+    GdcDashboard,
+    GdcFilterContext,
+    GdcVisualizationWidget,
+    GdcMetadata,
+    GdcVisualizationObject,
+} from "@gooddata/api-model-bear";
 
 /**
  * Modify how and what should be copied to the cloned dashboard
  */
-
 export interface ICopyDashboardOptions {
     /** copy new kpi and reference it in the cloned dashboard */
     copyKpi?: boolean;
@@ -18,6 +26,8 @@ export interface ICopyDashboardOptions {
     name?: string;
     /** optional, default value of summary is (current dashboard summary) */
     summary?: string;
+    /** optional, if true, the isLocked flag will be cleared for the newly created dashboard, defaults to false */
+    clearLockedFlag?: boolean;
 }
 
 type UriTranslator = (oldUri: string) => string;
@@ -37,6 +47,29 @@ export function createTranslator(
             return oldUri;
         }
     };
+}
+
+/**
+ * Remove fields that we do not want to send (either because the server will generate them anyway, or because of options)
+ * @param originalMeta - the meta to start with
+ * @param options - the options relevant to this particular run
+ */
+function getSanitizedMeta(
+    originalMeta: GdcMetadata.IObjectMeta,
+    options: ICopyDashboardOptions,
+): GdcMetadata.IObjectMeta {
+    return omit(
+        originalMeta,
+        compact([
+            "identifier",
+            "uri",
+            "author",
+            "created",
+            "updated",
+            "contributor",
+            options && options.clearLockedFlag && "locked",
+        ]),
+    );
 }
 
 /**
@@ -110,7 +143,7 @@ export class MetadataModuleExt {
         const allCreatedObjUris: string[] = [];
         const visWidgetUris: string[] = [];
         try {
-            const filterContext = await this.duplicateFilterContext(projectId, objectsFromDashboard);
+            const filterContext = await this.duplicateFilterContext(projectId, objectsFromDashboard, options);
             allCreatedObjUris.push(filterContext);
             const kpiMap = await this.duplicateOrKeepKpis(projectId, objectsFromDashboard, options);
             if (this.shouldCopyKpi(options)) {
@@ -135,7 +168,7 @@ export class MetadataModuleExt {
                         widgets: [...updatedContent.widgets],
                     },
                     meta: {
-                        ...dashboardDetails.analyticalDashboard.meta,
+                        ...getSanitizedMeta(dashboardDetails.analyticalDashboard.meta, options),
                         title: dashboardTitle,
                         summary: dashboardSummary,
                     },
@@ -216,9 +249,15 @@ export class MetadataModuleExt {
                     .filter((obj: any) => this.unwrapObj(obj).meta.category === "kpi")
                     .map(async (kpiWidget: any) => {
                         const { kpi }: { kpi: GdcKpi.IKPI } = kpiWidget;
+                        const toSave: GdcKpi.IWrappedKPI = {
+                            kpi: {
+                                meta: getSanitizedMeta(kpi.meta, options),
+                                content: { ...kpi.content },
+                            },
+                        };
                         const newUriKpiObj: string = (
-                            await this.metadataModule.createObject(projectId, kpiWidget)
-                        ).kpi.meta.uri;
+                            await this.metadataModule.createObject(projectId, toSave)
+                        ).kpi.meta.uri!;
                         uriMap.set(kpi.meta.uri!, newUriKpiObj);
                     }),
             );
@@ -256,13 +295,18 @@ export class MetadataModuleExt {
             const visObj = await this.metadataModule.getObjectDetails(
                 visualizationWidget.content.visualization,
             );
-            const newUriVisObj = (await this.metadataModule.createObject(projectId, visObj))
+            const toSave: GdcVisualizationObject.IVisualization = {
+                visualizationObject: {
+                    meta: getSanitizedMeta(visObj.visualizationObject.meta, options),
+                    content: { ...visObj.visualizationObject.content },
+                },
+            };
+            const newUriVisObj = (await this.metadataModule.createObject(projectId, toSave))
                 .visualizationObject.meta.uri;
 
-            const updatedVisWidget = {
-                ...visWidget,
+            const updatedVisWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
                 visualizationWidget: {
-                    ...visWidget.visualizationWidget,
+                    meta: getSanitizedMeta(visWidget.visualizationWidget.meta, options),
                     content: {
                         ...visWidget.visualizationWidget.content,
                         visualization: newUriVisObj,
@@ -270,20 +314,41 @@ export class MetadataModuleExt {
                 },
             };
             const visUri = (await this.metadataModule.createObject(projectId, updatedVisWidget))
-                .visualizationWidget.meta.uri;
+                .visualizationWidget.meta.uri!;
             uriMap.set(visualizationWidget.meta.uri, visUri);
         } else {
-            const { visualizationWidget } = await this.metadataModule.createObject(projectId, visWidget);
-            uriMap.set(visWidget.visualizationWidget.meta.uri, visualizationWidget.meta.uri);
+            const updatedVisWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
+                visualizationWidget: {
+                    meta: getSanitizedMeta(visWidget.visualizationWidget.meta, options),
+                    content: { ...visWidget.visualizationWidget.content },
+                },
+            };
+            const { visualizationWidget } = await this.metadataModule.createObject(
+                projectId,
+                updatedVisWidget,
+            );
+            uriMap.set(visWidget.visualizationWidget.meta.uri, visualizationWidget.meta.uri!);
         }
     }
 
-    private async duplicateFilterContext(projectId: string, objsFromDashboard: any): Promise<string> {
-        const { filterContext } = await this.metadataModule.createObject(
-            projectId,
-            objsFromDashboard.filter((obj: any) => this.unwrapObj(obj).meta.category === "filterContext")[0],
-        );
-        return filterContext.meta.uri;
+    private async duplicateFilterContext(
+        projectId: string,
+        objsFromDashboard: any,
+        options: ICopyDashboardOptions,
+    ): Promise<string> {
+        const originalFilterContext = objsFromDashboard.filter(
+            (obj: any) => this.unwrapObj(obj).meta.category === "filterContext",
+        )[0];
+
+        const toSave: GdcFilterContext.IWrappedFilterContext = {
+            filterContext: {
+                meta: getSanitizedMeta(originalFilterContext.filterContext.meta, options),
+                content: { ...originalFilterContext.filterContext.content },
+            },
+        };
+
+        const { filterContext } = await this.metadataModule.createObject(projectId, toSave);
+        return filterContext.meta.uri!;
     }
 
     private async getObjectsFromDashboard(
