@@ -85,6 +85,11 @@ export interface ISettings {
      */
     enableKPIDashboardScheduleRecipients?: boolean;
 
+    /**
+     * Indicates whether the user can zoom on the insights in KPI dashboards that have this feature enabled.
+     */
+    enableKDZooming?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

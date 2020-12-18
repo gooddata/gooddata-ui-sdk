@@ -119,11 +119,20 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
             return insightWithFilters;
         }
 
+        const fromWidgetWithZoomingHandled = {
+            ...fromWidget,
+            controls: {
+                ...fromWidget?.controls,
+                // we need to take the relevant feature flag into account as well
+                zoomInsight: !!(userWorkspaceSettings.enableKDZooming && fromWidget?.controls?.zoomInsight),
+            },
+        };
+
         const fromInsight = insightProperties(insightWithFilters);
-        const merged = merge({}, fromInsight, fromWidget);
+        const merged = merge({}, fromInsight, fromWidgetWithZoomingHandled);
 
         return insightSetProperties(insightWithFilters, merged);
-    }, [insightWithFilters, insightWidget.properties]);
+    }, [insightWithFilters, insightWidget.properties, userWorkspaceSettings]);
 
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(() => {
         const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
