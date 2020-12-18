@@ -8,12 +8,12 @@
     .headline-primary-item {
         @include gd-heading-1;
 
-        color: var(--gd-kpi-primaryMeasureColor, $gd-color-dark);
         overflow: hidden;
         height: 60px;
         line-height: 60px;
-        font-size: 50px;
         white-space: nowrap;
+        color: var(--gd-kpi-primaryMeasureColor, $gd-color-dark);
+        font-size: 50px;
 
         .headline-value-wrapper {
             display: inline-block;
@@ -113,19 +113,19 @@
 
             .headline-compare-section-item {
                 width: 100%;
+            }
 
-                &.headline-tertiary-item {
-                    padding: 10px 0 0;
-                    text-align: center;
-                }
+            .headline-tertiary-item {
+                padding: 10px 0 0;
+                text-align: center;
+            }
 
-                &.headline-secondary-item {
-                    border-left: 0;
-                    border-bottom: 1px dashed
-                        var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
-                    padding: 0 0 10px;
-                    text-align: center;
-                }
+            .headline-secondary-item {
+                border-left: 0;
+                border-bottom: 1px dashed
+                    var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
+                padding: 0 0 10px;
+                text-align: center;
             }
         }
 

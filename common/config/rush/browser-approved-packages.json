@@ -167,6 +167,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/stylelint-config",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/util",
       "allowedCategories": [ "production" ]
     },
@@ -837,6 +841,18 @@
     {
       "name": "styled-jsx",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "stylelint",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "stylelint-checkstyle-formatter",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "stylelint-config-prettier",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "supertest",
