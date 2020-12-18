@@ -13,20 +13,22 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
 .gd-date-filter-button {
     @include gd-font-base;
-    font-size: 12px;
-    line-height: 16px;
-    max-width: none !important;
+
     position: relative;
     height: 41px;
     margin: 7px 11px 7px 0;
     padding: 5px 10px;
+    line-height: 16px;
     cursor: pointer;
     user-select: none;
+    font-size: 12px;
+    // stylelint-disable-next-line declaration-no-important
+    max-width: none !important;
 
     &.disabled {
         cursor: pointer;
-        pointer-events: none;
         user-select: auto;
+        pointer-events: none;
 
         .button-subtitle::after {
             content: none;
@@ -59,8 +61,8 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         left: 0;
         border: 1px solid transparent;
         background: $gd-dashboards-filterBar-filterButton-backgroundColor;
-        border-radius: 3px;
         transform: translateZ(-1px);
+        border-radius: 3px;
     }
 
     &:hover,
@@ -85,10 +87,10 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 // refactor
                 // stylelint-disable-next-line max-nesting-depth
                 &::after {
-                    border-color: $button-normal-active-border-color;
                     // refactor
                     // stylelint-disable-next-line max-line-length
                     box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+                    border-color: $button-normal-active-border-color;
                 }
             }
 
@@ -109,8 +111,8 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &::after {
             &,
             .edit-mode-on & {
-                border-color: $button-normal-hover-border-color;
                 box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
+                border-color: $button-normal-hover-border-color;
 
                 // refactor
                 // stylelint-disable-next-line max-line-length
@@ -155,9 +157,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &:active,
         &.is-active {
             &::after {
-                border-color: transparent;
                 box-shadow: none;
                 background: #eff2f4;
+                border-color: transparent;
             }
         }
 
@@ -173,32 +175,32 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         position: relative;
         z-index: 1;
         display: flex;
-        flex-direction: column;
         justify-content: center;
         height: 100%;
+        flex-direction: column;
 
         .overlay & {
-            flex-direction: row;
             align-items: center;
             height: 100%;
+            flex-direction: row;
         }
     }
 
     .button-title,
     .button-subtitle {
-        max-width: 100%;
         white-space: nowrap;
+        max-width: 100%;
 
         &::after {
             content: "\e612";
             display: none;
+            vertical-align: top;
+            color: $gd-color-state-blank;
+            transition: $transition-length;
             margin-left: 0.5em;
             font-family: "Indigo";
             font-weight: normal;
             font-size: inherit;
-            vertical-align: top;
-            color: $gd-color-state-blank;
-            transition: $transition-length;
         }
 
         &:only-child::after {
@@ -225,9 +227,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 
         .overlay & {
             flex: 0 0 auto;
+            color: $gd-color-label;
             max-width: 100%;
             margin-right: 5px;
-            color: $gd-color-label;
 
             &::after {
                 content: ":";
@@ -238,9 +240,9 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     .button-subtitle {
         display: inline-flex;
         overflow: hidden;
+        color: $gd-color-dark;
         font-weight: bold;
         text-overflow: ellipsis;
-        color: $gd-color-dark;
 
         .overlay & {
             flex: 1 1 auto;
@@ -250,8 +252,8 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
                 position: absolute;
                 top: 50%;
                 right: -20px;
-                font-size: 18px;
                 transform: translateY(-50%);
+                font-size: 18px;
             }
         }
 
@@ -277,17 +279,17 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
 .gd-mobile-dropdown-content .gd-date-filter-button-mobile {
     display: block;
     width: auto;
+    height: auto;
     margin: 0;
     padding: 10px;
+    box-shadow: 0 1px 2px 0 rgba(20, 56, 93, 0.1);
+    line-height: 25px;
     border-width: 1px 0;
     border-top: 1px solid $gd-border-color;
     border-bottom: 1px solid $gd-border-color;
     font-size: nth(map-get($gd-typo, font-sizes), 4);
     text-align: left;
-    line-height: 25px;
-    height: auto;
     background-color: $gd-color-white;
-    box-shadow: 0 1px 2px 0 rgba(20, 56, 93, 0.1);
 
     &::after {
         display: none;

@@ -79,6 +79,7 @@ $gd-day-picker-width: 268px;
     }
 
     &-picker {
+        // stylelint-disable max-nesting-depth
         position: absolute;
         z-index: 10;
         top: 30px;

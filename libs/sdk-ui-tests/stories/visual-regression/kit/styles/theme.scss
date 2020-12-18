@@ -22,7 +22,7 @@
     }
 
     > h5 {
-        margin: 2em 0em 1em;
+        margin: 2em 0 1em;
         font-size: 1.25em;
     }
 
@@ -30,7 +30,6 @@
         width: 100%;
         margin-top: 20px;
         margin-left: 30px;
-
         border-spacing: 0;
         border-collapse: collapse;
 
@@ -45,8 +44,8 @@
     code {
         padding: 2px 4px;
         border: 1px solid #ccc;
-        background: white;
         white-space: nowrap;
+        background: white;
         font-size: 90%;
     }
 }
@@ -64,8 +63,8 @@
 }
 
 .theme-circle {
-    height: 55px;
     width: 55px;
-    border-radius: 50%;
+    height: 55px;
     background: red;
+    border-radius: 50%;
 }

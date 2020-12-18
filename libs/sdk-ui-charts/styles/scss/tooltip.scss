@@ -87,14 +87,14 @@
     padding-right: 1em;
     word-wrap: break-word;
 
-    &:before {
+    &::before {
         content: "...";
         position: absolute;
         right: 0;
         bottom: 0;
     }
 
-    &:after {
+    &::after {
         content: "";
         position: absolute;
         right: 0;
@@ -107,13 +107,13 @@
 
 .gd-viz-tooltip-value-max-content {
     display: block;
-    overflow: hidden;
-    font-size: 14px;
-    height: 0;
-    font-weight: normal;
-    white-space: nowrap;
-    text-align: left;
     visibility: hidden;
+    overflow: hidden;
+    height: 0;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
 }
 
 .multiline-supported {
@@ -122,24 +122,25 @@
     }
 
     .gd-viz-tooltip-value {
-        text-align: left;
-        line-height: 1.3em;
-        max-height: 2.6em;
         margin: 0;
         padding: 0;
+        line-height: 1.3em;
+        text-align: left;
+        max-height: 2.6em;
 
         &.clamp-two-line {
+            display: box;
+
             /*! autoprefixer: ignore next */
             -webkit-box-orient: vertical;
-            display: -webkit-box;
             -webkit-line-clamp: 2;
         }
 
-        &:before {
+        &::before {
             content: none;
         }
 
-        &:after {
+        &::after {
             content: none;
         }
     }
@@ -150,6 +151,7 @@
     g.highcharts-tooltip {
         visibility: hidden;
     }
+
     z-index: 3005;
 }
 

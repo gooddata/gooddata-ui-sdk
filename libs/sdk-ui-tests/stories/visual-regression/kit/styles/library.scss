@@ -1,10 +1,11 @@
 // (C) 2020 GoodData Corporation
 
-$goodstrap-fontFamily: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$goodstrap-fontFamily: "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
 
 $goodstrap-sideMenuTrigger: 40em;
 $goodstrap-bg-color: #fff;
 
+// stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
 @mixin gradient-linear($topColor, $bottomColor) {
     background: $bottomColor; /* Old browsers */
     background-image: -webkit-gradient(linear, left top, left bottom, from($topColor), to($bottomColor));
@@ -13,6 +14,7 @@ $goodstrap-bg-color: #fff;
     background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
     background-image: -o-linear-gradient(top, $topColor, $bottomColor); /* Opera 11.10+ */
     background-image: linear-gradient(to top, $topColor, $bottomColor);
+    // stylelint-disable-next-line function-name-case
     filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$topColor}', EndColorStr='#{$bottomColor}'); /* IE6-IE9 */
 }
 
@@ -39,6 +41,7 @@ $goodstrap-bg-color: #fff;
     -moz-transition-delay: $delay;
     transition-delay: $delay;
 }
+// stylelint-enable value-no-vendor-prefix, declaration-block-no-duplicate-properties
 
 @mixin transition($property, $duration, $easing: blank, $delay: blank) {
     @include transition-property($property);
@@ -53,28 +56,25 @@ $goodstrap-bg-color: #fff;
 
 .example {
     position: relative;
-    min-height: 20px;
-    border: 1px solid #ccc;
-    background: #fff;
-    border-radius: 4px 4px 4px 0;
     margin: 15px 0;
     padding: 20px 20px 0;
+    border: 1px solid #ccc;
+    background: #fff;
+    min-height: 20px;
+    border-radius: 4px 4px 4px 0;
 }
 
 .showCode {
-    display: block;
     position: relative;
-    right: 0px;
-    left: 0px;
-
-    cursor: pointer;
-
+    right: 0;
+    left: 0;
+    display: block;
     margin: 20px -20px 0;
     padding: 5px 7px;
-
+    color: #555;
+    cursor: pointer;
     border-top: 1px dotted #eee;
     font-size: 12px;
-    color: #555;
     @include gradient-linear(#fff, #ccc);
 }
 
@@ -84,14 +84,14 @@ code.prettyprint {
     @include transition("background-color", 0.8s);
 
     &.flash {
-        background-color: #ffff99;
+        background-color: #ff9;
     }
 }
 
 pre.prettyprint {
     padding: 1em 1.5em;
-    white-space: pre-wrap;
     border: 1px solid #ddd;
+    white-space: pre-wrap;
     border-radius: 5px;
 }
 
@@ -104,9 +104,7 @@ pre.prettyprint {
 
     .library-item-title {
         margin: 0.5em 0;
-
         line-height: 1.4rem;
-
         font-size: 34px;
         color: black;
 
@@ -114,23 +112,18 @@ pre.prettyprint {
             position: relative;
             z-index: 2;
             padding-right: 25px;
-
             background: $goodstrap-bg-color;
         }
 
         &.guide {
-            &:after {
+            &::after {
                 content: "";
-                height: 1px;
-
                 position: absolute;
-
-                left: 50px;
-                right: 0;
-                top: 50%;
-
                 z-index: 1;
-
+                top: 50%;
+                right: 0;
+                left: 50px;
+                height: 1px;
                 background: #ddd;
             }
         }
@@ -142,23 +135,20 @@ pre.prettyprint {
         > a {
             margin-left: 15px;
             vertical-align: middle;
-
             font-size: 20px;
-
             cursor: pointer;
         }
     }
 
     .guidelines {
+        overflow: hidden;
         margin: 0;
         padding: 0;
 
-        overflow: hidden;
-
         > div > li,
         > li {
-            list-style-type: none;
             float: left;
+            list-style-type: none;
         }
     }
 
@@ -209,15 +199,15 @@ pre.prettyprint {
     }
 
     > h5 {
-        margin: 2em 0em 1em;
+        margin: 2em 0 1em;
         font-size: 1.25em;
     }
 
     code {
         padding: 2px 4px;
         border: 1px solid #ccc;
-        background: white;
         white-space: nowrap;
+        background: white;
         font-size: 90%;
     }
 

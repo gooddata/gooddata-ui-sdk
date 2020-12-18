@@ -169,20 +169,20 @@
 }
 
 .viz-zoom-out {
-    cursor: pointer;
     position: absolute;
     top: -85px;
     right: 35px;
     width: 36px;
     height: 36px;
     border: none;
+    color: transparent;
+    cursor: pointer;
+    transition: $transition-length;
     border-radius: 50%;
     background-color: $button-grey-background;
     background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon_undo.svg");
     background-repeat: no-repeat;
     background-position: center;
-    color: transparent;
-    transition: $transition-length;
 
     @media #{$xsmall-only}, #{$small-only} {
         top: -73px;
@@ -192,12 +192,12 @@
 // in dashboard view we need to tweak the positioning a bit as there is no options button
 .gd-dashboard-view-widget {
     .gd-bubble-trigger-zoom-out {
-        right: 0;
         top: -12px;
+        right: 0;
     }
     .viz-zoom-out {
-        cursor: pointer;
         top: 0;
         left: 0;
+        cursor: pointer;
     }
 }

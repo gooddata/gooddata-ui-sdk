@@ -1,9 +1,10 @@
 // (C) 2020 GoodData Corporation
 @import "../styles/goodstrap.scss";
+
 /* bubble */
 
-/* allow vendor prefixes */
-/* stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length */
+// allow vendor prefixes
+// stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
 
 @mixin gradient-linear($topColor, $bottomColor) {
     background: $bottomColor; /* Old browsers */
@@ -12,7 +13,7 @@
     background-image: -ms-linear-gradient(top, $topColor, $bottomColor); /* IE10 */
     background-image: linear-gradient(to top, $topColor, $bottomColor);
 }
-/* stylelint-enable value-no-vendor-prefix, declaration-block-no-duplicate-properties */
+// stylelint-enable value-no-vendor-prefix, declaration-block-no-duplicate-properties
 
 .bubble-example-container {
     position: relative;

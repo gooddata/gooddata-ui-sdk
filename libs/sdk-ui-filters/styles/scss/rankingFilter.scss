@@ -18,15 +18,15 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
         align-items: center;
 
         .gd-rf-value-tooltip-icon {
-            color: $gd-color-text-dimmed;
             padding: 0 1px;
+            color: $gd-color-text-dimmed;
         }
     }
 
     .gd-rf-dropdown-header {
         padding: 6px 6px 6px 10px;
-        background: $is-focused-background;
         color: $gd-color-state-blank;
+        background: $is-focused-background;
         font-size: 12px;
         text-transform: uppercase;
     }
@@ -73,10 +73,10 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
 }
 
 .gd-rf-value-dropdown-button {
-    display: inline-block;
-    margin: 0 10px;
-    width: $value_dropdown_width;
     position: static;
+    display: inline-block;
+    width: $value_dropdown_width;
+    margin: 0 10px;
 
     .gd-input-field {
         height: 27px;
@@ -93,6 +93,7 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
     }
 
     .gd-select-heading {
+        // stylelint-disable-next-line declaration-no-important
         position: relative !important;
     }
 }
@@ -123,8 +124,8 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
     }
 
     .gd-rf-attribute-all-records-icon {
-        color: $gd-color-text;
         padding: 0 1px;
+        color: $gd-color-text;
     }
 
     .gd-button-link.disabled {

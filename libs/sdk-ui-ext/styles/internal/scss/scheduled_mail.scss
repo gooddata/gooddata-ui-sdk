@@ -97,7 +97,6 @@ $vertical-space: 10px;
     > span {
         flex: 1;
         background: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon_pdf.svg") no-repeat left 0;
-
         padding-left: 18px;
 
         @media #{$medium-up} {

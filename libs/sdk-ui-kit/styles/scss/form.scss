@@ -396,8 +396,8 @@ textarea {
 
     input {
         position: absolute;
-        opacity: 0;
         outline: 0;
+        opacity: 0;
 
         &:checked ~ .input-label-text {
             &::before {
@@ -486,8 +486,8 @@ textarea {
 .input-checkbox-toggle {
     input {
         position: absolute;
-        opacity: 0;
         outline: 0;
+        opacity: 0;
 
         &:disabled,
         &.disabled {

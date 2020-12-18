@@ -106,12 +106,6 @@
     h3 {
         @include gd-heading-3;
     }
-
-    h2,
-    h3,
-    div {
-        color: $gd-modal-title-color;
-    }
 }
 
 .gd-dialog-header.gd-dialog-header-with-border {

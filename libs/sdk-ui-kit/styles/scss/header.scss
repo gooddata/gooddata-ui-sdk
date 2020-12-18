@@ -590,11 +590,11 @@ $gd-header-project-width: 230px;
     border-top: 1px solid $gd-border-color;
 
     .gd-workspace-picker-home-footer {
+        display: block;
+        color: $gd-color-text;
         background: url($base_path + "./icons/home.svg") no-repeat;
         padding-left: 30px;
-        color: $gd-color-text;
         text-decoration: none;
-        display: block;
 
         &:hover {
             color: $is-focused-color;
