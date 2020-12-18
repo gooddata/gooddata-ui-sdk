@@ -5,7 +5,7 @@
    ========================================================================== */
 
 /* disable max length */
-/* stylelint-disable max-line-length */
+// stylelint-disable max-line-length
 
 .gd-button {
     & + & {
@@ -18,7 +18,6 @@
     @extend %btn;
 
     box-shadow: $button-box-shadow-x-offset $button-shadow-darker;
-
     color: $button-normal-color;
     background: $button-normal-bg;
     border-color: $button-normal-border-color;
@@ -591,7 +590,6 @@
         position: relative;
         z-index: 1;
         margin: 0 -1px 0 0;
-
         border-radius: $button-group-border-radius;
 
         &:focus {
@@ -611,7 +609,6 @@
     > .gd-button:last-child,
     > *:not(.gd-button):last-child .gd-button {
         margin-right: 0;
-
         border-radius: 0 $button-border-radius $button-border-radius 0;
     }
 }

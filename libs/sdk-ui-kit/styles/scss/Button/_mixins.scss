@@ -13,17 +13,16 @@
     align-items: center;
     padding: 5px 14px;
     border: 1px solid transparent;
+    outline: 0;
     font: 400 14px/20px $gd-font-primary;
     white-space: nowrap;
     vertical-align: middle;
     cursor: pointer;
     text-align: left;
-
-    @include transition(all, 0.25s, ease-in-out);
     border-radius: $button-border-radius;
     text-transform: $button-text-capitalization;
 
-    outline: 0;
+    @include transition(all, 0.25s, ease-in-out);
 
     &::before,
     &::after {
