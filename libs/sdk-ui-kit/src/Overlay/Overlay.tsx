@@ -269,7 +269,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         return eventNode.contains(node);
     };
 
-    private shouldCloseOnClick = (e: React.MouseEvent) => {
+    private shouldCloseOnClick = (e: Event) => {
         if (!this.isComponentMounted) {
             return false;
         }
@@ -356,7 +356,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.props.onClose();
     };
 
-    public closeOnOutsideClick(e: React.MouseEvent): void {
+    public closeOnOutsideClick(e: Event): void {
         if (this.shouldCloseOnClick(e)) {
             this.props.onClose();
         }

@@ -5,6 +5,7 @@
 ```ts
 
 import { Component } from 'react';
+import { CSSProperties } from 'react';
 import { guidFor } from '@gooddata/goodstrap/lib/core/Guid';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
@@ -34,6 +35,21 @@ export type ArrowOffset = number[];
 
 // @internal (undocumented)
 export type ArrowOffsets = Record<string, ArrowOffset>;
+
+// @internal (undocumented)
+export class AutoSize extends Component<IAutoSizeProps> {
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    state: {
+        width: number;
+        height: number;
+    };
+    }
 
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
@@ -214,6 +230,18 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
 }
 
 // @internal (undocumented)
+export const Dropdown: React_2.FC<IDropdownProps>;
+
+// @internal (undocumented)
+export const DropdownButton: React_2.FC<IDropdownButtonProps>;
+
+// @internal (undocumented)
+export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
+
+// @internal (undocumented)
+export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -355,6 +383,25 @@ export interface IAppHeaderState {
     // (undocumented)
     responsiveMode: boolean;
 }
+
+// @internal (undocumented)
+export interface IAutoSizeChildren {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
+export interface IAutoSizeProps {
+    // (undocumented)
+    children: ({ width, height }: IAutoSizeChildren) => React_2.ReactNode;
+}
+
+// @internal
+export type IBreakpointsConfig = {
+    [s in ResponsiveScreenType]: number;
+};
 
 // @internal (undocumented)
 export interface IBubbleHoverTriggerProps extends IBubbleTriggerProps {
@@ -534,6 +581,134 @@ export interface IDialogBaseProps {
     onSubmit?: (data?: any) => void;
     // (undocumented)
     submitOnEnterKey?: boolean;
+}
+
+// @internal (undocumented)
+export interface IDropdownBodyRenderProps {
+    // (undocumented)
+    closeDropdown: () => void;
+    // (undocumented)
+    isMobile: boolean;
+}
+
+// @internal (undocumented)
+export interface IDropdownButtonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    iconLeft?: string;
+    // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
+    isSmall?: boolean;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    value?: string;
+}
+
+// @internal (undocumented)
+export interface IDropdownButtonRenderProps {
+    // (undocumented)
+    closeDropdown: () => void;
+    // (undocumented)
+    isMobile: boolean;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    openDropdown: () => void;
+    // (undocumented)
+    toggleDropdown: () => void;
+}
+
+// @internal (undocumented)
+export interface IDropdownListNoDataRenderProps {
+    // (undocumented)
+    hasNoMatchingData: boolean;
+}
+
+// @internal (undocumented)
+export interface IDropdownListProps<T> extends IListProps<T> {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    closeDropdown?: () => void;
+    // (undocumented)
+    disableAutofocus?: boolean;
+    // (undocumented)
+    footer?: React_2.ReactNode | ((closeDropdown: () => void) => React_2.ReactNode);
+    // (undocumented)
+    height?: number;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isMobile?: boolean;
+    // (undocumented)
+    mobileItemHeight?: number;
+    // (undocumented)
+    onSearch?: (searchString: string) => void;
+    // (undocumented)
+    onTabSelect?: (tab: ITab) => void;
+    // (undocumented)
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
+    // (undocumented)
+    searchFieldSize?: "small";
+    // (undocumented)
+    searchPlaceholder?: string;
+    // (undocumented)
+    searchString?: string;
+    // (undocumented)
+    selectedTabId?: string;
+    // (undocumented)
+    showSearch?: boolean;
+    // (undocumented)
+    showTabs?: boolean;
+    // (undocumented)
+    tabs?: ITab[];
+    // (undocumented)
+    width?: number;
+}
+
+// @internal (undocumented)
+export interface IDropdownProps {
+    // (undocumented)
+    alignPoints?: IAlignPoint[];
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    closeOnMouseDrag?: boolean;
+    // (undocumented)
+    closeOnOutsideClick?: boolean;
+    // (undocumented)
+    closeOnParentScroll?: boolean;
+    // (undocumented)
+    ignoreClicksOnByClass?: string[];
+    // (undocumented)
+    onOpenStateChanged?: (isOpen: boolean) => void;
+    // (undocumented)
+    openOnInit?: boolean;
+    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
+    // (undocumented)
+    overlayZIndex?: number;
+    // (undocumented)
+    renderBody: (props: IDropdownBodyRenderProps) => React_2.ReactNode;
+    // (undocumented)
+    renderButton: (props: IDropdownButtonRenderProps) => React_2.ReactNode;
+}
+
+// @internal (undocumented)
+export interface IDropdownTagsProps {
+    // (undocumented)
+    onTabSelect?: (tab: ITab) => void;
+    // (undocumented)
+    selectedTabId?: string;
+    // (undocumented)
+    tabs?: ITab[];
 }
 
 // @internal (undocumented)
@@ -1109,6 +1284,16 @@ export interface ILoadingDotsProps {
 }
 
 // @internal (undocumented)
+export interface ILoadingMaskProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    height?: CSSProperties["height"];
+    // (undocumented)
+    width?: CSSProperties["width"];
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -1134,6 +1319,24 @@ export interface IMeasureNumberFormatOwnProps {
     templates?: ReadonlyArray<IFormatTemplate>;
     // (undocumented)
     toggleButton: React_2.ComponentType<IToggleButtonProps>;
+}
+
+// @internal
+export interface IMediaQueries {
+    "!mobileDevice": string;
+    "<desktop": string;
+    ">=lg": string;
+    ">=md": string;
+    ">=sm": string;
+    ">=xl": string;
+    ">=xxl": string;
+    desktop: string;
+    lg: string;
+    md: string;
+    mobileDevice: string;
+    sm: string;
+    xl: string;
+    xxl: string;
 }
 
 // @public (undocumented)
@@ -1238,6 +1441,18 @@ export interface IMultiSelectRenderItemProps<T> {
 
 // @internal (undocumented)
 export const INFO_TEXT_COLOR = "#909293";
+
+// @internal (undocumented)
+export interface INoDataProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    hasNoMatchingData?: boolean;
+    // (undocumented)
+    noDataLabel: string;
+    // (undocumented)
+    notFoundLabel?: string;
+}
 
 // @internal (undocumented)
 export class Input extends React_2.PureComponent<InputPureProps, InputState> {
@@ -1519,7 +1734,7 @@ export interface IOverlayProps<T> {
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     positionType?: OverlayPositionType;
     // (undocumented)
-    shouldCloseOnClick?: (e: React.MouseEvent) => boolean;
+    shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
     zIndex?: number | undefined;
 }
@@ -1573,6 +1788,12 @@ export interface IRenderItemProps<T> {
     rowIndex: number;
     // (undocumented)
     width: number;
+}
+
+// @internal
+export interface IResponsiveConfig {
+    // (undocumented)
+    breakpoints: IBreakpointsConfig;
 }
 
 // @internal (undocumented)
@@ -1834,6 +2055,9 @@ export class List<T> extends Component<IListProps<T>> {
 export const LoadingDots: React_2.FC<ILoadingDotsProps>;
 
 // @internal (undocumented)
+export const LoadingMask: React_2.FC<ILoadingMaskProps>;
+
+// @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
@@ -1855,6 +2079,9 @@ export const MultiSelectList: React_2.ForwardRefExoticComponent<Pick<IMultiSelec
     WrappedComponent: React_2.ComponentType<IMultiSelectListProps<unknown>>;
 };
 
+// @internal (undocumented)
+export const NoData: React_2.FC<INoDataProps>;
+
 // @internal
 export function normalizeTime(time: Date): Date;
 
@@ -1868,7 +2095,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
     // (undocumented)
     closeOnMouseDrag: () => void;
     // (undocumented)
-    closeOnOutsideClick(e: React_2.MouseEvent): void;
+    closeOnOutsideClick(e: Event): void;
     // (undocumented)
     closeOnParentScroll(e: React_2.MouseEvent): void;
     // (undocumented)
@@ -1899,6 +2126,12 @@ export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export const ResponsiveContextProvider: React_2.Provider<IResponsiveConfig>;
+
+// @internal
+export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
 export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
@@ -1980,6 +2213,12 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal
+export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
+
+// @internal
+export const useResponsiveContext: () => IResponsiveConfig;
 
 // @internal (undocumented)
 export const WorkspacePickerHomeFooter: React_2.FC<IWorkspacePickerHomeFooterProps>;
