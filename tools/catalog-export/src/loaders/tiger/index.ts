@@ -116,7 +116,8 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
 
     const projectSpinner = ora();
     try {
-        return tigerLoad(projectId, tigerClient);
+        // await is important here, otherwise errors thrown from the load would not be handled by this catch block
+        return await tigerLoad(projectId, tigerClient);
     } catch (err) {
         projectSpinner.stop();
 
