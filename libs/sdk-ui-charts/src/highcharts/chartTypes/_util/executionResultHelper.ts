@@ -23,20 +23,29 @@ function findInDimensionHeaders(
         headerCount: number,
     ) => any,
 ): any {
-    let returnValue: any = null;
-    dimensions.some((dimension: any, dimensionIndex: number) => {
-        dimension.headers.some(
-            (wrappedDescriptor: IMeasureGroupDescriptor | IAttributeDescriptor, headerIndex: number) => {
-                const headerType = Object.keys(wrappedDescriptor)[0];
-                const header = wrappedDescriptor[headerType];
-                const headerCount = dimension.headers.length;
-                returnValue = headerCallback(headerType, header, dimensionIndex, headerIndex, headerCount);
-                return !!returnValue;
-            },
-        );
-        return !!returnValue;
-    });
-    return returnValue;
+    for (let dimensionIndex = 0; dimensionIndex < dimensions.length; dimensionIndex++) {
+        const dimension = dimensions[dimensionIndex];
+        for (let headerIndex = 0; headerIndex < dimension.headers.length; headerIndex++) {
+            const wrappedDescriptor = dimension.headers[headerIndex];
+            const headerType = Object.keys(wrappedDescriptor)[0];
+            const header = wrappedDescriptor[headerType];
+            const headerCount = dimension.headers.length;
+
+            const callbackResult = headerCallback(
+                headerType,
+                header,
+                dimensionIndex,
+                headerIndex,
+                headerCount,
+            );
+
+            if (callbackResult) {
+                return callbackResult;
+            }
+        }
+    }
+
+    return null;
 }
 
 export function findMeasureGroupInDimensions(
