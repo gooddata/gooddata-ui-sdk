@@ -50,6 +50,7 @@ $table-menu-hover: var(
 
             // workaround for https://www.ag-grid.com/ag-grid-changelog/ issue AG-4088 that is fixed in ag-grid 23.1.0 which has styles breaking changes which makes migration not feasible for now
             // ideally we should use enableCellTextSelection: true in CorePivotTable
+            // stylelint-disable-next-line declaration-no-important
             user-select: auto !important;
         }
 
@@ -63,11 +64,13 @@ $table-menu-hover: var(
             .ag-react-container {
                 width: 100%;
             }
+
             overflow: visible;
         }
 
         .ag-header {
             border-bottom: none;
+            // stylelint-disable-next-line declaration-no-important
             background-color: $custom-background-color !important; // TODO remove once css variables can modify theme
         }
 
@@ -130,11 +133,13 @@ $table-menu-hover: var(
             &:last-child {
                 border-bottom: none;
 
+                // stylelint-disable-next-line max-nesting-depth
                 .ag-header-cell,
                 .ag-header-group-cell-with-group {
                     border-bottom-style: solid;
                 }
 
+                // stylelint-disable-next-line max-nesting-depth
                 .gd-pivot-table-header {
                     min-height: 30px;
                 }
@@ -211,9 +216,10 @@ $table-menu-hover: var(
         .ag-floating-top {
             position: absolute;
             z-index: 1;
-            pointer-events: none;
             display: none;
+            // stylelint-disable-next-line declaration-no-important
             overflow: hidden !important;
+            pointer-events: none;
             border-bottom: none;
 
             &.gd-visible-sticky-row {
@@ -223,16 +229,19 @@ $table-menu-hover: var(
             .ag-row {
                 background-color: transparent;
 
+                // stylelint-disable-next-line max-nesting-depth
                 .ag-cell {
                     background-color: $custom-background-color;
                     border-top-color: $custom-background-color;
 
+                    // stylelint-disable-next-line max-nesting-depth
                     &.gd-hidden-sticky-column {
+                        color: transparent;
                         border-top-color: transparent;
                         background-color: transparent;
-                        color: transparent;
                     }
 
+                    // stylelint-disable-next-line max-nesting-depth
                     &.gd-measure-column,
                     &.gd-column-attribute-column {
                         display: none;
@@ -242,6 +251,7 @@ $table-menu-hover: var(
         }
 
         .ag-floating-bottom {
+            // stylelint-disable-next-line declaration-no-important
             overflow: auto !important;
             border-top: none;
         }
@@ -269,12 +279,12 @@ $table-menu-hover: var(
 
     .gd-table-loading {
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background: $custom-background-color;
         z-index: 1; // we need zIndex of at least 1, otherwise some table cells can show through the overlay
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: $custom-background-color;
     }
 }
 
@@ -437,14 +447,14 @@ $table-menu-hover: var(
 }
 
 .gd-aggregation-menu-item {
-    .gd-list-item-header:before {
-        display: block;
+    .gd-list-item-header::before {
         content: "";
         position: absolute;
+        top: 13px;
+        left: 10px;
+        display: block;
         width: 12px;
         height: 11px;
-        left: 10px;
-        top: 13px;
         background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/rows.svg");
     }
 
@@ -457,11 +467,11 @@ $table-menu-hover: var(
         }
 
         .gd-aggregation-menu-item-inner {
-            padding: 4px 30px;
-            flex: auto;
-            cursor: pointer;
             position: relative;
             z-index: 2;
+            flex: auto;
+            padding: 4px 30px;
+            cursor: pointer;
         }
 
         &.is-submenu .gd-aggregation-menu-item-inner {
