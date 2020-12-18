@@ -5,15 +5,16 @@
 .gd-extended-date-filter-body {
     .gd-filter-list-item {
         @include gd-font-base;
-        font-size: nth(map-get($gd-typo, font-sizes), 5);
-        line-height: nth(map-get($gd-typo, line-heights), 1);
+
         display: flex;
         justify-content: flex-start;
         width: 100%;
         border: none;
-        text-align: left;
-        background: transparent;
         outline: 0;
+        line-height: nth(map-get($gd-typo, line-heights), 1);
+        background: transparent;
+        font-size: nth(map-get($gd-typo, font-sizes), 5);
+        text-align: left;
 
         span {
             flex: 0 1 auto;

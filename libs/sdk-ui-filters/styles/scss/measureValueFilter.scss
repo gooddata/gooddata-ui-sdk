@@ -14,32 +14,33 @@ $dialog_width: 250px;
 
 .gd-mvf-dropdown-body {
     width: $dialog_width;
-    padding: 0px !important; // !important is necessary to ensure MVF doesn't have padding from predecessor styling
+    // stylelint-disable-next-line declaration-no-important
+    padding: 0 !important; // !important is necessary to ensure MVF doesn't have padding from predecessor styling
 
     .gd-mvf-dropdown-section {
         padding: 10px 10px 0;
 
         .gd-mvf-warning-message {
+            padding: 4px 8px 4px 10px;
+            line-height: 1.4em;
             font-size: 12px;
             border-radius: 3px;
             font-family: $gd-font-primary;
-            line-height: 1.4em;
-            padding: 4px 8px 4px 10px;
             margin-top: 4px;
 
             &.gd-mvf-warning-message-low {
-                background: $gd-palette-primary-base-t80;
                 color: $gd-palette-primary-base;
+                background: $gd-palette-primary-base-t80;
             }
 
             &.gd-mvf-warning-message-medium {
-                background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
                 color: $gd-color-warning-text;
+                background: var(--gd-palette-warning-base-t85, transparentize($gd-color-warning, 0.85));
             }
 
             &.gd-mvf-warning-message-high {
-                background: transparentize($gd-color-negative, 0.85);
                 color: $gd-color-negative;
+                background: transparentize($gd-color-negative, 0.85);
             }
         }
 
