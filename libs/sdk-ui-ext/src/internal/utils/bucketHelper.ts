@@ -49,6 +49,7 @@ import {
     isSimpleMeasure,
     ITotal,
     IMeasure,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
@@ -260,12 +261,15 @@ export function filterOutIncompatibleArithmeticMeasures(
 }
 
 export function isDateBucketItem(bucketItem: IBucketItem): boolean {
-    return !!bucketItem && bucketItem.attribute === DATE_DATASET_ATTRIBUTE;
+    return !!bucketItem && bucketItem.type === DATE;
 }
 
 export const isNotDateBucketItem = negate(isDateBucketItem);
 
 export function getDateFilter(filtersBucket: IFilters): IDateFilter {
+    if (!filtersBucket) {
+        return null;
+    }
     const dateFiltersInclEmpty = flatMap(filtersBucket.items, (filterItem) => {
         const filters = get<IFiltersBucketItem, "filters", IBucketFilter[]>(filterItem, "filters", []);
         return filters.find(isDateFilter);
@@ -575,6 +579,11 @@ export function getAllAttributeItemsWithPreference(
 
 export function getDateItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAttributeItemsWithoutStacks(buckets).filter(isDateBucketItem);
+}
+
+export function getMainDateItem(dateItems: IBucketItem[]): IBucketItem {
+    // first item for now, can be replaced by item matching the dimension of date filter in future
+    return dateItems[0];
 }
 
 function hasItemsAboveLimit(bucket: IBucketOfFun, itemsLimit: number): boolean {
@@ -945,4 +954,20 @@ export const transformMeasureBuckets = (
             items: [...bucket.items, ...unusedMeasures.splice(0, freeSlotsCount)],
         };
     });
+};
+
+const hasSameDateDimension = (dateItem: IBucketItem, referenceDateItem: IBucketItem): boolean => {
+    if (isDateBucketItem(dateItem) && isDateBucketItem(referenceDateItem)) {
+        return areObjRefsEqual(dateItem.dateDataset?.ref, referenceDateItem.dateDataset?.ref);
+    }
+    return false;
+};
+
+export const removeDivergentDateItems = (
+    viewItems: IBucketItem[],
+    mainDateItem: IBucketItem,
+): IBucketItem[] => {
+    return viewItems.filter(
+        (item: IBucketItem) => isNotDateBucketItem(item) || hasSameDateDimension(item, mainDateItem),
+    );
 };

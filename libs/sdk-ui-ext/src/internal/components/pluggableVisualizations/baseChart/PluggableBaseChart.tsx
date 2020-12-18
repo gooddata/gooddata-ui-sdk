@@ -43,7 +43,7 @@ import {
     getFilteredMeasuresForStackedCharts,
     getMeasureItems,
     getStackItems,
-    isDateBucketItem,
+    isNotDateBucketItem,
     sanitizeFilters,
 } from "../../../utils/bucketHelper";
 import { getValidProperties } from "../../../utils/colors";
@@ -198,7 +198,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (masterMeasures.length <= 1 && allAttributes.length > 1) {
             // first attribute is taken, find next available non-date attribute
             const attributesWithoutFirst = tail(allAttributes);
-            const nonDate = attributesWithoutFirst.filter((attribute) => !isDateBucketItem(attribute));
+            const nonDate = attributesWithoutFirst.filter(isNotDateBucketItem);
             stacks = nonDate.slice(0, 1);
         }
 

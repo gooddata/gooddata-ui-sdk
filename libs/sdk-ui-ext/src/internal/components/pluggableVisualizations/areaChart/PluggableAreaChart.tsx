@@ -29,10 +29,13 @@ import {
     getDateItems,
     getFilteredMeasuresForStackedCharts,
     getStackItems,
+    removeDivergentDateItems,
     isDateBucketItem,
+    isNotDateBucketItem,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
+    getMainDateItem,
 } from "../../../utils/bucketHelper";
 import {
     getReferencePointWithSupportedProperties,
@@ -46,7 +49,6 @@ import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChar
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
-import negate from "lodash/negate";
 import set from "lodash/set";
 import {
     addIntersectionFiltersToInsight,
@@ -194,29 +196,32 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private getAllAttributesWithoutDate(buckets: IBucketOfFun[]): IBucketItem[] {
-        return this.getAllAttributes(buckets).filter(negate(isDateBucketItem));
+        return this.getAllAttributes(buckets).filter(isNotDateBucketItem);
     }
 
     private filterStackItems(bucketItems: IBucketItem[]): IBucketItem[] {
-        return bucketItems.filter(negate(isDateBucketItem)).slice(0, MAX_STACKS_COUNT);
+        return bucketItems.filter(isNotDateBucketItem).slice(0, MAX_STACKS_COUNT);
     }
 
     private getBucketItems(referencePoint: IReferencePoint) {
         const buckets = get(referencePoint, BUCKETS, []);
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
+        const mainDateItem = getMainDateItem(dateItems);
 
         let stacks: IBucketItem[] = this.filterStackItems(getStackItems(buckets));
         const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
         const numOfAttributes = isAllowMoreThanOneViewByAttribute ? MAX_VIEW_COUNT : 1;
-        let views: IBucketItem[] = getAllCategoriesAttributeItems(buckets).slice(0, numOfAttributes);
+        let views: IBucketItem[] = removeDivergentDateItems(
+            getAllCategoriesAttributeItems(buckets).slice(0, numOfAttributes),
+            mainDateItem,
+        );
         const hasDateItemInViewByBucket = views.some(isDateBucketItem);
 
         if (dateItems.length && !hasDateItemInViewByBucket) {
-            const firstDateItem = dateItems[0];
             const allAttributes = this.getAllAttributesWithoutDate(buckets);
             const extraViewItems = allAttributes.slice(0, numOfAttributes - 1);
-            views = numOfAttributes > 1 ? [firstDateItem, ...extraViewItems] : [firstDateItem];
+            views = numOfAttributes > 1 ? [mainDateItem, ...extraViewItems] : [mainDateItem];
             if (!isAllowMoreThanOneViewByAttribute && measures.length <= 1) {
                 stacks = allAttributes.slice(0, MAX_STACKS_COUNT);
             }

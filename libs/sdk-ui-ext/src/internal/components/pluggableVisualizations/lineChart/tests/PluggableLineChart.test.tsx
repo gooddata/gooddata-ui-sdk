@@ -434,7 +434,7 @@ describe("PluggableLineChart", () => {
 
     it("should allow only one date attribute", async () => {
         const lineChart = createComponent();
-        const referencePoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
+        const referencePoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
 
         const expectedBuckets: IBucketOfFun[] = [
             {
@@ -452,7 +452,7 @@ describe("PluggableLineChart", () => {
         ];
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.dateAttributeOnRowAndColumnReferencePoint,
+            referencePointMocks.dateAttributeOnViewAndStackReferencePoint,
         );
 
         expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);

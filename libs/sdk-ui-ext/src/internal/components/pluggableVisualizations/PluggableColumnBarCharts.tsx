@@ -32,7 +32,9 @@ import {
     getAllCategoriesAttributeItems,
     getDateItems,
     getFilteredMeasuresForStackedCharts,
+    getMainDateItem,
     getStackItems,
+    removeDivergentDateItems,
     isDateBucketItem,
     isNotDateBucketItem,
 } from "../../utils/bucketHelper";
@@ -116,26 +118,33 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         const buckets: IBucketOfFun[] = get(extendedReferencePoint, BUCKETS, []);
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
+        const mainDateItem = getMainDateItem(dateItems);
         const categoriesCount: number = get(
             extendedReferencePoint,
             [UICONFIG, BUCKETS, BucketNames.VIEW, "itemsLimit"],
             MAX_CATEGORIES_COUNT,
         );
         const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
-        let views = allAttributesWithoutStacks.slice(0, categoriesCount);
+        const allAttributesWithoutStacksWithDatesHandled = removeDivergentDateItems(
+            allAttributesWithoutStacks,
+            mainDateItem,
+        );
+        let views = allAttributesWithoutStacksWithDatesHandled.slice(0, categoriesCount);
         const hasDateItemInViewByBucket = views.some(isDateBucketItem);
         let stackItemIndex = categoriesCount;
         let stacks = getStackItems(buckets);
 
         if (dateItems.length && !hasDateItemInViewByBucket) {
-            const extraViewItems = allAttributesWithoutStacks.slice(0, categoriesCount - 1);
-            views = [dateItems[0], ...extraViewItems];
+            const extraViewItems = allAttributesWithoutStacksWithDatesHandled.slice(0, categoriesCount - 1);
+            views = [mainDateItem, ...extraViewItems];
             stackItemIndex = categoriesCount - 1;
         }
 
-        if (!stacks.length && measures.length <= 1 && allAttributesWithoutStacks.length > stackItemIndex) {
-            stacks = allAttributesWithoutStacks
-                .slice(stackItemIndex, allAttributesWithoutStacks.length)
+        const hasSomeRemainingAttributes = allAttributesWithoutStacksWithDatesHandled.length > stackItemIndex;
+
+        if (!stacks.length && measures.length <= 1 && hasSomeRemainingAttributes) {
+            stacks = allAttributesWithoutStacksWithDatesHandled
+                .slice(stackItemIndex, allAttributesWithoutStacksWithDatesHandled.length)
                 .filter(isNotDateBucketItem)
                 .slice(0, MAX_STACKS_COUNT);
         }

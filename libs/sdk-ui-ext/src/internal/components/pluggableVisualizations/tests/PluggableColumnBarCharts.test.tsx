@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
 import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IVisProps, IVisConstruct } from "../../../interfaces/Visualization";
 import { MAX_VIEW_COUNT } from "../../../constants/uiConfig";
@@ -191,28 +192,6 @@ describe("PluggableColumnBarCharts", () => {
             });
         });
 
-        it("should keep only one date attribute in view by bucket", async () => {
-            const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnRowAndColumnReferencePoint;
-            const expectedBuckets: IBucketOfFun[] = [
-                {
-                    localIdentifier: "measures",
-                    items: mockRefPoint.buckets[0].items,
-                },
-                {
-                    localIdentifier: "view",
-                    items: mockRefPoint.buckets[1].items.slice(0, 1),
-                },
-                {
-                    localIdentifier: "stack",
-                    items: [],
-                },
-            ];
-            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
-
-            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
-        });
-
         it("should cut out measures tail when getting many measures, no category and one stack", async () => {
             const columnChart = createComponent(defaultProps);
             const mockRefPoint = referencePointMocks.multipleMetricsOneStackByReferencePoint;
@@ -366,6 +345,77 @@ describe("PluggableColumnBarCharts", () => {
                 stackMeasures: true,
                 stackMeasuresToPercent: true,
             });
+        });
+    });
+
+    describe("handling date items", () => {
+        it("should keep only one date attribute in view by bucket when comming from stacked chart", async () => {
+            const columnChart = createComponent(defaultProps);
+            const mockRefPoint = referencePointMocks.dateAttributeOnViewAndStackReferencePoint;
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: mockRefPoint.buckets[0].items,
+                },
+                {
+                    localIdentifier: "view",
+                    items: mockRefPoint.buckets[1].items.slice(0, 1),
+                },
+                {
+                    localIdentifier: "stack",
+                    items: [],
+                },
+            ];
+            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
+
+            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+        });
+
+        it("should keep two date attributes in view by bucket when comming from pivot table with only one dimension", async () => {
+            const columnChart = createComponent(defaultProps);
+            const mockRefPoint = referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint;
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: mockRefPoint.buckets[0].items,
+                },
+                {
+                    localIdentifier: "view",
+                    items: [...mockRefPoint.buckets[1].items, ...mockRefPoint.buckets[2].items],
+                },
+                {
+                    localIdentifier: "stack",
+                    items: [],
+                },
+            ];
+            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
+
+            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+        });
+
+        it("should keep only first date attribute in view by bucket when comming from pivot table with different dimensions", async () => {
+            const columnChart = createComponent(defaultProps);
+            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
+            mockRefPoint.buckets[2].items[0].dateDataset.ref = {
+                uri: "closed",
+            };
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: mockRefPoint.buckets[0].items,
+                },
+                {
+                    localIdentifier: "view",
+                    items: [...mockRefPoint.buckets[1].items],
+                },
+                {
+                    localIdentifier: "stack",
+                    items: [],
+                },
+            ];
+            const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
+
+            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
         });
     });
 
