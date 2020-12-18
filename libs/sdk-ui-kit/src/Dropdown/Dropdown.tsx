@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import uniqueId from "lodash/uniqueId";
 
 import { FullScreenOverlay, Overlay } from "../Overlay";
@@ -52,8 +52,16 @@ export interface IDropdownButtonRenderProps {
 /**
  * @internal
  */
+export interface IDropdownBodyRenderProps {
+    isMobile: boolean;
+    closeDropdown: () => void;
+}
+
+/**
+ * @internal
+ */
 export interface IDropdownProps {
-    renderBody: (props: { closeDropdown: () => void; isMobile: boolean }) => React.ReactNode;
+    renderBody: (props: IDropdownBodyRenderProps) => React.ReactNode;
 
     renderButton: (props: IDropdownButtonRenderProps) => React.ReactNode;
 
@@ -140,10 +148,14 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
         }));
     }, []);
 
+    const mountRef = useRef(false);
     useEffect(() => {
-        if (onOpenStateChanged) {
+        if (mountRef.current && onOpenStateChanged) {
             onOpenStateChanged(isOpen);
         }
+        return () => {
+            mountRef.current = true;
+        };
     }, [isOpen]);
 
     const renderButtonProps = {
@@ -155,48 +167,47 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
-    const renderDropdown = isMobileDevice ? (
-        <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
-            <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
-                <div className="gd-mobile-dropdown-header gd-flex-item">
-                    {_renderButton({
-                        ...renderButtonProps,
-                        isMobile: true,
-                    })}
-                </div>
+    const renderDropdown =
+        isOpen &&
+        (isMobileDevice ? (
+            <FullScreenOverlay alignTo="body" alignPoints={MOBILE_DROPDOWN_ALIGN_POINTS}>
+                <div className="gd-mobile-dropdown-overlay overlay gd-flex-row-container">
+                    <div className="gd-mobile-dropdown-header gd-flex-item">
+                        {_renderButton({
+                            ...renderButtonProps,
+                            isMobile: true,
+                        })}
+                    </div>
 
-                <div
-                    className="gd-mobile-dropdown-content
-                                            gd-flex-item-stretch gd-flex-row-container"
-                >
+                    <div className="gd-mobile-dropdown-content gd-flex-item-stretch gd-flex-row-container">
+                        {renderBody({
+                            closeDropdown,
+                            isMobile: true,
+                        })}
+                    </div>
+                </div>
+            </FullScreenOverlay>
+        ) : (
+            <Overlay
+                alignTo={`.${dropdownId}`}
+                positionType={overlayPositionType}
+                alignPoints={alignPoints}
+                closeOnOutsideClick={closeOnOutsideClick}
+                closeOnMouseDrag={closeOnMouseDrag}
+                closeOnParentScroll={closeOnParentScroll}
+                shouldCloseOnClick={shouldCloseOnClick}
+                ignoreClicksOnByClass={ignoreClicksOnByClass}
+                onClose={closeDropdown}
+                zIndex={overlayZIndex}
+            >
+                <div className="overlay dropdown-body">
                     {renderBody({
                         closeDropdown,
-                        isMobile: true,
+                        isMobile: false,
                     })}
                 </div>
-            </div>
-        </FullScreenOverlay>
-    ) : (
-        <Overlay
-            alignTo={`.${dropdownId}`}
-            positionType={overlayPositionType}
-            alignPoints={alignPoints}
-            closeOnOutsideClick={closeOnOutsideClick}
-            closeOnMouseDrag={closeOnMouseDrag}
-            closeOnParentScroll={closeOnParentScroll}
-            shouldCloseOnClick={shouldCloseOnClick}
-            ignoreClicksOnByClass={ignoreClicksOnByClass}
-            onClose={closeDropdown}
-            zIndex={overlayZIndex}
-        >
-            <div className="overlay dropdown-body">
-                {renderBody({
-                    closeDropdown,
-                    isMobile: false,
-                })}
-            </div>
-        </Overlay>
-    );
+            </Overlay>
+        ));
 
     return (
         <div className={className}>
@@ -204,7 +215,7 @@ export const Dropdown: React.FC<IDropdownProps> = (props) => {
                 ...renderButtonProps,
                 isMobile: false,
             })}
-            {isOpen && renderDropdown}
+            {renderDropdown}
         </div>
     );
 };

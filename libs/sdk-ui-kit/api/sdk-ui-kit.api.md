@@ -236,10 +236,7 @@ export const Dropdown: React_2.FC<IDropdownProps>;
 export const DropdownButton: React_2.FC<IDropdownButtonProps>;
 
 // @internal (undocumented)
-export class DropdownList<T> extends Component<IDropdownListProps<T>> {
-    // (undocumented)
-    render(): React_2.ReactNode;
-}
+export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
@@ -587,6 +584,14 @@ export interface IDialogBaseProps {
 }
 
 // @internal (undocumented)
+export interface IDropdownBodyRenderProps {
+    // (undocumented)
+    closeDropdown: () => void;
+    // (undocumented)
+    isMobile: boolean;
+}
+
+// @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
     className?: string;
@@ -621,6 +626,12 @@ export interface IDropdownButtonRenderProps {
 }
 
 // @internal (undocumented)
+export interface IDropdownListNoDataRenderProps {
+    // (undocumented)
+    hasNoMatchingData: boolean;
+}
+
+// @internal (undocumented)
 export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     className?: string;
@@ -629,7 +640,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     disableAutofocus?: boolean;
     // (undocumented)
-    footer?: React_2.ReactNode;
+    footer?: React_2.ReactNode | ((closeDropdown: () => void) => React_2.ReactNode);
     // (undocumented)
     height?: number;
     // (undocumented)
@@ -643,11 +654,9 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
     // (undocumented)
-    renderNoData?: (props: {
-        hasNoMatchingData: boolean;
-    }) => React_2.ReactNode;
+    renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
     // (undocumented)
-    searchFieldSize?: string;
+    searchFieldSize?: "small";
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -687,10 +696,7 @@ export interface IDropdownProps {
     // (undocumented)
     overlayZIndex?: number;
     // (undocumented)
-    renderBody: (props: {
-        closeDropdown: () => void;
-        isMobile: boolean;
-    }) => React_2.ReactNode;
+    renderBody: (props: IDropdownBodyRenderProps) => React_2.ReactNode;
     // (undocumented)
     renderButton: (props: IDropdownButtonRenderProps) => React_2.ReactNode;
 }
@@ -1317,20 +1323,20 @@ export interface IMeasureNumberFormatOwnProps {
 
 // @internal
 export interface IMediaQueries {
-    isDesktop: string;
-    isLg: string;
-    isLgUp: string;
-    isMd: string;
-    isMdUp: string;
-    isMobileDevice: string;
-    isNotMobileDevice: string;
-    isSm: string;
-    isSmallerThanDesktop: string;
-    isSmUp: string;
-    isXl: string;
-    isXlUp: string;
-    isXxl: string;
-    isXxlUp: string;
+    "!mobileDevice": string;
+    "<desktop": string;
+    ">=lg": string;
+    ">=md": string;
+    ">=sm": string;
+    ">=xl": string;
+    ">=xxl": string;
+    desktop: string;
+    lg: string;
+    md: string;
+    mobileDevice: string;
+    sm: string;
+    xl: string;
+    xxl: string;
 }
 
 // @public (undocumented)
