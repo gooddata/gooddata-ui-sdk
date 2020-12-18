@@ -113,7 +113,6 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     $value-height: 60px;
 
     font-weight: map-get(map-get($gd-typo, font-weights), bold);
-
     font-family: $gd-font-primary-without-custom;
     height: $value-height;
     margin: 10px 0;
