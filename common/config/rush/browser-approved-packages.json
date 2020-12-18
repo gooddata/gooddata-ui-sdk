@@ -183,11 +183,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addon-options",
+      "name": "@storybook/addons",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@storybook/addons",
+      "name": "@storybook/preset-scss",
       "allowedCategories": [ "production" ]
     },
     {
