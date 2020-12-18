@@ -234,10 +234,10 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
 
 // this will fix the scale problem of mapbox canvas when exporting
 .isExportMode .mapboxgl-canvas {
-    /* stylelint-disable declaration-no-important */
+    // stylelint-disable-next-line declaration-no-important
     width: 100% !important;
+    // stylelint-disable-next-line declaration-no-important
     height: 100% !important;
-    /* stylelint-enable declaration-no-important */
 }
 
 @import "~@gooddata/sdk-ui-vis-commons/styles/scss/legend";
