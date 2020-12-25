@@ -9,6 +9,11 @@ $gd-header-height: 44px;
 $gd-header-animation-easing: cubic-bezier(0.23, 1, 0.32, 1);
 $gd-header-project-width: 230px;
 
+$button-normal-active-gradient-top: #dee6ef;
+$button-normal-active-gradient-bottom: #ecf0f5;
+$button-normal-active-border-color: #b1c1d1;
+$button-normal-active-shadow: transparentize($button-normal-active-border-color, 0.35);
+
 .gd-header {
     position: relative;
     box-sizing: border-box;
@@ -600,5 +605,96 @@ $gd-header-project-width: 230px;
             color: $is-focused-color;
             text-decoration: underline;
         }
+    }
+}
+
+.gd-data-header-menu-section {
+    display: flex;
+    flex: 1 0 auto;
+
+    .icon-sources {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+
+        &:hover {
+            border-color: $gd-color-highlight;
+        }
+    }
+
+    .icon-model {
+        border-radius: 0;
+
+        &:hover {
+            border-color: $gd-color-highlight;
+        }
+    }
+
+    .icon-cloud-upload {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+
+        &::before {
+            top: 11px;
+            color: #6d7680;
+        }
+
+        &:hover {
+            border-color: $gd-color-highlight;
+        }
+    }
+
+    button.is-active[class*="gd-button-"]::before,
+    button[class*="gd-button-"]::before {
+        width: 19px;
+        height: 16px;
+        font-size: 16px;
+    }
+
+    .gd-button-primary[class*="icon-"] {
+        box-shadow: none;
+        padding-left: 11px;
+    }
+
+    button.is-active {
+        box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
+        color: $gd-color-text;
+        border-color: $button-normal-active-border-color;
+
+        @include gradient-linear($button-normal-active-gradient-top, $button-normal-active-gradient-bottom);
+
+        &::before,
+        &::after {
+            top: calc(50% - 1px);
+            color: $gd-color-highlight;
+        }
+
+        .gd-button-text {
+            font-weight: bold;
+        }
+
+        .gd-button-icon {
+            margin-top: 2px;
+        }
+
+        &:focus {
+            box-shadow: 0 0 3px 0 $gd-color-highlight;
+        }
+    }
+
+    .gd-button-text {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 14px;
+    }
+
+    &,
+    li {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        display: block;
+        list-style: none;
     }
 }
