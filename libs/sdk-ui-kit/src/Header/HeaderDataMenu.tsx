@@ -42,7 +42,7 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
             return (
                 <li key={key}>
                     <BubbleHoverTrigger
-                        tagName="abbr"
+                        tagName="div"
                         hideDelay={100}
                         showDelay={100}
                         className="gd-bubble-trigger-data-menu"
@@ -55,12 +55,7 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
                         />
                         {tooltipText && isDisable && (
                             <Bubble
-                                alignPoints={[
-                                    { align: "bc tc" },
-                                    { align: "tc bc" },
-                                    { align: "bl tl" },
-                                    { align: "br tr" },
-                                ]}
+                                alignPoints={[{ align: "bc tc" }, { align: "bc tl" }, { align: "bc tr" }]}
                             >
                                 {tooltipText}
                             </Bubble>
