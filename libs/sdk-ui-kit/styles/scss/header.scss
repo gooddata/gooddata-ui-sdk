@@ -635,10 +635,16 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 
         &::before {
             top: 11px;
-            color: #6d7680;
+            color: #b0beca;
         }
 
-        &:hover {
+        &:hover.disabled {
+            color: #b0beca;
+            border-color: $gd-color-highlight;
+        }
+
+        &:hover:not(.disabled) {
+            color: #464e56;
             border-color: $gd-color-highlight;
         }
     }
@@ -696,5 +702,19 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     li {
         display: block;
         list-style: none;
+    }
+}
+
+button.gd-button-primary {
+    &.icon-cloud-upload.s-load.gd-button,
+    &.icon-sources.s-sources.gd-button {
+        > span {
+            margin-left: 23px;
+        }
+    }
+    &.icon-model.s-model.gd-button {
+        > span {
+            margin-left: 22px;
+        }
     }
 }
