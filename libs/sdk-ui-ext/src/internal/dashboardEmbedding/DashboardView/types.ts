@@ -88,7 +88,7 @@ export interface IDashboardViewProps {
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
-     * These are applied to all the widgets in the dashboard.
+     * These are applied to all the widgets in the dashboard. If specified, these override any drills specified in the dashboards.
      *
      * TODO: do we need more sophisticated logic to specify drillability?
      */
