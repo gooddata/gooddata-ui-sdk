@@ -1,7 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ReactWrapper } from "enzyme";
-// TODO: RAIL-2760: Migrate to sdk-ui-kit
-import { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { DropdownList, DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants";
 
@@ -36,6 +35,6 @@ export function openDropdown(wrapper: ReactWrapper): void {
 }
 
 export function selectDropdownItem(wrapper: ReactWrapper, index: number): void {
-    const dropdownItem = wrapper.find(DropdownBody).find(".fixedDataTableRowLayout_rowWrapper").at(index);
+    const dropdownItem = wrapper.find(DropdownList).find(".fixedDataTableRowLayout_rowWrapper").at(index);
     dropdownItem.find(".gd-list-item span").simulate("click");
 }
