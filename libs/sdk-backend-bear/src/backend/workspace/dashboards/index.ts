@@ -346,7 +346,11 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getBearWidgetAlertsForWidget = async (widget: IWidget): Promise<ObjRef[]> => {
         const objectLinks = await this.authCall((sdk) =>
-            sdk.md.getObjectUsedBy(this.workspace, widget.uri, { types: ["kpiAlert"], nearest: false }),
+            sdk.md.getObjectUsedBy(this.workspace, widget.uri, {
+                types: ["kpiAlert"],
+                // limit ourselves to nearest only, otherwise, other alerts on the dashboard would be deleted, too
+                nearest: true,
+            }),
         );
 
         return objectLinks.map((link) => uriRef(link.link));
