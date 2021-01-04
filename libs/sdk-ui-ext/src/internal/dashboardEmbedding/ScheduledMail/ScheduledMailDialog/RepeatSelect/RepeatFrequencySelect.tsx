@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-// TODO: RAIL-2760: Migrate to sdk-ui-kit
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, FREQUENCY_TYPE } from "../../constants";
@@ -26,15 +25,26 @@ class RenderRepeatFrequencySelect extends React.PureComponent<IRepeatFrequencySe
             <Dropdown
                 alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                 className="gd-schedule-email-dialog-repeat-frequency s-gd-schedule-email-dialog-repeat-frequency"
-                button={<DropdownButton value={repeatFrequencyItem.title} />}
-                body={
-                    <DropdownBody
+                renderButton={({ toggleDropdown }) => (
+                    <DropdownButton value={repeatFrequencyItem.title} onClick={toggleDropdown} />
+                )}
+                renderBody={({ closeDropdown, isMobile }) => (
+                    <DropdownList
                         width={DROPDOWN_WIDTH}
                         items={repeatFrequencyItems}
-                        selection={repeatFrequencyItem}
-                        onSelect={this.onRepeatFrequencyChange}
+                        isMobile={isMobile}
+                        renderItem={({ item }) => (
+                            <SingleSelectListItem
+                                title={item.title}
+                                onClick={() => {
+                                    this.onRepeatFrequencyChange(item);
+                                    closeDropdown();
+                                }}
+                                isSelected={repeatFrequencyItem.id === item.id}
+                            />
+                        )}
                     />
-                }
+                )}
                 overlayPositionType="sameAsTarget"
                 overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
             />

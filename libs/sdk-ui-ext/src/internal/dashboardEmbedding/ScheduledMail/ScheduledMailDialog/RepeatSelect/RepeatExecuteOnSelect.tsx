@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-// TODO: RAIL-2760: Migrate to sdk-ui-kit
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_EXECUTE_ON } from "../../constants";
@@ -27,15 +26,26 @@ class RenderRepeatExecuteOnSelect extends React.PureComponent<IRepeatExecuteOnSe
             <Dropdown
                 alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                 className="gd-schedule-email-dialog-repeat-execute-on s-gd-schedule-email-dialog-repeat-execute-on"
-                button={<DropdownButton value={repeatExecuteOnItem.title} />}
-                body={
-                    <DropdownBody
+                renderBody={({ closeDropdown, isMobile }) => (
+                    <DropdownList
                         width={DROPDOWN_WIDTH}
                         items={repeatExecuteOnItems}
-                        selection={repeatExecuteOnItem}
-                        onSelect={this.onRepeatExecuteOnChange}
+                        isMobile={isMobile}
+                        renderItem={({ item }) => (
+                            <SingleSelectListItem
+                                title={item.title}
+                                onClick={() => {
+                                    this.onRepeatExecuteOnChange(item);
+                                    closeDropdown();
+                                }}
+                                isSelected={repeatExecuteOnItem.id === item.id}
+                            />
+                        )}
                     />
-                }
+                )}
+                renderButton={({ toggleDropdown }) => (
+                    <DropdownButton value={repeatExecuteOnItem.title} onClick={toggleDropdown} />
+                )}
                 overlayPositionType="sameAsTarget"
                 overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
             />

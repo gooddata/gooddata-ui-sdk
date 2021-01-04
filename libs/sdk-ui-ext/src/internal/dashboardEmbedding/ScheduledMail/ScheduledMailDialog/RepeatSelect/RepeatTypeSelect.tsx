@@ -1,8 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-// TODO: RAIL-2760: Migrate to sdk-ui-kit
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { IDropdownItem } from "../../interfaces";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX, REPEAT_TYPES } from "../../constants";
@@ -27,15 +26,26 @@ class RenderRepeatTypeSelect extends React.PureComponent<IRepeatTypeSelectProps>
             <Dropdown
                 alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
                 className="gd-schedule-email-dialog-repeat-type s-gd-schedule-email-dialog-repeat-type"
-                button={<DropdownButton value={repeatTypeItem.title} />}
-                body={
-                    <DropdownBody
+                renderButton={({ toggleDropdown }) => (
+                    <DropdownButton value={repeatTypeItem.title} onClick={toggleDropdown} />
+                )}
+                renderBody={({ closeDropdown, isMobile }) => (
+                    <DropdownList
                         width={DROPDOWN_WIDTH}
                         items={repeatItems}
-                        selection={repeatTypeItem}
-                        onSelect={this.onRepeatTypeChange}
+                        isMobile={isMobile}
+                        renderItem={({ item }) => (
+                            <SingleSelectListItem
+                                title={item.title}
+                                onClick={() => {
+                                    this.onRepeatTypeChange(item);
+                                    closeDropdown();
+                                }}
+                                isSelected={repeatTypeItem.id === item.id}
+                            />
+                        )}
                     />
-                }
+                )}
                 overlayPositionType="sameAsTarget"
                 overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
             />

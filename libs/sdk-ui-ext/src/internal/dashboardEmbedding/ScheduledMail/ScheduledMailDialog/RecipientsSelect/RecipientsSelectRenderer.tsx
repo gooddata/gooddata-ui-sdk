@@ -17,10 +17,7 @@ import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import includes from "lodash/includes";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-// TODO: RAIL-2760: Migrate to sdk-ui-kit
-import Message from "@gooddata/goodstrap/lib/Messages/Message";
-import LoadingMask from "@gooddata/goodstrap/lib/core/LoadingMask";
+import { Bubble, BubbleHoverTrigger, Message, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { isEmail } from "../../utils/validate";
 import {
@@ -227,11 +224,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
     private renderLoadingIcon = (menuProps: MenuProps<any>): React.ReactElement => {
         return (
             <Menu className="s-gd-recipients-menu-container" {...menuProps}>
-                <LoadingMask
-                    style={{
-                        height: `${LOADING_MENU_HEIGHT}px`,
-                    }}
-                />
+                <LoadingMask height={LOADING_MENU_HEIGHT} />
             </Menu>
         );
     };
