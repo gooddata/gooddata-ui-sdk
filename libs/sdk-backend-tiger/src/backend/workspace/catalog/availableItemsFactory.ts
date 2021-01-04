@@ -29,7 +29,7 @@ import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableI
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter";
-import { jsonApiIdToObjRef, isJsonApiId } from "../../../convertors/fromBackend/afm/ObjRefConverter";
+import { jsonApiIdToObjRef, isJsonApiId } from "../../../convertors/fromBackend/ObjRefConverter";
 import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
 

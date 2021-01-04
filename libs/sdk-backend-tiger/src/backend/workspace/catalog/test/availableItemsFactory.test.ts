@@ -4,7 +4,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { CatalogItem } from "@gooddata/sdk-backend-spi";
 import { uriRef } from "@gooddata/sdk-model";
 import { convertResponseToObjRefs, filterAvailableItems } from "../availableItemsFactory";
-import { JsonApiId } from "../../../../convertors/fromBackend/afm/ObjRefConverter";
+import { JsonApiId } from "../../../../convertors/fromBackend/ObjRefConverter";
 
 describe("available item filtering", () => {
     describe("response conversion", () => {

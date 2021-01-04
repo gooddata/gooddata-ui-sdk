@@ -1,45 +1,18 @@
 // (C) 2007-2021 GoodData Corporation
 import { ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
+import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
-import { TigerObjectType } from "../../../types";
+import { TigerObjectType } from "../../types";
+import { isTigerType, TigerCompatibleObjectType, tigerIdTypeToObjectType } from "../../types/refTypeMapping";
 
-const allValidTigerAfmTypes: TigerObjectType[] = [
-    "metric",
-    "label",
-    "fact",
-    "dataset",
-    "attribute",
-    "visualizationObject",
-    "filterContext",
-];
-
-const objRefTypeByTigerType: {
-    [objectType in TigerObjectType]: ObjectType;
-} = {
-    attribute: "attribute",
-    metric: "measure",
-    label: "displayForm",
-    dataset: "dataSet",
-    fact: "fact",
-    variable: "variable",
-    visualizationObject: "visualizationObject",
-    analyticalDashboard: "analyticalDashboard",
-    filterContext: "filterContext",
-};
-
-const isValidTigerAfmType = (obj: any): obj is TigerObjectType => {
-    return !isEmpty(obj) && allValidTigerAfmTypes.some((afmType) => afmType === obj);
-};
-
-function toObjectType(value: TigerObjectType): ObjectType {
-    if (!isValidTigerAfmType(value)) {
+export function toObjectType(value: TigerObjectType): TigerCompatibleObjectType {
+    if (!isTigerType(value)) {
         throw new UnexpectedError(`Cannot convert ${value} to ObjRef, ${value} is not valid TigerAfmType`);
     }
 
-    return objRefTypeByTigerType[value];
+    return tigerIdTypeToObjectType[value];
 }
 
 export function toObjRef(qualifier: ObjectIdentifier): ObjRef {

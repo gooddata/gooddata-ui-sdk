@@ -104,11 +104,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         });
 
         const included = result.data.included || [];
+        const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
 
         return {
             dashboard: convertDashboard(result.data as AnalyticalDashboard),
             references: {
-                insights: included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight),
+                insights,
             },
         };
     };

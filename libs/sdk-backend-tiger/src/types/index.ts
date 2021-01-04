@@ -3,6 +3,13 @@ import { ITigerClient } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 
 /**
+ * Tiger authenticated call guard
+ *
+ * @public
+ */
+export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClient>;
+
+/**
  * Tiger AFM types
  *
  * @public
@@ -16,11 +23,9 @@ export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute"
  */
 export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext";
 
-export type TigerObjectType = TigerAfmType | TigerMetadataType;
-
 /**
- * Tiger authenticated call guard
+ * Tiger entity types
  *
  * @public
  */
-export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClient>;
+export type TigerObjectType = TigerAfmType | TigerMetadataType;
