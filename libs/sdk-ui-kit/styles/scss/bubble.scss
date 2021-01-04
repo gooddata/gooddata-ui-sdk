@@ -127,6 +127,13 @@
             $bubble-arrowColor: $bubble-light-arrowColor;
             $bubble-arrowBorderColor: $bubble-light-arrowBorderColor;
             $bubble-bgcolor: $bubble-light-bgcolor;
+        } @else if $skin == warning {
+            $bubble-borderWidth: $bubble-warning-borderWidth;
+            $bubble-color: $bubble-warning-color;
+            $bubble-borderColor: $bubble-warning-borderColor;
+            $bubble-arrowColor: $bubble-warning-arrowColor;
+            $bubble-arrowBorderColor: $bubble-warning-arrowBorderColor;
+            $bubble-bgcolor: $bubble-warning-bgcolor;
         }
 
         &.bubble-#{$skin} {

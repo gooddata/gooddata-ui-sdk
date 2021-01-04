@@ -7,7 +7,7 @@
 $bubble-helper-size: 8px;
 $bubble-max-width: 300px;
 $bubble-small-max-width: 200px;
-$bubble-skins: primary, secondary, dark, light, negative;
+$bubble-skins: primary, secondary, dark, light, warning, negative;
 
 // Bubble
 $bubble-boxShadow: "0 1px 3px 0 rgba(20, 56, 93, 0.10), 0 2px 9px 0 rgba(20, 56, 93, 0.15)";
@@ -17,6 +17,7 @@ $bubble-borderWidth: 0;
 $bubble-bg-color: transparentize($gd-color-text, 0.05);
 $bubble-secondary-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-highlight, 0.1));
 $bubble-light-base: rgba(255, 255, 255, 0.95);
+$bubble-warning-base: $gd-color-warning-text;
 $bubble-light-border-base: #c9d5e0;
 $bubble-primary-borderWidth: $bubble-borderWidth;
 $bubble-primary-color: var(--gd-tooltip-color, $gd-color-text-light);
@@ -36,6 +37,12 @@ $bubble-light-borderColor: $bubble-light-border-base;
 $bubble-light-arrowColor: $bubble-light-base;
 $bubble-light-arrowBorderColor: $bubble-light-border-base;
 $bubble-light-bgcolor: $bubble-light-base;
+$bubble-warning-borderWidth: $bubble-borderWidth;
+$bubble-warning-color: $gd-color-text-light;
+$bubble-warning-borderColor: $bubble-warning-base;
+$bubble-warning-arrowColor: $bubble-warning-base;
+$bubble-warning-arrowBorderColor: $bubble-warning-base;
+$bubble-warning-bgcolor: $bubble-warning-base;
 
 // error
 $bubble-negative-base: var(--gd-palette-error-base-t10, transparentize($gd-color-negative, 0.1));
