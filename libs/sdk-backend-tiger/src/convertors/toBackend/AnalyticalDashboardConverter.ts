@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { AnalyticalDashboardObject } from "@gooddata/api-client-tiger";
 import { IDashboardDefinition, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
@@ -12,7 +12,7 @@ export function convertAnalyticalDashboard(
         analyticalDashboard: {
             isLocked: dashboard.isLocked,
             dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
-            filterContextRef: filterContextRef,
+            filterContextRef: cloneWithSanitizedIds(filterContextRef),
             layout: cloneWithSanitizedIds(dashboard.layout),
         },
     };

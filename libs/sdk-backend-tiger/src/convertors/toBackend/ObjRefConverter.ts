@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -22,6 +22,7 @@ const allValidAfmTypes: TigerObjectType[] = [
     "dataSet",
     "attribute",
     "visualizationObject",
+    "filterContext",
 ];
 
 type TigerIdType = TigerAfmType | "visualizationObject" | "filterContext";

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     AnalyticalDashboard,
     AnalyticalDashboards,
@@ -70,6 +70,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 },
                 {
                     headers: defaultHeaders,
+                    include: "filterContexts",
                 },
             );
         });
@@ -96,7 +97,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     headers: defaultHeaders,
                     params: {
-                        include: "visualizationObjects",
+                        include: "visualizationObjects,filterContexts",
                     },
                 },
             );

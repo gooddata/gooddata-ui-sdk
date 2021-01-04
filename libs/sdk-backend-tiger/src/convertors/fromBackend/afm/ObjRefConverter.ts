@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjectType, ObjRef } from "@gooddata/sdk-model";
@@ -13,6 +13,7 @@ const allValidTigerAfmTypes: TigerObjectType[] = [
     "dataset",
     "attribute",
     "visualizationObject",
+    "filterContext",
 ];
 
 const objRefTypeByTigerType: {
@@ -26,6 +27,7 @@ const objRefTypeByTigerType: {
     variable: "variable",
     visualizationObject: "visualizationObject",
     analyticalDashboard: "analyticalDashboard",
+    filterContext: "filterContext",
 };
 
 const isValidTigerAfmType = (obj: any): obj is TigerObjectType => {

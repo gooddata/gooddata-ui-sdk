@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 
@@ -14,7 +14,7 @@ export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute"
  *
  * @public
  */
-export type TigerMetadataType = "analyticalDashboard" | "visualizationObject";
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext";
 
 export type TigerObjectType = TigerAfmType | TigerMetadataType;
 
