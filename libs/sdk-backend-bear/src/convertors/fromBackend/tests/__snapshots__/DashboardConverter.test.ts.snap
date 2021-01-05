@@ -19,6 +19,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
+  "tags": undefined,
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -45,6 +46,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
   },
+  "tags": undefined,
   "title": "dashboardWithExtendedDateFilterConfig",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithExtendedDateFilterConfig",
@@ -131,6 +133,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
+  "tags": undefined,
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -282,6 +285,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
+  "tags": undefined,
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -433,6 +437,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
+  "tags": undefined,
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -451,6 +456,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/emptyDashboard",
   },
+  "tags": undefined,
   "title": "emptyDashboard",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/emptyDashboard",
@@ -478,6 +484,7 @@ Object {
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
   },
+  "tags": undefined,
   "title": "dashboardWithFilterContext",
   "updated": "2020-05-05 10:10:10",
   "uri": "/gdc/md/obj/dashboardWithFilterContext",
