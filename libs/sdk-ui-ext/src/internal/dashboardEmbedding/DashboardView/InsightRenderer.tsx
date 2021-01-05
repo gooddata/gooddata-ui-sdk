@@ -49,7 +49,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     insight,
     filters,
     filterContext,
-    drillableItems = [],
+    drillableItems,
     onDrill,
     onError,
     backend,
