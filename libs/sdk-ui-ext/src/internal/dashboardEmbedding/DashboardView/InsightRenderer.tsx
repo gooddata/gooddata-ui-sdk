@@ -135,29 +135,15 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         return insightSetProperties(insightWithFilters, merged);
     }, [insightWithFilters, insightWidget.properties, userWorkspaceSettings]);
 
-    const drillingConfig = useMemo<{
-        drillableItems: Array<IDrillableItem | IHeaderPredicate>;
-        forceDisableDrillOnAxes: boolean;
-    }>(() => {
-        // if there are drillable items from the user, use them and only them
-        if (drillableItems) {
-            return {
-                drillableItems,
-                forceDisableDrillOnAxes: false, // to keep in line with KD, enable axes drilling if using explicit drills
-            };
-        }
-
+    const implicitDrills = useMemo(() => {
         const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
         const drillsFromDrillDown = insightDrillDownPredicates(possibleDrills, attributesWithDrillDown);
 
-        return {
-            drillableItems: [
-                ...drillsFromWidget, // drills specified in the widget definition
-                ...drillsFromDrillDown, // drills from drill downs specified on attributes
-            ],
-            forceDisableDrillOnAxes: true, // to keep in line with KD, disable axes drilling if using implicit drills
-        };
-    }, [insightWidget.drills, drillableItems, possibleDrills, attributesWithDrillDown]);
+        return [
+            ...drillsFromWidget, // drills specified in the widget definition
+            ...drillsFromDrillDown, // drills from drill downs specified on attributes
+        ];
+    }, [insightWidget.drills, possibleDrills, attributesWithDrillDown]);
 
     const handlePushData = useCallback((data: IPushData): void => {
         if (data.availableDrillTargets?.attributes) {
@@ -177,9 +163,9 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         () => ({
             mapboxToken: dashboardViewConfig?.mapboxToken,
             separators: dashboardViewConfig?.separators,
-            forceDisableDrillOnAxes: drillingConfig.forceDisableDrillOnAxes,
+            forceDisableDrillOnAxes: !drillableItems, // to keep in line with KD, enable axes drilling only if using explicit drills
         }),
-        [dashboardViewConfig, drillingConfig.forceDisableDrillOnAxes],
+        [dashboardViewConfig, drillableItems],
     );
 
     // we need sdk-ui intl wrapper (this is how InsightView does this as well) for error messages etc.
@@ -199,7 +185,8 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 insight={insightWithAddedWidgetProperties}
                 backend={effectiveBackend}
                 workspace={effectiveWorkspace}
-                drillableItems={drillingConfig.drillableItems}
+                // if there are drillable items from the user, use them and only them
+                drillableItems={drillableItems ?? implicitDrills}
                 onDrill={onDrill}
                 config={chartConfig}
                 onLoadingChanged={handleLoadingChanged}
