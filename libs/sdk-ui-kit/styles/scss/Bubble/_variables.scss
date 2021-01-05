@@ -17,7 +17,7 @@ $bubble-borderWidth: 0;
 $bubble-bg-color: transparentize($gd-color-text, 0.05);
 $bubble-secondary-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-highlight, 0.1));
 $bubble-light-base: rgba(255, 255, 255, 0.95);
-$bubble-warning-base: var(--gd-palette-warning-base, $gd-color-warning-text);
+$bubble-warning-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-warning-text, 0.1));
 $bubble-light-border-base: #c9d5e0;
 $bubble-primary-borderWidth: $bubble-borderWidth;
 $bubble-primary-color: var(--gd-tooltip-color, $gd-color-text-light);
