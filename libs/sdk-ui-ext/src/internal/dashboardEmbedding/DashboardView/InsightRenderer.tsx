@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+import isEqual from "lodash/isEqual";
 import merge from "lodash/merge";
 import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
 import { IFilter, IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
@@ -160,7 +161,15 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
 
     const handlePushData = useCallback((data: IPushData): void => {
         if (data.availableDrillTargets?.attributes) {
-            setPossibleDrills(data.availableDrillTargets.attributes);
+            setPossibleDrills((prevValue) => {
+                // only set possible drills if really different to prevent other hooks firing unnecessarily
+                if (!isEqual(prevValue, data.availableDrillTargets.attributes)) {
+                    return data.availableDrillTargets.attributes;
+                }
+
+                // returning prevValue effectively skips the setState
+                return prevValue;
+            });
         }
     }, []);
 
