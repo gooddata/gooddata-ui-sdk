@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Bubble, BubbleHoverTrigger, BubbleFocusTrigger, Button } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
+import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
 import "./styles.scss";
@@ -84,6 +85,50 @@ class BubbleExamples extends Component {
                         This is bubble content.
                         <br />
                         <Button value="Click here!" className="gd-button-positive" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <h4>Color Skins</h4>
+                <p>Hover over this link to see bubble skins</p>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Primary" className="gd-button-link primary-skin" />
+
+                    <Bubble className="bubble-primary" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Secondary" className="gd-button-link secondary-skin" />
+
+                    <Bubble className="bubble-secondary" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Negative" className="gd-button-link negative-skin" />
+
+                    <Bubble className="bubble-negative" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Light" className="gd-button-link light-skin" />
+
+                    <Bubble className="bubble-light" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Dark" className="gd-button-link dark-skin" />
+
+                    <Bubble className="bubble-dark" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
+                    </Bubble>
+                </BubbleHoverTrigger>
+                <BubbleHoverTrigger>
+                    <Button tagName="span" value="Warning" className="gd-button-link warning-skin" />
+
+                    <Bubble className="bubble-warning" alignPoints={[{ align: "cr cl" }]}>
+                        This is bubble content.
                     </Bubble>
                 </BubbleHoverTrigger>
                 <h5>Focus</h5>
@@ -169,5 +214,32 @@ class BubbleExamples extends Component {
     }
 }
 
-storiesOf(`${UiKit}/Bubble`, module).add("full-featured", () => <BubbleExamples />);
+storiesOf(`${UiKit}/Bubble`, module).add("full-featured", () => {
+    return withMultipleScreenshots(<BubbleExamples />, {
+        "primary-skin": {
+            hoverSelector: ".primary-skin",
+            postInteractionWait: 1000,
+        },
+        "secondary-skin": {
+            hoverSelector: ".secondary-skin",
+            postInteractionWait: 1000,
+        },
+        "negative-skin": {
+            hoverSelector: ".negative-skin",
+            postInteractionWait: 1000,
+        },
+        "light-skin": {
+            hoverSelector: ".light-skin",
+            postInteractionWait: 1000,
+        },
+        "dark-skin": {
+            hoverSelector: ".dark-skin",
+            postInteractionWait: 1000,
+        },
+        "warning-skin": {
+            hoverSelector: ".warning-skin",
+            postInteractionWait: 1000,
+        },
+    });
+});
 storiesOf(`${UiKit}/Bubble`, module).add("themed", () => wrapWithTheme(<BubbleExamples />));
