@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     isFluidLayout,
     IDashboard,
@@ -504,6 +504,7 @@ export const convertDashboard = (
         description,
         dateFilterConfig,
         isLocked,
+        tags,
     } = dashboard;
     const convertedLayout = layout && convertLayout(layout);
     const widgets = layout && layoutWidgets(layout);
@@ -529,6 +530,7 @@ export const convertDashboard = (
                 title,
                 summary: description,
                 locked: isLocked,
+                tags: tags?.join(" "),
             },
         },
     };

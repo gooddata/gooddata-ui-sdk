@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef, Identifier } from "@gooddata/sdk-model";
 import { IDashboardLayout } from "./layout/dashboardLayout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
@@ -80,6 +80,11 @@ export interface IDashboardBase {
      * When dashboard is locked, no one other than the administrator can edit it
      */
     readonly isLocked?: boolean;
+
+    /**
+     * Dashboard (optional) tagging system
+     */
+    readonly tags?: string[];
 }
 
 /**

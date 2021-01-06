@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     GdcMetadata,
@@ -67,7 +67,7 @@ export const convertDashboard = (
     exportFilterContextUri?: string,
 ): IDashboard => {
     const {
-        meta: { summary, created, updated, identifier, uri, title, locked },
+        meta: { summary, created, updated, identifier, uri, title, locked, tags },
         content: { layout, filterContext, dateFilterConfig, widgets: widgetsUris },
     } = dashboard.analyticalDashboard;
 
@@ -106,6 +106,8 @@ export const convertDashboard = (
         layout: layout
             ? convertLayout(layout, widgets)
             : createImplicitDashboardLayout(widgets, dependencies, visualizationClasses),
+
+        tags: tags?.split(" "),
     };
 
     return convertedDashboard;

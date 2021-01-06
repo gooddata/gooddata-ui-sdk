@@ -400,6 +400,7 @@ export interface IDashboardAttributeFilterReference {
 export interface IDashboardBase {
     readonly description: string;
     readonly isLocked?: boolean;
+    readonly tags?: string[];
     readonly title: string;
 }
 
