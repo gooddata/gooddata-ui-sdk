@@ -4,7 +4,7 @@ import compact from "lodash/compact";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsight, IColorPalette, idRef } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
@@ -18,10 +18,14 @@ import {
     UnexpectedSdkError,
     OnLoadingChanged,
 } from "@gooddata/sdk-ui";
-import { IInsightViewDataLoader, getInsightViewDataLoader } from "./dataLoaders";
 import { IInsightViewProps } from "./types";
 import { InsightRenderer } from "./InsightRenderer";
 import { InsightError } from "./InsightError";
+import {
+    colorPaletteDataLoaderFactory,
+    insightDataLoaderFactory,
+    userWorkspaceSettingsDataLoaderFactory,
+} from "../dataLoaders";
 
 interface IInsightViewState {
     isDataLoading: boolean;
@@ -72,10 +76,10 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     };
 
     private getRemoteResource = async <T extends any>(
-        resourceObtainer: (loader: IInsightViewDataLoader) => Promise<T>,
+        resourceObtainer: (backend: IAnalyticalBackend, workspace: string) => Promise<T>,
     ) => {
         try {
-            return await resourceObtainer(getInsightViewDataLoader(this.props.workspace));
+            return await resourceObtainer(this.props.backend, this.props.workspace);
         } catch (e) {
             if (isGoodDataSdkError(e)) {
                 this.setError(e);
@@ -94,7 +98,9 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                 ? idRef(this.props.insight, "insight")
                 : this.props.insight;
 
-        const insight = await this.getRemoteResource((loader) => loader.getInsight(this.props.backend, ref));
+        const insight = await this.getRemoteResource((backend, workspace) =>
+            insightDataLoaderFactory.forWorkspace(workspace).getInsight(backend, ref),
+        );
 
         if (this.props.executeByReference) {
             /*
@@ -115,11 +121,15 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     };
 
     private getColorPalette = (): Promise<IColorPalette> => {
-        return this.getRemoteResource((loader) => loader.getColorPalette(this.props.backend));
+        return this.getRemoteResource((backend, workspace) =>
+            colorPaletteDataLoaderFactory.forWorkspace(workspace).getColorPalette(backend),
+        );
     };
 
     private getUserWorkspaceSettings = (): Promise<IUserWorkspaceSettings> => {
-        return this.getRemoteResource((loader) => loader.getUserWorkspaceSettings(this.props.backend));
+        return this.getRemoteResource((backend, workspace) =>
+            userWorkspaceSettingsDataLoaderFactory.forWorkspace(workspace).getUserWorkspaceSettings(backend),
+        );
     };
 
     private updateUserWorkspaceSettings = async () => {

@@ -10,7 +10,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { getDashboardViewDataLoader } from "./dataLoaders";
+import { colorPaletteDataLoaderFactory } from "../../../dataLoaders";
 
 /**
  * @beta
@@ -61,7 +61,7 @@ export function useColorPalette({
         "The workspace in useColorPalette must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const loader = getDashboardViewDataLoader(effectiveWorkspace);
+    const loader = colorPaletteDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getColorPalette(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
