@@ -42,6 +42,7 @@ export function convertAnalyticalDashboardContent(
 ): AnalyticalDashboardObject.IAnalyticalDashboard["analyticalDashboard"] {
     return {
         isLocked: analyticalDashboard.isLocked,
+        tags: analyticalDashboard.tags,
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         filterContextRef: cloneWithSanitizedIds(analyticalDashboard.filterContextRef),
         layout: cloneWithSanitizedIds(analyticalDashboard.layout),

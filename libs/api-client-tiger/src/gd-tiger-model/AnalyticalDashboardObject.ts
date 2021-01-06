@@ -10,6 +10,7 @@ export namespace AnalyticalDashboardObject {
     export interface IAnalyticalDashboard {
         analyticalDashboard: {
             isLocked?: boolean;
+            tags?: string[];
             layout?: IDashboardLayout;
             filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;

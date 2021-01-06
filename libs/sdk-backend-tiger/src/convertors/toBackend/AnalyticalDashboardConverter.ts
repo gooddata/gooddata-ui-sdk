@@ -11,6 +11,7 @@ export function convertAnalyticalDashboard(
     return {
         analyticalDashboard: {
             isLocked: dashboard.isLocked,
+            tags: dashboard.tags,
             dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
             filterContextRef: cloneWithSanitizedIds(filterContextRef),
             layout: cloneWithSanitizedIds(dashboard.layout),
