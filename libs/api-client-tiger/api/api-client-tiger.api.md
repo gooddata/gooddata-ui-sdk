@@ -156,6 +156,18 @@ export interface AnalyticalDashboardAttributesAllOf {
 }
 
 // @public
+export interface AnalyticalDashboardCollection {
+    data: Array<AnalyticalDashboardsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface AnalyticalDashboardCollectionAllOf {
+    data?: Array<AnalyticalDashboardsItem>;
+}
+
+// @public
 export interface AnalyticalDashboardData {
     attributes?: AnalyticalDashboardAttributes;
     id: string;
@@ -181,12 +193,13 @@ export interface AnalyticalDashboardDataRequestAllOf {
 }
 
 // @public (undocumented)
-export namespace AnalyticalDashboardObject {
+export namespace AnalyticalDashboardObjectModel {
     // (undocumented)
     export interface IAnalyticalDashboard {
         // (undocumented)
         analyticalDashboard: {
             isLocked?: boolean;
+            tags?: string[];
             layout?: IDashboardLayout;
             filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;
@@ -203,30 +216,16 @@ export namespace AnalyticalDashboardObject {
 
 // @public
 export interface AnalyticalDashboardRelationships {
-    labels?: AnalyticalDashboardRelationshipsLabels;
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-
-// @public
-export interface AnalyticalDashboardRelationshipsLabels {
-    data?: Array<string> | RelationshipToOne;
+    datasets?: RelationshipToMany;
+    filterContexts?: RelationshipToMany;
+    labels?: RelationshipToMany;
+    metrics?: RelationshipToMany;
+    visualizationObjects?: RelationshipToMany;
 }
 
 // @public
 export interface AnalyticalDashboardRequest {
     data: AnalyticalDashboardDataRequest;
-}
-
-// @public
-export interface AnalyticalDashboards {
-    data: Array<AnalyticalDashboardsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface AnalyticalDashboardsAllOf {
-    data?: Array<AnalyticalDashboardsItem>;
 }
 
 // @public
@@ -244,7 +243,7 @@ export interface AnalyticalDashboardsItemAllOf {
 }
 
 // @public
-export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema;
+export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObject;
 
 // @public
 export type AnalyticsObjectRequest = AnalyticalDashboardRequest | FilterContextRequest | MetricRequest | VisualizationObjectRequest;
@@ -297,69 +296,93 @@ export interface AttributeAttributesAllOf {
 // @public
 export enum AttributeAttributesAllOfGranularityEnum {
     // (undocumented)
-    DAY = "day",
+    DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "dayOfMonth",
+    DAYOFMONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "dayOfWeek",
+    DAYOFWEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "dayOfYear",
+    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
     // (undocumented)
-    HOUR = "hour",
+    DAYOFYEAR = "DAY_OF_YEAR",
     // (undocumented)
-    HOUROFDAY = "hourOfDay",
+    HOUR = "HOUR",
     // (undocumented)
-    MINUTE = "minute",
+    HOUROFDAY = "HOUR_OF_DAY",
     // (undocumented)
-    MINUTEOFHOUR = "minuteOfHour",
+    MINUTE = "MINUTE",
     // (undocumented)
-    MONTH = "month",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
     // (undocumented)
-    MONTHOFYEAR = "monthOfYear",
+    MONTH = "MONTH",
     // (undocumented)
-    QUARTER = "quarter",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
     // (undocumented)
-    QUARTEROFYEAR = "quarterOfYear",
+    QUARTER = "QUARTER",
     // (undocumented)
-    WEEK = "week",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
     // (undocumented)
-    WEEKOFYEAR = "weekOfYear",
+    WEEK = "WEEK",
     // (undocumented)
-    YEAR = "year"
+    WEEKEU = "WEEK_EU",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
+    // (undocumented)
+    YEAR = "YEAR"
 }
 
 // @public
 export enum AttributeAttributesGranularityEnum {
     // (undocumented)
-    DAY = "day",
+    DAY = "DAY",
     // (undocumented)
-    DAYOFMONTH = "dayOfMonth",
+    DAYOFMONTH = "DAY_OF_MONTH",
     // (undocumented)
-    DAYOFWEEK = "dayOfWeek",
+    DAYOFWEEK = "DAY_OF_WEEK",
     // (undocumented)
-    DAYOFYEAR = "dayOfYear",
+    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
     // (undocumented)
-    HOUR = "hour",
+    DAYOFYEAR = "DAY_OF_YEAR",
     // (undocumented)
-    HOUROFDAY = "hourOfDay",
+    HOUR = "HOUR",
     // (undocumented)
-    MINUTE = "minute",
+    HOUROFDAY = "HOUR_OF_DAY",
     // (undocumented)
-    MINUTEOFHOUR = "minuteOfHour",
+    MINUTE = "MINUTE",
     // (undocumented)
-    MONTH = "month",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
     // (undocumented)
-    MONTHOFYEAR = "monthOfYear",
+    MONTH = "MONTH",
     // (undocumented)
-    QUARTER = "quarter",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
     // (undocumented)
-    QUARTEROFYEAR = "quarterOfYear",
+    QUARTER = "QUARTER",
     // (undocumented)
-    WEEK = "week",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
     // (undocumented)
-    WEEKOFYEAR = "weekOfYear",
+    WEEK = "WEEK",
     // (undocumented)
-    YEAR = "year"
+    WEEKEU = "WEEK_EU",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
+    // (undocumented)
+    YEAR = "YEAR"
+}
+
+// @public
+export interface AttributeCollection {
+    data: Array<AttributesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface AttributeCollectionAllOf {
+    data?: Array<AttributesItem>;
 }
 
 // @public
@@ -415,7 +438,7 @@ export interface AttributeItem {
 // @public
 export interface AttributeRelationships {
     dataset?: AttributeRelationshipsDataset;
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    labels?: RelationshipToMany;
 }
 
 // @public
@@ -427,18 +450,6 @@ export interface AttributeRelationshipsDataset {
 export interface AttributeResultHeader {
     labelValue: string;
     primaryLabelValue: string;
-}
-
-// @public
-export interface Attributes {
-    data: Array<AttributesItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface AttributesAllOf {
-    data?: Array<AttributesItem>;
 }
 
 // @public
@@ -627,6 +638,18 @@ export enum DatasetAttributesTypeEnum {
 }
 
 // @public
+export interface DatasetCollection {
+    data: Array<DatasetsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface DatasetCollectionAllOf {
+    data?: Array<DatasetsItem>;
+}
+
+// @public
 export interface DatasetData {
     attributes?: DatasetAttributes;
     id: string;
@@ -646,21 +669,9 @@ export interface DatasetDataAllOf1 {
 
 // @public
 export interface DatasetRelationships {
-    attributes?: AnalyticalDashboardRelationshipsLabels;
-    facts?: AnalyticalDashboardRelationshipsLabels;
-    references?: AnalyticalDashboardRelationshipsLabels;
-}
-
-// @public
-export interface Datasets {
-    data: Array<DatasetsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface DatasetsAllOf {
-    data?: Array<DatasetsItem>;
+    attributes?: RelationshipToMany;
+    facts?: RelationshipToMany;
+    references?: RelationshipToMany;
 }
 
 // @public
@@ -1178,6 +1189,18 @@ export interface FactAttributesAllOf {
 }
 
 // @public
+export interface FactCollection {
+    data: Array<FactsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface FactCollectionAllOf {
+    data?: Array<FactsItem>;
+}
+
+// @public
 export interface FactData {
     attributes?: FactAttributes;
     id: string;
@@ -1198,20 +1221,8 @@ export interface FactDataAllOf1 {
 // @public
 export interface FactRelationships {
     dataset?: object;
-    metrics?: AnalyticalDashboardRelationshipsLabels;
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-
-// @public
-export interface Facts {
-    data: Array<FactsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface FactsAllOf {
-    data?: Array<FactsItem>;
+    metrics?: RelationshipToMany;
+    visualizationObjects?: RelationshipToMany;
 }
 
 // @public
@@ -1239,9 +1250,23 @@ export interface FilterContextAttributes {
 }
 
 // @public
+export interface FilterContextCollection {
+    data: Array<FilterContextsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface FilterContextCollectionAllOf {
+    data?: Array<FilterContextsItem>;
+}
+
+// @public
 export interface FilterContextData {
-    data: FilterContextDataRequest;
+    attributes?: FilterContextAttributes;
+    id: string;
     relationships?: FilterContextRelationships;
+    type: string;
 }
 
 // @public
@@ -1263,9 +1288,9 @@ export interface FilterContextDataRequestAllOf {
 
 // @public
 export interface FilterContextRelationships {
-    attributes?: AnalyticalDashboardRelationshipsLabels;
-    datasets?: AnalyticalDashboardRelationshipsLabels;
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
+    datasets?: RelationshipToMany;
+    labels?: RelationshipToMany;
 }
 
 // @public
@@ -1274,22 +1299,12 @@ export interface FilterContextRequest {
 }
 
 // @public
-export interface FilterContexts {
-    data: Array<FilterContextsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface FilterContextsAllOf {
-    data?: Array<FilterContextsItem>;
-}
-
-// @public
 export interface FilterContextsItem {
-    data: FilterContextDataRequest;
+    attributes?: FilterContextAttributes;
+    id: string;
     links?: Links;
     relationships?: FilterContextRelationships;
+    type: string;
 }
 
 // @public
@@ -1315,6 +1330,8 @@ export enum FormOfGranularityEnum {
     // (undocumented)
     DAYOFWEEK = "DAY_OF_WEEK",
     // (undocumented)
+    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
+    // (undocumented)
     DAYOFYEAR = "DAY_OF_YEAR",
     // (undocumented)
     HOUR = "HOUR",
@@ -1335,7 +1352,11 @@ export enum FormOfGranularityEnum {
     // (undocumented)
     WEEK = "WEEK",
     // (undocumented)
+    WEEKEU = "WEEK_EU",
+    // (undocumented)
     WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
     // (undocumented)
     YEAR = "YEAR"
 }
@@ -1459,6 +1480,18 @@ export interface LabelAttributesAllOf {
 }
 
 // @public
+export interface LabelCollection {
+    data: Array<LabelsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface LabelCollectionAllOf {
+    data?: Array<LabelsItem>;
+}
+
+// @public
 export interface LabelData {
     attributes?: LabelAttributes;
     id: string;
@@ -1524,22 +1557,10 @@ export interface LabelElementsRequestArgs {
 
 // @public
 export interface LabelRelationships {
-    analyticalDashboards?: AnalyticalDashboardRelationshipsLabels;
+    analyticalDashboards?: RelationshipToMany;
     attribute?: object;
-    metrics?: AnalyticalDashboardRelationshipsLabels;
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-
-// @public
-export interface Labels {
-    data: Array<LabelsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface LabelsAllOf {
-    data?: Array<LabelsItem>;
+    metrics?: RelationshipToMany;
+    visualizationObjects?: RelationshipToMany;
 }
 
 // @public
@@ -1664,7 +1685,7 @@ export interface MetadataConfigurationParameters {
 export type MetadataModelObject = AnalyticsObject | Attribute | Dataset | Fact | Label | Source | Table;
 
 // @public
-export type MetadataModelObjects = AnalyticalDashboards | Attributes | Datasets | Facts | FilterContexts | Labels | Metrics | Sources | Tables | VisualizationObjects;
+export type MetadataModelObjects = AnalyticalDashboardCollection | AttributeCollection | DatasetCollection | FactCollection | FilterContextCollection | LabelCollection | MetricCollection | SourceCollection | TableCollection | VisualizationObjectCollection;
 
 // @public
 export interface MetadataRequestArgs {
@@ -1701,6 +1722,18 @@ export interface MetricAttributesAllOfContent {
 }
 
 // @public
+export interface MetricCollection {
+    data: Array<MetricsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface MetricCollectionAllOf {
+    data?: Array<MetricsItem>;
+}
+
+// @public
 export interface MetricData {
     attributes?: MetricAttributes;
     id: string;
@@ -1727,28 +1760,16 @@ export interface MetricDataRequestAllOf {
 
 // @public
 export interface MetricRelationships {
-    attributes?: AnalyticalDashboardRelationshipsLabels;
-    facts?: AnalyticalDashboardRelationshipsLabels;
-    labels?: AnalyticalDashboardRelationshipsLabels;
-    metrics?: AnalyticalDashboardRelationshipsLabels;
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
+    facts?: RelationshipToMany;
+    labels?: RelationshipToMany;
+    metrics?: RelationshipToMany;
+    visualizationObjects?: RelationshipToMany;
 }
 
 // @public
 export interface MetricRequest {
     data: MetricDataRequest;
-}
-
-// @public
-export interface Metrics {
-    data: Array<MetricsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface MetricsAllOf {
-    data?: Array<MetricsItem>;
 }
 
 // @public
@@ -2058,6 +2079,17 @@ export enum ReferenceIdentifierTypeEnum {
 }
 
 // @public
+export interface RelationshipLinks {
+    self?: string;
+}
+
+// @public
+export interface RelationshipToMany {
+    data?: Array<Linkage>;
+    links?: RelationshipLinks;
+}
+
+// @public
 export interface RelationshipToOne {
     id: string;
     type: string;
@@ -2232,6 +2264,18 @@ export interface Source {
 }
 
 // @public
+export interface SourceCollection {
+    data: Array<SourcesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface SourceCollectionAllOf {
+    data?: Array<SourcesItem>;
+}
+
+// @public
 export interface SourceData {
     id: string;
     relationships?: SourceRelationships;
@@ -2245,19 +2289,7 @@ export interface SourceDataAllOf {
 
 // @public
 export interface SourceRelationships {
-    tables?: AnalyticalDashboardRelationshipsLabels;
-}
-
-// @public
-export interface Sources {
-    data: Array<SourcesItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface SourcesAllOf {
-    data?: Array<SourcesItem>;
+    tables?: RelationshipToMany;
 }
 
 // @public
@@ -2332,6 +2364,18 @@ export enum TableAttributesAllOfColumnsDataTypeEnum {
 }
 
 // @public
+export interface TableCollection {
+    data: Array<TablesItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface TableCollectionAllOf {
+    data?: Array<TablesItem>;
+}
+
+// @public
 export interface TableData {
     attributes?: TableAttributes;
     id: string;
@@ -2357,18 +2401,6 @@ export interface TableRelationships {
 // @public
 export interface TableRelationshipsSource {
     data?: RelationshipToOne;
-}
-
-// @public
-export interface Tables {
-    data: Array<TablesItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface TablesAllOf {
-    data?: Array<TablesItem>;
 }
 
 // @public
@@ -2438,8 +2470,60 @@ export interface ValidObjectsControllerApiInterface {
     }, options?: any): AxiosPromise<AfmValidObjectsResponse>;
 }
 
+// @public
+export interface VisualizationObject {
+    data: VisualizationObjectData;
+    included?: Array<IncludedResource>;
+    links?: Links;
+}
+
+// @public
+export interface VisualizationObjectAttributes {
+    content?: object;
+    description?: string;
+    tags?: Array<string>;
+    title?: string;
+}
+
+// @public
+export interface VisualizationObjectCollection {
+    data: Array<VisualizationObjectsItem>;
+    included?: Array<SuccessIncluded>;
+    links?: ListLinks;
+}
+
+// @public
+export interface VisualizationObjectCollectionAllOf {
+    data?: Array<VisualizationObjectsItem>;
+}
+
+// @public
+export interface VisualizationObjectData {
+    attributes?: VisualizationObjectAttributes;
+    id: string;
+    relationships?: VisualizationObjectRelationShips;
+    type: string;
+}
+
+// @public
+export interface VisualizationObjectDataAllOf {
+    relationships?: VisualizationObjectRelationShips;
+}
+
+// @public
+export interface VisualizationObjectDataRequest {
+    attributes?: VisualizationObjectAttributes;
+    id: string;
+    type: string;
+}
+
+// @public
+export interface VisualizationObjectDataRequestAllOf {
+    attributes?: VisualizationObjectAttributes;
+}
+
 // @public (undocumented)
-export namespace VisualizationObject {
+export namespace VisualizationObjectModel {
     // (undocumented)
     export interface IAttribute {
         // (undocumented)
@@ -2517,69 +2601,17 @@ export namespace VisualizationObject {
 }
 
 // @public
-export interface VisualizationObjectAttributes {
-    content?: object;
-    description?: string;
-    tags?: Array<string>;
-    title?: string;
-}
-
-// @public
-export interface VisualizationObjectData {
-    attributes?: VisualizationObjectAttributes;
-    id: string;
-    relationships?: VisualizationObjectRelationShips;
-    type: string;
-}
-
-// @public
-export interface VisualizationObjectDataAllOf {
-    relationships?: VisualizationObjectRelationShips;
-}
-
-// @public
-export interface VisualizationObjectDataRequest {
-    attributes?: VisualizationObjectAttributes;
-    id: string;
-    type: string;
-}
-
-// @public
-export interface VisualizationObjectDataRequestAllOf {
-    attributes?: VisualizationObjectAttributes;
-}
-
-// @public
 export interface VisualizationObjectRelationShips {
-    attributes?: AnalyticalDashboardRelationshipsLabels;
-    facts?: AnalyticalDashboardRelationshipsLabels;
-    labels?: AnalyticalDashboardRelationshipsLabels;
-    metrics?: AnalyticalDashboardRelationshipsLabels;
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
+    facts?: RelationshipToMany;
+    labels?: RelationshipToMany;
+    metrics?: RelationshipToMany;
+    visualizationObjects?: RelationshipToMany;
 }
 
 // @public
 export interface VisualizationObjectRequest {
     data: VisualizationObjectDataRequest;
-}
-
-// @public
-export interface VisualizationObjects {
-    data: Array<VisualizationObjectsItem>;
-    included?: Array<SuccessIncluded>;
-    links?: ListLinks;
-}
-
-// @public
-export interface VisualizationObjectsAllOf {
-    data?: Array<VisualizationObjectsItem>;
-}
-
-// @public
-export interface VisualizationObjectSchema {
-    data: VisualizationObjectData;
-    included?: Array<IncludedResource>;
-    links?: Links;
 }
 
 // @public
@@ -2636,7 +2668,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator: (configuration?: Meta
         entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
         workspaceId: string;
         organizationId?: string | undefined;
-        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema | undefined;
+        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObject | undefined;
     }, options?: any): MetadataRequestArgs;
     deleteEntity(params: {
         entity: "analyticalDashboards" | "filterContexts" | "metrics" | "visualizationObjects";
@@ -2660,7 +2692,7 @@ export const WorkspaceModelControllerApiAxiosParamCreator: (configuration?: Meta
         id: string;
         workspaceId: string;
         organizationId?: string | undefined;
-        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema | undefined;
+        analyticsObject?: AnalyticalDashboard | FilterContext | Metric | VisualizationObject | undefined;
     }, options?: any): MetadataRequestArgs;
 };
 

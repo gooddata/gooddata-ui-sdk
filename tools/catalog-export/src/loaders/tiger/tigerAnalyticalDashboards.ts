@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient, AnalyticalDashboards } from "@gooddata/api-client-tiger";
+import { ITigerClient, AnalyticalDashboardCollection } from "@gooddata/api-client-tiger";
 
 /**
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included
@@ -24,7 +24,7 @@ export async function loadAnalyticalDashboards(
         },
     );
 
-    return (result.data as AnalyticalDashboards).data.map((dashboard) => {
+    return (result.data as AnalyticalDashboardCollection).data.map((dashboard) => {
         return {
             title: dashboard.attributes?.title ?? dashboard.id,
             identifier: dashboard.id,

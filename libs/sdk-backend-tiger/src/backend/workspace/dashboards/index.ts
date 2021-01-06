@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import {
     AnalyticalDashboard,
-    AnalyticalDashboards,
+    AnalyticalDashboardCollection,
     FilterContext,
     isVisualizationObjectsItem,
 } from "@gooddata/api-client-tiger";
@@ -53,7 +53,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 },
             );
         });
-        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboards);
+        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboardCollection);
     };
 
     public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {

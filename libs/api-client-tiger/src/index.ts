@@ -18,8 +18,8 @@ import {
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
-export { VisualizationObject } from "./gd-tiger-model/VisualizationObject";
-export { AnalyticalDashboardObject } from "./gd-tiger-model/AnalyticalDashboardObject";
+export { VisualizationObjectModel } from "./gd-tiger-model/VisualizationObjectModel";
+export { AnalyticalDashboardObjectModel } from "./gd-tiger-model/AnalyticalDashboardObjectModel";
 
 export {
     isAttributeHeader,

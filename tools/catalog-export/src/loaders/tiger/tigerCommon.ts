@@ -71,6 +71,8 @@ export function convertLabels(attribute: AttributesItem, labelsMap: LabelMap): D
     if (Array.isArray(labelsRefs)) {
         labelsArray = (labelsRefs as unknown) as RelationshipToOne[];
     } else if (typeof labelsRefs === "object" && Object.keys(labelsRefs).length > 0) {
+        // FIXME else branch can be deleted when BE return always array according to types
+        // @ts-expect-error despite type, labelsRefs can be object
         labelsArray.push({ id: labelsRefs.id, type: labelsRefs.type });
     }
     return labelsArray

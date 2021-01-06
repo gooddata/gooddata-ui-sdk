@@ -9,7 +9,7 @@ import {
     SortKeyValue,
 } from "../generated/afm-rest-api";
 
-export namespace VisualizationObject {
+export namespace VisualizationObjectModel {
     export interface IVisualizationObject {
         visualizationObject: {
             title: string;

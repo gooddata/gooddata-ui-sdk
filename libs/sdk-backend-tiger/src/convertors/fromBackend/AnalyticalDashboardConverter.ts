@@ -2,12 +2,13 @@
 import {
     AnalyticalDashboard,
     AnalyticalDashboardAttributes,
-    AnalyticalDashboardObject,
-    AnalyticalDashboards,
+    AnalyticalDashboardObjectModel,
+    AnalyticalDashboardCollection,
     AnalyticalDashboardsItem,
     FilterContext,
     FilterContextDataRequest,
     IncludedResource,
+    isFilterContextData,
 } from "@gooddata/api-client-tiger";
 import { IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
 
@@ -32,14 +33,14 @@ export const convertAnalyticalDashboard = (
 };
 
 export const convertAnalyticalDashboardToListItems = (
-    analyticalDashboards: AnalyticalDashboards,
+    analyticalDashboards: AnalyticalDashboardCollection,
 ): IListedDashboard[] => {
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };
 
 export function convertAnalyticalDashboardContent(
-    analyticalDashboard: AnalyticalDashboardObject.IAnalyticalDashboard["analyticalDashboard"],
-): AnalyticalDashboardObject.IAnalyticalDashboard["analyticalDashboard"] {
+    analyticalDashboard: AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"],
+): AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"] {
     return {
         isLocked: analyticalDashboard.isLocked,
         tags: analyticalDashboard.tags,
@@ -57,7 +58,7 @@ export function convertDashboard(
     const { title = "", description = "", content } = attributes;
 
     const dashboardData = convertAnalyticalDashboardContent(
-        (content as AnalyticalDashboardObject.IAnalyticalDashboard).analyticalDashboard,
+        (content as AnalyticalDashboardObjectModel.IAnalyticalDashboard).analyticalDashboard,
     );
 
     return {
@@ -74,7 +75,7 @@ export function convertDashboard(
 }
 
 export function convertFilterContextFromBackend(filterContext: FilterContext): IFilterContext {
-    const { id, type, attributes } = (filterContext.data as unknown) as FilterContextDataRequest; // FIXME bad API type - filterContext.data is not FilterContextData tyoe
+    const { id, type, attributes } = filterContext.data;
     const { title = "", description = "", content } = attributes!;
 
     return {
@@ -84,13 +85,13 @@ export function convertFilterContextFromBackend(filterContext: FilterContext): I
         title,
         description,
         filters: cloneWithSanitizedIds(
-            (content as AnalyticalDashboardObject.IFilterContext).filterContext.filters,
+            (content as AnalyticalDashboardObjectModel.IFilterContext).filterContext.filters,
         ),
     };
 }
 
 export function getFilterContextFromIncluded(included: IncludedResource[]): IFilterContext | undefined {
-    const filterContextData = included.find((item) => item.type === "filterContext");
+    const filterContextData = included.find(isFilterContextData);
     if (!filterContextData) {
         return;
     }
@@ -105,7 +106,7 @@ export function getFilterContextFromIncluded(included: IncludedResource[]): IFil
         title,
         description,
         filters: cloneWithSanitizedIds(
-            (content as AnalyticalDashboardObject.IFilterContext).filterContext.filters,
+            (content as AnalyticalDashboardObjectModel.IFilterContext).filterContext.filters,
         ),
     };
 }

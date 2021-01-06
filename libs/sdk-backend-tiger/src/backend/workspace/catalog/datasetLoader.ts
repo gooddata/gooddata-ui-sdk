@@ -1,7 +1,7 @@
 // (C) 2019-2020 GoodData Corporation
 
 import {
-    Attributes,
+    AttributeCollection,
     AttributesItem,
     DatasetsItem,
     ITigerClient,
@@ -33,6 +33,8 @@ function getAttributeLabels(
     if (Array.isArray(labelsRefs)) {
         labelsArray = (labelsRefs as unknown) as RelationshipToOne[];
     } else if (typeof labelsRefs === "object" && Object.keys(labelsRefs).length > 0) {
+        // FIXME else branch can be deleted when BE return always array according to types
+        // @ts-expect-error despite type, labelsRefs can be object
         labelsArray.push({ id: labelsRefs.id, type: labelsRefs.type });
     }
     const allLabels: LabelsItem[] = labelsArray
@@ -57,7 +59,7 @@ function isGeoLabel(label: LabelsItem): boolean {
     return label.id.search(/^.*\.geo__/) > -1;
 }
 
-function createNonDateAttributes(attributes: Attributes): ICatalogAttribute[] {
+function createNonDateAttributes(attributes: AttributeCollection): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
@@ -101,7 +103,7 @@ function identifyDateDatasets(dateAttributes: AttributesItem[], included: Succes
     return Object.values(datasets);
 }
 
-function createDateDatasets(attributes: Attributes): ICatalogDateDataset[] {
+function createDateDatasets(attributes: AttributeCollection): ICatalogDateDataset[] {
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
@@ -138,7 +140,7 @@ export async function loadAttributesAndDateDatasets(
         },
     );
 
-    const attributes = attributesResponse.data as Attributes;
+    const attributes = attributesResponse.data as AttributeCollection;
     const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes);
     const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
 

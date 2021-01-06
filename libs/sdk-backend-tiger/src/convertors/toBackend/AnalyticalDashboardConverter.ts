@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { AnalyticalDashboardObject } from "@gooddata/api-client-tiger";
+import { AnalyticalDashboardObjectModel } from "@gooddata/api-client-tiger";
 import { IDashboardDefinition, IFilterContextDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { cloneWithSanitizedIds } from "./IdSanitization";
@@ -7,7 +7,7 @@ import { cloneWithSanitizedIds } from "./IdSanitization";
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
-): AnalyticalDashboardObject.IAnalyticalDashboard {
+): AnalyticalDashboardObjectModel.IAnalyticalDashboard {
     return {
         analyticalDashboard: {
             isLocked: dashboard.isLocked,
@@ -21,7 +21,7 @@ export function convertAnalyticalDashboard(
 
 export function convertFilterContextToBackend(
     filterContext: IFilterContextDefinition,
-): AnalyticalDashboardObject.IFilterContext {
+): AnalyticalDashboardObjectModel.IFilterContext {
     return {
         filterContext: {
             filters: cloneWithSanitizedIds(filterContext.filters),

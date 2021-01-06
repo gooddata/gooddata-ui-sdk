@@ -1,9 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/api-client-tiger";
+import { VisualizationObjectModel } from "@gooddata/api-client-tiger";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
-export const convertInsight = (insight: IInsightDefinition): VisualizationObject.IVisualizationObject => {
+export const convertInsight = (
+    insight: IInsightDefinition,
+): VisualizationObjectModel.IVisualizationObject => {
     return {
         visualizationObject: {
             ...insight.insight,

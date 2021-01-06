@@ -35,5 +35,5 @@ export function isVisualizationObjectsItem(
 }
 
 export function isFilterContextData(filterContext: unknown): filterContext is FilterContextData {
-    return (filterContext as FilterContextData).data.type === "filterContext";
+    return (filterContext as FilterContextData).type === "filterContext";
 }

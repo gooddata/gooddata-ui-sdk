@@ -1,5 +1,3 @@
-// (C) 2020 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -103,6 +101,44 @@ export interface AnalyticalDashboardAttributesAllOf {
 /**
  *
  * @export
+ * @interface AnalyticalDashboardCollection
+ */
+export interface AnalyticalDashboardCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof AnalyticalDashboardCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof AnalyticalDashboardCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<AnalyticalDashboardsItem>}
+     * @memberof AnalyticalDashboardCollection
+     */
+    data: Array<AnalyticalDashboardsItem>;
+}
+/**
+ *
+ * @export
+ * @interface AnalyticalDashboardCollectionAllOf
+ */
+export interface AnalyticalDashboardCollectionAllOf {
+    /**
+     *
+     * @type {Array<AnalyticalDashboardsItem>}
+     * @memberof AnalyticalDashboardCollectionAllOf
+     */
+    data?: Array<AnalyticalDashboardsItem>;
+}
+/**
+ *
+ * @export
  * @interface AnalyticalDashboardData
  */
 export interface AnalyticalDashboardData {
@@ -190,29 +226,34 @@ export interface AnalyticalDashboardDataRequestAllOf {
 export interface AnalyticalDashboardRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof AnalyticalDashboardRelationships
      */
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    datasets?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof AnalyticalDashboardRelationships
      */
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface AnalyticalDashboardRelationshipsLabels
- */
-export interface AnalyticalDashboardRelationshipsLabels {
+    filterContexts?: RelationshipToMany;
     /**
      *
-     * @type {Array | RelationshipToOne}
-     * @memberof AnalyticalDashboardRelationshipsLabels
+     * @type {RelationshipToMany}
+     * @memberof AnalyticalDashboardRelationships
      */
-    data?: Array<string> | RelationshipToOne;
+    labels?: RelationshipToMany;
+    /**
+     *
+     * @type {RelationshipToMany}
+     * @memberof AnalyticalDashboardRelationships
+     */
+    metrics?: RelationshipToMany;
+    /**
+     *
+     * @type {RelationshipToMany}
+     * @memberof AnalyticalDashboardRelationships
+     */
+    visualizationObjects?: RelationshipToMany;
 }
 /**
  *
@@ -226,44 +267,6 @@ export interface AnalyticalDashboardRequest {
      * @memberof AnalyticalDashboardRequest
      */
     data: AnalyticalDashboardDataRequest;
-}
-/**
- *
- * @export
- * @interface AnalyticalDashboards
- */
-export interface AnalyticalDashboards {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof AnalyticalDashboards
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof AnalyticalDashboards
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<AnalyticalDashboardsItem>}
-     * @memberof AnalyticalDashboards
-     */
-    data: Array<AnalyticalDashboardsItem>;
-}
-/**
- *
- * @export
- * @interface AnalyticalDashboardsAllOf
- */
-export interface AnalyticalDashboardsAllOf {
-    /**
-     *
-     * @type {Array<AnalyticalDashboardsItem>}
-     * @memberof AnalyticalDashboardsAllOf
-     */
-    data?: Array<AnalyticalDashboardsItem>;
 }
 /**
  *
@@ -319,7 +322,7 @@ export interface AnalyticalDashboardsItemAllOf {
  * @type AnalyticsObject
  * @export
  */
-export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObjectSchema;
+export type AnalyticsObject = AnalyticalDashboard | FilterContext | Metric | VisualizationObject;
 /**
  * @type AnalyticsObjectRequest
  * @export
@@ -391,21 +394,24 @@ export interface AttributeAttributes {
  * @enum {string}
  */
 export enum AttributeAttributesGranularityEnum {
-    MINUTE = "minute",
-    HOUR = "hour",
-    DAY = "day",
-    WEEK = "week",
-    MONTH = "month",
-    QUARTER = "quarter",
-    YEAR = "year",
-    MINUTEOFHOUR = "minuteOfHour",
-    HOUROFDAY = "hourOfDay",
-    DAYOFWEEK = "dayOfWeek",
-    DAYOFMONTH = "dayOfMonth",
-    DAYOFYEAR = "dayOfYear",
-    WEEKOFYEAR = "weekOfYear",
-    MONTHOFYEAR = "monthOfYear",
-    QUARTEROFYEAR = "quarterOfYear",
+    MINUTE = "MINUTE",
+    HOUR = "HOUR",
+    DAY = "DAY",
+    WEEK = "WEEK",
+    MONTH = "MONTH",
+    QUARTER = "QUARTER",
+    YEAR = "YEAR",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    HOUROFDAY = "HOUR_OF_DAY",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
+    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
+    WEEKEU = "WEEK_EU",
 }
 
 /**
@@ -427,23 +433,64 @@ export interface AttributeAttributesAllOf {
  * @enum {string}
  */
 export enum AttributeAttributesAllOfGranularityEnum {
-    MINUTE = "minute",
-    HOUR = "hour",
-    DAY = "day",
-    WEEK = "week",
-    MONTH = "month",
-    QUARTER = "quarter",
-    YEAR = "year",
-    MINUTEOFHOUR = "minuteOfHour",
-    HOUROFDAY = "hourOfDay",
-    DAYOFWEEK = "dayOfWeek",
-    DAYOFMONTH = "dayOfMonth",
-    DAYOFYEAR = "dayOfYear",
-    WEEKOFYEAR = "weekOfYear",
-    MONTHOFYEAR = "monthOfYear",
-    QUARTEROFYEAR = "quarterOfYear",
+    MINUTE = "MINUTE",
+    HOUR = "HOUR",
+    DAY = "DAY",
+    WEEK = "WEEK",
+    MONTH = "MONTH",
+    QUARTER = "QUARTER",
+    YEAR = "YEAR",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    HOUROFDAY = "HOUR_OF_DAY",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
+    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
+    WEEKEU = "WEEK_EU",
 }
 
+/**
+ *
+ * @export
+ * @interface AttributeCollection
+ */
+export interface AttributeCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof AttributeCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof AttributeCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<AttributesItem>}
+     * @memberof AttributeCollection
+     */
+    data: Array<AttributesItem>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeCollectionAllOf
+ */
+export interface AttributeCollectionAllOf {
+    /**
+     *
+     * @type {Array<AttributesItem>}
+     * @memberof AttributeCollectionAllOf
+     */
+    data?: Array<AttributesItem>;
+}
 /**
  *
  * @export
@@ -509,10 +556,10 @@ export interface AttributeDataAllOf1 {
 export interface AttributeRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof AttributeRelationships
      */
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    labels?: RelationshipToMany;
     /**
      *
      * @type {AttributeRelationshipsDataset}
@@ -532,44 +579,6 @@ export interface AttributeRelationshipsDataset {
      * @memberof AttributeRelationshipsDataset
      */
     data?: RelationshipToOne;
-}
-/**
- *
- * @export
- * @interface Attributes
- */
-export interface Attributes {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Attributes
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Attributes
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<AttributesItem>}
-     * @memberof Attributes
-     */
-    data: Array<AttributesItem>;
-}
-/**
- *
- * @export
- * @interface AttributesAllOf
- */
-export interface AttributesAllOf {
-    /**
-     *
-     * @type {Array<AttributesItem>}
-     * @memberof AttributesAllOf
-     */
-    data?: Array<AttributesItem>;
 }
 /**
  *
@@ -843,6 +852,44 @@ export interface DatasetAttributesAllOfReferenceProperties {
 /**
  *
  * @export
+ * @interface DatasetCollection
+ */
+export interface DatasetCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof DatasetCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof DatasetCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<DatasetsItem>}
+     * @memberof DatasetCollection
+     */
+    data: Array<DatasetsItem>;
+}
+/**
+ *
+ * @export
+ * @interface DatasetCollectionAllOf
+ */
+export interface DatasetCollectionAllOf {
+    /**
+     *
+     * @type {Array<DatasetsItem>}
+     * @memberof DatasetCollectionAllOf
+     */
+    data?: Array<DatasetsItem>;
+}
+/**
+ *
+ * @export
  * @interface DatasetData
  */
 export interface DatasetData {
@@ -905,60 +952,22 @@ export interface DatasetDataAllOf1 {
 export interface DatasetRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof DatasetRelationships
      */
-    attributes?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof DatasetRelationships
      */
-    facts?: AnalyticalDashboardRelationshipsLabels;
+    facts?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof DatasetRelationships
      */
-    references?: AnalyticalDashboardRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface Datasets
- */
-export interface Datasets {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Datasets
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Datasets
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<DatasetsItem>}
-     * @memberof Datasets
-     */
-    data: Array<DatasetsItem>;
-}
-/**
- *
- * @export
- * @interface DatasetsAllOf
- */
-export interface DatasetsAllOf {
-    /**
-     *
-     * @type {Array<DatasetsItem>}
-     * @memberof DatasetsAllOf
-     */
-    data?: Array<DatasetsItem>;
+    references?: RelationshipToMany;
 }
 /**
  *
@@ -1623,6 +1632,44 @@ export interface FactAttributesAllOf {
 /**
  *
  * @export
+ * @interface FactCollection
+ */
+export interface FactCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof FactCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof FactCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<FactsItem>}
+     * @memberof FactCollection
+     */
+    data: Array<FactsItem>;
+}
+/**
+ *
+ * @export
+ * @interface FactCollectionAllOf
+ */
+export interface FactCollectionAllOf {
+    /**
+     *
+     * @type {Array<FactsItem>}
+     * @memberof FactCollectionAllOf
+     */
+    data?: Array<FactsItem>;
+}
+/**
+ *
+ * @export
  * @interface FactData
  */
 export interface FactData {
@@ -1691,54 +1738,16 @@ export interface FactRelationships {
     dataset?: object;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof FactRelationships
      */
-    metrics?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof FactRelationships
      */
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface Facts
- */
-export interface Facts {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Facts
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Facts
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<FactsItem>}
-     * @memberof Facts
-     */
-    data: Array<FactsItem>;
-}
-/**
- *
- * @export
- * @interface FactsAllOf
- */
-export interface FactsAllOf {
-    /**
-     *
-     * @type {Array<FactsItem>}
-     * @memberof FactsAllOf
-     */
-    data?: Array<FactsItem>;
+    visualizationObjects?: RelationshipToMany;
 }
 /**
  *
@@ -1836,15 +1845,65 @@ export interface FilterContextAttributes {
 /**
  *
  * @export
+ * @interface FilterContextCollection
+ */
+export interface FilterContextCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof FilterContextCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof FilterContextCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<FilterContextsItem>}
+     * @memberof FilterContextCollection
+     */
+    data: Array<FilterContextsItem>;
+}
+/**
+ *
+ * @export
+ * @interface FilterContextCollectionAllOf
+ */
+export interface FilterContextCollectionAllOf {
+    /**
+     *
+     * @type {Array<FilterContextsItem>}
+     * @memberof FilterContextCollectionAllOf
+     */
+    data?: Array<FilterContextsItem>;
+}
+/**
+ *
+ * @export
  * @interface FilterContextData
  */
 export interface FilterContextData {
     /**
-     *
-     * @type {FilterContextDataRequest}
+     * Unique identifier of object
+     * @type {string}
      * @memberof FilterContextData
      */
-    data: FilterContextDataRequest;
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FilterContextData
+     */
+    type: string;
+    /**
+     *
+     * @type {FilterContextAttributes}
+     * @memberof FilterContextData
+     */
+    attributes?: FilterContextAttributes;
     /**
      *
      * @type {FilterContextRelationships}
@@ -1911,22 +1970,22 @@ export interface FilterContextDataRequestAllOf {
 export interface FilterContextRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof FilterContextRelationships
      */
-    attributes?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof FilterContextRelationships
      */
-    datasets?: AnalyticalDashboardRelationshipsLabels;
+    datasets?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof FilterContextRelationships
      */
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    labels?: RelationshipToMany;
 }
 /**
  *
@@ -1944,44 +2003,6 @@ export interface FilterContextRequest {
 /**
  *
  * @export
- * @interface FilterContexts
- */
-export interface FilterContexts {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof FilterContexts
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof FilterContexts
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<FilterContextsItem>}
-     * @memberof FilterContexts
-     */
-    data: Array<FilterContextsItem>;
-}
-/**
- *
- * @export
- * @interface FilterContextsAllOf
- */
-export interface FilterContextsAllOf {
-    /**
-     *
-     * @type {Array<FilterContextsItem>}
-     * @memberof FilterContextsAllOf
-     */
-    data?: Array<FilterContextsItem>;
-}
-/**
- *
- * @export
  * @interface FilterContextsItem
  */
 export interface FilterContextsItem {
@@ -1992,11 +2013,23 @@ export interface FilterContextsItem {
      */
     links?: Links;
     /**
-     *
-     * @type {FilterContextDataRequest}
+     * Unique identifier of object
+     * @type {string}
      * @memberof FilterContextsItem
      */
-    data: FilterContextDataRequest;
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof FilterContextsItem
+     */
+    type: string;
+    /**
+     *
+     * @type {FilterContextAttributes}
+     * @memberof FilterContextsItem
+     */
+    attributes?: FilterContextAttributes;
     /**
      *
      * @type {FilterContextRelationships}
@@ -2192,6 +2225,44 @@ export interface LabelAttributesAllOf {
 /**
  *
  * @export
+ * @interface LabelCollection
+ */
+export interface LabelCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof LabelCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof LabelCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<LabelsItem>}
+     * @memberof LabelCollection
+     */
+    data: Array<LabelsItem>;
+}
+/**
+ *
+ * @export
+ * @interface LabelCollectionAllOf
+ */
+export interface LabelCollectionAllOf {
+    /**
+     *
+     * @type {Array<LabelsItem>}
+     * @memberof LabelCollectionAllOf
+     */
+    data?: Array<LabelsItem>;
+}
+/**
+ *
+ * @export
  * @interface LabelData
  */
 export interface LabelData {
@@ -2260,60 +2331,22 @@ export interface LabelRelationships {
     attribute?: object;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof LabelRelationships
      */
-    analyticalDashboards?: AnalyticalDashboardRelationshipsLabels;
+    analyticalDashboards?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof LabelRelationships
      */
-    metrics?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof LabelRelationships
      */
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface Labels
- */
-export interface Labels {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Labels
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Labels
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<LabelsItem>}
-     * @memberof Labels
-     */
-    data: Array<LabelsItem>;
-}
-/**
- *
- * @export
- * @interface LabelsAllOf
- */
-export interface LabelsAllOf {
-    /**
-     *
-     * @type {Array<LabelsItem>}
-     * @memberof LabelsAllOf
-     */
-    data?: Array<LabelsItem>;
+    visualizationObjects?: RelationshipToMany;
 }
 /**
  *
@@ -2432,16 +2465,16 @@ export type MetadataModelObject = AnalyticsObject | Attribute | Dataset | Fact |
  * @export
  */
 export type MetadataModelObjects =
-    | AnalyticalDashboards
-    | Attributes
-    | Datasets
-    | Facts
-    | FilterContexts
-    | Labels
-    | Metrics
-    | Sources
-    | Tables
-    | VisualizationObjects;
+    | AnalyticalDashboardCollection
+    | AttributeCollection
+    | DatasetCollection
+    | FactCollection
+    | FilterContextCollection
+    | LabelCollection
+    | MetricCollection
+    | SourceCollection
+    | TableCollection
+    | VisualizationObjectCollection;
 /**
  *
  * @export
@@ -2533,6 +2566,44 @@ export interface MetricAttributesAllOfContent {
 /**
  *
  * @export
+ * @interface MetricCollection
+ */
+export interface MetricCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof MetricCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof MetricCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<MetricsItem>}
+     * @memberof MetricCollection
+     */
+    data: Array<MetricsItem>;
+}
+/**
+ *
+ * @export
+ * @interface MetricCollectionAllOf
+ */
+export interface MetricCollectionAllOf {
+    /**
+     *
+     * @type {Array<MetricsItem>}
+     * @memberof MetricCollectionAllOf
+     */
+    data?: Array<MetricsItem>;
+}
+/**
+ *
+ * @export
  * @interface MetricData
  */
 export interface MetricData {
@@ -2620,34 +2691,34 @@ export interface MetricDataRequestAllOf {
 export interface MetricRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof MetricRelationships
      */
-    attributes?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof MetricRelationships
      */
-    facts?: AnalyticalDashboardRelationshipsLabels;
+    facts?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof MetricRelationships
      */
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    labels?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof MetricRelationships
      */
-    metrics?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof MetricRelationships
      */
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: RelationshipToMany;
 }
 /**
  *
@@ -2661,44 +2732,6 @@ export interface MetricRequest {
      * @memberof MetricRequest
      */
     data: MetricDataRequest;
-}
-/**
- *
- * @export
- * @interface Metrics
- */
-export interface Metrics {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Metrics
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Metrics
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<MetricsItem>}
-     * @memberof Metrics
-     */
-    data: Array<MetricsItem>;
-}
-/**
- *
- * @export
- * @interface MetricsAllOf
- */
-export interface MetricsAllOf {
-    /**
-     *
-     * @type {Array<MetricsItem>}
-     * @memberof MetricsAllOf
-     */
-    data?: Array<MetricsItem>;
 }
 /**
  *
@@ -2791,6 +2824,38 @@ export enum ReferenceIdentifierTypeEnum {
 }
 
 /**
+ * A resource object **MAY** contain references to other resource objects (\"relationships\"). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource\'s links object.
+ * @export
+ * @interface RelationshipLinks
+ */
+export interface RelationshipLinks {
+    /**
+     * A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself.
+     * @type {string}
+     * @memberof RelationshipLinks
+     */
+    self?: string;
+}
+/**
+ *
+ * @export
+ * @interface RelationshipToMany
+ */
+export interface RelationshipToMany {
+    /**
+     *
+     * @type {RelationshipLinks}
+     * @memberof RelationshipToMany
+     */
+    links?: RelationshipLinks;
+    /**
+     *
+     * @type {Array<Linkage>}
+     * @memberof RelationshipToMany
+     */
+    data?: Array<Linkage>;
+}
+/**
  * References to other resource objects in a to-one (\"relationship\"). Relationships can be specified by including a member in a resource\'s links object.
  * @export
  * @interface RelationshipToOne
@@ -2882,6 +2947,44 @@ export interface Source {
 /**
  *
  * @export
+ * @interface SourceCollection
+ */
+export interface SourceCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof SourceCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof SourceCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<SourcesItem>}
+     * @memberof SourceCollection
+     */
+    data: Array<SourcesItem>;
+}
+/**
+ *
+ * @export
+ * @interface SourceCollectionAllOf
+ */
+export interface SourceCollectionAllOf {
+    /**
+     *
+     * @type {Array<SourcesItem>}
+     * @memberof SourceCollectionAllOf
+     */
+    data?: Array<SourcesItem>;
+}
+/**
+ *
+ * @export
  * @interface SourceData
  */
 export interface SourceData {
@@ -2925,48 +3028,10 @@ export interface SourceDataAllOf {
 export interface SourceRelationships {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof SourceRelationships
      */
-    tables?: AnalyticalDashboardRelationshipsLabels;
-}
-/**
- *
- * @export
- * @interface Sources
- */
-export interface Sources {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Sources
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Sources
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<SourcesItem>}
-     * @memberof Sources
-     */
-    data: Array<SourcesItem>;
-}
-/**
- *
- * @export
- * @interface SourcesAllOf
- */
-export interface SourcesAllOf {
-    /**
-     *
-     * @type {Array<SourcesItem>}
-     * @memberof SourcesAllOf
-     */
-    data?: Array<SourcesItem>;
+    tables?: RelationshipToMany;
 }
 /**
  *
@@ -3167,6 +3232,44 @@ export enum TableAttributesAllOfColumnsDataTypeEnum {
 /**
  *
  * @export
+ * @interface TableCollection
+ */
+export interface TableCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof TableCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof TableCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<TablesItem>}
+     * @memberof TableCollection
+     */
+    data: Array<TablesItem>;
+}
+/**
+ *
+ * @export
+ * @interface TableCollectionAllOf
+ */
+export interface TableCollectionAllOf {
+    /**
+     *
+     * @type {Array<TablesItem>}
+     * @memberof TableCollectionAllOf
+     */
+    data?: Array<TablesItem>;
+}
+/**
+ *
+ * @export
  * @interface TableData
  */
 export interface TableData {
@@ -3250,44 +3353,6 @@ export interface TableRelationshipsSource {
 /**
  *
  * @export
- * @interface Tables
- */
-export interface Tables {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof Tables
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof Tables
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<TablesItem>}
-     * @memberof Tables
-     */
-    data: Array<TablesItem>;
-}
-/**
- *
- * @export
- * @interface TablesAllOf
- */
-export interface TablesAllOf {
-    /**
-     *
-     * @type {Array<TablesItem>}
-     * @memberof TablesAllOf
-     */
-    data?: Array<TablesItem>;
-}
-/**
- *
- * @export
  * @interface TablesItem
  */
 export interface TablesItem {
@@ -3325,9 +3390,9 @@ export interface TablesItem {
 /**
  *
  * @export
- * @interface VisualizationObjectSchema
+ * @interface VisualizationObject
  */
-export interface VisualizationObjectSchema {
+export interface VisualizationObject {
     /**
      *
      * @type {VisualizationObjectData}
@@ -3337,13 +3402,13 @@ export interface VisualizationObjectSchema {
     /**
      * Compound documents.
      * @type {Array<IncludedResource>}
-     * @memberof VisualizationObjectSchema
+     * @memberof VisualizationObject
      */
     included?: Array<IncludedResource>;
     /**
      *
      * @type {Links}
-     * @memberof VisualizationObjectSchema
+     * @memberof VisualizationObject
      */
     links?: Links;
 }
@@ -3377,6 +3442,44 @@ export interface VisualizationObjectAttributes {
      * @memberof VisualizationObjectAttributes
      */
     content?: object;
+}
+/**
+ *
+ * @export
+ * @interface VisualizationObjectCollection
+ */
+export interface VisualizationObjectCollection {
+    /**
+     * Included resources
+     * @type {Array<SuccessIncluded>}
+     * @memberof VisualizationObjectCollection
+     */
+    included?: Array<SuccessIncluded>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof VisualizationObjectCollection
+     */
+    links?: ListLinks;
+    /**
+     *
+     * @type {Array<VisualizationObjectsItem>}
+     * @memberof VisualizationObjectCollection
+     */
+    data: Array<VisualizationObjectsItem>;
+}
+/**
+ *
+ * @export
+ * @interface VisualizationObjectCollectionAllOf
+ */
+export interface VisualizationObjectCollectionAllOf {
+    /**
+     *
+     * @type {Array<VisualizationObjectsItem>}
+     * @memberof VisualizationObjectCollectionAllOf
+     */
+    data?: Array<VisualizationObjectsItem>;
 }
 /**
  *
@@ -3468,34 +3571,34 @@ export interface VisualizationObjectDataRequestAllOf {
 export interface VisualizationObjectRelationShips {
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof VisualizationObjectRelationShips
      */
-    attributes?: AnalyticalDashboardRelationshipsLabels;
+    attributes?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof VisualizationObjectRelationShips
      */
-    facts?: AnalyticalDashboardRelationshipsLabels;
+    facts?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof VisualizationObjectRelationShips
      */
-    labels?: AnalyticalDashboardRelationshipsLabels;
+    labels?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof VisualizationObjectRelationShips
      */
-    metrics?: AnalyticalDashboardRelationshipsLabels;
+    metrics?: RelationshipToMany;
     /**
      *
-     * @type {AnalyticalDashboardRelationshipsLabels}
+     * @type {RelationshipToMany}
      * @memberof VisualizationObjectRelationShips
      */
-    visualizationObjects?: AnalyticalDashboardRelationshipsLabels;
+    visualizationObjects?: RelationshipToMany;
 }
 /**
  *
@@ -3509,44 +3612,6 @@ export interface VisualizationObjectRequest {
      * @memberof VisualizationObjectRequest
      */
     data: VisualizationObjectDataRequest;
-}
-/**
- *
- * @export
- * @interface VisualizationObjects
- */
-export interface VisualizationObjects {
-    /**
-     * Included resources
-     * @type {Array<SuccessIncluded>}
-     * @memberof VisualizationObjects
-     */
-    included?: Array<SuccessIncluded>;
-    /**
-     *
-     * @type {ListLinks}
-     * @memberof VisualizationObjects
-     */
-    links?: ListLinks;
-    /**
-     *
-     * @type {Array<VisualizationObjectsItem>}
-     * @memberof VisualizationObjects
-     */
-    data: Array<VisualizationObjectsItem>;
-}
-/**
- *
- * @export
- * @interface VisualizationObjectsAllOf
- */
-export interface VisualizationObjectsAllOf {
-    /**
-     *
-     * @type {Array<VisualizationObjectsItem>}
-     * @memberof VisualizationObjectsAllOf
-     */
-    data?: Array<VisualizationObjectsItem>;
 }
 /**
  *

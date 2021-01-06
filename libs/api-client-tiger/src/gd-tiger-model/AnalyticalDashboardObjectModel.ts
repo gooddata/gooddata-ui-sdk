@@ -6,7 +6,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 
-export namespace AnalyticalDashboardObject {
+export namespace AnalyticalDashboardObjectModel {
     export interface IAnalyticalDashboard {
         analyticalDashboard: {
             isLocked?: boolean;

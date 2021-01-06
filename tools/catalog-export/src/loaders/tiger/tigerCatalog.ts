@@ -1,9 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
-import { Attributes, Facts, Metrics, ITigerClient } from "@gooddata/api-client-tiger";
+import {
+    AttributeCollection,
+    FactCollection,
+    MetricCollection,
+    ITigerClient,
+} from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
-function convertMetrics(metrics: Metrics): Metric[] {
+function convertMetrics(metrics: MetricCollection): Metric[] {
     return metrics.data.map((metric) => {
         return {
             metric: {
@@ -17,7 +22,7 @@ function convertMetrics(metrics: Metrics): Metric[] {
     });
 }
 
-function convertFacts(facts: Facts): Fact[] {
+function convertFacts(facts: FactCollection): Fact[] {
     return facts.data.map((fact) => {
         return {
             fact: {
@@ -31,7 +36,7 @@ function convertFacts(facts: Facts): Fact[] {
     });
 }
 
-function convertAttributes(attributes: Attributes): Attribute[] {
+function convertAttributes(attributes: AttributeCollection): Attribute[] {
     const labels = createLabelMap(attributes.included);
 
     /*
@@ -88,8 +93,8 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
     ]);
 
     return {
-        metrics: convertMetrics(metricsResult.data as Metrics),
-        facts: convertFacts(factsResult.data as Facts),
-        attributes: convertAttributes(attributesResult.data as Attributes),
+        metrics: convertMetrics(metricsResult.data as MetricCollection),
+        facts: convertFacts(factsResult.data as FactCollection),
+        attributes: convertAttributes(attributesResult.data as AttributeCollection),
     };
 }

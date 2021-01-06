@@ -1371,38 +1371,38 @@
             "MetadataModelObjects": {
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/AnalyticalDashboards"
+                        "$ref": "#/components/schemas/AnalyticalDashboardCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/FilterContexts"
+                        "$ref": "#/components/schemas/FilterContextCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Metrics"
+                        "$ref": "#/components/schemas/MetricCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/VisualizationObjects"
+                        "$ref": "#/components/schemas/VisualizationObjectCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Attributes"
+                        "$ref": "#/components/schemas/AttributeCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Datasets"
+                        "$ref": "#/components/schemas/DatasetCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Facts"
+                        "$ref": "#/components/schemas/FactCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Labels"
+                        "$ref": "#/components/schemas/LabelCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Sources"
+                        "$ref": "#/components/schemas/SourceCollection"
                     },
                     {
-                        "$ref": "#/components/schemas/Tables"
+                        "$ref": "#/components/schemas/TableCollection"
                     }
                 ]
             },
-            "AnalyticalDashboards": {
+            "AnalyticalDashboardCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1434,7 +1434,7 @@
                     }
                 ]
             },
-            "FilterContexts": {
+            "FilterContextCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1466,7 +1466,7 @@
                     }
                 ]
             },
-            "Metrics": {
+            "MetricCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1498,7 +1498,7 @@
                     }
                 ]
             },
-            "VisualizationObjects": {
+            "VisualizationObjectCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1530,7 +1530,7 @@
                     }
                 ]
             },
-            "Attributes": {
+            "AttributeCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1562,7 +1562,7 @@
                     }
                 ]
             },
-            "Datasets": {
+            "DatasetCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1594,7 +1594,7 @@
                     }
                 ]
             },
-            "Facts": {
+            "FactCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1626,7 +1626,7 @@
                     }
                 ]
             },
-            "Labels": {
+            "LabelCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1658,7 +1658,7 @@
                     }
                 ]
             },
-            "Sources": {
+            "SourceCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1690,7 +1690,7 @@
                     }
                 ]
             },
-            "Tables": {
+            "TableCollection": {
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/Success"
@@ -1787,35 +1787,20 @@
             "AnalyticalDashboardRelationships": {
                 "type": "object",
                 "properties": {
+                    "datasets": {
+                        "$ref": "#/components/schemas/relationshipToMany"
+                    },
+                    "filterContexts": {
+                        "$ref": "#/components/schemas/relationshipToMany"
+                    },
                     "labels": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
+                    },
+                    "metrics": {
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "visualizationObjects": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -1965,19 +1950,7 @@
                 "type": "object",
                 "properties": {
                     "labels": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "dataset": {
                         "type": "object",
@@ -2103,49 +2076,13 @@
                 "type": "object",
                 "properties": {
                     "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "facts": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "references": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2220,34 +2157,10 @@
                         }
                     },
                     "metrics": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "visualizationObjects": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2325,49 +2238,13 @@
                         }
                     },
                     "analyticalDashboards": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "metrics": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "visualizationObjects": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2410,19 +2287,7 @@
                 "type": "object",
                 "properties": {
                     "tables": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2625,7 +2490,7 @@
             "FilterContextData": {
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/FilterContextRequest"
+                        "$ref": "#/components/schemas/FilterContextDataRequest"
                     },
                     {
                         "properties": {
@@ -2640,49 +2505,13 @@
                 "type": "object",
                 "properties": {
                     "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "datasets": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "labels": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2745,79 +2574,19 @@
                 "type": "object",
                 "properties": {
                     "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "facts": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "labels": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "metrics": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "visualizationObjects": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -2888,79 +2657,19 @@
                 "type": "object",
                 "properties": {
                     "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "facts": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "labels": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "metrics": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     },
                     "visualizationObjects": {
-                        "type": "object",
-                        "properties": {
-                            "data": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToMany"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/relationshipToOne"
-                                    }
-                                ]
-                            }
-                        }
+                        "$ref": "#/components/schemas/relationshipToMany"
                     }
                 }
             },
@@ -3035,6 +2744,23 @@
                     ]
                 }
             },
+            "relationshipToMany": {
+                "type": "object",
+                "properties": {
+                    "links": {
+                        "$ref": "#/components/schemas/relationshipLinks"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                    }
+                }
+            },
+            "JsonApiRelToMany": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/linkage"
+                }
+            },
             "relationshipToOne": {
                 "description": "References to other resource objects in a to-one (\"relationship\"). Relationships can be specified by including a member in a resource's links object.",
                 "anyOf": [
@@ -3046,17 +2772,20 @@
                     }
                 ]
             },
-            "relationshipToMany": {
-                "description": "An array of objects each containing \"type\" and \"id\" members for to-many relationships.",
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/linkage"
-                },
-                "uniqueItems": true
-            },
             "empty": {
                 "description": "Describes an empty to-one relationship.",
                 "type": "null"
+            },
+            "relationshipLinks": {
+                "description": "A resource object **MAY** contain references to other resource objects (\"relationships\"). Relationships may be to-one or to-many. Relationships can be specified by including a member in a resource's links object.",
+                "type": "object",
+                "properties": {
+                    "self": {
+                        "description": "A `self` member, whose value is a URL for the relationship itself (a \"relationship URL\"). This URL allows the client to directly manipulate the relationship. For example, it would allow a client to remove an `author` from an `article` without deleting the people resource itself.",
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
             },
             "linkage": {
                 "description": "The \"type\" and \"id\" to non-empty members.",

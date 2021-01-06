@@ -22,9 +22,9 @@ import {
     insightSetFilters,
 } from "@gooddata/sdk-model";
 import {
+    VisualizationObjectModel,
+    VisualizationObjectCollection,
     VisualizationObject,
-    VisualizationObjects,
-    VisualizationObjectSchema,
 } from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
 import {
@@ -90,7 +90,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             );
         });
-        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjects;
+        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjectCollection;
         const insights = visualizationObjects.map(visualizationObjectsItemToInsight);
 
         // TODO - where to get this "meta" information in new MD?
@@ -140,10 +140,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             ),
         );
-        const { data: visualizationObject, links } = response.data as VisualizationObjectSchema;
+        const { data: visualizationObject, links } = response.data as VisualizationObject;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
-                visualizationObject.attributes!.content! as VisualizationObject.IVisualizationObject,
+                visualizationObject.attributes!.content! as VisualizationObjectModel.IVisualizationObject,
             ),
             visualizationObject.id,
             links!.self,
@@ -182,7 +182,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             );
         });
-        const insightData = createResponse.data as VisualizationObjectSchema;
+        const insightData = createResponse.data as VisualizationObject;
         return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
     };
 
