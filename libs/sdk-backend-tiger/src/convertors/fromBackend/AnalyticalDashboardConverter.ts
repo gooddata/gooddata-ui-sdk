@@ -7,6 +7,7 @@ import {
     AnalyticalDashboardsItem,
     FilterContext,
     FilterContextDataRequest,
+    IncludedResource,
 } from "@gooddata/api-client-tiger";
 import { IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
 
@@ -72,13 +73,34 @@ export function convertDashboard(
 }
 
 export function convertFilterContextFromBackend(filterContext: FilterContext): IFilterContext {
-    const { id, type, attributes } = (filterContext.data as unknown) as FilterContextDataRequest; // FIXME bad API type
+    const { id, type, attributes } = (filterContext.data as unknown) as FilterContextDataRequest; // FIXME bad API type - filterContext.data is not FilterContextData tyoe
     const { title = "", description = "", content } = attributes!;
 
     return {
         ref: idRef(id, type as ObjectType),
         identifier: id,
         uri: (filterContext.links as any).self,
+        title,
+        description,
+        filters: cloneWithSanitizedIds(
+            (content as AnalyticalDashboardObject.IFilterContext).filterContext.filters,
+        ),
+    };
+}
+
+export function getFilterContextFromIncluded(included: IncludedResource[]): IFilterContext | undefined {
+    const filterContextData = included.find((item) => item.type === "filterContext");
+    if (!filterContextData) {
+        return;
+    }
+
+    const { id, type, attributes } = filterContextData as FilterContextDataRequest;
+    const { title = "", description = "", content } = attributes!;
+
+    return {
+        ref: idRef(id, type as ObjectType),
+        identifier: id,
+        uri: "", // FIXME we need link in included
         title,
         description,
         filters: cloneWithSanitizedIds(

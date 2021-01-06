@@ -22,6 +22,7 @@ import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
     convertFilterContextFromBackend,
+    getFilterContextFromIncluded,
 } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 import {
@@ -56,9 +57,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
-        if (filterContextRef) {
-            throw new NotSupported("Not supported property 'filterContextRef'");
-        }
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
 
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((sdk) => {
@@ -75,16 +76,21 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data as AnalyticalDashboard);
+        const included = result.data.included || [];
+        const filterContext = filterContextByRef
+            ? filterContextByRef
+            : getFilterContextFromIncluded(included);
+
+        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
     };
 
     public getDashboardWithReferences = async (
         ref: ObjRef,
         filterContextRef?: ObjRef,
     ): Promise<IDashboardWithReferences> => {
-        if (filterContextRef) {
-            throw new NotSupported("Not supported property 'filterContextRef'");
-        }
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
 
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((sdk) => {
@@ -105,9 +111,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const included = result.data.included || [];
         const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
+        const filterContext = filterContextByRef
+            ? filterContextByRef
+            : getFilterContextFromIncluded(included);
 
         return {
-            dashboard: convertDashboard(result.data as AnalyticalDashboard),
+            dashboard: convertDashboard(result.data as AnalyticalDashboard, filterContext),
             references: {
                 insights,
             },
@@ -242,6 +251,24 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                             },
                         },
                     },
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertFilterContextFromBackend(result.data as FilterContext);
+    };
+
+    private getFilterContext = async (filterContextRef: ObjRef) => {
+        const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "filterContexts",
+                    workspaceId: this.workspace,
+                    id: filterContextId,
                 },
                 {
                     headers: defaultHeaders,
