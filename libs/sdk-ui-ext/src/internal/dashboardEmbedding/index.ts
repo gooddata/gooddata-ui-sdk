@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
 export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
 export {
@@ -14,6 +14,7 @@ export {
     KpiView,
     defaultThemeModifier,
 } from "./DashboardView";
+export { clearDashboardViewCaches } from "./hooks/dataLoaders";
 // TODO: export only necessary and not internal constants
 export {
     DASHBOARD_LAYOUT_BREAKPOINT_LG,

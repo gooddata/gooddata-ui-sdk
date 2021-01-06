@@ -10,7 +10,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { getDashboardViewDataLoader } from "./dataLoaders";
+import { attributesWithDrillDownDataLoaderFactory } from "./dataLoaders";
 
 /**
  * @beta
@@ -79,7 +79,7 @@ export function useAttributesWithDrillDown({
                 return [];
             }
 
-            const loader = getDashboardViewDataLoader(effectiveWorkspace);
+            const loader = attributesWithDrillDownDataLoaderFactory.forWorkspace(effectiveWorkspace);
             return loader.getAttributesWithDrillDown(effectiveBackend);
         };
     }, [hasDrillingEnabled, effectiveBackend, effectiveWorkspace]);

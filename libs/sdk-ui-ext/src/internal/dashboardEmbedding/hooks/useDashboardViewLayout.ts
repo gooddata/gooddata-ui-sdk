@@ -13,7 +13,7 @@ import invariant from "ts-invariant";
 import { IDashboardViewLayout } from "../DashboardLayout";
 import { FluidLayoutTransforms } from "@gooddata/sdk-backend-spi";
 import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayout";
-import { getDashboardViewDataLoader } from "./dataLoaders";
+import { insightDataLoaderFactory } from "../../../dataLoaders";
 
 /**
  * @beta
@@ -76,7 +76,7 @@ export const useDashboardViewLayout = ({
                   .filter((w) => w.type === "insight")
                   .map((w) => w.insight);
 
-              const loader = getDashboardViewDataLoader(effectiveWorkspace);
+              const loader = insightDataLoaderFactory.forWorkspace(effectiveWorkspace);
 
               const insights = await Promise.all(
                   insightRefsToLoad.map((ref) => loader.getInsight(effectiveBackend, ref)),

@@ -9,7 +9,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { getDashboardViewDataLoader } from "./dataLoaders";
+import { userWorkspaceSettingsDataLoaderFactory } from "../../../dataLoaders";
 
 /**
  * @beta
@@ -60,7 +60,7 @@ export function useUserWorkspaceSettings({
         "The workspace in useUserWorkspaceSettings must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const loader = getDashboardViewDataLoader(effectiveWorkspace);
+    const loader = userWorkspaceSettingsDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getUserWorkspaceSettings(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
