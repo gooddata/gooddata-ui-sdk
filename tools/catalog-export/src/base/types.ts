@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -128,6 +128,7 @@ export type ProjectMetadata = {
     catalog: Catalog;
     dateDataSets: DateDataSet[];
     insights: ObjectMeta[];
+    analyticalDashboards: ObjectMeta[];
 };
 
 //

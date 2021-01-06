@@ -1,5 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`loadProjectMetadata should load analytical dashboards 1`] = `
+Array [
+  Object {
+    "identifier": "afMA17GSbk31",
+    "tags": "",
+    "title": "KPIs",
+  },
+  Object {
+    "identifier": "abBJlnxrfEWH",
+    "tags": "",
+    "title": "Store management KPIs",
+  },
+  Object {
+    "identifier": "aahlrtUEgKkq",
+    "tags": "",
+    "title": "Untitled",
+  },
+]
+`;
+
 exports[`loadProjectMetadata should load date data sets 1`] = `
 Array [
   Object {

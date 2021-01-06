@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { CatalogExportError, ProjectMetadata } from "../../base/types";
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import ora from "ora";
@@ -6,6 +6,7 @@ import { logError } from "../../cli/loggers";
 import { loadCatalog } from "./tigerCatalog";
 import { loadInsights } from "./tigerInsights";
 import { loadDateDataSets } from "./tigerDateDatasets";
+import { loadAnalyticalDashboards } from "./tigerAnalyticalDashboards";
 
 export async function tigerLoad(projectId: string, tigerClient: ITigerClient): Promise<ProjectMetadata> {
     const spinner = ora();
@@ -23,11 +24,16 @@ export async function tigerLoad(projectId: string, tigerClient: ITigerClient): P
         const insights = await loadInsights(projectId, tigerClient);
         spinner.succeed("Insights loaded");
 
+        spinner.start("Loading analytical dashboards");
+        const analyticalDashboards = await loadAnalyticalDashboards(projectId, tigerClient);
+        spinner.succeed("Analytical dashboards loaded");
+
         return {
             projectId,
             catalog,
             dateDataSets,
             insights,
+            analyticalDashboards,
         };
     } catch (err) {
         spinner.fail();

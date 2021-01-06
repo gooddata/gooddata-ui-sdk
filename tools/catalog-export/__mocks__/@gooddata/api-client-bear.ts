@@ -3,6 +3,7 @@ import catalogItemsResponse from "./loadItems.json";
 import getObjectsResponse from "./getObjects.json";
 import getObjectsByQueryResponse from "./getObjectsByQuery.json";
 import getVisualizationsResponse from "./getVisualizations.json";
+import getAnalyticalDashboards from "./getAnalyticalDashboards.json";
 
 export default {
     catalogue: {
@@ -19,6 +20,9 @@ export default {
         },
         getVisualizations() {
             return new Promise((resolve) => resolve(getVisualizationsResponse));
+        },
+        getAnalyticalDashboards() {
+            return new Promise((resolve) => resolve(getAnalyticalDashboards));
         },
     },
 };

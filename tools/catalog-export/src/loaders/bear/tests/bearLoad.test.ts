@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { bearLoad } from "../bearLoad";
 
 jest.mock("@gooddata/api-client-bear");
@@ -26,5 +26,11 @@ describe("loadProjectMetadata", () => {
         const result = await bearLoad("test");
 
         expect(result.insights).toMatchSnapshot();
+    });
+
+    it("should load analytical dashboards", async () => {
+        const result = await bearLoad("test");
+
+        expect(result.analyticalDashboards).toMatchSnapshot();
     });
 });

@@ -1,0 +1,44 @@
+[
+    {
+        "author": "/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d",
+        "category": "analyticalDashboard",
+        "contributor": "/gdc/account/profile/2e5a40d590f955c88251a8aead5267bd",
+        "created": "2017-01-26 17:53:13",
+        "deprecated": "0",
+        "identifier": "afMA17GSbk31",
+        "isProduction": 1,
+        "summary": "",
+        "tags": "",
+        "title": "KPIs",
+        "updated": "2020-11-18 22:14:11",
+        "uri": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/2663"
+    },
+    {
+        "author": "/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d",
+        "category": "analyticalDashboard",
+        "contributor": "/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d",
+        "created": "2017-05-03 15:03:50",
+        "deprecated": "0",
+        "identifier": "abBJlnxrfEWH",
+        "isProduction": 1,
+        "summary": "",
+        "tags": "",
+        "title": "Store management KPIs",
+        "updated": "2018-01-23 04:43:37",
+        "uri": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/6853"
+    },
+    {
+        "author": "/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d",
+        "category": "analyticalDashboard",
+        "contributor": "/gdc/account/profile/187aa70b3f3ed50ba4940e7b1966367d",
+        "created": "2018-11-12 11:29:01",
+        "deprecated": "0",
+        "identifier": "aahlrtUEgKkq",
+        "isProduction": 1,
+        "summary": "",
+        "tags": "",
+        "title": "Untitled",
+        "updated": "2018-11-12 11:29:02",
+        "uri": "/gdc/md/mbuumy476p78ybcceiru61hcyr8i8lo8/obj/8867"
+    }
+]
