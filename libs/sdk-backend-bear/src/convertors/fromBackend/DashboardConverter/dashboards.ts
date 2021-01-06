@@ -107,7 +107,8 @@ export const convertDashboard = (
             ? convertLayout(layout, widgets)
             : createImplicitDashboardLayout(widgets, dependencies, visualizationClasses),
 
-        tags: tags?.split(" "),
+        // filter takes care of multiple spaces and also the base scenario ("" ~> [])
+        tags: tags?.split(" ").filter((t) => t),
     };
 
     return convertedDashboard;
