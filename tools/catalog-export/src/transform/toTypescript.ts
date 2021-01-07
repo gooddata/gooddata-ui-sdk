@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import flatten from "lodash/flatten";
 import {
     ImportDeclarationStructure,
@@ -23,6 +23,7 @@ export type TypescriptOutput = {
 const FILE_DIRECTIVES = ["/* eslint-disable */"];
 const FILE_HEADER = `/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 const INSIGHT_MAP_VARNAME = "Insights";
+const ANALYTICAL_DASHBOARD_MAP_VARNAME = "Dashboards";
 const DATE_DATASETS_MAP_VARNAME = "DateDatasets";
 const FACT_AGGREGATIONS = ["sum", "count", "avg", "min", "max", "median", "runsum"];
 
@@ -475,6 +476,33 @@ function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableSt
 }
 
 /**
+ * Declares a constant initialized to object mapping analyticalDashboard => analyticalDashboard identifier.
+ *
+ * @param projectMeta - project metadata containing the analyticalDashboards
+ */
+function generateAnalyticalDashboards(
+    projectMeta: ProjectMetadata,
+): OptionalKind<VariableStatementStructure> {
+    const analyticalDashboardInitializer: string[] = projectMeta.analyticalDashboards.map((dashboard) => {
+        const propName = uniqueVariable(dashboard.title);
+        const jsDoc = `/** \n* Dashboard Title: ${dashboard.title}  \n* Dashboard ID: ${dashboard.identifier}\n*/`;
+
+        return `${jsDoc}\n${propName}: '${dashboard.identifier}'`;
+    });
+
+    return {
+        declarationKind: VariableDeclarationKind.Const,
+        isExported: true,
+        declarations: [
+            {
+                name: ANALYTICAL_DASHBOARD_MAP_VARNAME,
+                initializer: `{ ${analyticalDashboardInitializer.join(",")} }`,
+            },
+        ],
+    };
+}
+
+/**
  * Transforms project metadata into model definitions in TypeScript. The resulting TS source file will contain
  * constant declarations for the various objects in the metadata:
  *
@@ -505,6 +533,7 @@ export function transformToTypescript(
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
     sourceFile.addVariableStatements(generateDateDataSets(projectMeta, tiger));
     sourceFile.addVariableStatement(generateInsights(projectMeta));
+    sourceFile.addVariableStatement(generateAnalyticalDashboards(projectMeta));
 
     return output;
 }

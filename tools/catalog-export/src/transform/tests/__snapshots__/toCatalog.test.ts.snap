@@ -36,6 +36,20 @@ Object {
       "tags": "",
     },
   },
+  "dashboards": Object {
+    "KPIs": Object {
+      "identifier": "afMA17GSbk31",
+      "tags": "",
+    },
+    "Store management KPIs": Object {
+      "identifier": "abBJlnxrfEWH",
+      "tags": "",
+    },
+    "Untitled": Object {
+      "identifier": "aahlrtUEgKkq",
+      "tags": "",
+    },
+  },
   "dateDataSets": Object {
     "Date (Timeline)": Object {
       "attributes": Object {
@@ -449,6 +463,20 @@ Object {
         },
       },
       "identifier": "attr.orders.channel",
+      "tags": "",
+    },
+  },
+  "dashboards": Object {
+    "KPIs": Object {
+      "identifier": "afMA17GSbk31",
+      "tags": "",
+    },
+    "Store management KPIs": Object {
+      "identifier": "abBJlnxrfEWH",
+      "tags": "",
+    },
+    "Untitled": Object {
+      "identifier": "aahlrtUEgKkq",
       "tags": "",
     },
   },

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { bearLoad } from "../../loaders/bear/bearLoad";
 import { transformToCatalog } from "../toCatalog";
 
@@ -35,6 +35,17 @@ describe("transformToCatalog", () => {
                 // different identifier AND the same name
                 "Total Sales by City": {
                     identifier: "abhJpedgcfU2",
+                    tags: "",
+                },
+            },
+            dashboards: {
+                "Store management KPIs": {
+                    identifier: "abBJlnxrfEWH",
+                    tags: "",
+                },
+
+                KPIs: {
+                    identifier: "afMA17GSbk31",
                     tags: "",
                 },
             },

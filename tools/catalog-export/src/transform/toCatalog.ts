@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { ProjectMetadata, Attribute } from "../base/types";
 import { createUniqueName } from "./titles";
 import cloneDeep from "lodash/cloneDeep";
@@ -48,6 +48,7 @@ interface ICatalog {
     visualizations: TitleToItemMap;
     attributes: IAttrs;
     dateDataSets: TitleToDataSet;
+    dashboards: TitleToItemMap;
 }
 
 type TitleToDataSet = { [key: string]: IDataSet };
@@ -152,6 +153,18 @@ function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     return newMapping;
 }
 
+function createDashboards(projectMeta: ProjectMetadata): TitleToItemMap {
+    const newMapping: TitleToItemMap = {};
+
+    projectMeta.analyticalDashboards.forEach((dashboard) => {
+        const { title, identifier, tags } = dashboard;
+        const uniqueTitle = createUniqueName(title, newMapping);
+        newMapping[uniqueTitle] = { identifier, tags };
+    });
+
+    return newMapping;
+}
+
 /**
  * Merges new and existing catalog by item identifiers. The logic is as follows:
  *
@@ -222,6 +235,7 @@ export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog
     const attributes = createCatalogAttributes(projectMeta);
     const dateDataSets = createDateDatasets(projectMeta);
     const visualizations = createVisualizations(projectMeta);
+    const dashboards = createDashboards(projectMeta);
 
     const newCatalog: ICatalog = {
         projectId: projectMeta.projectId,
@@ -229,6 +243,7 @@ export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog
         attributes,
         visualizations,
         dateDataSets,
+        dashboards,
     };
 
     if (existingCatalog) {

@@ -1,10 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import ora from "ora";
 import { logError } from "../../cli/loggers";
 import { CatalogExportError, ProjectMetadata } from "../../base/types";
 import { loadCatalog } from "./bearCatalog";
 import { loadDateDataSets } from "./bearDateDatasets";
 import { loadInsights } from "./bearInsights";
+import { loadAnalyticalDashboard } from "./bearAnalyticalDashboard";
 
 /**
  * Loads all project metadata that can be used for exporting into catalog.
@@ -28,11 +29,15 @@ export async function bearLoad(projectId: string): Promise<ProjectMetadata> {
         const insights = await loadInsights(projectId);
         spinner.succeed("Insights loaded");
 
+        spinner.start("Loading analytical dashboards…");
+        const analyticalDashboards = await loadAnalyticalDashboard(projectId);
+        spinner.succeed("Analytical dashboards loaded");
         return {
             projectId,
             catalog,
             dateDataSets,
             insights,
+            analyticalDashboards,
         };
     } catch (err) {
         spinner.fail();

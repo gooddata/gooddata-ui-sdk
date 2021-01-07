@@ -582,5 +582,18 @@ export const Insights = { /**
     * Insight ID: aaBN5UG3dXu4
     */
     $TotalSalesByLocation: 'aaBN5UG3dXu4' };
+export const Dashboards = { /** 
+    * Dashboard Title: KPIs  
+    * Dashboard ID: afMA17GSbk31
+    */
+    KPIs: 'afMA17GSbk31',/** 
+    * Dashboard Title: Store management KPIs  
+    * Dashboard ID: abBJlnxrfEWH
+    */
+    StoreManagementKPIs: 'abBJlnxrfEWH',/** 
+    * Dashboard Title: Untitled  
+    * Dashboard ID: aahlrtUEgKkq
+    */
+    Untitled: 'aahlrtUEgKkq' };
 "
 `;
