@@ -1171,7 +1171,7 @@ export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, at
 export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: DimensionItem[]): IDimension[];
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "visualizationObject" | "filterContext";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

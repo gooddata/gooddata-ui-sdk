@@ -5,7 +5,7 @@ import {
     SortDirection as TigerSortDirection,
     SortKeyAttribute,
     SortKeyValue,
-    VisualizationObject,
+    VisualizationObjectModel,
 } from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
@@ -21,9 +21,9 @@ import isEmpty from "lodash/isEmpty";
 type SortKey = SortKeyAttribute | SortKeyValue;
 
 function merge(
-    dims: VisualizationObject.IDimension[],
+    dims: VisualizationObjectModel.IDimension[],
     sorting: SortKey[][],
-): VisualizationObject.IDimension[] {
+): VisualizationObjectModel.IDimension[] {
     return dims.map((dim, idx) => {
         if (!isEmpty(sorting[idx])) {
             return {
@@ -103,9 +103,9 @@ function convertMeasureLocators(locators: ILocatorItem[]): DimensionItemValue[] 
  * @param sorts - sort items defined by SDK user
  */
 function dimensionsWithSorts(
-    dims: VisualizationObject.IDimension[],
+    dims: VisualizationObjectModel.IDimension[],
     sorts: ISortItem[],
-): VisualizationObject.IDimension[] {
+): VisualizationObjectModel.IDimension[] {
     if (isEmpty(sorts)) {
         return dims;
     }
@@ -183,7 +183,7 @@ function dimensionsWithSorts(
  * @param def
  */
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
-    const dimensionsWithoutSorts: VisualizationObject.IDimension[] = def.dimensions.map((dim, idx) => {
+    const dimensionsWithoutSorts: VisualizationObjectModel.IDimension[] = def.dimensions.map((dim, idx) => {
         if (!isEmpty(dim.totals)) {
             throw new Error("Tiger backend does not support totals.");
         }

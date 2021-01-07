@@ -28,6 +28,7 @@ import {
     IWidgetReferences,
     widgetType,
     IDashboardLayout,
+    IDashboardWithReferences,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, areObjRefsEqual, uriRef, objRefToString, IFilter } from "@gooddata/sdk-model";
 import {
@@ -36,7 +37,9 @@ import {
     GdcFilterContext,
     GdcVisualizationClass,
     GdcMetadataObject,
+    GdcVisualizationObject,
 } from "@gooddata/api-model-bear";
+import { convertVisualization } from "../../../convertors/fromBackend/VisualizationConverter";
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import * as fromSdkModel from "../../../convertors/toBackend/DashboardConverter";
 import * as toSdkModel from "../../../convertors/fromBackend/DashboardConverter";
@@ -51,6 +54,7 @@ import {
     userUriFromAuthenticatedPrincipalWithAnonymous,
 } from "../../../utils/api";
 import keyBy from "lodash/keyBy";
+import { BearWorkspaceInsights } from "../insights";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
 import { resolveWidgetFilters } from "./widgetFilters";
@@ -68,7 +72,11 @@ const DASHBOARD_DEPENDENCIES_TYPES: DashboardDependencyCategory[] = [
 ];
 
 export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
-    constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
+    private insights: BearWorkspaceInsights;
+
+    constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {
+        this.insights = new BearWorkspaceInsights(this.authCall, this.workspace);
+    }
 
     // Public methods
 
@@ -658,11 +666,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getBearDashboardDependencies = async (
         dashboardRef: ObjRef,
+        types = DASHBOARD_DEPENDENCIES_TYPES,
     ): Promise<toSdkModel.BearDashboardDependency[]> => {
         const uri = await objRefToUri(dashboardRef, this.workspace, this.authCall);
         const dependenciesObjectLinks = await this.authCall((sdk) =>
             sdk.md.getObjectUsing(this.workspace, uri, {
-                types: DASHBOARD_DEPENDENCIES_TYPES,
+                types,
                 nearest: false,
             }),
         );
@@ -673,4 +682,34 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         return dependenciesMetadataObjects;
     };
+
+    public async getDashboardWithReferences(
+        ref: ObjRef,
+        filterContextRef?: ObjRef,
+    ): Promise<IDashboardWithReferences> {
+        const dashboard = await this.getDashboard(ref, filterContextRef);
+        const dependencies = (await this.getBearDashboardDependencies(ref, [
+            "visualizationObject",
+        ])) as GdcVisualizationObject.IVisualization[];
+
+        const visualizationClassUrlByVisualizationClassUri = await this.insights.getVisualizationClassesByVisualizationClassUri(
+            { includeDeprecated: true },
+        );
+
+        const insights = dependencies.map((visualization: GdcVisualizationObject.IVisualization) =>
+            convertVisualization(
+                visualization,
+                visualizationClassUrlByVisualizationClassUri[
+                    visualization.visualizationObject.content.visualizationClass.uri
+                ],
+            ),
+        );
+
+        return {
+            dashboard,
+            references: {
+                insights,
+            },
+        };
+    }
 }

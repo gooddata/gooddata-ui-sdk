@@ -1,20 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
-import cloneDeepWith from "lodash/cloneDeepWith";
-import { IInsightDefinition, isIdentifierRef } from "@gooddata/sdk-model";
-import { VisualizationObject } from "@gooddata/api-client-tiger";
+import { IInsightDefinition } from "@gooddata/sdk-model";
+import { VisualizationObjectModel } from "@gooddata/api-client-tiger";
+import { cloneWithSanitizedIds } from "./IdSanitization";
 
-import { toObjQualifier } from "./ObjRefConverter";
-
-const cloneWithSanitizedIds = (item: any) =>
-    cloneDeepWith(item, (value) => {
-        if (isIdentifierRef(value)) {
-            return toObjQualifier(value);
-        }
-
-        return undefined;
-    });
-
-export const convertInsight = (insight: IInsightDefinition): VisualizationObject.IVisualizationObject => {
+export const convertInsight = (
+    insight: IInsightDefinition,
+): VisualizationObjectModel.IVisualizationObject => {
     return {
         visualizationObject: {
             ...insight.insight,

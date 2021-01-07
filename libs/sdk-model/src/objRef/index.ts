@@ -43,7 +43,9 @@ export type ObjectType =
     | "tag"
     | "insight"
     | "variable"
-    | "analyticalDashboard";
+    | "analyticalDashboard"
+    | "visualizationObject"
+    | "filterContext";
 
 /**
  * Model object reference using object's unique identifier.

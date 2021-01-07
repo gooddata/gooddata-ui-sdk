@@ -1,16 +1,46 @@
-// (C) 2020 GoodData Corporation
-import { IWorkspaceDashboardsService, IListedDashboard, NotSupported } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2021 GoodData Corporation
+import {
+    AnalyticalDashboard,
+    AnalyticalDashboardCollection,
+    FilterContext,
+    isVisualizationObjectsItem,
+} from "@gooddata/api-client-tiger";
+import {
+    IDashboard,
+    IDashboardDefinition,
+    IDashboardWithReferences,
+    IFilterContext,
+    IFilterContextDefinition,
+    IListedDashboard,
+    isFilterContextDefinition,
+    IWorkspaceDashboardsService,
+    NotSupported,
+} from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
+import uuid4 from "uuid/v4";
+import {
+    convertAnalyticalDashboardToListItems,
+    convertDashboard,
+    convertFilterContextFromBackend,
+    getFilterContextFromIncluded,
+} from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
+import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
+import {
+    convertAnalyticalDashboard,
+    convertFilterContextToBackend,
+} from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { convertAnalyticalDashboardToListItems } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 import { objRefToIdentifier } from "../../../utils/api";
-import { AnalyticalDashboards } from "@gooddata/api-client-tiger";
+
+const defaultHeaders = {
+    Accept: "application/vnd.gooddata.api+json",
+    "Content-Type": "application/vnd.gooddata.api+json",
+};
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
     // Public methods
-
     public getDashboards = async (): Promise<IListedDashboard[]> => {
         const result = await this.authCall((sdk) => {
             return sdk.workspaceModel.getEntities(
@@ -23,15 +53,109 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 },
             );
         });
-        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboards);
+        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboardCollection);
     };
 
-    public getDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
+
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    id,
+                },
+                {
+                    headers: defaultHeaders,
+                    include: "filterContexts",
+                },
+            );
+        });
+
+        const included = result.data.included || [];
+        const filterContext = filterContextByRef
+            ? filterContextByRef
+            : getFilterContextFromIncluded(included);
+
+        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
     };
 
-    public createDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public getDashboardWithReferences = async (
+        ref: ObjRef,
+        filterContextRef?: ObjRef,
+    ): Promise<IDashboardWithReferences> => {
+        const filterContextByRef = filterContextRef
+            ? await this.getFilterContext(filterContextRef)
+            : undefined;
+
+        const id = await objRefToIdentifier(ref, this.authCall);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    id,
+                },
+                {
+                    headers: defaultHeaders,
+                    params: {
+                        include: "visualizationObjects,filterContexts",
+                    },
+                },
+            );
+        });
+
+        const included = result.data.included || [];
+        const insights = included.filter(isVisualizationObjectsItem).map(visualizationObjectsItemToInsight);
+        const filterContext = filterContextByRef
+            ? filterContextByRef
+            : getFilterContextFromIncluded(included);
+
+        return {
+            dashboard: convertDashboard(result.data as AnalyticalDashboard, filterContext),
+            references: {
+                insights,
+            },
+        };
+    };
+
+    public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
+        let filterContext;
+        if (dashboard.filterContext) {
+            filterContext = isFilterContextDefinition(dashboard.filterContext)
+                ? await this.createFilterContext(dashboard.filterContext)
+                : dashboard.filterContext;
+        }
+
+        const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.createEntity(
+                {
+                    entity: "analyticalDashboards",
+                    workspaceId: this.workspace,
+                    analyticsObject: {
+                        data: {
+                            id: uuid4(),
+                            type: "analyticalDashboard",
+                            attributes: {
+                                content: dashboardContent,
+                                title: dashboard.title,
+                                description: dashboard.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
     };
 
     public updateDashboard = async () => {
@@ -42,11 +166,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.workspaceModel.deleteEntity({
-                entity: "analyticalDashboards",
-                id: id,
-                workspaceId: this.workspace,
-            }),
+            sdk.workspaceModel.deleteEntity(
+                {
+                    entity: "analyticalDashboards",
+                    id: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            ),
         );
     };
 
@@ -59,11 +188,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getScheduledMailsCountForDashboard = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return 0;
     };
 
     public getAllWidgetAlertsForCurrentUser = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return [];
     };
 
     public getDashboardWidgetAlertsForCurrentUser = async () => {
@@ -71,7 +202,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getWidgetAlertsCountForWidgets = async () => {
-        throw new NotSupported("Not supported");
+        // FIXME Not supported
+        return [];
     };
 
     public createWidgetAlert = async () => {
@@ -96,5 +228,54 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     public getResolvedFiltersForWidget = async () => {
         throw new NotSupported("Not supported");
+    };
+
+    private createFilterContext = async (
+        filterContext: IFilterContextDefinition,
+    ): Promise<IFilterContext> => {
+        const tigerFilterContext = convertFilterContextToBackend(filterContext);
+
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.createEntity(
+                {
+                    entity: "filterContexts",
+                    workspaceId: this.workspace,
+                    analyticsObject: {
+                        data: {
+                            id: uuid4(),
+                            type: "filterContext",
+                            attributes: {
+                                content: tigerFilterContext,
+                                title: filterContext.title || "",
+                                description: filterContext.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertFilterContextFromBackend(result.data as FilterContext);
+    };
+
+    private getFilterContext = async (filterContextRef: ObjRef) => {
+        const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceModel.getEntity(
+                {
+                    entity: "filterContexts",
+                    workspaceId: this.workspace,
+                    id: filterContextId,
+                },
+                {
+                    headers: defaultHeaders,
+                },
+            );
+        });
+
+        return convertFilterContextFromBackend(result.data as FilterContext);
     };
 }

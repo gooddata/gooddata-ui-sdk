@@ -47,6 +47,10 @@ const TigerToSdkGranularityMap: TigerToSdk = {
     [AttributeAttributesGranularityEnum.DAYOFWEEK]: "GDC.time.day_in_week",
     [AttributeAttributesGranularityEnum.HOUROFDAY]: "GDC.time.hour_in_day",
     [AttributeAttributesGranularityEnum.MINUTEOFHOUR]: "GDC.time.minute_in_hour",
+
+    [AttributeAttributesGranularityEnum.WEEKOFYEAREU]: "GDC.time.euweek_in_year",
+    [AttributeAttributesGranularityEnum.DAYOFWEEKEU]: "GDC.time.day_in_euweek",
+    [AttributeAttributesGranularityEnum.WEEKEU]: "GDC.time.week",
 };
 
 /**

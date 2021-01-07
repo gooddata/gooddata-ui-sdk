@@ -53,7 +53,10 @@ const convertBucket = (bucket: IBucket): GdcVisualizationObject.IBucket => {
     };
 };
 
-const convertInsightContent = (
+/**
+ * @internal
+ */
+export const convertInsightContent = (
     insight: IInsightDefinition,
 ): GdcVisualizationObject.IVisualizationObjectContent => {
     const { properties, references } = convertUrisToReferences({

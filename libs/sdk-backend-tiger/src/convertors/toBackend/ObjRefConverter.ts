@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -6,47 +6,34 @@ import {
     isLocalIdRef,
     isObjRef,
     isUriRef,
-    ObjectType,
     ObjRef,
     ObjRefInScope,
 } from "@gooddata/sdk-model";
-import isEmpty from "lodash/isEmpty";
-import { TigerAfmType } from "../../types";
-
-type AfmObjectType = Exclude<ObjectType, "tag" | "insight" | "analyticalDashboard">;
-
-const allValidAfmTypes: AfmObjectType[] = ["measure", "displayForm", "fact", "dataSet", "attribute"];
-
-const tigerAfmTypeByObjectAfmType: {
-    [objectType in AfmObjectType]: TigerAfmType;
-} = {
-    attribute: "attribute",
-    measure: "metric",
-    displayForm: "label",
-    dataSet: "dataset",
-    fact: "fact",
-    variable: "variable",
-};
-
-const isValidAfmType = (obj: any): obj is AfmObjectType => {
-    return !isEmpty(obj) && allValidAfmTypes.some((afmType) => afmType === obj);
-};
+import { TigerAfmType, TigerObjectType } from "../../types";
+import {
+    isTigerCompatibleType,
+    objectTypeToTigerIdType,
+    TigerCompatibleObjectType,
+} from "../../types/refTypeMapping";
 
 // TODO: get rid of the defaultValue, tiger should explode if ref is not provided correctly
-function toTigerAfmType(value: ObjectType | undefined, defaultValue?: TigerAfmType): TigerAfmType {
+export function toTigerType(
+    value: TigerCompatibleObjectType | undefined,
+    defaultValue?: TigerObjectType,
+): TigerObjectType {
     if (!value) {
         if (!defaultValue) {
-            throw new UnexpectedError("No value or default value was provided to toTigerAfmType ");
+            throw new UnexpectedError("No value or default value was provided to toTigerType ");
         }
 
         return defaultValue;
     }
 
-    if (!isValidAfmType(value)) {
+    if (!isTigerCompatibleType(value)) {
         throw new UnexpectedError(`Cannot convert ${value} to AFM type, ${value} is not valid AfmObjectType`);
     }
 
-    return tigerAfmTypeByObjectAfmType[value];
+    return objectTypeToTigerIdType[value];
 }
 
 export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjectIdentifier {
@@ -57,7 +44,7 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): Object
     return {
         identifier: {
             id: ref.identifier,
-            type: toTigerAfmType(ref.type, defaultValue),
+            type: toTigerType(ref.type as TigerCompatibleObjectType, defaultValue),
         },
     };
 }

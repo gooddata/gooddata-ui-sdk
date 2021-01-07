@@ -1,6 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
+
+/**
+ * Tiger authenticated call guard
+ *
+ * @public
+ */
+export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClient>;
 
 /**
  * Tiger AFM types
@@ -10,8 +17,15 @@ import { AuthenticatedCallGuard } from "@gooddata/sdk-backend-base";
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "variable";
 
 /**
- * Tiger authenticated call guard
+ * Tiger metadata types
  *
  * @public
  */
-export type TigerAuthenticatedCallGuard = AuthenticatedCallGuard<ITigerClient>;
+export type TigerMetadataType = "analyticalDashboard" | "visualizationObject" | "filterContext";
+
+/**
+ * Tiger entity types
+ *
+ * @public
+ */
+export type TigerObjectType = TigerAfmType | TigerMetadataType;

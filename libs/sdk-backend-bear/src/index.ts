@@ -92,6 +92,7 @@ export const BackendToBearConvertors = {
     convertFilterContextItem,
     convertFilterReference,
     convertKpiDrill,
+    convertInsight,
     convertVisualizationWidgetDrill,
     convertScheduledMail: convertScheduledMailFromBackend,
     convertDashboardDateFilterConfig,

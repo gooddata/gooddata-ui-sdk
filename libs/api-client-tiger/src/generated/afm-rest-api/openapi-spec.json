@@ -1312,7 +1312,8 @@
                             "MINUTE_OF_HOUR",
                             "WEEK_OF_YEAR",
                             "WEEK_OF_YEAR_EU",
-                            "DAY_OF_WEEK_EU"
+                            "DAY_OF_WEEK_EU",
+                            "WEEK_EU"
                         ]
                     }
                 }

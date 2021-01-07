@@ -18,7 +18,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
-import { Facts, Metrics } from "@gooddata/api-client-tiger";
+import { FactCollection, MetricCollection } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -97,7 +97,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
             ),
         );
 
-        return (measures.data as Metrics).data.map(convertMeasure);
+        return (measures.data as MetricCollection).data.map(convertMeasure);
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
@@ -114,7 +114,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 },
             ),
         );
-        return (facts.data as Facts).data.map(convertFact);
+        return (facts.data as FactCollection).data.map(convertFact);
     };
 
     // Groups are collected from all catalog entities.

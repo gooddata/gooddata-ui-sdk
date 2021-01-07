@@ -21,6 +21,7 @@ export const BackendToBearConvertors: {
     convertFilterContextItem: (filterContextItem: import("@gooddata/api-model-bear").GdcFilterContext.FilterContextItem) => import("@gooddata/sdk-backend-spi").FilterContextItem;
     convertFilterReference: (filterReference: import("@gooddata/api-model-bear").GdcExtendedDateFilters.IDateFilterReference | import("@gooddata/api-model-bear").GdcExtendedDateFilters.IAttributeFilterReference) => import("@gooddata/sdk-backend-spi").IDashboardFilterReference;
     convertKpiDrill: (kpi: import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI) => import("@gooddata/sdk-backend-spi").IDrillToLegacyDashboard;
+    convertInsight: (insight: import("@gooddata/sdk-model").IInsight) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
     convertVisualizationWidgetDrill: (drill: import("@gooddata/api-model-bear").GdcVisualizationWidget.IDrillDefinition) => import("@gooddata/sdk-backend-spi").DrillDefinition;
     convertScheduledMail: (scheduledMail: import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail) => import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail;
     convertDashboardDateFilterConfig: (dateFilterConfig: import("@gooddata/api-model-bear").GdcDashboard.IDashboardDateFilterConfig) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig;

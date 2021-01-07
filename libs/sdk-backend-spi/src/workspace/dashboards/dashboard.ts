@@ -1,5 +1,5 @@
-// (C) 2019-2021 GoodData Corporation
-import { ObjRef, Identifier } from "@gooddata/sdk-model";
+// (C) 2019-2020 GoodData Corporation
+import { ObjRef, Identifier, IInsight } from "@gooddata/sdk-model";
 import { IDashboardLayout } from "./layout/dashboardLayout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
@@ -189,4 +189,21 @@ export interface IListedDashboard {
      * Updated date
      */
     readonly updated: string;
+}
+
+/**
+ * Dashboard referenced objects
+ * @alpha
+ */
+export interface IDashboardReferences {
+    insights: IInsight[];
+}
+
+/**
+ * Dashboard with referenced objects
+ *  * @alpha
+ */
+export interface IDashboardWithReferences {
+    dashboard: IDashboard;
+    references: IDashboardReferences;
 }

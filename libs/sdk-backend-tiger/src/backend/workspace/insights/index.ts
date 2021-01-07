@@ -20,14 +20,17 @@ import {
     mergeFilters,
     insightFilters,
     insightSetFilters,
-    idRef,
 } from "@gooddata/sdk-model";
 import {
+    VisualizationObjectModel,
+    VisualizationObjectCollection,
     VisualizationObject,
-    VisualizationObjects,
-    VisualizationObjectSchema,
 } from "@gooddata/api-client-tiger";
 import uuid4 from "uuid/v4";
+import {
+    insightFromInsightDefinition,
+    visualizationObjectsItemToInsight,
+} from "../../../convertors/fromBackend/InsightConverter";
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
@@ -35,17 +38,6 @@ import { convertVisualizationObject } from "../../../convertors/fromBackend/Visu
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
-
-const insightFromInsightDefinition = (insight: IInsightDefinition, id: string, uri: string): IInsight => {
-    return {
-        insight: {
-            ...insight.insight,
-            identifier: id,
-            uri,
-            ref: idRef(id),
-        },
-    };
-};
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -98,16 +90,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             );
         });
-        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjects;
-        const insights = visualizationObjects.map((visualizationObject) => {
-            return insightFromInsightDefinition(
-                convertVisualizationObject(
-                    visualizationObject!.attributes!.content! as VisualizationObject.IVisualizationObject,
-                ),
-                visualizationObject.id,
-                visualizationObject.links!.self,
-            );
-        });
+        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjectCollection;
+        const insights = visualizationObjects.map(visualizationObjectsItemToInsight);
 
         // TODO - where to get this "meta" information in new MD?
         // Count the objects from API vs get it from backend?
@@ -156,10 +140,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             ),
         );
-        const { data: visualizationObject, links } = response.data as VisualizationObjectSchema;
+        const { data: visualizationObject, links } = response.data as VisualizationObject;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
-                visualizationObject.attributes!.content! as VisualizationObject.IVisualizationObject,
+                visualizationObject.attributes!.content! as VisualizationObjectModel.IVisualizationObject,
             ),
             visualizationObject.id,
             links!.self,
@@ -198,7 +182,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             );
         });
-        const insightData = createResponse.data as VisualizationObjectSchema;
+        const insightData = createResponse.data as VisualizationObject;
         return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
     };
 

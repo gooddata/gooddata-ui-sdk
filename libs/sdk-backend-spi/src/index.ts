@@ -170,6 +170,8 @@ export {
 } from "./workspace/dashboards/drills";
 export {
     IDashboard,
+    IDashboardReferences,
+    IDashboardWithReferences,
     IDashboardDefinition,
     IListedDashboard,
     IDashboardBase,

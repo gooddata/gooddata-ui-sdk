@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types";
-import { Attributes, AttributesItem, DatasetsItem, ITigerClient } from "@gooddata/api-client-tiger";
+import { AttributeCollection, AttributesItem, DatasetsItem, ITigerClient } from "@gooddata/api-client-tiger";
 import {
     convertAttribute,
     createDatasetMap,
@@ -17,7 +17,7 @@ type DatasetWithAttributes = {
 };
 
 function findDateDatasetsWithAttributes(
-    attributes: Attributes,
+    attributes: AttributeCollection,
     datasetsMap: DatasetMap,
 ): DatasetWithAttributes[] {
     const res: { [id: string]: DatasetWithAttributes } = {};
@@ -91,7 +91,7 @@ export async function loadDateDataSets(
     const labelsMap = createLabelMap(result.data.included);
     const datasetsMap = createDatasetMap(result.data.included);
 
-    const dateDatasets = findDateDatasetsWithAttributes(result.data as Attributes, datasetsMap);
+    const dateDatasets = findDateDatasetsWithAttributes(result.data as AttributeCollection, datasetsMap);
 
     return convertToExportableFormat(dateDatasets, labelsMap);
 }
