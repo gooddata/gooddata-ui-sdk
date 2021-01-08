@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import { dashboardDataLoaderFactory } from "./dataLoaders";
 
 /**
  * @beta
@@ -65,7 +66,8 @@ export function useDashboard({
         "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const promise = () => effectiveBackend.workspace(effectiveWorkspace).dashboards().getDashboard(dashboard);
+    const loader = dashboardDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getDashboard(effectiveBackend, dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,

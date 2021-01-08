@@ -8,11 +8,12 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, IInsight, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { IDashboardViewLayout } from "../DashboardLayout";
 import { FluidLayoutTransforms } from "@gooddata/sdk-backend-spi";
 import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayout";
+import { insightDataLoaderFactory } from "../../../dataLoaders";
 
 /**
  * @beta
@@ -75,10 +76,10 @@ export const useDashboardViewLayout = ({
                   .filter((w) => w.type === "insight")
                   .map((w) => w.insight);
 
+              const loader = insightDataLoaderFactory.forWorkspace(effectiveWorkspace);
+
               const insights = await Promise.all(
-                  insightRefsToLoad.map((ref) =>
-                      effectiveBackend.workspace(effectiveWorkspace).insights().getInsight(ref),
-                  ),
+                  insightRefsToLoad.map((ref) => loader.getInsight(effectiveBackend, ref)),
               );
 
               const getInsightByRef = (insightRef: ObjRef): IInsight | undefined => {
@@ -86,7 +87,7 @@ export const useDashboardViewLayout = ({
               };
 
               const getDashboardViewWidgetClass = (insight: IInsight): DashboardViewLayoutWidgetClass => {
-                  return insight.insight.visualizationUrl.split(":")[1] as DashboardViewLayoutWidgetClass;
+                  return insightVisualizationUrl(insight).split(":")[1] as DashboardViewLayoutWidgetClass;
               };
 
               // Convert current layout model to "legacy" layout model,

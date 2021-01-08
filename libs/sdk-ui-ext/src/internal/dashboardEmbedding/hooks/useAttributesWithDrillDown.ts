@@ -9,8 +9,8 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import flatMap from "lodash/flatMap";
 import invariant from "ts-invariant";
+import { attributesWithDrillDownDataLoaderFactory } from "./dataLoaders";
 
 /**
  * @beta
@@ -79,18 +79,10 @@ export function useAttributesWithDrillDown({
                 return [];
             }
 
-            const catalog = await effectiveBackend
-                .workspace(effectiveWorkspace)
-                .catalog()
-                .forTypes(["attribute", "dateDataset"])
-                .load();
-
-            const attributes = catalog.attributes();
-            const dateAttributes = flatMap(catalog.dateDatasets(), (dd) => dd.dateAttributes);
-
-            return [...attributes, ...dateAttributes].filter((attr) => attr.attribute.drillDownStep);
+            const loader = attributesWithDrillDownDataLoaderFactory.forWorkspace(effectiveWorkspace);
+            return loader.getAttributesWithDrillDown(effectiveBackend);
         };
-    }, [hasDrillingEnabled]);
+    }, [hasDrillingEnabled, effectiveBackend, effectiveWorkspace]);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,

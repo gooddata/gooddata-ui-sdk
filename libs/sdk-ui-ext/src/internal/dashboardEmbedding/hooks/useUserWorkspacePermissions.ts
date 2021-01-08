@@ -9,6 +9,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
+import { userWorkspacePermissionsDataLoaderFactory } from "./dataLoaders";
 
 /**
  * @beta
@@ -59,8 +60,8 @@ export function useUserWorkspacePermissions({
         "The workspace in useUserWorkspacePermissions must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
-    const promise = () =>
-        effectiveBackend.workspace(effectiveWorkspace).permissions().getPermissionsForCurrentUser();
+    const loader = userWorkspacePermissionsDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getUserWorkspacePermissions(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,

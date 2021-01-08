@@ -2,4 +2,3 @@
 
 export { InsightView } from "./InsightView";
 export { IInsightViewProps } from "./types";
-export { clearInsightViewCaches } from "./dataLoaders";
