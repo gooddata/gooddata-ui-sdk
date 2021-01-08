@@ -77,6 +77,16 @@ module.exports = async (env, argv) => {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: "GoodData.UI Examples Gallery",
+            meta: [
+                {
+                    property: "og:image",
+                    content: "https://www.gooddata.com/learn-assets/img/og-examples.png",
+                },
+                {
+                    name: "twitter:image",
+                    content: "https://www.gooddata.com/learn-assets/img/og-examples.png",
+                },
+            ],
         }),
         new CircularDependencyPlugin({
             exclude: /node_modules|dist/,
