@@ -1,5 +1,7 @@
 # GoodData.UI SDK
 
+TESTING SONAR INTEGRATION, DO NOT MERGE
+
 ## Getting Started
 
 The easiest way to start developing analytical applications using GoodData.UI SDK is to use

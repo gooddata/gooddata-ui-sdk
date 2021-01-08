@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import ora from "ora";
@@ -116,8 +116,7 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
 
     const projectSpinner = ora();
     try {
-        // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(projectId, tigerClient);
+        return tigerLoad(projectId, tigerClient);
     } catch (err) {
         projectSpinner.stop();
 
