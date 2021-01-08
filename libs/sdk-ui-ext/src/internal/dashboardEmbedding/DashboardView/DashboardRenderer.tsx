@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { memo, useCallback } from "react";
 import {
     IAnalyticalBackend,
     IFilterContext,
@@ -36,7 +36,7 @@ interface IDashboardRendererProps {
     className?: string;
 }
 
-export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
+export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardViewLayout,
     alerts,
     filters,
@@ -49,7 +49,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
     onError,
     LoadingComponent,
     className,
-}) => {
+}) {
     const isThemeLoading = useThemeIsLoading();
 
     const contentWithProps = useCallback(
@@ -115,4 +115,4 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = ({
             className={className}
         />
     );
-};
+});

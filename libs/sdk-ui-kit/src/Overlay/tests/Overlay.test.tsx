@@ -45,16 +45,16 @@ class FixedComponent extends Component<FixedComponentProps> {
     }
 }
 
-const ComposedOverlay = forwardRef((props: any, ref) => (
-    <div>
-        <FixedComponent {...props.fixed} />
-        <Overlay {...props.overlay} ref={ref}>
-            <FixedComponent {...props.content} />
-        </Overlay>
-    </div>
-));
-
-ComposedOverlay.displayName = "ComposedOverlay";
+const ComposedOverlay = forwardRef(function ComposedOverlay(props: any, ref) {
+    return (
+        <div>
+            <FixedComponent {...props.fixed} />
+            <Overlay {...props.overlay} ref={ref}>
+                <FixedComponent {...props.content} />
+            </Overlay>
+        </div>
+    );
+});
 
 function createEvent(options = {}) {
     return {

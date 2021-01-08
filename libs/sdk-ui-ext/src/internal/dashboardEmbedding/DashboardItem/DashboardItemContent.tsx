@@ -8,7 +8,7 @@ interface IDashboardItemContentProps {
 }
 
 export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemContentProps>(
-    ({ children, className }, ref) => {
+    function DashboardItemContent({ children, className }, ref) {
         return (
             <div className={cx("dash-item-content", className)} ref={ref}>
                 {children}
@@ -16,5 +16,3 @@ export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemCon
         );
     },
 );
-
-DashboardItemContent.displayName = "DashboardItemContent";
