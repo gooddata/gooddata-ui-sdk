@@ -130,6 +130,7 @@ module.exports = async (env, argv) => {
                 react: path.resolve("./node_modules/react"),
                 // fixes tilde imports in CSS from sdk-ui-ext
                 "@gooddata/sdk-ui-ext": path.resolve("./node_modules/@gooddata/sdk-ui-ext"),
+                "@gooddata/sdk-ui-kit": path.resolve("./node_modules/@gooddata/sdk-ui-kit"),
             },
             // Prefer ESM versions of packages to enable tree shaking and easier dev experience
             mainFields: ["module", "browser", "main"],
