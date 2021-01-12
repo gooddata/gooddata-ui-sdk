@@ -1,3 +1,5 @@
+// (C) 2021 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
