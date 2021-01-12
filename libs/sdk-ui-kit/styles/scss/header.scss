@@ -597,7 +597,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     .gd-workspace-picker-home-footer {
         display: block;
         color: $gd-color-text;
-        background: url($base_path + "./icons/home.svg") no-repeat;
+        background: url("~@gooddata/sdk-ui-kit/esm/assets/home.svg") no-repeat;
         padding-left: 30px;
         text-decoration: none;
 

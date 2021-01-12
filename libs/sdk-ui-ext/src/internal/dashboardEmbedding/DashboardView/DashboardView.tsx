@@ -164,20 +164,20 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             <UserWorkspaceSettingsProvider settings={userWorkspaceSettings}>
                 <ColorPaletteProvider palette={colorPalette}>
                     <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
-                        {isScheduledMailDialogVisible && (
-                            <ScheduledMailDialog
-                                backend={backend}
-                                workspace={workspace}
-                                locale={effectiveLocale}
-                                dashboard={dashboard}
-                                filters={applyFiltersToScheduledMail ? filters : undefined}
-                                onSubmit={onScheduledMailDialogSubmit}
-                                onSubmitSuccess={onScheduledMailSubmitSuccess}
-                                onSubmitError={onScheduledMailSubmitError}
-                                onCancel={onScheduledMailDialogCancel}
-                                onError={onError}
-                            />
-                        )}
+                        <ScheduledMailDialog
+                            backend={backend}
+                            workspace={workspace}
+                            locale={effectiveLocale}
+                            dashboard={dashboard}
+                            filters={applyFiltersToScheduledMail ? filters : undefined}
+                            onSubmit={onScheduledMailDialogSubmit}
+                            onSubmitSuccess={onScheduledMailSubmitSuccess}
+                            onSubmitError={onScheduledMailSubmitError}
+                            onCancel={onScheduledMailDialogCancel}
+                            onError={onError}
+                            isVisible={isScheduledMailDialogVisible}
+                        />
+
                         {isFluidLayoutEmpty(dashboardViewLayout) ? (
                             <EmptyDashboardError ErrorComponent={ErrorComponent} />
                         ) : (

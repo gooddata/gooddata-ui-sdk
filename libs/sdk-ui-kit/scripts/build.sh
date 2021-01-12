@@ -11,6 +11,12 @@ _clean() {
 }
 
 _common-build() {
+    mkdir -p dist
+    cp -rf src/assets dist/assets
+
+    mkdir -p esm
+    cp -rf src/assets esm/assets
+
     _build_styles
 }
 

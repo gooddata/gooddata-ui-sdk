@@ -81,6 +81,15 @@ export type ScheduledMailDialogProps = {
      * Callback to be called, when error occurs.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Is scheduled e-mail dialog visible?
+     * This is used to control the visibility of the dialog without unmounting it.
+     * Note: We want to avoid unmounting of the component to ensure
+     * that all necessary hooks are called when saving the e-mail - this property
+     * affects only rendering part of the dialog.
+     */
+    isVisible?: boolean;
 };
 
 export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) => {
@@ -95,6 +104,7 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         onSubmitError,
         onCancel,
         onError,
+        isVisible,
     } = props;
     const { result: currentUser, status: currentUserStatus, error: currentUserError } = useCurrentUser({
         backend,
@@ -187,7 +197,7 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         );
     }
 
-    return currentUser ? (
+    return currentUser && isVisible ? (
         <ScheduledMailDialogRenderer
             backend={backend}
             workspace={workspace}
