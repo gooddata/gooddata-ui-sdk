@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 /**
  * Workspace permission types
@@ -20,7 +20,8 @@ export type WorkspacePermission =
     | "canManageProject"
     | "canCreateScheduledMail"
     | "canListUsersInProject"
-    | "canManageDomain";
+    | "canManageDomain"
+    | "canInviteUserToProject";
 
 /**
  * Dictionary of workspace permissions
