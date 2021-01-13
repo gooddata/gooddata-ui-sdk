@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -220,6 +220,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canCreateScheduledMail: true,
             canListUsersInProject: true,
             canManageDomain: true,
+            canInviteUserToProject: true,
         }),
     };
 }

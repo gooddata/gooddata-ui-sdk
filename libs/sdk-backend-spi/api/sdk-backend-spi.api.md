@@ -1803,7 +1803,7 @@ export function widgetType(widget: IWidget): WidgetType;
 export function widgetUri(widget: IWidget): string;
 
 // @public
-export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain";
+export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject";
 
 
 // (No @packageDocumentation comment for this package)

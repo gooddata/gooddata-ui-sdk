@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IWorkspacePermissionsService, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
@@ -23,6 +23,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
                 canCreateScheduledMail: true,
                 canListUsersInProject: true,
                 canManageDomain: true,
+                canInviteUserToProject: true,
             };
             return result;
         });
