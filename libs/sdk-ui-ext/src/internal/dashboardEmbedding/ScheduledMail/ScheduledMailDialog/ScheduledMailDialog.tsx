@@ -181,6 +181,10 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         );
     }
 
+    if (!isVisible) {
+        return null;
+    }
+
     if (isLoading) {
         return (
             <Overlay className="gd-schedule-email-dialog-overlay" isModal positionType="fixed">
@@ -197,7 +201,7 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         );
     }
 
-    return currentUser && isVisible ? (
+    return currentUser ? (
         <ScheduledMailDialogRenderer
             backend={backend}
             workspace={workspace}
