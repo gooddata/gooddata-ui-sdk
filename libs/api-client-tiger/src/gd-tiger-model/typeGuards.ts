@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     AttributeExecutionResultHeader,
@@ -7,7 +7,7 @@ import {
     ObjectIdentifier,
     ResultDimension,
 } from "../generated/afm-rest-api";
-import { FilterContextData, VisualizationObjectsItem } from "../generated/metadata-json-api";
+import { JsonApiFilterContext, JsonApiVisualizationObject } from "../generated/metadata-json-api";
 
 export type ResultDimensionHeader = ResultDimension["headers"][number];
 
@@ -30,10 +30,10 @@ export function isResultAttributeHeader(
 
 export function isVisualizationObjectsItem(
     visualizationObject: unknown,
-): visualizationObject is VisualizationObjectsItem {
-    return (visualizationObject as VisualizationObjectsItem).type === "visualizationObject";
+): visualizationObject is JsonApiVisualizationObject {
+    return (visualizationObject as JsonApiVisualizationObject).type === "visualizationObject";
 }
 
-export function isFilterContextData(filterContext: unknown): filterContext is FilterContextData {
-    return (filterContext as FilterContextData).type === "filterContext";
+export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContext {
+    return (filterContext as JsonApiFilterContext).type === "filterContext";
 }
