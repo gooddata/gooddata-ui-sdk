@@ -19,11 +19,11 @@ const DashboardViewWithEmails: React.FC = () => {
                 onScheduledMailDialogCancel={() => setIsEmailDialogOpen(false)}
                 onScheduledMailSubmitSuccess={() => {
                     alert("Scheduled email scheduled successfully");
-                    setIsEmailDialogOpen(true);
+                    setIsEmailDialogOpen(false);
                 }}
                 onScheduledMailSubmitError={() => {
                     alert("Scheduled email error");
-                    setIsEmailDialogOpen(true);
+                    setIsEmailDialogOpen(false);
                 }}
             />
         </>
