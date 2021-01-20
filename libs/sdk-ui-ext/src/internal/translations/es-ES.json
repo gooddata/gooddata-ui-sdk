@@ -74,6 +74,8 @@
     "dashboard.error.missing_primary_bucket_item.text": "Agregue una medida principal a la perspectiva o cambie a tabla.\nCuando lo haya hecho, podrá guardarla.",
     "dashboard.xirr.error.invalid_buckets.heading": "Configuración incompleta",
     "dashboard.xirr.error.invalid_buckets.text": "Asegúrese de haber seleccionado una medida y un atributo de fecha",
+    "dashboard.embedded.error.empty.heading": "No hay widgets en el panel",
+    "dashboard.embedded.error.empty.text": "Asegúrese de que el panel que está incrustando es correcto.",
     "properties.unsupported": "Esta visualización no admite la configuración",
     "properties.config.not_applicable": "El panel de configuración no es aplicable para esta configuración de la perspectiva",
     "properties.not_applicable": "La propiedad no es aplicable para esta configuración de la perspectiva",

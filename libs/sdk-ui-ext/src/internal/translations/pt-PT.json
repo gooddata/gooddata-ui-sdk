@@ -74,6 +74,8 @@
     "dashboard.error.missing_primary_bucket_item.text": "Adicione uma medida principal ao insight ou mude para tabela.\nQuando terminar, poderá guardá-lo.",
     "dashboard.xirr.error.invalid_buckets.heading": "Configuração incompleta",
     "dashboard.xirr.error.invalid_buckets.text": "Certifique-se de que selecionou uma medida e um atributo de data",
+    "dashboard.embedded.error.empty.heading": "Não há widgets no dashboard",
+    "dashboard.embedded.error.empty.text": "Certifique-se de que o dashboard que está a incorporar está correto.",
     "properties.unsupported": "Esta visualização não suporta configuração",
     "properties.config.not_applicable": "O painel Configuração não é aplicável para esta configuração do insight",
     "properties.not_applicable": "A propriedade não é aplicável para esta configuração do insight",

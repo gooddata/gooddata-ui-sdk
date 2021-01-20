@@ -74,6 +74,8 @@
     "dashboard.error.missing_primary_bucket_item.text": "为洞察添加基本度量，或切换至表格。\n完成后，您将可以保存它。",
     "dashboard.xirr.error.invalid_buckets.heading": "配置不完整",
     "dashboard.xirr.error.invalid_buckets.text": "请务必选择一个度量和一个日期属性",
+    "dashboard.embedded.error.empty.heading": "此控制面板中无任何构件",
+    "dashboard.embedded.error.empty.text": "请确保要嵌入的控制面板是正确的。",
     "properties.unsupported": "此可视化不支持配置",
     "properties.config.not_applicable": "配置面板不适用于此洞察配置",
     "properties.not_applicable": "属性不适用于此洞察配置",

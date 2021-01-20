@@ -74,6 +74,8 @@
     "dashboard.error.missing_primary_bucket_item.text": "Fügen Sie Ihrer Ansicht ein primäres Maß hinzu oder schalten Sie auf Tabelle um.\nWenn Sie fertig sind, können Sie es speichern.",
     "dashboard.xirr.error.invalid_buckets.heading": "Unvollständige Konfiguration",
     "dashboard.xirr.error.invalid_buckets.text": "Bitte überprüfen Sie, ob Sie eine Messung und ein Datum ausgewählt haben.",
+    "dashboard.embedded.error.empty.heading": "Das Dashboard enthält keine Widgets",
+    "dashboard.embedded.error.empty.text": "Stellen Sie sicher, dass Sie das richtige Dashboard einbetten.",
     "properties.unsupported": "Diese Visualisierung unterstützt keine Konfiguration",
     "properties.config.not_applicable": "Der Konfigurationsabschnitt ist nicht auf diese Konfiguration der Betrachtung anwendbar",
     "properties.not_applicable": "Eigenschaft ist nicht auf diese Konfiguration der Betrachtung anwendbar",
