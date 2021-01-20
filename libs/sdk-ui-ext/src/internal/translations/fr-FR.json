@@ -74,6 +74,8 @@
     "dashboard.error.missing_primary_bucket_item.text": "Ajoutez une mesure principale à votre perception, ou basculez vers le tableau.\r\nUne fois que vois avez terminé, vous pourrez l'enregistrer.",
     "dashboard.xirr.error.invalid_buckets.heading": "Configuration incomplète",
     "dashboard.xirr.error.invalid_buckets.text": "Vérifiez que vous avez sélectionné une mesure et un attribut de date",
+    "dashboard.embedded.error.empty.heading": "Aucun widget sur le tableau de bord",
+    "dashboard.embedded.error.empty.text": "Vérifiez que vous incorporez le bon tableau de bord.",
     "properties.unsupported": "Cette visualisation ne prend pas en charge la configuration",
     "properties.config.not_applicable": "Panneau de configuration ne s'applique pas à cette configuration de la perception",
     "properties.not_applicable": "Propriété ne s'applique pas à cette configuration de la perception",
