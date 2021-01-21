@@ -220,6 +220,21 @@ It is possible to override default Backstop concurrency settings using environme
     the very end. Since the comparison is done at the end and is pretty fast anyway, tweaking this option
     is usually not needed.
 
+## End-to-end tests with Storybook and TestCafe
+
+To enable some more involved interaction testing that would not be possible or practical with BackstopJS, the project also comes with TestCafe support.
+
+It uses the Storybook described in the previous sections and runs standard TestCafe tests on top os selected stories (those in the `50 Stories for e2e Tests` section).
+
+### Building and running
+
+To run the TestCafe tests
+
+-   Make sure you have the Storybook running by executing `npm run storybook`
+-   Run the TestCafe tests
+    -   either in visual mode by `npm run testcafe-visual` (this is useful debugging as you can see what is happening)
+    -   or in headless mode by `npm run testcafe` (this is much faster as tests are run in parallel)
+
 ## Technical Funny Stuff
 
 This project has several use cases where React component test scenarios have to be processed in node.js environment:
