@@ -1567,10 +1567,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private scrollBarExists(): boolean {
-        const { scrollWidth, clientWidth } = document.getElementsByClassName(
+        const { scrollWidth, clientWidth } = this.containerRef.getElementsByClassName(
             "ag-body-horizontal-scroll-viewport",
         )[0];
-        return scrollWidth > clientWidth ? true : false;
+        return scrollWidth > clientWidth;
     }
 
     private getScrollBarPadding(): number {
