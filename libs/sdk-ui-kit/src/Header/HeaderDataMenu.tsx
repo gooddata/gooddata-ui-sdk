@@ -35,7 +35,8 @@ export const CoreHeaderDataMenu: React.FC<IHeaderDataMenuProps> = ({
         return items.map((item: IHeaderDataMenuItem) => {
             const { isDisable, tooltipText, isActive, className, key, onClick } = item;
             const classNames = cx(`gd-button-primary ${className}`, {
-                "is-active": isActive,
+                "is-active": !isDisable && isActive,
+                "is-normal": !isDisable && !isActive,
             });
 
             const clickHandler = onClick ? onClick : () => onMenuItemClick(item);
