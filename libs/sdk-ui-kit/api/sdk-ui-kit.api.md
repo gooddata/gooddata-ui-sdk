@@ -232,6 +232,9 @@ export class DialogBase<P extends IDialogBaseProps> extends PureComponent<P> {
 }
 
 // @internal (undocumented)
+export const DocumentHeader: React_2.FC<IDocumentHeaderProps>;
+
+// @internal (undocumented)
 export const Dropdown: React_2.FC<IDropdownProps>;
 
 // @internal (undocumented)
@@ -597,6 +600,18 @@ export interface IDialogBaseProps {
     onSubmit?: (data?: any) => void;
     // (undocumented)
     submitOnEnterKey?: boolean;
+}
+
+// @internal (undocumented)
+export interface IDocumentHeaderProps {
+    // (undocumented)
+    appleTouchIconUrl?: string;
+    // (undocumented)
+    brandTitle?: string;
+    // (undocumented)
+    faviconUrl?: string;
+    // (undocumented)
+    pageTitle?: string;
 }
 
 // @internal (undocumented)
