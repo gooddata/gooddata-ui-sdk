@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";
 
 export {
@@ -235,6 +235,7 @@ export {
     BucketItemModifications,
     BucketItemReducer,
     bucketModifyItems,
+    bucketItemReduce,
 } from "./execution/buckets";
 
 export {
@@ -262,6 +263,7 @@ export {
     defSetSorts,
     defTotals,
     IPostProcessing,
+    defSetPostProcessing,
 } from "./execution/executionDefinition";
 
 export {
@@ -319,6 +321,7 @@ export {
     insightFilters,
     insightVisualizationUrl,
     insightSetFilters,
+    insightSetBuckets,
     insightSetProperties,
     insightSetSorts,
     insightModifyItems,
