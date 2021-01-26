@@ -26,5 +26,6 @@ export * from "./CustomizableCheckmark";
 export * from "./AutoSize";
 export * from "./LoadingMask";
 export * from "./NoData";
+export * from "./DocumentHeader";
 export * from "./Dropdown";
 export * from "./responsive";

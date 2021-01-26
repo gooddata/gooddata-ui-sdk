@@ -311,6 +311,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "@types/react-document-title",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-dom",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -736,6 +740,10 @@
     },
     {
       "name": "react-day-picker",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-document-title",
       "allowedCategories": [ "production" ]
     },
     {
