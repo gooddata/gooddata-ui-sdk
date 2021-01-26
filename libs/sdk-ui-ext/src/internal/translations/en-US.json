@@ -849,6 +849,41 @@
         "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
         "limit": 0
     },
+    "filters.alertMessage.relativePreset": {
+        "value": "in {calendarIcon} {range}",
+        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.inPeriod": {
+        "value": "in period {calendarIcon} {range}",
+        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'. Example text: 'in period (calendar) from 2 months ago to 2 months ahead'",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.day": {
+        "value": "{n, plural, =0 {this day} =1 {last day} other {last # days}}",
+        "comment": "In '{n, plural, =0 {THIS DAY} =1 {LAST DAY} other {LAST # DAYS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.week": {
+        "value": "{n, plural, =0 {this week} =1 {last week} other {last # weeks}}",
+        "comment": "In '{n, plural, =0 {THIS WEEK} =1 {LAST WEEK} other {LAST # WEEKS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.month": {
+        "value": "{n, plural, =0 {this month} =1 {last month} other {last # months}}",
+        "comment": "In '{n, plural, =0 {THIS MONTH} =1 {LAST MONTH} other {LAST # MONTHS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.quarter": {
+        "value": "{n, plural, =0 {this quarter} =1 {last quarter} other {last # quarters}}",
+        "comment": "In '{n, plural, =0 {THIS QUARTER} =1 {LAST QUARTER} other {LAST # QUARTERS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.year": {
+        "value": "{n, plural, =0 {this year} =1 {last year} other {last # years}}",
+        "comment": "In '{n, plural, =0 {THIS YEAR} =1 {LAST YEAR} other {LAST # YEARS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
     "kpi.noData": {
         "value": "No data for current filter settings. Try changing the filters.",
         "comment": "",
