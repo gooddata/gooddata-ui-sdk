@@ -120,6 +120,9 @@ export function bucketItemLocalId(bucketItem: IAttributeOrMeasure): string;
 export type BucketItemModifications = (bucketItem: IAttributeOrMeasure) => IAttributeOrMeasure;
 
 // @public
+export function bucketItemReduce(bucket: IBucket, reducer?: BucketItemReducer): IBucket;
+
+// @public
 export type BucketItemReducer = (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure, idx: number, src: IAttributeOrMeasure[]) => IAttributeOrMeasure[];
 
 // @public
@@ -211,6 +214,9 @@ export function defFingerprint(def: IExecutionDefinition): string;
 
 // @public
 export function defSetDimensions(def: IExecutionDefinition, dimensions?: IDimension[]): IExecutionDefinition;
+
+// @public
+export function defSetPostProcessing(def: IExecutionDefinition, postProcessing: IPostProcessing): IExecutionDefinition;
 
 // @public
 export function defSetSorts(def: IExecutionDefinition, sortBy?: ISortItem[]): IExecutionDefinition;
@@ -621,6 +627,9 @@ export function insightRef(insight: IInsight): ObjRef;
 
 // @public
 export function insightSanitize<T extends IInsightDefinition>(insight: T): T;
+
+// @public
+export function insightSetBuckets<T extends IInsightDefinition>(insight: T, buckets?: IBucket[] | undefined): T;
 
 // @public
 export function insightSetFilters<T extends IInsightDefinition>(insight: T, filters?: IFilter[]): T;
