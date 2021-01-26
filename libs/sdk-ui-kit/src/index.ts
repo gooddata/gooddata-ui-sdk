@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 export * from "./typings/utilities";
 export * from "./typings/positioning";
@@ -25,5 +25,6 @@ export * from "./CustomizableCheckmark";
 export * from "./AutoSize";
 export * from "./LoadingMask";
 export * from "./NoData";
+export * from "./DocumentHeader";
 export * from "./Dropdown";
 export * from "./responsive";
