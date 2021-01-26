@@ -221,6 +221,7 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canListUsersInProject: true,
             canManageDomain: true,
             canInviteUserToProject: true,
+            canRefreshData: true,
         }),
     };
 }
