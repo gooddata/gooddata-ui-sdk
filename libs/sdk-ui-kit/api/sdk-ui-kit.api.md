@@ -1836,6 +1836,32 @@ export interface IResponsiveTextProps {
 export function isFreemiumEdition(platformEdition: string): boolean;
 
 // @internal (undocumented)
+export interface IShortenedTextProps {
+    // (undocumented)
+    children: string;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    displayTooltip?: boolean;
+    // (undocumented)
+    getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
+    // (undocumented)
+    tagName?: React_2.ElementType;
+    // (undocumented)
+    tooltipAlignPoints?: IAlignPoint[];
+    // (undocumented)
+    tooltipVisibleOnMouseOver?: boolean;
+}
+
+// @internal (undocumented)
+export interface IShortenedTextState {
+    // (undocumented)
+    customTitle: boolean;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string;
@@ -2181,6 +2207,31 @@ export type Separators = {
     thousand: string;
     decimal: string;
 };
+
+// @internal (undocumented)
+export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
+    constructor(props: IShortenedTextProps);
+    // (undocumented)
+    checkTitle(): void;
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentDidUpdate(): void;
+    // (undocumented)
+    static defaultProps: Partial<IShortenedTextProps>;
+    // (undocumented)
+    recomputeShortening(): void;
+    // (undocumented)
+    render(): React_2.ReactNode;
+    // (undocumented)
+    renderText(): React_2.ReactNode;
+    // (undocumented)
+    renderTextWithBubble(): React_2.ReactNode;
+    // (undocumented)
+    textRef: React_2.RefObject<HTMLElement>;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void;
+}
 
 // @internal (undocumented)
 export function shouldEnableNewNavigation(featureFlags: ISettings): boolean;
