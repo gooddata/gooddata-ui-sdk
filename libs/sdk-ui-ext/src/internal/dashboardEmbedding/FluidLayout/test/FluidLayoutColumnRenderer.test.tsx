@@ -3,37 +3,38 @@ import React from "react";
 import { shallow } from "enzyme";
 import { Col } from "react-grid-system";
 import zip from "lodash/zip";
+import { FluidLayoutFacade, IFluidLayoutSizeByScreen } from "@gooddata/sdk-backend-spi";
 import { FluidLayoutColumnRenderer } from "../FluidLayoutColumnRenderer";
 import { ALL_SCREENS } from "../constants";
-import { TextLayoutColumn } from "./fixtures";
+import { fluidLayoutMock, fluidLayoutRowMock } from "../mocks";
 
 const testWidths = [12, 10, 6, 4, 2];
 const testCases = zip(ALL_SCREENS, testWidths);
 
-const testColumn: TextLayoutColumn = {
-    size: testCases.reduce(
-        (acc, [screen, widthAsGridColumnsCount]) => ({
-            ...acc,
-            [screen]: {
-                widthAsGridColumnsCount,
-            },
-        }),
-        {
-            xl: {
-                widthAsGridColumnsCount: 0,
-            },
+const sizeForAllScreens: IFluidLayoutSizeByScreen = testCases.reduce(
+    (acc, [screen, widthAsGridColumnsCount]) => ({
+        ...acc,
+        [screen]: {
+            widthAsGridColumnsCount,
         },
-    ),
-};
+    }),
+    {
+        xl: {
+            widthAsGridColumnsCount: 0,
+        },
+    },
+);
+
+export const layoutFacade = FluidLayoutFacade.for(
+    fluidLayoutMock([fluidLayoutRowMock([["Test", sizeForAllScreens]])]),
+);
 
 describe("FluidLayoutColumnRenderer", () => {
     it("should propagate responsive widths to Col component", () => {
         const wrapper = shallow(
             <FluidLayoutColumnRenderer
-                row={{ columns: [] }}
-                column={testColumn}
-                rowIndex={0}
-                columnIndex={0}
+                DefaultRenderer={FluidLayoutColumnRenderer}
+                column={layoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
             />,
         );

@@ -55,6 +55,14 @@ $gd-dashboards-section-description-color: var(
     position: relative;
 }
 
+.gd-fluidlayout-row-debug {
+    background-color: #fff;
+
+    &:nth-of-type(even) {
+        color: #f2f2f2;
+    }
+}
+
 .gd-fluid-layout-row-header {
     padding-right: 20px;
     padding-left: 20px;

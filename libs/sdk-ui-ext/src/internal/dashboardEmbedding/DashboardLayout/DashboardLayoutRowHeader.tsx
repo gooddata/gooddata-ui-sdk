@@ -3,6 +3,9 @@ import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { DashboardLayoutRowHeaderDescription } from "./DashboardLayoutRowHeaderDescription";
 
+/**
+ * @alpha
+ */
 export interface IDashboardLayoutRowHeaderProps {
     title?: string;
     description?: string;

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 
 /**
@@ -13,11 +13,7 @@ export type ResponsiveScreenType = "xl" | "lg" | "md" | "sm" | "xs";
  *
  * @alpha
  */
-export interface IFluidLayout<
-    TContent,
-    TColumn extends IFluidLayoutColumn<TContent> = IFluidLayoutColumn<TContent>,
-    TRow extends IFluidLayoutRow<TContent, TColumn> = IFluidLayoutRow<TContent, TColumn>
-> {
+export interface IFluidLayout<TContent> {
     /**
      * Unique type to identify fluid layout.
      */
@@ -26,7 +22,7 @@ export interface IFluidLayout<
     /**
      * Layout rows.
      */
-    rows: TRow[];
+    rows: IFluidLayoutRow<TContent>[];
 
     /**
      * Layout size.
@@ -43,23 +39,19 @@ export interface IFluidLayout<
  * Type-guard testing whether the provided object is an instance of {@link IFluidLayout}.
  * @alpha
  */
-export function isFluidLayout<
-    TContent,
-    TColumn extends IFluidLayoutColumn<TContent> = IFluidLayoutColumn<TContent>,
-    TRow extends IFluidLayoutRow<TContent, TColumn> = IFluidLayoutRow<TContent, TColumn>
->(obj: unknown): obj is IFluidLayout<TContent, TColumn, TRow> {
-    return !isEmpty(obj) && (obj as IFluidLayout<TContent, TColumn, TRow>).type === "fluidLayout";
+export function isFluidLayout<TContent>(obj: unknown): obj is IFluidLayout<TContent> {
+    return !isEmpty(obj) && (obj as IFluidLayout<TContent>).type === "fluidLayout";
 }
 
 /**
  * Fluid layout row definition.
  * @alpha
  */
-export interface IFluidLayoutRow<TContent, TColumn extends IFluidLayoutColumn<TContent>> {
+export interface IFluidLayoutRow<TContent> {
     /**
      * Row columns.
      */
-    columns: TColumn[];
+    columns: IFluidLayoutColumn<TContent>[];
 
     /**
      * Custom row style.

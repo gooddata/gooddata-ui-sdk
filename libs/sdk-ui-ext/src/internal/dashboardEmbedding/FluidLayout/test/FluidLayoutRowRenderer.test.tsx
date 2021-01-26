@@ -2,34 +2,26 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { Row } from "react-grid-system";
+import { FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
 import { FluidLayoutRowRenderer } from "../FluidLayoutRowRenderer";
-import { layoutRowWithOneColumn } from "./fixtures";
+import { fluidLayoutWithOneColumn } from "./fixtures";
+
+const layoutFacade = FluidLayoutFacade.for(fluidLayoutWithOneColumn);
 
 describe("FluidLayoutRowRenderer", () => {
     it("should propagate className", () => {
         const className = "test";
         const wrapper = shallow(
             <FluidLayoutRowRenderer
-                row={layoutRowWithOneColumn}
-                rowIndex={0}
+                row={layoutFacade.rows().row(0)}
                 screen="xl"
                 className={className}
+                DefaultRenderer={FluidLayoutRowRenderer}
             >
                 Test
             </FluidLayoutRowRenderer>,
         );
 
         expect(wrapper.find(Row)).toHaveClassName(className);
-    });
-
-    it("should propagate other Row props", () => {
-        const style = { backgroundColor: "red" };
-        const wrapper = shallow(
-            <FluidLayoutRowRenderer row={layoutRowWithOneColumn} rowIndex={0} screen="xl" style={style}>
-                Test
-            </FluidLayoutRowRenderer>,
-        );
-
-        expect(wrapper.find(Row)).toHaveStyle(style);
     });
 });

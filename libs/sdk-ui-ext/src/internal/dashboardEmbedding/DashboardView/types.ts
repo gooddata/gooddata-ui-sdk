@@ -1,4 +1,5 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
+import { CSSProperties } from "react";
 import {
     IAnalyticalBackend,
     ITheme,
@@ -7,6 +8,12 @@ import {
     ISeparators,
     IScheduledMailDefinition,
     IScheduledMail,
+    IDashboardLayoutContent,
+    IFilterContext,
+    ITempFilterContext,
+    IWidget,
+    ResponsiveScreenType,
+    IFluidLayoutColumnMethods,
 } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
@@ -14,6 +21,8 @@ import {
     IRelativeDateFilter,
     IPositiveAttributeFilter,
     INegativeAttributeFilter,
+    IInsight,
+    IFilter,
 } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
@@ -24,6 +33,7 @@ import {
     OnError,
     ILocale,
 } from "@gooddata/sdk-ui";
+import { IDashboardViewLayoutContentRenderProps, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
 
 /**
  * Supported dashboard filter type.
@@ -207,4 +217,69 @@ export interface IDashboardViewProps {
      * Callback to be called, when submitting of the scheduled email failed.
      */
     onScheduledMailSubmitError?: OnError;
+
+    /**
+     * Component to customize widget rendering
+     */
+    widgetRenderer?: IDashboardWidgetRenderer;
 }
+
+/**
+ * TODO: RAIL-2869: docs
+ *
+ * @alpha
+ */
+export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProps<IDashboardLayoutContent> & {
+    alerts: IWidgetAlert[];
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    filters?: IFilter[];
+    filterContext: IFilterContext | ITempFilterContext;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    onDrill?: OnFiredDrillEvent;
+    ErrorComponent: React.ComponentType<IErrorProps>;
+    LoadingComponent: React.ComponentType<ILoadingProps>;
+    onError?: OnError;
+    widgetClass?: DashboardViewLayoutWidgetClass;
+    insight?: IInsight;
+    widgetRenderer: IDashboardWidgetRenderer;
+};
+
+/**
+ * TODO: RAIL-2869: docs
+ *
+ * @alpha
+ */
+export type IDashboardWidgetRenderProps = {
+    alerts: IWidgetAlert[];
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    filters?: IFilter[];
+    filterContext: IFilterContext | ITempFilterContext;
+    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
+    onDrill?: OnFiredDrillEvent;
+    ErrorComponent: React.ComponentType<IErrorProps>;
+    LoadingComponent: React.ComponentType<ILoadingProps>;
+    onError?: OnError;
+    widgetClass?: DashboardViewLayoutWidgetClass;
+    insight?: IInsight;
+    widget: IWidget;
+    DefaultRenderer: IDashboardWidgetRenderer;
+    screen: ResponsiveScreenType;
+    column: IFluidLayoutColumnMethods<IDashboardLayoutContent>;
+
+    /**
+     * Minimum height of the widget calculated according to the visualization type.
+     */
+    minHeight?: CSSProperties["minHeight"];
+
+    /**
+     * Height of the widget calculated according to the column size configuration for the current screen.
+     */
+    height?: CSSProperties["height"];
+};
+
+/**
+ * Component used for the widget rendering.
+ */
+export type IDashboardWidgetRenderer = React.ComponentType<IDashboardWidgetRenderProps>;

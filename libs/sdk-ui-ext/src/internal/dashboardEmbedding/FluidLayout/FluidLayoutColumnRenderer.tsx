@@ -1,24 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import React from "react";
+import React, { useMemo } from "react";
 import { Col } from "react-grid-system";
-import { IFluidLayoutColumn, IFluidLayoutRow } from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutColumnRenderer } from "./interfaces";
 
-export const FluidLayoutColumnRenderer: IFluidLayoutColumnRenderer<
-    any,
-    IFluidLayoutColumn<any>,
-    IFluidLayoutRow<any, IFluidLayoutColumn<any>>
-> = (props) => {
-    const {
-        column,
-        children,
-        columnIndex: _columnIndex,
-        rowIndex: _rowIndex,
-        row: _row,
-        screen: _screen,
-        ...colProps
-    } = props;
-    const { size } = column;
+export const FluidLayoutColumnRenderer: IFluidLayoutColumnRenderer<any> = (props) => {
+    const { column, children, className, minHeight } = props;
+    const size = column.size();
+    const style = useMemo(() => ({ minHeight }), [minHeight]);
 
     return (
         <Col
@@ -27,7 +15,8 @@ export const FluidLayoutColumnRenderer: IFluidLayoutColumnRenderer<
             md={size?.md?.widthAsGridColumnsCount}
             sm={size?.sm?.widthAsGridColumnsCount}
             xs={size?.xs?.widthAsGridColumnsCount}
-            {...colProps}
+            className={className}
+            style={style}
         >
             {children}
         </Col>

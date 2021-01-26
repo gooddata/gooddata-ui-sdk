@@ -299,21 +299,16 @@ Object {
       "columns": Array [
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "alluvial",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "alluvial",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "alluvial",
-              },
-              "title": "alluvial alluvial",
-              "type": "insight",
-              "uri": "alluvial",
             },
-            "widgetClass": "alluvial",
+            "title": "alluvial alluvial",
+            "type": "insight",
+            "uri": "alluvial",
           },
           "size": Object {
             "lg": Object {
@@ -340,21 +335,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "area",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "area",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "area",
-              },
-              "title": "area area",
-              "type": "insight",
-              "uri": "area",
             },
-            "widgetClass": "area",
+            "title": "area area",
+            "type": "insight",
+            "uri": "area",
           },
           "size": Object {
             "lg": Object {
@@ -381,21 +371,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "bar",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "bar",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "bar",
-              },
-              "title": "bar bar",
-              "type": "insight",
-              "uri": "bar",
             },
-            "widgetClass": "bar",
+            "title": "bar bar",
+            "type": "insight",
+            "uri": "bar",
           },
           "size": Object {
             "lg": Object {
@@ -422,21 +407,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "bubble",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "bubble",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "bubble",
-              },
-              "title": "bubble bubble",
-              "type": "insight",
-              "uri": "bubble",
             },
-            "widgetClass": "bubble",
+            "title": "bubble bubble",
+            "type": "insight",
+            "uri": "bubble",
           },
           "size": Object {
             "lg": Object {
@@ -463,21 +443,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "bullet",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "bullet",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "bullet",
-              },
-              "title": "bullet bullet",
-              "type": "insight",
-              "uri": "bullet",
             },
-            "widgetClass": "bullet",
+            "title": "bullet bullet",
+            "type": "insight",
+            "uri": "bullet",
           },
           "size": Object {
             "lg": Object {
@@ -504,21 +479,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "column",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "column",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "column",
-              },
-              "title": "column column",
-              "type": "insight",
-              "uri": "column",
             },
-            "widgetClass": "column",
+            "title": "column column",
+            "type": "insight",
+            "uri": "column",
           },
           "size": Object {
             "lg": Object {
@@ -545,21 +515,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "combo",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "combo",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "combo",
-              },
-              "title": "combo combo",
-              "type": "insight",
-              "uri": "combo",
             },
-            "widgetClass": "combo",
+            "title": "combo combo",
+            "type": "insight",
+            "uri": "combo",
           },
           "size": Object {
             "lg": Object {
@@ -586,21 +551,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "combo2",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "combo2",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "combo2",
-              },
-              "title": "combo2 combo2",
-              "type": "insight",
-              "uri": "combo2",
             },
-            "widgetClass": "combo2",
+            "title": "combo2 combo2",
+            "type": "insight",
+            "uri": "combo2",
           },
           "size": Object {
             "lg": Object {
@@ -627,21 +587,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "donut",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "donut",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "donut",
-              },
-              "title": "donut donut",
-              "type": "insight",
-              "uri": "donut",
             },
-            "widgetClass": "donut",
+            "title": "donut donut",
+            "type": "insight",
+            "uri": "donut",
           },
           "size": Object {
             "lg": Object {
@@ -668,21 +623,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "funnel",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "funnel",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "funnel",
-              },
-              "title": "funnel funnel",
-              "type": "insight",
-              "uri": "funnel",
             },
-            "widgetClass": "funnel",
+            "title": "funnel funnel",
+            "type": "insight",
+            "uri": "funnel",
           },
           "size": Object {
             "lg": Object {
@@ -709,21 +659,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "geo",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "geo",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "geo",
-              },
-              "title": "geo geo",
-              "type": "insight",
-              "uri": "geo",
             },
-            "widgetClass": "geo",
+            "title": "geo geo",
+            "type": "insight",
+            "uri": "geo",
           },
           "size": Object {
             "lg": Object {
@@ -750,21 +695,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "headline",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "headline",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "headline",
-              },
-              "title": "headline headline",
-              "type": "insight",
-              "uri": "headline",
             },
-            "widgetClass": "headline",
+            "title": "headline headline",
+            "type": "insight",
+            "uri": "headline",
           },
           "size": Object {
             "lg": Object {
@@ -795,21 +735,16 @@ Object {
       "columns": Array [
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "heatmap",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "heatmap",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "heatmap",
-              },
-              "title": "heatmap heatmap",
-              "type": "insight",
-              "uri": "heatmap",
             },
-            "widgetClass": "heatmap",
+            "title": "heatmap heatmap",
+            "type": "insight",
+            "uri": "heatmap",
           },
           "size": Object {
             "lg": Object {
@@ -836,21 +771,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "histogram",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "histogram",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "histogram",
-              },
-              "title": "histogram histogram",
-              "type": "insight",
-              "uri": "histogram",
             },
-            "widgetClass": "histogram",
+            "title": "histogram histogram",
+            "type": "insight",
+            "uri": "histogram",
           },
           "size": Object {
             "lg": Object {
@@ -877,21 +807,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "line",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "line",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "line",
-              },
-              "title": "line line",
-              "type": "insight",
-              "uri": "line",
             },
-            "widgetClass": "line",
+            "title": "line line",
+            "type": "insight",
+            "uri": "line",
           },
           "size": Object {
             "lg": Object {
@@ -918,21 +843,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "pareto",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "pareto",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "pareto",
-              },
-              "title": "pareto pareto",
-              "type": "insight",
-              "uri": "pareto",
             },
-            "widgetClass": "pareto",
+            "title": "pareto pareto",
+            "type": "insight",
+            "uri": "pareto",
           },
           "size": Object {
             "lg": Object {
@@ -959,21 +879,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "pushpin",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "pushpin",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "pushpin",
-              },
-              "title": "pushpin pushpin",
-              "type": "insight",
-              "uri": "pushpin",
             },
-            "widgetClass": "pushpin",
+            "title": "pushpin pushpin",
+            "type": "insight",
+            "uri": "pushpin",
           },
           "size": Object {
             "lg": Object {
@@ -1000,21 +915,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": true,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "pie",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "pie",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "pie",
-              },
-              "title": "pie pie",
-              "type": "insight",
-              "uri": "pie",
             },
-            "widgetClass": "pie",
+            "title": "pie pie",
+            "type": "insight",
+            "uri": "pie",
           },
           "size": Object {
             "lg": Object {
@@ -1041,21 +951,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "scatter",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "scatter",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "scatter",
-              },
-              "title": "scatter scatter",
-              "type": "insight",
-              "uri": "scatter",
             },
-            "widgetClass": "scatter",
+            "title": "scatter scatter",
+            "type": "insight",
+            "uri": "scatter",
           },
           "size": Object {
             "lg": Object {
@@ -1082,21 +987,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "table",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "table",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "table",
-              },
-              "title": "table table",
-              "type": "insight",
-              "uri": "table",
             },
-            "widgetClass": "table",
+            "title": "table table",
+            "type": "insight",
+            "uri": "table",
           },
           "size": Object {
             "lg": Object {
@@ -1123,21 +1023,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "treemap",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "treemap",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "treemap",
-              },
-              "title": "treemap treemap",
-              "type": "insight",
-              "uri": "treemap",
             },
-            "widgetClass": "treemap",
+            "title": "treemap treemap",
+            "type": "insight",
+            "uri": "treemap",
           },
           "size": Object {
             "lg": Object {
@@ -1164,21 +1059,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "waterfall",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "waterfall",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "waterfall",
-              },
-              "title": "waterfall waterfall",
-              "type": "insight",
-              "uri": "waterfall",
             },
-            "widgetClass": "waterfall",
+            "title": "waterfall waterfall",
+            "type": "insight",
+            "uri": "waterfall",
           },
           "size": Object {
             "lg": Object {
@@ -1205,21 +1095,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "xirr",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "xirr",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "xirr",
-              },
-              "title": "xirr xirr",
-              "type": "insight",
-              "uri": "xirr",
             },
-            "widgetClass": "xirr",
+            "title": "xirr xirr",
+            "type": "insight",
+            "uri": "xirr",
           },
           "size": Object {
             "lg": Object {
@@ -1246,21 +1131,16 @@ Object {
         },
         Object {
           "content": Object {
-            "resizedByLayout": false,
-            "type": "widget",
-            "widget": Object {
-              "description": "",
-              "drills": Array [],
+            "description": "",
+            "drills": Array [],
+            "identifier": "kpi",
+            "ignoreDashboardFilters": Array [],
+            "ref": Object {
               "identifier": "kpi",
-              "ignoreDashboardFilters": Array [],
-              "ref": Object {
-                "identifier": "kpi",
-              },
-              "title": "kpi kpi",
-              "type": "kpi",
-              "uri": "kpi",
             },
-            "widgetClass": "kpi",
+            "title": "kpi kpi",
+            "type": "kpi",
+            "uri": "kpi",
           },
           "size": Object {
             "lg": Object {
