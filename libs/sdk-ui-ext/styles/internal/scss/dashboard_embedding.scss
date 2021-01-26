@@ -77,6 +77,36 @@
             }
         }
     }
+
+    .is-alert-highlighted {
+        &,
+        &:hover {
+            &::before {
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: $gd-palette-primary-dimmed;
+                // in animations
+                // stylelint-disable-next-line no-unknown-animations
+                animation-name: alert-highlighted;
+                animation-duration: 0.3s;
+                animation-iteration-count: 1;
+            }
+        }
+
+        &.is-alert-triggered,
+        &.is-alert-broken {
+            &,
+            &:hover {
+                // refactor
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    background-color: $gd-palette-warning-dimmed;
+                }
+            }
+        }
+    }
 }
 
 .dash-item-content-wrapper,
@@ -199,5 +229,26 @@
         top: 0;
         left: 0;
         cursor: pointer;
+    }
+}
+
+.dash-item-action-alert {
+    &.disabled {
+        background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/alert-bell-na.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 16px;
+    }
+
+    .has-set-alert &,
+    .is-alert-dialog &,
+    .dash-item-content:hover & {
+        display: block;
+    }
+}
+
+.dash-item-action-options {
+    .dash-item-content:not(.is-alert-dialog):hover & {
+        display: block;
     }
 }

@@ -3,4 +3,3 @@
 import KpiContent from "./KpiContent";
 
 export { KpiContent };
-export * from "./types";

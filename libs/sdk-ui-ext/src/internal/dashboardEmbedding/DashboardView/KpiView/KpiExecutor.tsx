@@ -35,7 +35,7 @@ import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
 import { KpiRenderer } from "./KpiRenderer";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IKpiResult } from "../../KpiContent";
+import { IKpiResult } from "../../types";
 
 interface IKpiExecutorProps {
     kpiWidget: IWidgetDefinition;

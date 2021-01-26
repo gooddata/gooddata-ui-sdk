@@ -7,3 +7,10 @@ export interface IKpiResult {
     measureForComparisonResult?: number;
     measureDescriptor: IMeasureDescriptor;
 }
+
+export interface IKpiAlertResult {
+    measureFormat: string;
+    measureResult: number;
+}
+
+export type KpiAlertOperationStatus = "idle" | "inProgress" | "error";

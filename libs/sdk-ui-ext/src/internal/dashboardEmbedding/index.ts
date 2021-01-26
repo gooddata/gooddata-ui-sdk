@@ -100,4 +100,6 @@ export {
     IFluidLayoutRowKeyGetterProps,
 } from "./FluidLayout";
 export * from "./DashboardItem";
+export * from "./KpiAlerts";
 export * from "./KpiContent";
+export * from "./types";
