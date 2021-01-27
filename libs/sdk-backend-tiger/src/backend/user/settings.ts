@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../types";
 
@@ -37,6 +37,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableHidingOfDataPoints: true,
                 enableAdCatalogRefresh: true,
                 enableAdRankingFilter: true,
+                enableNewNavigationForResponsiveUi: true,
             };
         });
     }
