@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
@@ -7,6 +7,8 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
 const HardcodedSettings = {
+    enableNewNavigationForResponsiveUi: true,
+
     // AD specific
     analyticalDesigner: true,
     enablePushpinGeoChart: true,

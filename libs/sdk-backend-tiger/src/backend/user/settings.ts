@@ -37,7 +37,6 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableHidingOfDataPoints: true,
                 enableAdCatalogRefresh: true,
                 enableAdRankingFilter: true,
-                enableNewNavigationForResponsiveUi: true,
             };
         });
     }
