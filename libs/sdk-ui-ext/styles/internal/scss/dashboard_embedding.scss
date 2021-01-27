@@ -4,6 +4,7 @@
 @import "./kpi";
 @import "./scheduled_mail";
 @import "./scheduled_mail_recipients";
+@import "./item-states";
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
@@ -148,6 +149,12 @@
 
 .type-kpi,
 .viz-type-headline {
+    .dash-item-action-alert,
+    .dash-item-action-placeholder {
+        top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
+        right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-kpiWidget-borderWidth});
+    }
+
     .dash-item-content {
         border-width: $gd-dashboards-content-kpiWidget-borderWidth;
         border-style: solid;
@@ -229,6 +236,68 @@
         top: 0;
         left: 0;
         cursor: pointer;
+    }
+}
+
+.dash-item-action {
+    width: $item-action-width;
+    height: 36px;
+    border-radius: 20px;
+    font-size: 18px;
+    line-height: 36px;
+    text-align: center;
+    color: $gd-color-text-light;
+    cursor: pointer;
+    position: absolute;
+    z-index: 2;
+    top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+    right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+
+    &.disabled {
+        cursor: auto;
+    }
+}
+
+.is-desktop {
+    .dash-item-action-alert:not(.disabled):hover,
+    .dash-item-action-options:not(.disabled):hover,
+    .dash-item-action-widget-options-active {
+        color: $gd-color-text-light;
+        background-color: $gd-color-text-dimmed;
+    }
+}
+
+.is-mobile {
+    .dash-item-action-alert:not(.disabled),
+    .dash-item-action-options:not(.disabled) {
+        color: $gd-color-link;
+        background: none;
+    }
+
+    .dash-item-action-alert.disabled,
+    .dash-item-action-options.disabled {
+        background-color: transparent;
+    }
+
+    .dash-item-action-widget-options:not(.disabled) {
+        color: $gd-color-label;
+        background-color: $is-focused-background;
+    }
+
+    .dash-item-action-widget-options-active:not(.disabled) {
+        background-color: $gd-color-text-dimmed;
+    }
+}
+
+.dash-item-action-alert,
+.dash-item-action-options {
+    display: none;
+    color: $gd-color-label;
+    background-color: $is-focused-background;
+    transition: $transition-length;
+
+    .is-mobile & {
+        display: block;
     }
 }
 

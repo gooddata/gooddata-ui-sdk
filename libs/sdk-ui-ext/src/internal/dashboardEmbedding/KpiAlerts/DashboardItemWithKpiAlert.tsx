@@ -35,7 +35,6 @@ export interface IDashboardItemWithKpiAlertProps {
     isLoading: boolean;
     filters?: IFilter[];
     kpiResult: IKpiResult | undefined;
-    error: GoodDataSdkError | undefined;
 
     // Alert
     alert?: IWidgetAlertDefinition;

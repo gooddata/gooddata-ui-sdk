@@ -29,13 +29,19 @@ import {
     OnError,
     createNumberJsFormatter,
     IDataSeries,
+    NoDataSdkError,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
 import { KpiRenderer } from "./KpiRenderer";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IKpiResult } from "../../types";
+import { IKpiResult, IKpiAlertResult } from "../../types";
+import { DashboardItemWithKpiAlert } from "../../KpiAlerts/DashboardItemWithKpiAlert";
+import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
+import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
+import { filterContextToFiltersForWidget } from "../../converters";
+import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
 
 interface IKpiExecutorProps {
     kpiWidget: IWidgetDefinition;
@@ -52,7 +58,6 @@ interface IKpiExecutorProps {
     disableDrillUnderline?: boolean;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
-    clientWidth?: number;
 }
 
 /**
@@ -74,7 +79,6 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     disableDrillUnderline,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
-    clientWidth,
 }) => {
     const execution = useExecution({
         seriesBy: compact([primaryMeasure, secondaryMeasure]),
@@ -84,6 +88,27 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     });
 
     const { error, result, status } = useDataView({ execution, onError }, [execution.fingerprint()]);
+
+    // TODO move?
+    const brokenAlertsInfo = alert ? getBrokenAlertFiltersBasicInfo(alert, kpiWidget, filters) : undefined;
+    const isAlertBroken = !!brokenAlertsInfo?.length;
+
+    const alertExecution = useExecution({
+        seriesBy: [primaryMeasure],
+        filters: alert ? filterContextToFiltersForWidget(alert.filterContext, kpiWidget) ?? [] : filters,
+        backend,
+        workspace,
+    });
+
+    const { error: alertError, result: alertResult, status: alertStatus } = useDataView(
+        {
+            execution: alert && !isAlertBroken ? alertExecution : null, // no need to execute broken alerts, the data is not shown anyway
+            onError,
+        },
+        [alertExecution.fingerprint()],
+    );
+
+    const userWorkspaceSettings = useUserWorkspaceSettings();
 
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
@@ -112,8 +137,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                 disableDrillUnderline={disableDrillUnderline}
                 isDrillable={false}
                 onDrill={onDrill && handleOnDrill}
-                alert={alert}
-                clientWidth={clientWidth}
+                clientWidth={undefined} // TODO get from alert wrapper
                 separators={separators}
             />
         ) : (
@@ -132,23 +156,53 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         measureForComparisonResult: getSeriesResult(secondarySeries),
     };
 
+    const alertSeries = alertResult?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
+    const kpiAlertResult: IKpiAlertResult | undefined = alertSeries
+        ? {
+              measureFormat: alertSeries.firstForMeasure(primaryMeasure).measureFormat(),
+              measureResult: getSeriesResult(alertSeries.firstForMeasure(primaryMeasure)),
+          }
+        : undefined;
+
     const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
     const isDrillable =
         kpiWidget.drills.length > 0 ||
         isSomeHeaderPredicateMatched(predicates, primarySeries.descriptor.measureDescriptor, result);
 
     return (
-        <KpiRenderer
+        <DashboardItemWithKpiAlert
             kpi={kpiWidget}
-            kpiResult={kpiResult}
-            filters={filters}
-            disableDrillUnderline={disableDrillUnderline}
-            isDrillable={isDrillable}
-            onDrill={onDrill && handleOnDrill}
             alert={alert}
-            clientWidth={clientWidth}
-            separators={separators}
-        />
+            filters={filters}
+            userWorkspaceSettings={userWorkspaceSettings}
+            kpiResult={kpiResult}
+            renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
+            kpiAlertResult={kpiAlertResult}
+            isAlertLoading={alertStatus === "loading"}
+            canSetAlert // TODO
+            alertExecutionError={
+                alertError ||
+                // TODO get rid of this hack, detect broken alerts differently
+                // (the problem is alerts on KPIs without dateDataset, their date filters are invalid and we have no idea what date dataset to put there)
+                (isAlertBroken ? new NoDataSdkError() : undefined)
+            }
+            isAlertBroken={isAlertBroken}
+
+            // TODO alert dialog
+        >
+            {({ clientWidth }) => (
+                <KpiRenderer
+                    kpi={kpiWidget}
+                    kpiResult={kpiResult}
+                    filters={filters}
+                    disableDrillUnderline={disableDrillUnderline}
+                    isDrillable={isDrillable}
+                    onDrill={onDrill && handleOnDrill}
+                    clientWidth={clientWidth}
+                    separators={separators}
+                />
+            )}
+        </DashboardItemWithKpiAlert>
     );
 };
 

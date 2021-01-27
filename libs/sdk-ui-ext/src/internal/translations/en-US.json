@@ -1019,6 +1019,26 @@
         "comment": "",
         "limit": 0
     },
+    "kpi.alertBox.title": {
+        "value": "Set an alert on KPI change",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.example": {
+        "value": "e.g.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.unverifiedEmail": {
+        "value": "Sorry, you can't set an alert. Make sure your email is verified. If that doesn't help, ask your administrator to update your permissions.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.disabledInReadOnly": {
+        "value": "Alerting is disabled in the read-only mode",
+        "comment": "",
+        "limit": 0
+    },
     "kpiAlertDialog.delete": {
         "value": "Delete",
         "comment": "",

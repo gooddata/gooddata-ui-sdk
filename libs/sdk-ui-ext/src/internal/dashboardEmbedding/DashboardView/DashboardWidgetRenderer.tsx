@@ -5,7 +5,6 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { isWidget, isDashboardLayoutContent, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer";
-import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
 import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";
@@ -74,24 +73,19 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
 
         return (
             <DashboardItem className="type-kpi" screen={screen}>
-                <DashboardItemKpi renderHeadline={() => <DashboardItemHeadline title={widget.title} />}>
-                    {({ clientWidth }) => (
-                        <KpiView
-                            kpiWidget={widget}
-                            filterContext={filterContext}
-                            alert={relevantAlert}
-                            backend={backend}
-                            workspace={workspace}
-                            filters={filters}
-                            drillableItems={drillableItems}
-                            onDrill={onDrill}
-                            onError={onError}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            clientWidth={clientWidth}
-                        />
-                    )}
-                </DashboardItemKpi>
+                <KpiView
+                    kpiWidget={widget}
+                    filterContext={filterContext}
+                    alert={relevantAlert}
+                    backend={backend}
+                    workspace={workspace}
+                    filters={filters}
+                    drillableItems={drillableItems}
+                    onDrill={onDrill}
+                    onError={onError}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
             </DashboardItem>
         );
     }
