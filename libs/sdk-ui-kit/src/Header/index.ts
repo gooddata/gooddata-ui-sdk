@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 export { AppHeader, IHeaderMenuItem, IAppHeaderProps, IAppHeaderState } from "./Header";
 export { WorkspacePickerHomeFooter, IWorkspacePickerHomeFooterProps } from "./WorkspacePickerHomeFooter";
 export {
@@ -7,3 +7,6 @@ export {
     IHeaderWorkspacePickerProps,
 } from "./HeaderWorkspacePicker";
 export { IHeaderDataMenuItem, IHeaderDataMenuProps, HeaderDataMenu } from "./HeaderDataMenu";
+export { IUiSettings, generateHeaderAccountMenuItems } from "./generateHeaderAccountMenuItems";
+export { generateHeaderHelpMenuItems } from "./generateHeaderHelpMenuItems";
+export { generateHeaderMenuItemsGroups } from "./generateHeaderMenuItemsGroups";

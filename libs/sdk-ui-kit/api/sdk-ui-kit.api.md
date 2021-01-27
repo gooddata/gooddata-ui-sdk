@@ -9,6 +9,8 @@ import { CSSProperties } from 'react';
 import { guidFor } from '@gooddata/goodstrap/lib/core/Guid';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { ISettings } from '@gooddata/sdk-backend-spi';
+import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
@@ -281,6 +283,20 @@ export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
+
+// @internal (undocumented)
+export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, // bootstrapResource.current.projectPermissions
+uiSettings: IUiSettings, // bootstrapResource.settings
+workspaceId?: string): IHeaderMenuItem[];
+
+// @internal (undocumented)
+export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
+
+// @internal (undocumented)
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean): IHeaderMenuItem[][];
+
+// @internal (undocumented)
+export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
 
 // @internal (undocumented)
 export type GetOptimalAlignment = {
@@ -1817,6 +1833,9 @@ export interface IResponsiveTextProps {
 }
 
 // @internal (undocumented)
+export function isFreemiumEdition(platformEdition: string): boolean;
+
+// @internal (undocumented)
 export interface ISingleSelectListItemProps {
     // (undocumented)
     icon?: string;
@@ -1932,6 +1951,12 @@ export interface ITypographyProps {
     tagName: "h1" | "h2" | "h3" | "p";
     // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IUiSettings {
+    // (undocumented)
+    displayAccountPage: boolean;
 }
 
 // @internal (undocumented)
@@ -2156,6 +2181,12 @@ export type Separators = {
     thousand: string;
     decimal: string;
 };
+
+// @internal (undocumented)
+export function shouldEnableNewNavigation(featureFlags: ISettings): boolean;
+
+// @internal (undocumented)
+export function shouldHidePPExperience(featureFlags: ISettings): boolean;
 
 // @internal (undocumented)
 export class SingleSelectListItem extends Component<ISingleSelectListItemProps, ISingleSelectListItemState> {

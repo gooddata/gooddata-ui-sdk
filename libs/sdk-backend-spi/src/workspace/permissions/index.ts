@@ -21,7 +21,8 @@ export type WorkspacePermission =
     | "canCreateScheduledMail"
     | "canListUsersInProject"
     | "canManageDomain"
-    | "canInviteUserToProject";
+    | "canInviteUserToProject"
+    | "canRefreshData";
 
 /**
  * Dictionary of workspace permissions
