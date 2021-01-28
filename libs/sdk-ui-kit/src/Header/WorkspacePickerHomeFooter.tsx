@@ -6,7 +6,8 @@ import cx from "classnames";
  * @internal
  */
 export interface IWorkspacePickerHomeFooterProps {
-    href: string;
+    href?: string;
+    onClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     className?: string;
 }
 /**
@@ -16,10 +17,11 @@ export const WorkspacePickerHomeFooter: React.FC<IWorkspacePickerHomeFooterProps
     children,
     className,
     href,
+    onClick,
 }) => {
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
     return (
-        <a className={mergedClassNames} href={href}>
+        <a className={mergedClassNames} href={href} onClick={onClick}>
             {children}
         </a>
     );

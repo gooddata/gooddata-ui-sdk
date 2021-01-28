@@ -1964,7 +1964,9 @@ export interface IWorkspacePickerHomeFooterProps {
     // (undocumented)
     className?: string;
     // (undocumented)
-    href: string;
+    href?: string;
+    // (undocumented)
+    onClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
 }
 
 // @internal @deprecated (undocumented)
