@@ -1,20 +1,20 @@
 // (C) 2019-2020 GoodData Corporation
 import { shallow } from "enzyme";
 import React from "react";
+import { FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutContentRenderer } from "../DashboardLayoutContentRenderer";
 import { dashboardLayoutMock, dashboardRowMock, dashboardWidgetMock } from "../mocks";
 
 describe("DashboardLayoutContentRenderer", () => {
     it("should set debug style for content without ratio", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]]),
-        ]);
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
+        );
+
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 debug
             />,
@@ -24,18 +24,21 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should set debug style for content with ratio", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([
-                [dashboardWidgetMock("kpi1", "kpi"), { widthAsGridColumnsCount: 2, heightAsRatio: 200 }],
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([
+                dashboardRowMock([
+                    [
+                        dashboardWidgetMock("kpi1", "kpi"),
+                        { xl: { widthAsGridColumnsCount: 2, heightAsRatio: 200 } },
+                    ],
+                ]),
             ]),
-        ]);
+        );
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 debug
             />,
@@ -45,22 +48,23 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should set debug style for content with ratio, when widget is resized by dashboardLayout", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([
-                [
-                    dashboardWidgetMock("kpi1", "kpi", true),
-                    { widthAsGridColumnsCount: 2, heightAsRatio: 200 },
-                ],
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([
+                dashboardRowMock([
+                    [
+                        dashboardWidgetMock("kpi1", "kpi"),
+                        { xl: { widthAsGridColumnsCount: 2, heightAsRatio: 200 } },
+                    ],
+                ]),
             ]),
-        ]);
+        );
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
+                isResizedByLayoutSizingStrategy
                 debug
             />,
         );
@@ -68,42 +72,35 @@ describe("DashboardLayoutContentRenderer", () => {
         expect(wrapper.find("div")).toHaveStyle("border", "dashed 1px #d6d6d6");
     });
 
-    it("should set height and overflow style for content with ratio", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([
-                [
-                    dashboardWidgetMock("kpi1", "kpi", true),
-                    { widthAsGridColumnsCount: 4, heightAsRatio: 150 },
-                ],
-            ]),
-        ]);
+    it("should set overflow style for content with ratio", () => {
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
+        );
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
+                isResizedByLayoutSizingStrategy
+                allowOverflow
                 screen="xl"
             />,
         );
 
         expect(wrapper.find("div")).toHaveStyle("overflowY", "auto");
         expect(wrapper.find("div")).toHaveStyle("overflowX", "hidden");
-        expect(wrapper.find("div")).toHaveStyle("height", 826);
     });
 
     it("should propagate className", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]]),
-        ]);
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
+        );
         const className = "test";
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
+                isResizedByLayoutSizingStrategy
                 screen="xl"
                 className={className}
             />,
@@ -112,22 +109,44 @@ describe("DashboardLayoutContentRenderer", () => {
         expect(wrapper.find("div")).toHaveClassName(className);
     });
 
-    it("should propagate other html props", () => {
-        const dashboardLayout = dashboardLayoutMock([
-            dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]]),
-        ]);
-        const style = { backgroundColor: "red" };
+    it("should propagate minHeight", () => {
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
+        );
+        const minHeight = 100;
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout.rows[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
-                style={style}
+                minHeight={minHeight}
             />,
         );
 
-        expect(wrapper.find("div")).toHaveStyle(style);
+        expect(wrapper.find("div")).toHaveStyle("minHeight", minHeight);
+    });
+
+    it("should propagate height", () => {
+        const dashboardLayoutFacade = FluidLayoutFacade.for(
+            dashboardLayoutMock([
+                dashboardRowMock([
+                    [
+                        dashboardWidgetMock("kpi1", "kpi"),
+                        { xl: { widthAsGridColumnsCount: 10, heightAsRatio: 50 } },
+                    ],
+                ]),
+            ]),
+        );
+        const height = 100;
+        const wrapper = shallow(
+            <DashboardLayoutContentRenderer
+                DefaultRenderer={DashboardLayoutContentRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
+                screen="xl"
+                height={height}
+            />,
+        );
+
+        expect(wrapper.find("div")).toHaveStyle("height", height);
     });
 });

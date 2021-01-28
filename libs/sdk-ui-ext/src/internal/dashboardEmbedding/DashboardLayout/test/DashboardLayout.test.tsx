@@ -14,8 +14,8 @@ describe("DashboardLayout", () => {
         const wrapper = shallow(
             <DashboardLayout
                 layout={dashboardLayout}
-                contentRenderer={({ columnIndex, rowIndex }) => (
-                    <div>{`col-${columnIndex}-row-${rowIndex}`}</div>
+                contentRenderer={({ column }) => (
+                    <div>{`col-${column.index()}-row-${column.row().index()}`}</div>
                 )}
             />,
         );

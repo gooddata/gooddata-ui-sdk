@@ -1,81 +1,57 @@
-// (C) 2007-2020 GoodData Corporation
-import { IFluidLayoutSize } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2021 GoodData Corporation
+import { IFluidLayoutSizeByScreen, IWidget } from "@gooddata/sdk-backend-spi";
 import {
-    IDashboardViewLayoutContentRowHeader,
-    DashboardViewLayoutWidgetClass,
     IDashboardViewLayout,
     IDashboardViewLayoutColumn,
-    IDashboardViewLayoutContentWidget,
-    IDashboardViewLayoutCustomContent,
     IDashboardViewLayoutContent,
 } from "./interfaces/dashboardLayout";
+import { DashboardViewLayoutWidgetClass } from "./interfaces/dashboardLayoutSizing";
 
-export type DashboardLayoutRowMock = {
+export type DashboardLayoutRowMock<TCustomContent = IDashboardViewLayoutContent> = {
     title?: string;
     description?: string;
-    contentAndSizePairs: ([IDashboardViewLayoutContent, IFluidLayoutSize] | [IDashboardViewLayoutContent])[];
-};
-
-export const dashboardRowHeaderMock = (
-    title?: string,
-    description?: string,
-): IDashboardViewLayoutContentRowHeader => {
-    return {
-        type: "rowHeader",
-        description,
-        title,
-    };
-};
-
-export const dashboardCustomMock = (): IDashboardViewLayoutCustomContent => {
-    return {
-        type: "custom",
-    };
+    columns: Array<[TCustomContent, IFluidLayoutSizeByScreen?]>;
 };
 
 export const dashboardWidgetMock = (
     id: string,
     widgetClass: DashboardViewLayoutWidgetClass = "bar",
-    resizedByLayout = false,
-): IDashboardViewLayoutContentWidget => {
+): IWidget => {
     return {
-        type: "widget",
-        widgetClass,
-        widget: {
-            description: "",
-            drills: [],
-            ignoreDashboardFilters: [],
+        description: "",
+        drills: [],
+        ignoreDashboardFilters: [],
+        identifier: id,
+        ref: {
             identifier: id,
-            ref: {
-                identifier: id,
-            },
-            title: `${widgetClass} ${id}`,
-            type: widgetClass === "kpi" ? "kpi" : "insight",
-            uri: id,
         },
-        resizedByLayout,
+        title: `${widgetClass} ${id}`,
+        type: widgetClass === "kpi" ? "kpi" : "insight",
+        uri: id,
     };
 };
 
-export const dashboardRowMock = (
-    contentAndSizePairs: ([IDashboardViewLayoutContent, IFluidLayoutSize] | [IDashboardViewLayoutContent])[],
+export const dashboardRowMock = <TCustomContent>(
+    columns: Array<[TCustomContent, IFluidLayoutSizeByScreen?]>,
     title?: string,
     description?: string,
-): DashboardLayoutRowMock => {
+): DashboardLayoutRowMock<TCustomContent> => {
     return {
-        contentAndSizePairs,
+        columns,
         title,
         description,
     };
 };
 
-export const dashboardLayoutMock = (rowMocks: DashboardLayoutRowMock[]): IDashboardViewLayout => {
-    const emptyLayout: IDashboardViewLayout = {
+export const dashboardLayoutMock = <TCustomContent>(
+    rowMocks: DashboardLayoutRowMock<TCustomContent>[],
+): IDashboardViewLayout<TCustomContent> => {
+    const emptyLayout: IDashboardViewLayout<TCustomContent> = {
         type: "fluidLayout",
         rows: [],
     };
 
-    return rowMocks.reduce((acc: IDashboardViewLayout, rowMock, rowIndex) => {
+    return rowMocks.reduce((acc: IDashboardViewLayout<TCustomContent>, rowMock, rowIndex) => {
         if (!acc.rows[rowIndex]) {
             acc.rows[rowIndex] = {
                 columns: [],
@@ -90,12 +66,14 @@ export const dashboardLayoutMock = (rowMocks: DashboardLayoutRowMock[]): IDashbo
             };
         }
 
-        return rowMock.contentAndSizePairs.reduce(
-            (acc2: IDashboardViewLayout, [content, size = { widthAsGridColumnsCount: 12 }], columnIndex) => {
-                const column: IDashboardViewLayoutColumn = {
-                    size: {
-                        xl: size,
-                    },
+        return rowMock.columns.reduce(
+            (
+                acc2: IDashboardViewLayout<TCustomContent>,
+                [content, size = { xl: { widthAsGridColumnsCount: 12 } }],
+                columnIndex,
+            ) => {
+                const column: IDashboardViewLayoutColumn<TCustomContent> = {
+                    size,
                     content,
                 };
                 acc2.rows[rowIndex].columns[columnIndex] = column;

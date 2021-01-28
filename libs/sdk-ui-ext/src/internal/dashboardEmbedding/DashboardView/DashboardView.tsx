@@ -41,6 +41,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     onScheduledMailSubmitSuccess,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
+    widgetRenderer,
 }) => {
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
         dashboard,
@@ -80,7 +81,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 
     const {
         error: dashboardViewLayoutError,
-        result: dashboardViewLayout,
+        result: dashboardViewLayoutResult,
         status: dashboardViewLayoutStatus,
     } = useDashboardViewLayout({
         dashboardLayout: dashboardData?.layout,
@@ -106,7 +107,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             userWorkspaceSettings &&
             colorPalette &&
             drillDownAttributes &&
-            dashboardViewLayout
+            dashboardViewLayoutResult
         ) {
             onDashboardLoaded?.({
                 alerts: alertsData,
@@ -120,7 +121,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         userWorkspaceSettings,
         colorPalette,
         drillDownAttributes,
-        dashboardViewLayout,
+        dashboardViewLayoutResult,
     ]);
 
     useEffect(() => {
@@ -178,13 +179,13 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                             isVisible={isScheduledMailDialogVisible}
                         />
 
-                        {isFluidLayoutEmpty(dashboardViewLayout) ? (
+                        {isFluidLayoutEmpty(dashboardData.layout) ? (
                             <EmptyDashboardError ErrorComponent={ErrorComponent} />
                         ) : (
                             <DashboardRenderer
                                 backend={backend}
                                 workspace={workspace}
-                                dashboardViewLayout={dashboardViewLayout}
+                                dashboardViewLayout={dashboardData?.layout}
                                 alerts={alertsData}
                                 filters={filters}
                                 filterContext={dashboardData.filterContext}
@@ -193,6 +194,11 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 className="gd-dashboards-root"
+                                getDashboardViewLayoutWidgetClass={
+                                    dashboardViewLayoutResult.getDashboardViewLayoutWidgetClass
+                                }
+                                getInsightByRef={dashboardViewLayoutResult.getInsightByRef}
+                                widgetRenderer={widgetRenderer}
                             />
                         )}
                     </AttributesWithDrillDownProvider>

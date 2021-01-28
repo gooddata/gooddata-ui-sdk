@@ -1,6 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-import { IWidget, IWidgetDefinition } from "../widget";
-import { IFluidLayout, IFluidLayoutColumn, IFluidLayoutRow } from "./fluidLayout";
+// (C) 2019-2021 GoodData Corporation
+import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "../widget";
+import { IFluidLayout, IFluidLayoutColumn, IFluidLayoutRow, isFluidLayout } from "./fluidLayout";
 
 /**
  * Dashboard layout content - widget, widget definition, or another layout.
@@ -8,6 +8,13 @@ import { IFluidLayout, IFluidLayoutColumn, IFluidLayoutRow } from "./fluidLayout
  * @alpha
  */
 export type IDashboardLayoutContent = IWidget | IWidgetDefinition | IDashboardLayout;
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardLayoutContent}.
+ * @alpha
+ */
+export const isDashboardLayoutContent = (obj: unknown): obj is IDashboardLayoutContent =>
+    [isFluidLayout, isWidget, isWidgetDefinition].some((guard) => guard(obj));
 
 /**
  * Dashboard layout column definition.
@@ -21,15 +28,11 @@ export type IDashboardLayoutColumn = IFluidLayoutColumn<IDashboardLayoutContent>
  *
  * @alpha
  */
-export type IDashboardLayoutRow = IFluidLayoutRow<IDashboardLayoutContent, IDashboardLayoutColumn>;
+export type IDashboardLayoutRow = IFluidLayoutRow<IDashboardLayoutContent>;
 
 /**
  * Dashboard layout definition.
  *
  * @alpha
  */
-export type IDashboardLayout = IFluidLayout<
-    IDashboardLayoutContent,
-    IDashboardLayoutColumn,
-    IDashboardLayoutRow
->;
+export type IDashboardLayout = IFluidLayout<IDashboardLayoutContent>;

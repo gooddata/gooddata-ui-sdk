@@ -2,6 +2,9 @@
 import * as React from "react";
 import cx from "classnames";
 
+/**
+ * @alpha
+ */
 export interface IDashboardLayoutRowHeaderDescriptionProps {
     description: string;
 }

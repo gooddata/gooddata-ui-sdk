@@ -5,8 +5,11 @@ import {
     IFilterContext,
     ITempFilterContext,
     IWidgetAlert,
+    IDashboardLayoutContent,
+    IWidget,
+    isWidget,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -16,13 +19,14 @@ import {
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { DashboardLayout, DashboardLayoutColumnRenderer, DashboardLayoutRowHeader } from "../DashboardLayout";
+import { DashboardLayout, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
 import { IDashboardViewLayout } from "../DashboardLayout/interfaces/dashboardLayout";
 import { DashboardContentRenderer } from "./DashboardContentRenderer";
-import { IDashboardViewLayoutColumnRenderProps } from "../DashboardLayout/interfaces/dashboardLayoutComponents";
+import { IDashboardViewLayoutContentRenderProps } from "../DashboardLayout/interfaces/dashboardLayoutComponents";
+import { IDashboardWidgetRenderer } from "./types";
 
 interface IDashboardRendererProps {
-    dashboardViewLayout: IDashboardViewLayout;
+    dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
     alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -34,6 +38,9 @@ interface IDashboardRendererProps {
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;
     className?: string;
+    getDashboardViewLayoutWidgetClass: (widget: IWidget) => DashboardViewLayoutWidgetClass;
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined;
+    widgetRenderer: IDashboardWidgetRenderer;
 }
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
@@ -49,16 +56,30 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     onError,
     LoadingComponent,
     className,
+    getDashboardViewLayoutWidgetClass,
+    getInsightByRef,
+    widgetRenderer,
 }) {
     const isThemeLoading = useThemeIsLoading();
 
     const contentWithProps = useCallback(
-        (props: IDashboardViewLayoutColumnRenderProps) => {
+        (props: IDashboardViewLayoutContentRenderProps<IDashboardLayoutContent>) => {
             const { column } = props;
+            let widgetClass: DashboardViewLayoutWidgetClass;
+            let insight: IInsight;
+            const content = column.content();
+            if (isWidget(content)) {
+                widgetClass = getDashboardViewLayoutWidgetClass(content);
+            }
+            if (content.type === "insight") {
+                insight = getInsightByRef(content.insight);
+            }
+
             return (
                 <DashboardContentRenderer
                     {...props}
-                    content={column.content}
+                    widgetClass={widgetClass}
+                    insight={insight}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}
                     alerts={alerts}
@@ -69,10 +90,12 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     onError={onError}
                     workspace={workspace}
                     backend={backend}
+                    widgetRenderer={widgetRenderer}
                 />
             );
         },
         [
+            widgetRenderer,
             ErrorComponent,
             LoadingComponent,
             alerts,
@@ -94,24 +117,6 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
         <DashboardLayout
             layout={dashboardViewLayout}
             contentRenderer={contentWithProps}
-            columnRenderer={(props) => {
-                return (
-                    <>
-                        {props.columnIndex === 0 && props.row.header && (
-                            <DashboardLayoutColumnRenderer
-                                {...props}
-                                column={{ size: { xl: { widthAsGridColumnsCount: 12 } } }}
-                            >
-                                <DashboardLayoutRowHeader
-                                    title={props.row.header.title}
-                                    description={props.row.header.description}
-                                />
-                            </DashboardLayoutColumnRenderer>
-                        )}
-                        <DashboardLayoutColumnRenderer {...props} />
-                    </>
-                );
-            }}
             className={className}
         />
     );

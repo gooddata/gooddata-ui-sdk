@@ -1,83 +1,25 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import cx from "classnames";
-import { IFilter, areObjRefsEqual } from "@gooddata/sdk-model";
+import { isWidget, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    IDrillableItem,
-    IErrorProps,
-    IHeaderPredicate,
-    ILoadingProps,
-    OnError,
-    OnFiredDrillEvent,
-} from "@gooddata/sdk-ui";
-import { KpiView } from "./KpiView";
-import { InsightRenderer } from "./InsightRenderer";
-import {
-    IWidget,
-    IWidgetAlert,
-    IAnalyticalBackend,
-    IFilterContext,
-    ITempFilterContext,
-} from "@gooddata/sdk-backend-spi";
-import {
-    DashboardLayoutContentRenderer,
-    IDashboardViewLayoutContent,
-    IDashboardViewLayoutColumn,
-    IDashboardViewLayoutRow,
+    getDashboardLayoutContentHeightForRatioAndScreen,
+    getDashboardLayoutMinimumWidgetHeight,
 } from "../DashboardLayout";
-import { IFluidLayoutContentRenderer } from "../FluidLayout";
-import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
-import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
-import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
-import { DashboardItem } from "../DashboardItem/DashboardItem";
-import { getVisTypeCssClass } from "./utils";
+import { DashboardWidgetRenderer } from "./DashboardWidgetRenderer";
+import { IDashboardContentRenderProps } from "./types";
 
-export type IDashboardContentRenderer = IFluidLayoutContentRenderer<
-    IDashboardViewLayoutContent,
-    IDashboardViewLayoutColumn,
-    IDashboardViewLayoutRow,
-    {
-        debug?: boolean;
-        layoutContentRef?: React.RefObject<HTMLDivElement>;
-        style?: React.CSSProperties;
-        className?: string;
-        content: IDashboardViewLayoutContent;
-        alerts: IWidgetAlert[];
-        backend?: IAnalyticalBackend;
-        workspace?: string;
-        filters?: IFilter[];
-        filterContext: IFilterContext | ITempFilterContext;
-        drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-        onDrill?: OnFiredDrillEvent;
-        ErrorComponent: React.ComponentType<IErrorProps>;
-        LoadingComponent: React.ComponentType<ILoadingProps>;
-        onError?: OnError;
-    }
->;
-
-export const DashboardContentRenderer: IDashboardContentRenderer = (props) => {
-    const { column, columnIndex, row, rowIndex, screen, className, debug, layoutContentRef, style } = props;
-
-    return (
-        <DashboardLayoutContentRenderer
-            column={column}
-            columnIndex={columnIndex}
-            row={row}
-            rowIndex={rowIndex}
-            screen={screen}
-            className={className}
-            layoutContentRef={layoutContentRef}
-            debug={debug}
-            style={style}
-        >
-            <DashboardWidgetRenderer {...props} />
-        </DashboardLayoutContentRenderer>
-    );
-};
-
-export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
+export const DashboardContentRenderer: React.FC<IDashboardContentRenderProps> = (props) => {
     const {
-        content,
+        column,
+        screen,
+        className,
+        debug,
+        contentRef,
+        DefaultRenderer,
+        isResizedByLayoutSizingStrategy,
+        widgetClass,
+        widgetRenderer: WidgetRenderer,
+        insight,
         ErrorComponent,
         LoadingComponent,
         alerts,
@@ -88,83 +30,56 @@ export const DashboardWidgetRenderer: IDashboardContentRenderer = (props) => {
         onDrill,
         onError,
         workspace,
-        screen,
     } = props;
-    switch (content.type) {
-        case "rowHeader": {
-            return (
-                <div>
-                    {content.title && <h2>{content.title}</h2>}
-                    {content.description && <div>{content.description}</div>}
-                </div>
-            );
-        }
-        case "widget": {
-            if (content.widget.type === "insight") {
-                return (
-                    <DashboardItem
-                        className={cx(
-                            "type-visualization",
-                            "gd-dashboard-view-widget",
-                            getVisTypeCssClass(content.widgetClass),
-                        )}
-                        screen={screen}
-                    >
-                        <DashboardItemVisualization
-                            renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
-                        >
-                            {() => (
-                                <InsightRenderer
-                                    insight={content.insight}
-                                    insightWidget={content.widget as IWidget}
-                                    backend={backend}
-                                    workspace={workspace}
-                                    filters={filters}
-                                    filterContext={filterContext}
-                                    drillableItems={drillableItems}
-                                    onDrill={onDrill}
-                                    onError={onError}
-                                    ErrorComponent={ErrorComponent}
-                                    LoadingComponent={LoadingComponent}
-                                />
-                            )}
-                        </DashboardItemVisualization>
-                    </DashboardItem>
-                );
-            }
 
-            const relevantAlert = alerts?.find((alert) => areObjRefsEqual(alert.widget, content.widget.ref));
+    const content = column.content();
 
-            return (
-                <DashboardItem className="type-kpi" screen={screen}>
-                    <DashboardItemKpi
-                        renderHeadline={() => <DashboardItemHeadline title={content.widget.title} />}
-                    >
-                        {({ clientWidth }) => (
-                            <KpiView
-                                kpiWidget={content.widget as IWidget}
-                                filterContext={filterContext}
-                                alert={relevantAlert}
-                                backend={backend}
-                                workspace={workspace}
-                                filters={filters}
-                                drillableItems={drillableItems}
-                                onDrill={onDrill}
-                                onError={onError}
-                                ErrorComponent={ErrorComponent}
-                                LoadingComponent={LoadingComponent}
-                                clientWidth={clientWidth}
-                            />
-                        )}
-                    </DashboardItemKpi>
-                </DashboardItem>
-            );
-        }
-        case "custom": {
-            throw new Error("Custom widgets are not supported");
-        }
-        default: {
-            return <div>Unknown widget</div>;
-        }
+    if (!isWidget(content)) {
+        throw new UnexpectedError("Custom dashboard view content is not yet supported.");
     }
+
+    // TODO: RAIL-2869
+    const currentSize = column.size()[screen];
+    const minHeight = getDashboardLayoutMinimumWidgetHeight(widgetClass);
+    const height = currentSize && getDashboardLayoutContentHeightForRatioAndScreen(currentSize, screen);
+
+    return WidgetRenderer ? (
+        <WidgetRenderer
+            column={column}
+            ErrorComponent={ErrorComponent}
+            LoadingComponent={LoadingComponent}
+            alerts={alerts}
+            filterContext={filterContext}
+            screen={screen}
+            widget={content}
+            backend={backend}
+            drillableItems={drillableItems}
+            filters={filters}
+            insight={insight}
+            onDrill={onDrill}
+            onError={onError}
+            widgetClass={widgetClass}
+            workspace={workspace}
+            DefaultRenderer={WidgetRenderer}
+            // TODO: RAIL-2869 Unify props for DefaultRenderer & WidgetRenderer
+            minHeight={minHeight}
+            height={height}
+        />
+    ) : (
+        <DefaultRenderer
+            DefaultRenderer={DefaultRenderer}
+            column={column}
+            screen={screen}
+            className={className}
+            contentRef={contentRef}
+            debug={debug}
+            // TODO: RAIL-2869 how to solve it inside DashboardViewLayoutContentRenderer?
+            height={currentSize.heightAsRatio ? height : undefined}
+            minHeight={!currentSize.heightAsRatio ? minHeight : undefined}
+            allowOverflow={!!currentSize.heightAsRatio}
+            isResizedByLayoutSizingStrategy={isResizedByLayoutSizingStrategy}
+        >
+            <DashboardWidgetRenderer {...props} DefaultRenderer={DashboardWidgetRenderer} widget={content} />
+        </DefaultRenderer>
+    );
 };

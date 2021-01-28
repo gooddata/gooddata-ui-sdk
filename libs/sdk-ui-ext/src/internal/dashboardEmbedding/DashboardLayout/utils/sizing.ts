@@ -1,20 +1,24 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import flatten from "lodash/flatten";
 import round from "lodash/round";
 import isNil from "lodash/isNil";
+import isEqual from "lodash/isEqual";
 import {
     IFluidLayoutSizeByScreen,
     isFluidLayout,
     IFluidLayoutSize,
-    FluidLayoutTransforms,
+    FluidLayoutFacade,
     ResponsiveScreenType,
+    isWidget,
+    isWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { ALL_SCREENS } from "../../FluidLayout";
 import {
     IDashboardViewLayoutColumn,
     IDashboardViewLayout,
-    DashboardViewLayoutWidgetClass,
+    IDashboardViewLayoutRow,
 } from "../interfaces/dashboardLayout";
+import { DashboardViewLayoutWidgetClass } from "../interfaces/dashboardLayoutSizing";
 import {
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
@@ -28,22 +32,32 @@ import {
  *
  * @param columns - fluid layout columns
  */
-export function unifyDashboardLayoutColumnHeights(layout: IDashboardViewLayout): IDashboardViewLayout;
-export function unifyDashboardLayoutColumnHeights(
-    columns: IDashboardViewLayoutColumn[],
-): IDashboardViewLayoutColumn[];
-export function unifyDashboardLayoutColumnHeights(
-    columnsOrLayout: IDashboardViewLayout | IDashboardViewLayoutColumn[],
-): IDashboardViewLayout | IDashboardViewLayoutColumn[] {
+export function unifyDashboardLayoutColumnHeights<TCustomContent>(
+    layout: IDashboardViewLayout<TCustomContent>,
+): IDashboardViewLayout<TCustomContent>;
+export function unifyDashboardLayoutColumnHeights<TCustomContent>(
+    columns: IDashboardViewLayoutColumn<TCustomContent>[],
+): IDashboardViewLayoutColumn<TCustomContent>[];
+export function unifyDashboardLayoutColumnHeights<TCustomContent>(
+    columnsOrLayout: IDashboardViewLayout<TCustomContent> | IDashboardViewLayoutColumn<TCustomContent>[],
+): IDashboardViewLayout<TCustomContent> | IDashboardViewLayoutColumn<TCustomContent>[] {
     if (isFluidLayout(columnsOrLayout)) {
-        return FluidLayoutTransforms.for(columnsOrLayout)
-            .updateRows(({ row }) => {
-                return {
-                    ...row,
-                    columns: unifyDashboardLayoutColumnHeights(row.columns),
-                };
-            })
-            .layout();
+        const updatedLayout: IDashboardViewLayout<TCustomContent> = {
+            ...columnsOrLayout,
+            rows: FluidLayoutFacade.for(columnsOrLayout)
+                .rows()
+                .reduce((acc: IDashboardViewLayoutRow<TCustomContent>[], row) => {
+                    return [
+                        ...acc,
+                        {
+                            ...row.raw(),
+                            columns: unifyDashboardLayoutColumnHeights(row.columns().raw()),
+                        },
+                    ];
+                }, []),
+        };
+
+        return updatedLayout;
     }
 
     const columnsWithSizeForAllScreens = columnsOrLayout.map((column) => ({
@@ -51,23 +65,19 @@ export function unifyDashboardLayoutColumnHeights(
         size: dashboardLayoutColumnSizeForAllScreensFromXLSize(column.size.xl),
     }));
 
-    const columnsWithUnifiedHeightForAllScreens: IDashboardViewLayoutColumn[] = ALL_SCREENS.reduce(
-        (acc, screen) => {
-            const fluidLayoutColumnsAsFutureGridRows = splitDashboardLayoutColumnsAsFutureGridRows(
-                acc,
-                screen,
-            );
+    const columnsWithUnifiedHeightForAllScreens: IDashboardViewLayoutColumn<
+        TCustomContent
+    >[] = ALL_SCREENS.reduce((acc, screen) => {
+        const fluidLayoutColumnsAsFutureGridRows = splitDashboardLayoutColumnsAsFutureGridRows(acc, screen);
 
-            const fluidLayoutColumnsWithUnifiedHeight = flatten(
-                fluidLayoutColumnsAsFutureGridRows.map((futureGridRow) =>
-                    unifyDashboardLayoutColumnHeightsForScreen(futureGridRow, screen),
-                ),
-            );
+        const fluidLayoutColumnsWithUnifiedHeight = flatten(
+            fluidLayoutColumnsAsFutureGridRows.map((futureGridRow) =>
+                unifyDashboardLayoutColumnHeightsForScreen(futureGridRow, screen),
+            ),
+        );
 
-            return fluidLayoutColumnsWithUnifiedHeight;
-        },
-        columnsWithSizeForAllScreens,
-    );
+        return fluidLayoutColumnsWithUnifiedHeight;
+    }, columnsWithSizeForAllScreens);
 
     return columnsWithUnifiedHeightForAllScreens;
 }
@@ -158,14 +168,14 @@ function dashboardLayoutColumnSizeForAllScreens(
  * @param columns - fluild layout columns
  * @param screen - responsive screen class
  */
-function splitDashboardLayoutColumnsAsFutureGridRows(
-    columns: IDashboardViewLayoutColumn[],
+function splitDashboardLayoutColumnsAsFutureGridRows<TCustomContent>(
+    columns: IDashboardViewLayoutColumn<TCustomContent>[],
     screen: ResponsiveScreenType,
-): IDashboardViewLayoutColumn[][] {
-    const virtualRows: IDashboardViewLayoutColumn[][] = [];
+): IDashboardViewLayoutColumn<TCustomContent>[][] {
+    const virtualRows: IDashboardViewLayoutColumn<TCustomContent>[][] = [];
 
     let currentRowWidth = 0;
-    let currentRow: IDashboardViewLayoutColumn[] = [];
+    let currentRow: IDashboardViewLayoutColumn<TCustomContent>[] = [];
 
     columns.forEach((column) => {
         const columnSize: IFluidLayoutSize = column.size[screen];
@@ -199,8 +209,8 @@ function splitDashboardLayoutColumnsAsFutureGridRows(
  * @param column - fluid layout column
  * @param screen -  responsive screen class
  */
-function dashboardLayoutColumnHeightForScreen(
-    column: IDashboardViewLayoutColumn,
+function dashboardLayoutColumnHeightForScreen<TCustomContent>(
+    column: IDashboardViewLayoutColumn<TCustomContent>,
     screen: ResponsiveScreenType,
 ) {
     const { widthAsGridColumnsCount, heightAsRatio = 0 } = column.size?.[screen] ?? {};
@@ -217,10 +227,10 @@ function dashboardLayoutColumnHeightForScreen(
  * @param columns - fluid layout columns
  * @param screen -  responsive screen class
  */
-function unifyDashboardLayoutColumnHeightsForScreen(
-    columns: IDashboardViewLayoutColumn[],
+function unifyDashboardLayoutColumnHeightsForScreen<TCustomContent>(
+    columns: IDashboardViewLayoutColumn<TCustomContent>[],
     screen: ResponsiveScreenType,
-): IDashboardViewLayoutColumn[] {
+): IDashboardViewLayoutColumn<TCustomContent>[] {
     const heights = columns.map((column) => dashboardLayoutColumnHeightForScreen(column, screen));
     const maxHeight = Math.max(0, ...heights);
 
@@ -231,11 +241,11 @@ function unifyDashboardLayoutColumnHeightsForScreen(
     return columns.map((column) => updateDashboardLayoutColumnHeight(column, screen, maxHeight));
 }
 
-const updateDashboardLayoutColumnHeight = (
-    column: IDashboardViewLayoutColumn,
+const updateDashboardLayoutColumnHeight = <TCustomContent>(
+    column: IDashboardViewLayoutColumn<TCustomContent>,
     screen: ResponsiveScreenType,
     maxHeight: number,
-): IDashboardViewLayoutColumn => {
+): IDashboardViewLayoutColumn<TCustomContent> => {
     const columnSizeForCurrentScreen = column.size[screen];
     const heightAsRatio = columnSizeForCurrentScreen?.widthAsGridColumnsCount
         ? round(maxHeight / columnSizeForCurrentScreen.widthAsGridColumnsCount, 2)
@@ -247,12 +257,11 @@ const updateDashboardLayoutColumnHeight = (
         !isNil(columnSizeForCurrentScreen?.heightAsRatio) &&
         columnSizeForCurrentScreen?.heightAsRatio !== heightAsRatio
     ) {
-        if (updatedColumn.content?.type === "widget") {
+        if (isWidget(updatedColumn.content) || isWidgetDefinition(updatedColumn.content)) {
             updatedColumn = {
                 ...updatedColumn,
                 content: {
                     ...updatedColumn.content,
-                    resizedByLayout: true,
                 },
             };
         }
@@ -296,11 +305,55 @@ export function getDashboardLayoutMinimumWidgetHeight(type: DashboardViewLayoutW
 }
 
 export const getDashboardLayoutContentHeightForRatioAndScreen = (
-    ratio: number,
-    width: number,
+    size: IFluidLayoutSize,
     screen: ResponsiveScreenType,
 ): number => {
+    const { widthAsGridColumnsCount, heightAsRatio } = size;
+    // TODO: RAIL-2869  Migrate to ResponsiveContext
     const actualWidth = DASHBOARD_LAYOUT_CONTAINER_WIDTHS[screen];
     const actualColumnUnitWidth = actualWidth / DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
-    return actualColumnUnitWidth * width * (ratio / 100);
+    return actualColumnUnitWidth * widthAsGridColumnsCount * (heightAsRatio / 100);
+};
+
+/**
+ * Tuple that represents a column position in the layout
+ * [rowIndex, columnIndex]
+ *
+ * @internal
+ */
+type ColumnPosition = [number, number];
+
+export const getResizedColumnPositions = <TCustomContent>(
+    originalLayout: IDashboardViewLayout<TCustomContent>,
+    resizedLayout: IDashboardViewLayout<TCustomContent>,
+    positions: ColumnPosition[] = [],
+): ColumnPosition[] => {
+    const originalLayoutFacade = FluidLayoutFacade.for(originalLayout);
+    return FluidLayoutFacade.for(resizedLayout)
+        .rows()
+        .reduce((acc: ColumnPosition[], row) => {
+            return row.columns().reduce((acc, column) => {
+                const originalColumn = originalLayoutFacade
+                    .rows()
+                    .row(row.index())
+                    .columns()
+                    .column(column.index());
+                const originalContent = originalColumn.content();
+                const updatedContent = column.content();
+
+                // Is nested layout?
+                if (isFluidLayout(originalContent) && isFluidLayout(updatedContent)) {
+                    return getResizedColumnPositions(originalContent, updatedContent, positions);
+                }
+
+                if (
+                    !isEqual(originalColumn.size(), column.size()) &&
+                    (isWidget(updatedContent) || isWidgetDefinition(updatedContent))
+                ) {
+                    acc.push([column.row().index(), column.index()]);
+                }
+
+                return acc;
+            }, acc);
+        }, positions);
 };

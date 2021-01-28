@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import { Configuration } from "react-grid-system";
-import { DashboardViewLayoutWidgetClass } from "./interfaces/dashboardLayout";
 import {
+    DashboardViewLayoutWidgetClass,
     DashboardViewWidgetDimensionsByWidgetClass,
     IDashboardViewWidgetDimension,
 } from "./interfaces/dashboardLayoutSizing";
@@ -53,6 +53,7 @@ export const DASHBOARD_LAYOUT_CONTAINER_WIDTHS = {
 
 export const DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH = 180;
 
+// TODO: RAIL-2869 unmix visualization classes & kpi?
 export const DASHBOARD_LAYOUT_WIDGET_CLASS: {
     [widgetClass in DashboardViewLayoutWidgetClass]?: DashboardViewLayoutWidgetClass;
 } = {

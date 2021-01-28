@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, IDashboardLayout, layoutWidgets, isWidget } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2021 GoodData Corporation
+import { IAnalyticalBackend, IDashboardLayout, layoutWidgets, IWidget } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -10,16 +10,22 @@ import {
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
-import { IDashboardViewLayout } from "../DashboardLayout";
-import { FluidLayoutTransforms } from "@gooddata/sdk-backend-spi";
-import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayout";
 import { insightDataLoaderFactory } from "../../../dataLoaders";
+import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
+
+/**
+ * @beta
+ */
+export interface IUseDashboardViewLayoutResult {
+    getDashboardViewLayoutWidgetClass: (widget: IWidget) => DashboardViewLayoutWidgetClass;
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined;
+}
 
 /**
  * @beta
  */
 export interface IUseDashboardViewLayoutConfig
-    extends UseCancelablePromiseCallbacks<IDashboardViewLayout, GoodDataSdkError> {
+    extends UseCancelablePromiseCallbacks<IUseDashboardViewLayoutResult, GoodDataSdkError> {
     /**
      * Dashboard layout to transform to view model.
      */
@@ -56,7 +62,7 @@ export const useDashboardViewLayout = ({
     onLoading,
     onPending,
     onSuccess,
-}: IUseDashboardViewLayoutConfig): UseCancelablePromiseState<IDashboardViewLayout, any> => {
+}: IUseDashboardViewLayoutConfig): UseCancelablePromiseState<IUseDashboardViewLayoutResult, any> => {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
@@ -86,51 +92,18 @@ export const useDashboardViewLayout = ({
                   return insights.find((i) => areObjRefsEqual(i.insight.ref, insightRef));
               };
 
-              const getDashboardViewWidgetClass = (insight: IInsight): DashboardViewLayoutWidgetClass => {
+              const getDashboardViewLayoutWidgetClass = (widget: IWidget): DashboardViewLayoutWidgetClass => {
+                  if (widget.type === "kpi") {
+                      return "kpi";
+                  }
+                  const insight = getInsightByRef(widget.ref);
                   return insightVisualizationUrl(insight).split(":")[1] as DashboardViewLayoutWidgetClass;
               };
 
-              // Convert current layout model to "legacy" layout model,
-              // to keep it backward compatible with KD
-              const emptyLayout: IDashboardViewLayout = {
-                  ...dashboardLayout,
-                  rows: [],
+              return {
+                  getDashboardViewLayoutWidgetClass,
+                  getInsightByRef,
               };
-
-              return FluidLayoutTransforms.for(dashboardLayout).reduceColumns(
-                  (acc: IDashboardViewLayout, { column, columnIndex, row, rowIndex }) => {
-                      if (!acc.rows[rowIndex]) {
-                          acc.rows[rowIndex] = {
-                              ...row,
-                              columns: [],
-                          };
-                      }
-                      const currentContent = column.content;
-                      if (isWidget(currentContent)) {
-                          const insight = getInsightByRef(currentContent.insight);
-                          acc.rows[rowIndex].columns[columnIndex] = {
-                              ...column,
-                              content: {
-                                  type: "widget",
-                                  widget: currentContent,
-                                  insight,
-                                  widgetClass:
-                                      currentContent.type === "insight"
-                                          ? getDashboardViewWidgetClass(insight)
-                                          : "kpi",
-                              },
-                          };
-                      } else {
-                          // eslint-disable-next-line no-console
-                          console.warn(
-                              `Encountered an unknown widget, please check the dashboard data. Skipping for layout.`,
-                          );
-                      }
-
-                      return acc;
-                  },
-                  emptyLayout,
-              );
           }
         : null;
 

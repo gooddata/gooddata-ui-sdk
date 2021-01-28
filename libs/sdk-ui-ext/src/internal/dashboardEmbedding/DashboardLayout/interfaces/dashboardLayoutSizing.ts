@@ -1,5 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
-import { DashboardViewLayoutWidgetClass } from "./dashboardLayout";
+// (C) 2019-2021 GoodData Corporation
+import { VisType } from "@gooddata/sdk-ui";
+
+/**
+ * Dashboard layout widget classification.
+ * Used to calculate the size of a layout column based on the widget it contains.
+ *
+ * @alpha
+ */
+export type DashboardViewLayoutWidgetClass = VisType | "kpi";
 
 /**
  * Dictionary with default size configuration by widget class.

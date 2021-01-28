@@ -2,64 +2,61 @@
 import React from "react";
 import zip from "lodash/zip";
 import { shallow } from "enzyme";
+import { FluidLayoutFacade, IFluidLayoutSizeByScreen } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutColumnRenderer } from "../DashboardLayoutColumnRenderer";
 import { FluidLayoutColumnRenderer, ALL_SCREENS } from "../../FluidLayout";
 import { dashboardLayoutMock, dashboardRowMock, dashboardWidgetMock } from "../mocks";
-import { IDashboardViewLayoutColumn } from "../interfaces/dashboardLayout";
-
-const dashboardLayout = dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("tableId", "table")]])]);
 
 const testWidths = [12, 10, 6, 4, 2];
 const testRatios = [100, 200, 50, 100, 60];
 const testCases = zip(ALL_SCREENS, testWidths, testRatios);
 
-const testColumn: IDashboardViewLayoutColumn = {
-    size: testCases.reduce(
-        (acc, [screen, widthAsGridColumnsCount, heightAsRatio]) => ({
-            ...acc,
-            [screen]: {
-                widthAsGridColumnsCount,
-                heightAsRatio,
-            },
-        }),
-        {
-            xl: {
-                widthAsGridColumnsCount: 0,
-            },
+const sizeForAllScreens: IFluidLayoutSizeByScreen = testCases.reduce(
+    (acc, [screen, widthAsGridColumnsCount, heightAsRatio]) => ({
+        ...acc,
+        [screen]: {
+            widthAsGridColumnsCount,
+            heightAsRatio,
         },
-    ),
-};
+    }),
+    {
+        xl: {
+            widthAsGridColumnsCount: 0,
+        },
+    },
+);
+
+const dashboardLayout = dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("tableId", "table")]])]);
+const dashboardLayoutWitchSizing = dashboardLayoutMock([
+    dashboardRowMock([[dashboardWidgetMock("tableId", "table"), sizeForAllScreens]]),
+]);
+const dashboardLayoutFacade = FluidLayoutFacade.for(dashboardLayout);
+const dashboardLayoutWithSizingFacade = FluidLayoutFacade.for(dashboardLayoutWitchSizing);
 
 describe("DashboardLayoutColumnRenderer", () => {
     it("should set minHeight:0 to override default grid style", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={FluidLayoutColumnRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
             />,
         );
 
-        expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveStyle("minHeight", 0);
+        expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveProp("minHeight", 0);
     });
 
     it("should set custom minHeight, when provided", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                column={dashboardLayout.rows[0].columns[0]}
-                row={dashboardLayout[0]}
-                columnIndex={0}
-                rowIndex={0}
+                DefaultRenderer={FluidLayoutColumnRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
-                style={{
-                    minHeight: 100,
-                }}
+                minHeight={100}
             />,
         );
 
-        expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveStyle("minHeight", 100);
+        expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveProp("minHeight", 100);
     });
 
     it.each(testCases)(
@@ -67,10 +64,8 @@ describe("DashboardLayoutColumnRenderer", () => {
         (screen, width, ratio) => {
             const wrapper = shallow(
                 <DashboardLayoutColumnRenderer
-                    row={{ columns: [] }}
-                    column={testColumn}
-                    rowIndex={0}
-                    columnIndex={0}
+                    DefaultRenderer={FluidLayoutColumnRenderer}
+                    column={dashboardLayoutWithSizingFacade.rows().row(0).columns().column(0)}
                     screen={screen}
                 />,
             );
@@ -90,16 +85,8 @@ describe("DashboardLayoutColumnRenderer", () => {
     it("should not set ratio class for column without ratio", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                row={{ columns: [] }}
-                column={{
-                    size: {
-                        xl: {
-                            widthAsGridColumnsCount: 12,
-                        },
-                    },
-                }}
-                rowIndex={0}
-                columnIndex={0}
+                DefaultRenderer={FluidLayoutColumnRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
             />,
         );
@@ -113,31 +100,13 @@ describe("DashboardLayoutColumnRenderer", () => {
         const className = "test";
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                row={{ columns: [] }}
-                column={testColumn}
-                rowIndex={0}
-                columnIndex={0}
+                DefaultRenderer={FluidLayoutColumnRenderer}
+                column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 className={className}
             />,
         );
 
         expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveClassName(className);
-    });
-
-    it("should propagate style", () => {
-        const style = { backgroundColor: "red" };
-        const wrapper = shallow(
-            <DashboardLayoutColumnRenderer
-                row={{ columns: [] }}
-                column={testColumn}
-                rowIndex={0}
-                columnIndex={0}
-                screen="xl"
-                style={style}
-            />,
-        );
-
-        expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveStyle(style);
     });
 });

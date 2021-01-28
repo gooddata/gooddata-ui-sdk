@@ -414,7 +414,6 @@ export class ScheduledMailDialogRendererUI extends React.PureComponent<
 
     private getScheduleEmailData = (): IScheduledMailDefinition => {
         const when = this.getTimeSchedule();
-        // TODO: propagate from recipients component
 
         const { selectedRecipients: recipients } = this.state;
         /// To: is currently only owner

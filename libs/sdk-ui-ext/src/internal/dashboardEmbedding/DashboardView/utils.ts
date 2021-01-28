@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -8,7 +8,7 @@ import {
     newAllTimeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
-import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayout";
+import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
 
 export function hasDateFilterForDateDataset(filters: IFilter[], dateDataset: ObjRef): boolean {
     return filters.some((filter) => {
