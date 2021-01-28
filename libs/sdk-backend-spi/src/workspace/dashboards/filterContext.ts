@@ -1,5 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
-import { ObjRef, isObjRef } from "@gooddata/sdk-model";
+// (C) 2019-2021 GoodData Corporation
+import { ObjRef, isObjRef, IAttributeElements } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardObjectIdentity } from "./common";
 import { DateFilterGranularity, DateString } from "../dateFilterConfigs/types";
@@ -56,9 +56,9 @@ export interface IDashboardAttributeFilter {
         negativeSelection: boolean;
 
         /**
-         * Selected attribute elements object refs
+         * Selected attribute elements
          */
-        attributeElements: ObjRef[];
+        attributeElements: IAttributeElements;
 
         /**
          * Identifier of the filter which is valid in the scope of the filter context

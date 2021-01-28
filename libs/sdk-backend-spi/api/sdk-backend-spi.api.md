@@ -6,6 +6,7 @@
 
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
+import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
@@ -376,7 +377,7 @@ export interface IDashboardAttributeFilter {
     attributeFilter: {
         displayForm: ObjRef;
         negativeSelection: boolean;
-        attributeElements: ObjRef[];
+        attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
     };

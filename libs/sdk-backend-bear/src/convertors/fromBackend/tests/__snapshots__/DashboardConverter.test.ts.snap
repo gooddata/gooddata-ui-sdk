@@ -63,14 +63,12 @@ Object {
     "filters": Array [
       Object {
         "attributeFilter": Object {
-          "attributeElements": Array [
-            Object {
-              "uri": "/test",
-            },
-            Object {
-              "uri": "/test2",
-            },
-          ],
+          "attributeElements": Object {
+            "uris": Array [
+              "/test",
+              "/test2",
+            ],
+          },
           "displayForm": Object {
             "uri": "/displayForm",
           },
@@ -81,14 +79,12 @@ Object {
       },
       Object {
         "attributeFilter": Object {
-          "attributeElements": Array [
-            Object {
-              "uri": "/test3",
-            },
-            Object {
-              "uri": "/test4",
-            },
-          ],
+          "attributeElements": Object {
+            "uris": Array [
+              "/test3",
+              "/test4",
+            ],
+          },
           "displayForm": Object {
             "uri": "/displayForm34",
           },

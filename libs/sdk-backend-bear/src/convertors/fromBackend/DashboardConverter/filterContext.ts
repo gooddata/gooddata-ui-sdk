@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcFilterContext } from "@gooddata/api-model-bear";
 import { uriRef } from "@gooddata/sdk-model";
 import {
@@ -59,7 +59,7 @@ export const convertFilterContextItem = (
 
         const convertedFilterContextItem: IDashboardAttributeFilter = {
             attributeFilter: {
-                attributeElements: attributeElements.map(uriRef),
+                attributeElements: { uris: attributeElements },
                 displayForm: uriRef(displayForm),
                 negativeSelection,
                 localIdentifier,

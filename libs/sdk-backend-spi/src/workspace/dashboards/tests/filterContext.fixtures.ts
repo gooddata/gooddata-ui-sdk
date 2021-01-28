@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IDashboardAttributeFilter,
     IDashboardAttributeFilterReference,
@@ -12,7 +12,7 @@ import { uriRef } from "@gooddata/sdk-model";
 
 export const dashboardAttributeFilter: IDashboardAttributeFilter = {
     attributeFilter: {
-        attributeElements: [],
+        attributeElements: { uris: [] },
         displayForm: uriRef("/displayForm"),
         negativeSelection: false,
     },

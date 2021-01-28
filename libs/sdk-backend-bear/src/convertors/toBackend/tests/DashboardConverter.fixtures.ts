@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IDashboard,
     IDashboardLayoutColumn,
@@ -27,7 +27,7 @@ export const dashboardFilterContext: IFilterContext = {
     filters: [
         {
             attributeFilter: {
-                attributeElements: [{ identifier: "attrId", uri: "/gdc/md/attrId" }],
+                attributeElements: { uris: ["/gdc/md/attrId"] },
                 displayForm: {
                     uri: "/gdc/md/displayForm",
                 },
@@ -53,7 +53,7 @@ export const dashboardTempFilterContext: ITempFilterContext = {
     filters: [
         {
             attributeFilter: {
-                attributeElements: [{ identifier: "attrId", uri: "/gdc/md/attrId" }],
+                attributeElements: { uris: ["/gdc/md/attrId"] },
                 displayForm: {
                     uri: "/gdc/md/displayForm",
                 },

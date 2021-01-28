@@ -44,6 +44,7 @@ import {
     IDashboardLayoutRow,
     ResponsiveScreenType,
     IDashboardLayout,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import {
     GdcDashboardLayout,
@@ -55,7 +56,7 @@ import {
     GdcFilterContext,
     GdcScheduledMail,
 } from "@gooddata/api-model-bear";
-import { ObjRef, isUriRef, objRefToString } from "@gooddata/sdk-model";
+import { ObjRef, isUriRef, objRefToString, isAttributeElementsByValue } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import isEmpty from "lodash/isEmpty";
@@ -210,7 +211,6 @@ export const convertFilterContextItem = (
             filterElementsBy = [],
         },
     } = filterContextItem;
-    const attributeElementsUris = attributeElements.map(refToUri);
     const displayFormUri = refToUri(displayForm);
 
     const convertedAttributeFilterParents = filterElementsBy.map((filterElementsByItem) => {
@@ -222,10 +222,16 @@ export const convertFilterContextItem = (
         };
     });
 
+    if (isAttributeElementsByValue(attributeElements)) {
+        throw new NotSupported(
+            "Bear backend does not support value attribute filters in analytical dashboards",
+        );
+    }
+
     const convertedAttributeFilter: GdcFilterContext.IAttributeFilter = {
         attributeFilter: {
             negativeSelection,
-            attributeElements: attributeElementsUris,
+            attributeElements: attributeElements.uris,
             displayForm: displayFormUri,
             localIdentifier,
             filterElementsBy: convertedAttributeFilterParents,
