@@ -4,7 +4,6 @@ import {
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
-    IWidgetAlert,
     IWidget,
     isWidget,
     IDashboardLayoutContent,
@@ -32,7 +31,6 @@ import { DashboardWidgetRenderer } from "./DashboardWidgetRenderer";
 
 interface IDashboardRendererProps {
     dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
@@ -51,7 +49,6 @@ interface IDashboardRendererProps {
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardViewLayout,
-    alerts,
     filters,
     filterContext,
     backend,
@@ -115,7 +112,6 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     insight,
                     ErrorComponent,
                     LoadingComponent,
-                    alerts,
                     drillableItems,
                     filters,
                     filterContext,

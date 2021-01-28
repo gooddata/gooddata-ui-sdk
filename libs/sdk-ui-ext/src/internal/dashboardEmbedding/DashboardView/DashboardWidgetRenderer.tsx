@@ -10,12 +10,12 @@ import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisual
 import { DashboardItem } from "../DashboardItem/DashboardItem";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardWidgetRenderProps } from "./types";
+import { useAlerts } from "./DashboardAlertsContext";
 
 export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (props) => {
     const {
         ErrorComponent,
         LoadingComponent,
-        alerts,
         backend,
         drillableItems,
         filters,
@@ -34,6 +34,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
             "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
         );
     }
+    const { alerts } = useAlerts();
 
     if (isWidget(widget)) {
         if (widget.type === "insight") {

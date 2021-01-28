@@ -230,7 +230,6 @@ export interface IDashboardViewProps {
  * @alpha
  */
 export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProps<IDashboardLayoutContent> & {
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
@@ -251,7 +250,6 @@ export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProp
  * @alpha
  */
 export type IDashboardWidgetRenderProps = {
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];

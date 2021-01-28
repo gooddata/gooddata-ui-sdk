@@ -44,6 +44,7 @@ import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 import { filterContextToFiltersForWidget } from "../../converters";
 import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
 import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
+import { useAlertDeleteHandler } from "./useAlertDeleteHandler";
 
 interface IKpiExecutorProps {
     kpiWidget: IWidgetDefinition;
@@ -128,6 +129,13 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 
+    const { alertDeletingStatus, deleteAlert } = useAlertDeleteHandler({
+        alert,
+        backend,
+        closeAlertDialog: () => setIsAlertDialogOpen(false),
+        workspace,
+    });
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -182,7 +190,6 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             kpiResult={kpiResult}
             renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
             kpiAlertResult={kpiAlertResult}
-            isAlertLoading={alertStatus === "loading"}
             canSetAlert // TODO
             alertExecutionError={
                 alertError ||
@@ -190,6 +197,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                 // (the problem is alerts on KPIs without dateDataset, their date filters are invalid and we have no idea what date dataset to put there)
                 (isAlertBroken ? new NoDataSdkError() : undefined)
             }
+            isAlertLoading={false /* alerts are always loaded at this point */}
+            isAlertExecutionLoading={alertStatus === "loading"}
             isAlertBroken={isAlertBroken}
             isAlertDialogOpen={isAlertDialogOpen}
             onAlertDialogOpenClick={() => setIsAlertDialogOpen(true)}
@@ -199,13 +208,15 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     dateFormat={userWorkspaceSettings.responsiveUiDateFormat}
                     userEmail="TODO@gooddata.com"
                     onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
-                    onAlertDialogDeleteClick={noop as any}
+                    onAlertDialogDeleteClick={deleteAlert}
                     onAlertDialogSaveClick={noop as any}
                     onAlertDialogUpdateClick={noop as any}
                     onApplyAlertFiltersClick={noop as any}
                     isAlertLoading={alertStatus === "loading"}
+                    alertDeletingStatus={alertDeletingStatus}
                 />
             )}
+            alertDeletingStatus={alertDeletingStatus}
 
             // TODO alert dialog
         >
