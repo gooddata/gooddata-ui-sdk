@@ -213,9 +213,9 @@ export class PluggableAreaChart extends PluggableBaseChart {
         const isAllowMoreThanOneViewByAttribute = !stacks.length && measures.length <= 1;
         const numOfAttributes = isAllowMoreThanOneViewByAttribute ? MAX_VIEW_COUNT : 1;
         let views: IBucketItem[] = removeDivergentDateItems(
-            getAllCategoriesAttributeItems(buckets).slice(0, numOfAttributes),
+            getAllCategoriesAttributeItems(buckets),
             mainDateItem,
-        );
+        ).slice(0, numOfAttributes);
         const hasDateItemInViewByBucket = views.some(isDateBucketItem);
 
         if (dateItems.length && !hasDateItemInViewByBucket) {

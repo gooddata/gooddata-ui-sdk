@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import forEach from "lodash/forEach";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
@@ -15,6 +15,8 @@ import {
     getComparisonTypeFromFilters,
     keepOnlyMasterAndDerivedMeasuresOfType,
     filterOutIncompatibleArithmeticMeasures,
+    isComparisonAvailable,
+    removeAllDerivedMeasures,
 } from "./bucketHelper";
 import { isShowInPercentAllowed, isComparisonOverTimeAllowed } from "./bucketRules";
 
@@ -31,7 +33,9 @@ export function configureOverTimeComparison(
     extendedReferencePoint: IExtendedReferencePoint,
     weekFiltersEnabled: boolean,
 ): IExtendedReferencePoint {
-    const { buckets, filters, uiConfig } = extendedReferencePoint;
+    let newExtendedReferencePoint = cloneDeep(extendedReferencePoint);
+
+    const { buckets, filters, uiConfig } = newExtendedReferencePoint;
     const { supportedOverTimeComparisonTypes } = uiConfig;
 
     const appliedComparisonType = getComparisonTypeFromFilters(filters);
@@ -66,7 +70,11 @@ export function configureOverTimeComparison(
         bucket.items = newItems;
     });
 
-    return extendedReferencePoint;
+    if (!isComparisonAvailable(buckets, filters)) {
+        newExtendedReferencePoint = removeAllDerivedMeasures(newExtendedReferencePoint);
+    }
+
+    return newExtendedReferencePoint;
 }
 
 function removeShowInPercent(measure: IBucketItem) {

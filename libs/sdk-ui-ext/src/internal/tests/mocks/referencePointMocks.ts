@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IReferencePoint,
     IBucketItem,
@@ -12,6 +12,9 @@ import {
 } from "../../interfaces/Visualization";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { ColumnWidthItem } from "@gooddata/sdk-ui-pivot";
+import { ObjRef, uriRef } from "@gooddata/sdk-model";
+
+export const dateDatasetRef: ObjRef = uriRef("data.dataset.1");
 
 export const masterMeasureItems: IBucketItem[] = [
     {
@@ -268,6 +271,9 @@ export const samePeriodPrevYearFiltersBucket: IFilters = {
                 },
             ],
             aggregation: null,
+            dateDataset: {
+                ref: dateDatasetRef,
+            },
         },
     ],
 };
@@ -489,6 +495,20 @@ export const overTimeComparisonDateItem: IBucketItem = {
     localIdentifier: "2fb4a818526f4ca18c926b1a11adc859",
     filters: [dateFilterSamePeriodPreviousYear],
     attribute: "attr.datedataset",
+    dateDataset: {
+        ref: dateDatasetRef,
+    },
+};
+
+export const dateItemWithDateDataset: IBucketItem = {
+    localIdentifier: "a1",
+    type: "date",
+    attribute: "attr.datedataset",
+    aggregation: null,
+    showInPercent: null,
+    dateDataset: {
+        ref: dateDatasetRef,
+    },
 };
 
 const defaultSortItem = {
@@ -713,7 +733,7 @@ export const samePeriodPreviousYearRefPoint: IReferencePoint = {
         },
         {
             localIdentifier: "view",
-            items: [],
+            items: [dateItemWithDateDataset],
         },
         {
             localIdentifier: "stack",
@@ -1747,6 +1767,64 @@ export const dateAttributeOnRowsAndColumnsReferencePoint: IReferencePoint = {
                     localIdentifier: "date2",
                 },
             ],
+        },
+    ],
+    filters: {
+        localIdentifier: "filters",
+        items: [],
+    },
+};
+
+export const dateAttributesOnRowsReferencePoint: IReferencePoint = {
+    buckets: [
+        {
+            localIdentifier: "measures",
+            items: masterMeasureItems.slice(0, 1),
+        },
+        {
+            localIdentifier: "attribute",
+            items: [
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "created",
+                        },
+                    },
+                    localIdentifier: "date1",
+                },
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "closed",
+                        },
+                    },
+                    localIdentifier: "date2",
+                },
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "snapshot",
+                        },
+                    },
+                    localIdentifier: "date3",
+                },
+                {
+                    ...dateItem,
+                    dateDataset: {
+                        ref: {
+                            uri: "created",
+                        },
+                    },
+                    localIdentifier: "date4",
+                },
+            ],
+        },
+        {
+            localIdentifier: "columns",
+            items: [],
         },
     ],
     filters: {

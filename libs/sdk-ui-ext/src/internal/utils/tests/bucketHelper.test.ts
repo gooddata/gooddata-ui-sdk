@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
 import { IBucket } from "@gooddata/sdk-model";
 import { BucketNames, DefaultLocale, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
-import { ATTRIBUTE, METRIC } from "../../constants/bucket";
+import { ATTRIBUTE, METRIC, DATE } from "../../constants/bucket";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig";
 import {
     IBucketItem,
@@ -11,6 +11,8 @@ import {
     IExtendedReferencePoint,
     IFilters,
     IUiConfig,
+    DATE_DATASET_ATTRIBUTE,
+    IFiltersBucketItem,
 } from "../../interfaces/Visualization";
 import * as referencePointMocks from "../../tests/mocks/referencePointMocks";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks";
@@ -48,6 +50,7 @@ import {
     sanitizeFilters,
     setBucketTitles,
     transformMeasureBuckets,
+    isComparisonAvailable,
 } from "../bucketHelper";
 import { createInternalIntl } from "../internalIntlProvider";
 
@@ -2770,4 +2773,92 @@ describe("transformMeasureBuckets", () => {
             expect(transformMeasureBuckets(measureBucketsLocalIdentifiers, buckets)).toEqual(expectedValue);
         },
     );
+});
+
+describe("isComparisonAvailable", () => {
+    const dateFilterBucketItem: IFiltersBucketItem = {
+        attribute: DATE_DATASET_ATTRIBUTE,
+        localIdentifier: "f1",
+        filters: [referencePointMocks.dateFilter],
+        dateDataset: {
+            ref: referencePointMocks.dateDatasetRef,
+        },
+    };
+    const referencePoint: IExtendedReferencePoint = {
+        buckets: [
+            {
+                localIdentifier: "view",
+                items: [
+                    {
+                        localIdentifier: "date",
+                        type: DATE,
+                        attribute: DATE_DATASET_ATTRIBUTE,
+                        dateDataset: {
+                            ref: referencePointMocks.dateDatasetRef,
+                        },
+                    },
+                ],
+            },
+        ],
+        filters: {
+            localIdentifier: "filters",
+            items: [dateFilterBucketItem],
+        },
+        uiConfig: DEFAULT_BASE_CHART_UICONFIG,
+    };
+
+    it("should return 'true' in case that date filter has the same date dataset as one of date bucket items", () => {
+        expect(isComparisonAvailable(referencePoint.buckets, referencePoint.filters)).toBe(true);
+    });
+
+    it("should return 'false' in case that date filter have different date dataset than date bucket items", () => {
+        const newReferencePoint: IExtendedReferencePoint = {
+            ...referencePoint,
+            filters: {
+                localIdentifier: "filters",
+                items: [
+                    {
+                        attribute: DATE_DATASET_ATTRIBUTE,
+                        localIdentifier: "f1",
+                        filters: [referencePointMocks.dateFilter],
+                        dateDataset: {
+                            ref: {
+                                uri: "date.dataset.2",
+                            },
+                        },
+                    },
+                ],
+            },
+        };
+        expect(isComparisonAvailable(newReferencePoint.buckets, newReferencePoint.filters)).toBe(false);
+    });
+
+    it("should return 'false' in case that filters do not contain date filter", () => {
+        const newReferencePoint: IExtendedReferencePoint = {
+            ...referencePoint,
+            filters: {
+                localIdentifier: "filters",
+                items: [],
+            },
+        };
+        expect(isComparisonAvailable(newReferencePoint.buckets, newReferencePoint.filters)).toBe(false);
+    });
+
+    it("should return 'true' in case that buckets do not contain date item", () => {
+        const newReferencePoint: IExtendedReferencePoint = {
+            ...referencePoint,
+            buckets: [
+                {
+                    localIdentifier: "view",
+                    items: [
+                        {
+                            localIdentifier: "a1",
+                            type: ATTRIBUTE,
+                        },
+                    ],
+                },
+            ],
+        };
+        expect(isComparisonAvailable(newReferencePoint.buckets, newReferencePoint.filters)).toBe(true);
+    });
 });
