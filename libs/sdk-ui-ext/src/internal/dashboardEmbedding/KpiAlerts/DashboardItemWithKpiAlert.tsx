@@ -55,7 +55,7 @@ export interface IDashboardItemWithKpiAlertProps {
     isReadOnlyMode?: boolean;
 
     // Callbacks
-    onAlertDialogOpenClick?: () => void;
+    onAlertDialogOpenClick: () => void;
 
     contentClassName?: string;
     kpiClassName?: string;

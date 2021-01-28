@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
     IAnalyticalBackend,
     isNoDataError,
@@ -34,6 +34,7 @@ import {
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
+import noop from "lodash/noop";
 import { KpiRenderer } from "./KpiRenderer";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IKpiResult, IKpiAlertResult } from "../../types";
@@ -42,6 +43,7 @@ import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 import { filterContextToFiltersForWidget } from "../../converters";
 import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
+import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
 
 interface IKpiExecutorProps {
     kpiWidget: IWidgetDefinition;
@@ -124,6 +126,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         [onDrill, result],
     );
 
+    const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -187,6 +191,21 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                 (isAlertBroken ? new NoDataSdkError() : undefined)
             }
             isAlertBroken={isAlertBroken}
+            isAlertDialogOpen={isAlertDialogOpen}
+            onAlertDialogOpenClick={() => setIsAlertDialogOpen(true)}
+            renderAlertDialog={() => (
+                <KpiAlertDialog
+                    alert={alert}
+                    dateFormat={userWorkspaceSettings.responsiveUiDateFormat}
+                    userEmail="TODO@gooddata.com"
+                    onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
+                    onAlertDialogDeleteClick={noop as any}
+                    onAlertDialogSaveClick={noop as any}
+                    onAlertDialogUpdateClick={noop as any}
+                    onApplyAlertFiltersClick={noop as any}
+                    isAlertLoading={alertStatus === "loading"}
+                />
+            )}
 
             // TODO alert dialog
         >
