@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { FilterContextItem, IFilterContext, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
-import { idRef, uriRef } from "@gooddata/sdk-model";
+import { idRef } from "@gooddata/sdk-model";
 
 import { filterContextToFiltersForWidget } from "../converters";
 
@@ -34,7 +34,7 @@ describe("filterContextToFiltersForWidget", () => {
             getFilterContext([
                 {
                     attributeFilter: {
-                        attributeElements: [idRef("foo"), idRef("bar")],
+                        attributeElements: { values: ["foo", "bar"] },
                         displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
                         negativeSelection: false,
                     },
@@ -46,7 +46,7 @@ describe("filterContextToFiltersForWidget", () => {
             getFilterContext([
                 {
                     attributeFilter: {
-                        attributeElements: [uriRef("foo"), uriRef("bar")],
+                        attributeElements: { uris: ["foo", "bar"] },
                         displayForm: ReferenceLdm.Account.Name.attribute.displayForm,
                         negativeSelection: true,
                     },

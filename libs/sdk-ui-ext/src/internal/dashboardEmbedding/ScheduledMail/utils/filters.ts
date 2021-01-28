@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     NotSupported,
     FilterContextItem,
@@ -10,15 +10,17 @@ import {
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isNegativeAttributeFilter,
-    isPositiveAttributeFilter,
     isAttributeElementsByRef,
-    uriRef,
+    filterAttributeElements,
+    filterObjRef,
+    isAttributeFilter,
 } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "../../DashboardView/types";
 
 export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): FilterContextItem => {
-    if (isNegativeAttributeFilter(filter)) {
-        if (!isAttributeElementsByRef(filter.negativeAttributeFilter.notIn)) {
+    if (isAttributeFilter(filter)) {
+        const attributeElements = filterAttributeElements(filter);
+        if (!isAttributeElementsByRef(attributeElements)) {
             // For attributes with a lot of elements, this transformation can be very expensive.
             // Let's enforce user to provide element uris by himself.
             throw new NotSupported(
@@ -27,26 +29,9 @@ export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): Fi
         }
         const filterContextItem: IDashboardAttributeFilter = {
             attributeFilter: {
-                negativeSelection: false,
-                displayForm: filter.negativeAttributeFilter.displayForm,
-                attributeElements: filter.negativeAttributeFilter.notIn.uris.map(uriRef),
-            },
-        };
-
-        return filterContextItem;
-    } else if (isPositiveAttributeFilter(filter)) {
-        if (!isAttributeElementsByRef(filter.positiveAttributeFilter.in)) {
-            // For attributes with a lot of elements, this transformation can be very expensive.
-            // Let's enforce user to provide element uris by himself.
-            throw new NotSupported(
-                "Attribute filter with text values is not supported. Please provide element uris instead.",
-            );
-        }
-        const filterContextItem: IDashboardAttributeFilter = {
-            attributeFilter: {
-                negativeSelection: false,
-                displayForm: filter.positiveAttributeFilter.displayForm,
-                attributeElements: filter.positiveAttributeFilter.in.uris.map(uriRef),
+                negativeSelection: isNegativeAttributeFilter(filter),
+                displayForm: filterObjRef(filter),
+                attributeElements,
             },
         };
 

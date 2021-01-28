@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     IFilterContext,
     isDashboardAttributeFilter,
@@ -8,13 +8,9 @@ import {
 import {
     IFilter,
     newNegativeAttributeFilter,
-    isUriRef,
-    objRefToString,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newAbsoluteDateFilter,
-    IAttributeElements,
-    ObjRef,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
 
@@ -38,12 +34,12 @@ export function filterContextToFiltersForWidget(
             if (filter.attributeFilter.negativeSelection) {
                 return newNegativeAttributeFilter(
                     filter.attributeFilter.displayForm,
-                    filterContextAttributeElementsToElements(filter.attributeFilter.attributeElements),
+                    filter.attributeFilter.attributeElements,
                 );
             } else {
                 return newPositiveAttributeFilter(
                     filter.attributeFilter.displayForm,
-                    filterContextAttributeElementsToElements(filter.attributeFilter.attributeElements),
+                    filter.attributeFilter.attributeElements,
                 );
             }
         } else {
@@ -67,12 +63,4 @@ export function filterContextToFiltersForWidget(
 
 function numberOrStringToNumber(input: number | string): number {
     return isString(input) ? Number.parseInt(input) : input;
-}
-
-function filterContextAttributeElementsToElements(attributeElements: ObjRef[]): IAttributeElements {
-    return attributeElements.length
-        ? isUriRef(attributeElements[0])
-            ? { uris: attributeElements.map(objRefToString) }
-            : { values: attributeElements.map(objRefToString) }
-        : { values: [] };
 }
