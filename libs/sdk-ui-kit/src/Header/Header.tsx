@@ -73,6 +73,7 @@ export interface IAppHeaderProps {
     headerColor?: string;
     headerTextColor?: string;
     activeColor?: string;
+    redirectUrl?: string;
 
     userName: string;
 
@@ -369,6 +370,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         items={this.props.helpMenuItems}
                         disableDropdown={this.props.disableHelpDropdown}
                         onHelpClicked={this.props.onHelpClick}
+                        redirectUrl={this.props.redirectUrl}
                     />
                 )}
 

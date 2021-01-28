@@ -381,6 +381,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
+    redirectUrl?: string;
+    // (undocumented)
     userName: string;
     // (undocumented)
     workspacePicker: React_2.ReactNode;

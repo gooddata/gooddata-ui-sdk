@@ -52,7 +52,7 @@
     },
     "dependencies": {
         "@formatjs/intl-pluralrules": "~1.3.7",
-        "@gooddata/goodstrap": "^70.2.0",
+        "@gooddata/goodstrap": "70.2.1-alpha-tulean-master-2021-01-28T14-45-54-566Z",
         "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.55",
         "@gooddata/sdk-model": "^8.2.0-alpha.55",
