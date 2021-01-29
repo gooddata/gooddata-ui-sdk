@@ -37,6 +37,7 @@ import compact from "lodash/compact";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
 import noop from "lodash/noop";
+import round from "lodash/round";
 import { KpiRenderer } from "./KpiRenderer";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IKpiResult, IKpiAlertResult } from "../../types";
@@ -51,6 +52,7 @@ import { useAlertSaveOrUpdateHandler } from "./alertManipulationHooks/useAlertSa
 import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 import { IUseAlertManipulationHandlerConfig } from "./alertManipulationHooks/types";
+import { isMetricFormatInPercent } from "../../utils/format";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -88,6 +90,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     workspace,
     separators,
     disableDrillUnderline,
+    intl,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
@@ -190,6 +193,12 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
           }
         : undefined;
 
+    const isThresholdRepresentingPercent = isMetricFormatInPercent(kpiResult.measureFormat);
+    const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
+    const thresholdPlaceholder = isThresholdRepresentingPercent
+        ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
+        : `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value}`; // TODO fix floating point multiply
+
     const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
     const isDrillable =
         kpiWidget.drills.length > 0 ||
@@ -260,12 +269,13 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}
                     alertSavingStatus={alertSavingStatus}
+                    filters={filters}
+                    isThresholdRepresentingPercent={isThresholdRepresentingPercent}
+                    thresholdPlaceholder={thresholdPlaceholder}
                 />
             )}
             alertDeletingStatus={alertDeletingStatus}
             alertSavingStatus={alertSavingStatus}
-
-            // TODO alert dialog
         >
             {({ clientWidth }) => (
                 <KpiRenderer
