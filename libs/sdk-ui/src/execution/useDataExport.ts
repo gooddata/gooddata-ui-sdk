@@ -1,7 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DependencyList } from "react";
 import { IExportConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
+    convertError,
     GoodDataSdkError,
     useCancelablePromise,
     UseCancelablePromiseCallbacks,
@@ -51,6 +52,9 @@ export function useDataExport(
                           .then((executionResult) => executionResult.export(exportConfig))
                           .then((exportResult) => {
                               return exportResult.uri;
+                          })
+                          .catch((error) => {
+                              throw convertError(error);
                           })
                 : null,
             onCancel,
