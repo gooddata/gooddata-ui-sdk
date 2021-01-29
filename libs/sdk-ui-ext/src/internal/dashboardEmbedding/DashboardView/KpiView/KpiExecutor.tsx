@@ -32,6 +32,7 @@ import {
     IDataSeries,
     NoDataSdkError,
     isNoDataSdkError,
+    DataViewFacade,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
@@ -39,7 +40,7 @@ import isNumber from "lodash/isNumber";
 import noop from "lodash/noop";
 import round from "lodash/round";
 import { KpiRenderer } from "./KpiRenderer";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 import { IKpiResult, IKpiAlertResult } from "../../types";
 import { DashboardItemWithKpiAlert } from "../../KpiAlerts/DashboardItemWithKpiAlert";
 import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
@@ -124,8 +125,6 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         [alert, alertExecution.fingerprint()],
     );
 
-    const userWorkspaceSettings = useUserWorkspaceSettings();
-
     const handleOnDrill = useCallback(
         (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
             if (!onDrill || !result) {
@@ -141,7 +140,6 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     );
 
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
-
     const closeAlertDialog = () => setIsAlertDialogOpen(false);
 
     const alertManipulationHandlerConfig: IUseAlertManipulationHandlerConfig = {
@@ -149,55 +147,31 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         workspace,
         closeAlertDialog,
     };
-
     const { alertDeletingStatus, deleteAlert } = useAlertDeleteHandler(alertManipulationHandlerConfig);
     const { alertSavingStatus, saveOrUpdateAlert } = useAlertSaveOrUpdateHandler(
         alertManipulationHandlerConfig,
     );
 
+    const userWorkspaceSettings = useUserWorkspaceSettings();
     const { result: currentUser } = useCurrentUser({ backend });
     const { result: permissions } = useUserWorkspacePermissions({ backend, workspace });
     const canSetAlert = permissions?.canCreateScheduledMail;
+
     const isReadonlyMode = false; // TODO we need to support proper read only mode for live examples with proxy
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
 
-    const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    const primarySeries = series?.firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
-
-    const kpiResult: IKpiResult | undefined = primarySeries
-        ? {
-              measureDescriptor: primarySeries.descriptor.measureDescriptor,
-              measureFormat: primarySeries.measureFormat(),
-              measureResult: getSeriesResult(primarySeries),
-              measureForComparisonResult: getSeriesResult(secondarySeries),
-          }
-        : undefined;
-
-    const alertSeries = alertResult?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    const kpiAlertResult: IKpiAlertResult | undefined = alertSeries
-        ? {
-              measureFormat: alertSeries.firstForMeasure(primaryMeasure).measureFormat(),
-              measureResult: getSeriesResult(alertSeries.firstForMeasure(primaryMeasure)),
-          }
-        : undefined;
-
-    const isThresholdRepresentingPercent = kpiResult
-        ? isMetricFormatInPercent(kpiResult.measureFormat)
-        : false;
-    const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
-    const thresholdPlaceholder = isThresholdRepresentingPercent
-        ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
-        : `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value}`; // TODO fix floating point multiply
+    const kpiResult = getKpiResult(result, primaryMeasure, secondaryMeasure, separators);
+    const kpiAlertResult = getKpiAlertResult(alertResult, primaryMeasure, separators);
+    const { isThresholdRepresentingPercent, thresholdPlaceholder } = getAlertThresholdInfo(kpiResult, intl);
 
     const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
     const isDrillable =
         status !== "error" &&
         (kpiWidget.drills.length > 0 ||
-            isSomeHeaderPredicateMatched(predicates, primarySeries.descriptor.measureDescriptor, result));
+            isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result));
 
     return (
         <DashboardItemWithKpiAlert
@@ -211,9 +185,14 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             canSetAlert={canSetAlert}
             isReadOnlyMode={isReadonlyMode}
             alertExecutionError={
-                alertError ||
-                // TODO get rid of this hack, detect broken alerts differently
-                // (the problem is alerts on KPIs without dateDataset, their date filters are invalid and we have no idea what date dataset to put there)
+                alertError ??
+                /*
+                 * if alert is broken, behave as if its execution yielded no data (which is true, we do not execute it)
+                 * context: the problem is alerts on KPIs without dateDataset, their date filters are invalid
+                 * and we have no idea what date dataset to put there hence it is sometimes impossible
+                 * to execute them (unlike KPI Dashboards, we do not have the guarantee that there is a date
+                 * filter in the filters)
+                 */
                 (isAlertBroken ? new NoDataSdkError() : undefined)
             }
             isAlertLoading={false /* alerts are always loaded at this point */}
@@ -260,8 +239,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                               };
                         saveOrUpdateAlert(toSave);
                     }}
-                    onAlertDialogUpdateClick={noop as any}
-                    onApplyAlertFiltersClick={noop as any}
+                    onAlertDialogUpdateClick={noop as any} // TODO implement
+                    onApplyAlertFiltersClick={noop as any} // TODO implement
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}
                     alertSavingStatus={alertSavingStatus}
@@ -312,4 +291,57 @@ function getSeriesResult(series: IDataSeries | undefined): number | null {
     }
 
     return Number.parseFloat(value);
+}
+
+function getKpiResult(
+    result: DataViewFacade | undefined,
+    primaryMeasure: IMeasure,
+    secondaryMeasure:
+        | IMeasure<IPoPMeasureDefinition>
+        | IMeasure<IPreviousPeriodMeasureDefinition>
+        | undefined,
+    separators: ISeparators,
+): IKpiResult | undefined {
+    const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
+    const primarySeries = series?.firstForMeasure(primaryMeasure);
+    const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
+
+    return primarySeries
+        ? {
+              measureDescriptor: primarySeries.descriptor.measureDescriptor,
+              measureFormat: primarySeries.measureFormat(),
+              measureResult: getSeriesResult(primarySeries),
+              measureForComparisonResult: getSeriesResult(secondarySeries),
+          }
+        : undefined;
+}
+
+function getKpiAlertResult(
+    result: DataViewFacade | undefined,
+    primaryMeasure: IMeasure,
+    separators: ISeparators,
+): IKpiAlertResult | undefined {
+    const alertSeries = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
+    return alertSeries
+        ? {
+              measureFormat: alertSeries.firstForMeasure(primaryMeasure).measureFormat(),
+              measureResult: getSeriesResult(alertSeries.firstForMeasure(primaryMeasure)),
+          }
+        : undefined;
+}
+
+function getAlertThresholdInfo(kpiResult: IKpiResult | undefined, intl: IntlShape) {
+    const isThresholdRepresentingPercent = kpiResult
+        ? isMetricFormatInPercent(kpiResult.measureFormat)
+        : false;
+
+    const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
+    const thresholdPlaceholder = isThresholdRepresentingPercent
+        ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
+        : `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value}`; // TODO fix floating point multiply
+
+    return {
+        isThresholdRepresentingPercent,
+        thresholdPlaceholder,
+    };
 }
