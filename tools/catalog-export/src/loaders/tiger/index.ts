@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import ora from "ora";
@@ -15,9 +15,8 @@ import { createTigerClient } from "./tigerClient";
  */
 async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
     try {
-        await tigerClient.workspaceModel.getEntities(
+        await tigerClient.workspaceModel.getEntitiesMetrics(
             {
-                entity: "metrics",
                 workspaceId: projectId,
             },
             {

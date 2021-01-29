@@ -1,7 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types";
-import { AttributeCollection, AttributesItem, DatasetsItem, ITigerClient } from "@gooddata/api-client-tiger";
+import {
+    JsonApiAttributeList,
+    JsonApiAttribute,
+    JsonApiDataset,
+    ITigerClient,
+} from "@gooddata/api-client-tiger";
 import {
     convertAttribute,
     createDatasetMap,
@@ -12,12 +17,12 @@ import {
 } from "./tigerCommon";
 
 type DatasetWithAttributes = {
-    dataset: DatasetsItem;
-    attributes: AttributesItem[];
+    dataset: JsonApiDataset;
+    attributes: JsonApiAttribute[];
 };
 
 function findDateDatasetsWithAttributes(
-    attributes: AttributeCollection,
+    attributes: JsonApiAttributeList,
     datasetsMap: DatasetMap,
 ): DatasetWithAttributes[] {
     const res: { [id: string]: DatasetWithAttributes } = {};
@@ -73,9 +78,8 @@ export async function loadDateDataSets(
     _projectId: string,
     tigerClient: ITigerClient,
 ): Promise<DateDataSet[]> {
-    const result = await tigerClient.workspaceModel.getEntities(
+    const result = await tigerClient.workspaceModel.getEntitiesAttributes(
         {
-            entity: "attributes",
             workspaceId: _projectId,
         },
         {
@@ -91,7 +95,7 @@ export async function loadDateDataSets(
     const labelsMap = createLabelMap(result.data.included);
     const datasetsMap = createDatasetMap(result.data.included);
 
-    const dateDatasets = findDateDatasetsWithAttributes(result.data as AttributeCollection, datasetsMap);
+    const dateDatasets = findDateDatasetsWithAttributes(result.data, datasetsMap);
 
     return convertToExportableFormat(dateDatasets, labelsMap);
 }

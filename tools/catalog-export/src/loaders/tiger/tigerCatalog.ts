@@ -1,14 +1,14 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
 import {
-    AttributeCollection,
-    FactCollection,
-    MetricCollection,
+    JsonApiAttributeList,
+    JsonApiFactList,
+    JsonApiMetricList,
     ITigerClient,
 } from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
-function convertMetrics(metrics: MetricCollection): Metric[] {
+function convertMetrics(metrics: JsonApiMetricList): Metric[] {
     return metrics.data.map((metric) => {
         return {
             metric: {
@@ -22,7 +22,7 @@ function convertMetrics(metrics: MetricCollection): Metric[] {
     });
 }
 
-function convertFacts(facts: FactCollection): Fact[] {
+function convertFacts(facts: JsonApiFactList): Fact[] {
     return facts.data.map((fact) => {
         return {
             fact: {
@@ -36,7 +36,7 @@ function convertFacts(facts: FactCollection): Fact[] {
     });
 }
 
-function convertAttributes(attributes: AttributeCollection): Attribute[] {
+function convertAttributes(attributes: JsonApiAttributeList): Attribute[] {
     const labels = createLabelMap(attributes.included);
 
     /*
@@ -58,27 +58,24 @@ function convertAttributes(attributes: AttributeCollection): Attribute[] {
  */
 export async function loadCatalog(_projectId: string, tigerClient: ITigerClient): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
-        tigerClient.workspaceModel.getEntities(
+        tigerClient.workspaceModel.getEntitiesMetrics(
             {
-                entity: "metrics",
                 workspaceId: _projectId,
             },
             {
                 headers: { Accept: "application/vnd.gooddata.api+json" },
             },
         ),
-        tigerClient.workspaceModel.getEntities(
+        tigerClient.workspaceModel.getEntitiesFacts(
             {
-                entity: "facts",
                 workspaceId: _projectId,
             },
             {
                 headers: { Accept: "application/vnd.gooddata.api+json" },
             },
         ),
-        tigerClient.workspaceModel.getEntities(
+        tigerClient.workspaceModel.getEntitiesAttributes(
             {
-                entity: "attributes",
                 workspaceId: _projectId,
             },
             {
@@ -93,8 +90,8 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
     ]);
 
     return {
-        metrics: convertMetrics(metricsResult.data as MetricCollection),
-        facts: convertFacts(factsResult.data as FactCollection),
-        attributes: convertAttributes(attributesResult.data as AttributeCollection),
+        metrics: convertMetrics(metricsResult.data),
+        facts: convertFacts(factsResult.data),
+        attributes: convertAttributes(attributesResult.data),
     };
 }
