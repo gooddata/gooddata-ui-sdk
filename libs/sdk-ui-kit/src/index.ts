@@ -20,6 +20,7 @@ export * from "./Messages";
 export * from "./Dialog";
 export * from "./Overlay";
 export * from "./ResponsiveText";
+export * from "./ShortenedText";
 export * from "./Typography";
 export * from "./LoadingDots";
 export * from "./CustomizableCheckmark";
