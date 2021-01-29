@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IHeaderMenuItem } from "./Header";
-import { isFreemiumEdition, shouldHidePPExperience } from "../utils/featureFlags";
+import { isFreemiumEdition, shouldEnableNewNavigation, shouldHidePPExperience } from "../utils/featureFlags";
 
 /**
  * @internal
@@ -13,12 +13,20 @@ export function generateHeaderMenuItemsGroups(
     dashboardId?: string,
     tabId?: string,
     hasNoDataSet?: boolean,
+    hasAnalyticalDashboards?: boolean,
+    showKDTab?: boolean,
+    showADTab?: boolean,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
     }
 
-    const { enableCsvUploader, enableDataSection } = featureFlags;
+    const {
+        enableCsvUploader,
+        enableDataSection,
+        enableAnalyticalDashboards,
+        analyticalDesigner,
+    } = featureFlags;
 
     const {
         canUploadNonProductionCSV,
@@ -28,12 +36,15 @@ export function generateHeaderMenuItemsGroups(
         canManageProject,
         canInitData,
         canRefreshData,
+        canCreateAnalyticalDashboard,
+        canCreateVisualization,
     } = workspacePermissions;
 
     const menuItemsGroups: IHeaderMenuItem[][] = [];
 
     const shouldHidePixelPerfectExperience = shouldHidePPExperience(featureFlags);
     const isFreemiumCustomer = isFreemiumEdition(featureFlags.platformEdition.toString());
+    const enableNewNavigation = shouldEnableNewNavigation(featureFlags);
 
     // PIXEL PERFECT MENU ITEMS
     if (!shouldHidePixelPerfectExperience) {
@@ -64,7 +75,16 @@ export function generateHeaderMenuItemsGroups(
 
     // INSIGHTS MENU ITEMS
     const insightItemsGroup = [];
-
+    const kpiDashboardsItem = {
+        key: enableNewNavigation ? "gs.header.kpis.new" : "gs.header.kpis",
+        className: "s-menu-kpis",
+        href: `/dashboards/#/project/${workspaceId}`,
+    };
+    const analyticalDesignerItem = {
+        key: enableNewNavigation ? "gs.header.analyze.new" : "gs.header.analyze",
+        className: "s-menu-analyze",
+        href: `/analyze/#/${workspaceId}/reportId/edit`,
+    };
     const loadCsvItem = {
         key: "gs.header.load",
         className: "s-menu-load",
@@ -79,13 +99,23 @@ export function generateHeaderMenuItemsGroups(
         className: "s-menu-data",
         href: dataItemLink,
     };
-
+    const showKpiDashboardsItem =
+        showKDTab ||
+        hasAnalyticalDashboards ||
+        (canCreateAnalyticalDashboard === true && enableAnalyticalDashboards);
+    const showAnalyticalDesignerItem = showADTab || (canCreateVisualization === true && analyticalDesigner);
     const canAccessLoadCsvPage = canUploadNonProductionCSV === true && enableCsvUploader;
     const showLoadCsvItem = enableDataSection
         ? !isFreemiumCustomer && canAccessLoadCsvPage
         : canAccessLoadCsvPage;
     const showDataItem = enableDataSection && isFreemiumCustomer && (canInitData || canRefreshData);
 
+    if (showKpiDashboardsItem) {
+        insightItemsGroup.push(kpiDashboardsItem);
+    }
+    if (showAnalyticalDesignerItem) {
+        insightItemsGroup.push(analyticalDesignerItem);
+    }
     if (showLoadCsvItem) {
         insightItemsGroup.push(loadCsvItem);
     }

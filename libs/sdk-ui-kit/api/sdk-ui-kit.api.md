@@ -293,7 +293,7 @@ workspaceId?: string): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, hasAnalyticalDashboards?: boolean, showKDTab?: boolean, showADTab?: boolean): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
