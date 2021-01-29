@@ -2,7 +2,6 @@
 import React, { useCallback, useState } from "react";
 import {
     IAnalyticalBackend,
-    isNoDataError,
     IWidgetAlert,
     ISeparators,
     IWidgetDefinition,
@@ -32,6 +31,7 @@ import {
     createNumberJsFormatter,
     IDataSeries,
     NoDataSdkError,
+    isNoDataSdkError,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
@@ -164,33 +164,18 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         return <LoadingComponent />;
     }
 
-    if (status === "error") {
-        return isNoDataError(error) ? (
-            <KpiRenderer
-                kpi={kpiWidget}
-                kpiResult={null}
-                filters={filters}
-                disableDrillUnderline={disableDrillUnderline}
-                isDrillable={false}
-                onDrill={onDrill && handleOnDrill}
-                clientWidth={undefined} // TODO get from alert wrapper
-                separators={separators}
-            />
-        ) : (
-            <ErrorComponent message={error.message} />
-        );
-    }
+    const series = result?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
+    const primarySeries = series?.firstForMeasure(primaryMeasure);
+    const secondarySeries = secondaryMeasure ? series?.firstForMeasure(secondaryMeasure) : undefined;
 
-    const series = result.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
-    const primarySeries = series.firstForMeasure(primaryMeasure);
-    const secondarySeries = secondaryMeasure ? series.firstForMeasure(secondaryMeasure) : undefined;
-
-    const kpiResult: IKpiResult = {
-        measureDescriptor: primarySeries.descriptor.measureDescriptor,
-        measureFormat: primarySeries.measureFormat(),
-        measureResult: getSeriesResult(primarySeries),
-        measureForComparisonResult: getSeriesResult(secondarySeries),
-    };
+    const kpiResult: IKpiResult | undefined = primarySeries
+        ? {
+              measureDescriptor: primarySeries.descriptor.measureDescriptor,
+              measureFormat: primarySeries.measureFormat(),
+              measureResult: getSeriesResult(primarySeries),
+              measureForComparisonResult: getSeriesResult(secondarySeries),
+          }
+        : undefined;
 
     const alertSeries = alertResult?.data({ valueFormatter: createNumberJsFormatter(separators) }).series();
     const kpiAlertResult: IKpiAlertResult | undefined = alertSeries
@@ -200,7 +185,9 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
           }
         : undefined;
 
-    const isThresholdRepresentingPercent = isMetricFormatInPercent(kpiResult.measureFormat);
+    const isThresholdRepresentingPercent = kpiResult
+        ? isMetricFormatInPercent(kpiResult.measureFormat)
+        : false;
     const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?
     const thresholdPlaceholder = isThresholdRepresentingPercent
         ? `${intl.formatMessage({ id: "kpi.alertBox.example" })} ${value * 100}`
@@ -208,8 +195,9 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     const predicates = drillableItems ? convertDrillableItemsToPredicates(drillableItems) : [];
     const isDrillable =
-        kpiWidget.drills.length > 0 ||
-        isSomeHeaderPredicateMatched(predicates, primarySeries.descriptor.measureDescriptor, result);
+        status !== "error" &&
+        (kpiWidget.drills.length > 0 ||
+            isSomeHeaderPredicateMatched(predicates, primarySeries.descriptor.measureDescriptor, result));
 
     return (
         <DashboardItemWithKpiAlert
@@ -258,7 +246,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                                   threshold,
                                   whenTriggered,
                                   isTriggered: evaluateTriggered(
-                                      kpiResult.measureResult,
+                                      kpiResult?.measureResult ?? 0,
                                       threshold,
                                       whenTriggered,
                                   ),
@@ -285,18 +273,23 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             alertDeletingStatus={alertDeletingStatus}
             alertSavingStatus={alertSavingStatus}
         >
-            {({ clientWidth }) => (
-                <KpiRenderer
-                    kpi={kpiWidget}
-                    kpiResult={kpiResult}
-                    filters={filters}
-                    disableDrillUnderline={disableDrillUnderline}
-                    isDrillable={isDrillable}
-                    onDrill={onDrill && handleOnDrill}
-                    clientWidth={clientWidth}
-                    separators={separators}
-                />
-            )}
+            {({ clientWidth }) => {
+                if (status === "error" && !isNoDataSdkError(error)) {
+                    return <ErrorComponent message={(error as Error).message} />;
+                }
+                return (
+                    <KpiRenderer
+                        kpi={kpiWidget}
+                        kpiResult={kpiResult}
+                        filters={filters}
+                        disableDrillUnderline={disableDrillUnderline}
+                        isDrillable={isDrillable}
+                        onDrill={onDrill && handleOnDrill}
+                        clientWidth={clientWidth}
+                        separators={separators}
+                    />
+                );
+            }}
         </DashboardItemWithKpiAlert>
     );
 };

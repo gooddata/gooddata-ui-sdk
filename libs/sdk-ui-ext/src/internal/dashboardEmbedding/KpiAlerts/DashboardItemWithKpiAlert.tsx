@@ -1,8 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { IUserWorkspaceSettings, IWidgetAlertDefinition, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
-import { ErrorCodes, GoodDataSdkError, isGoodDataSdkError } from "@gooddata/sdk-ui";
-// import { DashboardItemKpi } from "@gooddata/sdk-ui-ext/esm/internal";
+import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import React, { Component, MouseEvent } from "react";
@@ -240,8 +239,7 @@ export class DashboardItemWithKpiAlert extends Component<
 
     getClassNames(): { content: string; kpi: string } {
         const { kpiAlertResult } = this.props;
-        const isSdkError = isGoodDataSdkError(this.props.alertExecutionError);
-        const isNoData = isSdkError && this.props.alertExecutionError.message === ErrorCodes.NO_DATA;
+        const isNoData = isNoDataSdkError(this.props.alertExecutionError);
         const hasEvaluationResult = isNoData || kpiAlertResult?.measureResult !== undefined;
         const content = cx(this.props.contentClassName, {
             "is-alert-dialog": this.props.isAlertDialogOpen,
