@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceDashboardsService,
     IDashboard,
@@ -321,10 +321,16 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Alerts
     private createBearWidgetAlert = async (alert: IWidgetAlertDefinition) => {
-        const bearAlert = fromSdkModel.convertWidgetAlert(alert);
+        // make sure the alert has a non-empty title, otherwise the backend will throw
+        // the default is taken form the existing convention set by KPI Dashboards
+        const alertWithSanitizedName: IWidgetAlertDefinition = {
+            ...alert,
+            title: alert.title || "kpi alert", // must be a non empty string, hence the || and not ??
+        };
+        const bearAlert = fromSdkModel.convertWidgetAlert(alertWithSanitizedName);
         const createdBearAlert = await this.authCall((sdk) => sdk.md.createObject(this.workspace, bearAlert));
         const convertedAlertFilterContext = fromSdkModel.convertFilterContext(
-            alert.filterContext as IFilterContext, // Filter context is already saved at this point
+            alertWithSanitizedName.filterContext as IFilterContext, // Filter context is already saved at this point
         );
 
         return toSdkModel.convertAlert(createdBearAlert, convertedAlertFilterContext) as IWidgetAlert;
