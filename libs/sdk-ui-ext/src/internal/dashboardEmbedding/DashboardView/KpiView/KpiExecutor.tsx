@@ -53,6 +53,8 @@ import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 import { IUseAlertManipulationHandlerConfig } from "./alertManipulationHooks/types";
 import { isMetricFormatInPercent } from "../../utils/format";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
+import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -153,6 +155,11 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         alertManipulationHandlerConfig,
     );
 
+    const { result: currentUser } = useCurrentUser({ backend });
+    const { result: permissions } = useUserWorkspacePermissions({ backend, workspace });
+    const canSetAlert = permissions?.canCreateScheduledMail;
+    const isReadonlyMode = false; // TODO we need to support proper read only mode for live examples with proxy
+
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -213,7 +220,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             kpiResult={kpiResult}
             renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
             kpiAlertResult={kpiAlertResult}
-            canSetAlert // TODO
+            canSetAlert={canSetAlert}
+            isReadOnlyMode={isReadonlyMode}
             alertExecutionError={
                 alertError ||
                 // TODO get rid of this hack, detect broken alerts differently
@@ -229,7 +237,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                 <KpiAlertDialog
                     alert={alert}
                     dateFormat={userWorkspaceSettings.responsiveUiDateFormat}
-                    userEmail="TODO@gooddata.com"
+                    userEmail={currentUser?.email}
                     onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
                     onAlertDialogDeleteClick={() => deleteAlert(alert)}
                     onAlertDialogSaveClick={(threshold, whenTriggered) => {
