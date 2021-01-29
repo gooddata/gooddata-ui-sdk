@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -13,11 +13,12 @@ import invariant from "ts-invariant";
 /**
  * @beta
  */
-export interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbacks<void, GoodDataSdkError> {
+export interface IUseSaveWidgetAlertConfig
+    extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
     /**
-     * Widget alert to delete.
+     * Widget alert to save.
      */
-    widgetAlert?: IWidgetAlert;
+    widgetAlert?: IWidgetAlertDefinition;
 
     /**
      * Backend to work with.
@@ -37,11 +38,11 @@ export interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbac
 }
 
 /**
- * Hook allowing to delete a widget alert
+ * Hook allowing to save a widget alert
  * @param config - configuration of the hook
  * @beta
  */
-export function useDeleteWidgetAlert({
+export function useSaveWidgetAlert({
     widgetAlert,
     backend,
     workspace,
@@ -50,22 +51,22 @@ export function useDeleteWidgetAlert({
     onLoading,
     onPending,
     onSuccess,
-}: IUseDeleteWidgetAlertConfig): UseCancelablePromiseState<void, any> {
+}: IUseSaveWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useDeleteKpiAlert must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useSaveKpiAlert must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useDeleteKpiAlert must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useSaveKpiAlert must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
     const promise = widgetAlert
-        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().deleteWidgetAlert(widgetAlert.ref)
+        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().createWidgetAlert(widgetAlert)
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [

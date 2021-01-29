@@ -30,6 +30,7 @@ import { IDashboardWidgetRenderer, IDashboardWidgetRenderProps } from "./types";
 import { DashboardWidgetRenderer } from "./DashboardWidgetRenderer";
 
 interface IDashboardRendererProps {
+    dashboardRef: ObjRef;
     dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
     backend?: IAnalyticalBackend;
     workspace?: string;
@@ -63,6 +64,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     getInsightByRef,
     widgetRenderer,
     areSectionHeadersEnabled,
+    dashboardRef,
 }) {
     const isThemeLoading = useThemeIsLoading();
 
@@ -110,6 +112,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     ...computedRenderProps,
                     widgetClass,
                     insight,
+                    dashboardRef,
                     ErrorComponent,
                     LoadingComponent,
                     drillableItems,

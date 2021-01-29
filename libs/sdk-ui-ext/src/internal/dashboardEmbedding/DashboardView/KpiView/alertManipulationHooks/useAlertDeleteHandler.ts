@@ -1,44 +1,42 @@
 // (C) 2021 GoodData Corporation
 import { useState } from "react";
 import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { useDeleteKpiAlert } from "../../hooks/useDeleteWidgetAlert";
-import { KpiAlertOperationStatus } from "../../types";
-import { useAlerts } from "../DashboardAlertsContext";
+import { useDeleteWidgetAlert } from "../../../hooks/useDeleteWidgetAlert";
+import { KpiAlertOperationStatus } from "../../../types";
+import { useAlerts } from "../../DashboardAlertsContext";
 
 interface IUseAlertDeleteHandlerConfig {
-    alert: IWidgetAlert;
     closeAlertDialog: () => void;
     backend: IAnalyticalBackend;
     workspace: string;
 }
 
 export function useAlertDeleteHandler({
-    alert,
     closeAlertDialog,
     backend,
     workspace,
 }: IUseAlertDeleteHandlerConfig): {
     alertDeletingStatus: KpiAlertOperationStatus;
-    deleteAlert: () => void;
+    deleteAlert: (alert: IWidgetAlert) => void;
 } {
     const { removeAlert } = useAlerts();
-    const [shouldDeleteAlert, setShouldDeleteAlert] = useState(false);
-    const deleteAlert = () => setShouldDeleteAlert(true);
+    const [alertToDelete, setAlertToDelete] = useState<IWidgetAlert | undefined>(undefined);
+    const deleteAlert = (alert: IWidgetAlert) => setAlertToDelete(alert);
     const [alertDeletingStatus, setAlertDeletingStatus] = useState<KpiAlertOperationStatus>("idle");
-    useDeleteKpiAlert({
+    useDeleteWidgetAlert({
         backend,
         workspace,
-        widgetAlert: shouldDeleteAlert ? alert : null,
+        widgetAlert: alertToDelete,
         onError: () => {
             setAlertDeletingStatus("error");
-            setShouldDeleteAlert(false);
+            setAlertToDelete(undefined);
         },
         onLoading: () => setAlertDeletingStatus("inProgress"),
         onSuccess: () => {
             setAlertDeletingStatus("idle");
-            setShouldDeleteAlert(false);
+            removeAlert(alertToDelete);
+            setAlertToDelete(undefined);
             closeAlertDialog();
-            removeAlert(alert);
         },
     });
 

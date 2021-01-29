@@ -27,6 +27,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
         widgetClass,
         insight,
         widget,
+        dashboardRef,
     } = props;
 
     if (!isDashboardLayoutContent) {
@@ -75,6 +76,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
         return (
             <DashboardItem className="type-kpi" screen={screen}>
                 <KpiView
+                    dashboardRef={dashboardRef}
                     kpiWidget={widget}
                     filterContext={filterContext}
                     alert={relevantAlert}

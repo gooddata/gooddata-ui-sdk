@@ -12,6 +12,7 @@ import {
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import {
     useExecution,
@@ -44,9 +45,13 @@ import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 import { filterContextToFiltersForWidget } from "../../converters";
 import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
 import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
-import { useAlertDeleteHandler } from "./useAlertDeleteHandler";
+import { useAlertDeleteHandler } from "./alertManipulationHooks/useAlertDeleteHandler";
+import { useAlertSaveHandler } from "./alertManipulationHooks/useAlertSaveHandler";
+import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
+import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 
 interface IKpiExecutorProps {
+    dashboardRef: ObjRef;
     kpiWidget: IWidgetDefinition;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
@@ -68,6 +73,7 @@ interface IKpiExecutorProps {
  * @internal
  */
 export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
+    dashboardRef,
     kpiWidget,
     primaryMeasure,
     secondaryMeasure,
@@ -108,7 +114,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             execution: alert && !isAlertBroken ? alertExecution : null, // no need to execute broken alerts, the data is not shown anyway
             onError,
         },
-        [alertExecution.fingerprint()],
+        [alert, alertExecution.fingerprint()],
     );
 
     const userWorkspaceSettings = useUserWorkspaceSettings();
@@ -130,7 +136,12 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 
     const { alertDeletingStatus, deleteAlert } = useAlertDeleteHandler({
-        alert,
+        backend,
+        closeAlertDialog: () => setIsAlertDialogOpen(false),
+        workspace,
+    });
+
+    const { alertSavingStatus, saveAlert } = useAlertSaveHandler({
         backend,
         closeAlertDialog: () => setIsAlertDialogOpen(false),
         workspace,
@@ -208,15 +219,32 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     dateFormat={userWorkspaceSettings.responsiveUiDateFormat}
                     userEmail="TODO@gooddata.com"
                     onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
-                    onAlertDialogDeleteClick={deleteAlert}
-                    onAlertDialogSaveClick={noop as any}
+                    onAlertDialogDeleteClick={() => deleteAlert(alert)}
+                    onAlertDialogSaveClick={(threshold, whenTriggered) => {
+                        saveAlert({
+                            dashboard: dashboardRef,
+                            widget: kpiWidget.ref,
+                            threshold,
+                            whenTriggered,
+                            isTriggered: evaluateTriggered(kpiResult.measureResult, threshold, whenTriggered),
+                            filterContext: {
+                                title: "filterContext",
+                                description: "",
+                                filters: filters.map(dashboardFilterToFilterContextItem),
+                            },
+                            description: "",
+                            title: "",
+                        });
+                    }}
                     onAlertDialogUpdateClick={noop as any}
                     onApplyAlertFiltersClick={noop as any}
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}
+                    alertSavingStatus={alertSavingStatus}
                 />
             )}
             alertDeletingStatus={alertDeletingStatus}
+            alertSavingStatus={alertSavingStatus}
 
             // TODO alert dialog
         >

@@ -1,4 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2021 GoodData Corporation
+import { IWidgetAlertBase } from "@gooddata/sdk-backend-spi";
 import round from "lodash/round";
 
 function getNumberOfDecimalPlaces(num: number): number {
@@ -42,4 +43,26 @@ export function thresholdFromPercentToDecimal(threshold: number): number {
     return isNaN(threshold) // eslint-disable-line no-restricted-globals
         ? threshold
         : round(threshold / 100, numberOfWantedDecimalPlaces);
+}
+
+function sanitizeValue(value: number) {
+    return isNaN(value) ? 0 : value; // eslint-disable-line no-restricted-globals
+}
+
+export function evaluateTriggered(
+    kpiMeasureResult: number,
+    threshold: number,
+    when: IWidgetAlertBase["whenTriggered"],
+): boolean {
+    const sanitizedValue = sanitizeValue(kpiMeasureResult);
+    const sanitizedThreshold = sanitizeValue(threshold);
+
+    switch (when) {
+        case "aboveThreshold":
+            return sanitizedValue > sanitizedThreshold;
+        case "underThreshold":
+            return sanitizedValue < sanitizedThreshold;
+        default:
+            return false;
+    }
 }

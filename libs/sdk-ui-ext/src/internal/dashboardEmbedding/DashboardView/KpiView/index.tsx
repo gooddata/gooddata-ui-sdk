@@ -8,7 +8,7 @@ import {
     IWidget,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     IErrorProps,
     ILoadingProps,
@@ -26,6 +26,11 @@ import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig } from "../DashboardViewConfigContext";
 
 export interface IKpiViewProps {
+    /**
+     * Ref to the dashboard this KPI is part of.
+     */
+    dashboardRef: ObjRef;
+
     /**
      * The KPI to execute and display.
      */
@@ -93,6 +98,7 @@ export interface IKpiViewProps {
  * @internal
  */
 export const KpiView: React.FC<IKpiViewProps> = ({
+    dashboardRef,
     kpiWidget,
     alert,
     filters,
@@ -134,6 +140,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
 
     return (
         <KpiExecutor
+            dashboardRef={dashboardRef}
             kpiWidget={kpiWidget}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}

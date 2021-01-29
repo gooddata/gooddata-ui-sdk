@@ -15,7 +15,7 @@ import {
     filterObjRef,
     isAttributeFilter,
 } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../../DashboardView/types";
+import { IDashboardFilter } from "../DashboardView/types";
 
 export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): FilterContextItem => {
     if (isAttributeFilter(filter)) {

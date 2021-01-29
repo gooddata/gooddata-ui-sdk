@@ -21,7 +21,7 @@ import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange";
 import { kpiAlertDialogAlignPoints, kpiAlertDialogMobileAlignPoints } from "./alignPoints";
 import { IBrokenAlertFilter } from "./types";
 import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters";
-import { thresholdFromDecimalToPercent, thresholdFromPercentToDecimal } from "./utils/alertThresholdUtils";
+import { thresholdFromDecimalToPercent, thresholdFromPercentToDecimal } from "../utils/alertThresholdUtils";
 import { areKpiAlertFiltersSameAsDashboard } from "./utils/filterUtils";
 import { KpiAlertDialogWhenTriggeredPicker } from "./KpiAlertDialogWhenTriggeredPicker";
 
