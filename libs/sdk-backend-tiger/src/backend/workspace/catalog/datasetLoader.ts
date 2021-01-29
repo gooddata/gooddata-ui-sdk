@@ -1,13 +1,13 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
-    AttributeCollection,
-    AttributesItem,
-    DatasetsItem,
+    JsonApiAttributeList,
+    JsonApiDataset,
     ITigerClient,
-    LabelsItem,
-    RelationshipToOne,
-    SuccessIncluded,
+    JsonApiLinkage,
+    JsonApiLabelWithLinks,
+    JsonApiAttributeWithLinks,
+    JsonApiDatasetWithLinks,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import {
@@ -16,7 +16,7 @@ import {
     convertDateDataset,
 } from "../../../convertors/fromBackend/CatalogConverter";
 
-function lookupRelatedObject(included: SuccessIncluded[] | undefined, id: string, type: string) {
+function lookupRelatedObject(included: JsonApiLinkage[] | undefined, id: string, type: string) {
     if (!included) {
         return;
     }
@@ -25,32 +25,24 @@ function lookupRelatedObject(included: SuccessIncluded[] | undefined, id: string
 }
 
 function getAttributeLabels(
-    attribute: AttributesItem,
-    included: SuccessIncluded[] | undefined,
-): LabelsItem[] {
-    const labelsRefs = attribute.relationships?.labels?.data;
-    let labelsArray: RelationshipToOne[] = [];
-    if (Array.isArray(labelsRefs)) {
-        labelsArray = (labelsRefs as unknown) as RelationshipToOne[];
-    } else if (typeof labelsRefs === "object" && Object.keys(labelsRefs).length > 0) {
-        // FIXME else branch can be deleted when BE return always array according to types
-        // @ts-expect-error despite type, labelsRefs can be object
-        labelsArray.push({ id: labelsRefs.id, type: labelsRefs.type });
-    }
-    const allLabels: LabelsItem[] = labelsArray
+    attribute: JsonApiAttributeWithLinks,
+    included: JsonApiLinkage[] | undefined,
+): JsonApiLabelWithLinks[] {
+    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
+    const allLabels: JsonApiLabelWithLinks[] = labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
             if (!obj) {
                 return;
             }
-            return obj as LabelsItem;
+            return obj as JsonApiLabelWithLinks;
         })
-        .filter((obj): obj is LabelsItem => obj !== undefined);
+        .filter((obj): obj is JsonApiLabelWithLinks => obj !== undefined);
 
     return allLabels;
 }
 
-function isGeoLabel(label: LabelsItem): boolean {
+function isGeoLabel(label: JsonApiLabelWithLinks): boolean {
     /*
      * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
      *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
@@ -59,7 +51,7 @@ function isGeoLabel(label: LabelsItem): boolean {
     return label.id.search(/^.*\.geo__/) > -1;
 }
 
-function createNonDateAttributes(attributes: AttributeCollection): ICatalogAttribute[] {
+function createNonDateAttributes(attributes: JsonApiAttributeList): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
@@ -73,11 +65,14 @@ function createNonDateAttributes(attributes: AttributeCollection): ICatalogAttri
 }
 
 type DatasetWithAttributes = {
-    dataset: DatasetsItem;
-    attributes: AttributesItem[];
+    dataset: JsonApiDatasetWithLinks;
+    attributes: JsonApiAttributeWithLinks[];
 };
 
-function identifyDateDatasets(dateAttributes: AttributesItem[], included: SuccessIncluded[] | undefined) {
+function identifyDateDatasets(
+    dateAttributes: JsonApiAttributeWithLinks[],
+    included: JsonApiLinkage[] | undefined,
+) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
 
     dateAttributes.forEach((attribute) => {
@@ -85,7 +80,7 @@ function identifyDateDatasets(dateAttributes: AttributesItem[], included: Succes
         if (!ref) {
             return;
         }
-        const dataset = lookupRelatedObject(included, ref.id, ref.type) as DatasetsItem;
+        const dataset = lookupRelatedObject(included, ref.id, ref.type) as JsonApiDataset;
         if (!dataset) {
             return;
         }
@@ -103,7 +98,7 @@ function identifyDateDatasets(dateAttributes: AttributesItem[], included: Succes
     return Object.values(datasets);
 }
 
-function createDateDatasets(attributes: AttributeCollection): ICatalogDateDataset[] {
+function createDateDatasets(attributes: JsonApiAttributeList): ICatalogDateDataset[] {
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
@@ -124,9 +119,8 @@ export async function loadAttributesAndDateDatasets(
     workspaceId: string,
     includeTags: string[],
 ): Promise<CatalogItem[]> {
-    const attributesResponse = await sdk.workspaceModel.getEntities(
+    const attributesResponse = await sdk.workspaceModel.getEntitiesAttributes(
         {
-            entity: "attributes",
             workspaceId: workspaceId,
         },
         {
@@ -140,7 +134,7 @@ export async function loadAttributesAndDateDatasets(
         },
     );
 
-    const attributes = attributesResponse.data as AttributeCollection;
+    const attributes = attributesResponse.data;
     const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes);
     const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
 

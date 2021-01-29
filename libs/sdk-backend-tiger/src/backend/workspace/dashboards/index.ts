@@ -1,10 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import {
-    AnalyticalDashboard,
-    AnalyticalDashboardCollection,
-    FilterContext,
-    isVisualizationObjectsItem,
-} from "@gooddata/api-client-tiger";
+import { isVisualizationObjectsItem } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
     IDashboardDefinition,
@@ -43,17 +38,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     // Public methods
     public getDashboards = async (): Promise<IListedDashboard[]> => {
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.getEntities(
+            return sdk.workspaceModel.getEntitiesAnalyticalDashboards(
                 {
-                    entity: "analyticalDashboards",
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: defaultHeaders,
                 },
             );
         });
-        return convertAnalyticalDashboardToListItems(result.data as AnalyticalDashboardCollection);
+        return convertAnalyticalDashboardToListItems(result.data);
     };
 
     public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {
@@ -63,9 +57,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.getEntity(
+            return sdk.workspaceModel.getEntityAnalyticalDashboards(
                 {
-                    entity: "analyticalDashboards",
                     workspaceId: this.workspace,
                     id,
                 },
@@ -81,7 +74,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? filterContextByRef
             : getFilterContextFromIncluded(included);
 
-        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
+        return convertDashboard(result.data, filterContext);
     };
 
     public getDashboardWithReferences = async (
@@ -94,9 +87,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const id = await objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.getEntity(
+            return sdk.workspaceModel.getEntityAnalyticalDashboards(
                 {
-                    entity: "analyticalDashboards",
                     workspaceId: this.workspace,
                     id,
                 },
@@ -116,7 +108,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : getFilterContextFromIncluded(included);
 
         return {
-            dashboard: convertDashboard(result.data as AnalyticalDashboard, filterContext),
+            dashboard: convertDashboard(result.data, filterContext),
             references: {
                 insights,
             },
@@ -133,11 +125,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.createEntity(
+            return sdk.workspaceModel.createEntityAnalyticalDashboards(
                 {
-                    entity: "analyticalDashboards",
                     workspaceId: this.workspace,
-                    analyticsObject: {
+                    jsonApiAnalyticalDashboardDocument: {
                         data: {
                             id: uuidv4(),
                             type: "analyticalDashboard",
@@ -155,7 +146,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertDashboard(result.data as AnalyticalDashboard, filterContext);
+        return convertDashboard(result.data, filterContext);
     };
 
     public updateDashboard = async () => {
@@ -166,9 +157,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.workspaceModel.deleteEntity(
+            sdk.workspaceModel.deleteEntityAnalyticalDashboards(
                 {
-                    entity: "analyticalDashboards",
                     id: id,
                     workspaceId: this.workspace,
                 },
@@ -236,11 +226,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const tigerFilterContext = convertFilterContextToBackend(filterContext);
 
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.createEntity(
+            return sdk.workspaceModel.createEntityFilterContexts(
                 {
-                    entity: "filterContexts",
                     workspaceId: this.workspace,
-                    analyticsObject: {
+                    jsonApiFilterContextDocument: {
                         data: {
                             id: uuidv4(),
                             type: "filterContext",
@@ -258,15 +247,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertFilterContextFromBackend(result.data as FilterContext);
+        return convertFilterContextFromBackend(result.data);
     };
 
     private getFilterContext = async (filterContextRef: ObjRef) => {
         const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
         const result = await this.authCall((sdk) => {
-            return sdk.workspaceModel.getEntity(
+            return sdk.workspaceModel.getEntityFilterContexts(
                 {
-                    entity: "filterContexts",
                     workspaceId: this.workspace,
                     id: filterContextId,
                 },
@@ -276,6 +264,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
         });
 
-        return convertFilterContextFromBackend(result.data as FilterContext);
+        return convertFilterContextFromBackend(result.data);
     };
 }
