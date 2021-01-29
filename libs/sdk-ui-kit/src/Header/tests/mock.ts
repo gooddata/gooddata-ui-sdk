@@ -15,12 +15,14 @@ export const getAccountMenuFeatureFlagsMock = (
     enableCsvUploader: boolean,
     enableDataSection: boolean,
     hidePixelPerfectExperience: boolean,
+    analyticalDesigner: boolean,
     platformEdition: string,
 ): ISettings => {
     return {
         enableCsvUploader,
         enableDataSection,
         hidePixelPerfectExperience,
+        analyticalDesigner,
         platformEdition,
     };
 };

@@ -369,6 +369,19 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 }
 
+.anchor-tag-header-help {
+    color: #fff;
+    opacity: 0.8;
+
+    &:hover,
+    :active,
+    :focus {
+        color: #fff;
+        text-decoration: none;
+        opacity: 1;
+    }
+}
+
 .gd-header-account {
     &:hover {
         background: rgba(255, 255, 255, 0.3);

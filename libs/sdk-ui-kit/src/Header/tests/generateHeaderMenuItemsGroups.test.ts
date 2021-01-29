@@ -5,8 +5,9 @@ import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups"
 describe("generateHeaderMenuItemsGroups", () => {
     it("should return dashboards and report items if hidePixelPerfectExperience is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, false, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, true, false, true, "enterprise"),
             getWorkspacePermissionsMock(true, true),
+            true,
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",
@@ -27,6 +28,16 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/project/TestWorkspaceId",
+                    key: "gs.header.kpis",
+                },
+                {
+                    className: "s-menu-analyze",
+                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    key: "gs.header.analyze",
+                },
+                {
                     className: "s-menu-load",
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
@@ -44,8 +55,9 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return dashboards and report item if hidePixelPerfectExperience is true", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, true, "enterprise"),
+            getAccountMenuFeatureFlagsMock(true, true, true, false, "enterprise"),
             getWorkspacePermissionsMock(true, true),
+            false,
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",
@@ -71,8 +83,9 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item if platformEdition is free and hasNoDataSet is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, true, true, false, "free"),
             getWorkspacePermissionsMock(true, true),
+            false,
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",
@@ -98,8 +111,9 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should return data item with datasource href if platformEdition is free and hasNoDataSet is true", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, true, true, false, "free"),
             getWorkspacePermissionsMock(true, true),
+            true,
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",
@@ -107,6 +121,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/project/TestWorkspaceId",
+                    key: "gs.header.kpis",
+                },
                 {
                     className: "s-menu-data",
                     href: "/admin/connect/#/projects/TestWorkspaceId/datasource",
@@ -125,8 +144,9 @@ describe("generateHeaderMenuItemsGroups", () => {
 
     it("should not return manage item if canManageMetric is false", () => {
         const items = generateHeaderMenuItemsGroups(
-            getAccountMenuFeatureFlagsMock(true, true, true, "free"),
+            getAccountMenuFeatureFlagsMock(true, true, true, false, "free"),
             getWorkspacePermissionsMock(true, false),
+            false,
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",

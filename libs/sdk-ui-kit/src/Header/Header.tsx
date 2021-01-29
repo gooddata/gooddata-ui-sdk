@@ -11,10 +11,10 @@ import addCSS from "@gooddata/goodstrap/lib/core/addCSS";
 
 import HeaderMenu from "@gooddata/goodstrap/lib/Header/HeaderMenu";
 import HeaderAccount from "@gooddata/goodstrap/lib/Header/HeaderAccount";
-import HeaderHelp from "@gooddata/goodstrap/lib/Header/HeaderHelp";
 
 import { Button } from "../Button";
 import { Overlay } from "../Overlay";
+import { HeaderHelp } from "./HeaderHelp";
 
 import {
     getItemActiveColor,
@@ -78,6 +78,8 @@ export interface IAppHeaderProps {
 
     disableHelpDropdown?: boolean;
     onHelpClick?: (isOpen: boolean) => void;
+
+    helpRedirectUrl?: string;
 }
 /**
  * @internal
@@ -369,6 +371,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         items={this.props.helpMenuItems}
                         disableDropdown={this.props.disableHelpDropdown}
                         onHelpClicked={this.props.onHelpClick}
+                        helpRedirectUrl={this.props.helpRedirectUrl}
                     />
                 )}
 

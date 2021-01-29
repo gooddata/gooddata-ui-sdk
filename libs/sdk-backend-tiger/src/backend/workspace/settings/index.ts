@@ -8,6 +8,8 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 
 const HardcodedSettings = {
     enableNewNavigationForResponsiveUi: true,
+    enableDataSection: true,
+    platformEdition: "enterprise",
 
     // AD specific
     analyticalDesigner: true,
