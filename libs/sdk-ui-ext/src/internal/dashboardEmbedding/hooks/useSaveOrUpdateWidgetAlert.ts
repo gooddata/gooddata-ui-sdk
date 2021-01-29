@@ -1,5 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    isWidgetAlert,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+} from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -13,12 +18,12 @@ import invariant from "ts-invariant";
 /**
  * @beta
  */
-export interface IUseSaveWidgetAlertConfig
+export interface IUseSaveOrUpdateWidgetAlertConfig
     extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
     /**
-     * Widget alert to save.
+     * Widget alert to save or update.
      */
-    widgetAlert?: IWidgetAlertDefinition;
+    widgetAlert?: IWidgetAlertDefinition | IWidgetAlert;
 
     /**
      * Backend to work with.
@@ -42,7 +47,7 @@ export interface IUseSaveWidgetAlertConfig
  * @param config - configuration of the hook
  * @beta
  */
-export function useSaveWidgetAlert({
+export function useSaveOrUpdateWidgetAlert({
     widgetAlert,
     backend,
     workspace,
@@ -51,22 +56,25 @@ export function useSaveWidgetAlert({
     onLoading,
     onPending,
     onSuccess,
-}: IUseSaveWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
+}: IUseSaveOrUpdateWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
     invariant(
         effectiveBackend,
-        "The backend in useSaveKpiAlert must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+        "The backend in useSaveOrUpdateWidgetAlert must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
     );
 
     invariant(
         effectiveWorkspace,
-        "The workspace in useSaveKpiAlert must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+        "The workspace in useSaveOrUpdateWidgetAlert must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
     );
 
     const promise = widgetAlert
-        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().createWidgetAlert(widgetAlert)
+        ? () =>
+              isWidgetAlert(widgetAlert)
+                  ? effectiveBackend.workspace(effectiveWorkspace).dashboards().updateWidgetAlert(widgetAlert)
+                  : effectiveBackend.workspace(effectiveWorkspace).dashboards().createWidgetAlert(widgetAlert)
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [

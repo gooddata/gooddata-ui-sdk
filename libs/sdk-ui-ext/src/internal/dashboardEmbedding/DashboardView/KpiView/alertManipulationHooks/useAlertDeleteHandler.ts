@@ -1,21 +1,16 @@
 // (C) 2021 GoodData Corporation
 import { useState } from "react";
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { useDeleteWidgetAlert } from "../../../hooks/useDeleteWidgetAlert";
 import { KpiAlertOperationStatus } from "../../../types";
 import { useAlerts } from "../../DashboardAlertsContext";
-
-interface IUseAlertDeleteHandlerConfig {
-    closeAlertDialog: () => void;
-    backend: IAnalyticalBackend;
-    workspace: string;
-}
+import { IUseAlertManipulationHandlerConfig } from "./types";
 
 export function useAlertDeleteHandler({
     closeAlertDialog,
     backend,
     workspace,
-}: IUseAlertDeleteHandlerConfig): {
+}: IUseAlertManipulationHandlerConfig): {
     alertDeletingStatus: KpiAlertOperationStatus;
     deleteAlert: (alert: IWidgetAlert) => void;
 } {

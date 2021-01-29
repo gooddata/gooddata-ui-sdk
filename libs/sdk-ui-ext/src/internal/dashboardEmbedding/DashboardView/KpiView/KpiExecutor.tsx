@@ -6,6 +6,7 @@ import {
     IWidgetAlert,
     ISeparators,
     IWidgetDefinition,
+    IWidgetAlertDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -46,9 +47,10 @@ import { filterContextToFiltersForWidget } from "../../converters";
 import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
 import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
 import { useAlertDeleteHandler } from "./alertManipulationHooks/useAlertDeleteHandler";
-import { useAlertSaveHandler } from "./alertManipulationHooks/useAlertSaveHandler";
+import { useAlertSaveOrUpdateHandler } from "./alertManipulationHooks/useAlertSaveOrUpdateHandler";
 import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
+import { IUseAlertManipulationHandlerConfig } from "./alertManipulationHooks/types";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -135,17 +137,18 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     const [isAlertDialogOpen, setIsAlertDialogOpen] = useState(false);
 
-    const { alertDeletingStatus, deleteAlert } = useAlertDeleteHandler({
-        backend,
-        closeAlertDialog: () => setIsAlertDialogOpen(false),
-        workspace,
-    });
+    const closeAlertDialog = () => setIsAlertDialogOpen(false);
 
-    const { alertSavingStatus, saveAlert } = useAlertSaveHandler({
+    const alertManipulationHandlerConfig: IUseAlertManipulationHandlerConfig = {
         backend,
-        closeAlertDialog: () => setIsAlertDialogOpen(false),
         workspace,
-    });
+        closeAlertDialog,
+    };
+
+    const { alertDeletingStatus, deleteAlert } = useAlertDeleteHandler(alertManipulationHandlerConfig);
+    const { alertSavingStatus, saveOrUpdateAlert } = useAlertSaveOrUpdateHandler(
+        alertManipulationHandlerConfig,
+    );
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
@@ -221,20 +224,36 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     onAlertDialogCloseClick={() => setIsAlertDialogOpen(false)}
                     onAlertDialogDeleteClick={() => deleteAlert(alert)}
                     onAlertDialogSaveClick={(threshold, whenTriggered) => {
-                        saveAlert({
-                            dashboard: dashboardRef,
-                            widget: kpiWidget.ref,
-                            threshold,
-                            whenTriggered,
-                            isTriggered: evaluateTriggered(kpiResult.measureResult, threshold, whenTriggered),
-                            filterContext: {
-                                title: "filterContext",
-                                description: "",
-                                filters: filters.map(dashboardFilterToFilterContextItem),
-                            },
-                            description: "",
-                            title: "",
-                        });
+                        const toSave: IWidgetAlertDefinition = alert
+                            ? {
+                                  ...alert,
+                                  threshold,
+                                  whenTriggered,
+                                  isTriggered: evaluateTriggered(
+                                      kpiAlertResult.measureResult,
+                                      threshold,
+                                      whenTriggered,
+                                  ),
+                              }
+                            : {
+                                  dashboard: dashboardRef,
+                                  widget: kpiWidget.ref,
+                                  threshold,
+                                  whenTriggered,
+                                  isTriggered: evaluateTriggered(
+                                      kpiResult.measureResult,
+                                      threshold,
+                                      whenTriggered,
+                                  ),
+                                  filterContext: {
+                                      title: "filterContext",
+                                      description: "",
+                                      filters: filters.map(dashboardFilterToFilterContextItem),
+                                  },
+                                  description: "",
+                                  title: "",
+                              };
+                        saveOrUpdateAlert(toSave);
                     }}
                     onAlertDialogUpdateClick={noop as any}
                     onApplyAlertFiltersClick={noop as any}

@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { useState } from "react";
-import { IAnalyticalBackend, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
-import { useSaveWidgetAlert } from "../../../hooks/useSaveWidgetAlert";
+import { IAnalyticalBackend, isWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
+import { useSaveOrUpdateWidgetAlert } from "../../../hooks/useSaveOrUpdateWidgetAlert";
 import { KpiAlertOperationStatus } from "../../../types";
 import { useAlerts } from "../../DashboardAlertsContext";
 
@@ -11,19 +11,19 @@ interface IUseAlertSaveHandlerConfig {
     workspace: string;
 }
 
-export function useAlertSaveHandler({
+export function useAlertSaveOrUpdateHandler({
     closeAlertDialog,
     backend,
     workspace,
 }: IUseAlertSaveHandlerConfig): {
     alertSavingStatus: KpiAlertOperationStatus;
-    saveAlert: (alert: IWidgetAlertDefinition) => void;
+    saveOrUpdateAlert: (alert: IWidgetAlertDefinition) => void;
 } {
-    const { addAlert } = useAlerts();
+    const { addAlert, updateAlert } = useAlerts();
     const [alertToSave, setAlertToSave] = useState<IWidgetAlertDefinition | undefined>();
-    const saveAlert = (alert: IWidgetAlertDefinition) => setAlertToSave(alert);
+    const saveOrUpdateAlert = (alert: IWidgetAlertDefinition) => setAlertToSave(alert);
     const [alertSavingStatus, setAlertSavingStatus] = useState<KpiAlertOperationStatus>("idle");
-    useSaveWidgetAlert({
+    useSaveOrUpdateWidgetAlert({
         backend,
         workspace,
         widgetAlert: alertToSave,
@@ -34,7 +34,14 @@ export function useAlertSaveHandler({
         onLoading: () => setAlertSavingStatus("inProgress"),
         onSuccess: (saved) => {
             setAlertSavingStatus("idle");
-            addAlert(saved);
+
+            const wasUpdate = isWidgetAlert(alertToSave);
+            if (wasUpdate) {
+                updateAlert(saved);
+            } else {
+                addAlert(saved);
+            }
+
             setAlertToSave(undefined);
             closeAlertDialog();
         },
@@ -42,6 +49,6 @@ export function useAlertSaveHandler({
 
     return {
         alertSavingStatus,
-        saveAlert,
+        saveOrUpdateAlert,
     };
 }
