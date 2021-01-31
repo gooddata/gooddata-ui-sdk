@@ -13,6 +13,11 @@ import { FluidLayoutColumnsMethods } from "./columns";
  * @alpha
  */
 export class FluidLayoutRowMethods<TContent> implements IFluidLayoutRowMethods<TContent> {
+    private static Cache: WeakMap<IFluidLayoutRow<any>, FluidLayoutRowMethods<any>> = new WeakMap<
+        IFluidLayoutRow<any>,
+        FluidLayoutRowMethods<any>
+    >();
+
     protected constructor(
         protected readonly _layoutFacade: IFluidLayoutFacade<TContent>,
         protected readonly _row: IFluidLayoutRow<TContent>,
@@ -24,7 +29,11 @@ export class FluidLayoutRowMethods<TContent> implements IFluidLayoutRowMethods<T
         row: IFluidLayoutRow<TContent>,
         index: number,
     ): FluidLayoutRowMethods<TContent> {
-        return new FluidLayoutRowMethods(layoutFacade, row, index);
+        if (!FluidLayoutRowMethods.Cache.has(row)) {
+            FluidLayoutRowMethods.Cache.set(row, new FluidLayoutRowMethods(layoutFacade, row, index));
+        }
+
+        return FluidLayoutRowMethods.Cache.get(row)!;
     }
 
     public raw = (): IFluidLayoutRow<TContent> => this._row;
@@ -36,7 +45,7 @@ export class FluidLayoutRowMethods<TContent> implements IFluidLayoutRowMethods<T
     public index = (): number => this._index;
 
     public columns = (): IFluidLayoutColumnsMethods<TContent> =>
-        FluidLayoutColumnsMethods.for(this._layoutFacade, this);
+        FluidLayoutColumnsMethods.for(this._layoutFacade, this, this._row.columns);
 
     public isLast = (): boolean => this.index() + 1 === this._layoutFacade.rows().raw().length;
 

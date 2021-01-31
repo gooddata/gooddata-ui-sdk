@@ -264,7 +264,7 @@ export type IDashboardWidgetRenderProps = {
     widgetClass?: DashboardViewLayoutWidgetClass;
     insight?: IInsight;
     widget: IWidget;
-    DefaultRenderer: IDashboardWidgetRenderer;
+    DefaultWidgetRenderer: IDashboardWidgetRenderer;
     screen: ResponsiveScreenType;
     column: IFluidLayoutColumnMethods<IDashboardLayoutContent>;
 
@@ -282,4 +282,4 @@ export type IDashboardWidgetRenderProps = {
 /**
  * Component used for the widget rendering.
  */
-export type IDashboardWidgetRenderer = React.ComponentType<IDashboardWidgetRenderProps>;
+export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;

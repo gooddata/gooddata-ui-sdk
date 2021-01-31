@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -89,6 +89,11 @@ export interface ISettings {
      * Indicates whether the user can zoom on the insights in KPI dashboards that have this feature enabled.
      */
     enableKDZooming?: boolean;
+
+    /**
+     * Indicates, whether dashboard "row headers" are enabled
+     */
+    areSectionHeadersEnabled?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

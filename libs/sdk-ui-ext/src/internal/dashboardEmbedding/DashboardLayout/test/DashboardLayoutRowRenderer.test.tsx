@@ -14,7 +14,7 @@ describe("DashboardLayoutRowRenderer", () => {
     it("should add debug css class in debug mode", () => {
         const wrapper = shallow(
             <DashboardLayoutRowRenderer
-                DefaultRenderer={FluidLayoutRowRenderer}
+                DefaultRowRenderer={FluidLayoutRowRenderer}
                 row={dashboardLayoutFacade.rows().row(0)}
                 screen="xl"
                 debug

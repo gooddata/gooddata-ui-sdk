@@ -2,9 +2,9 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
+import { Row } from "react-grid-system";
 import { FluidLayoutRow } from "../FluidLayoutRow";
 import { FluidLayoutColumn } from "../FluidLayoutColumn";
-import { FluidLayoutRowRenderer } from "../FluidLayoutRowRenderer";
 import {
     createArrayWithSize,
     fluidLayoutWithOneColumn,
@@ -12,7 +12,10 @@ import {
     createFluidLayoutMock,
 } from "./fixtures";
 
-const CustomRowRenderer: TextLayoutRowRenderer = ({ children }) => <div>{children}</div>;
+const customRowRendererClass = "s-row-renderer";
+const customRowRenderer: TextLayoutRowRenderer = ({ children }) => (
+    <div className={customRowRendererClass}>{children}</div>
+);
 
 const layoutFacade = FluidLayoutFacade.for(fluidLayoutWithOneColumn);
 
@@ -25,14 +28,14 @@ describe("FluidLayoutRow", () => {
 
     it("should use default row renderer, when rowRenderer prop is not provided", () => {
         const wrapper = shallow(<FluidLayoutRow row={layoutFacade.rows().row(0)} screen="xl" />);
-        expect(wrapper.find(FluidLayoutRowRenderer)).toExist();
+        expect(wrapper.find(Row)).toExist();
     });
 
     it("should use provided row renderer, when rowRenderer prop is provided", () => {
         const wrapper = shallow(
-            <FluidLayoutRow row={layoutFacade.rows().row(0)} screen="xl" rowRenderer={CustomRowRenderer} />,
+            <FluidLayoutRow row={layoutFacade.rows().row(0)} screen="xl" rowRenderer={customRowRenderer} />,
         );
 
-        expect(wrapper.find(CustomRowRenderer)).toExist();
+        expect(wrapper.find(`.${customRowRendererClass}`)).toExist();
     });
 });

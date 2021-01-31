@@ -37,10 +37,12 @@ describe("DashboardLayoutColumnRenderer", () => {
     it("should set minHeight:0 to override default grid style", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                DefaultRenderer={FluidLayoutColumnRenderer}
+                DefaultColumnRenderer={FluidLayoutColumnRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
-            />,
+            >
+                Test
+            </DashboardLayoutColumnRenderer>,
         );
 
         expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveProp("minHeight", 0);
@@ -49,11 +51,13 @@ describe("DashboardLayoutColumnRenderer", () => {
     it("should set custom minHeight, when provided", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                DefaultRenderer={FluidLayoutColumnRenderer}
+                DefaultColumnRenderer={FluidLayoutColumnRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 minHeight={100}
-            />,
+            >
+                Test
+            </DashboardLayoutColumnRenderer>,
         );
 
         expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveProp("minHeight", 100);
@@ -64,10 +68,12 @@ describe("DashboardLayoutColumnRenderer", () => {
         (screen, width, ratio) => {
             const wrapper = shallow(
                 <DashboardLayoutColumnRenderer
-                    DefaultRenderer={FluidLayoutColumnRenderer}
+                    DefaultColumnRenderer={FluidLayoutColumnRenderer}
                     column={dashboardLayoutWithSizingFacade.rows().row(0).columns().column(0)}
                     screen={screen}
-                />,
+                >
+                    Test
+                </DashboardLayoutColumnRenderer>,
             );
 
             expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveClassName(
@@ -85,10 +91,12 @@ describe("DashboardLayoutColumnRenderer", () => {
     it("should not set ratio class for column without ratio", () => {
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                DefaultRenderer={FluidLayoutColumnRenderer}
+                DefaultColumnRenderer={FluidLayoutColumnRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
-            />,
+            >
+                Test
+            </DashboardLayoutColumnRenderer>,
         );
 
         expect(wrapper.find(FluidLayoutColumnRenderer).props().className).not.toMatch(
@@ -100,11 +108,13 @@ describe("DashboardLayoutColumnRenderer", () => {
         const className = "test";
         const wrapper = shallow(
             <DashboardLayoutColumnRenderer
-                DefaultRenderer={FluidLayoutColumnRenderer}
+                DefaultColumnRenderer={FluidLayoutColumnRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 className={className}
-            />,
+            >
+                Test
+            </DashboardLayoutColumnRenderer>,
         );
 
         expect(wrapper.find(FluidLayoutColumnRenderer)).toHaveClassName(className);

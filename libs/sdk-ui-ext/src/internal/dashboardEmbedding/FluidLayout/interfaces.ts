@@ -53,12 +53,12 @@ export type IFluidLayoutRowRenderProps<TContent> = {
     /**
      * Default renderer of the row - can be used as a fallback for custom rowRenderer.
      */
-    DefaultRenderer: IFluidLayoutRowRenderer<TContent>;
+    DefaultRowRenderer: IFluidLayoutRowRenderer<TContent>;
 
     /**
      * Columns rendered by columnRenderer.
      */
-    children?: React.ReactNode;
+    children: React.ReactNode;
 
     /**
      * Additional row css class name.
@@ -72,9 +72,9 @@ export type IFluidLayoutRowRenderProps<TContent> = {
  *
  * @alpha
  */
-export type IFluidLayoutRowRenderer<TContent, TCustomProps = object> = React.ComponentType<
-    IFluidLayoutRowRenderProps<TContent> & TCustomProps
->;
+export type IFluidLayoutRowRenderer<TContent, TCustomProps = object> = (
+    renderProps: IFluidLayoutRowRenderProps<TContent> & TCustomProps,
+) => JSX.Element;
 
 /**
  * Default props provided to {@link IFluidLayoutRowHeaderRenderer}.
@@ -99,9 +99,9 @@ export type IFluidLayoutRowHeaderRenderProps<TContent> = {
  *
  * @alpha
  */
-export type IFluidLayoutRowHeaderRenderer<TContent, TCustomProps = object> = React.ComponentType<
-    IFluidLayoutRowHeaderRenderProps<TContent> & TCustomProps
->;
+export type IFluidLayoutRowHeaderRenderer<TContent, TCustomProps = object> = (
+    renderProps: IFluidLayoutRowHeaderRenderProps<TContent> & TCustomProps,
+) => JSX.Element;
 
 /**
  * Default props provided to {@link IFluidLayoutColumnKeyGetter}
@@ -152,7 +152,7 @@ export type IFluidLayoutColumnRenderProps<TContent> = {
     /**
      * Default renderer of the column - can be used as a fallback for custom columnRenderer.
      */
-    DefaultRenderer: IFluidLayoutColumnRenderer<TContent>;
+    DefaultColumnRenderer: IFluidLayoutColumnRenderer<TContent>;
 
     /**
      * Additional column css class name.
@@ -167,7 +167,7 @@ export type IFluidLayoutColumnRenderProps<TContent> = {
     /**
      * Column content rendered by contentRenderer.
      */
-    children?: React.ReactNode;
+    children: React.ReactNode;
 };
 
 /**
@@ -176,9 +176,9 @@ export type IFluidLayoutColumnRenderProps<TContent> = {
  *
  * @alpha
  */
-export type IFluidLayoutColumnRenderer<TContent, TCustomProps = object> = React.ComponentType<
-    IFluidLayoutColumnRenderProps<TContent> & TCustomProps
->;
+export type IFluidLayoutColumnRenderer<TContent, TCustomProps = object> = (
+    renderProps: IFluidLayoutColumnRenderProps<TContent> & TCustomProps,
+) => JSX.Element;
 
 /**
  * Default props provided to {@link IFluidLayoutContentRenderer}
@@ -203,9 +203,9 @@ export type IFluidLayoutContentRenderProps<TContent> = {
  *
  * @alpha
  */
-export type IFluidLayoutContentRenderer<TContent, TCustomProps = object> = React.ComponentType<
-    IFluidLayoutContentRenderProps<TContent> & TCustomProps
->;
+export type IFluidLayoutContentRenderer<TContent, TCustomProps = object> = (
+    renderProps: IFluidLayoutContentRenderProps<TContent> & TCustomProps,
+) => JSX.Element;
 
 /**
  * Fluid layout renderer.

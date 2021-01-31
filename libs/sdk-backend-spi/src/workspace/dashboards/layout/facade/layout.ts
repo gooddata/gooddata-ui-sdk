@@ -10,6 +10,10 @@ import { FluidLayoutRowsMethods } from "./rows";
  * @alpha
  */
 export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent> {
+    private static Cache: WeakMap<IFluidLayout<any>, FluidLayoutFacade<any>> = new WeakMap<
+        IFluidLayout<any>,
+        FluidLayoutFacade<any>
+    >();
     protected constructor(protected _layout: IFluidLayout<TContent>) {}
 
     /**
@@ -18,11 +22,15 @@ export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent>
      */
     public static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacade<TContent> {
         invariant(isFluidLayout(layout), "Provided data must be IFluidLayout!");
-        return new FluidLayoutFacade<TContent>(layout);
+        if (!FluidLayoutFacade.Cache.has(layout)) {
+            FluidLayoutFacade.Cache.set(layout, new FluidLayoutFacade(layout));
+        }
+
+        return FluidLayoutFacade.Cache.get(layout)!;
     }
 
     public rows = (): IFluidLayoutRowsMethods<TContent> => {
-        return FluidLayoutRowsMethods.for(this);
+        return FluidLayoutRowsMethods.for(this, this._layout.rows);
     };
 
     public raw = (): IFluidLayout<TContent> => {

@@ -178,7 +178,6 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                             onError={onError}
                             isVisible={isScheduledMailDialogVisible}
                         />
-
                         {isFluidLayoutEmpty(dashboardData.layout) ? (
                             <EmptyDashboardError ErrorComponent={ErrorComponent} />
                         ) : (
@@ -199,6 +198,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                 }
                                 getInsightByRef={dashboardViewLayoutResult.getInsightByRef}
                                 widgetRenderer={widgetRenderer}
+                                areSectionHeadersEnabled={userWorkspaceSettings?.areSectionHeadersEnabled}
                             />
                         )}
                     </AttributesWithDrillDownProvider>

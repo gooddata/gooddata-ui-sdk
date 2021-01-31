@@ -13,7 +13,7 @@ describe("DashboardLayoutContentRenderer", () => {
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 debug
@@ -37,7 +37,7 @@ describe("DashboardLayoutContentRenderer", () => {
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 debug
@@ -61,7 +61,7 @@ describe("DashboardLayoutContentRenderer", () => {
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 isResizedByLayoutSizingStrategy
@@ -79,7 +79,7 @@ describe("DashboardLayoutContentRenderer", () => {
 
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 isResizedByLayoutSizingStrategy
                 allowOverflow
@@ -98,7 +98,7 @@ describe("DashboardLayoutContentRenderer", () => {
         const className = "test";
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 isResizedByLayoutSizingStrategy
                 screen="xl"
@@ -116,7 +116,7 @@ describe("DashboardLayoutContentRenderer", () => {
         const minHeight = 100;
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 minHeight={minHeight}
@@ -140,7 +140,7 @@ describe("DashboardLayoutContentRenderer", () => {
         const height = 100;
         const wrapper = shallow(
             <DashboardLayoutContentRenderer
-                DefaultRenderer={DashboardLayoutContentRenderer}
+                DefaultContentRenderer={DashboardLayoutContentRenderer}
                 column={dashboardLayoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
                 height={height}

@@ -4,7 +4,7 @@ import { IFluidLayoutColumnMethods } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutColumnRenderer } from "./DashboardLayoutColumnRenderer";
 import { DashboardLayoutRowHeader } from "./DashboardLayoutRowHeader";
 import { IDashboardViewLayoutRowHeaderRenderProps } from "./interfaces/dashboardLayoutComponents";
-import { FluidLayoutColumnRenderer } from "../FluidLayout/FluidLayoutColumnRenderer";
+import { FluidLayoutColumnRenderer } from "../FluidLayout";
 
 const emptyColumnFacadeWithFullSize: IFluidLayoutColumnMethods<any> = {
     index: () => 0,
@@ -25,7 +25,7 @@ export function DashboardLayoutRowHeaderRenderer<TCustomContent>(
 
     return rowHeader ? (
         <DashboardLayoutColumnRenderer
-            DefaultRenderer={FluidLayoutColumnRenderer}
+            DefaultColumnRenderer={FluidLayoutColumnRenderer}
             column={emptyColumnFacadeWithFullSize}
             screen={screen}
         >

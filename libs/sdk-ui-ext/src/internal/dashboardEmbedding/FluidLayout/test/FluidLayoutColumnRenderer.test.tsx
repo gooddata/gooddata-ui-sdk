@@ -33,10 +33,12 @@ describe("FluidLayoutColumnRenderer", () => {
     it("should propagate responsive widths to Col component", () => {
         const wrapper = shallow(
             <FluidLayoutColumnRenderer
-                DefaultRenderer={FluidLayoutColumnRenderer}
+                DefaultColumnRenderer={FluidLayoutColumnRenderer}
                 column={layoutFacade.rows().row(0).columns().column(0)}
                 screen="xl"
-            />,
+            >
+                Test
+            </FluidLayoutColumnRenderer>,
         );
         expect(wrapper.find(Col)).toHaveProp("xl", 12);
         expect(wrapper.find(Col)).toHaveProp("lg", 10);
