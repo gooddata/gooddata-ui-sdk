@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -122,11 +122,6 @@ export interface IDrill {
      * Drill origin
      */
     origin: DrillOrigin;
-
-    /**
-     * Drill target
-     */
-    target: IDrillTarget;
 }
 
 /**
@@ -179,9 +174,17 @@ export interface IDrillToDashboard extends IDrill {
     transition: "in-place";
 
     /**
-     * Target dashboard ref
+     * Target dashboard ref. If not specified, then this is a drill to self - activating such
+     * drill will not switch to a different dashboard but will instead set dashboard filters to
+     * 'focus' on the drilled attribute element IF a filter for that attribute is defined for
+     * the dashboard.
+     *
+     * Example: dashboard shows several for company departments. It is possible to filter the entire
+     * dashboard by department. A column chart showing cost by department has drill to dashboard set
+     * without 'target'. When user clicks a column, the dashboard's department filter will be set
+     * to the department that the clicked column represents.
      */
-    target: ObjRef;
+    target?: ObjRef;
 }
 
 /**

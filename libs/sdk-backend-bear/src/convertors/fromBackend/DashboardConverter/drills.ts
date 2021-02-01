@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { GdcVisualizationWidget, GdcKpi } from "@gooddata/api-model-bear";
 import { uriRef, idRef, localIdRef } from "@gooddata/sdk-model";
@@ -46,7 +46,7 @@ export const convertVisualizationWidgetDrill = (
         const drillDefinition: IDrillToDashboard = {
             type: "drillToDashboard",
             origin: { type: "drillFromMeasure", measure: localIdRef(localIdentifier) },
-            target: idRef(toDashboard),
+            target: toDashboard !== undefined ? idRef(toDashboard) : undefined,
             transition: target,
         };
         return drillDefinition;

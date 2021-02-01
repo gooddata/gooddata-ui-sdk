@@ -56,7 +56,14 @@ import {
     GdcFilterContext,
     GdcScheduledMail,
 } from "@gooddata/api-model-bear";
-import { ObjRef, isUriRef, objRefToString, isAttributeElementsByValue } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    isUriRef,
+    isAttributeElementsByValue,
+    isIdentifierRef,
+    ObjRefInScope,
+    isLocalIdRef,
+} from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 import { convertUrisToReferences } from "../fromBackend/ReferenceConverter";
 import isEmpty from "lodash/isEmpty";
@@ -64,13 +71,21 @@ import omitBy from "lodash/omitBy";
 import { serializeProperties } from "../fromBackend/PropertiesConverter";
 
 const refToUri = (ref: ObjRef) => {
-    if (isUriRef(ref)) {
-        return ref.uri;
-    }
+    invariant(isUriRef(ref));
 
-    throw new UnexpectedError(
-        "Identifiers are not supported in the bear dashboard model, first sanitize your object refs!",
-    );
+    return ref.uri;
+};
+
+const refToIdentifier = (ref: ObjRef) => {
+    invariant(isIdentifierRef(ref));
+
+    return ref.identifier;
+};
+
+const refToLocalId = (ref: ObjRefInScope) => {
+    invariant(isLocalIdRef(ref));
+
+    return ref.localIdentifier;
 };
 
 export const convertResponsiveSize = (size: IFluidLayoutSize): GdcDashboardLayout.IFluidLayoutSize => {
@@ -324,7 +339,7 @@ export function convertDrill(
     } = drill;
     const drillFromMeasure = {
         drillFromMeasure: {
-            localIdentifier: objRefToString(measure),
+            localIdentifier: refToLocalId(measure),
         },
     };
 
@@ -333,7 +348,7 @@ export function convertDrill(
             drillToDashboard: {
                 from: drillFromMeasure,
                 target: "in-place",
-                toDashboard: objRefToString(drill.target),
+                toDashboard: drill.target !== undefined ? refToIdentifier(drill.target) : undefined,
             },
         };
 

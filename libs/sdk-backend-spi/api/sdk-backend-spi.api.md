@@ -574,7 +574,6 @@ export type IDimensionItemDescriptor = IMeasureGroupDescriptor | IAttributeDescr
 // @alpha
 export interface IDrill {
     origin: DrillOrigin;
-    target: IDrillTarget;
     transition: DrillTransition;
     type: DrillType;
 }
@@ -620,7 +619,7 @@ export interface IDrillToCustomUrlTarget {
 
 // @alpha
 export interface IDrillToDashboard extends IDrill {
-    target: ObjRef;
+    target?: ObjRef;
     transition: "in-place";
     type: "drillToDashboard";
 }

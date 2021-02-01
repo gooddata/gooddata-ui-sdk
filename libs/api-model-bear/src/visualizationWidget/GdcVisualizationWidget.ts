@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
 import has from "lodash/has";
 import { GdcMetadata } from "../meta/GdcMetadata";
@@ -50,7 +50,7 @@ export namespace GdcVisualizationWidget {
         drillToDashboard: {
             target: "in-place";
             from: IDrillFromMeasure;
-            toDashboard: Identifier;
+            toDashboard?: Identifier;
         };
     }
 
