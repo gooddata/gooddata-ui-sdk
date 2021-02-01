@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DependencyList } from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { DataViewWindow } from "./withExecutionLoading";
 import {
+    convertError,
     DataViewFacade,
     GoodDataSdkError,
     useCancelablePromise,
@@ -57,6 +58,9 @@ export function useDataView(
                           )
                           .then((dataView) => {
                               return DataViewFacade.for(dataView);
+                          })
+                          .catch((error) => {
+                              throw convertError(error);
                           })
                 : null,
             onCancel,
