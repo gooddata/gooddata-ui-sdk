@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "8.2.0-alpha.47",
+    "version": "8.2.0-alpha.47.fix.0",
     "author": "GoodData",
     "description": "GoodData SDK Catalog Export tooling",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/catalog-export",
@@ -38,9 +38,9 @@
     "dependencies": {
         "@babel/core": "^7.7.2",
         "@babel/plugin-transform-typescript": "^7.7.2",
-        "@gooddata/api-client-bear": "^8.2.0-alpha.47",
-        "@gooddata/api-client-tiger": "^8.2.0-alpha.47",
-        "@gooddata/api-model-bear": "^8.2.0-alpha.47",
+        "@gooddata/api-client-bear": "^8.2.0-alpha.47.fix.0",
+        "@gooddata/api-client-tiger": "^8.2.0-alpha.47.fix.0",
+        "@gooddata/api-model-bear": "^8.2.0-alpha.47.fix.0",
         "chalk": "^2.4.2",
         "commander": "^3.0.2",
         "inquirer": "^6.5.2",

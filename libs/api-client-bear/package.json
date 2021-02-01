@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-bear",
-    "version": "8.2.0-alpha.47",
+    "version": "8.2.0-alpha.47.fix.0",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
     "license": "MIT",
@@ -45,7 +45,7 @@
     },
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-bear",
     "dependencies": {
-        "@gooddata/api-model-bear": "^8.2.0-alpha.47",
+        "@gooddata/api-model-bear": "^8.2.0-alpha.47.fix.0",
         "fetch-cookie": "^0.7.0",
         "isomorphic-fetch": "^2.2.1",
         "lodash": "^4.17.19",
