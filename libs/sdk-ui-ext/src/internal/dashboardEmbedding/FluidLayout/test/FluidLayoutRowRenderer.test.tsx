@@ -16,7 +16,7 @@ describe("FluidLayoutRowRenderer", () => {
                 row={layoutFacade.rows().row(0)}
                 screen="xl"
                 className={className}
-                DefaultRenderer={FluidLayoutRowRenderer}
+                DefaultRowRenderer={FluidLayoutRowRenderer}
             >
                 Test
             </FluidLayoutRowRenderer>,

@@ -13,6 +13,11 @@ import { IFluidLayoutColumnMethods, IFluidLayoutFacade, IFluidLayoutRowMethods }
  * @alpha
  */
 export class FluidLayoutColumnMethods<TContent> implements IFluidLayoutColumnMethods<TContent> {
+    private static Cache: WeakMap<IFluidLayoutColumn<any>, FluidLayoutColumnMethods<any>> = new WeakMap<
+        IFluidLayoutColumn<any>,
+        FluidLayoutColumnMethods<any>
+    >();
+
     protected constructor(
         protected _layoutFacade: IFluidLayoutFacade<TContent>,
         protected _rowFacade: IFluidLayoutRowMethods<TContent>,
@@ -26,7 +31,14 @@ export class FluidLayoutColumnMethods<TContent> implements IFluidLayoutColumnMet
         column: IFluidLayoutColumn<TContent>,
         index: number,
     ): FluidLayoutColumnMethods<TContent> {
-        return new FluidLayoutColumnMethods(layoutFacade, rowFacade, column, index);
+        if (!FluidLayoutColumnMethods.Cache.has(column)) {
+            FluidLayoutColumnMethods.Cache.set(
+                column,
+                new FluidLayoutColumnMethods(layoutFacade, rowFacade, column, index),
+            );
+        }
+
+        return FluidLayoutColumnMethods.Cache.get(column)!;
     }
 
     public raw = (): IFluidLayoutColumn<TContent> => this._column;

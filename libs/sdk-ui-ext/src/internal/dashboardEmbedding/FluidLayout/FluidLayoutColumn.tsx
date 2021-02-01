@@ -1,8 +1,8 @@
 // (C) 2007-2020 GoodData Corporation
-import React from "react";
+
+import { FluidLayoutColumnRenderer } from "./FluidLayoutColumnRenderer";
 import { ResponsiveScreenType, IFluidLayoutColumnMethods } from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutColumnRenderer, IFluidLayoutContentRenderer } from "./interfaces";
-import { FluidLayoutColumnRenderer } from "./FluidLayoutColumnRenderer";
 
 /**
  * @alpha
@@ -15,18 +15,12 @@ export interface IFluidLayoutColumnProps<TContent> {
 }
 
 export function FluidLayoutColumn<TContent>(props: IFluidLayoutColumnProps<TContent>): JSX.Element {
-    const {
-        column,
-        columnRenderer: ColumnRenderer = FluidLayoutColumnRenderer,
-        contentRenderer: ContentRenderer,
-        screen,
-    } = props;
-
+    const { column, columnRenderer = FluidLayoutColumnRenderer, contentRenderer, screen } = props;
     const renderProps = { column, screen };
 
-    return (
-        <ColumnRenderer {...renderProps} DefaultRenderer={FluidLayoutColumnRenderer}>
-            <ContentRenderer {...renderProps} />
-        </ColumnRenderer>
-    );
+    return columnRenderer({
+        ...renderProps,
+        DefaultColumnRenderer: FluidLayoutColumnRenderer,
+        children: contentRenderer(renderProps),
+    });
 }

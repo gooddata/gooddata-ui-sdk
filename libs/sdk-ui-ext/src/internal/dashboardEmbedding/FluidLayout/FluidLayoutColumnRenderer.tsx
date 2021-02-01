@@ -1,7 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { useMemo } from "react";
-import { Col } from "react-grid-system";
 import { IFluidLayoutColumnRenderer } from "./interfaces";
+import { Col } from "react-grid-system";
 
 export const FluidLayoutColumnRenderer: IFluidLayoutColumnRenderer<any> = (props) => {
     const { column, children, className, minHeight } = props;

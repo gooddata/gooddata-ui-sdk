@@ -41,14 +41,14 @@ export function FluidLayout<TContent>(props: IFluidLayoutProps<TContent>): JSX.E
                     render={(screen: ResponsiveScreenType) =>
                         screen ? (
                             <Container fluid={true} className={containerClassName}>
-                                {layoutFacade.rows().map((rowFacade) => {
+                                {layoutFacade.rows().map((row) => {
                                     return (
                                         <FluidLayoutRow
                                             key={rowKeyGetter({
-                                                row: rowFacade,
+                                                row,
                                                 screen,
                                             })}
-                                            row={rowFacade}
+                                            row={row}
                                             rowRenderer={rowRenderer}
                                             rowHeaderRenderer={rowHeaderRenderer}
                                             columnKeyGetter={columnKeyGetter}

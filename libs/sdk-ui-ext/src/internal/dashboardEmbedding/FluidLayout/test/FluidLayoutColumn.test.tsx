@@ -2,49 +2,56 @@
 import React from "react";
 import { shallow } from "enzyme";
 import { FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
+import { Col } from "react-grid-system";
 import { FluidLayoutColumn } from "../FluidLayoutColumn";
-import { FluidLayoutColumnRenderer } from "../FluidLayoutColumnRenderer";
 import { fluidLayoutWithOneColumn, TextLayoutColumnRenderer, TextLayoutContentRenderer } from "./fixtures";
 
-const CustomColumnRenderer: TextLayoutColumnRenderer = ({ children }) => <div>{children}</div>;
-const CustomContentRenderer: TextLayoutContentRenderer = ({ column }) => <div>{column.content()}</div>;
+const customColumnRendererClass = "s-column-renderer";
+const customContentRendererClass = "s-column-renderer";
+
+const customColumnRenderer: TextLayoutColumnRenderer = ({ children }) => (
+    <div className={customColumnRendererClass}>{children}</div>
+);
+const customContentRenderer: TextLayoutContentRenderer = ({ column }) => (
+    <div className={customContentRendererClass}>{column.content()}</div>
+);
 
 const layoutFacade = FluidLayoutFacade.for(fluidLayoutWithOneColumn);
 
 describe("FluidLayoutColumn", () => {
-    it("should render default column renderer, when columnRenderer prop is not provided", () => {
+    it("should use default column renderer, when columnRenderer prop is not provided", () => {
         const wrapper = shallow(
             <FluidLayoutColumn
                 screen="xl"
                 column={layoutFacade.rows().row(0).columns().column(0)}
-                contentRenderer={CustomContentRenderer}
+                contentRenderer={customContentRenderer}
             />,
         );
-        expect(wrapper.find(FluidLayoutColumnRenderer)).toExist();
+        expect(wrapper.find(Col)).toExist();
     });
 
-    it("should render provided column renderer, when columnRenderer prop is provided", () => {
+    it("should use provided column renderer, when columnRenderer prop is provided", () => {
         const wrapper = shallow(
             <FluidLayoutColumn
                 screen="xl"
                 column={layoutFacade.rows().row(0).columns().column(0)}
-                columnRenderer={CustomColumnRenderer}
-                contentRenderer={CustomContentRenderer}
+                columnRenderer={customColumnRenderer}
+                contentRenderer={customContentRenderer}
             />,
         );
 
-        expect(wrapper.find(CustomColumnRenderer)).toExist();
+        expect(wrapper.find(`.${customColumnRendererClass}`)).toExist();
     });
 
-    it("should render provided content renderer", () => {
+    it("should use provided content renderer", () => {
         const wrapper = shallow(
             <FluidLayoutColumn
                 screen="xl"
                 column={layoutFacade.rows().row(0).columns().column(0)}
-                contentRenderer={CustomContentRenderer}
+                contentRenderer={customContentRenderer}
             />,
         );
 
-        expect(wrapper.find(CustomContentRenderer)).toExist();
+        expect(wrapper.find(`.${customContentRendererClass}`)).toExist();
     });
 });

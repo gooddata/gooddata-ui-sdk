@@ -41,6 +41,7 @@ interface IDashboardRendererProps {
     getDashboardViewLayoutWidgetClass: (widget: IWidget) => DashboardViewLayoutWidgetClass;
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined;
     widgetRenderer: IDashboardWidgetRenderer;
+    areSectionHeadersEnabled?: boolean;
 }
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
@@ -59,6 +60,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     getDashboardViewLayoutWidgetClass,
     getInsightByRef,
     widgetRenderer,
+    areSectionHeadersEnabled,
 }) {
     const isThemeLoading = useThemeIsLoading();
 
@@ -118,6 +120,9 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
             layout={dashboardViewLayout}
             contentRenderer={contentWithProps}
             className={className}
+            // When section headers are enabled, use default DashboardLayout rowHeaderRenderer.
+            // When turned off, render nothing.
+            rowHeaderRenderer={areSectionHeadersEnabled ? undefined : () => null}
         />
     );
 });

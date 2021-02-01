@@ -1196,6 +1196,7 @@ export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    areSectionHeadersEnabled?: boolean;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;

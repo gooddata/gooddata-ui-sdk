@@ -29,8 +29,8 @@ export interface IFluidLayoutRowProps<TContent> {
 export function FluidLayoutRow<TContent>(props: IFluidLayoutRowProps<TContent>): JSX.Element {
     const {
         row,
-        rowRenderer: RowRenderer = FluidLayoutRowRenderer,
-        rowHeaderRenderer: RowHeaderRenderer,
+        rowRenderer = FluidLayoutRowRenderer,
+        rowHeaderRenderer,
         columnKeyGetter = ({ column }) => column.index(),
         columnRenderer,
         contentRenderer,
@@ -38,11 +38,11 @@ export function FluidLayoutRow<TContent>(props: IFluidLayoutRowProps<TContent>):
     } = props;
     const renderProps = { row, screen };
 
-    const columns = row.columns().map((column) => {
+    const columns = row.columns().map((columnFacade) => {
         return (
             <FluidLayoutColumn
-                key={columnKeyGetter({ column, screen })}
-                column={column}
+                key={columnKeyGetter({ column: columnFacade, screen })}
+                column={columnFacade}
                 columnRenderer={columnRenderer}
                 contentRenderer={contentRenderer}
                 screen={screen}
@@ -50,10 +50,14 @@ export function FluidLayoutRow<TContent>(props: IFluidLayoutRowProps<TContent>):
         );
     });
 
-    return (
-        <RowRenderer {...renderProps} DefaultRenderer={FluidLayoutRowRenderer}>
-            {RowHeaderRenderer && <RowHeaderRenderer row={row} screen={screen} />}
-            {columns}
-        </RowRenderer>
-    );
+    return rowRenderer({
+        ...renderProps,
+        DefaultRowRenderer: FluidLayoutRowRenderer,
+        children: (
+            <>
+                {rowHeaderRenderer && rowHeaderRenderer({ row, screen })}
+                {columns}
+            </>
+        ),
+    });
 }
