@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
 import invariant from "ts-invariant";
 import {
@@ -141,7 +141,7 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public workspaces(): IWorkspacesQueryFactory {
-        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter);
+        return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter, this.sdk);
     }
 
     public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspacesQueryFactory,
     IWorkspacesQuery,
@@ -8,19 +8,22 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 import { TigerWorkspace } from "../workspace";
+import { ITigerClient, WorkspaceObjectModel } from "@gooddata/api-client-tiger";
+import { convertWorkspaceToDescriptor } from "../../convertors/toBackend/WorkspaceConverter";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
+        private sdk: ITigerClient,
     ) {}
 
     public forUser(userId: string): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, userId);
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.sdk, userId);
     }
 
     public forCurrentUser(): IWorkspacesQuery {
-        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter);
+        return new TigerWorkspaceQuery(this.authCall, this.dateFormatter, this.sdk);
     }
 }
 
@@ -32,6 +35,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly dateFormatter: DateFormatter,
+        private sdk: ITigerClient,
         // @ts-expect-error Keeping this for now for future use
         private readonly userId?: string,
     ) {}
@@ -126,12 +130,22 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             },
         ].map((descriptor) => new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter));
 
+        const tigerWorkspaces = await this.sdk.workspace.getWorkspaces().then((res: any) => {
+            return res.data.map((workspace: WorkspaceObjectModel.IWorkspace) => {
+                return new TigerWorkspace(
+                    this.authCall,
+                    convertWorkspaceToDescriptor(workspace).id,
+                    this.dateFormatter,
+                );
+            });
+        });
+
         return {
             search,
-            items: workspaces,
+            items: tigerWorkspaces || workspaces,
             limit,
             offset,
-            totalCount: workspaces.length,
+            totalCount: tigerWorkspaces.length || workspaces.length,
             next: () => Promise.resolve(emptyResult),
         };
     }

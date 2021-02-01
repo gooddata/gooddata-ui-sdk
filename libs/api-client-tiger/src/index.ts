@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { tigerExecutionClientFactory } from "./execution";
 import {
@@ -17,9 +17,11 @@ import {
 } from "./workspaceModel";
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
+import { tigerWorkspaceClientFactory } from "./workspace";
 
 export { VisualizationObjectModel } from "./gd-tiger-model/VisualizationObjectModel";
 export { AnalyticalDashboardObjectModel } from "./gd-tiger-model/AnalyticalDashboardObjectModel";
+export { WorkspaceObjectModel } from "./gd-tiger-model/WorkspaceObjectModel";
 
 export {
     isAttributeHeader,
@@ -48,6 +50,7 @@ export {
     LabelElementsBaseApi,
     LabelElementsRequestArgs,
     tigerValidObjectsClientFactory,
+    tigerWorkspaceClientFactory,
 };
 
 export interface ITigerClient {
@@ -55,6 +58,7 @@ export interface ITigerClient {
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+    workspace: ReturnType<typeof tigerWorkspaceClientFactory>;
 }
 
 /**
@@ -66,12 +70,14 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const labelElements = tigerLabelElementsClientFactory(axios);
     const workspaceModel = tigerWorkspaceModelClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
+    const workspace = tigerWorkspaceClientFactory(axios);
 
     return {
         execution,
         labelElements,
         workspaceModel,
         validObjects,
+        workspace,
     };
 };
 
