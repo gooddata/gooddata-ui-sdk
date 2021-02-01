@@ -9,18 +9,28 @@ import { isFreemiumEdition, shouldHidePPExperience } from "../utils/featureFlags
 export function generateHeaderMenuItemsGroups(
     featureFlags: ISettings,
     workspacePermissions: IWorkspacePermissions,
+    hasAnalyticalDashboards?: boolean,
     workspaceId?: string,
     dashboardId?: string,
     tabId?: string,
     hasNoDataSet?: boolean,
+    backendSupportsDataItem?: boolean,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
     }
 
-    const { enableCsvUploader, enableDataSection } = featureFlags;
+    const {
+        enableCsvUploader,
+        enableDataSection,
+        enableNewNavigationForResponsiveUi,
+        analyticalDesigner,
+        enableAnalyticalDashboards,
+    } = featureFlags;
 
     const {
+        canCreateAnalyticalDashboard,
+        canCreateVisualization,
         canUploadNonProductionCSV,
         canAccessWorkbench,
         canManageReport,
@@ -65,6 +75,17 @@ export function generateHeaderMenuItemsGroups(
     // INSIGHTS MENU ITEMS
     const insightItemsGroup = [];
 
+    const kpiDashboardsItem = {
+        key: enableNewNavigationForResponsiveUi ? "gs.header.kpis.new" : "gs.header.kpis",
+        className: "s-menu-kpis",
+        href: `/dashboards/#/project/${workspaceId}`,
+    };
+    const analyticalDesignerItem = {
+        key: enableNewNavigationForResponsiveUi ? "gs.header.analyze.new" : "gs.header.analyze",
+        className: "s-menu-analyze",
+        href: `/analyze/#/${workspaceId}/reportId/edit`,
+    };
+
     const loadCsvItem = {
         key: "gs.header.load",
         className: "s-menu-load",
@@ -80,12 +101,25 @@ export function generateHeaderMenuItemsGroups(
         href: dataItemLink,
     };
 
+    const showKpiDashboardsItem =
+        hasAnalyticalDashboards || (canCreateAnalyticalDashboard === true && enableAnalyticalDashboards);
+    const showAnalyticalDesignerItem = canCreateVisualization === true && analyticalDesigner;
+
     const canAccessLoadCsvPage = canUploadNonProductionCSV === true && enableCsvUploader;
     const showLoadCsvItem = enableDataSection
         ? !isFreemiumCustomer && canAccessLoadCsvPage
         : canAccessLoadCsvPage;
-    const showDataItem = enableDataSection && isFreemiumCustomer && (canInitData || canRefreshData);
+    const showDataItem =
+        enableDataSection &&
+        (isFreemiumCustomer || backendSupportsDataItem) &&
+        (canInitData || canRefreshData);
 
+    if (showKpiDashboardsItem) {
+        insightItemsGroup.push(kpiDashboardsItem);
+    }
+    if (showAnalyticalDesignerItem) {
+        insightItemsGroup.push(analyticalDesignerItem);
+    }
     if (showLoadCsvItem) {
         insightItemsGroup.push(loadCsvItem);
     }
