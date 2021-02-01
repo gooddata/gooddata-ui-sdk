@@ -241,18 +241,18 @@
 }
 
 .dash-item-action {
-    width: $item-action-width;
-    height: 36px;
-    border-radius: 20px;
-    font-size: 18px;
-    line-height: 36px;
-    text-align: center;
-    color: $gd-color-text-light;
-    cursor: pointer;
     position: absolute;
     z-index: 2;
     top: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
     right: calc(-#{$item-outer-padding} - #{$gd-dashboards-content-widget-borderWidth});
+    width: $item-action-width;
+    height: 36px;
+    line-height: 36px;
+    color: $gd-color-text-light;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 18px;
+    text-align: center;
 
     &.disabled {
         cursor: auto;

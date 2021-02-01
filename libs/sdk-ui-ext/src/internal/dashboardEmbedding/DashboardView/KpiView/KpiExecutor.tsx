@@ -46,7 +46,7 @@ import { DashboardItemWithKpiAlert } from "../../KpiAlerts/DashboardItemWithKpiA
 import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 import { filterContextToFiltersForWidget } from "../../converters";
-import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/KpiAlertDialog/utils/brokenFilterUtils";
+import { getBrokenAlertFiltersBasicInfo } from "../../KpiAlerts/utils/brokenFilterUtils";
 import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
 import { useAlertDeleteHandler } from "./alertManipulationHooks/useAlertDeleteHandler";
 import { useAlertSaveOrUpdateHandler } from "./alertManipulationHooks/useAlertSaveOrUpdateHandler";

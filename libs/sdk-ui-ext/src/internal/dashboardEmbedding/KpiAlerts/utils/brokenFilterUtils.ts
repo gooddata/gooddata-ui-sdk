@@ -26,7 +26,7 @@ import last from "lodash/last";
 import partition from "lodash/partition";
 import { IntlShape } from "react-intl";
 
-import { isAttributeFilterIgnored, isDateFilterIrrelevant } from "../../utils/filterUtils";
+import { isAttributeFilterIgnored, isDateFilterIrrelevant } from "../utils/filterUtils";
 
 import { dashboardDateFilterToPreset } from "./translationUtils";
 import {

@@ -1,6 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React, { Component } from "react";
-import { isEqual, last } from "lodash";
+import isEqual from "lodash/isEqual";
+import last from "lodash/last";
 import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import ReactMessage from "@gooddata/goodstrap/lib/Messages/Message";
 import MediaQuery, { MediaQueryMatchers } from "react-responsive";
@@ -19,8 +20,8 @@ import { KpiAlertOperationStatus } from "../../types";
 
 import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange";
 import { kpiAlertDialogAlignPoints, kpiAlertDialogMobileAlignPoints } from "./alignPoints";
-import { IBrokenAlertFilter } from "./types";
-import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters";
+import { IBrokenAlertFilter } from "../types";
+import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters/KpiAlertDialogBrokenFilters";
 import { thresholdFromDecimalToPercent, thresholdFromPercentToDecimal } from "../utils/alertThresholdUtils";
 import { areKpiAlertFiltersSameAsDashboard } from "./utils/filterUtils";
 import { KpiAlertDialogWhenTriggeredPicker } from "./KpiAlertDialogWhenTriggeredPicker";

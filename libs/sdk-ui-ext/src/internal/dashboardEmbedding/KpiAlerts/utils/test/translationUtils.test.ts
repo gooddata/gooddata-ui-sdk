@@ -5,7 +5,7 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 
 import { getKpiAlertTranslationData, KpiAlertTranslationData } from "../translationUtils";
-import { messagesMap } from "../../../../../utils/internalIntlProvider";
+import { messagesMap } from "../../../../utils/internalIntlProvider";
 
 // we need to have both sdk-ui and sdk-ui-ext messages available
 const intl = createIntlMock(messagesMap[DefaultLocale], DefaultLocale);

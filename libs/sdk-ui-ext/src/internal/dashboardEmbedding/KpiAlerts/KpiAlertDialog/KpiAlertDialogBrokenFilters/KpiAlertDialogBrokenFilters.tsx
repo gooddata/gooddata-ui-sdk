@@ -5,7 +5,7 @@ import cx from "classnames";
 import FilterLabel from "@gooddata/goodstrap/lib/Filter/FilterLabel";
 import partition from "lodash/partition";
 
-import { IBrokenAlertFilter } from "./types";
+import { IBrokenAlertFilter } from "../../types";
 import { getFilterLabelFilter } from "./utils/filterUtils";
 
 const ITEMS_SCROLL_LIMIT = 5;

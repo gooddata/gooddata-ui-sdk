@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl"
 import { IDateFilter } from "@gooddata/sdk-model";
 import { IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 
-import { getKpiAlertTranslationData } from "./utils/translationUtils";
+import { getKpiAlertTranslationData } from "../utils/translationUtils";
 
 interface IKpiAlertDialogDateRangeProps {
     filter: IDateFilter | IDashboardDateFilter;
