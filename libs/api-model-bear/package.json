@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-model-bear",
-    "version": "8.2.0-alpha.53",
+    "version": "8.2.0-alpha.53.fix.0",
     "description": "TypeScript definition files for GoodData platform",
     "main": "dist/index.js",
     "module": "esm/index.js",

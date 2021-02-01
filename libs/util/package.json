@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "8.2.0-alpha.53",
+    "version": "8.2.0-alpha.53.fix.0",
     "author": "GoodData",
     "description": "GoodData Utility Functions",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/util",
