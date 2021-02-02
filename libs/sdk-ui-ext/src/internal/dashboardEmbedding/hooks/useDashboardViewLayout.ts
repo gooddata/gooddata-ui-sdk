@@ -96,7 +96,7 @@ export const useDashboardViewLayout = ({
                   if (widget.type === "kpi") {
                       return "kpi";
                   }
-                  const insight = getInsightByRef(widget.ref);
+                  const insight = getInsightByRef(widget.insight);
                   return insightVisualizationUrl(insight).split(":")[1] as DashboardViewLayoutWidgetClass;
               };
 
