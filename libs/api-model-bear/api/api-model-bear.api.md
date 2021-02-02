@@ -2699,7 +2699,7 @@ export namespace GdcVisualizationWidget {
         drillToDashboard: {
             target: "in-place";
             from: IDrillFromMeasure;
-            toDashboard: Identifier;
+            toDashboard?: Identifier;
         };
     }
     // (undocumented)
