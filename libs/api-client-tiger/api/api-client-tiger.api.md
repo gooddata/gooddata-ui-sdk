@@ -980,6 +980,8 @@ export interface ITigerClient {
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
+    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
+    // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
     // (undocumented)
     workspaceModel: ReturnType<typeof tigerWorkspaceModelClientFactory>;
@@ -4079,6 +4081,9 @@ export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => ElementsControllerApiInterface;
+
+// @public (undocumented)
+export const tigerOrganizationObjectsClientFactory: (axios: AxiosInstance) => OrganizationModelControllerApiInterface;
 
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObjectsControllerApiInterface;

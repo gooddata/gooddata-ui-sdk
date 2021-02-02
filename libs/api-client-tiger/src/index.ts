@@ -15,6 +15,7 @@ import {
     MetadataBaseApi,
     MetadataRequestArgs,
 } from "./workspaceModel";
+import { tigerOrganizationObjectsClientFactory } from "./OrganizationObjects";
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
@@ -48,6 +49,7 @@ export {
     LabelElementsBaseApi,
     LabelElementsRequestArgs,
     tigerValidObjectsClientFactory,
+    tigerOrganizationObjectsClientFactory,
 };
 
 export interface ITigerClient {
@@ -55,6 +57,7 @@ export interface ITigerClient {
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
 }
 
 /**
@@ -66,12 +69,14 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const labelElements = tigerLabelElementsClientFactory(axios);
     const workspaceModel = tigerWorkspaceModelClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
+    const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
 
     return {
         execution,
         labelElements,
         workspaceModel,
         validObjects,
+        organizationObjects,
     };
 };
 
