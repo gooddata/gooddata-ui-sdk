@@ -73,7 +73,7 @@ export function dashboardDateFilterToPreset(
     }
 }
 
-// TODO: when moving this to SDK8, expose the translation logic for date filters directly without the conversion to date filter options
+// TODO (RAIL-2847) when moving this to SDK8, expose the translation logic for date filters directly without the conversion to date filter options
 export function getKpiAlertTranslationData(
     filter: IDateFilter | IDashboardDateFilter | undefined,
     intl: IntlShape,

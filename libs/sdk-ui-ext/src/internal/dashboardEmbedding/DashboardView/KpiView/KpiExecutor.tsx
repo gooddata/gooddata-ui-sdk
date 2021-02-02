@@ -12,6 +12,7 @@ import {
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    isMeasureFormatInPercent,
     ObjRef,
 } from "@gooddata/sdk-model";
 import {
@@ -53,7 +54,6 @@ import { useAlertSaveOrUpdateHandler } from "./alertManipulationHooks/useAlertSa
 import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 import { IUseAlertManipulationHandlerConfig } from "./alertManipulationHooks/types";
-import { isMetricFormatInPercent } from "../../utils/format";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
 
@@ -106,7 +106,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 
     const { error, result, status } = useDataView({ execution, onError }, [execution.fingerprint()]);
 
-    // TODO move?
+    // TODO simplify after broken alerts are ready (RAIL-2847)
     const brokenAlertsInfo = alert ? getBrokenAlertFiltersBasicInfo(alert, kpiWidget, filters) : undefined;
     const isAlertBroken = !!brokenAlertsInfo?.length;
 
@@ -157,7 +157,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     const { result: permissions } = useUserWorkspacePermissions({ backend, workspace });
     const canSetAlert = permissions?.canCreateScheduledMail;
 
-    const isReadonlyMode = false; // TODO we need to support proper read only mode for live examples with proxy
+    const isReadonlyMode = false; // TODO we need to support proper read only mode for live examples with proxy (RAIL-2931)
 
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
@@ -332,7 +332,7 @@ function getKpiAlertResult(
 
 function getAlertThresholdInfo(kpiResult: IKpiResult | undefined, intl: IntlShape) {
     const isThresholdRepresentingPercent = kpiResult
-        ? isMetricFormatInPercent(kpiResult.measureFormat)
+        ? isMeasureFormatInPercent(kpiResult.measureFormat)
         : false;
 
     const value = round(kpiResult?.measureResult || 0, 2); // sure about rounding?

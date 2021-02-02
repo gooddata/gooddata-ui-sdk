@@ -180,6 +180,7 @@ export {
     measureTitle,
     measureArithmeticOperator,
     measureFormat,
+    isMeasureFormatInPercent,
     measureAggregation,
     measureFilters,
     measurePopAttribute,

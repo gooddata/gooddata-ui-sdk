@@ -848,6 +848,9 @@ export function isMeasure(obj: unknown): obj is IMeasure;
 export function isMeasureDefinition(obj: unknown): obj is IMeasureDefinition;
 
 // @public
+export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean;
+
+// @public
 export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem;
 
 // @public

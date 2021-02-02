@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { Velocity, Won } from "../../../../__mocks__/model";
 import {
@@ -10,6 +10,7 @@ import {
 } from "../factory";
 import {
     IPreviousPeriodDateDataSet,
+    isMeasureFormatInPercent,
     measureAggregation,
     measureAlias,
     measureArithmeticOperands,
@@ -216,6 +217,37 @@ describe("measureFormat", () => {
 
     it.each(InvalidScenarios)("should thrown when %s", (_desc, input) => {
         expect(() => measureFormat(input)).toThrow();
+    });
+});
+
+describe("isMeasureFormatInPercent", () => {
+    type Scenario = [string, boolean, string];
+
+    const scenarios: Scenario[] = [
+        ["empty format", false, ""],
+        ["default format", false, "#,##0"],
+        ["default format with semicolon", false, "#,##0;"],
+        ["currency format", false, "$#,##0.00"],
+        ["currency format with semicolon", false, "$#,##0.00;"],
+        ["currency format with percent", true, "$#,##0.00%"],
+        ["currency format with percent with semicolon", true, "$#,##0.00%;"],
+        [
+            "conditional format",
+            false,
+            `[=null]--;
+             [<.3][red]#,##0.0%;
+             [>.8][green]#,##0.0%;
+             #,##0.0%'`,
+        ],
+    ];
+
+    it.each(scenarios)("should recognize %s as %p", (_, expected, format) => {
+        expect(isMeasureFormatInPercent(format)).toBe(expected);
+    });
+
+    it("should get the format from IMeasure instance", () => {
+        const MeasureWithFormat = modifyMeasure(SimpleMeasureWithIdentifier, (m) => m.format("$#,##0.00%"));
+        expect(isMeasureFormatInPercent(MeasureWithFormat)).toBe(true);
     });
 });
 
