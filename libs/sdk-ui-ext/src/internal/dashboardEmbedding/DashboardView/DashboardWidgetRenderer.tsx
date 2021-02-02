@@ -2,7 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
-import { isWidget } from "@gooddata/sdk-backend-spi";
+import { isWidget, isDashboardLayoutContent, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer";
 import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
@@ -29,6 +29,12 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
         insight,
         widget,
     } = props;
+
+    if (!isDashboardLayoutContent) {
+        throw new UnexpectedError(
+            "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
+        );
+    }
 
     if (isWidget(widget)) {
         if (widget.type === "insight") {
