@@ -95,7 +95,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-data",
-                    href: "/admin/modeler/#/projects/TestWorkspaceId",
+                    href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
                 },
             ],
@@ -156,7 +156,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             [
                 {
                     className: "s-menu-data",
-                    href: "/admin/modeler/#/projects/TestWorkspaceId",
+                    href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
                 },
             ],
