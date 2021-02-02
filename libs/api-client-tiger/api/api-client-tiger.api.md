@@ -1454,6 +1454,8 @@ export interface ITigerClient {
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
     // (undocumented)
+    workspace: ReturnType<typeof tigerWorkspaceClientFactory>;
+    // (undocumented)
     workspaceModel: ReturnType<typeof tigerWorkspaceModelClientFactory>;
 }
 
@@ -2427,6 +2429,11 @@ export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Elements
 // @public (undocumented)
 export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObjectsControllerApiInterface;
 
+// @public
+export const tigerWorkspaceClientFactory: (axios: AxiosInstance) => {
+    getWorkspacesWithPaging: (page: number, size: number) => Promise<WorkspaceObjectModel.IWorkspaceResponse>;
+};
+
 // @public (undocumented)
 export const tigerWorkspaceModelClientFactory: (axios: AxiosInstance) => WorkspaceModelControllerApiInterface;
 
@@ -2801,6 +2808,35 @@ export interface WorkspaceModelControllerApiInterface {
         organizationId?: string;
         analyticsObject?: AnalyticsObject;
     }, options?: any): AxiosPromise<AnalyticsObject>;
+}
+
+// @public (undocumented)
+export namespace WorkspaceObjectModel {
+    // (undocumented)
+    export interface IWorkspace {
+        // (undocumented)
+        attributes: {
+            name: string;
+        };
+        // (undocumented)
+        id: string;
+        // (undocumented)
+        links: {
+            self: string;
+        };
+    }
+    // (undocumented)
+    export interface IWorkspaceParams {
+        // (undocumented)
+        page: number;
+        // (undocumented)
+        size: number;
+    }
+    // (undocumented)
+    export interface IWorkspaceResponse {
+        // (undocumented)
+        data: IWorkspace[];
+    }
 }
 
 // @public
