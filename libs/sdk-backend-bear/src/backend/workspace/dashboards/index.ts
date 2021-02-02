@@ -273,9 +273,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createWidgetAlert = async (alert: IWidgetAlertDefinition): Promise<IWidgetAlert> => {
-        const savedFilterContext = await this.createOrUpdateWidgetAlertFilterContext(alert);
+        const [savedFilterContext, dashboardUri] = await Promise.all([
+            this.createOrUpdateWidgetAlertFilterContext(alert),
+            objRefToUri(alert.dashboard, this.workspace, this.authCall),
+        ]);
         const alertWithSavedFilterContext: IWidgetAlertDefinition = {
             ...alert,
+            dashboard: uriRef(dashboardUri), // bear only supports uri refs here, so we need to make sure it gets uri
             filterContext: savedFilterContext,
         };
 

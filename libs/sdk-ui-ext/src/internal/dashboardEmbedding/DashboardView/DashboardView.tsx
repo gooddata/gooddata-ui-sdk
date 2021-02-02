@@ -186,12 +186,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                 <DashboardRenderer
                                     backend={backend}
                                     workspace={workspace}
-                                    dashboardRef={{
-                                        // TODO this is a hack to send "ambivalent" ref down as bear only understands uris...
-                                        identifier: dashboardData.identifier,
-                                        type: "analyticalDashboard",
-                                        uri: dashboardData.uri,
-                                    }}
+                                    dashboardRef={dashboard}
                                     dashboardViewLayout={dashboardData?.layout}
                                     filters={filters}
                                     filterContext={dashboardData.filterContext}
