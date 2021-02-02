@@ -94,7 +94,7 @@ export function generateHeaderMenuItemsGroups(
     const dataItemLink =
         canManageProject && hasNoDataSet
             ? `/admin/connect/#/projects/${workspaceId}/datasource`
-            : `/admin/modeler/#/projects/${workspaceId}`;
+            : `/modeler/#/projects/${workspaceId}`;
     const dataItem = {
         key: "gs.header.data",
         className: "s-menu-data",
