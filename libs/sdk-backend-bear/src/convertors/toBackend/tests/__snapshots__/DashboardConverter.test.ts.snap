@@ -330,6 +330,30 @@ Object {
 }
 `;
 
+exports[`dashboard converter convert widget should convert kpi widget with drilling 1`] = `
+Object {
+  "kpi": Object {
+    "content": Object {
+      "comparisonDirection": "growIsGood",
+      "comparisonType": "lastYear",
+      "dateDataSet": undefined,
+      "drillTo": Object {
+        "projectDashboard": "oldDashboardUri",
+        "projectDashboardTab": "tab1",
+      },
+      "ignoreDashboardFilters": Array [],
+      "metric": "/measure",
+    },
+    "meta": Object {
+      "identifier": "widgetKpi",
+      "summary": "",
+      "title": "widgetKpi",
+      "uri": "/gdc/md/obj/widgetKpi",
+    },
+  },
+}
+`;
+
 exports[`dashboard converter convert widget should convert visualization widget 1`] = `
 Object {
   "visualizationWidget": Object {

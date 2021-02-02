@@ -334,6 +334,15 @@ export function convertDrill(
 export function convertDrill(
     drill: DrillDefinition,
 ): GdcKpi.IKpiProjectDashboardLink | GdcVisualizationWidget.IDrillDefinition {
+    if (isDrillToLegacyDashboard(drill)) {
+        const { tab } = drill;
+        const kpiDrill: GdcKpi.IKpiProjectDashboardLink = {
+            projectDashboard: refToUri(drill.target),
+            projectDashboardTab: tab,
+        };
+        return kpiDrill;
+    }
+
     const {
         origin: { measure },
     } = drill;
@@ -385,13 +394,6 @@ export function convertDrill(
         };
 
         return drillToAttributeUrl;
-    } else if (isDrillToLegacyDashboard(drill)) {
-        const { tab } = drill;
-        const kpiDrill: GdcKpi.IKpiProjectDashboardLink = {
-            projectDashboard: refToUri(drill.target),
-            projectDashboardTab: tab,
-        };
-        return kpiDrill;
     }
 
     throw new UnexpectedError("Unable to convert unknown drill!");
