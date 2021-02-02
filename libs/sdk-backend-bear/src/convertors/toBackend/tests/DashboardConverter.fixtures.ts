@@ -6,6 +6,7 @@ import {
     ITempFilterContext,
     IWidget,
 } from "@gooddata/sdk-backend-spi";
+import { uriRef } from "@gooddata/sdk-model";
 
 const createObjectMeta = (id: string) => {
     const uri = `/gdc/md/obj/${id}`;
@@ -127,6 +128,22 @@ export const widgetKpi: IWidget = {
     },
     type: "kpi",
     drills: [],
+};
+
+export const widgetKpiWithDrilling: IWidget = {
+    ...widgetKpi,
+    drills: [
+        {
+            type: "drillToLegacyDashboard",
+            origin: {
+                measure: uriRef("someMeasureUri"),
+                type: "drillFromMeasure",
+            },
+            target: uriRef("oldDashboardUri"),
+            transition: "in-place",
+            tab: "tab1",
+        },
+    ],
 };
 
 const columns: IDashboardLayoutColumn[] = [

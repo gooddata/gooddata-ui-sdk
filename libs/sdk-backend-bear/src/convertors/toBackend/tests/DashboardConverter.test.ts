@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { convertDashboard, convertFilterContext, convertWidget } from "../DashboardConverter";
 import {
@@ -12,6 +12,7 @@ import {
     dashboardTempFilterContext,
     widgetHeadline,
     widgetKpi,
+    widgetKpiWithDrilling,
 } from "./DashboardConverter.fixtures";
 
 describe("dashboard converter", () => {
@@ -55,6 +56,11 @@ describe("dashboard converter", () => {
 
         it("should convert kpi widget", () => {
             const convertedDashboard = convertWidget(widgetKpi);
+            expect(convertedDashboard).toMatchSnapshot();
+        });
+
+        it("should convert kpi widget with drilling", () => {
+            const convertedDashboard = convertWidget(widgetKpiWithDrilling);
             expect(convertedDashboard).toMatchSnapshot();
         });
     });
