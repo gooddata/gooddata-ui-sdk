@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "Löschen des Alarms fehlgeschlagen. Bitte versuchen Sie es noch einmal.",
     "kpiAlertDialog.brokenAlert": "Gebrochene Warnmeldung",
     "kpiAlertDialog.brokenAlertAppeal": "Um den richtigen KPI-Wert anzuzeigen, aktivieren Sie die Filter in dieser Warnmeldung. Sie können die Warnmeldung auch entfernen.",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "Datum",
     "kpiAlertDialog.removedFilters": "Die Filter wurden aus dem Dashboard entfernt",
     "kpiAlertDialog.ignoredFilters": "Unbekannte Filter für diesen KPI",
     "kpiAlertDialog.updateTitle": "Aktualisieren",

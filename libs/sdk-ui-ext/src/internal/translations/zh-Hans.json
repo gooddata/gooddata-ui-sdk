@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "删除警报失败。请重试。",
     "kpiAlertDialog.brokenAlert": "损坏的警报",
     "kpiAlertDialog.brokenAlertAppeal": "要查看正确的 KPI 值，请更新此警报中的筛选器。您也可以删除此警报。",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "日期",
     "kpiAlertDialog.removedFilters": "从控制面板删除的筛选器",
     "kpiAlertDialog.ignoredFilters": "忽略此 KPI 的筛选器",
     "kpiAlertDialog.updateTitle": "更新",

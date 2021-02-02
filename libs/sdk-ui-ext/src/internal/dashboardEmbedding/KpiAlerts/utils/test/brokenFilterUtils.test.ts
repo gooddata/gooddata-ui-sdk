@@ -226,7 +226,7 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
 
 describe("enrichBrokenAlertsInfo", () => {
     const DEFAULT_DATE_TITLE = "Date";
-    const intl = createIntlMock({ "configurationPanel.date": DEFAULT_DATE_TITLE });
+    const intl = createIntlMock({ "kpiAlertDialog.brokenAlertDefaultDateLabel": DEFAULT_DATE_TITLE });
     const dateFormat = "yyyy/MM/dd";
     const dateDataSets: IDataSetMetadataObject[] = [
         {

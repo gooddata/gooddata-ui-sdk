@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "Error al eliminar la alerta. Vuelva a intentarlo más tarde.",
     "kpiAlertDialog.brokenAlert": "Alerta rota",
     "kpiAlertDialog.brokenAlertAppeal": "Para ver el valor KPI correcto, actualice los filtros de esta alerta. También puede quitar la alerta.",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "Fecha",
     "kpiAlertDialog.removedFilters": "Filtros quitados del panel",
     "kpiAlertDialog.ignoredFilters": "Filtros omitidos para este kpi",
     "kpiAlertDialog.updateTitle": "Actualizar",

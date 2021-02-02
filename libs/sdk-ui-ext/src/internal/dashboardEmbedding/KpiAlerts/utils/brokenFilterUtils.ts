@@ -41,13 +41,13 @@ export interface IBrokenAlertFilterBasicInfo<TFilter extends FilterContextItem =
     brokenType: BrokenAlertType;
 }
 
-function isBrokenAlertDateFilterInfo(
+export function isBrokenAlertDateFilterInfo(
     item: IBrokenAlertFilterBasicInfo,
 ): item is IBrokenAlertFilterBasicInfo<IDashboardDateFilter> {
     return isDashboardDateFilter(item.alertFilter);
 }
 
-function isBrokenAlertAttributeFilterInfo(
+export function isBrokenAlertAttributeFilterInfo(
     item: IBrokenAlertFilterBasicInfo,
 ): item is IBrokenAlertFilterBasicInfo<IDashboardAttributeFilter> {
     return isDashboardAttributeFilter(item.alertFilter);
@@ -196,7 +196,9 @@ function enrichBrokenDateFilter(
         type: "date",
         brokenType: brokenType,
         dateFilterTitle,
-        title: matchingDateDataset?.title ?? intl.formatMessage({ id: "configurationPanel.date" }), // TODO: migrate this default to SDK with a more appropriate name
+        title:
+            matchingDateDataset?.title ??
+            intl.formatMessage({ id: "kpiAlertDialog.brokenAlertDefaultDateLabel" }),
     };
 }
 
