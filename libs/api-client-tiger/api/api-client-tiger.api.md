@@ -985,6 +985,9 @@ export interface ITigerClient {
     workspaceModel: ReturnType<typeof tigerWorkspaceModelClientFactory>;
 }
 
+// @public (undocumented)
+export const JSON_API_HEADER_VALUE = "application/vnd.gooddata.api+json";
+
 // @public
 export interface JsonApiACL {
     attributes?: JsonApiACLAttributes;
@@ -1426,6 +1429,12 @@ export interface JsonApiFilterContextWithLinks {
     relationships?: JsonApiFilterContextRelationships;
     type: string;
 }
+
+// @public (undocumented)
+export const jsonApiHeaders: {
+    Accept: string;
+    "Content-Type": string;
+};
 
 // @public
 export interface JsonApiLabel {

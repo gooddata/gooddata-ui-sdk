@@ -6,6 +6,7 @@ import {
     JsonApiAttribute,
     JsonApiDataset,
     ITigerClient,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     convertAttribute,
@@ -83,7 +84,7 @@ export async function loadDateDataSets(
             workspaceId: _projectId,
         },
         {
-            headers: { Accept: "application/vnd.gooddata.api+json" },
+            headers: jsonApiHeaders,
             query: {
                 include: "labels,datasets",
                 // TODO - update after paging is fixed in MDC-354

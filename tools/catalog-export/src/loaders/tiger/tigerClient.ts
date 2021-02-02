@@ -1,11 +1,6 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { ITigerClient, newAxios, tigerClientFactory } from "@gooddata/api-client-tiger";
-
-export const DefaultGetOptions = {
-    contentType: "application/json" as const,
-    include: "tags",
-};
 
 /**
  * Creates a new tiger client that will connect to the provided hostname (include schema in the hostname) and

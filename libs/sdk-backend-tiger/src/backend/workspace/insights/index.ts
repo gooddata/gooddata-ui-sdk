@@ -22,7 +22,7 @@ import {
     insightSetFilters,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
-import { VisualizationObjectModel } from "@gooddata/api-client-tiger";
+import { VisualizationObjectModel, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
     visualizationObjectsItemToInsight,
@@ -34,11 +34,6 @@ import { convertVisualizationObject } from "../../../convertors/fromBackend/Visu
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
-
-const defaultHeaders = {
-    Accept: "application/vnd.gooddata.api+json",
-    "Content-Type": "application/vnd.gooddata.api+json",
-};
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -82,7 +77,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                     ...(options?.limit ? { pageLimit: options?.limit } : {}),
                     pageOffset: options?.offset ?? 0,
                     ...((filter ? { filter } : {}) as any),
@@ -135,7 +130,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             ),
         );
@@ -173,7 +168,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     },
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });
@@ -200,7 +195,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     },
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });

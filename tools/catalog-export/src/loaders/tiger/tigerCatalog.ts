@@ -5,6 +5,7 @@ import {
     JsonApiFactList,
     JsonApiMetricList,
     ITigerClient,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
@@ -63,7 +64,7 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
                 workspaceId: _projectId,
             },
             {
-                headers: { Accept: "application/vnd.gooddata.api+json" },
+                headers: jsonApiHeaders,
             },
         ),
         tigerClient.workspaceModel.getEntitiesFacts(
@@ -71,7 +72,7 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
                 workspaceId: _projectId,
             },
             {
-                headers: { Accept: "application/vnd.gooddata.api+json" },
+                headers: jsonApiHeaders,
             },
         ),
         tigerClient.workspaceModel.getEntitiesAttributes(
@@ -79,7 +80,7 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
                 workspaceId: _projectId,
             },
             {
-                headers: { Accept: "application/vnd.gooddata.api+json" },
+                headers: jsonApiHeaders,
                 query: {
                     include: "labels",
                     // TODO - update after paging is fixed in MDC-354

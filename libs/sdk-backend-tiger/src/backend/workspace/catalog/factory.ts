@@ -18,6 +18,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
+import { jsonApiHeaders } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -90,7 +91,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                 },
             ),
         );
@@ -107,7 +108,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 },
                 {
                     query: { tags: includeTags.join(",") },
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                 },
             ),
         );

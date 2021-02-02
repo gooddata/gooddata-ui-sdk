@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { isVisualizationObjectsItem } from "@gooddata/api-client-tiger";
+import { isVisualizationObjectsItem, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
     IDashboardDefinition,
@@ -27,11 +27,6 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToIdentifier } from "../../../utils/api";
 
-const defaultHeaders = {
-    Accept: "application/vnd.gooddata.api+json",
-    "Content-Type": "application/vnd.gooddata.api+json",
-};
-
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
@@ -43,7 +38,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });
@@ -63,7 +58,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     id,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                     include: "filterContexts",
                 },
             );
@@ -93,7 +88,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     id,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                     params: {
                         include: "visualizationObjects,filterContexts",
                     },
@@ -141,7 +136,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     },
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });
@@ -163,7 +158,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             ),
         );
@@ -242,7 +237,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     },
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });
@@ -259,7 +254,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     id: filterContextId,
                 },
                 {
-                    headers: defaultHeaders,
+                    headers: jsonApiHeaders,
                 },
             );
         });

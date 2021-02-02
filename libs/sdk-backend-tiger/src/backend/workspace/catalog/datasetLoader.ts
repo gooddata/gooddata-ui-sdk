@@ -8,6 +8,7 @@ import {
     JsonApiLabelWithLinks,
     JsonApiAttributeWithLinks,
     JsonApiDatasetWithLinks,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import {
@@ -124,7 +125,7 @@ export async function loadAttributesAndDateDatasets(
             workspaceId: workspaceId,
         },
         {
-            headers: { Accept: "application/vnd.gooddata.api+json" },
+            headers: jsonApiHeaders,
             query: {
                 include: "labels,datasets",
                 // TODO - update after paging is fixed in MDC-354

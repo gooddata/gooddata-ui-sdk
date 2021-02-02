@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 
 /**
  * Load insights that are stored in workspace metadata so that their links can be included
@@ -16,7 +16,7 @@ export async function loadInsights(_projectId: string, tigerClient: ITigerClient
             workspaceId: _projectId,
         },
         {
-            headers: { Accept: "application/vnd.gooddata.api+json" },
+            headers: jsonApiHeaders,
         },
     );
 

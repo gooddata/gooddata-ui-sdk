@@ -6,6 +6,7 @@ import {
     JsonApiLabel,
     JsonApiMetric,
     JsonApiMetricDocument,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -26,7 +27,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                     query: { include: "facts,metrics,attributes,labels" },
                 },
             ),

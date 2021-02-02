@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { tigerExecutionClientFactory } from "./execution";
 import {
@@ -78,3 +78,10 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
 const defaultTigerClient = tigerClientFactory(defaultAxios);
 
 export default defaultTigerClient;
+
+export const JSON_API_HEADER_VALUE = "application/vnd.gooddata.api+json";
+
+export const jsonApiHeaders = {
+    Accept: JSON_API_HEADER_VALUE,
+    "Content-Type": JSON_API_HEADER_VALUE,
+};
