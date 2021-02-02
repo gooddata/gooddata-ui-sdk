@@ -4,9 +4,8 @@ import isEqual from "lodash/isEqual";
 import last from "lodash/last";
 import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import ReactMessage from "@gooddata/goodstrap/lib/Messages/Message";
-import MediaQuery, { MediaQueryMatchers } from "react-responsive";
 import Spinner from "@gooddata/goodstrap/lib/core/Spinner";
-import { Button, Input, Typography, Overlay } from "@gooddata/sdk-ui-kit";
+import { Button, Input, Typography, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import {
     IDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -15,7 +14,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { IDateFilter, IFilter, isAttributeFilter, isDateFilter } from "@gooddata/sdk-model";
 
-import { IS_MOBILE_DEVICE } from "./mediaQueries";
 import { KpiAlertOperationStatus } from "../../types";
 
 import { KpiAlertDialogDateRange } from "./KpiAlertDialogDateRange";
@@ -25,12 +23,6 @@ import { KpiAlertDialogBrokenFilters } from "./KpiAlertDialogBrokenFilters/KpiAl
 import { thresholdFromDecimalToPercent, thresholdFromPercentToDecimal } from "../utils/alertThresholdUtils";
 import { areKpiAlertFiltersSameAsDashboard } from "./utils/filterUtils";
 import { KpiAlertDialogWhenTriggeredPicker } from "./KpiAlertDialogWhenTriggeredPicker";
-
-const DEFAULT_MEDIA_QUERY_VALUES: MediaQueryMatchers = {
-    type: "screen",
-    width: window.innerWidth,
-    height: window.innerHeight,
-};
 
 export interface IKpiAlertDialogProps {
     alert?: IWidgetAlertDefinition;
@@ -66,6 +58,11 @@ interface IKpiAlertDialogState {
 }
 
 const DEFAULT_WHEN_TRIGGERED = "aboveThreshold";
+
+const KpiAlertDialogWrapper: React.FC<{ children: (isMobile: boolean) => JSX.Element }> = ({ children }) => {
+    const isMobile = useMediaQuery("mobileDevice");
+    return children(isMobile);
+};
 
 export class KpiAlertDialog extends Component<
     IKpiAlertDialogProps & WrappedComponentProps,
@@ -122,7 +119,7 @@ export class KpiAlertDialog extends Component<
 
     render(): React.ReactNode {
         return (
-            <MediaQuery query={IS_MOBILE_DEVICE} device={DEFAULT_MEDIA_QUERY_VALUES}>
+            <KpiAlertDialogWrapper>
                 {(isMobile) => {
                     return (
                         <Overlay
@@ -138,7 +135,7 @@ export class KpiAlertDialog extends Component<
                         </Overlay>
                     );
                 }}
-            </MediaQuery>
+            </KpiAlertDialogWrapper>
         );
     }
 
