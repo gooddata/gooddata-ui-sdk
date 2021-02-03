@@ -849,6 +849,41 @@
         "comment": "In '{n, plural, one {YEAR} other {#Y}}' translate only uppercase words. Keep number placeholder '#' as is. Do not put dot character after period abbreviation (correct '{#y}', wrong '{#y.}').",
         "limit": 0
     },
+    "filters.alertMessage.relativePreset": {
+        "value": "in {calendarIcon} {range}",
+        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.inPeriod": {
+        "value": "in period {calendarIcon} {range}",
+        "comment": "Don't translate placeholders '{calendarIcon}', '{range}'. Example text: 'in period (calendar) from 2 months ago to 2 months ahead'",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.day": {
+        "value": "{n, plural, =0 {this day} =1 {last day} other {last # days}}",
+        "comment": "In '{n, plural, =0 {THIS DAY} =1 {LAST DAY} other {LAST # DAYS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.week": {
+        "value": "{n, plural, =0 {this week} =1 {last week} other {last # weeks}}",
+        "comment": "In '{n, plural, =0 {THIS WEEK} =1 {LAST WEEK} other {LAST # WEEKS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.month": {
+        "value": "{n, plural, =0 {this month} =1 {last month} other {last # months}}",
+        "comment": "In '{n, plural, =0 {THIS MONTH} =1 {LAST MONTH} other {LAST # MONTHS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.quarter": {
+        "value": "{n, plural, =0 {this quarter} =1 {last quarter} other {last # quarters}}",
+        "comment": "In '{n, plural, =0 {THIS QUARTER} =1 {LAST QUARTER} other {LAST # QUARTERS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
+    "filters.alertMessage.relativePreset.range.year": {
+        "value": "{n, plural, =0 {this year} =1 {last year} other {last # years}}",
+        "comment": "In '{n, plural, =0 {THIS YEAR} =1 {LAST YEAR} other {LAST # YEARS}}' translate only uppercase words. Keep number placeholder '#' as is.",
+        "limit": 0
+    },
     "kpi.noData": {
         "value": "No data for current filter settings. Try changing the filters.",
         "comment": "",
@@ -981,6 +1016,161 @@
     },
     "gs.date.at": {
         "value": "at",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.title": {
+        "value": "Set an alert on KPI change",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.example": {
+        "value": "e.g.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.unverifiedEmail": {
+        "value": "Sorry, you can't set an alert. Make sure your email is verified. If that doesn't help, ask your administrator to update your permissions.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpi.alertBox.disabledInReadOnly": {
+        "value": "Alerting is disabled in the read-only mode",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.delete": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.deleting": {
+        "value": "Deleting…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "kpiAlertDialog.emailMe": {
+        "value": "Email me",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.emailMeWhen": {
+        "value": "{emailMe} when this KPI is",
+        "comment": "Don't translate placeholder '{emailMe}'.",
+        "limit": 0
+    },
+    "kpiAlertDialog.emailInfo": {
+        "value": "Email will be sent to {userEmail}",
+        "comment": "Don't translate placeholder '{userEmail}'.",
+        "limit": 0
+    },
+    "kpiAlertDialog.invalidNumber": {
+        "value": "<strong>This number is not valid.</strong><br />Double-check it and try again.",
+        "comment": "Do not translate HTML markup enclosed in <>.",
+        "limit": 0
+    },
+    "kpiAlertDialog.filtersDiffer": {
+        "value": "KPI is now filtered differently than when the alert was set up.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.filtersApply": {
+        "value": "Apply alert filters to dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.savingFailed": {
+        "value": "Saving alert failed. Please try again.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.deleteingFailed": {
+        "value": "Deleting alert failed. Please try again.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.brokenAlert": {
+        "value": "Broken alert",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.brokenAlertAppeal": {
+        "value": "To see correct KPI value, update the filters in this alert. You can also remove the alert.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.removedFilters": {
+        "value": "Filters removed from dashboard",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.ignoredFilters": {
+        "value": "Filters ignored for this kpi",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.updateTitle": {
+        "value": "Update",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.updateBrokenTitle": {
+        "value": "Update filters",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.updatingTitle": {
+        "value": "Updating…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "kpiAlertDialog.updateBrokenFailed": {
+        "value": "Updating filters failed. Please try again.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.setTitle": {
+        "value": "Set alert",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.settingTitle": {
+        "value": "Setting…",
+        "comment": "Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
+    "kpiAlertDialog.threshold.above": {
+        "value": "above",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.threshold.below": {
+        "value": "below",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.withAttributeFilters": {
+        "value": "{numFilters} more {numFilters, select, 1 {filter} other {filters}} applied",
+        "comment": "Don't translate placeholder '{numFilters}'. In '{numFilters, select, 1 {FILTER} other {FILTERS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "kpiAlertDialog.unsaved.changes.headline": {
+        "value": "Leave the KPI dashboard?",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.unsaved.changes.message": {
+        "value": "There are unpublished changes that will be lost.",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.unsaved.changes.leave.anyway": {
+        "value": "Leave anyway",
+        "comment": "",
+        "limit": 0
+    },
+    "kpiAlertDialog.unsaved.changes.stay": {
+        "value": "Stay",
         "comment": "",
         "limit": 0
     }

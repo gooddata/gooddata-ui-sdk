@@ -1695,14 +1695,11 @@ export interface InputWithNumberFormatState {
 }
 
 // @internal (undocumented)
-export class InsightListItem extends Component<IInsightListItemProps> {
-    // (undocumented)
-    componentDidUpdate(prevProps: IInsightListItemProps): void;
-    // (undocumented)
-    handleClickDelete: (e: React_2.MouseEvent) => void;
-    // (undocumented)
-    render(): JSX.Element;
-    }
+export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightListItemProps & WrappedComponentProps<"intl">, "title" | "updated" | "width" | "type" | "onClick" | "isSelected" | "isLoading" | "isLocked" | "onDelete"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IInsightListItemProps & WrappedComponentProps<"intl">>;
+};
 
 // @internal (undocumented)
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;

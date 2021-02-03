@@ -5,18 +5,17 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { isWidget, isDashboardLayoutContent, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer";
-import { DashboardItemKpi } from "../DashboardItem/DashboardItemKpi";
 import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardWidgetRenderProps } from "./types";
+import { useAlerts } from "./DashboardAlertsContext";
 
 export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (props) => {
     const {
         ErrorComponent,
         LoadingComponent,
-        alerts,
         backend,
         drillableItems,
         filters,
@@ -28,6 +27,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
         widgetClass,
         insight,
         widget,
+        dashboardRef,
     } = props;
 
     if (!isDashboardLayoutContent) {
@@ -35,6 +35,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
             "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
         );
     }
+    const { alerts } = useAlerts();
 
     if (isWidget(widget)) {
         if (widget.type === "insight") {
@@ -74,24 +75,20 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
 
         return (
             <DashboardItem className="type-kpi" screen={screen}>
-                <DashboardItemKpi renderHeadline={() => <DashboardItemHeadline title={widget.title} />}>
-                    {({ clientWidth }) => (
-                        <KpiView
-                            kpiWidget={widget}
-                            filterContext={filterContext}
-                            alert={relevantAlert}
-                            backend={backend}
-                            workspace={workspace}
-                            filters={filters}
-                            drillableItems={drillableItems}
-                            onDrill={onDrill}
-                            onError={onError}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
-                            clientWidth={clientWidth}
-                        />
-                    )}
-                </DashboardItemKpi>
+                <KpiView
+                    dashboardRef={dashboardRef}
+                    kpiWidget={widget}
+                    filterContext={filterContext}
+                    alert={relevantAlert}
+                    backend={backend}
+                    workspace={workspace}
+                    filters={filters}
+                    drillableItems={drillableItems}
+                    onDrill={onDrill}
+                    onError={onError}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
             </DashboardItem>
         );
     }

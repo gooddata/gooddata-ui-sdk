@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { granularityIntlCodes } from "./constants/i18n";
 import { defaultDateFilterOptions } from "./constants/config";
 import { validateFilterOption } from "./validation/OptionValidation";
@@ -8,6 +8,8 @@ import {
     getDateFilterTitle,
     getDateFilterRepresentation,
     getDateFilterTitleUsingTranslator,
+    formatAbsoluteDateRange,
+    formatRelativeDateRange,
 } from "./utils/Translations/DateFilterTitle";
 import {
     DateFilter,
@@ -31,6 +33,8 @@ const DateFilterHelpers = {
     defaultDateFilterOptions,
     canExcludeCurrentPeriod,
     mapOptionToAfm,
+    formatAbsoluteDateRange,
+    formatRelativeDateRange,
 };
 
 // This is 1:1 reexported by root index.ts and is part of SDK's public API

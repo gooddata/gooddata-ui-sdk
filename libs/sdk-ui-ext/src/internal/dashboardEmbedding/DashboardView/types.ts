@@ -230,9 +230,9 @@ export interface IDashboardViewProps {
  * @alpha
  */
 export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProps<IDashboardLayoutContent> & {
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
+    dashboardRef: ObjRef;
     filters?: IFilter[];
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
@@ -251,9 +251,9 @@ export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProp
  * @alpha
  */
 export type IDashboardWidgetRenderProps = {
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
+    dashboardRef: ObjRef;
     filters?: IFilter[];
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;

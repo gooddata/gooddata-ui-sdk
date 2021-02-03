@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { Identifier, isIdentifierRef, isUriRef, ObjRef } from "../../objRef";
@@ -505,6 +505,21 @@ export function measureFormat(measure: IMeasure): string | undefined {
     invariant(measure, "measure must be specified");
 
     return measure.measure.format;
+}
+
+/**
+ * Gets a flag indicating whether a given measure has a format resulting in data being formatted as percentage
+ * @param measureOrFormat - measure or measure format to test
+ * @returns true if the measure format is in percent, false otherwise
+ * @public
+ * @remarks Measure format is considered to represent value in percent when
+ * A) format string has no conditional separators (i.e. no semicolons except a single one at the end);
+ *    otherwise the parsing would need access to a particular value.
+ * B) percentage symbol is found (not directly preceded by backslash)
+ */
+export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string): boolean {
+    const format = isMeasure(measureOrFormat) ? measureFormat(measureOrFormat) : measureOrFormat;
+    return !!format && /^([^;]*)%([^;]*)[;]*$/.test(format.trim().replace(/\\%/g, ""));
 }
 
 /**

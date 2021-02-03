@@ -3,7 +3,7 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-import ShortenedText from "@gooddata/goodstrap/lib/core/ShortenedText";
+import { ShortenedText } from "../ShortenedText";
 
 /**
  * @internal
@@ -36,7 +36,7 @@ export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
         );
     }
 
-    const classeNames = cx(
+    const classNames = cx(
         "gd-list-item",
         "gd-list-item-shortened",
         `s-${id}`,
@@ -53,7 +53,7 @@ export const DateDatasetsListItem: React.FC<IDateDatasetsListItemProps> = ({
     ];
 
     return (
-        <div className={classeNames} onClick={onClick}>
+        <div className={classNames} onClick={onClick}>
             <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>{title}</ShortenedText>
         </div>
     );

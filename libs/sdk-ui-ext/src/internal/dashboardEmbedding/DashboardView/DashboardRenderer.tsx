@@ -4,7 +4,6 @@ import {
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
-    IWidgetAlert,
     IWidget,
     isWidget,
     IDashboardLayoutContent,
@@ -31,8 +30,8 @@ import { IDashboardWidgetRenderer, IDashboardWidgetRenderProps } from "./types";
 import { DashboardWidgetRenderer } from "./DashboardWidgetRenderer";
 
 interface IDashboardRendererProps {
+    dashboardRef: ObjRef;
     dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
-    alerts: IWidgetAlert[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     filters?: IFilter[];
@@ -51,7 +50,6 @@ interface IDashboardRendererProps {
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardViewLayout,
-    alerts,
     filters,
     filterContext,
     backend,
@@ -66,6 +64,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     getInsightByRef,
     widgetRenderer,
     areSectionHeadersEnabled,
+    dashboardRef,
 }) {
     const isThemeLoading = useThemeIsLoading();
 
@@ -113,9 +112,9 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     ...computedRenderProps,
                     widgetClass,
                     insight,
+                    dashboardRef,
                     ErrorComponent,
                     LoadingComponent,
-                    alerts,
                     drillableItems,
                     filters,
                     filterContext,

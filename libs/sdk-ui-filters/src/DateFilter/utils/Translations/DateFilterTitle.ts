@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import format from "date-fns/format";
 import capitalize from "lodash/capitalize";
 import isEqual from "lodash/isEqual";
@@ -21,7 +21,11 @@ import { DEFAULT_DATE_FORMAT } from "../../constants/Platform";
 
 export const formatAbsoluteDate = (date: Date, dateFormat: string): string => format(date, dateFormat);
 
-const formatAbsoluteDateRange = (from: Date | string, to: Date | string, dateFormat: string): string => {
+export const formatAbsoluteDateRange = (
+    from: Date | string,
+    to: Date | string,
+    dateFormat: string,
+): string => {
     const fromDate = convertPlatformDateStringToDate(from);
     const toDate = convertPlatformDateStringToDate(to);
     const fromTitle = formatAbsoluteDate(fromDate, dateFormat);
@@ -117,7 +121,7 @@ const relativeDateRangeFormatters: Array<{
     },
 ];
 
-const formatRelativeDateRange = (
+export const formatRelativeDateRange = (
     from: number,
     to: number,
     granularity: DateFilterGranularity,

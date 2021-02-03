@@ -1,7 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { isMeasureFormatInPercent } from "@gooddata/sdk-model";
 import { IAxis } from "../../typings/unsafe";
 import { isBarChart, isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, unwrap } from "../_util/common";
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
@@ -74,7 +75,7 @@ export function getXAxes(
 function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
     const percentageFormat = getMeasureFormat(
         measureGroupItems.find((measure: any) => {
-            return isPercentage(getMeasureFormat(measure));
+            return isMeasureFormatInPercent(getMeasureFormat(measure));
         }),
     );
     return percentageFormat !== ""
@@ -86,10 +87,6 @@ function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
 
 function getMeasureFormat(measure: any) {
     return get(measure, "format", "");
-}
-
-function isPercentage(format: string) {
-    return format.includes("%");
 }
 
 export function getYAxes(

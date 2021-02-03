@@ -64,6 +64,8 @@ export const DateFilterHelpers: {
     defaultDateFilterOptions: import("./interfaces").IDateFilterOptionsByType;
     canExcludeCurrentPeriod: (dateFilterOption: import("./interfaces").DateFilterOption) => boolean;
     mapOptionToAfm: (value: import("./interfaces").DateFilterOption, dateDataSet: import("@gooddata/sdk-model").ObjRef, excludeCurrentPeriod: boolean) => import("@gooddata/sdk-model").IDateFilter;
+    formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: import("@gooddata/sdk-backend-spi").DateFilterGranularity, translator: import("./utils/Translations/Translators").IDateAndMessageTranslator) => string;
 };
 
 // @beta

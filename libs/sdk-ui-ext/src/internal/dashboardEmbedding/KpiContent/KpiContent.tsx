@@ -7,7 +7,7 @@ import { IFilter, isAbsoluteDateFilter, isAllTimeDateFilter, isDateFilter } from
 
 import KpiValue from "./KpiValue";
 import KpiPop from "./KpiPop";
-import { IKpiResult } from "./types";
+import { IKpiResult } from "../types";
 import { isDateFilterIrrelevant } from "./utils/filter";
 import { getKpiPopLabel } from "./utils/translations";
 

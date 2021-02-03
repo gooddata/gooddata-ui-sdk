@@ -1,14 +1,14 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component, createRef } from "react";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
-import ShortenedText from "@gooddata/goodstrap/lib/core/ShortenedText";
 import { getDateTimeConfig } from "@gooddata/goodstrap/lib/data/date";
 
 import { InsightListItemDate } from "./InsightListItemDate";
 import { Button } from "../Button";
+import { ShortenedText } from "../ShortenedText";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";
@@ -48,7 +48,7 @@ export interface IInsightListItemProps {
 /**
  * @internal
  */
-export class InsightListItem extends Component<IInsightListItemProps> {
+export class InsightListItemCore extends Component<IInsightListItemProps & WrappedComponentProps> {
     private shortenedTextRef = createRef<ShortenedText>();
 
     public render(): JSX.Element {
@@ -78,7 +78,9 @@ export class InsightListItem extends Component<IInsightListItemProps> {
                     <div className="gd-visualizations-list-item-content-name">
                         {this.renderLock()}
                         <ShortenedText ref={this.shortenedTextRef} tooltipAlignPoints={tooltipAlignPoints}>
-                            {isLoading ? <FormattedMessage id="gs.visualizationsList.loading" /> : title}
+                            {isLoading
+                                ? this.props.intl.formatMessage({ id: "gs.visualizationsList.loading" })
+                                : title}
                         </ShortenedText>
                     </div>
                     <div className="gd-visualizations-list-item-content-date">
@@ -90,7 +92,7 @@ export class InsightListItem extends Component<IInsightListItemProps> {
         );
     }
 
-    public componentDidUpdate(prevProps: IInsightListItemProps): void {
+    public componentDidUpdate(prevProps: IInsightListItemProps & WrappedComponentProps): void {
         if (prevProps.width !== this.props.width && this.shortenedTextRef.current) {
             // TODO INE remove any when GD has correct typings
             (this.shortenedTextRef.current as any).recomputeShortening();
@@ -143,3 +145,8 @@ export class InsightListItem extends Component<IInsightListItemProps> {
         );
     };
 }
+
+/**
+ * @internal
+ */
+export const InsightListItem = injectIntl(InsightListItemCore);

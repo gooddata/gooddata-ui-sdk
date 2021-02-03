@@ -14,7 +14,11 @@ import ptPT from "../translations/pt-PT.json";
 import zhHans from "../translations/zh-Hans.json";
 import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
-const messagesMap = {
+export interface ITranslations {
+    [key: string]: string;
+}
+
+export const messagesMap: { [locale: string]: ITranslations } = {
     "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,

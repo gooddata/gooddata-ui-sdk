@@ -8,7 +8,7 @@ import {
     IWidget,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ObjRef } from "@gooddata/sdk-model";
 import {
     IErrorProps,
     ILoadingProps,
@@ -26,6 +26,11 @@ import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig } from "../DashboardViewConfigContext";
 
 export interface IKpiViewProps {
+    /**
+     * Ref to the dashboard this KPI is part of.
+     */
+    dashboardRef: ObjRef;
+
     /**
      * The KPI to execute and display.
      */
@@ -86,11 +91,6 @@ export interface IKpiViewProps {
      * Component to render while the KPI is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
-
-    /**
-     * Width of the parent element as measured when rendered.
-     */
-    clientWidth?: number;
 }
 
 /**
@@ -98,6 +98,7 @@ export interface IKpiViewProps {
  * @internal
  */
 export const KpiView: React.FC<IKpiViewProps> = ({
+    dashboardRef,
     kpiWidget,
     alert,
     filters,
@@ -109,7 +110,6 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     workspace,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
-    clientWidth,
 }) => {
     invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
@@ -140,6 +140,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
 
     return (
         <KpiExecutor
+            dashboardRef={dashboardRef}
             kpiWidget={kpiWidget}
             primaryMeasure={result.primaryMeasure}
             secondaryMeasure={result.secondaryMeasure}
@@ -154,7 +155,6 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             workspace={workspace}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
-            clientWidth={clientWidth}
         />
     );
 };
