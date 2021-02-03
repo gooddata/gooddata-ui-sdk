@@ -1,14 +1,14 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback } from "react";
 import { IDrillEventContext, OnFiredDrillEvent } from "@gooddata/sdk-ui";
-import { ISeparators, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
+import { ISeparators, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 
 import { KpiContent } from "../../KpiContent";
 import { IKpiResult } from "../../types";
 
 interface IKpiRendererProps {
-    kpi: IWidgetDefinition;
+    kpi: IKpiWidget | IKpiWidgetDefinition;
     kpiResult: IKpiResult | null;
     filters: IFilter[];
     separators: ISeparators;

@@ -63,7 +63,7 @@ export const BearToBackendConvertors: {
     convertInsightDefinition: (insight: import("@gooddata/sdk-model").IInsightDefinition) => import("@gooddata/api-model-bear").GdcVisualizationObject.IVisualizationObject;
     toAfmExecution: (def: import("@gooddata/sdk-model").IExecutionDefinition) => import("@gooddata/api-model-bear").GdcExecuteAFM.IExecution;
     convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail) => import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail;
-    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IWidgetDefinition | import("@gooddata/sdk-backend-spi").IWidget) => import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget | import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI;
+    convertWidget: (widget: import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidget | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition) => import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget | import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI;
     convertResponsiveSize: (size: import("@gooddata/sdk-backend-spi").IFluidLayoutSize) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutSize;
     convertLayoutColumnSize: (column: import("@gooddata/sdk-backend-spi").IFluidLayoutSizeByScreen) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutColSize;
 };

@@ -902,6 +902,37 @@ export interface IInsightsQueryOptions {
 // @public
 export type IInsightsQueryResult = IPagedResource<IInsight>;
 
+// @alpha (undocumented)
+export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {
+}
+
+// @alpha (undocumented)
+export interface IInsightWidgetBase extends IWidgetBase {
+    readonly insight: ObjRef;
+    readonly properties?: VisualizationProperties;
+    // (undocumented)
+    readonly type: "insight";
+}
+
+// @alpha (undocumented)
+export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha (undocumented)
+export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {
+}
+
+// @alpha (undocumented)
+export interface IKpiWidgetBase extends IWidgetBase {
+    readonly kpi: ILegacyKpi;
+    // (undocumented)
+    readonly type: "kpi";
+}
+
+// @alpha (undocumented)
+export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
 // @alpha
 export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
 
@@ -1229,6 +1260,12 @@ export function isFluidLayout<TContent>(obj: unknown): obj is IFluidLayout<TCont
 export const isFluidLayoutEmpty: (layout: IFluidLayout<any>) => boolean;
 
 // @alpha
+export function isInsightWidget(obj: unknown): obj is IInsightWidget;
+
+// @alpha
+export function isKpiWidget(obj: unknown): obj is IKpiWidget;
+
+// @alpha
 export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
 
 // @alpha
@@ -1501,8 +1538,7 @@ export interface IVariableMetadataObject extends IMetadataObject {
 }
 
 // @alpha (undocumented)
-export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {
-}
+export type IWidget = IKpiWidget | IInsightWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -1537,16 +1573,12 @@ export interface IWidgetBase {
     readonly description: string;
     readonly drills: DrillDefinition[];
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
-    readonly insight?: ObjRef;
-    readonly kpi?: ILegacyKpi;
-    readonly properties?: VisualizationProperties;
     readonly title: string;
     readonly type: WidgetType;
 }
 
 // @alpha
-export interface IWidgetDefinition extends IWidgetBase, Partial<IDashboardObjectIdentity> {
-}
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
 
 // @alpha
 export interface IWidgetReferences {
@@ -1868,6 +1900,9 @@ export function walkLayout(layout: IDashboardLayout, { rowCallback, columnCallba
     columnCallback?: (column: IDashboardLayoutColumn, columnPath: LayoutPath) => void;
     widgetCallback?: (widget: IWidget | IWidgetDefinition, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
+
+// @alpha
+export function widgetId(widget: IWidget): string;
 
 // @alpha
 export type WidgetType = "kpi" | "insight";

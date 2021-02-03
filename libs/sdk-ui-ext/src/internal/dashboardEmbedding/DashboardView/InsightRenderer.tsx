@@ -2,7 +2,12 @@
 import React, { useCallback, useMemo, useState } from "react";
 import isEqual from "lodash/isEqual";
 import merge from "lodash/merge";
-import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+    IInsightWidget,
+} from "@gooddata/sdk-backend-spi";
 import { IFilter, IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
@@ -32,7 +37,7 @@ import { useColorPalette } from "./ColorPaletteContext";
 import { useAttributesWithDrillDown } from "./AttributesWithDrillDownContext";
 
 interface IInsightRendererProps {
-    insightWidget: IWidget;
+    insightWidget: IInsightWidget;
     insight: IInsight;
     backend?: IAnalyticalBackend;
     workspace?: string;

@@ -1,5 +1,10 @@
-// (C) 2020 GoodData Corporation
-import { IAnalyticalBackend, IFilterContext, ITempFilterContext, IWidget } from "@gooddata/sdk-backend-spi";
+// (C) 2020-2021 GoodData Corporation
+import {
+    IAnalyticalBackend,
+    IFilterContext,
+    ITempFilterContext,
+    IKpiWidget,
+} from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
     IMeasure,
@@ -25,7 +30,7 @@ import invariant from "ts-invariant";
 import { filterContextToFiltersForWidget } from "../../converters";
 
 interface IUseKpiDataConfig {
-    kpiWidget: IWidget;
+    kpiWidget: IKpiWidget;
     filterContext?: IFilterContext | ITempFilterContext;
     filters?: IFilter[];
     backend?: IAnalyticalBackend;

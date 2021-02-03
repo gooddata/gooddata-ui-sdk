@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { GoodDataSdkError, isGoodDataSdkError, ErrorCodes, ISeparators } from "@gooddata/sdk-ui";
-import { isLegacyKpiWithComparison, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
+import { isLegacyKpiWithComparison, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter, isAbsoluteDateFilter, isAllTimeDateFilter, isDateFilter } from "@gooddata/sdk-model";
 
 import KpiValue from "./KpiValue";
@@ -13,7 +13,7 @@ import { getKpiPopLabel } from "./utils/translations";
 
 export interface IKpiContentProps {
     // KPI
-    kpi: IWidgetDefinition;
+    kpi: IKpiWidget | IKpiWidgetDefinition;
     isLoading: boolean;
     filters?: IFilter[];
     separators?: ISeparators;

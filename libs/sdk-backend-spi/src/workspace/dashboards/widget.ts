@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { ObjRef, isObjRef, ObjectType, VisualizationProperties } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 import { IDashboardFilterReference } from "./filterContext";
@@ -45,19 +45,43 @@ export interface IWidgetBase {
     readonly type: WidgetType;
 
     /**
-     * Widget insight object reference (when widget is not kpi)
+     * Widget drills
      */
-    readonly insight?: ObjRef;
+    readonly drills: DrillDefinition[];
+}
+
+/**
+ * @alpha
+ */
+export interface IKpiWidgetBase extends IWidgetBase {
+    readonly type: "kpi";
 
     /**
      * Temporary place for legacy kpi properties
      */
-    readonly kpi?: ILegacyKpi;
+    readonly kpi: ILegacyKpi;
+}
+
+/**
+ * @alpha
+ */
+export interface IKpiWidget extends IKpiWidgetBase, IDashboardObjectIdentity {}
+
+/**
+ * @alpha
+ */
+export interface IKpiWidgetDefinition extends IKpiWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * @alpha
+ */
+export interface IInsightWidgetBase extends IWidgetBase {
+    readonly type: "insight";
 
     /**
-     * Widget drills
+     * Widget insight object reference (when widget is not kpi)
      */
-    readonly drills: DrillDefinition[];
+    readonly insight: ObjRef;
 
     /**
      * Overrides for visualization-specific properties.
@@ -71,15 +95,25 @@ export interface IWidgetBase {
 }
 
 /**
- * See {@link IWidget}]
  * @alpha
  */
-export interface IWidgetDefinition extends IWidgetBase, Partial<IDashboardObjectIdentity> {}
+export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIdentity {}
 
 /**
  * @alpha
  */
-export interface IWidget extends IWidgetBase, IDashboardObjectIdentity {}
+export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * See {@link IWidget}]
+ * @alpha
+ */
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition;
+
+/**
+ * @alpha
+ */
+export type IWidget = IKpiWidget | IInsightWidget;
 
 /**
  * List of currently supported types of references that can be retrieved using getWidgetReferencedObjects()
@@ -121,10 +155,39 @@ export function isWidget(obj: unknown): obj is IWidget {
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IInsightWidget}.
+ * @alpha
+ */
+export function isInsightWidget(obj: unknown): obj is IInsightWidget {
+    return hasWidgetProps(obj) && isObjRef((obj as any).ref) && (obj as IInsightWidget).type === "insight";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
+ * @alpha
+ */
+export function isKpiWidget(obj: unknown): obj is IKpiWidget {
+    return hasWidgetProps(obj) && isObjRef((obj as any).ref) && (obj as IKpiWidget).type === "kpi";
+}
+
+/**
  * @internal
  */
 function hasWidgetProps(obj: unknown): boolean {
     return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
+}
+
+/**
+ * Gets the widget identifier
+ *
+ * @param widget - widget to get identrifier of
+ * @returns the widget identifier
+ * @alpha
+ */
+export function widgetId(widget: IWidget): string {
+    invariant(widget, "widget to get identifier of must be specified");
+
+    return widget.identifier;
 }
 
 /**

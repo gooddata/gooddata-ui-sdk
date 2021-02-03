@@ -4,8 +4,9 @@ import {
     IAnalyticalBackend,
     IWidgetAlert,
     ISeparators,
-    IWidgetDefinition,
     IWidgetAlertDefinition,
+    IKpiWidget,
+    IKpiWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -59,7 +60,7 @@ import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermiss
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
-    kpiWidget: IWidgetDefinition;
+    kpiWidget: IKpiWidget | IKpiWidgetDefinition;
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     alert?: IWidgetAlert;

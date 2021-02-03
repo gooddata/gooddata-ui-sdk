@@ -1,4 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
+import { idRef } from "@gooddata/sdk-model";
 import { IFluidLayoutSizeByScreen, IWidget } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardViewLayout,
@@ -17,7 +18,7 @@ export const dashboardWidgetMock = (
     id: string,
     widgetClass: DashboardViewLayoutWidgetClass = "bar",
 ): IWidget => {
-    return {
+    const commonProps: Omit<IWidget, "kpi" | "insight" | "type"> = {
         description: "",
         drills: [],
         ignoreDashboardFilters: [],
@@ -26,9 +27,23 @@ export const dashboardWidgetMock = (
             identifier: id,
         },
         title: `${widgetClass} ${id}`,
-        type: widgetClass === "kpi" ? "kpi" : "insight",
         uri: id,
     };
+
+    return widgetClass === "kpi"
+        ? {
+              ...commonProps,
+              type: "kpi",
+              kpi: {
+                  comparisonType: "none",
+                  metric: idRef("measure"),
+              },
+          }
+        : {
+              ...commonProps,
+              insight: idRef("insight"),
+              type: "insight",
+          };
 };
 
 export const dashboardRowMock = <TCustomContent>(
