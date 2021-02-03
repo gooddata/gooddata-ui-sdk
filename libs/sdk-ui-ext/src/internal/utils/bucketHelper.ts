@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import set from "lodash/set";
 import get from "lodash/get";
 import uniq from "lodash/uniq";
@@ -19,6 +19,7 @@ import {
     OverTimeComparisonTypes,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
+import { ObjRef } from "@gooddata/sdk-model";
 
 import {
     DATE_DATASET_ATTRIBUTE,
@@ -54,6 +55,10 @@ import {
 
 export function isDateFilter(filter: IBucketFilter): filter is IDateFilter {
     return !!filter && (filter as IDateFilter).attribute === DATE_DATASET_ATTRIBUTE;
+}
+
+export function isFiltersBucketItem(filter: IFiltersBucketItem): filter is IFiltersBucketItem {
+    return !!filter && filter.attribute === DATE_DATASET_ATTRIBUTE;
 }
 
 export function isAttributeFilter(filter: IBucketFilter): filter is IAttributeFilter {
@@ -969,5 +974,29 @@ export const removeDivergentDateItems = (
 ): IBucketItem[] => {
     return viewItems.filter(
         (item: IBucketItem) => isNotDateBucketItem(item) || hasSameDateDimension(item, mainDateItem),
+    );
+};
+
+const getDateFilterRef = (filters: IFilters): ObjRef | undefined => {
+    const dateFilter = filters?.items?.find(isFiltersBucketItem);
+    if (!dateFilter) {
+        return undefined;
+    }
+    return dateFilter.dateDataset?.ref;
+};
+
+export const isComparisonAvailable = (buckets: IBucketOfFun[], filters: IFilters): boolean => {
+    const itemsFromBucket: IBucketItem[] = buckets.reduce(
+        (acc: IBucketItem[], bucket: IBucketOfFun) => acc.concat(bucket.items),
+        [],
+    );
+    const bucketDateItems = itemsFromBucket.filter(isDateBucketItem);
+    const areDateBucketItemsEmpty = bucketDateItems.length === 0;
+    const dateFilterRef = getDateFilterRef(filters);
+    if (areDateBucketItemsEmpty) {
+        return true;
+    }
+    return bucketDateItems.some((bucketDateItem: IBucketItem) =>
+        areObjRefsEqual(bucketDateItem.dateDataset?.ref, dateFilterRef),
     );
 };

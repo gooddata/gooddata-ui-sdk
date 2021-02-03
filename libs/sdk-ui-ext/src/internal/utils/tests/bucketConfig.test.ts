@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
 import { DATE, GRANULARITY } from "../../constants/bucket";
@@ -14,8 +14,12 @@ import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 describe("configure Percent and Over Time Comparison helper functions", () => {
     const samePeriodPreviousYearFilter: IFiltersBucketItem = {
+        attribute: DATE_DATASET_ATTRIBUTE,
         localIdentifier: "f1",
         filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
+        dateDataset: {
+            ref: referencePointMocks.dateDatasetRef,
+        },
     };
 
     function getSingleMeasureNoFilterReferencePoint(numberOfMeasures: number): IExtendedReferencePoint {
@@ -58,6 +62,10 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                         .slice(2, 4)
                         .concat(referencePointMocks.derivedMeasureItems.slice(2, 4))
                         .concat(referencePointMocks.arithmeticMeasureItems.slice(5, 6)),
+                },
+                {
+                    localIdentifier: "attribute",
+                    items: [referencePointMocks.dateItemWithDateDataset],
                 },
             ],
             filters: {
@@ -129,48 +137,56 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
     describe("configureOverTimeComparison", () => {
         const dateFilterBucketItem: IFiltersBucketItem = {
+            attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
             filters: [referencePointMocks.dateFilter],
+            dateDataset: {
+                ref: referencePointMocks.dateDatasetRef,
+            },
         };
 
         const dateFilterWithSamePeriodPreviousYear: IFiltersBucketItem = {
+            attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
             filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
+            dateDataset: {
+                ref: referencePointMocks.dateDatasetRef,
+            },
         };
 
-        it(
-            "should keep all derived measures if over time comparison is available " +
-                "due to non-all-time date filter",
-            () => {
-                const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
+        it("should keep all derived measures if over time comparison is available due to non-all-time date filter", () => {
+            const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-                const referencePoint: IExtendedReferencePoint = {
-                    buckets: [
-                        {
-                            localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.arithmeticMeasureItems[0],
-                                referencePointMocks.arithmeticMeasureItems[1],
-                                referencePointMocks.arithmeticMeasureItems[3],
-                            ],
-                        },
-                    ],
-                    filters: {
-                        localIdentifier: "filters",
-                        items: [samePeriodPreviousYearFilter],
+            const referencePoint: IExtendedReferencePoint = {
+                buckets: [
+                    {
+                        localIdentifier: "measures",
+                        items: [
+                            referencePointMocks.masterMeasureItems[0],
+                            referencePointMocks.derivedMeasureItems[1],
+                            referencePointMocks.arithmeticMeasureItems[0],
+                            referencePointMocks.arithmeticMeasureItems[1],
+                            referencePointMocks.arithmeticMeasureItems[3],
+                        ],
                     },
-                    uiConfig: {
-                        ...uiConfig,
-                        supportedOverTimeComparisonTypes: [OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR],
+                    {
+                        localIdentifier: "attribute",
+                        items: [referencePointMocks.dateItemWithDateDataset],
                     },
-                };
-                const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint), false);
+                ],
+                filters: {
+                    localIdentifier: "filters",
+                    items: [samePeriodPreviousYearFilter],
+                },
+                uiConfig: {
+                    ...uiConfig,
+                    supportedOverTimeComparisonTypes: [OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR],
+                },
+            };
+            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint), false);
 
-                expect(newReferencePoint.buckets).toMatchObject(referencePoint.buckets);
-            },
-        );
+            expect(newReferencePoint.buckets).toMatchObject(referencePoint.buckets);
+        });
 
         it("should remove derived measures when no date filter present", () => {
             const referencePoint: IExtendedReferencePoint = {
@@ -326,6 +342,9 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                                 type: DATE,
                                 attribute: DATE_DATASET_ATTRIBUTE,
                                 granularity: GRANULARITY.week,
+                                dateDataset: {
+                                    ref: referencePointMocks.dateDatasetRef,
+                                },
                             },
                         ],
                     },
@@ -460,6 +479,36 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             expectedReferencePoint.buckets[1].items = [
                 referencePointMocks.masterMeasureItems[2],
                 referencePointMocks.masterMeasureItems[3],
+            ];
+
+            expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
+        });
+
+        it("should remove all derived measures when date filter does not have same date dataset with date buckets", () => {
+            const dateFilterWithDifferentDateDataset: IFiltersBucketItem = {
+                attribute: DATE_DATASET_ATTRIBUTE,
+                localIdentifier: "f1",
+                filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
+                dateDataset: {
+                    ref: {
+                        uri: "different.date.dataset",
+                    },
+                },
+            };
+            const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithDifferentDateDataset);
+            const expectedReferencePoint = cloneDeep(referencePoint);
+            const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint), false);
+            expectedReferencePoint.buckets[0].items = [
+                referencePointMocks.masterMeasureItems[0],
+                referencePointMocks.masterMeasureItems[1],
+                referencePointMocks.arithmeticMeasureItems[0],
+                referencePointMocks.arithmeticMeasureItems[1],
+                referencePointMocks.arithmeticMeasureItems[3],
+            ];
+            expectedReferencePoint.buckets[1].items = [
+                referencePointMocks.masterMeasureItems[2],
+                referencePointMocks.masterMeasureItems[3],
+                referencePointMocks.arithmeticMeasureItems[5],
             ];
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);

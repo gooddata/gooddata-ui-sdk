@@ -167,6 +167,28 @@ describe("PluggableAreaChart", () => {
             expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
         });
 
+        it("should keep two date attributes in view by bucket when coming from pivot table with date buckets with different date dimensions", async () => {
+            const areaChart = createComponent(defaultProps);
+            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributesOnRowsReferencePoint);
+            const expectedBuckets: IBucketOfFun[] = [
+                {
+                    localIdentifier: "measures",
+                    items: mockRefPoint.buckets[0].items,
+                },
+                {
+                    localIdentifier: "view",
+                    items: [mockRefPoint.buckets[1].items[0], mockRefPoint.buckets[1].items[3]],
+                },
+                {
+                    localIdentifier: "stack",
+                    items: [],
+                },
+            ];
+            const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
+
+            expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
+        });
+
         it("should keep only first date attribute in view by bucket when comming from pivot table with different dimensions", async () => {
             const areaChart = createComponent(defaultProps);
             const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
