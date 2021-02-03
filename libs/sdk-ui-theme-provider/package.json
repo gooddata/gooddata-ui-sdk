@@ -44,13 +44,13 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "lodash": "^4.17.19",
-        "react-intl": "^3.6.0",
-        "tslib": "^2.0.0",
-        "polished": "^3.6.7",
-        "ts-invariant": "^0.6.0",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.63",
-        "@gooddata/sdk-ui": "^8.2.0-alpha.63"
+        "@gooddata/sdk-ui": "^8.2.0-alpha.63",
+        "lodash": "^4.17.19",
+        "polished": "^3.6.7",
+        "react-intl": "^3.6.0",
+        "ts-invariant": "^0.6.0",
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.5.2",
