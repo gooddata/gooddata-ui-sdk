@@ -65,7 +65,7 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
             --env BACKSTOP_COMPARE_LIMIT \
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
-            --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:5.0.6 \
+            --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:5.1.0 \
             --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
