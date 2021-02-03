@@ -1,0 +1,856 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createTableDescriptor correctly creates colDefs for table with just column attribute 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "colId": "cg_0",
+        "headerName": "CompuSci",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_1",
+        "headerName": "Educationly",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_2",
+        "headerName": "Explorer",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_3",
+        "headerName": "Grammar Plus",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_4",
+        "headerName": "PhoenixSoft",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_5",
+        "headerName": "TouchAll",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+      Object {
+        "colId": "cg_6",
+        "headerName": "WonderKid",
+        "type": "COLUMN_ATTRIBUTE_COLUMN",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Product",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with just row attribute 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with just two measures 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "c_0",
+    "field": "c_0",
+    "headerName": "Amount",
+    "type": "MEASURE_COLUMN",
+  },
+  Object {
+    "colId": "c_1",
+    "field": "c_1",
+    "headerName": "Won",
+    "type": "MEASURE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with single attribute pivot 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "cellRenderer": "loadingRenderer",
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with single row and column pivot 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with two attribute pivot 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "colId": "r_1",
+    "field": "r_1",
+    "headerName": "Department",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_0",
+                "field": "c_0",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_1",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_1",
+                "field": "c_1",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_2",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "Interest",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_2",
+                "field": "c_2",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_4",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_3",
+                "field": "c_3",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_5",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_3",
+        "headerName": "Discovery",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_4",
+                "field": "c_4",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_7",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_5",
+                "field": "c_5",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_8",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_6",
+        "headerName": "Short List",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_6",
+                "field": "c_6",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_10",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_7",
+                "field": "c_7",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_11",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_9",
+        "headerName": "Risk Assessment",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_8",
+                "field": "c_8",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_13",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_9",
+                "field": "c_9",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_14",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_12",
+        "headerName": "Conviction",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_10",
+                "field": "c_10",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_16",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_11",
+                "field": "c_11",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_17",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_15",
+        "headerName": "Negotiation",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_12",
+                "field": "c_12",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_19",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_13",
+                "field": "c_13",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_20",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_18",
+        "headerName": "Closed Won",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_14",
+                "field": "c_14",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_22",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_15",
+                "field": "c_15",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_23",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_21",
+        "headerName": "Closed Lost",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Stage Name › Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with two measures and single attribute pivot 1`] = `
+Array [
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "cellRenderer": "loadingRenderer",
+            "colId": "c_0",
+            "field": "c_0",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+          Object {
+            "colId": "c_1",
+            "field": "c_1",
+            "headerName": "Won",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "East Coast",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "colId": "c_2",
+            "field": "c_2",
+            "headerName": "Amount",
+            "type": "MEASURE_COLUMN",
+          },
+          Object {
+            "colId": "c_3",
+            "field": "c_3",
+            "headerName": "Won",
+            "type": "MEASURE_COLUMN",
+          },
+        ],
+        "groupId": "g_1",
+        "headerName": "West Coast",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table with two measures, rows and cols and totals and subtotals 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "colId": "r_1",
+    "field": "r_1",
+    "headerName": "Department",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "children": Array [
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_0",
+                "field": "c_0",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+              Object {
+                "colId": "c_1",
+                "field": "c_1",
+                "headerName": "Won",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_1",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_2",
+                "field": "c_2",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+              Object {
+                "colId": "c_3",
+                "field": "c_3",
+                "headerName": "Won",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_2",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_0",
+        "headerName": "Exclude",
+      },
+      Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_4",
+                "field": "c_4",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+              Object {
+                "colId": "c_5",
+                "field": "c_5",
+                "headerName": "Won",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_4",
+            "headerName": "East Coast",
+          },
+          Object {
+            "children": Array [
+              Object {
+                "colId": "c_6",
+                "field": "c_6",
+                "headerName": "Amount",
+                "type": "MEASURE_COLUMN",
+              },
+              Object {
+                "colId": "c_7",
+                "field": "c_7",
+                "headerName": "Won",
+                "type": "MEASURE_COLUMN",
+              },
+            ],
+            "groupId": "g_5",
+            "headerName": "West Coast",
+          },
+        ],
+        "groupId": "g_3",
+        "headerName": "Include",
+      },
+    ],
+    "groupId": "groupingDescriptor",
+    "headerName": "Forecast Category › Region",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly creates colDefs for table without pivoting 1`] = `
+Array [
+  Object {
+    "cellRenderer": "loadingRenderer",
+    "colId": "r_0",
+    "field": "r_0",
+    "headerName": "Product",
+    "type": "ROW_ATTRIBUTE_COLUMN",
+  },
+  Object {
+    "colId": "c_0",
+    "field": "c_0",
+    "headerName": "Amount",
+    "type": "MEASURE_COLUMN",
+  },
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with just column attribute 1`] = `
+Array [
+  Array [
+    0,
+    0,
+  ],
+  Array [
+    0,
+    1,
+  ],
+  Array [
+    0,
+    2,
+  ],
+  Array [
+    0,
+    3,
+  ],
+  Array [
+    0,
+    4,
+  ],
+  Array [
+    0,
+    5,
+  ],
+  Array [
+    0,
+    6,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with just row attribute 1`] = `Array []`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with just two measures 1`] = `
+Array [
+  Array [
+    0,
+  ],
+  Array [
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with single attribute pivot 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with single row and column pivot 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with two attribute pivot 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    2,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    2,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    3,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    3,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    4,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    4,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    5,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    5,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    6,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    6,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    7,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    7,
+    1,
+    0,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with two measures and single attribute pivot 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    1,
+  ],
+  Array [
+    0,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table with two measures, rows and cols and totals and subtotals 1`] = `
+Array [
+  Array [
+    0,
+    0,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    0,
+    1,
+  ],
+  Array [
+    0,
+    0,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    0,
+    1,
+    1,
+  ],
+  Array [
+    0,
+    1,
+    0,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    0,
+    1,
+  ],
+  Array [
+    0,
+    1,
+    1,
+    0,
+  ],
+  Array [
+    0,
+    1,
+    1,
+    1,
+  ],
+]
+`;
+
+exports[`createTableDescriptor correctly populates fullIndexPaths for table without pivoting 1`] = `
+Array [
+  Array [
+    0,
+  ],
+]
+`;

@@ -1,23 +1,12 @@
 // (C) 2007-2019 GoodData Corporation
 import {
-    IAttributeDescriptor,
-    IDataView,
-    IExecutionResult,
-    IMeasureDescriptor,
-    IPreparedExecution,
-    isAttributeDescriptor,
-    isNoDataError,
-    isUnexpectedResponseError,
-    IMeasureGroupDescriptor,
-    isMeasureGroupDescriptor,
-    IDimensionDescriptor,
-} from "@gooddata/sdk-backend-spi";
-import { defFingerprint, defTotals, ITotal, SortDirection } from "@gooddata/sdk-model";
-import {
     AgGridEvent,
     AllCommunityModules,
     BodyScrollEvent,
     CellClassParams,
+    CellEvent,
+    ColDef,
+    ColGroupDef,
     Column,
     ColumnApi,
     ColumnResizedEvent,
@@ -25,10 +14,24 @@ import {
     GridReadyEvent,
     IDatasource,
     SortChangedEvent,
+    ValueFormatterParams,
 } from "@ag-grid-community/all-modules";
+import {
+    IAttributeDescriptor,
+    IDataView,
+    IDimensionDescriptor,
+    IExecutionResult,
+    IMeasureDescriptor,
+    IMeasureGroupDescriptor,
+    IPreparedExecution,
+    isAttributeDescriptor,
+    isMeasureGroupDescriptor,
+    isNoDataError,
+    isUnexpectedResponseError,
+} from "@gooddata/sdk-backend-spi";
+import { defFingerprint, defTotals, ITotal } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
 import cx from "classnames";
-import CustomEvent from "custom-event";
 import React from "react";
 import { injectIntl } from "react-intl";
 import flatMap from "lodash/fp/flatMap";
@@ -44,25 +47,21 @@ import {
     DataViewFacade,
     ErrorCodes,
     ErrorComponent,
-    getDrillIntersection,
     GoodDataSdkError,
-    IAvailableDrillTargets,
     IAvailableDrillTargetMeasure,
+    IAvailableDrillTargets,
     IDrillEvent,
     IDrillEventContextTable,
-    IDrillEventIntersectionElement,
     IErrorDescriptors,
     IHeaderPredicate,
     ILoadingState,
-    IMappingHeader,
     IntlWrapper,
-    isSomeHeaderPredicateMatched,
     LoadingComponent,
     newErrorMapping,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { getUpdatedColumnTotals } from "./impl/aggregationsMenuHelper";
-import ApiWrapper from "./impl/agGridApiWrapper";
+import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
+import ApiWrapper from "./impl/base/agGridApiWrapper";
 import {
     AVAILABLE_TOTALS,
     COLS_PER_PAGE,
@@ -71,33 +70,15 @@ import {
     ROW_ATTRIBUTE_COLUMN,
     ROW_SUBTOTAL,
     ROW_TOTAL,
-} from "./impl/agGridConst";
-import { AgGridDatasource, createAgGridDatasource } from "./impl/agGridDataSource";
-import { getDrillRowData } from "./impl/agGridDrilling";
-import { createTableHeaders } from "./impl/agGridHeaders";
-import { getSortsFromModel } from "./impl/agGridSorting";
-import {
-    ICustomGridOptions,
-    IGridCellEvent,
-    IGridHeader,
-    ISortModelItem,
-    TableHeaders,
-} from "./impl/agGridTypes";
-import {
-    cellRenderer,
-    getColumnIdentifier,
-    getMeasureFormat,
-    getRowNodeId,
-    getTreeLeaves,
-    indexOfTreeNode,
-    isMeasureColumn,
-    isSomeTotal,
-} from "./impl/agGridUtils";
-import ColumnGroupHeader from "./impl/ColumnGroupHeader";
-import ColumnHeader from "./impl/ColumnHeader";
+} from "./impl/base/constants";
+import { AgGridDatasource, createAgGridDatasource } from "./impl/data/dataSource";
+import { ICustomGridOptions } from "./impl/base/agGridTypes";
+import { isMeasureColumn } from "./impl/base/agGridUtils";
+import ColumnGroupHeader from "./impl/structure/headers/ColumnGroupHeader";
+import ColumnHeader from "./impl/structure/headers/ColumnHeader";
 import { getScrollbarWidth, sleep } from "./impl/utils";
-import { IGroupingProvider } from "./impl/GroupingProvider";
-import { RowLoadingElement } from "./impl/RowLoadingElement";
+import { IGroupingProvider } from "./impl/data/rowGroupingProvider";
+import { RowLoadingElement } from "./impl/data/RowLoadingElement";
 import {
     initializeStickyRow,
     IScrollPosition,
@@ -106,12 +87,20 @@ import {
     updateStickyRowPosition,
 } from "./impl/stickyRowHandler";
 
-import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "./impl/tableCell";
+import {
+    createCellRenderer,
+    getCellClassNames,
+    getMeasureCellFormattedValue,
+    getMeasureCellStyle,
+} from "./impl/data/tableCell";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
-import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/agGridColumnWrapper";
-import { ColumnWidthItem, ColumnEventSourceType, IResizedColumns, UIClick } from "./columnWidths";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/base/agGridColumnWrapper";
+import { ColumnEventSourceType, ColumnWidthItem, IResizedColumns, UIClick } from "./columnWidths";
 import {
+    AUTO_SIZED_MAX_WIDTH,
+    autoresizeAllColumns,
+    getAutoResizedColumns,
     isColumnAutoResized,
     MANUALLY_SIZED_MAX_WIDTH,
     MIN_WIDTH,
@@ -121,16 +110,29 @@ import {
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
-    autoresizeAllColumns,
-    getAutoResizedColumns,
-    AUTO_SIZED_MAX_WIDTH,
-} from "./impl/agGridColumnSizing";
+} from "./impl/resizing/agGridColumnSizing";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import sumBy from "lodash/sumBy";
+import {
+    agColId,
+    ColumnGroupingDescriptorId,
+    isDataColLeaf,
+    isSliceCol,
+} from "./impl/structure/tableDescriptorTypes";
+import { invariant } from "ts-invariant";
+import { TableDescriptor } from "./impl/structure/tableDescriptor";
+import { ICommonHeaderParams } from "./impl/structure/headers/HeaderCell";
+import { createDrilledRow } from "./impl/drilling/drilledRowFactory";
+import isEmpty from "lodash/isEmpty";
+import { createDrillIntersection } from "./impl/drilling/drillIntersectionFactory";
+import { IGridRow } from "./impl/data/resultTypes";
+import { isSomeTotal } from "./impl/data/dataSourceUtils";
+import last from "lodash/last";
+import { isCellDrillable } from "./impl/drilling/cellDrillabilityPredicate";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -185,7 +187,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private gridApi: GridApi | null = null;
     private columnApi: ColumnApi | null = null;
     private gridOptions: ICustomGridOptions | null = null;
-    private tableHeaders: TableHeaders | null = null;
+    private tableDescriptor: TableDescriptor | null = null;
     private agGridDataSource: AgGridDatasource | null = null;
 
     private currentResult: IExecutionResult | null = null;
@@ -243,7 +245,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private cleanupNonReactState = () => {
         this.gridApi = null;
         this.gridOptions = null;
-        this.tableHeaders = null;
+        this.tableDescriptor = null;
         this.agGridDataSource = null;
         this.currentResult = null;
         this.visibleData = null;
@@ -355,13 +357,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
          *
          * NOTE: it would be better to have this all orchestrated in a single call.
          */
-        this.tableHeaders = createTableHeaders(dataView);
+        this.tableDescriptor = TableDescriptor.for(this.visibleData);
 
         const columnWidths = this.getColumnWidths(this.props);
-        this.resizedColumnsStore.updateColumnWidths(columnWidths, this.visibleData);
+        this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, columnWidths);
 
         updateColumnDefinitionsWithWidths(
-            this.tableHeaders.allHeaders,
+            this.tableDescriptor,
             this.resizedColumnsStore,
             this.autoResizedColumns,
             this.getDefaultWidth(),
@@ -371,7 +373,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         this.agGridDataSource = createAgGridDatasource(
             {
-                headers: this.tableHeaders,
+                tableDescriptor: this.tableDescriptor,
                 getGroupRows: this.getGroupRows,
                 getColumnTotals: this.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
@@ -391,6 +393,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private initialize(execution: IPreparedExecution): void {
         this.onLoadingChanged({ isLoading: true });
         this.lastInitRequestFingerprint = defFingerprint(execution.definition);
+
         execution
             .execute()
             .then((result) => {
@@ -523,13 +526,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private applyColumnSizes(columnWidths: ColumnWidthItem[] | undefined) {
-        if (!this.columnApi || !this.visibleData) {
+        if (!this.columnApi || !this.tableDescriptor) {
             return;
         }
 
-        this.resizedColumnsStore.updateColumnWidths(columnWidths, this.visibleData);
+        this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, columnWidths);
 
-        syncSuppressSizeToFitOnColumns(this.resizedColumnsStore, this.columnApi);
+        syncSuppressSizeToFitOnColumns(this.tableDescriptor, this.resizedColumnsStore, this.columnApi);
 
         if (this.isGrowToFitEnabled()) {
             this.growToFit(this.columnApi); // calls resetColumnsWidthToDefault internally too
@@ -661,11 +664,19 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.state.columnTotals;
     };
 
+    private getTableDescriptor = () => {
+        invariant(this.tableDescriptor);
+
+        return this.tableDescriptor;
+    };
+
     private getExecutionDefinition = () => {
         return this.props.execution.definition;
     };
 
     private getDataView = () => {
+        invariant(this.visibleData);
+
         return this.visibleData;
     };
 
@@ -735,6 +746,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private updateAutoResizedColumns = (gridApi: GridApi, columnApi: ColumnApi): void => {
         this.autoResizedColumns = getAutoResizedColumns(
+            this.tableDescriptor,
             gridApi,
             columnApi,
             this.currentResult,
@@ -824,6 +836,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private resetColumnsWidthToDefault(columnApi: ColumnApi, columns: Column[]) {
         resetColumnsWidthToDefault(
+            this.tableDescriptor!,
             columnApi,
             columns,
             this.resizedColumnsStore,
@@ -836,7 +849,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const columns = columnApi.getAllColumns();
 
         columns.forEach((col) => {
-            const id = getColumnIdentifier(col);
+            const id = agColId(col);
 
             this.growToFittedColumns[id] = {
                 width: col.getActualWidth(),
@@ -1006,111 +1019,49 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateStickyRow();
     };
 
-    private getAttributeHeader(colId: string, columnDefs: IGridHeader[]): IAttributeDescriptor | undefined {
-        const matchingColDef = columnDefs.find((columnDef: IGridHeader) => columnDef.field === colId);
-        if (matchingColDef && matchingColDef.drillItems.length === 1) {
-            const drillItemHeader = matchingColDef.drillItems[0];
-            if (isAttributeDescriptor(drillItemHeader)) {
-                return drillItemHeader;
-            }
+    private cellClicked = (cellEvent: CellEvent) => {
+        invariant(this.tableDescriptor);
+        invariant(this.visibleData);
+
+        const row = cellEvent.data as IGridRow;
+
+        invariant(row);
+
+        if (isSomeTotal(row.type)) {
+            return false;
         }
-        return undefined;
-    }
 
-    private getItemAndAttributeHeaders = (
-        attributeItemHeaders: { [colId: string]: IMappingHeader },
-        columnDefs: IGridHeader[],
-    ): IMappingHeader[] => {
-        return Object.keys(attributeItemHeaders).reduce((headers: IMappingHeader[], colId: string) => {
-            const attributeHeader = this.getAttributeHeader(colId, columnDefs);
-            if (attributeHeader) {
-                headers.push(attributeItemHeaders[colId]);
-                headers.push(attributeHeader);
-            }
-            return headers;
-        }, []);
-    };
+        const { colDef, data, rowIndex } = cellEvent;
+        const col = this.tableDescriptor.getCol(agColId(colDef));
 
-    private getAttributeDrillItemsForMeasureDrill = (
-        cellEvent: IGridCellEvent,
-        columnDefs: IGridHeader[],
-    ): IMappingHeader[] => {
-        const rowDrillItems = get(cellEvent, ["data", "headerItemMap"]);
-        return this.getItemAndAttributeHeaders(rowDrillItems, columnDefs);
-    };
+        // cells belong to either slice column or leaf data column; if cells belong to column of a different
+        // type then there must be either something messed up with table construction or a new type of cell
+        invariant(isSliceCol(col) || isDataColLeaf(col));
 
-    private getAttributeDrillItemsForAttributeDrill = (
-        cellEvent: IGridCellEvent,
-        columnDefs: IGridHeader[],
-        rowDrillItem: IMappingHeader,
-    ): IMappingHeader[] => {
-        const attributeHeaders = this.getAttributeDrillItemsForMeasureDrill(cellEvent, columnDefs);
-
-        // pick whole path up to current attributeHeader and attributeHeaderItem (inclusive)
-        const index = attributeHeaders.indexOf(rowDrillItem);
-        return attributeHeaders.slice(0, index + 2);
-    };
-
-    private getRowDrillItem = (cellEvent: IGridCellEvent) =>
-        get(cellEvent, ["data", "headerItemMap", cellEvent.colDef.field!]);
-
-    private getDrillItems = (cellEvent: IGridCellEvent): IMappingHeader[] => {
-        const { colDef } = cellEvent;
-        const rowDrillItem = this.getRowDrillItem(cellEvent);
-        return rowDrillItem ? [rowDrillItem, ...colDef.drillItems] : colDef.drillItems;
-    };
-
-    private getDrillIntersection = (
-        cellEvent: IGridCellEvent,
-        drillItems: IMappingHeader[],
-        allHeaders: IGridHeader[],
-    ): IDrillEventIntersectionElement[] => {
-        const rowDrillItem = this.getRowDrillItem(cellEvent);
-        const completeDrillItems: IMappingHeader[] = rowDrillItem
-            ? this.getAttributeDrillItemsForAttributeDrill(cellEvent, allHeaders, rowDrillItem)
-            : [...drillItems, ...this.getAttributeDrillItemsForMeasureDrill(cellEvent, allHeaders)];
-        return getDrillIntersection(completeDrillItems);
-    };
-
-    private cellClicked = (cellEvent: IGridCellEvent) => {
         const { onDrill } = this.props;
-        const tableHeaders = this.tableHeaders!;
-        const dv = this.visibleData!;
+        const dv = this.visibleData;
         const drillablePredicates = this.getDrillablePredicates();
-        const { colDef, rowIndex } = cellEvent;
-        const rowType = get(cellEvent, ["data", "type"], "");
-        if (isSomeTotal(rowType)) {
+
+        const areDrillableHeaders = isCellDrillable(col, cellEvent.data, dv, drillablePredicates);
+
+        if (!areDrillableHeaders) {
             return false;
         }
-
-        const drillItems: IMappingHeader[] = this.getDrillItems(cellEvent);
-        const drillableHeaders = drillItems.filter((drillItem: IMappingHeader) =>
-            isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
-        );
-
-        if (drillableHeaders.length === 0) {
-            return false;
-        }
-
-        const leafColumnDefs = getTreeLeaves(tableHeaders.allHeaders);
-        const columnIndex = leafColumnDefs.findIndex((gridHeader) => gridHeader.field === colDef.field);
-        const row = getDrillRowData(leafColumnDefs, cellEvent.data);
-        const intersection = this.getDrillIntersection(cellEvent, drillItems, tableHeaders.allHeaders);
 
         const drillContext: IDrillEventContextTable = {
             type: VisualizationTypes.TABLE,
             element: "cell",
-            columnIndex,
+            columnIndex: this.tableDescriptor.getAbsoluteColIndex(col),
             rowIndex,
-            row,
-            intersection,
+            row: createDrilledRow(data as IGridRow, this.tableDescriptor),
+            intersection: createDrillIntersection(cellEvent, this.tableDescriptor),
         };
         const drillEvent: IDrillEvent = {
             dataView: dv.dataView,
             drillContext,
         };
 
-        if (onDrill!(drillEvent)) {
+        if (onDrill?.(drillEvent)) {
             // This is needed for /analyze/embedded/ drilling with post message
             // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
             const event = new CustomEvent("drill", {
@@ -1133,10 +1084,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private async resetResizedColumn(column: Column) {
-        const id = getColumnIdentifier(column);
+        if (!this.tableDescriptor) {
+            return;
+        }
 
-        if (this.resizedColumnsStore.isColumnManuallyResized(column)) {
-            this.resizedColumnsStore.removeFromManuallyResizedColumn(column);
+        const id = agColId(column);
+
+        if (this.resizedColumnsStore.isColumnManuallyResized(this.tableDescriptor, column)) {
+            this.resizedColumnsStore.removeFromManuallyResizedColumn(this.tableDescriptor, column);
         }
 
         column.getColDef().suppressSizeToFit = false;
@@ -1180,6 +1135,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private onColumnsManualReset = async (columns: Column[]) => {
+        if (!this.tableDescriptor) {
+            return;
+        }
+
         let columnsToReset = columns;
 
         /*
@@ -1197,10 +1156,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         if (this.isWeakMeasureResizeOperation(columns)) {
             columnsToReset = this.resizedColumnsStore.getMatchingColumnsByMeasure(
+                this.tableDescriptor,
                 columns[0],
                 this.getAllMeasureColumns(),
             );
-            this.resizedColumnsStore.removeWeakMeasureColumn(columns[0]);
+            this.resizedColumnsStore.removeWeakMeasureColumn(this.tableDescriptor, columns[0]);
         }
 
         for (const column of columnsToReset) {
@@ -1222,7 +1182,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (this.isAllMeasureResizeOperation(columns)) {
             resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else if (this.isWeakMeasureResizeOperation(columns)) {
-            resizeWeakMeasureColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
+            resizeWeakMeasureColumns(
+                this.tableDescriptor!,
+                this.columnApi!,
+                this.resizedColumnsStore,
+                columns[0],
+            );
         } else {
             columns.forEach((column) => {
                 this.resizedColumnsStore.addToManuallyResizedColumn(column);
@@ -1234,26 +1199,21 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private afterOnResizeColumns() {
         this.growToFit(this.columnApi!);
-        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.visibleData!);
+        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.tableDescriptor!);
         this.props.onColumnResized!(columnWidths);
     }
 
     private sortChanged = (event: SortChangedEvent): void => {
-        if (!this.currentResult) {
+        if (!this.tableDescriptor || !this.currentResult) {
             // eslint-disable-next-line no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
         }
 
-        const sortModel: ISortModelItem[] = event.columnApi
-            .getAllColumns()
-            .filter((col) => col.getSort() !== undefined && col.getSort() !== null)
-            .map((col) => ({
-                colId: col.getColDef().field!,
-                sort: col.getSort() as SortDirection,
-            }));
-
-        const sortItems = getSortsFromModel(sortModel, this.currentResult);
+        const sortItems = this.tableDescriptor.createSortItems(
+            event.columnApi.getAllColumns(),
+            this.currentResult.definition.sortBy,
+        );
 
         this.props.pushData!({
             properties: {
@@ -1283,10 +1243,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     // TODO: refactor to move all this outside of the file
     //
     private createGridOptions = (): ICustomGridOptions => {
-        const tableHeaders = this.tableHeaders;
+        invariant(this.tableDescriptor);
+        invariant(this.visibleData);
+
+        const { colDefs } = this.tableDescriptor;
         const { pageSize } = this.props;
-        const totalRowCount = this.visibleData!.rawData().firstDimSize();
+        const totalRowCount = this.visibleData.rawData().firstDimSize();
         const separators = get(this.props, ["config", "separators"], undefined);
+
+        const allColumnDefs = colDefs.sliceColDefs.concat(colDefs.rootDataColDefs);
 
         /*
          * This is a half-workaround around the visual weirdness where upon load/sort ag-grid renders full
@@ -1304,17 +1269,20 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const extraTotalsBuffer = this.props.config && this.props.config.menu ? 10 : 0;
         const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
-        const commonHeaderComponentParams = {
+        const commonHeaderComponentParams: ICommonHeaderParams = {
             onMenuAggregationClick: this.onMenuAggregationClick,
+            getTableDescriptor: this.getTableDescriptor,
             getExecutionDefinition: this.getExecutionDefinition,
             getDataView: this.getDataView,
             getColumnTotals: this.getColumnTotals,
             intl: this.props.intl,
         };
 
+        const cellRenderer = createCellRenderer();
+
         return {
             // Initial data
-            columnDefs: tableHeaders!.allHeaders,
+            columnDefs: allColumnDefs,
             rowData: [],
             defaultColDef: {
                 cellClass: this.getCellClass(),
@@ -1361,9 +1329,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onFirstDataRendered: this.onFirstDataRendered,
             onBodyScroll: this.onBodyScroll,
 
-            // this provides persistent row selection (if enabled)
-            getRowNodeId,
-
             // Column types
             columnTypes: {
                 [ROW_ATTRIBUTE_COLUMN]: {
@@ -1397,20 +1362,34 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                         cx(AG_NUMERIC_HEADER_CLASSNAME, "gd-measure-column-header"),
                     ),
                     // wrong params type from ag-grid, we need any
-                    valueFormatter: (params: any) => {
-                        return params.value !== undefined && this.currentResult
+                    valueFormatter: (params: ValueFormatterParams) => {
+                        invariant(this.tableDescriptor);
+
+                        const colId = agColId(params.colDef);
+                        const colDesc = this.tableDescriptor.getCol(colId);
+
+                        invariant(isDataColLeaf(colDesc));
+
+                        return params.value !== undefined
                             ? getMeasureCellFormattedValue(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.currentResult),
+                                  colDesc.seriesDescriptor.measureFormat(),
                                   separators,
                               )
                             : (null as any);
                     },
                     cellStyle: (params) => {
-                        return params.value !== undefined && this.currentResult
+                        invariant(this.tableDescriptor);
+
+                        const colId = agColId(params.colDef);
+                        const colDesc = this.tableDescriptor.getCol(colId);
+
+                        invariant(isDataColLeaf(colDesc));
+
+                        return params.value !== undefined
                             ? getMeasureCellStyle(
                                   params.value,
-                                  getMeasureFormat(params.colDef, this.currentResult),
+                                  colDesc.seriesDescriptor.measureFormat(),
                                   separators,
                                   true,
                               )
@@ -1437,40 +1416,51 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
      * getCellClass returns class for drillable cells. (maybe format in the future as well)
      */
     private getCellClass = (classList?: string) => (cellClassParams: CellClassParams): string => {
-        const { rowIndex } = cellClassParams;
-        const dv = this.visibleData!;
-        const colDef = cellClassParams.colDef as IGridHeader;
-        const drillablePredicates = this.getDrillablePredicates();
-        // return none if no drillableItems are specified
+        invariant(this.tableDescriptor);
+        invariant(this.visibleData);
 
-        let hasDrillableHeader = false;
+        const { rowIndex, data } = cellClassParams;
+        const row: IGridRow = data;
 
-        const rowType = get(cellClassParams, ["data", "type"], "");
-        const isRowTotal = rowType === ROW_TOTAL;
-        const isRowSubtotal = rowType === ROW_SUBTOTAL;
-
-        if (drillablePredicates.length !== 0 && !isRowTotal && !isRowSubtotal) {
-            const rowDrillItem = get(cellClassParams, ["data", "headerItemMap", colDef.field!]);
-            const headers: IMappingHeader[] = rowDrillItem
-                ? [...colDef.drillItems, rowDrillItem]
-                : colDef.drillItems;
-
-            hasDrillableHeader = headers.some((drillItem: IMappingHeader) =>
-                isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
-            );
+        if (isEmpty(row)) {
+            // ag-grid calls getCellClass before the data is available & rows are created - there will be no
+            // data in the cellClassParams. not sure what is the purpose or whether that is a bug. anyway it
+            // does not make sense to proceed further.
+            //
+            // ag-grid may call this with either data undefined or data being empty object
+            return cx(classList);
         }
 
-        const attributeId = colDef.field!;
+        const dv = this.visibleData;
+        const colDef = cellClassParams.colDef;
+        const colId = agColId(colDef);
+        const col = this.tableDescriptor.getCol(colId);
+
+        // cells belong to either data column or slice column. anything else means there is an error
+        // somewhere
+        invariant(isDataColLeaf(col) || isSliceCol(col));
+
+        const drillablePredicates = this.getDrillablePredicates();
+        const isRowTotal = row.type === ROW_TOTAL;
+        const isRowSubtotal = row.type === ROW_SUBTOTAL;
+        let hasDrillableHeader = false;
+
+        if (!isRowTotal && !isRowSubtotal) {
+            hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
+        }
+
+        const colIndex = this.tableDescriptor.getAbsoluteColIndex(col);
+        const measureIndex = isDataColLeaf(col) ? last(col.fullIndexPathToHere) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();
-        const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(attributeId, rowIndex);
+        const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(colId, rowIndex);
         const rowSeparator = !hiddenCell && this.getGroupingProvider().isGroupBoundary(rowIndex);
-        const subtotalStyle = get(cellClassParams, ["data", "subtotalStyle"]);
+        const subtotalStyle = row?.subtotalStyle;
 
         return cx(
             classList,
-            getCellClassNames(rowIndex, colDef.index!, hasDrillableHeader),
-            colDef.index !== undefined ? `gd-column-index-${colDef.index}` : null,
-            colDef.measureIndex !== undefined ? `gd-column-measure-${colDef.measureIndex}` : null,
+            measureIndex !== undefined ? `gd-column-measure-${measureIndex}` : null,
+            getCellClassNames(rowIndex, colIndex, hasDrillableHeader),
+            `gd-column-index-${colIndex}`,
             isRowTotal ? "gd-row-total" : null,
             subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
@@ -1479,30 +1469,56 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getHeaderClass = (classList?: string) => (headerClassParams: any): string => {
-        const colDef: IGridHeader = headerClassParams.colDef;
-        const { field, measureIndex, index } = colDef;
-        const treeIndexes = colDef
-            ? indexOfTreeNode(
-                  colDef,
-                  this.tableHeaders!.allHeaders,
-                  (nodeA, nodeB) => nodeA.field !== undefined && nodeA.field === nodeB.field,
-              )
-            : null;
-        const colGroupIndex = treeIndexes ? treeIndexes[treeIndexes.length - 1] : null;
-        const isFirstColumn = treeIndexes !== null && !treeIndexes.some((index) => index !== 0);
+        invariant(this.tableDescriptor);
 
-        return cx(
-            classList,
-            "gd-column-group-header",
-            colGroupIndex !== null ? `gd-column-group-header-${colGroupIndex}` : null,
-            colGroupIndex !== null ? `s-table-measure-column-header-group-cell-${colGroupIndex}` : null,
-            measureIndex !== null && measureIndex !== undefined
-                ? `s-table-measure-column-header-cell-${measureIndex}`
-                : null,
-            index ? `s-table-measure-column-header-index-${index}` : null,
-            !field ? "gd-column-group-header--empty" : null,
-            isFirstColumn ? "gd-column-group-header--first" : null,
-        );
+        const colDef: ColDef | ColGroupDef = headerClassParams.colDef;
+        const colId = agColId(colDef);
+
+        if (!colId) {
+            return cx(classList);
+        }
+
+        if (colId === ColumnGroupingDescriptorId) {
+            // This is the special, presentation-only ColGroupDef which communicates to the user
+            // what attributes are used for grouping the column header.
+
+            return cx(
+                classList,
+                "gd-column-group-header",
+                "s-table-column-group-header-descriptor",
+                !this.tableDescriptor.sliceColCount() ? "gd-column-group-header--first" : null,
+            );
+        } else {
+            const colDesc = this.tableDescriptor.getCol(colId);
+            const treeIndexes = colDesc.fullIndexPathToHere;
+            const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
+            const noLeftBorder =
+                this.tableDescriptor.isFirstCol(colId) || !this.tableDescriptor.hasGroupedDataCols();
+            const absoluteColIndex = isDataColLeaf(colDesc)
+                ? this.tableDescriptor.getAbsoluteColIndex(colDesc)
+                : undefined;
+
+            return cx(
+                classList,
+                "gd-column-group-header",
+                // Funny stuff begin
+                // NOTE: this funny stuff is here to mimic how selectors were originally created.it does not seem
+                //  to make much sense :)
+                indexWithinGroup !== undefined ? `gd-column-group-header-${indexWithinGroup}` : null,
+                indexWithinGroup !== undefined
+                    ? `s-table-measure-column-header-group-cell-${indexWithinGroup}`
+                    : null,
+                // Funny stuff end
+                indexWithinGroup !== undefined
+                    ? `s-table-measure-column-header-cell-${indexWithinGroup}`
+                    : null,
+                absoluteColIndex !== undefined
+                    ? `s-table-measure-column-header-index-${absoluteColIndex}`
+                    : null,
+                noLeftBorder ? "gd-column-group-header--first" : null,
+                !colDef.headerName ? "gd-column-group-header--empty" : null,
+            );
+        }
     };
 
     //
@@ -1544,6 +1560,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 this.getGridApi(),
                 this.getGroupingProvider(),
                 ApiWrapper,
+                this.getTableDescriptor(),
+                this.getDataView(),
+                this.getDrillablePredicates(),
             );
         }
 

@@ -1,9 +1,13 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { GridApi, RowNode } from "@ag-grid-community/all-modules";
-import { IGroupingProvider } from "./GroupingProvider";
-import { colIdIsSimpleAttribute, getGridIndex } from "./agGridUtils";
-import ApiWrapper from "./agGridApiWrapper";
+import { IGroupingProvider } from "./data/rowGroupingProvider";
+import { getGridIndex } from "./base/agGridUtils";
+import ApiWrapper from "./base/agGridApiWrapper";
 import { getScrollbarWidth } from "./utils";
+import { ROW_ATTRIBUTE_COLUMN } from "./base/constants";
+import { isCellDrillable } from "./drilling/cellDrillabilityPredicate";
+import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
+import { TableDescriptor } from "./structure/tableDescriptor";
 
 export interface IScrollPosition {
     readonly top: number;
@@ -56,6 +60,9 @@ export const updateStickyRowContentClasses = (
     gridApi: GridApi | null,
     groupingProvider: IGroupingProvider,
     apiWrapper: typeof ApiWrapper,
+    tableDescriptor: TableDescriptor,
+    dv: DataViewFacade,
+    drillablePredicates: IHeaderPredicate[],
 ): void => {
     if (!gridApi || !shouldUpdate(currentScrollPosition, lastScrollPosition, rowHeight)) {
         return;
@@ -72,7 +79,11 @@ export const updateStickyRowContentClasses = (
     apiWrapper.addPinnedTopRowClass(gridApi, "gd-visible-sticky-row");
 
     const lastRowIndex = getGridIndex(lastScrollPosition.top, rowHeight);
-    const attributeKeys = Object.keys(firstVisibleNodeData).filter(colIdIsSimpleAttribute);
+    // TODO: consider obtaining row-col descriptors from tableDescriptor instead
+    const attributeKeys = Object.keys(firstVisibleNodeData).filter((colId: string) => {
+        const colDef = gridApi.getColumnDef(colId);
+        return colDef && colDef.type === ROW_ATTRIBUTE_COLUMN;
+    });
 
     attributeKeys.forEach((columnId: string) => {
         apiWrapper.removeCellClass(gridApi, columnId, lastRowIndex, "gd-cell-show-hidden");
@@ -81,6 +92,20 @@ export const updateStickyRowContentClasses = (
         if (groupingProvider.isRepeatedValue(columnId, firstVisibleRowIndex + 1)) {
             // set the sticky header text
             apiWrapper.setPinnedTopRowCellText(gridApi, columnId, firstVisibleNodeData[columnId]);
+
+            if (
+                isCellDrillable(
+                    tableDescriptor.getCol(columnId),
+                    firstVisibleNodeData,
+                    dv,
+                    drillablePredicates,
+                )
+            ) {
+                apiWrapper.addPinnedTopRowCellClass(gridApi, columnId, "gd-cell-drillable");
+            } else {
+                apiWrapper.removePinnedTopRowCellClass(gridApi, columnId, "gd-cell-drillable");
+            }
+
             // show the sticky header
             apiWrapper.removePinnedTopRowCellClass(gridApi, columnId, "gd-hidden-sticky-column");
         } else {
