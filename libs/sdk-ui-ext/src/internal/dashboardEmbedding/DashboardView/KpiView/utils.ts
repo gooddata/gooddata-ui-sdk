@@ -6,7 +6,6 @@ import {
     IKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IFilter,
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
@@ -28,11 +27,12 @@ import {
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 import { filterContextToFiltersForWidget } from "../../converters";
+import { IDashboardFilter } from "../../types";
 
 interface IUseKpiDataConfig {
     kpiWidget: IKpiWidget;
     filterContext?: IFilterContext | ITempFilterContext;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     onError?: OnError;
@@ -41,7 +41,7 @@ interface IUseKpiDataConfig {
 interface IUseKpiDataResult {
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
-    filters: IFilter[];
+    filters: IDashboardFilter[];
 }
 
 export function useKpiData({
@@ -58,13 +58,12 @@ export function useKpiData({
         invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
         const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, kpiWidget);
-
         const inputFilters = [...filtersFromFilterContext, ...(filters ?? [])];
 
-        const relevantFilters = await effectiveBackend
+        const relevantFilters = (await effectiveBackend
             .workspace(effectiveWorkspace)
             .dashboards()
-            .getResolvedFiltersForWidget(kpiWidget, inputFilters);
+            .getResolvedFiltersForWidget(kpiWidget, inputFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
 
         const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 

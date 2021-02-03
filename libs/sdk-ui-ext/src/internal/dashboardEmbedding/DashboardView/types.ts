@@ -15,15 +15,7 @@ import {
     ResponsiveScreenType,
     IFluidLayoutColumnMethods,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    IAbsoluteDateFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-    IInsight,
-    IFilter,
-} from "@gooddata/sdk-model";
+import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -34,16 +26,7 @@ import {
     ILocale,
 } from "@gooddata/sdk-ui";
 import { IDashboardViewLayoutContentRenderProps, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
-
-/**
- * Supported dashboard filter type.
- * @alpha
- */
-export type IDashboardFilter =
-    | IAbsoluteDateFilter
-    | IRelativeDateFilter
-    | IPositiveAttributeFilter
-    | INegativeAttributeFilter;
+import { IDashboardFilter } from "../types";
 
 /**
  * @beta
@@ -95,6 +78,12 @@ export interface IDashboardViewProps {
      * (and then the attached dashboard will use the original filters stored on the dashboard)
      */
     filters?: IDashboardFilter[];
+
+    /**
+     * Optionally, specify a callback that will be triggered when the filters should be changed.
+     * (e.g. to apply filters of a KPI alert to the whole dashboard)
+     */
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
@@ -233,7 +222,7 @@ export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProp
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboardRef: ObjRef;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
@@ -254,7 +243,8 @@ export type IDashboardWidgetRenderProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboardRef: ObjRef;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;

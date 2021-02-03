@@ -24,6 +24,7 @@ import { DashboardAlertsProvider } from "./DashboardAlertsContext";
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
+    onFiltersChange,
     theme,
     disableThemeLoading = false,
     themeModifier = defaultThemeModifier,
@@ -189,6 +190,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                     dashboardRef={dashboard}
                                     dashboardViewLayout={dashboardData?.layout}
                                     filters={filters}
+                                    onFiltersChange={onFiltersChange}
                                     filterContext={dashboardData.filterContext}
                                     onDrill={onDrill}
                                     drillableItems={drillableItems}

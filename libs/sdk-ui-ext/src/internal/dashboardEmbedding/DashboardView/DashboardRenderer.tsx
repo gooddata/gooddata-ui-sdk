@@ -9,7 +9,7 @@ import {
     IDashboardLayoutContent,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter, ObjRef, IInsight } from "@gooddata/sdk-model";
+import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -27,6 +27,7 @@ import {
 } from "../DashboardLayout";
 import { IDashboardViewLayout } from "../DashboardLayout/interfaces/dashboardLayout";
 import { IDashboardWidgetRenderer, IDashboardWidgetRenderProps } from "./types";
+import { IDashboardFilter } from "../types";
 import { DashboardWidgetRenderer } from "./DashboardWidgetRenderer";
 
 interface IDashboardRendererProps {
@@ -34,7 +35,8 @@ interface IDashboardRendererProps {
     dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
     backend?: IAnalyticalBackend;
     workspace?: string;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
@@ -51,6 +53,7 @@ interface IDashboardRendererProps {
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardViewLayout,
     filters,
+    onFiltersChange,
     filterContext,
     backend,
     workspace,
@@ -117,6 +120,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     LoadingComponent,
                     drillableItems,
                     filters,
+                    onFiltersChange,
                     filterContext,
                     onDrill,
                     onError,

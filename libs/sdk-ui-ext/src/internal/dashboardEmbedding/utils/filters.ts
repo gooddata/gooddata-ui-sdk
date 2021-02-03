@@ -5,6 +5,7 @@ import {
     IDashboardDateFilter,
     IDashboardAttributeFilter,
     isDateFilterGranularity,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     isAbsoluteDateFilter,
@@ -14,10 +15,14 @@ import {
     filterAttributeElements,
     filterObjRef,
     isAttributeFilter,
+    newNegativeAttributeFilter,
+    newPositiveAttributeFilter,
+    newAbsoluteDateFilter,
+    newRelativeDateFilter,
 } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../DashboardView/types";
+import { IDashboardFilter } from "../types";
 
-export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): FilterContextItem => {
+export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {
         const attributeElements = filterAttributeElements(filter);
         if (!isAttributeElementsByRef(attributeElements)) {
@@ -69,4 +74,31 @@ export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): Fi
     }
 
     throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
-};
+}
+
+export function filterContextItemToDashboardFilter(filter: FilterContextItem): IDashboardFilter {
+    if (isDashboardAttributeFilter(filter)) {
+        const { attributeFilter } = filter;
+        if (attributeFilter.negativeSelection) {
+            return newNegativeAttributeFilter(attributeFilter.displayForm, attributeFilter.attributeElements);
+        } else {
+            return newPositiveAttributeFilter(attributeFilter.displayForm, attributeFilter.attributeElements);
+        }
+    } else {
+        const { dateFilter } = filter;
+        if (dateFilter.type === "absolute") {
+            return newAbsoluteDateFilter(
+                dateFilter.dataSet,
+                dateFilter.from?.toString(),
+                dateFilter.to?.toString(),
+            );
+        } else {
+            return newRelativeDateFilter(
+                dateFilter.dataSet,
+                dateFilter.granularity,
+                Number.parseInt(filter.dateFilter.from?.toString() ?? "0", 10),
+                Number.parseInt(filter.dateFilter.to?.toString() ?? "0", 10),
+            );
+        }
+    }
+}

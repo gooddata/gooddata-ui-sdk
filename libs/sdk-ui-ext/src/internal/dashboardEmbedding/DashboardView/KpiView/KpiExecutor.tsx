@@ -15,7 +15,6 @@ import {
     IWidgetAlertDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IFilter,
     IMeasure,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
@@ -55,8 +54,8 @@ import {
     KpiAlertDialog,
 } from "../../KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "../../KpiAlerts/useBrokenAlertFiltersMeta";
-import { IKpiAlertResult, IKpiResult } from "../../types";
-import { dashboardFilterToFilterContextItem } from "../../utils/filters";
+import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
+import { dashboardFilterToFilterContextItem, filterContextItemToDashboardFilter } from "../../utils/filters";
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 
 import {
@@ -72,7 +71,8 @@ interface IKpiExecutorProps {
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     alert?: IWidgetAlert;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
     onError?: OnError;
@@ -95,6 +95,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     secondaryMeasure,
     alert,
     filters,
+    onFiltersChange,
     drillableItems,
     onDrill,
     onError,
@@ -274,7 +275,11 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                         saveOrUpdateAlert(toSave);
                     }}
                     onAlertDialogUpdateClick={noop as any} // TODO implement
-                    onApplyAlertFiltersClick={noop as any} // TODO implement
+                    onApplyAlertFiltersClick={() =>
+                        onFiltersChange(
+                            alert.filterContext?.filters?.map(filterContextItemToDashboardFilter) ?? [],
+                        )
+                    }
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}
                     alertSavingStatus={alertSavingStatus}

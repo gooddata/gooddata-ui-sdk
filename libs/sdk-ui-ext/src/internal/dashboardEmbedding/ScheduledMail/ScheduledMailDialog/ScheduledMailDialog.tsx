@@ -19,7 +19,7 @@ import { useDashboard } from "../../hooks/useDashboard";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer";
 import { uriRef } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../../DashboardView/types";
+import { IDashboardFilter } from "../../types";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 
 export type ScheduledMailDialogProps = {
