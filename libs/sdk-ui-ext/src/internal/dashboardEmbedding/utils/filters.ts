@@ -6,6 +6,7 @@ import {
     IDashboardAttributeFilter,
     isDateFilterGranularity,
     isDashboardAttributeFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     isAbsoluteDateFilter,
@@ -15,13 +16,13 @@ import {
     filterAttributeElements,
     filterObjRef,
     isAttributeFilter,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
-    newAbsoluteDateFilter,
-    newRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "../types";
 
+/**
+ * Converts a {@link IDashboardFilter} to a {@link FilterContextItem}.
+ * @param filter - filter to convert
+ */
 export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {
         const attributeElements = filterAttributeElements(filter);
@@ -76,29 +77,14 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
     throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
 }
 
-export function filterContextItemToDashboardFilter(filter: FilterContextItem): IDashboardFilter {
-    if (isDashboardAttributeFilter(filter)) {
-        const { attributeFilter } = filter;
-        if (attributeFilter.negativeSelection) {
-            return newNegativeAttributeFilter(attributeFilter.displayForm, attributeFilter.attributeElements);
+export function filterArrayToFilterContextItems(
+    filters: Array<IDashboardFilter | FilterContextItem>,
+): FilterContextItem[] {
+    return filters.map((filter) => {
+        if (isDashboardDateFilter(filter) || isDashboardAttributeFilter(filter)) {
+            return filter;
         } else {
-            return newPositiveAttributeFilter(attributeFilter.displayForm, attributeFilter.attributeElements);
+            return dashboardFilterToFilterContextItem(filter);
         }
-    } else {
-        const { dateFilter } = filter;
-        if (dateFilter.type === "absolute") {
-            return newAbsoluteDateFilter(
-                dateFilter.dataSet,
-                dateFilter.from?.toString(),
-                dateFilter.to?.toString(),
-            );
-        } else {
-            return newRelativeDateFilter(
-                dateFilter.dataSet,
-                dateFilter.granularity,
-                Number.parseInt(filter.dateFilter.from?.toString() ?? "0", 10),
-                Number.parseInt(filter.dateFilter.to?.toString() ?? "0", 10),
-            );
-        }
-    }
+    });
 }

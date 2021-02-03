@@ -14,6 +14,7 @@ import {
     IWidget,
     ResponsiveScreenType,
     IFluidLayoutColumnMethods,
+    FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
@@ -69,15 +70,17 @@ export interface IDashboardViewProps {
     dashboard: ObjRef;
 
     /**
-     * Optionally, specify filters to be applied to all the widgets in the dashboard
-     * on top of any filters the dashboard already has saved within.
+     * Optionally, specify filters to be applied to all the widgets in the dashboard.
+     * If you specify this and want to merge your filters with the filters from the dashboard,
+     * you need to use the data from the {@link onDashboardLoaded} callback.
+     * To make the merging of the filters easier, you can use the {@link mergeFiltersWithDashboard} function.
      *
      * Note: These filters are also applied to created scheduled e-mails.
      * (the attached dashboard will use the filters that are set at the time we schedule it)
      * To suppress this behavior, set applyFiltersToScheduledMail property to false.
      * (and then the attached dashboard will use the original filters stored on the dashboard)
      */
-    filters?: IDashboardFilter[];
+    filters?: Array<IDashboardFilter | FilterContextItem>;
 
     /**
      * Optionally, specify a callback that will be triggered when the filters should be changed.
@@ -243,7 +246,7 @@ export type IDashboardWidgetRenderProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboardRef: ObjRef;
-    filters?: IDashboardFilter[];
+    filters?: FilterContextItem[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;

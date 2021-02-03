@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
@@ -26,13 +27,13 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
-import { filterContextToFiltersForWidget } from "../../converters";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { IDashboardFilter } from "../../types";
 
 interface IUseKpiDataConfig {
     kpiWidget: IKpiWidget;
     filterContext?: IFilterContext | ITempFilterContext;
-    filters?: IDashboardFilter[];
+    filters?: FilterContextItem[];
     backend?: IAnalyticalBackend;
     workspace?: string;
     onError?: OnError;
@@ -57,8 +58,9 @@ export function useKpiData({
     const promise = async () => {
         invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
-        const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, kpiWidget);
-        const inputFilters = [...filtersFromFilterContext, ...(filters ?? [])];
+        const inputFilters = filters
+            ? filterContextItemsToFiltersForWidget(filters, kpiWidget)
+            : filterContextToFiltersForWidget(filterContext, kpiWidget);
 
         const relevantFilters = (await effectiveBackend
             .workspace(effectiveWorkspace)

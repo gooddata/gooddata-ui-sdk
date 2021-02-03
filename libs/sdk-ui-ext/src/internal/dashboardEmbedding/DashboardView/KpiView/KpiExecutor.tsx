@@ -41,7 +41,7 @@ import {
     useExecution,
 } from "@gooddata/sdk-ui";
 
-import { filterContextToFiltersForWidget } from "../../converters";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
@@ -54,7 +54,7 @@ import {
 } from "../../KpiAlerts";
 import { useBrokenAlertFiltersMeta } from "../../KpiAlerts/useBrokenAlertFiltersMeta";
 import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
-import { dashboardFilterToFilterContextItem, filterContextItemToDashboardFilter } from "../../utils/filters";
+import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 
 import {
@@ -293,8 +293,10 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                         onFiltersChange
                             ? () =>
                                   onFiltersChange(
-                                      alert.filterContext?.filters?.map(filterContextItemToDashboardFilter) ??
-                                          [],
+                                      filterContextItemsToFiltersForWidget(
+                                          alert.filterContext?.filters ?? [],
+                                          kpiWidget,
+                                      ),
                                   )
                             : undefined
                     }

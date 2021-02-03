@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 import React, { memo } from "react";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
@@ -35,7 +36,7 @@ interface IDashboardRendererProps {
     dashboardViewLayout: IDashboardViewLayout<IDashboardLayoutContent>;
     backend?: IAnalyticalBackend;
     workspace?: string;
-    filters?: IDashboardFilter[];
+    filters?: FilterContextItem[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;

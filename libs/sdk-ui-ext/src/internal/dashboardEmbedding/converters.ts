@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import {
+    FilterContextItem,
     IFilterContext,
     isDashboardAttributeFilter,
     ITempFilterContext,
@@ -29,7 +30,21 @@ export function filterContextToFiltersForWidget(
         return [];
     }
 
-    return filterContext.filters.map((filter) => {
+    return filterContextItemsToFiltersForWidget(filterContext.filters, widget);
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @internal
+ */
+export function filterContextItemsToFiltersForWidget(
+    filterContextItems: FilterContextItem[],
+    widget: IWidgetDefinition,
+): IDashboardFilter[] {
+    return filterContextItems.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
             if (filter.attributeFilter.negativeSelection) {
                 return newNegativeAttributeFilter(

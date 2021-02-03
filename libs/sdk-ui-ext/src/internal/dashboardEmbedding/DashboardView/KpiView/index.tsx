@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import compact from "lodash/compact";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
@@ -45,7 +46,7 @@ export interface IKpiViewProps {
     /**
      * Optionally, specify filters to be applied to the KPI.
      */
-    filters?: IDashboardFilter[];
+    filters?: FilterContextItem[];
 
     /**
      * Optionally, specify a callback that will be triggered when the filters should be changed.
