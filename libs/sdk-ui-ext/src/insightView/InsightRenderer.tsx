@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
 import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
@@ -40,7 +40,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     onError?: (error: GoodDataSdkError | undefined) => void;
 }
 
-const getElementId = () => `gd-vis-${uuid.v4()}`;
+const getElementId = () => `gd-vis-${uuidv4()}`;
 
 const visualizationUriRootStyle = {
     height: "100%",

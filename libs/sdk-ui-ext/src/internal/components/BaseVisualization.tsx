@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import React from "react";
 import { render } from "react-dom";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -89,7 +89,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
 
     constructor(props: IBaseVisualizationProps) {
         super(props);
-        this.visElementId = uuid.v4();
+        this.visElementId = uuidv4();
         this.executionFactory = props.backend.workspace(props.projectId).execution();
     }
 
@@ -117,7 +117,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         );
 
         if (visualizationClassChanged) {
-            this.visElementId = uuid.v4();
+            this.visElementId = uuidv4();
             this.setupVisualization(nextProps);
         }
 

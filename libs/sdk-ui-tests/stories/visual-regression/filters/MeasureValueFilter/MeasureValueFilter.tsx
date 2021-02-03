@@ -14,11 +14,11 @@ const scenarios = {
     closed: {},
     opened: { clickSelector: ".s-mvf-operator-dropdown-button", postInteractionWait: 200 },
     "between-selected": {
-        clickSelectors: [".s-mvf-operator-dropdown-button", ".s-mvf-operator-between"],
+        clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-between"],
         postInteractionWait: 200,
     },
     "greater-than-selected": {
-        clickSelectors: [".s-mvf-operator-dropdown-button", ".s-mvf-operator-greater_than"],
+        clickSelectors: [".s-mvf-operator-dropdown-button", 200, ".s-mvf-operator-greater_than"],
         postInteractionWait: 200,
     },
 };

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import partial from "lodash/partial";
 import mapboxgl from "mapbox-gl";
 import {
@@ -90,9 +90,9 @@ export function createPushpinDataLayer(
     dataSourceName: string,
     geoData: IGeoData,
     config: IGeoConfig,
-): mapboxgl.Layer {
+): mapboxgl.CircleLayer {
     const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};
-    const layer: mapboxgl.Layer = {
+    const layer: mapboxgl.CircleLayer = {
         id: DEFAULT_LAYER_NAME,
         type: PUSHPIN_STYLE_CIRCLE,
         source: dataSourceName,
@@ -113,7 +113,7 @@ export function createPushpinDataLayer(
  * Create layer for clustered points/pins which have 'properties.point_count' indicates number of same points is clustered together
  * @param dataSourceName
  */
-export function createClusterPoints(dataSourceName: string): mapboxgl.Layer {
+export function createClusterPoints(dataSourceName: string): mapboxgl.CircleLayer {
     return {
         id: DEFAULT_CLUSTER_LAYER_NAME,
         type: PUSHPIN_STYLE_CIRCLE,
@@ -131,7 +131,7 @@ export function createClusterPoints(dataSourceName: string): mapboxgl.Layer {
  * Create layer for cluster labels which indicate number of points/pins is clustered
  * @param dataSourceName
  */
-export function createClusterLabels(dataSourceName: string): mapboxgl.Layer {
+export function createClusterLabels(dataSourceName: string): mapboxgl.SymbolLayer {
     return {
         ...DEFAULT_CLUSTER_LABELS_CONFIG,
         source: dataSourceName,
@@ -143,7 +143,7 @@ export function createClusterLabels(dataSourceName: string): mapboxgl.Layer {
  * @param dataSourceName
  * @param selectedSegmentItems
  */
-export function createUnclusterPoints(dataSourceName: string): mapboxgl.Layer {
+export function createUnclusterPoints(dataSourceName: string): mapboxgl.CircleLayer {
     return {
         id: DEFAULT_LAYER_NAME,
         type: PUSHPIN_STYLE_CIRCLE,

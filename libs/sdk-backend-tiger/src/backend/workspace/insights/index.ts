@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IInsightsQueryOptions,
     IInsightsQueryResult,
@@ -26,7 +26,7 @@ import {
     VisualizationObjectCollection,
     VisualizationObject,
 } from "@gooddata/api-client-tiger";
-import uuid4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 import {
     insightFromInsightDefinition,
     visualizationObjectsItemToInsight,
@@ -164,7 +164,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     workspaceId: this.workspace,
                     analyticsObject: {
                         data: {
-                            id: uuid4(),
+                            id: uuidv4(),
                             type: "visualizationObject",
                             attributes: {
                                 description: insightTitle(insight),

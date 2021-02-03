@@ -109,7 +109,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
 
     public render(): React.ReactNode {
         const { intl, isMulti, options, value } = this.props;
-        const creatableSelectComponent: SelectComponentsConfig<any> = {
+        const creatableSelectComponent: SelectComponentsConfig<any, boolean> = {
             ...ReactSelectComponents,
             IndicatorsContainer: this.renderEmptyContainer,
             Input: this.renderInputContainer,
@@ -165,7 +165,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         };
     }
 
-    private renderNoOptionsContainer = (menuProps: MenuProps<any>): React.ReactElement => {
+    private renderNoOptionsContainer = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
         const {
             selectProps: { inputValue },
         } = menuProps;
@@ -185,7 +185,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         return this.renderEmptyContainer();
     };
 
-    private renderMenuOptions = (menuProps: MenuProps<any>): React.ReactElement => {
+    private renderMenuOptions = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
         const { isLoading, currentUser } = this.props;
         const {
             options,
@@ -213,7 +213,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         return this.renderMenuOptionsContainer(menuProps);
     };
 
-    private renderMenuOptionsContainer = (menuProps: MenuProps<any>): React.ReactElement => {
+    private renderMenuOptionsContainer = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
         return (
             <Menu className="s-gd-recipients-menu-container" {...menuProps}>
                 {menuProps.children}
@@ -221,7 +221,7 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
         );
     };
 
-    private renderLoadingIcon = (menuProps: MenuProps<any>): React.ReactElement => {
+    private renderLoadingIcon = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
         return (
             <Menu className="s-gd-recipients-menu-container" {...menuProps}>
                 <LoadingMask height={LOADING_MENU_HEIGHT} />
@@ -432,7 +432,10 @@ class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRe
             : [];
     }
 
-    private isRecipientAdded = (value: IScheduleEmailRecipient[], searchKey: string): boolean => {
+    private isRecipientAdded = (
+        value: ReadonlyArray<IScheduleEmailRecipient>,
+        searchKey: string,
+    ): boolean => {
         return value.some((recipient: IScheduleEmailRecipient) =>
             isEqual(getScheduledEmailRecipientUniqueIdentifier(recipient), searchKey),
         );

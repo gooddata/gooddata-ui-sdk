@@ -18,10 +18,18 @@ export interface IBackstopScenarioConfig {
      * Click the specified DOM element prior to screenshot
      */
     clickSelector?: string;
+
     /**
-     * Simulates multiple sequential click interactions
+     * Simulates multiple sequential click interactions. It is also possible to include a wait in milliseconds
+     * inside this array. Just specify a number of millis.
+     *
+     * Example: [ 'selector-1', 100, 'selector-2' ] == first click selector-1, then wait 100 millis, then
+     * click 'selector-2'.
+     *
+     * Note: after performing these operations, the backstop driver will apply 'postInteractionWait' so there
+     * is no need to include a trailing timeout.
      */
-    clickSelectors?: string[];
+    clickSelectors?: Array<string | number>;
 
     /**
      * Import cookies in JSON format
@@ -49,9 +57,17 @@ export interface IBackstopScenarioConfig {
     hoverSelector?: string;
 
     /**
-     * Simulates multiple sequential hover interactions
+     * Simulates multiple sequential hover interactions. It is also possible to include a wait in milliseconds
+     * inside this array. Just specify a number of millis.
+     *
+     * Example: [ 'selector-1', 100, 'selector-2' ] == first hover selector-1, then wait 100 millis, then
+     * hover 'selector-2'.
+     *
+     * Note: after performing this hovering, backstop driver will proceed deal with clickSelectors. if you need
+     * to wait before starting clicking, then include trailing timeout here. There is also postInteractionWait; this
+     * is applied _after_ the click selectors processing.
      */
-    hoverSelectors?: string[];
+    hoverSelectors?: Array<string | number>[];
 
     /**
      * Press key in the DOM element prior to screenshot

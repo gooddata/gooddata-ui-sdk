@@ -3,7 +3,7 @@ import React from "react";
 import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";
@@ -43,7 +43,7 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
 
     constructor(props: IColorDropdownOwnProps & WrappedComponentProps) {
         super(props);
-        this.id = uuid.v4();
+        this.id = uuidv4();
         this.state = {
             isDropdownOpen: false,
             dropdownVersion: DropdownVersionType.ColorPalette,

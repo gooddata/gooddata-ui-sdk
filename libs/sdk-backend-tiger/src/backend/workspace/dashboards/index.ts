@@ -17,7 +17,7 @@ import {
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
-import uuid4 from "uuid/v4";
+import { v4 as uuidv4 } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -139,7 +139,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                     analyticsObject: {
                         data: {
-                            id: uuid4(),
+                            id: uuidv4(),
                             type: "analyticalDashboard",
                             attributes: {
                                 content: dashboardContent,
@@ -242,7 +242,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                     analyticsObject: {
                         data: {
-                            id: uuid4(),
+                            id: uuidv4(),
                             type: "filterContext",
                             attributes: {
                                 content: tigerFilterContext,

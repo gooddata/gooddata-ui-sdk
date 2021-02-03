@@ -2081,7 +2081,7 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         onRangeChange: () => void;
         onScrollStart: () => void;
         onSelect: () => void;
-        rowItem: React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, string | any | (new (props: any) => React_2.Component<any, any, any>)>) | (new (props: any) => React_2.Component<any, any, any>)>;
+        rowItem: React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any>) | (new (props: any) => React_2.Component<any, any, any>)>;
         scrollToSelected: boolean;
         selection: {};
     };
