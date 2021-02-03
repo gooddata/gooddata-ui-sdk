@@ -1,5 +1,11 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IDashboardLayout, layoutWidgets, IWidget } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IDashboardLayout,
+    layoutWidgets,
+    IWidget,
+    isInsightWidget,
+} from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -79,7 +85,7 @@ export const useDashboardViewLayout = ({
     const promise = dashboardLayout
         ? async () => {
               const insightRefsToLoad = layoutWidgets(dashboardLayout)
-                  .filter((w) => w.type === "insight")
+                  .filter(isInsightWidget)
                   .map((w) => w.insight);
 
               const loader = insightDataLoaderFactory.forWorkspace(effectiveWorkspace);

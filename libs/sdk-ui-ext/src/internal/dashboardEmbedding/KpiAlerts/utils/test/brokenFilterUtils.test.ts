@@ -31,6 +31,10 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
         ignoreDashboardFilters: [],
         title: "KPI",
         type: "kpi",
+        kpi: {
+            comparisonType: "none",
+            metric: idRef("measure"),
+        },
     };
 
     const alertBase: IWidgetAlertDefinition = {

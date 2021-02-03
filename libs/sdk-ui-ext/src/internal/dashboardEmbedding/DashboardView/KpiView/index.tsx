@@ -5,7 +5,7 @@ import {
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
-    IWidget,
+    IKpiWidget,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
 import { IFilter, ObjRef } from "@gooddata/sdk-model";
@@ -34,7 +34,7 @@ export interface IKpiViewProps {
     /**
      * The KPI to execute and display.
      */
-    kpiWidget: IWidget;
+    kpiWidget: IKpiWidget;
 
     /**
      * Optionally, specify alert set by the current user to this KPI.

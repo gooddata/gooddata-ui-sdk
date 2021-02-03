@@ -1,5 +1,5 @@
-// (C) 2020 GoodData Corporation
-import { IFilter, newAllTimeFilter, newRelativeDateFilter, ObjRef } from "@gooddata/sdk-model";
+// (C) 2020-2021 GoodData Corporation
+import { IFilter, newAllTimeFilter, newRelativeDateFilter, ObjRef, idRef } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { hasDateFilterForDateDataset, addImplicitAllTimeFilter } from "../utils";
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
@@ -41,6 +41,7 @@ describe("addImplicitAllTimeFilter", () => {
         title: "Foo",
         type: "insight",
         dateDataSet: undefined,
+        insight: idRef("insight"),
     };
 
     const widgetWithMatchingDateDataset: IWidgetDefinition = {

@@ -1,5 +1,9 @@
 // (C) 2007-2021 GoodData Corporation
-import { IUserWorkspaceSettings, IWidgetAlertDefinition, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
+import {
+    IUserWorkspaceSettings,
+    IWidgetAlertDefinition,
+    IKpiWidgetDefinition,
+} from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError, isNoDataSdkError } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -30,7 +34,7 @@ function getNodeDocumentRelativeOffsetTop(node: HTMLDivElement): number {
 
 export interface IDashboardItemWithKpiAlertProps {
     // KPI
-    kpi: IWidgetDefinition;
+    kpi: IKpiWidgetDefinition;
     isLoading: boolean;
     filters?: IFilter[];
     kpiResult: IKpiResult | undefined;

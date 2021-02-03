@@ -402,17 +402,7 @@ export function convertDrill(
 export const convertWidget = (
     widget: IWidget | IWidgetDefinition,
 ): GdcVisualizationWidget.IWrappedVisualizationWidget | GdcKpi.IWrappedKPI => {
-    const {
-        type,
-        insight,
-        kpi,
-        ignoreDashboardFilters,
-        dateDataSet,
-        title,
-        description,
-        drills,
-        properties: widgetProperties = {},
-    } = widget;
+    const { ignoreDashboardFilters, dateDataSet, title, description, drills } = widget;
     const meta = {
         ...(isWidget(widget)
             ? {
@@ -426,8 +416,9 @@ export const convertWidget = (
     const convertedDateDataSet = dateDataSet && refToUri(dateDataSet);
     const convertedIgnoredDashboardFilters = ignoreDashboardFilters.map(convertFilterReference);
 
-    if (type === "kpi") {
+    if (widget.type === "kpi") {
         invariant(widget.kpi, "Widget type is kpi, but kpi props are not defined!");
+        const { kpi } = widget;
 
         const kpiWidget: GdcKpi.IWrappedKPI = {
             kpi: {
@@ -438,9 +429,9 @@ export const convertWidget = (
                               comparisonType: kpi.comparisonType,
                           }
                         : {
-                              comparisonType: kpi!.comparisonType,
+                              comparisonType: kpi.comparisonType,
                           }),
-                    metric: refToUri(kpi!.metric),
+                    metric: refToUri(kpi.metric),
                     ignoreDashboardFilters: convertedIgnoredDashboardFilters,
                     dateDataSet: convertedDateDataSet,
                     drillTo:
@@ -453,6 +444,8 @@ export const convertWidget = (
         return kpiWidget;
     }
 
+    const { insight, properties: widgetProperties = {} } = widget;
+
     const { properties, references } = convertUrisToReferences({
         properties: widgetProperties,
         references: {},
@@ -463,7 +456,7 @@ export const convertWidget = (
     const visualizationWidget: GdcVisualizationWidget.IWrappedVisualizationWidget = {
         visualizationWidget: {
             content: {
-                visualization: refToUri(insight!),
+                visualization: refToUri(insight),
                 ignoreDashboardFilters: convertedIgnoredDashboardFilters,
                 dateDataSet: convertedDateDataSet,
                 drills: drills
