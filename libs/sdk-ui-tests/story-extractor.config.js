@@ -9,9 +9,4 @@ module.exports = {
         "\\.(css|less|sass|scss)$": "<rootDir>/__mocks__/styleMock.ts",
     },
     testPathIgnorePatterns: ["/node_modules/", "/dist/"],
-    globals: {
-        "ts-jest": {
-            packageJson: "<rootDir>/package.json",
-        },
-    },
 };
