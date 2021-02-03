@@ -115,7 +115,7 @@ export function useBrokenAlertFiltersMeta({
                                   includeTotalCountWithoutFilters: true,
                               })
                               .query(),
-                          attributesService.getAttributeDisplayForm(displayForm), // TODO: we might load all displayForms at once
+                          attributesService.getAttributeDisplayForm(displayForm),
                       ]);
 
                       return {

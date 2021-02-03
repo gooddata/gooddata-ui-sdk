@@ -4,7 +4,6 @@ import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
 import compact from "lodash/compact";
 import isNil from "lodash/isNil";
 import isNumber from "lodash/isNumber";
-import noop from "lodash/noop";
 import round from "lodash/round";
 import {
     IAnalyticalBackend,
@@ -274,7 +273,22 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                               };
                         saveOrUpdateAlert(toSave);
                     }}
-                    onAlertDialogUpdateClick={noop as any} // TODO implement
+                    onAlertDialogUpdateClick={() => {
+                        saveOrUpdateAlert({
+                            ...alert,
+                            // evaluate triggered as if the alert already used the correct filters (i.e. use the KPI execution itself)
+                            isTriggered: evaluateAlertTriggered(
+                                kpiResult?.measureResult ?? 0,
+                                alert.threshold,
+                                alert.whenTriggered,
+                            ),
+                            // change the filters to the filters currently used by the KPI
+                            filterContext: {
+                                ...alert.filterContext,
+                                filters: filters.map(dashboardFilterToFilterContextItem),
+                            },
+                        });
+                    }}
                     onApplyAlertFiltersClick={
                         onFiltersChange
                             ? () =>
@@ -287,6 +301,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}
                     alertSavingStatus={alertSavingStatus}
+                    alertUpdatingStatus={alertSavingStatus} // since alert updating is realized by saving in SDK, we can use the same status
                     filters={filters}
                     isThresholdRepresentingPercent={isThresholdRepresentingPercent}
                     thresholdPlaceholder={thresholdPlaceholder}
