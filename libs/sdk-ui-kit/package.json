@@ -81,8 +81,8 @@
         "react-document-title": "^2.0.3"
     },
     "peerDependencies": {
-        "react": "^16.5.2",
-        "react-dom": "^16.5.2"
+        "react": "^16.10.0",
+        "react-dom": "^16.10.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
