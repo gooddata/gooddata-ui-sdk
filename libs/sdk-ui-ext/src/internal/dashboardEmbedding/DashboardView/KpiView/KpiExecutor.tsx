@@ -275,10 +275,14 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                         saveOrUpdateAlert(toSave);
                     }}
                     onAlertDialogUpdateClick={noop as any} // TODO implement
-                    onApplyAlertFiltersClick={() =>
-                        onFiltersChange(
-                            alert.filterContext?.filters?.map(filterContextItemToDashboardFilter) ?? [],
-                        )
+                    onApplyAlertFiltersClick={
+                        onFiltersChange
+                            ? () =>
+                                  onFiltersChange(
+                                      alert.filterContext?.filters?.map(filterContextItemToDashboardFilter) ??
+                                          [],
+                                  )
+                            : undefined
                     }
                     isAlertLoading={alertStatus === "loading"}
                     alertDeletingStatus={alertDeletingStatus}

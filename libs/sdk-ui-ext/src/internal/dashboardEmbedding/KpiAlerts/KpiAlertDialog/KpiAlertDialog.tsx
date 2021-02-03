@@ -67,9 +67,10 @@ export interface IKpiAlertDialogProps {
     onAlertDialogUpdateClick: () => void;
 
     /**
-     * Triggered when user clicks the "Apply alert filters to dashboard" button in case the dashboard has different filters than the alert
+     * Triggered when user clicks the "Apply alert filters to dashboard" button in case the dashboard has different filters than the alert.
+     * If not specified, the corresponding button will not be rendered.
      */
-    onApplyAlertFiltersClick: () => void;
+    onApplyAlertFiltersClick?: () => void;
 }
 
 interface IKpiAlertDialogState {
@@ -383,10 +384,15 @@ export class KpiAlertDialog extends Component<
         const shouldShowFiltersDifferMessage = !!this.props.alert && filtersDiffer;
         return shouldShowFiltersDifferMessage ? (
             <ReactMessage type="warning">
-                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />{" "}
-                <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
-                    <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
-                </a>
+                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />
+                {!!this.props.onApplyAlertFiltersClick && (
+                    <>
+                        {" "}
+                        <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
+                            <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
+                        </a>
+                    </>
+                )}
             </ReactMessage>
         ) : (
             false
