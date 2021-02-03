@@ -54,7 +54,7 @@
         "spark-md5": "^3.0.0",
         "ts-invariant": "^0.6.0",
         "tslib": "^2.0.0",
-        "uuid": "^3.3.3"
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.0.0",
@@ -66,7 +66,7 @@
         "@types/node-fetch": "^1.6.7",
         "@types/qs": "^6.5.1",
         "@types/spark-md5": "^3.0.1",
-        "@types/uuid": "^3.4.5",
+        "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "async": "^2.1.5",

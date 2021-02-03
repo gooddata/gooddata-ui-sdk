@@ -3840,10 +3840,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-FvUupuM3rlRsRtCN+fDudtmytGO6iHJuuRKS1Ss0pG5z8oX0diNEw94UEL7hgDbpN94rgaK5R7sWm6RrSkZuAQ==
-  /@types/uuid/3.4.9:
+  /@types/uuid/8.3.0:
     dev: false
     resolution:
-      integrity: sha512-XDwyIlt/47l2kWLTzw/mtrpLdB+GPSskR2n/PIcPn+VYhVO77rGhRncIR5GPU0KRzXuqkDO+J5qqrG0Y8P6jzQ==
+      integrity: sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ==
   /@types/webpack-env/1.16.0:
     dev: false
     resolution:
@@ -20051,7 +20051,7 @@ packages:
       '@types/node-fetch': 1.6.9
       '@types/qs': 6.9.5
       '@types/spark-md5': 3.0.2
-      '@types/uuid': 3.4.9
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.0.2
       async: 2.6.3
@@ -20080,7 +20080,7 @@ packages:
       ts-loader: 6.2.2_typescript@4.0.2
       tslib: 2.1.0
       typescript: 4.0.2
-      uuid: 3.4.0
+      uuid: 8.3.2
       webpack: 4.46.0_webpack-cli@3.3.12
       webpack-cli: 3.3.12_webpack@4.46.0
       webpack-dev-server: 3.11.2_46edf965869dcc7c8d09e022f331d1ea
@@ -20090,7 +20090,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-kmh0GR6SO1YtnMVFUtr2Xwf0Dzu5E//Wr4tfd0IHNNYocfv20yjYgbIp9LmftMquUYzdch6ddOQO5g/Qwa/n4Q==
+      integrity: sha512-cV+v9B+XALHhI2FaxC+uiIE08SYeBvtMvPR02RaFU4MRg9YJPodNqYk7LSOqCTV69DrzbQ4EEfJHrylbroX/nw==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz_ts-node@8.10.2':
@@ -20450,7 +20450,7 @@ packages:
       '@types/json-stable-stringify': 1.0.32
       '@types/lodash': 4.14.168
       '@types/spark-md5': 3.0.2
-      '@types/uuid': 3.4.9
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.0.2
       concurrently: 5.3.0
@@ -20473,14 +20473,14 @@ packages:
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.0.2
       tslib: 2.1.0
       typescript: 4.0.2
-      uuid: 3.4.0
+      uuid: 8.3.2
     dev: false
     id: 'file:projects/sdk-backend-bear.tgz'
     name: '@rush-temp/sdk-backend-bear'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-/zs3LbxW8SSXp+ZDr7sF7pgOft6hf5TQHSt/ikomh/PGZ/yNhY0sCk+mueLV8W+FzFc6iklx/K9yN8P4JTBS8Q==
+      integrity: sha512-nMuaMat6nDFsL9LsBoKnPX96D88trFs7g+BAD2izIB19X/635+kwi9U2U4lnFLZoXZ7poFNHDwt61d0x7XKHVg==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2':
@@ -20557,7 +20557,7 @@ packages:
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
       '@types/spark-md5': 3.0.2
-      '@types/uuid': 3.4.9
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.0.2
       axios: 0.21.1
@@ -20579,14 +20579,14 @@ packages:
       tslib: 2.1.0
       typescript: 4.0.2
       url: 0.11.0
-      uuid: 3.4.0
+      uuid: 8.3.2
     dev: false
     id: 'file:projects/sdk-backend-tiger.tgz'
     name: '@rush-temp/sdk-backend-tiger'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-I/rUglWIVJLw8QUSJOkxJwDPY7l0kcv6fPplIgHATgPmc3wjV9b2VGdXfJJxN5SznGk59PwKdl7i7SCRaihlqg==
+      integrity: sha512-oLyywzenymiB/zSU9qq2se6IezlSwxyBD4LQh9Kdc5DQZ69UB1r1jztF6hfy2q4RR2CiQBN7bLaKsWUMLBQCag==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-embedding.tgz_ts-node@8.10.2':
@@ -20957,7 +20957,7 @@ packages:
       '@types/react-select': 3.1.2
       '@types/react-transition-group': 2.9.2
       '@types/react-truncate': 2.3.3
-      '@types/uuid': 3.4.9
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.0.2
       classnames: 2.2.6
@@ -21001,14 +21001,14 @@ packages:
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.0.2
       tslib: 2.1.0
       typescript: 4.0.2
-      uuid: 3.4.0
+      uuid: 8.3.2
     dev: false
     id: 'file:projects/sdk-ui-ext.tgz'
     name: '@rush-temp/sdk-ui-ext'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-mHyju+q/VOaUfNP0BR5awPF7XYW4X+trfd00YPDF/Yr7ybjXPTcI0mQqnFYta9CcwhSeWukNWuTgc7PolcEziw==
+      integrity: sha512-JGY4bn4BaE1DTHFOjuOEgb8TCZk5b54/tKcPnikcCaRPG7HR67swX6npnOdGgBfUjmv4rB5xTU1xNoHSZ6XIKQ==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz_ts-node@8.10.2':
@@ -21166,7 +21166,7 @@ packages:
       '@types/react-responsive': 8.0.2
       '@types/react-transition-group': 2.9.2
       '@types/stringify-object': 3.3.0
-      '@types/uuid': 3.4.9
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 4.14.2_eslint@7.19.0+typescript@4.0.2
       classnames: 2.2.6
@@ -21213,14 +21213,14 @@ packages:
       ts-jest: 26.5.0_jest@26.6.3+typescript@4.0.2
       tslib: 2.1.0
       typescript: 4.0.2
-      uuid: 3.4.0
+      uuid: 8.3.2
     dev: false
     id: 'file:projects/sdk-ui-kit.tgz'
     name: '@rush-temp/sdk-ui-kit'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-mNemuHwZidNvnscPWjYT3JYya0pX0maersuU1OfE5pDyCC/lER/dFJJcoB+MEoatCKtGdSGXZszmR/xkgS8prA==
+      integrity: sha512-sU448iL3ej7JrmHhDuznVZNUZYjGbxfxH7je+SEvF0OHEJS1htjbqnC0zOdErY1H68qOTcQeU6aDGz3YIaVErw==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2':

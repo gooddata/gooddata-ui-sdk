@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { VisualizationProperties } from "@gooddata/sdk-model";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { isUri } from "@gooddata/api-client-bear";
 import isArray from "lodash/isArray";
 import isObject from "lodash/isObject";
 import isString from "lodash/isString";
-import uuid from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 /*
  * Helpers
@@ -16,7 +16,7 @@ const getReferenceId = (value: string, references: GdcVisualizationObject.IRefer
 
 type IdGenerator = () => string;
 
-const defaultIdGenerator: IdGenerator = () => uuid.v4().replace(/-/g, "");
+const defaultIdGenerator: IdGenerator = () => uuidv4().replace(/-/g, "");
 
 type StringTransformation = (value: string) => string;
 
