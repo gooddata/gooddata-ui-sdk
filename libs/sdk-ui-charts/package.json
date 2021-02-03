@@ -71,7 +71,7 @@
         "polished": "^3.6.7",
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
-        "ts-invariant": "^0.5.1",
+        "ts-invariant": "^0.6.0",
         "tslib": "^2.0.0"
     },
     "peerDependencies": {

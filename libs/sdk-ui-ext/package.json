@@ -82,7 +82,7 @@
         "react-select": "^3.1.0",
         "react-transition-group": "^2.4.0",
         "react-truncate": "^2.4.0",
-        "ts-invariant": "^0.5.1",
+        "ts-invariant": "^0.6.0",
         "tslib": "^2.0.0",
         "uuid": "^3.3.3"
     },

@@ -47,7 +47,7 @@
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.63",
         "@gooddata/sdk-model": "^8.2.0-alpha.63",
         "lodash": "^4.17.19",
-        "ts-invariant": "^0.5.1",
+        "ts-invariant": "^0.6.0",
         "tslib": "^2.0.0"
     },
     "devDependencies": {

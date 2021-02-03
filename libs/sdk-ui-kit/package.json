@@ -75,7 +75,7 @@
         "react-portal": "^4.1.5",
         "react-responsive": "^8.0.1",
         "react-transition-group": "^2.4.0",
-        "ts-invariant": "^0.5.1",
+        "ts-invariant": "^0.6.0",
         "tslib": "^2.0.0",
         "uuid": "^3.3.3",
         "react-document-title": "^2.0.3"
