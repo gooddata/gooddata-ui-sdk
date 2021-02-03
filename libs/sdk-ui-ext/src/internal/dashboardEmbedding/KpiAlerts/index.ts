@@ -8,6 +8,7 @@ import {
     enrichBrokenAlertsInfo,
     getBrokenAlertFiltersBasicInfo,
 } from "./utils/brokenFilterUtils";
+import { evaluateAlertTriggered } from "./utils/alertThresholdUtils";
 
 export {
     DashboardItemWithKpiAlert,
@@ -16,4 +17,5 @@ export {
     IBrokenAlertFilterBasicInfo,
     enrichBrokenAlertsInfo,
     getBrokenAlertFiltersBasicInfo,
+    evaluateAlertTriggered,
 };

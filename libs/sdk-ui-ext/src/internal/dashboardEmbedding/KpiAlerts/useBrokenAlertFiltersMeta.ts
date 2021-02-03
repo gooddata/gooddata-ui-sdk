@@ -15,12 +15,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { isAttributeElementsByRef, objRefToString } from "@gooddata/sdk-model";
 
+import { dateDatasetsDataLoaderFactory } from "../hooks/dataLoaders";
+
 import {
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
     isBrokenAlertAttributeFilterInfo,
-} from "../../KpiAlerts/utils/brokenFilterUtils";
-import { dateDatasetsDataLoaderFactory } from "../../hooks/dataLoaders";
+} from "./utils/brokenFilterUtils";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;
@@ -56,6 +57,9 @@ export interface IUseEnrichedBrokenAlertsConfig
 
 const DEFAULT_ATTRIBUTE_ELEMENT_COUNT = 20;
 
+/**
+ * @internal
+ */
 export function useBrokenAlertFiltersMeta({
     backend,
     brokenAlertFilters,

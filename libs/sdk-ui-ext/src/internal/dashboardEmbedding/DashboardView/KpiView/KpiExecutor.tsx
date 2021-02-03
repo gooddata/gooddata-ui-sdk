@@ -1,12 +1,18 @@
 // (C) 2020 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
+import compact from "lodash/compact";
+import isNil from "lodash/isNil";
+import isNumber from "lodash/isNumber";
+import noop from "lodash/noop";
+import round from "lodash/round";
 import {
     IAnalyticalBackend,
-    IWidgetAlert,
-    ISeparators,
-    IWidgetAlertDefinition,
     IKpiWidget,
     IKpiWidgetDefinition,
+    ISeparators,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     IFilter,
@@ -17,50 +23,48 @@ import {
     ObjRef,
 } from "@gooddata/sdk-model";
 import {
-    useExecution,
-    useDataView,
-    IErrorProps,
-    ILoadingProps,
-    ErrorComponent as DefaultError,
-    LoadingComponent as DefaultLoading,
-    IDrillableItem,
-    IHeaderPredicate,
-    OnFiredDrillEvent,
-    IDrillEventContext,
     convertDrillableItemsToPredicates,
-    isSomeHeaderPredicateMatched,
-    OnError,
     createNumberJsFormatter,
-    IDataSeries,
-    NoDataSdkError,
-    isNoDataSdkError,
     DataViewFacade,
+    ErrorComponent as DefaultError,
+    IDataSeries,
+    IDrillableItem,
+    IDrillEventContext,
+    IErrorProps,
+    IHeaderPredicate,
+    ILoadingProps,
+    isNoDataSdkError,
+    isSomeHeaderPredicateMatched,
+    LoadingComponent as DefaultLoading,
+    NoDataSdkError,
+    OnError,
+    OnFiredDrillEvent,
+    useDataView,
+    useExecution,
 } from "@gooddata/sdk-ui";
-import compact from "lodash/compact";
-import isNil from "lodash/isNil";
-import isNumber from "lodash/isNumber";
-import noop from "lodash/noop";
-import round from "lodash/round";
-import { KpiRenderer } from "./KpiRenderer";
-import { injectIntl, IntlShape, WrappedComponentProps } from "react-intl";
-import { IKpiResult, IKpiAlertResult } from "../../types";
-import { DashboardItemWithKpiAlert } from "../../KpiAlerts/DashboardItemWithKpiAlert";
-import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
-import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
+
 import { filterContextToFiltersForWidget } from "../../converters";
-import {
-    enrichBrokenAlertsInfo,
-    getBrokenAlertFiltersBasicInfo,
-} from "../../KpiAlerts/utils/brokenFilterUtils";
-import KpiAlertDialog from "../../KpiAlerts/KpiAlertDialog/KpiAlertDialog";
-import { useAlertDeleteHandler } from "./alertManipulationHooks/useAlertDeleteHandler";
-import { useAlertSaveOrUpdateHandler } from "./alertManipulationHooks/useAlertSaveOrUpdateHandler";
-import { evaluateTriggered } from "../../KpiAlerts/utils/alertThresholdUtils";
-import { dashboardFilterToFilterContextItem } from "../../utils/filters";
-import { IUseAlertManipulationHandlerConfig } from "./alertManipulationHooks/types";
+import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
 import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
-import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
+import {
+    DashboardItemWithKpiAlert,
+    enrichBrokenAlertsInfo,
+    evaluateAlertTriggered,
+    getBrokenAlertFiltersBasicInfo,
+    KpiAlertDialog,
+} from "../../KpiAlerts";
+import { useBrokenAlertFiltersMeta } from "../../KpiAlerts/useBrokenAlertFiltersMeta";
+import { IKpiAlertResult, IKpiResult } from "../../types";
+import { dashboardFilterToFilterContextItem } from "../../utils/filters";
+import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
+
+import {
+    IUseAlertManipulationHandlerConfig,
+    useAlertDeleteHandler,
+    useAlertSaveOrUpdateHandler,
+} from "./alertManipulationHooks";
+import { KpiRenderer } from "./KpiRenderer";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -243,7 +247,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                                   ...alert,
                                   threshold,
                                   whenTriggered,
-                                  isTriggered: evaluateTriggered(
+                                  isTriggered: evaluateAlertTriggered(
                                       kpiAlertResult.measureResult,
                                       threshold,
                                       whenTriggered,
@@ -254,7 +258,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                                   widget: kpiWidget.ref,
                                   threshold,
                                   whenTriggered,
-                                  isTriggered: evaluateTriggered(
+                                  isTriggered: evaluateAlertTriggered(
                                       kpiResult?.measureResult ?? 0,
                                       threshold,
                                       whenTriggered,
