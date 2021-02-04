@@ -73,7 +73,7 @@
         "source-map-loader": "^1.1.1",
         "stats-webpack-plugin": "^0.7.0",
         "style-loader": "^1.2.1",
-        "styled-jsx": "^3.2.5",
+        "styled-jsx": "~3.2.5",
         "supertest": "^4.0.2",
         "testcafe": "^1.8.4",
         "typescript": "4.0.2",
