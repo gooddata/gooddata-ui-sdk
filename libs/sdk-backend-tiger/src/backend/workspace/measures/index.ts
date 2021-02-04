@@ -21,9 +21,9 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }
 
         const metricMetadata = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntityMetrics(
+            sdk.workspaceObjects.getEntityMetrics(
                 {
-                    id: ref.identifier,
+                    objectId: ref.identifier,
                     workspaceId: this.workspace,
                 },
                 {

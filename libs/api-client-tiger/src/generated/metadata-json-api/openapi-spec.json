@@ -424,7 +424,7 @@
         "/api/workspaces/{workspaceId}/objects": {
             "get": {
                 "tags": ["workspace-root-model-controller"],
-                "operationId": "getRootJsonApi_1_1",
+                "operationId": "getRootJsonApi",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -2617,9 +2617,9 @@
                 }
             }
         },
-        "/api/workspaces/{workspaceId}/model/analyticalDashboards": {
+        "/api/workspaces/{workspaceId}/objects/analyticalDashboards": {
             "get": {
-                "tags": ["workspace-model-controller"],
+                "tags": ["workspace-object-controller"],
                 "operationId": "getEntities@AnalyticalDashboards",
                 "parameters": [
                     {
@@ -2690,1864 +2690,8 @@
                 }
             },
             "post": {
-                "tags": ["workspace-model-controller"],
+                "tags": ["workspace-object-controller"],
                 "operationId": "createEntity@AnalyticalDashboards",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiAnalyticalDashboardDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/analyticalDashboards/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@AnalyticalDashboards",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "updateEntity@AnalyticalDashboards",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiAnalyticalDashboardDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "deleteEntity@AnalyticalDashboards",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfully deleted"
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/attributes": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Attributes",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAttributeList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/attributes/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Attributes",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAttributeDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/datasets": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Datasets",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiDatasetList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/datasets/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Datasets",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiDatasetDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/facts": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Facts",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFactList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/facts/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Facts",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFactDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/filterContexts": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@FilterContexts",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFilterContextList"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "createEntity@FilterContexts",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiFilterContextDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFilterContextDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/filterContexts/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@FilterContexts",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFilterContextDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "updateEntity@FilterContexts",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiFilterContextDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiFilterContextDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "deleteEntity@FilterContexts",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfully deleted"
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/labels": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Labels",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiLabelList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/labels/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Labels",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiLabelDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/metrics": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Metrics",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiMetricList"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "createEntity@Metrics",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiMetricDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiMetricDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/metrics/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Metrics",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiMetricDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "updateEntity@Metrics",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiMetricDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiMetricDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "deleteEntity@Metrics",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfully deleted"
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/sources": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Sources",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiSourceTablesList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/sources/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Sources",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiSourceTablesDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/tables": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@Tables",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiSourceTableList"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/tables/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@Tables",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiSourceTableDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/visualizationObjects": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntities@VisualizationObjects",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectList"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "createEntity@VisualizationObjects",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiVisualizationObjectDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model/visualizationObjects/{id}": {
-            "get": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "getEntity@VisualizationObjects",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "updateEntity@VisualizationObjects",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiVisualizationObjectDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["workspace-model-controller"],
-                "operationId": "deleteEntity@VisualizationObjects",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfully deleted"
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/objects/analyticalDashboards": {
-            "get": {
-                "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@AnalyticalDashboards_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardList"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["workspace-object-controller"],
-                "operationId": "createEntity@AnalyticalDashboards_1",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4601,7 +2745,7 @@
         "/api/workspaces/{workspaceId}/objects/analyticalDashboards/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@AnalyticalDashboards_1",
+                "operationId": "getEntity@AnalyticalDashboards",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4651,7 +2795,7 @@
             },
             "put": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "updateEntity@AnalyticalDashboards_1",
+                "operationId": "updateEntity@AnalyticalDashboards",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4711,7 +2855,7 @@
             },
             "delete": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "deleteEntity@AnalyticalDashboards_1",
+                "operationId": "deleteEntity@AnalyticalDashboards",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4748,7 +2892,7 @@
         "/api/workspaces/{workspaceId}/objects/attributes": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Attributes_1",
+                "operationId": "getEntities@Attributes",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4821,7 +2965,7 @@
         "/api/workspaces/{workspaceId}/objects/attributes/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Attributes_1",
+                "operationId": "getEntity@Attributes",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4873,7 +3017,7 @@
         "/api/workspaces/{workspaceId}/objects/datasets": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Datasets_1",
+                "operationId": "getEntities@Datasets",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4946,7 +3090,7 @@
         "/api/workspaces/{workspaceId}/objects/datasets/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Datasets_1",
+                "operationId": "getEntity@Datasets",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -4998,7 +3142,7 @@
         "/api/workspaces/{workspaceId}/objects/facts": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Facts_1",
+                "operationId": "getEntities@Facts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5071,7 +3215,7 @@
         "/api/workspaces/{workspaceId}/objects/facts/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Facts_1",
+                "operationId": "getEntity@Facts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5123,7 +3267,7 @@
         "/api/workspaces/{workspaceId}/objects/filterContexts": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@FilterContexts_1",
+                "operationId": "getEntities@FilterContexts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5194,7 +3338,7 @@
             },
             "post": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "createEntity@FilterContexts_1",
+                "operationId": "createEntity@FilterContexts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5248,7 +3392,7 @@
         "/api/workspaces/{workspaceId}/objects/filterContexts/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@FilterContexts_1",
+                "operationId": "getEntity@FilterContexts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5298,7 +3442,7 @@
             },
             "put": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "updateEntity@FilterContexts_1",
+                "operationId": "updateEntity@FilterContexts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5358,7 +3502,7 @@
             },
             "delete": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "deleteEntity@FilterContexts_1",
+                "operationId": "deleteEntity@FilterContexts",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5395,7 +3539,7 @@
         "/api/workspaces/{workspaceId}/objects/labels": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Labels_1",
+                "operationId": "getEntities@Labels",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5468,7 +3612,7 @@
         "/api/workspaces/{workspaceId}/objects/labels/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Labels_1",
+                "operationId": "getEntity@Labels",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5520,7 +3664,7 @@
         "/api/workspaces/{workspaceId}/objects/metrics": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Metrics_1",
+                "operationId": "getEntities@Metrics",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5591,7 +3735,7 @@
             },
             "post": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "createEntity@Metrics_1",
+                "operationId": "createEntity@Metrics",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5645,7 +3789,7 @@
         "/api/workspaces/{workspaceId}/objects/metrics/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Metrics_1",
+                "operationId": "getEntity@Metrics",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5695,7 +3839,7 @@
             },
             "put": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "updateEntity@Metrics_1",
+                "operationId": "updateEntity@Metrics",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5755,7 +3899,7 @@
             },
             "delete": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "deleteEntity@Metrics_1",
+                "operationId": "deleteEntity@Metrics",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5792,7 +3936,7 @@
         "/api/workspaces/{workspaceId}/objects/sources": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Sources_1",
+                "operationId": "getEntities@Sources",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5865,7 +4009,7 @@
         "/api/workspaces/{workspaceId}/objects/sources/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Sources_1",
+                "operationId": "getEntity@Sources",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5917,7 +4061,7 @@
         "/api/workspaces/{workspaceId}/objects/tables": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@Tables_1",
+                "operationId": "getEntities@Tables",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -5990,7 +4134,7 @@
         "/api/workspaces/{workspaceId}/objects/tables/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@Tables_1",
+                "operationId": "getEntity@Tables",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6042,7 +4186,7 @@
         "/api/workspaces/{workspaceId}/objects/visualizationObjects": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntities@VisualizationObjects_1",
+                "operationId": "getEntities@VisualizationObjects",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6113,7 +4257,7 @@
             },
             "post": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "createEntity@VisualizationObjects_1",
+                "operationId": "createEntity@VisualizationObjects",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6167,7 +4311,7 @@
         "/api/workspaces/{workspaceId}/objects/visualizationObjects/{objectId}": {
             "get": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "getEntity@VisualizationObjects_1",
+                "operationId": "getEntity@VisualizationObjects",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6217,7 +4361,7 @@
             },
             "put": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "updateEntity@VisualizationObjects_1",
+                "operationId": "updateEntity@VisualizationObjects",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6277,7 +4421,7 @@
             },
             "delete": {
                 "tags": ["workspace-object-controller"],
-                "operationId": "deleteEntity@VisualizationObjects_1",
+                "operationId": "deleteEntity@VisualizationObjects",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -6573,18 +4717,18 @@
                                 "HOUR",
                                 "DAY",
                                 "WEEK",
-                                "WEEK_EU",
+                                "EUWEEK",
                                 "MONTH",
                                 "QUARTER",
                                 "YEAR",
                                 "MINUTE_OF_HOUR",
                                 "HOUR_OF_DAY",
                                 "DAY_OF_WEEK",
-                                "DAY_OF_WEEK_EU",
+                                "DAY_OF_EUWEEK",
                                 "DAY_OF_MONTH",
                                 "DAY_OF_YEAR",
                                 "WEEK_OF_YEAR",
-                                "WEEK_OF_YEAR_EU",
+                                "EUWEEK_OF_YEAR",
                                 "MONTH_OF_YEAR",
                                 "QUARTER_OF_YEAR"
                             ]

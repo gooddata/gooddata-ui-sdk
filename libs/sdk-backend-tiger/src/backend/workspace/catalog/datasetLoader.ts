@@ -120,7 +120,7 @@ export async function loadAttributesAndDateDatasets(
     workspaceId: string,
     includeTags: string[],
 ): Promise<CatalogItem[]> {
-    const attributesResponse = await sdk.workspaceModel.getEntitiesAttributes(
+    const attributesResponse = await sdk.workspaceObjects.getEntitiesAttributes(
         {
             workspaceId: workspaceId,
         },

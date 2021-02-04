@@ -1,8 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
-    WorkspaceModelControllerApi,
-    WorkspaceModelControllerApiInterface,
+    WorkspaceObjectControllerApi,
+    WorkspaceObjectControllerApiInterface,
     Configuration,
     ConfigurationParameters,
 } from "./generated/metadata-json-api";
@@ -15,8 +15,6 @@ export {
     RequestArgs as MetadataRequestArgs,
 };
 
-// TODO consider to add clients for other controllers
-// Right now only the workspace model is utilized (to work with LDM and analytical objects)
-export const tigerWorkspaceModelClientFactory = (
+export const tigerWorkspaceObjectsClientFactory = (
     axios: AxiosInstance,
-): WorkspaceModelControllerApiInterface => new WorkspaceModelControllerApi({}, "", axios);
+): WorkspaceObjectControllerApiInterface => new WorkspaceObjectControllerApi({}, "", axios);

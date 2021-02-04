@@ -11,7 +11,7 @@ import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
  * @param tigerClient - tiger client to use for communication
  */
 export async function loadInsights(_projectId: string, tigerClient: ITigerClient): Promise<ObjectMeta[]> {
-    const result = await tigerClient.workspaceModel.getEntitiesVisualizationObjects(
+    const result = await tigerClient.workspaceObjects.getEntitiesVisualizationObjects(
         {
             workspaceId: _projectId,
         },
