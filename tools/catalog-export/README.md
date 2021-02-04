@@ -65,7 +65,7 @@ setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
     "projectId": "your workspace",
     "username": "username",
     "password": "password",
-    "output": "workspaceModel.ts"
+    "output": "workspaceObjects.ts"
 }
 ```
 

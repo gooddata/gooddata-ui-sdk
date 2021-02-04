@@ -15,7 +15,7 @@ import { createTigerClient } from "./tigerClient";
  */
 async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
     try {
-        await tigerClient.workspaceModel.getEntitiesMetrics(
+        await tigerClient.workspaceObjects.getEntitiesMetrics(
             {
                 workspaceId: projectId,
             },

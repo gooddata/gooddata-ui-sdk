@@ -79,7 +79,7 @@ export async function loadDateDataSets(
     _projectId: string,
     tigerClient: ITigerClient,
 ): Promise<DateDataSet[]> {
-    const result = await tigerClient.workspaceModel.getEntitiesAttributes(
+    const result = await tigerClient.workspaceObjects.getEntitiesAttributes(
         {
             workspaceId: _projectId,
         },

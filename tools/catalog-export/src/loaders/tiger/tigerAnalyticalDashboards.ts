@@ -14,7 +14,7 @@ export async function loadAnalyticalDashboards(
     _projectId: string,
     tigerClient: ITigerClient,
 ): Promise<ObjectMeta[]> {
-    const result = await tigerClient.workspaceModel.getEntitiesAnalyticalDashboards(
+    const result = await tigerClient.workspaceObjects.getEntitiesAnalyticalDashboards(
         {
             workspaceId: _projectId,
         },
