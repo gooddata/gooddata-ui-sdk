@@ -24,6 +24,10 @@ import DashboardViewWithEmails from "./DashboardViewWithEmails";
 import DashboardViewWithEmailsSRC from "!raw-loader!./DashboardViewWithEmails";
 import DashboardViewWithEmailsSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithEmails";
 
+import CustomDashboardView from "./CustomDashboardView";
+import CustomDashboardViewSRC from "!raw-loader!./CustomDashboardView";
+import CustomDashboardViewSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/CustomDashboardView";
+
 export const DashboardView = (): JSX.Element => (
     <div>
         <h1>DashboardView</h1>
@@ -90,6 +94,16 @@ export const DashboardView = (): JSX.Element => (
             for={DashboardViewWithEmails}
             source={DashboardViewWithEmailsSRC}
             sourceJS={DashboardViewWithEmailsSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <p>Example of how to customize rendering of the dashboard widgets.</p>
+
+        <ExampleWithSource
+            for={CustomDashboardView}
+            source={CustomDashboardViewSRC}
+            sourceJS={CustomDashboardViewSRCJS}
         />
     </div>
 );

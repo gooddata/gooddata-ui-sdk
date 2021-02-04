@@ -31,7 +31,7 @@ import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget }
 import { IDashboardFilter } from "../../types";
 
 interface IUseKpiDataConfig {
-    kpiWidget: IKpiWidget;
+    kpiWidget?: IKpiWidget;
     filterContext?: IFilterContext | ITempFilterContext;
     filters?: FilterContextItem[];
     backend?: IAnalyticalBackend;
@@ -55,51 +55,53 @@ export function useKpiData({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    const promise = async () => {
-        invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
+    const promise = kpiWidget
+        ? async () => {
+              invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
-        const inputFilters = filters
-            ? filterContextItemsToFiltersForWidget(filters, kpiWidget)
-            : filterContextToFiltersForWidget(filterContext, kpiWidget);
+              const inputFilters = filters
+                  ? filterContextItemsToFiltersForWidget(filters, kpiWidget)
+                  : filterContextToFiltersForWidget(filterContext, kpiWidget);
 
-        const relevantFilters = (await effectiveBackend
-            .workspace(effectiveWorkspace)
-            .dashboards()
-            .getResolvedFiltersForWidget(kpiWidget, inputFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
+              const relevantFilters = (await effectiveBackend
+                  .workspace(effectiveWorkspace)
+                  .dashboards()
+                  .getResolvedFiltersForWidget(kpiWidget, inputFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
 
-        const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
+              const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 
-        const comparison = kpiWidget.kpi.comparisonType;
+              const comparison = kpiWidget.kpi.comparisonType;
 
-        const isAllTime =
-            !relevantFilters ||
-            !relevantFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+              const isAllTime =
+                  !relevantFilters ||
+                  !relevantFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
 
-        if (comparison === "none" || isAllTime) {
-            return { primaryMeasure, filters: relevantFilters };
-        }
+              if (comparison === "none" || isAllTime) {
+                  return { primaryMeasure, filters: relevantFilters };
+              }
 
-        if (comparison === "previousPeriod") {
-            const secondaryMeasure = newPreviousPeriodMeasure(primaryMeasure, [
-                { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
-            ]);
+              if (comparison === "previousPeriod") {
+                  const secondaryMeasure = newPreviousPeriodMeasure(primaryMeasure, [
+                      { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
+                  ]);
 
-            return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
-        }
+                  return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
+              }
 
-        if (comparison === "lastYear") {
-            const secondaryMeasure = await getLastYearComparisonMeasure(
-                effectiveBackend,
-                effectiveWorkspace,
-                primaryMeasure,
-                kpiWidget.dateDataSet,
-            );
+              if (comparison === "lastYear") {
+                  const secondaryMeasure = await getLastYearComparisonMeasure(
+                      effectiveBackend,
+                      effectiveWorkspace,
+                      primaryMeasure,
+                      kpiWidget.dateDataSet,
+                  );
 
-            return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
-        }
+                  return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
+              }
 
-        invariant(false, `Unknown comparison ${comparison}`);
-    };
+              invariant(false, `Unknown comparison ${comparison}`);
+          }
+        : null;
 
     return useCancelablePromise({ promise }, [
         effectiveBackend,
