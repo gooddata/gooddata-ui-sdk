@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "Échec de suppression de l'alerte. Réessayez.",
     "kpiAlertDialog.brokenAlert": "Alerte interrompue",
     "kpiAlertDialog.brokenAlertAppeal": "Pour voir la valeur correcte de KPI, mettez à jour les filtres dans cette alerte. Vous pouvez également supprimer l'alerte.",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "Date",
     "kpiAlertDialog.removedFilters": "Filtres supprimés du tableau de bord",
     "kpiAlertDialog.ignoredFilters": "Filtres ignorés pour ce KPI",
     "kpiAlertDialog.updateTitle": "Mettre à jour",

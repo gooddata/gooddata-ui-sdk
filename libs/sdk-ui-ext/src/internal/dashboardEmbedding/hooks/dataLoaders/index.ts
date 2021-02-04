@@ -1,7 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { attributesWithDrillDownDataLoaderFactory } from "./AttributesWithDrillDownDataLoader";
-import { dashboardDataLoaderFactory } from "./DashboardDataLoader";
 import { dashboardAlertsDataLoaderFactory } from "./DashboardAlertsDataLoader";
+import { dashboardDataLoaderFactory } from "./DashboardDataLoader";
+import { dateDatasetsDataLoaderFactory } from "./DateDatasetsDataLoader";
 import { userWorkspacePermissionsDataLoaderFactory } from "./UserWorkspacePermissionsDataLoader";
 import {
     colorPaletteDataLoaderFactory,
@@ -13,9 +14,10 @@ import { IDataLoaderFactory } from "../../../../dataLoaders/types";
 export function clearDashboardViewCaches(): void {
     const relevantFactories: IDataLoaderFactory<unknown>[] = [
         attributesWithDrillDownDataLoaderFactory,
-        dashboardDataLoaderFactory,
-        dashboardAlertsDataLoaderFactory,
         colorPaletteDataLoaderFactory,
+        dashboardAlertsDataLoaderFactory,
+        dashboardDataLoaderFactory,
+        dateDatasetsDataLoaderFactory,
         insightDataLoaderFactory,
         userWorkspacePermissionsDataLoaderFactory,
         userWorkspaceSettingsDataLoaderFactory,
@@ -25,7 +27,8 @@ export function clearDashboardViewCaches(): void {
 
 export {
     attributesWithDrillDownDataLoaderFactory,
-    dashboardDataLoaderFactory,
     dashboardAlertsDataLoaderFactory,
+    dashboardDataLoaderFactory,
+    dateDatasetsDataLoaderFactory,
     userWorkspacePermissionsDataLoaderFactory,
 };

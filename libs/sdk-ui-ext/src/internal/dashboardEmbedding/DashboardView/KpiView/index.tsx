@@ -2,13 +2,14 @@
 import React, { useMemo } from "react";
 import compact from "lodash/compact";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
     IKpiWidget,
     IWidgetAlert,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef } from "@gooddata/sdk-model";
 import {
     IErrorProps,
     ILoadingProps,
@@ -24,6 +25,7 @@ import invariant from "ts-invariant";
 import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig } from "../DashboardViewConfigContext";
+import { IDashboardFilter } from "../../types";
 
 export interface IKpiViewProps {
     /**
@@ -44,7 +46,13 @@ export interface IKpiViewProps {
     /**
      * Optionally, specify filters to be applied to the KPI.
      */
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
+
+    /**
+     * Optionally, specify a callback that will be triggered when the filters should be changed.
+     * (e.g. to apply filters of a KPI alert to the whole dashboard)
+     */
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
 
     /**
      * The filter context used in the parent dashboard.
@@ -102,6 +110,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     kpiWidget,
     alert,
     filters,
+    onFiltersChange,
     filterContext,
     drillableItems = [],
     onDrill,
@@ -146,6 +155,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             secondaryMeasure={result.secondaryMeasure}
             alert={alert}
             filters={result.filters}
+            onFiltersChange={onFiltersChange}
             onDrill={onDrill}
             onError={onError}
             drillableItems={effectiveDrillableItems}

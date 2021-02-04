@@ -1,21 +1,22 @@
 // (C) 2020-2021 GoodData Corporation
 import {
+    FilterContextItem,
     IFilterContext,
     isDashboardAttributeFilter,
     ITempFilterContext,
     IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
-    IFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
     newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
+import { IDashboardFilter } from "./types";
 
 /**
- * Gets {@link IFilter} items for filters specified in given filterContext in relation to the given widget.
+ * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.
  *
  * @param filterContext - filter context to get filters for
  * @param widget - widget to use to get dateDataSet for date filters
@@ -24,12 +25,26 @@ import isString from "lodash/isString";
 export function filterContextToFiltersForWidget(
     filterContext: IFilterContext | ITempFilterContext | undefined,
     widget: IWidgetDefinition,
-): IFilter[] {
+): IDashboardFilter[] {
     if (!filterContext) {
         return [];
     }
 
-    return filterContext.filters.map((filter) => {
+    return filterContextItemsToFiltersForWidget(filterContext.filters, widget);
+}
+
+/**
+ * Gets {@link IDashboardFilter} items for filters specified as {@link FilterContextItem} instances.
+ *
+ * @param filterContextItems - filter context items to get filters for
+ * @param widget - widget to use to get dateDataSet for date filters
+ * @internal
+ */
+export function filterContextItemsToFiltersForWidget(
+    filterContextItems: FilterContextItem[],
+    widget: IWidgetDefinition,
+): IDashboardFilter[] {
+    return filterContextItems.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
             if (filter.attributeFilter.negativeSelection) {
                 return newNegativeAttributeFilter(

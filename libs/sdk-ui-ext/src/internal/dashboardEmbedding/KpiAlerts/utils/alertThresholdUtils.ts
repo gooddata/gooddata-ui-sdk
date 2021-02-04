@@ -49,7 +49,7 @@ function sanitizeValue(value: number) {
     return isNaN(value) ? 0 : value; // eslint-disable-line no-restricted-globals
 }
 
-export function evaluateTriggered(
+export function evaluateAlertTriggered(
     kpiMeasureResult: number,
     threshold: number,
     when: IWidgetAlertBase["whenTriggered"],

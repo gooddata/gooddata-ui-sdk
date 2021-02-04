@@ -14,16 +14,9 @@ import {
     IWidget,
     ResponsiveScreenType,
     IFluidLayoutColumnMethods,
+    FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    IAbsoluteDateFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-    IInsight,
-    IFilter,
-} from "@gooddata/sdk-model";
+import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -34,16 +27,7 @@ import {
     ILocale,
 } from "@gooddata/sdk-ui";
 import { IDashboardViewLayoutContentRenderProps, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
-
-/**
- * Supported dashboard filter type.
- * @alpha
- */
-export type IDashboardFilter =
-    | IAbsoluteDateFilter
-    | IRelativeDateFilter
-    | IPositiveAttributeFilter
-    | INegativeAttributeFilter;
+import { IDashboardFilter } from "../types";
 
 /**
  * @beta
@@ -86,15 +70,23 @@ export interface IDashboardViewProps {
     dashboard: ObjRef;
 
     /**
-     * Optionally, specify filters to be applied to all the widgets in the dashboard
-     * on top of any filters the dashboard already has saved within.
+     * Optionally, specify filters to be applied to all the widgets in the dashboard.
+     * If you specify this and want to merge your filters with the filters from the dashboard,
+     * you need to use the data from the {@link onDashboardLoaded} callback.
+     * To make the merging of the filters easier, you can use the {@link mergeFiltersWithDashboard} function.
      *
      * Note: These filters are also applied to created scheduled e-mails.
      * (the attached dashboard will use the filters that are set at the time we schedule it)
      * To suppress this behavior, set applyFiltersToScheduledMail property to false.
      * (and then the attached dashboard will use the original filters stored on the dashboard)
      */
-    filters?: IDashboardFilter[];
+    filters?: Array<IDashboardFilter | FilterContextItem>;
+
+    /**
+     * Optionally, specify a callback that will be triggered when the filters should be changed.
+     * (e.g. to apply filters of a KPI alert to the whole dashboard)
+     */
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
 
     /**
      * Configure drillability; e.g. which parts of the visualization can be interacted with.
@@ -233,7 +225,7 @@ export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProp
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboardRef: ObjRef;
-    filters?: IFilter[];
+    filters?: IDashboardFilter[];
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
@@ -254,7 +246,8 @@ export type IDashboardWidgetRenderProps = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     dashboardRef: ObjRef;
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
+    onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;

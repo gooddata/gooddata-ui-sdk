@@ -1099,6 +1099,11 @@
         "comment": "",
         "limit": 0
     },
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": {
+        "value": "Date",
+        "comment": "Label used in broken alert dialog in case no other date label is found.",
+        "limit": 0
+    },
     "kpiAlertDialog.removedFilters": {
         "value": "Filters removed from dashboard",
         "comment": "",

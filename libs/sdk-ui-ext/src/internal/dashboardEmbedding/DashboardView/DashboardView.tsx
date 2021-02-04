@@ -20,10 +20,12 @@ import { useDashboardViewLayout } from "../hooks/useDashboardViewLayout";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";
 import { DashboardAlertsProvider } from "./DashboardAlertsContext";
+import { filterArrayToFilterContextItems } from "../utils/filters";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
     filters,
+    onFiltersChange,
     theme,
     disableThemeLoading = false,
     themeModifier = defaultThemeModifier,
@@ -144,6 +146,10 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         };
     }, [config, userWorkspaceSettings]);
 
+    const sanitizedFilters = useMemo(() => {
+        return filters ? filterArrayToFilterContextItems(filters) : undefined;
+    }, [filters]);
+
     const statuses = [
         dashboardStatus,
         alertsStatus,
@@ -172,7 +178,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                 workspace={workspace}
                                 locale={effectiveLocale}
                                 dashboard={dashboard}
-                                filters={applyFiltersToScheduledMail ? filters : undefined}
+                                filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
                                 onSubmit={onScheduledMailDialogSubmit}
                                 onSubmitSuccess={onScheduledMailSubmitSuccess}
                                 onSubmitError={onScheduledMailSubmitError}
@@ -188,7 +194,8 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                     workspace={workspace}
                                     dashboardRef={dashboard}
                                     dashboardViewLayout={dashboardData?.layout}
-                                    filters={filters}
+                                    filters={sanitizedFilters}
+                                    onFiltersChange={onFiltersChange}
                                     filterContext={dashboardData.filterContext}
                                     onDrill={onDrill}
                                     drillableItems={drillableItems}

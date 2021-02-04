@@ -3,12 +3,13 @@ import React, { useCallback, useMemo, useState } from "react";
 import isEqual from "lodash/isEqual";
 import merge from "lodash/merge";
 import {
+    FilterContextItem,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
-import { IFilter, IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
+import { IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IAvailableDrillTargetAttribute,
@@ -29,7 +30,7 @@ import {
 import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
 import { InsightError } from "../../../insightView/InsightError";
 import { widgetDrillsToDrillPredicates, insightDrillDownPredicates } from "./drillingUtils";
-import { filterContextToFiltersForWidget } from "../converters";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
 import { useDashboardViewConfig } from "./DashboardViewConfigContext";
 import { useUserWorkspaceSettings } from "./UserWorkspaceSettingsContext";
@@ -41,7 +42,7 @@ interface IInsightRendererProps {
     insight: IInsight;
     backend?: IAnalyticalBackend;
     workspace?: string;
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
@@ -90,10 +91,13 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         [onError],
     );
 
-    const inputFilters = useMemo(() => {
-        const filtersFromFilterContext = filterContextToFiltersForWidget(filterContext, insightWidget);
-        return [...filtersFromFilterContext, ...(filters ?? [])];
-    }, [filters, filterContext, insightWidget]);
+    const inputFilters = useMemo(
+        () =>
+            filters
+                ? filterContextItemsToFiltersForWidget(filters, insightWidget)
+                : filterContextToFiltersForWidget(filterContext, insightWidget),
+        [filters, filterContext, insightWidget],
+    );
 
     const { error, result: insightWithFilters, status } = useCancelablePromise(
         {

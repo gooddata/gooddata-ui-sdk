@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "Het alarm kon niet worden verwijderd. Probeer het opnieuw.",
     "kpiAlertDialog.brokenAlert": "Niet-nagekomen waarschuwing",
     "kpiAlertDialog.brokenAlertAppeal": "Om de juist KPI-waarde te zien moet u de filters in deze waarschuwing bijwerken. U kunt de waarschuwing ook verwijderen.",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "Datum",
     "kpiAlertDialog.removedFilters": "Filters verwijderd uit dashboard",
     "kpiAlertDialog.ignoredFilters": "Geen rekening gehouden met de filters voor deze kpi",
     "kpiAlertDialog.updateTitle": "Update",

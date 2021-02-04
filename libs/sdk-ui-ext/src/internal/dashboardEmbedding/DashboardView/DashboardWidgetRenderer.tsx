@@ -19,6 +19,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
         backend,
         drillableItems,
         filters,
+        onFiltersChange,
         filterContext,
         onDrill,
         onError,
@@ -83,6 +84,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRenderProps> = (p
                     backend={backend}
                     workspace={workspace}
                     filters={filters}
+                    onFiltersChange={onFiltersChange}
                     drillableItems={drillableItems}
                     onDrill={onDrill}
                     onError={onError}

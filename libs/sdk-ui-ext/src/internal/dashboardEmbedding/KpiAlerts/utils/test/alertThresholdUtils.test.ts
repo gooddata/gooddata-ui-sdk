@@ -2,7 +2,7 @@
 import { IWidgetAlertBase } from "@gooddata/sdk-backend-spi";
 
 import {
-    evaluateTriggered,
+    evaluateAlertTriggered,
     thresholdFromDecimalToPercent,
     thresholdFromPercentToDecimal,
 } from "../alertThresholdUtils";
@@ -29,7 +29,7 @@ describe("thresholdFromPercentToDecimal", () => {
     });
 });
 
-describe("evaluateTriggered", () => {
+describe("evaluateAlertTriggered", () => {
     type Scenario = [boolean, number, number, IWidgetAlertBase["whenTriggered"]];
     const scenarios: Scenario[] = [
         [false, 5, 10, "aboveThreshold"],
@@ -55,7 +55,7 @@ describe("evaluateTriggered", () => {
     it.each(scenarios)(
         "should return %p when kpi result is %p, threshold is %p and type is %s",
         (expected, kpiResult, threshold, whenTriggered) => {
-            expect(evaluateTriggered(kpiResult, threshold, whenTriggered)).toEqual(expected);
+            expect(evaluateAlertTriggered(kpiResult, threshold, whenTriggered)).toEqual(expected);
         },
     );
 });

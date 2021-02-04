@@ -41,15 +41,36 @@ export interface IKpiAlertDialogProps {
     filters?: IFilter[];
     dateFormat: string;
 
-    // Callbacks
+    /**
+     * Triggered when either the "Close" button or the "Cancel" button is clicked.
+     */
     onAlertDialogCloseClick: () => void;
+
+    /**
+     * Triggered when a new alert creation or an update of the settings of an existing alert is triggered.
+     * The function is called with the current values of the alert dialog inputs.
+     */
     onAlertDialogSaveClick: (
         threshold: number,
         whenTriggered: IWidgetAlertDefinition["whenTriggered"],
     ) => void;
+
+    /**
+     * Triggered when the "Delete" button is clicked.
+     */
     onAlertDialogDeleteClick: () => void;
+
+    /**
+     * Triggered when the "Update filters" button in broken alert state is clicked.
+     * This should make sure the alert is updated with the filters currently used by its KPI (and therefore fix the alert).
+     */
     onAlertDialogUpdateClick: () => void;
-    onApplyAlertFiltersClick: () => void;
+
+    /**
+     * Triggered when user clicks the "Apply alert filters to dashboard" button in case the dashboard has different filters than the alert.
+     * If not specified, the corresponding button will not be rendered.
+     */
+    onApplyAlertFiltersClick?: () => void;
 }
 
 interface IKpiAlertDialogState {
@@ -363,10 +384,15 @@ export class KpiAlertDialog extends Component<
         const shouldShowFiltersDifferMessage = !!this.props.alert && filtersDiffer;
         return shouldShowFiltersDifferMessage ? (
             <ReactMessage type="warning">
-                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />{" "}
-                <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
-                    <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
-                </a>
+                <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />
+                {!!this.props.onApplyAlertFiltersClick && (
+                    <>
+                        {" "}
+                        <a className="s-apply-alert-filters" onClick={this.applyAlertFilterSetting}>
+                            <FormattedHTMLMessage id="kpiAlertDialog.filtersApply" />
+                        </a>
+                    </>
+                )}
             </ReactMessage>
         ) : (
             false

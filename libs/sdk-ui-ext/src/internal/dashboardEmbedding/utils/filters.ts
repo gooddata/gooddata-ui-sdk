@@ -5,6 +5,8 @@ import {
     IDashboardDateFilter,
     IDashboardAttributeFilter,
     isDateFilterGranularity,
+    isDashboardAttributeFilter,
+    isDashboardDateFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     isAbsoluteDateFilter,
@@ -15,9 +17,13 @@ import {
     filterObjRef,
     isAttributeFilter,
 } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../DashboardView/types";
+import { IDashboardFilter } from "../types";
 
-export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): FilterContextItem => {
+/**
+ * Converts a {@link IDashboardFilter} to a {@link FilterContextItem}.
+ * @param filter - filter to convert
+ */
+export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): FilterContextItem {
     if (isAttributeFilter(filter)) {
         const attributeElements = filterAttributeElements(filter);
         if (!isAttributeElementsByRef(attributeElements)) {
@@ -69,4 +75,16 @@ export const dashboardFilterToFilterContextItem = (filter: IDashboardFilter): Fi
     }
 
     throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
-};
+}
+
+export function filterArrayToFilterContextItems(
+    filters: Array<IDashboardFilter | FilterContextItem>,
+): FilterContextItem[] {
+    return filters.map((filter) => {
+        if (isDashboardDateFilter(filter) || isDashboardAttributeFilter(filter)) {
+            return filter;
+        } else {
+            return dashboardFilterToFilterContextItem(filter);
+        }
+    });
+}

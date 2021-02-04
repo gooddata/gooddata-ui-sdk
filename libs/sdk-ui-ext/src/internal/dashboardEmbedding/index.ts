@@ -14,6 +14,7 @@ export {
     KpiView,
     defaultThemeModifier,
 } from "./DashboardView";
+export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
 
 // TODO: RAIL-2869 Migrate to Responsive context
 export {

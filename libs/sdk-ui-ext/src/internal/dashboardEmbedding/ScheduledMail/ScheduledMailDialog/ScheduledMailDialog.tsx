@@ -6,6 +6,7 @@ import {
     IScheduledMail,
     IAnalyticalBackend,
     IFilterContextDefinition,
+    FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
@@ -19,8 +20,6 @@ import { useDashboard } from "../../hooks/useDashboard";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer";
 import { uriRef } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../../DashboardView/types";
-import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 
 export type ScheduledMailDialogProps = {
     /**
@@ -39,7 +38,7 @@ export type ScheduledMailDialogProps = {
      * Note: By default, exported dashboard in the scheduled mail will use the original stored dashboard filter context,
      * with this prop, you can override it.
      */
-    filters?: IDashboardFilter[];
+    filters?: FilterContextItem[];
 
     /**
      * Backend to work with.
@@ -131,7 +130,7 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
             const filterContext: IFilterContextDefinition = {
                 title: "filterContext",
                 description: "",
-                filters: filters.map(dashboardFilterToFilterContextItem),
+                filters,
             };
 
             return filterContext;

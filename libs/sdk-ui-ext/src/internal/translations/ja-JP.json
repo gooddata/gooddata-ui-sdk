@@ -219,6 +219,7 @@
     "kpiAlertDialog.deleteingFailed": "通知を消去できませんでした。もう一度やり直してください。",
     "kpiAlertDialog.brokenAlert": "通知が壊れています",
     "kpiAlertDialog.brokenAlertAppeal": "正しい KPI の値を確認するには、この通知のフィルターを更新します。通知を削除することもできます。",
+    "kpiAlertDialog.brokenAlertDefaultDateLabel": "日付",
     "kpiAlertDialog.removedFilters": "フィルターをダッシュボードから削除しました",
     "kpiAlertDialog.ignoredFilters": "この kpi に対してフィルターが無視されました",
     "kpiAlertDialog.updateTitle": "更新",
