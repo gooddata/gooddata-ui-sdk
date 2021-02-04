@@ -15,6 +15,7 @@ export {
     defaultThemeModifier,
 } from "./DashboardView";
 export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
+export { isDateFilterIrrelevant } from "./utils/filters";
 
 // TODO: RAIL-2869 Migrate to Responsive context
 export {
