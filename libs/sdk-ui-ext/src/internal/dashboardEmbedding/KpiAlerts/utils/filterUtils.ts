@@ -1,43 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
+import { IUserWorkspaceSettings, IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import {
-    isDashboardAttributeFilterReference,
-    isDashboardDateFilterReference,
-    IUserWorkspaceSettings,
-    IWidgetDefinition,
-} from "@gooddata/sdk-backend-spi";
-import {
-    areObjRefsEqual,
     IFilter,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
     isDateFilter,
     isRelativeDateFilter,
-    ObjRef,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import last from "lodash/last";
-
-export function isAttributeFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
-    return widget.ignoreDashboardFilters.some(
-        (filter) =>
-            isDashboardAttributeFilterReference(filter) && areObjRefsEqual(filter.displayForm, displayForm),
-    );
-}
-
-export function isDateFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
-    return widget.ignoreDashboardFilters.some(
-        (filter) => isDashboardDateFilterReference(filter) && areObjRefsEqual(filter.dataSet, displayForm),
-    );
-}
-
-export function isDateFilterIrrelevant(widget: IWidgetDefinition): boolean {
-    const dateDataSetRef = widget.dateDataSet;
-    // backward compatibility for old kpis
-    const ignoredOldWay = isDateFilterIgnored(widget, dateDataSetRef);
-    // now dataSetRef is cleaned
-    const checkboxEnabled = !!dateDataSetRef;
-    return !checkboxEnabled || ignoredOldWay;
-}
 
 export function isAlertingTemporarilyDisabledForGivenFilter(
     kpi: IWidgetDefinition,

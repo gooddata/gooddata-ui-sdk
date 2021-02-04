@@ -6,9 +6,13 @@ import {
     IDashboardAttributeFilter,
     isDateFilterGranularity,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterReference,
     isDashboardDateFilter,
+    isDashboardDateFilterReference,
+    IWidgetDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
+    areObjRefsEqual,
     isAbsoluteDateFilter,
     isRelativeDateFilter,
     isNegativeAttributeFilter,
@@ -16,6 +20,7 @@ import {
     filterAttributeElements,
     filterObjRef,
     isAttributeFilter,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "../types";
 
@@ -87,4 +92,26 @@ export function filterArrayToFilterContextItems(
             return dashboardFilterToFilterContextItem(filter);
         }
     });
+}
+
+export function isAttributeFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
+    return widget.ignoreDashboardFilters.some(
+        (filter) =>
+            isDashboardAttributeFilterReference(filter) && areObjRefsEqual(filter.displayForm, displayForm),
+    );
+}
+
+export function isDateFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
+    return widget.ignoreDashboardFilters.some(
+        (filter) => isDashboardDateFilterReference(filter) && areObjRefsEqual(filter.dataSet, displayForm),
+    );
+}
+
+export function isDateFilterIrrelevant(widget: IWidgetDefinition): boolean {
+    const dateDataSetRef = widget.dateDataSet;
+    // backward compatibility for old kpis
+    const ignoredOldWay = isDateFilterIgnored(widget, dateDataSetRef);
+    // now dataSetRef is cleaned
+    const checkboxEnabled = !!dateDataSetRef;
+    return !checkboxEnabled || ignoredOldWay;
 }
