@@ -3,7 +3,7 @@ import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { isMeasureFormatInPercent } from "@gooddata/sdk-model";
-import { IAxis } from "../../typings/unsafe";
+import { IAxis, ISeriesItem } from "../../typings/unsafe";
 import { isBarChart, isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, unwrap } from "../_util/common";
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import isEmpty from "lodash/isEmpty";
@@ -93,7 +93,7 @@ export function getYAxes(
     dv: DataViewFacade,
     config: IChartConfig,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
-    stackByAttribute: any,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
 ): IAxis[] {
     const { type } = config;
 
@@ -229,14 +229,14 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
     return null;
 }
 
-export function assignYAxes(series: any, yAxes: IAxis[]) {
-    return series.reduce((result: any, item: any, index: number) => {
+export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
+    return series.reduce((result, item, index) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
             return includes(get(axis, "seriesIndices", []), index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one
-        const firstYAxisIndex = result.lenght > 0 ? result[0].yAxis : 0;
+        const firstYAxisIndex = result.length > 0 ? result[0].yAxis : 0;
         const seriesItem = {
             ...item,
             yAxis: yAxisIndex !== -1 ? yAxisIndex : firstYAxisIndex,

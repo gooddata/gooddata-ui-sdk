@@ -28,7 +28,7 @@ export const Y_AXIS_SCORE = {
     NEGATIVE_AND_POSITIVE_DATA: 2,
 };
 
-function getYAxes(chart: Highcharts.Chart): IHighchartsAxisExtend[] {
+function getYAxes(chart: any): IHighchartsAxisExtend[] {
     return chart.axes.filter(isYAxis);
 }
 
@@ -105,7 +105,8 @@ function addTick(tickPositions: number[], tickInterval: number, isAddFirst: bool
  */
 export function adjustTicks(axis: IHighchartsAxisExtend): void {
     let tickPositions: number[] = (axis.tickPositions || []).slice();
-    const tickAmount: number = axis.tickAmount;
+    const { tickAmount } = axis;
+    const { dataMax, dataMin } = axis.getExtremes();
     const currentTickAmount: number = tickPositions.length;
 
     if (currentTickAmount === tickAmount) {
@@ -119,10 +120,10 @@ export function adjustTicks(axis: IHighchartsAxisExtend): void {
 
         while (tickPositions.length < tickAmount) {
             const isAddFirst =
-                axis.dataMax <= 0 || // negative dataSet
+                dataMax <= 0 || // negative dataSet
                 axis.max <= 0 ||
                 !(
-                    axis.dataMin >= 0 || // positive dataSet
+                    dataMin >= 0 || // positive dataSet
                     axis.min >= 0 ||
                     min === 0 || // default HC behavior
                     tickPositions.length % 2 !== 0
@@ -140,7 +141,8 @@ export function adjustTicks(axis: IHighchartsAxisExtend): void {
 }
 
 export function getSelectionRange(axis: IHighchartsAxisExtend): number[] {
-    const { tickAmount, tickPositions, dataMin, dataMax } = axis;
+    const { tickAmount, tickPositions } = axis;
+    const { dataMin, dataMax } = axis.getExtremes();
     const currentTickAmount: number = tickPositions.length;
     if (dataMin >= 0) {
         return [currentTickAmount - tickAmount, currentTickAmount];
@@ -166,7 +168,7 @@ export function getSelectionRange(axis: IHighchartsAxisExtend): number[] {
  * @return Y axis score
  */
 export function getYAxisScore(axis: IHighchartsAxisExtend): number {
-    const { dataMin, dataMax } = axis;
+    const { dataMin, dataMax } = axis.getExtremes();
     const yAxisMin = Math.min(0, dataMin);
     const yAxisMax = Math.max(0, dataMax);
 
@@ -245,7 +247,7 @@ function updateAxis(axis: IHighchartsAxisExtend, currentTickAmount: number): voi
  */
 export function preventDataCutOff(axis: IHighchartsAxisExtend): void {
     const { chart } = axis;
-    const { min, max, dataMin, dataMax } = axis;
+    const { min, max, dataMin, dataMax } = axis.getExtremes();
 
     const isCutOff = !isUserSetExtremesOnAnyAxis(chart) && (min > dataMin || max < dataMax);
     if (!isCutOff) {

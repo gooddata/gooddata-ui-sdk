@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import autohideLabels from "./plugins/autohideLabels/autohideLabels";
+//import autohideLabels from "./plugins/autohideLabels/autohideLabels";
 import { extendDataLabelColors } from "./plugins/dataLabelsColors";
 import { applyPointHaloOptions } from "./plugins/pointHalo";
 import { linearTickPositions } from "./plugins/linearTickPositions";
@@ -36,7 +36,7 @@ const extendRenderStackTotals = (Highcharts: any) => {
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function initChartPlugins(Highcharts: any): void {
     extendRenderStackTotals(Highcharts);
-    autohideLabels(Highcharts);
+    //autohideLabels(Highcharts);
     extendDataLabelColors(Highcharts);
     applyPointHaloOptions(Highcharts);
     linearTickPositions(Highcharts);

@@ -13,7 +13,7 @@ const AREA_TEMPLATE = {
     },
     plotOptions: {
         area: {
-            lineWidth: 1,
+            lineWidth: LINE_WIDTH,
         },
         series: {
             marker: {

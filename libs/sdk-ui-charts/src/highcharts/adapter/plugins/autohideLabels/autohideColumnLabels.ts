@@ -114,7 +114,7 @@ const toggleStackedChartLabels = (visiblePoints: Highcharts.Point[], axisRangeFo
 };
 
 export function isOverlappingWidth(visiblePoints: Highcharts.Point[]): boolean {
-    return visiblePoints.filter(hasDataLabel).some((point: Highcharts.Point) => {
+    return visiblePoints.filter(hasDataLabel).some((point: UnsafeInternals) => {
         const { dataLabel, shapeArgs } = point;
 
         if (dataLabel && shapeArgs) {
@@ -148,7 +148,7 @@ export function areLabelsOverlappingColumns(
     labels: Highcharts.Point[],
     visiblePoints: Highcharts.Point[],
 ): boolean {
-    return labels.some((label: Highcharts.Point) => {
+    return labels.some((label: UnsafeInternals) => {
         if (isEmpty(label)) {
             return false;
         }
@@ -161,7 +161,7 @@ export function areLabelsOverlappingColumns(
             height,
         };
 
-        return visiblePoints.some((point: Highcharts.Point) => {
+        return visiblePoints.some((point: UnsafeInternals) => {
             const seriesType: string = get(point, "series.options.type");
             if (
                 isEmpty(point) ||
@@ -318,7 +318,7 @@ export const handleColumnLabelsOutsideChart = (chart: Highcharts.Chart): void =>
 
 export function getLabelOrDataLabelForPoints(points: Highcharts.Point[]): Highcharts.Point[] {
     return points
-        .map((point: Highcharts.Point) => {
+        .map((point: UnsafeInternals) => {
             return point.label || point.dataLabel;
         })
         .filter(identity);
