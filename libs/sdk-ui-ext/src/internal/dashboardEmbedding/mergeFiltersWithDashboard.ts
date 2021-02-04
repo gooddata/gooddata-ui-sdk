@@ -11,9 +11,9 @@ import { filterArrayToFilterContextItems } from "./utils/filters";
  * @alpha
  */
 export function mergeFiltersWithDashboard(
-    dashboard: IDashboard,
+    dashboard: IDashboard | undefined,
     additionalFilters: Array<IDashboardFilter | FilterContextItem>,
 ): FilterContextItem[] {
-    const sanitizedAdditionalFilters = filterArrayToFilterContextItems(additionalFilters);
-    return [...dashboard.filterContext?.filters, ...sanitizedAdditionalFilters];
+    const sanitizedAdditionalFilters = filterArrayToFilterContextItems(additionalFilters ?? []);
+    return [...(dashboard?.filterContext?.filters ?? []), ...sanitizedAdditionalFilters];
 }

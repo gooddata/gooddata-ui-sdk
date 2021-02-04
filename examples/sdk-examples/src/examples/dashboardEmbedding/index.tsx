@@ -12,6 +12,10 @@ import DashboardViewWithFilters from "./DashboardViewWithFilters";
 import DashboardViewWithFiltersSRC from "!raw-loader!./DashboardViewWithFilters";
 import DashboardViewWithFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithFilters";
 
+import DashboardViewWithMergedFilters from "./DashboardViewWithMergedFilters";
+import DashboardViewWithMergedFiltersSRC from "!raw-loader!./DashboardViewWithMergedFilters";
+import DashboardViewWithMergedFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithMergedFilters";
+
 import DashboardViewWithDrilling from "./DashboardViewWithDrilling";
 import DashboardViewWithDrillingSRC from "!raw-loader!./DashboardViewWithDrilling";
 import DashboardViewWithDrillingSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithDrilling";
@@ -24,7 +28,10 @@ export const DashboardView = (): JSX.Element => (
     <div>
         <h1>DashboardView</h1>
 
-        <p>Simple example of how to embed a Dashboard into your application</p>
+        <p>
+            Simple example of how to embed a Dashboard into your application. There is a filter set on this
+            Dashboard itself to show only <em>Fine Dining</em> restaurants.
+        </p>
 
         <ExampleWithSource
             for={SimpleDashboardView}
@@ -35,8 +42,9 @@ export const DashboardView = (): JSX.Element => (
         <hr className="separator" />
 
         <p>
-            Example of how to embed a Dashboard into your application with added filters – the same Dashboard
-            as in the previous example filtered only to California
+            Example of how to embed a Dashboard into your application with custom filters – the same Dashboard
+            as in the previous example filtered only to California (disregarding any filters set on the
+            Dashboard itself, if you do not want that, see the next example).
         </p>
 
         <ExampleWithSource
@@ -48,8 +56,23 @@ export const DashboardView = (): JSX.Element => (
         <hr className="separator" />
 
         <p>
+            Example of how to embed a Dashboard into your application with custom filters combined with the
+            filters already specified on the dashboard itself – the same Dashboard as in the first example
+            with added filter only to California (this also respects the filters set on the Dashboard itself,
+            if you do not want that, see the previous example).
+        </p>
+
+        <ExampleWithSource
+            for={DashboardViewWithMergedFilters}
+            source={DashboardViewWithMergedFiltersSRC}
+            sourceJS={DashboardViewWithMergedFiltersSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <p>
             Example of how to embed a Dashboard into your application with added drilling – the same Dashboard
-            as in the previous examples wit Aventura with enabled drilling (check the console logs for
+            as in the previous examples with Daly City with enabled drilling (check the console logs for
             results).
         </p>
 

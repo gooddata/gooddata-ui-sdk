@@ -13,7 +13,7 @@ const DashboardViewWithDrilling: React.FC = () => {
         <DashboardView
             dashboard={dashboardRef}
             config={config}
-            drillableItems={[HeaderPredicates.attributeItemNameMatch("Aventura")]}
+            drillableItems={[HeaderPredicates.attributeItemNameMatch("Daly City")]}
             onDrill={(e) => {
                 // eslint-disable-next-line no-console
                 console.log("Drill event in DashboardView: ", e);
