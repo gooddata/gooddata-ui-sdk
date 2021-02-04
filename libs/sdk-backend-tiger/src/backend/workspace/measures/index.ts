@@ -1,12 +1,12 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
 import {
-    AttributeData,
-    FactData,
-    IncludedResource,
-    LabelData,
-    Metric,
-    MetricData,
+    JsonApiAttribute,
+    JsonApiFact,
+    JsonApiLabel,
+    JsonApiMetric,
+    JsonApiMetricDocument,
+    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -21,26 +21,28 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }
 
         const metricMetadata = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntity(
+            sdk.workspaceModel.getEntityMetrics(
                 {
-                    entity: "metrics",
                     id: ref.identifier,
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                     query: { include: "facts,metrics,attributes,labels" },
                 },
             ),
         );
-        const metric = metricMetadata.data as Metric;
+        const metric = metricMetadata.data;
         const maql = metric.data.attributes!.content!.maql || "";
 
         const regexTokens = tokenizeExpression(maql);
         return regexTokens.map((regexToken) => this.resolveToken(regexToken, metric));
     }
 
-    private resolveToken(regexToken: IExpressionToken, metric: Metric): IMeasureExpressionToken {
+    private resolveToken(
+        regexToken: IExpressionToken,
+        metric: JsonApiMetricDocument,
+    ): IMeasureExpressionToken {
         if (regexToken.type === "text" || regexToken.type === "quoted_text") {
             return { type: "text", value: regexToken.value };
         }
@@ -54,12 +56,12 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     private resolveObjectToken(
         objectId: string,
         objectType: "metric" | "fact" | "attribute" | "label",
-        includedObjects: ReadonlyArray<IncludedResource>,
+        includedObjects: ReadonlyArray<any>,
         identifier: string,
     ): IMeasureExpressionToken {
         const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
-        }) as MetricData | LabelData | AttributeData | FactData;
+        }) as JsonApiMetric | JsonApiLabel | JsonApiAttribute | JsonApiFact;
 
         interface ITypeMapping {
             [tokenObjectType: string]: IMeasureExpressionToken["type"];

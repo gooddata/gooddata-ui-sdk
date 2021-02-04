@@ -1,12 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
-import {
-    IWorkspacesQueryFactory,
-    IWorkspacesQuery,
-    IWorkspacesQueryResult,
-    IAnalyticalWorkspace,
-} from "@gooddata/sdk-backend-spi";
+// (C) 2019-2021 GoodData Corporation
+import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
+import { jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
+import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
 import { TigerWorkspace } from "../workspace";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
@@ -24,6 +21,7 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     }
 }
 
+// TODO: Add paging when paging is added to the response while getting workspaces
 class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
@@ -68,67 +66,23 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             totalCount: 0,
             next: () => Promise.resolve(emptyResult),
         };
-
-        /*
-         * Tiger has no service to obtain list of workspaces yet. Thus hardcoding all available workspaces
-         * it may support.
-         *
-         * List taken from NAS code: sqlexecutor/databaseaccess/DataSourceService.kt
-         */
-        const workspaces: IAnalyticalWorkspace[] = [
-            {
-                title: "TPC-H - Postgres",
-                id: "tpch",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "GoodSales - Postgres",
-                id: "goodsales",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "UFO - Postgres",
-                id: "ufo",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "COVID-19 - Postgres",
-                id: "covid",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "TPC-H - Redshift",
-                id: "tpch_rs",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "GoodSales - Redshift",
-                id: "goodsales_rs",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "UFO - Redshift",
-                id: "ufo_rs",
-                description: "",
-                isDemo: true,
-            },
-            {
-                title: "COVID-19 - Redshift",
-                id: "covid_rs",
-                description: "",
-                isDemo: true,
-            },
-        ].map((descriptor) => new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter));
-
+        const workspaces = (
+            await this.authCall(async (sdk) => {
+                return sdk.organizationObjects.getAllEntitiesWorkspaces(
+                    {
+                        page: offset / limit,
+                        size: limit,
+                    },
+                    { headers: jsonApiHeaders },
+                );
+            })
+        ).data.data;
         return {
             search,
-            items: workspaces,
+            items: workspaces.map((workspace) => {
+                const descriptor = workspaceConverter(workspace);
+                return new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
+            }),
             limit,
             offset,
             totalCount: workspaces.length,

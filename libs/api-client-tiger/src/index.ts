@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { tigerExecutionClientFactory } from "./execution";
 import {
@@ -15,6 +15,7 @@ import {
     MetadataBaseApi,
     MetadataRequestArgs,
 } from "./workspaceModel";
+import { tigerOrganizationObjectsClientFactory } from "./OrganizationObjects";
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import { axios as defaultAxios, newAxios } from "./axios";
 
@@ -48,6 +49,7 @@ export {
     LabelElementsBaseApi,
     LabelElementsRequestArgs,
     tigerValidObjectsClientFactory,
+    tigerOrganizationObjectsClientFactory,
 };
 
 export interface ITigerClient {
@@ -55,6 +57,7 @@ export interface ITigerClient {
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
+    organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
 }
 
 /**
@@ -66,15 +69,24 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const labelElements = tigerLabelElementsClientFactory(axios);
     const workspaceModel = tigerWorkspaceModelClientFactory(axios);
     const validObjects = tigerValidObjectsClientFactory(axios);
+    const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
 
     return {
         execution,
         labelElements,
         workspaceModel,
         validObjects,
+        organizationObjects,
     };
 };
 
 const defaultTigerClient = tigerClientFactory(defaultAxios);
 
 export default defaultTigerClient;
+
+export const JSON_API_HEADER_VALUE = "application/vnd.gooddata.api+json";
+
+export const jsonApiHeaders = {
+    Accept: JSON_API_HEADER_VALUE,
+    "Content-Type": JSON_API_HEADER_VALUE,
+};

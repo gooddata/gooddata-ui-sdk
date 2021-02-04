@@ -1,12 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { idRef } from "@gooddata/sdk-model";
 import {
-    AttributeAttributesGranularityEnum,
-    AttributesItem,
-    DatasetsItem,
-    FactsItem,
-    LabelsItem,
-    MetricsItem,
+    JsonApiAttributeWithLinks,
+    JsonApiDatasetWithLinks,
+    JsonApiFactWithLinks,
+    JsonApiLabelWithLinks,
+    JsonApiMetricWithLinks,
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
 import {
@@ -28,14 +27,18 @@ import {
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
 
-type MetadataObject = AttributesItem | FactsItem | MetricsItem | LabelsItem;
+type MetadataObject =
+    | JsonApiAttributeWithLinks
+    | JsonApiFactWithLinks
+    | JsonApiMetricWithLinks
+    | JsonApiLabelWithLinks;
 
 const commonMetadataObjectModifications = <TItem extends MetadataObject, T extends IMetadataObjectBuilder>(
     item: TItem,
 ) => (builder: T) =>
     builder
         .id(item.id)
-        .uri(item.links?.self || "")
+        .uri(item.links!.self)
         .title(item.attributes?.title || "")
         .description(item.attributes?.description || "");
 
@@ -50,10 +53,10 @@ const commonGroupableCatalogItemModifications = <
 };
 
 export const convertAttribute = (
-    attribute: AttributesItem,
-    defaultLabel: LabelsItem,
-    geoLabels: LabelsItem[],
-    allLabels: LabelsItem[],
+    attribute: JsonApiAttributeWithLinks,
+    defaultLabel: JsonApiLabelWithLinks,
+    geoLabels: JsonApiLabelWithLinks[],
+    allLabels: JsonApiLabelWithLinks[],
 ): ICatalogAttribute => {
     const geoPinDisplayForms = geoLabels.map((label) => {
         return newAttributeDisplayFormMetadataObject(
@@ -82,7 +85,7 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (measure: MetricsItem): ICatalogMeasure => {
+export const convertMeasure = (measure: JsonApiMetricWithLinks): ICatalogMeasure => {
     const maql = measure.attributes?.content?.maql;
 
     return newCatalogMeasure((catalogM) =>
@@ -94,7 +97,7 @@ export const convertMeasure = (measure: MetricsItem): ICatalogMeasure => {
     );
 };
 
-export const convertFact = (fact: FactsItem): ICatalogFact => {
+export const convertFact = (fact: JsonApiFactWithLinks): ICatalogFact => {
     return newCatalogFact((catalogF) =>
         catalogF
             .fact(idRef(fact.id, "fact"), (f) => f.modify(commonMetadataObjectModifications(fact)))
@@ -102,12 +105,13 @@ export const convertFact = (fact: FactsItem): ICatalogFact => {
     );
 };
 
-export const convertDateAttribute = (attribute: AttributesItem, label: LabelsItem): ICatalogDateAttribute => {
+export const convertDateAttribute = (
+    attribute: JsonApiAttributeWithLinks,
+    label: JsonApiLabelWithLinks,
+): ICatalogDateAttribute => {
     return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
-            .granularity(
-                toSdkGranularity(attribute.attributes?.granularity as AttributeAttributesGranularityEnum),
-            )
+            .granularity(toSdkGranularity(attribute.attributes!.granularity!))
             .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
@@ -118,7 +122,7 @@ export const convertDateAttribute = (attribute: AttributesItem, label: LabelsIte
 };
 
 export const convertDateDataset = (
-    dataset: DatasetsItem,
+    dataset: JsonApiDatasetWithLinks,
     attributes: ICatalogDateAttribute[],
 ): ICatalogDateDataset => {
     return newCatalogDateDataset((dateDataset) => {
@@ -129,7 +133,7 @@ export const convertDateDataset = (
                     .id(dataset.id)
                     .title(dataset.attributes?.title || "")
                     .description(dataset.attributes?.description || "")
-                    .uri("") // we don't have links in included entities
+                    .uri(dataset.links!.self)
                     .production(true)
                     .unlisted(false);
             })

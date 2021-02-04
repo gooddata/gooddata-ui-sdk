@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
@@ -18,7 +18,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
-import { FactCollection, MetricCollection } from "@gooddata/api-client-tiger";
+import { jsonApiHeaders } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -86,35 +86,33 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
         const measures = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntities(
+            sdk.workspaceModel.getEntitiesMetrics(
                 {
-                    entity: "metrics",
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                 },
             ),
         );
 
-        return (measures.data as MetricCollection).data.map(convertMeasure);
+        return measures.data.data.map(convertMeasure);
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
         const { includeTags = [] } = this.options;
         const facts = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntities(
+            sdk.workspaceModel.getEntitiesFacts(
                 {
-                    entity: "facts",
                     workspaceId: this.workspace,
                 },
                 {
                     query: { tags: includeTags.join(",") },
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                 },
             ),
         );
-        return (facts.data as FactCollection).data.map(convertFact);
+        return facts.data.data.map(convertFact);
     };
 
     // Groups are collected from all catalog entities.

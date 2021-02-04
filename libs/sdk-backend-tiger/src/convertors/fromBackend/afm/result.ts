@@ -1,9 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
-    AttributeAttributesGranularityEnum,
     DimensionHeader,
     ExecutionResult,
     isResultAttributeHeader,
+    JsonApiAttributeAttributesGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import {
     DataValue,
@@ -30,9 +30,14 @@ export type TransformerResult = {
 };
 
 // gets all the enum values
-const supportedSuffixes: string[] = Object.keys(AttributeAttributesGranularityEnum)
+const supportedSuffixes: string[] = Object.keys(JsonApiAttributeAttributesGranularityEnum)
     .filter((item) => isNaN(Number(item)))
-    .map((key) => AttributeAttributesGranularityEnum[key as keyof typeof AttributeAttributesGranularityEnum]);
+    .map(
+        (key) =>
+            JsonApiAttributeAttributesGranularityEnum[
+                key as keyof typeof JsonApiAttributeAttributesGranularityEnum
+            ],
+    );
 
 function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranularity | undefined {
     if (!isAttributeDescriptor(header)) {
@@ -43,7 +48,7 @@ function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranular
     const suffix = identifier.substr(identifier.lastIndexOf(".") + 1);
 
     return supportedSuffixes.includes(suffix)
-        ? toSdkGranularity(suffix as AttributeAttributesGranularityEnum)
+        ? toSdkGranularity(suffix as JsonApiAttributeAttributesGranularityEnum)
         : undefined; // not a date attribute
 }
 

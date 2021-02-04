@@ -1,14 +1,13 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
-    AnalyticalDashboard,
-    AnalyticalDashboardAttributes,
+    JsonApiAnalyticalDashboardAttributes,
+    JsonApiAnalyticalDashboardDocument,
+    JsonApiAnalyticalDashboardList,
+    JsonApiFilterContextDocument,
     AnalyticalDashboardObjectModel,
-    AnalyticalDashboardCollection,
-    AnalyticalDashboardsItem,
-    FilterContext,
-    FilterContextDataRequest,
-    IncludedResource,
     isFilterContextData,
+    JsonApiAnalyticalDashboardWithLinks,
+    JsonApiFilterContextWithLinks,
 } from "@gooddata/api-client-tiger";
 import { IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
 
@@ -17,9 +16,9 @@ import omit from "lodash/omit";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export const convertAnalyticalDashboard = (
-    analyticalDashboard: AnalyticalDashboardsItem,
+    analyticalDashboard: JsonApiAnalyticalDashboardWithLinks,
 ): IListedDashboard => {
-    const attributes = analyticalDashboard.attributes as AnalyticalDashboardAttributes;
+    const attributes = analyticalDashboard.attributes as JsonApiAnalyticalDashboardAttributes;
     const { title, description } = attributes;
     return {
         ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
@@ -33,7 +32,7 @@ export const convertAnalyticalDashboard = (
 };
 
 export const convertAnalyticalDashboardToListItems = (
-    analyticalDashboards: AnalyticalDashboardCollection,
+    analyticalDashboards: JsonApiAnalyticalDashboardList,
 ): IListedDashboard[] => {
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };
@@ -51,7 +50,7 @@ export function convertAnalyticalDashboardContent(
 }
 
 export function convertDashboard(
-    analyticalDashboard: AnalyticalDashboard,
+    analyticalDashboard: JsonApiAnalyticalDashboardDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
     const { id, attributes = {} } = analyticalDashboard.data;
@@ -64,7 +63,7 @@ export function convertDashboard(
     return {
         ref: idRef(id, "analyticalDashboard"),
         identifier: id,
-        uri: (analyticalDashboard.links as any).self,
+        uri: analyticalDashboard.links!.self,
         title,
         description,
         created: "",
@@ -74,14 +73,14 @@ export function convertDashboard(
     };
 }
 
-export function convertFilterContextFromBackend(filterContext: FilterContext): IFilterContext {
+export function convertFilterContextFromBackend(filterContext: JsonApiFilterContextDocument): IFilterContext {
     const { id, type, attributes } = filterContext.data;
     const { title = "", description = "", content } = attributes!;
 
     return {
         ref: idRef(id, type as ObjectType),
         identifier: id,
-        uri: (filterContext.links as any).self,
+        uri: filterContext.links!.self,
         title,
         description,
         filters: cloneWithSanitizedIds(
@@ -90,19 +89,19 @@ export function convertFilterContextFromBackend(filterContext: FilterContext): I
     };
 }
 
-export function getFilterContextFromIncluded(included: IncludedResource[]): IFilterContext | undefined {
-    const filterContextData = included.find(isFilterContextData);
-    if (!filterContextData) {
+export function getFilterContextFromIncluded(included: any[]): IFilterContext | undefined {
+    const filterContext = included.find(isFilterContextData) as JsonApiFilterContextWithLinks;
+    if (!filterContext) {
         return;
     }
 
-    const { id, type, attributes } = filterContextData as FilterContextDataRequest;
+    const { id, type, attributes } = filterContext;
     const { title = "", description = "", content } = attributes!;
 
     return {
         ref: idRef(id, type as ObjectType),
         identifier: id,
-        uri: "", // FIXME we need link in included
+        uri: filterContext.links!.self,
         title,
         description,
         filters: cloneWithSanitizedIds(

@@ -21,12 +21,8 @@ import {
     insightFilters,
     insightSetFilters,
 } from "@gooddata/sdk-model";
-import {
-    VisualizationObjectModel,
-    VisualizationObjectCollection,
-    VisualizationObject,
-} from "@gooddata/api-client-tiger";
 import { v4 as uuidv4 } from "uuid";
+import { VisualizationObjectModel, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
     visualizationObjectsItemToInsight,
@@ -76,13 +72,12 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                   }
                 : undefined;
 
-            return sdk.workspaceModel.getEntities(
+            return sdk.workspaceModel.getEntitiesVisualizationObjects(
                 {
-                    entity: "visualizationObjects",
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                     ...(options?.limit ? { pageLimit: options?.limit } : {}),
                     pageOffset: options?.offset ?? 0,
                     ...((filter ? { filter } : {}) as any),
@@ -90,7 +85,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 },
             );
         });
-        const { data: visualizationObjects } = insightsResponse.data as VisualizationObjectCollection;
+        const { data: visualizationObjects } = insightsResponse.data;
         const insights = visualizationObjects.map(visualizationObjectsItemToInsight);
 
         // TODO - where to get this "meta" information in new MD?
@@ -129,18 +124,17 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const id = await objRefToIdentifier(ref, this.authCall);
         const response = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntity(
+            sdk.workspaceModel.getEntityVisualizationObjects(
                 {
-                    entity: "visualizationObjects",
                     id: id,
                     workspaceId: this.workspace,
                 },
                 {
-                    headers: { Accept: "application/vnd.gooddata.api+json" },
+                    headers: jsonApiHeaders,
                 },
             ),
         );
-        const { data: visualizationObject, links } = response.data as VisualizationObject;
+        const { data: visualizationObject, links } = response.data;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
                 visualizationObject.attributes!.content! as VisualizationObjectModel.IVisualizationObject,
@@ -158,11 +152,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((sdk) => {
-            return sdk.workspaceModel.createEntity(
+            return sdk.workspaceModel.createEntityVisualizationObjects(
                 {
-                    entity: "visualizationObjects",
                     workspaceId: this.workspace,
-                    analyticsObject: {
+                    jsonApiVisualizationObjectDocument: {
                         data: {
                             id: uuidv4(),
                             type: "visualizationObject",
@@ -175,25 +168,21 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     },
                 },
                 {
-                    headers: {
-                        Accept: "application/vnd.gooddata.api+json",
-                        "Content-Type": "application/vnd.gooddata.api+json",
-                    },
+                    headers: jsonApiHeaders,
                 },
             );
         });
-        const insightData = createResponse.data as VisualizationObject;
+        const insightData = createResponse.data;
         return insightFromInsightDefinition(insight, insightData.data.id, insightData.links!.self);
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((sdk) => {
-            return sdk.workspaceModel.updateEntity(
+            return sdk.workspaceModel.updateEntityVisualizationObjects(
                 {
-                    entity: "visualizationObjects",
                     id: insightId(insight),
                     workspaceId: this.workspace,
-                    analyticsObject: {
+                    jsonApiVisualizationObjectDocument: {
                         data: {
                             id: insightId(insight),
                             type: "visualizationObject",
@@ -206,10 +195,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     },
                 },
                 {
-                    headers: {
-                        Accept: "application/vnd.gooddata.api+json",
-                        "Content-Type": "application/vnd.gooddata.api+json",
-                    },
+                    headers: jsonApiHeaders,
                 },
             );
         });
@@ -220,8 +206,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.workspaceModel.deleteEntity({
-                entity: "visualizationObjects",
+            sdk.workspaceModel.deleteEntityVisualizationObjects({
                 id: id,
                 workspaceId: this.workspace,
             }),

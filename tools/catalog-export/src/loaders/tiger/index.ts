@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import ora from "ora";
 import { log, logError } from "../../cli/loggers";
 import { promptPassword, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 
@@ -15,13 +15,12 @@ import { createTigerClient } from "./tigerClient";
  */
 async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
     try {
-        await tigerClient.workspaceModel.getEntities(
+        await tigerClient.workspaceModel.getEntitiesMetrics(
             {
-                entity: "metrics",
                 workspaceId: projectId,
             },
             {
-                headers: { Accept: "application/vnd.gooddata.api+json" },
+                headers: jsonApiHeaders,
             },
         );
         return true;
