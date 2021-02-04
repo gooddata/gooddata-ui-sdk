@@ -22,7 +22,9 @@ export interface IHighchartsAxisExtend extends IHighchartsAxis {
 }
 
 type IHighchartsPoint = Partial<Highcharts.Point>;
-export type IHighchartsSeriesOptionsType = Partial<Highcharts.SeriesOptionsType>;
+
+// move to heatmap
+export type IHighchartsSeriesOptionsType = Partial<Highcharts.SeriesHeatmapOptions>;
 
 interface IHighchartsSeries {
     area?: Highcharts.SVGElement;
@@ -38,6 +40,7 @@ interface IHighchartsSeries {
     yAxis: IHighchartsAxisExtend;
 }
 
+// move to heatmap
 export interface IHighchartsSeriesExtend extends Partial<IHighchartsSeries> {
     pointPlacementToXValue?(): number;
 }

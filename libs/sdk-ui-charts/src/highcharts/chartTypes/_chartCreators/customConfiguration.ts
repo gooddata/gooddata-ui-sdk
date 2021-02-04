@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import set from "lodash/set";
@@ -612,6 +612,9 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(dataLabelFormatter, chartConfig),
+                    // workaround for missing data labels on last stacked measure with limimted axis
+                    // see https://github.com/highcharts/highcharts/issues/15145
+                    ...(stackMeasuresToPercent && canStackInPercent ? { inside: true } : {}),
                 },
             },
             column: {
@@ -1112,6 +1115,7 @@ function getAxesConfiguration(
             const minProp = min ? { min: Number(min) } : {};
 
             const isViewByTwoAttributes = get(chartOptions, "isViewByTwoAttributes", false);
+            const isInvertedChart = isInvertedChartType(chartOptions.type);
             const visible = get(chartOptions, axisPropsKey.concat(".visible"), true);
             const rotation = get(chartOptions, axisPropsKey.concat(".rotation"), "auto");
             const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
@@ -1150,6 +1154,9 @@ function getAxesConfiguration(
                     },
                     autoRotation: [-90],
                     ...rotationProp,
+                    // Due to a bug in Highcharts & grouped-categories the autoRotation is working only with useHtml
+                    // See: https://github.com/blacklabel/grouped_categories/issues/137
+                    useHTML: !isInvertedChart && isViewByTwoAttributes,
                 },
                 title: {
                     // should disable X axis title when 'View By 2 attributes'

@@ -7,7 +7,7 @@ export type HTMLDOMElement = Highcharts.HTMLDOMElement;
 export type SVGDOMElement = Highcharts.SVGDOMElement;
 export type SVGAttributes = Highcharts.SVGAttributes;
 export type StackItemObject = Highcharts.StackItemObject;
-export type DataLabelsOptionsObject = Highcharts.DataLabelsOptionsObject;
+export type DataLabelsOptionsObject = Highcharts.DataLabelsOptions;
 export type ColorAxisOptions = Highcharts.ColorAxisOptions;
 
 export default Highcharts;

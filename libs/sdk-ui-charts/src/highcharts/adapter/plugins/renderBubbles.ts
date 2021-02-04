@@ -12,6 +12,7 @@
 import isNil from "lodash/isNil";
 import Highcharts from "../../lib";
 import { IHighchartsAxisExtend } from "../../typings/extend";
+import { SeriesMapbubbleOptions } from "highcharts";
 export interface IBubbleAxis extends IHighchartsAxisExtend {
     allowZoomOutside?: boolean;
     dataMin?: number;
@@ -28,6 +29,7 @@ export interface IBubbleSeries extends Highcharts.Series {
     zData?: Array<number | null>;
     radii?: Array<number | null>;
     getRadii(zMin: number, zMax: number, series: Highcharts.Series): number | null;
+    options: SeriesMapbubbleOptions;
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

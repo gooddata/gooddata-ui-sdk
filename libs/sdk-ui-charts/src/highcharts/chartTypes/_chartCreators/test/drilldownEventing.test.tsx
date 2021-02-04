@@ -75,7 +75,7 @@ describe("Drilldown Eventing", () => {
             },
         ],
     };
-    const pointClickEventData = ({ point } as any) as Highcharts.DrilldownEventObject;
+    const pointClickEventData = { point } as Highcharts.DrilldownEventObject;
 
     it("should get clickable chart element name", () => {
         const fn = getClickableElementNameByChartType;
@@ -332,7 +332,7 @@ describe("Drilldown Eventing", () => {
         const target = { dispatchEvent: jest.fn() };
         const pointClickWitZEventData = cloneDeep(pointClickEventData);
 
-        pointClickWitZEventData.point.z = 12000;
+        pointClickWitZEventData.point["z"] = 12000;
 
         chartClick(
             drillConfig,
