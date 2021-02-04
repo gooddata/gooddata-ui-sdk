@@ -72,7 +72,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                   }
                 : undefined;
 
-            return sdk.workspaceModel.getEntitiesVisualizationObjects(
+            return sdk.workspaceObjects.getEntitiesVisualizationObjects(
                 {
                     workspaceId: this.workspace,
                 },
@@ -124,9 +124,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const id = await objRefToIdentifier(ref, this.authCall);
         const response = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntityVisualizationObjects(
+            sdk.workspaceObjects.getEntityVisualizationObjects(
                 {
-                    id: id,
+                    objectId: id,
                     workspaceId: this.workspace,
                 },
                 {
@@ -152,7 +152,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((sdk) => {
-            return sdk.workspaceModel.createEntityVisualizationObjects(
+            return sdk.workspaceObjects.createEntityVisualizationObjects(
                 {
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectDocument: {
@@ -178,9 +178,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((sdk) => {
-            return sdk.workspaceModel.updateEntityVisualizationObjects(
+            return sdk.workspaceObjects.updateEntityVisualizationObjects(
                 {
-                    id: insightId(insight),
+                    objectId: insightId(insight),
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectDocument: {
                         data: {
@@ -206,8 +206,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         await this.authCall((sdk) =>
-            sdk.workspaceModel.deleteEntityVisualizationObjects({
-                id: id,
+            sdk.workspaceObjects.deleteEntityVisualizationObjects({
+                objectId: id,
                 workspaceId: this.workspace,
             }),
         );

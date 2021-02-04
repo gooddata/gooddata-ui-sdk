@@ -86,7 +86,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
         const measures = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntitiesMetrics(
+            sdk.workspaceObjects.getEntitiesMetrics(
                 {
                     workspaceId: this.workspace,
                 },
@@ -102,7 +102,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     private loadFacts = async (): Promise<ICatalogFact[]> => {
         const { includeTags = [] } = this.options;
         const facts = await this.authCall((sdk) =>
-            sdk.workspaceModel.getEntitiesFacts(
+            sdk.workspaceObjects.getEntitiesFacts(
                 {
                     workspaceId: this.workspace,
                 },
