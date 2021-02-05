@@ -1249,6 +1249,9 @@ export type RgbType = "rgb";
 export type SortDirection = "asc" | "desc";
 
 // @public
+export function sortDirection(sort: ISortItem): SortDirection;
+
+// @public
 export type SortEntityIds = {
     allIdentifiers: Identifier[];
     attributeIdentifiers: Identifier[];

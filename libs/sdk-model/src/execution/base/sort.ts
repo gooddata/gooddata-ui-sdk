@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { Identifier } from "../../objRef/index";
 import { attributeLocalId, IAttribute } from "../attribute";
 import { IMeasure, measureLocalId } from "../measure";
@@ -154,6 +154,21 @@ export function isMeasureLocator(obj: unknown): obj is IMeasureLocatorItem {
 //
 // Public functions
 //
+
+/**
+ * Gets sort item's direction
+ * @param sort - sort item.
+ * @public
+ */
+export function sortDirection(sort: ISortItem): SortDirection {
+    invariant(sort, "sort item must be specified");
+
+    if (isAttributeSort(sort)) {
+        return sort.attributeSortItem.direction;
+    } else {
+        return sort.measureSortItem.direction;
+    }
+}
 
 /**
  * Categorized collection of entity (object) identifiers referenced by a sort item.
