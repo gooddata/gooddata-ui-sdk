@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 export { withExecution, IWithExecution } from "./withExecution";
 export {
@@ -12,4 +12,4 @@ export { RawExecute, IRawExecuteProps } from "./RawExecute";
 export { Execute, IExecuteProps } from "./Execute";
 export { useDataExport } from "./useDataExport";
 export { useDataView } from "./useDataView";
-export { useExecution } from "./useExecution";
+export { useExecution, IUseExecutionConfig } from "./useExecution";

@@ -1,5 +1,4 @@
 // (C) 2020-2021 GoodData Corporation
-import { CSSProperties } from "react";
 import {
     IAnalyticalBackend,
     ITheme,
@@ -12,9 +11,8 @@ import {
     IFilterContext,
     ITempFilterContext,
     IWidget,
-    ResponsiveScreenType,
-    IFluidLayoutColumnMethods,
     FilterContextItem,
+    ILegacyKpi,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
@@ -25,6 +23,7 @@ import {
     ILoadingProps,
     OnError,
     ILocale,
+    VisType,
 } from "@gooddata/sdk-ui";
 import { IDashboardViewLayoutContentRenderProps, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
 import { IDashboardFilter } from "../types";
@@ -160,7 +159,7 @@ export interface IDashboardViewProps {
     LoadingComponent?: React.ComponentType<ILoadingProps>;
 
     /**
-     * Called when the dashboard is loaded. This is to allow the imbedding code to read the dashboard data
+     * Called when the dashboard is loaded. This is to allow the embedding code to read the dashboard data
      * (for example to adapt its filter UI according to the filters saved in the dashboard).
      */
     onDashboardLoaded?: (params: { dashboard: IDashboard; alerts: IWidgetAlert[] }) => void;
@@ -211,7 +210,8 @@ export interface IDashboardViewProps {
     onScheduledMailSubmitError?: OnError;
 
     /**
-     * Component to customize widget rendering
+     * Component to customize widget rendering.
+     * Note: Custom widget rendering is not supported for dashboard exports & scheduled e-mails.
      */
     widgetRenderer?: IDashboardWidgetRenderer;
 }
@@ -238,41 +238,93 @@ export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProp
 };
 
 /**
- * TODO: RAIL-2869: docs
+ * Render props for custom widget rendering.
  *
  * @alpha
  */
 export type IDashboardWidgetRenderProps = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-    dashboardRef: ObjRef;
-    filters?: FilterContextItem[];
-    onFiltersChange?: (filters: IDashboardFilter[]) => void;
-    filterContext: IFilterContext | ITempFilterContext;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
+    /**
+     * ErrorComponent provided to DashboardView, or default component used for error rendering.
+     */
     ErrorComponent: React.ComponentType<IErrorProps>;
+
+    /**
+     * LoadingComponent provided to DashboardView, or default component used for loading rendering.
+     */
     LoadingComponent: React.ComponentType<ILoadingProps>;
-    onError?: OnError;
-    widgetClass?: DashboardViewLayoutWidgetClass;
-    insight?: IInsight;
+
+    /**
+     * Dashboard widget (insight or kpi) rendered in a common way.
+     * Use this as a fallback for custom widget rendering.
+     * Note: Please don't modify this element in any way, implementation can be changed in the future.
+     */
+    renderedWidget: React.ReactElement;
+
+    /**
+     * Common predicates against which the widget can be tested.
+     * Please use these predicates instead of areObjRefsEqual().
+     */
+    predicates: IWidgetPredicates;
+
+    /**
+     * Alert if set for this widget (in case it's a kpi widget).
+     */
+    alert?: IWidgetAlert;
+
+    /**
+     * Widget data.
+     */
     widget: IWidget;
-    DefaultWidgetRenderer: IDashboardWidgetRenderer;
-    screen: ResponsiveScreenType;
-    column: IFluidLayoutColumnMethods<IDashboardLayoutContent>;
 
     /**
-     * Minimum height of the widget calculated according to the visualization type.
+     * Insight set for this widget. (in case it's an insight widget)
      */
-    minHeight?: CSSProperties["minHeight"];
+    insight?: IInsight;
 
     /**
-     * Height of the widget calculated according to the column size configuration for the current screen.
+     * Sanitized filters provided to the dashboard
      */
-    height?: CSSProperties["height"];
+    filters?: FilterContextItem[];
 };
 
 /**
  * Component used for the widget rendering.
  */
 export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;
+
+/**
+ * Interface for testing the widget against common predicates
+ *
+ * @alpha
+ */
+export interface IWidgetPredicates {
+    /**
+     * Predicate to test whether the widget matches the provided ObjRef.
+     * This is useful to customize rendering for the particular widget.
+     */
+    isWidgetWithRef: (ref: ObjRef) => boolean;
+
+    /**
+     * Predicate to test whether the widget contains insight that matches the provided ObjRef.
+     * This is useful to customize rendering for the widget with particular insight.
+     */
+    isWidgetWithInsightRef: (ref: ObjRef) => boolean;
+
+    /**
+     * Predicate to test whether the widget contains insight of particular type (e.g. table, bar, column, scatter, etc).
+     * This is useful to customize rendering for the insight widget of concrete type.
+     */
+    isWidgetWithInsightType: (type: VisType) => boolean;
+
+    /**
+     * Predicate to test whether the widget contains kpi that matches the provided ObjRef.
+     * This is useful to customize rendering for the widget with particular kpi.
+     */
+    isWidgetWithKpiRef: (ref: ObjRef) => boolean;
+
+    /**
+     * Predicate to test whether the widget contains kpi of particular comparison type (none, previousPeriod or previousYear).
+     * This is useful to customize rendering for the kpi widget of concrete type.
+     */
+    isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
+}

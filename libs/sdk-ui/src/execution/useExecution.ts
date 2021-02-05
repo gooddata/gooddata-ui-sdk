@@ -1,16 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IAttributeOrMeasure, IAttribute, ITotal, INullableFilter, ISortItem } from "@gooddata/sdk-model";
 import { useBackend, useWorkspace } from "../base";
 import { createExecution } from "./createExecution";
 
-/**
- * This hook provides a simplified interface for creating executions.
- * It builds the execution on top of the backend passed to the BackendProvider, and workspace passed to the WorkspaceProvider.
- *
- * @beta
- */
-export function useExecution(options: {
+export interface IUseExecutionConfig {
     /**
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
@@ -61,12 +55,20 @@ export function useExecution(options: {
      * workspace here, then the executor MUST be rendered within an existing WorkspaceContext.
      */
     workspace?: string;
-}): IPreparedExecution {
-    const backend = useBackend(options.backend);
-    const workspace = useWorkspace(options.workspace);
+}
+
+/**
+ * This hook provides a simplified interface for creating executions.
+ * It builds the execution on top of the backend passed to the BackendProvider, and workspace passed to the WorkspaceProvider.
+ *
+ * @beta
+ */
+export function useExecution(config: IUseExecutionConfig): IPreparedExecution {
+    const backend = useBackend(config.backend);
+    const workspace = useWorkspace(config.workspace);
 
     const execution = createExecution({
-        ...options,
+        ...config,
         backend,
         workspace,
     });
