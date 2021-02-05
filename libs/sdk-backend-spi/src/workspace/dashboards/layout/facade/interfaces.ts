@@ -7,7 +7,7 @@ import {
     IFluidLayoutSize,
     IFluidLayoutSizeByScreen,
     ResponsiveScreenType,
-} from "./fluidLayout";
+} from "../fluidLayout";
 
 /**
  * TODO: RAIL-2869 add docs
@@ -15,13 +15,26 @@ import {
  */
 export interface IFluidLayoutColumnMethods<TContent> {
     raw(): IFluidLayoutColumn<TContent>;
+
+    testRaw(pred: (column: IFluidLayoutColumn<TContent>) => boolean): boolean;
+    test(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
+
     index(): number;
+    indexIs(index: number): boolean;
+
     size(): IFluidLayoutSizeByScreen;
     sizeForScreen(screen: ResponsiveScreenType): IFluidLayoutSize | undefined;
-    style(): IFluidLayoutColumn<TContent>["style"];
+    hasSizeForScreen(screen: ResponsiveScreenType): boolean;
+
     content(): TContent | undefined;
-    row(): IFluidLayoutRowMethods<TContent>;
+    hasContent(): boolean;
+    contentEquals(content: TContent): boolean;
+    contentIs(content: TContent): boolean;
+
+    isFirstInRow(): boolean;
     isLastInRow(): boolean;
+
+    row(): IFluidLayoutRowMethods<TContent>;
 }
 
 /**
@@ -46,6 +59,7 @@ export interface IFluidLayoutColumnsMethods<TContent> {
         pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean,
     ): IFluidLayoutColumnMethods<TContent>[];
     all(): IFluidLayoutColumnMethods<TContent>[];
+    count(): number;
 }
 
 /**
@@ -54,11 +68,28 @@ export interface IFluidLayoutColumnsMethods<TContent> {
  */
 export interface IFluidLayoutRowMethods<TContent> {
     raw(): IFluidLayoutRow<TContent>;
+
+    testRaw(pred: (column: IFluidLayoutRow<TContent>) => boolean): boolean;
+    test(pred: (column: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
+
     index(): number;
+    indexIs(index: number): boolean;
+
     header(): IFluidLayoutSectionHeader | undefined;
-    style(): IFluidLayoutRow<TContent>["style"] | undefined;
+    title(): string | undefined;
+    description(): string | undefined;
+    headerEquals(header: IFluidLayoutSectionHeader): boolean;
+    hasHeader(): boolean;
+    hasTitle(): boolean;
+    hasDescription(): boolean;
+    titleEquals(title: string): boolean;
+    descriptionEquals(title: string): boolean;
+
     columns(): IFluidLayoutColumnsMethods<TContent>;
+
+    isFirst(): boolean;
     isLast(): boolean;
+
     layout(): IFluidLayoutFacade<TContent>;
 }
 
@@ -82,6 +113,7 @@ export interface IFluidLayoutRowsMethods<TContent> {
     some(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
     filter(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): IFluidLayoutRowMethods<TContent>[];
     all(): IFluidLayoutRowMethods<TContent>[];
+    count(): number;
 }
 
 /**
@@ -89,6 +121,7 @@ export interface IFluidLayoutRowsMethods<TContent> {
  * @alpha
  */
 export interface IFluidLayoutFacade<TContent> {
+    size(): IFluidLayoutSize | undefined;
     rows(): IFluidLayoutRowsMethods<TContent>;
     raw(): IFluidLayout<TContent>;
 }

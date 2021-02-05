@@ -1,8 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
-import { IFluidLayout, isFluidLayout } from "../fluidLayout";
 import invariant from "ts-invariant";
+import { IFluidLayout, IFluidLayoutSize, isFluidLayout } from "../fluidLayout";
 
-import { IFluidLayoutFacade, IFluidLayoutRowsMethods } from "../fluidLayoutMethods";
+import { IFluidLayoutFacade, IFluidLayoutRowsMethods } from "./interfaces";
 import { FluidLayoutRowsMethods } from "./rows";
 
 /**
@@ -10,11 +10,7 @@ import { FluidLayoutRowsMethods } from "./rows";
  * @alpha
  */
 export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent> {
-    private static Cache: WeakMap<IFluidLayout<any>, FluidLayoutFacade<any>> = new WeakMap<
-        IFluidLayout<any>,
-        FluidLayoutFacade<any>
-    >();
-    protected constructor(protected _layout: IFluidLayout<TContent>) {}
+    private constructor(private readonly layout: IFluidLayout<TContent>) {}
 
     /**
      * Creates an instance of FluidLayoutFacade
@@ -22,18 +18,18 @@ export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent>
      */
     public static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacade<TContent> {
         invariant(isFluidLayout(layout), "Provided data must be IFluidLayout!");
-        if (!FluidLayoutFacade.Cache.has(layout)) {
-            FluidLayoutFacade.Cache.set(layout, new FluidLayoutFacade(layout));
-        }
-
-        return FluidLayoutFacade.Cache.get(layout)!;
+        return new FluidLayoutFacade(layout);
     }
 
     public rows = (): IFluidLayoutRowsMethods<TContent> => {
-        return FluidLayoutRowsMethods.for(this, this._layout.rows);
+        return FluidLayoutRowsMethods.for(this, this.layout.rows);
+    };
+
+    public size = (): IFluidLayoutSize | undefined => {
+        return this.layout.size;
     };
 
     public raw = (): IFluidLayout<TContent> => {
-        return this._layout;
+        return this.layout;
     };
 }
