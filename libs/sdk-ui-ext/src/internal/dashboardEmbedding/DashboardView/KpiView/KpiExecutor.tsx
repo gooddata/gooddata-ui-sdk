@@ -47,12 +47,9 @@ import { useCurrentUser } from "../../hooks/useCurrentUser";
 import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
 import {
     DashboardItemWithKpiAlert,
-    enrichBrokenAlertsInfo,
     evaluateAlertTriggered,
     getBrokenAlertFiltersBasicInfo,
-    KpiAlertDialog,
 } from "../../KpiAlerts";
-import { useBrokenAlertFiltersMeta } from "../../KpiAlerts/useBrokenAlertFiltersMeta";
 import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
 import { dashboardFilterToFilterContextItem } from "../../utils/filters";
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
@@ -63,6 +60,7 @@ import {
     useAlertSaveOrUpdateHandler,
 } from "./alertManipulationHooks";
 import { KpiRenderer } from "./KpiRenderer";
+import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -70,7 +68,15 @@ interface IKpiExecutorProps {
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
     alert?: IWidgetAlert;
-    filters?: IDashboardFilter[];
+    /**
+     * Filters that should be used for the execution
+     */
+    effectiveFilters?: IDashboardFilter[];
+    /**
+     * All filters that are currently set (this is useful for broken alert filters, where we need even
+     * the filters ignored for execution)
+     */
+    allFilters?: IDashboardFilter[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
     onDrill?: OnFiredDrillEvent;
@@ -93,7 +99,8 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     primaryMeasure,
     secondaryMeasure,
     alert,
-    filters,
+    allFilters,
+    effectiveFilters,
     onFiltersChange,
     drillableItems,
     onDrill,
@@ -108,7 +115,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
 }) => {
     const execution = useExecution({
         seriesBy: compact([primaryMeasure, secondaryMeasure]),
-        filters,
+        filters: effectiveFilters,
         backend,
         workspace,
     });
@@ -118,36 +125,17 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     const userWorkspaceSettings = useUserWorkspaceSettings();
 
     const brokenAlertsBasicInfo = useMemo(
-        () => (alert ? getBrokenAlertFiltersBasicInfo(alert, kpiWidget, filters) : undefined),
-        [alert, kpiWidget, filters],
+        () => (alert ? getBrokenAlertFiltersBasicInfo(alert, kpiWidget, allFilters) : undefined),
+        [alert, kpiWidget, allFilters],
     );
 
-    const isAlertBroken = !!brokenAlertsBasicInfo?.length; // we need to know if the alert is broken synchronously (for the alert execution)...
-
-    // ...but we can load the extra data needed asynchronously to have it ready by the time the user opens the dialog
-    const { result: brokenAlertsMeta } = useBrokenAlertFiltersMeta({
-        backend,
-        workspace,
-        brokenAlertFilters: brokenAlertsBasicInfo,
-    });
-
-    const brokenAlertFilters = useMemo(() => {
-        if (!brokenAlertsMeta) {
-            return null;
-        }
-
-        return enrichBrokenAlertsInfo(
-            brokenAlertsBasicInfo,
-            intl,
-            userWorkspaceSettings.responsiveUiDateFormat,
-            brokenAlertsMeta.dateDatasets,
-            brokenAlertsMeta.attributeFiltersMeta,
-        );
-    }, [brokenAlertsMeta]);
+    const isAlertBroken = !!brokenAlertsBasicInfo?.length;
 
     const alertExecution = useExecution({
         seriesBy: [primaryMeasure],
-        filters: alert ? filterContextToFiltersForWidget(alert.filterContext, kpiWidget) ?? [] : filters,
+        filters: alert
+            ? filterContextToFiltersForWidget(alert.filterContext, kpiWidget) ?? []
+            : effectiveFilters,
         backend,
         workspace,
     });
@@ -211,7 +199,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
         <DashboardItemWithKpiAlert
             kpi={kpiWidget}
             alert={alert}
-            filters={filters}
+            filters={effectiveFilters}
             userWorkspaceSettings={userWorkspaceSettings}
             kpiResult={kpiResult}
             renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
@@ -235,7 +223,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             isAlertDialogOpen={isAlertDialogOpen}
             onAlertDialogOpenClick={() => setIsAlertDialogOpen(true)}
             renderAlertDialog={() => (
-                <KpiAlertDialog
+                <KpiAlertDialogWrapper
                     alert={alert}
                     dateFormat={userWorkspaceSettings.responsiveUiDateFormat}
                     userEmail={currentUser?.email}
@@ -266,7 +254,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                                   filterContext: {
                                       title: "filterContext",
                                       description: "",
-                                      filters: filters.map(dashboardFilterToFilterContextItem),
+                                      filters: effectiveFilters.map(dashboardFilterToFilterContextItem),
                                   },
                                   description: "",
                                   title: "",
@@ -285,7 +273,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                             // change the filters to the filters currently used by the KPI
                             filterContext: {
                                 ...alert.filterContext,
-                                filters: filters.map(dashboardFilterToFilterContextItem),
+                                filters: effectiveFilters.map(dashboardFilterToFilterContextItem),
                             },
                         });
                     }}
@@ -304,10 +292,12 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     alertDeletingStatus={alertDeletingStatus}
                     alertSavingStatus={alertSavingStatus}
                     alertUpdatingStatus={alertSavingStatus} // since alert updating is realized by saving in SDK, we can use the same status
-                    filters={filters}
+                    filters={effectiveFilters}
                     isThresholdRepresentingPercent={isThresholdRepresentingPercent}
                     thresholdPlaceholder={thresholdPlaceholder}
-                    brokenAlertFilters={brokenAlertFilters}
+                    brokenAlertFiltersBasicInfo={brokenAlertsBasicInfo}
+                    backend={backend}
+                    workspace={workspace}
                 />
             )}
             alertDeletingStatus={alertDeletingStatus}
@@ -321,7 +311,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                     <KpiRenderer
                         kpi={kpiWidget}
                         kpiResult={kpiResult}
-                        filters={filters}
+                        filters={effectiveFilters}
                         disableDrillUnderline={disableDrillUnderline}
                         isDrillable={isDrillable}
                         onDrill={onDrill && handleOnDrill}

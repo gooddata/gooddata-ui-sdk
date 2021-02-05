@@ -42,7 +42,8 @@ interface IUseKpiDataConfig {
 interface IUseKpiDataResult {
     primaryMeasure: IMeasure;
     secondaryMeasure?: IMeasure<IPoPMeasureDefinition> | IMeasure<IPreviousPeriodMeasureDefinition>;
-    filters: IDashboardFilter[];
+    effectiveFilters?: IDashboardFilter[];
+    allFilters?: IDashboardFilter[];
 }
 
 export function useKpiData({
@@ -56,28 +57,28 @@ export function useKpiData({
     const effectiveWorkspace = useWorkspace(workspace);
 
     const promise = kpiWidget
-        ? async () => {
+        ? async (): Promise<IUseKpiDataResult> => {
               invariant(kpiWidget.kpi, "The provided widget is not a KPI widget.");
 
-              const inputFilters = filters
+              const allFilters = filters
                   ? filterContextItemsToFiltersForWidget(filters, kpiWidget)
                   : filterContextToFiltersForWidget(filterContext, kpiWidget);
 
-              const relevantFilters = (await effectiveBackend
+              const effectiveFilters = (await effectiveBackend
                   .workspace(effectiveWorkspace)
                   .dashboards()
-                  .getResolvedFiltersForWidget(kpiWidget, inputFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
+                  .getResolvedFiltersForWidget(kpiWidget, allFilters)) as IDashboardFilter[]; // all the inputs are IDashboardFilter, so the result must be too
 
               const primaryMeasure = newMeasure(kpiWidget.kpi.metric);
 
               const comparison = kpiWidget.kpi.comparisonType;
 
               const isAllTime =
-                  !relevantFilters ||
-                  !relevantFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
+                  !effectiveFilters ||
+                  !effectiveFilters.some((filter) => isDateFilter(filter) && !isAllTimeDateFilter(filter));
 
               if (comparison === "none" || isAllTime) {
-                  return { primaryMeasure, filters: relevantFilters };
+                  return { primaryMeasure, effectiveFilters, allFilters };
               }
 
               if (comparison === "previousPeriod") {
@@ -85,7 +86,7 @@ export function useKpiData({
                       { dataSet: kpiWidget.dateDataSet, periodsAgo: 1 },
                   ]);
 
-                  return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
+                  return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
               }
 
               if (comparison === "lastYear") {
@@ -96,7 +97,7 @@ export function useKpiData({
                       kpiWidget.dateDataSet,
                   );
 
-                  return { primaryMeasure, secondaryMeasure, filters: relevantFilters };
+                  return { primaryMeasure, secondaryMeasure, effectiveFilters, allFilters };
               }
 
               invariant(false, `Unknown comparison ${comparison}`);
