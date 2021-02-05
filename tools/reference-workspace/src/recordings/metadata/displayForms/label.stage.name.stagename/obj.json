@@ -1,0 +1,9 @@
+{
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1091" },
+    "description": "",
+    "id": "label.stage.name.stagename",
+    "ref": { "identifier": "label.stage.name.stagename" },
+    "title": "Stage Name",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1092"
+}

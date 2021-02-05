@@ -1,0 +1,9 @@
+{
+    "attribute": { "uri": "/gdc/md/referenceworkspace/obj/1062" },
+    "description": "",
+    "id": "label.opportunitysnapshot.forecastcategory",
+    "ref": { "identifier": "label.opportunitysnapshot.forecastcategory" },
+    "title": "Forecast Category",
+    "type": "displayForm",
+    "uri": "/gdc/md/referenceworkspace/obj/1063"
+}

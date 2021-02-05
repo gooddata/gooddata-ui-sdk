@@ -1,8 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2021 GoodData Corporation
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2020-09-21T09:52:01.805Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-02-05T07:33:28.219Z; */
 
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
@@ -266,6 +266,11 @@ const fp_50b382d97968e85d5afe9cfb78e4c346 = {
     executionResult: require("./uiTestScenarios/executions/50b382d97968e85d5afe9cfb78e4c346/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/50b382d97968e85d5afe9cfb78e4c346/dataView_all.json"),
     scenarios: require("./uiTestScenarios/executions/50b382d97968e85d5afe9cfb78e4c346/scenarios.json"),
+};
+const fp_50dbeb990ce53c68fbe21e37709a8f29 = {
+    definition: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/dataView_all.json"),
 };
 const fp_52e947577efd3f98414a985dde315000 = {
     definition: require("./uiTestScenarios/executions/52e947577efd3f98414a985dde315000/definition.json"),
@@ -555,6 +560,11 @@ const fp_c1ea61c78a68d705df9a594cf1d8c196 = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/c1ea61c78a68d705df9a594cf1d8c196/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/c1ea61c78a68d705df9a594cf1d8c196/dataView_o0_0s22_1000.json"),
 };
+const fp_c28089a6200886f493c60c0e0da63f6b = {
+    definition: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/dataView_all.json"),
+};
 const fp_c4f0c66ccbfc48490f97ce78cfdbd6b1 = {
     definition: require("./uiTestScenarios/executions/c4f0c66ccbfc48490f97ce78cfdbd6b1/definition.json"),
     executionResult: require("./uiTestScenarios/executions/c4f0c66ccbfc48490f97ce78cfdbd6b1/executionResult.json"),
@@ -747,16 +757,6 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     executionResult: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/executionResult.json"),
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
-};
-const fp_50dbeb990ce53c68fbe21e37709a8f29 = {
-    definition: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/50dbeb990ce53c68fbe21e37709a8f29/dataView_all.json"),
-};
-const fp_c28089a6200886f493c60c0e0da63f6b = {
-    definition: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/c28089a6200886f493c60c0e0da63f6b/dataView_all.json"),
 };
 export const Scenarios = {
     ComboChart: {
@@ -1127,6 +1127,14 @@ const df_label_owner_region = {
 const df_label_stage_status = {
     elements: require("./metadata/displayForms/label.stage.status/elements.json"),
     obj: require("./metadata/displayForms/label.stage.status/obj.json"),
+};
+const df_label_opportunitysnapshot_forecastcategory = {
+    elements: require("./metadata/displayForms/label.opportunitysnapshot.forecastcategory/elements.json"),
+    obj: require("./metadata/displayForms/label.opportunitysnapshot.forecastcategory/obj.json"),
+};
+const df_label_stage_name_stagename = {
+    elements: require("./metadata/displayForms/label.stage.name.stagename/elements.json"),
+    obj: require("./metadata/displayForms/label.stage.name.stagename/obj.json"),
 };
 const i_AreaChart_141e496201b32738d0233842253651b4 = {
     obj: require("./uiTestScenarios/insights/AreaChart.141e496201b32738d0233842253651b4/obj.json"),
@@ -2972,6 +2980,7 @@ export const Recordings = {
         fp_485af508e3677373d3cfc5614a5e04c2,
         fp_5055bf7ddf995e9e067ea75963adb55d,
         fp_50b382d97968e85d5afe9cfb78e4c346,
+        fp_50dbeb990ce53c68fbe21e37709a8f29,
         fp_52e947577efd3f98414a985dde315000,
         fp_557d8c675cfa15fec987c31036da51ba,
         fp_5958d4d8584b37ab3cb2e78567aeadfe,
@@ -3020,6 +3029,7 @@ export const Recordings = {
         fp_ba942f3e77e766d51677b6438eb470e1,
         fp_bcf69fa3cf04052d9e92e1713d8cdf0e,
         fp_c1ea61c78a68d705df9a594cf1d8c196,
+        fp_c28089a6200886f493c60c0e0da63f6b,
         fp_c4f0c66ccbfc48490f97ce78cfdbd6b1,
         fp_c63c6d6839beb4fa8590ba0a3f8d6e3d,
         fp_ca3184cfe21e8c8400a68a8055d0ea99,
@@ -3053,8 +3063,6 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
-        fp_50dbeb990ce53c68fbe21e37709a8f29,
-        fp_c28089a6200886f493c60c0e0da63f6b,
     },
     metadata: {
         catalog,
@@ -3064,6 +3072,8 @@ export const Recordings = {
             df_label_owner_department,
             df_label_owner_region,
             df_label_stage_status,
+            df_label_opportunitysnapshot_forecastcategory,
+            df_label_stage_name_stagename,
         },
         insights: {
             i_AreaChart_141e496201b32738d0233842253651b4,
