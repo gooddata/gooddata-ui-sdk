@@ -25,6 +25,7 @@ const HardcodedSettings = {
     enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
+    enableMultipleDates: true,
 
     // KD specific
     enableAnalyticalDashboards: true,
