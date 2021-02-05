@@ -55,6 +55,10 @@ export interface IUseEnrichedBrokenAlertsConfig
     workspace?: string;
 }
 
+/**
+ * the amount of elements to load, this should be small enough to be efficient,
+ * and large enough to always be longer than the broken alert filters display
+ */
 const DEFAULT_ATTRIBUTE_ELEMENT_COUNT = 20;
 
 /**
@@ -95,13 +99,15 @@ export function useBrokenAlertFiltersMeta({
 
               const filterDataPromise = Promise.all(
                   filtersToLoad.map(async (filter) => {
-                      if (!isAttributeElementsByRef(filter.alertFilter.attributeFilter.attributeElements)) {
+                      const { attributeFilter } = filter.alertFilter;
+
+                      if (!isAttributeElementsByRef(attributeFilter.attributeElements)) {
                           throw new NotSupported(
                               "Only URI attribute filters are supported in useBrokenAlertFiltersMeta",
                           );
                       }
 
-                      const displayForm = filter.alertFilter.attributeFilter.displayForm;
+                      const displayForm = attributeFilter.displayForm;
 
                       const attributesService = effectiveBackend.workspace(effectiveWorkspace).attributes();
 
@@ -111,7 +117,9 @@ export function useBrokenAlertFiltersMeta({
                               .forDisplayForm(displayForm)
                               .withLimit(DEFAULT_ATTRIBUTE_ELEMENT_COUNT)
                               .withOptions({
-                                  uris: filter.alertFilter.attributeFilter.attributeElements.uris,
+                                  uris: attributeFilter.negativeSelection
+                                      ? undefined // for negative filters we need to load the items NOT selected, however there is no way of doing that, so we load everything
+                                      : attributeFilter.attributeElements.uris,
                                   includeTotalCountWithoutFilters: true,
                               })
                               .query(),

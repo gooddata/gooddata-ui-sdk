@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { DashboardItemWithKpiAlert, IDashboardItemWithKpiAlertProps } from "./DashboardItemWithKpiAlert";
-import KpiAlertDialog from "./KpiAlertDialog/KpiAlertDialog";
+import KpiAlertDialog, { IKpiAlertDialogProps } from "./KpiAlertDialog/KpiAlertDialog";
 import {
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
@@ -15,6 +15,7 @@ export {
     DashboardItemWithKpiAlert,
     IDashboardItemWithKpiAlertProps,
     KpiAlertDialog,
+    IKpiAlertDialogProps,
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
     enrichBrokenAlertsInfo,

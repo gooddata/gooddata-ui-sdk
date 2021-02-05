@@ -59,7 +59,7 @@ export function useKpiExecution(
     const { result, status, error } = useKpiData(config);
     const execution = useExecution({
         seriesBy: compact([result?.primaryMeasure, result?.secondaryMeasure]),
-        filters: result?.filters,
+        filters: result?.effectiveFilters,
         backend: effectiveBackend,
         workspace: effectiveWorkspace,
     });
