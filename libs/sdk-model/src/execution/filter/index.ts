@@ -462,6 +462,23 @@ export function attributeElementsIsEmpty(attributeElements: IAttributeElements):
 }
 
 /**
+ * Gets the number of items in the {@link IAttributeElements}.
+ *
+ * @param attributeElements - object to test
+ * @returns the number of items
+ * @internal
+ */
+export function attributeElementsCount(attributeElements: IAttributeElements): number {
+    invariant(attributeElements, "attribute elements must be specified");
+
+    if (isAttributeElementsByRef(attributeElements)) {
+        return attributeElements.uris.length;
+    }
+
+    return attributeElements.values.length;
+}
+
+/**
  * Gets attribute elements specified on the attribute filter.
  *
  * @param filter - attribute filter to work with
