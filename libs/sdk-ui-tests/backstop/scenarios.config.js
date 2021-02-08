@@ -34,6 +34,18 @@ const ScenarioConfig = [
     },
     {
         /*
+         * Tests for pivot table stories - either created automatically for test scenarios or created manually.
+         * These have same selectors as the rest of the visualizations but want to have increased mismatch
+         * threshold as tables can be large which can make bugs related to first (sticky) row slip through.
+         */
+        idRegex: /(01|02).*Pivot.*/g,
+        config: {
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
+        },
+    },
+    {
+        /*
          * Tests for visualization stories - either created automatically for test scenarios or created manually
          */
         idRegex: /(01|02).*/g,
