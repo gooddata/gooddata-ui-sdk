@@ -290,7 +290,8 @@ export const GD_COLOR_WHITE = "#fff";
 // @internal (undocumented)
 export function generateHeaderAccountMenuItems(workspacePermissions: IWorkspacePermissions, // bootstrapResource.current.projectPermissions
 uiSettings: IUiSettings, // bootstrapResource.settings
-workspaceId?: string): IHeaderMenuItem[];
+workspaceId?: string, // parsed from bootstrapResource.current.project.links.self
+showOnlyLogoutItem?: boolean): IHeaderMenuItem[];
 
 // @internal (undocumented)
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];

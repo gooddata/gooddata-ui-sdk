@@ -10,6 +10,7 @@ const HardcodedSettings = {
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
     platformEdition: "enterprise",
+    enableDomainHomepage: true,
 
     // AD specific
     analyticalDesigner: true,

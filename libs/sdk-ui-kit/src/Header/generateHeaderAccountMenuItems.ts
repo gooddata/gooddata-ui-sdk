@@ -16,6 +16,7 @@ export function generateHeaderAccountMenuItems(
     workspacePermissions: IWorkspacePermissions, // bootstrapResource.current.projectPermissions
     uiSettings: IUiSettings, // bootstrapResource.settings
     workspaceId?: string, // parsed from bootstrapResource.current.project.links.self
+    showOnlyLogoutItem?: boolean,
 ): IHeaderMenuItem[] {
     const { canInitData } = workspacePermissions;
     const { displayAccountPage } = uiSettings;
@@ -36,8 +37,8 @@ export function generateHeaderAccountMenuItems(
         className: "s-logout",
     };
 
-    const showAccountItem = workspaceId && displayAccountPage;
-    const showDataIntegrationConsoleItem = canInitData === true;
+    const showAccountItem = workspaceId && displayAccountPage && !showOnlyLogoutItem;
+    const showDataIntegrationConsoleItem = canInitData === true && !showOnlyLogoutItem;
 
     if (showAccountItem) {
         accountMenuItems.push(accountItem);
