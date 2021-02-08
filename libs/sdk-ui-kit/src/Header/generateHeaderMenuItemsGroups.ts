@@ -135,7 +135,7 @@ export function generateHeaderMenuItemsGroups(
         className: "s-menu-manage",
         href: `/#s=/gdc/projects/${workspaceId}|dataPage|`,
     };
-    const showManageItem = canManageMetric === true;
+    const showManageItem = canManageMetric;
     if (showManageItem) {
         manageItemsGroup.push(manageItem);
     }

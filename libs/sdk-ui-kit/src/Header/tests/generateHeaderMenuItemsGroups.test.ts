@@ -162,4 +162,26 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
         ]);
     });
+
+    it("should not return data item if backendSupportsDataItem is false and platform edition is not free", () => {
+        const items = generateHeaderMenuItemsGroups(
+            getAccountMenuFeatureFlagsMock(true, true, true, false, "enterprise"),
+            getWorkspacePermissionsMock(true, false),
+            false,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            "TestTabId",
+            false,
+            false,
+        );
+        expect(items).toEqual([
+            [
+                {
+                    className: "s-menu-load",
+                    href: "/data/#/projects/TestWorkspaceId/datasets",
+                    key: "gs.header.load",
+                },
+            ],
+        ]);
+    });
 });

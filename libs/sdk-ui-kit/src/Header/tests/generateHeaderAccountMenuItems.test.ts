@@ -88,4 +88,16 @@ describe("generateHeaderAccountMenuItems", () => {
         );
         expect(items).toEqual([{ className: "s-logout", key: "gs.header.logout" }]);
     });
+
+    it("should return logout item if showOnlyLogoutItem is true", () => {
+        const items = generateHeaderAccountMenuItems(
+            getWorkspacePermissionsMock(true, true),
+            {
+                displayAccountPage: true,
+            },
+            "TestWorkspaceId",
+            true,
+        );
+        expect(items).toEqual([{ className: "s-logout", key: "gs.header.logout" }]);
+    });
 });
