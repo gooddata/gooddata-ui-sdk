@@ -121,6 +121,29 @@ describe("searchForLocatorMatch", () => {
             undefined,
         ],
         [
+            "does not match when insufficient attribute locators in table with two column attributes and single measure",
+            [
+                newMeasureColumnLocator(ReferenceLdm.Probability),
+                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+            ],
+            SingleMeasureWithTwoRowAndTwoColumnAttributes,
+            undefined,
+        ],
+        [
+            "does not match when too many attribute locators in table with two column attributes and single measure",
+            [
+                newAttributeColumnLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.CompuSci.uri),
+                newAttributeColumnLocator(
+                    ReferenceLdm.StageName.Default,
+                    ReferenceData.StageName.Negotiation.uri,
+                ),
+                newMeasureColumnLocator(ReferenceLdm.Probability),
+                newAttributeColumnLocator(ReferenceLdm.Region, ReferenceData.Region.WestCoast.uri),
+            ],
+            SingleMeasureWithTwoRowAndTwoColumnAttributes,
+            undefined,
+        ],
+        [
             "does match locator in table with only column attribute",
             [newAttributeColumnLocator(ReferenceLdm.Product.Name, ReferenceData.ProductName.Explorer.uri)],
             SingleColumn,

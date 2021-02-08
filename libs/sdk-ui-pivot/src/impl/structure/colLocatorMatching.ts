@@ -14,7 +14,16 @@ import {
     isMeasureColumnLocator,
 } from "../../columnWidths";
 import invariant from "ts-invariant";
+import { colMeasureLocalId } from "./colAccessors";
 
+/**
+ * Given data sheet columns, this function will traverse them in order to attempt to match the provided
+ * column locators. This function works recursively, if the cols are composite (data col root or group) then
+ * after successfully matching locator, the code proceed further to search through the children.
+ *
+ * @param cols - columns to search
+ * @param locators - column locators to match
+ */
 export function searchForLocatorMatch(
     cols: DataCol[],
     locators: ColumnLocator[],
@@ -40,9 +49,12 @@ export function searchForLocatorMatch(
                 );
             });
 
-            // if this blows, then there is error in the column width sanitization logic which should clean all column
-            // width items that reference missing attributes or measures.
-            invariant(matchingLocator);
+            if (!matchingLocator) {
+                // if there is no matching attribute locator yet code is on data col group, then it
+                // means there are less attributes in the table than there are attribute locators. the
+                // table has changed yet some sort items hang around. bail out immediately with no match.
+                return undefined;
+            }
 
             const elementToMatch = (matchingLocator as IAttributeColumnLocator).attributeLocatorItem.element;
             // while the attribute locator has element optional (for wildcard match), all the remaining code always populates
@@ -67,16 +79,15 @@ export function searchForLocatorMatch(
                 }
             }
         } else if (isDataColLeaf(col)) {
-            // code has reached the leaves. at this point there must be just one locator left and it must
-            // be the measure column locator. if this bombs then locator creation or sanitization of invalid column width
-            // items is hosed (or was not called).
-            invariant(locators.length === 1);
-            invariant(isMeasureColumnLocator(locators[0]));
+            if (locators.length > 1 || !isMeasureColumnLocator(locators[0])) {
+                // code has reached the leaves. at this point there must be just one locator left and it must
+                // be the measure column locator. if this is not the case, then there are too many locators -
+                // the table has likely changed and old locators were left around. bail out immediately.
 
-            if (
-                col.seriesDescriptor.measureDescriptor.measureHeaderItem.localIdentifier ===
-                locators[0].measureLocatorItem.measureIdentifier
-            ) {
+                return undefined;
+            }
+
+            if (colMeasureLocalId(col) === locators[0].measureLocatorItem.measureIdentifier) {
                 found = col;
             }
         }
