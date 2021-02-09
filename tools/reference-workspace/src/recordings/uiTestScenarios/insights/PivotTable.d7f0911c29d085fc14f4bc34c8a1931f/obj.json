@@ -1,0 +1,32 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_created.aag81lMifn6q"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "created.test"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            { "items": [], "localIdentifier": "columns" }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.d7f0911c29d085fc14f4bc34c8a1931f",
+        "properties": {},
+        "sorts": [],
+        "title": "PivotTable - with two same dates",
+        "uri": "PivotTable.d7f0911c29d085fc14f4bc34c8a1931f",
+        "visualizationUrl": "local:table"
+    }
+}

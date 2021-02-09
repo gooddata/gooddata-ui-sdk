@@ -1,0 +1,79 @@
+[
+    {
+        "n2oMap": {
+            "a_label.owner.department": "a_label.owner.department",
+            "a_label.owner.region": "a_label.owner.region",
+            "a_label.stage.name.stagename": "a_label.stage.name.stagename"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.stage.name.stagename", "type": "displayForm" },
+                        "localIdentifier": "a_label.stage.name.stagename"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.region"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                        "localIdentifier": "a_label.owner.department"
+                    }
+                }
+            ],
+            "buckets": [
+                { "items": [], "localIdentifier": "measures" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.stage.name.stagename",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.stage.name.stagename"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                                "localIdentifier": "a_label.owner.region"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.owner.department",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.owner.department"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "columns"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_label.stage.name.stagename", "a_label.owner.region"] },
+                { "itemIdentifiers": ["a_label.owner.department"] }
+            ],
+            "filters": [],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "with attributes without measures",
+        "vis": "PivotTable"
+    }
+]

@@ -8972,6 +8972,119 @@ Object {
 }
 `;
 
+exports[`PivotTable with with attributes without measures should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.stage.name.stagename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.stage.name.stagename",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.department",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.department",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.stage.name.stagename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.stage.name.stagename",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.department",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.department",
+          },
+        },
+      ],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.stage.name.stagename",
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.department",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with with attributes without measures should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
 exports[`PivotTable with with autoresizeAll should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -10805,6 +10918,98 @@ Object {
       "defaultWidth": "viewport",
     },
   },
+  "drillableItems": Array [],
+  "exportTitle": "PivotTable",
+  "locale": "en-US",
+  "onColumnResized": [Function],
+  "onDrill": [Function],
+  "onExportReady": [Function],
+  "onLoadingChanged": [Function],
+  "pageSize": 100,
+  "pushData": [Function],
+}
+`;
+
+exports[`PivotTable with with two same dates should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aag81lMifn6q",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aag81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "created.test",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aag81lMifn6q",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aag81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "created.test",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "columns",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aag81lMifn6q",
+        "created.test",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`PivotTable with with two same dates should create expected props for core chart 1`] = `
+Object {
+  "ErrorComponent": [Function],
+  "LoadingComponent": [Function],
+  "afterRender": [Function],
+  "config": Object {},
   "drillableItems": Array [],
   "exportTitle": "PivotTable",
   "locale": "en-US",

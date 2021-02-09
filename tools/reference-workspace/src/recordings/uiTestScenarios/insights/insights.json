@@ -1592,6 +1592,11 @@
     "PivotTable.70c2ef0e499ebb8a719ccea3ae5db47f": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with attribute and metric column size."
     },
+    "PivotTable.71f688d207f32bba1f14f6979254eab5": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with attributes without measures.",
+        "scenarioName": "with attributes without measures",
+        "visName": "PivotTable"
+    },
     "PivotTable.7c6250794e56a964bf62ae1f4db62e48": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by first measure.",
         "scenarioName": "two measures with single row attr sorted by first measure",
@@ -1675,6 +1680,9 @@
     "PivotTable.c8594723bcb5c2379c569b7bed0bf517": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with attribute and metric column size."
     },
+    "PivotTable.cb97200a62e20346dd6638cdda573c10": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with autoresizeAll."
+    },
     "PivotTable.cbb569e1acdc9d31ee6ff4868045b548": {
         "comment": "Auto-generated insight for test scenario PivotTable - two measures with single row attr sorted by second measure.",
         "scenarioName": "two measures with single row attr sorted by second measure",
@@ -1699,6 +1707,11 @@
     },
     "PivotTable.d71c6c00211b4c0f5536a56e2cb6b5a3": {
         "comment": "Auto-generated insight for test scenario PivotTable - with two measures and row attribute with auto-resizing and grow to fit."
+    },
+    "PivotTable.d7f0911c29d085fc14f4bc34c8a1931f": {
+        "comment": "Auto-generated insight for test scenario PivotTable - with two same dates.",
+        "scenarioName": "with two same dates",
+        "visName": "PivotTable"
     },
     "PivotTable.db667c9364afd76c769d4c8efdf5a979": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."

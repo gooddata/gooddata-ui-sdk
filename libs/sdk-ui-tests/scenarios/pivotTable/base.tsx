@@ -5,6 +5,7 @@ import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { IPivotTableProps, PivotTable } from "@gooddata/sdk-ui-pivot";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames";
 import { requestPages } from "@gooddata/mock-handling";
+import { IAttribute, modifyAttribute } from "@gooddata/sdk-model";
 
 export const PivotTableWithSingleColumn = {
     columns: [ReferenceLdm.Product.Name],
@@ -41,6 +42,22 @@ export const PivotTableWithArithmeticMeasures = {
         ReferenceLdmExt.CalculatedWonLostRatio,
     ],
     rows: [ReferenceLdm.Product.Name],
+};
+
+export const PivotTableWithAttributesWithoutMeasures = {
+    measures: [],
+    rows: [ReferenceLdm.StageName.Default, ReferenceLdm.Region],
+    columns: [ReferenceLdm.Department],
+};
+
+const modifiedCreatedYear: IAttribute = modifyAttribute(ReferenceLdm.CreatedYear, (m) =>
+    m.localId("created.test"),
+);
+
+export const PivotTableWithTwoSameDate = {
+    measures: [],
+    rows: [ReferenceLdm.CreatedYear, modifiedCreatedYear],
+    columns: [],
 };
 
 export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
@@ -103,4 +120,6 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         PivotTableWithTwoMeasuresAndThreeRowsAndTwoCols,
     )
     .addScenario("empty values", PivotTableWithSingleMeasureAndTwoRowsAndCols)
-    .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures);
+    .addScenario("arithmetic measures", PivotTableWithArithmeticMeasures)
+    .addScenario("with attributes without measures", PivotTableWithAttributesWithoutMeasures)
+    .addScenario("with two same dates", PivotTableWithTwoSameDate);

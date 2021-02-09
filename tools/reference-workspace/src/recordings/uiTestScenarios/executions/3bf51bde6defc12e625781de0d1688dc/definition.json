@@ -1,0 +1,25 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_created.aag81lMifn6q"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                "localIdentifier": "a_created.aag81lMifn6q_1"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["a_created.aag81lMifn6q", "a_created.aag81lMifn6q_1"] },
+        { "itemIdentifiers": [] }
+    ],
+    "filters": [],
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

@@ -1,0 +1,62 @@
+[
+    {
+        "n2oMap": {
+            "a_created.aag81lMifn6q": "a_created.aag81lMifn6q",
+            "a_created.aag81lMifn6q_1": "created.test"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_created.aag81lMifn6q"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "created.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "created.test"
+                    }
+                }
+            ],
+            "buckets": [
+                { "items": [], "localIdentifier": "measures" },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "created.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_created.aag81lMifn6q"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "created.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "created.test"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                { "items": [], "localIdentifier": "columns" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_created.aag81lMifn6q", "created.test"] },
+                { "itemIdentifiers": [] }
+            ],
+            "filters": [],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "with two same dates",
+        "vis": "PivotTable"
+    }
+]

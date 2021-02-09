@@ -1,0 +1,51 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.stage.name",
+                            "name": "Stage Name",
+                            "uri": "/gdc/md/referenceworkspace/obj/1091"
+                        },
+                        "identifier": "label.stage.name.stagename",
+                        "localIdentifier": "a_label.stage.name.stagename",
+                        "name": "Stage Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1092"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.region",
+                            "name": "Region",
+                            "uri": "/gdc/md/referenceworkspace/obj/1086"
+                        },
+                        "identifier": "label.owner.region",
+                        "localIdentifier": "a_label.owner.region",
+                        "name": "Region",
+                        "uri": "/gdc/md/referenceworkspace/obj/1087"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.owner.department",
+                            "name": "Department",
+                            "uri": "/gdc/md/referenceworkspace/obj/1088"
+                        },
+                        "identifier": "label.owner.department",
+                        "localIdentifier": "a_label.owner.department",
+                        "name": "Department",
+                        "uri": "/gdc/md/referenceworkspace/obj/1089"
+                    }
+                }
+            ]
+        }
+    ]
+}
