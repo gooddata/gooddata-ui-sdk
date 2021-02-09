@@ -1,5 +1,13 @@
 // (C) 2007-2021 GoodData Corporation
-import { AnyCol, DataColLeaf, isDataColLeaf, isSliceCol, SliceCol } from "../structure/tableDescriptorTypes";
+import {
+    AnyCol,
+    DataColGroup,
+    DataColLeaf,
+    isDataColGroup,
+    isDataColLeaf,
+    isSliceCol,
+    SliceCol,
+} from "../structure/tableDescriptorTypes";
 import { IMappingHeader } from "@gooddata/sdk-ui";
 import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import invariant, { InvariantError } from "ts-invariant";
@@ -35,9 +43,15 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
+export function createDataColGroupHeaders(col: DataColGroup): IMappingHeader[] {
+    return [col.header, col.attributeDescriptor];
+}
+
 export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[] {
     if (isDataColLeaf(col)) {
         return createDataColLeafHeaders(col);
+    } else if (isDataColGroup(col)) {
+        return createDataColGroupHeaders(col);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order
         // to construct drilling headers for a slice col, both the column & the row data must be

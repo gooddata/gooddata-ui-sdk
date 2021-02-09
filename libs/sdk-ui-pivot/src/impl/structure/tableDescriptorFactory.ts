@@ -125,7 +125,7 @@ function groupColumns(
                 currentGroup = {
                     type: "columnGroupHeaderDescriptor",
                     id: `g_${groupId++}`,
-                    descriptor: attributeDescriptors![level],
+                    attributeDescriptor: attributeDescriptors![level],
                     header: attributeHeaders[level],
                     descriptorsToHere: attributeDescriptors.slice(0, level),
                     headersToHere: attributeHeaders.slice(0, level),
@@ -194,7 +194,7 @@ function createColumnDescriptorsWhenNoMeasures(dv: DataViewFacade): GroupingOper
             fullIndexPathToHere: [colIdx],
             header: headers[numberOfAttributes - 1][colIdx],
             headersToHere: headers.slice(0, numberOfAttributes - 1).map((attrHeaders) => attrHeaders[colIdx]),
-            descriptor: descriptors[numberOfAttributes - 1],
+            attributeDescriptor: descriptors[numberOfAttributes - 1],
             descriptorsToHere: descriptors.slice(0, numberOfAttributes - 1),
         });
     }

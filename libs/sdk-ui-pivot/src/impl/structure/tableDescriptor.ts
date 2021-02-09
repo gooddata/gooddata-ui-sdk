@@ -12,6 +12,7 @@ import {
     TableCols,
     agColId,
     DataColGroup,
+    isEmptyDataColGroup,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
@@ -50,13 +51,21 @@ import { createSortItemForCol } from "./colSortItemFactory";
  * The important thing to remember is that ColDefs and ColGroupDefs have same colId/groupId as their column descriptor
  * counterparts.
  *
- *
  * @alpha
  */
 export class TableDescriptor {
+    /**
+     * This field contains slice column descriptors zipped with their respective ColDef that should
+     * be used for ag-grid.
+     */
     public readonly zippedSliceCols: Array<[SliceCol, ColDef]> = [];
+
+    /**
+     * This field contains descriptors of leaf columns zipped with their respective ColDef that should
+     * be used for ag-grid.
+     */
     public readonly zippedLeaves: Array<[DataColLeaf | DataColGroup, ColDef]> = [];
-    private readonly dataColLeaves: number;
+    private readonly measureColumns: number;
 
     private constructor(
         private readonly dv: DataViewFacade,
@@ -65,7 +74,7 @@ export class TableDescriptor {
     ) {
         this._initializeZippedLeaves();
         this._initializeZippedSliceCols();
-        this.dataColLeaves = headers.leafDataCols.filter(isDataColLeaf).length;
+        this.measureColumns = headers.leafDataCols.filter(isDataColLeaf).length;
     }
 
     /**
@@ -162,7 +171,7 @@ export class TableDescriptor {
      * values.
      */
     public dataColLeavesCount(): number {
-        return this.dataColLeaves;
+        return this.measureColumns;
     }
 
     /**
@@ -229,15 +238,22 @@ export class TableDescriptor {
     }
 
     /**
-     * Given slice or leaf data column, this method returns its absolute index in the table. This takes into
-     * account that the table columns go from left-to-right, starting with slicing columns first then followed
-     * by leaf data columns.
+     * Given a column that may appear as a leaf of table headers this method returns its absolute index in the table.
+     *
+     * This takes into account that the table columns go from left-to-right, starting with slicing columns first then
+     * followed by leaf data columns.
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteColIndex(col: SliceCol | DataColLeaf): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | DataColLeaf | DataColGroup): number {
         if (isSliceCol(col)) {
             return col.index;
+        } else if (isDataColGroup(col)) {
+            // if this bombs, caller is not operating with the leaf columns correctly and sent over
+            // a col that is not a leaf
+            invariant(isEmptyDataColGroup(col));
+
+            return this.sliceColCount() + this.headers.leafDataCols.findIndex((leaf) => leaf.id === col.id);
         }
 
         return this.sliceColCount() + col.index;

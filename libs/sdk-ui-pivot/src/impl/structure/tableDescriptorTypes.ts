@@ -127,7 +127,7 @@ export type DataColGroup = {
     /**
      * Descriptor of attribute whose value scopes this column group.
      */
-    readonly descriptor: IAttributeDescriptor;
+    readonly attributeDescriptor: IAttributeDescriptor;
 
     /**
      * The actual attribute header that scopes this column group.

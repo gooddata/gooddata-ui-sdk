@@ -41,7 +41,7 @@ export function createColumnLocator(col: DataColGroup | DataColLeaf): ColumnLoca
     if (isDataColGroup(col)) {
         const { descriptorsToHere, headersToHere } = col;
         const descriptorsAndHeaders = zip(descriptorsToHere, headersToHere);
-        descriptorsAndHeaders.push([col.descriptor, col.header]);
+        descriptorsAndHeaders.push([col.attributeDescriptor, col.header]);
 
         return descriptorsAndHeaders.map(([descriptor, header]) =>
             createAttributeLocator(descriptor, header),

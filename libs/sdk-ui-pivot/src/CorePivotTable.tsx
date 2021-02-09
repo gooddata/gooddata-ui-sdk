@@ -121,6 +121,7 @@ import {
     agColId,
     ColumnGroupingDescriptorId,
     isDataColLeaf,
+    isDataColRootGroup,
     isSliceCol,
 } from "./impl/structure/tableDescriptorTypes";
 import { invariant } from "ts-invariant";
@@ -1051,7 +1052,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const drillContext: IDrillEventContextTable = {
             type: VisualizationTypes.TABLE,
             element: "cell",
-            columnIndex: this.tableDescriptor.getAbsoluteColIndex(col),
+            columnIndex: this.tableDescriptor.getAbsoluteLeafColIndex(col),
             rowIndex,
             row: createDrilledRow(data as IGridRow, this.tableDescriptor),
             intersection: createDrillIntersection(cellEvent, this.tableDescriptor),
@@ -1433,12 +1434,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const dv = this.visibleData;
         const colDef = cellClassParams.colDef;
-        const colId = agColId(colDef);
-        const col = this.tableDescriptor.getCol(colId);
+        const col = this.tableDescriptor.getCol(colDef);
 
-        // cells belong to either data column or slice column. anything else means there is an error
-        // somewhere
-        invariant(isDataColLeaf(col) || isSliceCol(col));
+        invariant(!isDataColRootGroup(col));
 
         const drillablePredicates = this.getDrillablePredicates();
         const isRowTotal = row.type === ROW_TOTAL;
@@ -1449,10 +1447,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
-        const colIndex = this.tableDescriptor.getAbsoluteColIndex(col);
+        const colIndex = this.tableDescriptor.getAbsoluteLeafColIndex(col);
         const measureIndex = isDataColLeaf(col) ? last(col.fullIndexPathToHere) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();
-        const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(colId, rowIndex);
+        const hiddenCell = !isPinnedRow && this.getGroupingProvider().isRepeatedValue(col.id, rowIndex);
         const rowSeparator = !hiddenCell && this.getGroupingProvider().isGroupBoundary(rowIndex);
         const subtotalStyle = row?.subtotalStyle;
 
@@ -1469,7 +1467,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getHeaderClass = (classList?: string) => (headerClassParams: any): string => {
-        invariant(this.tableDescriptor);
+        invariant(this.tableDescriptor, "getHeaderClass requires table descriptor");
 
         const colDef: ColDef | ColGroupDef = headerClassParams.colDef;
         const colId = agColId(colDef);
@@ -1495,7 +1493,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             const noLeftBorder =
                 this.tableDescriptor.isFirstCol(colId) || !this.tableDescriptor.hasGroupedDataCols();
             const absoluteColIndex = isDataColLeaf(colDesc)
-                ? this.tableDescriptor.getAbsoluteColIndex(colDesc)
+                ? this.tableDescriptor.getAbsoluteLeafColIndex(colDesc)
                 : undefined;
 
             return cx(

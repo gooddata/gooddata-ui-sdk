@@ -41,7 +41,7 @@ export function searchForLocatorMatch(
              * Once code has that, it can compare the URI of attribute element for which this group was created with
              * the excepted attribute element in the locator.
              */
-            const groupByAttributeLocalId = col.descriptor.attributeHeader.localIdentifier;
+            const groupByAttributeLocalId = col.attributeDescriptor.attributeHeader.localIdentifier;
             const matchingLocator = locators.find((locator) => {
                 return (
                     isAttributeColumnLocator(locator) &&
