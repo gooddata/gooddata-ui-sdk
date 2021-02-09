@@ -1,37 +1,12 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { IntlProvider, IntlShape, createIntl } from "react-intl";
-import { translationUtils } from "@gooddata/util";
-
-import enUS from "../translations/en-US.json";
-import deDE from "../translations/de-DE.json";
-import esES from "../translations/es-ES.json";
-import frFR from "../translations/fr-FR.json";
-import jaJP from "../translations/ja-JP.json";
-import nlNL from "../translations/nl-NL.json";
-import ptBR from "../translations/pt-BR.json";
-import ptPT from "../translations/pt-PT.json";
-import zhHans from "../translations/zh-Hans.json";
 import { DefaultLocale, ILocale } from "@gooddata/sdk-ui";
 
-export interface ITranslations {
-    [key: string]: string;
-}
-
-export const messagesMap: { [locale: string]: ITranslations } = {
-    "en-US": translationUtils.removeMetadata(enUS),
-    "de-DE": deDE,
-    "es-ES": esES,
-    "fr-FR": frFR,
-    "ja-JP": jaJP,
-    "nl-NL": nlNL,
-    "pt-BR": ptBR,
-    "pt-PT": ptPT,
-    "zh-Hans": zhHans,
-};
+import { translations } from "./translations";
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
-    return createIntl({ locale, messages: messagesMap[locale] });
+    return createIntl({ locale, messages: translations[locale] });
 }
 
 interface IInternalIntlWrapperProps {
@@ -45,7 +20,7 @@ export class InternalIntlWrapper extends React.PureComponent<IInternalIntlWrappe
     public render(): React.ReactNode {
         const { locale } = this.props;
         return (
-            <IntlProvider locale={locale} messages={messagesMap[locale]}>
+            <IntlProvider locale={locale} messages={translations[locale]}>
                 {this.props.children}
             </IntlProvider>
         );

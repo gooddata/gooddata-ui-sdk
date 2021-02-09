@@ -5,7 +5,7 @@ import noop from "lodash/noop";
 import { DefaultLocale, withIntl } from "@gooddata/sdk-ui";
 
 import KpiAlertDialog, { IKpiAlertDialogProps } from "../KpiAlertDialog";
-import { messagesMap } from "../../../../utils/internalIntlProvider";
+import { translations } from "../../../../utils/translations";
 
 const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
@@ -23,7 +23,7 @@ function renderKpiAlertDialog(options: Partial<IKpiAlertDialogProps>) {
     const Wrapped: React.ComponentType<IKpiAlertDialogProps> = withIntl(
         KpiAlertDialog,
         undefined,
-        messagesMap[DefaultLocale],
+        translations[DefaultLocale],
     );
     return mount(<Wrapped {...defaultProps} {...options} />);
 }
