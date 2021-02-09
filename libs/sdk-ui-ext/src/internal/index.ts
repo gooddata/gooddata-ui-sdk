@@ -9,6 +9,7 @@ export {
     DefaultVisualizationCatalog,
     FullVisualizationCatalog,
 } from "./components/VisualizationCatalog";
+export { translations } from "./utils/translations";
 
 export {
     IVisualization,
