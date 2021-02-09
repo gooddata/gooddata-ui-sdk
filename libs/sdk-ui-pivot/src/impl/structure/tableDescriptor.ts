@@ -24,6 +24,7 @@ import { createHeadersAndColDefs } from "./tableDescriptorFactory";
 import { ISortItem } from "@gooddata/sdk-model";
 import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting";
 import { createSortItemForCol } from "./colSortItemFactory";
+import keyBy from "lodash/keyBy";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information
@@ -362,10 +363,47 @@ export class TableDescriptor {
             return createSortItemForCol(col, sort, originalSorts);
         });
     }
+
+    /**
+     * Updates all attribute descriptors used in table's column descriptors so that they reflect total items
+     * specified in the provided data view facade.
+     *
+     * @param dv - data view with same attribute structure but with added totals
+     */
+    public updateTotalItems(dv: DataViewFacade): void {
+        const idToDescriptor: Record<string, IAttributeDescriptor> = keyBy(
+            dv.meta().attributeDescriptors(),
+            (desc) => desc.attributeHeader.localIdentifier,
+        );
+
+        this.headers.sliceCols.forEach((sliceCol) =>
+            updateAttributeDescriptorTotals(idToDescriptor, sliceCol.attributeDescriptor),
+        );
+        this.headers.groupingAttributes.forEach((attribute) =>
+            updateAttributeDescriptorTotals(idToDescriptor, attribute),
+        );
+    }
 }
 
 function attributeDescriptorLocalIdMatch(localId: string): (b: IAttributeDescriptor) => boolean {
     return (b: IAttributeDescriptor): boolean => {
         return localId === b.attributeHeader.localIdentifier;
     };
+}
+
+function updateAttributeDescriptorTotals(
+    newDescriptors: Record<string, IAttributeDescriptor>,
+    target: IAttributeDescriptor,
+) {
+    const attributeLocalId = target.attributeHeader.localIdentifier;
+    const newDescriptor = newDescriptors[attributeLocalId];
+
+    // if this bombs then reinit logic of the entire pivot table is flawed because upon change of table structure is
+    // re-initialized - which includes the table descriptor so the code should be getting to this place at all.
+    invariant(
+        newDescriptor,
+        `attempting to refresh attribute descriptors for different table. attribute with local id ${attributeLocalId} not found`,
+    );
+
+    target.attributeHeader.totalItems = newDescriptor.attributeHeader.totalItems;
 }

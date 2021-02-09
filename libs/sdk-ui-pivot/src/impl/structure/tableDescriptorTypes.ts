@@ -227,6 +227,11 @@ export type TableCols = {
      * Mapping between header ID to header descriptor (useful for lookups as ColDefs 'field' references this)
      */
     readonly idToDescriptor: Record<string, AnyCol>;
+
+    /**
+     * All attributes used for grouping table columns.
+     */
+    readonly groupingAttributes: IAttributeDescriptor[];
 };
 
 /**

@@ -143,6 +143,11 @@ export class AgGridDatasource implements IDatasource {
                         const dv = DataViewFacade.for(dataView);
                         this.gridApiProvider()?.setInfiniteRowCount(dataView.totalCount[0]);
                         this.currentSorts = dv.meta().effectiveSortItems();
+
+                        // Table descriptors contain attribute metadata & this attribute metadata contains totalItems
+                        // it is essential to update the total items in descriptors to keep the descriptors in-sync
+                        this.config.tableDescriptor.updateTotalItems(dv);
+
                         this.processData(dv, params);
                     })
                     .catch((err) => {

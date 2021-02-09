@@ -272,7 +272,7 @@ function createColumnDescriptors(dv: DataViewFacade): GroupingOperationResult {
 
 function createTableHeaders(dv: DataViewFacade): TableCols {
     const rows: SliceCol[] = createRowDescriptors(dv);
-    const { rootColumns, leafColumns, allColumns } = createColumnDescriptors(dv);
+    const { rootColumns, leafColumns, allColumns, groupingAttributes } = createColumnDescriptors(dv);
 
     const idToDescriptor: Record<string, AnyCol> = {};
 
@@ -284,6 +284,7 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
         rootDataCols: rootColumns,
         leafDataCols: leafColumns,
         idToDescriptor,
+        groupingAttributes,
     };
 }
 
