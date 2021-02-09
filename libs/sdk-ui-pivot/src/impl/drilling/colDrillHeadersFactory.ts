@@ -15,6 +15,7 @@ import { IGridRow } from "../data/resultTypes";
 
 export function createDataColLeafHeaders(col: DataColLeaf): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
+
     if (col.seriesDescriptor.attributeDescriptors) {
         col.seriesDescriptor.attributeDescriptors.forEach(
             (attributeDescriptor: IAttributeDescriptor, index: number) => {
@@ -44,9 +45,29 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
 }
 
 export function createDataColGroupHeaders(col: DataColGroup): IMappingHeader[] {
-    return [col.header, col.attributeDescriptor];
+    const mappingHeaders: IMappingHeader[] = [];
+
+    col.descriptorsToHere.forEach((descriptor, index) => {
+        mappingHeaders.push(col.headersToHere[index]);
+        mappingHeaders.push(descriptor);
+    });
+
+    mappingHeaders.push(col.header);
+    mappingHeaders.push(col.attributeDescriptor);
+
+    return mappingHeaders;
 }
 
+/**
+ * Given column and optionally a grid row, this function will collect all descriptors and headers
+ * to create 'mapping headers' that can be used for matching the column against drill predicates.
+ *
+ * Note: the row is optional and will only be needed when constructing headers for slicing columns (e.g. columns
+ * that contain slicing attribute elements) - as the attribute element headers are in the row data.
+ *
+ * @param col - column to get mapping headers for
+ * @param row - row
+ */
 export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[] {
     if (isDataColLeaf(col)) {
         return createDataColLeafHeaders(col);

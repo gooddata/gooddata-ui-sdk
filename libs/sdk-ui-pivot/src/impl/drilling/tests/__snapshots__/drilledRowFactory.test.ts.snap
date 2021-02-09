@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createDrilledRow creates drill row with extracted id when /gdc uri 1`] = `
+Array [
+  Object {
+    "id": "165678",
+    "name": "CompuSci",
+    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+  },
+  Object {
+    "id": "460487",
+    "name": "Direct Sales",
+    "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+  },
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+]
+`;
+
+exports[`createDrilledRow creates drill row with extracted id when no link in attribute uri 1`] = `
+Array [
+  Object {
+    "id": "arbitrary_pk_that_is_not_link",
+    "name": "value1",
+    "uri": "arbitrary_pk_that_is_not_link",
+  },
+  Object {
+    "id": "arbitrary_pk_that_is_not_a_link",
+    "name": "value2",
+    "uri": "arbitrary_pk_that_is_not_a_link",
+  },
+  "0",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+]
+`;
