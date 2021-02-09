@@ -290,8 +290,8 @@
     }
 }
 
-.dash-item-action-alert,
-.dash-item-action-options {
+.dash-item-action.dash-item-action-alert,
+.dash-item-action.dash-item-action-options {
     display: none;
     color: $gd-color-label;
     background-color: $is-focused-background;
@@ -302,7 +302,7 @@
     }
 }
 
-.dash-item-action-alert {
+.dash-item-action.dash-item-action-alert {
     &.disabled {
         background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/alert-bell-na.svg");
         background-repeat: no-repeat;

@@ -68,6 +68,9 @@ export type AttributeBuilderInput = Identifier | ObjRef | IAttribute;
 export function attributeDisplayFormRef(attribute: IAttribute): ObjRef;
 
 // @internal
+export function attributeElementsCount(attributeElements: IAttributeElements): number;
+
+// @internal
 export function attributeElementsIsEmpty(attributeElements: IAttributeElements): boolean;
 
 // @public

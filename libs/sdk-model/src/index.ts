@@ -103,6 +103,7 @@ export {
     isRelativeDateFilter,
     isAllTimeDateFilter,
     attributeElementsIsEmpty,
+    attributeElementsCount,
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
     isDateFilter,

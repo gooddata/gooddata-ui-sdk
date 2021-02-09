@@ -13,6 +13,7 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
+    attributeElementsCount,
     attributeElementsIsEmpty,
     filterObjRef,
     IFilter,
@@ -222,9 +223,7 @@ function enrichBrokenAttributeFilter(
 
     const selection = elements.map((el) => el.title).join(", ");
     const title = meta.title;
-    const selectedCount = isAttributeElementsByRef(alertFilter.attributeFilter.attributeElements)
-        ? alertFilter.attributeFilter.attributeElements.uris.length
-        : alertFilter.attributeFilter.attributeElements.values.length;
+    const selectedCount = attributeElementsCount(alertFilter.attributeFilter.attributeElements);
 
     return {
         type: "attribute",
