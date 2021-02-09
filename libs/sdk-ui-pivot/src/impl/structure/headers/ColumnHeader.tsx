@@ -4,7 +4,7 @@ import React from "react";
 import { IMenu } from "../../../types";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell";
-import { agColId, isEmptyDataColGroup, isSliceCol } from "../tableDescriptorTypes";
+import { isEmptyDataColGroup, isSliceCol } from "../tableDescriptorTypes";
 import { SortDirection } from "@gooddata/sdk-model";
 
 export interface IColumnHeaderProps extends ICommonHeaderParams, IHeaderParams {
@@ -75,7 +75,7 @@ class ColumnHeader extends React.Component<IColumnHeaderProps, IColumnHeaderStat
     }
 
     private getColDescriptor() {
-        return this.props.getTableDescriptor().getCol(agColId(this.props.column));
+        return this.props.getTableDescriptor().getCol(this.props.column);
     }
 }
 

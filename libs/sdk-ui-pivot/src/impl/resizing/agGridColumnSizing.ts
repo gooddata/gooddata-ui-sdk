@@ -665,7 +665,7 @@ export const resizeWeakMeasureColumns = (
     resizedColumnsStore.addWeekMeasureColumn(tableDescriptor, column);
 
     allColumns.forEach((col) => {
-        const colDesc = tableDescriptor.getCol(agColId(col));
+        const colDesc = tableDescriptor.getCol(col);
         const weakColumnWidth = resizedColumnsStore.getMatchedWeakMeasuresColumnWidth(colDesc);
 
         if (isMeasureColumn(col) && weakColumnWidth) {

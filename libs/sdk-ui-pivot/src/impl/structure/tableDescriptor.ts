@@ -111,7 +111,7 @@ export class TableDescriptor {
      */
     public getCol(c: string | Column | ColDef | ColGroupDef): AnyCol {
         invariant(c, "id of column or Column, ColDef or ColGroupDef must be provided");
-        const id = typeof c !== "string" ? agColId(c) : c;
+        const id = agColId(c);
         const result = this.headers.idToDescriptor[id];
 
         invariant(result, `no column with id ${id}`);
@@ -127,7 +127,7 @@ export class TableDescriptor {
      */
     public getColDef(c: string | Column | ColDef | ColGroupDef): ColDef | ColGroupDef {
         invariant(c, "id of column or Column, ColDef or ColGroupDef must be provided");
-        const id = typeof c !== "string" ? agColId(c) : c;
+        const id = agColId(c);
         const result = this.colDefs.idToColDef[id];
 
         invariant(result, `no column with id ${id}`);
@@ -183,8 +183,7 @@ export class TableDescriptor {
      */
     public isFirstCol(c: string | Column | ColDef | ColGroupDef): boolean {
         invariant(c, "id of column or Column, ColDef or ColGroupDef must be provided");
-        const id = typeof c !== "string" ? agColId(c) : c;
-        invariant(id, "colId must be provided");
+        const id = agColId(c);
 
         if (this.headers.sliceCols.length > 0) {
             return this.headers.sliceCols[0].id === id;
@@ -203,8 +202,7 @@ export class TableDescriptor {
      */
     public isFirstDataCol(c: string | Column | ColDef | ColGroupDef): boolean {
         invariant(c, "id of column or Column, ColDef or ColGroupDef must be provided");
-        const id = typeof c !== "string" ? agColId(c) : c;
-        const col = this.getCol(id);
+        const col = this.getCol(c);
 
         switch (col.type) {
             case "leafColumnDescriptor":

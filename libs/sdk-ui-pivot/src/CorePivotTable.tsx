@@ -1033,7 +1033,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         const { colDef, data, rowIndex } = cellEvent;
-        const col = this.tableDescriptor.getCol(agColId(colDef));
+        const col = this.tableDescriptor.getCol(colDef);
 
         // cells belong to either slice column or leaf data column; if cells belong to column of a different
         // type then there must be either something messed up with table construction or a new type of cell
@@ -1366,8 +1366,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     valueFormatter: (params: ValueFormatterParams) => {
                         invariant(this.tableDescriptor);
 
-                        const colId = agColId(params.colDef);
-                        const colDesc = this.tableDescriptor.getCol(colId);
+                        const colDesc = this.tableDescriptor.getCol(params.colDef);
 
                         invariant(isDataColLeaf(colDesc));
 
@@ -1382,8 +1381,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     cellStyle: (params) => {
                         invariant(this.tableDescriptor);
 
-                        const colId = agColId(params.colDef);
-                        const colDesc = this.tableDescriptor.getCol(colId);
+                        const colDesc = this.tableDescriptor.getCol(params.colDef);
 
                         invariant(isDataColLeaf(colDesc));
 

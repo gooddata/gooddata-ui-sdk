@@ -253,12 +253,23 @@ function isColumn(obj: unknown): obj is Column {
     return (obj as Column)?.getColDef !== undefined;
 }
 
-export function agColId(colDef: ColDef | ColGroupDef | Column): string {
-    if (isColDef(colDef)) {
-        return colDef.colId!;
-    } else if (isColumn(colDef)) {
-        return agColId(colDef.getColDef());
+/**
+ * Convenience accessor of ag-grid column identifier. This can take either string itself or the
+ * different type of col flying around ag-grid API (ColDef, ColGroupDef or Column).
+ *
+ * For purposes of our table, column ID for ag-grid groups is the groupId.
+ *
+ * @param colOrId - column id (returned as is) or one of the ag-grid's column types
+ */
+export function agColId(colOrId: string | ColDef | ColGroupDef | Column): string {
+    if (typeof colOrId === "string") {
+        return colOrId;
+    }
+    if (isColDef(colOrId)) {
+        return colOrId.colId!;
+    } else if (isColumn(colOrId)) {
+        return agColId(colOrId.getColDef());
     } else {
-        return colDef.groupId!;
+        return colOrId.groupId!;
     }
 }
