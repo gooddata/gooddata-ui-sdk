@@ -1,14 +1,11 @@
 // (C) 2007-2021 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import { GridApi, RowNode } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
 import { getGridIndex } from "./base/agGridUtils";
 import ApiWrapper from "./base/agGridApiWrapper";
 import { getScrollbarWidth } from "./utils";
 import { ROW_ATTRIBUTE_COLUMN } from "./base/constants";
-import { isCellDrillable } from "./drilling/cellDrillabilityPredicate";
-import { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
-import { TableDescriptor } from "./structure/tableDescriptor";
-
 export interface IScrollPosition {
     readonly top: number;
     readonly left: number;
@@ -53,16 +50,22 @@ function shouldUpdate(
     return initialUpdate || differentRow || differentHorizontalBreakpoint;
 }
 
-export const updateStickyRowContentClasses = (
+const areDataDifferent = (previousData: any, currentData: any): boolean => {
+    return (
+        Object.keys(previousData).length !== Object.keys(currentData).length ||
+        Object.keys(previousData).some((dataItemKey: string) => {
+            return previousData[dataItemKey] !== currentData[dataItemKey];
+        })
+    );
+};
+
+export const updateStickyRowContentClassesAndData = (
     currentScrollPosition: IScrollPosition,
     lastScrollPosition: IScrollPosition,
     rowHeight: number,
     gridApi: GridApi | null,
     groupingProvider: IGroupingProvider,
     apiWrapper: typeof ApiWrapper,
-    tableDescriptor: TableDescriptor,
-    dv: DataViewFacade,
-    drillablePredicates: IHeaderPredicate[],
 ): void => {
     if (!gridApi || !shouldUpdate(currentScrollPosition, lastScrollPosition, rowHeight)) {
         return;
@@ -85,32 +88,18 @@ export const updateStickyRowContentClasses = (
         return colDef && colDef.type === ROW_ATTRIBUTE_COLUMN;
     });
 
+    const stickyRowData = {};
+    const headerItemMap = {};
+
     attributeKeys.forEach((columnId: string) => {
         apiWrapper.removeCellClass(gridApi, columnId, lastRowIndex, "gd-cell-show-hidden");
 
         // the following value is the same as the current one
         if (groupingProvider.isRepeatedValue(columnId, firstVisibleRowIndex + 1)) {
-            // set the sticky header text
-            apiWrapper.setPinnedTopRowCellText(gridApi, columnId, firstVisibleNodeData[columnId]);
-
-            if (
-                isCellDrillable(
-                    tableDescriptor.getCol(columnId),
-                    firstVisibleNodeData,
-                    dv,
-                    drillablePredicates,
-                )
-            ) {
-                apiWrapper.addPinnedTopRowCellClass(gridApi, columnId, "gd-cell-drillable");
-            } else {
-                apiWrapper.removePinnedTopRowCellClass(gridApi, columnId, "gd-cell-drillable");
-            }
-
-            // show the sticky header
-            apiWrapper.removePinnedTopRowCellClass(gridApi, columnId, "gd-hidden-sticky-column");
+            // set correct sticky row data
+            stickyRowData[columnId] = firstVisibleNodeData[columnId];
+            headerItemMap[columnId] = firstVisibleNodeData.headerItemMap[columnId];
         } else {
-            // hide the sticky header
-            apiWrapper.addPinnedTopRowCellClass(gridApi, columnId, "gd-hidden-sticky-column");
             // if the column has some groups
             if (groupingProvider.isColumnWithGrouping(columnId)) {
                 // show the last cell of the group temporarily so it scrolls out of the viewport nicely
@@ -119,4 +108,16 @@ export const updateStickyRowContentClasses = (
             }
         }
     });
+    const previousRowData = gridApi.getPinnedTopRow(0)?.data;
+    const { headerItemMap: _previousHeaderMap, ...previousData } = previousRowData;
+    // set new rowData only if differen to avoid rerendering and flashing of the sticky row
+    if (areDataDifferent(previousData, stickyRowData)) {
+        const headerItemMapProp = isEmpty(headerItemMap) ? {} : { headerItemMap };
+        gridApi.setPinnedTopRowData([
+            {
+                ...stickyRowData,
+                ...headerItemMapProp,
+            },
+        ]);
+    }
 };

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
 
 function getHeaderHeight(gridApi: GridApi): number {
@@ -86,28 +86,6 @@ function getPinnedTopRowCellElement(gridApi: GridApi, attributeId: string): HTML
     return pinnedTopRowCellElementWrapper ? pinnedTopRowCellElementWrapper.querySelector("span") : null;
 }
 
-function addPinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string): void {
-    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
-    if (cellElement !== null) {
-        cellElement.classList.add(className);
-    }
-}
-
-function removePinnedTopRowCellClass(gridApi: GridApi, attributeId: string, className: string): void {
-    const cellElement = getPinnedTopRowCellElementWrapper(gridApi, attributeId);
-    if (cellElement !== null) {
-        cellElement.classList.remove(className);
-    }
-}
-
-function setPinnedTopRowCellText(gridApi: GridApi, attributeId: string, text: string): void {
-    const cellElement = getPinnedTopRowCellElement(gridApi, attributeId);
-
-    if (cellElement !== null) {
-        cellElement.innerText = text;
-    }
-}
-
 export default {
     getHeaderHeight,
     // cell element
@@ -122,8 +100,5 @@ export default {
     // pinned row cell element
     getPinnedTopRowCellElement,
     getPinnedTopRowCellElementWrapper,
-    addPinnedTopRowCellClass,
-    removePinnedTopRowCellClass,
-    setPinnedTopRowCellText,
     getPaginationBottomRowIndex,
 };

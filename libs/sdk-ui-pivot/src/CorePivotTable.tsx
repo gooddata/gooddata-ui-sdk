@@ -83,7 +83,7 @@ import {
     initializeStickyRow,
     IScrollPosition,
     stickyRowExists,
-    updateStickyRowContentClasses,
+    updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./impl/stickyRowHandler";
 
@@ -1279,6 +1279,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             intl: this.props.intl,
         };
 
+        // cellRenderer and getCellClass are shared by normal cells, sticky header cells and total cells
+        // consider to use custom pinnedRowCellRenderer to simplify the logic
         const cellRenderer = createCellRenderer();
 
         return {
@@ -1420,6 +1422,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const { rowIndex, data } = cellClassParams;
         const row: IGridRow = data;
+        const isEmptyCell = !cellClassParams.value;
+        // hide empty sticky cells
+        const isTopPinned = cellClassParams.node.rowPinned === "top";
 
         if (isEmpty(row)) {
             // ag-grid calls getCellClass before the data is available & rows are created - there will be no
@@ -1427,7 +1432,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             // does not make sense to proceed further.
             //
             // ag-grid may call this with either data undefined or data being empty object
-            return cx(classList);
+
+            // empty row data are also possible for pinned row, when no cell should be visible
+            return cx(classList, isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null);
         }
 
         const dv = this.visibleData;
@@ -1441,7 +1448,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
         let hasDrillableHeader = false;
 
-        if (!isRowTotal && !isRowSubtotal) {
+        if (!isRowTotal && !isRowSubtotal && !isEmptyCell) {
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
@@ -1461,6 +1468,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             subtotalStyle ? `gd-table-row-subtotal gd-table-row-subtotal-${subtotalStyle}` : null,
             hiddenCell ? "gd-cell-hide s-gd-cell-hide" : null,
             rowSeparator ? "gd-table-row-separator s-gd-table-row-separator" : null,
+            isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null,
         );
     };
 
@@ -1549,16 +1557,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private updateStickyRowContent(scrollPosition: IScrollPosition): void {
         if (this.isStickyRowAvailable()) {
-            updateStickyRowContentClasses(
+            updateStickyRowContentClassesAndData(
                 scrollPosition,
                 this.lastScrollPosition,
                 DEFAULT_ROW_HEIGHT,
                 this.getGridApi(),
                 this.getGroupingProvider(),
                 ApiWrapper,
-                this.getTableDescriptor(),
-                this.getDataView(),
-                this.getDrillablePredicates(),
             );
         }
 
