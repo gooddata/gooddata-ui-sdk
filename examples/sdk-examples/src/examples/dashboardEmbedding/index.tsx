@@ -28,6 +28,10 @@ import CustomDashboardView from "./CustomDashboardView";
 import CustomDashboardViewSRC from "!raw-loader!./CustomDashboardView";
 import CustomDashboardViewSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/CustomDashboardView";
 
+import DashboardExport from "./DashboardExport";
+import DashboardExportSRC from "!raw-loader!./DashboardExport";
+import DashboardExportSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardExport";
+
 export const DashboardView = (): JSX.Element => (
     <div>
         <h1>DashboardView</h1>
@@ -104,6 +108,16 @@ export const DashboardView = (): JSX.Element => (
             for={CustomDashboardView}
             source={CustomDashboardViewSRC}
             sourceJS={CustomDashboardViewSRCJS}
+        />
+
+        <p>
+            Example of how to export a dashboard. This will export the dashboard in the first example to PDF.
+        </p>
+
+        <ExampleWithSource
+            for={DashboardExport}
+            source={DashboardExportSRC}
+            sourceJS={DashboardExportSRCJS}
         />
     </div>
 );
