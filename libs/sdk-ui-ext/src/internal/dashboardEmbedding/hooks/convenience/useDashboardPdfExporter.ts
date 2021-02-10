@@ -19,7 +19,7 @@ function downloadFile(uri: string): void {
 /**
  * @beta
  */
-export interface IUseExportDashboardConfig
+export interface IUseDashboardPdfExporterConfig
     extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
     /**
      * Backend to work with.
@@ -41,7 +41,7 @@ export interface IUseExportDashboardConfig
 /**
  * @beta
  */
-export interface IUseExportDashboardResult {
+export interface IUseDashboardPdfExporterResult {
     /**
      * When called, triggers the export process and ends with downloading the file when ready.
      *
@@ -67,7 +67,7 @@ export interface IUseExportDashboardResult {
  * @param config - configuration of the hook
  * @beta
  */
-export function useExportDashboardToPdf({
+export function useDashboardPdfExporter({
     backend,
     workspace,
     onError,
@@ -75,7 +75,7 @@ export function useExportDashboardToPdf({
     onLoading,
     onPending,
     onSuccess,
-}: IUseExportDashboardConfig = {}): IUseExportDashboardResult {
+}: IUseDashboardPdfExporterConfig = {}): IUseDashboardPdfExporterResult {
     const [dashboardToExport, setDashboardToExport] = useState<ObjRef | undefined>();
     const [filtersToExport, setFiltersToExport] = useState<IDashboardFilter[] | undefined>();
     const exportDashboard = (dashboard: ObjRef, filters?: IDashboardFilter[]) => {

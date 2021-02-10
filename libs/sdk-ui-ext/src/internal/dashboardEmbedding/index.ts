@@ -17,7 +17,7 @@ export {
 export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
 export { isDateFilterIrrelevant } from "./utils/filters";
 export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";
-export { useExportDashboardToPdf } from "./hooks/convenience/useExportDashboardToPdf";
+export { useDashboardPdfExporter } from "./hooks/convenience/useDashboardPdfExporter";
 
 // TODO: RAIL-2869 Migrate to Responsive context
 export {
