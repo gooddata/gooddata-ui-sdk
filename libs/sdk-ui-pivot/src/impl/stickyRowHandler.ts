@@ -6,6 +6,7 @@ import { getGridIndex } from "./base/agGridUtils";
 import ApiWrapper from "./base/agGridApiWrapper";
 import { getScrollbarWidth } from "./utils";
 import { ROW_ATTRIBUTE_COLUMN } from "./base/constants";
+import { IGridRow } from "./data/resultTypes";
 export interface IScrollPosition {
     readonly top: number;
     readonly left: number;
@@ -108,8 +109,13 @@ export const updateStickyRowContentClassesAndData = (
             }
         }
     });
-    const previousRowData = gridApi.getPinnedTopRow(0)?.data;
-    const { headerItemMap: _previousHeaderMap, ...previousData } = previousRowData;
+    const previousRowData = gridApi.getPinnedTopRow(0)?.data as IGridRow;
+    const {
+        headerItemMap: _ignoredHeaders,
+        type: _ignoredType,
+        subtotalStyle: _ignoredStyle,
+        ...previousData
+    } = previousRowData;
     // set new rowData only if differen to avoid rerendering and flashing of the sticky row
     if (areDataDifferent(previousData, stickyRowData)) {
         const headerItemMapProp = isEmpty(headerItemMap) ? {} : { headerItemMap };

@@ -8,7 +8,7 @@ import { IDimension } from "@gooddata/sdk-model";
 
 export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]): boolean => {
     const currentTotalsCount = gridApi?.getPinnedBottomRowCount() ?? 0;
-    const newTotalsCount = newTotals === null ? 0 : newTotals.length;
+    const newTotalsCount = newTotals?.length ?? 0;
 
     if (currentTotalsCount !== newTotalsCount) {
         return true;

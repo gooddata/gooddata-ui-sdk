@@ -23,13 +23,13 @@ import {
 } from "../agGridColumnSizing";
 import {
     ColumnOnlyResultDescriptor,
+    getFakeColumn,
     SingleMeasureWithRowAttributeDescriptor,
     testStore,
     TwoMeasuresWithRowAttributeDescriptor,
     TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor,
 } from "./columnSizing.fixture";
 import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
-import { getFakeColumn } from "./_old_agGridMock";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants";
 import { measureLocalId } from "@gooddata/sdk-model";
 

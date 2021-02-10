@@ -17,8 +17,8 @@ import {
 import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../agGridColumnSizing";
 import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
 
-// NOTE: the function under test mutate inputs (by design) so the tests
-
+// NOTE: the function under test mutate inputs (by design). each test must use its own instance of TableDescriptor
+//  as the ColDefs has will be updated during test runs.
 describe("updateColumnDefinitionsWithWidths", () => {
     it("should enrich colDefs based on column width items", () => {
         const table = TableDescriptor.for(TwoMeasuresWithTwoRowAndTwoColumnAttributes);

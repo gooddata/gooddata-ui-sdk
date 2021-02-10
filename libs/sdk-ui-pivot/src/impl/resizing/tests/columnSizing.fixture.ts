@@ -5,6 +5,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { TableDescriptor } from "../../structure/tableDescriptor";
 import { ColumnWidthItem } from "../../../columnWidths";
 import { ResizedColumnsStore } from "../agGridColumnSizing";
+import { Column, ColumnApi } from "@ag-grid-community/all-modules";
 
 const ColumnOnlyResult = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleColumn,
@@ -47,3 +48,40 @@ export function testStore(
 
     return store;
 }
+
+export const getFakeColumnApi = (columnsMaps: { [id: string]: Column }): ColumnApi => {
+    const fakeColumnApi = {
+        getColumn: (columnId: string) => {
+            return columnsMaps[columnId];
+        },
+        setColumnWidth: (column: Column, width: number) => {
+            columnsMaps[column.getColId()].getColDef().width = width;
+        },
+        getAllColumns: () => {
+            return Object.keys(columnsMaps).map((colId: string) => columnsMaps[colId]);
+        },
+    };
+    return fakeColumnApi as ColumnApi;
+};
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+export const getFakeColumn = (colDef: any): Column => {
+    const columnDefinition = {
+        ...colDef,
+    };
+    const fakeColumn = {
+        getColDef: () => {
+            return columnDefinition;
+        },
+        getColId: () => {
+            return columnDefinition.colId;
+        },
+
+        getActualWidth: () => {
+            return columnDefinition.width;
+        },
+        drillItems: columnDefinition.drillItems,
+    };
+
+    return (fakeColumn as unknown) as Column;
+};

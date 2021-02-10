@@ -4,6 +4,12 @@ import { ROW_TOTAL } from "../base/constants";
 
 /**
  * All non-grand-total rows in the grid conform to this interface.
+ *
+ * CAREFUL: if you are updating this type, adding new props etc, look at stickyRowHandler code,
+ * the updateStickyRowContentClassesAndData function - there may be a bad interplay that you would not expect.
+ *
+ * TODO: we need to refactor this type. wildly mixing a number of our custom props with the values for fields
+ *  leads to unnecessary dangers.
  */
 export interface IGridRow {
     /**

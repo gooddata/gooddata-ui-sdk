@@ -14,6 +14,7 @@ import { isDataColLeaf, SliceCol } from "../structure/tableDescriptorTypes";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
 import { getSubtotalStyles } from "./dataSourceUtils";
+import fill from "lodash/fill";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
     return resultHeaderItems.findIndex((headerItem) => isResultTotalHeader(headerItem[rowIndex]));
@@ -28,7 +29,7 @@ function getMinimalRowData(dv: DataViewFacade): DataValue[][] {
         ? data
         : // if there are no measures only attributes
           // create array of [null] of length equal to the number of row dimension headerItems
-          (Array(numberOfRowHeaderItems).fill([null]) as DataValue[][]);
+          (fill(Array(numberOfRowHeaderItems), [null]) as DataValue[][]);
 }
 
 function getCell(

@@ -70,7 +70,7 @@ export function createDrilledRow(row: IGridRow, tableDescriptor: TableDescriptor
         result.push({
             // Note: this is related to `id` deprecation. The whole `id` thing does not make sense. Code should
             // send the entire URI (== PK of the element) so that the code is backend-agnostic. Doing the check
-            // here so that for bear, we follow this crap and for other backends code just adds the entire uri.
+            // here so that for bear, drill contains the `id` and for other backends code adds the entire uri (PK).
             // with this in place, we don't have to worry about how other backends represent the PK of the element.
             id: maybeId ?? drillItemUri,
             uri: drillItemUri,
