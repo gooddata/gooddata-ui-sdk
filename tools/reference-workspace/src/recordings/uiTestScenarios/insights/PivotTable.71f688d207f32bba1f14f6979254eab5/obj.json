@@ -1,0 +1,45 @@
+{
+    "insight": {
+        "buckets": [
+            { "items": [], "localIdentifier": "measures" },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.stage.name.stagename",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.stage.name.stagename"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.department"
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "PivotTable.71f688d207f32bba1f14f6979254eab5",
+        "properties": {},
+        "sorts": [],
+        "title": "PivotTable - with attributes without measures",
+        "uri": "PivotTable.71f688d207f32bba1f14f6979254eab5",
+        "visualizationUrl": "local:table"
+    }
+}

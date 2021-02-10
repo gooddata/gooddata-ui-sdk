@@ -1,0 +1,33 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.stage.name.stagename", "type": "displayForm" },
+                "localIdentifier": "a_label.stage.name.stagename"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.region"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.owner.department", "type": "displayForm" },
+                "localIdentifier": "a_label.owner.department"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["a_label.stage.name.stagename", "a_label.owner.region"] },
+        { "itemIdentifiers": ["a_label.owner.department"] }
+    ],
+    "filters": [],
+    "measures": [],
+    "sortBy": [
+        { "attributeSortItem": { "attributeIdentifier": "a_label.stage.name.stagename", "direction": "asc" } }
+    ],
+    "workspace": "reference-workspace"
+}

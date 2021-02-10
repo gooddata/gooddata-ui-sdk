@@ -2,5 +2,7 @@
     "label.product.id.name": {},
     "label.owner.department": {},
     "label.owner.region": {},
-    "label.stage.status": {}
+    "label.stage.status": {},
+    "label.opportunitysnapshot.forecastcategory": {},
+    "label.stage.name.stagename": {}
 }

@@ -187,7 +187,11 @@ export { CatalogHelper } from "./helpers/CatalogHelper";
 
 export { DataViewFacade } from "./results/facade";
 export {
+    DataSeriesId,
     DataPoint,
+    DataSeriesDescriptorMethods,
+    DataSliceDescriptorMethods,
+    DataSliceId,
     DataSliceDescriptor,
     IDataSlice,
     DataSeriesDescriptor,

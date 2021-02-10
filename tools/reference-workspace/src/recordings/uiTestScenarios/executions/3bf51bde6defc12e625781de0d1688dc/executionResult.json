@@ -1,0 +1,35 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "created.year",
+                            "name": "Year (Created)",
+                            "uri": "/gdc/md/referenceworkspace/obj/332"
+                        },
+                        "identifier": "created.aag81lMifn6q",
+                        "localIdentifier": "a_created.aag81lMifn6q",
+                        "name": "Year (Created)",
+                        "uri": "/gdc/md/referenceworkspace/obj/350"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "created.year",
+                            "name": "Year (Created)",
+                            "uri": "/gdc/md/referenceworkspace/obj/332"
+                        },
+                        "identifier": "created.aag81lMifn6q",
+                        "localIdentifier": "a_created.aag81lMifn6q_1",
+                        "name": "Year (Created)",
+                        "uri": "/gdc/md/referenceworkspace/obj/350"
+                    }
+                }
+            ]
+        },
+        { "headers": [] }
+    ]
+}

@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createSortItem creates valid attribute sort 1`] = `
+Object {
+  "attributeSortItem": Object {
+    "attributeIdentifier": "a_label.product.id.name",
+    "direction": "asc",
+  },
+}
+`;
+
+exports[`createSortItem creates valid measure sort item when no column attributes 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "asc",
+    "locators": Array [
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`createSortItem creates valid measure sort item when single column attribute 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "desc",
+    "locators": Array [
+      Object {
+        "attributeLocatorItem": Object {
+          "attributeIdentifier": "a_label.owner.region",
+          "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        },
+      },
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+  },
+}
+`;
+
+exports[`createSortItem creates valid measure sort item when two attributes 1`] = `
+Object {
+  "measureSortItem": Object {
+    "direction": "desc",
+    "locators": Array [
+      Object {
+        "attributeLocatorItem": Object {
+          "attributeIdentifier": "a_label.stage.name.stagename",
+          "element": "/gdc/md/referenceworkspace/obj/1091/elements?id=166498",
+        },
+      },
+      Object {
+        "attributeLocatorItem": Object {
+          "attributeIdentifier": "a_label.owner.region",
+          "element": "/gdc/md/referenceworkspace/obj/1086/elements?id=460488",
+        },
+      },
+      Object {
+        "measureLocatorItem": Object {
+          "measureIdentifier": "m_aangOxLSeztu",
+        },
+      },
+    ],
+  },
+}
+`;

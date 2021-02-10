@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import {
     IAttributeDescriptor,
@@ -96,6 +96,12 @@ export interface IResultMetaMethods {
      *   are returned
      */
     attributeHeaders(): IResultAttributeHeader[][][];
+
+    /**
+     * @returns filters headers for the provided dimension so that only attribute headers in that dimension
+     *   are returned
+     */
+    attributeHeadersForDim(idx: number): IResultAttributeHeader[][];
 
     /**
      * Tests whether measure descriptor is for a derived measure - that is, the measure is specified in
@@ -231,6 +237,16 @@ class ResultMetaMethods implements IResultMetaMethods {
                 isResultAttributeHeader(headerList[0]),
             ) as IResultAttributeHeader[][];
         });
+    }
+
+    public attributeHeadersForDim(dim: number): IResultAttributeHeader[][] {
+        if (this.hasNoHeadersInDim(dim)) {
+            return [];
+        }
+
+        return this.dataView.headerItems[dim].filter((headerList) =>
+            isResultAttributeHeader(headerList[0]),
+        ) as IResultAttributeHeader[][];
     }
 
     public isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean {

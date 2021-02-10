@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { attributeLocalId, IAttribute, Identifier, IMeasure, measureLocalId } from "@gooddata/sdk-model";
 
@@ -224,7 +224,10 @@ export function isWeakMeasureColumnWidthItem(obj: unknown): obj is IWeakMeasureC
     );
 }
 
-function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator {
+/**
+ * @internal
+ */
+export function newMeasureColumnLocator(measureOrId: IMeasure | string): IMeasureColumnLocator {
     const measureIdentifier = measureLocalId(measureOrId);
 
     return {

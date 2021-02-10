@@ -74,12 +74,19 @@ function scenarioSaveDefinition(
     dir: string,
     interactions: ChartInteractions,
 ): string {
-    const { triggeredExecution } = interactions;
+    let { triggeredExecution } = interactions;
     const fp = defFingerprint(triggeredExecution!);
     const recordingDir = path.join(dir, fp);
 
     if (!fs.existsSync(recordingDir)) {
         fs.mkdirSync(recordingDir);
+    }
+
+    if (triggeredExecution?.postProcessing) {
+        triggeredExecution = {
+            ...triggeredExecution,
+            postProcessing: undefined,
+        };
     }
 
     writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {

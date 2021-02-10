@@ -4,9 +4,8 @@ import { mount } from "enzyme";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
 import { CorePivotTablePure, WATCHING_TABLE_RENDERED_INTERVAL } from "../CorePivotTable";
-import { getParsedFields } from "../impl/agGridUtils";
 import * as stickyRowHandler from "../impl/stickyRowHandler";
-import agGridApiWrapper from "../impl/agGridApiWrapper";
+import agGridApiWrapper from "../impl/base/agGridApiWrapper";
 import { ICorePivotTableProps } from "../types";
 import { IPreparedExecution, prepareExecution } from "@gooddata/sdk-backend-spi";
 import { recordedBackend, DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
@@ -381,20 +380,5 @@ describe("CorePivotTable", () => {
 
             expect(afterRender).toHaveBeenCalledTimes(1);
         });
-    });
-});
-
-describe("getParsedFields", () => {
-    it("should return last parsed field from colId", () => {
-        expect(getParsedFields("a_2009")).toEqual([["a", "2009"]]);
-        expect(getParsedFields("a_2009_4-a_2071_12")).toEqual([
-            ["a", "2009", "4"],
-            ["a", "2071", "12"],
-        ]);
-        expect(getParsedFields("a_2009_4-a_2071_12-m_3")).toEqual([
-            ["a", "2009", "4"],
-            ["a", "2071", "12"],
-            ["m", "3"],
-        ]);
     });
 });

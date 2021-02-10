@@ -76,6 +76,7 @@ export {
     newAttributeLocator,
     SortEntityIds,
     sortEntityIds,
+    sortDirection,
     sortMeasureLocators,
     attributeLocatorElement,
     attributeLocatorIdentifier,
