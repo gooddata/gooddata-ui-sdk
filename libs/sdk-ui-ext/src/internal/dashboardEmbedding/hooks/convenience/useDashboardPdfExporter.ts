@@ -93,7 +93,7 @@ export function useDashboardPdfExporter({
         },
         onSuccess: (url) => {
             downloadFile(url);
-            onSuccess(url);
+            onSuccess?.(url);
         },
         onCancel,
         onLoading,
