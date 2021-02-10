@@ -21,6 +21,7 @@ import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";
 import { DashboardAlertsProvider } from "./DashboardAlertsContext";
 import { filterArrayToFilterContextItems } from "../utils/filters";
+import { DashboardViewIsReadOnlyProvider } from "./DashboardViewIsReadOnlyContext";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -45,6 +46,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
     widgetRenderer,
+    isReadOnly = false,
 }) => {
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
         dashboard,
@@ -173,43 +175,47 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                 <ColorPaletteProvider palette={colorPalette}>
                     <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
                         <DashboardAlertsProvider alerts={alertsData}>
-                            <ScheduledMailDialog
-                                backend={backend}
-                                workspace={workspace}
-                                locale={effectiveLocale}
-                                dashboard={dashboard}
-                                filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
-                                onSubmit={onScheduledMailDialogSubmit}
-                                onSubmitSuccess={onScheduledMailSubmitSuccess}
-                                onSubmitError={onScheduledMailSubmitError}
-                                onCancel={onScheduledMailDialogCancel}
-                                onError={onError}
-                                isVisible={isScheduledMailDialogVisible}
-                            />
-                            {isFluidLayoutEmpty(dashboardData.layout) ? (
-                                <EmptyDashboardError ErrorComponent={ErrorComponent} />
-                            ) : (
-                                <DashboardRenderer
+                            <DashboardViewIsReadOnlyProvider isReadOnly={isReadOnly}>
+                                <ScheduledMailDialog
                                     backend={backend}
                                     workspace={workspace}
-                                    dashboardRef={dashboard}
-                                    dashboardViewLayout={dashboardData?.layout}
-                                    filters={sanitizedFilters}
-                                    onFiltersChange={onFiltersChange}
-                                    filterContext={dashboardData.filterContext}
-                                    onDrill={onDrill}
-                                    drillableItems={drillableItems}
-                                    ErrorComponent={ErrorComponent}
-                                    LoadingComponent={LoadingComponent}
-                                    className="gd-dashboards-root"
-                                    getDashboardViewLayoutWidgetClass={
-                                        dashboardViewLayoutResult.getDashboardViewLayoutWidgetClass
-                                    }
-                                    getInsightByRef={dashboardViewLayoutResult.getInsightByRef}
-                                    widgetRenderer={widgetRenderer}
-                                    areSectionHeadersEnabled={userWorkspaceSettings?.areSectionHeadersEnabled}
+                                    locale={effectiveLocale}
+                                    dashboard={dashboard}
+                                    filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
+                                    onSubmit={onScheduledMailDialogSubmit}
+                                    onSubmitSuccess={onScheduledMailSubmitSuccess}
+                                    onSubmitError={onScheduledMailSubmitError}
+                                    onCancel={onScheduledMailDialogCancel}
+                                    onError={onError}
+                                    isVisible={isScheduledMailDialogVisible}
                                 />
-                            )}
+                                {isFluidLayoutEmpty(dashboardData.layout) ? (
+                                    <EmptyDashboardError ErrorComponent={ErrorComponent} />
+                                ) : (
+                                    <DashboardRenderer
+                                        backend={backend}
+                                        workspace={workspace}
+                                        dashboardRef={dashboard}
+                                        dashboardViewLayout={dashboardData?.layout}
+                                        filters={sanitizedFilters}
+                                        onFiltersChange={onFiltersChange}
+                                        filterContext={dashboardData.filterContext}
+                                        onDrill={onDrill}
+                                        drillableItems={drillableItems}
+                                        ErrorComponent={ErrorComponent}
+                                        LoadingComponent={LoadingComponent}
+                                        className="gd-dashboards-root"
+                                        getDashboardViewLayoutWidgetClass={
+                                            dashboardViewLayoutResult.getDashboardViewLayoutWidgetClass
+                                        }
+                                        getInsightByRef={dashboardViewLayoutResult.getInsightByRef}
+                                        widgetRenderer={widgetRenderer}
+                                        areSectionHeadersEnabled={
+                                            userWorkspaceSettings?.areSectionHeadersEnabled
+                                        }
+                                    />
+                                )}
+                            </DashboardViewIsReadOnlyProvider>
                         </DashboardAlertsProvider>
                     </AttributesWithDrillDownProvider>
                 </ColorPaletteProvider>

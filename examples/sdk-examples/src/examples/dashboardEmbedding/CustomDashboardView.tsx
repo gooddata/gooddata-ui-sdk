@@ -247,6 +247,7 @@ const CustomDashboardView: React.FC = () => {
                 // Render all other widgets in a common way, just wrap them with some component
                 return <CustomWidgetContainer>{renderedWidget}</CustomWidgetContainer>;
             }}
+            isReadOnly
         />
     );
 };
