@@ -27,6 +27,7 @@ const DashboardViewWithMergedFilters: React.FC = () => {
             filters={mergedFilters}
             config={config}
             onDashboardLoaded={({ dashboard }) => setDashboard(dashboard)}
+            isReadOnly
         />
     );
 };

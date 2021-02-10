@@ -18,6 +18,7 @@ const DashboardViewWithDrilling: React.FC = () => {
                 // eslint-disable-next-line no-console
                 console.log("Drill event in DashboardView: ", e);
             }}
+            isReadOnly
         />
     );
 };

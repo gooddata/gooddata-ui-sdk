@@ -25,6 +25,7 @@ const DashboardViewWithEmails: React.FC = () => {
                     alert("Scheduled email error");
                     setIsEmailDialogOpen(false);
                 }}
+                isReadOnly
             />
         </>
     );

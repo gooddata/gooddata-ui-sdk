@@ -25,6 +25,7 @@ import invariant from "ts-invariant";
 import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig } from "../DashboardViewConfigContext";
+import { useDashboardViewIsReadOnly } from "../DashboardViewIsReadOnlyContext";
 import { IDashboardFilter } from "../../types";
 
 export interface IKpiViewProps {
@@ -132,6 +133,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     });
 
     const config = useDashboardViewConfig();
+    const isReadOnly = useDashboardViewIsReadOnly();
 
     // add drilling predicate for the metric if the KPI has any drills defined from KPI dashboards
     const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(
@@ -166,6 +168,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             workspace={workspace}
             ErrorComponent={ErrorComponent}
             LoadingComponent={LoadingComponent}
+            isReadOnly={isReadOnly}
         />
     );
 };

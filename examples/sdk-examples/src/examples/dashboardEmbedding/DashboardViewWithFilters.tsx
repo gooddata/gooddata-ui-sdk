@@ -14,7 +14,7 @@ const filters = [
 const config = { mapboxToken: MAPBOX_TOKEN };
 
 const DashboardViewWithFilters: React.FC = () => {
-    return <DashboardView dashboard={dashboardRef} filters={filters} config={config} />;
+    return <DashboardView dashboard={dashboardRef} filters={filters} config={config} isReadOnly />;
 };
 
 export default DashboardViewWithFilters;

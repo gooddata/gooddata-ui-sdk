@@ -214,6 +214,14 @@ export interface IDashboardViewProps {
      * Note: Custom widget rendering is not supported for dashboard exports & scheduled e-mails.
      */
     widgetRenderer?: IDashboardWidgetRenderer;
+
+    /**
+     * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
+     * that would alter any backend state (disabling creating/changing alerts for example).
+     *
+     * @default false i.e. NOT a read-only mode.
+     */
+    isReadOnly?: boolean;
 }
 
 /**

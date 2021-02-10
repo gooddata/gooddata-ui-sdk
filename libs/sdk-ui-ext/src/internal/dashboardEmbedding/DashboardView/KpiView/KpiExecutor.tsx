@@ -85,6 +85,7 @@ interface IKpiExecutorProps {
     workspace: string;
     separators: ISeparators;
     disableDrillUnderline?: boolean;
+    isReadOnly?: boolean;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
 }
@@ -110,6 +111,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     separators,
     disableDrillUnderline,
     intl,
+    isReadOnly,
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
 }) => {
@@ -179,8 +181,6 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     const { result: permissions } = useUserWorkspacePermissions({ backend, workspace });
     const canSetAlert = permissions?.canCreateScheduledMail;
 
-    const isReadonlyMode = false; // TODO we need to support proper read only mode for live examples with proxy (RAIL-2931)
-
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -205,7 +205,7 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
             renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
             kpiAlertResult={kpiAlertResult}
             canSetAlert={canSetAlert}
-            isReadOnlyMode={isReadonlyMode}
+            isReadOnlyMode={isReadOnly}
             alertExecutionError={
                 alertError ??
                 /*

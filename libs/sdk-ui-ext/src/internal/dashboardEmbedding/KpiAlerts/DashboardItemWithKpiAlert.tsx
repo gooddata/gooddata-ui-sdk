@@ -197,7 +197,11 @@ export class DashboardItemWithKpiAlert extends Component<
 
         // TODO: Remove "isAlertingTemporarilyDisabledForGivenFilter" when alerts support absolute filters (RAIL-1456, RAIL-1457).
         //       When alert is set, we allow opening the alert box so user can edit/delete it.
-        if (!this.props.canSetAlert || (isAlertingTemporarilyDisabled && !this.props.alert)) {
+        if (
+            this.props.isReadOnlyMode ||
+            !this.props.canSetAlert ||
+            (isAlertingTemporarilyDisabled && !this.props.alert)
+        ) {
             const bubbleMessage = this.props.isReadOnlyMode ? (
                 <FormattedMessage id="kpi.alertBox.disabledInReadOnly" />
             ) : (
