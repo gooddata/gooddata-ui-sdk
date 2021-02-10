@@ -1,0 +1,80 @@
+// (C) 2007-2021 GoodData Corporation
+import { InternalTableState } from "./internalState";
+import { ICorePivotTableProps } from "./types";
+import { CellEvent } from "@ag-grid-community/all-modules";
+import { invariant } from "ts-invariant";
+import { IGridRow } from "./impl/data/resultTypes";
+import { isSomeTotal } from "./impl/data/dataSourceUtils";
+import { isDataColLeaf, isSliceCol } from "./impl/structure/tableDescriptorTypes";
+import { isCellDrillable } from "./impl/drilling/cellDrillabilityPredicate";
+import {
+    convertDrillableItemsToPredicates,
+    IDrillEvent,
+    IDrillEventContextTable,
+    VisualizationTypes,
+} from "@gooddata/sdk-ui";
+import { createDrilledRow } from "./impl/drilling/drilledRowFactory";
+import { createDrillIntersection } from "./impl/drilling/drillIntersectionFactory";
+
+export type CellClickedHandler = (cellEvent: CellEvent) => boolean;
+
+export function cellClickedFactory(
+    table: InternalTableState,
+    props: Readonly<ICorePivotTableProps>,
+): CellClickedHandler {
+    return (cellEvent: CellEvent): boolean => {
+        invariant(table.tableDescriptor);
+        invariant(table.visibleData);
+
+        const row = cellEvent.data as IGridRow;
+
+        invariant(row);
+
+        if (isSomeTotal(row.type)) {
+            return false;
+        }
+
+        const { colDef, data, rowIndex } = cellEvent;
+        const col = table.tableDescriptor.getCol(colDef);
+
+        // cells belong to either slice column or leaf data column; if cells belong to column of a different
+        // type then there must be either something messed up with table construction or a new type of cell
+        invariant(isSliceCol(col) || isDataColLeaf(col));
+
+        const { onDrill } = props;
+        const dv = table.visibleData;
+        const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
+
+        const areDrillableHeaders = isCellDrillable(col, cellEvent.data, dv, drillablePredicates);
+
+        if (!areDrillableHeaders) {
+            return false;
+        }
+
+        const drillContext: IDrillEventContextTable = {
+            type: VisualizationTypes.TABLE,
+            element: "cell",
+            columnIndex: table.tableDescriptor.getAbsoluteLeafColIndex(col),
+            rowIndex,
+            row: createDrilledRow(data as IGridRow, table.tableDescriptor),
+            intersection: createDrillIntersection(cellEvent, table.tableDescriptor),
+        };
+        const drillEvent: IDrillEvent = {
+            dataView: dv.dataView,
+            drillContext,
+        };
+
+        if (onDrill?.(drillEvent)) {
+            // This is needed for /analyze/embedded/ drilling with post message
+            // More info: https://github.com/gooddata/gdc-analytical-designer/blob/develop/test/drillEventing/drillEventing_page.html
+            const event = new CustomEvent("drill", {
+                detail: drillEvent,
+                bubbles: true,
+            });
+            cellEvent.event?.target?.dispatchEvent(event);
+            return true;
+        }
+
+        return false;
+    };
+}

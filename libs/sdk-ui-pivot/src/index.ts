@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 export { PivotTable } from "./PivotTable";
 export { CorePivotTable } from "./CorePivotTable";
 
@@ -10,6 +10,7 @@ export {
     IColumnSizing,
     DefaultColumnWidth,
     ICorePivotTableProps,
+    ColumnResizedCallback,
     IMenu,
 } from "./types";
 

@@ -18,3 +18,9 @@ export const DEFAULT_HEADER_FONT = '12px / 28px avenir, "Helvetica Neue", arial,
 export const DEFAULT_ROW_FONT = '12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
 export const DEFAULT_SUBTOTAL_FONT = '700 12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
 export const DEFAULT_TOTAL_FONT = '700 12px / 26px avenir, "Helvetica Neue", arial, sans-serif';
+
+/**
+ * DEFAULT_AUTOSIZE_PADDING needs to match real padding from styles
+ */
+export const DEFAULT_AUTOSIZE_PADDING = 12;
+export const DEFAULT_ROW_HEIGHT = 28;

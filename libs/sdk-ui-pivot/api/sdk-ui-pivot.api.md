@@ -23,6 +23,9 @@ import { WrappedComponentProps } from 'react-intl';
 export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator;
 
 // @public (undocumented)
+export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
+
+// @public (undocumented)
 export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
 
 // @public (undocumented)
@@ -113,7 +116,7 @@ export interface IMenu {
 // @public (undocumented)
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     config?: IPivotTableConfig;
-    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
+    onColumnResized?: ColumnResizedCallback;
     pageSize?: number;
 }
 

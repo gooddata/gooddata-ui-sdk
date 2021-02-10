@@ -81,6 +81,11 @@ export function getMeasureCellStyle(
     };
 }
 
+/**
+ * Returns common implementation of cell renderer used for normal cells, sticky header cells and totals.
+ *
+ * TODO: Consider to use custom pinnerRowCellRenderer in order to reduce number of conditionals
+ */
 export function createCellRenderer(): (params: ICellRendererParams) => string {
     return (params: ICellRendererParams): string => {
         const isRowTotalOrSubtotal = isSomeTotal(params.data?.type);
