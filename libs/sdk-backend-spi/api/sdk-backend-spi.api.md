@@ -127,17 +127,62 @@ export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 // @alpha
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
+// @alpha (undocumented)
+export class FluidLayoutBuilder<TContent> implements IFluidLayoutBuilder<TContent> {
+    protected constructor(layoutFacade: IFluidLayoutFacade<TContent>);
+    // (undocumented)
+    addRow: (create?: FluidLayoutRowModifications<TContent>, index?: number | undefined) => this;
+    // (undocumented)
+    build: () => IFluidLayout<TContent>;
+    // (undocumented)
+    facade(): IFluidLayoutFacade<TContent>;
+    static for<TContent>(layout: IFluidLayout<TContent>): FluidLayoutBuilder<TContent>;
+    static forNewLayout<TContent>(): FluidLayoutBuilder<TContent>;
+    // (undocumented)
+    protected layoutFacade: IFluidLayoutFacade<TContent>;
+    // (undocumented)
+    modify: (modifications: FluidLayoutModifications<TContent>) => this;
+    // (undocumented)
+    modifyRow: (index: number, modify: FluidLayoutRowModifications<TContent>) => this;
+    // (undocumented)
+    modifyRows: (modify: FluidLayoutRowModifications<TContent>, selector?: FluidLayoutRowsSelector<TContent>) => this;
+    // (undocumented)
+    moveRow: (fromIndex: number, toIndex: number) => this;
+    // (undocumented)
+    removeRow: (index: number) => this;
+    // (undocumented)
+    removeRows: (selector?: FluidLayoutRowsSelector<TContent>) => this;
+    // (undocumented)
+    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayout<TContent>>): this;
+    // (undocumented)
+    size: (valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutSize | undefined>) => this;
+}
+
+// @alpha
+export type FluidLayoutColumnModifications<TContent> = (columnBuilder: IFluidLayoutColumnBuilder<TContent>, columnFacade: IFluidLayoutColumnMethods<TContent>) => IFluidLayoutColumnBuilder<TContent>;
+
+// @alpha
+export type FluidLayoutColumnsSelector<TContent> = (columnsFacade: IFluidLayoutColumnsMethods<TContent>) => IFluidLayoutColumnMethods<TContent>[] | IFluidLayoutColumnMethods<TContent> | undefined;
+
 // @alpha
 export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent> {
-    protected constructor(_layout: IFluidLayout<TContent>);
     static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacade<TContent>;
-    // (undocumented)
-    protected _layout: IFluidLayout<TContent>;
     // (undocumented)
     raw: () => IFluidLayout<TContent>;
     // (undocumented)
     rows: () => IFluidLayoutRowsMethods<TContent>;
+    // (undocumented)
+    size: () => IFluidLayoutSize | undefined;
 }
+
+// @alpha
+export type FluidLayoutModifications<TContent> = (layoutBuilder: IFluidLayoutBuilder<TContent>, layoutFacade: IFluidLayoutFacade<TContent>) => IFluidLayoutBuilder<TContent>;
+
+// @alpha
+export type FluidLayoutRowModifications<TContent> = (rowBuilder: IFluidLayoutRowBuilder<TContent>, rowFacade: IFluidLayoutRowMethods<TContent>) => IFluidLayoutRowBuilder<TContent>;
+
+// @alpha
+export type FluidLayoutRowsSelector<TContent> = (rowsFacade: IFluidLayoutRowsMethods<TContent>) => IFluidLayoutRowMethods<TContent>[] | IFluidLayoutRowMethods<TContent> | undefined;
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -736,15 +781,38 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
 export interface IFluidLayout<TContent> {
     rows: IFluidLayoutRow<TContent>[];
     size?: IFluidLayoutSize;
-    style?: string;
     type: "fluidLayout";
+}
+
+// @alpha
+export interface IFluidLayoutBuilder<TContent> {
+    addRow(create?: (builder: IFluidLayoutRowBuilder<TContent>) => IFluidLayoutRowBuilder<TContent>, index?: number): this;
+    build(): IFluidLayout<TContent>;
+    facade(): IFluidLayoutFacade<TContent>;
+    modify(modifications: FluidLayoutModifications<TContent>): this;
+    modifyRow(index: number, modify: FluidLayoutRowModifications<TContent>): this;
+    modifyRows(modify: FluidLayoutRowModifications<TContent>, selector?: FluidLayoutRowsSelector<TContent>): this;
+    moveRow(fromIndex: number, toIndex: number): this;
+    removeRow(index: number): this;
+    removeRows(selector?: FluidLayoutRowsSelector<TContent>): this;
+    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayout<TContent>>): this;
+    size(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutSize | undefined>): this;
 }
 
 // @alpha
 export interface IFluidLayoutColumn<TContent> {
     content?: TContent;
     size: IFluidLayoutSizeByScreen;
-    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutColumnBuilder<TContent> {
+    build(): IFluidLayoutColumn<TContent>;
+    content(valueOrTransform: ValueOrUpdateCallback<TContent | undefined>): this;
+    facade(): IFluidLayoutColumnMethods<TContent>;
+    modify(modifications: FluidLayoutColumnModifications<TContent>): this;
+    setColumn(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutColumn<TContent>>): this;
+    size(valueOrTransform: ValueOrUpdateCallback<IFluidLayoutSizeByScreen>): this;
 }
 
 // @alpha
@@ -752,7 +820,19 @@ export interface IFluidLayoutColumnMethods<TContent> {
     // (undocumented)
     content(): TContent | undefined;
     // (undocumented)
+    contentEquals(content: TContent): boolean;
+    // (undocumented)
+    contentIs(content: TContent): boolean;
+    // (undocumented)
+    hasContent(): boolean;
+    // (undocumented)
+    hasSizeForScreen(screen: ResponsiveScreenType): boolean;
+    // (undocumented)
     index(): number;
+    // (undocumented)
+    indexIs(index: number): boolean;
+    // (undocumented)
+    isFirstInRow(): boolean;
     // (undocumented)
     isLastInRow(): boolean;
     // (undocumented)
@@ -764,7 +844,9 @@ export interface IFluidLayoutColumnMethods<TContent> {
     // (undocumented)
     sizeForScreen(screen: ResponsiveScreenType): IFluidLayoutSize | undefined;
     // (undocumented)
-    style(): IFluidLayoutColumn<TContent>["style"];
+    test(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
+    // (undocumented)
+    testRaw(pred: (column: IFluidLayoutColumn<TContent>) => boolean): boolean;
 }
 
 // @alpha
@@ -773,6 +855,8 @@ export interface IFluidLayoutColumnsMethods<TContent> {
     all(): IFluidLayoutColumnMethods<TContent>[];
     // (undocumented)
     column(columnIndex: number): IFluidLayoutColumnMethods<TContent> | undefined;
+    // (undocumented)
+    count(): number;
     // (undocumented)
     every(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
     // (undocumented)
@@ -797,13 +881,29 @@ export interface IFluidLayoutFacade<TContent> {
     raw(): IFluidLayout<TContent>;
     // (undocumented)
     rows(): IFluidLayoutRowsMethods<TContent>;
+    // (undocumented)
+    size(): IFluidLayoutSize | undefined;
 }
 
 // @alpha
 export interface IFluidLayoutRow<TContent> {
     columns: IFluidLayoutColumn<TContent>[];
     header?: IFluidLayoutSectionHeader;
-    style?: string;
+}
+
+// @alpha
+export interface IFluidLayoutRowBuilder<TContent> {
+    addColumn(xlSize: IFluidLayoutSize, create?: (builder: IFluidLayoutColumnBuilder<TContent>) => IFluidLayoutColumnBuilder<TContent>, index?: number): this;
+    build(): IFluidLayoutRow<TContent>;
+    facade(): IFluidLayoutRowMethods<TContent>;
+    header(valueOrTransform: ValueOrUpdateCallback<IFluidLayoutSectionHeader | undefined>): this;
+    modify(modifications: FluidLayoutRowModifications<TContent>): this;
+    modifyColumn(index: number, modify: FluidLayoutColumnModifications<TContent>): this;
+    modifyColumns(modify: FluidLayoutColumnModifications<TContent>, selector?: FluidLayoutColumnsSelector<TContent>): this;
+    moveColumn(fromIndex: number, toIndex: number): this;
+    removeColumn(index: number): this;
+    removeColumns(selector?: FluidLayoutColumnsSelector<TContent>): this;
+    setRow(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutRow<TContent>>): this;
 }
 
 // @alpha
@@ -811,9 +911,25 @@ export interface IFluidLayoutRowMethods<TContent> {
     // (undocumented)
     columns(): IFluidLayoutColumnsMethods<TContent>;
     // (undocumented)
+    description(): string | undefined;
+    // (undocumented)
+    descriptionEquals(title: string): boolean;
+    // (undocumented)
+    hasDescription(): boolean;
+    // (undocumented)
+    hasHeader(): boolean;
+    // (undocumented)
+    hasTitle(): boolean;
+    // (undocumented)
     header(): IFluidLayoutSectionHeader | undefined;
     // (undocumented)
+    headerEquals(header: IFluidLayoutSectionHeader): boolean;
+    // (undocumented)
     index(): number;
+    // (undocumented)
+    indexIs(index: number): boolean;
+    // (undocumented)
+    isFirst(): boolean;
     // (undocumented)
     isLast(): boolean;
     // (undocumented)
@@ -821,13 +937,21 @@ export interface IFluidLayoutRowMethods<TContent> {
     // (undocumented)
     raw(): IFluidLayoutRow<TContent>;
     // (undocumented)
-    style(): IFluidLayoutRow<TContent>["style"] | undefined;
+    test(pred: (column: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
+    // (undocumented)
+    testRaw(pred: (column: IFluidLayoutRow<TContent>) => boolean): boolean;
+    // (undocumented)
+    title(): string | undefined;
+    // (undocumented)
+    titleEquals(title: string): boolean;
 }
 
 // @alpha
 export interface IFluidLayoutRowsMethods<TContent> {
     // (undocumented)
     all(): IFluidLayoutRowMethods<TContent>[];
+    // (undocumented)
+    count(): number;
     // (undocumented)
     every(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
     // (undocumented)
@@ -1893,6 +2017,9 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly responseBody: unknown;
 }
+
+// @alpha
+export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);
 
 // @alpha
 export function walkLayout(layout: IDashboardLayout, { rowCallback, columnCallback, widgetCallback, }: {

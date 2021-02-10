@@ -11,10 +11,17 @@ const emptyColumnFacadeWithFullSize: IFluidLayoutColumnMethods<any> = {
     raw: () => null,
     content: () => null,
     row: () => undefined,
-    style: () => undefined,
     size: () => ({ xl: { widthAsGridColumnsCount: 12 } }),
     sizeForScreen: () => ({ widthAsGridColumnsCount: 12 }),
     isLastInRow: () => true,
+    contentEquals: () => false,
+    contentIs: () => false,
+    hasContent: () => false,
+    hasSizeForScreen: () => false,
+    indexIs: () => false,
+    isFirstInRow: () => true,
+    test: () => false,
+    testRaw: () => false,
 };
 
 export function DashboardLayoutRowHeaderRenderer<TCustomContent>(

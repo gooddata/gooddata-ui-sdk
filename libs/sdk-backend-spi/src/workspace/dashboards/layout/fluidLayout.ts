@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import isArray from "lodash/isArray";
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
@@ -28,11 +29,6 @@ export interface IFluidLayout<TContent> {
      * Layout size.
      */
     size?: IFluidLayoutSize;
-
-    /**
-     * Custom layout style.
-     */
-    style?: string;
 }
 
 /**
@@ -44,6 +40,25 @@ export function isFluidLayout<TContent>(obj: unknown): obj is IFluidLayout<TCont
 }
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link IFluidLayoutColumn}.
+ * @alpha
+ */
+export function isFluidLayoutColumn<TContent>(obj: unknown): obj is IFluidLayoutColumn<TContent> {
+    return (
+        !isEmpty(obj) &&
+        typeof (obj as IFluidLayoutColumn<TContent>).size?.xl?.widthAsGridColumnsCount === "number"
+    );
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IFluidLayoutRow}.
+ * @alpha
+ */
+export function isFluidLayoutRow<TContent>(obj: unknown): obj is IFluidLayoutRow<TContent> {
+    return !isEmpty(obj) && isArray((obj as IFluidLayoutRow<TContent>).columns);
+}
+
+/**
  * Fluid layout row definition.
  * @alpha
  */
@@ -52,11 +67,6 @@ export interface IFluidLayoutRow<TContent> {
      * Row columns.
      */
     columns: IFluidLayoutColumn<TContent>[];
-
-    /**
-     * Custom row style.
-     */
-    style?: string;
 
     /**
      * Row can optionally contain a header with title and description.
@@ -78,11 +88,6 @@ export interface IFluidLayoutColumn<TContent> {
      * Column size.
      */
     size: IFluidLayoutSizeByScreen;
-
-    /**
-     * Column style.
-     */
-    style?: string;
 }
 
 /**

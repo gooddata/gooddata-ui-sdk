@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import { IFluidLayoutRow } from "../fluidLayout";
-import { IFluidLayoutRowsMethods, IFluidLayoutFacade, IFluidLayoutRowMethods } from "../fluidLayoutMethods";
+import { IFluidLayoutRowsMethods, IFluidLayoutFacade, IFluidLayoutRowMethods } from "./interfaces";
 import { FluidLayoutRowMethods } from "./row";
 
 /**
@@ -9,40 +9,31 @@ import { FluidLayoutRowMethods } from "./row";
  * @alpha
  */
 export class FluidLayoutRowsMethods<TContent> implements IFluidLayoutRowsMethods<TContent> {
-    private static Cache: WeakMap<IFluidLayoutFacade<any>, FluidLayoutRowsMethods<any>> = new WeakMap<
-        IFluidLayoutFacade<any>,
-        FluidLayoutRowsMethods<any>
-    >();
+    private rowFacades: IFluidLayoutRowMethods<TContent>[] | undefined;
 
-    private _rows: IFluidLayoutRowMethods<TContent>[] | undefined;
-
-    protected constructor(
-        protected readonly _layoutFacade: IFluidLayoutFacade<TContent>,
-        protected readonly _rawRows: IFluidLayoutRow<TContent>[],
+    private constructor(
+        private readonly layoutFacade: IFluidLayoutFacade<TContent>,
+        private readonly rawRows: IFluidLayoutRow<TContent>[],
     ) {}
 
     public static for<TContent>(
         layoutFacade: IFluidLayoutFacade<TContent>,
         rows: IFluidLayoutRow<TContent>[],
     ): FluidLayoutRowsMethods<TContent> {
-        if (!FluidLayoutRowsMethods.Cache.has(layoutFacade)) {
-            FluidLayoutRowsMethods.Cache.set(layoutFacade, new FluidLayoutRowsMethods(layoutFacade, rows));
-        }
-
-        return FluidLayoutRowsMethods.Cache.get(layoutFacade)!;
+        return new FluidLayoutRowsMethods(layoutFacade, rows);
     }
 
     private getRowFacades = () => {
-        if (!this._rows) {
-            this._rows = this._rawRows.map((row, index) =>
-                FluidLayoutRowMethods.for(this._layoutFacade, row, index),
+        if (!this.rowFacades) {
+            this.rowFacades = this.rawRows.map((row, index) =>
+                FluidLayoutRowMethods.for(this.layoutFacade, row, index),
             );
         }
 
-        return this._rows;
+        return this.rowFacades;
     };
 
-    public raw = (): IFluidLayoutRow<TContent>[] => this._rawRows;
+    public raw = (): IFluidLayoutRow<TContent>[] => this.rawRows;
 
     public row = (rowIndex: number): IFluidLayoutRowMethods<TContent> | undefined => {
         const rowFacades = this.getRowFacades();
@@ -93,5 +84,9 @@ export class FluidLayoutRowsMethods<TContent> implements IFluidLayoutRowsMethods
 
     public all = (): IFluidLayoutRowMethods<TContent>[] => {
         return this.getRowFacades();
+    };
+
+    public count = (): number => {
+        return this.getRowFacades().length;
     };
 }

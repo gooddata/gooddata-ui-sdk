@@ -117,7 +117,7 @@ export const convertLayoutColumnSize = (
 };
 
 const convertLayoutColumn = (column: IDashboardLayoutColumn): GdcDashboardLayout.IFluidLayoutColumn => {
-    const { content, size, style } = column;
+    const { content, size } = column;
     if (isWidget(content)) {
         const converted: GdcDashboardLayout.IFluidLayoutColumn = {
             size: convertLayoutColumnSize(size),
@@ -125,9 +125,6 @@ const convertLayoutColumn = (column: IDashboardLayoutColumn): GdcDashboardLayout
                 widget: { qualifier: { uri: refToUri(content!.ref!) } },
             },
         };
-        if (style) {
-            converted.style = style;
-        }
 
         return converted;
     } else if (isFluidLayout(content)) {
@@ -143,7 +140,6 @@ const convertLayoutColumn = (column: IDashboardLayoutColumn): GdcDashboardLayout
 
     return {
         size: convertLayoutColumnSize(size),
-        style,
     };
 };
 
@@ -167,10 +163,6 @@ const convertLayoutRow = (row: IDashboardLayoutRow): GdcDashboardLayout.IFluidLa
         }
     }
 
-    if (row.style) {
-        convertedRow.style = row.style;
-    }
-
     return convertedRow;
 };
 
@@ -183,10 +175,6 @@ const convertLayout = (layout: IDashboardLayout): GdcDashboardLayout.Layout => {
     };
     if (layout.size) {
         convertedLayout.fluidLayout.size = convertResponsiveSize(layout.size);
-    }
-
-    if (layout.style) {
-        convertedLayout.fluidLayout.style = layout.style;
     }
 
     return convertedLayout;

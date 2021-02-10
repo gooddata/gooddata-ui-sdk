@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FluidLayoutColumnBuilder .content() should update content by callback 1`] = `
+Object {
+  "content": "Content",
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 50,
+      "widthAsGridColumnsCount": 12,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder .content() should update content by callback returning undefined 1`] = `
+Object {
+  "content": undefined,
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 50,
+      "widthAsGridColumnsCount": 12,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder .content() should update content by undefined 1`] = `
+Object {
+  "content": undefined,
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 50,
+      "widthAsGridColumnsCount": 12,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder .content() should update content by value 1`] = `
+Object {
+  "content": "Content",
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 50,
+      "widthAsGridColumnsCount": 12,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder .size() should update size by callback 1`] = `
+Object {
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 150,
+      "widthAsGridColumnsCount": 6,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder .size() should update size by value 1`] = `
+Object {
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 150,
+      "widthAsGridColumnsCount": 6,
+    },
+  },
+}
+`;
+
+exports[`FluidLayoutColumnBuilder constructors .for() should throw error, when the column is damaged 1`] = `"Provided data must be IFluidLayoutColumn!"`;
+
+exports[`FluidLayoutColumnBuilder constructors .forNewColumn() should create new empty column 1`] = `
+Object {
+  "size": Object {
+    "xl": Object {
+      "heightAsRatio": 50,
+      "widthAsGridColumnsCount": 12,
+    },
+  },
+}
+`;

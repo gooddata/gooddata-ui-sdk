@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { GdcDashboardLayout, GdcVisualizationObject, GdcVisualizationClass } from "@gooddata/api-model-bear";
 import { uriRef, idRef, UriRef, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -71,7 +71,6 @@ const convertLayoutColumn = (
 
     return {
         content: content && convertLayout(content, widgetDependencies),
-        style: column.style,
         size: convertLayoutColumnSize(column.size),
     };
 };
@@ -100,9 +99,6 @@ export const convertLayout = (
     };
     if (fluidLayout.size) {
         convertedLayout.size = convertResponsiveSize(fluidLayout.size);
-    }
-    if (fluidLayout.style) {
-        convertedLayout.style = fluidLayout.style;
     }
     return convertedLayout;
 };

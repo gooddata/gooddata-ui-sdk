@@ -1,12 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import { IFluidLayoutColumn } from "../fluidLayout";
-import {
-    IFluidLayoutColumnMethods,
-    IFluidLayoutColumnsMethods,
-    IFluidLayoutFacade,
-    IFluidLayoutRowMethods,
-} from "../fluidLayoutMethods";
+import { IFluidLayoutColumnMethods, IFluidLayoutColumnsMethods, IFluidLayoutRowMethods } from "./interfaces";
 import { FluidLayoutColumnMethods } from "./column";
 
 /**
@@ -14,45 +9,31 @@ import { FluidLayoutColumnMethods } from "./column";
  * @alpha
  */
 export class FluidLayoutColumnsMethods<TContent> implements IFluidLayoutColumnsMethods<TContent> {
-    private static Cache: WeakMap<IFluidLayoutRowMethods<any>, FluidLayoutColumnsMethods<any>> = new WeakMap<
-        IFluidLayoutRowMethods<any>,
-        FluidLayoutColumnsMethods<any>
-    >();
+    private columnFacades: IFluidLayoutColumnMethods<TContent>[] | undefined;
 
-    protected constructor(
-        protected readonly _layoutFacade: IFluidLayoutFacade<TContent>,
-        protected readonly _rowFacade: IFluidLayoutRowMethods<TContent>,
-        protected readonly _rawColumns: IFluidLayoutColumn<TContent>[],
+    private constructor(
+        private readonly rowFacade: IFluidLayoutRowMethods<TContent>,
+        private readonly rawColumns: IFluidLayoutColumn<TContent>[],
     ) {}
 
-    private _columns: IFluidLayoutColumnMethods<TContent>[] | undefined = undefined;
-
     public static for<TContent>(
-        layoutFacade: IFluidLayoutFacade<TContent>,
         rowFacade: IFluidLayoutRowMethods<TContent>,
-        columns: IFluidLayoutColumn<TContent>[],
+        columnFacades: IFluidLayoutColumn<TContent>[],
     ): FluidLayoutColumnsMethods<TContent> {
-        if (!FluidLayoutColumnsMethods.Cache.has(rowFacade)) {
-            FluidLayoutColumnsMethods.Cache.set(
-                rowFacade,
-                new FluidLayoutColumnsMethods(layoutFacade, rowFacade, columns),
-            );
-        }
-
-        return FluidLayoutColumnsMethods.Cache.get(rowFacade)!;
+        return new FluidLayoutColumnsMethods(rowFacade, columnFacades);
     }
 
     private getColumnFacades = () => {
-        if (!this._columns) {
-            this._columns = this._rawColumns.map((column, index) =>
-                FluidLayoutColumnMethods.for(this._layoutFacade, this._rowFacade, column, index),
+        if (!this.columnFacades) {
+            this.columnFacades = this.rawColumns.map((column, index) =>
+                FluidLayoutColumnMethods.for(this.rowFacade, column, index),
             );
         }
 
-        return this._columns;
+        return this.columnFacades;
     };
 
-    public raw = (): IFluidLayoutColumn<TContent>[] => this._rawColumns;
+    public raw = (): IFluidLayoutColumn<TContent>[] => this.rawColumns;
 
     public column = (columnIndex: number): IFluidLayoutColumnMethods<TContent> | undefined => {
         const columnFacades = this.getColumnFacades();
@@ -105,5 +86,9 @@ export class FluidLayoutColumnsMethods<TContent> implements IFluidLayoutColumnsM
 
     public all = (): IFluidLayoutColumnMethods<TContent>[] => {
         return this.getColumnFacades();
+    };
+
+    public count = (): number => {
+        return this.getColumnFacades().length;
     };
 }

@@ -221,6 +221,18 @@ export {
     isFluidLayout,
 } from "./workspace/dashboards/layout/fluidLayout";
 export { FluidLayoutFacade } from "./workspace/dashboards/layout/facade/layout";
+export { FluidLayoutBuilder } from "./workspace/dashboards/layout/builder/layout";
+export {
+    FluidLayoutColumnModifications,
+    FluidLayoutColumnsSelector,
+    FluidLayoutModifications,
+    FluidLayoutRowModifications,
+    FluidLayoutRowsSelector,
+    IFluidLayoutBuilder,
+    IFluidLayoutColumnBuilder,
+    IFluidLayoutRowBuilder,
+    ValueOrUpdateCallback,
+} from "./workspace/dashboards/layout/builder/interfaces";
 export {
     isFluidLayoutEmpty,
     IWidgetWithLayoutPath,
@@ -235,7 +247,7 @@ export {
     IFluidLayoutColumnsMethods,
     IFluidLayoutRowMethods,
     IFluidLayoutRowsMethods,
-} from "./workspace/dashboards/layout/fluidLayoutMethods";
+} from "./workspace/dashboards/layout/facade/interfaces";
 export {
     IWidget,
     IWidgetDefinition,
