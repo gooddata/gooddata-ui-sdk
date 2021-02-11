@@ -976,11 +976,14 @@ export function isVisualizationObjectsItem(visualizationObject: unknown): visual
 // @public (undocumented)
 export interface ITigerClient {
     // (undocumented)
+    axios: AxiosInstance;
+    // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
     organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
+    setApiToken: (token: string | undefined) => void;
     // (undocumented)
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
     // (undocumented)
@@ -4002,6 +4005,12 @@ export type ResultDimensionHeader = ResultDimension["headers"][number];
 export interface ResultSpec {
     dimensions: Array<Dimension>;
 }
+
+// @public
+export function setAxiosAuthorizationToken(axios: AxiosInstance, token: string | undefined): void;
+
+// @public
+export function setGlobalAuthorizationToken(token: string | undefined): void;
 
 // @public
 export interface SimpleMeasureDefinition {
