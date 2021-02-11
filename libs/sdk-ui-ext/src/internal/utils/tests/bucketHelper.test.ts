@@ -2780,9 +2780,7 @@ describe("isComparisonAvailable", () => {
         attribute: DATE_DATASET_ATTRIBUTE,
         localIdentifier: "f1",
         filters: [referencePointMocks.dateFilter],
-        dateDataset: {
-            ref: referencePointMocks.dateDatasetRef,
-        },
+        dateDatasetRef: referencePointMocks.dateDatasetRef,
     };
     const referencePoint: IExtendedReferencePoint = {
         buckets: [
@@ -2793,9 +2791,7 @@ describe("isComparisonAvailable", () => {
                         localIdentifier: "date",
                         type: DATE,
                         attribute: DATE_DATASET_ATTRIBUTE,
-                        dateDataset: {
-                            ref: referencePointMocks.dateDatasetRef,
-                        },
+                        dateDatasetRef: referencePointMocks.dateDatasetRef,
                     },
                 ],
             },
@@ -2821,10 +2817,8 @@ describe("isComparisonAvailable", () => {
                         attribute: DATE_DATASET_ATTRIBUTE,
                         localIdentifier: "f1",
                         filters: [referencePointMocks.dateFilter],
-                        dateDataset: {
-                            ref: {
-                                uri: "date.dataset.2",
-                            },
+                        dateDatasetRef: {
+                            uri: "date.dataset.2",
                         },
                     },
                 ],

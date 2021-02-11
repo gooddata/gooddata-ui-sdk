@@ -271,9 +271,7 @@ export const samePeriodPrevYearFiltersBucket: IFilters = {
                 },
             ],
             aggregation: null,
-            dateDataset: {
-                ref: dateDatasetRef,
-            },
+            dateDatasetRef,
         },
     ],
 };
@@ -495,9 +493,7 @@ export const overTimeComparisonDateItem: IBucketItem = {
     localIdentifier: "2fb4a818526f4ca18c926b1a11adc859",
     filters: [dateFilterSamePeriodPreviousYear],
     attribute: "attr.datedataset",
-    dateDataset: {
-        ref: dateDatasetRef,
-    },
+    dateDatasetRef,
 };
 
 export const dateItemWithDateDataset: IBucketItem = {
@@ -506,9 +502,7 @@ export const dateItemWithDateDataset: IBucketItem = {
     attribute: "attr.datedataset",
     aggregation: null,
     showInPercent: null,
-    dateDataset: {
-        ref: dateDatasetRef,
-    },
+    dateDatasetRef,
 };
 
 const defaultSortItem = {
@@ -1745,11 +1739,7 @@ export const dateAttributeOnRowsAndColumnsReferencePoint: IReferencePoint = {
             items: [
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "created",
-                        },
-                    },
+                    dateDatasetRef: uriRef("created"),
                     localIdentifier: "date1",
                 },
             ],
@@ -1759,11 +1749,7 @@ export const dateAttributeOnRowsAndColumnsReferencePoint: IReferencePoint = {
             items: [
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "created",
-                        },
-                    },
+                    dateDatasetRef: uriRef("created"),
                     localIdentifier: "date2",
                 },
             ],
@@ -1786,38 +1772,22 @@ export const dateAttributesOnRowsReferencePoint: IReferencePoint = {
             items: [
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "created",
-                        },
-                    },
+                    dateDatasetRef: uriRef("created"),
                     localIdentifier: "date1",
                 },
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "closed",
-                        },
-                    },
+                    dateDatasetRef: uriRef("closed"),
                     localIdentifier: "date2",
                 },
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "snapshot",
-                        },
-                    },
+                    dateDatasetRef: uriRef("snapshot"),
                     localIdentifier: "date3",
                 },
                 {
                     ...dateItem,
-                    dateDataset: {
-                        ref: {
-                            uri: "created",
-                        },
-                    },
+                    dateDatasetRef: uriRef("created"),
                     localIdentifier: "date4",
                 },
             ],

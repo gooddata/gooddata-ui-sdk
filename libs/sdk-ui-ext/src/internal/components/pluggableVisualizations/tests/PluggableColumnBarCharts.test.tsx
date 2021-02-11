@@ -396,7 +396,7 @@ describe("PluggableColumnBarCharts", () => {
         it("should keep only first date attribute in view by bucket when comming from pivot table with different dimensions", async () => {
             const columnChart = createComponent(defaultProps);
             const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
-            mockRefPoint.buckets[2].items[0].dateDataset.ref = {
+            mockRefPoint.buckets[2].items[0].dateDatasetRef = {
                 uri: "closed",
             };
             const expectedBuckets: IBucketOfFun[] = [
