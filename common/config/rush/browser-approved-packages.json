@@ -695,6 +695,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "open",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "ora",
       "allowedCategories": [ "tools" ]
     },

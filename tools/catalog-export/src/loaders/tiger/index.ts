@@ -2,12 +2,12 @@
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import ora from "ora";
-import { log, logError } from "../../cli/loggers";
-import { promptPassword, promptUsername } from "../../cli/prompts";
-import { clearLine } from "../../cli/clear";
+import { logError, logInfo } from "../../cli/loggers";
+import { promptUsername } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
+import open from "open";
 
 /**
  * Tests if the provided tiger client can access the backend.
@@ -44,6 +44,18 @@ async function probeAccess(tigerClient: ITigerClient, projectId: string): Promis
     }
 }
 
+const TigerApiTokenVariable = "TIGER_API_TOKEN";
+
+/**
+ * Gets token defined in TIGER_API_TOKEN or undefined if no such env variable or the variable contains
+ * empty value.
+ */
+function getTigerApiToken(): string | undefined {
+    const token = process.env[TigerApiTokenVariable];
+
+    return token?.length ? token : undefined;
+}
+
 /**
  * Gets the tiger client asking for credentials if they are needed.
  * @param hostname - hostname to use
@@ -53,38 +65,51 @@ async function probeAccess(tigerClient: ITigerClient, projectId: string): Promis
 async function getTigerClient(
     hostname: string,
     usernameFromConfig: string | null,
-    passwordFromConfig: string | null,
     projectIdFromConfig: string,
 ): Promise<ITigerClient> {
-    const logInSpinner = ora();
-    let tigerClient = createTigerClient(hostname);
+    const token = getTigerApiToken();
+    const hasToken = token !== undefined;
+    let askedForLogin: boolean = false;
+
+    const tigerClient = createTigerClient(hostname, token);
+
     try {
-        // check if authorization is even necessary by trying a client without credentials
+        // check if user has access; if the auth is not enabled, it is no problem that user does not have
+        // token set
         const hasAccess = await probeAccess(tigerClient, projectIdFromConfig);
 
         if (!hasAccess) {
-            if (usernameFromConfig) {
-                log("Username", usernameFromConfig);
+            if (hasToken) {
+                logError(`It looks like the token you have set in ${TigerApiTokenVariable} has expired.`);
+            } else {
+                logError(`You do not have the ${TigerApiTokenVariable} environment variable set.`);
             }
 
-            const username = usernameFromConfig || (await promptUsername());
-            const password = passwordFromConfig || (await promptPassword());
+            if (!usernameFromConfig) {
+                logInfo(
+                    "I'm now going to ask you for your Tiger userId and then open your default browser at location " +
+                        "where you can obtain a fresh API token.",
+                );
+            }
 
-            logInSpinner.start("Logging in...");
+            const userId = usernameFromConfig || (await promptUsername("Tiger userId"));
+            const tokenUrl = `${hostname}/api/users/${userId}/apiTokens`;
+            await open(tokenUrl, { wait: false });
 
-            tigerClient = createTigerClient(hostname!, username, password);
+            logInfo(
+                `You should now see your default browser open at either ${tokenUrl} or at ` +
+                    `your Tiger installation's login page. Once you obtain the token, please set the ${TigerApiTokenVariable} environment variable and try again.`,
+            );
 
-            // test that the provided credentials work
-            await probeAccess(tigerClient, projectIdFromConfig);
-
-            logInSpinner.stop();
-            clearLine();
+            askedForLogin = true;
+            throw new CatalogExportError("API token not set or no longer valid.", 1);
         }
 
         return tigerClient;
     } catch (err) {
-        logInSpinner.fail();
-        clearLine();
+        if (askedForLogin) {
+            throw err;
+        }
 
         throw new CatalogExportError(`Unable to log in to platform. The error was: ${err}`, 1);
     }
@@ -102,7 +127,7 @@ async function getTigerClient(
  * @throws CatalogExportError upon any error.
  */
 export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    const { projectId, hostname, username, password } = config;
+    const { projectId, hostname, username } = config;
 
     if (!projectId) {
         throw new CatalogExportError(
@@ -111,7 +136,7 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
         );
     }
 
-    const tigerClient = await getTigerClient(hostname!, username, password, projectId);
+    const tigerClient = await getTigerClient(hostname!, username, projectId);
 
     const projectSpinner = ora();
     try {
