@@ -53,6 +53,7 @@ export {
 };
 
 export interface ITigerClient {
+    axios: AxiosInstance;
     workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
@@ -72,6 +73,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
 
     return {
+        axios,
         execution,
         labelElements,
         workspaceObjects,
