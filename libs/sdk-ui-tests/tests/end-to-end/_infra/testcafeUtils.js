@@ -35,6 +35,7 @@ const retry = async (check = async () => true, timeout = 1000, interval = 100, s
                 reject(error);
             }
             setTimeout(
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
                 () => retry(check, timeout, interval, started).then(resolve, reject),
                 Math.max(startTime - resolveTime + interval, 0),
             );
@@ -45,6 +46,7 @@ const retry = async (check = async () => true, timeout = 1000, interval = 100, s
 // returns a promise that is resolved with true when selector exists and rejected when it does not
 // or the other way around if expectExist is false
 export const selectorExists = (query, expectExist = true) =>
+    // eslint-disable-next-line no-async-promise-executor
     new Promise(async (resolve, reject) => {
         const exists = await Selector(query).exists;
         if (exists === expectExist) {
