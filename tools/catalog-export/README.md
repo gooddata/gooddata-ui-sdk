@@ -63,14 +63,22 @@ setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
     "hostname": "https://your.hostname.or.ip",
     "backend": "tiger",
     "projectId": "your workspace",
-    "username": "username",
-    "password": "password",
+    "username": "tiger_user_id",
     "output": "workspaceObjects.ts"
 }
 ```
 
 > Note: you have to enter `projectId` or use the `--project-id` option with tiger. Unlike for bear, the
 > catalog-export will not prompt you to select a workspace from a list of available workspaces.
+
+### Tiger Authentication
+
+When connecting to a Tiger backend, the tool expects that you have TIGER_API_TOKEN set with a value of the API Token
+which you yourself obtain from your installation. The username and password authentication is not possible against
+Tiger backend.
+
+While the configuration allows to specify `username` this is optional and will be used only to open a browser window
+at location where you can obtain an API Token.
 
 ## Recommendations
 

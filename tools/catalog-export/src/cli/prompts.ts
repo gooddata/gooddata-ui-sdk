@@ -1,15 +1,15 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
 import gooddata from "@gooddata/api-client-bear";
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
 import * as path from "path";
 import * as fs from "fs";
 
-export async function promptUsername(): Promise<string> {
+export async function promptUsername(wording: string = "username"): Promise<string> {
     const usernameQuestion: DistinctQuestion = {
         type: "input",
         name: "username",
-        message: "Enter your username:",
+        message: `Enter your ${wording}:`,
     };
     const usernameResponse = await prompt(usernameQuestion);
 
