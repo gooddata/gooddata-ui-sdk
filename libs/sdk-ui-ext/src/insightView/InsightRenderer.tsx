@@ -46,7 +46,10 @@ const visualizationUriRootStyle = {
     height: "100%",
 };
 
-class InsightRendererCore extends React.Component<IInsightRendererProps & WrappedComponentProps> {
+// this needs to be a pure component as it can happen that this might be rendered multiple times
+// with the same props (referentially) - this might make the rendered visualization behave unpredictably
+// and is bad for performance so we need to make sure the re-renders are performed only if necessary
+class InsightRendererCore extends React.PureComponent<IInsightRendererProps & WrappedComponentProps> {
     private elementId = getElementId();
     private visualization: IVisualization | undefined;
     private containerRef = React.createRef<HTMLDivElement>();
