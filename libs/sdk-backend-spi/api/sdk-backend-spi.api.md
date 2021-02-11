@@ -1949,6 +1949,7 @@ export class NoDataError extends AnalyticalBackendError {
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
+    loginUrl?: string;
 }
 
 // @public

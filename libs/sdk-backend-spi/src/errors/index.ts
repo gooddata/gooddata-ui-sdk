@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IDataView } from "../workspace/execution";
 
@@ -133,6 +133,12 @@ export class NotImplemented extends AnalyticalBackendError {
  * @public
  */
 export class NotAuthenticated extends AnalyticalBackendError {
+    /**
+     * Implementation of different backends MAY use this field to communicate URL of the login page where
+     * the authentication flow starts. Consult concrete backend's authentication providers for further detail.
+     */
+    public loginUrl?: string;
+
     constructor(message: string, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.NOT_AUTHENTICATED, cause);
     }

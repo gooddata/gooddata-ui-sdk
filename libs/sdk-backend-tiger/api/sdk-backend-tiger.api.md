@@ -7,13 +7,47 @@
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
+import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { ITigerClient } from '@gooddata/api-client-tiger';
 
 export { AnonymousAuthProvider }
+
+// @public
+export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
+    constructor();
+    // (undocumented)
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+}
+
+// @public
+export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
+    // (undocumented)
+    abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    // (undocumented)
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    // (undocumented)
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
+    // (undocumented)
+    protected obtainCurrentPrincipal(context: IAuthenticationContext): Promise<void>;
+    // (undocumented)
+    protected principal: IAuthenticatedPrincipal | undefined;
+}
 
 // @public
 function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAnalyticalBackend;
 
 export default tigerFactory;
+
+// @public
+export class TigerTokenAuthProvider extends TigerAuthProviderBase {
+    constructor(apiToken: string);
+    // (undocumented)
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    // (undocumented)
+    initializeClient(client: ITigerClient): void;
+}
 
 
 // (No @packageDocumentation comment for this package)
