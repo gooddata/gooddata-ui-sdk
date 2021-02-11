@@ -18,6 +18,9 @@ import merge from "lodash/merge";
 const _CONFIG: AxiosRequestConfig = {
     maxContentLength: -1,
     headers: {
+        common: {
+            "X-Requested-With": "XMLHttpRequest",
+        },
         post: {
             "Content-Type": "application/json;charset=utf8",
         },
