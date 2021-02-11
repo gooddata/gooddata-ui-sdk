@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
+import stringify from "json-stable-stringify";
 import React from "react";
 import { IDrillableItem, OnFiredDrillEvent, IHeaderPredicate } from "@gooddata/sdk-ui";
 import { ChartTransformation, renderHighCharts } from "./ChartTransformation";
@@ -9,9 +10,7 @@ import { IChartConfig } from "../interfaces";
 
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common";
 import isEqual from "lodash/isEqual";
-import isFunction from "lodash/isFunction";
 import noop from "lodash/noop";
-import omitBy from "lodash/omitBy";
 
 export interface IVisualizationProps {
     height: number;
@@ -46,11 +45,15 @@ export class Visualization extends React.Component<IVisualizationProps> {
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps): void {
-        this.setNumericSymbols(nextProps);
+        if (!isEqual(this.props.numericSymbols, nextProps.numericSymbols)) {
+            this.setNumericSymbols(nextProps);
+        }
     }
 
     public shouldComponentUpdate(nextProps: IVisualizationProps): boolean {
-        return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
+        // we need to exclude functions in all levels of nesting from the comparison
+        // the simplest way is to stringify (we do this in other places already as well)
+        return stringify(this.props) !== stringify(nextProps);
     }
 
     public setNumericSymbols(props: IVisualizationProps): void {
