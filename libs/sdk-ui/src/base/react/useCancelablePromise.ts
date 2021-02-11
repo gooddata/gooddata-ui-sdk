@@ -1,7 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
 import { makeCancelable } from "./CancelablePromise";
 import noop from "lodash/noop";
+import { UnexpectedSdkError } from "../errors/GoodDataSdkError";
+import { safeSerialize } from "./safeSerialize";
 
 /**
  * Indicates the current state of the promise inside useCancelablePromise hook
@@ -107,7 +109,7 @@ export function useCancelablePromise<TResult, TError = any>(
     }: {
         promise: (() => Promise<TResult>) | undefined | null;
     } & UseCancelablePromiseCallbacks<TResult, TError>,
-    deps: DependencyList = [],
+    deps?: DependencyList,
 ): UseCancelablePromiseState<TResult, TError> {
     const getInitialState = (): UseCancelablePromiseState<TResult, TError> => ({
         result: undefined,
@@ -176,8 +178,17 @@ export function useCancelablePromise<TResult, TError = any>(
 
     // We want to avoid the return of the old state when some dependency has changed,
     // before another useEffect hook round starts.
-    const [prevDeps, setDeps] = useState<DependencyList>(deps);
-    if (deps.some((dep, i) => dep !== prevDeps[i])) {
+    const [prevDeps, setDeps] = useState(deps);
+    if (prevDeps?.length !== deps?.length) {
+        throw new UnexpectedSdkError(
+            `The final argument passed to useCancelablePromise changed size between renders. The order and size of this array must remain constant.
+
+Previous: ${safeSerialize(prevDeps)}
+Incoming: ${safeSerialize(deps)}`,
+        );
+    }
+
+    if (deps?.some((dep, i) => dep !== prevDeps?.[i])) {
         setDeps(deps);
         const currentState = getInitialState();
         setState(currentState);
