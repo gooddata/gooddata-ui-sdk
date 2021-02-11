@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DependencyList, useEffect, useState } from "react";
 import { makeCancelable } from "./CancelablePromise";
 import noop from "lodash/noop";
@@ -107,7 +107,7 @@ export function useCancelablePromise<TResult, TError = any>(
     }: {
         promise: (() => Promise<TResult>) | undefined | null;
     } & UseCancelablePromiseCallbacks<TResult, TError>,
-    deps: DependencyList = [],
+    deps?: DependencyList,
 ): UseCancelablePromiseState<TResult, TError> {
     const getInitialState = (): UseCancelablePromiseState<TResult, TError> => ({
         result: undefined,
@@ -176,8 +176,12 @@ export function useCancelablePromise<TResult, TError = any>(
 
     // We want to avoid the return of the old state when some dependency has changed,
     // before another useEffect hook round starts.
-    const [prevDeps, setDeps] = useState<DependencyList>(deps);
-    if (deps.some((dep, i) => dep !== prevDeps[i])) {
+    const [prevDeps, setDeps] = useState(deps);
+    if (
+        (!deps && prevDeps) || // removed deps when we had some
+        (deps && !prevDeps) || // or added deps when we had none
+        deps?.some((dep, i) => dep !== prevDeps?.[i]) // or changed some dep
+    ) {
         setDeps(deps);
         const currentState = getInitialState();
         setState(currentState);
