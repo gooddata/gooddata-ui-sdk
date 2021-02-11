@@ -81,7 +81,7 @@ export function generateHeaderMenuItemsGroups(
         href: `/dashboards/#/project/${workspaceId}`,
     };
     const analyticalDesignerItem = {
-        key: enableNewNavigationForResponsiveUi ? "gs.header.analyze.new" : "gs.header.analyze",
+        key: "gs.header.analyze",
         className: "s-menu-analyze",
         href: `/analyze/#/${workspaceId}/reportId/edit`,
     };
@@ -91,10 +91,11 @@ export function generateHeaderMenuItemsGroups(
         className: "s-menu-load",
         href: `/data/#/projects/${workspaceId}/datasets`,
     };
-    const dataItemLink =
-        canManageProject && hasNoDataSet
+    const dataItemLink = !backendSupportsDataItem
+        ? canManageProject && hasNoDataSet
             ? `/admin/connect/#/projects/${workspaceId}/datasource`
-            : `/modeler/#/projects/${workspaceId}`;
+            : `/modeler/#/projects/${workspaceId}`
+        : `/modeler/#/${workspaceId}`;
     const dataItem = {
         key: "gs.header.data",
         className: "s-menu-data",
