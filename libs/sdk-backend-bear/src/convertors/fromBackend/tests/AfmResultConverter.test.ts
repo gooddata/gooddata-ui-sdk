@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { transformResultHeaders } from "@gooddata/sdk-backend-base";
-import { findDateAttributeUri } from "../../dateFormatting/dateFormatter";
+import { findDateAttributeUris } from "../../dateFormatting/dateFormatter";
 import { createResultHeaderTransformer } from "../afm/result";
 import {
     dimensionHeaders,
@@ -23,7 +23,7 @@ describe("AfmResultConverter", () => {
     ];
 
     it("should get the date attribute uri if it exists", () => {
-        expect(findDateAttributeUri(dimensions)).toEqual("/gdc/md/projectId/obj/272");
+        expect(findDateAttributeUris(dimensions)).toEqual(["/gdc/md/projectId/obj/272"]);
     });
 
     it.each(Scenarios)(
@@ -32,7 +32,7 @@ describe("AfmResultConverter", () => {
             expect(
                 transformResultHeaders(
                     dimensionHeaders,
-                    createResultHeaderTransformer(findDateAttributeUri(dimensions)),
+                    createResultHeaderTransformer(findDateAttributeUris(dimensions)),
                     {
                         dateFormat,
                     },
