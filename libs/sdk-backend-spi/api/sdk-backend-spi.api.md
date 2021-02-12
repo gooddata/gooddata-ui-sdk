@@ -69,6 +69,12 @@ export function attributeDescriptorLocalId(descriptor: IAttributeDescriptor): st
 export function attributeDescriptorName(descriptor: IAttributeDescriptor): string;
 
 // @public
+export type AuthenticationFlow = {
+    loginUrl: string;
+    returnRedirectParam: string;
+};
+
+// @public
 export type CatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact | ICatalogDateDataset;
 
 // @public
@@ -1949,7 +1955,8 @@ export class NoDataError extends AnalyticalBackendError {
 // @public
 export class NotAuthenticated extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
-    loginUrl?: string;
+    // (undocumented)
+    authenticationFlow?: AuthenticationFlow;
 }
 
 // @public

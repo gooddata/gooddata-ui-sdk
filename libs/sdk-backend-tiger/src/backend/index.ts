@@ -204,12 +204,14 @@ export class TigerBackend implements IAnalyticalBackend {
                     });
                 })
                 .catch((err2) => {
-                    throw new NotAuthenticated("Current session is not authenticated.", err2);
+                    throw errorConverter(err2);
                 });
         });
     };
 
-    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): IAuthenticationContext => {
+        return { client: this.sdk };
+    };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
         const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {

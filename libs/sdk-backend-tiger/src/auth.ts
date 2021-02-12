@@ -3,12 +3,14 @@ import {
     IAuthenticatedPrincipal,
     IAuthenticationContext,
     IAuthenticationProvider,
-    NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
-import { AxiosError } from "axios";
+import { convertApiError } from "./utils/errorHandling";
 
-type TigerUserProfile = { name?: string; userId: string };
+type TigerUserProfile = {
+    name?: string;
+    userId: string;
+};
 
 /**
  * Base for other IAuthenticationProvider implementations.
@@ -41,37 +43,26 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         const profile = await this.loadProfile(context);
 
         this.principal = {
-            userId: profile.userId,
+            userId: profile.userId ?? "n/a",
             userMeta: profile,
         };
     }
 
     /*
-     * TODO: this API does not yet exist on tiger. replace it with call to api-tiger-client
+     * TODO: this API is not yet part of OAS spec. eventually replace it with call to api-tiger-client
      */
     private async loadProfile(context: IAuthenticationContext): Promise<TigerUserProfile> {
         const client = context.client as ITigerClient;
 
         try {
+            // TODO: this is here because /api/profile is now weird and returns some dummy HTML page
+            //  for everyone - it's not really an authenticated resource. until the profile is
+            //  fixed the code tries to access user's org which is properly protected by auth.
+            await client.axios.get<TigerUserProfile>("/api/organization");
+
             return (await client.axios.get<TigerUserProfile>("/api/profile")).data;
         } catch (err) {
-            const statusCode = (err as AxiosError).response?.status;
-
-            if (statusCode === 404) {
-                // This is here until /api/profile lands in tiger
-                return {
-                    userId: "n/a",
-                };
-            } else if (statusCode === 401) {
-                const responseBody = (err as AxiosError).response?.data;
-                const exc = new NotAuthenticated("No session or session expired", err);
-
-                exc.loginUrl = responseBody;
-
-                throw exc;
-            }
-
-            throw err;
+            throw convertApiError(err);
         }
     }
 }
