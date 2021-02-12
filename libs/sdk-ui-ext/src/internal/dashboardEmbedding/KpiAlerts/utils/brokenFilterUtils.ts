@@ -21,15 +21,13 @@ import {
     isAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { ILocale } from "@gooddata/sdk-ui";
-import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import last from "lodash/last";
 import partition from "lodash/partition";
 import { IntlShape } from "react-intl";
 
 import { isAttributeFilterIgnored, isDateFilterIrrelevant } from "../../utils/filters";
 
-import { dashboardDateFilterToPreset } from "./translationUtils";
+import { translateDateFilter } from "./translationUtils";
 import {
     BrokenAlertType,
     IBrokenAlertAttributeFilter,
@@ -182,12 +180,7 @@ function enrichBrokenDateFilter(
     dateDataSets: IDataSetMetadataObject[],
 ): IBrokenAlertDateFilter {
     const { alertFilter, brokenType } = brokenFilter;
-    // TODO clear this up so that the conversion is not needed
-    const dateFilterTitle = DateFilterHelpers.getDateFilterTitle(
-        dashboardDateFilterToPreset(alertFilter),
-        intl.locale as ILocale,
-        dateFormat,
-    );
+    const dateFilterTitle = translateDateFilter(alertFilter, intl, dateFormat);
 
     const matchingDateDataset = dateDataSets.find((dataset) =>
         areObjRefsEqual(dataset, alertFilter.dateFilter.dataSet),
