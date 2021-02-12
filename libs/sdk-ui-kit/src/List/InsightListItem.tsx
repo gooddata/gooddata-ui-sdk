@@ -94,8 +94,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
 
     public componentDidUpdate(prevProps: IInsightListItemProps & WrappedComponentProps): void {
         if (prevProps.width !== this.props.width && this.shortenedTextRef.current) {
-            // TODO INE remove any when GD has correct typings
-            (this.shortenedTextRef.current as any).recomputeShortening();
+            this.shortenedTextRef.current.recomputeShortening();
         }
     }
 

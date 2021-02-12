@@ -173,7 +173,8 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
     // Bear model expects that all refs are sanitized to uriRefs.
     const dashboardUriRef = useMemo(() => (dashboard ? uriRef(dashboard.uri) : null), [dashboard]);
 
-    if (featureFlags) {
+    // trigger the invariant only if the user tries to open the dialog
+    if (featureFlags && isVisible) {
         invariant(
             featureFlags.enableKPIDashboardSchedule,
             "Feature flag enableKPIDashboardSchedule must be enabled to make ScheduledMailDialog work properly.",

@@ -1,13 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 import { IntlShape } from "react-intl";
 import lowerFirst from "lodash/lowerFirst";
-import { isRelativeDateFilterOption, DateFilterHelpers } from "@gooddata/sdk-ui-filters";
-import { ILocale } from "@gooddata/sdk-ui";
+import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
 import {
     absoluteDateFilterValues,
-    IAbsoluteDateFilter,
+    IAbsoluteDateFilterValues,
     IDateFilter,
-    IRelativeDateFilter,
+    IRelativeDateFilterValues,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
     isRelativeDateFilter,
@@ -24,29 +23,6 @@ export type KpiAlertTranslationData = {
     rangeText: string;
     intlIdRoot: string;
 } | null;
-
-function relativeFilterToRelativePreset(filter: IRelativeDateFilter): IRelativeDateFilterPreset {
-    const { from, to, granularity } = relativeDateFilterValues(filter);
-    return {
-        localIdentifier: "",
-        type: "relativePreset",
-        visible: true,
-        from,
-        to,
-        granularity: granularity as DateFilterGranularity,
-    };
-}
-
-function absoluteFilterToRelativePreset(filter: IAbsoluteDateFilter): IAbsoluteDateFilterPreset {
-    const { from, to } = absoluteDateFilterValues(filter);
-    return {
-        localIdentifier: "",
-        type: "absolutePreset",
-        visible: true,
-        from,
-        to,
-    };
-}
 
 export function dashboardDateFilterToPreset(
     filter: IDashboardDateFilter,
@@ -73,7 +49,70 @@ export function dashboardDateFilterToPreset(
     }
 }
 
-// TODO (RAIL-2847) when moving this to SDK8, expose the translation logic for date filters directly without the conversion to date filter options
+interface IRelativeDateFilterMeta extends IRelativeDateFilterValues {
+    type: "relative";
+}
+
+interface IAbsoluteDateFilterMeta extends IAbsoluteDateFilterValues {
+    type: "absolute";
+}
+
+type DateFilterMeta = IRelativeDateFilterMeta | IAbsoluteDateFilterMeta;
+
+function filterMetadata(filter: IDateFilter | IDashboardDateFilter): DateFilterMeta {
+    if (isRelativeDateFilter(filter)) {
+        return { ...relativeDateFilterValues(filter), type: "relative" };
+    } else if (isAbsoluteDateFilter(filter)) {
+        return { ...absoluteDateFilterValues(filter), type: "absolute" };
+    } else if (filter.dateFilter.type === "relative") {
+        return {
+            type: "relative",
+            from: Number.parseInt(filter.dateFilter.from?.toString() ?? "0", 10),
+            to: Number.parseInt(filter.dateFilter.to?.toString() ?? "0", 10),
+            granularity: filter.dateFilter.granularity,
+        };
+    } else {
+        return {
+            type: "absolute",
+            from: filter.dateFilter.from?.toString(),
+            to: filter.dateFilter.to?.toString(),
+        };
+    }
+}
+
+export function translateDateFilter(
+    filter: IDateFilter | IDashboardDateFilter,
+    intl: IntlShape,
+    dateFormat: string,
+): string {
+    const metadata = filterMetadata(filter);
+
+    return metadata.type === "absolute"
+        ? DateFilterHelpers.formatAbsoluteDateRange(metadata.from, metadata.to, dateFormat)
+        : DateFilterHelpers.formatRelativeDateRange(
+              metadata.from,
+              metadata.to,
+              metadata.granularity as DateFilterGranularity,
+              intl,
+          );
+}
+
+function getIntlIdRoot(filter: IDateFilter | IDashboardDateFilter): string {
+    const metadata = filterMetadata(filter);
+
+    if (metadata.type === "absolute") {
+        return "filters.alertMessage.relativePreset.inPeriod";
+    }
+
+    const hasOneBoundToday = metadata.from === 0 || metadata.to === 0; // e.g. last 4 months, next 6 days
+    const isLastOneX = metadata.from === -1 && metadata.to === -1; // e.g last month
+    const isNextOneX = metadata.from === 1 && metadata.to === 1; // e.g. next month
+
+    return hasOneBoundToday || isLastOneX || isNextOneX
+        ? "filters.alertMessage.relativePreset"
+        : "filters.alertMessage.relativePreset.inPeriod";
+}
+
 export function getKpiAlertTranslationData(
     filter: IDateFilter | IDashboardDateFilter | undefined,
     intl: IntlShape,
@@ -83,27 +122,8 @@ export function getKpiAlertTranslationData(
         return null;
     }
 
-    const option = isRelativeDateFilter(filter)
-        ? relativeFilterToRelativePreset(filter)
-        : isAbsoluteDateFilter(filter)
-        ? absoluteFilterToRelativePreset(filter)
-        : dashboardDateFilterToPreset(filter);
-
-    const rangeText = lowerFirst(
-        DateFilterHelpers.getDateFilterRepresentation(option, intl.locale as ILocale, dateFormat),
-    );
-
-    const hasOneBoundToday = option.from === 0 || option.to === 0; // e.g. last 4 months, next 6 days
-    const isLastOneX = option.from === -1 && option.to === -1; // e.g last month
-    const isNextOneX = option.from === 1 && option.to === 1; // e.g. next month
-
-    const intlIdRoot =
-        isRelativeDateFilterOption(option) && (hasOneBoundToday || isLastOneX || isNextOneX)
-            ? "filters.alertMessage.relativePreset"
-            : "filters.alertMessage.relativePreset.inPeriod";
-
     return {
-        intlIdRoot,
-        rangeText,
+        intlIdRoot: getIntlIdRoot(filter),
+        rangeText: lowerFirst(translateDateFilter(filter, intl, dateFormat)),
     };
 }
