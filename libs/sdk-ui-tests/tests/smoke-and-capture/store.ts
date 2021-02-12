@@ -20,7 +20,7 @@ function initializeStores(): DefinitionStores | undefined {
     const rootDir = process.env[StoreEnvVar];
 
     if (!rootDir) {
-        // tslint:disable-next-line:no-console
+        // eslint-disable-next-line no-console
         console.warn(
             `The smoke-and-capture suite is not configured with store root. The suite will run but will not store any recording definitions.`,
         );

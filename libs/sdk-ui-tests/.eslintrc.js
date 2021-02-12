@@ -10,4 +10,7 @@ module.exports = {
         "../../.eslintrc.react.js",
     ],
     parserOptions: { tsconfigRootDir: __dirname },
+    globals: {
+        fixture: true,
+    },
 };

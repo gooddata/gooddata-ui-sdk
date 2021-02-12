@@ -1422,7 +1422,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-KWk80UPIzPmUg+P0rKh6TqspRw0G6eux1PuJr+zz47ftMaZ9QDwbGzHZbtzWkl5hgayM/qrKRutllRC7D/vVXQ==
-  /@gooddata/eslint-config/2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe:
+  /@gooddata/eslint-config/2.1.0_484ad33abf09c2c204e4316f145b0b5a:
     dependencies:
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
       '@typescript-eslint/parser': 2.34.0_eslint@7.19.0+typescript@4.0.2
@@ -1430,6 +1430,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
     dev: false
     peerDependencies:
       '@typescript-eslint/eslint-plugin': '>=2.16.0'
@@ -1437,9 +1438,10 @@ packages:
       eslint-plugin-header: '>=3.0.0'
       eslint-plugin-import: '>=2.20.0'
       eslint-plugin-jest: '>=23.6.0'
+      eslint-plugin-no-only-tests: '>=2.4.0'
       typescript: '*'
     resolution:
-      integrity: sha512-iW45o4EJxt3Rg/oLTx2COuHW66ipbwM8JhX81RgMYnfnSiTUSOKOVmhbagVsIuGC403zigDn3J7YmoDHZhVfWw==
+      integrity: sha512-DwB//alPfbTXMTYlvEyj1nsLTRt/5xcYm/ytZ58Mb70stBBY7/FD3jL9QTcZVXa2Ox0hmDw0yFtzX2yM/1IyzA==
   /@gooddata/frontend-npm-scripts/1.2.0:
     dependencies:
       line-replace: 1.0.3
@@ -8174,6 +8176,12 @@ packages:
       typescript: '*'
     resolution:
       integrity: sha512-dNGGjzuEzCE3d5EPZQ/QGtmlMotqnYWD/QpCZ1UuZlrMAdhG5rldh0N0haCvhGnUkSeuORS5VNROwF9Hrgn3Lg==
+  /eslint-plugin-no-only-tests/2.4.0:
+    dev: false
+    engines:
+      node: '>=4.0.0'
+    resolution:
+      integrity: sha512-azP9PwQYfGtXJjW273nIxQH9Ygr+5/UyeW2wEjYoDtVYPI+WPKwbj0+qcAKYUXFZLRumq4HKkFaoDBAwBoXImQ==
   /eslint-plugin-prettier/3.3.1_eslint@7.19.0+prettier@2.0.5:
     dependencies:
       eslint: 7.19.0
@@ -8982,19 +8990,6 @@ packages:
   /follow-redirects/1.13.2_debug@4.1.1:
     dependencies:
       debug: 4.1.1
-    dev: false
-    engines:
-      node: '>=4.0'
-    peerDependencies:
-      debug: '*'
-    peerDependenciesMeta:
-      debug:
-        optional: true
-    resolution:
-      integrity: sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
-  /follow-redirects/1.13.2_debug@4.3.1:
-    dependencies:
-      debug: 4.3.1_supports-color@6.1.0
     dev: false
     engines:
       node: '>=4.0'
@@ -10262,7 +10257,7 @@ packages:
   /http-proxy/1.18.1_debug@4.3.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.13.2_debug@4.3.1
+      follow-redirects: 1.13.2
       requires-port: 1.0.0
     dev: false
     engines:
@@ -20035,7 +20030,7 @@ packages:
       integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==
   'file:projects/api-client-bear.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/fast-levenshtein': 0.0.1
       '@types/fetch-mock': 5.12.2
       '@types/isomorphic-fetch': 0.0.34
@@ -20054,6 +20049,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       fast-levenshtein: 2.0.6
       fetch-cookie: 0.7.3
@@ -20083,12 +20079,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-D6IbJN+FVRjdxGqZ5ojwXs/aK3ImfRCx3SqCoovMQnNQ/AfC7vpkwO9r+feGLAgijRoLyEK7wBMOs2ZnqQuLgQ==
+      integrity: sha512-YRYvkrO4yMfZEhWioFnivJeUTSgklXGAE7dEluNzYIxV+RoTn6HHoSUVD2YQmNnBXAnAXF1KzGnNNQwlIvt/Ig==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@openapitools/openapi-generator-cli': 1.0.10-4.3.1
       '@types/jest': 26.0.20
@@ -20106,6 +20102,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20123,12 +20120,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Eh40LLxv2YlWFussVwpqXFhRJXKPuw59LcuFqwc/uOSO38G2WoVOGGfFTIJxeRSDbae7O/MFNiqt3THsW+5eqw==
+      integrity: sha512-xhqH5JUmvC+MLWw/OtPd19Fg0prdtg1gSzJV50Et5mmPcH5YKyIMaUwobryWsgNaPcKE0cX9O31neJf1W9Gg5w==
       tarball: 'file:projects/api-client-tiger.tgz'
     version: 0.0.0
   'file:projects/api-model-bear.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20140,6 +20137,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20154,12 +20152,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-KNz4xvLB28LUjB/G84YJsCoGPWamh2JvmADaOtdC5LXlhSTLmar9BIc/QhZrVeRilD1Vk7yF3fwqd9qywX07pA==
+      integrity: sha512-I9pl1C2acC0sEC2vbIzfTyH6eKgynRLg42Bax0rN8F0mVUXXdtfMl2V5QBt/f1y9uCivnEHJpk5fUnJ1UgHR+Q==
       tarball: 'file:projects/api-model-bear.tgz'
     version: 0.0.0
   'file:projects/applink.tgz':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/blessed': 0.1.17
       '@types/cross-spawn': 6.0.2
       '@types/jest': 26.0.20
@@ -20178,6 +20176,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       find-up: 5.0.0
       jest: 26.6.3_ts-node@8.10.2
@@ -20192,14 +20191,14 @@ packages:
     dev: false
     name: '@rush-temp/applink'
     resolution:
-      integrity: sha512-o+NHkeBTDISSxwBrN1kl6N8FRsQk2jP8qoNS73oTLOOOH+dRQmx9prm73Y0JCh9b+14WeK3lJeQILiOXptAu4A==
+      integrity: sha512-YnmEewh92suMBnR7ioFTq3NTXBmlmUPGkrA4hLyNx5WoPjwuaSueh8R8gwAj0XA+Wy2stm23DNkFt8iNa1vm7w==
       tarball: 'file:projects/applink.tgz'
     version: 0.0.0
   'file:projects/catalog-export.tgz':
     dependencies:
       '@babel/core': 7.12.13
       '@babel/plugin-transform-typescript': 7.12.13_@babel+core@7.12.13
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/inquirer': 6.5.0
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20214,6 +20213,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       inquirer: 6.5.2
       jest: 26.6.3_ts-node@8.10.2
@@ -20232,12 +20232,12 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-q8yRCgKiHndbWvfTfRQVT7RrMyZFtphOZHW48mMqAlxaaX5Kph61RKp0mnB2DvUq1PodjM8Dgh5OXid8OeSeTg==
+      integrity: sha512-VJ4Nvhi+FRgyyNzTgmWMQYlginYScAcoGpxZAPyI6L2KK4J+r4OKfyyR+ihCyrljz10eFLTtKhJ9qf4Adw4sEQ==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/experimental-workspace.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20249,6 +20249,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20263,12 +20264,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-0sgoQhsJAj8Ye2g/RdTw+p+5eR3xjvj/UdL9XSCkKCOGEHo0piJ9cGMwaLISv0ALuyV26FqBPszcihVVp7rtQA==
+      integrity: sha512-S0wWv+QlnFQBVtPsd8om6P3Fpi5sh6ruYy3SZtInfAMCI1G9H1XxUMqBKmYtODnws0R3Bum9M2kFKEwPBsixfg==
       tarball: 'file:projects/experimental-workspace.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
       '@types/node': 12.19.15
@@ -20279,6 +20280,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20293,12 +20295,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-rWQN8yipX9eDt9gvk6SmdjKFvjenzm5EvyV7NU6Sl32O2eluh7jy5zPhyxGEVMTUAsrM5wxkkGhiua6fKM7S1Q==
+      integrity: sha512-OViI7fByLI1Q2p6OPsKq/eZxefA6IS+jERNvzoj9jXglYKJC4KsayvNkPX72YF/cvziQhgWmte+YEn54xscfuQ==
       tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/inquirer': 6.5.0
       '@types/jest': 26.0.20
       '@types/json-stable-stringify': 1.0.32
@@ -20315,6 +20317,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       inquirer: 6.5.2
       jest: 26.6.3_ts-node@8.10.2
@@ -20335,12 +20338,12 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-QKjN7R5OJvOyiYwZWqkQLGkrOzzWl5LoIAlHlA9K7qNBbIvPgq7pUrfS2AF2+Pk2gFk6VhG6ys5v81flMYAfYw==
+      integrity: sha512-tRxspqFsxvnuHxrUGwn3En5aaOWVEYa+RaWD+Oy47/ZlgNhctUCP8zlr2neDBjEvxBfwbAchL1wt7LJu0Ac/tA==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
       '@types/node': 12.19.15
@@ -20351,6 +20354,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20364,12 +20368,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-iRm4BerwaG+OGC5BRIN7Ga+tzQMPoSbMTTpgqsmz9yg4WAM52TrtB7bMTLWf3ZiD+NehbtsB/4dfGodePRu3vQ==
+      integrity: sha512-pH7it+LbR0Z0Ae403PagdIkifP7pkyQCxSSShRfrcYUv3+yV/FitaKl6YlA/hNz2pA1/41V8qZQwBYLJe0w3hQ==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
       '@types/node': 12.19.15
@@ -20380,6 +20384,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20394,12 +20399,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-UwhaHwTmvOVJLfNPFNNa/vFZHDnSQyHhue218E1FrgbtbAYYXL9PFcbUKVl4VxVYOjqimmyLlh8vS7rgc2Jo2g==
+      integrity: sha512-RMGL5bj8ZvwVjY3Kmut92isNTMRQnmh5xKmXqUH4n9+dYOYcxUGCzCXE9OQt1h7z4+xnEY8iZcSFW7zBfrCICg==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/json-stable-stringify': 1.0.32
@@ -20414,6 +20419,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20432,12 +20438,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-k4ws5H8sR7xPOI3XIKsEaEozeul3fWlfQvfWrCugWPsj2Xg8BoV8RGnUrcjijinnrjd2FYJTq5l6JhTp6iqyzw==
+      integrity: sha512-2vRIS5TBWNMVBJTHKm5P8dnGvZDMcV6TdmEJ9btdEL2nHAWaEV2s83rvZK2EnGawOsTnmgSXTrGYfealKSlLaw==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/json-stable-stringify': 1.0.32
@@ -20454,6 +20460,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       http-status-codes: 1.4.0
       jest: 26.6.3_ts-node@8.10.2
@@ -20473,12 +20480,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-GGnxT7tgc4a0MgPNluPyXJrN6pcJvJIp2TgDBk7MqnThYkb+mySpbXYRlkyWH1yD4fqVVl3F1n5HQf0YqcveSQ==
+      integrity: sha512-+rgFmzZ84yB3tG2ck2kYWHg3/62xAZuS0p4brM5RK2rhLJ3ZNN6pTWrzfiIhyMrDX8fuQWzAPlMNSpRbjgkoHg==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20491,6 +20498,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20506,12 +20514,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-H9CPv7vBcsNNWj1mHNqrHZtl2OCNMlfBZ0dmyThm7YhZXIW+cwlyr8eySNDwOtgm5+He8KVveW6QI4xeaW3qeg==
+      integrity: sha512-6R2H6BYRD9s/hBCcdxzwKl9k1JBwqaH3jEI5WxqqTvr4J/gPvgQDdA3NQcajwlHKpFuq0AMpyBapOAT6tQZr+Q==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20524,6 +20532,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20540,12 +20549,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-wfzZl6og4UOHf+AXQKdUnn0LphFukNczO5Fa3FMX0Lo6rgJkLG7GeBVy7tqeyxtYWW2qNt0q+z8V9RlObznu4g==
+      integrity: sha512-16daFf1ytVhCIKXr/608ZapIDEittcisngG6mkPnTAeelSJrb69NQbks8FERfByZ95c8q0D+pk9W1HXraSyZNA==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20561,6 +20570,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20579,12 +20589,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-h4vkzHWMDg6VRSRDOLAc8A+pJyCMz+eT0+PNWGTtNRgmJBcKhXpmBhwfc/wwLjtMSUhKQ+/uAhcjXpjxDT/aFw==
+      integrity: sha512-C2oAbZagEGo9xPnulSgEdTXJU2+Fk4fVjDH4QAL0pX/XCOHwXmQXb+fT+GTUYRKIxm4aHa6r0a4V8bZpGfsYEQ==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-embedding.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20596,6 +20606,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20610,7 +20621,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-/VVJ8CKcFXiwXZmajwpW5+Nq7WYHPnHIzzO6chWbh1xBy7anB6YQal/6tz+5mGbL/NkF3AXKX+8wru1b3LEgIQ==
+      integrity: sha512-aoX4qeZ8hT3I+iQrJSI+6bCNwdpvPBnTXj2Fu2SJpIJmum6w3qd2sjYyRjtM8tAURhmTlMgmzuU6JMk6WAU/nQ==
       tarball: 'file:projects/sdk-embedding.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_ts-node@8.10.2':
@@ -20626,7 +20637,7 @@ packages:
       '@babel/preset-react': 7.12.13_@babel+core@7.12.13
       '@babel/preset-typescript': 7.12.13_@babel+core@7.12.13
       '@babel/runtime': 7.12.13
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@types/classnames': 2.2.3
       '@types/history': 4.7.8
@@ -20661,6 +20672,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -20710,12 +20722,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-imbTY5lgFsQ/BFnGlylHfKrq4lQlnJPOiiJ+O9xVLTXgcyZhdZhEeqsnw9qdCMssXYG+mMkBCa7KmNUKet88gA==
+      integrity: sha512-8+OXsODJ6M8l4KrCQGHuU03/FRH8IVZ6dOQP7UNrct7FfROtfPZTgSfwOv/edtZsQm7fKjemkIwTymtqtJTlCw==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/json-stable-stringify': 1.0.32
@@ -20731,6 +20743,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20749,12 +20762,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-QE6Ky7n2QeCq6v/wLh7bFR518XAXLUBTeo/avxx9oKaUIXNOc9vOqVSfsV+eI1eyq5MLXGrgKnYnj3u7TeTmqw==
+      integrity: sha512-ODOpcCZexPulHxLOYNj0U+gpEKWFmYLvP082FogPG3uh1ssu0b3s/xoE9zsj2WYGGlkOG8ioVp7/ZPSemA74jA==
       tarball: 'file:projects/sdk-model.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-ts.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -20766,6 +20779,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20780,12 +20794,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-pr04+t4dk2SQHqmuo43YI+p3RhpERDsz4lyL3EiyUeqRhBR4wKBvP39LGt99YoYdfzc17JAZvrE+lR6OFX5Z/g==
+      integrity: sha512-xM0Vlqb1Gzann6Gu+YaWA60TyxDS8lBeBBmawVoyEyUUv7+Jrqt0aknDn2gU/tBvK2NZbg3Qfmb8iJeUv4aCiw==
       tarball: 'file:projects/sdk-skel-ts.tgz'
     version: 0.0.0
   'file:projects/sdk-skel-tsx.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/enzyme': 3.10.8
       '@types/enzyme-adapter-react-16': 1.0.6
@@ -20806,6 +20820,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -20829,12 +20844,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-rBA8mQlbf0G9BJJACsWK/HirJKqXzMetRtVvMVWdtQZfcDi3a3GYRkziAzy+1f8SOfWCi/TuDIihYZLp2qXAWw==
+      integrity: sha512-ltf3Imf7KVNfWeYlMKIMkTxL/1f6V2ncz2vHEM0cMlU6jjIrxQaQRevalLN7qUYbyNd6kaFx/GOE7CmZgEYdAA==
       tarball: 'file:projects/sdk-skel-tsx.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-all.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@typescript-eslint/eslint-plugin': 4.14.2_b763233e34f2d156ea6f9b0d506a8153
@@ -20845,6 +20860,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -20858,12 +20874,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-l5lnKGwn53YCWge9M9rj/QICEYxqdARFifsD1jB5t6FYojRNTnZbe6DpDuWZQnH8XGMpTP7MmD4j1bOUNbj3XQ==
+      integrity: sha512-vHoa7iu7LdaPB72/rkYxdxDPpH0uWWFApytfisDmJhDEYSHyzzD5nTXprtlxQlhxr/fsvgTuWgpi0D4QY25+wQ==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -20891,6 +20907,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -20925,13 +20942,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-CNsfTziTTFaDt8hdIjsjuh4qeWoti/H4rdeXlSsrBy5taij2xn4AJ27cPkWhbT9uY1xTXasdMOgXNs1ojbEtVg==
+      integrity: sha512-dbsKj2jzTcGrM0ADWpBUCUrrQgnDNIb4TV3uJBKuk5nBjr/85Sz6gldHjf6Tdd3hFA6a++zbDE9nig9q/wdmBQ==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz_ts-node@8.10.2':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -20964,6 +20981,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21001,12 +21019,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-DZjmlRTZ1+NZccwVNF4MRI459VBiziQk18rKTdDZ2WJDUykq2l81cwLSgKKPcNA1ZebDB9ONj/VC1LxvlfkbEQ==
+      integrity: sha512-EU6hEVvw491tEDWR6cU88oGugD60CLhK8kRmhkAJhcrvk7ulEryrJHvF9T0/PlylfJw5D451PjiGShXT+kCm0Q==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21037,6 +21055,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21072,12 +21091,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-mp3xo8nxFfuM9qSWIR1QakekZ2/G1MdLbf2nzVKUe/DXx1ObLri0o+BwWwPbkV/x1+t+aRATbyKejmYnqJsGdA==
+      integrity: sha512-YKmHGQucX+F6PWUoAg+fYUpDgxzqzRJbJyIPSUIb+nJd9W3YHeo/HQ+msNn07nP4Xa1hCM8nGF/g7+i+5UyAxg==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21105,6 +21124,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21134,12 +21154,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Q6eTFWy7XCVj1StZgdYu6lM6CNBPJ0Dip8BTPSUqaiR0+iXgtQo7ZUM5X73JPLIIZwnSx5FeBMghSPeZZixk7A==
+      integrity: sha512-db2O8jBJBw5yiXhj9MMHgxJETdtvmFu61FoWw6nSPTMz5WCrImhUx1wTPGqP9+CZADxMsxcYW6F7Fr9XwhIT3A==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-kit.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21174,6 +21194,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21213,7 +21234,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-wtaqBqk7NTNfzZqSYRHe27Y7IZgwW45XinLIg1WqWAv/Ic11La+Z/pFLrHsFDIe/vsNnpwyqmRWwuAqPQKQkVA==
+      integrity: sha512-SjVOjIMt2b+qcgHREM/WyLM1hx7ZTTI6TIgfXmAzQ6FNWkTs/XtxPWUnBd7DNl6A//eEDX601gXqD1vDbexL4A==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2':
@@ -21221,7 +21242,7 @@ packages:
       '@ag-grid-community/all-modules': 22.1.1
       '@ag-grid-community/react': 22.1.2_react-dom@16.14.0+react@16.14.0
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21247,6 +21268,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21278,7 +21300,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-0zneXEKHnQeFDzbZ11mIVQjOK6TlUTMZarneIU/4eJroWju1f8Lkfnb6Wh9y7fGaU1SS11ut8Tumsvw1b7pUjA==
+      integrity: sha512-cLG3PeTWGjA+6hsGz2rKOBAAgOVSnF2rWXVFdkzRvWzHnABIQgbasn3n5lHcMYr/4EU5xM9lU4FYaUK18pPk5g==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz':
@@ -21289,7 +21311,7 @@ packages:
       '@babel/preset-env': 7.12.13_@babel+core@7.12.13
       '@babel/preset-react': 7.12.13_@babel+core@7.12.13
       '@babel/runtime': 7.12.13
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@storybook/addon-actions': 6.1.16_4739bbb15760d634c9ef36534c29a77c
@@ -21321,6 +21343,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21351,12 +21374,12 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-tests'
     resolution:
-      integrity: sha512-3h6l5ZdIwDwkAbcvotWiKgpHTS7a2XCLfl3PgqAy5b2Bwaa3Q5jKesctfTOdGxG+11atPsfU10Sj2iHCzaHmEA==
+      integrity: sha512-7tdL84NRvETMH+zoHz+I1KKAjcPUIwdhZZPb8k+A1MBM0OaHkKCz5q8Hex/W1acaA6KV8+LbyMWWf8qE2Tma4g==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-theme-provider.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/enzyme': 3.10.8
       '@types/enzyme-adapter-react-16': 1.0.6
@@ -21377,6 +21400,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21402,12 +21426,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-psVDTlTa9cTNKJj2UYR6GsxW8PPV8T6PYeBoPFwVz/ftfdbYc6ryqulY9QRLPwECxUyEUajt0G7e0C35PPZD/w==
+      integrity: sha512-L8fFapfEbX28R6FZWEEPkjsbb3lJE8VCCAajAVKvWclZVK4AeamCixSFf7d4HlClirNyOh8126a0JEJ+TEA3fw==
       tarball: 'file:projects/sdk-ui-theme-provider.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21433,6 +21457,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21460,13 +21485,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-zRN/nvJHEHj4C6ITlDMVcQZ7WKCxXONJMVDJmCkmlLNWVAmyeyUc6TaKgdiV5QQQJxKik7uENVBvcmJMwpU6uw==
+      integrity: sha512-BTsx8RM66of+cQJaiBLSIfWIeyzY1F+p1J63R7eVGhTVwPJ93it9FahtFy9jHhfmhEHhCB6t4kJ7rEEeCSoRzA==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz_ts-node@8.10.2':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
@@ -21490,6 +21515,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       eslint-plugin-react: 7.22.0_eslint@7.19.0
       eslint-plugin-react-hooks: 4.2.0_eslint@7.19.0
@@ -21518,12 +21544,12 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-uVyA/08z8weRww5/cFxFPnR0Eg1Do3C47ZDMc2SLWoAyX8qKT1wdDj+fI623R9vHEx5wvdM4Wa+RmBRY0qPpeQ==
+      integrity: sha512-uu3Zan7XhS461oDW+r7fUoLzwYX9WPKS6JUzKYokcND/U9hR5lmfzDLO6gKdPVCl3iGxsgvoHRCt87slGhUBug==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
   'file:projects/util.tgz_ts-node@8.10.2':
     dependencies:
-      '@gooddata/eslint-config': 2.0.0_dcbc19620aa9208a3dfc82dab7c1b8fe
+      '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
       '@microsoft/api-extractor': 7.8.1
       '@types/jest': 26.0.20
       '@types/lodash': 4.14.168
@@ -21535,6 +21561,7 @@ packages:
       eslint-plugin-header: 3.1.1_eslint@7.19.0
       eslint-plugin-import: 2.22.1_eslint@7.19.0
       eslint-plugin-jest: 24.1.3_eslint@7.19.0+typescript@4.0.2
+      eslint-plugin-no-only-tests: 2.4.0
       eslint-plugin-prettier: 3.3.1_eslint@7.19.0+prettier@2.0.5
       jest: 26.6.3_ts-node@8.10.2
       jest-junit: 3.7.0
@@ -21549,7 +21576,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-nvCV4VQ2N9w3oq2t5D7fDG1Rlu72aaxhdpsEw8vrLEeWPr3A83uX0TWBgkQsf31UtGPK6aK1mJKCQHXDgNwVhw==
+      integrity: sha512-p2t6EDI4qQw3f1Q/hw207jCDHRHcCp2cZ3JKPwSCiMM8XI0PFdr5zMYGUMtgZdp3pCWtXeOWvpEypEOMrbARAQ==
       tarball: 'file:projects/util.tgz'
     version: 0.0.0
 registry: ''

@@ -1,15 +1,13 @@
 // (C) 2007-2020 GoodData Corporation
-import { Selector, ClientFunction, t } from "testcafe";
+import { Selector, ClientFunction } from "testcafe";
 import { navigateToStory } from "../_infra/testcafeUtils";
 import { getCell, waitForPivotTableStopLoading, checkWidthWithTolerance } from "./utils";
 
-fixture
-    .only("Pivot Table Sizing")
-    .beforeEach(
-        navigateToStory(
-            "50-stories-for-e2e-tests-pivot-table--complex-table-with-multiple-columns-and-with-sizing",
-        ),
-    );
+fixture("Pivot Table Sizing").beforeEach(
+    navigateToStory(
+        "50-stories-for-e2e-tests-pivot-table--complex-table-with-multiple-columns-and-with-sizing",
+    ),
+);
 
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing";
 const FIRST_CELL_AUTORESIZE_WIDTH = 105;
