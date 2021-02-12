@@ -182,9 +182,7 @@ export interface IBucketItem {
 
     dfRef?: ObjRef;
     locationDisplayFormRef?: ObjRef;
-    dateDataset?: {
-        ref: ObjRef;
-    };
+    dateDatasetRef?: ObjRef;
 }
 
 export interface IFiltersBucketItem extends IBucketItem {

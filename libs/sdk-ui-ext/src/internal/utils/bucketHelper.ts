@@ -963,7 +963,7 @@ export const transformMeasureBuckets = (
 
 const hasSameDateDimension = (dateItem: IBucketItem, referenceDateItem: IBucketItem): boolean => {
     if (isDateBucketItem(dateItem) && isDateBucketItem(referenceDateItem)) {
-        return areObjRefsEqual(dateItem.dateDataset?.ref, referenceDateItem.dateDataset?.ref);
+        return areObjRefsEqual(dateItem.dateDatasetRef, referenceDateItem.dateDatasetRef);
     }
     return false;
 };
@@ -982,7 +982,7 @@ const getDateFilterRef = (filters: IFilters): ObjRef | undefined => {
     if (!dateFilter) {
         return undefined;
     }
-    return dateFilter.dateDataset?.ref;
+    return dateFilter.dateDatasetRef;
 };
 
 export const isComparisonAvailable = (buckets: IBucketOfFun[], filters: IFilters): boolean => {
@@ -997,6 +997,6 @@ export const isComparisonAvailable = (buckets: IBucketOfFun[], filters: IFilters
         return true;
     }
     return bucketDateItems.some((bucketDateItem: IBucketItem) =>
-        areObjRefsEqual(bucketDateItem.dateDataset?.ref, dateFilterRef),
+        areObjRefsEqual(bucketDateItem.dateDatasetRef, dateFilterRef),
     );
 };
