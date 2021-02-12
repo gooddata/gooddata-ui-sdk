@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 /**
  * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
@@ -7,6 +7,20 @@
  * @public
  */
 export interface IAuthenticationProvider {
+    /**
+     * Optionally perform custom initialization of the client that the Analytical Backend uses to communicate
+     * with the server.
+     *
+     * If implemented, this function WILL BE called by the backend every time a new instance of API client
+     * is created.
+     *
+     * Note: the configuration and construction of Analytical Backend instance is cumulative. Backend implementations
+     * MAY create multiple instances of clients during construction.
+     *
+     * @param client - an instance of client
+     */
+    initializeClient?(client: any): void;
+
     /**
      * Perform authentication.
      *

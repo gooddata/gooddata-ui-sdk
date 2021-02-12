@@ -311,6 +311,7 @@ export interface IAuthenticationProvider {
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
     deauthenticate(context: IAuthenticationContext): Promise<void>;
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
+    initializeClient?(client: any): void;
 }
 
 // @public

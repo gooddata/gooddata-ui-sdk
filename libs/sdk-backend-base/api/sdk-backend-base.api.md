@@ -132,6 +132,8 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
+    initializeClient(client: any): void;
+    // (undocumented)
     reset: () => void;
 }
 
