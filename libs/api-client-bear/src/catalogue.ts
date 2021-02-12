@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import find from "lodash/find";
 import omit from "lodash/omit";
@@ -229,7 +229,7 @@ export class CatalogueModule {
     }> {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
-            ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap")!, true)
+            ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap")!)
             : undefined;
 
         const omittedOptions = [
