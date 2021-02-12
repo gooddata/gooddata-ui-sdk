@@ -1513,7 +1513,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     ? `s-table-measure-column-header-group-cell-${indexWithinGroup}`
                     : null,
                 // Funny stuff end
-                indexWithinGroup !== undefined
+                indexWithinGroup !== undefined && !isSliceCol(colDesc)
                     ? `s-table-measure-column-header-cell-${indexWithinGroup}`
                     : null,
                 absoluteColIndex !== undefined
