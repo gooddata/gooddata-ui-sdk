@@ -1,7 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
-import { ColDef, Column } from "@ag-grid-community/all-modules";
+import { ColDef, Column, ColumnResizedEvent } from "@ag-grid-community/all-modules";
 import { MEASURE_COLUMN } from "./constants";
 import { agColId } from "../structure/tableDescriptorTypes";
+import { ColumnEventSourceType } from "../../columnWidths";
 
 /*
  * Assorted utility functions used in our Pivot Table -> ag-grid integration.
@@ -24,4 +25,22 @@ export const isMeasureColumn = (item: Column | ColDef): boolean => {
 
 export function agColIds(columns: Column[]) {
     return columns.map(agColId);
+}
+
+export function isHeaderResizer(target: HTMLElement): boolean {
+    return target.classList.contains("ag-header-cell-resize");
+}
+
+export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
+    return Boolean(
+        columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns,
+    );
+}
+
+export function scrollBarExists(target: HTMLDivElement): boolean {
+    const { scrollWidth, clientWidth } = target.getElementsByClassName(
+        "ag-body-horizontal-scroll-viewport",
+    )[0];
+
+    return scrollWidth > clientWidth;
 }

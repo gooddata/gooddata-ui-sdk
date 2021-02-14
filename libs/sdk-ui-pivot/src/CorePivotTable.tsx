@@ -50,7 +50,7 @@ import { RowLoadingElement } from "./impl/data/RowLoadingElement";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
-import { ColumnEventSourceType, ColumnWidthItem } from "./columnWidths";
+import { ColumnWidthItem } from "./columnWidths";
 import { MIN_WIDTH } from "./impl/resizing/agGridColumnSizing";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
@@ -66,6 +66,7 @@ import {
 import { cellClassFactory, headerClassFactory } from "./tableStyling";
 import { cellClickedFactory } from "./cellClicked";
 import { columnAttributeTemplate, measureColumnTemplate, rowAttributeTemplate } from "./columntTypes";
+import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agGridUtils";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -899,24 +900,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onColumnResized: this.props.onColumnResized,
         };
     };
-}
-
-export function isHeaderResizer(target: HTMLElement): boolean {
-    return target.classList.contains("ag-header-cell-resize");
-}
-
-export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return Boolean(
-        columnEvent && columnEvent.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns,
-    );
-}
-
-export function scrollBarExists(target: HTMLDivElement): boolean {
-    const { scrollWidth, clientWidth } = target.getElementsByClassName(
-        "ag-body-horizontal-scroll-viewport",
-    )[0];
-
-    return scrollWidth > clientWidth;
 }
 
 const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
