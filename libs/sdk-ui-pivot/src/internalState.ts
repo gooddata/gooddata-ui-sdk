@@ -22,7 +22,6 @@ import {
 } from "./impl/resizing/agGridColumnSizing";
 import { ColumnWidthItem, IResizedColumns, UIClick } from "./columnWidths";
 import { AgGridDatasource, createAgGridDatasource } from "./impl/data/dataSource";
-import { ICustomGridOptions } from "./impl/base/agGridTypes";
 import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import { defFingerprint, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -79,24 +78,19 @@ export type StickyRowContext = {
 
 export class InternalTableState {
     public readonly tableDescriptor: TableDescriptor;
-    public currentResult: IExecutionResult;
-    public visibleData: DataViewFacade;
-
     private readonly intl: IntlShape;
 
-    currentFingerprint: string;
-
-    resizedColumnsStore: ResizedColumnsStore;
-    autoResizedColumns: IResizedColumns;
-    growToFittedColumns: IResizedColumns;
-    public resizing: boolean;
-    numberOfColumnResizedCalls: number;
-
-    agGridDataSource: AgGridDatasource;
-    gridOptions: ICustomGridOptions;
-
-    gridApi: GridApi | undefined;
-    columnApi: ColumnApi | undefined;
+    private currentResult: IExecutionResult;
+    private visibleData: DataViewFacade;
+    private currentFingerprint: string;
+    private resizedColumnsStore: ResizedColumnsStore;
+    private autoResizedColumns: IResizedColumns;
+    private growToFittedColumns: IResizedColumns;
+    private resizing: boolean;
+    private numberOfColumnResizedCalls: number;
+    private agGridDataSource: AgGridDatasource;
+    private gridApi: GridApi | undefined;
+    private columnApi: ColumnApi | undefined;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
 
@@ -577,5 +571,17 @@ export class InternalTableState {
         }
 
         return stickyRowExists(this.gridApi);
+    };
+
+    public getRowCount = (): number => {
+        return this.visibleData.rawData().firstDimSize();
+    };
+
+    public getDrillDataContext = (): DataViewFacade => {
+        return this.visibleData;
+    };
+
+    public isResizing = (): boolean => {
+        return this.resizing;
     };
 }

@@ -24,7 +24,6 @@ export function cellClickedFactory(
 ): CellClickedHandler {
     return (cellEvent: CellEvent): boolean => {
         invariant(table.tableDescriptor);
-        invariant(table.visibleData);
 
         const row = cellEvent.data as IGridRow;
 
@@ -42,7 +41,7 @@ export function cellClickedFactory(
         invariant(isSliceCol(col) || isDataColLeaf(col));
 
         const { onDrill } = props;
-        const dv = table.visibleData;
+        const dv = table.getDrillDataContext();
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
 
         const areDrillableHeaders = isCellDrillable(col, cellEvent.data, dv, drillablePredicates);

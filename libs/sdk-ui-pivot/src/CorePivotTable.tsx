@@ -475,12 +475,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return this.props.execution.definition;
     };
 
-    private getDataView = () => {
-        invariant(this.tableState);
-
-        return this.tableState.visibleData;
-    };
-
     private getGroupRows = (): boolean => {
         return this.props.config?.groupRows ?? true;
     };
@@ -534,7 +528,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         this.tableState?.growToFit(this.getResizingContext());
 
-        if (!this.state.resized && !this.tableState.resizing) {
+        if (!this.state.resized && !this.tableState.isResizing()) {
             this.setState({
                 resized: true,
             });
@@ -581,7 +575,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             ? this.state.resized
             : this.tableState.isPivotTableReady();
         const shouldCallAutoresizeColumns =
-            this.tableState.isPivotTableReady() && !this.state.resized && !this.tableState.resizing;
+            this.tableState.isPivotTableReady() && !this.state.resized && !this.tableState.isResizing();
 
         if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
             this.autoresizeColumns();
@@ -744,7 +738,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const { colDefs } = this.tableState.tableDescriptor;
         const { pageSize } = this.props;
-        const totalRowCount = this.tableState.visibleData.rawData().firstDimSize();
+        const totalRowCount = this.tableState.getRowCount();
 
         const allColumnDefs = colDefs.sliceColDefs.concat(colDefs.rootDataColDefs);
 
@@ -768,7 +762,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onMenuAggregationClick: this.onMenuAggregationClick,
             getTableDescriptor: this.getTableDescriptor,
             getExecutionDefinition: this.getExecutionDefinition,
-            getDataView: this.getDataView,
             getColumnTotals: this.getColumnTotals,
             intl: this.props.intl,
         };

@@ -45,7 +45,7 @@ export function cellClassFactory(
             return cx(classList, isTopPinned && isEmptyCell ? "gd-hidden-sticky-column" : null);
         }
 
-        const dv = table.visibleData;
+        const dv = table.getDrillDataContext();
         const colDef = cellClassParams.colDef;
         const col = table.tableDescriptor.getCol(colDef);
 
