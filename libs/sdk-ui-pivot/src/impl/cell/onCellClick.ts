@@ -1,24 +1,23 @@
-// (C) 2007-2021 GoodData Corporation
-import { TableFacade } from "./tableFacade";
-import { ICorePivotTableProps } from "./types";
+import { TableFacade } from "../../tableFacade";
+import { ICorePivotTableProps } from "../../types";
 import { CellEvent } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
-import { IGridRow } from "./impl/data/resultTypes";
-import { isSomeTotal } from "./impl/data/dataSourceUtils";
-import { isDataColLeaf, isSliceCol } from "./impl/structure/tableDescriptorTypes";
-import { isCellDrillable } from "./impl/drilling/cellDrillabilityPredicate";
+import { IGridRow } from "../data/resultTypes";
+import { isSomeTotal } from "../data/dataSourceUtils";
+import { isDataColLeaf, isSliceCol } from "../structure/tableDescriptorTypes";
 import {
     convertDrillableItemsToPredicates,
     IDrillEvent,
     IDrillEventContextTable,
     VisualizationTypes,
 } from "@gooddata/sdk-ui";
-import { createDrilledRow } from "./impl/drilling/drilledRowFactory";
-import { createDrillIntersection } from "./impl/drilling/drillIntersectionFactory";
+import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
+import { createDrilledRow } from "../drilling/drilledRowFactory";
+import { createDrillIntersection } from "../drilling/drillIntersectionFactory";
 
 export type CellClickedHandler = (cellEvent: CellEvent) => boolean;
 
-export function cellClickedFactory(
+export function onCellClickedFactory(
     table: TableFacade,
     props: Readonly<ICorePivotTableProps>,
 ): CellClickedHandler {

@@ -1,11 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-import {
-    createCellRenderer,
-    getCellClassNames,
-    getMeasureCellFormattedValue,
-    getMeasureCellStyle,
-} from "../tableCell";
+import { getCellClassNames, getMeasureCellFormattedValue, getMeasureCellStyle } from "../cellUtils";
 import { identity } from "lodash";
+import { createCellRenderer } from "../cellRenderer";
 
 describe("cellRenderer", () => {
     it("should escape value", () => {

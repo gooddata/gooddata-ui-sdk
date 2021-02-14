@@ -3,12 +3,6 @@ import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
 import { ITableCellStyle, MeasureCell } from "../../types";
-import { ICellRendererParams } from "@ag-grid-community/all-modules";
-import escape from "lodash/escape";
-import { VALUE_CLASS } from "../base/constants";
-import { isSomeTotal } from "./dataSourceUtils";
-import { IGridTotalsRow } from "./resultTypes";
-import { agColId } from "../structure/tableDescriptorTypes";
 
 function getFormattedNumber(
     cellContent: MeasureCell,
@@ -21,18 +15,7 @@ function getFormattedNumber(
     return numberFormat(parsedNumber, format, undefined, separators);
 }
 
-function hasTotalForCurrentColumn(params: ICellRendererParams): boolean {
-    const row = params.data as IGridTotalsRow;
-
-    if (!row || !row.calculatedForColumns) {
-        return false;
-    }
-
-    const colId = agColId(params.colDef);
-
-    return row.calculatedForColumns.some((col) => col === colId);
-}
-
+// TODO: move to cell class; refactor tests
 export function getCellClassNames(rowIndex: number, columnIndex: number, isDrillable: boolean): string {
     return cx(
         {
@@ -78,24 +61,5 @@ export function getMeasureCellStyle(
     return {
         ...(color && { color }),
         ...(backgroundColor && { backgroundColor }),
-    };
-}
-
-/**
- * Returns common implementation of cell renderer used for normal cells, sticky header cells and totals.
- *
- * TODO: Consider to use custom pinnerRowCellRenderer in order to reduce number of conditionals
- */
-export function createCellRenderer(): (params: ICellRendererParams) => string {
-    return (params: ICellRendererParams): string => {
-        const isRowTotalOrSubtotal = isSomeTotal(params.data?.type);
-        const isActiveRowTotal = isRowTotalOrSubtotal && hasTotalForCurrentColumn(params);
-        const formattedValue =
-            isRowTotalOrSubtotal && !isActiveRowTotal && !params.value
-                ? "" // inactive row total cells should be really empty (no "-") when they have no value (RAIL-1525)
-                : escape(params.formatValue(params.value));
-        const className = params.node.rowPinned === "top" ? "gd-sticky-header-value" : VALUE_CLASS;
-
-        return `<span class="${className}">${formattedValue || ""}</span>`;
     };
 }

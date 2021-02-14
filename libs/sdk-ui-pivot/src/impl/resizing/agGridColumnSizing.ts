@@ -32,7 +32,7 @@ import {
     IWeakMeasureColumnWidthItem,
 } from "../../columnWidths";
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
-import { getMeasureCellFormattedValue } from "../data/tableCell";
+import { getMeasureCellFormattedValue } from "../cell/cellUtils";
 import isEmpty from "lodash/isEmpty";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import {

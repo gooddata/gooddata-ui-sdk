@@ -63,10 +63,15 @@ import {
     getAvailableDrillTargets,
     getAvailableDrillTargetsFromExecutionResult,
 } from "./impl/drilling/drillTargets";
-import { cellClassFactory, headerClassFactory } from "./tableStyling";
-import { cellClickedFactory } from "./cellClicked";
-import { columnAttributeTemplate, measureColumnTemplate, rowAttributeTemplate } from "./colDefTemplates";
+import { headerClassFactory } from "./impl/structure/colDefHeaderClass";
+import {
+    columnAttributeTemplate,
+    measureColumnTemplate,
+    rowAttributeTemplate,
+} from "./impl/structure/colDefTemplates";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agGridUtils";
+import { cellClassFactory } from "./impl/cell/cellClass";
+import { onCellClickedFactory } from "./impl/cell/onCellClick";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -752,7 +757,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     ...commonHeaderComponentParams,
                 },
             },
-            onCellClicked: cellClickedFactory(this.table, this.props),
+            onCellClicked: onCellClickedFactory(this.table, this.props),
             onSortChanged: this.onSortChanged,
             onColumnResized: this.onGridColumnResized,
             onGridColumnsChanged: this.onGridColumnsChanged,
