@@ -102,36 +102,6 @@ export interface IMenuAggregationClickConfig {
     include: boolean;
 }
 
-export interface IAttributeCell {
-    uri: string;
-    name: string;
-}
-
-export interface IAttributeCellForDrilling {
-    id: string;
-    name: string;
-}
-
-export type MeasureCell = number | string | null;
-export type TableCell = IAttributeCell | MeasureCell;
-export type TableCellForDrilling = IAttributeCellForDrilling | MeasureCell;
-export type TableRowForDrilling = TableCellForDrilling[];
-
-export interface ITableCellStyle {
-    backgroundColor?: string;
-    color?: string;
-    fontWeight?: React.CSSProperties["fontWeight"];
-}
-
-export interface ITableCellStyleAndFormattedValue {
-    style: ITableCellStyle;
-    formattedValue: string;
-}
-
-export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
-    return (cell as IAttributeCell)?.uri !== undefined;
-}
-
 /**
  * @public
  */

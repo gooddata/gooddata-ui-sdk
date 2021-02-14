@@ -2,15 +2,18 @@
 import cx from "classnames";
 import { colors2Object, ISeparators, numberFormat } from "@gooddata/numberjs";
 
-import { ITableCellStyle, MeasureCell } from "../../types";
+import { DataValue } from "@gooddata/sdk-backend-spi";
 
-function getFormattedNumber(
-    cellContent: MeasureCell,
-    format: string,
-    separators: ISeparators | undefined,
-): string {
+export interface ITableCellStyle {
+    backgroundColor?: string;
+    color?: string;
+    fontWeight?: React.CSSProperties["fontWeight"];
+}
+
+// TODO: see if we can use existing / common function for this
+function getFormattedNumber(value: DataValue, format: string, separators: ISeparators | undefined): string {
     const parsedNumber: string | number =
-        cellContent === null ? "" : typeof cellContent === "string" ? parseFloat(cellContent) : cellContent;
+        value === null ? "" : typeof value === "string" ? parseFloat(value) : value;
 
     return numberFormat(parsedNumber, format, undefined, separators);
 }
@@ -28,23 +31,23 @@ export function getCellClassNames(rowIndex: number, columnIndex: number, isDrill
 }
 
 export function getMeasureCellFormattedValue(
-    cellContent: MeasureCell,
+    value: DataValue,
     format: string,
     separators: ISeparators | undefined,
 ): string {
-    const formattedNumber = getFormattedNumber(cellContent, format, separators);
+    const formattedNumber = getFormattedNumber(value, format, separators);
     const { label } = colors2Object(formattedNumber);
 
     return label === "" ? "–" : label;
 }
 
 export function getMeasureCellStyle(
-    cellContent: MeasureCell,
+    value: DataValue,
     format: string,
     separators: ISeparators | undefined,
     applyColor: boolean,
 ): ITableCellStyle {
-    const formattedNumber = getFormattedNumber(cellContent, format, separators);
+    const formattedNumber = getFormattedNumber(value, format, separators);
     const { backgroundColor, color, label } = colors2Object(formattedNumber);
 
     if (label === "") {
