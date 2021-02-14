@@ -58,14 +58,14 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
 import { ICommonHeaderParams } from "./impl/structure/headers/HeaderCell";
-import { ColumnResizingContext, InternalTableState } from "./internalState";
+import { ColumnResizingConfig, TableFacade } from "./tableFacade";
 import {
     getAvailableDrillTargets,
     getAvailableDrillTargetsFromExecutionResult,
 } from "./impl/drilling/drillTargets";
 import { cellClassFactory, headerClassFactory } from "./tableStyling";
 import { cellClickedFactory } from "./cellClicked";
-import { columnAttributeTemplate, measureColumnTemplate, rowAttributeTemplate } from "./columntTypes";
+import { columnAttributeTemplate, measureColumnTemplate, rowAttributeTemplate } from "./colDefTemplates";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agGridUtils";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
@@ -121,7 +121,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private containerRef: HTMLDivElement;
     private gridOptions: ICustomGridOptions | null = null;
-    private tableState: InternalTableState | null;
+    private table: TableFacade | null;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -174,10 +174,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private initializeNonReactState = (result: IExecutionResult, dataView: IDataView) => {
-        this.tableState = new InternalTableState(result, dataView, this.props.intl);
-        this.tableState.updateColumnWidths(this.getResizingContext());
+        this.table = new TableFacade(result, dataView, this.props.intl);
+        this.table.updateColumnWidths(this.getResizingConfig());
 
-        this.tableState.createDataSource({
+        this.table.createDataSource({
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
             onPageLoaded: this.onPageLoaded,
@@ -212,15 +212,13 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
                         // TODO: refactor to return value?
                         this.initializeNonReactState(result, dataView);
-                        invariant(this.tableState);
+                        invariant(this.table);
 
                         this.onLoadingChanged({ isLoading: false });
-                        this.props.onExportReady?.(
-                            this.tableState.createExportFunction(this.props.exportTitle),
-                        );
+                        this.props.onExportReady?.(this.table.createExportFunction(this.props.exportTitle));
                         this.setState({ tableReady: true });
 
-                        const availableDrillTargets = this.tableState.getAvailableDrillTargets();
+                        const availableDrillTargets = this.table.getAvailableDrillTargets();
                         this.props.pushData!({ dataView, availableDrillTargets });
                     })
                     .catch((error) => {
@@ -301,7 +299,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
              */
 
             if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-                this.tableState?.refreshHeader();
+                this.table?.refreshHeader();
             }
 
             if (this.isGrowToFitEnabled() && !this.isGrowToFitEnabled(prevProps)) {
@@ -312,7 +310,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             const columnWidths = this.getColumnWidths(this.props);
 
             if (!isEqual(prevColumnWidths, columnWidths)) {
-                this.tableState?.applyColumnSizes(this.getResizingContext());
+                this.table?.applyColumnSizes(this.getResizingConfig());
             }
         }
     }
@@ -398,7 +396,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
      * @param prevProps
      */
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        invariant(this.tableState);
+        invariant(this.table);
 
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
@@ -408,7 +406,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
 
-        return !prepExecutionSame && this.tableState.isMatchingExecution(this.props.execution);
+        return !prepExecutionSame && this.table.isMatchingExecution(this.props.execution);
     }
 
     //
@@ -428,9 +426,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private getTableDescriptor = () => {
-        invariant(this.tableState);
+        invariant(this.table);
 
-        return this.tableState.tableDescriptor;
+        return this.table.tableDescriptor;
     };
 
     private getExecutionDefinition = () => {
@@ -475,15 +473,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private growToFit() {
-        invariant(this.tableState);
+        invariant(this.table);
 
         if (!this.isGrowToFitEnabled()) {
             return;
         }
 
-        this.tableState?.growToFit(this.getResizingContext());
+        this.table?.growToFit(this.getResizingConfig());
 
-        if (!this.state.resized && !this.tableState.isResizing()) {
+        if (!this.state.resized && !this.table.isResizing()) {
             this.setState({
                 resized: true,
             });
@@ -495,7 +493,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return;
         }
 
-        const didResize = await this.tableState?.autoresizeColumns(this.getResizingContext(), force);
+        const didResize = await this.table?.autoresizeColumns(this.getResizingConfig(), force);
 
         if (didResize) {
             this.setState({
@@ -511,16 +509,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private startWatchingTableRendered = () => {
-        if (!this.tableState) {
+        if (!this.table) {
             return;
         }
 
         const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
         const isTableRendered = this.shouldAutoResizeColumns()
             ? this.state.resized
-            : this.tableState.isPivotTableReady();
+            : this.table.isPivotTableReady();
         const shouldCallAutoresizeColumns =
-            this.tableState.isPivotTableReady() && !this.state.resized && !this.tableState.isResizing();
+            this.table.isPivotTableReady() && !this.state.resized && !this.table.isResizing();
 
         if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
             this.autoresizeColumns();
@@ -545,18 +543,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private onGridReady = (event: GridReadyEvent) => {
-        invariant(this.tableState);
+        invariant(this.table);
 
-        this.tableState.finishInitialization(event.api, event.columnApi);
+        this.table.finishInitialization(event.api, event.columnApi);
         this.updateDesiredHeight();
 
         if (this.getGroupRows()) {
-            this.tableState.initializeStickyRow();
+            this.table.initializeStickyRow();
         }
     };
 
     private onFirstDataRendered = async (_event: AgGridEvent) => {
-        invariant(this.tableState);
+        invariant(this.table);
 
         if (this.firstDataRendered) {
             // eslint-disable-next-line no-console
@@ -601,7 +599,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
-        invariant(this.tableState);
+        invariant(this.table);
 
         if (!columnEvent.finished) {
             return; // only update the height once the user is done setting the column size
@@ -610,18 +608,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateDesiredHeight();
 
         if (isManualResizing(columnEvent)) {
-            this.tableState.onManualColumnResize(this.getResizingContext(), columnEvent.columns!);
+            this.table.onManualColumnResize(this.getResizingConfig(), columnEvent.columns!);
         }
     };
 
     private onSortChanged = (event: SortChangedEvent): void => {
-        if (!this.tableState) {
+        if (!this.table) {
             // eslint-disable-next-line no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
         }
 
-        const sortItems = this.tableState.createSortItems(event.columnApi.getAllColumns());
+        const sortItems = this.table.createSortItems(event.columnApi.getAllColumns());
 
         this.props.pushData!({
             properties: {
@@ -647,12 +645,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private onPageLoaded = (_dv: DataViewFacade, newResult: boolean): void => {
-        if (!this.tableState) {
+        if (!this.table) {
             return;
         }
 
         if (newResult) {
-            this.props.onExportReady?.(this.tableState.createExportFunction(this.props.exportTitle));
+            this.props.onExportReady?.(this.table.createExportFunction(this.props.exportTitle));
         }
 
         this.updateDesiredHeight();
@@ -668,7 +666,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         });
 
         this.setState({ columnTotals: newColumnTotals }, () => {
-            this.tableState?.refreshData();
+            this.table?.refreshData();
         });
     };
 
@@ -697,11 +695,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private createGridOptions = (): ICustomGridOptions => {
-        invariant(this.tableState);
+        invariant(this.table);
 
-        const { colDefs } = this.tableState.tableDescriptor;
+        const { colDefs } = this.table.tableDescriptor;
         const { pageSize } = this.props;
-        const totalRowCount = this.tableState.getRowCount();
+        const totalRowCount = this.table.getRowCount();
 
         const allColumnDefs = colDefs.sliceColDefs.concat(colDefs.rootDataColDefs);
 
@@ -734,7 +732,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             columnDefs: allColumnDefs,
             rowData: [],
             defaultColDef: {
-                cellClass: cellClassFactory(this.tableState, this.props),
+                cellClass: cellClassFactory(this.table, this.props),
                 headerComponentFramework: ColumnHeader as any,
                 headerComponentParams: {
                     menu: this.getMenuConfig,
@@ -746,7 +744,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 resizable: true,
             },
             defaultColGroupDef: {
-                headerClass: headerClassFactory(this.tableState, this.props),
+                headerClass: headerClassFactory(this.table, this.props),
                 children: [],
                 headerGroupComponentFramework: ColumnGroupHeader as any,
                 headerGroupComponentParams: {
@@ -754,7 +752,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     ...commonHeaderComponentParams,
                 },
             },
-            onCellClicked: cellClickedFactory(this.tableState, this.props),
+            onCellClicked: cellClickedFactory(this.table, this.props),
             onSortChanged: this.onSortChanged,
             onColumnResized: this.onGridColumnResized,
             onGridColumnsChanged: this.onGridColumnsChanged,
@@ -780,9 +778,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
             // Column types
             columnTypes: {
-                [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(this.tableState, this.props),
-                [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(this.tableState, this.props),
-                [MEASURE_COLUMN]: measureColumnTemplate(this.tableState, this.props),
+                [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(this.table, this.props),
+                [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(this.table, this.props),
+                [MEASURE_COLUMN]: measureColumnTemplate(this.table, this.props),
             },
 
             // Custom renderers
@@ -803,18 +801,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private isStickyRowAvailable(): boolean {
-        invariant(this.tableState);
+        invariant(this.table);
 
-        return Boolean(this.getGroupRows() && this.tableState.stickyRowExists());
+        return Boolean(this.getGroupRows() && this.table.stickyRowExists());
     }
 
     private updateStickyRow(): void {
-        if (!this.tableState) {
+        if (!this.table) {
             return;
         }
 
         if (this.isStickyRowAvailable()) {
-            this.tableState.updateStickyRowPosition();
+            this.table.updateStickyRowPosition();
 
             const scrollPosition: IScrollPosition = { ...this.lastScrollPosition };
             this.lastScrollPosition = {
@@ -827,10 +825,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private updateStickyRowContent(scrollPosition: IScrollPosition): void {
-        invariant(this.tableState);
+        invariant(this.table);
 
         if (this.isStickyRowAvailable()) {
-            this.tableState.updateStickyRowContent({
+            this.table.updateStickyRowContent({
                 scrollPosition,
                 lastScrollPosition: this.lastScrollPosition,
             });
@@ -844,7 +842,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private getScrollBarPadding(): number {
-        if (!this.tableState?.isFullyInitialized()) {
+        if (!this.table?.isFullyInitialized()) {
             return 0;
         }
 
@@ -861,14 +859,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (!maxHeight) {
             return;
         }
-        const bodyHeight = this.tableState?.getTotalBodyHeight() ?? 0;
+        const bodyHeight = this.table?.getTotalBodyHeight() ?? 0;
         const totalHeight = bodyHeight + this.getScrollBarPadding();
 
         return Math.min(totalHeight, maxHeight);
     }
 
     private updateDesiredHeight(): void {
-        if (!this.tableState) {
+        if (!this.table) {
             return;
         }
 
@@ -883,7 +881,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     // Obtaining different table contexts
     //
 
-    private getResizingContext = (): ColumnResizingContext => {
+    private getResizingConfig = (): ColumnResizingConfig => {
         return {
             defaultWidth: this.getDefaultWidth(),
             growToFit: this.isGrowToFitEnabled(),

@@ -49,13 +49,13 @@ import {
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
 
-export type DataSourceOptions = {
+export type DataSourceConfig = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
 };
 
-export type ColumnResizingContext = {
+export type ColumnResizingConfig = {
     defaultWidth: number;
     growToFit: boolean;
     columnAutoresizeEnabled: boolean;
@@ -71,12 +71,12 @@ export type ColumnResizingContext = {
     onColumnResized: ColumnResizedCallback | undefined;
 };
 
-export type StickyRowContext = {
+export type StickyRowConfig = {
     scrollPosition: IScrollPosition;
     lastScrollPosition: IScrollPosition;
 };
 
-export class InternalTableState {
+export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;
     private readonly intl: IntlShape;
 
@@ -141,7 +141,7 @@ export class InternalTableState {
         this.growToFittedColumns = {};
     };
 
-    public updateColumnWidths = (resizingCtx: ColumnResizingContext): void => {
+    public updateColumnWidths = (resizingCtx: ColumnResizingConfig): void => {
         this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, resizingCtx.widths);
 
         updateColumnDefinitionsWithWidths(
@@ -154,7 +154,7 @@ export class InternalTableState {
         );
     };
 
-    public createDataSource = (options: DataSourceOptions): AgGridDatasource => {
+    public createDataSource = (options: DataSourceConfig): AgGridDatasource => {
         this.onPageLoadedCallback = options.onPageLoaded;
 
         this.agGridDataSource = createAgGridDatasource(
@@ -197,7 +197,7 @@ export class InternalTableState {
         this.gridApi?.refreshHeader();
     };
 
-    public growToFit = (resizingCtx: ColumnResizingContext): void => {
+    public growToFit = (resizingCtx: ColumnResizingConfig): void => {
         invariant(this.gridApi);
         invariant(this.columnApi);
 
@@ -241,7 +241,7 @@ export class InternalTableState {
         });
     };
 
-    public resetColumnsWidthToDefault = (resizingCtx: ColumnResizingContext, columns: Column[]): void => {
+    public resetColumnsWidthToDefault = (resizingCtx: ColumnResizingConfig, columns: Column[]): void => {
         invariant(this.columnApi);
 
         resetColumnsWidthToDefault(
@@ -254,7 +254,7 @@ export class InternalTableState {
         );
     };
 
-    public applyColumnSizes = (resizingCtx: ColumnResizingContext): void => {
+    public applyColumnSizes = (resizingCtx: ColumnResizingConfig): void => {
         invariant(this.columnApi);
 
         this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, resizingCtx.widths);
@@ -270,7 +270,7 @@ export class InternalTableState {
     };
 
     public autoresizeColumns = async (
-        resizingCtx: ColumnResizingContext,
+        resizingCtx: ColumnResizingConfig,
         force: boolean = false,
     ): Promise<boolean> => {
         invariant(this.gridApi);
@@ -302,7 +302,7 @@ export class InternalTableState {
         return false;
     };
 
-    private autoresizeAllColumns = async (resizingCtx: ColumnResizingContext) => {
+    private autoresizeAllColumns = async (resizingCtx: ColumnResizingConfig) => {
         invariant(this.gridApi);
         invariant(this.columnApi);
 
@@ -319,7 +319,7 @@ export class InternalTableState {
         autoresizeAllColumns(this.columnApi, this.autoResizedColumns);
     };
 
-    private updateAutoResizedColumns = (resizingCtx: ColumnResizingContext): void => {
+    private updateAutoResizedColumns = (resizingCtx: ColumnResizingConfig): void => {
         invariant(this.gridApi);
         invariant(this.columnApi);
         invariant(resizingCtx.containerRef);
@@ -417,7 +417,7 @@ export class InternalTableState {
     };
 
     public onColumnsManualReset = async (
-        resizingCtx: ColumnResizingContext,
+        resizingCtx: ColumnResizingConfig,
         columns: Column[],
     ): Promise<void> => {
         invariant(this.gridApi);
@@ -459,15 +459,15 @@ export class InternalTableState {
         return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
     };
 
-    private isAllMeasureResizeOperation(resizingCtx: ColumnResizingContext, columns: Column[]): boolean {
+    private isAllMeasureResizeOperation(resizingCtx: ColumnResizingConfig, columns: Column[]): boolean {
         return resizingCtx.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
-    private isWeakMeasureResizeOperation(resizingCtx: ColumnResizingContext, columns: Column[]): boolean {
+    private isWeakMeasureResizeOperation(resizingCtx: ColumnResizingConfig, columns: Column[]): boolean {
         return resizingCtx.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
-    public onColumnsManualResized = (resizingCtx: ColumnResizingContext, columns: Column[]): void => {
+    public onColumnsManualResized = (resizingCtx: ColumnResizingConfig, columns: Column[]): void => {
         if (this.isAllMeasureResizeOperation(resizingCtx, columns)) {
             resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
         } else if (this.isWeakMeasureResizeOperation(resizingCtx, columns)) {
@@ -487,7 +487,7 @@ export class InternalTableState {
     };
 
     public onManualColumnResize = async (
-        resizingCtx: ColumnResizingContext,
+        resizingCtx: ColumnResizingConfig,
         columns: Column[],
     ): Promise<void> => {
         this.numberOfColumnResizedCalls++;
@@ -502,7 +502,7 @@ export class InternalTableState {
         }
     };
 
-    private afterOnResizeColumns = (resizingCtx: ColumnResizingContext) => {
+    private afterOnResizeColumns = (resizingCtx: ColumnResizingConfig) => {
         this.growToFit(resizingCtx);
         const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.tableDescriptor!);
 
@@ -540,7 +540,7 @@ export class InternalTableState {
         return headerHeight + bodyHeight + footerHeight;
     };
 
-    public updateStickyRowContent = (stickyCtx: StickyRowContext): void => {
+    public updateStickyRowContent = (stickyCtx: StickyRowConfig): void => {
         invariant(this.gridApi);
 
         updateStickyRowContentClassesAndData(

@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { InternalTableState } from "./internalState";
+import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "./types";
 import { CellEvent } from "@ag-grid-community/all-modules";
 import { invariant } from "ts-invariant";
@@ -19,7 +19,7 @@ import { createDrillIntersection } from "./impl/drilling/drillIntersectionFactor
 export type CellClickedHandler = (cellEvent: CellEvent) => boolean;
 
 export function cellClickedFactory(
-    table: InternalTableState,
+    table: TableFacade,
     props: Readonly<ICorePivotTableProps>,
 ): CellClickedHandler {
     return (cellEvent: CellEvent): boolean => {

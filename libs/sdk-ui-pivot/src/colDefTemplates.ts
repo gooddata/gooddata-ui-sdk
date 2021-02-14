@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
-import { InternalTableState } from "./internalState";
+import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "./types";
 import { cellClassFactory, headerClassFactory } from "./tableStyling";
 import { AVAILABLE_TOTALS } from "./impl/base/constants";
@@ -9,10 +9,7 @@ import cx from "classnames";
 import { invariant } from "ts-invariant";
 import { isDataColLeaf } from "./impl/structure/tableDescriptorTypes";
 
-export function rowAttributeTemplate(
-    table: InternalTableState,
-    props: Readonly<ICorePivotTableProps>,
-): ColDef {
+export function rowAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
 
     return {
@@ -36,10 +33,7 @@ export function rowAttributeTemplate(
     };
 }
 
-export function columnAttributeTemplate(
-    table: InternalTableState,
-    props: Readonly<ICorePivotTableProps>,
-): ColDef {
+export function columnAttributeTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     return {
         cellClass: cellClassFactory(table, props, "gd-column-attribute-column"),
         headerClass: headerClassFactory(table, props, "gd-column-attribute-column-header"),
@@ -49,10 +43,7 @@ export function columnAttributeTemplate(
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
 
-export function measureColumnTemplate(
-    table: InternalTableState,
-    props: Readonly<ICorePivotTableProps>,
-): ColDef {
+export function measureColumnTemplate(table: TableFacade, props: Readonly<ICorePivotTableProps>): ColDef {
     const cellRenderer = createCellRenderer();
     const separators = props.config?.separators;
 

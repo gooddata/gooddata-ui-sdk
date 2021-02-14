@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { InternalTableState } from "./internalState";
+import { TableFacade } from "./tableFacade";
 import { CellClassParams, ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import { IGridRow } from "./impl/data/resultTypes";
 import isEmpty from "lodash/isEmpty";
@@ -23,7 +23,7 @@ export type CellClassProvider = (cellClassParams: CellClassParams) => string;
 export type HeaderClassProvider = (headerClassParams: any) => string;
 
 export function cellClassFactory(
-    table: InternalTableState,
+    table: TableFacade,
     props: Readonly<ICorePivotTableProps>,
     classList?: string,
 ): CellClassProvider {
@@ -82,7 +82,7 @@ export function cellClassFactory(
 }
 
 export function headerClassFactory(
-    table: InternalTableState,
+    table: TableFacade,
     _props: Readonly<ICorePivotTableProps>,
     classList?: string,
 ): HeaderClassProvider {
