@@ -421,11 +421,11 @@ export class ResizedColumnsStore {
 //
 //
 
-export const convertColumnWidthsToMap = (
+export function convertColumnWidthsToMap(
     tableDescriptor: TableDescriptor,
     columnWidths: ColumnWidthItem[],
     widthValidator: (width: ColumnWidth) => ColumnWidth = defaultWidthValidator,
-): IResizedColumnsCollection => {
+): IResizedColumnsCollection {
     if (!columnWidths) {
         return {};
     }
@@ -454,12 +454,12 @@ export const convertColumnWidthsToMap = (
         }
     });
     return columnWidthsMap;
-};
+}
 
-const getAttributeColumnWidthItemFieldAndWidth = (
+function getAttributeColumnWidthItemFieldAndWidth(
     tableDescriptor: TableDescriptor,
     columnWidthItem: IAttributeColumnWidthItem,
-): [string, IAbsoluteColumnWidth] => {
+): [string, IAbsoluteColumnWidth] {
     const col = tableDescriptor.matchAttributeWidthItem(columnWidthItem);
 
     invariant(
@@ -468,12 +468,12 @@ const getAttributeColumnWidthItemFieldAndWidth = (
     );
 
     return [col.id, columnWidthItem.attributeColumnWidthItem.width];
-};
+}
 
-const getMeasureColumnWidthItemFieldAndWidth = (
+function getMeasureColumnWidthItemFieldAndWidth(
     tableDescriptor: TableDescriptor,
     columnWidthItem: IMeasureColumnWidthItem,
-): [DataColLeaf | DataColGroup, ColumnWidth] | undefined => {
+): [DataColLeaf | DataColGroup, ColumnWidth] | undefined {
     const col = tableDescriptor.matchMeasureWidthItem(columnWidthItem);
 
     if (!col) {
@@ -482,9 +482,9 @@ const getMeasureColumnWidthItemFieldAndWidth = (
     }
 
     return [col, columnWidthItem.measureColumnWidthItem.width];
-};
+}
 
-const getSizeItemByColId = (col: AnyCol, width: ColumnWidth): ColumnWidthItem => {
+function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
     if (isSliceCol(col)) {
         const attributeIdentifier = col.attributeDescriptor.attributeHeader.localIdentifier;
         if (isAbsoluteColumnWidth(width)) {
@@ -513,12 +513,12 @@ const getSizeItemByColId = (col: AnyCol, width: ColumnWidth): ColumnWidthItem =>
         };
     }
     throw new InvariantError(`could not find header matching ${col.id}`);
-};
+}
 
-export const getColumnWidthsFromMap = (
+export function getColumnWidthsFromMap(
     map: IResizedColumnsCollection,
     tableDescriptor: TableDescriptor,
-): ColumnWidthItem[] => {
+): ColumnWidthItem[] {
     return Object.keys(map).map((colId: string) => {
         const { width } = map[colId];
         const col: AnyCol = tableDescriptor.getCol(colId);
@@ -528,15 +528,15 @@ export const getColumnWidthsFromMap = (
 
         return sizeItem;
     });
-};
+}
 
-export const getWeakColumnWidthsFromMap = (map: IWeakMeasureColumnWidthItemsMap): ColumnWidthItem[] => {
+export function getWeakColumnWidthsFromMap(map: IWeakMeasureColumnWidthItemsMap): ColumnWidthItem[] {
     return Object.keys(map).map((measureIdentifier: string) => {
         return map[measureIdentifier];
     });
-};
+}
 
-const defaultWidthValidator = (width: ColumnWidth): ColumnWidth => {
+function defaultWidthValidator(width: ColumnWidth): ColumnWidth {
     if (isAbsoluteColumnWidth(width)) {
         return {
             ...width,
@@ -544,19 +544,19 @@ const defaultWidthValidator = (width: ColumnWidth): ColumnWidth => {
         };
     }
     return width;
-};
+}
 
 /**
  * This function _mutates_ the incoming column defs according to the sizing rules.
  */
-export const updateColumnDefinitionsWithWidths = (
+export function updateColumnDefinitionsWithWidths(
     tableDescriptor: TableDescriptor,
     resizedColumnsStore: ResizedColumnsStore,
     autoResizedColumns: IResizedColumns,
     defaultColumnWidth: number,
     isGrowToFitEnabled: boolean,
     growToFittedColumns: IResizedColumns = {},
-): void => {
+): void {
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
@@ -589,13 +589,13 @@ export const updateColumnDefinitionsWithWidths = (
             }
         }
     });
-};
+}
 
-export const syncSuppressSizeToFitOnColumns = (
+export function syncSuppressSizeToFitOnColumns(
     tableDescriptor: TableDescriptor,
     resizedColumnsStore: ResizedColumnsStore,
     columnApi: ColumnApi,
-): void => {
+): void {
     if (!columnApi) {
         return;
     }
@@ -608,19 +608,20 @@ export const syncSuppressSizeToFitOnColumns = (
             ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
             : (col.getColDef().suppressSizeToFit = false);
     });
-};
+}
 
-export const isColumnAutoResized = (autoResizedColumns: IResizedColumns, resizedColumnId: string): boolean =>
-    Boolean(resizedColumnId && autoResizedColumns[resizedColumnId]);
+export function isColumnAutoResized(autoResizedColumns: IResizedColumns, resizedColumnId: string): boolean {
+    return Boolean(resizedColumnId && autoResizedColumns[resizedColumnId]);
+}
 
-export const resetColumnsWidthToDefault = (
+export function resetColumnsWidthToDefault(
     tableDescriptor: TableDescriptor,
     columnApi: ColumnApi,
     columns: Column[],
     resizedColumnsStore: ResizedColumnsStore,
     autoResizedColumns: IResizedColumns,
     defaultWidth: number,
-): void => {
+): void {
     columns.forEach((col) => {
         const id = agColId(col);
 
@@ -635,13 +636,13 @@ export const resetColumnsWidthToDefault = (
             columnApi.setColumnWidth(col, defaultWidth);
         }
     });
-};
+}
 
-export const resizeAllMeasuresColumns = (
+export function resizeAllMeasuresColumns(
     columnApi: ColumnApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
-): void => {
+): void {
     const columnWidth = column.getActualWidth();
     const allColumns = columnApi.getAllColumns();
 
@@ -652,14 +653,14 @@ export const resizeAllMeasuresColumns = (
     });
 
     resizedColumnsStore.addAllMeasureColumn(columnWidth, allColumns);
-};
+}
 
-export const resizeWeakMeasureColumns = (
+export function resizeWeakMeasureColumns(
     tableDescriptor: TableDescriptor,
     columnApi: ColumnApi,
     resizedColumnsStore: ResizedColumnsStore,
     column: Column,
-): void => {
+): void {
     const allColumns: Column[] = columnApi.getAllColumns();
 
     resizedColumnsStore.addWeekMeasureColumn(tableDescriptor, column);
@@ -673,10 +674,11 @@ export const resizeWeakMeasureColumns = (
             col.getColDef().suppressSizeToFit = true;
         }
     });
-};
+}
 
-const getAllowGrowToFitProp = (allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } =>
-    allowGrowToFit ? { allowGrowToFit } : {};
+function getAllowGrowToFitProp(allowGrowToFit: boolean | undefined): { allowGrowToFit?: boolean } {
+    return allowGrowToFit ? { allowGrowToFit } : {};
+}
 
 interface CalculateColumnWidthsConfig {
     tableDescriptor: TableDescriptor;
@@ -694,12 +696,12 @@ interface CalculateColumnWidthsConfig {
     cache: Map<string, number>;
 }
 
-export const getMaxWidth = (
+export function getMaxWidth(
     context: CanvasRenderingContext2D,
     text: string | undefined,
     hasSort: boolean,
     maxWidth: number | undefined,
-): number | undefined => {
+): number | undefined {
     if (!text) {
         return;
     }
@@ -709,14 +711,14 @@ export const getMaxWidth = (
         : context.measureText(text).width;
 
     return maxWidth === undefined || width > maxWidth ? width : undefined;
-};
+}
 
-export const getMaxWidthCached = (
+export function getMaxWidthCached(
     context: CanvasRenderingContext2D,
     text: string,
     maxWidth: number | undefined,
     widthsCache: Map<string, number>,
-): number | undefined => {
+): number | undefined {
     const cachedWidth = widthsCache.get(text);
     let width;
 
@@ -728,19 +730,19 @@ export const getMaxWidthCached = (
     }
 
     return maxWidth === undefined || width > maxWidth ? width : undefined;
-};
+}
 
-const valueFormatter = (text: string, col: DataColLeaf, separators: any) => {
+function valueFormatter(text: string, col: DataColLeaf, separators: any) {
     return text !== undefined
         ? getMeasureCellFormattedValue(text, col.seriesDescriptor.measureFormat(), separators)
         : null;
-};
+}
 
-const collectWidths = (
+function collectWidths(
     config: CalculateColumnWidthsConfig,
     row: IGridRow,
     maxWidths: Map<string, number>,
-): void => {
+): void {
     const { context } = config;
     config.columns.forEach((column: Column) => {
         const col = config.tableDescriptor.getCol(column);
@@ -763,13 +765,13 @@ const collectWidths = (
             }
         }
     });
-};
+}
 
-export const getUpdatedColumnDefs = (
+export function getUpdatedColumnDefs(
     columns: Column[],
     maxWidths: Map<string, number>,
     padding: number,
-): ColDef[] => {
+): ColDef[] {
     return columns.map((column: Column) => {
         const colDef: ColDef = column.getColDef();
         const colId = agColId(colDef);
@@ -786,9 +788,9 @@ export const getUpdatedColumnDefs = (
 
         return colDef;
     });
-};
+}
 
-const calculateColumnWidths = (config: CalculateColumnWidthsConfig) => {
+function calculateColumnWidths(config: CalculateColumnWidthsConfig) {
     const { context } = config;
     const maxWidths = new Map<string, number>();
 
@@ -822,9 +824,9 @@ const calculateColumnWidths = (config: CalculateColumnWidthsConfig) => {
     });
 
     return getUpdatedColumnDefs(config.columns, maxWidths, config.padding);
-};
+}
 
-const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
+function getDisplayedRowData(gridApi: GridApi): IGridRow[] {
     const rowCount = gridApi.getDisplayedRowCount();
     const rowData: IGridRow[] = [];
     for (let index = 0; index < rowCount; index++) {
@@ -834,9 +836,9 @@ const getDisplayedRowData = (gridApi: GridApi): IGridRow[] => {
         }
     }
     return rowData;
-};
+}
 
-const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
+function getDisplayedTotalData(gridApi: GridApi): IGridRow[] {
     const totalCount = gridApi.getPinnedBottomRowCount();
     const totalData: IGridRow[] = [];
     for (let index = 0; index < totalCount; index++) {
@@ -846,9 +848,9 @@ const getDisplayedTotalData = (gridApi: GridApi): IGridRow[] => {
         }
     }
     return totalData;
-};
+}
 
-const getTableFont = (containerRef: HTMLDivElement, className: string, defaultFont: string) => {
+function getTableFont(containerRef: HTMLDivElement, className: string, defaultFont: string) {
     const element = containerRef.getElementsByClassName(className)[0];
     if (!element) {
         return defaultFont;
@@ -856,11 +858,11 @@ const getTableFont = (containerRef: HTMLDivElement, className: string, defaultFo
 
     const { font, fontWeight, fontSize, fontFamily } = window.getComputedStyle(element);
     return isEmpty(font) ? `${fontWeight} ${fontSize} ${fontFamily}` : font;
-};
+}
 
-const getTableFonts = (
+function getTableFonts(
     containerRef: HTMLDivElement,
-): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } => {
+): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } {
     /**
      * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
      */
@@ -869,15 +871,12 @@ const getTableFonts = (
     const subtotalFont = getTableFont(containerRef, ROW_SUBTOTAL_CLASS, DEFAULT_SUBTOTAL_FONT);
     const totalFont = getTableFont(containerRef, ROW_TOTAL_CLASS, DEFAULT_TOTAL_FONT);
     return { headerFont, rowFont, subtotalFont, totalFont };
-};
+}
 
 /**
  * Ag-Grid API set desired column sizes (it *mutates* pivot table columns data).
  */
-export const autoresizeAllColumns = (
-    columnApi: ColumnApi | null,
-    autoResizedColumns: IResizedColumns,
-): void => {
+export function autoresizeAllColumns(columnApi: ColumnApi | null, autoResizedColumns: IResizedColumns): void {
     if (columnApi) {
         const columns = columnApi.getPrimaryColumns();
 
@@ -891,14 +890,14 @@ export const autoresizeAllColumns = (
             }
         });
     }
-};
+}
 
 /**
  * Custom implementation of columns autoresizing according content: https://en.morzel.net/post/resizing-all-ag-gird-react-columns
  * Calculate the width of text for each grid cell and collect the minimum width needed for each of the gird columns.
  * Text width calculation is done efficiently with measureText method on Canvas.
  */
-export const getAutoResizedColumns = (
+export function getAutoResizedColumns(
     tableDescriptor: TableDescriptor | null,
     gridApi: GridApi | null,
     columnApi: ColumnApi | null,
@@ -909,7 +908,7 @@ export const getAutoResizedColumns = (
         padding: number;
         separators: any;
     },
-): IResizedColumns => {
+): IResizedColumns {
     if (tableDescriptor && gridApi && columnApi && execution) {
         const columns = columnApi.getPrimaryColumns();
         const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
@@ -944,4 +943,4 @@ export const getAutoResizedColumns = (
         return autoResizedColumns;
     }
     return {};
-};
+}

@@ -10,7 +10,7 @@ import { VALUE_CLASS } from "../base/constants";
  * @param props
  * @constructor
  */
-export const RowLoadingElement = (props: ICellRendererParams): JSX.Element => {
+export function RowLoadingElement(props: ICellRendererParams): JSX.Element {
     if (props.node.rowPinned === "top") {
         return <span className={"gd-sticky-header-value"}>{props.formatValue(props.value)}</span>;
     }
@@ -23,4 +23,4 @@ export const RowLoadingElement = (props: ICellRendererParams): JSX.Element => {
         return <span className={`${VALUE_CLASS} s-loading-done`}>{props.formatValue(props.value)}</span>;
     }
     return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
-};
+}

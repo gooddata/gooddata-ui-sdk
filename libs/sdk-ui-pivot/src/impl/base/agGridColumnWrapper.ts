@@ -1,20 +1,20 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { ColumnApi, Column } from "@ag-grid-community/all-modules";
 
-export const setColumnMaxWidth = (
+export function setColumnMaxWidth(
     columnApi: ColumnApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
-): void => {
+): void {
     setColumnMaxWidthIf(columnApi, columnIds, newMaxWidth, () => true);
-};
+}
 
-export const setColumnMaxWidthIf = (
+export function setColumnMaxWidthIf(
     columnApi: ColumnApi,
     columnIds: string[],
     newMaxWidth: number | undefined,
     condition: (column: Column) => boolean,
-): void => {
+): void {
     columnIds.forEach((colId) => {
         const column = columnApi.getColumn(colId);
 
@@ -26,4 +26,4 @@ export const setColumnMaxWidthIf = (
             column.getColDef().maxWidth = newMaxWidth;
         }
     });
-};
+}

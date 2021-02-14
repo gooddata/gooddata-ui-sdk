@@ -1,3 +1,4 @@
+// (C) 2007-2021 GoodData Corporation
 import { TableFacade } from "../../tableFacade";
 import { ICorePivotTableProps } from "../../types";
 import { CellEvent } from "@ag-grid-community/all-modules";

@@ -12,11 +12,11 @@ export interface IScrollPosition {
     readonly left: number;
 }
 
-export const initializeStickyRow = (gridApi: GridApi): void => {
+export function initializeStickyRow(gridApi: GridApi): void {
     gridApi.setPinnedTopRowData([{}]);
-};
+}
 
-export const updateStickyRowPosition = (gridApi: GridApi | null, apiWrapper: any = ApiWrapper): void => {
+export function updateStickyRowPosition(gridApi: GridApi | null, apiWrapper: any = ApiWrapper): void {
     if (!gridApi) {
         return;
     }
@@ -24,7 +24,7 @@ export const updateStickyRowPosition = (gridApi: GridApi | null, apiWrapper: any
     const headerHeight = apiWrapper.getHeaderHeight(gridApi);
     apiWrapper.setPinnedTopRowStyle(gridApi, "top", `${headerHeight}px`);
     apiWrapper.setPinnedTopRowStyle(gridApi, "padding-right", `${getScrollbarWidth()}px`);
-};
+}
 
 export function stickyRowExists(gridApi: GridApi, apiWrapper: any = ApiWrapper): boolean {
     return !!apiWrapper.getPinnedTopRowElement(gridApi);
@@ -51,23 +51,23 @@ function shouldUpdate(
     return initialUpdate || differentRow || differentHorizontalBreakpoint;
 }
 
-const areDataDifferent = (previousData: any, currentData: any): boolean => {
+function areDataDifferent(previousData: any, currentData: any): boolean {
     return (
         Object.keys(previousData).length !== Object.keys(currentData).length ||
         Object.keys(previousData).some((dataItemKey: string) => {
             return previousData[dataItemKey] !== currentData[dataItemKey];
         })
     );
-};
+}
 
-export const updateStickyRowContentClassesAndData = (
+export function updateStickyRowContentClassesAndData(
     currentScrollPosition: IScrollPosition,
     lastScrollPosition: IScrollPosition,
     rowHeight: number,
     gridApi: GridApi | null,
     groupingProvider: IGroupingProvider,
     apiWrapper: typeof ApiWrapper,
-): void => {
+): void {
     if (!gridApi || !shouldUpdate(currentScrollPosition, lastScrollPosition, rowHeight)) {
         return;
     }
@@ -126,4 +126,4 @@ export const updateStickyRowContentClassesAndData = (
             },
         ]);
     }
-};
+}
