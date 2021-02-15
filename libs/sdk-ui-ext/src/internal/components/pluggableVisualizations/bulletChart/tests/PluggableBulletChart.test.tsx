@@ -269,7 +269,7 @@ describe("PluggableBulletChart", () => {
 
         it("should keep first Date item when items have different dimensions", async () => {
             const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
-            mockRefPoint.buckets[2].items[0].dateDataset.ref = {
+            mockRefPoint.buckets[2].items[0].dateDatasetRef = {
                 uri: "closed",
             };
 

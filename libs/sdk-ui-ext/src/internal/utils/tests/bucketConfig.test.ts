@@ -17,9 +17,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         attribute: DATE_DATASET_ATTRIBUTE,
         localIdentifier: "f1",
         filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
-        dateDataset: {
-            ref: referencePointMocks.dateDatasetRef,
-        },
+        dateDatasetRef: referencePointMocks.dateDatasetRef,
     };
 
     function getSingleMeasureNoFilterReferencePoint(numberOfMeasures: number): IExtendedReferencePoint {
@@ -140,18 +138,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
             filters: [referencePointMocks.dateFilter],
-            dateDataset: {
-                ref: referencePointMocks.dateDatasetRef,
-            },
+            dateDatasetRef: referencePointMocks.dateDatasetRef,
         };
 
         const dateFilterWithSamePeriodPreviousYear: IFiltersBucketItem = {
             attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
             filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
-            dateDataset: {
-                ref: referencePointMocks.dateDatasetRef,
-            },
+            dateDatasetRef: referencePointMocks.dateDatasetRef,
         };
 
         it("should keep all derived measures if over time comparison is available due to non-all-time date filter", () => {
@@ -342,9 +336,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                                 type: DATE,
                                 attribute: DATE_DATASET_ATTRIBUTE,
                                 granularity: GRANULARITY.week,
-                                dateDataset: {
-                                    ref: referencePointMocks.dateDatasetRef,
-                                },
+                                dateDatasetRef: referencePointMocks.dateDatasetRef,
                             },
                         ],
                     },
@@ -489,10 +481,8 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                 attribute: DATE_DATASET_ATTRIBUTE,
                 localIdentifier: "f1",
                 filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
-                dateDataset: {
-                    ref: {
-                        uri: "different.date.dataset",
-                    },
+                dateDatasetRef: {
+                    uri: "different.date.dataset",
                 },
             };
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterWithDifferentDateDataset);
