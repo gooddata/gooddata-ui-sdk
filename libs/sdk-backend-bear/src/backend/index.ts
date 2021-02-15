@@ -233,10 +233,10 @@ export class BearBackend implements IAnalyticalBackend {
         return new BearBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
     }
 
-    public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
+    public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
         return new Promise((resolve, reject) => {
             this.authProvider
-                .getCurrentPrincipal({ client: this.sdk })
+                .getCurrentPrincipal({ client: this.sdk, backend: this })
                 .then((res) => {
                     resolve(res);
                 })
@@ -248,19 +248,19 @@ export class BearBackend implements IAnalyticalBackend {
                     reject(err);
                 });
         });
-    }
+    };
 
-    public authenticate(force: boolean): Promise<IAuthenticatedPrincipal> {
+    public authenticate = (force: boolean): Promise<IAuthenticatedPrincipal> => {
         if (!force) {
             return this.authApiCall(async (sdk) => {
-                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
+                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk, backend: this });
                 invariant(principal, "Principal must be defined");
                 return principal!;
             });
         }
 
         return this.triggerAuthentication(true);
-    }
+    };
 
     public deauthenticate(): Promise<void> {
         if (!this.authProvider) {
@@ -318,7 +318,7 @@ export class BearBackend implements IAnalyticalBackend {
         return result;
     };
 
-    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk, backend: this });
 
     private triggerAuthentication = (reset = false): Promise<IAuthenticatedPrincipal> => {
         if (!this.authProvider) {
@@ -340,7 +340,10 @@ export class BearBackend implements IAnalyticalBackend {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }
 
-            const principal = await this.authProvider.getCurrentPrincipal({ client: this.sdk });
+            const principal = await this.authProvider.getCurrentPrincipal({
+                client: this.sdk,
+                backend: this,
+            });
             if (principal) {
                 return principal;
             }

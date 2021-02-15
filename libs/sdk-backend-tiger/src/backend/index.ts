@@ -151,10 +151,10 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerWorkspaceQueryFactory(this.authApiCall, this.dateFormatter);
     }
 
-    public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
+    public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
         return new Promise((resolve, reject) => {
             this.authProvider
-                .getCurrentPrincipal({ client: this.sdk })
+                .getCurrentPrincipal({ client: this.sdk, backend: this })
                 .then((res) => {
                     resolve(res);
                 })
@@ -166,19 +166,19 @@ export class TigerBackend implements IAnalyticalBackend {
                     reject(err);
                 });
         });
-    }
+    };
 
-    public authenticate(force: boolean): Promise<IAuthenticatedPrincipal> {
+    public authenticate = (force: boolean): Promise<IAuthenticatedPrincipal> => {
         if (!force) {
             return this.authApiCall(async (sdk) => {
-                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk });
+                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk, backend: this });
                 invariant(principal, "Principal must be defined");
                 return principal!;
             });
         }
 
         return this.triggerAuthentication(true);
-    }
+    };
 
     /**
      * Perform API call that requires authentication. The call will be decorated with error handling
@@ -210,7 +210,7 @@ export class TigerBackend implements IAnalyticalBackend {
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => {
-        return { client: this.sdk };
+        return { client: this.sdk, backend: this };
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
@@ -219,7 +219,10 @@ export class TigerBackend implements IAnalyticalBackend {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }
 
-            const principal = await this.authProvider.getCurrentPrincipal({ client: this.sdk });
+            const principal = await this.authProvider.getCurrentPrincipal({
+                client: this.sdk,
+                backend: this,
+            });
             if (principal) {
                 return principal;
             }
@@ -243,7 +246,7 @@ export class TigerBackend implements IAnalyticalBackend {
             this.authProvider.reset();
         }
 
-        return this.authProvider.authenticate({ client: this.sdk });
+        return this.authProvider.authenticate({ client: this.sdk, backend: this });
     };
 }
 
