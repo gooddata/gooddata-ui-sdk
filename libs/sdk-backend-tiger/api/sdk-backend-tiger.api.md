@@ -5,6 +5,7 @@
 ```ts
 
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
+import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
@@ -20,6 +21,9 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 }
+
+// @public
+export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
 
 // @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {

@@ -1,5 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import {
+    AuthenticationFlow,
+    IAnalyticalBackend,
     IAuthenticatedPrincipal,
     IAuthenticationContext,
     IAuthenticationProvider,
@@ -124,4 +126,40 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 
         return this.principal!;
     }
+}
+
+/**
+ * Given tiger backend, authentication flow details and current location, this function creates URL where the
+ * browser should redirect to start authentication flow with correct return address.
+ *
+ * The current location is essential to determine whether the return redirect should contain absolute or
+ * related return path:
+ *
+ * -  When running on same origin, then use relative path
+ * -  When running on different origin, then use absolute path
+ *
+ * @param backend - an instance of analytical backend
+ * @param authenticationFlow - details about the tiger authentication flow
+ * @param location - current location
+ * @public
+ */
+export function createTigerAuthenticationUrl(
+    backend: IAnalyticalBackend,
+    authenticationFlow: AuthenticationFlow,
+    location: Location,
+) {
+    let host = `${location.protocol}//${location.host}`;
+    let returnAddress = `${location.pathname ?? ""}${location.search ?? ""}${location.hash ?? ""}`;
+    const { hostname: backendHostname } = backend.config;
+
+    if (backendHostname && backendHostname !== host) {
+        // different origin. app must redirect to the backend hostname
+        host = backendHostname;
+        // but have return to current hostname
+        returnAddress = location.href;
+    }
+
+    return `${host}${authenticationFlow.loginUrl}?${
+        authenticationFlow.returnRedirectParam
+    }=${encodeURIComponent(returnAddress)}`;
 }
