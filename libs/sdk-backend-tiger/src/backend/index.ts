@@ -13,6 +13,7 @@ import {
     ErrorConverter,
     NotAuthenticated,
     IAuthenticationContext,
+    isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -159,7 +160,7 @@ export class TigerBackend implements IAnalyticalBackend {
                     resolve(res);
                 })
                 .catch((err) => {
-                    if (isNotAuthenticatedError(err)) {
+                    if (isNotAuthenticatedResponse(err)) {
                         resolve(null);
                     }
 
@@ -177,7 +178,13 @@ export class TigerBackend implements IAnalyticalBackend {
             });
         }
 
-        return this.triggerAuthentication(true);
+        return this.triggerAuthentication(true).catch((err) => {
+            if (isNotAuthenticated(err)) {
+                this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+            }
+
+            throw err;
+        });
     };
 
     /**
@@ -192,21 +199,29 @@ export class TigerBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<ITigerClient, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, await this.getAsyncCallContext()).catch((err) => {
-            if (!isNotAuthenticatedError(err)) {
-                throw errorConverter(err);
-            }
+        return call(this.sdk, await this.getAsyncCallContext())
+            .catch((err) => {
+                if (!isNotAuthenticatedResponse(err)) {
+                    throw errorConverter(err);
+                }
 
-            return this.triggerAuthentication()
-                .then(async (_) => {
-                    return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
-                        throw errorConverter(e);
+                return this.triggerAuthentication()
+                    .then(async (_) => {
+                        return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
+                            throw errorConverter(e);
+                        });
+                    })
+                    .catch((err2) => {
+                        throw errorConverter(err2);
                     });
-                })
-                .catch((err2) => {
-                    throw errorConverter(err2);
-                });
-        });
+            })
+            .catch((err) => {
+                if (isNotAuthenticated(err)) {
+                    this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+                }
+
+                throw err;
+            });
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => {
@@ -280,6 +295,6 @@ function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData)
     return headers;
 }
 
-function isNotAuthenticatedError(err: any): boolean {
+function isNotAuthenticatedResponse(err: any): boolean {
     return err?.response?.status === 401;
 }
