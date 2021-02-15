@@ -17,6 +17,7 @@ import merge from "lodash/merge";
  */
 const _CONFIG: AxiosRequestConfig = {
     maxContentLength: -1,
+    withCredentials: true,
     headers: {
         common: {
             "X-Requested-With": "XMLHttpRequest",
