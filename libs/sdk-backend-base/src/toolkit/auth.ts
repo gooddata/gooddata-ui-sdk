@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAuthenticatedPrincipal,
     IAuthenticationContext,
@@ -72,6 +72,10 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     public reset = (): void => {
         this.principal = undefined;
     };
+
+    public initializeClient(client: any): void {
+        this.realProvider.initializeClient?.(client);
+    }
 
     public authenticate = (context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> => {
         if (this.principal) {

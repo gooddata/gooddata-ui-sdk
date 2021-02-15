@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IDataView } from "../workspace/execution";
 
@@ -127,12 +127,28 @@ export class NotImplemented extends AnalyticalBackendError {
 }
 
 /**
+ * Implementation of different backends MAY indicate through this structure where to redirect the browser
+ * in order to start authentication flow.
+ *
+ * The `returnRedirectParam` is the name of the query parameter that the application should set when redirecting.
+ * The value of the query parameter is the return URL where the browser should return after successful authentication.
+ *
+ * @public
+ */
+export type AuthenticationFlow = {
+    loginUrl: string;
+    returnRedirectParam: string;
+};
+
+/**
  * This exception is thrown when client code triggers an operation which requires authentication but the client
  * code did not provide credentials or the credentials are invalid.
  *
  * @public
  */
 export class NotAuthenticated extends AnalyticalBackendError {
+    public authenticationFlow?: AuthenticationFlow;
+
     constructor(message: string, cause?: Error) {
         super(message, AnalyticalBackendErrorTypes.NOT_AUTHENTICATED, cause);
     }

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { factory as createSdk, SDK } from "@gooddata/api-client-bear";
 import {
     IAnalyticalBackendConfig,
@@ -142,6 +142,8 @@ export class BearBackend implements IAnalyticalBackend {
         this.telemetry = telemetrySanitize(telemetry);
         this.authProvider = authProvider || new NoopAuthProvider();
         this.sdk = newSdkInstance(this.config, this.implConfig, this.telemetry);
+
+        this.authProvider.initializeClient?.(this.sdk);
 
         if (this.implConfig.onLegacyCallbacksReady) {
             const legacyFunctions: BearLegacyFunctions = {

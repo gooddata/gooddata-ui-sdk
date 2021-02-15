@@ -17,7 +17,12 @@ import {
 } from "./workspaceObjects";
 import { tigerOrganizationObjectsClientFactory } from "./OrganizationObjects";
 import { tigerValidObjectsClientFactory } from "./validObjects";
-import { axios as defaultAxios, newAxios } from "./axios";
+import {
+    axios as defaultAxios,
+    newAxios,
+    setAxiosAuthorizationToken,
+    setGlobalAuthorizationToken,
+} from "./axios";
 
 export { VisualizationObjectModel } from "./gd-tiger-model/VisualizationObjectModel";
 export { AnalyticalDashboardObjectModel } from "./gd-tiger-model/AnalyticalDashboardObjectModel";
@@ -31,7 +36,7 @@ export {
     ResultDimensionHeader,
 } from "./gd-tiger-model/typeGuards";
 
-export { newAxios };
+export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
 
 export * from "./generated/afm-rest-api/api";
 export * from "./generated/metadata-json-api/api";
@@ -53,11 +58,21 @@ export {
 };
 
 export interface ITigerClient {
+    axios: AxiosInstance;
     workspaceObjects: ReturnType<typeof tigerWorkspaceObjectsClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     validObjects: ReturnType<typeof tigerValidObjectsClientFactory>;
     organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
+
+    /**
+     * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
+     * requests.
+     *
+     * @remarks This is a convenience method that ultimately calls {@link setAxiosAuthorizationToken}.
+     * @param token - token to set, if undefined, it will reset
+     */
+    setApiToken: (token: string | undefined) => void;
 }
 
 /**
@@ -72,11 +87,15 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const organizationObjects = tigerOrganizationObjectsClientFactory(axios);
 
     return {
+        axios,
         execution,
         labelElements,
         workspaceObjects,
         validObjects,
         organizationObjects,
+        setApiToken: (token: string | undefined): void => {
+            setAxiosAuthorizationToken(axios, token);
+        },
     };
 };
 

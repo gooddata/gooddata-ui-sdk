@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
@@ -40,3 +40,9 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
 
 export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
+export {
+    ContextDeferredAuthProvider,
+    TigerTokenAuthProvider,
+    TigerAuthProviderBase,
+    createTigerAuthenticationUrl,
+} from "./auth";

@@ -101,7 +101,7 @@ export class TigerBackend implements IAnalyticalBackend {
         config: IAnalyticalBackendConfig = {},
         implConfig: TigerBackendConfig = {},
         telemetry: TelemetryData = {},
-        authProvider?: AuthProviderCallGuard,
+        authProvider?: IAuthProviderCallGuard,
     ) {
         this.config = config;
         this.implConfig = implConfig;
@@ -111,6 +111,8 @@ export class TigerBackend implements IAnalyticalBackend {
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
         this.sdk = tigerClientFactory(axios);
+
+        this.authProvider.initializeClient?.(this.sdk);
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -118,7 +120,12 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public withTelemetry(componentName: string, props: object): IAnalyticalBackend {
-        return new TigerBackend(this.config, this.implConfig, { componentName, props: Object.keys(props) });
+        return new TigerBackend(
+            this.config,
+            this.implConfig,
+            { componentName, props: Object.keys(props) },
+            this.authProvider,
+        );
     }
 
     public withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend {
@@ -197,12 +204,14 @@ export class TigerBackend implements IAnalyticalBackend {
                     });
                 })
                 .catch((err2) => {
-                    throw new NotAuthenticated("Current session is not authenticated.", err2);
+                    throw errorConverter(err2);
                 });
         });
     };
 
-    private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk });
+    private getAuthenticationContext = (): IAuthenticationContext => {
+        return { client: this.sdk };
+    };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
         const getPrincipal = async (): Promise<IAuthenticatedPrincipal> => {

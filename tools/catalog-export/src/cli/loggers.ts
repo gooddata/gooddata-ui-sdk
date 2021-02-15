@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import chalk from "chalk";
 import stripAnsi from "strip-ansi";
 
@@ -26,6 +26,10 @@ export function logSuccess(message: string): void {
 
 export function logWarn(message: string): void {
     console.log(chalk`{blue.yellow    WARN  } ${message}`);
+}
+
+export function logInfo(message: string): void {
+    console.log(chalk`{blue.bold    INFO  } ${message}`);
 }
 
 export function logBox(message: string, padding: number = 2): void {

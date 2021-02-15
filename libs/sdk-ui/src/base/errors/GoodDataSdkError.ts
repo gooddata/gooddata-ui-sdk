@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
+import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
 
 /**
  * Error codes recognized by the SDK.
@@ -85,6 +86,8 @@ export class BadRequestSdkError extends GoodDataSdkError {
  * This error means that you are not authorized.
  */
 export class UnauthorizedSdkError extends GoodDataSdkError {
+    public authenticationFlow?: AuthenticationFlow;
+
     constructor(message?: string, cause?: Error) {
         super(ErrorCodes.UNAUTHORIZED as SdkErrorType, message, cause);
     }

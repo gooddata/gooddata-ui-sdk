@@ -118,6 +118,7 @@ export {
     isNotSupported,
     isNotImplemented,
     isNotAuthenticated,
+    AuthenticationFlow,
     AnalyticalBackendErrorTypes,
 } from "./errors";
 

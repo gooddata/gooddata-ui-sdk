@@ -1,8 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     AnalyticalBackendErrorTypes,
     isAnalyticalBackendError,
     isUnexpectedResponseError,
+    NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import HttpStatusCodes from "http-status-codes";
 import { IntlShape } from "react-intl";
@@ -113,8 +114,11 @@ export function convertError(error: unknown): GoodDataSdkError {
                 return new DataTooLargeToComputeSdkError(ErrorCodes.DATA_TOO_LARGE_TO_COMPUTE, error);
             case AnalyticalBackendErrorTypes.PROTECTED_DATA:
                 return new ProtectedReportSdkError(ErrorCodes.PROTECTED_REPORT, error);
-            case AnalyticalBackendErrorTypes.NOT_AUTHENTICATED:
-                return new UnauthorizedSdkError(ErrorCodes.UNAUTHORIZED, error);
+            case AnalyticalBackendErrorTypes.NOT_AUTHENTICATED: {
+                const sdkError = new UnauthorizedSdkError(ErrorCodes.UNAUTHORIZED, error);
+                sdkError.authenticationFlow = (error as NotAuthenticated).authenticationFlow;
+                return sdkError;
+            }
             default:
                 return new UnexpectedSdkError(ErrorCodes.UNKNOWN_ERROR, error);
         }
