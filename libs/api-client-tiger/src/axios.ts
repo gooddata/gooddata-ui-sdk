@@ -49,6 +49,7 @@ export const axios: AxiosInstance = a.create(_CONFIG);
  * instances created by calling {@link newAxios}.
  *
  * @param token - token to set; if undefined to
+ * @public
  */
 export function setGlobalAuthorizationToken(token: string | undefined) {
     _TOKEN = token;
@@ -62,6 +63,7 @@ export function setGlobalAuthorizationToken(token: string | undefined) {
  *
  * @param axios - an instance of axios to update with authorization token
  * @param token - token to set or undefined to clear
+ * @public
  */
 export function setAxiosAuthorizationToken(axios: AxiosInstance, token: string | undefined) {
     if (!token) {
@@ -89,6 +91,7 @@ export function setAxiosAuthorizationToken(axios: AxiosInstance, token: string |
  *
  * @param baseUrl - hostname to use, if not specified then axios (in browser) works on top of current origin
  * @param headers - header settings, merged into axios' headers object
+ * @public
  */
 export function newAxiosRequestConfig(
     baseUrl?: string,
@@ -119,6 +122,7 @@ export function newAxiosRequestConfig(
  * @param baseUrl - hostname, optional, will default to current origin
  * @param headers - object mapping header name -\> header value
  * @returns always new instance
+ * @public
  */
 export function newAxios(baseUrl?: string, headers?: { [name: string]: string }): AxiosInstance {
     const config = newAxiosRequestConfig(baseUrl, headers);
