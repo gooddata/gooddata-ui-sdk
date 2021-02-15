@@ -12,6 +12,7 @@ import {
     NotAuthenticated,
     IWorkspacesQueryFactory,
     IUserService,
+    isNotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -241,7 +242,7 @@ export class BearBackend implements IAnalyticalBackend {
                     resolve(res);
                 })
                 .catch((err) => {
-                    if (isNotAuthenticatedError(err)) {
+                    if (isNotAuthenticatedResponse(err)) {
                         resolve(null);
                     }
 
@@ -293,29 +294,29 @@ export class BearBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<SDK, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        // first, try it "normally"
-        let result: T;
-
-        try {
-            result = await call(this.sdk, await this.getAsyncCallContext());
-        } catch (err) {
-            if (!isNotAuthenticatedError(err)) {
-                throw errorConverter(err);
-            }
-
-            // in case there was a NotAuthenticated error, trigger auth and try once again
-            try {
-                await this.triggerAuthentication();
-                result = await call(this.sdk, await this.getAsyncCallContext());
-            } catch (err) {
-                if (!isNotAuthenticatedError(err)) {
+        return call(this.sdk, await this.getAsyncCallContext())
+            .catch((err) => {
+                if (!isNotAuthenticatedResponse(err)) {
                     throw errorConverter(err);
                 }
-                throw new NotAuthenticated("Current session is not authenticated.", err);
-            }
-        }
 
-        return result;
+                return this.triggerAuthentication()
+                    .then(async (_) => {
+                        return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
+                            throw errorConverter(e);
+                        });
+                    })
+                    .catch((err2) => {
+                        throw errorConverter(err2);
+                    });
+            })
+            .catch((err) => {
+                if (isNotAuthenticated(err)) {
+                    this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+                }
+
+                throw err;
+            });
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => ({ client: this.sdk, backend: this });
@@ -331,7 +332,13 @@ export class BearBackend implements IAnalyticalBackend {
             this.authProvider.reset();
         }
 
-        return this.authProvider.authenticate(this.getAuthenticationContext());
+        return this.authProvider.authenticate(this.getAuthenticationContext()).catch((err) => {
+            if (isNotAuthenticated(err)) {
+                this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+            }
+
+            throw err;
+        });
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
@@ -361,7 +368,7 @@ export class BearBackend implements IAnalyticalBackend {
 // internals
 //
 
-function isNotAuthenticatedError(err: any): boolean {
+function isNotAuthenticatedResponse(err: any): boolean {
     return isApiResponseError(err) && err.response.status === 401;
 }
 
