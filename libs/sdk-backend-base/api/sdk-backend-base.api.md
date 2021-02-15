@@ -54,6 +54,7 @@ import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
 import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
+import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 
 // @internal
@@ -132,7 +133,9 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)
-    initializeClient(client: any): void;
+    initializeClient: (client: any) => void;
+    // (undocumented)
+    onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
     // (undocumented)
     reset: () => void;
 }

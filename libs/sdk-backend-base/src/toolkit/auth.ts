@@ -5,6 +5,7 @@ import {
     ErrorConverter,
     IAuthenticationProvider,
     NotSupported,
+    NotAuthenticated,
 } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -73,9 +74,13 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         this.principal = undefined;
     };
 
-    public initializeClient(client: any): void {
+    public initializeClient = (client: any): void => {
         this.realProvider.initializeClient?.(client);
-    }
+    };
+
+    public onNotAuthenticated = (context: IAuthenticationContext, error: NotAuthenticated): void => {
+        this.realProvider.onNotAuthenticated?.(context, error);
+    };
 
     public authenticate = (context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> => {
         if (this.principal) {
