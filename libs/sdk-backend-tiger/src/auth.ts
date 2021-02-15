@@ -123,6 +123,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
  * Note: the not authenticated handler MAY be called many times in succession so you may want to wrap it in a
  * call guard or in a debounce.
  *
+ * @remarks See {@link redirectToTigerAuthentication} for implementation of the NotAuthenticated handler which
+ *  you may use with this provider.
  * @public
  */
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
@@ -175,4 +177,36 @@ export function createTigerAuthenticationUrl(
     return `${host}${authenticationFlow.loginUrl}?${
         authenticationFlow.returnRedirectParam
     }=${encodeURIComponent(returnAddress)}`;
+}
+
+/**
+ * Given authentication context and the authentication error, this implementation of `NotAuthenticatedHandler`
+ * will redirect current window to location where Tiger authentication flow will start.
+ *
+ * The location will be setup with correct return address so that when the flow finishes successfully, the
+ * browser window will be redirected from whence it came.
+ *
+ * @remarks See also {@link createTigerAuthenticationUrl}; this function is used to construct the URL. You may use
+ *  it when build your own handler.
+ * @param context - authentication context
+ * @param error - not authenticated error, must contain the `authenticationFlow` information otherwise the
+ *  handler just logs an error and does nothing
+ * @public
+ */
+export function redirectToTigerAuthentication(
+    context: IAuthenticationContext,
+    error: NotAuthenticated,
+): void {
+    if (!error.authenticationFlow) {
+        // eslint-disable-next-line no-console
+        console.error("Analytical Backend did not provide detail where to start authentication flow. ");
+
+        return;
+    }
+
+    window.location.href = createTigerAuthenticationUrl(
+        context.backend,
+        error.authenticationFlow,
+        window.location,
+    );
 }

@@ -30,6 +30,9 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
 export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
 
 // @public
+export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
+
+// @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     // (undocumented)
     abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;

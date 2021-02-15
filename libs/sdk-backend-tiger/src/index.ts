@@ -45,4 +45,5 @@ export {
     TigerTokenAuthProvider,
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
+    redirectToTigerAuthentication,
 } from "./auth";
