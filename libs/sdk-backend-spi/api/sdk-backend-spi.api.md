@@ -227,7 +227,6 @@ export interface IAnalyticalBackend {
 
 // @public
 export interface IAnalyticalBackendConfig {
-    // (undocumented)
     readonly hostname?: string;
 }
 
@@ -309,6 +308,7 @@ export interface IAuthenticatedPrincipal {
 
 // @public
 export interface IAuthenticationContext {
+    backend: IAnalyticalBackend;
     client: any;
 }
 
@@ -318,6 +318,7 @@ export interface IAuthenticationProvider {
     deauthenticate(context: IAuthenticationContext): Promise<void>;
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     initializeClient?(client: any): void;
+    onNotAuthenticated?: NotAuthenticatedHandler;
 }
 
 // @public
@@ -1958,6 +1959,9 @@ export class NotAuthenticated extends AnalyticalBackendError {
     // (undocumented)
     authenticationFlow?: AuthenticationFlow;
 }
+
+// @public (undocumented)
+export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
 
 // @public
 export class NotImplemented extends AnalyticalBackendError {

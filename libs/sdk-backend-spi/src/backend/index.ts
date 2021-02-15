@@ -1,10 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IPreparedExecution } from "../workspace/execution";
 import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace";
-import { IAuthenticatedPrincipal, IAuthenticationProvider } from "../auth";
 import { IUserService } from "../user";
+import { NotAuthenticated } from "../errors";
+import { IBackendCapabilities } from "./capabilities";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -13,6 +14,10 @@ import { IUserService } from "../user";
  * @public
  */
 export interface IAnalyticalBackendConfig {
+    /**
+     * Server hostname (including protocol and port). If not specified and running in browser, then the
+     * backend will communicate with origin.
+     */
     readonly hostname?: string;
 }
 
@@ -134,76 +139,97 @@ export interface IAnalyticalBackend {
 }
 
 /**
- * Analytical Backend communicates its capabilities via objects of this type. In return, the capabilities
- * can then be used by applications to enable / disable particular features.
+ * @public
+ */
+export type NotAuthenticatedHandler = (context: IAuthenticationContext, error: NotAuthenticated) => void;
+
+/**
+ * Defines authentication provider to use when instance of IAnalyticalBackend discovers that
+ * the current session is not authentication.
  *
  * @public
  */
-export interface IBackendCapabilities {
+export interface IAuthenticationProvider {
     /**
-     * Indicates whether the backend is capable to address objects using URIs
+     * Optionally perform custom initialization of the client that the Analytical Backend uses to communicate
+     * with the server.
+     *
+     * If implemented, this function WILL BE called by the backend every time a new instance of API client
+     * is created.
+     *
+     * Note: the configuration and construction of Analytical Backend instance is cumulative. Backend implementations
+     * MAY create multiple instances of clients during construction.
+     *
+     * @param client - an instance of client
      */
-    supportsObjectUris?: boolean;
+    initializeClient?(client: any): void;
 
     /**
-     * Indicates whether the backend is capable to calculate and include totals in the resulting data view.
+     * Optionally specify function to call when the Analytical Backend runs into NotAuthenticated error.
+     *
+     * @param context - context in which the authentication is done
+     * @param error - an instance of NotAuthenticated error
      */
-    canCalculateTotals?: boolean;
+    onNotAuthenticated?: NotAuthenticatedHandler;
 
     /**
-     * Indicates whether the backend is capable to sort the result data view.
+     * Perform authentication.
+     *
+     * @param context - context in which the authentication is done
      */
-    canSortData?: boolean;
+    authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 
     /**
-     * Indicates whether the backend can recognize attribute elements by URI.
+     * Returns the currently authenticated principal, or undefined if not authenticated.
+     * Does not trigger authentication if no principal is available.
      */
-    supportsElementUris?: boolean;
+    getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
 
     /**
-     * Indicates maximum result dimensions that the backend is able to produce.
+     * Clear existing authentication.
+     *
+     * @param context - context in which the authentication is done
      */
-    maxDimensions?: number;
+    deauthenticate(context: IAuthenticationContext): Promise<void>;
+}
+
+/**
+ * Describes user, which is currently authenticated to the backend.
+ *
+ * @public
+ */
+export interface IAuthenticatedPrincipal {
+    /**
+     * Unique identifier of the authenticated user. The identifier semantics MAY differ between backend
+     * implementations. The client code SHOULD NOT make assumptions on the content (such as userId being
+     * valid email and so on).
+     */
+    userId: string;
 
     /**
-     * Indicates whether backend can export data to CSV file.
+     * Backend-specific user metadata.
      */
-    canExportCsv?: boolean;
+    userMeta?: any;
+}
+
+/**
+ * Describes context in which the authentication is done. To cater for custom authentication schemes.
+ * the API client of the underlying backend IS exposed anonymously to the provider - the provider SHOULD use
+ * the provided API client to exercise any backend-specific authentication mechanisms.
+ *
+ * @public
+ */
+export interface IAuthenticationContext {
+    /**
+     * An instance of analytical backend which triggered the authentication.
+     */
+    backend: IAnalyticalBackend;
 
     /**
-     * Indicates whether backend can export data to Excel.
+     * API client used to communicate with the backend - this can be used to perform any backend-specific,
+     * non-standard authentication.
      */
-    canExportXlsx?: boolean;
-
-    /**
-     * Indicates whether backend can transform an existing result into a different shape / sorting / totals.
-     */
-    canTransformExistingResult?: boolean;
-
-    /**
-     * Indicates whether backend can execute an existing, persistent insight by reference.
-     */
-    canExecuteByReference?: boolean;
-
-    /**
-     * Indicates whether backend supports adding CSV datasets and switching between them.
-     */
-    supportsCsvUploader?: boolean;
-
-    /**
-     * Indicates whether backend supports ranking filters.
-     */
-    supportsRankingFilter?: boolean;
-
-    /**
-     * Indicates whether backend supports element query parent filtering.
-     */
-    supportsElementsQueryParentFiltering?: boolean;
-
-    /**
-     * Catchall for additional capabilities
-     */
-    [key: string]: undefined | boolean | number | string;
+    client: any;
 }
 
 //
