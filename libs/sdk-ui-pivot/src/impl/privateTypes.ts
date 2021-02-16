@@ -1,11 +1,19 @@
 // (C) 2007-2021 GoodData Corporation
-import { ITotal, TotalType } from "@gooddata/sdk-model";
+import { IExecutionDefinition, ITotal, TotalType } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths";
 import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback } from "../publicTypes";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { ColumnResizedCallback, IMenu } from "../publicTypes";
+import { DataViewFacade, GoodDataSdkError, ILoadingState, IPushData, OnExportReady } from "@gooddata/sdk-ui";
 import { IScrollPosition } from "./stickyRowHandler";
-import { GridOptions } from "@ag-grid-community/all-modules";
+import {
+    AgGridEvent,
+    BodyScrollEvent,
+    ColumnResizedEvent,
+    GridOptions,
+    GridReadyEvent,
+    SortChangedEvent,
+} from "@ag-grid-community/all-modules";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /*
  * The types defined in this file are used internally thorough different components. They are never intended
@@ -19,11 +27,32 @@ export interface IMenuAggregationClickConfig {
     include: boolean;
 }
 
-export type DataSourceConfig = {
+export type TableConfig = {
+    hasColumnWidths: boolean;
+
+    getExecutionDefinition: () => IExecutionDefinition;
+    getMenuConfig: () => IMenu;
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
+
+    onGridReady: (event: GridReadyEvent) => void;
+    onFirstDataRendered: (_event: AgGridEvent) => Promise<void>;
+    onBodyScroll: (event: BodyScrollEvent) => void;
+    onModelUpdated: () => void;
+    onGridColumnsChanged: () => void;
+    onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
+    onSortChanged: (event: SortChangedEvent) => void;
+
+    onLoadingChanged: (loadingState: ILoadingState) => void;
+    onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;
+    onExportReady: OnExportReady;
+
+    onPushData: (data: IPushData) => void;
+
     onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
+    onMenuAggregationClick: (menuAggregationClickConfig: IMenuAggregationClickConfig) => void;
 };
+
 export type ColumnResizingConfig = {
     defaultWidth: number;
     growToFit: boolean;

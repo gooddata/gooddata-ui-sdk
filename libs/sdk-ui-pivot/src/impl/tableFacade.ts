@@ -42,7 +42,8 @@ import {
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./stickyRowHandler";
-import { ColumnResizingConfig, DataSourceConfig, StickyRowConfig } from "./privateTypes";
+import { ColumnResizingConfig, TableConfig, StickyRowConfig } from "./privateTypes";
+import { ICorePivotTableProps } from "../publicTypes";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
@@ -65,8 +66,14 @@ export class TableFacade {
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
 
-    constructor(result: IExecutionResult, dataView: IDataView, intl: IntlShape) {
-        this.intl = intl;
+    constructor(
+        result: IExecutionResult,
+        dataView: IDataView,
+        config: TableConfig,
+        resizing: ColumnResizingConfig,
+        props: Readonly<ICorePivotTableProps>,
+    ) {
+        this.intl = props.intl;
 
         this.currentResult = result;
         this.fixEmptyHeaders(dataView);
@@ -78,6 +85,9 @@ export class TableFacade {
         this.growToFittedColumns = {};
         this.resizing = false;
         this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
+
+        this.createDataSource(config);
+        this.updateColumnWidths(resizing);
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -105,7 +115,7 @@ export class TableFacade {
         this.growToFittedColumns = {};
     };
 
-    public updateColumnWidths = (resizingCtx: ColumnResizingConfig): void => {
+    private updateColumnWidths = (resizingCtx: ColumnResizingConfig): void => {
         this.resizedColumnsStore.updateColumnWidths(resizingCtx.widths);
 
         updateColumnDefinitionsWithWidths(
@@ -118,7 +128,7 @@ export class TableFacade {
         );
     };
 
-    public createDataSource = (options: DataSourceConfig): AgGridDatasource => {
+    private createDataSource = (options: TableConfig): AgGridDatasource => {
         this.onPageLoadedCallback = options.onPageLoaded;
 
         this.agGridDataSource = createAgGridDatasource(

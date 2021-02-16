@@ -34,44 +34,30 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import {
-    COLS_PER_PAGE,
-    COLUMN_ATTRIBUTE_COLUMN,
-    DEFAULT_AUTOSIZE_PADDING,
-    DEFAULT_ROW_HEIGHT,
-    MEASURE_COLUMN,
-    ROW_ATTRIBUTE_COLUMN,
-} from "./impl/base/constants";
-import ColumnGroupHeader from "./impl/structure/headers/ColumnGroupHeader";
-import ColumnHeader from "./impl/structure/headers/ColumnHeader";
+import { COLS_PER_PAGE } from "./impl/base/constants";
 import { getScrollbarWidth } from "./impl/utils";
-import { RowLoadingElement } from "./impl/data/RowLoadingElement";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
 import { ColumnWidthItem } from "./columnWidths";
-import { MIN_WIDTH } from "./impl/resizing/columnSizing";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
-import { ICommonHeaderParams } from "./impl/structure/headers/HeaderCell";
 import { TableFacade } from "./impl/tableFacade";
 import {
     getAvailableDrillTargets,
     getAvailableDrillTargetsFromExecutionResult,
 } from "./impl/drilling/drillTargets";
-import { headerClassFactory } from "./impl/structure/colDefHeaderClass";
-import {
-    columnAttributeTemplate,
-    measureColumnTemplate,
-    rowAttributeTemplate,
-} from "./impl/structure/colDefTemplates";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
-import { cellClassFactory } from "./impl/cell/cellClass";
-import { onCellClickedFactory } from "./impl/cell/onCellClick";
-import { ColumnResizingConfig, ICustomGridOptions, IMenuAggregationClickConfig } from "./impl/privateTypes";
+import {
+    ColumnResizingConfig,
+    ICustomGridOptions,
+    IMenuAggregationClickConfig,
+    TableConfig,
+} from "./impl/privateTypes";
+import { createGridOptions } from "./impl/gridOptions";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -151,6 +137,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private cleanupNonReactState = () => {
+        this.table = null;
         this.lastInitRequestFingerprint = null;
         this.firstDataRendered = false;
 
@@ -178,15 +165,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         );
     };
 
-    private initializeNonReactState = (result: IExecutionResult, dataView: IDataView) => {
-        this.table = new TableFacade(result, dataView, this.props.intl);
-        this.table.updateColumnWidths(this.getResizingConfig());
-
-        this.table.createDataSource({
-            getGroupRows: this.getGroupRows,
-            getColumnTotals: this.getColumnTotals,
-            onPageLoaded: this.onPageLoaded,
-        });
+    private createTableFacade = (result: IExecutionResult, dataView: IDataView): TableFacade => {
+        return new TableFacade(result, dataView, this.getTableConfig(), this.getResizingConfig(), this.props);
     };
 
     private initialize(execution: IPreparedExecution): void {
@@ -215,9 +195,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                             return;
                         }
 
-                        // TODO: refactor to return value?
-                        this.initializeNonReactState(result, dataView);
-                        invariant(this.table);
+                        this.table = this.createTableFacade(result, dataView);
 
                         this.onLoadingChanged({ isLoading: false });
                         this.props.onExportReady?.(this.table.createExportFunction(this.props.exportTitle));
@@ -361,8 +339,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             );
         }
 
+        // when table is ready, then the table facade must be set
+        invariant(this.table);
+
         if (!this.gridOptions) {
-            this.gridOptions = this.createGridOptions();
+            this.gridOptions = createGridOptions(this.table, this.getTableConfig(), this.props);
         }
 
         /*
@@ -428,12 +409,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private getColumnTotals = () => {
         return this.state.columnTotals;
-    };
-
-    private getTableDescriptor = () => {
-        invariant(this.table);
-
-        return this.table.tableDescriptor;
     };
 
     private getExecutionDefinition = () => {
@@ -696,112 +671,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     //
-    // grid options & styling;
-    //
-
-    private createGridOptions = (): ICustomGridOptions => {
-        invariant(this.table);
-
-        const { colDefs } = this.table.tableDescriptor;
-        const { pageSize } = this.props;
-        const totalRowCount = this.table.getRowCount();
-
-        const allColumnDefs = colDefs.sliceColDefs.concat(colDefs.rootDataColDefs);
-
-        /*
-         * This is a half-workaround around the visual weirdness where upon load/sort ag-grid renders full
-         * page of empty rows and then possibly shrinks back to the actual size of data obtained from backend.
-         *
-         * since the code knows total count of all data on all pages already, it is possible to set the effective
-         * page size to minimum of the requested page size and the total of all data => thus eliminating this
-         * effect.
-         *
-         * the only dumb thing about this approach is that dynamically added subtotals (via menu) kick this
-         * slightly out of balance as extra rows get added and ag-grid needs to load additional pages... and so an
-         * extra buffer of couple of rows in case it is possible add subtotals. while there will be some expanding
-         * and shrinking, it will not be so big.
-         */
-        const extraTotalsBuffer = this.props.config && this.props.config.menu ? 10 : 0;
-        const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
-
-        const commonHeaderComponentParams: ICommonHeaderParams = {
-            onMenuAggregationClick: this.onMenuAggregationClick,
-            getTableDescriptor: this.getTableDescriptor,
-            getExecutionDefinition: this.getExecutionDefinition,
-            getColumnTotals: this.getColumnTotals,
-            intl: this.props.intl,
-        };
-
-        return {
-            // Initial data
-            columnDefs: allColumnDefs,
-            rowData: [],
-            defaultColDef: {
-                cellClass: cellClassFactory(this.table, this.props),
-                headerComponentFramework: ColumnHeader as any,
-                headerComponentParams: {
-                    menu: this.getMenuConfig,
-                    enableSorting: true,
-                    ...commonHeaderComponentParams,
-                },
-                minWidth: MIN_WIDTH,
-                sortable: true,
-                resizable: true,
-            },
-            defaultColGroupDef: {
-                headerClass: headerClassFactory(this.table, this.props),
-                children: [],
-                headerGroupComponentFramework: ColumnGroupHeader as any,
-                headerGroupComponentParams: {
-                    menu: this.getMenuConfig,
-                    ...commonHeaderComponentParams,
-                },
-            },
-            onCellClicked: onCellClickedFactory(this.table, this.props),
-            onSortChanged: this.onSortChanged,
-            onColumnResized: this.onGridColumnResized,
-            onGridColumnsChanged: this.onGridColumnsChanged,
-            onModelUpdated: this.onModelUpdated,
-
-            // Basic options
-            suppressMovableColumns: true,
-            suppressCellSelection: true,
-            suppressAutoSize: this.hasColumnWidths(),
-            enableFilter: false,
-
-            // infinite scrolling model
-            rowModelType: "infinite",
-            paginationPageSize: effectivePageSize,
-            cacheOverflowSize: effectivePageSize,
-            cacheBlockSize: effectivePageSize,
-            maxConcurrentDatasourceRequests: 1,
-            infiniteInitialRowCount: effectivePageSize,
-            maxBlocksInCache: 10,
-            onGridReady: this.onGridReady,
-            onFirstDataRendered: this.onFirstDataRendered,
-            onBodyScroll: this.onBodyScroll,
-
-            // Column types
-            columnTypes: {
-                [ROW_ATTRIBUTE_COLUMN]: rowAttributeTemplate(this.table, this.props),
-                [COLUMN_ATTRIBUTE_COLUMN]: columnAttributeTemplate(this.table, this.props),
-                [MEASURE_COLUMN]: measureColumnTemplate(this.table, this.props),
-            },
-
-            // Custom renderers
-            frameworkComponents: {
-                // any is needed here because of incompatible types with AgGridReact types
-                loadingRenderer: RowLoadingElement as any, // loading indicator
-            },
-
-            // Custom CSS classes
-            rowClass: "gd-table-row",
-            rowHeight: DEFAULT_ROW_HEIGHT,
-            autoSizePadding: DEFAULT_AUTOSIZE_PADDING,
-        };
-    };
-
-    //
     // Sticky row handling
     //
 
@@ -885,6 +754,32 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
     // Obtaining different table contexts
     //
+
+    private getTableConfig = (): TableConfig => {
+        return {
+            hasColumnWidths: this.hasColumnWidths(),
+
+            getExecutionDefinition: this.getExecutionDefinition,
+            getMenuConfig: this.getMenuConfig,
+            getGroupRows: this.getGroupRows,
+            getColumnTotals: this.getColumnTotals,
+
+            onGridReady: this.onGridReady,
+            onFirstDataRendered: this.onFirstDataRendered,
+            onBodyScroll: this.onBodyScroll,
+            onModelUpdated: this.onModelUpdated,
+            onGridColumnsChanged: this.onGridColumnsChanged,
+            onGridColumnResized: this.onGridColumnResized,
+            onSortChanged: this.onSortChanged,
+
+            onLoadingChanged: this.onLoadingChanged,
+            onError: this.onError,
+            onExportReady: this.props.onExportReady ?? noop,
+            onPushData: this.props.pushData ?? noop,
+            onPageLoaded: this.onPageLoaded,
+            onMenuAggregationClick: this.onMenuAggregationClick,
+        };
+    };
 
     private getResizingConfig = (): ColumnResizingConfig => {
         return {
