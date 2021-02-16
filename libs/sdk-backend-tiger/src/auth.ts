@@ -5,6 +5,8 @@ import {
     IAuthenticatedPrincipal,
     IAuthenticationContext,
     IAuthenticationProvider,
+    NotAuthenticated,
+    NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
 import { convertApiError } from "./utils/errorHandling";
@@ -114,12 +116,25 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
  * -  The login page will start and drive the OIDC authentication flow. Once the flow finishes and session
  *    is set up, the login page will redirect back to the application.
  *
+ * You may use the provider's ability to use passed `NotAuthenticatedHandler` function. This will be called
+ * every time a NotAuthenticated error is raised by the backend. Your application can pass a custom handler of
+ * this event - typically something that will start driving the authentication from a single place.
+ *
+ * Note: the not authenticated handler MAY be called many times in succession so you may want to wrap it in a
+ * call guard or in a debounce.
+ *
+ * @remarks See {@link redirectToTigerAuthentication} for implementation of the NotAuthenticated handler which
+ *  you may use with this provider.
  * @public
  */
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
-    public constructor() {
+    public constructor(private readonly notAuthenticatedHandler?: NotAuthenticatedHandler) {
         super();
     }
+
+    public onNotAuthenticated = (context: IAuthenticationContext, error: NotAuthenticated): void => {
+        this.notAuthenticatedHandler?.(context, error);
+    };
 
     public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         await this.obtainCurrentPrincipal(context);
@@ -147,7 +162,7 @@ export function createTigerAuthenticationUrl(
     backend: IAnalyticalBackend,
     authenticationFlow: AuthenticationFlow,
     location: Location,
-) {
+): string {
     let host = `${location.protocol}//${location.host}`;
     let returnAddress = `${location.pathname ?? ""}${location.search ?? ""}${location.hash ?? ""}`;
     const { hostname: backendHostname } = backend.config;
@@ -162,4 +177,36 @@ export function createTigerAuthenticationUrl(
     return `${host}${authenticationFlow.loginUrl}?${
         authenticationFlow.returnRedirectParam
     }=${encodeURIComponent(returnAddress)}`;
+}
+
+/**
+ * Given authentication context and the authentication error, this implementation of `NotAuthenticatedHandler`
+ * will redirect current window to location where Tiger authentication flow will start.
+ *
+ * The location will be setup with correct return address so that when the flow finishes successfully, the
+ * browser window will be redirected from whence it came.
+ *
+ * @remarks See also {@link createTigerAuthenticationUrl}; this function is used to construct the URL. You may use
+ *  it when build your own handler.
+ * @param context - authentication context
+ * @param error - not authenticated error, must contain the `authenticationFlow` information otherwise the
+ *  handler just logs an error and does nothing
+ * @public
+ */
+export function redirectToTigerAuthentication(
+    context: IAuthenticationContext,
+    error: NotAuthenticated,
+): void {
+    if (!error.authenticationFlow) {
+        // eslint-disable-next-line no-console
+        console.error("Analytical Backend did not provide detail where to start authentication flow. ");
+
+        return;
+    }
+
+    window.location.href = createTigerAuthenticationUrl(
+        context.backend,
+        error.authenticationFlow,
+        window.location,
+    );
 }

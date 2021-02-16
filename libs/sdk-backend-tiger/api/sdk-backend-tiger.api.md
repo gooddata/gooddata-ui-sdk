@@ -12,18 +12,25 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { ITigerClient } from '@gooddata/api-client-tiger';
+import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
+import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 
 export { AnonymousAuthProvider }
 
 // @public
 export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
-    constructor();
+    constructor(notAuthenticatedHandler?: NotAuthenticatedHandler | undefined);
     // (undocumented)
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    // (undocumented)
+    onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
 
 // @public
 export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authenticationFlow: AuthenticationFlow, location: Location): string;
+
+// @public
+export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
 
 // @public
 export abstract class TigerAuthProviderBase implements IAuthenticationProvider {

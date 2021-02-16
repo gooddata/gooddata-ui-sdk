@@ -2,13 +2,16 @@
 
 export {
     IAnalyticalBackend,
-    IBackendCapabilities,
     IAnalyticalBackendConfig,
     AnalyticalBackendFactory,
     prepareExecution,
+    IAuthenticationContext,
+    IAuthenticatedPrincipal,
+    IAuthenticationProvider,
+    NotAuthenticatedHandler,
 } from "./backend";
 
-export { IAuthenticatedPrincipal, IAuthenticationContext, IAuthenticationProvider } from "./auth";
+export { IBackendCapabilities } from "./backend/capabilities";
 
 export {
     ISettings,

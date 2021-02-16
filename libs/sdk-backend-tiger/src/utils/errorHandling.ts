@@ -39,8 +39,5 @@ export function createNotAuthenticatedError(error: Error): NotAuthenticated | un
         returnRedirectParam: "redirectTo",
     };
 
-    // eslint-disable-next-line no-console
-    console.error("not authenticated", exc);
-
     return exc;
 }

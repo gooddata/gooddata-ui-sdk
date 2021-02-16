@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -110,6 +110,7 @@ export class CustomBackend implements IAnalyticalBackend {
     private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {
         return {
             client: useClient || this.config.clientProvider(this.config),
+            backend: this,
         };
     };
 
@@ -161,7 +162,7 @@ export class CustomBackend implements IAnalyticalBackend {
                 throw new NotAuthenticated("Cannot obtain principal without an authProvider.");
             }
 
-            const principal = await this.authProvider.getCurrentPrincipal({ client });
+            const principal = await this.authProvider.getCurrentPrincipal({ client, backend: this });
             if (principal) {
                 return principal;
             }
