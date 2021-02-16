@@ -34,7 +34,6 @@ import {
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { getMeasureCellFormattedValue } from "../cell/cellUtils";
 import isEmpty from "lodash/isEmpty";
-import { TableDescriptor } from "../structure/tableDescriptor";
 import {
     agColId,
     AnyCol,
@@ -49,6 +48,7 @@ import { createColumnLocator } from "../structure/colLocatorFactory";
 import { colMeasureLocalId } from "../structure/colAccessors";
 import { IGridRow } from "../data/resultTypes";
 import { isSomeTotal } from "../data/dataSourceUtils";
+import { TableDescriptor } from "../structure/tableDescriptor";
 
 export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
@@ -77,21 +77,24 @@ export interface IWeakMeasureColumnWidthItemsMap {
 }
 
 export class ResizedColumnsStore {
+    private readonly tableDescriptor: TableDescriptor;
     private manuallyResizedColumns: IResizedColumnsCollection;
     private allMeasureColumnWidth: number | null;
     private weakMeasuresColumnWidths: IWeakMeasureColumnWidthItemsMap;
 
     public constructor(
+        tableDescriptor: TableDescriptor,
         manuallyResizedColumns: IResizedColumnsCollection = {},
         allMeasureColumnWidth: number | null = null,
         weakMeasuresColumnWidths: IWeakMeasureColumnWidthItemsMap = {},
     ) {
+        this.tableDescriptor = tableDescriptor;
         this.manuallyResizedColumns = manuallyResizedColumns;
         this.allMeasureColumnWidth = allMeasureColumnWidth;
         this.weakMeasuresColumnWidths = weakMeasuresColumnWidths;
     }
 
-    public getManuallyResizedColumn2(col: AnyCol): IManuallyResizedColumnsItem | undefined {
+    public getManuallyResizedColumn2 = (col: AnyCol): IManuallyResizedColumnsItem | undefined => {
         if (this.manuallyResizedColumns[col.id]) {
             return this.convertItem(this.manuallyResizedColumns[col.id]);
         }
@@ -105,23 +108,20 @@ export class ResizedColumnsStore {
         if (isDataColLeaf(col) && this.isAllMeasureColumWidthUsed()) {
             return this.getAllMeasureColumMapItem();
         }
-    }
+    };
 
-    public getManuallyResizedColumn(
-        tableDescriptor: TableDescriptor,
-        item: Column | ColDef,
-    ): IManuallyResizedColumnsItem | undefined {
+    public getManuallyResizedColumn = (item: Column | ColDef): IManuallyResizedColumnsItem | undefined => {
         const colId = agColId(item);
-        const col = tableDescriptor.getCol(colId);
+        const col = this.tableDescriptor.getCol(colId);
 
         return this.getManuallyResizedColumn2(col);
-    }
+    };
 
-    public isColumnManuallyResized(tableDescriptor: TableDescriptor, item: Column | ColDef): boolean {
-        return !!this.getManuallyResizedColumn(tableDescriptor, item);
-    }
+    public isColumnManuallyResized = (item: Column | ColDef): boolean => {
+        return !!this.getManuallyResizedColumn(item);
+    };
 
-    public addToManuallyResizedColumn(column: Column, allowGrowToFit: boolean = false): void {
+    public addToManuallyResizedColumn = (column: Column, allowGrowToFit: boolean = false): void => {
         this.manuallyResizedColumns[agColId(column)] = {
             width: {
                 value: column.getActualWidth(),
@@ -130,7 +130,7 @@ export class ResizedColumnsStore {
         };
 
         column.getColDef().suppressSizeToFit = !allowGrowToFit;
-    }
+    };
 
     /**
      * Sets width for all column measures.
@@ -140,7 +140,7 @@ export class ResizedColumnsStore {
      * @param columnWidth - column width
      * @param allColumns - all columns in table
      */
-    public addAllMeasureColumn(columnWidth: number, allColumns: Column[]): void {
+    public addAllMeasureColumn = (columnWidth: number, allColumns: Column[]): void => {
         this.allMeasureColumnWidth = columnWidth;
         allColumns.forEach((col) => {
             if (isMeasureColumn(col)) {
@@ -152,11 +152,11 @@ export class ResizedColumnsStore {
             }
         });
         this.weakMeasuresColumnWidths = {};
-    }
+    };
 
-    public addWeekMeasureColumn(tableDescriptor: TableDescriptor, column: Column): void {
+    public addWeekMeasureColumn = (column: Column): void => {
         const width = column.getActualWidth();
-        const measureHeaderLocalIdentifier = colMeasureLocalId(tableDescriptor.getCol(column));
+        const measureHeaderLocalIdentifier = colMeasureLocalId(this.tableDescriptor.getCol(column));
 
         if (measureHeaderLocalIdentifier) {
             this.weakMeasuresColumnWidths[measureHeaderLocalIdentifier] = {
@@ -177,19 +177,19 @@ export class ResizedColumnsStore {
 
             this.manuallyResizedColumns = omitBy(this.manuallyResizedColumns, shouldBeRemoved);
         }
-    }
+    };
 
-    public removeAllMeasureColumns(): void {
+    public removeAllMeasureColumns = (): void => {
         this.allMeasureColumnWidth = null;
         const shouldBeRemoved = (resizedColumnItem: IResizedColumnsCollectionItem) =>
             isColumnWidthAuto(resizedColumnItem.width);
         this.manuallyResizedColumns = omitBy(this.manuallyResizedColumns, shouldBeRemoved);
 
         this.weakMeasuresColumnWidths = {};
-    }
+    };
 
-    public removeWeakMeasureColumn(tableDescriptor: TableDescriptor, column: Column): void {
-        const col = tableDescriptor.getCol(agColId(column));
+    public removeWeakMeasureColumn = (column: Column): void => {
+        const col = this.tableDescriptor.getCol(agColId(column));
         const weakColumnWidth = this.getMatchedWeakMeasuresColumnWidth(col);
 
         if (weakColumnWidth) {
@@ -206,7 +206,7 @@ export class ResizedColumnsStore {
             };
             this.manuallyResizedColumns = omitBy(this.manuallyResizedColumns, shouldBeRemoved);
         }
-    }
+    };
 
     /**
      * Removes manual sizing setting from the store.
@@ -218,11 +218,10 @@ export class ResizedColumnsStore {
      * 'auto' widths when all measure width is used and then measure column is
      * removed. Not sure why.
      *
-     * @param tableDescriptor
      * @param column
      */
-    public removeFromManuallyResizedColumn(tableDescriptor: TableDescriptor, column: Column): void {
-        const col = tableDescriptor.getCol(agColId(column));
+    public removeFromManuallyResizedColumn = (column: Column): void => {
+        const col = this.tableDescriptor.getCol(agColId(column));
         const item = this.manuallyResizedColumns[col.id];
 
         if (item) {
@@ -238,13 +237,13 @@ export class ResizedColumnsStore {
             (this.isAllMeasureColumWidthUsed() || this.getMatchedWeakMeasuresColumnWidth(col))
         ) {
             // TODO INE: consider creating weakItem with width: "auto" when alt+DC over allMeasure
-            this.manuallyResizedColumns[col.id] = this.getAutoSizeItem(tableDescriptor, column);
+            this.manuallyResizedColumns[col.id] = this.getAutoSizeItem(column);
             column.getColDef().suppressSizeToFit = false;
         }
-    }
+    };
 
-    public getColumnWidthsFromMap(tableDescriptor: TableDescriptor): ColumnWidthItem[] {
-        const result = getColumnWidthsFromMap(this.manuallyResizedColumns, tableDescriptor);
+    public getColumnWidthsFromMap = (): ColumnWidthItem[] => {
+        const result = getColumnWidthsFromMap(this.manuallyResizedColumns, this.tableDescriptor);
         if (this.isAllMeasureColumWidthUsed()) {
             result.push(this.getAllMeasureColumnWidth());
         }
@@ -254,12 +253,9 @@ export class ResizedColumnsStore {
         );
 
         return result.concat(weakColumnWidthItems);
-    }
+    };
 
-    public updateColumnWidths(
-        tableDescriptor: TableDescriptor,
-        columnWidths: ColumnWidthItem[] | undefined,
-    ): void {
+    public updateColumnWidths = (columnWidths: ColumnWidthItem[] | undefined): void => {
         const allMeasureWidthItem = this.filterAllMeasureColumnWidthItem(columnWidths);
 
         if (allMeasureWidthItem && isAllMeasureColumnWidthItem(allMeasureWidthItem)) {
@@ -277,27 +273,23 @@ export class ResizedColumnsStore {
 
         const columnWidthItems = this.filterStrongColumnWidthItems(columnWidths);
 
-        const columnWidthsByField = convertColumnWidthsToMap(tableDescriptor, columnWidthItems);
+        const columnWidthsByField = convertColumnWidthsToMap(this.tableDescriptor, columnWidthItems);
         this.manuallyResizedColumns = columnWidthsByField;
-    }
+    };
 
-    public getMatchingColumnsByMeasure(
-        tableDescriptor: TableDescriptor,
-        targetColumn: Column,
-        allColumns: Column[],
-    ): Column[] {
-        const targetMeasureLocalIdentifier = colMeasureLocalId(tableDescriptor.getCol(targetColumn));
+    public getMatchingColumnsByMeasure = (targetColumn: Column, allColumns: Column[]): Column[] => {
+        const targetMeasureLocalIdentifier = colMeasureLocalId(this.tableDescriptor.getCol(targetColumn));
 
         if (targetMeasureLocalIdentifier) {
             return allColumns.filter((col: Column) => {
-                const measureLocalIdentifier = colMeasureLocalId(tableDescriptor.getCol(col));
+                const measureLocalIdentifier = colMeasureLocalId(this.tableDescriptor.getCol(col));
                 return targetMeasureLocalIdentifier === measureLocalIdentifier;
             });
         }
         return [];
-    }
+    };
 
-    public getMatchedWeakMeasuresColumnWidth(col: AnyCol): IWeakMeasureColumnWidthItem | undefined {
+    public getMatchedWeakMeasuresColumnWidth = (col: AnyCol): IWeakMeasureColumnWidthItem | undefined => {
         if (!isDataColLeaf(col)) {
             return;
         }
@@ -308,7 +300,7 @@ export class ResizedColumnsStore {
         if (measureHeaderLocalIdentifier) {
             return this.weakMeasuresColumnWidths[measureHeaderLocalIdentifier];
         }
-    }
+    };
 
     private filterAllMeasureColumnWidthItem(
         columnWidths: ColumnWidthItem[] | undefined,
@@ -327,9 +319,9 @@ export class ResizedColumnsStore {
         return [];
     }
 
-    private filterWeakColumnWidthItems(
+    private filterWeakColumnWidthItems = (
         columnWidths: ColumnWidthItem[] | undefined,
-    ): IWeakMeasureColumnWidthItemsMap {
+    ): IWeakMeasureColumnWidthItemsMap => {
         if (columnWidths) {
             const onlyWeakWidthItems: IWeakMeasureColumnWidthItem[] = columnWidths.filter(
                 isWeakMeasureColumnWidthItem,
@@ -360,7 +352,7 @@ export class ResizedColumnsStore {
             );
         }
         return {};
-    }
+    };
 
     private convertItem(item: IResizedColumnsCollectionItem): IManuallyResizedColumnsItem | undefined {
         // columns with width.value = auto are hidden
@@ -379,24 +371,24 @@ export class ResizedColumnsStore {
         };
     }
 
-    private isAllMeasureColumWidthUsed() {
+    private isAllMeasureColumWidthUsed = () => {
         return this.allMeasureColumnWidth !== null;
-    }
+    };
 
-    private getAutoSizeItem(tableDescriptor: TableDescriptor, column: Column): IResizedColumnsCollectionItem {
-        const measureHeaderLocalIdentifier = colMeasureLocalId(tableDescriptor.getCol(column));
+    private getAutoSizeItem = (column: Column): IResizedColumnsCollectionItem => {
+        const measureHeaderLocalIdentifier = colMeasureLocalId(this.tableDescriptor.getCol(column));
         const result: IResizedColumnsCollectionItem = { width: { value: "auto" } };
         if (measureHeaderLocalIdentifier) {
             result.measureIdentifier = measureHeaderLocalIdentifier;
         }
         return result;
-    }
+    };
 
-    private getAllMeasureColumMapItem(): IManuallyResizedColumnsItem {
+    private getAllMeasureColumMapItem = (): IManuallyResizedColumnsItem => {
         return { width: this.allMeasureColumnWidth! };
-    }
+    };
 
-    private getAllMeasureColumnWidth(): IAllMeasureColumnWidthItem {
+    private getAllMeasureColumnWidth = (): IAllMeasureColumnWidthItem => {
         return {
             measureColumnWidthItem: {
                 width: {
@@ -404,7 +396,7 @@ export class ResizedColumnsStore {
                 },
             },
         };
-    }
+    };
 
     private isMatchingWeakWidth(
         item: IResizedColumnsCollectionItem,
@@ -592,7 +584,6 @@ export function updateColumnDefinitionsWithWidths(
 }
 
 export function syncSuppressSizeToFitOnColumns(
-    tableDescriptor: TableDescriptor,
     resizedColumnsStore: ResizedColumnsStore,
     columnApi: ColumnApi,
 ): void {
@@ -603,7 +594,7 @@ export function syncSuppressSizeToFitOnColumns(
     const columns: Column[] = columnApi.getAllColumns();
 
     columns.forEach((col) => {
-        const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(tableDescriptor, col);
+        const resizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
         resizedColumn
             ? (col.getColDef().suppressSizeToFit = !resizedColumn.allowGrowToFit)
             : (col.getColDef().suppressSizeToFit = false);
@@ -615,7 +606,6 @@ export function isColumnAutoResized(autoResizedColumns: IResizedColumns, resized
 }
 
 export function resetColumnsWidthToDefault(
-    tableDescriptor: TableDescriptor,
     columnApi: ColumnApi,
     columns: Column[],
     resizedColumnsStore: ResizedColumnsStore,
@@ -625,8 +615,8 @@ export function resetColumnsWidthToDefault(
     columns.forEach((col) => {
         const id = agColId(col);
 
-        if (resizedColumnsStore.isColumnManuallyResized(tableDescriptor, col)) {
-            const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(tableDescriptor, col);
+        if (resizedColumnsStore.isColumnManuallyResized(col)) {
+            const manuallyResizedColumn = resizedColumnsStore.getManuallyResizedColumn(col);
             if (manuallyResizedColumn) {
                 columnApi.setColumnWidth(col, manuallyResizedColumn.width);
             }
@@ -663,7 +653,7 @@ export function resizeWeakMeasureColumns(
 ): void {
     const allColumns: Column[] = columnApi.getAllColumns();
 
-    resizedColumnsStore.addWeekMeasureColumn(tableDescriptor, column);
+    resizedColumnsStore.addWeekMeasureColumn(column);
 
     allColumns.forEach((col) => {
         const colDesc = tableDescriptor.getCol(col);

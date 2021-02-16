@@ -97,23 +97,16 @@ export class TableFacade {
     constructor(result: IExecutionResult, dataView: IDataView, intl: IntlShape) {
         this.intl = intl;
 
-        this.autoResizedColumns = {};
-        this.growToFittedColumns = {};
-        this.resizing = false;
-        this.resizedColumnsStore = new ResizedColumnsStore();
-
         this.currentResult = result;
         this.fixEmptyHeaders(dataView);
         this.visibleData = DataViewFacade.for(dataView);
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
-
-        /*
-         * Initialize table headers from first page of data, then update the initialized
-         * headers according to column sizing rules.
-         *
-         * NOTE: it would be better to have this all orchestrated in a single call.
-         */
         this.tableDescriptor = TableDescriptor.for(this.visibleData);
+
+        this.autoResizedColumns = {};
+        this.growToFittedColumns = {};
+        this.resizing = false;
+        this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -142,7 +135,7 @@ export class TableFacade {
     };
 
     public updateColumnWidths = (resizingCtx: ColumnResizingConfig): void => {
-        this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, resizingCtx.widths);
+        this.resizedColumnsStore.updateColumnWidths(resizingCtx.widths);
 
         updateColumnDefinitionsWithWidths(
             this.tableDescriptor,
@@ -245,7 +238,6 @@ export class TableFacade {
         invariant(this.columnApi);
 
         resetColumnsWidthToDefault(
-            this.tableDescriptor,
             this.columnApi,
             columns,
             this.resizedColumnsStore,
@@ -257,9 +249,9 @@ export class TableFacade {
     public applyColumnSizes = (resizingCtx: ColumnResizingConfig): void => {
         invariant(this.columnApi);
 
-        this.resizedColumnsStore.updateColumnWidths(this.tableDescriptor, resizingCtx.widths);
+        this.resizedColumnsStore.updateColumnWidths(resizingCtx.widths);
 
-        syncSuppressSizeToFitOnColumns(this.tableDescriptor, this.resizedColumnsStore, this.columnApi);
+        syncSuppressSizeToFitOnColumns(this.resizedColumnsStore, this.columnApi);
 
         if (resizingCtx.growToFit) {
             this.growToFit(resizingCtx); // calls resetColumnsWidthToDefault internally too
@@ -393,8 +385,8 @@ export class TableFacade {
 
         const id = agColId(column);
 
-        if (this.resizedColumnsStore.isColumnManuallyResized(this.tableDescriptor, column)) {
-            this.resizedColumnsStore.removeFromManuallyResizedColumn(this.tableDescriptor, column);
+        if (this.resizedColumnsStore.isColumnManuallyResized(column)) {
+            this.resizedColumnsStore.removeFromManuallyResizedColumn(column);
         }
 
         column.getColDef().suppressSizeToFit = false;
@@ -440,11 +432,10 @@ export class TableFacade {
 
         if (this.isWeakMeasureResizeOperation(resizingCtx, columns)) {
             columnsToReset = this.resizedColumnsStore.getMatchingColumnsByMeasure(
-                this.tableDescriptor,
                 columns[0],
                 this.getAllMeasureColumns(),
             );
-            this.resizedColumnsStore.removeWeakMeasureColumn(this.tableDescriptor, columns[0]);
+            this.resizedColumnsStore.removeWeakMeasureColumn(columns[0]);
         }
 
         for (const column of columnsToReset) {
@@ -504,7 +495,7 @@ export class TableFacade {
 
     private afterOnResizeColumns = (resizingCtx: ColumnResizingConfig) => {
         this.growToFit(resizingCtx);
-        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap(this.tableDescriptor!);
+        const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap();
 
         resizingCtx.onColumnResized?.(columnWidths);
     };

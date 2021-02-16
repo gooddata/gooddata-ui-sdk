@@ -32,6 +32,7 @@ import {
 import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
 import { COLUMN_ATTRIBUTE_COLUMN, MEASURE_COLUMN, ROW_ATTRIBUTE_COLUMN } from "../../base/constants";
 import { measureLocalId } from "@gooddata/sdk-model";
+import { pick } from "lodash";
 
 // This cannot be created using factory functions & it's very awkward case for which
 export const ColumnOnlyWidth: IMeasureColumnWidthItem = {
@@ -261,11 +262,15 @@ describe("ResizedColumnStore", () => {
         ["for measureless column width on column-only table", ColumnOnlyResultDescriptor, [ColumnOnlyWidth]],
     ];
 
+    function storeSnapshot(store: ResizedColumnsStore) {
+        return pick(store, ["manuallyResizedColumns", "allMeasureColumnWidth", "weakMeasuresColumnWidths"]);
+    }
+
     describe("initial state", () => {
         it.each(Scenarios)("should create valid store %s", (_desc, t, widths) => {
             const store = testStore(t, ...widths);
 
-            expect(store).toMatchSnapshot();
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
 
         it("should enforce min-width for column", () => {
@@ -312,7 +317,7 @@ describe("ResizedColumnStore", () => {
         it.each(Scenarios)("should extract valid width items %s", (_desc, t, widths) => {
             const store = testStore(t, ...widths);
 
-            expect(store.getColumnWidthsFromMap(t)).toEqual(widths);
+            expect(store.getColumnWidthsFromMap()).toEqual(widths);
         });
     });
 
@@ -329,11 +334,9 @@ describe("ResizedColumnStore", () => {
                 suppressSizeToFit: true,
             });
 
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
+            store.removeFromManuallyResizedColumn(column);
             expect(column.getColDef().suppressSizeToFit).toBeFalsy();
-            expect(
-                store.getManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column),
-            ).toBeUndefined();
+            expect(store.getManuallyResizedColumn(column)).toBeUndefined();
         });
 
         it("should remove attribute from manual resizing AND disable suppressSizeToFit", () => {
@@ -348,11 +351,9 @@ describe("ResizedColumnStore", () => {
                 suppressSizeToFit: true,
             });
 
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
+            store.removeFromManuallyResizedColumn(column);
             expect(column.getColDef().suppressSizeToFit).toBeFalsy();
-            expect(
-                store.getManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column),
-            ).toBeUndefined();
+            expect(store.getManuallyResizedColumn(column)).toBeUndefined();
         });
 
         it("should remove attribute from manual resizing AND disable suppressSizeToFit even when all measures have column width set", () => {
@@ -368,11 +369,9 @@ describe("ResizedColumnStore", () => {
                 suppressSizeToFit: true,
             });
 
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
+            store.removeFromManuallyResizedColumn(column);
             expect(column.getColDef().suppressSizeToFit).toBeFalsy();
-            expect(
-                store.getManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column),
-            ).toBeUndefined();
+            expect(store.getManuallyResizedColumn(column)).toBeUndefined();
         });
 
         it("should set auto-width for measure column when column not sized but auto-width is used", () => {
@@ -383,8 +382,8 @@ describe("ResizedColumnStore", () => {
                 type: MEASURE_COLUMN,
             });
 
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.removeFromManuallyResizedColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
 
         it("should set auto-width for measure column when column sized but auto-width is used", () => {
@@ -399,8 +398,8 @@ describe("ResizedColumnStore", () => {
                 type: MEASURE_COLUMN,
             });
 
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.removeFromManuallyResizedColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
     });
 
@@ -435,7 +434,7 @@ describe("ResizedColumnStore", () => {
                 type: MEASURE_COLUMN,
             });
 
-            expect(store.getManuallyResizedColumn(t, column)?.width).toEqual(expected);
+            expect(store.getManuallyResizedColumn(column)?.width).toEqual(expected);
         });
     });
 
@@ -452,10 +451,8 @@ describe("ResizedColumnStore", () => {
                 width: 111,
             });
 
-            store.removeWeakMeasureColumn(TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, column);
-            expect(
-                store.getManuallyResizedColumn(TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, column),
-            ).toBeUndefined();
+            store.removeWeakMeasureColumn(column);
+            expect(store.getManuallyResizedColumn(column)).toBeUndefined();
         });
 
         it("should clear auto-width for measure column", () => {
@@ -471,10 +468,10 @@ describe("ResizedColumnStore", () => {
             });
 
             // after this call, store has entry for col c_0 with width 'auto'
-            store.removeFromManuallyResizedColumn(TwoMeasuresWithRowAttributeDescriptor, column);
+            store.removeFromManuallyResizedColumn(column);
             // this call should clean it up
-            store.removeWeakMeasureColumn(TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.removeWeakMeasureColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
     });
 
@@ -489,8 +486,8 @@ describe("ResizedColumnStore", () => {
                 width: 111,
             });
 
-            store.addWeekMeasureColumn(ColumnOnlyResultDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.addWeekMeasureColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
 
         it("should add weak column", () => {
@@ -503,8 +500,8 @@ describe("ResizedColumnStore", () => {
                 width: 111,
             });
 
-            store.addWeekMeasureColumn(TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.addWeekMeasureColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
 
         it("should replace single row measure width with weak column", () => {
@@ -530,8 +527,8 @@ describe("ResizedColumnStore", () => {
                 width: 111,
             });
 
-            store.addWeekMeasureColumn(TwoMeasuresWithTwoRowAndTwoColumnAttributesDescriptor, column);
-            expect(store).toMatchSnapshot();
+            store.addWeekMeasureColumn(column);
+            expect(storeSnapshot(store)).toMatchSnapshot();
         });
     });
 
@@ -551,7 +548,7 @@ describe("ResizedColumnStore", () => {
         };
 
         it("should add all measure columns", () => {
-            const resizedColumnsStore = new ResizedColumnsStore();
+            const resizedColumnsStore = new ResizedColumnsStore(SingleMeasureWithRowAttributeDescriptor);
             const columnsMock = [
                 getFakeColumn({
                     type: MEASURE_COLUMN,
@@ -564,7 +561,7 @@ describe("ResizedColumnStore", () => {
         });
 
         it("should omit from manually resized map by colId", () => {
-            const resizedColumnsStore = new ResizedColumnsStore({
+            const resizedColumnsStore = new ResizedColumnsStore(SingleMeasureWithRowAttributeDescriptor, {
                 m_0: {
                     width: {
                         value: 400,
@@ -586,7 +583,7 @@ describe("ResizedColumnStore", () => {
         });
 
         it("should omit from manually resized map by colId and kept other items", () => {
-            const resizedColumnsStore = new ResizedColumnsStore({
+            const resizedColumnsStore = new ResizedColumnsStore(SingleMeasureWithRowAttributeDescriptor, {
                 m_0: { width: { value: 400 } },
                 a_1055: { width: { value: 200 } },
             });
@@ -607,6 +604,7 @@ describe("ResizedColumnStore", () => {
 
         it("should clear all weakMeasuresColumnWidths", () => {
             const resizedColumnsStore = new ResizedColumnsStore(
+                SingleMeasureWithRowAttributeDescriptor,
                 {
                     m_0: { width: { value: 400 } },
                     a_4DOTdf: { width: { value: 200 } },
@@ -632,7 +630,7 @@ describe("ResizedColumnStore", () => {
 
     describe("addToManuallyResizedColumn", () => {
         it("should add manually resized column to map", () => {
-            const resizedColumnsStore = new ResizedColumnsStore();
+            const resizedColumnsStore = new ResizedColumnsStore(SingleMeasureWithRowAttributeDescriptor);
             const correctWidth = 42;
             const columnMock = getFakeColumn({
                 colId: "m_1",
@@ -651,16 +649,16 @@ describe("ResizedColumnStore", () => {
         it("should return all measure column width", () => {
             const store = testStore(TestTable, newWidthForAllMeasureColumns(125));
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
 
         it("should return after adding weak column", () => {
             const store = testStore(TestTable);
 
             const column = getFakeColumn({ colId: "c_0", width: 125 });
-            store.addWeekMeasureColumn(TestTable, column);
+            store.addWeekMeasureColumn(column);
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
 
         it("should return after adding manual column", () => {
@@ -669,7 +667,7 @@ describe("ResizedColumnStore", () => {
             const column = getFakeColumn({ colId: "c_0", width: 125 });
             store.addToManuallyResizedColumn(column);
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
 
         it("should return manual size column after adding both manual and weak columns", () => {
@@ -678,9 +676,9 @@ describe("ResizedColumnStore", () => {
             const column = getFakeColumn({ colId: "c_0", width: 125 });
             const weak = getFakeColumn({ colId: "c_0", width: 150 });
             store.addToManuallyResizedColumn(column);
-            store.addWeekMeasureColumn(TestTable, weak);
+            store.addWeekMeasureColumn(weak);
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
 
         it("should return single column with when added measure-less column", () => {
@@ -694,23 +692,23 @@ describe("ResizedColumnStore", () => {
             });
 
             store.addToManuallyResizedColumn(column);
-            expect(store.getManuallyResizedColumn(ColumnOnlyResultDescriptor, column)?.width).toEqual(111);
+            expect(store.getManuallyResizedColumn(column)?.width).toEqual(111);
         });
 
         it("should not return with after adding weak column and removing manual resize column", () => {
             const store = testStore(TestTable);
 
             const column = getFakeColumn({ colId: "c_0", width: 125 });
-            store.addWeekMeasureColumn(TestTable, column);
-            store.removeFromManuallyResizedColumn(TestTable, column);
+            store.addWeekMeasureColumn(column);
+            store.removeFromManuallyResizedColumn(column);
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toBeUndefined();
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toBeUndefined();
         });
 
         it("should return all measure for columns width", () => {
             const store = testStore(TestTable, newWidthForAllColumnsForMeasure(ReferenceLdm.Amount, 125));
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
 
         it("should return explicit measure column width", () => {
@@ -729,7 +727,7 @@ describe("ResizedColumnStore", () => {
                 ),
             );
 
-            expect(store.getManuallyResizedColumn(TestTable, TestCol)?.width).toEqual(125);
+            expect(store.getManuallyResizedColumn(TestCol)?.width).toEqual(125);
         });
     });
 

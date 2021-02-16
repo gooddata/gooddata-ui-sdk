@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ResizedColumnStore addWeekMeasureColumn should add weak column 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {
@@ -22,7 +22,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore addWeekMeasureColumn should do nothing when column type is not MEASURE_COLUMN 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {},
@@ -30,7 +30,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore addWeekMeasureColumn should replace single row measure width with weak column 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {
@@ -51,7 +51,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for all columns of a first measure on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {
@@ -72,7 +72,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for all columns of a second measure on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {
@@ -93,7 +93,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for all measure columns on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": 125,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {},
@@ -101,7 +101,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for attribute column width on table with single row attribute 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "r_0": Object {
@@ -115,7 +115,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for auto-sizing exactly one measure column on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -130,7 +130,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for auto-sizing exactly two measure columns of two different measures on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -151,7 +151,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for both attribute columns width on table with two row attributes 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "r_0": Object {
@@ -170,7 +170,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for both measure columns on non-pivoted table with two measures 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_0": Object {
@@ -191,7 +191,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for combination of attribute, single measure and all measure widths on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -224,7 +224,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for combination of single measure and all measure widths on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -252,7 +252,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for exactly one measure column on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -267,7 +267,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for exactly two measure columns of same measure on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_2": Object {
@@ -288,7 +288,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for exactly two measure columns of two different measures on pivoted table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_4": Object {
@@ -309,7 +309,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for first attribute column width on table with two row attributes 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "r_0": Object {
@@ -323,7 +323,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for first measure column on non-pivoted table with two measures 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_0": Object {
@@ -338,7 +338,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for measureless column width on column-only table 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "cg_3": Object {
@@ -353,7 +353,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for second attribute column width on table with two row attributes 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "r_1": Object {
@@ -367,7 +367,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore initial state should create valid store for second measure column on non-pivoted table with two measures 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {
     "c_1": Object {
@@ -382,7 +382,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore removeFromManuallyResizedColumn should set auto-width for measure column when column not sized but auto-width is used 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": 155,
   "manuallyResizedColumns": Object {
     "c_0": Object {
@@ -397,7 +397,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore removeFromManuallyResizedColumn should set auto-width for measure column when column sized but auto-width is used 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": 155,
   "manuallyResizedColumns": Object {
     "c_0": Object {
@@ -412,7 +412,7 @@ ResizedColumnsStore {
 `;
 
 exports[`ResizedColumnStore removeWeakMeasureColumn should clear auto-width for measure column 1`] = `
-ResizedColumnsStore {
+Object {
   "allMeasureColumnWidth": null,
   "manuallyResizedColumns": Object {},
   "weakMeasuresColumnWidths": Object {},

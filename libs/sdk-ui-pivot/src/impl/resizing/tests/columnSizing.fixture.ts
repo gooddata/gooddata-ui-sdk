@@ -40,10 +40,10 @@ export function testStore(
     tableDescriptor: TableDescriptor,
     ...widths: ColumnWidthItem[]
 ): ResizedColumnsStore {
-    const store = new ResizedColumnsStore();
+    const store = new ResizedColumnsStore(tableDescriptor);
 
     if (widths.length) {
-        store.updateColumnWidths(tableDescriptor, widths);
+        store.updateColumnWidths(widths);
     }
 
     return store;
