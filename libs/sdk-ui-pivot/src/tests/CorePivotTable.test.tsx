@@ -360,7 +360,7 @@ describe("CorePivotTable", () => {
 
             table.startWatchingTableRendered();
             expect(table.stopWatchingTableRendered).toHaveBeenCalledTimes(1);
-            expect(clearInterval).toHaveBeenCalledTimes(1);
+            expect(clearInterval).toHaveBeenCalledTimes(0);
         });
 
         it("should call afterRender after table rendered", () => {
