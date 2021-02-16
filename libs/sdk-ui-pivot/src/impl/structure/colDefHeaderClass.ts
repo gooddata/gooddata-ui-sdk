@@ -3,7 +3,7 @@ import { TableFacade } from "../../tableFacade";
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import cx from "classnames";
 import { agColId, ColumnGroupingDescriptorId, isDataColLeaf, isSliceCol } from "./tableDescriptorTypes";
-import { ICorePivotTableProps } from "../../types";
+import { ICorePivotTableProps } from "../../publicTypes";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
 

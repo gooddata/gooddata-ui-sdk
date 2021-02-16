@@ -1,6 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 import { ITotal, TotalType } from "@gooddata/sdk-model";
-import { IMenuAggregationClickConfig } from "../../../types";
 
 import { AVAILABLE_TOTALS } from "../../base/constants";
 import intersection from "lodash/intersection";
@@ -8,6 +7,7 @@ import isEqual from "lodash/isEqual";
 import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
 import { IColumnTotal } from "./aggregationsMenuTypes";
+import { IMenuAggregationClickConfig } from "../../../privateTypes";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(

@@ -1,14 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    IAttribute,
-    IAttributeOrMeasure,
-    INullableFilter,
-    ISortItem,
-    ITotal,
-    TotalType,
-} from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 import { ColumnWidthItem } from "./columnWidths";
@@ -93,13 +86,6 @@ export interface IPivotTableConfig {
      * Optionally customize maximum height of the table.
      */
     maxHeight?: number;
-}
-
-export interface IMenuAggregationClickConfig {
-    type: TotalType;
-    measureIdentifiers: string[];
-    attributeIdentifier: string;
-    include: boolean;
 }
 
 /**

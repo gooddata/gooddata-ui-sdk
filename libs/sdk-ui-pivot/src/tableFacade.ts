@@ -20,10 +20,10 @@ import {
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
 } from "./impl/resizing/columnSizing";
-import { ColumnWidthItem, IResizedColumns, UIClick } from "./columnWidths";
+import { IResizedColumns, UIClick } from "./columnWidths";
 import { AgGridDatasource, createAgGridDatasource } from "./impl/data/dataSource";
 import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
-import { defFingerprint, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
@@ -31,8 +31,6 @@ import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/base/agColumnWrap
 import { agColIds, isMeasureColumn } from "./impl/base/agUtils";
 import { agColId } from "./impl/structure/tableDescriptorTypes";
 import { sleep } from "./impl/utils";
-import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback } from "./types";
 import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./impl/base/constants";
 import { getAvailableDrillTargets } from "./impl/drilling/drillTargets";
 import { IGroupingProvider } from "./impl/data/rowGroupingProvider";
@@ -40,41 +38,14 @@ import sumBy from "lodash/sumBy";
 import ApiWrapper from "./impl/base/agApiWrapper";
 import {
     initializeStickyRow,
-    IScrollPosition,
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./impl/stickyRowHandler";
+import { ColumnResizingConfig, DataSourceConfig, StickyRowConfig } from "./privateTypes";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
-
-export type DataSourceConfig = {
-    getGroupRows: () => boolean;
-    getColumnTotals: () => ITotal[];
-    onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
-};
-
-export type ColumnResizingConfig = {
-    defaultWidth: number;
-    growToFit: boolean;
-    columnAutoresizeEnabled: boolean;
-    widths: ColumnWidthItem[] | undefined;
-
-    clientWidth: number;
-    containerRef: HTMLDivElement | undefined;
-    separators: ISeparators | undefined;
-
-    isMetaOrCtrlKeyPressed: boolean;
-    isAltKeyPressed: boolean;
-
-    onColumnResized: ColumnResizedCallback | undefined;
-};
-
-export type StickyRowConfig = {
-    scrollPosition: IScrollPosition;
-    lastScrollPosition: IScrollPosition;
-};
 
 export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;

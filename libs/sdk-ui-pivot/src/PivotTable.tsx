@@ -13,7 +13,7 @@ import {
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
-import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
+import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./publicTypes";
 import omit from "lodash/omit";
 import {
     IntlTranslationsProvider,

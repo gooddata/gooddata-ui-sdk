@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import { IHeaderParams } from "@ag-grid-community/all-modules";
 import React from "react";
-import { IMenu } from "../../../types";
+import { IMenu } from "../../../publicTypes";
 
 import HeaderCell, { ALIGN_LEFT, ALIGN_RIGHT, ICommonHeaderParams } from "./HeaderCell";
 import { isEmptyDataColGroup, isSliceCol } from "../tableDescriptorTypes";

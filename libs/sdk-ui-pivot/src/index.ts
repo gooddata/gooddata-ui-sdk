@@ -12,7 +12,7 @@ export {
     ICorePivotTableProps,
     ColumnResizedCallback,
     IMenu,
-} from "./types";
+} from "./publicTypes";
 
 export {
     IWeakMeasureColumnWidthItem,

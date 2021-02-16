@@ -49,7 +49,7 @@ import { getScrollbarWidth } from "./impl/utils";
 import { RowLoadingElement } from "./impl/data/RowLoadingElement";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
-import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
+import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
 import { ColumnWidthItem } from "./columnWidths";
 import { MIN_WIDTH } from "./impl/resizing/columnSizing";
 import cloneDeep from "lodash/cloneDeep";
@@ -58,7 +58,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
 import { ICommonHeaderParams } from "./impl/structure/headers/HeaderCell";
-import { ColumnResizingConfig, TableFacade } from "./tableFacade";
+import { TableFacade } from "./tableFacade";
 import {
     getAvailableDrillTargets,
     getAvailableDrillTargetsFromExecutionResult,
@@ -72,6 +72,7 @@ import {
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import { cellClassFactory } from "./impl/cell/cellClass";
 import { onCellClickedFactory } from "./impl/cell/onCellClick";
+import { ColumnResizingConfig, IMenuAggregationClickConfig } from "./privateTypes";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
