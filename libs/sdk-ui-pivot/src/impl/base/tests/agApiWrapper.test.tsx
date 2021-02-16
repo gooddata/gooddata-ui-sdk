@@ -3,14 +3,14 @@ import React from "react";
 import { mount } from "enzyme";
 import { AgGridReact } from "@ag-grid-community/react";
 
-import ApiWrapper from "../agGridApiWrapper";
+import ApiWrapper from "../agApiWrapper";
 import {
     AllCommunityModules,
     GridApi,
     GridReadyEvent,
     ICellRendererParams,
 } from "@ag-grid-community/all-modules";
-import { ICustomGridOptions } from "../agGridTypes";
+import { ICustomGridOptions } from "../agTypes";
 
 describe("agGridApiWrapper", () => {
     const firstAttributeColumnId = "a_123";

@@ -2,7 +2,7 @@
 import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
-import { isMeasureColumn } from "../base/agGridUtils";
+import { isMeasureColumn } from "../base/agUtils";
 import {
     DEFAULT_HEADER_FONT,
     DEFAULT_ROW_FONT,

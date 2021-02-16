@@ -20,7 +20,7 @@ import {
     MIN_WIDTH,
     ResizedColumnsStore,
     SORT_ICON_WIDTH,
-} from "../agGridColumnSizing";
+} from "../columnSizing";
 import {
     ColumnOnlyResultDescriptor,
     getFakeColumn,

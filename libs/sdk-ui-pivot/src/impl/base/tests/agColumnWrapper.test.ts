@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { ColumnApi, Column } from "@ag-grid-community/all-modules";
-import { setColumnMaxWidthIf, setColumnMaxWidth } from "../agGridColumnWrapper";
+import { setColumnMaxWidthIf, setColumnMaxWidth } from "../agColumnWrapper";
 
 describe("agColumnWrapper", () => {
     function getFakeColumnApi(columnsMaps: { [id: string]: Column }): ColumnApi {

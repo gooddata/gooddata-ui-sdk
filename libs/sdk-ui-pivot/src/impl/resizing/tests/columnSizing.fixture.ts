@@ -4,7 +4,7 @@ import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { TableDescriptor } from "../../structure/tableDescriptor";
 import { ColumnWidthItem } from "../../../columnWidths";
-import { ResizedColumnsStore } from "../agGridColumnSizing";
+import { ResizedColumnsStore } from "../columnSizing";
 import { Column, ColumnApi } from "@ag-grid-community/all-modules";
 
 const ColumnOnlyResult = recordedDataFacade(

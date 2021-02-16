@@ -42,7 +42,7 @@ import {
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
 } from "./impl/base/constants";
-import { ICustomGridOptions } from "./impl/base/agGridTypes";
+import { ICustomGridOptions } from "./impl/base/agTypes";
 import ColumnGroupHeader from "./impl/structure/headers/ColumnGroupHeader";
 import ColumnHeader from "./impl/structure/headers/ColumnHeader";
 import { getScrollbarWidth } from "./impl/utils";
@@ -51,7 +51,7 @@ import { IScrollPosition } from "./impl/stickyRowHandler";
 
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu, IMenuAggregationClickConfig } from "./types";
 import { ColumnWidthItem } from "./columnWidths";
-import { MIN_WIDTH } from "./impl/resizing/agGridColumnSizing";
+import { MIN_WIDTH } from "./impl/resizing/columnSizing";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
@@ -69,7 +69,7 @@ import {
     measureColumnTemplate,
     rowAttributeTemplate,
 } from "./impl/structure/colDefTemplates";
-import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agGridUtils";
+import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import { cellClassFactory } from "./impl/cell/cellClass";
 import { onCellClickedFactory } from "./impl/cell/onCellClick";
 

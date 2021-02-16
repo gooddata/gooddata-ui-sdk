@@ -2,7 +2,7 @@
 import { shallow } from "enzyme";
 import React from "react";
 import { LoadingComponent } from "@gooddata/sdk-ui";
-import { RowLoadingElement } from "../../data/RowLoadingElement";
+import { RowLoadingElement } from "../RowLoadingElement";
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import noop from "lodash/noop";
 

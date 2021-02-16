@@ -19,7 +19,7 @@ import {
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
-} from "./impl/resizing/agGridColumnSizing";
+} from "./impl/resizing/columnSizing";
 import { ColumnWidthItem, IResizedColumns, UIClick } from "./columnWidths";
 import { AgGridDatasource, createAgGridDatasource } from "./impl/data/dataSource";
 import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
@@ -27,8 +27,8 @@ import { defFingerprint, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
-import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/base/agGridColumnWrapper";
-import { agColIds, isMeasureColumn } from "./impl/base/agGridUtils";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/base/agColumnWrapper";
+import { agColIds, isMeasureColumn } from "./impl/base/agUtils";
 import { agColId } from "./impl/structure/tableDescriptorTypes";
 import { sleep } from "./impl/utils";
 import { ISeparators } from "@gooddata/numberjs";
@@ -37,7 +37,7 @@ import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./impl/base/consta
 import { getAvailableDrillTargets } from "./impl/drilling/drillTargets";
 import { IGroupingProvider } from "./impl/data/rowGroupingProvider";
 import sumBy from "lodash/sumBy";
-import ApiWrapper from "./impl/base/agGridApiWrapper";
+import ApiWrapper from "./impl/base/agApiWrapper";
 import {
     initializeStickyRow,
     IScrollPosition,

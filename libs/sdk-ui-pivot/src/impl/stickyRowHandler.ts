@@ -2,8 +2,8 @@
 import isEmpty from "lodash/isEmpty";
 import { GridApi, RowNode } from "@ag-grid-community/all-modules";
 import { IGroupingProvider } from "./data/rowGroupingProvider";
-import { getGridIndex } from "./base/agGridUtils";
-import ApiWrapper from "./base/agGridApiWrapper";
+import { getGridIndex } from "./base/agUtils";
+import ApiWrapper from "./base/agApiWrapper";
 import { getScrollbarWidth } from "./utils";
 import { ROW_ATTRIBUTE_COLUMN } from "./base/constants";
 import { IGridRow } from "./data/resultTypes";

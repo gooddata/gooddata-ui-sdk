@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
-import ApiWrapper from "../base/agGridApiWrapper";
+import ApiWrapper from "../base/agApiWrapper";
 import isEqual from "lodash/isEqual";
 import { IGridTotalsRow } from "./resultTypes";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
