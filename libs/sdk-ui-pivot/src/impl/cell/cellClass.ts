@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { CellClassParams } from "@ag-grid-community/all-modules";
-import { TableFacade } from "../../tableFacade";
+import { TableFacade } from "../tableFacade";
 import { ICorePivotTableProps } from "../../publicTypes";
 import { IGridRow } from "../data/resultTypes";
 import isEmpty from "lodash/isEmpty";

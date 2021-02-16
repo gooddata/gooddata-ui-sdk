@@ -22,7 +22,7 @@ import { AVAILABLE_TOTALS } from "../../base/constants";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 import { TableDescriptor } from "../tableDescriptor";
 import { isDataColGroup, isDataColLeaf, isDataColRootGroup, isSliceCol } from "../tableDescriptorTypes";
-import { IMenuAggregationClickConfig } from "../../../privateTypes";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level

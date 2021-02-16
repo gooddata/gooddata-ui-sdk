@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { TableDescriptor } from "./impl/structure/tableDescriptor";
+import { TableDescriptor } from "./structure/tableDescriptor";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
     createExportFunction,
@@ -19,29 +19,29 @@ import {
     resizeWeakMeasureColumns,
     syncSuppressSizeToFitOnColumns,
     updateColumnDefinitionsWithWidths,
-} from "./impl/resizing/columnSizing";
-import { IResizedColumns, UIClick } from "./columnWidths";
-import { AgGridDatasource, createAgGridDatasource } from "./impl/data/dataSource";
+} from "./resizing/columnSizing";
+import { IResizedColumns, UIClick } from "../columnWidths";
+import { AgGridDatasource, createAgGridDatasource } from "./data/dataSource";
 import { Column, ColumnApi, GridApi } from "@ag-grid-community/all-modules";
 import { defFingerprint, ISortItem } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { IntlShape } from "react-intl";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
-import { setColumnMaxWidth, setColumnMaxWidthIf } from "./impl/base/agColumnWrapper";
-import { agColIds, isMeasureColumn } from "./impl/base/agUtils";
-import { agColId } from "./impl/structure/tableDescriptorTypes";
-import { sleep } from "./impl/utils";
-import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./impl/base/constants";
-import { getAvailableDrillTargets } from "./impl/drilling/drillTargets";
-import { IGroupingProvider } from "./impl/data/rowGroupingProvider";
+import { setColumnMaxWidth, setColumnMaxWidthIf } from "./base/agColumnWrapper";
+import { agColIds, isMeasureColumn } from "./base/agUtils";
+import { agColId } from "./structure/tableDescriptorTypes";
+import { sleep } from "./utils";
+import { DEFAULT_AUTOSIZE_PADDING, DEFAULT_ROW_HEIGHT } from "./base/constants";
+import { getAvailableDrillTargets } from "./drilling/drillTargets";
+import { IGroupingProvider } from "./data/rowGroupingProvider";
 import sumBy from "lodash/sumBy";
-import ApiWrapper from "./impl/base/agApiWrapper";
+import ApiWrapper from "./base/agApiWrapper";
 import {
     initializeStickyRow,
     stickyRowExists,
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
-} from "./impl/stickyRowHandler";
+} from "./stickyRowHandler";
 import { ColumnResizingConfig, DataSourceConfig, StickyRowConfig } from "./privateTypes";
 
 const HEADER_CELL_BORDER = 1;

@@ -1,10 +1,16 @@
 // (C) 2007-2021 GoodData Corporation
 import { ITotal, TotalType } from "@gooddata/sdk-model";
-import { ColumnWidthItem } from "./columnWidths";
+import { ColumnWidthItem } from "../columnWidths";
 import { ISeparators } from "@gooddata/numberjs";
-import { ColumnResizedCallback } from "./publicTypes";
+import { ColumnResizedCallback } from "../publicTypes";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { IScrollPosition } from "./impl/stickyRowHandler";
+import { IScrollPosition } from "./stickyRowHandler";
+import { GridOptions } from "@ag-grid-community/all-modules";
+
+/*
+ * The types defined in this file are used internally thorough different components. They are never intended
+ * for public exports.
+ */
 
 export interface IMenuAggregationClickConfig {
     type: TotalType;
@@ -37,3 +43,7 @@ export type StickyRowConfig = {
     scrollPosition: IScrollPosition;
     lastScrollPosition: IScrollPosition;
 };
+
+export interface ICustomGridOptions extends GridOptions {
+    enableMenu?: boolean;
+}

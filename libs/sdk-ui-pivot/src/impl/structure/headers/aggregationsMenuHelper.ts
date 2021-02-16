@@ -7,7 +7,7 @@ import isEqual from "lodash/isEqual";
 import sortBy from "lodash/sortBy";
 import uniq from "lodash/uniq";
 import { IColumnTotal } from "./aggregationsMenuTypes";
-import { IMenuAggregationClickConfig } from "../../../privateTypes";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 function getTotalsForMeasureAndType(totals: ITotal[], type: TotalType, measureLocalIdentifier: string) {
     return totals.filter(

@@ -42,7 +42,6 @@ import {
     MEASURE_COLUMN,
     ROW_ATTRIBUTE_COLUMN,
 } from "./impl/base/constants";
-import { ICustomGridOptions } from "./impl/base/agTypes";
 import ColumnGroupHeader from "./impl/structure/headers/ColumnGroupHeader";
 import ColumnHeader from "./impl/structure/headers/ColumnHeader";
 import { getScrollbarWidth } from "./impl/utils";
@@ -58,7 +57,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
 import { ICommonHeaderParams } from "./impl/structure/headers/HeaderCell";
-import { TableFacade } from "./tableFacade";
+import { TableFacade } from "./impl/tableFacade";
 import {
     getAvailableDrillTargets,
     getAvailableDrillTargetsFromExecutionResult,
@@ -72,7 +71,7 @@ import {
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import { cellClassFactory } from "./impl/cell/cellClass";
 import { onCellClickedFactory } from "./impl/cell/onCellClick";
-import { ColumnResizingConfig, IMenuAggregationClickConfig } from "./privateTypes";
+import { ColumnResizingConfig, ICustomGridOptions, IMenuAggregationClickConfig } from "./impl/privateTypes";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;

@@ -9,7 +9,7 @@ import AggregationsMenu from "./AggregationsMenu";
 import { HEADER_LABEL_CLASS } from "../../base/constants";
 import { TableDescriptor } from "../tableDescriptor";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
-import { IMenuAggregationClickConfig } from "../../../privateTypes";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";

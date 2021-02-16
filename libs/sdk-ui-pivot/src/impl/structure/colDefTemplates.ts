@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { ColDef, ValueFormatterParams } from "@ag-grid-community/all-modules";
-import { TableFacade } from "../../tableFacade";
+import { TableFacade } from "../tableFacade";
 import { ICorePivotTableProps } from "../../publicTypes";
 import { headerClassFactory } from "./colDefHeaderClass";
 import { AVAILABLE_TOTALS } from "../base/constants";

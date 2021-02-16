@@ -10,7 +10,7 @@ import {
     GridReadyEvent,
     ICellRendererParams,
 } from "@ag-grid-community/all-modules";
-import { ICustomGridOptions } from "../agTypes";
+import { ICustomGridOptions } from "../../privateTypes";
 
 describe("agGridApiWrapper", () => {
     const firstAttributeColumnId = "a_123";

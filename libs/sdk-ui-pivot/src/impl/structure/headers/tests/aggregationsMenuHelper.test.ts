@@ -2,7 +2,7 @@
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
 import { ITotal } from "@gooddata/sdk-model";
 import { IColumnTotal } from "../aggregationsMenuTypes";
-import { IMenuAggregationClickConfig } from "../../../../privateTypes";
+import { IMenuAggregationClickConfig } from "../../../privateTypes";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {
