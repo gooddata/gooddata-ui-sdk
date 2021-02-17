@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IBucketItem } from "../../../../interfaces/Visualization";
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -146,6 +146,27 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
 
         const result = adaptReferencePointWidthItemsToPivotTable(
             sourceColumnWidthsWithweakMeasure,
+            measures,
+            [],
+            columnAttributes,
+            [],
+            [],
+            [],
+        );
+
+        expect(result).toEqual(expectedColumnWidthItems);
+    });
+
+    it("should remove attributeWidhtItem when attribute is located on column", () => {
+        const sourceColumnWidhtsWithAttributeColumn: ColumnWidthItem[] = [
+            validAttributeColumnWidthItem,
+            validWeakMeasureColumnWidthItem,
+        ];
+
+        const expectedColumnWidthItems: ColumnWidthItem[] = [validWeakMeasureColumnWidthItem];
+
+        const result = adaptReferencePointWidthItemsToPivotTable(
+            sourceColumnWidhtsWithAttributeColumn,
             measures,
             [],
             columnAttributes,
