@@ -1,14 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
 import { idRef } from "@gooddata/sdk-model";
 import { IFluidLayoutSizeByScreen, IWidget } from "@gooddata/sdk-backend-spi";
-import {
-    IDashboardViewLayout,
-    IDashboardViewLayoutColumn,
-    IDashboardViewLayoutContent,
-} from "./interfaces/dashboardLayout";
+import { IDashboardViewLayout, IDashboardViewLayoutColumn } from "./interfaces/dashboardLayout";
 import { DashboardViewLayoutWidgetClass } from "./interfaces/dashboardLayoutSizing";
 
-export type DashboardLayoutRowMock<TCustomContent = IDashboardViewLayoutContent> = {
+export type DashboardLayoutRowMock<TCustomContent> = {
     title?: string;
     description?: string;
     columns: Array<[TCustomContent, IFluidLayoutSizeByScreen?]>;

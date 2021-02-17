@@ -1,5 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
-import { IFluidLayoutRow, IFluidLayoutColumn, IFluidLayout } from "@gooddata/sdk-backend-spi";
+import {
+    IFluidLayoutRow,
+    IFluidLayoutColumn,
+    IFluidLayout,
+    IFluidLayoutColumnFacade,
+    IFluidLayoutRowFacade,
+} from "@gooddata/sdk-backend-spi";
 import {
     IFluidLayoutColumnRenderer,
     IFluidLayoutContentRenderer,
@@ -12,9 +18,21 @@ export type TextLayoutColumn = IFluidLayoutColumn<TextLayoutContent>;
 export type TextLayoutRow = IFluidLayoutRow<TextLayoutContent>;
 export type TextLayout = IFluidLayout<TextLayoutContent>;
 
-export type TextLayoutColumnRenderer = IFluidLayoutColumnRenderer<TextLayoutContent>;
-export type TextLayoutContentRenderer = IFluidLayoutContentRenderer<TextLayoutContent>;
-export type TextLayoutRowRenderer = IFluidLayoutRowRenderer<TextLayoutContent>;
+export type TextLayoutColumnRenderer = IFluidLayoutColumnRenderer<
+    TextLayoutContent,
+    TextLayoutColumn,
+    IFluidLayoutColumnFacade<TextLayoutContent, TextLayoutColumn>
+>;
+export type TextLayoutContentRenderer = IFluidLayoutContentRenderer<
+    TextLayoutContent,
+    TextLayoutColumn,
+    IFluidLayoutColumnFacade<TextLayoutContent, TextLayoutColumn>
+>;
+export type TextLayoutRowRenderer = IFluidLayoutRowRenderer<
+    TextLayoutContent,
+    TextLayoutRow,
+    IFluidLayoutRowFacade<TextLayoutContent, TextLayoutRow>
+>;
 
 export const createArrayWithSize = (size: number): any[] => Array.from(new Array(size));
 

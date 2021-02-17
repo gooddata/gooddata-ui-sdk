@@ -12,8 +12,18 @@ import {
     widgetId,
     widgetUri,
     ILegacyKpi,
+    isFluidLayout,
+    isDashboardLayoutContent,
+    isInsightWidget,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight, insightId, insightUri, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    IInsight,
+    insightId,
+    insightUri,
+    areObjRefsEqual,
+    objRefToString,
+} from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IErrorProps,
@@ -33,8 +43,15 @@ import {
 import { IDashboardViewLayout } from "../DashboardLayout/interfaces/dashboardLayout";
 import { IDashboardFilter } from "../types";
 import { DashboardWidgetRenderer, IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
-import { IDashboardWidgetRenderer, IDashboardWidgetRenderProps, IWidgetPredicates } from "./types";
+import {
+    IDashboardWidgetRenderer,
+    IDashboardWidgetRenderProps,
+    IWidgetPredicates,
+    DashboardViewLayoutTransform,
+} from "./types";
 import { useAlerts } from "./DashboardAlertsContext";
+import { DashboardViewLayoutBuilder } from "../DashboardLayout/builder/layout";
+import { DashboardViewLayoutColumnModifications } from "../DashboardLayout/builder/interfaces";
 
 interface IDashboardRendererProps {
     dashboardRef: ObjRef;
@@ -54,7 +71,35 @@ interface IDashboardRendererProps {
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined;
     widgetRenderer: IDashboardWidgetRenderer;
     areSectionHeadersEnabled?: boolean;
+    transformLayout?: DashboardViewLayoutTransform<any>;
 }
+
+/**
+ * Do this to ensure areObjRefsEqual() and other predicates are working with uncontrolled user ref inputs.
+ */
+const polluteWidgetRefsWithBothIdAndUri = (
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+): DashboardViewLayoutColumnModifications<IDashboardLayoutContent> => (column) =>
+    column.content((c) => {
+        const updatedContent = { ...c };
+        if (isWidget(updatedContent)) {
+            updatedContent.ref = {
+                ...updatedContent.ref,
+                uri: widgetUri(updatedContent),
+                identifier: widgetId(updatedContent),
+            };
+        }
+        if (isInsightWidget(updatedContent)) {
+            const insight = getInsightByRef(updatedContent.insight);
+            updatedContent.insight = {
+                ...updatedContent.insight,
+                uri: insightUri(insight),
+                identifier: insightId(insight),
+            };
+        }
+
+        return updatedContent;
+    });
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardViewLayout,
@@ -74,6 +119,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     widgetRenderer,
     areSectionHeadersEnabled,
     dashboardRef,
+    transformLayout,
 }) {
     const { alerts } = useAlerts();
     const isThemeLoading = useThemeIsLoading();
@@ -83,17 +129,41 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
         return <LoadingComponent />;
     }
 
+    const getWidgetAlert = (widgetRef: ObjRef) =>
+        alerts?.find((alert) => areObjRefsEqual(alert.widget, widgetRef));
+
+    const transformedLayout = transformLayout
+        ? transformLayout(
+              DashboardViewLayoutBuilder.for(dashboardViewLayout).modifyRows((row) =>
+                  row.modifyColumns(polluteWidgetRefsWithBothIdAndUri(getInsightByRef)),
+              ),
+              {
+                  getWidgetAlert,
+                  getInsight: getInsightByRef,
+                  filters,
+              },
+          ).build()
+        : dashboardViewLayout;
+
     return (
         <DashboardLayout
-            layout={dashboardViewLayout}
+            layout={transformedLayout}
+            columnKeyGetter={(keyGetterProps) => {
+                const content = keyGetterProps.column.content();
+                if (isWidget(content)) {
+                    return objRefToString(content.ref);
+                }
+                {
+                    return keyGetterProps.column.index().toString();
+                }
+            }}
             contentRenderer={(renderProps) => {
                 const { column, screen, DefaultContentRenderer } = renderProps;
                 let widgetClass: DashboardViewLayoutWidgetClass;
                 let insight: IInsight;
                 const content = column.content();
-
-                if (!isWidget(content)) {
-                    throw new UnexpectedError("Custom dashboard view content is not yet supported.");
+                if (isFluidLayout(content)) {
+                    throw new UnexpectedError("Nested layouts not yet supported.");
                 }
 
                 if (isWidget(content)) {
@@ -102,8 +172,6 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 if (content.type === "insight") {
                     insight = getInsightByRef(content.insight);
                 }
-
-                const alert = alerts?.find((alert) => areObjRefsEqual(alert.widget, content.ref));
 
                 const currentSize = column.size()[screen];
                 const minHeight = !currentSize.heightAsRatio
@@ -120,6 +188,10 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     height,
                 };
 
+                const alert = isWidget(content)
+                    ? alerts?.find((alert) => areObjRefsEqual(alert.widget, content.ref))
+                    : undefined;
+
                 const widgetRenderProps: IDashboardWidgetRendererProps = {
                     insight,
                     dashboardRef,
@@ -133,47 +205,47 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                     onError,
                     workspace,
                     backend,
-                    widget: content,
+                    widget: isWidget(content) ? content : undefined,
                     screen,
                     alert,
                 };
 
-                const renderedWidget = <DashboardWidgetRenderer {...widgetRenderProps} />;
+                const renderedWidget = isWidget(content) ? (
+                    <DashboardWidgetRenderer {...widgetRenderProps} />
+                ) : null;
 
                 const predicates: IWidgetPredicates = {
-                    isWidgetWithRef: (ref: ObjRef) =>
-                        areObjRefsEqual(ref, { identifier: widgetId(content), uri: widgetUri(content) }),
+                    isCustomWidget: () => !isDashboardLayoutContent(content),
+                    isWidgetWithRef: (ref: ObjRef) => isWidget(content) && areObjRefsEqual(ref, content.ref),
                     isWidgetWithKpiRef: (ref: ObjRef) =>
-                        content.type === "kpi" &&
-                        areObjRefsEqual(ref, { identifier: widgetId(content), uri: widgetUri(content) }),
+                        isWidget(content) && content.type === "kpi" && areObjRefsEqual(ref, content.ref),
                     isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) =>
-                        content.type === "kpi" && comparisonType === content.kpi.comparisonType,
+                        isWidget(content) &&
+                        content.type === "kpi" &&
+                        comparisonType === content.kpi.comparisonType,
                     isWidgetWithInsightRef: (ref: ObjRef) =>
+                        isWidget(content) &&
                         content.type === "insight" &&
-                        areObjRefsEqual(ref, { identifier: insightId(insight), uri: insightUri(insight) }),
+                        areObjRefsEqual(ref, content.insight),
                     isWidgetWithInsightType: (type: VisType) =>
-                        content.type === "insight" && type === widgetClass,
+                        isWidget(content) && content.type === "insight" && type === widgetClass,
                 };
 
                 const commonCustomWidgetRenderProps = {
                     ErrorComponent,
                     LoadingComponent,
                     predicates,
-                    widget: content,
+                    widget: isWidget(content) ? content : undefined,
                     renderedWidget,
                     filters,
+                    customWidget: !isDashboardLayoutContent(content) ? content : undefined,
                 };
 
-                const customWidgetRendererProps: IDashboardWidgetRenderProps =
-                    content.type === "insight"
-                        ? {
-                              ...commonCustomWidgetRenderProps,
-                              insight,
-                          }
-                        : {
-                              ...commonCustomWidgetRenderProps,
-                              alert,
-                          };
+                const customWidgetRendererProps: IDashboardWidgetRenderProps = {
+                    ...commonCustomWidgetRenderProps,
+                    insight,
+                    alert,
+                };
 
                 return (
                     <DefaultContentRenderer {...renderProps} {...computedRenderProps}>

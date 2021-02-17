@@ -8,11 +8,7 @@ import {
     IFluidLayoutSize,
     IFluidLayoutSizeByScreen,
 } from "../../fluidLayout";
-import {
-    createValueOrUpdateCallbackTestCases,
-    createEmptyFluidLayoutRowBuilder,
-    createEmptyFluidLayoutColumnBuilder,
-} from "./utils";
+import { createValueOrUpdateCallbackTestCases, createEmptyFluidLayoutColumnBuilder } from "./utils";
 import { FluidLayoutBuilder } from "../layout";
 import { FluidLayoutRowBuilder } from "../row";
 
@@ -58,14 +54,6 @@ describe("FluidLayoutColumnBuilder", () => {
                 };
 
                 expect(boom).toThrowErrorMatchingSnapshot();
-            });
-        });
-
-        describe(".forNewColumn()", () => {
-            it("should create new empty column", () => {
-                const rowBuilder = createEmptyFluidLayoutRowBuilder();
-                const column = FluidLayoutColumnBuilder.forNewColumn(rowBuilder, defaultColumnXlSize).build();
-                expect(column).toMatchSnapshot();
             });
         });
     });

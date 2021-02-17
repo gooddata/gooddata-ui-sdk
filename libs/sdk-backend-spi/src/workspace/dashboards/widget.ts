@@ -159,7 +159,15 @@ export function isWidget(obj: unknown): obj is IWidget {
  * @alpha
  */
 export function isInsightWidget(obj: unknown): obj is IInsightWidget {
-    return hasWidgetProps(obj) && isObjRef((obj as any).ref) && (obj as IInsightWidget).type === "insight";
+    return isWidget(obj) && (obj as IInsightWidget).type === "insight";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IInsightWidgetDefinition}.
+ * @alpha
+ */
+export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IInsightWidget).type === "insight";
 }
 
 /**
@@ -167,7 +175,15 @@ export function isInsightWidget(obj: unknown): obj is IInsightWidget {
  * @alpha
  */
 export function isKpiWidget(obj: unknown): obj is IKpiWidget {
-    return hasWidgetProps(obj) && isObjRef((obj as any).ref) && (obj as IKpiWidget).type === "kpi";
+    return isWidget(obj) && (obj as IKpiWidget).type === "kpi";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IKpiWidget}.
+ * @alpha
+ */
+export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IKpiWidget).type === "kpi";
 }
 
 /**

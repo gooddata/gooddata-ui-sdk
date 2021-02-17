@@ -8,11 +8,16 @@ import {
     IFluidLayoutSizeByScreen,
 } from "../fluidLayout";
 import {
-    IFluidLayoutColumnMethods,
-    IFluidLayoutColumnsMethods,
+    IFluidLayoutColumnFacade,
+    IFluidLayoutColumnFacadeImpl,
+    IFluidLayoutColumnsFacade,
+    IFluidLayoutColumnsFacadeImpl,
     IFluidLayoutFacade,
-    IFluidLayoutRowMethods,
-    IFluidLayoutRowsMethods,
+    IFluidLayoutFacadeImpl,
+    IFluidLayoutRowFacade,
+    IFluidLayoutRowFacadeImpl,
+    IFluidLayoutRowsFacade,
+    IFluidLayoutRowsFacadeImpl,
 } from "../facade/interfaces";
 
 /**
@@ -22,46 +27,12 @@ import {
  * @param rowsFacade - rows facade to create a query
  * @returns array of row facades, single row facade, or undefined
  */
-export type FluidLayoutRowsSelector<TContent> = (
-    rowsFacade: IFluidLayoutRowsMethods<TContent>,
-) => IFluidLayoutRowMethods<TContent>[] | IFluidLayoutRowMethods<TContent> | undefined;
-
-/**
- * Represents a query to select a subset of row columns.
- *
- * @alpha
- * @param columnsFacade - columns facade to create a query
- * @returns array of column facades, single column facade, or undefined
- */
-export type FluidLayoutColumnsSelector<TContent> = (
-    columnsFacade: IFluidLayoutColumnsMethods<TContent>,
-) => IFluidLayoutColumnMethods<TContent>[] | IFluidLayoutColumnMethods<TContent> | undefined;
-
-/**
- * Represents a callback to modify the layout.
- *
- * @alpha
- * @param layoutBuilder - layout builder on which the transformations will be performed
- * @param layoutFacade - layout facade for convenient work with the layout
- * @returns layout builder with applied transforms
- */
-export type FluidLayoutModifications<TContent> = (
-    layoutBuilder: IFluidLayoutBuilder<TContent>,
-    layoutFacade: IFluidLayoutFacade<TContent>,
-) => IFluidLayoutBuilder<TContent>;
-
-/**
- * Represents a callback to modify the layout column.
- *
- * @alpha
- * @param columnBuilder - column builder on which the transformations will be performed
- * @param columnFacade - column facade for convenient work with the column
- * @returns row builder with applied transforms
- */
-export type FluidLayoutColumnModifications<TContent> = (
-    columnBuilder: IFluidLayoutColumnBuilder<TContent>,
-    columnFacade: IFluidLayoutColumnMethods<TContent>,
-) => IFluidLayoutColumnBuilder<TContent>;
+export type FluidLayoutRowsSelector<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TRowsFacade extends IFluidLayoutRowsFacade<TContent, TRow, TRowFacade>
+> = (rowsFacade: TRowsFacade) => TRowFacade[] | TRowFacade | undefined;
 
 /**
  * Represents a callback to modify the layout row.
@@ -71,10 +42,96 @@ export type FluidLayoutColumnModifications<TContent> = (
  * @param rowFacade - row facade for convenient work with the column
  * @returns row builder with applied transforms
  */
-export type FluidLayoutRowModifications<TContent> = (
-    rowBuilder: IFluidLayoutRowBuilder<TContent>,
-    rowFacade: IFluidLayoutRowMethods<TContent>,
-) => IFluidLayoutRowBuilder<TContent>;
+export type FluidLayoutRowModifications<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TRow extends IFluidLayoutRow<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnsFacade extends IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade>,
+    TColumnBuilder extends IFluidLayoutColumnBuilder<TContent, TColumn, TColumnFacade>,
+    TRowBuilder extends IFluidLayoutRowBuilder<
+        TContent,
+        TRow,
+        TColumn,
+        TRowFacade,
+        TColumnFacade,
+        TColumnsFacade,
+        TColumnBuilder
+    >
+> = (rowBuilder: TRowBuilder, rowFacade: TRowFacade) => TRowBuilder;
+
+/**
+ * Represents a query to select a subset of row columns.
+ *
+ * @alpha
+ * @param columnsFacade - columns facade to create a query
+ * @returns array of column facades, single column facade, or undefined
+ */
+export type FluidLayoutColumnsSelector<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnsFacade extends IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade>
+> = (columnsFacade: TColumnsFacade) => TColumnFacade[] | TColumnFacade | undefined;
+
+/**
+ * Represents a callback to modify the layout column.
+ *
+ * @alpha
+ * @param columnBuilder - column builder on which the transformations will be performed
+ * @param columnFacade - column facade for convenient work with the column
+ * @returns row builder with applied transforms
+ */
+export type FluidLayoutColumnModifications<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnBuilder extends IFluidLayoutColumnBuilder<TContent, TColumn, TColumnFacade>
+> = (columnBuilder: TColumnBuilder, columnFacade: TColumnFacade) => TColumnBuilder;
+
+/**
+ * Represents a callback to modify the layout.
+ *
+ * @alpha
+ * @param layoutBuilder - layout builder on which the transformations will be performed
+ * @param layoutFacade - layout facade for convenient work with the layout
+ * @returns layout builder with applied transforms
+ */
+export type FluidLayoutModifications<
+    TContent,
+    TLayout extends IFluidLayout<TContent>,
+    TRow extends IFluidLayoutRow<TContent>,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TRowsFacade extends IFluidLayoutRowsFacade<TContent, TRow, TRowFacade>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnsFacade extends IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade>,
+    TLayoutFacade extends IFluidLayoutFacade<TContent, TLayout>,
+    TColumnBuilder extends IFluidLayoutColumnBuilder<TContent, TColumn, TColumnFacade>,
+    TRowBuilder extends IFluidLayoutRowBuilder<
+        TContent,
+        TRow,
+        TColumn,
+        TRowFacade,
+        TColumnFacade,
+        TColumnsFacade,
+        TColumnBuilder
+    >,
+    TLayoutBuilder extends IFluidLayoutBuilder<
+        TContent,
+        TLayout,
+        TRow,
+        TColumn,
+        TRowFacade,
+        TRowsFacade,
+        TColumnFacade,
+        TColumnsFacade,
+        TLayoutFacade,
+        TColumnBuilder,
+        TRowBuilder
+    >
+> = (layoutBuilder: TLayoutBuilder, layoutFacade: TLayoutFacade) => TLayoutBuilder;
 
 /**
  * Represents a callback to update the value, or the value itself.
@@ -87,7 +144,11 @@ export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue)
  *
  * @alpha
  */
-export interface IFluidLayoutColumnBuilder<TContent> {
+export interface IFluidLayoutColumnBuilder<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+> {
     /**
      * Set or update column size.
      *
@@ -111,14 +172,14 @@ export interface IFluidLayoutColumnBuilder<TContent> {
      * @param valueOrUpdateCallback - raw column data or update callback
      * @returns this
      */
-    setColumn(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutColumn<TContent>>): this;
+    setColumn(valueOrUpdateCallback: ValueOrUpdateCallback<TColumn>): this;
 
     /**
      * Get facade for the modified column.
      *
      * @returns column facade
      */
-    facade(): IFluidLayoutColumnMethods<TContent>;
+    facade(): TColumnFacade;
 
     /**
      * Perform set of the modifications on the column.
@@ -127,14 +188,14 @@ export interface IFluidLayoutColumnBuilder<TContent> {
      * @param modifications - callback to modify the column
      * @returns this
      */
-    modify(modifications: FluidLayoutColumnModifications<TContent>): this;
+    modify(modifications: FluidLayoutColumnModifications<TContent, TColumn, TColumnFacade, this>): this;
 
     /**
      * Get raw data of the modified column.
      *
      * @returns raw data of the modified column
      */
-    build(): IFluidLayoutColumn<TContent>;
+    build(): TColumn;
 }
 
 /**
@@ -142,7 +203,15 @@ export interface IFluidLayoutColumnBuilder<TContent> {
  *
  * @alpha
  */
-export interface IFluidLayoutRowBuilder<TContent> {
+export interface IFluidLayoutRowBuilder<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnsFacade extends IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade>,
+    TColumnBuilder extends IFluidLayoutColumnBuilder<TContent, TColumn, TColumnFacade>
+> {
     /**
      * Set or update row header.
      *
@@ -169,7 +238,7 @@ export interface IFluidLayoutRowBuilder<TContent> {
      */
     addColumn(
         xlSize: IFluidLayoutSize,
-        create?: (builder: IFluidLayoutColumnBuilder<TContent>) => IFluidLayoutColumnBuilder<TContent>,
+        create?: (builder: TColumnBuilder) => TColumnBuilder,
         index?: number,
     ): this;
 
@@ -185,7 +254,10 @@ export interface IFluidLayoutRowBuilder<TContent> {
      * @param modify - callback to modify the column
      * @returns this
      */
-    modifyColumn(index: number, modify: FluidLayoutColumnModifications<TContent>): this;
+    modifyColumn(
+        index: number,
+        modify: FluidLayoutColumnModifications<TContent, TColumn, TColumnFacade, TColumnBuilder>,
+    ): this;
 
     /**
      * Remove the column at a specified index.
@@ -231,8 +303,8 @@ export interface IFluidLayoutRowBuilder<TContent> {
      * @returns this
      */
     modifyColumns(
-        modify: FluidLayoutColumnModifications<TContent>,
-        selector?: FluidLayoutColumnsSelector<TContent>,
+        modify: FluidLayoutColumnModifications<TContent, TColumn, TColumnFacade, TColumnBuilder>,
+        selector?: FluidLayoutColumnsSelector<TContent, TColumn, TColumnFacade, TColumnsFacade>,
     ): this;
 
     /**
@@ -249,7 +321,16 @@ export interface IFluidLayoutRowBuilder<TContent> {
      * @param selector - query to select the target columns you want to remove
      * @returns this
      */
-    removeColumns(selector?: FluidLayoutColumnsSelector<TContent>): this;
+    removeColumns(
+        selector?: FluidLayoutColumnsSelector<TContent, TColumn, TColumnFacade, TColumnsFacade>,
+    ): this;
+
+    /**
+     * Remove all empty columns.
+     *
+     * @returns this
+     */
+    removeEmptyColumns(): this;
 
     /**
      * Set or update row as raw data.
@@ -258,14 +339,14 @@ export interface IFluidLayoutRowBuilder<TContent> {
      * @param valueOrUpdateCallback - raw row data or update callback
      * @returns this
      */
-    setRow(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutRow<TContent>>): this;
+    setRow(valueOrUpdateCallback: ValueOrUpdateCallback<TRow>): this;
 
     /**
      * Get facade for the modified row.
      *
      * @returns row facade
      */
-    facade(): IFluidLayoutRowMethods<TContent>;
+    facade(): TRowFacade;
 
     /**
      * Perform set of the modifications on the row.
@@ -274,14 +355,25 @@ export interface IFluidLayoutRowBuilder<TContent> {
      * @param modifications - callback to modify the row
      * @returns this
      */
-    modify(modifications: FluidLayoutRowModifications<TContent>): this;
+    modify(
+        modifications: FluidLayoutRowModifications<
+            TContent,
+            TColumn,
+            TRow,
+            TRowFacade,
+            TColumnFacade,
+            TColumnsFacade,
+            TColumnBuilder,
+            this
+        >,
+    ): this;
 
     /**
      * Get raw data of the modified row.
      *
      * @returns raw data of the modified row
      */
-    build(): IFluidLayoutRow<TContent>;
+    build(): TRow;
 }
 
 /**
@@ -290,7 +382,27 @@ export interface IFluidLayoutRowBuilder<TContent> {
  *
  * @alpha
  */
-export interface IFluidLayoutBuilder<TContent> {
+export interface IFluidLayoutBuilder<
+    TContent,
+    TLayout extends IFluidLayout<TContent>,
+    TRow extends IFluidLayoutRow<TContent>,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TRowsFacade extends IFluidLayoutRowsFacade<TContent, TRow, TRowFacade>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>,
+    TColumnsFacade extends IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade>,
+    TLayoutFacade extends IFluidLayoutFacade<TContent, TLayout>,
+    TColumnBuilder extends IFluidLayoutColumnBuilder<TContent, TColumn, TColumnFacade>,
+    TRowBuilder extends IFluidLayoutRowBuilder<
+        TContent,
+        TRow,
+        TColumn,
+        TRowFacade,
+        TColumnFacade,
+        TColumnsFacade,
+        TColumnBuilder
+    >
+> {
     /**
      * Set or update layout size.
      *
@@ -315,10 +427,7 @@ export interface IFluidLayoutBuilder<TContent> {
      * @param index - index where to place the row
      * @returns this
      */
-    addRow(
-        create?: (builder: IFluidLayoutRowBuilder<TContent>) => IFluidLayoutRowBuilder<TContent>,
-        index?: number,
-    ): this;
+    addRow(create?: (builder: TRowBuilder) => TRowBuilder, index?: number): this;
 
     /**
      * Modify row at a specified index.
@@ -332,7 +441,19 @@ export interface IFluidLayoutBuilder<TContent> {
      * @param modify - callback to modify the row
      * @returns this
      */
-    modifyRow(index: number, modify: FluidLayoutRowModifications<TContent>): this;
+    modifyRow(
+        index: number,
+        modify: FluidLayoutRowModifications<
+            TContent,
+            TColumn,
+            TRow,
+            TRowFacade,
+            TColumnFacade,
+            TColumnsFacade,
+            TColumnBuilder,
+            TRowBuilder
+        >,
+    ): this;
 
     /**
      * Remove the row at a specified index.
@@ -378,8 +499,17 @@ export interface IFluidLayoutBuilder<TContent> {
      * @returns this
      */
     modifyRows(
-        modify: FluidLayoutRowModifications<TContent>,
-        selector?: FluidLayoutRowsSelector<TContent>,
+        modify: FluidLayoutRowModifications<
+            TContent,
+            TColumn,
+            TRow,
+            TRowFacade,
+            TColumnFacade,
+            TColumnsFacade,
+            TColumnBuilder,
+            TRowBuilder
+        >,
+        selector?: FluidLayoutRowsSelector<TContent, TRow, TRowFacade, TRowsFacade>,
     ): this;
 
     /**
@@ -396,7 +526,14 @@ export interface IFluidLayoutBuilder<TContent> {
      * @param selector - query to select the target rows you want to modify
      * @returns this
      */
-    removeRows(selector?: FluidLayoutRowsSelector<TContent>): this;
+    removeRows(selector?: FluidLayoutRowsSelector<TContent, TRow, TRowFacade, TRowsFacade>): this;
+
+    /**
+     * Remove all empty rows.
+     *
+     * @returns this
+     */
+    removeEmptyRows(): this;
 
     /**
      * Set or update layout as raw data.
@@ -405,14 +542,14 @@ export interface IFluidLayoutBuilder<TContent> {
      * @param valueOrUpdateCallback - raw layout data or update callback
      * @returns this
      */
-    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayout<TContent>>): this;
+    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<TLayout>): this;
 
     /**
      * Get facade for the modified layout.
      *
      * @returns layout facade
      */
-    facade(): IFluidLayoutFacade<TContent>;
+    facade(): TLayoutFacade;
 
     /**
      * Perform set of the modifications on the layout.
@@ -421,12 +558,66 @@ export interface IFluidLayoutBuilder<TContent> {
      * @param modifications - callback to modify the layout
      * @returns this
      */
-    modify(modifications: FluidLayoutModifications<TContent>): this;
+    modify(
+        modifications: FluidLayoutModifications<
+            TContent,
+            TLayout,
+            TRow,
+            TColumn,
+            TRowFacade,
+            TRowsFacade,
+            TColumnFacade,
+            TColumnsFacade,
+            TLayoutFacade,
+            TColumnBuilder,
+            TRowBuilder,
+            this
+        >,
+    ): this;
 
     /**
      * Get raw data of the modified layout.
      *
      * @returns raw data of the modified layout
      */
-    build(): IFluidLayout<TContent>;
+    build(): TLayout;
 }
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutBuilderImpl<TContent> = IFluidLayoutBuilder<
+    TContent,
+    IFluidLayout<TContent>,
+    IFluidLayoutRow<TContent>,
+    IFluidLayoutColumn<TContent>,
+    IFluidLayoutRowFacadeImpl<TContent>,
+    IFluidLayoutRowsFacadeImpl<TContent>,
+    IFluidLayoutColumnFacadeImpl<TContent>,
+    IFluidLayoutColumnsFacadeImpl<TContent>,
+    IFluidLayoutFacadeImpl<TContent>,
+    IFluidLayoutColumnBuilderImpl<TContent>,
+    IFluidLayoutRowBuilderImpl<TContent>
+>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutRowBuilderImpl<TContent> = IFluidLayoutRowBuilder<
+    TContent,
+    IFluidLayoutRow<TContent>,
+    IFluidLayoutColumn<TContent>,
+    IFluidLayoutRowFacadeImpl<TContent>,
+    IFluidLayoutColumnFacadeImpl<TContent>,
+    IFluidLayoutColumnsFacadeImpl<TContent>,
+    IFluidLayoutColumnBuilderImpl<TContent>
+>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutColumnBuilderImpl<TContent> = IFluidLayoutColumnBuilder<
+    TContent,
+    IFluidLayoutColumn<TContent>,
+    IFluidLayoutColumnFacadeImpl<TContent>
+>;

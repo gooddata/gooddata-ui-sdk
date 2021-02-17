@@ -5,6 +5,7 @@ import { ValueOrUpdateCallback } from "./interfaces";
  * Calls an update callback when it's a function, otherwise returns the value itself.
  * This is just an utility function to DRY the builder implementation a bit.
  *
+ * @alpha
  * @param valueOrUpdateCallback - value to set, or update callback
  * @param valueToUpdate - original value to update
  */

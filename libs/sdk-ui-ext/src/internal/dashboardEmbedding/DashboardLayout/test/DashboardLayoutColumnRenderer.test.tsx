@@ -2,10 +2,11 @@
 import React from "react";
 import zip from "lodash/zip";
 import { shallow } from "enzyme";
-import { FluidLayoutFacade, IFluidLayoutSizeByScreen } from "@gooddata/sdk-backend-spi";
+import { IFluidLayoutSizeByScreen } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutColumnRenderer } from "../DashboardLayoutColumnRenderer";
 import { FluidLayoutColumnRenderer, ALL_SCREENS } from "../../FluidLayout";
 import { dashboardLayoutMock, dashboardRowMock, dashboardWidgetMock } from "../mocks";
+import { DashboardViewLayoutFacade } from "../facade/layout";
 
 const testWidths = [12, 10, 6, 4, 2];
 const testRatios = [100, 200, 50, 100, 60];
@@ -30,8 +31,8 @@ const dashboardLayout = dashboardLayoutMock([dashboardRowMock([[dashboardWidgetM
 const dashboardLayoutWitchSizing = dashboardLayoutMock([
     dashboardRowMock([[dashboardWidgetMock("tableId", "table"), sizeForAllScreens]]),
 ]);
-const dashboardLayoutFacade = FluidLayoutFacade.for(dashboardLayout);
-const dashboardLayoutWithSizingFacade = FluidLayoutFacade.for(dashboardLayoutWitchSizing);
+const dashboardLayoutFacade = DashboardViewLayoutFacade.for(dashboardLayout);
+const dashboardLayoutWithSizingFacade = DashboardViewLayoutFacade.for(dashboardLayoutWitchSizing);
 
 describe("DashboardLayoutColumnRenderer", () => {
     it("should set minHeight:0 to override default grid style", () => {

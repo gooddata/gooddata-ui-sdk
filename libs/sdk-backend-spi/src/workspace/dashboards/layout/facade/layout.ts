@@ -2,34 +2,34 @@
 import invariant from "ts-invariant";
 import { IFluidLayout, IFluidLayoutSize, isFluidLayout } from "../fluidLayout";
 
-import { IFluidLayoutFacade, IFluidLayoutRowsMethods } from "./interfaces";
-import { FluidLayoutRowsMethods } from "./rows";
+import { IFluidLayoutFacade, IFluidLayoutFacadeImpl, IFluidLayoutRowsFacadeImpl } from "./interfaces";
+import { FluidLayoutRowsFacade } from "./rows";
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent> {
-    private constructor(private readonly layout: IFluidLayout<TContent>) {}
+export class FluidLayoutFacade<TContent, TLayout extends IFluidLayout<TContent>>
+    implements IFluidLayoutFacade<TContent, TLayout> {
+    protected constructor(protected layout: TLayout) {}
 
     /**
      * Creates an instance of FluidLayoutFacade
      * @param layout - layout to wrap
      */
-    public static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacade<TContent> {
+    public static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacadeImpl<TContent> {
         invariant(isFluidLayout(layout), "Provided data must be IFluidLayout!");
         return new FluidLayoutFacade(layout);
     }
 
-    public rows = (): IFluidLayoutRowsMethods<TContent> => {
-        return FluidLayoutRowsMethods.for(this, this.layout.rows);
-    };
+    public rows(): IFluidLayoutRowsFacadeImpl<TContent> {
+        return FluidLayoutRowsFacade.for(this, this.layout.rows);
+    }
 
-    public size = (): IFluidLayoutSize | undefined => {
+    public size(): IFluidLayoutSize | undefined {
         return this.layout.size;
-    };
+    }
 
-    public raw = (): IFluidLayout<TContent> => {
+    public raw(): TLayout {
         return this.layout;
-    };
+    }
 }

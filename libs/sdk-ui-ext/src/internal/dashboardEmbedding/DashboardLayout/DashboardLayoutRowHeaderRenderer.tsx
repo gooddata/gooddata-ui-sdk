@@ -1,12 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 import * as React from "react";
-import { IFluidLayoutColumnMethods } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutColumnRenderer } from "./DashboardLayoutColumnRenderer";
 import { DashboardLayoutRowHeader } from "./DashboardLayoutRowHeader";
 import { IDashboardViewLayoutRowHeaderRenderProps } from "./interfaces/dashboardLayoutComponents";
 import { FluidLayoutColumnRenderer } from "../FluidLayout";
+import { IDashboardViewLayoutColumnFacade } from "./facade/interfaces";
 
-const emptyColumnFacadeWithFullSize: IFluidLayoutColumnMethods<any> = {
+const emptyColumnFacadeWithFullSize: IDashboardViewLayoutColumnFacade<any> = {
     index: () => 0,
     raw: () => null,
     content: () => null,
@@ -22,6 +22,18 @@ const emptyColumnFacadeWithFullSize: IFluidLayoutColumnMethods<any> = {
     isFirstInRow: () => true,
     test: () => false,
     testRaw: () => false,
+    hasCustomContent: () => false,
+    hasInsightWidgetContent: () => false,
+    hasInsightWidgetDefinitionContent: () => false,
+    hasKpiWidgetContent: () => false,
+    hasKpiWidgetDefinitionContent: () => false,
+    hasLayoutContent: () => false,
+    hasWidgetContent: () => false,
+    hasWidgetDefinitionContent: () => false,
+    hasWidgetWithInsightRef: () => false,
+    hasWidgetWithKpiRef: () => false,
+    hasWidgetWithRef: () => false,
+    isEmpty: () => false,
 };
 
 export function DashboardLayoutRowHeaderRenderer<TCustomContent>(

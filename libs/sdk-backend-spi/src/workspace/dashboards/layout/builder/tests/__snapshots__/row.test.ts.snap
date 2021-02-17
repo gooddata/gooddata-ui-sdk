@@ -665,9 +665,3 @@ Object {
 `;
 
 exports[`FluidLayoutRowBuilder constructors .for() should throw error, when the row is damaged 1`] = `"Provided data must be IFluidLayoutRow!"`;
-
-exports[`FluidLayoutRowBuilder constructors .forNewRow() should create new empty row 1`] = `
-Object {
-  "columns": Array [],
-}
-`;

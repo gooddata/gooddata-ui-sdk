@@ -1,0 +1,371 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DashboardViewLayoutBuilder constructors .for() should throw error, when the layout is damaged 1`] = `"Provided data must be IDashboardViewLayout!"`;
+
+exports[`DashboardViewLayoutBuilder should remove all columns with kpi widget: after 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "insightRef",
+            },
+            "ref": Object {
+              "identifier": "insightWidget",
+            },
+            "title": "Insight widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "insightRef",
+            },
+            "ref": Object {
+              "identifier": "insightWidget",
+            },
+            "title": "Insight widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "type": "fluidLayout",
+}
+`;
+
+exports[`DashboardViewLayoutBuilder should remove all columns with kpi widget: before 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "insightRef",
+            },
+            "ref": Object {
+              "identifier": "insightWidget",
+            },
+            "title": "Insight widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "kpi": Object {
+              "comparisonType": "none",
+              "metric": Object {
+                "identifier": "measure",
+              },
+            },
+            "ref": Object {
+              "identifier": "kpiWidget",
+            },
+            "title": "Kpi widget",
+            "type": "kpi",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "kpi": Object {
+              "comparisonType": "none",
+              "metric": Object {
+                "identifier": "measure",
+              },
+            },
+            "ref": Object {
+              "identifier": "kpiWidget",
+            },
+            "title": "Kpi widget",
+            "type": "kpi",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "insightRef",
+            },
+            "ref": Object {
+              "identifier": "insightWidget",
+            },
+            "title": "Insight widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "type": "fluidLayout",
+}
+`;
+
+exports[`DashboardViewLayoutBuilder should resize columns with particular insight: after 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "tableInsight",
+            },
+            "ref": Object {
+              "identifier": "widget1",
+            },
+            "title": "Table widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 25,
+              "widthAsGridColumnsCount": 2,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "barInsight",
+            },
+            "ref": Object {
+              "identifier": "widget2",
+            },
+            "title": "Bar widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "columnInsight",
+            },
+            "ref": Object {
+              "identifier": "widget3",
+            },
+            "title": "Column widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "tableInsight",
+            },
+            "ref": Object {
+              "identifier": "widget4",
+            },
+            "title": "Table widget 2",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 25,
+              "widthAsGridColumnsCount": 2,
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "type": "fluidLayout",
+}
+`;
+
+exports[`DashboardViewLayoutBuilder should resize columns with particular insight: before 1`] = `
+Object {
+  "rows": Array [
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "tableInsight",
+            },
+            "ref": Object {
+              "identifier": "widget1",
+            },
+            "title": "Table widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "barInsight",
+            },
+            "ref": Object {
+              "identifier": "widget2",
+            },
+            "title": "Bar widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "columnInsight",
+            },
+            "ref": Object {
+              "identifier": "widget3",
+            },
+            "title": "Column widget",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+    Object {
+      "columns": Array [
+        Object {
+          "content": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "tableInsight",
+            },
+            "ref": Object {
+              "identifier": "widget4",
+            },
+            "title": "Table widget 2",
+            "type": "insight",
+          },
+          "size": Object {
+            "xl": Object {
+              "heightAsRatio": 50,
+              "widthAsGridColumnsCount": 12,
+            },
+          },
+        },
+      ],
+    },
+  ],
+  "type": "fluidLayout",
+}
+`;

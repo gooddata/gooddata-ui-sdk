@@ -11,9 +11,7 @@ import {
  *
  * @alpha
  */
-export type IDashboardViewLayoutContent<TCustomContent = IDashboardLayoutContent> =
-    | IDashboardLayoutContent
-    | TCustomContent;
+export type IDashboardViewLayoutContent<TCustomContent> = IDashboardLayoutContent | TCustomContent;
 
 /**
  * Dashboard layout column definition.
@@ -21,7 +19,7 @@ export type IDashboardViewLayoutContent<TCustomContent = IDashboardLayoutContent
  * @alpha
  */
 export type IDashboardViewLayoutColumn<
-    TCustomContent = IDashboardViewLayoutContent<any>
+    TCustomContent extends IDashboardViewLayoutContent<any>
 > = IFluidLayoutColumn<TCustomContent>;
 
 /**
@@ -30,7 +28,7 @@ export type IDashboardViewLayoutColumn<
  * @alpha
  */
 export type IDashboardViewLayoutRow<
-    TCustomContent = IDashboardViewLayoutContent<IDashboardLayoutContent>
+    TCustomContent extends IDashboardViewLayoutContent<any>
 > = IFluidLayoutRow<TCustomContent>;
 
 /**
@@ -38,6 +36,6 @@ export type IDashboardViewLayoutRow<
  *
  * @alpha
  */
-export type IDashboardViewLayout<
-    TCustomContent = IDashboardViewLayoutContent<IDashboardLayoutContent>
-> = IFluidLayout<TCustomContent>;
+export type IDashboardViewLayout<TCustomContent extends IDashboardViewLayoutContent<any>> = IFluidLayout<
+    TCustomContent
+>;

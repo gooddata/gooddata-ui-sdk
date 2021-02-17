@@ -71,14 +71,3 @@ Object {
 `;
 
 exports[`FluidLayoutColumnBuilder constructors .for() should throw error, when the column is damaged 1`] = `"Provided data must be IFluidLayoutColumn!"`;
-
-exports[`FluidLayoutColumnBuilder constructors .forNewColumn() should create new empty column 1`] = `
-Object {
-  "size": Object {
-    "xl": Object {
-      "heightAsRatio": 50,
-      "widthAsGridColumnsCount": 12,
-    },
-  },
-}
-`;

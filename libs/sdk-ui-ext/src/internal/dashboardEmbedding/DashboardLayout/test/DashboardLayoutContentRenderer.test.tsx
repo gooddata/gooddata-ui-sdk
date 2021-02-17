@@ -1,13 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import { shallow } from "enzyme";
 import React from "react";
-import { FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutContentRenderer } from "../DashboardLayoutContentRenderer";
 import { dashboardLayoutMock, dashboardRowMock, dashboardWidgetMock } from "../mocks";
+import { DashboardViewLayoutFacade } from "../facade/layout";
 
 describe("DashboardLayoutContentRenderer", () => {
     it("should set debug style for content without ratio", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
         );
 
@@ -24,7 +24,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should set debug style for content with ratio", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([
                 dashboardRowMock([
                     [
@@ -48,7 +48,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should set debug style for content with ratio, when widget is resized by dashboardLayout", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([
                 dashboardRowMock([
                     [
@@ -73,7 +73,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should set overflow style for content with ratio", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
         );
 
@@ -92,7 +92,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should propagate className", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
         );
         const className = "test";
@@ -110,7 +110,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should propagate minHeight", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([dashboardRowMock([[dashboardWidgetMock("kpi1", "kpi")]])]),
         );
         const minHeight = 100;
@@ -127,7 +127,7 @@ describe("DashboardLayoutContentRenderer", () => {
     });
 
     it("should propagate height", () => {
-        const dashboardLayoutFacade = FluidLayoutFacade.for(
+        const dashboardLayoutFacade = DashboardViewLayoutFacade.for(
             dashboardLayoutMock([
                 dashboardRowMock([
                     [

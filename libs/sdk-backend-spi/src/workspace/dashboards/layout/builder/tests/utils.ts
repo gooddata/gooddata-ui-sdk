@@ -1,8 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 import {
-    IFluidLayoutBuilder,
-    IFluidLayoutColumnBuilder,
-    IFluidLayoutRowBuilder,
+    IFluidLayoutBuilderImpl,
+    IFluidLayoutColumnBuilderImpl,
+    IFluidLayoutRowBuilderImpl,
     ValueOrUpdateCallback,
 } from "../interfaces";
 import { IFluidLayoutSize } from "../../fluidLayout";
@@ -21,11 +21,11 @@ export const createValueOrUpdateCallbackTestCases = <TValue>(
     ["by callback returning undefined", () => undefined],
 ];
 
-export const createEmptyFluidLayoutBuilder = (): IFluidLayoutBuilder<any> =>
+export const createEmptyFluidLayoutBuilder = (): IFluidLayoutBuilderImpl<any> =>
     FluidLayoutBuilder.forNewLayout();
 
-export const createEmptyFluidLayoutRowBuilder = (): IFluidLayoutRowBuilder<any> =>
-    FluidLayoutRowBuilder.forNewRow(createEmptyFluidLayoutBuilder());
+export const createEmptyFluidLayoutRowBuilder = (): IFluidLayoutRowBuilderImpl<any> =>
+    FluidLayoutRowBuilder.for(createEmptyFluidLayoutBuilder().addRow(), 0);
 
-export const createEmptyFluidLayoutColumnBuilder = (): IFluidLayoutColumnBuilder<any> =>
-    FluidLayoutColumnBuilder.forNewColumn(createEmptyFluidLayoutRowBuilder(), defaultColumnXlSize);
+export const createEmptyFluidLayoutColumnBuilder = (): IFluidLayoutColumnBuilderImpl<any> =>
+    FluidLayoutColumnBuilder.for(createEmptyFluidLayoutRowBuilder().addColumn(defaultColumnXlSize), 0);

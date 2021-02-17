@@ -1,63 +1,112 @@
 // (C) 2019-2021 GoodData Corporation
 import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
-import { IFluidLayoutRow, IFluidLayoutSectionHeader } from "../fluidLayout";
-import { IFluidLayoutColumnsMethods, IFluidLayoutRowMethods, IFluidLayoutFacade } from "./interfaces";
-import { FluidLayoutColumnsMethods } from "./columns";
+import { IFluidLayout, IFluidLayoutRow, IFluidLayoutSectionHeader } from "../fluidLayout";
+import { FluidLayoutColumnsFacade } from "./columns";
+import {
+    IFluidLayoutRowFacade,
+    IFluidLayoutRowFacadeImpl,
+    IFluidLayoutFacade,
+    IFluidLayoutFacadeImpl,
+    IFluidLayoutColumnsFacadeImpl,
+} from "./interfaces";
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export class FluidLayoutRowMethods<TContent> implements IFluidLayoutRowMethods<TContent> {
-    private constructor(
-        private readonly layoutFacade: IFluidLayoutFacade<TContent>,
-        private readonly row: IFluidLayoutRow<TContent>,
-        private readonly rowIndex: number,
+export class FluidLayoutRowFacade<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TLayout extends IFluidLayout<TContent>,
+    TLayoutFacade extends IFluidLayoutFacade<TContent, TLayout>
+> implements IFluidLayoutRowFacade<TContent, TRow> {
+    protected constructor(
+        protected readonly layoutFacade: TLayoutFacade,
+        protected readonly row: TRow,
+        protected readonly rowIndex: number,
     ) {}
 
     public static for<TContent>(
-        layoutFacade: IFluidLayoutFacade<TContent>,
+        layoutFacade: IFluidLayoutFacadeImpl<TContent>,
         row: IFluidLayoutRow<TContent>,
         index: number,
-    ): FluidLayoutRowMethods<TContent> {
-        return new FluidLayoutRowMethods(layoutFacade, row, index);
+    ): IFluidLayoutRowFacadeImpl<TContent> {
+        return new FluidLayoutRowFacade(layoutFacade, row, index);
     }
 
-    public raw = (): IFluidLayoutRow<TContent> => this.row;
+    public raw(): TRow {
+        return this.row;
+    }
 
-    public header = (): IFluidLayoutSectionHeader | undefined => this.row.header;
+    public header(): IFluidLayoutSectionHeader | undefined {
+        return this.row.header;
+    }
 
-    public title = (): string | undefined => this.header()?.title;
+    public title(): string | undefined {
+        return this.header()?.title;
+    }
 
-    public description = (): string | undefined => this.header()?.description;
+    public description(): string | undefined {
+        return this.header()?.description;
+    }
 
-    public index = (): number => this.rowIndex;
+    public index(): number {
+        return this.rowIndex;
+    }
 
-    public columns = (): IFluidLayoutColumnsMethods<TContent> =>
-        FluidLayoutColumnsMethods.for(this, this.row.columns);
+    public isFirst(): boolean {
+        return this.indexIs(0);
+    }
 
-    public isFirst = (): boolean => this.indexIs(0);
+    public isLast(): boolean {
+        return this.indexIs(this.layoutFacade.rows().count() - 1);
+    }
 
-    public isLast = (): boolean => this.indexIs(this.layoutFacade.rows().raw().length - 1);
+    public testRaw(pred: (row: TRow) => boolean): boolean {
+        return pred(this.raw());
+    }
 
-    public layout = (): IFluidLayoutFacade<TContent> => this.layoutFacade;
+    public test(pred: (row: this) => boolean): boolean {
+        return pred(this);
+    }
 
-    public testRaw = (pred: (row: IFluidLayoutRow<TContent>) => boolean): boolean => pred(this.raw());
+    public indexIs(index: number): boolean {
+        return this.index() === index;
+    }
 
-    public test = (pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean => pred(this);
+    public headerEquals(header: IFluidLayoutSectionHeader): boolean {
+        return isEqual(this.header(), header);
+    }
 
-    public indexIs = (index: number): boolean => this.index() === index;
+    public hasHeader(): boolean {
+        return !isNil(this.header());
+    }
 
-    public headerEquals = (header: IFluidLayoutSectionHeader): boolean => isEqual(this.header(), header);
+    public hasTitle(): boolean {
+        return !isNil(this.title());
+    }
 
-    public hasHeader = (): boolean => !isNil(this.header());
+    public hasDescription(): boolean {
+        return !isNil(this.description());
+    }
 
-    public hasTitle = (): boolean => !isNil(this.title());
+    public titleEquals(title: string): boolean {
+        return isEqual(this.title(), title);
+    }
 
-    public hasDescription = (): boolean => !isNil(this.description());
+    public descriptionEquals(description: string): boolean {
+        return isEqual(this.description(), description);
+    }
 
-    public titleEquals = (title: string): boolean => isEqual(this.title(), title);
+    public isEmpty(): boolean {
+        return this.columns().count() === 0;
+    }
 
-    public descriptionEquals = (description: string): boolean => isEqual(this.description(), description);
+    public columns(): IFluidLayoutColumnsFacadeImpl<TContent> {
+        return FluidLayoutColumnsFacade.for(this, this.row.columns);
+    }
+
+    public layout(): IFluidLayoutFacadeImpl<TContent> {
+        return this.layoutFacade;
+    }
 }

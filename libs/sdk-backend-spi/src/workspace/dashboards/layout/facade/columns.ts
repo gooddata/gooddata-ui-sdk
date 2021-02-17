@@ -1,94 +1,78 @@
 // (C) 2019-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import { IFluidLayoutColumn } from "../fluidLayout";
-import { IFluidLayoutColumnMethods, IFluidLayoutColumnsMethods, IFluidLayoutRowMethods } from "./interfaces";
-import { FluidLayoutColumnMethods } from "./column";
+import {
+    IFluidLayoutColumnFacade,
+    IFluidLayoutColumnsFacade,
+    IFluidLayoutColumnsFacadeImpl,
+    IFluidLayoutRowFacadeImpl,
+} from "./interfaces";
+import { FluidLayoutColumnFacade } from "./column";
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export class FluidLayoutColumnsMethods<TContent> implements IFluidLayoutColumnsMethods<TContent> {
-    private columnFacades: IFluidLayoutColumnMethods<TContent>[] | undefined;
-
-    private constructor(
-        private readonly rowFacade: IFluidLayoutRowMethods<TContent>,
-        private readonly rawColumns: IFluidLayoutColumn<TContent>[],
-    ) {}
+export class FluidLayoutColumnsFacade<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+> implements IFluidLayoutColumnsFacade<TContent, TColumn, TColumnFacade> {
+    protected constructor(protected readonly columnFacades: TColumnFacade[]) {}
 
     public static for<TContent>(
-        rowFacade: IFluidLayoutRowMethods<TContent>,
-        columnFacades: IFluidLayoutColumn<TContent>[],
-    ): FluidLayoutColumnsMethods<TContent> {
-        return new FluidLayoutColumnsMethods(rowFacade, columnFacades);
+        rowFacade: IFluidLayoutRowFacadeImpl<TContent>,
+        columns: IFluidLayoutColumn<TContent>[],
+    ): IFluidLayoutColumnsFacadeImpl<TContent> {
+        const columnFacades = columns.map((column, index) =>
+            FluidLayoutColumnFacade.for(rowFacade, column, index),
+        );
+        return new FluidLayoutColumnsFacade(columnFacades);
     }
 
-    private getColumnFacades = () => {
-        if (!this.columnFacades) {
-            this.columnFacades = this.rawColumns.map((column, index) =>
-                FluidLayoutColumnMethods.for(this.rowFacade, column, index),
-            );
-        }
+    public raw(): TColumn[] {
+        return this.columnFacades.map((columnFacade) => columnFacade.raw());
+    }
 
-        return this.columnFacades;
-    };
+    public column(columnIndex: number): TColumnFacade | undefined {
+        return this.columnFacades[columnIndex];
+    }
 
-    public raw = (): IFluidLayoutColumn<TContent>[] => this.rawColumns;
+    public map<TReturn>(callback: (column: TColumnFacade) => TReturn): TReturn[] {
+        return this.columnFacades.map(callback);
+    }
 
-    public column = (columnIndex: number): IFluidLayoutColumnMethods<TContent> | undefined => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades[columnIndex];
-    };
+    public flatMap<TReturn>(callback: (column: TColumnFacade) => TReturn[]): TReturn[] {
+        return flatMap(this.columnFacades, callback);
+    }
 
-    public map = <TReturn>(callback: (column: IFluidLayoutColumnMethods<TContent>) => TReturn): TReturn[] => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.map(callback);
-    };
-
-    public flatMap = <TReturn>(
-        callback: (column: IFluidLayoutColumnMethods<TContent>) => TReturn[],
-    ): TReturn[] => {
-        const columnFacades = this.getColumnFacades();
-        return flatMap(columnFacades, callback);
-    };
-
-    public reduce = <TReturn>(
-        callback: (acc: TReturn, row: IFluidLayoutColumnMethods<TContent>) => TReturn,
+    public reduce<TReturn>(
+        callback: (acc: TReturn, row: TColumnFacade) => TReturn,
         initialValue: TReturn,
-    ): TReturn => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.reduce(callback, initialValue);
-    };
+    ): TReturn {
+        return this.columnFacades.reduce(callback, initialValue);
+    }
 
-    public find = (
-        pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean,
-    ): IFluidLayoutColumnMethods<TContent> | undefined => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.find(pred);
-    };
+    public find(pred: (row: TColumnFacade) => boolean): TColumnFacade | undefined {
+        return this.columnFacades.find(pred);
+    }
 
-    public every = (pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean): boolean => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.every(pred);
-    };
+    public every(pred: (row: TColumnFacade) => boolean): boolean {
+        return this.columnFacades.every(pred);
+    }
 
-    public some = (pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean): boolean => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.some(pred);
-    };
+    public some(pred: (row: TColumnFacade) => boolean): boolean {
+        return this.columnFacades.some(pred);
+    }
 
-    public filter = (
-        pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean,
-    ): IFluidLayoutColumnMethods<TContent>[] => {
-        const columnFacades = this.getColumnFacades();
-        return columnFacades.filter(pred);
-    };
+    public filter(pred: (row: TColumnFacade) => boolean): TColumnFacade[] {
+        return this.columnFacades.filter(pred);
+    }
 
-    public all = (): IFluidLayoutColumnMethods<TContent>[] => {
-        return this.getColumnFacades();
-    };
+    public all(): TColumnFacade[] {
+        return this.columnFacades;
+    }
 
-    public count = (): number => {
-        return this.getColumnFacades().length;
-    };
+    public count(): number {
+        return this.columnFacades.length;
+    }
 }

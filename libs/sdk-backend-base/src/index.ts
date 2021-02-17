@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 export { dummyBackend, dummyBackendEmptyData, dummyDataView, DummyBackendConfig } from "./dummyBackend";
 
@@ -72,6 +72,13 @@ export {
     ExtractBuilderType,
     IBuilder,
 } from "./ldmFactories/builder";
+export {
+    InsightWidgetBuilder,
+    newInsightWidget,
+    IInsightWidgetBuilder,
+} from "./ldmFactories/dashboard/insightWidgetFactory";
+export { KpiWidgetBuilder, newKpiWidget, IKpiWidgetBuilder } from "./ldmFactories/dashboard/kpiWidgetFactory";
+export { IWidgetBaseBuilder, WidgetBaseBuilder } from "./ldmFactories/dashboard/factory";
 export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory";
 export {
     CatalogDateAttributeBuilder,

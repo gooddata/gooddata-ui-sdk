@@ -37,14 +37,6 @@ describe("FluidLayoutRowBuilder", () => {
                 expect(boom).toThrowErrorMatchingSnapshot();
             });
         });
-
-        describe(".forNewRow()", () => {
-            it("should create new empty row", () => {
-                const layoutBuilder = createEmptyFluidLayoutBuilder();
-                const row = FluidLayoutRowBuilder.forNewRow(layoutBuilder).build();
-                expect(row).toMatchSnapshot();
-            });
-        });
     });
 
     describe(".header()", () => {

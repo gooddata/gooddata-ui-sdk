@@ -10,6 +10,7 @@ export {
 export {
     DashboardView,
     IDashboardViewProps,
+    DashboardViewLayoutTransform,
     IKpiViewProps,
     KpiView,
     defaultThemeModifier,
@@ -18,6 +19,24 @@ export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
 export { isDateFilterIrrelevant } from "./utils/filters";
 export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";
 export { useDashboardPdfExporter } from "./hooks/convenience/useDashboardPdfExporter";
+export { DashboardViewLayoutBuilder } from "./DashboardLayout/builder/layout";
+export {
+    DashboardViewLayoutColumnModifications,
+    DashboardViewLayoutColumnsSelector,
+    DashboardViewLayoutModifications,
+    DashboardViewLayoutRowModifications,
+    DashboardViewLayoutRowsSelector,
+    IDashboardViewLayoutBuilder,
+    IDashboardViewLayoutColumnBuilder,
+    IDashboardViewLayoutRowBuilder,
+} from "./DashboardLayout/builder/interfaces";
+export {
+    IDashboardViewLayoutColumnFacade,
+    IDashboardViewLayoutColumnsFacade,
+    IDashboardViewLayoutFacade,
+    IDashboardViewLayoutRowFacade,
+    IDashboardViewLayoutRowsFacade,
+} from "./DashboardLayout/facade/interfaces";
 
 // TODO: RAIL-2869 Migrate to Responsive context
 export {

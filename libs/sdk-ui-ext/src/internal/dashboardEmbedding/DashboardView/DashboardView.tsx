@@ -46,6 +46,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
     widgetRenderer,
+    transformLayout,
     isReadOnly = false,
 }) => {
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
@@ -193,6 +194,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                     <EmptyDashboardError ErrorComponent={ErrorComponent} />
                                 ) : (
                                     <DashboardRenderer
+                                        transformLayout={transformLayout}
                                         backend={backend}
                                         workspace={workspace}
                                         dashboardRef={dashboard}

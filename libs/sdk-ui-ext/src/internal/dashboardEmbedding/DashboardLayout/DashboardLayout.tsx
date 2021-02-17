@@ -4,7 +4,7 @@ import isEqual from "lodash/isEqual";
 import { setConfiguration } from "react-grid-system";
 import cx from "classnames";
 import { FluidLayout } from "../FluidLayout";
-import { IDashboardViewLayout, IDashboardViewLayoutContent } from "./interfaces/dashboardLayout";
+import { IDashboardViewLayout } from "./interfaces/dashboardLayout";
 import {
     IDashboardViewLayoutColumnKeyGetter,
     IDashboardViewLayoutColumnRenderer,
@@ -19,13 +19,14 @@ import { DashboardLayoutContentRenderer } from "./DashboardLayoutContentRenderer
 import { DashboardLayoutRowRenderer } from "./DashboardLayoutRowRenderer";
 import { DashboardLayoutColumnRenderer } from "./DashboardLayoutColumnRenderer";
 import { DashboardLayoutRowHeaderRenderer } from "./DashboardLayoutRowHeaderRenderer";
+import { DashboardViewLayoutFacade } from "./facade/layout";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
 /**
  * @alpha
  */
-export interface IDashboardViewLayoutProps<TCustomContent> {
+export type IDashboardViewLayoutProps<TCustomContent> = {
     layout: IDashboardViewLayout<TCustomContent>;
     rowRenderer?: IDashboardViewLayoutRowRenderer<TCustomContent>;
     rowKeyGetter?: IDashboardViewLayoutRowKeyGetter<TCustomContent>;
@@ -39,9 +40,9 @@ export interface IDashboardViewLayoutProps<TCustomContent> {
     layoutSizingStrategy?: (
         layout: IDashboardViewLayout<TCustomContent>,
     ) => IDashboardViewLayout<TCustomContent>;
-}
+};
 
-export function DashboardLayout<TCustomContent = IDashboardViewLayoutContent>(
+export function DashboardLayout<TCustomContent>(
     props: IDashboardViewLayoutProps<TCustomContent>,
 ): JSX.Element {
     const {
@@ -66,6 +67,7 @@ export function DashboardLayout<TCustomContent = IDashboardViewLayoutContent>(
             className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
             containerClassName="gd-fluidlayout-layout s-fluid-layout"
             layout={resizedLayout}
+            layoutFacadeConstructor={DashboardViewLayoutFacade.for}
             rowKeyGetter={rowKeyGetter}
             rowRenderer={(renderProps) =>
                 rowRenderer({ ...renderProps, debug, DefaultRowRenderer: DashboardLayoutRowRenderer })

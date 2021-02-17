@@ -28,6 +28,10 @@ import CustomDashboardView from "./CustomDashboardView";
 import CustomDashboardViewSRC from "!raw-loader!./CustomDashboardView";
 import CustomDashboardViewSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/CustomDashboardView";
 
+import CustomDashboardViewAdvanced from "./CustomDashboardViewAdvanced";
+import CustomDashboardViewAdvancedSRC from "!raw-loader!./CustomDashboardViewAdvanced";
+import CustomDashboardViewAdvancedSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/CustomDashboardViewAdvanced";
+
 import DashboardExport from "./DashboardExport";
 import DashboardExportSRC from "!raw-loader!./DashboardExport";
 import DashboardExportSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardExport";
@@ -108,6 +112,14 @@ export const DashboardView = (): JSX.Element => (
             for={CustomDashboardView}
             source={CustomDashboardViewSRC}
             sourceJS={CustomDashboardViewSRCJS}
+        />
+
+        <p>Example of dashboard view advanced customizations</p>
+
+        <ExampleWithSource
+            for={CustomDashboardViewAdvanced}
+            source={CustomDashboardViewAdvancedSRC}
+            sourceJS={CustomDashboardViewAdvancedSRCJS}
         />
 
         <p>

@@ -10,14 +10,13 @@ import {
 } from "../fluidLayout";
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export interface IFluidLayoutColumnMethods<TContent> {
-    raw(): IFluidLayoutColumn<TContent>;
+export interface IFluidLayoutColumnFacade<TContent, TColumn extends IFluidLayoutColumn<TContent>> {
+    raw(): TColumn;
 
-    testRaw(pred: (column: IFluidLayoutColumn<TContent>) => boolean): boolean;
-    test(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
+    testRaw(pred: (column: TColumn) => boolean): boolean;
+    test(pred: (column: this) => boolean): boolean;
 
     index(): number;
     indexIs(index: number): boolean;
@@ -34,43 +33,44 @@ export interface IFluidLayoutColumnMethods<TContent> {
     isFirstInRow(): boolean;
     isLastInRow(): boolean;
 
-    row(): IFluidLayoutRowMethods<TContent>;
+    isEmpty(): boolean;
+
+    // override
+    row(): IFluidLayoutRowFacade<TContent, IFluidLayoutRow<TContent>>;
 }
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export interface IFluidLayoutColumnsMethods<TContent> {
-    raw(): IFluidLayoutColumn<TContent>[];
-    column(columnIndex: number): IFluidLayoutColumnMethods<TContent> | undefined;
-    map<TReturn>(callback: (column: IFluidLayoutColumnMethods<TContent>) => TReturn): TReturn[];
-    flatMap<TReturn>(callback: (row: IFluidLayoutColumnMethods<TContent>) => TReturn[]): TReturn[];
+export interface IFluidLayoutColumnsFacade<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+> {
+    raw(): TColumn[];
+    column(columnIndex: number): TColumnFacade | undefined;
+    map<TReturn>(callback: (column: TColumnFacade) => TReturn): TReturn[];
+    flatMap<TReturn>(callback: (row: TColumnFacade) => TReturn[]): TReturn[];
     reduce<TReturn>(
-        callback: (acc: TReturn, column: IFluidLayoutColumnMethods<TContent>) => TReturn,
+        callback: (acc: TReturn, column: TColumnFacade) => TReturn,
         initialValue: TReturn,
     ): TReturn;
-    find(
-        pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean,
-    ): IFluidLayoutColumnMethods<TContent> | undefined;
-    every(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
-    some(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
-    filter(
-        pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean,
-    ): IFluidLayoutColumnMethods<TContent>[];
-    all(): IFluidLayoutColumnMethods<TContent>[];
+    find(pred: (column: TColumnFacade) => boolean): TColumnFacade | undefined;
+    every(pred: (column: TColumnFacade) => boolean): boolean;
+    some(pred: (column: TColumnFacade) => boolean): boolean;
+    filter(pred: (row: TColumnFacade) => boolean): TColumnFacade[];
+    all(): TColumnFacade[];
     count(): number;
 }
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export interface IFluidLayoutRowMethods<TContent> {
-    raw(): IFluidLayoutRow<TContent>;
+export interface IFluidLayoutRowFacade<TContent, TRow extends IFluidLayoutRow<TContent>> {
+    raw(): TRow;
 
-    testRaw(pred: (column: IFluidLayoutRow<TContent>) => boolean): boolean;
-    test(pred: (column: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
+    testRaw(pred: (column: TRow) => boolean): boolean;
+    test(pred: (column: this) => boolean): boolean;
 
     index(): number;
     indexIs(index: number): boolean;
@@ -85,43 +85,85 @@ export interface IFluidLayoutRowMethods<TContent> {
     titleEquals(title: string): boolean;
     descriptionEquals(title: string): boolean;
 
-    columns(): IFluidLayoutColumnsMethods<TContent>;
-
     isFirst(): boolean;
     isLast(): boolean;
+    isEmpty(): boolean;
 
-    layout(): IFluidLayoutFacade<TContent>;
+    // overrides
+    columns(): IFluidLayoutColumnsFacade<
+        TContent,
+        IFluidLayoutColumn<TContent>,
+        IFluidLayoutColumnFacade<TContent, IFluidLayoutColumn<TContent>>
+    >;
+    layout(): IFluidLayoutFacade<TContent, IFluidLayout<TContent>>;
 }
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export interface IFluidLayoutRowsMethods<TContent> {
-    raw(): IFluidLayoutRow<TContent>[];
-    row(rowIndex: number): IFluidLayoutRowMethods<TContent> | undefined;
-    map<TReturn>(callback: (row: IFluidLayoutRowMethods<TContent>) => TReturn): TReturn[];
-    flatMap<TReturn>(callback: (row: IFluidLayoutRowMethods<TContent>) => TReturn[]): TReturn[];
-    reduce<TReturn>(
-        callback: (acc: TReturn, row: IFluidLayoutRowMethods<TContent>) => TReturn,
-        initialValue: TReturn,
-    ): TReturn;
-    find(
-        pred: (row: IFluidLayoutRowMethods<TContent>) => boolean,
-    ): IFluidLayoutRowMethods<TContent> | undefined;
-    every(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
-    some(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
-    filter(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): IFluidLayoutRowMethods<TContent>[];
-    all(): IFluidLayoutRowMethods<TContent>[];
+export interface IFluidLayoutRowsFacade<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>
+> {
+    raw(): TRow[];
+    row(rowIndex: number): TRowFacade | undefined;
+    map<TReturn>(callback: (row: TRowFacade) => TReturn): TReturn[];
+    flatMap<TReturn>(callback: (row: TRowFacade) => TReturn[]): TReturn[];
+    reduce<TReturn>(callback: (acc: TReturn, row: TRowFacade) => TReturn, initialValue: TReturn): TReturn;
+    find(pred: (row: TRowFacade) => boolean): TRowFacade | undefined;
+    every(pred: (row: TRowFacade) => boolean): boolean;
+    some(pred: (row: TRowFacade) => boolean): boolean;
+    filter(pred: (row: TRowFacade) => boolean): TRowFacade[];
+    all(): TRowFacade[];
     count(): number;
 }
 
 /**
- * TODO: RAIL-2869 add docs
  * @alpha
  */
-export interface IFluidLayoutFacade<TContent> {
+export interface IFluidLayoutFacade<TContent, TLayout extends IFluidLayout<TContent>> {
     size(): IFluidLayoutSize | undefined;
-    rows(): IFluidLayoutRowsMethods<TContent>;
-    raw(): IFluidLayout<TContent>;
+    rows(): IFluidLayoutRowsFacade<
+        TContent,
+        IFluidLayoutRow<TContent>,
+        IFluidLayoutRowFacade<TContent, IFluidLayoutRow<TContent>>
+    >;
+    raw(): TLayout;
 }
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutFacadeImpl<TContent> = IFluidLayoutFacade<TContent, IFluidLayout<TContent>>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutRowsFacadeImpl<TContent> = IFluidLayoutRowsFacade<
+    TContent,
+    IFluidLayoutRow<TContent>,
+    IFluidLayoutRowFacadeImpl<TContent>
+>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutRowFacadeImpl<TContent> = IFluidLayoutRowFacade<TContent, IFluidLayoutRow<TContent>>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutColumnsFacadeImpl<TContent> = IFluidLayoutColumnsFacade<
+    TContent,
+    IFluidLayoutColumn<TContent>,
+    IFluidLayoutColumnFacadeImpl<TContent>
+>;
+
+/**
+ * @alpha
+ */
+export type IFluidLayoutColumnFacadeImpl<TContent> = IFluidLayoutColumnFacade<
+    TContent,
+    IFluidLayoutColumn<TContent>
+>;

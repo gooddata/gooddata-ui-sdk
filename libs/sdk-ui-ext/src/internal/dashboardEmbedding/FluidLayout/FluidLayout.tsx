@@ -1,14 +1,31 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { useMemo } from "react";
 import { Container, ScreenClassProvider, ScreenClassRender } from "react-grid-system";
-import { ResponsiveScreenType, FluidLayoutFacade } from "@gooddata/sdk-backend-spi";
+import {
+    ResponsiveScreenType,
+    FluidLayoutFacade,
+    IFluidLayoutRow,
+    IFluidLayoutColumn,
+    IFluidLayout,
+    IFluidLayoutFacade,
+    IFluidLayoutRowFacade,
+    IFluidLayoutColumnFacade,
+} from "@gooddata/sdk-backend-spi";
 import { FluidLayoutRow } from "./FluidLayoutRow";
 import { IFluidLayoutRenderer } from "./interfaces";
 
 /**
  * @alpha
  */
-export type IFluidLayoutProps<TContent> = IFluidLayoutRenderer<TContent>;
+export type IFluidLayoutProps<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TLayout extends IFluidLayout<TContent>,
+    TLayoutFacade extends IFluidLayoutFacade<TContent, TLayout>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+> = IFluidLayoutRenderer<TContent, TRow, TColumn, TLayout, TLayoutFacade, TRowFacade, TColumnFacade>;
 
 /**
  * FluidLayout component takes fluid layout with any content,
@@ -18,9 +35,20 @@ export type IFluidLayoutProps<TContent> = IFluidLayoutRenderer<TContent>;
  *
  * @alpha
  */
-export function FluidLayout<TContent>(props: IFluidLayoutProps<TContent>): JSX.Element {
+export function FluidLayout<
+    TContent,
+    TRow extends IFluidLayoutRow<TContent>,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TLayout extends IFluidLayout<TContent>,
+    TLayoutFacade extends IFluidLayoutFacade<TContent, TLayout>,
+    TRowFacade extends IFluidLayoutRowFacade<TContent, TRow>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+>(
+    props: IFluidLayoutRenderer<TContent, TRow, TColumn, TLayout, TLayoutFacade, TRowFacade, TColumnFacade>,
+): JSX.Element {
     const {
         layout,
+        layoutFacadeConstructor = FluidLayoutFacade.for,
         rowKeyGetter = ({ row }) => row.index(),
         rowRenderer,
         rowHeaderRenderer,
@@ -32,7 +60,7 @@ export function FluidLayout<TContent>(props: IFluidLayoutProps<TContent>): JSX.E
         onMouseLeave,
     } = props;
 
-    const layoutFacade = useMemo(() => FluidLayoutFacade.for(layout), [layout]);
+    const layoutFacade = useMemo(() => layoutFacadeConstructor(layout), [layout]);
 
     return (
         <div className={className} onMouseLeave={onMouseLeave}>
@@ -41,7 +69,7 @@ export function FluidLayout<TContent>(props: IFluidLayoutProps<TContent>): JSX.E
                     render={(screen: ResponsiveScreenType) =>
                         screen ? (
                             <Container fluid={true} className={containerClassName}>
-                                {layoutFacade.rows().map((row) => {
+                                {layoutFacade.rows().map((row: TRowFacade) => {
                                     return (
                                         <FluidLayoutRow
                                             key={rowKeyGetter({

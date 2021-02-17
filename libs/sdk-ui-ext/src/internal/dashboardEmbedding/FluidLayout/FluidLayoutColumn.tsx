@@ -1,20 +1,32 @@
 // (C) 2007-2020 GoodData Corporation
 
 import { FluidLayoutColumnRenderer } from "./FluidLayoutColumnRenderer";
-import { ResponsiveScreenType, IFluidLayoutColumnMethods } from "@gooddata/sdk-backend-spi";
+import {
+    ResponsiveScreenType,
+    IFluidLayoutColumnFacade,
+    IFluidLayoutColumn,
+} from "@gooddata/sdk-backend-spi";
 import { IFluidLayoutColumnRenderer, IFluidLayoutContentRenderer } from "./interfaces";
 
 /**
  * @alpha
  */
-export interface IFluidLayoutColumnProps<TContent> {
-    column: IFluidLayoutColumnMethods<TContent>;
+export interface IFluidLayoutColumnProps<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+> {
+    column: TColumnFacade;
     screen: ResponsiveScreenType;
-    columnRenderer?: IFluidLayoutColumnRenderer<TContent>;
-    contentRenderer: IFluidLayoutContentRenderer<TContent>;
+    columnRenderer?: IFluidLayoutColumnRenderer<TContent, TColumn, TColumnFacade>;
+    contentRenderer: IFluidLayoutContentRenderer<TContent, TColumn, TColumnFacade>;
 }
 
-export function FluidLayoutColumn<TContent>(props: IFluidLayoutColumnProps<TContent>): JSX.Element {
+export function FluidLayoutColumn<
+    TContent,
+    TColumn extends IFluidLayoutColumn<TContent>,
+    TColumnFacade extends IFluidLayoutColumnFacade<TContent, TColumn>
+>(props: IFluidLayoutColumnProps<TContent, TColumn, TColumnFacade>): JSX.Element {
     const { column, columnRenderer = FluidLayoutColumnRenderer, contentRenderer, screen } = props;
     const renderProps = { column, screen };
 

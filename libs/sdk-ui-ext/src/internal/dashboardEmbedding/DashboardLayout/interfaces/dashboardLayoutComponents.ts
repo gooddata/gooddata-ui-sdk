@@ -13,8 +13,18 @@ import {
     IFluidLayoutRowHeaderRenderProps,
     IFluidLayoutRowHeaderRenderer,
 } from "../../FluidLayout";
+import {
+    IDashboardViewLayoutColumnFacade,
+    IDashboardViewLayoutFacade,
+    IDashboardViewLayoutRowFacade,
+} from "../facade/interfaces";
 
-import { IDashboardViewLayoutContent } from "./dashboardLayout";
+import {
+    IDashboardViewLayout,
+    IDashboardViewLayoutColumn,
+    IDashboardViewLayoutContent,
+    IDashboardViewLayoutRow,
+} from "./dashboardLayout";
 
 /**
  * @alpha
@@ -27,29 +37,47 @@ export interface IDashboardViewLayoutCommonRenderProps {
  * @alpha
  */
 export type IDashboardViewLayoutRowKeyGetter<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutRowKeyGetter<TCustomContent>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRowKeyGetter<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>
+>;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutRowRenderProps<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutRowRenderProps<TCustomContent> & IDashboardViewLayoutCommonRenderProps;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRowRenderProps<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>
+> &
+    IDashboardViewLayoutCommonRenderProps;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutRowRenderer<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutRowRenderer<TCustomContent, IDashboardViewLayoutCommonRenderProps>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRowRenderer<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>,
+    IDashboardViewLayoutCommonRenderProps
+>;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutRowHeaderRenderProps<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutRowHeaderRenderProps<TCustomContent> &
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRowHeaderRenderProps<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>
+> &
     IDashboardViewLayoutCommonRenderProps & {
         /**
          * Default row header renderer - can be used as a fallback for custom rowHeaderRenderer.
@@ -61,36 +89,59 @@ export type IDashboardViewLayoutRowHeaderRenderProps<
  * @alpha
  */
 export type IDashboardViewLayoutRowHeaderRenderer<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutRowHeaderRenderer<TCustomContent, IDashboardViewLayoutRowHeaderRenderProps<TCustomContent>>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRowHeaderRenderer<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>,
+    IDashboardViewLayoutRowHeaderRenderProps<TCustomContent>
+>;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutColumnKeyGetter<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutColumnKeyGetter<TCustomContent>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutColumnKeyGetter<
+    TCustomContent,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>
+>;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutColumnRenderProps<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutColumnRenderProps<TCustomContent> & IDashboardViewLayoutCommonRenderProps;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutColumnRenderProps<
+    TCustomContent,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>
+> &
+    IDashboardViewLayoutCommonRenderProps;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutColumnRenderer<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutColumnRenderer<TCustomContent, IDashboardViewLayoutColumnRenderProps<TCustomContent>>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutColumnRenderer<
+    TCustomContent,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>,
+    IDashboardViewLayoutColumnRenderProps<TCustomContent>
+>;
 
 /**
  * @alpha
  */
 export type IDashboardViewLayoutContentRenderProps<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutContentRenderProps<TCustomContent> &
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutContentRenderProps<
+    TCustomContent,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>
+> &
     IDashboardViewLayoutCommonRenderProps & {
         /**
          * React ref to content element.
@@ -138,14 +189,27 @@ export type IDashboardViewLayoutContentRenderProps<
  * @alpha
  */
 export type IDashboardViewLayoutContentRenderer<
-    TCustomContent = IDashboardViewLayoutContent
-> = IFluidLayoutContentRenderer<TCustomContent, IDashboardViewLayoutContentRenderProps<TCustomContent>>;
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutContentRenderer<
+    TCustomContent,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>,
+    IDashboardViewLayoutContentRenderProps<TCustomContent>
+>;
 
 /**
  * Dashboard layout definition.
  *
  * @alpha
  */
-export type IDashboardViewLayoutRenderer<TCustomContent = IDashboardViewLayoutContent> = IFluidLayoutRenderer<
-    TCustomContent
+export type IDashboardViewLayoutRenderer<
+    TCustomContent extends IDashboardViewLayoutContent<any>
+> = IFluidLayoutRenderer<
+    TCustomContent,
+    IDashboardViewLayoutRow<TCustomContent>,
+    IDashboardViewLayoutColumn<TCustomContent>,
+    IDashboardViewLayout<TCustomContent>,
+    IDashboardViewLayoutFacade<TCustomContent>,
+    IDashboardViewLayoutRowFacade<TCustomContent>,
+    IDashboardViewLayoutColumnFacade<TCustomContent>
 >;

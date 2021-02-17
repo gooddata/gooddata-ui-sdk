@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { ObjRef } from "@gooddata/sdk-model";
 
@@ -13,15 +13,31 @@ export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
  * @alpha
  */
 export interface ILegacyKpiBase {
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+    comparisonDirection?: ILegacyKpiComparisonDirection;
     metric: ObjRef;
 }
 
 /**
- * Kpi with comparison
  * @alpha
  */
-export interface ILegacyKpiWithComparison extends ILegacyKpiBase {
-    comparisonType: ILegacyKpiComparisonTypeComparison;
+export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
+
+/**
+ * Kpi with previous period comparison
+ * @alpha
+ */
+export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
+    comparisonType: "previousPeriod";
+    comparisonDirection: ILegacyKpiComparisonDirection;
+}
+
+/**
+ * Kpi with period over period comparison
+ * @alpha
+ */
+export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
+    comparisonType: "lastYear";
     comparisonDirection: ILegacyKpiComparisonDirection;
 }
 
@@ -42,7 +58,7 @@ export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithCo
  * @alpha
  */
 export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
-    comparisonType: ILegacyKpiComparisonTypeNoComparison;
+    comparisonType: "none";
 }
 
 /**
@@ -54,16 +70,10 @@ export function isLegacyKpiWithoutComparison(obj: unknown): obj is ILegacyKpiWit
 }
 
 /**
- * Kpi comparison type none
- * @alpha
- */
-export type ILegacyKpiComparisonTypeNoComparison = "none";
-
-/**
  * Kpi comparison type
  * @alpha
  */
-export type ILegacyKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+export type ILegacyKpiComparisonTypeComparison = "previousPeriod" | "lastYear" | "none";
 
 /**
  * Kpi comparison direction
