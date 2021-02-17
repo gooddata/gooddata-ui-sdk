@@ -49,13 +49,15 @@ const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
 
 export class TableFacade {
-    public readonly tableDescriptor: TableDescriptor;
     private readonly intl: IntlShape;
+
+    public readonly tableDescriptor: TableDescriptor;
+    private readonly resizedColumnsStore: ResizedColumnsStore;
 
     private currentResult: IExecutionResult;
     private visibleData: DataViewFacade;
     private currentFingerprint: string;
-    private resizedColumnsStore: ResizedColumnsStore;
+
     private autoResizedColumns: IResizedColumns;
     private growToFittedColumns: IResizedColumns;
     private resizing: boolean;
@@ -70,7 +72,6 @@ export class TableFacade {
         result: IExecutionResult,
         dataView: IDataView,
         config: TableConfig,
-        resizing: ColumnResizingConfig,
         props: Readonly<ICorePivotTableProps>,
     ) {
         this.intl = props.intl;
@@ -87,7 +88,7 @@ export class TableFacade {
         this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
 
         this.createDataSource(config);
-        this.updateColumnWidths(resizing);
+        this.updateColumnWidths(config.getResizingConfig());
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -115,15 +116,15 @@ export class TableFacade {
         this.growToFittedColumns = {};
     };
 
-    private updateColumnWidths = (resizingCtx: ColumnResizingConfig): void => {
-        this.resizedColumnsStore.updateColumnWidths(resizingCtx.widths);
+    private updateColumnWidths = (resizingConfig: ColumnResizingConfig): void => {
+        this.resizedColumnsStore.updateColumnWidths(resizingConfig.widths);
 
         updateColumnDefinitionsWithWidths(
             this.tableDescriptor,
             this.resizedColumnsStore,
             this.autoResizedColumns,
-            resizingCtx.defaultWidth,
-            resizingCtx.growToFit,
+            resizingConfig.defaultWidth,
+            resizingConfig.growToFit,
             this.growToFittedColumns,
         );
     };
@@ -171,18 +172,18 @@ export class TableFacade {
         this.gridApi?.refreshHeader();
     };
 
-    public growToFit = (resizingCtx: ColumnResizingConfig): void => {
+    public growToFit = (resizingConfig: ColumnResizingConfig): void => {
         invariant(this.gridApi);
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
-        this.resetColumnsWidthToDefault(resizingCtx, columns);
+        this.resetColumnsWidthToDefault(resizingConfig, columns);
         this.clearFittedColumns();
 
         const widths = columns.map((column) => column.getActualWidth());
         const sumOfWidths = widths.reduce((a, b) => a + b, 0);
 
-        if (sumOfWidths < resizingCtx.clientWidth) {
+        if (sumOfWidths < resizingConfig.clientWidth) {
             const columnIds = agColIds(columns);
 
             setColumnMaxWidth(this.columnApi, columnIds, undefined);
@@ -215,7 +216,7 @@ export class TableFacade {
         });
     };
 
-    public resetColumnsWidthToDefault = (resizingCtx: ColumnResizingConfig, columns: Column[]): void => {
+    public resetColumnsWidthToDefault = (resizingConfig: ColumnResizingConfig, columns: Column[]): void => {
         invariant(this.columnApi);
 
         resetColumnsWidthToDefault(
@@ -223,27 +224,27 @@ export class TableFacade {
             columns,
             this.resizedColumnsStore,
             this.autoResizedColumns,
-            resizingCtx.defaultWidth,
+            resizingConfig.defaultWidth,
         );
     };
 
-    public applyColumnSizes = (resizingCtx: ColumnResizingConfig): void => {
+    public applyColumnSizes = (resizingConfig: ColumnResizingConfig): void => {
         invariant(this.columnApi);
 
-        this.resizedColumnsStore.updateColumnWidths(resizingCtx.widths);
+        this.resizedColumnsStore.updateColumnWidths(resizingConfig.widths);
 
         syncSuppressSizeToFitOnColumns(this.resizedColumnsStore, this.columnApi);
 
-        if (resizingCtx.growToFit) {
-            this.growToFit(resizingCtx); // calls resetColumnsWidthToDefault internally too
+        if (resizingConfig.growToFit) {
+            this.growToFit(resizingConfig); // calls resetColumnsWidthToDefault internally too
         } else {
             const columns = this.columnApi.getAllColumns();
-            this.resetColumnsWidthToDefault(resizingCtx, columns);
+            this.resetColumnsWidthToDefault(resizingConfig, columns);
         }
     };
 
     public autoresizeColumns = async (
-        resizingCtx: ColumnResizingConfig,
+        resizingConfig: ColumnResizingConfig,
         force: boolean = false,
     ): Promise<boolean> => {
         invariant(this.gridApi);
@@ -258,14 +259,14 @@ export class TableFacade {
         if (this.isPivotTableReady() && (!alreadyResized() || (alreadyResized() && force))) {
             this.resizing = true;
             // we need to know autosize width for each column, even manually resized ones, to support removal of columnWidth def from props
-            await this.autoresizeAllColumns(resizingCtx);
+            await this.autoresizeAllColumns(resizingConfig);
 
             // after that we need to reset manually resized columns back to its manually set width by growToFit or by helper. See UT resetColumnsWidthToDefault for width priorities
-            if (resizingCtx.growToFit) {
-                this.growToFit(resizingCtx);
-            } else if (resizingCtx.columnAutoresizeEnabled && this.shouldPerformAutoresize()) {
+            if (resizingConfig.growToFit) {
+                this.growToFit(resizingConfig);
+            } else if (resizingConfig.columnAutoresizeEnabled && this.shouldPerformAutoresize()) {
                 const columns = this.columnApi!.getAllColumns();
-                this.resetColumnsWidthToDefault(resizingCtx, columns);
+                this.resetColumnsWidthToDefault(resizingConfig, columns);
             }
             this.resizing = false;
 
@@ -275,11 +276,11 @@ export class TableFacade {
         return false;
     };
 
-    private autoresizeAllColumns = async (resizingCtx: ColumnResizingConfig) => {
+    private autoresizeAllColumns = async (resizingConfig: ColumnResizingConfig) => {
         invariant(this.gridApi);
         invariant(this.columnApi);
 
-        if (!this.shouldPerformAutoresize() || !resizingCtx.columnAutoresizeEnabled) {
+        if (!this.shouldPerformAutoresize() || !resizingConfig.columnAutoresizeEnabled) {
             return Promise.resolve();
         }
 
@@ -288,25 +289,25 @@ export class TableFacade {
         /*
          * Ensures correct autoResizeColumns
          */
-        this.updateAutoResizedColumns(resizingCtx);
+        this.updateAutoResizedColumns(resizingConfig);
         autoresizeAllColumns(this.columnApi, this.autoResizedColumns);
     };
 
-    private updateAutoResizedColumns = (resizingCtx: ColumnResizingConfig): void => {
+    private updateAutoResizedColumns = (resizingConfig: ColumnResizingConfig): void => {
         invariant(this.gridApi);
         invariant(this.columnApi);
-        invariant(resizingCtx.containerRef);
+        invariant(resizingConfig.containerRef);
 
         this.autoResizedColumns = getAutoResizedColumns(
             this.tableDescriptor,
             this.gridApi,
             this.columnApi,
             this.currentResult,
-            resizingCtx.containerRef,
+            resizingConfig.containerRef,
             {
                 measureHeaders: true,
                 padding: 2 * DEFAULT_AUTOSIZE_PADDING + HEADER_CELL_BORDER,
-                separators: resizingCtx.separators,
+                separators: resizingConfig.separators,
             },
         );
     };
@@ -390,7 +391,7 @@ export class TableFacade {
     };
 
     public onColumnsManualReset = async (
-        resizingCtx: ColumnResizingConfig,
+        resizingConfig: ColumnResizingConfig,
         columns: Column[],
     ): Promise<void> => {
         invariant(this.gridApi);
@@ -403,15 +404,15 @@ export class TableFacade {
          * resetResizedColumn uses updateAutoResizedColumns to properly reset columns
          */
         if (!Object.keys(this.autoResizedColumns).length) {
-            this.updateAutoResizedColumns(resizingCtx);
+            this.updateAutoResizedColumns(resizingConfig);
         }
 
-        if (this.isAllMeasureResizeOperation(resizingCtx, columns)) {
+        if (this.isAllMeasureResizeOperation(resizingConfig, columns)) {
             this.resizedColumnsStore.removeAllMeasureColumns();
             columnsToReset = this.getAllMeasureColumns();
         }
 
-        if (this.isWeakMeasureResizeOperation(resizingCtx, columns)) {
+        if (this.isWeakMeasureResizeOperation(resizingConfig, columns)) {
             columnsToReset = this.resizedColumnsStore.getMatchingColumnsByMeasure(
                 columns[0],
                 this.getAllMeasureColumns(),
@@ -423,7 +424,7 @@ export class TableFacade {
             await this.resetResizedColumn(column);
         }
 
-        this.afterOnResizeColumns(resizingCtx);
+        this.afterOnResizeColumns(resizingConfig);
     };
 
     private getAllMeasureColumns = () => {
@@ -431,18 +432,18 @@ export class TableFacade {
         return this.columnApi.getAllColumns().filter((col) => isMeasureColumn(col));
     };
 
-    private isAllMeasureResizeOperation(resizingCtx: ColumnResizingConfig, columns: Column[]): boolean {
-        return resizingCtx.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    private isAllMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
+        return resizingConfig.isMetaOrCtrlKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
-    private isWeakMeasureResizeOperation(resizingCtx: ColumnResizingConfig, columns: Column[]): boolean {
-        return resizingCtx.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
+    private isWeakMeasureResizeOperation(resizingConfig: ColumnResizingConfig, columns: Column[]): boolean {
+        return resizingConfig.isAltKeyPressed && columns.length === 1 && isMeasureColumn(columns[0]);
     }
 
-    public onColumnsManualResized = (resizingCtx: ColumnResizingConfig, columns: Column[]): void => {
-        if (this.isAllMeasureResizeOperation(resizingCtx, columns)) {
+    public onColumnsManualResized = (resizingConfig: ColumnResizingConfig, columns: Column[]): void => {
+        if (this.isAllMeasureResizeOperation(resizingConfig, columns)) {
             resizeAllMeasuresColumns(this.columnApi!, this.resizedColumnsStore, columns[0]);
-        } else if (this.isWeakMeasureResizeOperation(resizingCtx, columns)) {
+        } else if (this.isWeakMeasureResizeOperation(resizingConfig, columns)) {
             resizeWeakMeasureColumns(
                 this.tableDescriptor!,
                 this.columnApi!,
@@ -455,11 +456,11 @@ export class TableFacade {
             });
         }
 
-        this.afterOnResizeColumns(resizingCtx);
+        this.afterOnResizeColumns(resizingConfig);
     };
 
     public onManualColumnResize = async (
-        resizingCtx: ColumnResizingConfig,
+        resizingConfig: ColumnResizingConfig,
         columns: Column[],
     ): Promise<void> => {
         this.numberOfColumnResizedCalls++;
@@ -467,18 +468,18 @@ export class TableFacade {
 
         if (this.numberOfColumnResizedCalls === UIClick.DOUBLE_CLICK) {
             this.numberOfColumnResizedCalls = 0;
-            await this.onColumnsManualReset(resizingCtx, columns);
+            await this.onColumnsManualReset(resizingConfig, columns);
         } else if (this.numberOfColumnResizedCalls === UIClick.CLICK) {
             this.numberOfColumnResizedCalls = 0;
-            this.onColumnsManualResized(resizingCtx, columns);
+            this.onColumnsManualResized(resizingConfig, columns);
         }
     };
 
-    private afterOnResizeColumns = (resizingCtx: ColumnResizingConfig) => {
-        this.growToFit(resizingCtx);
+    private afterOnResizeColumns = (resizingConfig: ColumnResizingConfig) => {
+        this.growToFit(resizingConfig);
         const columnWidths = this.resizedColumnsStore.getColumnWidthsFromMap();
 
-        resizingCtx.onColumnResized?.(columnWidths);
+        resizingConfig.onColumnResized?.(columnWidths);
     };
 
     public getGroupingProvider = (): IGroupingProvider => {
@@ -491,7 +492,16 @@ export class TableFacade {
         return this.tableDescriptor.createSortItems(columns, this.currentResult.definition.sortBy);
     };
 
-    public isMatchingExecution(other: IPreparedExecution): boolean {
+    /**
+     * Tests whether the other prepared execution's definition matches the definition
+     * that was used to obtain the current execution result with which the table operates.
+     *
+     * Note that during table lifecycle, changes such adding sorts and totals WILL lead
+     * to modification of the execution definition and in return modification of
+     *
+     * @param other
+     */
+    public isMatchingCurrentResult(other: IPreparedExecution): boolean {
         return this.currentFingerprint === other.fingerprint();
     }
 

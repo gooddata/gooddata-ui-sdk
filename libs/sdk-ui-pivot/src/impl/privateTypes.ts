@@ -35,6 +35,8 @@ export type TableConfig = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
 
+    getResizingConfig: () => ColumnResizingConfig;
+
     onGridReady: (event: GridReadyEvent) => void;
     onFirstDataRendered: (_event: AgGridEvent) => Promise<void>;
     onBodyScroll: (event: BodyScrollEvent) => void;
@@ -47,7 +49,7 @@ export type TableConfig = {
     onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;
     onExportReady: OnExportReady;
 
-    onPushData: (data: IPushData) => void;
+    pushData: (data: IPushData) => void;
 
     onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
     onMenuAggregationClick: (menuAggregationClickConfig: IMenuAggregationClickConfig) => void;

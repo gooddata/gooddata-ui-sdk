@@ -7,21 +7,14 @@ import {
     GridReadyEvent,
     SortChangedEvent,
 } from "@ag-grid-community/all-modules";
-import {
-    IDataView,
-    IExecutionResult,
-    IPreparedExecution,
-    isNoDataError,
-    isUnexpectedResponseError,
-} from "@gooddata/sdk-backend-spi";
-import { defFingerprint, defTotals, ITotal } from "@gooddata/sdk-model";
+import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { defTotals, ITotal } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
 
 import "../styles/css/pivotTable.css";
 import {
-    convertError,
     createExportErrorFunction,
     DataViewFacade,
     ErrorCodes,
@@ -34,7 +27,6 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
-import { COLS_PER_PAGE } from "./impl/base/constants";
 import { getScrollbarWidth } from "./impl/utils";
 import { IScrollPosition } from "./impl/stickyRowHandler";
 
@@ -46,10 +38,6 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
 import { TableFacade } from "./impl/tableFacade";
-import {
-    getAvailableDrillTargets,
-    getAvailableDrillTargetsFromExecutionResult,
-} from "./impl/drilling/drillTargets";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import {
     ColumnResizingConfig,
@@ -58,12 +46,13 @@ import {
     TableConfig,
 } from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
+import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 
 export interface ICorePivotTableState {
-    tableReady: boolean;
+    readyToRender: boolean;
     columnTotals: ITotal[];
     desiredHeight: number | undefined;
     error?: string;
@@ -92,15 +81,11 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         onColumnResized: noop,
     };
 
-    // these can stay here
-
     private readonly errorMap: IErrorDescriptors;
 
-    /**
-     * Fingerprint of the last execution definition the initialize was called with.
-     */
-    private lastInitRequestFingerprint: string | null = null;
-    private unmounted: boolean = false;
+    private initializer: TableFacadeInitializer | null = null;
+    private table: TableFacade | null;
+
     private firstDataRendered: boolean = false;
     private watchingIntervalId: number | null;
     private lastScrollPosition: IScrollPosition = {
@@ -112,7 +97,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
     private containerRef: HTMLDivElement;
     private gridOptions: ICustomGridOptions | null = null;
-    private table: TableFacade | null;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -120,7 +104,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         const { execution, config } = props;
 
         this.state = {
-            tableReady: false,
+            readyToRender: false,
             columnTotals: cloneDeep(defTotals(execution.definition, 0)),
             desiredHeight: config!.maxHeight,
             resized: false,
@@ -129,6 +113,57 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.errorMap = newErrorMapping(props.intl);
     }
 
+    //
+    // Lifecycle
+    //
+
+    /**
+     * Starts initialization of table that will show results of the provided prepared execution. If there is
+     * already an initialization in progress for the table, this will abandon the previous initialization
+     * and start a new one.
+     *
+     * During the initialization the code drives the execution and obtains the first page of data. Once that
+     * is done, the initializer will construct the {@link TableFacade} with all the essential non-react
+     * table & data state in it.
+     *
+     * After the initializer completes this, the table facade and the table itself is ready to render the
+     * ag-grid component.
+     *
+     * @param execution - prepared execution to drive
+     */
+    private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
+        this.abandonCurrentInitialization();
+
+        const initializer = new TableFacadeInitializer(execution, this.getTableConfig(), this.props);
+
+        initializer.initialize().then((result) => {
+            if (!result) {
+                /*
+                 * This particular initialization was abandoned. The table now likely has a new
+                 */
+                return;
+            }
+
+            this.initializer = null;
+            this.table = result;
+            this.setState({ readyToRender: true });
+        });
+
+        return initializer;
+    };
+
+    /**
+     * Abandon current table initialization (if any). This will not cancel any in-flight requests but will
+     * make sure that when they complete they are noop - dead work.
+     */
+    private abandonCurrentInitialization = (): void => {
+        if (this.initializer) {
+            this.initializer.abandon();
+        }
+
+        this.initializer = null;
+    };
+
     private clearTimeouts = () => {
         if (this.watchingIntervalId) {
             clearTimeout(this.watchingIntervalId);
@@ -136,126 +171,52 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     };
 
-    private cleanupNonReactState = () => {
-        this.table = null;
-        this.lastInitRequestFingerprint = null;
-        this.firstDataRendered = false;
-
-        this.lastScrollPosition = {
-            top: 0,
-            left: 0,
-        };
-
-        this.clearTimeouts();
-    };
-
+    /**
+     * Completely re-initializes the table in order to show data for the provided prepared execution. At this point
+     * code has determined that the table layout for the other prepared execution differs from what is currently
+     * shown and the only reasonable thing to do is to throw everything away and start from scratch.
+     *
+     * This will reset all React state and non-react state and start table initialization process.
+     *
+     * @param execution
+     */
     private reinitialize = (execution: IPreparedExecution): void => {
         this.setState(
             {
-                tableReady: false,
+                readyToRender: false,
                 columnTotals: cloneDeep(defTotals(execution.definition, 0)),
                 error: undefined,
                 desiredHeight: this.props.config!.maxHeight,
                 resized: false,
             },
             () => {
-                this.cleanupNonReactState();
-                this.initialize(execution);
+                this.table = null;
+                this.gridOptions = null;
+                this.firstDataRendered = false;
+                this.lastScrollPosition = {
+                    top: 0,
+                    left: 0,
+                };
+                this.isMetaOrCtrlKeyPressed = false;
+                this.isAltKeyPressed = false;
+
+                this.clearTimeouts();
+                this.initializer = this.initialize(execution);
             },
         );
     };
 
-    private createTableFacade = (result: IExecutionResult, dataView: IDataView): TableFacade => {
-        return new TableFacade(result, dataView, this.getTableConfig(), this.getResizingConfig(), this.props);
-    };
-
-    private initialize(execution: IPreparedExecution): void {
-        this.onLoadingChanged({ isLoading: true });
-        this.lastInitRequestFingerprint = defFingerprint(execution.definition);
-
-        execution
-            .execute()
-            .then((result) => {
-                result
-                    .readWindow([0, 0], [this.props.pageSize!, COLS_PER_PAGE])
-                    .then((dataView) => {
-                        if (this.unmounted) {
-                            /*
-                             * Stop right now if the component gets unmounted while it is still being
-                             * initialized.
-                             */
-                            return;
-                        }
-
-                        if (this.lastInitRequestFingerprint !== defFingerprint(dataView.definition)) {
-                            /*
-                             * Stop right now if the data are not relevant anymore because there was another
-                             * initialize request in the meantime.
-                             */
-                            return;
-                        }
-
-                        this.table = this.createTableFacade(result, dataView);
-
-                        this.onLoadingChanged({ isLoading: false });
-                        this.props.onExportReady?.(this.table.createExportFunction(this.props.exportTitle));
-                        this.setState({ tableReady: true });
-
-                        const availableDrillTargets = this.table.getAvailableDrillTargets();
-                        this.props.pushData!({ dataView, availableDrillTargets });
-                    })
-                    .catch((error) => {
-                        if (this.unmounted) {
-                            return;
-                        }
-
-                        /**
-                         * When execution result is received successfully,
-                         * but data load fails with unexpected http response,
-                         * we still want to push availableDrillTargets
-                         */
-                        if (isUnexpectedResponseError(error)) {
-                            const availableDrillTargets = getAvailableDrillTargetsFromExecutionResult(result);
-
-                            this.props.pushData!({ availableDrillTargets });
-                        }
-
-                        /*
-                         * There can be situations, where there is no data to visualize but the result / dataView contains
-                         * metadata essential for setup of drilling. Look for that and if available push up.
-                         */
-                        if (isNoDataError(error) && error.dataView) {
-                            const availableDrillTargets = getAvailableDrillTargets(
-                                DataViewFacade.for(error.dataView),
-                            );
-
-                            this.props.pushData!({ availableDrillTargets });
-                            this.onLoadingChanged({ isLoading: false });
-                        }
-
-                        this.onError(convertError(error));
-                    });
-            })
-            .catch((error) => {
-                if (this.unmounted) {
-                    return;
-                }
-
-                this.onError(convertError(error));
-            });
-    }
-
     public componentDidMount(): void {
-        this.initialize(this.props.execution);
+        this.initializer = this.initialize(this.props.execution);
     }
 
     public componentWillUnmount(): void {
-        this.unmounted = true;
-
         if (this.containerRef) {
             this.containerRef.removeEventListener("mousedown", this.onContainerMouseDown);
         }
 
+        // this ensures any events emitted during the async initialization will be sunk. they are no longer needed.
+        this.abandonCurrentInitialization();
         this.clearTimeouts();
     }
 
@@ -298,12 +259,53 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
     }
 
+    /**
+     * Tests whether reinitialization of ag-grid is needed after the update. Currently there are two
+     * conditions:
+     *
+     * - drilling has changed
+     *
+     * OR
+     *
+     * - prepared execution has changed AND the new prep execution definition does not match currently shown
+     *   data.
+     *
+     * @param prevProps
+     */
+    private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
+        if (!this.table) {
+            return true;
+        }
+
+        const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
+
+        if (!drillingIsSame) {
+            return true;
+        }
+
+        const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
+
+        return !prepExecutionSame && !this.table.isMatchingCurrentResult(this.props.execution);
+    }
+
     private isAgGridRerenderNeeded(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
         const propsRequiringAgGridRerender = [["config", "menu"]];
         return propsRequiringAgGridRerender.some(
             (propKey) => !isEqual(get(props, propKey), get(prevProps, propKey)),
         );
     }
+
+    //
+    // Render
+    //
+
+    private setContainerRef = (container: HTMLDivElement): void => {
+        this.containerRef = container;
+
+        if (this.containerRef) {
+            this.containerRef.addEventListener("mousedown", this.onContainerMouseDown);
+        }
+    };
 
     private renderLoading() {
         const { LoadingComponent } = this.props;
@@ -331,7 +333,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             overflow: "hidden",
         };
 
-        if (!this.state.tableReady) {
+        if (!this.state.readyToRender) {
             return (
                 <div className="gd-table-component" style={style}>
                     {this.renderLoading()}
@@ -339,7 +341,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             );
         }
 
-        // when table is ready, then the table facade must be set
+        // when table is ready, then the table facade must be set. if this bombs then there is a bug
+        // in the initialization logic
         invariant(this.table);
 
         if (!this.gridOptions) {
@@ -367,156 +370,6 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             </div>
         );
     }
-
-    /**
-     * Tests whether reinitialization of ag-grid is needed after the update. Currently there are two
-     * conditions:
-     *
-     * - drilling has changed
-     *
-     * OR
-     *
-     * - prepared execution has changed AND the new prep execution definition does not match currently shown
-     *   data.
-     *
-     * @param prevProps
-     */
-    private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        invariant(this.table);
-
-        const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
-
-        if (!drillingIsSame) {
-            return true;
-        }
-
-        const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
-
-        return !prepExecutionSame && this.table.isMatchingExecution(this.props.execution);
-    }
-
-    //
-    // getters / setters / manipulators
-    //
-
-    private setContainerRef = (container: HTMLDivElement): void => {
-        this.containerRef = container;
-
-        if (this.containerRef) {
-            this.containerRef.addEventListener("mousedown", this.onContainerMouseDown);
-        }
-    };
-
-    private getColumnTotals = () => {
-        return this.state.columnTotals;
-    };
-
-    private getExecutionDefinition = () => {
-        return this.props.execution.definition;
-    };
-
-    private getGroupRows = (): boolean => {
-        return this.props.config?.groupRows ?? true;
-    };
-
-    private getMenuConfig = (): IMenu => {
-        return this.props.config?.menu ?? {};
-    };
-
-    //
-    // column resizing stuff
-    //
-
-    private getDefaultWidth = () => {
-        return DEFAULT_COLUMN_WIDTH;
-    };
-
-    private isColumnAutoresizeEnabled = () => {
-        const defaultWidth = this.getDefaultWidthFromProps(this.props);
-        return defaultWidth === "viewport" || defaultWidth === "autoresizeAll";
-    };
-
-    private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) => {
-        return props.config?.columnSizing?.growToFit === true;
-    };
-
-    private getColumnWidths = (props: ICorePivotTableProps): ColumnWidthItem[] | undefined => {
-        return props.config!.columnSizing?.columnWidths;
-    };
-
-    private hasColumnWidths = () => {
-        return !!this.getColumnWidths(this.props);
-    };
-
-    private getDefaultWidthFromProps = (props: ICorePivotTableProps): DefaultColumnWidth => {
-        return props.config?.columnSizing?.defaultWidth ?? "unset";
-    };
-
-    private growToFit() {
-        invariant(this.table);
-
-        if (!this.isGrowToFitEnabled()) {
-            return;
-        }
-
-        this.table?.growToFit(this.getResizingConfig());
-
-        if (!this.state.resized && !this.table.isResizing()) {
-            this.setState({
-                resized: true,
-            });
-        }
-    }
-
-    private autoresizeColumns = async (force: boolean = false) => {
-        if (this.state.resized && !force) {
-            return;
-        }
-
-        const didResize = await this.table?.autoresizeColumns(this.getResizingConfig(), force);
-
-        if (didResize) {
-            this.setState({
-                resized: true,
-            });
-        }
-    };
-
-    private shouldAutoResizeColumns = () => {
-        const columnAutoresize = this.isColumnAutoresizeEnabled();
-        const growToFit = this.isGrowToFitEnabled();
-        return columnAutoresize || growToFit;
-    };
-
-    private startWatchingTableRendered = () => {
-        if (!this.table) {
-            return;
-        }
-
-        const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
-        const isTableRendered = this.shouldAutoResizeColumns()
-            ? this.state.resized
-            : this.table.isPivotTableReady();
-        const shouldCallAutoresizeColumns =
-            this.table.isPivotTableReady() && !this.state.resized && !this.table.isResizing();
-
-        if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
-            this.autoresizeColumns();
-        }
-
-        if (missingContainerRef || isTableRendered) {
-            this.stopWatchingTableRendered();
-        }
-    };
-
-    private stopWatchingTableRendered = () => {
-        if (this.watchingIntervalId) {
-            clearInterval(this.watchingIntervalId);
-            this.watchingIntervalId = null;
-        }
-
-        this.props.afterRender!();
-    };
 
     //
     // event handlers
@@ -671,6 +524,76 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     //
+    // Table resizing
+    //
+
+    private growToFit() {
+        invariant(this.table);
+
+        if (!this.isGrowToFitEnabled()) {
+            return;
+        }
+
+        this.table?.growToFit(this.getResizingConfig());
+
+        if (!this.state.resized && !this.table.isResizing()) {
+            this.setState({
+                resized: true,
+            });
+        }
+    }
+
+    private autoresizeColumns = async (force: boolean = false) => {
+        if (this.state.resized && !force) {
+            return;
+        }
+
+        const didResize = await this.table?.autoresizeColumns(this.getResizingConfig(), force);
+
+        if (didResize) {
+            this.setState({
+                resized: true,
+            });
+        }
+    };
+
+    private shouldAutoResizeColumns = () => {
+        const columnAutoresize = this.isColumnAutoresizeEnabled();
+        const growToFit = this.isGrowToFitEnabled();
+        return columnAutoresize || growToFit;
+    };
+
+    private startWatchingTableRendered = () => {
+        if (!this.table) {
+            return;
+        }
+
+        const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
+        const isTableRendered = this.shouldAutoResizeColumns()
+            ? this.state.resized
+            : this.table.isPivotTableReady();
+        const shouldCallAutoresizeColumns =
+            this.table.isPivotTableReady() && !this.state.resized && !this.table.isResizing();
+
+        if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
+            this.autoresizeColumns();
+        }
+
+        if (missingContainerRef || isTableRendered) {
+            this.stopWatchingTableRendered();
+        }
+    };
+
+    private stopWatchingTableRendered = () => {
+        if (this.watchingIntervalId) {
+            clearInterval(this.watchingIntervalId);
+            this.watchingIntervalId = null;
+        }
+
+        this.props.afterRender!();
+    };
+
+    //
     // Sticky row handling
     //
 
@@ -752,8 +675,49 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     //
-    // Obtaining different table contexts
+    // Table configuration accessors
     //
+
+    private getColumnTotals = () => {
+        return this.state.columnTotals;
+    };
+
+    private getExecutionDefinition = () => {
+        return this.props.execution.definition;
+    };
+
+    private getGroupRows = (): boolean => {
+        return this.props.config?.groupRows ?? true;
+    };
+
+    private getMenuConfig = (): IMenu => {
+        return this.props.config?.menu ?? {};
+    };
+
+    private getDefaultWidth = () => {
+        return DEFAULT_COLUMN_WIDTH;
+    };
+
+    private isColumnAutoresizeEnabled = () => {
+        const defaultWidth = this.getDefaultWidthFromProps(this.props);
+        return defaultWidth === "viewport" || defaultWidth === "autoresizeAll";
+    };
+
+    private isGrowToFitEnabled = (props: ICorePivotTableProps = this.props) => {
+        return props.config?.columnSizing?.growToFit === true;
+    };
+
+    private getColumnWidths = (props: ICorePivotTableProps): ColumnWidthItem[] | undefined => {
+        return props.config!.columnSizing?.columnWidths;
+    };
+
+    private hasColumnWidths = () => {
+        return !!this.getColumnWidths(this.props);
+    };
+
+    private getDefaultWidthFromProps = (props: ICorePivotTableProps): DefaultColumnWidth => {
+        return props.config?.columnSizing?.defaultWidth ?? "unset";
+    };
 
     private getTableConfig = (): TableConfig => {
         return {
@@ -763,6 +727,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             getMenuConfig: this.getMenuConfig,
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
+
+            getResizingConfig: this.getResizingConfig,
 
             onGridReady: this.onGridReady,
             onFirstDataRendered: this.onFirstDataRendered,
@@ -775,7 +741,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
             onExportReady: this.props.onExportReady ?? noop,
-            onPushData: this.props.pushData ?? noop,
+            pushData: this.props.pushData ?? noop,
             onPageLoaded: this.onPageLoaded,
             onMenuAggregationClick: this.onMenuAggregationClick,
         };
