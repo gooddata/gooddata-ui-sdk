@@ -307,10 +307,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * @param prevProps
      */
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        if (!this.internal.table) {
-            return true;
-        }
-
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
         if (!drillingIsSame) {
@@ -318,6 +314,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
+
+        if (!this.internal.table) {
+            // table is not yet initialized. do reinit in case the execution being initialized (one in prevProps) is
+            // different from the new execution.
+            return !prepExecutionSame;
+        }
 
         return !prepExecutionSame && !this.internal.table.isMatchingCurrentResult(this.props.execution);
     }
@@ -555,7 +557,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
     };
 
-    private onError(error: GoodDataSdkError, execution = this.props.execution) {
+    private onError = (error: GoodDataSdkError, execution = this.props.execution) => {
         const { onExportReady } = this.props;
 
         if (this.props.execution.fingerprint() === execution.fingerprint()) {
@@ -565,13 +567,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
             this.props.onError?.(error);
         }
-    }
+    };
 
     //
     // Table resizing
     //
 
-    private growToFit() {
+    private growToFit = () => {
         invariant(this.internal.table);
 
         if (!this.isGrowToFitEnabled()) {
@@ -585,7 +587,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                 resized: true,
             });
         }
-    }
+    };
 
     private autoresizeColumns = async (force: boolean = false) => {
         if (this.state.resized && !force) {
@@ -639,13 +641,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     // Sticky row handling
     //
 
-    private isStickyRowAvailable(): boolean {
+    private isStickyRowAvailable = (): boolean => {
         invariant(this.internal.table);
 
         return Boolean(this.getGroupRows() && this.internal.table.stickyRowExists());
-    }
+    };
 
-    private updateStickyRow(): void {
+    private updateStickyRow = (): void => {
         if (!this.internal.table) {
             return;
         }
@@ -661,9 +663,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
             this.updateStickyRowContent(scrollPosition);
         }
-    }
+    };
 
-    private updateStickyRowContent(scrollPosition: IScrollPosition): void {
+    private updateStickyRowContent = (scrollPosition: IScrollPosition): void => {
         invariant(this.internal.table);
 
         if (this.isStickyRowAvailable()) {
@@ -674,13 +676,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }
 
         this.internal.lastScrollPosition = { ...scrollPosition };
-    }
+    };
 
     //
     // Desired height updating
     //
 
-    private getScrollBarPadding(): number {
+    private getScrollBarPadding = (): number => {
         if (!this.internal.table?.isFullyInitialized()) {
             return 0;
         }
@@ -691,9 +693,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         // check for scrollbar presence
         return scrollBarExists(this.containerRef) ? getScrollbarWidth() : 0;
-    }
+    };
 
-    private calculateDesiredHeight(): number | undefined {
+    private calculateDesiredHeight = (): number | undefined => {
         const { maxHeight } = this.props.config!;
         if (!maxHeight) {
             return;
@@ -702,9 +704,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const totalHeight = bodyHeight + this.getScrollBarPadding();
 
         return Math.min(totalHeight, maxHeight);
-    }
+    };
 
-    private updateDesiredHeight(): void {
+    private updateDesiredHeight = (): void => {
         if (!this.internal.table) {
             return;
         }
@@ -714,7 +716,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         if (this.state.desiredHeight !== desiredHeight) {
             this.setState({ desiredHeight });
         }
-    }
+    };
 
     //
     // Table configuration accessors

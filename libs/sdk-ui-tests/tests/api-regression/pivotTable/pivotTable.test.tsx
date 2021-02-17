@@ -12,7 +12,7 @@ import { defSetSorts } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap";
 
 function tablePropsExtractor(wrapper: ReactWrapper): any {
-    const child = wrapper.find("CorePivotTablePure");
+    const child = wrapper.find("CorePivotTableAgImpl");
 
     return child.props();
 }
