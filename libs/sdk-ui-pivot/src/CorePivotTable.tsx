@@ -47,11 +47,98 @@ const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 
 /**
- * Pivot Table react component
+ * This class implements pivot table using the community version of ag-grid.
+ *
+ * Bear in mind that this is not a typical, standard React component implementation; the main reason
+ * behind that is that while ag-grid comes with a React component the ag-grid itself is not a React component
+ * and vast majority of its APIs are non-React as well. You will therefore find that there is a lot of non-react
+ * state flying around.
+ *
+ * Instead of looking at this implementation as a typical React component, look at it like a adapter between
+ * React and ag-grid which is used to render data obtained using GD executions.
+ *
+ * The code in this class is built to reflect the adapter nature of the integration. The responsibility of this
+ * component is to correctly handle the component lifecycle and orchestrate integration of React and ag-grid, React
+ * and GoodData, React and GoodData and ag-grid.
+ *
+ * Lifecycle
+ * ---------
+ *
+ * The goal of the table is to render data that it obtains from GD platform by driving an execution. To this end
+ * the prop 'execution' contains an instance of Prepared Execution which is all set up and ready to run.
+ *
+ * Before rendering anything, the code must first drive this prepared execution completion in order to figure out
+ * how the actual table should look like header-wise.
+ *
+ * Once the execution completes successfully code will process the result and the metadata included within
+ * to construct table headers for ag-grid and prepare an ag-grid data source that the ag-grid will use to read
+ * pages of data from backend. Note: while constructing table headers, the code will also apply manual column
+ * sizing settings.
+ *
+ * With this ready, the component can render the actual ag-grid table. It will create ag-grid options with
+ * all the necessary metadata and customizations.
+ *
+ * After the table is successfully rendered, the code may (depending on props) apply grow-to-width and auto-resizing
+ * logic on the table columns. And then finally it will determine and set the sticky row contents.
+ *
+ * At this point when the table is rendered, the users may interact with it and change sorting or add totals
+ * or subtotals. All of this is handled outside of React. These changes are handled in the ag-grid data source
+ * implementation. As it discovers that different sorts or totals are needed, it will transform the original
+ * prepared execution, add the extra settings and re-drive the execution. Once done, it will update the internal
+ * state and ping ag-grid API to re-render the table.
+ *
+ * In case the client changes props (say modifying the prepared execution) the componentDidUpdate will determine
+ * whether the full reinitialization is in order. If so the entire existing ag-grid and all our internal state
+ * is thrown out and table is initialized from scratch.
+ *
+ * Notable sub-components
+ * ----------------------
+ *
+ * All custom logic that we build on top of ag-grid has the entry point in `TableFacade`. The code in this component
+ * relies on the facade to drive our custom table logic. This facade further delegates complex pieces of work
+ * to other components. The most important are `TableDescriptor` and `ResizedColumnStore` + its friends.
+ *
+ * The `TableDescriptor` is responsible for figuring out how the table should look like and prepare column
+ * descriptors and ag-grid ColDefs.
+ *
+ * The `ResizedColumnStore` & functions in its vicinity are responsible for implementation of our custom
+ * table column resizing logic.
+ *
+ * Apart from these main components there is also our custom implementation of ag-grid data source - this is responsible
+ * for getting correct data and transforming it to form that can be consumed by ag-gird. It is the data source where
+ * our code has to figure out whether the sorts or totals have changed and if so update the execution to perform
+ * the correct execution.
+ *
+ * Finally there is the sticky row handling which contains some nasty code & at times works with ag-grid internals
+ * to get the job done.
+ *
+ * Known flaws
+ * -----------
+ *
+ * -  The initial render & subsequent table column resizing is brittle and includes a async functions, timeouts, intervals
+ *    etc.
+ *
+ *    This can be currently knocked out of balance if during initial table render the data source determines
+ *    it needs to transform the execution (to include sorts for instance; this was often the case if AD sent execution
+ *    definition with invalid sorts).
+ *
+ * -  The reinitialization of entire table is too aggressive at the moment. There are two most notable cases:
+ *
+ *    1.  Client changes drills; this will lead to reinit to correctly mark cells as drillable. Perhaps all we
+ *        need it to trigger some kind of ag-grid cell refresh?
+ *
+ *    2.  Client changes prepared execution that comes in props. Any change means reinit. This is not really needed
+ *        if only sorts or totals were added but the shape of the table looks the same.
+ *
+ * Debugging hints
+ * ---------------
+ *
+ * Nothing renders: check out the problem with resizing & data source interplay.
+ *
  *
  * @internal
  */
-export class CorePivotTablePure extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
+export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, ICorePivotTableState> {
     public static defaultProps: Partial<ICorePivotTableProps> = {
         locale: "en-US",
         drillableItems: [],
@@ -189,7 +276,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
              * after a successful execution and initialization.
              */
 
-            if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
+            if (this.shouldRefreshHeader(this.props, prevProps)) {
                 this.internal.table?.refreshHeader();
             }
 
@@ -235,7 +322,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         return !prepExecutionSame && !this.internal.table.isMatchingCurrentResult(this.props.execution);
     }
 
-    private isAgGridRerenderNeeded(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
+    /**
+     * Tests whether ag-grid's refreshHeader should be called. At the moment this is necessary when user
+     * turns on/off the aggregation menus through the props. The menus happen to appear in the table column headers
+     * so the refresh is essential to show/hide them.
+     *
+     * @param props current table props
+     * @param prevProps previous table props
+     * @private
+     */
+    private shouldRefreshHeader(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
         const propsRequiringAgGridRerender = [["config", "menu"]];
         return propsRequiringAgGridRerender.some(
             (propKey) => !isEqual(get(props, propKey), get(prevProps, propKey)),
@@ -412,6 +508,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             top: Math.max(event.top, 0),
             left: event.left,
         };
+
         this.updateStickyRowContent(scrollPosition);
     };
 
@@ -419,6 +516,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (event.target && isHeaderResizer(event.target as HTMLElement)) {
             event.stopPropagation();
         }
+
         this.internal.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
         this.internal.isAltKeyPressed = event.altKey;
     };
@@ -710,7 +808,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 }
 
-const CorePivotTableWithIntl = injectIntl(CorePivotTablePure);
+const CorePivotTableWithIntl = injectIntl(CorePivotTableAgImpl);
 
 /**
  * @internal
