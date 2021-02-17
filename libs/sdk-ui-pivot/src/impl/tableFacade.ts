@@ -86,8 +86,9 @@ export class TableFacade {
         this.growToFittedColumns = {};
         this.resizing = false;
         this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
+        this.numberOfColumnResizedCalls = 0;
 
-        this.createDataSource(config);
+        this.agGridDataSource = this.createDataSource(config);
         this.updateColumnWidths(config.getResizingConfig());
     }
 
@@ -132,7 +133,7 @@ export class TableFacade {
     private createDataSource = (options: TableConfig): AgGridDatasource => {
         this.onPageLoadedCallback = options.onPageLoaded;
 
-        this.agGridDataSource = createAgGridDatasource(
+        const dataSource = createAgGridDatasource(
             {
                 tableDescriptor: this.tableDescriptor,
                 getGroupRows: options.getGroupRows,
@@ -148,7 +149,7 @@ export class TableFacade {
             this.intl,
         );
 
-        return this.agGridDataSource;
+        return dataSource;
     };
 
     private onPageLoaded = (dv: DataViewFacade): void => {

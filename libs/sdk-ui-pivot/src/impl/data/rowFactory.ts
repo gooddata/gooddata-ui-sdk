@@ -150,10 +150,10 @@ export function getRowTotals(
     const grandTotalAttrDescriptor = grandTotalColDescriptor.attributeDescriptor;
     const leafColumns = tableDescriptor.zippedLeaves;
 
-    return colGrandTotals.map((totalsPerLeafColumn: string[], totalIdx: number) => {
+    return colGrandTotals.map((totalsPerLeafColumn: DataValue[], totalIdx: number) => {
         const grandTotalName = grandTotalAttrDescriptor.attributeHeader.totalItems![totalIdx].totalHeaderItem
             .name;
-        const measureCells: Record<string, string> = {};
+        const measureCells: Record<string, DataValue> = {};
         const calculatedForColumns: string[] = [];
         const calculatedForMeasures = colGrandTotalDefs
             .filter((total) => {

@@ -58,20 +58,20 @@ export class AgGridDatasource implements IDatasource {
         // we do not have a sortModel yet so we need to check the dataView itself if the sorting makes sense
         const isInitialDvSortedByFirstAttribute = isDataViewSortedByFirstAttribute(initialDv);
 
-        this.setGroupingProvider(isInitialDvSortedByFirstAttribute);
+        this.grouping = this.createGroupingProvider(isInitialDvSortedByFirstAttribute);
     }
 
-    private setGroupingProvider = (isSortedByFirst: boolean) => {
+    private createGroupingProvider = (isSortedByFirst: boolean) => {
         // grouping happens under two conditions: it is desired & the data is sorted by first column
         const shouldGroup = this.config.getGroupRows() && isSortedByFirst;
 
-        this.grouping = GroupingProviderFactory.createProvider(shouldGroup);
+        return GroupingProviderFactory.createProvider(shouldGroup);
     };
 
     private resetGroupingProvider = (sortModel: ColDef[] = []): void => {
         const isSortedByFirst = isSortedByFirstAttribute(this.config.tableDescriptor, sortModel);
 
-        this.setGroupingProvider(isSortedByFirst);
+        this.grouping = this.createGroupingProvider(isSortedByFirst);
     };
 
     private onDestroy = (): void => {

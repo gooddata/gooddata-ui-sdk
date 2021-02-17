@@ -84,10 +84,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private readonly errorMap: IErrorDescriptors;
 
     private initializer: TableFacadeInitializer | null = null;
-    private table: TableFacade | null;
+    private table: TableFacade | null = null;
 
     private firstDataRendered: boolean = false;
-    private watchingIntervalId: number | null;
+    private watchingIntervalId: number | null = null;
     private lastScrollPosition: IScrollPosition = {
         top: 0,
         left: 0,
@@ -95,7 +95,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private isMetaOrCtrlKeyPressed = false;
     private isAltKeyPressed = false;
 
-    private containerRef: HTMLDivElement;
+    private containerRef: HTMLDivElement | undefined;
     private gridOptions: ICustomGridOptions | null = null;
 
     constructor(props: ICorePivotTableProps) {
