@@ -1723,10 +1723,7 @@ describe("chartOptionsBuilder", () => {
                     stackByAttribute,
                     type,
                 );
-                expect(drillableMeasuresSeriesData[0].data.length).toEqual(0); // x is null
-                expect(drillableMeasuresSeriesData[1].data.length).toEqual(0); // y is null
-                expect(drillableMeasuresSeriesData[2].data.length).toEqual(0); // x and y are null
-                expect(drillableMeasuresSeriesData[3].data.length).toEqual(0); // z is null
+                expect(drillableMeasuresSeriesData.length).toEqual(16);
             });
         });
 
