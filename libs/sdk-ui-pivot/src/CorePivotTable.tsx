@@ -8,7 +8,7 @@ import {
     SortChangedEvent,
 } from "@ag-grid-community/all-modules";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { defTotals, ITotal } from "@gooddata/sdk-model";
+import { defTotals } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
 import React from "react";
 import { injectIntl } from "react-intl";
@@ -37,27 +37,14 @@ import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { invariant } from "ts-invariant";
-import { TableFacade } from "./impl/tableFacade";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
-import {
-    ColumnResizingConfig,
-    ICustomGridOptions,
-    IMenuAggregationClickConfig,
-    TableConfig,
-} from "./impl/privateTypes";
+import { ColumnResizingConfig, IMenuAggregationClickConfig, TableConfig } from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
+import { ICorePivotTableState, InternalTableState } from "./tableState";
 
-export const DEFAULT_COLUMN_WIDTH = 200;
-export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
-
-export interface ICorePivotTableState {
-    readyToRender: boolean;
-    columnTotals: ITotal[];
-    desiredHeight: number | undefined;
-    error?: string;
-    resized: boolean;
-}
+const DEFAULT_COLUMN_WIDTH = 200;
+const WATCHING_TABLE_RENDERED_INTERVAL = 500;
 
 /**
  * Pivot Table react component
@@ -82,21 +69,9 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private readonly errorMap: IErrorDescriptors;
-
-    private initializer: TableFacadeInitializer | null = null;
-    private table: TableFacade | null = null;
-
-    private firstDataRendered: boolean = false;
-    private watchingIntervalId: number | null = null;
-    private lastScrollPosition: IScrollPosition = {
-        top: 0,
-        left: 0,
-    };
-    private isMetaOrCtrlKeyPressed = false;
-    private isAltKeyPressed = false;
-
     private containerRef: HTMLDivElement | undefined;
-    private gridOptions: ICustomGridOptions | null = null;
+
+    private internal: InternalTableState;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -111,6 +86,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         };
 
         this.errorMap = newErrorMapping(props.intl);
+        this.internal = new InternalTableState();
     }
 
     //
@@ -132,7 +108,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
      * @param execution - prepared execution to drive
      */
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
-        this.abandonCurrentInitialization();
+        this.internal.abandonInitialization();
 
         const initializer = new TableFacadeInitializer(execution, this.getTableConfig(), this.props);
 
@@ -144,31 +120,12 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 return;
             }
 
-            this.initializer = null;
-            this.table = result;
+            this.internal.initializer = undefined;
+            this.internal.table = result;
             this.setState({ readyToRender: true });
         });
 
         return initializer;
-    };
-
-    /**
-     * Abandon current table initialization (if any). This will not cancel any in-flight requests but will
-     * make sure that when they complete they are noop - dead work.
-     */
-    private abandonCurrentInitialization = (): void => {
-        if (this.initializer) {
-            this.initializer.abandon();
-        }
-
-        this.initializer = null;
-    };
-
-    private clearTimeouts = () => {
-        if (this.watchingIntervalId) {
-            clearTimeout(this.watchingIntervalId);
-            this.watchingIntervalId = null;
-        }
     };
 
     /**
@@ -190,24 +147,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                 resized: false,
             },
             () => {
-                this.table = null;
-                this.gridOptions = null;
-                this.firstDataRendered = false;
-                this.lastScrollPosition = {
-                    top: 0,
-                    left: 0,
-                };
-                this.isMetaOrCtrlKeyPressed = false;
-                this.isAltKeyPressed = false;
-
-                this.clearTimeouts();
-                this.initializer = this.initialize(execution);
+                this.internal.destroy();
+                this.internal = new InternalTableState();
+                this.internal.initializer = this.initialize(execution);
             },
         );
     };
 
     public componentDidMount(): void {
-        this.initializer = this.initialize(this.props.execution);
+        this.internal.initializer = this.initialize(this.props.execution);
     }
 
     public componentWillUnmount(): void {
@@ -216,8 +164,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         }
 
         // this ensures any events emitted during the async initialization will be sunk. they are no longer needed.
-        this.abandonCurrentInitialization();
-        this.clearTimeouts();
+        this.internal.destroy();
     }
 
     public componentDidUpdate(prevProps: ICorePivotTableProps): void {
@@ -243,7 +190,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
              */
 
             if (this.isAgGridRerenderNeeded(this.props, prevProps)) {
-                this.table?.refreshHeader();
+                this.internal.table?.refreshHeader();
             }
 
             if (this.isGrowToFitEnabled() && !this.isGrowToFitEnabled(prevProps)) {
@@ -254,7 +201,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             const columnWidths = this.getColumnWidths(this.props);
 
             if (!isEqual(prevColumnWidths, columnWidths)) {
-                this.table?.applyColumnSizes(this.getResizingConfig());
+                this.internal.table?.applyColumnSizes(this.getResizingConfig());
             }
         }
     }
@@ -273,7 +220,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
      * @param prevProps
      */
     private isReinitNeeded(prevProps: ICorePivotTableProps): boolean {
-        if (!this.table) {
+        if (!this.internal.table) {
             return true;
         }
 
@@ -285,7 +232,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
 
-        return !prepExecutionSame && !this.table.isMatchingCurrentResult(this.props.execution);
+        return !prepExecutionSame && !this.internal.table.isMatchingCurrentResult(this.props.execution);
     }
 
     private isAgGridRerenderNeeded(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
@@ -343,10 +290,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         // when table is ready, then the table facade must be set. if this bombs then there is a bug
         // in the initialization logic
-        invariant(this.table);
+        invariant(this.internal.table);
 
-        if (!this.gridOptions) {
-            this.gridOptions = createGridOptions(this.table, this.getTableConfig(), this.props);
+        if (!this.internal.gridOptions) {
+            this.internal.gridOptions = createGridOptions(
+                this.internal.table,
+                this.getTableConfig(),
+                this.props,
+            );
         }
 
         /*
@@ -364,7 +315,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
                     style={style}
                     ref={this.setContainerRef}
                 >
-                    <AgGridReact {...this.gridOptions} modules={AllCommunityModules} />
+                    <AgGridReact {...this.internal.gridOptions} modules={AllCommunityModules} />
                     {shouldRenderLoadingOverlay ? this.renderLoading() : null}
                 </div>
             </div>
@@ -376,34 +327,29 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private onGridReady = (event: GridReadyEvent) => {
-        invariant(this.table);
+        invariant(this.internal.table);
 
-        this.table.finishInitialization(event.api, event.columnApi);
+        this.internal.table.finishInitialization(event.api, event.columnApi);
         this.updateDesiredHeight();
 
         if (this.getGroupRows()) {
-            this.table.initializeStickyRow();
+            this.internal.table.initializeStickyRow();
         }
     };
 
     private onFirstDataRendered = async (_event: AgGridEvent) => {
-        invariant(this.table);
+        invariant(this.internal.table);
 
-        if (this.firstDataRendered) {
+        if (this.internal.firstDataRendered) {
             // eslint-disable-next-line no-console
             console.error("onFirstDataRendered called multiple times");
         }
 
-        this.firstDataRendered = true;
+        this.internal.firstDataRendered = true;
 
         // Since issue here is not resolved, https://github.com/ag-grid/ag-grid/issues/3263,
         // work-around by using 'setInterval'
-        if (!this.watchingIntervalId) {
-            this.watchingIntervalId = window.setInterval(
-                this.startWatchingTableRendered,
-                WATCHING_TABLE_RENDERED_INTERVAL,
-            );
-        }
+        this.internal.startWatching(this.startWatchingTableRendered, WATCHING_TABLE_RENDERED_INTERVAL);
 
         /*
          * At this point data from backend is available, some of it is rendered and auto-resize can be done.
@@ -432,7 +378,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
-        invariant(this.table);
+        invariant(this.internal.table);
 
         if (!columnEvent.finished) {
             return; // only update the height once the user is done setting the column size
@@ -441,18 +387,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateDesiredHeight();
 
         if (isManualResizing(columnEvent)) {
-            this.table.onManualColumnResize(this.getResizingConfig(), columnEvent.columns!);
+            this.internal.table.onManualColumnResize(this.getResizingConfig(), columnEvent.columns!);
         }
     };
 
     private onSortChanged = (event: SortChangedEvent): void => {
-        if (!this.table) {
+        if (!this.internal.table) {
             // eslint-disable-next-line no-console
             console.warn("changing sorts without prior execution cannot work");
             return;
         }
 
-        const sortItems = this.table.createSortItems(event.columnApi.getAllColumns());
+        const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns());
 
         this.props.pushData!({
             properties: {
@@ -473,17 +419,17 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (event.target && isHeaderResizer(event.target as HTMLElement)) {
             event.stopPropagation();
         }
-        this.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
-        this.isAltKeyPressed = event.altKey;
+        this.internal.isMetaOrCtrlKeyPressed = event.metaKey || event.ctrlKey;
+        this.internal.isAltKeyPressed = event.altKey;
     };
 
     private onPageLoaded = (_dv: DataViewFacade, newResult: boolean): void => {
-        if (!this.table) {
+        if (!this.internal.table) {
             return;
         }
 
         if (newResult) {
-            this.props.onExportReady?.(this.table.createExportFunction(this.props.exportTitle));
+            this.props.onExportReady?.(this.internal.table.createExportFunction(this.props.exportTitle));
         }
 
         this.updateDesiredHeight();
@@ -499,7 +445,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         });
 
         this.setState({ columnTotals: newColumnTotals }, () => {
-            this.table?.refreshData();
+            this.internal.table?.refreshData();
         });
     };
 
@@ -528,15 +474,15 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private growToFit() {
-        invariant(this.table);
+        invariant(this.internal.table);
 
         if (!this.isGrowToFitEnabled()) {
             return;
         }
 
-        this.table?.growToFit(this.getResizingConfig());
+        this.internal.table?.growToFit(this.getResizingConfig());
 
-        if (!this.state.resized && !this.table.isResizing()) {
+        if (!this.state.resized && !this.internal.table.isResizing()) {
             this.setState({
                 resized: true,
             });
@@ -548,7 +494,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             return;
         }
 
-        const didResize = await this.table?.autoresizeColumns(this.getResizingConfig(), force);
+        const didResize = await this.internal.table?.autoresizeColumns(this.getResizingConfig(), force);
 
         if (didResize) {
             this.setState({
@@ -564,16 +510,18 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private startWatchingTableRendered = () => {
-        if (!this.table) {
+        if (!this.internal.table) {
             return;
         }
 
         const missingContainerRef = !this.containerRef; // table having no data will be unmounted, it causes ref null
         const isTableRendered = this.shouldAutoResizeColumns()
             ? this.state.resized
-            : this.table.isPivotTableReady();
+            : this.internal.table.isPivotTableReady();
         const shouldCallAutoresizeColumns =
-            this.table.isPivotTableReady() && !this.state.resized && !this.table.isResizing();
+            this.internal.table.isPivotTableReady() &&
+            !this.state.resized &&
+            !this.internal.table.isResizing();
 
         if (this.shouldAutoResizeColumns() && shouldCallAutoresizeColumns) {
             this.autoresizeColumns();
@@ -585,11 +533,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     };
 
     private stopWatchingTableRendered = () => {
-        if (this.watchingIntervalId) {
-            clearInterval(this.watchingIntervalId);
-            this.watchingIntervalId = null;
-        }
-
+        this.internal.stopWatching();
         this.props.afterRender!();
     };
 
@@ -598,21 +542,21 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private isStickyRowAvailable(): boolean {
-        invariant(this.table);
+        invariant(this.internal.table);
 
-        return Boolean(this.getGroupRows() && this.table.stickyRowExists());
+        return Boolean(this.getGroupRows() && this.internal.table.stickyRowExists());
     }
 
     private updateStickyRow(): void {
-        if (!this.table) {
+        if (!this.internal.table) {
             return;
         }
 
         if (this.isStickyRowAvailable()) {
-            this.table.updateStickyRowPosition();
+            this.internal.table.updateStickyRowPosition();
 
-            const scrollPosition: IScrollPosition = { ...this.lastScrollPosition };
-            this.lastScrollPosition = {
+            const scrollPosition: IScrollPosition = { ...this.internal.lastScrollPosition };
+            this.internal.lastScrollPosition = {
                 top: 0,
                 left: 0,
             };
@@ -622,16 +566,16 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     }
 
     private updateStickyRowContent(scrollPosition: IScrollPosition): void {
-        invariant(this.table);
+        invariant(this.internal.table);
 
         if (this.isStickyRowAvailable()) {
-            this.table.updateStickyRowContent({
+            this.internal.table.updateStickyRowContent({
                 scrollPosition,
-                lastScrollPosition: this.lastScrollPosition,
+                lastScrollPosition: this.internal.lastScrollPosition,
             });
         }
 
-        this.lastScrollPosition = { ...scrollPosition };
+        this.internal.lastScrollPosition = { ...scrollPosition };
     }
 
     //
@@ -639,7 +583,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     //
 
     private getScrollBarPadding(): number {
-        if (!this.table?.isFullyInitialized()) {
+        if (!this.internal.table?.isFullyInitialized()) {
             return 0;
         }
 
@@ -656,14 +600,14 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         if (!maxHeight) {
             return;
         }
-        const bodyHeight = this.table?.getTotalBodyHeight() ?? 0;
+        const bodyHeight = this.internal.table?.getTotalBodyHeight() ?? 0;
         const totalHeight = bodyHeight + this.getScrollBarPadding();
 
         return Math.min(totalHeight, maxHeight);
     }
 
     private updateDesiredHeight(): void {
-        if (!this.table) {
+        if (!this.internal.table) {
             return;
         }
 
@@ -754,8 +698,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             columnAutoresizeEnabled: this.isColumnAutoresizeEnabled(),
             widths: this.getColumnWidths(this.props),
 
-            isAltKeyPressed: this.isAltKeyPressed,
-            isMetaOrCtrlKeyPressed: this.isMetaOrCtrlKeyPressed,
+            isAltKeyPressed: this.internal.isAltKeyPressed,
+            isMetaOrCtrlKeyPressed: this.internal.isMetaOrCtrlKeyPressed,
 
             clientWidth: this.containerRef?.clientWidth ?? 0,
             containerRef: this.containerRef,
