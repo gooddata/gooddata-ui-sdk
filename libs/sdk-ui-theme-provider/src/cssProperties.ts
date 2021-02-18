@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isObject from "lodash/isObject";
 import { transparentize, darken, lighten, mix, setLightness } from "polished";
 import { IThemePalette, ITheme, IThemeChart } from "@gooddata/sdk-backend-spi";
@@ -334,7 +334,7 @@ export const clearCssProperties = (): void => {
  * }
  * is converted to "palette-primary-base" variable with value #14b2e2
  *
- * @beta
+ * @internal
  */
 export function setCssProperties(theme: ITheme): void {
     const cssProperties = [
