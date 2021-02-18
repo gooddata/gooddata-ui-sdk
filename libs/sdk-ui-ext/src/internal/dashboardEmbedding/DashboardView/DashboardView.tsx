@@ -227,7 +227,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         </DashboardViewConfigProvider>
     );
 
-    if (!hasThemeProvider && !disableThemeLoading) {
+    if (theme || (!hasThemeProvider && !disableThemeLoading)) {
         dashboardRender = (
             <ThemeProvider theme={theme} backend={backend} workspace={workspace} modifier={themeModifier}>
                 {dashboardRender}
