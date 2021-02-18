@@ -219,7 +219,7 @@ export interface IDashboardViewProps {
 
     /**
      * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
-     * that would alter any backend state (disabling creating/changing alerts for example).
+     * that would alter any backend state (disabling creating/changing alerts, creating scheduled emails, etc.).
      *
      * @default false i.e. NOT a read-only mode.
      */

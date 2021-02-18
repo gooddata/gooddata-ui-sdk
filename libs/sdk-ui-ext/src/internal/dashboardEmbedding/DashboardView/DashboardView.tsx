@@ -180,19 +180,21 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                     <AttributesWithDrillDownProvider attributes={drillDownAttributes}>
                         <DashboardAlertsProvider alerts={alertsData}>
                             <DashboardViewIsReadOnlyProvider isReadOnly={isReadOnly}>
-                                <ScheduledMailDialog
-                                    backend={backend}
-                                    workspace={workspace}
-                                    locale={effectiveLocale}
-                                    dashboard={dashboardRef}
-                                    filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
-                                    onSubmit={onScheduledMailDialogSubmit}
-                                    onSubmitSuccess={onScheduledMailSubmitSuccess}
-                                    onSubmitError={onScheduledMailSubmitError}
-                                    onCancel={onScheduledMailDialogCancel}
-                                    onError={onError}
-                                    isVisible={isScheduledMailDialogVisible}
-                                />
+                                {!isReadOnly && (
+                                    <ScheduledMailDialog
+                                        backend={backend}
+                                        workspace={workspace}
+                                        locale={effectiveLocale}
+                                        dashboard={dashboardRef}
+                                        filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
+                                        onSubmit={onScheduledMailDialogSubmit}
+                                        onSubmitSuccess={onScheduledMailSubmitSuccess}
+                                        onSubmitError={onScheduledMailSubmitError}
+                                        onCancel={onScheduledMailDialogCancel}
+                                        onError={onError}
+                                        isVisible={isScheduledMailDialogVisible}
+                                    />
+                                )}
                                 {isFluidLayoutEmpty(dashboardData.layout) ? (
                                     <EmptyDashboardError ErrorComponent={ErrorComponent} />
                                 ) : (
