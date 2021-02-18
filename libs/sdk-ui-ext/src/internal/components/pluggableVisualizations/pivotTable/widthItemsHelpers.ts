@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import includes from "lodash/includes";
 import {
     ColumnWidthItem,
@@ -122,8 +122,6 @@ function adaptWidthItemsToPivotTable(
         return originalColumnWidths;
     }
 
-    const attributeLocalIdentifiers = [...rowAttributeLocalIdentifiers, ...columnAttributeLocalIdentifiers];
-
     return originalColumnWidths.reduce((columnWidths: ColumnWidthItem[], columnWidth: ColumnWidthItem) => {
         if (isMeasureColumnWidthItem(columnWidth)) {
             const filteredMeasureColumnWidthItem: IMeasureColumnWidthItem = {
@@ -156,7 +154,10 @@ function adaptWidthItemsToPivotTable(
             }
         } else if (isAttributeColumnWidthItem(columnWidth)) {
             if (
-                includes(attributeLocalIdentifiers, columnWidth.attributeColumnWidthItem.attributeIdentifier)
+                includes(
+                    rowAttributeLocalIdentifiers,
+                    columnWidth.attributeColumnWidthItem.attributeIdentifier,
+                )
             ) {
                 return [...columnWidths, columnWidth];
             }
