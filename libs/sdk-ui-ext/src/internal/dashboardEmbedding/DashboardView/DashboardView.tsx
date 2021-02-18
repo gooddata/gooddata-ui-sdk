@@ -3,6 +3,8 @@ import React, { useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { isFluidLayoutEmpty } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
+
 import { useDashboard } from "../hooks/useDashboard";
 import { useDashboardAlerts } from "../hooks/useDashboardAlerts";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
@@ -48,14 +50,16 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     widgetRenderer,
     isReadOnly = false,
 }) => {
+    const dashboardRef = typeof dashboard === "string" ? idRef(dashboard, "analyticalDashboard") : dashboard;
+
     const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
-        dashboard,
+        dashboard: dashboardRef,
         backend,
         workspace,
     });
 
     const { error: alertsError, result: alertsData, status: alertsStatus } = useDashboardAlerts({
-        dashboard,
+        dashboard: dashboardRef,
         backend,
         workspace,
     });
@@ -180,7 +184,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                     backend={backend}
                                     workspace={workspace}
                                     locale={effectiveLocale}
-                                    dashboard={dashboard}
+                                    dashboard={dashboardRef}
                                     filters={applyFiltersToScheduledMail ? sanitizedFilters : undefined}
                                     onSubmit={onScheduledMailDialogSubmit}
                                     onSubmitSuccess={onScheduledMailSubmitSuccess}
@@ -195,7 +199,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                     <DashboardRenderer
                                         backend={backend}
                                         workspace={workspace}
-                                        dashboardRef={dashboard}
+                                        dashboardRef={dashboardRef}
                                         dashboardViewLayout={dashboardData?.layout}
                                         filters={sanitizedFilters}
                                         onFiltersChange={onFiltersChange}
