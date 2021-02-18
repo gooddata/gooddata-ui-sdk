@@ -20,10 +20,6 @@ import DashboardViewWithDrilling from "./DashboardViewWithDrilling";
 import DashboardViewWithDrillingSRC from "!raw-loader!./DashboardViewWithDrilling";
 import DashboardViewWithDrillingSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithDrilling";
 
-import DashboardViewWithEmails from "./DashboardViewWithEmails";
-import DashboardViewWithEmailsSRC from "!raw-loader!./DashboardViewWithEmails";
-import DashboardViewWithEmailsSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithEmails";
-
 import CustomDashboardView from "./CustomDashboardView";
 import CustomDashboardViewSRC from "!raw-loader!./CustomDashboardView";
 import CustomDashboardViewSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/CustomDashboardView";
@@ -88,16 +84,6 @@ export const DashboardView = (): JSX.Element => (
             for={DashboardViewWithDrilling}
             source={DashboardViewWithDrillingSRC}
             sourceJS={DashboardViewWithDrillingSRCJS}
-        />
-
-        <hr className="separator" />
-
-        <p>Example of how to embed a Dashboard into your application with the option to schedule emails.</p>
-
-        <ExampleWithSource
-            for={DashboardViewWithEmails}
-            source={DashboardViewWithEmailsSRC}
-            sourceJS={DashboardViewWithEmailsSRCJS}
         />
 
         <hr className="separator" />

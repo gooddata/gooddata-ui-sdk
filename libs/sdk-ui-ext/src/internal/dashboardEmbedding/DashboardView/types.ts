@@ -64,9 +64,11 @@ export interface IDashboardViewConfig {
  */
 export interface IDashboardViewProps {
     /**
-     * Reference to the dashboard to display.
+     * Reference to the dashboard to display. This can be specified by either object reference using URI or using identifier.
+     *
+     * For convenience it is also possible to specify just the identifier of the dashboard.
      */
-    dashboard: ObjRef;
+    dashboard: ObjRef | string;
 
     /**
      * Optionally, specify filters to be applied to all the widgets in the dashboard.
@@ -217,7 +219,7 @@ export interface IDashboardViewProps {
 
     /**
      * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
-     * that would alter any backend state (disabling creating/changing alerts for example).
+     * that would alter any backend state (disabling creating/changing alerts, creating scheduled emails, etc.).
      *
      * @default false i.e. NOT a read-only mode.
      */
