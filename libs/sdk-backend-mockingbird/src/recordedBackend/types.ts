@@ -7,6 +7,7 @@ import {
     ICatalogGroup,
     ISettings,
     ITheme,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IInsight, IColorPalette, IVisualizationClass } from "@gooddata/sdk-model";
 
@@ -46,6 +47,11 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Default: 'uri'
      */
     useRefType?: RecordedRefType;
+
+    /**
+     * Specify validator that returns boolean for provided URL value and validation context type.
+     */
+    securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
 };
 
 /**
@@ -110,3 +116,8 @@ export type CatalogRecording = {
 export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
+
+/**
+ * @internal
+ */
+export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;

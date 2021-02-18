@@ -12,6 +12,7 @@ import {
     IWorkspacesQueryFactory,
     NotAuthenticated,
     NotSupported,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 import { TelemetryData } from "../toolkit/backend";
 import {
@@ -105,6 +106,10 @@ export class CustomBackend implements IAnalyticalBackend {
 
     public currentUser = (): IUserService => {
         throw new NotSupported("user service is not supported");
+    };
+
+    public organization = (_organizationId: string): IOrganization => {
+        throw new NotSupported("organization is not supported");
     };
 
     private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {

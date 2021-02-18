@@ -31,6 +31,7 @@ import {
     NotSupported,
     IWorkspaceDescriptor,
     CatalogItemType,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -93,6 +94,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        organization(_organizationId: string): IOrganization {
+            throw new NotSupported("not supported");
         },
         currentUser(): IUserService {
             throw new NotSupported("not supported");

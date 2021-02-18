@@ -23,6 +23,7 @@ import {
     IWorkspaceUsersQuery,
     IDateFilterConfigsQuery,
     IWorkspaceDescriptor,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -64,6 +65,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
             this.decorated.withTelemetry(componentName, props),
             this.factories,
         );
+    }
+
+    public organization(organizationId: string): IOrganization {
+        return this.decorated.organization(organizationId);
     }
 
     public currentUser(): IUserService {

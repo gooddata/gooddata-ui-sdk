@@ -8,6 +8,7 @@ import {
     IUserService,
     IWorkspacesQueryFactory,
     NotSupported,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 
 import invariant from "ts-invariant";
@@ -56,6 +57,9 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        organization(organizationId: string): IOrganization {
+            return primaryBackend.organization(organizationId);
         },
         currentUser(): IUserService {
             return primaryBackend.currentUser();

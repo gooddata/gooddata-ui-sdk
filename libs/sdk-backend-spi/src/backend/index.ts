@@ -6,6 +6,7 @@ import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace";
 import { IUserService } from "../user";
 import { NotAuthenticated } from "../errors";
 import { IBackendCapabilities } from "./capabilities";
+import { IOrganization } from "../organization";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -116,6 +117,12 @@ export interface IAnalyticalBackend {
      * @returns promise of the completed process, or rejection if deauthentication failed.
      */
     deauthenticate(): Promise<void>;
+
+    /**
+     * Returns an organization available on the backend.
+     * @param organizationId - unique ID of the organization
+     */
+    organization(organizationId: string): IOrganization;
 
     /**
      * Returns a service for interacting with the currently authenticated user.

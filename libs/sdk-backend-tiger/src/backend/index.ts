@@ -14,6 +14,8 @@ import {
     NotAuthenticated,
     IAuthenticationContext,
     isNotAuthenticated,
+    IOrganization,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -137,6 +139,23 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public deauthenticate(): Promise<void> {
         return Promise.resolve();
+    }
+
+    public organization(organizationId: string): IOrganization {
+        return {
+            organizationId,
+            securitySettings: () => ({
+                isUrlValid: (url: string, context: ValidationContext) => {
+                    // eslint-disable-next-line no-console
+                    console.warn(
+                        "'isUrlValid' function is not supported by Tiger backend, false is returned for parameters:",
+                        url,
+                        context,
+                    );
+                    return Promise.resolve(false);
+                },
+            }),
+        };
     }
 
     public currentUser(): IUserService {

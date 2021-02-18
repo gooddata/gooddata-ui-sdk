@@ -219,6 +219,7 @@ export interface IAnalyticalBackend {
     deauthenticate(): Promise<void>;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
+    organization(organizationId: string): IOrganization;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
@@ -1168,6 +1169,13 @@ export interface IObjectExpressionToken {
 }
 
 // @public
+export interface IOrganization {
+    // (undocumented)
+    readonly organizationId: string;
+    securitySettings(): ISecuritySettingsService;
+}
+
+// @public
 export interface IPagedResource<TItem> {
     // (undocumented)
     readonly items: TItem[];
@@ -1346,6 +1354,11 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+
+// @public
+export interface ISecuritySettingsService {
+    isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
+}
 
 // @public
 export interface ISeparators {
@@ -2030,6 +2043,9 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly responseBody: unknown;
 }
+
+// @public
+export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
 export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);

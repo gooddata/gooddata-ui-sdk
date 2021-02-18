@@ -21,6 +21,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
 // @internal (undocumented)
 export type CatalogRecording = {
@@ -119,6 +120,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     globalPalette?: IColorPalette;
     theme?: ITheme;
     useRefType?: RecordedRefType;
+    securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
 };
 
 // @internal
@@ -157,10 +159,12 @@ export type ScenarioRecording = {
 };
 
 // @internal (undocumented)
+export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;
+
+// @internal (undocumented)
 export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
-
 
 // (No @packageDocumentation comment for this package)
 
