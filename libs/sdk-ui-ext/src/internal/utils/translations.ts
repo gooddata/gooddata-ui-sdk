@@ -1,6 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IntlShape } from "react-intl";
+import merge from "lodash/merge";
 import { translationUtils } from "@gooddata/util";
+import { messagesMap as sdkUiTranslations } from "@gooddata/sdk-ui";
+
 import enUS from "../translations/en-US.json";
 import deDE from "../translations/de-DE.json";
 import esES from "../translations/es-ES.json";
@@ -27,10 +30,7 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
     });
 }
 
-/**
- * @internal
- */
-export const translations: { [locale: string]: Record<string, string> } = {
+const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
     "es-ES": esES,
@@ -41,3 +41,11 @@ export const translations: { [locale: string]: Record<string, string> } = {
     "pt-PT": ptPT,
     "zh-Hans": zhHans,
 };
+
+/**
+ * @internal
+ */
+export const translations: { [locale: string]: Record<string, string> } = merge(
+    sdkUiTranslations, // we use also some of the sdk-ui strings here so we need to merge them in here
+    sdkUiExtTranslations,
+);
