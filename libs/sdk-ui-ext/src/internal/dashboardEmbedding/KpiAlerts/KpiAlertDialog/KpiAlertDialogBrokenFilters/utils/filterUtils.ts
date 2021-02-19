@@ -6,7 +6,7 @@ interface ILabelFilterData {
     selection: string;
     isDate: boolean;
     isAllSelected: boolean;
-    selectionSize: number;
+    selectionSize: number | null;
 }
 
 export function getFilterLabelFilter(item: IBrokenAlertFilter): ILabelFilterData {

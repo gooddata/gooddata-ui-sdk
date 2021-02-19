@@ -29,7 +29,7 @@ function getNodeDocumentRelativeOffsetTop(node: HTMLDivElement): number {
     // Get document-relative position by adding viewport scroll to viewport-relative gBCR
     const rect = node.getBoundingClientRect();
     const win = node.ownerDocument.defaultView;
-    return rect.top + win.pageYOffset;
+    return rect.top + (win?.pageYOffset ?? 0);
 }
 
 export interface IDashboardItemWithKpiAlertProps {
@@ -67,9 +67,9 @@ export interface IDashboardItemWithKpiAlertProps {
      */
     suppressAlertTriggered?: boolean;
 
-    children?: (params: { clientWidth: number }) => React.ReactNode;
-    renderHeadline?: () => React.ReactNode;
-    renderAlertDialog?: () => React.ReactNode;
+    children: (params: { clientWidth: number }) => React.ReactNode;
+    renderHeadline: () => React.ReactNode;
+    renderAlertDialog: () => React.ReactNode;
 }
 
 interface IDashboardItemWithKpiAlertState {
@@ -154,10 +154,13 @@ export class DashboardItemWithKpiAlert extends Component<
         }, timeout);
     }
 
-    clearUpdatingTimeout(name: string = null): void {
-        if (this.timeouts[name]) {
+    clearUpdatingTimeout(name?: string): void {
+        if (name && this.timeouts[name]) {
             clearTimeout(this.timeouts[name]);
             delete this.timeouts[name];
+        } else {
+            Object.keys(this.timeouts).forEach((key) => clearTimeout(this.timeouts[key]));
+            this.timeouts = {};
         }
     }
 
@@ -180,7 +183,7 @@ export class DashboardItemWithKpiAlert extends Component<
     renderAlertBox = (): React.ReactNode => {
         const isAlertingTemporarilyDisabled = isAlertingTemporarilyDisabledForGivenFilter(
             this.props.kpi,
-            this.props.filters,
+            this.props.filters!,
             this.props.userWorkspaceSettings,
         );
 

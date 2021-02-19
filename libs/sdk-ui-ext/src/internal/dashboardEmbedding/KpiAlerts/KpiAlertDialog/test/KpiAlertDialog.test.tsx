@@ -11,11 +11,11 @@ const DEFAULT_DATE_FORMAT = "MM/dd/yyyy";
 
 const defaultProps: IKpiAlertDialogProps = {
     dateFormat: DEFAULT_DATE_FORMAT,
-    onAlertDialogCloseClick: noop as any,
-    onAlertDialogDeleteClick: noop as any,
-    onAlertDialogSaveClick: noop as any,
-    onAlertDialogUpdateClick: noop as any,
-    onApplyAlertFiltersClick: noop as any,
+    onAlertDialogCloseClick: noop,
+    onAlertDialogDeleteClick: noop,
+    onAlertDialogSaveClick: noop,
+    onAlertDialogUpdateClick: noop,
+    onApplyAlertFiltersClick: noop,
     userEmail: "user@gooddata.com",
 };
 
