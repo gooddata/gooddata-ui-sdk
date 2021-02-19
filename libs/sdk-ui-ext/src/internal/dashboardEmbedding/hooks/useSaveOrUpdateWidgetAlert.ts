@@ -13,7 +13,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -60,15 +60,8 @@ export function useSaveOrUpdateWidgetAlert({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useSaveOrUpdateWidgetAlert must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useSaveOrUpdateWidgetAlert must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useSaveOrUpdateWidgetAlert");
+    workspaceInvariant(effectiveWorkspace, "useSaveOrUpdateWidgetAlert");
 
     const promise = widgetAlert
         ? () =>

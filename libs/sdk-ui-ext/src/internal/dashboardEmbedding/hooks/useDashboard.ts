@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -9,8 +9,8 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { dashboardDataLoaderFactory } from "./dataLoaders";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -56,15 +56,8 @@ export function useDashboard({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useDashboard");
+    workspaceInvariant(effectiveWorkspace, "useDashboard");
 
     const loader = dashboardDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getDashboard(effectiveBackend, dashboard);

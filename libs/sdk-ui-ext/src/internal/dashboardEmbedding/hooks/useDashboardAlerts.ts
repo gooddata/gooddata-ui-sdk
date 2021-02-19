@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -9,8 +9,8 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { dashboardAlertsDataLoaderFactory } from "./dataLoaders";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -57,15 +57,8 @@ export function useDashboardAlerts({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useDashboardAlerts must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useDashboardAlerts");
+    workspaceInvariant(effectiveWorkspace, "useDashboardAlerts");
 
     const loader = dashboardAlertsDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getDashboardAlerts(effectiveBackend, dashboard);

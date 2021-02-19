@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend, IUser } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -7,7 +7,7 @@ import {
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { backendInvariant } from "./utils";
 
 /**
  * @beta
@@ -37,10 +37,7 @@ export function useCurrentUser({
 }: IUseCurrentUserConfig): UseCancelablePromiseState<IUser, any> {
     const effectiveBackend = useBackend(backend);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useCurrentUser must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useCurrentUser");
 
     const promise = () => effectiveBackend.currentUser().getUser();
 

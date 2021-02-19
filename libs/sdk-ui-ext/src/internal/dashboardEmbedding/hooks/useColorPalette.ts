@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import {
@@ -9,8 +9,8 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
 import { colorPaletteDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -51,15 +51,8 @@ export function useColorPalette({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useColorPalette must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useColorPalette must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useColorPalette");
+    workspaceInvariant(effectiveWorkspace, "useColorPalette");
 
     const loader = colorPaletteDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getColorPalette(effectiveBackend);
