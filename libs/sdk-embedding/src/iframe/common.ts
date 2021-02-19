@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import isObject from "lodash/isObject";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
@@ -78,7 +78,7 @@ export type GdcMessageEventListener = (event: IGdcMessageEvent<string, string, a
  */
 export interface IGdcMessageEventListenerConfig {
     /**
-     * The product name where the postmessages are sent/received
+     * The product name where the post messages are sent/received
      */
     product: string;
 

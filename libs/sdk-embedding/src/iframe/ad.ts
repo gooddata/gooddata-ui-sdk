@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isObject from "lodash/isObject";
 import {
     CommandFailed,
@@ -271,7 +271,7 @@ export namespace EmbeddedAnalyticalDesigner {
     //
 
     /**
-     * Contain the information to contruct the AD url to open an insight editor
+     * Contain the information to construct the AD url to open an insight editor
      *
      * @public
      */
