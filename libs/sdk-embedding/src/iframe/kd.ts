@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import isObject from "lodash/isObject";
 import {
     IGdcMessageEvent,
@@ -244,12 +244,12 @@ export namespace EmbeddedKpiDashboard {
         ScheduleEmailDialogOpened = "scheduleEmailDialogOpened",
 
         /**
-         * The event that is emmited once setFilterParents command is successfull
+         * The event that is emitted once setFilterParents command is successful
          */
         SetFilterParentsFinished = "setFilterParentsFinished",
 
         /**
-         * The event that is emmited if setFilterParents command is not sucessfull it contains `SetFilterParentsErrorCode`
+         * The event that is emitted if setFilterParents command is not successful it contains `SetFilterParentsErrorCode`
          */
         SetFilterParentsFailed = "setFilterParentsFailed",
 
@@ -843,7 +843,12 @@ export namespace EmbeddedKpiDashboard {
      */
     export type SwitchedToViewData = IGdcKdMessageEnvelope<GdcKdEventType.SwitchedToView, IDashboardBody>;
 
-    export interface IPlaformBody {
+    /**
+     * @deprecated use IPlatformBody instead
+     */
+    export type IPlaformBody = IPlatformBody;
+
+    export interface IPlatformBody {
         status?: string;
         errorCode?: number;
         description?: string;
@@ -851,8 +856,14 @@ export namespace EmbeddedKpiDashboard {
 
     /**
      * @public
+     * @deprecated use PlatformData instead
      */
     export type PlaformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlaformBody>;
+
+    /**
+     * @public
+     */
+    export type PlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlatformBody>;
 
     /**
      * @public
@@ -1199,7 +1210,7 @@ export namespace EmbeddedKpiDashboard {
     >;
 
     /**
-     * Error type within AppCommandFailed event body when setFilterParents command is not successfull
+     * Error type within AppCommandFailed event body when setFilterParents command is not successful
      *
      * @public
      */

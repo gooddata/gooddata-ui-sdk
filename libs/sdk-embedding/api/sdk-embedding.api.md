@@ -492,8 +492,10 @@ export namespace EmbeddedKpiDashboard {
     export interface INoPermissionsBody {
         reason: string;
     }
+    // @deprecated (undocumented)
+    export type IPlaformBody = IPlatformBody;
     // (undocumented)
-    export interface IPlaformBody {
+    export interface IPlatformBody {
         // (undocumented)
         description?: string;
         // (undocumented)
@@ -559,8 +561,10 @@ export namespace EmbeddedKpiDashboard {
     export type OpenScheduleEmailDialogCommand = IGdcKdMessageEvent<GdcKdCommandType.OpenScheduleEmailDialog, null>;
     // (undocumented)
     export type OpenScheduleEmailDialogCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.OpenScheduleEmailDialog, null>;
-    // (undocumented)
+    // @deprecated (undocumented)
     export type PlaformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlaformBody>;
+    // (undocumented)
+    export type PlatformData = IGdcKdMessageEnvelope<GdcKdEventType.Platform, IPlatformBody>;
     export type RemoveFilterContextCommand = IGdcKdMessageEvent<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
     export type RemoveFilterContextCommandData = IGdcKdMessageEnvelope<GdcKdCommandType.RemoveFilterContext, EmbeddedGdc.IRemoveFilterContextContent>;
     export type RemoveFilterContextFinishedData = IGdcKdMessageEnvelope<GdcKdEventType.RemoveFilterContextFinished, IKdAvailableCommands>;
