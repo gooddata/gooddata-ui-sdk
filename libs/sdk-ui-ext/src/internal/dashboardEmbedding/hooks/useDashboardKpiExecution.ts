@@ -17,9 +17,9 @@ import {
     useExecution,
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
 import compact from "lodash/compact";
 import { useKpiData } from "../DashboardView/KpiView/utils";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -46,15 +46,8 @@ export function useKpiExecution(
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useKpiExecution must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useKpiExecution must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useKpiExecution");
+    workspaceInvariant(effectiveWorkspace, "useKpiExecution");
 
     const { result, status, error } = useKpiData(config);
     const execution = useExecution({

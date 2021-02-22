@@ -16,11 +16,11 @@ import {
     UnexpectedSdkError,
 } from "@gooddata/sdk-ui";
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { useDashboard } from "./useDashboard";
 import { useKpiExecution } from "./useDashboardKpiExecution";
 import { useInsightExecution } from "./useDashboardInsightExecution";
 import { useDashboardViewLayout } from "./useDashboardViewLayout";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @alpha
@@ -73,15 +73,8 @@ export function useDashboardWidgetExecution({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useWidgetExecution must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useWidgetExecution must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useDashboardWidgetExecution");
+    workspaceInvariant(effectiveWorkspace, "useDashboardWidgetExecution");
 
     const { result: dashboardResult, status: dashboardStatus, error: dashboardError } = useDashboard({
         dashboard,

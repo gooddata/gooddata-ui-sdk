@@ -12,42 +12,12 @@ import {
     isRelativeDateFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
-import {
-    DateFilterGranularity,
-    IAbsoluteDateFilterPreset,
-    IDashboardDateFilter,
-    IRelativeDateFilterPreset,
-} from "@gooddata/sdk-backend-spi";
+import { DateFilterGranularity, IDashboardDateFilter } from "@gooddata/sdk-backend-spi";
 
 export type KpiAlertTranslationData = {
     rangeText: string;
     intlIdRoot: string;
 } | null;
-
-export function dashboardDateFilterToPreset(
-    filter: IDashboardDateFilter,
-): IRelativeDateFilterPreset | IAbsoluteDateFilterPreset {
-    if (filter.dateFilter.type === "absolute") {
-        const result: IAbsoluteDateFilterPreset = {
-            localIdentifier: "",
-            type: "absolutePreset",
-            visible: true,
-            from: filter.dateFilter.from?.toString(),
-            to: filter.dateFilter.to?.toString(),
-        };
-        return result;
-    } else {
-        const result: IRelativeDateFilterPreset = {
-            localIdentifier: "",
-            type: "relativePreset",
-            visible: true,
-            granularity: filter.dateFilter.granularity,
-            from: Number.parseInt(filter.dateFilter.from?.toString() ?? "0", 10),
-            to: Number.parseInt(filter.dateFilter.to?.toString() ?? "0", 10),
-        };
-        return result;
-    }
-}
 
 interface IRelativeDateFilterMeta extends IRelativeDateFilterValues {
     type: "relative";

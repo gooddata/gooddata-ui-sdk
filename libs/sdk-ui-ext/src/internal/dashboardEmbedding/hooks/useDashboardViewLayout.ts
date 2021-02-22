@@ -15,9 +15,9 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { insightDataLoaderFactory } from "../../../dataLoaders";
 import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -72,15 +72,8 @@ export const useDashboardViewLayout = ({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useDashboardViewLayout must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useDashboardViewLayout must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useDashboardViewLayout");
+    workspaceInvariant(effectiveWorkspace, "useDashboardViewLayout");
 
     const promise = dashboardLayout
         ? async () => {

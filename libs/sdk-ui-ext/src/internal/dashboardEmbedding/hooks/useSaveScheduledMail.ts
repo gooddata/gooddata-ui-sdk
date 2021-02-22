@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     IAnalyticalBackend,
     IFilterContextDefinition,
@@ -13,7 +13,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -67,15 +67,8 @@ export function useSaveScheduledMail({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useSaveScheduledMail must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useSaveScheduledMail must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useSaveScheduledMail");
+    workspaceInvariant(effectiveWorkspace, "useSaveScheduledMail");
 
     const promise = scheduledMail
         ? () =>

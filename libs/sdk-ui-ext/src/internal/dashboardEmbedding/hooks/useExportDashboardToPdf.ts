@@ -8,9 +8,9 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
 import { IDashboardFilter } from "../types";
 import { dashboardFilterToFilterContextItem } from "../utils/filters";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -64,15 +64,8 @@ export function useExportDashboardToPdf({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useExportDashboardToPdf must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useExportDashboardToPdf must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useExportDashboardToPdf");
+    workspaceInvariant(effectiveWorkspace, "useExportDashboardToPdf");
 
     const promise = dashboard
         ? () =>

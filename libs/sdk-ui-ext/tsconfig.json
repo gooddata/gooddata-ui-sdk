@@ -12,6 +12,7 @@
         "esModuleInterop": true,
         "importHelpers": true,
         "noImplicitAny": true,
+        "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "outDir": "dist",

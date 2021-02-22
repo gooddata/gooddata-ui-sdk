@@ -47,7 +47,7 @@ export function DashboardLayout<TCustomContent = IDashboardViewLayoutContent>(
     const {
         layout,
         rowRenderer = DashboardLayoutRowRenderer,
-        rowHeaderRenderer,
+        rowHeaderRenderer = DashboardLayoutRowHeaderRenderer,
         rowKeyGetter,
         columnRenderer = DashboardLayoutColumnRenderer,
         columnKeyGetter,

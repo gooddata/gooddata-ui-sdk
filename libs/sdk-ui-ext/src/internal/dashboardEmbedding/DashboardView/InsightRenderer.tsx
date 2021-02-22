@@ -74,14 +74,9 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     const [possibleDrills, setPossibleDrills] = useState<IAvailableDrillTargetAttribute[]>([]);
     const [visualizationError, setVisualizationError] = useState<GoodDataSdkError | null>(null);
 
-    const handleLoadingChanged = useCallback<OnLoadingChanged>(
-        ({ isLoading }) => {
-            if (isLoading !== isVisualizationLoading) {
-                setIsVisualizationLoading(isLoading);
-            }
-        },
-        [isVisualizationLoading],
-    );
+    const handleLoadingChanged = useCallback<OnLoadingChanged>(({ isLoading }) => {
+        setIsVisualizationLoading(isLoading);
+    }, []);
 
     const handleError = useCallback<OnError>(
         (error) => {

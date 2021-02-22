@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -8,8 +8,8 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
 import { userWorkspacePermissionsDataLoaderFactory } from "./dataLoaders";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -50,15 +50,8 @@ export function useUserWorkspacePermissions({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useUserWorkspacePermissions must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useUserWorkspacePermissions must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useUserWorkspacePermissions");
+    workspaceInvariant(effectiveWorkspace, "useUserWorkspacePermissions");
 
     const loader = userWorkspacePermissionsDataLoaderFactory.forWorkspace(effectiveWorkspace);
     const promise = () => loader.getUserWorkspacePermissions(effectiveBackend);

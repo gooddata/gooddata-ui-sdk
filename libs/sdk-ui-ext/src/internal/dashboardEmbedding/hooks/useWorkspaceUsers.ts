@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IAnalyticalBackend, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -8,7 +8,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import invariant from "ts-invariant";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -55,15 +55,8 @@ export function useWorkspaceUsers({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useDashboard must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useDashboard must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useWorkspaceUsers");
+    workspaceInvariant(effectiveWorkspace, "useWorkspaceUsers");
 
     const promise = () => {
         let loader = effectiveBackend.workspace(effectiveWorkspace).users();

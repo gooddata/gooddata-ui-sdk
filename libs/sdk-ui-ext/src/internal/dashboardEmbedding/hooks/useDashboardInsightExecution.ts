@@ -17,9 +17,9 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
-import invariant from "ts-invariant";
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
 import { IDashboardFilter } from "../types";
+import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
  * @beta
@@ -47,15 +47,8 @@ export function useInsightExecution(
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    invariant(
-        effectiveBackend,
-        "The backend in useInsightExecution must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
-    );
-
-    invariant(
-        effectiveWorkspace,
-        "The workspace in useInsightExecution must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
-    );
+    backendInvariant(effectiveBackend, "useInsightExecution");
+    workspaceInvariant(effectiveWorkspace, "useInsightExecution");
 
     const promise =
         insight && insightWidget
