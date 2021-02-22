@@ -24,7 +24,7 @@ _common-build() {
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm"
+    concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
 }
 
 build-dev() {

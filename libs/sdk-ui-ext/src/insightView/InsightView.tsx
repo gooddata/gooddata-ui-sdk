@@ -240,7 +240,7 @@ export const IntlInsightView = withContexts(injectIntl(InsightViewCore));
  *
  * @public
  */
-export class InsightView extends React.Component<IInsightViewProps, IInsightViewState> {
+export class InsightView extends React.Component<IInsightViewProps> {
     public render(): React.ReactNode {
         return (
             <IntlWrapper locale={this.props.locale}>
