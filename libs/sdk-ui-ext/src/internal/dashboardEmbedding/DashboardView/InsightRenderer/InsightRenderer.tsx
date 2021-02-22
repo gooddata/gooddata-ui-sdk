@@ -27,17 +27,17 @@ import {
     useCancelablePromise,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
-import { InsightError } from "../../../insightView/InsightError";
+import { InsightRenderer as InsightRendererImpl } from "../../../../insightView/InsightRenderer";
+import { InsightError } from "../../../../insightView/InsightError";
 import { widgetDrillsToDrillPredicates, insightDrillDownPredicates } from "./drillingUtils";
-import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
 import { addImplicitAllTimeFilter } from "./utils";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import {
     useAttributesWithDrillDown,
     useColorPalette,
     useDashboardViewConfig,
     useUserWorkspaceSettings,
-} from "./contexts";
+} from "../contexts";
 
 interface IInsightRendererProps {
     insightWidget: IInsightWidget;
