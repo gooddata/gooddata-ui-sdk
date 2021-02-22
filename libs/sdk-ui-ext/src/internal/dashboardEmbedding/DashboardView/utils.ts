@@ -1,24 +1,8 @@
 // (C) 2020-2021 GoodData Corporation
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
-import {
-    areObjRefsEqual,
-    filterObjRef,
-    IFilter,
-    isDateFilter,
-    newAllTimeFilter,
-    ObjRef,
-} from "@gooddata/sdk-model";
+import { IFilter, newAllTimeFilter } from "@gooddata/sdk-model";
 import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
-
-export function hasDateFilterForDateDataset(filters: IFilter[], dateDataset: ObjRef): boolean {
-    return filters.some((filter) => {
-        if (!isDateFilter(filter)) {
-            return false;
-        }
-
-        return areObjRefsEqual(filterObjRef(filter), dateDataset);
-    });
-}
+import { hasDateFilterForDateDataset } from "../utils/filters";
 
 export function addImplicitAllTimeFilter(widget: IWidgetDefinition, resolvedFilters: IFilter[]): IFilter[] {
     // if the widget is connected to a dateDataset and has no date filters for it in the context,

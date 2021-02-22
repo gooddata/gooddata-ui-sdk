@@ -10,6 +10,7 @@ import {
     isDashboardDateFilter,
     isDashboardDateFilterReference,
     IWidgetDefinition,
+    IDashboard,
 } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -21,6 +22,8 @@ import {
     filterObjRef,
     isAttributeFilter,
     ObjRef,
+    IFilter,
+    isDateFilter,
 } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "../types";
 
@@ -129,4 +132,29 @@ export function isDateFilterIrrelevant(widget: IWidgetDefinition): boolean {
     // now dataSetRef is cleaned
     const checkboxEnabled = !!dateDataSetRef;
     return !checkboxEnabled || ignoredOldWay;
+}
+
+/**
+ * Gets filters merged with the filters provided by the specified dashboard.
+ *
+ * @param dashboard - dashboard to get the filters from
+ * @param additionalFilters - filters to apply on top of the filters from the dashboard
+ * @alpha
+ */
+export function mergeFiltersWithDashboard(
+    dashboard: IDashboard | undefined,
+    additionalFilters: Array<IDashboardFilter | FilterContextItem>,
+): FilterContextItem[] {
+    const sanitizedAdditionalFilters = filterArrayToFilterContextItems(additionalFilters ?? []);
+    return [...(dashboard?.filterContext?.filters ?? []), ...sanitizedAdditionalFilters];
+}
+
+export function hasDateFilterForDateDataset(filters: IFilter[], dateDataset: ObjRef): boolean {
+    return filters.some((filter) => {
+        if (!isDateFilter(filter)) {
+            return false;
+        }
+
+        return areObjRefsEqual(filterObjRef(filter), dateDataset);
+    });
 }

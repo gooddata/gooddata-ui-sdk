@@ -8,8 +8,7 @@ export {
     ScheduledMailDialogRenderer,
 } from "./ScheduledMail";
 export { DashboardView, IDashboardViewProps, defaultThemeModifier } from "./DashboardView";
-export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
-export { isDateFilterIrrelevant } from "./utils/filters";
+export { isDateFilterIrrelevant, mergeFiltersWithDashboard } from "./utils/filters";
 export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";
 export { useDashboardPdfExporter } from "./hooks/convenience/useDashboardPdfExporter";
 export { clearDashboardViewCaches } from "./hooks/dataLoaders";
