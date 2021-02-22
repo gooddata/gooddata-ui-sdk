@@ -18,7 +18,7 @@ import {
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
-import { useKpiData } from "../DashboardView/KpiView/utils";
+import { useKpiData } from "./useKpiData";
 import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**

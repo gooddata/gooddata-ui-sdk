@@ -7,13 +7,7 @@ export {
     IScheduledMailDialogRendererOwnProps,
     ScheduledMailDialogRenderer,
 } from "./ScheduledMail";
-export {
-    DashboardView,
-    IDashboardViewProps,
-    IKpiViewProps,
-    KpiView,
-    defaultThemeModifier,
-} from "./DashboardView";
+export { DashboardView, IDashboardViewProps, defaultThemeModifier } from "./DashboardView";
 export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
 export { isDateFilterIrrelevant } from "./utils/filters";
 export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";

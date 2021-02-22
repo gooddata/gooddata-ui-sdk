@@ -22,9 +22,9 @@ import {
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
 
-import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../contexts";
+import { useKpiData } from "../../hooks/useKpiData";
 import { IDashboardFilter } from "../../types";
 
 export interface IKpiViewProps {
