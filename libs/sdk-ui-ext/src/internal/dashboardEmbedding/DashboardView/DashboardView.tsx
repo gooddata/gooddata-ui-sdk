@@ -11,19 +11,21 @@ import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
 import { useUserWorkspaceSettings } from "../hooks/useUserWorkspaceSettings";
 import { useColorPalette } from "../hooks/useColorPalette";
-import { DashboardViewConfigProvider } from "./DashboardViewConfigContext";
-import { UserWorkspaceSettingsProvider } from "./UserWorkspaceSettingsContext";
-import { ColorPaletteProvider } from "./ColorPaletteContext";
+import {
+    AttributesWithDrillDownProvider,
+    ColorPaletteProvider,
+    DashboardAlertsProvider,
+    DashboardViewConfigProvider,
+    DashboardViewIsReadOnlyProvider,
+    UserWorkspaceSettingsProvider,
+} from "./contexts";
 import { defaultThemeModifier } from "./defaultThemeModifier";
 import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
-import { AttributesWithDrillDownProvider } from "./AttributesWithDrillDownContext";
 import { useAttributesWithDrillDown } from "../hooks/useAttributesWithDrillDown";
 import { useDashboardViewLayout } from "../hooks/useDashboardViewLayout";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";
-import { DashboardAlertsProvider } from "./DashboardAlertsContext";
 import { filterArrayToFilterContextItems } from "../utils/filters";
-import { DashboardViewIsReadOnlyProvider } from "./DashboardViewIsReadOnlyContext";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,

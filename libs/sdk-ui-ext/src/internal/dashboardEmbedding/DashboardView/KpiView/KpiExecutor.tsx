@@ -52,7 +52,7 @@ import {
 } from "../../KpiAlerts";
 import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "../../utils/filters";
-import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
+import { useUserWorkspaceSettings } from "../contexts";
 
 import {
     IUseAlertManipulationHandlerConfig,

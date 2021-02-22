@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { useDeleteWidgetAlert } from "../../../hooks/useDeleteWidgetAlert";
 import { KpiAlertOperationStatus } from "../../../types";
-import { useAlerts } from "../../DashboardAlertsContext";
+import { useAlerts } from "../../contexts";
 import { IUseAlertManipulationHandlerConfig } from "./types";
 
 export function useAlertDeleteHandler({

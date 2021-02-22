@@ -24,8 +24,7 @@ import invariant from "ts-invariant";
 
 import { useKpiData } from "./utils";
 import { KpiExecutor } from "./KpiExecutor";
-import { useDashboardViewConfig } from "../DashboardViewConfigContext";
-import { useDashboardViewIsReadOnly } from "../DashboardViewIsReadOnlyContext";
+import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../contexts";
 import { IDashboardFilter } from "../../types";
 
 export interface IKpiViewProps {
