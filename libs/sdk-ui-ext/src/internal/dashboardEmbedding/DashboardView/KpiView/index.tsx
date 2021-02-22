@@ -24,10 +24,10 @@ import invariant from "ts-invariant";
 
 import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../contexts";
-import { useKpiData } from "../../hooks/useKpiData";
+import { useKpiData } from "../../hooks/internal";
 import { IDashboardFilter } from "../../types";
 
-export interface IKpiViewProps {
+interface IKpiViewProps {
     /**
      * Ref to the dashboard this KPI is part of.
      */

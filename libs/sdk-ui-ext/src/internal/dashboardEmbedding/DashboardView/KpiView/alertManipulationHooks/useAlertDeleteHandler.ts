@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { useState } from "react";
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
-import { useDeleteWidgetAlert } from "../../../hooks/useDeleteWidgetAlert";
+import { useDeleteWidgetAlert } from "../../../hooks/internal";
 import { KpiAlertOperationStatus } from "../../../types";
 import { useAlerts } from "../../contexts";
 import { IUseAlertManipulationHandlerConfig } from "./types";

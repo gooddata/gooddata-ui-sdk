@@ -3,10 +3,7 @@ import flatMap from "lodash/flatMap";
 import { IAnalyticalBackend, ICatalogAttribute, ICatalogDateAttribute } from "@gooddata/sdk-backend-spi";
 import { dataLoaderAbstractFactory } from "../../../../dataLoaders/DataLoaderAbstractFactory";
 
-/**
- * @internal
- */
-export interface IAttributesWithDrillDownDataLoader {
+interface IAttributesWithDrillDownDataLoader {
     /**
      * Obtains all catalog attributes with a drill down specified.
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend

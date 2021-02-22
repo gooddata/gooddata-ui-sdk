@@ -17,14 +17,11 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
-import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
-import { IDashboardFilter } from "../types";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
+import { IDashboardFilter } from "../../types";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseInsightExecutionConfig
+interface IUseInsightExecutionConfig
     extends UseCancelablePromiseCallbacks<IPreparedExecution | undefined, GoodDataSdkError> {
     insightWidget?: IInsightWidget;
     insight?: IInsight;
@@ -38,17 +35,17 @@ export interface IUseInsightExecutionConfig
 /**
  * Hook allowing to get execution for particular insight widget.
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useInsightExecution(
+export function useDashboardInsightExecution(
     config: IUseInsightExecutionConfig,
 ): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError> {
     const { backend, workspace, insightWidget, insight, filters, filterContext } = config;
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useInsightExecution");
-    workspaceInvariant(effectiveWorkspace, "useInsightExecution");
+    backendInvariant(effectiveBackend, "useDashboardInsightExecution");
+    workspaceInvariant(effectiveWorkspace, "useDashboardInsightExecution");
 
     const promise =
         insight && insightWidget

@@ -5,10 +5,7 @@ import { ObjRef, objRefToString } from "@gooddata/sdk-model";
 import { DASHBOARD_CACHE_SIZE } from "./constants";
 import { dataLoaderAbstractFactory } from "../../../../dataLoaders/DataLoaderAbstractFactory";
 
-/**
- * @internal
- */
-export interface IDashboardDataLoader {
+interface IDashboardDataLoader {
     /**
      * Obtains an analyticalDashboard specified by a ref.
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend

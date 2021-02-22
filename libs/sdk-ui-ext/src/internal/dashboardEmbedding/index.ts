@@ -5,10 +5,7 @@
  */
 
 // Hooks and data loading
-export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
-export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
-export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";
-export { useDashboardPdfExporter } from "./hooks/convenience/useDashboardPdfExporter";
+export * from "./hooks";
 export { clearDashboardViewCaches } from "./hooks/dataLoaders"; // TODO RAIL-2956 merge with other data loaders once moving to non internal
 
 // DashboardView itself

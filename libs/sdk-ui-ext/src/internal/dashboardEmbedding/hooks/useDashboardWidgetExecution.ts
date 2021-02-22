@@ -17,9 +17,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { useDashboard } from "./useDashboard";
-import { useKpiExecution } from "./useDashboardKpiExecution";
-import { useInsightExecution } from "./useDashboardInsightExecution";
-import { useDashboardViewLayout } from "./useDashboardViewLayout";
+import { useDashboardViewLayout, useDashboardInsightExecution, useDashboardKpiExecution } from "./internal";
 import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
@@ -111,7 +109,7 @@ export function useDashboardWidgetExecution({
     const kpiWidget = widget?.type === "kpi" ? widget : undefined;
     const insightWidget = widget?.type === "insight" ? widget : undefined;
 
-    const kpiExecution = useKpiExecution({
+    const kpiExecution = useDashboardKpiExecution({
         kpiWidget,
         filterContext: dashboardResult?.filterContext,
         filters,
@@ -119,7 +117,7 @@ export function useDashboardWidgetExecution({
         workspace: effectiveWorkspace,
     });
 
-    const insightExecution = useInsightExecution({
+    const insightExecution = useDashboardInsightExecution({
         insightWidget,
         insight: dashboardViewLayoutResult?.getInsightByRef(insightWidget?.insight),
         filters,

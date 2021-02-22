@@ -82,7 +82,7 @@ export interface IRecipientsSelectRendererOwnProps {
     canListUsersInProject?: boolean;
 }
 
-export type IRecipientsSelectRendererProps = IRecipientsSelectRendererOwnProps & WrappedComponentProps;
+type IRecipientsSelectRendererProps = IRecipientsSelectRendererOwnProps & WrappedComponentProps;
 
 class RecipientsSelectRendererUI extends React.PureComponent<IRecipientsSelectRendererProps> {
     private recipientRef = React.createRef<HTMLDivElement>();

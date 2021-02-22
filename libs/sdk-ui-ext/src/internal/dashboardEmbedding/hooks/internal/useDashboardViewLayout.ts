@@ -15,9 +15,9 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
-import { insightDataLoaderFactory } from "../../../dataLoaders";
-import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { insightDataLoaderFactory } from "../../../../dataLoaders";
+import { DashboardViewLayoutWidgetClass } from "../../DashboardLayout/interfaces/dashboardLayoutSizing";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
 /**
  * @beta

@@ -8,14 +8,11 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { IDashboardFilter } from "../types";
-import { dashboardFilterToFilterContextItem } from "../utils/filters";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { IDashboardFilter } from "../../types";
+import { dashboardFilterToFilterContextItem } from "../../utils/filters";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseExportDashboardToPdfConfig
+interface IUseExportDashboardToPdfConfig
     extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
     /**
      * Reference to the dashboard to export.
@@ -48,7 +45,7 @@ export interface IUseExportDashboardToPdfConfig
 /**
  * Hook allowing to export a dashboard to a PDF
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
 export function useExportDashboardToPdf({
     dashboard,

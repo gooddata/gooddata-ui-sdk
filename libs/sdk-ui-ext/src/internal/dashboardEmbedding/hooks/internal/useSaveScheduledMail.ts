@@ -13,12 +13,9 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseSaveScheduledMailConfig
+interface IUseSaveScheduledMailConfig
     extends UseCancelablePromiseCallbacks<IScheduledMail, GoodDataSdkError> {
     /**
      * Definition of the scheduled email to save.
@@ -51,7 +48,7 @@ export interface IUseSaveScheduledMailConfig
 /**
  * Hook allowing to schedule email
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
 export function useSaveScheduledMail({
     scheduledMail,

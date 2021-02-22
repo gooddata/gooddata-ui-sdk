@@ -12,10 +12,10 @@ import {
 } from "../ScheduledMailDialogRenderer";
 import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
-import { useWorkspaceUsers } from "../../../hooks/useWorkspaceUsers";
+import { useWorkspaceUsers } from "../../../hooks/internal";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
-jest.mock("../../../hooks/useWorkspaceUsers", () => ({
+jest.mock("../../../hooks/internal/useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
         status: "success",
         result: [],

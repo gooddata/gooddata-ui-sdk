@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,17 +8,13 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseWorkspaceUsersConfig
-    extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
+interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbacks<void, GoodDataSdkError> {
     /**
-     *  Option to filter users by the provided string.
+     * Widget alert to delete.
      */
-    search?: string;
+    widgetAlert?: IWidgetAlert;
 
     /**
      * Backend to work with.
@@ -38,12 +34,12 @@ export interface IUseWorkspaceUsersConfig
 }
 
 /**
- * Hook allowing to download workspace users
+ * Hook allowing to delete a widget alert
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useWorkspaceUsers({
-    search,
+export function useDeleteWidgetAlert({
+    widgetAlert,
     backend,
     workspace,
     onCancel,
@@ -51,24 +47,20 @@ export function useWorkspaceUsers({
     onLoading,
     onPending,
     onSuccess,
-}: IUseWorkspaceUsersConfig): UseCancelablePromiseState<IWorkspaceUser[], any> {
+}: IUseDeleteWidgetAlertConfig): UseCancelablePromiseState<void, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useWorkspaceUsers");
-    workspaceInvariant(effectiveWorkspace, "useWorkspaceUsers");
+    backendInvariant(effectiveBackend, "useDeleteWidgetAlert");
+    workspaceInvariant(effectiveWorkspace, "useDeleteWidgetAlert");
 
-    const promise = () => {
-        let loader = effectiveBackend.workspace(effectiveWorkspace).users();
-        if (search) {
-            loader = loader.withOptions({ search: `%${search}` });
-        }
-        return loader.queryAll();
-    };
+    const promise = widgetAlert
+        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().deleteWidgetAlert(widgetAlert.ref)
+        : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        search,
+        widgetAlert,
     ]);
 }

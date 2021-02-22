@@ -43,8 +43,7 @@ import {
 
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
-import { useCurrentUser } from "../../hooks/useCurrentUser";
-import { useUserWorkspacePermissions } from "../../hooks/useUserWorkspacePermissions";
+import { useCurrentUser, useUserWorkspacePermissions } from "../../hooks/internal";
 import {
     DashboardItemWithKpiAlert,
     evaluateAlertTriggered,
@@ -90,11 +89,7 @@ interface IKpiExecutorProps {
     LoadingComponent: React.ComponentType<ILoadingProps>;
 }
 
-/**
- * Executes the given measures and displays them as KPI
- * @internal
- */
-export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
+const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     dashboardRef,
     kpiWidget,
     primaryMeasure,
@@ -328,6 +323,10 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
     );
 };
 
+/**
+ * Executes the given measures and displays them as KPI
+ * @internal
+ */
 export const KpiExecutor = injectIntl(KpiExecutorCore);
 
 function getSeriesResult(series: IDataSeries | undefined): number | null {
