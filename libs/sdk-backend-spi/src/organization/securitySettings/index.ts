@@ -14,6 +14,11 @@ export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
  */
 export interface ISecuritySettingsService {
     /**
+     * The scope in which is security settings accessed (URI of organization, workspace, user profile).
+     */
+    readonly scope: string;
+
+    /**
      * Validate URL against backend whitelist.
      *
      * @param url - URL for validation.

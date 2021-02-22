@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IAnalyticalBackend,
     IDataView,
@@ -8,9 +8,17 @@ import {
     IWorkspaceCatalog,
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogFactoryOptions,
+    ValidationContext,
+    ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { CatalogDecoratorFactory, decoratedBackend, ExecutionDecoratorFactory } from "../decoratedBackend";
+import {
+    CatalogDecoratorFactory,
+    decoratedBackend,
+    ExecutionDecoratorFactory,
+    SecuritySettingsDecoratorFactory,
+} from "../decoratedBackend";
 import LRUCache from "lru-cache";
+import { DecoratedSecuritySettingsService } from "../decoratedBackend/securitySettings";
 import {
     DecoratedExecutionFactory,
     DecoratedExecutionResult,
@@ -37,10 +45,15 @@ type CatalogCacheEntry = {
     catalogForOptions: LRUCache<string, Promise<IWorkspaceCatalog>>;
 };
 
+type SecuritySettingsCacheEntry = {
+    valid: LRUCache<string, Promise<boolean>>;
+};
+
 type CachingContext = {
     caches: {
         execution?: LRUCache<string, ExecutionCacheEntry>;
         workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
+        securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
     };
     config: CachingConfiguration;
 };
@@ -244,6 +257,54 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
 }
 
 //
+// Organization security settings caching
+//
+
+function validUrlInContextKey(url: string, context: ValidationContext): string {
+    return `${context}_${stringify(url)}`;
+}
+
+class WithSecuritySettingsCaching extends DecoratedSecuritySettingsService {
+    constructor(decorated: ISecuritySettingsService, private readonly ctx: CachingContext) {
+        super(decorated);
+    }
+
+    public isUrlValid = (url: string, context: ValidationContext): Promise<boolean> => {
+        const cache = this.getOrCreateSecuritySettingsEntry(this.scope).valid;
+        const cacheKey = validUrlInContextKey(url, context);
+        let result = cache.get(cacheKey);
+
+        if (!result) {
+            result = super.isUrlValid(url, context).catch((e) => {
+                cache.del(cacheKey);
+                throw e;
+            });
+
+            cache.set(cacheKey, result);
+        }
+
+        return result;
+    };
+
+    private getOrCreateSecuritySettingsEntry = (scope: string): SecuritySettingsCacheEntry => {
+        const cache = this.ctx.caches.securitySettings!;
+        let cacheEntry = cache.get(scope);
+
+        if (!cacheEntry) {
+            cacheEntry = {
+                valid: new LRUCache<string, Promise<boolean>>({
+                    max: this.ctx.config.maxSecuritySettingsOrgUrls,
+                    maxAge: this.ctx.config.maxSecuritySettingsOrgUrlsAge,
+                }),
+            };
+            cache.set(scope, cacheEntry);
+        }
+
+        return cacheEntry;
+    };
+}
+
+//
 //
 //
 
@@ -254,6 +315,10 @@ function cachedExecutions(ctx: CachingContext): ExecutionDecoratorFactory {
 
 function cachedCatalog(ctx: CachingContext): CatalogDecoratorFactory {
     return (original: IWorkspaceCatalogFactory) => new WithCatalogCaching(original, ctx);
+}
+
+function cachedSecuritySettings(ctx: CachingContext): SecuritySettingsDecoratorFactory {
+    return (original: ISecuritySettingsService) => new WithSecuritySettingsCaching(original, ctx);
 }
 
 function cachingEnabled(desiredSize: number | undefined): boolean {
@@ -270,9 +335,14 @@ function cacheControl(ctx: CachingContext): CacheControl {
             ctx.caches.workspaceCatalogs?.reset();
         },
 
+        resetSecuritySettings: () => {
+            ctx.caches.securitySettings?.reset();
+        },
+
         resetAll: () => {
             control.resetExecutions();
             control.resetCatalogs();
+            control.resetSecuritySettings();
         },
     };
 
@@ -302,6 +372,11 @@ export type CacheControl = {
      * Resets all catalog caches.
      */
     resetCatalogs: () => void;
+
+    /**
+     * Resets all organization security settings caches.
+     */
+    resetSecuritySettings: () => void;
 
     /**
      * Convenience method to reset all caches (calls all the particular resets).
@@ -369,7 +444,7 @@ export type CachingConfiguration = {
      * approach is to load entire catalog of all items once and reuse it. If there is chance that your app can create
      * many unique options, then it is better to bound this.
      *
-     * Setting non-negative number here is invalid. If you want to turn off catalog caching, tweak the `maxCatalogs`.
+     * Setting non-positive number here is invalid. If you want to turn off catalog caching, tweak the `maxCatalogs`.
      */
     maxCatalogOptions: number | undefined;
 
@@ -380,7 +455,56 @@ export type CachingConfiguration = {
      * @param cacheControl - cache control instance
      */
     onCacheReady?: (cacheControl: CacheControl) => void;
+
+    /**
+     * Maximum number of organizations that will have its security settings cached. The scope string built by
+     * particular backend implementation from organization ID will be used as cache key.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * security settings organization cache is dangerous in applications with long-lived sessions that can
+     * create many unique requests and memory usage will only go up.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxSecuritySettingsOrgs: number | undefined;
+
+    /**
+     * Maximum number of URLs per organization that will have its validation result cached. The URL
+     * and validation context is used to form a cache key.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * security settings organization URL cache is dangerous in applications with long-lived sessions that can
+     * create many unique requests and memory usage will only go up.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off organization security settings caching,
+     * tweak the `maxSecuritySettingsOrgs`.
+     */
+    maxSecuritySettingsOrgUrls: number | undefined;
+
+    /**
+     * Maximum age of cached organization's URL validation results. The value is in milliseconds.
+     *
+     * Items are not pro-actively pruned out as they age, but if you try to get an item that is too old,
+     * it'll drop it and make a new request to the backend. The purpose of the cache setting is not mainly
+     * to limit its size to prevent memory usage grow (tweak `maxSecuritySettingsOrgUrls` for that)
+     * but to propagate URL whitelist changes on backend to the long-lived application sessions.
+     *
+     * Setting non-positive number here is invalid. If you want to turn off organization security settings
+     * caching, tweak the `maxSecuritySettingsOrgs`.
+     */
+    maxSecuritySettingsOrgUrlsAge: number | undefined;
 };
+
+function assertPositiveOrUndefined(value: number | undefined, valueName: string) {
+    invariant(
+        value === undefined || value > 0,
+        `${valueName} to cache must be positive or undefined, got: ${value}`,
+    );
+}
 
 /**
  * @beta
@@ -390,6 +514,9 @@ export const DefaultCachingConfiguration: CachingConfiguration = {
     maxResultWindows: 5,
     maxCatalogs: 1,
     maxCatalogOptions: 50,
+    maxSecuritySettingsOrgs: 3,
+    maxSecuritySettingsOrgUrls: 100,
+    maxSecuritySettingsOrgUrlsAge: 300_000, // 5 minutes
 };
 
 /**
@@ -405,28 +532,32 @@ export function withCaching(
     realBackend: IAnalyticalBackend,
     config: CachingConfiguration = DefaultCachingConfiguration,
 ): IAnalyticalBackend {
-    invariant(
-        config.maxCatalogOptions === undefined || config.maxCatalogOptions > 0,
-        `maxCatalogOptions to cache must be positive or undefined, got: ${config.maxCatalogOptions}`,
-    );
+    assertPositiveOrUndefined(config.maxCatalogOptions, "maxCatalogOptions");
+    assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrls, "maxSecuritySettingsOrgUrls");
+    assertPositiveOrUndefined(config.maxSecuritySettingsOrgUrlsAge, "maxSecuritySettingsOrgUrlsAge");
 
     const execCaching = cachingEnabled(config.maxExecutions);
     const catalogCaching = cachingEnabled(config.maxCatalogs);
+    const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
 
     const ctx: CachingContext = {
         caches: {
             execution: execCaching ? new LRUCache({ max: config.maxExecutions }) : undefined,
             workspaceCatalogs: catalogCaching ? new LRUCache({ max: config.maxCatalogs }) : undefined,
+            securitySettings: securitySettingsCaching
+                ? new LRUCache({ max: config.maxSecuritySettingsOrgs })
+                : undefined,
         },
         config,
     };
 
     const execution = execCaching ? cachedExecutions(ctx) : identity;
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
+    const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
 
     if (config.onCacheReady) {
         config.onCacheReady(cacheControl(ctx));
     }
 
-    return decoratedBackend(realBackend, { execution, catalog });
+    return decoratedBackend(realBackend, { execution, catalog, securitySettings });
 }

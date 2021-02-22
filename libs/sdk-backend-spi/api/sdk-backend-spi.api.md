@@ -1170,7 +1170,6 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
-    // (undocumented)
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
 }
@@ -1358,6 +1357,7 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 // @public
 export interface ISecuritySettingsService {
     isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
+    readonly scope: string;
 }
 
 // @public

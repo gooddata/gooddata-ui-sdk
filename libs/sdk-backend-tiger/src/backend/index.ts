@@ -145,6 +145,7 @@ export class TigerBackend implements IAnalyticalBackend {
         return {
             organizationId,
             securitySettings: () => ({
+                scope: organizationId,
                 isUrlValid: (url: string, context: ValidationContext) => {
                     // eslint-disable-next-line no-console
                     console.warn(

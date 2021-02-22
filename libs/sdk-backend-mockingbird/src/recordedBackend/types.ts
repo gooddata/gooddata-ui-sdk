@@ -50,8 +50,18 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
 
     /**
      * Specify validator that returns boolean for provided URL value and validation context type.
+     *
+     * The backend responds with `true` for every validation request when this custom validator is not setup.
      */
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
+
+    /**
+     * Specify function that builds organization scope from organization ID.
+     *
+     * The scope accessible on `ISecuritySettingsService` is constructed as `/gdc/domains/${organizationId}`
+     * when this custom factory is not setup.
+     */
+    securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
 };
 
 /**
@@ -121,3 +131,8 @@ export type VisClassesRecording = {
  * @internal
  */
 export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;
+
+/**
+ * @internal
+ */
+export type SecuritySettingsOrganizationScope = (organizationId: string) => string;

@@ -121,6 +121,7 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
     theme?: ITheme;
     useRefType?: RecordedRefType;
     securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
+    securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
 };
 
 // @internal
@@ -157,6 +158,9 @@ export type ScenarioRecording = {
     execution: ExecutionRecording;
     scenarioIndex: number;
 };
+
+// @internal (undocumented)
+export type SecuritySettingsOrganizationScope = (organizationId: string) => string;
 
 // @internal (undocumented)
 export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;

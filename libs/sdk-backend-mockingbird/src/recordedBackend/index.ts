@@ -189,10 +189,15 @@ function recordedWorkspace(
 }
 
 function recordedOrganization(organizationId: string, implConfig: RecordedBackendConfig): IOrganization {
+    const scopeFactory =
+        implConfig.securitySettingsOrganizationScope === undefined
+            ? (organizationId: string) => `/gdc/domains/${organizationId}`
+            : implConfig.securitySettingsOrganizationScope;
     return {
         organizationId,
         securitySettings(): ISecuritySettingsService {
             return {
+                scope: scopeFactory(organizationId),
                 isUrlValid(url: string, context: ValidationContext): Promise<boolean> {
                     if (implConfig.securitySettingsUrlValidator !== undefined) {
                         return Promise.resolve(implConfig.securitySettingsUrlValidator(url, context));

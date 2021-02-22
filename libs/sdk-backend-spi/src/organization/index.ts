@@ -8,6 +8,9 @@ import { ISecuritySettingsService } from "./securitySettings";
  * @public
  */
 export interface IOrganization {
+    /**
+     * ID of organization.
+     */
     readonly organizationId: string;
 
     /**

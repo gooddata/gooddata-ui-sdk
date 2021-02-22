@@ -34,6 +34,26 @@ describe("recordedBackend", () => {
                     },
                 );
             });
+
+            describe("scope", () => {
+                it("should build expected value when securitySettingsOrganizationScope is not configured", () => {
+                    const { scope } = recordedBackend(ReferenceRecordings.Recordings)
+                        .organization(ORGANIZATION_ID)
+                        .securitySettings();
+
+                    expect(scope).toBe("/gdc/domains/myOrganizationId");
+                });
+
+                it("should build expected value when securitySettingsOrganizationScope is configured", () => {
+                    const { scope } = recordedBackend(ReferenceRecordings.Recordings, {
+                        securitySettingsOrganizationScope: (organizationId) => `#${organizationId}#`,
+                    })
+                        .organization(ORGANIZATION_ID)
+                        .securitySettings();
+
+                    expect(scope).toBe("#myOrganizationId#");
+                });
+            });
         });
     });
 });

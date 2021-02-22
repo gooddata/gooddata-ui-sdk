@@ -46,6 +46,7 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
+import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
@@ -56,6 +57,7 @@ import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
+import { ValidationContext } from '@gooddata/sdk-backend-spi';
 
 // @internal
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
@@ -168,6 +170,7 @@ export type BuilderModifications<TBuilder extends IBuilder<TItem>, TItem = Extra
 export type CacheControl = {
     resetExecutions: () => void;
     resetCatalogs: () => void;
+    resetSecuritySettings: () => void;
     resetAll: () => void;
 };
 
@@ -178,14 +181,19 @@ export type CachingConfiguration = {
     maxCatalogs: number | undefined;
     maxCatalogOptions: number | undefined;
     onCacheReady?: (cacheControl: CacheControl) => void;
+    maxSecuritySettingsOrgs: number | undefined;
+    maxSecuritySettingsOrgUrls: number | undefined;
+    maxSecuritySettingsOrgUrlsAge: number | undefined;
 };
 
 // @beta
 export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttribute> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
+
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
+
     // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
     // (undocumented)
@@ -343,6 +351,15 @@ export abstract class DecoratedPreparedExecution implements IPreparedExecution {
 }
 
 // @alpha (undocumented)
+export abstract class DecoratedSecuritySettingsService implements ISecuritySettingsService {
+    protected constructor(decorated: ISecuritySettingsService);
+    // (undocumented)
+    isUrlValid(url: string, context: ValidationContext): Promise<boolean>;
+    // (undocumented)
+    scope: string;
+}
+
+// @alpha (undocumented)
 export abstract class DecoratedWorkspaceCatalog implements IWorkspaceCatalog {
     protected constructor(decorated: IWorkspaceCatalog);
     // (undocumented)
@@ -389,6 +406,7 @@ export abstract class DecoratedWorkspaceCatalogFactory implements IWorkspaceCata
 export type DecoratorFactories = {
     execution?: ExecutionDecoratorFactory;
     catalog?: CatalogDecoratorFactory;
+    securitySettings?: SecuritySettingsDecoratorFactory;
 };
 
 // @beta (undocumented)
@@ -611,6 +629,9 @@ export type ResultProviderContext = CustomCallContext & {
     execution: IPreparedExecution;
     resultFactory: ResultFactory;
 };
+
+// @alpha (undocumented)
+export type SecuritySettingsDecoratorFactory = (securitySettings: ISecuritySettingsService) => ISecuritySettingsService;
 
 // @beta (undocumented)
 export type TelemetryData = {
