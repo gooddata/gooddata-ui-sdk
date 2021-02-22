@@ -85,7 +85,7 @@
     "dependencies": {
         "@gooddata/api-client-bear": "^8.2.0-alpha.85",
         "@gooddata/api-model-bear": "^8.2.0-alpha.85",
-        "@gooddata/goodstrap": "^70.2.0",
+        "@gooddata/goodstrap": "^70.2.2",
         "@gooddata/sdk-backend-bear": "^8.2.0-alpha.85",
         "@gooddata/sdk-backend-spi": "^8.2.0-alpha.85",
         "@gooddata/sdk-model": "^8.2.0-alpha.85",

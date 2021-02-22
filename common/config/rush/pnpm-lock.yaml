@@ -1450,7 +1450,7 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-USBFmscQBlDf7V5jL3r5qTEBt/4yekUG8G8694gWZXvT6usN+9mZyMTvxVSdTWDRFS/6PDMQ1+YT74e4kVBGdw==
-  /@gooddata/goodstrap/70.2.1_react-dom@16.14.0+react@16.14.0:
+  /@gooddata/goodstrap/70.2.2_react-dom@16.14.0+react@16.14.0:
     dependencies:
       '@babel/runtime-corejs2': 7.12.13
       '@gooddata/js-utils': 3.10.17
@@ -1484,7 +1484,7 @@ packages:
       react: ^16.5.2
       react-dom: ^16.5.2
     resolution:
-      integrity: sha512-SOIZ/JzlY0PJPhlMG0jW2qYqDmCpPJ4LBfMK+zw5VOgskRUA96ROcs1ha73E1/RhvNFy77kwAINYwX6pltckwg==
+      integrity: sha512-4bu1fBEymRoTtjg6E3up3CZXIg6dFolG4yVkQkG0GRQyqiuUtZosz3/8zDyyIbNtscedbJ5VqFw0Z0/ybSgJIA==
   /@gooddata/js-utils/3.10.17:
     dependencies:
       '@gooddata/typings': 2.27.0
@@ -20079,7 +20079,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-TdaKMVluAfK1BQLzkMaVgbm9nfXGvXCFVEhTVRkmLLFfoJ+Lhs+CvROgdaC30XhFOjA5/lXDTUVJorGLExEPig==
+      integrity: sha512-3gKYQGwhIpbyEY2KFsESImhpTiV5xEniYyKfPJewiCXqbETcVjAAQUGkRk0b/oQwV9+708uzEL3u6p79RxqXgg==
       tarball: 'file:projects/api-client-bear.tgz'
     version: 0.0.0
   'file:projects/api-client-tiger.tgz_ts-node@8.10.2':
@@ -20120,7 +20120,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-naC4zyKV6LyWd+CgPg5xE/B1lEy2B362mo7HwBKpO7CvVEF0/h2pkiWplOC3ruXSXYILyzRBEueZCKX3ghFqwQ==
+      integrity: sha512-q2s8SgGuaSMFVmZZyFzFDi+Bh9V0kma7Hvkwyd3p3Vovl7jzlnpBaJvvwPvjZ3JEm1S7flN87AAMnBduOyFN8g==
       tarball: 'file:projects/api-client-tiger.tgz'
     version: 0.0.0
   'file:projects/api-model-bear.tgz_ts-node@8.10.2':
@@ -20233,7 +20233,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-Pu9KULwiVQ4/+I2bHrppq6E1sFiDqQlbiSPv8rp+UGhJNdgKp2BiqpP5dXpy8erLl5Yw71TQLH5iUdqXVhJjHw==
+      integrity: sha512-IsEu8BGXYjfKI89b4rIgnI+enXhzM/fiKrCqD7DWuMBKx6Ubm5nA3KguXPDrb1oQwobYQ8LPjKaSGdtqhJgmdA==
       tarball: 'file:projects/catalog-export.tgz'
     version: 0.0.0
   'file:projects/experimental-workspace.tgz_ts-node@8.10.2':
@@ -20265,7 +20265,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Sr72Ic9rvSf2bd3XMe7X2iZ1Mj/mqGg1QR8j6aj3R3ug6izhLO+rNKkJk68mwUcLSPMINbQgCqtu+SLXCq0yVA==
+      integrity: sha512-ADGmGE8OapyXDm+XBIlix482N/AAkfLS5HmiJwmFQDoTdxqsVne9cI/Q37jFMxKveB44Fy2YlzRGd/AyTZ+o3A==
       tarball: 'file:projects/experimental-workspace.tgz'
     version: 0.0.0
   'file:projects/live-examples-workspace.tgz_ts-node@8.10.2':
@@ -20296,7 +20296,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-WZXCxdEI3JXerwYsbP2tSRFQk/Ns2CSsG/jUd1dLiB6k3vGAqoQaerz1d0gO6Q5zsXJZW+jESVVaNSBLXb9jZw==
+      integrity: sha512-Gyew2FjdQcuLSl6Yt369QUlXlr3RxrisQfjXQ4DPbJJkYarnLS5A5CT5KBwK/6DgpaP5q0oyNJ+4dlxRlLqGCg==
       tarball: 'file:projects/live-examples-workspace.tgz'
     version: 0.0.0
   'file:projects/mock-handling.tgz':
@@ -20339,7 +20339,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-x92q+dt7F6t84wNDb3IjfiQr7JHZEcAVmgpQWDr/AWH3Ut452LSKhDhw0rwplGDidMMtN6kqt4DmMQvBeEL8Iw==
+      integrity: sha512-MfYxB1D1nutEUlhvz0yyQudMITWHzntMhGh9hbN0pJkk2x+FVHGDUEqol7cAazy3dhGthBNMZEz+KBZl181VIQ==
       tarball: 'file:projects/mock-handling.tgz'
     version: 0.0.0
   'file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2':
@@ -20369,7 +20369,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-BVuyEksPO2sAqW9uiflMN2EJBy70r5WDMl94vQtMcq3Q66cg3jyNG3OaMOWvKxx3HhQN2Tq1Pea/Z3N1z2p9xw==
+      integrity: sha512-HSEd7T1YXiRBpxknoCwg8/Eht2Gkr60FYd7UGVWttc3P76Wf47WHQB9s1KxvXNpnqW4DPmwoZ1sg8LILNQQ0IA==
       tarball: 'file:projects/reference-workspace-mgmt.tgz'
     version: 0.0.0
   'file:projects/reference-workspace.tgz_ts-node@8.10.2':
@@ -20400,7 +20400,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-STGHuesM/Uzj+ZPYgroNVfG8EhS9HLITVvFqIfkOrD2on79TjbhiH9EAHgQPaya3nOo36AvxJrD90HW5Xg4NOA==
+      integrity: sha512-5cpRqzUGTV0xRqS6sekv4sJSxsmYerwrd6Pug7fcDrctlinAgZ/9GnQqxmrwyMgiirYDHQRql09bCczvmUD4MA==
       tarball: 'file:projects/reference-workspace.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-base.tgz_ts-node@8.10.2':
@@ -20439,7 +20439,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-bUnpLmtzovHf8JO9/VJMC+U6/oftUIkvqVuHAp+lGaXVcejs3Hjh6QxDZSmDKiuWS4dMQ6bTPcUiq4sS4RUMtQ==
+      integrity: sha512-IbEDQjuBNT+6tK+mEOJUs6mYVI8hB8OAonlk0tejH19R4CtSaW8h06O0qEwuOt73p9LTG5APzs45UuNgeDEM0Q==
       tarball: 'file:projects/sdk-backend-base.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-bear.tgz_ts-node@8.10.2':
@@ -20481,7 +20481,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-s2M/z3mfQvyjqF9/SksrrG8JIDikT0tPJveU2XyNC5uzrOVSJ2LfrDvqXmpsNXcxdCYUKM1f3TVyYNLmQJEHqQ==
+      integrity: sha512-HG9HV2m22WLSUHqEf+Fo5hr8cCsSFiRRAuc2v2Wf1Jigg1MrypzAMoZ8Mr4uNEguef6n8mTJHGX1NPwL9XhIbw==
       tarball: 'file:projects/sdk-backend-bear.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2':
@@ -20515,7 +20515,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-LoRsfc3gLPSp5Xida9rb10SyefFRN/TPnvPFrF7xfRQdE/a+IEfmXrhyRbKb330SLPmRW7tnYWzMoW+WbbvBYg==
+      integrity: sha512-SuxzZHXMkRFiz/lFaN75IzNSFn4XJPs8xdbWLf+EHttgDB27hfQUvnNe2nQZsNdXxlXDF+vzOxiTFXMlfEEbmw==
       tarball: 'file:projects/sdk-backend-mockingbird.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-spi.tgz_ts-node@8.10.2':
@@ -20550,7 +20550,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Ze9tR6V6M0byoWHeuDYOurAZZdloli36Sq0aeok0Ogirc4Cj5/ePl8nEvmCXlX5HRFmk97W5K6BHlYk6QEeAVw==
+      integrity: sha512-5/K/ywwXmUvdJjfVNj9r/X/CD93/S8cEIYcG/qikQY6mrGQ0uzJ/j2Hj7cuODMZ4+V8uB8AYMckSjBbrU+BTkg==
       tarball: 'file:projects/sdk-backend-spi.tgz'
     version: 0.0.0
   'file:projects/sdk-backend-tiger.tgz_ts-node@8.10.2':
@@ -20590,7 +20590,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-VA7xib+/Ji/5JpJHLqbfzf1xWViTQtW/59LM/B6xjjEfGVIjd1dnRngZlYxeGkZRTAFCvt7EeRBDYKFwbUgH/Q==
+      integrity: sha512-qt/eg93CKkayRj3ik/bqZY1xTc5laUCoPm+fojzBJv/lmKDj5aJ/bJuSAjhHOGsqkidLO3uVa7mK90viRzlxtA==
       tarball: 'file:projects/sdk-backend-tiger.tgz'
     version: 0.0.0
   'file:projects/sdk-embedding.tgz_ts-node@8.10.2':
@@ -20622,7 +20622,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-kVFqwzt6wr8cjG1di7rZ02ny3zjlQyb7C5EOWBlddy72YIVz84S0/dsi8ZxuOmlYJSjmMiLbftobOfk9uEqY2A==
+      integrity: sha512-EK/Z5OrjnOmClkA8CLn06vG6rLmgfPTjl/2vUtxzJkvYTBnerbvnI5aNAjWRx4rOEjC3z42EvMHkYO4shofJ3Q==
       tarball: 'file:projects/sdk-embedding.tgz'
     version: 0.0.0
   'file:projects/sdk-examples.tgz_ts-node@8.10.2':
@@ -20639,7 +20639,7 @@ packages:
       '@babel/preset-typescript': 7.12.13_@babel+core@7.12.13
       '@babel/runtime': 7.12.13
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@types/classnames': 2.2.3
       '@types/history': 4.7.8
       '@types/isomorphic-fetch': 0.0.34
@@ -20723,7 +20723,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-pmff++6hkQ7Sraw8qdiYq3TUSEWSdfct9wYmNIp3yWVFWO1n7Slrm2s3okeu09l6us4QfuE18Xa7oqd+n/yAlg==
+      integrity: sha512-dqVaul1emxBKoQE7uzU7Mh9/FM7S7OEvJvCb7PX1ilpVC1DownYIzLwxjrrFR1GoQ2Fi635nbV4QUFWgANmLvw==
       tarball: 'file:projects/sdk-examples.tgz'
     version: 0.0.0
   'file:projects/sdk-model.tgz_ts-node@8.10.2':
@@ -20875,13 +20875,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-j601sociAmIgBrhd1Rj5EXmGH4if+h/K6zp1hRXsHhRshnUALB8diWm2p52rFwqpl/gvGczdunjZZIX8AUpN3Q==
+      integrity: sha512-nGNrhsG1SdZG3eqQn+TiaNI8s8Psk3vqIeeGL4anDZFqy5E523Tg+nnF+yl+k/GHdIX+rL/5ud3ZqyJxhMyKWg==
       tarball: 'file:projects/sdk-ui-all.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-charts.tgz_ts-node@8.10.2':
     dependencies:
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@types/classnames': 2.2.3
@@ -20943,14 +20943,14 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-V8Zy7PaduwsoA/IkiXPHd3jVBNev8bAmaEE5EnkV6PIk4KbFUhNdEWeR9fBEmE5+lttOaAan4rXcAjFLq9l7TQ==
+      integrity: sha512-/lFCc9cy2EG9CnWv0dqcpSVXApCi1QXN43jYXHng5U/28bRsvyz2EYhU4vpVHuMyyDcXRs3caTdLcEZ1ChUAGQ==
       tarball: 'file:projects/sdk-ui-charts.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-ext.tgz_ts-node@8.10.2':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21020,13 +21020,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-jLtJ3miSKjkoNk+NNrGTLR0PgKU58q02G/c6VBMeVay/UiW42D5a88OHp8DIN1IrAOiavk9qz7UCRGSmbkyNRQ==
+      integrity: sha512-4VNMLFUWCSFjA1W9yvLPkoun2ym6sIWE6t+5D6MF6udPLPbTEkbQ4SxT64qJVH1m+/aH3zrcNT/fcNDgbd/U3w==
       tarball: 'file:projects/sdk-ui-ext.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-filters.tgz_ts-node@8.10.2':
     dependencies:
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21092,13 +21092,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-xdI+N2VYq2u3xv+A2XxI0CklSkeWXI7yMTl86/i7WpI4lSeIg2OEKYKnzoG2JzfkcsFkyJF7fqIBglXhlMArGA==
+      integrity: sha512-pAJRD9VguB+zm3vT7yYzeIWhko31ZM8mFDbRvI4gMbk14NpSNfQUZ1ogkgIvRIP8jt+W8S9O1OkNiigF61qJjA==
       tarball: 'file:projects/sdk-ui-filters.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-geo.tgz_ts-node@8.10.2':
     dependencies:
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21155,13 +21155,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-1L+hTy6YhYNLir+74l5fcbcZifmBh/kUSTyzkWZ1lUEPedq3irzJFBZjQQUup7l73THPfxYrFwZRZfPYV088hg==
+      integrity: sha512-ekBlIKHJL70B8Wfw3byFNSxh4K4LN+6Ic0Y9c4WbZaC04gGTVWDoxpsPfryDmb2cXAK7kwyQt4aSV/t0dufPwQ==
       tarball: 'file:projects/sdk-ui-geo.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-kit.tgz_ts-node@8.10.2':
     dependencies:
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21235,7 +21235,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-4pToFADIqoe3QRGRMvQskHsdwgOMfk9icW+0yUvS9oCEIjQMNkvpj7WuoZ/7pd1dL4pgeuxHL9iC3n5i+TQMUQ==
+      integrity: sha512-WZbLEa7wL9daaOCYeqRQTZhyraTHaIgKtoDMNZd9hNY2r6fF5knoVWHva9cCH//W0xbCIsSON2G+ZY5YcetxgA==
       tarball: 'file:projects/sdk-ui-kit.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2':
@@ -21244,7 +21244,7 @@ packages:
       '@ag-grid-community/react': 22.1.2_react-dom@16.14.0+react@16.14.0
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21301,7 +21301,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-/C9mC3SKcAtXjGhwg84bUoyoX1heN+ZMa2hMzbMG8290D9PTs9yAEQw2aE7+UnGPiQEp8PosgdVimOwhkimyRg==
+      integrity: sha512-IoUmG6/pTlrUOtCcZlrU8NSPTE588GH47GMqu+f2rJnNqZWZbnEh/YLecVIiesgyODTKmfZRPgKfhOqyBKgn6A==
       tarball: 'file:projects/sdk-ui-pivot.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-tests.tgz':
@@ -21375,7 +21375,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-tests'
     resolution:
-      integrity: sha512-LjeYwUpU7PeguOB85hqWOXQb1ABRzmCSrkLjXg4Hjow2K9q/3zA8jpKzsUa3hsJDQV1qL+YdMSORNKmc7zRCmA==
+      integrity: sha512-SPj9+3zdDaErvsaOCIY5VC4vKMA95H1vHrhXOfcfkrdCJ0etDR4H0nXidJ/AlLBlZhWDs4wtDZAF4l1fn52QZg==
       tarball: 'file:projects/sdk-ui-tests.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-theme-provider.tgz_ts-node@8.10.2':
@@ -21427,13 +21427,13 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-+48k7cm3Pvt9fyhRJBT2d7uswdHtOMdZalDpz5domP49IZGLMDlY2P5IXFruzayv49ag/9x9UF3phW1RNUG60Q==
+      integrity: sha512-267JWdEZAFLIN2RUiX20UcP8QQswOf4+vFmjsk3WbPqS/e6vhOjc3AfDv+Gc20Dpa4dzzkwuiEjDge+BvB3Rsw==
       tarball: 'file:projects/sdk-ui-theme-provider.tgz'
     version: 0.0.0
   'file:projects/sdk-ui-vis-commons.tgz_ts-node@8.10.2':
     dependencies:
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@microsoft/api-extractor': 7.8.1
@@ -21486,14 +21486,14 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-RWBFZ3aUEMzYE687d6BtipQOFXZ0Tkmb5XCpnsJqu1iKOYACggmLmqsM1PoHM1RQJmIthUp/2co+K1BEUuiFzA==
+      integrity: sha512-4MS8Eh4KhN6x/XVQ0SrJI+PmPudtH2p9oj2oz9tzS8grOdoM8NC83WPySGKpnAGKCfwdVvBYbC8fjhHiegzQBQ==
       tarball: 'file:projects/sdk-ui-vis-commons.tgz'
     version: 0.0.0
   'file:projects/sdk-ui.tgz_ts-node@8.10.2':
     dependencies:
       '@formatjs/intl-pluralrules': 1.3.9
       '@gooddata/eslint-config': 2.1.0_484ad33abf09c2c204e4316f145b0b5a
-      '@gooddata/goodstrap': 70.2.1_react-dom@16.14.0+react@16.14.0
+      '@gooddata/goodstrap': 70.2.2_react-dom@16.14.0+react@16.14.0
       '@gooddata/numberjs': 3.2.5
       '@gooddata/stylelint-config': 5.0.0
       '@types/enzyme': 3.10.8
@@ -21545,7 +21545,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-y8rKTEVISVSt72Q8205mJ/OH+4CsY5kGMkwQ+wuSO2aarmC0GAzm91TZ6bdNNScXJIA9+eyJrO0iCqC1ISq2mg==
+      integrity: sha512-BS0A9acTuxEG6k9j20f3jQoq84+n27Ygrz575Fslugbr1ZMU/XoKeDYxBp4FJlTxz7AOmAwLZvHPEAlR++5M8g==
       tarball: 'file:projects/sdk-ui.tgz'
     version: 0.0.0
   'file:projects/util.tgz_ts-node@8.10.2':
