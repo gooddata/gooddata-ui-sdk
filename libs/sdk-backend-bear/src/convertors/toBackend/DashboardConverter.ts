@@ -191,8 +191,8 @@ export const convertFilterContextItem = (
             dateFilter: {
                 granularity,
                 type,
-                from,
-                to,
+                from: from?.toString(),
+                to: to?.toString(),
             },
         };
 

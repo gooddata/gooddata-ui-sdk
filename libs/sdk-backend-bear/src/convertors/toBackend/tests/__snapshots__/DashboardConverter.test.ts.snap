@@ -270,9 +270,9 @@ Object {
           "dateFilter": Object {
             "attribute": "/attrId",
             "dataSet": "/dataSet",
-            "from": -12,
+            "from": "-12",
             "granularity": "GDC.time.month",
-            "to": -2,
+            "to": "-2",
             "type": "relative",
           },
         },
@@ -297,9 +297,9 @@ Object {
         "dateFilter": Object {
           "attribute": "/attrId",
           "dataSet": "/dataSet",
-          "from": -12,
+          "from": "-12",
           "granularity": "GDC.time.month",
-          "to": -2,
+          "to": "-2",
           "type": "relative",
         },
       },

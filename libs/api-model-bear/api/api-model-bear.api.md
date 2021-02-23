@@ -1100,8 +1100,8 @@ export namespace GdcFilterContext {
         dateFilter: {
             type: DateFilterType;
             granularity: GdcExtendedDateFilters.DateFilterGranularity;
-            from?: GdcExtendedDateFilters.DateString | number;
-            to?: GdcExtendedDateFilters.DateString | number;
+            from?: GdcExtendedDateFilters.DateString | NumberAsString;
+            to?: GdcExtendedDateFilters.DateString | NumberAsString;
             dataSet?: string;
             attribute?: string;
         };
