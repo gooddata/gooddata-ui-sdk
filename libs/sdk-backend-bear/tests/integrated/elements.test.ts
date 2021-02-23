@@ -46,4 +46,17 @@ describe("bear elements", () => {
 
         expect(result).toMatchSnapshot();
     });
+
+    it("should load attribute elements for existing display form with a limiting measure", async () => {
+        const result = await backend
+            .workspace(testWorkspace())
+            .attributes()
+            .elements()
+            .forDisplayForm(attributeDisplayFormRef(ReferenceLdm.Account.Default))
+            .withLimit(20)
+            .withMeasures([ReferenceLdm.Amount])
+            .query();
+
+        expect(result).toMatchSnapshot();
+    });
 });

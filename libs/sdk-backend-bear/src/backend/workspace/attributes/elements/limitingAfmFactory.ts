@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { GdcExecuteAFM, Uri, Identifier, GdcMetadata } from "@gooddata/api-model-bear";
 import {
     ObjRef,
@@ -11,6 +11,7 @@ import {
     isIdentifierRef,
     areObjRefsEqual,
     objRefToString,
+    IMeasure,
 } from "@gooddata/sdk-model";
 import { IElementsQueryAttributeFilter, NotSupported } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
@@ -19,6 +20,7 @@ import groupBy from "lodash/groupBy";
 import uniqWith from "lodash/uniqWith";
 
 import { toBearRef } from "../../../../convertors/toBackend/ObjRefConverter";
+import { convertMeasure } from "../../../../convertors/toBackend/afm/MeasureConverter";
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
 import { IUriIdentifierPair } from "@gooddata/api-client-bear";
 import { objRefsToUris } from "../../../../utils/api";
@@ -32,10 +34,23 @@ export class LimitingAfmFactory {
 
     public getAfm = async (
         filters: IElementsQueryAttributeFilter[] | undefined,
+        measures: IMeasure[] | undefined,
     ): Promise<GdcExecuteAFM.IAfm | undefined> => {
-        if (!filters?.length) {
+        if (!filters?.length && !measures?.length) {
             return undefined;
         }
+
+        const filtersPart = filters?.length
+            ? [
+                  {
+                      expression: {
+                          value: await this.createFiltersExpressionFromAttributeFilters(filters),
+                      },
+                  },
+              ]
+            : undefined;
+
+        const measuresPart = measures?.length ? measures.map(convertMeasure) : undefined;
 
         return {
             attributes: [
@@ -44,13 +59,8 @@ export class LimitingAfmFactory {
                     displayForm: toBearRef(this.displayFormRef),
                 },
             ],
-            filters: [
-                {
-                    expression: {
-                        value: await this.createFiltersExpressionFromAttributeFilters(filters),
-                    },
-                },
-            ],
+            filters: filtersPart,
+            measures: measuresPart,
         };
     };
 

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IElementsQuery,
@@ -85,6 +85,12 @@ class RecordedElements implements IElementsQuery {
     public withAttributeFilters(): IElementsQuery {
         // eslint-disable-next-line no-console
         console.warn("recorded backend does not support withAttributeFilters yet, ignoring...");
+        return this;
+    }
+
+    public withMeasures(): IElementsQuery {
+        // eslint-disable-next-line no-console
+        console.warn("recorded backend does not support withMeasures yet, ignoring...");
         return this;
     }
 }

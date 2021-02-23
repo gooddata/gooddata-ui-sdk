@@ -17,6 +17,7 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
@@ -698,6 +699,7 @@ export interface IElementsQuery {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
+    withMeasures(measures: IMeasure[]): IElementsQuery;
     withOffset(offset: number): IElementsQuery;
     withOptions(options: IElementsQueryOptions): IElementsQuery;
 }
@@ -722,7 +724,9 @@ export interface IElementsQueryOptions {
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
     prompt?: string;
+    // @deprecated (undocumented)
     restrictiveDefinition?: string;
+    // @deprecated (undocumented)
     restrictiveDefinitionContent?: object;
     uris?: string[];
 }

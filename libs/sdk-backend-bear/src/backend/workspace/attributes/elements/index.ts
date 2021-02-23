@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -6,7 +6,7 @@ import {
     IElementsQueryResult,
     IAttributeElement,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IMeasure, ObjRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 import { BearAuthenticatedCallGuard } from "../../../../types/auth";
@@ -28,6 +28,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     private offset: number = 0;
     private options: IElementsQueryOptions | undefined;
     private attributeFilters: IElementsQueryAttributeFilter[] | undefined;
+    private measures: IMeasure[] | undefined;
     // cached AFM used to apply attributeRef and attributeFilters to the element queries
     private limitingAfm: GdcExecuteAFM.IAfm | undefined;
 
@@ -58,6 +59,11 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
         return this;
     }
 
+    public withMeasures(measures: IMeasure[]): IElementsQuery {
+        this.measures = measures.length > 0 ? measures : undefined;
+        return this;
+    }
+
     public withOptions(options: IElementsQueryOptions): IElementsQuery {
         this.options = options;
         return this;
@@ -66,7 +72,7 @@ class BearWorkspaceElementsQuery implements IElementsQuery {
     public async query(): Promise<IElementsQueryResult> {
         const limitingAfmFactory = new LimitingAfmFactory(this.authCall, this.displayFormRef, this.workspace);
 
-        this.limitingAfm = await limitingAfmFactory.getAfm(this.attributeFilters);
+        this.limitingAfm = await limitingAfmFactory.getAfm(this.attributeFilters, this.measures);
 
         return this.queryWorker(this.offset, this.limit, this.options);
     }
