@@ -174,32 +174,6 @@ Object {
 
 exports[`GeoPushpinChart with legend on the left should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "legend": Object {
       "enabled": false,
@@ -399,32 +373,6 @@ Object {
 
 exports[`GeoPushpinChart with legend on the right should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "legend": Object {
       "enabled": true,
@@ -547,32 +495,6 @@ Object {
 
 exports[`GeoPushpinChart with location and color should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -706,32 +628,6 @@ Object {
 
 exports[`GeoPushpinChart with location and color with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -831,32 +727,6 @@ Object {
 
 exports[`GeoPushpinChart with location and segment should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -971,32 +841,6 @@ Object {
 
 exports[`GeoPushpinChart with location and segment with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1139,32 +983,6 @@ Object {
 
 exports[`GeoPushpinChart with location and size  with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1283,32 +1101,6 @@ Object {
 
 exports[`GeoPushpinChart with location and size should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1379,32 +1171,6 @@ Object {
 
 exports[`GeoPushpinChart with location only should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1499,32 +1265,6 @@ Object {
 
 exports[`GeoPushpinChart with location only with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1663,32 +1403,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment and color should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1818,32 +1532,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment and size should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -1997,32 +1685,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment, color with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -2194,32 +1856,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment, size and color  should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -2422,32 +2058,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment, size and color with tooltip and filter should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -2643,32 +2253,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment, size and color with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -2831,32 +2415,6 @@ Object {
 
 exports[`GeoPushpinChart with location, segment, size with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -3008,32 +2566,6 @@ Object {
 
 exports[`GeoPushpinChart with location, size and color should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,
@@ -3200,32 +2732,6 @@ Object {
 
 exports[`GeoPushpinChart with location, size and color with tooltip should create expected props for core chart 1`] = `
 Object {
-  "backend": BackendWithDecoratedServices {
-    "capabilities": Object {},
-    "config": Object {
-      "hostname": "test",
-      "raiseNoDataExceptions": true,
-    },
-    "decorated": Object {
-      "authenticate": [Function],
-      "capabilities": Object {},
-      "config": Object {
-        "hostname": "test",
-        "raiseNoDataExceptions": true,
-      },
-      "currentUser": [Function],
-      "deauthenticate": [Function],
-      "isAuthenticated": [Function],
-      "onHostname": [Function],
-      "withAuthentication": [Function],
-      "withTelemetry": [Function],
-      "workspace": [Function],
-      "workspaces": [Function],
-    },
-    "factories": Object {
-      "execution": [Function],
-    },
-  },
   "config": Object {
     "mapboxToken": "this-is-not-real-token",
     "showLabels": false,

@@ -7,6 +7,7 @@ import {
     ICatalogGroup,
     ISettings,
     ITheme,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, IInsight, IColorPalette, IVisualizationClass } from "@gooddata/sdk-model";
 
@@ -46,6 +47,21 @@ export type RecordedBackendConfig = IAnalyticalBackendConfig & {
      * Default: 'uri'
      */
     useRefType?: RecordedRefType;
+
+    /**
+     * Specify validator that returns boolean for provided URL value and validation context type.
+     *
+     * The backend responds with `true` for every validation request when this custom validator is not setup.
+     */
+    securitySettingsUrlValidator?: SecuritySettingsUrlValidator;
+
+    /**
+     * Specify function that builds organization scope from organization ID.
+     *
+     * The scope accessible on `ISecuritySettingsService` is constructed as `/gdc/domains/${organizationId}`
+     * when this custom factory is not setup.
+     */
+    securitySettingsOrganizationScope?: SecuritySettingsOrganizationScope;
 };
 
 /**
@@ -110,3 +126,13 @@ export type CatalogRecording = {
 export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
+
+/**
+ * @internal
+ */
+export type SecuritySettingsUrlValidator = (url: string, context: ValidationContext) => boolean;
+
+/**
+ * @internal
+ */
+export type SecuritySettingsOrganizationScope = (organizationId: string) => string;

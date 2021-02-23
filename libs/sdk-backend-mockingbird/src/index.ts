@@ -15,6 +15,8 @@ export {
     CatalogRecording,
     VisClassesRecording,
     RecordedRefType,
+    SecuritySettingsUrlValidator,
+    SecuritySettingsOrganizationScope,
 } from "./recordedBackend/types";
 
 export {

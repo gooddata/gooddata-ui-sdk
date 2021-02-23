@@ -18,6 +18,9 @@ function withCachingForTests(
         maxCatalogOptions: 1,
         maxExecutions: 1,
         maxResultWindows: 1,
+        maxSecuritySettingsOrgs: 1,
+        maxSecuritySettingsOrgUrls: 1,
+        maxSecuritySettingsOrgUrlsAge: 300_000,
         onCacheReady,
     });
 }
@@ -224,5 +227,82 @@ describe("withCaching", () => {
         const second = backend.workspace("test").catalog().load();
 
         expect(second).not.toBe(first);
+    });
+
+    describe("security settings", () => {
+        const ORGANIZATION_ID = "org";
+        const URL = "https://gooddata.com";
+
+        it("caches organization security settings URL validation result", () => {
+            const backend = withCachingForTests();
+
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).toBe(first);
+        });
+
+        it("evicts organization security settings", () => {
+            const backend = withCachingForTests();
+
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            backend.organization("someOtherOrg").securitySettings().isUrlValid(URL, "UI_EVENT");
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+
+        it("evicts organization security settings URL validation result", () => {
+            const backend = withCachingForTests();
+
+            // first call caches result when getting security settings with default options
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            // second call done explicitly with different options => evict previous entry
+            backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid("https://google.com", "UI_EVENT");
+
+            // now back to default options, will be new promise
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
+
+        it("resets security settings cache", async () => {
+            let cacheControl: CacheControl | undefined;
+
+            const backend = withCachingForTests(defaultBackend, (cc) => (cacheControl = cc));
+            const first = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+            cacheControl?.resetSecuritySettings();
+            const second = backend
+                .organization(ORGANIZATION_ID)
+                .securitySettings()
+                .isUrlValid(URL, "UI_EVENT");
+
+            expect(second).not.toBe(first);
+        });
     });
 });

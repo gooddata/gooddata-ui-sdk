@@ -7,6 +7,7 @@ export {
     DecoratorFactories,
     CatalogDecoratorFactory,
     ExecutionDecoratorFactory,
+    SecuritySettingsDecoratorFactory,
 } from "./decoratedBackend";
 
 export {
@@ -21,6 +22,8 @@ export {
     DecoratedWorkspaceCatalog,
     WorkspaceCatalogWrapper,
 } from "./decoratedBackend/catalog";
+
+export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings";
 
 export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend";
 export {

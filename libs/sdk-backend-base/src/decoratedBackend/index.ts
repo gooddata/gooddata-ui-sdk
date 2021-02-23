@@ -23,6 +23,8 @@ import {
     IWorkspaceUsersQuery,
     IDateFilterConfigsQuery,
     IWorkspaceDescriptor,
+    IOrganization,
+    ISecuritySettingsService,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -64,6 +66,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
             this.decorated.withTelemetry(componentName, props),
             this.factories,
         );
+    }
+
+    public organization(organizationId: string): IOrganization {
+        return new OrganizationDecorator(this.decorated.organization(organizationId), this.factories);
     }
 
     public currentUser(): IUserService {
@@ -159,6 +165,28 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 }
 
+class OrganizationDecorator implements IOrganization {
+    readonly organizationId: string;
+    private decorated: IOrganization;
+    private readonly factories: DecoratorFactories;
+
+    constructor(decorated: IOrganization, factories: DecoratorFactories) {
+        this.decorated = decorated;
+        this.factories = factories;
+        this.organizationId = decorated.organizationId;
+    }
+
+    public securitySettings(): ISecuritySettingsService {
+        const { securitySettings } = this.factories;
+
+        if (securitySettings) {
+            return securitySettings(this.decorated.securitySettings());
+        }
+
+        return this.decorated.securitySettings();
+    }
+}
+
 /**
  * @alpha
  */
@@ -170,6 +198,13 @@ export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) =>
 export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWorkspaceCatalogFactory;
 
 /**
+ * @alpha
+ */
+export type SecuritySettingsDecoratorFactory = (
+    securitySettings: ISecuritySettingsService,
+) => ISecuritySettingsService;
+
+/**
  * Provides factory functions for the different decorators (currently only supports execution
  * decorator). Input to each factory function is the original implementation from the wrapped backend, output
  * is whatever decorateur sees fit.
@@ -179,6 +214,7 @@ export type CatalogDecoratorFactory = (catalog: IWorkspaceCatalogFactory) => IWo
 export type DecoratorFactories = {
     execution?: ExecutionDecoratorFactory;
     catalog?: CatalogDecoratorFactory;
+    securitySettings?: SecuritySettingsDecoratorFactory;
 };
 
 /**

@@ -33,6 +33,7 @@ import {
     IWorkspaceUsersQuery,
     NotSupported,
     IWorkspaceDescriptor,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -110,6 +111,9 @@ export function legacyRecordedBackend(
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        organization(_organizationId: string): IOrganization {
+            throw new NotSupported("not yet supported");
         },
         currentUser(): IUserService {
             throw new NotSupported("not yet supported");

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -31,6 +31,9 @@ import {
     NotSupported,
     IWorkspaceDescriptor,
     CatalogItemType,
+    IOrganization,
+    ISecuritySettingsService,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -93,6 +96,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        organization(organizationId: string): IOrganization {
+            return new DummyOrganization(organizationId);
         },
         currentUser(): IUserService {
             throw new NotSupported("not supported");
@@ -347,5 +353,18 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
     public load(): Promise<IWorkspaceCatalog> {
         return Promise.resolve("draw the rest of the owl" as any);
+    }
+}
+
+class DummyOrganization implements IOrganization {
+    constructor(public organizationId: string) {}
+
+    securitySettings(): ISecuritySettingsService {
+        return {
+            scope: `/gdc/domains/${this.organizationId}`,
+            isUrlValid(_url: string, _context: ValidationContext): Promise<boolean> {
+                return Promise.resolve(true);
+            },
+        };
     }
 }

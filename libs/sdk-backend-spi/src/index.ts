@@ -383,3 +383,6 @@ export {
     IAttributeElementExpressionToken,
     ITextExpressionToken,
 } from "./workspace/fromModel/ldm/measure";
+
+export { IOrganization } from "./organization";
+export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";

@@ -13,6 +13,7 @@ import {
     IWorkspacesQueryFactory,
     IUserService,
     isNotAuthenticated,
+    IOrganization,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -38,6 +39,7 @@ import {
     TelemetryData,
 } from "@gooddata/sdk-backend-base";
 import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
+import { BearOrganization } from "./organization";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateTotals: true,
@@ -268,6 +270,10 @@ export class BearBackend implements IAnalyticalBackend {
             throw new NotAuthenticated("Backend is not set up with authentication provider.");
         }
         return this.authProvider.deauthenticate(this.getAuthenticationContext());
+    }
+
+    public organization(organizationId: string): IOrganization {
+        return new BearOrganization(this.authApiCall, organizationId);
     }
 
     public currentUser(): IUserService {

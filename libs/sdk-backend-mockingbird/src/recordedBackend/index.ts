@@ -29,6 +29,9 @@ import {
     IWorkspaceDescriptor,
     IWorkspacePermissions,
     ITheme,
+    IOrganization,
+    ISecuritySettingsService,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -83,6 +86,9 @@ export function recordedBackend(
         },
         withAuthentication(_: IAuthenticationProvider): IAnalyticalBackend {
             return this;
+        },
+        organization(organizationId: string): IOrganization {
+            return recordedOrganization(organizationId, config);
         },
         currentUser(): IUserService {
             return recordedUserService(config);
@@ -178,6 +184,27 @@ function recordedWorkspace(
         },
         dateFilterConfigs(): IDateFilterConfigsQuery {
             throw new NotSupported("not supported");
+        },
+    };
+}
+
+function recordedOrganization(organizationId: string, implConfig: RecordedBackendConfig): IOrganization {
+    const scopeFactory =
+        implConfig.securitySettingsOrganizationScope === undefined
+            ? (organizationId: string) => `/gdc/domains/${organizationId}`
+            : implConfig.securitySettingsOrganizationScope;
+    return {
+        organizationId,
+        securitySettings(): ISecuritySettingsService {
+            return {
+                scope: scopeFactory(organizationId),
+                isUrlValid(url: string, context: ValidationContext): Promise<boolean> {
+                    if (implConfig.securitySettingsUrlValidator !== undefined) {
+                        return Promise.resolve(implConfig.securitySettingsUrlValidator(url, context));
+                    }
+                    return Promise.resolve(true);
+                },
+            };
         },
     };
 }
