@@ -1,35 +1,30 @@
-// (C) 2007-2018 GoodData Corporation
-import React, { useMemo, useState } from "react";
-import { DashboardView, mergeFiltersWithDashboard } from "@gooddata/sdk-ui-ext/esm/internal";
-import { idRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { IDashboard } from "@gooddata/sdk-backend-spi";
-import { Ldm } from "../../ldm";
-import { MAPBOX_TOKEN } from "../../constants/fixtures";
+// (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
+import React from "react";
 
-const dashboardRef = idRef("aeO5PVgShc0T");
-const filters = [
-    newPositiveAttributeFilter(Ldm.LocationState, {
-        uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116"],
-    }),
-];
-const config = { mapboxToken: MAPBOX_TOKEN };
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-const DashboardViewWithMergedFilters: React.FC = () => {
-    const [dashboard, setDashboard] = useState<IDashboard | undefined>();
+import DashboardViewWithMergedFilters from "./DashboardViewWithMergedFiltersSrc";
+import DashboardViewWithMergedFiltersSRC from "!raw-loader!./DashboardViewWithMergedFiltersSrc";
+import DashboardViewWithMergedFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithMergedFiltersSrc";
 
-    const mergedFilters = useMemo(() => {
-        return mergeFiltersWithDashboard(dashboard, filters);
-    }, [dashboard]);
+const DashboardView = (): JSX.Element => (
+    <div>
+        <h1>DashboardView with merged filters</h1>
 
-    return (
-        <DashboardView
-            dashboard={dashboardRef}
-            filters={mergedFilters}
-            config={config}
-            onDashboardLoaded={({ dashboard }) => setDashboard(dashboard)}
-            isReadOnly
+        <p>
+            Example of how to embed a Dashboard into your application with custom filters combined with the
+            filters already specified on the dashboard itself – the same Dashboard as in the first example
+            with added filter only to California (this also respects the filters set on the Dashboard itself,
+            if you do not want that, see the previous example).
+        </p>
+
+        <ExampleWithSource
+            for={DashboardViewWithMergedFilters}
+            source={DashboardViewWithMergedFiltersSRC}
+            sourceJS={DashboardViewWithMergedFiltersSRCJS}
         />
-    );
-};
+    </div>
+);
 
-export default DashboardViewWithMergedFilters;
+export default DashboardView;

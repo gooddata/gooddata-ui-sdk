@@ -1,6 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef, Identifier, IInsight } from "@gooddata/sdk-model";
-import { IDashboardLayout } from "./layout/dashboardLayout";
+import { IDashboardLayout } from "./layout";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext";
 import { IDashboardObjectIdentity } from "./common";
 import {

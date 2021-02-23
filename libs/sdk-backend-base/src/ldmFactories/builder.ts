@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 /**
  * We are using Builder pattern to create sdk-model objects https://en.wikipedia.org/wiki/Builder_pattern
  * Each sdk-model should have its own builder, and you should use it.
@@ -75,6 +75,28 @@ export type BuilderConstructor<TBuilder extends IBuilder<TItem>, TItem> = new (
 export type BuilderModifications<TBuilder extends IBuilder<TItem>, TItem = ExtractBuilderType<TBuilder>> = (
     builder: TBuilder,
 ) => TBuilder;
+
+/**
+ * Represents a callback to update the value, or the value itself.
+ * @alpha
+ */
+export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);
+
+/**
+ * Calls an update callback when it's a function, otherwise returns the value itself.
+ * This is just an utility function to DRY the builder implementation a bit.
+ *
+ * @alpha
+ * @param valueOrUpdateCallback - value to set, or update callback
+ * @param valueToUpdate - original value to update
+ */
+export const resolveValueOrUpdateCallback = <TValue>(
+    valueOrUpdateCallback: ValueOrUpdateCallback<TValue>,
+    valueToUpdate: TValue,
+): TValue =>
+    // typeof === "function" does not work here
+    // Related issue: https://github.com/microsoft/TypeScript/issues/37663
+    valueOrUpdateCallback instanceof Function ? valueOrUpdateCallback(valueToUpdate) : valueOrUpdateCallback;
 
 /**
  * Generic builder factory to create sdk-model objects using builder pattern

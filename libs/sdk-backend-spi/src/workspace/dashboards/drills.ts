@@ -4,15 +4,26 @@ import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
+ * Insight widget drill definition
+ * @alpha
+ */
+export type InsightDrillDefinition =
+    | IDrillToInsight
+    | IDrillToDashboard
+    | IDrillToCustomUrl
+    | IDrillToAttributeUrl;
+
+/**
+ * Kpi widget drill definition
+ * @alpha
+ */
+export type KpiDrillDefinition = IDrillToLegacyDashboard;
+
+/**
  * Widget drill definition
  * @alpha
  */
-export type DrillDefinition =
-    | IDrillToInsight
-    | IDrillToDashboard
-    | IDrillToLegacyDashboard
-    | IDrillToCustomUrl
-    | IDrillToAttributeUrl;
+export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
 /**
  * Drill origin type

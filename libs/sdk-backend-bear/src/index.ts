@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BearBackend, BearBackendConfig } from "./backend";
@@ -34,8 +34,8 @@ export default bearFactory;
 import {
     convertScheduledMail,
     convertWidget,
-    convertResponsiveSize,
-    convertLayoutColumnSize,
+    convertLayoutSize,
+    convertLayoutItemSize,
 } from "./convertors/toBackend/DashboardConverter";
 import { convertInsight, convertInsightDefinition } from "./convertors/toBackend/InsightConverter";
 import { toAfmExecution } from "./convertors/toBackend/afm/ExecutionConverter";
@@ -54,8 +54,8 @@ export const BearToBackendConvertors = {
     toAfmExecution,
     convertScheduledMail,
     convertWidget,
-    convertResponsiveSize,
-    convertLayoutColumnSize,
+    convertLayoutSize,
+    convertLayoutItemSize,
 };
 
 import { convertVisualization } from "./convertors/fromBackend/VisualizationConverter";
@@ -73,8 +73,8 @@ import {
     convertVisualizationWidgetDrill,
     convertScheduledMail as convertScheduledMailFromBackend,
     convertDashboardDateFilterConfig,
-    convertResponsiveSize as convertResponsiveSizeFromBackend,
-    convertLayoutColumnSize as convertLayoutColumnSizeFromBackend,
+    convertLayoutSize as convertLayoutSizeFromBackend,
+    convertLayoutItemSize as convertLayoutItemSizeFromBackend,
 } from "./convertors/fromBackend/DashboardConverter";
 
 /**
@@ -99,6 +99,6 @@ export const BackendToBearConvertors = {
     convertUrisToReferences,
     serializeProperties,
     deserializeProperties,
-    convertResponsiveSize: convertResponsiveSizeFromBackend,
-    convertLayoutColumnSize: convertLayoutColumnSizeFromBackend,
+    convertLayoutSize: convertLayoutSizeFromBackend,
+    convertLayoutItemSize: convertLayoutItemSizeFromBackend,
 };

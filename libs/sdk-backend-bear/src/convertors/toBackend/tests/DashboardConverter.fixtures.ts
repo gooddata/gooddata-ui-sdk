@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import {
     IDashboard,
-    IDashboardLayoutColumn,
+    IDashboardLayoutItem,
     IFilterContext,
     ITempFilterContext,
     IWidget,
@@ -146,71 +146,78 @@ export const widgetKpiWithDrilling: IWidget = {
     ],
 };
 
-const columns: IDashboardLayoutColumn[] = [
+const items: IDashboardLayoutItem[] = [
     {
+        type: "IDashboardLayoutItem",
         size: {
             xl: {
-                widthAsGridColumnsCount: 12,
+                gridWidth: 12,
             },
         },
-        content: widgetHeadline,
+        widget: widgetHeadline,
     },
     {
+        type: "IDashboardLayoutItem",
         size: {
             xl: {
-                widthAsGridColumnsCount: 6,
+                gridWidth: 6,
             },
         },
-        content: widgetKpi,
+        widget: widgetKpi,
     },
     {
+        type: "IDashboardLayoutItem",
         size: {
             xl: {
-                widthAsGridColumnsCount: 2,
+                gridWidth: 2,
             },
         },
-        content: widgetBarChart,
+        widget: widgetBarChart,
     },
 ];
 
-export const dashboardWithLayoutAndRowHeaders: IDashboard = {
+export const dashboardWithLayoutAndSectionHeaders: IDashboard = {
     ...emptyDashboard,
     layout: {
-        type: "fluidLayout",
-        rows: [
+        type: "IDashboardLayout",
+        sections: [
             {
+                type: "IDashboardLayoutSection",
                 header: {
-                    title: "Row 1",
+                    title: "Section 1",
                 },
-                columns,
+                items,
             },
             {
+                type: "IDashboardLayoutSection",
                 header: {
-                    description: "Row 2 description",
+                    description: "Section 2 description",
                 },
-                columns: [],
+                items: [],
             },
         ],
     },
 };
 
-export const dashboardWithLayoutAndEmptyRowHeaders: IDashboard = {
+export const dashboardWithLayoutAndEmptySectionHeaders: IDashboard = {
     ...emptyDashboard,
     layout: {
-        type: "fluidLayout",
-        rows: [
+        type: "IDashboardLayout",
+        sections: [
             {
+                type: "IDashboardLayoutSection",
                 // Test, that empty headers are removed (or it throws error on the backend)
                 header: {
                     title: "",
                     description: "",
                 },
-                columns,
+                items,
             },
             {
+                type: "IDashboardLayoutSection",
                 // Test, that empty headers are removed (or it throws error on the backend)
                 header: {},
-                columns: [],
+                items: [],
             },
         ],
     },

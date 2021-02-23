@@ -7,9 +7,6 @@ import {
     ISeparators,
     IScheduledMailDefinition,
     IScheduledMail,
-    IDashboardLayoutContent,
-    IFilterContext,
-    ITempFilterContext,
     IWidget,
     FilterContextItem,
     ILegacyKpi,
@@ -25,8 +22,36 @@ import {
     ILocale,
     VisType,
 } from "@gooddata/sdk-ui";
-import { IDashboardViewLayoutContentRenderProps, DashboardViewLayoutWidgetClass } from "../DashboardLayout";
 import { IDashboardFilter } from "../types";
+import { IDashboardLayoutBuilder } from "../DashboardLayout/builder/interfaces";
+
+/**
+ * @alpha
+ */
+export interface IDashboardLayoutTransformAdditionalProps {
+    /**
+     * Sanitized filters provided to the dashboard.
+     */
+    filters?: FilterContextItem[];
+
+    /**
+     * Get insight - returns insight only in case it's part of the layout, undefined otherwise.
+     */
+    getInsight: (insightRef: ObjRef) => IInsight | undefined;
+
+    /**
+     * Get widget alert - returns alert only in case it's a {@link IKpiWidget} and has alert set, undefined otherwise.
+     */
+    getWidgetAlert: (widgetRef: ObjRef) => IWidgetAlert;
+}
+
+/**
+ * @alpha
+ */
+export type DashboardLayoutTransform<TContent = any> = (
+    layoutBuilder: IDashboardLayoutBuilder<TContent>,
+    additionalProps: IDashboardLayoutTransformAdditionalProps,
+) => IDashboardLayoutBuilder<TContent>;
 
 /**
  * @beta
@@ -212,6 +237,11 @@ export interface IDashboardViewProps {
     onScheduledMailSubmitError?: OnError;
 
     /**
+     * Custom layout transforms for more advanced customizations.
+     */
+    transformLayout?: DashboardLayoutTransform<any>;
+
+    /**
      * Component to customize widget rendering.
      * Note: Custom widget rendering is not supported for dashboard exports & scheduled e-mails.
      */
@@ -225,27 +255,6 @@ export interface IDashboardViewProps {
      */
     isReadOnly?: boolean;
 }
-
-/**
- * TODO: RAIL-2869: docs
- *
- * @alpha
- */
-export type IDashboardContentRenderProps = IDashboardViewLayoutContentRenderProps<IDashboardLayoutContent> & {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-    dashboardRef: ObjRef;
-    filters?: IDashboardFilter[];
-    filterContext: IFilterContext | ITempFilterContext;
-    drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
-    ErrorComponent: React.ComponentType<IErrorProps>;
-    LoadingComponent: React.ComponentType<ILoadingProps>;
-    onError?: OnError;
-    widgetClass?: DashboardViewLayoutWidgetClass;
-    insight?: IInsight;
-    widgetRenderer: IDashboardWidgetRenderer;
-};
 
 /**
  * Render props for custom widget rendering.
@@ -287,12 +296,17 @@ export type IDashboardWidgetRenderProps = {
     widget: IWidget;
 
     /**
-     * Insight set for this widget. (in case it's an insight widget)
+     * Insight set for this widget (in case it's an insight widget).
      */
     insight?: IInsight;
 
     /**
-     * Sanitized filters provided to the dashboard
+     * Custom widget provided from the user (in case it's a custom widget).
+     */
+    customWidget?: any;
+
+    /**
+     * Sanitized filters provided to the dashboard.
      */
     filters?: FilterContextItem[];
 };
@@ -308,6 +322,11 @@ export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps
  * @alpha
  */
 export interface IWidgetPredicates {
+    /**
+     * Predicate to test whether the widget that is not part of the common layout model.
+     */
+    isCustomWidget: () => boolean;
+
     /**
      * Predicate to test whether the widget matches the provided ObjRef.
      * This is useful to customize rendering for the particular widget.

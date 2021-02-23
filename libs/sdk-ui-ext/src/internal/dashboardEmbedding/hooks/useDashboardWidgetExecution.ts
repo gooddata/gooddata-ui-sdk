@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { useDashboard } from "./useDashboard";
-import { useDashboardViewLayout, useDashboardInsightExecution, useDashboardKpiExecution } from "./internal";
+import { useDashboardLayoutData, useDashboardInsightExecution, useDashboardKpiExecution } from "./internal";
 import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
@@ -80,10 +80,10 @@ export function useDashboardWidgetExecution({
         workspace: effectiveWorkspace,
     });
     const {
-        result: dashboardViewLayoutResult,
-        status: dashboardViewLayoutStatus,
-        error: dashboardViewLayoutError,
-    } = useDashboardViewLayout({
+        result: dashboardLayoutResult,
+        status: dashboardLayoutStatus,
+        error: dashboardLayoutError,
+    } = useDashboardLayoutData({
         dashboardLayout: dashboardResult?.layout,
         backend: effectiveBackend,
         workspace: effectiveWorkspace,
@@ -119,7 +119,7 @@ export function useDashboardWidgetExecution({
 
     const insightExecution = useDashboardInsightExecution({
         insightWidget,
-        insight: dashboardViewLayoutResult?.getInsightByRef(insightWidget?.insight),
+        insight: dashboardLayoutResult?.getInsightByRef(insightWidget?.insight),
         filters,
         filterContext: dashboardResult?.filterContext,
         backend: effectiveBackend,
@@ -129,8 +129,8 @@ export function useDashboardWidgetExecution({
     const { result: executionResult, status: executionStatus, error: executionError } =
         widget?.type === "kpi" ? kpiExecution : insightExecution;
 
-    const statuses = [dashboardStatus, dashboardViewLayoutStatus, executionStatus];
-    const error = dashboardError ?? dashboardViewLayoutError ?? executionError;
+    const statuses = [dashboardStatus, dashboardLayoutStatus, executionStatus];
+    const error = dashboardError ?? dashboardLayoutError ?? executionError;
 
     if (error) {
         return {

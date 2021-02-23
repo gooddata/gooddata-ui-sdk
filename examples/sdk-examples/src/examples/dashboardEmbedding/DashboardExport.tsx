@@ -1,21 +1,27 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
-import { useDashboardPdfExporter } from "@gooddata/sdk-ui-ext/esm/internal";
-import { idRef } from "@gooddata/sdk-model";
 
-const dashboardRef = idRef("aeO5PVgShc0T");
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-const DashboardExport: React.FC = () => {
-    const { exportDashboard, status } = useDashboardPdfExporter();
-    const isLoading = status === "loading";
+import DashboardExport from "./DashboardExportSrc";
+import DashboardExportSRC from "!raw-loader!./DashboardExportSrc";
+import DashboardExportSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardExportSrc";
 
-    return status === "success" ? (
-        <span>Export successful!</span>
-    ) : (
-        <button onClick={() => exportDashboard(dashboardRef)} disabled={isLoading}>
-            {isLoading ? "Exporting..." : "Export dashboard"}
-        </button>
-    );
-};
+const DashboardView = (): JSX.Element => (
+    <div>
+        <h1>DashboardView with export</h1>
 
-export default DashboardExport;
+        <p>
+            Example of how to export a dashboard. This will export the dashboard in the first example to PDF.
+        </p>
+
+        <ExampleWithSource
+            for={DashboardExport}
+            source={DashboardExportSRC}
+            sourceJS={DashboardExportSRCJS}
+        />
+    </div>
+);
+
+export default DashboardView;

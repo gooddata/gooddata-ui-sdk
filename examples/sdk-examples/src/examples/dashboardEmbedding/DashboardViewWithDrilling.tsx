@@ -1,26 +1,29 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
-import { DashboardView } from "@gooddata/sdk-ui-ext/esm/internal";
-import { idRef } from "@gooddata/sdk-model";
-import { MAPBOX_TOKEN } from "../../constants/fixtures";
-import { HeaderPredicates } from "@gooddata/sdk-ui";
 
-const dashboardRef = idRef("aeO5PVgShc0T");
-const config = { mapboxToken: MAPBOX_TOKEN };
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-const DashboardViewWithDrilling: React.FC = () => {
-    return (
-        <DashboardView
-            dashboard={dashboardRef}
-            config={config}
-            drillableItems={[HeaderPredicates.attributeItemNameMatch("Daly City")]}
-            onDrill={(e) => {
-                // eslint-disable-next-line no-console
-                console.log("Drill event in DashboardView: ", e);
-            }}
-            isReadOnly
+import DashboardViewWithDrilling from "./DashboardViewWithDrillingSrc";
+import DashboardViewWithDrillingSRC from "!raw-loader!./DashboardViewWithDrillingSrc";
+import DashboardViewWithDrillingSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithDrillingSrc";
+
+const DashboardView = (): JSX.Element => (
+    <div>
+        <h1>DashboardView with drilling</h1>
+
+        <p>
+            Example of how to embed a Dashboard into your application with added drilling – the same Dashboard
+            as in the previous examples with Daly City with enabled drilling (check the console logs for
+            results).
+        </p>
+
+        <ExampleWithSource
+            for={DashboardViewWithDrilling}
+            source={DashboardViewWithDrillingSRC}
+            sourceJS={DashboardViewWithDrillingSRCJS}
         />
-    );
-};
+    </div>
+);
 
-export default DashboardViewWithDrilling;
+export default DashboardView;

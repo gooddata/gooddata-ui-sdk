@@ -145,11 +145,17 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": Object {
-    "rows": Array [
+    "sections": Array [
       Object {
-        "columns": Array [
+        "items": Array [
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 12,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -187,14 +193,15 @@ Object {
               "type": "insight",
               "uri": "/gdc/md/obj/visualizationWidgetHeadline",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 12,
-              },
-            },
           },
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 6,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -225,14 +232,15 @@ Object {
               "type": "insight",
               "uri": "/gdc/md/obj/visualizationWidgetBarChart",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 6,
-              },
-            },
           },
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 2,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -267,16 +275,12 @@ Object {
               "type": "kpi",
               "uri": "/gdc/md/obj/kpiWidget",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 2,
-              },
-            },
           },
         ],
+        "type": "IDashboardLayoutSection",
       },
     ],
-    "type": "fluidLayout",
+    "type": "IDashboardLayout",
   },
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",
@@ -297,11 +301,17 @@ Object {
   "identifier": "dashboardWithFilterContext",
   "isLocked": false,
   "layout": Object {
-    "rows": Array [
+    "sections": Array [
       Object {
-        "columns": Array [
+        "items": Array [
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 12,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -332,14 +342,15 @@ Object {
               "type": "insight",
               "uri": "/gdc/md/obj/visualizationWidgetBarChart",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 12,
-              },
-            },
           },
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 2,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -374,14 +385,15 @@ Object {
               "type": "kpi",
               "uri": "/gdc/md/obj/kpiWidget",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 2,
-              },
-            },
           },
           Object {
-            "content": Object {
+            "size": Object {
+              "xl": Object {
+                "gridWidth": 2,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
               "dateDataSet": undefined,
               "description": "",
               "drills": Array [
@@ -419,16 +431,12 @@ Object {
               "type": "insight",
               "uri": "/gdc/md/obj/visualizationWidgetHeadline",
             },
-            "size": Object {
-              "xl": Object {
-                "widthAsGridColumnsCount": 2,
-              },
-            },
           },
         ],
+        "type": "IDashboardLayoutSection",
       },
     ],
-    "type": "fluidLayout",
+    "type": "IDashboardLayout",
   },
   "ref": Object {
     "uri": "/gdc/md/obj/dashboardWithFilterContext",

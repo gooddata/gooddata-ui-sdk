@@ -1,14 +1,14 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ResponsiveScreenType } from "@gooddata/sdk-backend-spi";
+import { ScreenSize } from "@gooddata/sdk-backend-spi";
 
 interface IDashboardItemProps extends React.HTMLAttributes<HTMLDivElement> {
-    screen: ResponsiveScreenType;
+    screen: ScreenSize;
 }
 
 // done like this instead of a template string so that the code is greppable for the individual classes
-const screenClasses: { [S in ResponsiveScreenType]: string } = {
+const screenClasses: { [S in ScreenSize]: string } = {
     xs: "layout-xs",
     sm: "layout-sm",
     md: "layout-md",

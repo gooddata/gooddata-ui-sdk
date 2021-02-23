@@ -28,8 +28,8 @@ export const BackendToBearConvertors: {
     convertUrisToReferences: import("./convertors/fromBackend/ReferenceConverter").ReferenceConverter;
     serializeProperties: (properties: import("@gooddata/sdk-model").VisualizationProperties) => string;
     deserializeProperties: (properties: string | undefined) => import("@gooddata/sdk-model").VisualizationProperties;
-    convertResponsiveSize: (size: import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutSize) => import("@gooddata/sdk-backend-spi").IFluidLayoutSize;
-    convertLayoutColumnSize: (column: import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutColSize) => import("@gooddata/sdk-backend-spi").IFluidLayoutSizeByScreen;
+    convertLayoutSize: (size: import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutSize) => import("@gooddata/sdk-backend-spi").IDashboardLayoutSize;
+    convertLayoutItemSize: (column: import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutColSize) => import("@gooddata/sdk-backend-spi").IDashboardLayoutSizeByScreenSize;
 };
 
 // @public
@@ -64,8 +64,8 @@ export const BearToBackendConvertors: {
     toAfmExecution: (def: import("@gooddata/sdk-model").IExecutionDefinition) => import("@gooddata/api-model-bear").GdcExecuteAFM.IExecution;
     convertScheduledMail: (scheduledMail: import("@gooddata/sdk-backend-spi").IScheduledMailDefinition | import("@gooddata/sdk-backend-spi").IScheduledMail) => import("@gooddata/api-model-bear").GdcScheduledMail.IWrappedScheduledMail;
     convertWidget: (widget: import("@gooddata/sdk-backend-spi").IKpiWidget | import("@gooddata/sdk-backend-spi").IKpiWidgetDefinition | import("@gooddata/sdk-backend-spi").IInsightWidget | import("@gooddata/sdk-backend-spi").IInsightWidgetDefinition) => import("@gooddata/api-model-bear").GdcVisualizationWidget.IWrappedVisualizationWidget | import("@gooddata/api-model-bear").GdcKpi.IWrappedKPI;
-    convertResponsiveSize: (size: import("@gooddata/sdk-backend-spi").IFluidLayoutSize) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutSize;
-    convertLayoutColumnSize: (column: import("@gooddata/sdk-backend-spi").IFluidLayoutSizeByScreen) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutColSize;
+    convertLayoutSize: (size: import("@gooddata/sdk-backend-spi").IDashboardLayoutSize) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutSize;
+    convertLayoutItemSize: (column: import("@gooddata/sdk-backend-spi").IDashboardLayoutSizeByScreenSize) => import("@gooddata/api-model-bear").GdcDashboardLayout.IFluidLayoutColSize;
 };
 
 // @public

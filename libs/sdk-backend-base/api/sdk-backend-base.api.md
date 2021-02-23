@@ -26,6 +26,7 @@ import { ICatalogDateDataset } from '@gooddata/sdk-backend-spi';
 import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
@@ -39,9 +40,17 @@ import { IFactMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IGroupableCatalogItemBase } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IInsightWidget } from '@gooddata/sdk-backend-spi';
+import { IInsightWidgetDefinition } from '@gooddata/sdk-backend-spi';
+import { IKpiWidget } from '@gooddata/sdk-backend-spi';
+import { IKpiWidgetDefinition } from '@gooddata/sdk-backend-spi';
+import { ILegacyKpi } from '@gooddata/sdk-backend-spi';
+import { ILegacyKpiComparisonDirection } from '@gooddata/sdk-backend-spi';
+import { ILegacyKpiComparisonTypeComparison } from '@gooddata/sdk-backend-spi';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IMetadataObject } from '@gooddata/sdk-backend-spi';
+import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -49,15 +58,18 @@ import { IResultHeader } from '@gooddata/sdk-backend-spi';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IVariableMetadataObject } from '@gooddata/sdk-backend-spi';
+import { IWidget } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactoryOptions } from '@gooddata/sdk-backend-spi';
+import { KpiDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { MeasureBuilder } from '@gooddata/sdk-model';
 import { MeasureModifications } from '@gooddata/sdk-model';
 import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { ValidationContext } from '@gooddata/sdk-backend-spi';
+import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @internal
 export abstract class AbstractExecutionFactory implements IExecutionFactory {
@@ -496,6 +508,28 @@ export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBas
     groups(tagRefs: ObjRef[]): this;
 }
 
+// @alpha
+export interface IInsightWidgetBuilder extends IWidgetBaseBuilder<IInsightWidget> {
+    // (undocumented)
+    drills(valueOrUpdateCallback: ValueOrUpdateCallback<InsightDrillDefinition[]>): this;
+    // (undocumented)
+    insight(valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this;
+    // (undocumented)
+    properties(valueOrUpdateCallback: ValueOrUpdateCallback<VisualizationProperties | undefined>): this;
+}
+
+// @alpha
+export interface IKpiWidgetBuilder extends IWidgetBaseBuilder<IKpiWidget> {
+    // (undocumented)
+    comparisonDirection(valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>): this;
+    // (undocumented)
+    comparisonType(valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>): this;
+    // (undocumented)
+    drills(valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>): this;
+    // (undocumented)
+    measure(valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this;
+}
+
 // @beta
 export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends IBuilder<T> {
     deprecated(isDeprecated: boolean): this;
@@ -505,6 +539,66 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     title(title: string): this;
     unlisted(value: boolean): this;
     uri(uri: string): this;
+}
+
+// @alpha (undocumented)
+export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> implements IInsightWidgetBuilder {
+    constructor(item: IInsightWidget, validator?: ((item: Partial<IInsightWidget>) => void) | undefined);
+    // (undocumented)
+    drills: (valueOrUpdateCallback: ValueOrUpdateCallback<InsightDrillDefinition[]>) => this;
+    // (undocumented)
+    static for(insightWidget: IInsightWidgetDefinition): InsightWidgetBuilder;
+    // (undocumented)
+    static forNew(insight: ObjRef): InsightWidgetBuilder;
+    // (undocumented)
+    insight: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
+    // (undocumented)
+    protected item: IInsightWidget;
+    // (undocumented)
+    properties: (valueOrUpdateCallback: ValueOrUpdateCallback<VisualizationProperties | undefined>) => this;
+    // (undocumented)
+    protected validator?: ((item: Partial<IInsightWidget>) => void) | undefined;
+}
+
+// @alpha
+export interface IWidgetBaseBuilder<T extends IWidget> extends IBuilder<T> {
+    // (undocumented)
+    dateDataSet(valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef | undefined>): this;
+    // (undocumented)
+    description(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
+    // (undocumented)
+    id(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
+    // (undocumented)
+    ignoreDashboardFilters(valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardFilterReference[]>): this;
+    // (undocumented)
+    ref(valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>): this;
+    // (undocumented)
+    title(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
+    // (undocumented)
+    uri(valueOrUpdateCallback: ValueOrUpdateCallback<string>): this;
+}
+
+// @alpha (undocumented)
+export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements IKpiWidgetBuilder {
+    constructor(item: IKpiWidget, validator?: ((item: Partial<IKpiWidget>) => void) | undefined);
+    // (undocumented)
+    comparisonDirection: (valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonDirection | undefined>) => this;
+    // (undocumented)
+    comparisonType: (valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpiComparisonTypeComparison>) => this;
+    // (undocumented)
+    drills: (valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>) => this;
+    // (undocumented)
+    static for(kpiWidget: IKpiWidgetDefinition): KpiWidgetBuilder;
+    // (undocumented)
+    static forNew(measure: ObjRef): KpiWidgetBuilder;
+    // (undocumented)
+    protected item: IKpiWidget;
+    // (undocumented)
+    measure: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
+    // (undocumented)
+    protected setKpiWidgetProp: <K extends "comparisonType" | "comparisonDirection" | "metric">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<ILegacyKpi[K]>) => this;
+    // (undocumented)
+    protected validator?: ((item: Partial<IKpiWidget>) => void) | undefined;
 }
 
 // @beta (undocumented)
@@ -568,6 +662,12 @@ export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModi
 // @beta
 export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
 
+// @alpha (undocumented)
+export const newInsightWidget: (measure: ObjRef, modifications: (builder: InsightWidgetBuilder) => InsightWidgetBuilder) => IInsightWidget;
+
+// @alpha (undocumented)
+export const newKpiWidget: (measure: ObjRef, modifications: (builder: KpiWidgetBuilder) => KpiWidgetBuilder) => IKpiWidget;
+
 // @beta
 export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>) => IMeasureMetadataObject;
 
@@ -615,6 +715,9 @@ export class Normalizer {
 // @alpha (undocumented)
 export type PreparedExecutionWrapper = (execution: IPreparedExecution) => IPreparedExecution;
 
+// @alpha
+export const resolveValueOrUpdateCallback: <TValue>(valueOrUpdateCallback: ValueOrUpdateCallback<TValue>, valueToUpdate: TValue) => TValue;
+
 // @beta (undocumented)
 export type ResultFactory = (dimensions: IDimensionDescriptor[], fingerprint: string) => IExecutionResult;
 
@@ -642,8 +745,33 @@ export type TelemetryData = {
 // @public
 export function transformResultHeaders(resultHeaders: IResultHeader[][][], resultHeaderTransformer?: ResultHeaderTransformer, postProcessing?: IPostProcessing): IResultHeader[][][];
 
+// @alpha
+export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);
+
 // @beta
 export class VariableMetadataObjectBuilder<T extends IVariableMetadataObject = IVariableMetadataObject> extends MetadataObjectBuilder<T> {
+}
+
+// @alpha (undocumented)
+export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements IWidgetBaseBuilder<T> {
+    // (undocumented)
+    dateDataSet: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef | undefined>) => this;
+    // (undocumented)
+    description: (valueOrUpdateCallback: ValueOrUpdateCallback<string>) => this;
+    // (undocumented)
+    id: (valueOrUpdateCallback: ValueOrUpdateCallback<string>) => this;
+    // (undocumented)
+    ignoreDashboardFilters: (valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardFilterReference[]>) => this;
+    // (undocumented)
+    ref: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
+    // (undocumented)
+    protected setWidget: (updateCallback: (widget: Partial<T>) => Partial<T>) => this;
+    // (undocumented)
+    protected setWidgetProp: <K extends keyof T>(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<T[K]>) => this;
+    // (undocumented)
+    title: (valueOrUpdateCallback: ValueOrUpdateCallback<string>) => this;
+    // (undocumented)
+    uri: (valueOrUpdateCallback: ValueOrUpdateCallback<string>) => this;
 }
 
 // @beta

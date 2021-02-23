@@ -1,56 +1,44 @@
 // (C) 2007-2021 GoodData Corporation
 export {
-    IDashboardViewLayout,
-    IDashboardViewLayoutColumn,
-    IDashboardViewLayoutContent,
-    IDashboardViewLayoutRow,
-} from "./interfaces/dashboardLayout";
+    IDashboardItemDefaultDimensions,
+    IDashboardItemDefaultDimensionsByVisType,
+    IDashboardLayoutItemKeyGetter,
+    IDashboardLayoutItemKeyGetterProps,
+    IDashboardLayoutItemRenderProps,
+    IDashboardLayoutItemRenderer,
+    IDashboardLayoutRenderer,
+    IDashboardLayoutSectionHeaderRenderProps,
+    IDashboardLayoutSectionHeaderRenderer,
+    IDashboardLayoutSectionKeyGetter,
+    IDashboardLayoutSectionKeyGetterProps,
+    IDashboardLayoutSectionRenderProps,
+    IDashboardLayoutSectionRenderer,
+    IDashboardLayoutWidgetRenderProps,
+    IDashboardLayoutWidgetRenderer,
+    IDashboardLayoutGridRowRenderProps,
+    IDashboardLayoutGridRowRenderer,
+    IDashboardLayoutRenderProps,
+} from "./interfaces";
 export {
-    IDashboardViewLayoutColumnKeyGetter,
-    IDashboardViewLayoutColumnRenderProps,
-    IDashboardViewLayoutColumnRenderer,
-    IDashboardViewLayoutContentRenderer,
-    IDashboardViewLayoutRowKeyGetter,
-    IDashboardViewLayoutRowRenderer,
-    IDashboardViewLayoutCommonRenderProps,
-    IDashboardViewLayoutContentRenderProps,
-    IDashboardViewLayoutRenderer,
-    IDashboardViewLayoutRowHeaderRenderProps,
-    IDashboardViewLayoutRowHeaderRenderer,
-    IDashboardViewLayoutRowRenderProps,
-} from "./interfaces/dashboardLayoutComponents";
-export {
-    DashboardViewWidgetDimensionsByWidgetClass,
-    IDashboardViewWidgetDimension,
-    DashboardViewLayoutWidgetClass,
-} from "./interfaces/dashboardLayoutSizing";
-
-// TODO: RAIL-2869 Migrate to Responsive context
-export {
-    DASHBOARD_LAYOUT_BREAKPOINT_LG,
-    DASHBOARD_LAYOUT_BREAKPOINT_MD,
-    DASHBOARD_LAYOUT_BREAKPOINT_SM,
-    DASHBOARD_LAYOUT_BREAKPOINT_XS,
-    DASHBOARD_LAYOUT_BREAK_POINTS,
-    DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
-    DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
+    ALL_SCREENS,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    DASHBOARD_LAYOUT_GRID_CONFIGURATION,
-    DASHBOARD_LAYOUT_GUTTER_WIDTH,
-    DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
     DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
-    DASHBOARD_LAYOUT_WIDGET_CLASS,
+    DASHBOARD_LAYOUT_VIS_TYPE,
     SCREEN_BREAKPOINT_LG,
     SCREEN_BREAKPOINT_MD,
     SCREEN_BREAKPOINT_SM,
     SCREEN_BREAKPOINT_XL,
     SCREEN_BREAKPOINT_XS,
     SCREEN_BREAKPOINT_XXL,
-    WIDGET_DIMENSIONS_DEFAULT,
-    WIDGET_DIMENSIONS_TABLE,
-    isDashboardViewLayoutWidgetClass,
 } from "./constants";
+export { DashboardLayout } from "./DashboardLayout";
+export { DashboardLayoutItem, IDashboardLayoutItemProps } from "./DashboardLayoutItem";
+export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer";
+export { DashboardLayoutSection, IDashboardLayoutSectionProps } from "./DashboardLayoutSection";
+export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
+export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
+export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
+export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
 export {
     calculateGeoPushpinWidgetHeight,
     getGeoPushpinWidgetStyle,
@@ -59,13 +47,28 @@ export {
     isGeoPushpin,
 } from "./utils/legacy";
 export {
-    getDashboardLayoutContentHeightForRatioAndScreen,
-    getDashboardLayoutMinimumWidgetHeight,
-    unifyDashboardLayoutColumnHeights,
+    getDashboardLayoutItemHeightForRatioAndScreen,
+    getDashboardLayoutItemMaxGridWidth,
+    getDashboardLayoutWidgetDefaultGridWidth,
+    getDashboardLayoutWidgetDefaultHeight,
+    getDashboardLayoutWidgetMinGridWidth,
 } from "./utils/sizing";
-export { DashboardLayout, IDashboardViewLayoutProps } from "./DashboardLayout";
-export { DashboardLayoutRowRenderer } from "./DashboardLayoutRowRenderer";
-export { DashboardLayoutColumnRenderer } from "./DashboardLayoutColumnRenderer";
-export { DashboardLayoutContentRenderer } from "./DashboardLayoutContentRenderer";
-export { DashboardLayoutRowHeader } from "./DashboardLayoutRowHeader";
-export { DashboardLayoutRowHeaderRenderer } from "./DashboardLayoutRowHeaderRenderer";
+export { DashboardLayoutBuilder } from "./builder/layout";
+export { DashboardLayoutFacade } from "./facade/layout";
+export {
+    DashboardLayoutItemModifications,
+    DashboardLayoutItemsSelector,
+    DashboardLayoutModifications,
+    DashboardLayoutSectionModifications,
+    DashboardLayoutSectionsSelector,
+    IDashboardLayoutBuilder,
+    IDashboardLayoutItemBuilder,
+    IDashboardLayoutSectionBuilder,
+} from "./builder/interfaces";
+export {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutItemsFacade,
+    IDashboardLayoutFacade,
+    IDashboardLayoutSectionFacade,
+    IDashboardLayoutSectionsFacade,
+} from "./facade/interfaces";

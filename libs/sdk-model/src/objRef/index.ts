@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
@@ -181,8 +181,12 @@ export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T
         return b == null;
     }
 
-    if (isIdentifierRef(a) && isIdentifierRef(b)) {
+    if (isIdentifierRef(a) && isIdentifierRef(b) && a.type && b.type) {
         return a.identifier === b.identifier && a.type === b.type;
+    }
+
+    if (isIdentifierRef(a) && isIdentifierRef(b)) {
+        return a.identifier === b.identifier;
     }
 
     if (isUriRef(a) && isUriRef(b)) {

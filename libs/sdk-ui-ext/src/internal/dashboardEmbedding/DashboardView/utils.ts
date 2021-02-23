@@ -1,10 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
-import { DashboardViewLayoutWidgetClass } from "../DashboardLayout/interfaces/dashboardLayoutSizing";
+import { WidgetType } from "@gooddata/sdk-backend-spi";
+import { VisType } from "@gooddata/sdk-ui";
 
 const typeVisTypeCssClassMapping: {
-    [widgetClass in DashboardViewLayoutWidgetClass]?: string;
+    [visType in VisType]?: string;
 } = {
-    kpi: "viz-type-kpi",
     headline: "viz-type-headline",
     xirr: "viz-type-xirr",
     column: "viz-type-column",
@@ -23,6 +23,10 @@ const typeVisTypeCssClassMapping: {
     pushpin: "viz-type-pushpin",
 };
 
-export function getVisTypeCssClass(type: DashboardViewLayoutWidgetClass): string {
+export function getVisTypeCssClass(widgetType: WidgetType, type?: VisType): string {
+    if (widgetType === "kpi") {
+        return "viz-type-kpi";
+    }
+
     return typeVisTypeCssClassMapping[type] ?? "";
 }

@@ -133,13 +133,13 @@ Object {
                 },
               ],
               "header": Object {
-                "title": "Row 1",
+                "title": "Section 1",
               },
             },
             Object {
               "columns": Array [],
               "header": Object {
-                "description": "Row 2 description",
+                "description": "Section 2 description",
               },
             },
           ],
