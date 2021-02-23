@@ -82,6 +82,21 @@ export function dashboardFilterToFilterContextItem(filter: IDashboardFilter): Fi
     throw new NotSupported("Unsupported filter type! Please provide valid dashboard filter.");
 }
 
+/**
+ * Remove information about the date dataset from Date filters. Attribute filters are returned unchanged.
+ * @param filter - filter to strip date dataset from
+ */
+export function stripDateDatasets(filter: FilterContextItem): FilterContextItem {
+    if (!isDashboardDateFilter(filter)) {
+        return filter;
+    }
+
+    const { dataSet: _, ...rest } = filter.dateFilter;
+    return {
+        dateFilter: rest,
+    };
+}
+
 export function filterArrayToFilterContextItems(
     filters: Array<IDashboardFilter | FilterContextItem>,
 ): FilterContextItem[] {
