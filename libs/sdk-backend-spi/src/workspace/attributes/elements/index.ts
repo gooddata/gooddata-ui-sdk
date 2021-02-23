@@ -20,7 +20,7 @@ export interface IElementsQueryOptions {
     filter?: string;
 
     /**
-     * TO-DO what is this doing?
+     * TODO what is this doing?
      */
     prompt?: string;
 
@@ -39,16 +39,6 @@ export interface IElementsQueryOptions {
      * Include the total count of all elements in the response (without filters applied)
      */
     includeTotalCountWithoutFilters?: boolean;
-
-    /**
-     * @deprecated use withAttributeFilters or withMeasures
-     */
-    restrictiveDefinition?: string;
-
-    /**
-     * @deprecated use withAttributeFilters or withMeasures
-     */
-    restrictiveDefinitionContent?: object;
 }
 
 /**
@@ -112,6 +102,7 @@ export interface IElementsQuery {
      * Sets the attribute filters that will limit the available elements
      *
      * @param filters - attribute filters limiting the elements
+     * @returns element query
      */
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
 
@@ -120,6 +111,7 @@ export interface IElementsQuery {
      * have data will be returned.
      *
      * @param measures - measures limiting the elements
+     * @returns element query
      */
     withMeasures(measures: IMeasure[]): IElementsQuery;
 

@@ -724,10 +724,6 @@ export interface IElementsQueryOptions {
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
     prompt?: string;
-    // @deprecated (undocumented)
-    restrictiveDefinition?: string;
-    // @deprecated (undocumented)
-    restrictiveDefinitionContent?: object;
     uris?: string[];
 }
 
