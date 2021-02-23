@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IElementsQueryFactory,
     IElementsQuery,
@@ -45,6 +45,10 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
     }
 
     public withAttributeFilters(): IElementsQuery {
+        throw new NotSupported("not supported");
+    }
+
+    public withMeasures(): IElementsQuery {
         throw new NotSupported("not supported");
     }
 

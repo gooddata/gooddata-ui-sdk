@@ -1,5 +1,5 @@
 {
-    "id": "79c3bfc3-1f30-444b-a9e4-c5d8ebf2e0b6",
+    "id": "0865f38c-3b08-4eba-a0c8-83089851c946",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_groups",
     "request": {
         "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/groups",
@@ -18,19 +18,18 @@
         "status": 200,
         "body": "{\"catalogGroups\":[]}",
         "headers": {
-            "Date": "Tue, 08 Sep 2020 17:50:32 GMT",
-            "Server": "GoodData WebApp",
-            "Keep-Alive": "timeout=5, max=100",
-            "X-GDC-LOG-HEADER": "",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Content-Type": "application/json;charset=UTF-8",
-            "X-GDC-REQUEST-TIME": "30",
-            "X-GDC-REQUEST": "g1QCQENMjSxKd86s",
+            "date": "Tue, 23 Feb 2021 15:27:30 GMT",
+            "server": "istio-envoy",
+            "content-type": "application/json;charset=UTF-8",
+            "x-envoy-upstream-service-time": "22",
+            "X-GDC-REQUEST-TIME": "24",
+            "X-GDC-REQUEST": "oXXBNkFxaAqmjMvV",
+            "cache-control": "no-cache, no-store, must-revalidate",
             "vary": "origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "79c3bfc3-1f30-444b-a9e4-c5d8ebf2e0b6",
+    "uuid": "0865f38c-3b08-4eba-a0c8-83089851c946",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 17
 }

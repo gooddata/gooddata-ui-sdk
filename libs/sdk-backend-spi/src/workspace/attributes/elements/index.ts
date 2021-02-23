@@ -1,5 +1,5 @@
-// (C) 2019-2020 GoodData Corporation
-import { SortDirection, ObjRef, IAttributeFilter } from "@gooddata/sdk-model";
+// (C) 2019-2021 GoodData Corporation
+import { SortDirection, ObjRef, IAttributeFilter, IMeasure } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../../common/paging";
 import { IAttributeElement } from "../../fromModel/ldm/attributeElement";
 
@@ -20,7 +20,7 @@ export interface IElementsQueryOptions {
     filter?: string;
 
     /**
-     * TO-DO what is this doing?
+     * TODO what is this doing?
      */
     prompt?: string;
 
@@ -39,21 +39,6 @@ export interface IElementsQueryOptions {
      * Include the total count of all elements in the response (without filters applied)
      */
     includeTotalCountWithoutFilters?: boolean;
-
-    /**
-     * TODO what is this doing?
-     */
-    restrictiveDefinition?: string;
-
-    /**
-     * TODO what is this doing?
-     */
-    restrictiveDefinitionContent?: object;
-
-    /**
-     * TODO is it necessary?
-     */
-    // afm?: GdcExecuteAFM.IAfm; // TODO: do we really need this? if so, we should add support for using executionDefinition here
 }
 
 /**
@@ -117,8 +102,18 @@ export interface IElementsQuery {
      * Sets the attribute filters that will limit the available elements
      *
      * @param filters - attribute filters limiting the elements
+     * @returns element query
      */
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
+
+    /**
+     * Sets the measures that will limit the available elements - only elements for which the measures
+     * have data will be returned.
+     *
+     * @param measures - measures limiting the elements
+     * @returns element query
+     */
+    withMeasures(measures: IMeasure[]): IElementsQuery;
 
     /**
      * Allows to specify advanced options for the elements query.

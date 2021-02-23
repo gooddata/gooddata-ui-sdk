@@ -1,5 +1,5 @@
 {
-    "id": "3887855c-e6d6-4545-8fab-76cb3ae83c57",
+    "id": "4281c40a-ac00-478b-acaa-3df8013eb0d4",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_query",
     "request": {
         "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query",
@@ -23,22 +23,21 @@
     },
     "response": {
         "status": 303,
-        "body": "{\"uri\":\"/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=59759ff64f73b142e35a341c6d6185d7&q=eAFNyzsOAiAMANC7MDv0Q2nxNkDbxMHF4GS8u8TB%2BPb3KmPvx20%2Bd5RrwYCqIaMTOQ5zgZkWnS1U%0AcTrBV5VyKfc4bZ0T6kGqMiA7rUk8V4umLXlJEuDfybH2GWagqZEQpoQNHUW8%2B2DmOrvEb7w%2FtxQq%0AUA%3D%3D%0A\"}",
+        "body": "{\"uri\":\"/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=9d9776fe897e0791b1774c8eb4a25b66&q=eAFNzTuOAjAMANG7pKbwL3HMbWzjSBQ0KFRo776hQUz%2FNO%2Fmez%2Fv8drVrm3cHMqsL5epKdRB5rAK%0AwQWobPAJQ9ulPeqwPCYZvWxYEEXQ7MyiayaHY3Rg%2FjHLcx9hZ8LmMtxwCPCgQC2iCZzKSl%2Fx9w9u%0AiylJ%0A\"}",
         "headers": {
-            "Date": "Tue, 08 Sep 2020 17:50:33 GMT",
-            "Server": "GoodData WebApp",
-            "Location": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=59759ff64f73b142e35a341c6d6185d7&q=eAFNyzsOAiAMANC7MDv0Q2nxNkDbxMHF4GS8u8TB%2BPb3KmPvx20%2Bd5RrwYCqIaMTOQ5zgZkWnS1U%0AcTrBV5VyKfc4bZ0T6kGqMiA7rUk8V4umLXlJEuDfybH2GWagqZEQpoQNHUW8%2B2DmOrvEb7w%2FtxQq%0AUA%3D%3D%0A",
-            "Keep-Alive": "timeout=5, max=38",
-            "X-GDC-LOG-HEADER": "",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Content-Type": "application/json;charset=UTF-8",
-            "X-GDC-REQUEST-TIME": "65",
-            "X-GDC-REQUEST": "gDv3y7bl7aIOcdtw",
+            "date": "Tue, 23 Feb 2021 15:27:31 GMT",
+            "server": "istio-envoy",
+            "location": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=9d9776fe897e0791b1774c8eb4a25b66&q=eAFNzTuOAjAMANG7pKbwL3HMbWzjSBQ0KFRo776hQUz%2FNO%2Fmez%2Fv8drVrm3cHMqsL5epKdRB5rAK%0AwQWobPAJQ9ulPeqwPCYZvWxYEEXQ7MyiayaHY3Rg%2FjHLcx9hZ8LmMtxwCPCgQC2iCZzKSl%2Fx9w9u%0AiylJ%0A",
+            "content-type": "application/json;charset=UTF-8",
+            "x-envoy-upstream-service-time": "86",
+            "X-GDC-REQUEST-TIME": "88",
+            "X-GDC-REQUEST": "HXSfkNEz9JX7Xhy9",
+            "cache-control": "no-cache, no-store, must-revalidate",
             "vary": "origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "3887855c-e6d6-4545-8fab-76cb3ae83c57",
+    "uuid": "4281c40a-ac00-478b-acaa-3df8013eb0d4",
     "persistent": true,
-    "insertionIndex": 18
+    "insertionIndex": 21
 }
