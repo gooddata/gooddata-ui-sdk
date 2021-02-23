@@ -71,18 +71,26 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
     return chartDimensions;
 }
 
+/**
+ * Specifies props that are on geo chart props but not on core chart props - these must not be passed
+ * down to core chart.
+ */
+const NON_CORE_PROPS: Array<keyof IGeoPushpinChartProps> = [
+    "backend",
+    "workspace",
+    "segmentBy",
+    "filters",
+    "sortBy",
+    "location",
+    "color",
+    "size",
+];
+
 function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
     const { backend, workspace, sortBy, filters, exportTitle } = props;
 
     const buckets: IBucket[] = getBuckets(props);
-    const newProps = omit({ ...props }, [
-        BucketNames.LOCATION,
-        BucketNames.COLOR,
-        BucketNames.SIZE,
-        "segmentBy",
-        "filters",
-        "sortBy",
-    ]);
+    const newProps = omit(props, NON_CORE_PROPS);
 
     const execution = backend!
         .withTelemetry("GeoPushpinChart", props)
