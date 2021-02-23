@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcFilterContext } from "../GdcFilterContext";
 
 export const relativeDateFilter: GdcFilterContext.FilterContextItem = {
     dateFilter: {
         type: "relative",
-        from: -11,
-        to: 0,
+        from: "-11",
+        to: "0",
         granularity: "GDC.time.month",
     },
 };

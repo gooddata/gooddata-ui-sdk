@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { GdcFilterContext, GdcExport } from "@gooddata/api-model-bear";
@@ -18,8 +18,8 @@ describe("exportDashboard", () => {
     const relativeDateFilter: GdcFilterContext.FilterContextItem = {
         dateFilter: {
             type: "relative",
-            from: -11,
-            to: 11,
+            from: "-11",
+            to: "11",
             granularity: "GDC.time.month",
         },
     };

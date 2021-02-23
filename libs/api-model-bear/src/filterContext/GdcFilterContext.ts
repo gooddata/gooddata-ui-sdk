@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GdcExtendedDateFilters } from "../extendedDateFilters/GdcExtendedDateFilters";
 import { GdcMetadata } from "../meta/GdcMetadata";
-import { Uri, Timestamp } from "../aliases";
+import { Uri, Timestamp, NumberAsString } from "../aliases";
 
 /**
  * @public
@@ -55,8 +55,8 @@ export namespace GdcFilterContext {
         dateFilter: {
             type: DateFilterType;
             granularity: GdcExtendedDateFilters.DateFilterGranularity;
-            from?: GdcExtendedDateFilters.DateString | number;
-            to?: GdcExtendedDateFilters.DateString | number;
+            from?: GdcExtendedDateFilters.DateString | NumberAsString;
+            to?: GdcExtendedDateFilters.DateString | NumberAsString;
             dataSet?: string;
             attribute?: string;
         };

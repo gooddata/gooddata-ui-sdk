@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     GdcDashboard,
@@ -53,8 +53,8 @@ export const filterContext: GdcFilterContext.IWrappedFilterContext = {
                         granularity: "GDC.time.month",
                         type: "relative",
                         attribute: "testAttr",
-                        from: -10,
-                        to: 0,
+                        from: "-10",
+                        to: "0",
                     },
                 },
             ],

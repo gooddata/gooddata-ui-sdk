@@ -51,7 +51,7 @@ import {
     getBrokenAlertFiltersBasicInfo,
 } from "../../KpiAlerts";
 import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
-import { dashboardFilterToFilterContextItem } from "../../utils/filters";
+import { dashboardFilterToFilterContextItem, stripDateDatasets } from "../../utils/filters";
 import { useUserWorkspaceSettings } from "../UserWorkspaceSettingsContext";
 
 import {
@@ -254,7 +254,9 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                                   filterContext: {
                                       title: "filterContext",
                                       description: "",
-                                      filters: effectiveFilters.map(dashboardFilterToFilterContextItem),
+                                      filters: effectiveFilters
+                                          .map(dashboardFilterToFilterContextItem)
+                                          .map(stripDateDatasets),
                                   },
                                   description: "",
                                   title: "",
@@ -273,7 +275,9 @@ export const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps
                             // change the filters to the filters currently used by the KPI
                             filterContext: {
                                 ...alert.filterContext,
-                                filters: effectiveFilters.map(dashboardFilterToFilterContextItem),
+                                filters: effectiveFilters
+                                    .map(dashboardFilterToFilterContextItem)
+                                    .map(stripDateDatasets),
                             },
                         });
                     }}
