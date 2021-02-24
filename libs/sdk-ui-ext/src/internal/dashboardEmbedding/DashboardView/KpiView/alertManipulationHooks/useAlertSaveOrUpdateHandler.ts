@@ -1,9 +1,9 @@
 // (C) 2021 GoodData Corporation
 import { useState } from "react";
 import { IAnalyticalBackend, isWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
-import { useSaveOrUpdateWidgetAlert } from "../../../hooks/useSaveOrUpdateWidgetAlert";
+import { useSaveOrUpdateWidgetAlert } from "../../../hooks/internal";
 import { KpiAlertOperationStatus } from "../../../types";
-import { useAlerts } from "../../DashboardAlertsContext";
+import { useAlerts } from "../../contexts";
 
 interface IUseAlertSaveHandlerConfig {
     closeAlertDialog: () => void;

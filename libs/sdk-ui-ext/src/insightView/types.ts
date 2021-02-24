@@ -1,10 +1,16 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IFilter, IColorPalette, ObjRef } from "@gooddata/sdk-model";
 
-import { IVisCallbacks } from "../internal/interfaces/Visualization";
-import { ILocale, ILoadingProps, IErrorProps, IDrillableItem, IHeaderPredicate } from "@gooddata/sdk-ui";
+import {
+    ILocale,
+    ILoadingProps,
+    IErrorProps,
+    IDrillableItem,
+    IHeaderPredicate,
+    IVisualizationCallbacks,
+} from "@gooddata/sdk-ui";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
@@ -12,7 +18,7 @@ import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
 /**
  * @public
  */
-export interface IInsightViewProps extends Partial<IVisCallbacks> {
+export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     /**
      * Backend to work with.
      *

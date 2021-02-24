@@ -2,10 +2,7 @@
 import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { dataLoaderAbstractFactory } from "../../../../dataLoaders/DataLoaderAbstractFactory";
 
-/**
- * @internal
- */
-export interface IUserWorkspacePermissionsDataLoader {
+interface IUserWorkspacePermissionsDataLoader {
     /**
      * Obtains the user workspace permissions for the current user workspace.
      * @param backend - the {@link IAnalyticalBackend} instance to use to communicate with the backend

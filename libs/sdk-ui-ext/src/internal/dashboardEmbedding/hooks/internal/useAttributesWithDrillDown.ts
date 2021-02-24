@@ -9,13 +9,10 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { attributesWithDrillDownDataLoaderFactory } from "./dataLoaders";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { attributesWithDrillDownDataLoaderFactory } from "../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IAttributesWithDrillDownConfig
+interface IAttributesWithDrillDownConfig
     extends UseCancelablePromiseCallbacks<
         Array<ICatalogAttribute | ICatalogDateAttribute>,
         GoodDataSdkError
@@ -45,7 +42,7 @@ export interface IAttributesWithDrillDownConfig
 /**
  * Hook allowing to download attributes with drillDown of the given workspace
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
 export function useAttributesWithDrillDown({
     backend,

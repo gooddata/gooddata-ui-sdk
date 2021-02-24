@@ -7,12 +7,9 @@ import {
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
-import { backendInvariant } from "./utils";
+import { backendInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseCurrentUserConfig extends UseCancelablePromiseCallbacks<IUser, GoodDataSdkError> {
+interface IUseCurrentUserConfig extends UseCancelablePromiseCallbacks<IUser, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -25,7 +22,7 @@ export interface IUseCurrentUserConfig extends UseCancelablePromiseCallbacks<IUs
 /**
  * Hook allowing to get current user details
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
 export function useCurrentUser({
     backend,

@@ -46,6 +46,9 @@ interface IUseKpiDataResult {
     allFilters?: IDashboardFilter[];
 }
 
+/**
+ * @internal
+ */
 export function useKpiData({
     kpiWidget,
     filters,

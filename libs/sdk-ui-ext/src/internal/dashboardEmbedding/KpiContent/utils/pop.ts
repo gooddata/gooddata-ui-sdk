@@ -1,10 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import isNull from "lodash/isNull";
 
 import { HYPHEN } from "./format";
 
-export type Trend = "neutral" | "up" | "down";
+type Trend = "neutral" | "up" | "down";
 type Meaning = "neutral" | "positive" | "negative";
 
 export interface IPopInfo {

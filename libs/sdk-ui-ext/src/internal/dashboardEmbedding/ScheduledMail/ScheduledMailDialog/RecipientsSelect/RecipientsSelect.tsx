@@ -5,12 +5,12 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import sortBy from "lodash/sortBy";
 
-import { useWorkspaceUsers } from "../../../hooks/useWorkspaceUsers";
+import { useWorkspaceUsers } from "../../../hooks/internal";
 import { IScheduleEmailRecipient } from "../../interfaces";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer";
 
-export interface IRecipientsSelectProps {
+interface IRecipientsSelectProps {
     /**
      * Author of the scheduled email - is always recipient of the scheduled email.
      */

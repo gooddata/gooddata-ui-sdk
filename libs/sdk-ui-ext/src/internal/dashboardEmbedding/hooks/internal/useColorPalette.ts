@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IColorPalette } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,18 +9,10 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { colorPaletteDataLoaderFactory } from "../../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseUpdateWidgetAlertConfig
-    extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
-    /**
-     * Widget alert to update.
-     */
-    widgetAlert?: IWidgetAlert;
-
+interface IUseColorPaletteConfig extends UseCancelablePromiseCallbacks<IColorPalette, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -29,7 +22,7 @@ export interface IUseUpdateWidgetAlertConfig
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace to work with.
+     * Workspace to get the color palette for.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the hook MUST be called within an existing WorkspaceContext.
@@ -38,33 +31,30 @@ export interface IUseUpdateWidgetAlertConfig
 }
 
 /**
- * Hook allowing to update a widget alert
+ * Hook allowing to download color palette of the given workspace
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useUpdateWidgetAlert({
-    widgetAlert,
+export function useColorPalette({
     backend,
-    workspace,
     onCancel,
     onError,
     onLoading,
     onPending,
     onSuccess,
-}: IUseUpdateWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
+    workspace,
+}: IUseColorPaletteConfig): UseCancelablePromiseState<IColorPalette, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useUpdateWidgetAlert");
-    workspaceInvariant(effectiveWorkspace, "useUpdateWidgetAlert");
+    backendInvariant(effectiveBackend, "useColorPalette");
+    workspaceInvariant(effectiveWorkspace, "useColorPalette");
 
-    const promise = widgetAlert
-        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().updateWidgetAlert(widgetAlert)
-        : null;
+    const loader = colorPaletteDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getColorPalette(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        widgetAlert,
     ]);
 }

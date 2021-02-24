@@ -34,7 +34,7 @@ import { IDashboardViewLayout } from "../DashboardLayout/interfaces/dashboardLay
 import { IDashboardFilter } from "../types";
 import { DashboardWidgetRenderer, IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
 import { IDashboardWidgetRenderer, IDashboardWidgetRenderProps, IWidgetPredicates } from "./types";
-import { useAlerts } from "./DashboardAlertsContext";
+import { useAlerts } from "./contexts";
 
 interface IDashboardRendererProps {
     dashboardRef: ObjRef;

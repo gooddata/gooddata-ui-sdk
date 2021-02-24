@@ -1,6 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import { IDashboardViewConfig } from "./types";
+import { IDashboardViewConfig } from "../types";
 
 const DashboardViewConfigContext = React.createContext<IDashboardViewConfig | undefined>(undefined);
 DashboardViewConfigContext.displayName = "DashboardViewConfigContext";

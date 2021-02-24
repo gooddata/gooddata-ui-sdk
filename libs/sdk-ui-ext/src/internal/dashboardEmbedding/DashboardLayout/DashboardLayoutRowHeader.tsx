@@ -14,7 +14,7 @@ export interface IDashboardLayoutRowHeaderProps {
      * This prop is here to allow rendering row hotspots in gdc-dashboards edit mode
      * in the same DOM location as before without duplicating css classes / DOM structure,
      * because we want to have all the logic and styling of the dashboard layout in one place,
-     * to keep the look of DashbardView component in sync with gdc-dashboards.
+     * to keep the look of DashboardView component in sync with gdc-dashboards.
      */
 
     renderBeforeHeader?: React.ReactNode;
@@ -23,7 +23,7 @@ export interface IDashboardLayoutRowHeaderProps {
      * This prop is here to allow rendering editable row header in gdc-dashboards edit mode
      * in the same DOM location as before without duplicating css classes / DOM structure,
      * because we want to have all the logic and styling of the dashboard layout in one place,
-     * to keep the look of DashbardView component in sync with gdc-dashboards.
+     * to keep the look of DashboardView component in sync with gdc-dashboards.
      */
 
     renderHeader?: React.ReactNode;

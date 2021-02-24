@@ -23,7 +23,7 @@ import {
     OnError,
 } from "@gooddata/sdk-ui";
 import { KpiView } from "./KpiView";
-import { InsightRenderer } from "./InsightRenderer";
+import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
 import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";

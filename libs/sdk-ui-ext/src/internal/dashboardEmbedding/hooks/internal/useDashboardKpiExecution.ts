@@ -18,13 +18,10 @@ import {
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
-import { useKpiData } from "../DashboardView/KpiView/utils";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { useKpiData } from "./useKpiData";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseKpiExecutionConfig
+interface IUseKpiExecutionConfig
     extends UseCancelablePromiseCallbacks<IPreparedExecution | undefined, GoodDataSdkError> {
     kpiWidget?: IKpiWidget;
     filters?: FilterContextItem[];
@@ -37,17 +34,17 @@ export interface IUseKpiExecutionConfig
 /**
  * Hook allowing to get execution for particular kpi widget.
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useKpiExecution(
+export function useDashboardKpiExecution(
     config: IUseKpiExecutionConfig,
 ): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError> {
     const { backend, workspace } = config;
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useKpiExecution");
-    workspaceInvariant(effectiveWorkspace, "useKpiExecution");
+    backendInvariant(effectiveBackend, "useDashboardKpiExecution");
+    workspaceInvariant(effectiveWorkspace, "useDashboardKpiExecution");
 
     const { result, status, error } = useKpiData(config);
     const execution = useExecution({

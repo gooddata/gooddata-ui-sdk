@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,17 +8,11 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { userWorkspacePermissionsDataLoaderFactory } from "../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbacks<void, GoodDataSdkError> {
-    /**
-     * Widget alert to delete.
-     */
-    widgetAlert?: IWidgetAlert;
-
+interface IUseUserWorkspacePermissionsConfig
+    extends UseCancelablePromiseCallbacks<IWorkspacePermissions, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -37,33 +31,30 @@ export interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbac
 }
 
 /**
- * Hook allowing to delete a widget alert
+ * Hook allowing to download user workspace permissions
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useDeleteWidgetAlert({
-    widgetAlert,
+export function useUserWorkspacePermissions({
     backend,
-    workspace,
     onCancel,
     onError,
     onLoading,
     onPending,
     onSuccess,
-}: IUseDeleteWidgetAlertConfig): UseCancelablePromiseState<void, any> {
+    workspace,
+}: IUseUserWorkspacePermissionsConfig): UseCancelablePromiseState<IWorkspacePermissions, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useDeleteWidgetAlert");
-    workspaceInvariant(effectiveWorkspace, "useDeleteWidgetAlert");
+    backendInvariant(effectiveBackend, "useUserWorkspacePermissions");
+    workspaceInvariant(effectiveWorkspace, "useUserWorkspacePermissions");
 
-    const promise = widgetAlert
-        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().deleteWidgetAlert(widgetAlert.ref)
-        : null;
+    const loader = userWorkspacePermissionsDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getUserWorkspacePermissions(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        widgetAlert,
     ]);
 }

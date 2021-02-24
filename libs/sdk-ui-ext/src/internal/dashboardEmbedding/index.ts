@@ -1,24 +1,40 @@
 // (C) 2020-2021 GoodData Corporation
-export { useDashboard, IUseDashboardConfig } from "./hooks/useDashboard";
-export { useDashboardAlerts, IUseDashboardAlertsConfig } from "./hooks/useDashboardAlerts";
+
+/**
+ * Soon to be publicly exported stuff
+ */
+
+// Hooks and data loading
+export * from "./hooks";
+export { clearDashboardViewCaches } from "./hooks/dataLoaders"; // TODO RAIL-2956 merge with other data loaders once moving to non internal
+
+// DashboardView itself
+export { DashboardView, IDashboardViewProps, defaultThemeModifier } from "./DashboardView";
+
+// Publicly documented utilities
+export { isDateFilterIrrelevant, mergeFiltersWithDashboard } from "./utils/filters";
+
+// Publicly documented types
+export { IDashboardFilter } from "./types";
+
+//
+//
+//
+
+/**
+ * Stuff exported only for internal use (should probably stay in the /internal folder if possible)
+ */
+
 export {
     DASHBOARD_TITLE_MAX_LENGTH,
     PLATFORM_DATE_FORMAT,
     IScheduledMailDialogRendererOwnProps,
     ScheduledMailDialogRenderer,
 } from "./ScheduledMail";
-export {
-    DashboardView,
-    IDashboardViewProps,
-    IKpiViewProps,
-    KpiView,
-    defaultThemeModifier,
-} from "./DashboardView";
-export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
-export { isDateFilterIrrelevant } from "./utils/filters";
-export { useDashboardWidgetExecution } from "./hooks/useDashboardWidgetExecution";
-export { useDashboardPdfExporter } from "./hooks/convenience/useDashboardPdfExporter";
-export { clearDashboardViewCaches } from "./hooks/dataLoaders";
+export * from "./DashboardItem";
+export * from "./KpiAlerts";
+export * from "./KpiContent";
+export { IKpiAlertResult, IKpiResult, KpiAlertOperationStatus } from "./types";
 
 // TODO: RAIL-2869 Migrate to Responsive context
 export {
@@ -104,7 +120,3 @@ export {
     IFluidLayoutRowHeaderRenderer,
     IFluidLayoutRowKeyGetterProps,
 } from "./FluidLayout";
-export * from "./DashboardItem";
-export * from "./KpiAlerts";
-export * from "./KpiContent";
-export * from "./types";

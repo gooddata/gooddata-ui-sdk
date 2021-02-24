@@ -3,8 +3,8 @@ import { useState } from "react";
 import { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { UseCancelablePromiseCallbacks, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../../types";
-import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "../useExportDashboardToPdf";
+import { IDashboardFilter } from "../types";
+import { useExportDashboardToPdf as useExportDashboardToPdfCore } from "./internal";
 
 function downloadFile(uri: string): void {
     const anchor = document.createElement("a");

@@ -4,6 +4,11 @@ import { colorPaletteDataLoaderFactory } from "./ColorPaletteDataLoader";
 import { insightDataLoaderFactory } from "./InsightDataLoader";
 import { userWorkspaceSettingsDataLoaderFactory } from "./UserWorkspaceSettingsDataLoader";
 
+/**
+ * Clears all the caches used by the InsightView components.
+ *
+ * @public
+ */
 export function clearInsightViewCaches(): void {
     const relevantFactories: IDataLoaderFactory<unknown>[] = [
         colorPaletteDataLoaderFactory,
