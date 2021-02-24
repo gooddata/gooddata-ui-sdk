@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useMemo } from "react";
-import compact from "lodash/compact";
+import React from "react";
 import {
     FilterContextItem,
     IAnalyticalBackend,
@@ -17,7 +16,6 @@ import {
     LoadingComponent as DefaultLoading,
     IDrillableItem,
     IHeaderPredicate,
-    OnFiredDrillEvent,
     OnError,
 } from "@gooddata/sdk-ui";
 import invariant from "ts-invariant";
@@ -26,6 +24,7 @@ import { KpiExecutor } from "./KpiExecutor";
 import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../contexts";
 import { useKpiData } from "../../hooks/internal";
 import { IDashboardFilter } from "../../types";
+import { OnFiredDashboardViewDrillEvent } from "../types";
 
 interface IKpiViewProps {
     /**
@@ -67,7 +66,7 @@ interface IKpiViewProps {
     /**
      * Called when user triggers a drill on a visualization.
      */
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
 
     /**
      * Called in case of any error, either in the dashboard loading or any of the widgets execution.
@@ -112,7 +111,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     filters,
     onFiltersChange,
     filterContext,
-    drillableItems = [],
+    drillableItems,
     onDrill,
     onError,
     backend,
@@ -134,12 +133,6 @@ export const KpiView: React.FC<IKpiViewProps> = ({
     const config = useDashboardViewConfig();
     const isReadOnly = useDashboardViewIsReadOnly();
 
-    // add drilling predicate for the metric if the KPI has any drills defined from KPI dashboards
-    const effectiveDrillableItems: Array<IDrillableItem | IHeaderPredicate> = useMemo(
-        () => compact([...drillableItems, kpiWidget.drills.length > 0 && kpiWidget.kpi.metric]),
-        [kpiWidget, drillableItems],
-    );
-
     if (status === "loading" || status === "pending") {
         return <LoadingComponent />;
     }
@@ -160,7 +153,7 @@ export const KpiView: React.FC<IKpiViewProps> = ({
             onFiltersChange={onFiltersChange}
             onDrill={onDrill}
             onError={onError}
-            drillableItems={effectiveDrillableItems}
+            drillableItems={drillableItems}
             separators={config?.separators}
             disableDrillUnderline={config?.disableKpiDrillUnderline}
             backend={backend}

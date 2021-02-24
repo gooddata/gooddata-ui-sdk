@@ -1,4 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import {
     IAnalyticalBackend,
     ITheme,
@@ -10,17 +11,19 @@ import {
     IWidget,
     FilterContextItem,
     ILegacyKpi,
+    DrillDefinition,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
-    OnFiredDrillEvent,
     IErrorProps,
     ILoadingProps,
     OnError,
     ILocale,
     VisType,
+    IDrillEvent,
+    OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { IDashboardFilter } from "../types";
 import { IDashboardLayoutBuilder } from "../DashboardLayout/builder/interfaces";
@@ -85,6 +88,35 @@ export interface IDashboardViewConfig {
 }
 
 /**
+ * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
+ */
+export interface IDrillDownDefinition {
+    type: "drillDown";
+    target: ObjRef;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
+ * @alpha
+ */
+export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
+    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
+}
+
+/**
+ * A {@link IDrillEvent} with added field that contains info about all the drilling interactions set in KPI dashboards
+ * that are relevant to the given drill event (including drill downs).
+ */
+export interface IDashboardDrillEvent extends IDrillEvent {
+    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+}
+
+/**
+ * Callback called when a drill event occurs.
+ */
+export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
+
+/**
  * @beta
  */
 export interface IDashboardViewProps {
@@ -125,7 +157,7 @@ export interface IDashboardViewProps {
     /**
      * Called when user triggers a drill on a visualization.
      */
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
 
     /**
      * Backend to work with.

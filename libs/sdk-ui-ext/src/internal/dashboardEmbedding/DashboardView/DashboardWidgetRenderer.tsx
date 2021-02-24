@@ -17,7 +17,6 @@ import {
 import {
     IDrillableItem,
     IHeaderPredicate,
-    OnFiredDrillEvent,
     IErrorProps,
     ILoadingProps,
     OnError,
@@ -30,6 +29,7 @@ import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisual
 import { DashboardItem } from "../DashboardItem/DashboardItem";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardFilter } from "../types";
+import { OnFiredDashboardViewDrillEvent } from "./types";
 
 export type IDashboardWidgetRendererProps = {
     backend?: IAnalyticalBackend;
@@ -37,7 +37,7 @@ export type IDashboardWidgetRendererProps = {
     filters?: FilterContextItem[];
     filterContext: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;
