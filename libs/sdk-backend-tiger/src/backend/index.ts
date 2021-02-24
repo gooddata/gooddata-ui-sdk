@@ -153,7 +153,7 @@ export class TigerBackend implements IAnalyticalBackend {
                         url,
                         context,
                     );
-                    return Promise.resolve(false);
+                    return Promise.resolve(true);
                 },
             }),
         };
