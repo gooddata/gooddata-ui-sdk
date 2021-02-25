@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { FilterContextItem, isKpiWidget } from "@gooddata/sdk-backend-spi";
-import { DashboardView, useDashboardWidgetExecution } from "@gooddata/sdk-ui-ext/esm/internal";
+import { DashboardView, useDashboardWidgetExecution } from "@gooddata/sdk-ui-ext";
 import { idRef, newPositiveAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import { useDataView, IErrorProps, ILoadingProps } from "@gooddata/sdk-ui";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
