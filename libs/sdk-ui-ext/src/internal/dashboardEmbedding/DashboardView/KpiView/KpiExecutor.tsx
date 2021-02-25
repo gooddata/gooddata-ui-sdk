@@ -36,7 +36,6 @@ import {
     LoadingComponent as DefaultLoading,
     NoDataSdkError,
     OnError,
-    OnFiredDrillEvent,
     useDataView,
     useExecution,
 } from "@gooddata/sdk-ui";
@@ -60,6 +59,7 @@ import {
 } from "./alertManipulationHooks";
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
+import { OnFiredDashboardViewDrillEvent } from "../types";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;
@@ -78,7 +78,7 @@ interface IKpiExecutorProps {
     allFilters?: IDashboardFilter[];
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     backend: IAnalyticalBackend;
     workspace: string;
@@ -146,14 +146,20 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
     );
 
     const handleOnDrill = useCallback(
-        (drillContext: IDrillEventContext): ReturnType<OnFiredDrillEvent> => {
+        (drillContext: IDrillEventContext): ReturnType<OnFiredDashboardViewDrillEvent> => {
             if (!onDrill || !result) {
                 return false;
             }
 
+            // only return the definitions if there are no custom-specified drillableItems
+            // if there are, we assume it was the custom drill
+            const drillDefinitions =
+                !drillableItems?.length && kpiWidget.drills.length > 0 ? kpiWidget.drills : undefined;
+
             return onDrill({
                 dataView: result.dataView,
                 drillContext,
+                drillDefinitions,
             });
         },
         [onDrill, result],

@@ -32,7 +32,6 @@ import {
     IHeaderPredicate,
     ILoadingProps,
     OnError,
-    OnFiredDrillEvent,
     VisType,
 } from "@gooddata/sdk-ui";
 import { useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
@@ -51,6 +50,7 @@ import {
     IDashboardWidgetRenderProps,
     IWidgetPredicates,
     DashboardLayoutTransform,
+    OnFiredDashboardViewDrillEvent,
 } from "./types";
 
 interface IDashboardRendererProps {
@@ -62,7 +62,7 @@ interface IDashboardRendererProps {
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;

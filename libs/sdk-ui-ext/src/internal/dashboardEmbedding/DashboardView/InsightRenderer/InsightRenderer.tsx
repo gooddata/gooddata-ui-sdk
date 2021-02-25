@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useRef, useEffect } from "react";
+import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
 import merge from "lodash/merge";
 import {
@@ -21,15 +22,17 @@ import {
     IntlWrapper,
     IPushData,
     OnError,
-    OnFiredDrillEvent,
+    IDrillEvent,
     OnLoadingChanged,
     useBackend,
     useCancelablePromise,
     useWorkspace,
+    isSomeHeaderPredicateMatched,
+    DataViewFacade,
 } from "@gooddata/sdk-ui";
 import { InsightRenderer as InsightRendererImpl } from "../../../../insightView/InsightRenderer";
 import { InsightError } from "../../../../insightView/InsightError";
-import { widgetDrillsToDrillPredicates, insightDrillDownPredicates } from "./drillingUtils";
+import { getImplicitDrillsWithPredicates } from "./drillingUtils";
 import { addImplicitAllTimeFilter } from "./utils";
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import {
@@ -38,6 +41,7 @@ import {
     useDashboardViewConfig,
     useUserWorkspaceSettings,
 } from "../contexts";
+import { OnFiredDashboardViewDrillEvent } from "../types";
 
 interface IInsightRendererProps {
     insightWidget: IInsightWidget;
@@ -47,7 +51,7 @@ interface IInsightRendererProps {
     filters?: FilterContextItem[];
     filterContext?: IFilterContext | ITempFilterContext;
     drillableItems?: Array<IDrillableItem | IHeaderPredicate>;
-    onDrill?: OnFiredDrillEvent;
+    onDrill?: OnFiredDashboardViewDrillEvent;
     onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
@@ -141,15 +145,44 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         return insightSetProperties(insightWithFilters, merged);
     }, [insightWithFilters, insightWidget.properties, userWorkspaceSettings]);
 
-    const implicitDrills = useMemo(() => {
-        const drillsFromWidget = widgetDrillsToDrillPredicates(insightWidget.drills);
-        const drillsFromDrillDown = insightDrillDownPredicates(possibleDrills, attributesWithDrillDown);
-
-        return [
-            ...drillsFromWidget, // drills specified in the widget definition
-            ...drillsFromDrillDown, // drills from drill downs specified on attributes
-        ];
+    const implicitDrillDefinitions = useMemo(() => {
+        return getImplicitDrillsWithPredicates(insightWidget.drills, possibleDrills, attributesWithDrillDown);
     }, [insightWidget.drills, possibleDrills, attributesWithDrillDown]);
+
+    const implicitDrills = useMemo(() => {
+        return flatMap(implicitDrillDefinitions, (info) => info.predicates);
+    }, [implicitDrillDefinitions]);
+
+    // since InsightRendererImpl only sets onDrill on the first render (this is a PlugVis API, there is no way to update onDrill there)
+    // we have to sync the implicitDrillDefinitions into a ref so that the handleDrill can access the most recent value (thanks to the .current)
+    // without this, handleDrill just closes over the first implicitDrillDefinitions which will never contain drillDown drills
+    // as they are added *after* the first render of the PlugVis.
+    const cachedImplicitDrillDefinitions = useRef(implicitDrillDefinitions);
+    useEffect(() => {
+        cachedImplicitDrillDefinitions.current = implicitDrillDefinitions;
+    }, [implicitDrillDefinitions]);
+
+    const handleDrill = useCallback((event: IDrillEvent) => {
+        // if there are drillable items, we do not want to return any drillDefinitions as the implicit drills are not even used
+        if (drillableItems) {
+            return onDrill(event);
+        }
+
+        const facade = DataViewFacade.for(event.dataView);
+
+        const definitions = cachedImplicitDrillDefinitions.current;
+
+        const matchingImplicitDrillDefinitions = definitions.filter((info) => {
+            return event.drillContext.intersection.some((intersection) =>
+                isSomeHeaderPredicateMatched(info.predicates, intersection.header, facade),
+            );
+        });
+
+        return onDrill({
+            ...event,
+            drillDefinitions: matchingImplicitDrillDefinitions.map((info) => info.drillDefinition),
+        });
+    }, []);
 
     const handlePushData = useCallback((data: IPushData): void => {
         if (data.availableDrillTargets?.attributes) {
@@ -193,7 +226,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                 workspace={effectiveWorkspace}
                 // if there are drillable items from the user, use them and only them
                 drillableItems={drillableItems ?? implicitDrills}
-                onDrill={onDrill}
+                onDrill={onDrill ? handleDrill : undefined}
                 config={chartConfig}
                 onLoadingChanged={handleLoadingChanged}
                 locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
