@@ -151,6 +151,8 @@ export { IWorkspaceDashboardsService } from "./workspace/dashboards";
 export { IDashboardObjectIdentity } from "./workspace/dashboards/common";
 export {
     DrillDefinition,
+    InsightDrillDefinition,
+    KpiDrillDefinition,
     DrillOrigin,
     DrillOriginType,
     DrillTransition,
@@ -209,49 +211,26 @@ export {
 } from "./workspace/dashboards/filterContext";
 export {
     IDashboardLayout,
-    IDashboardLayoutColumn,
-    IDashboardLayoutContent,
-    IDashboardLayoutRow,
-    isDashboardLayoutContent,
-} from "./workspace/dashboards/layout/dashboardLayout";
+    DashboardWidget,
+    IDashboardLayoutSection,
+    IDashboardLayoutSectionHeader,
+    IDashboardLayoutSize,
+    IDashboardLayoutSizeByScreenSize,
+    IDashboardLayoutItem,
+    ScreenSize,
+    isDashboardLayout,
+    isDashboardLayoutSection,
+    isDashboardLayoutItem,
+    isDashboardWidget,
+} from "./workspace/dashboards/layout";
 export {
-    ResponsiveScreenType,
-    IFluidLayout,
-    IFluidLayoutColumn,
-    IFluidLayoutRow,
-    IFluidLayoutSectionHeader,
-    IFluidLayoutSize,
-    IFluidLayoutSizeByScreen,
-    isFluidLayout,
-} from "./workspace/dashboards/layout/fluidLayout";
-export { FluidLayoutFacade } from "./workspace/dashboards/layout/facade/layout";
-export { FluidLayoutBuilder } from "./workspace/dashboards/layout/builder/layout";
-export {
-    FluidLayoutColumnModifications,
-    FluidLayoutColumnsSelector,
-    FluidLayoutModifications,
-    FluidLayoutRowModifications,
-    FluidLayoutRowsSelector,
-    IFluidLayoutBuilder,
-    IFluidLayoutColumnBuilder,
-    IFluidLayoutRowBuilder,
-    ValueOrUpdateCallback,
-} from "./workspace/dashboards/layout/builder/interfaces";
-export {
-    isFluidLayoutEmpty,
+    isDashboardLayoutEmpty,
     IWidgetWithLayoutPath,
     LayoutPath,
     layoutWidgets,
     layoutWidgetsWithPaths,
     walkLayout,
-} from "./workspace/dashboards/layout/utils";
-export {
-    IFluidLayoutFacade,
-    IFluidLayoutColumnMethods,
-    IFluidLayoutColumnsMethods,
-    IFluidLayoutRowMethods,
-    IFluidLayoutRowsMethods,
-} from "./workspace/dashboards/layout/facade/interfaces";
+} from "./workspace/dashboards/utils";
 export {
     IWidget,
     IWidgetDefinition,
@@ -263,9 +242,11 @@ export {
     IKpiWidgetDefinition,
     WidgetType,
     isWidget,
-    isInsightWidget,
-    isKpiWidget,
     isWidgetDefinition,
+    isInsightWidget,
+    isInsightWidgetDefinition,
+    isKpiWidget,
+    isKpiWidgetDefinition,
     IWidgetReferences,
     SupportedWidgetReferenceTypes,
     widgetUri,
@@ -278,7 +259,8 @@ export {
     ILegacyKpiBase,
     ILegacyKpiComparisonDirection,
     ILegacyKpiComparisonTypeComparison,
-    ILegacyKpiComparisonTypeNoComparison,
+    ILegacyKpiWithPopComparison,
+    ILegacyKpiWithPreviousPeriodComparison,
     ILegacyKpiWithComparison,
     ILegacyKpiWithoutComparison,
     isLegacyKpiWithComparison,

@@ -4,8 +4,8 @@ import { convertDashboard, convertFilterContext, convertWidget } from "../Dashbo
 import {
     emptyDashboard,
     dashboardWithFilterContext,
-    dashboardWithLayoutAndRowHeaders,
-    dashboardWithLayoutAndEmptyRowHeaders,
+    dashboardWithLayoutAndSectionHeaders,
+    dashboardWithLayoutAndEmptySectionHeaders,
     dashboardWithExtendedDateFilterConfig,
     dashboardWithTempFilterContext,
     dashboardFilterContext,
@@ -33,12 +33,12 @@ describe("dashboard converter", () => {
         });
 
         it("should convert dashboard with layout", () => {
-            const convertedDashboard = convertDashboard(dashboardWithLayoutAndRowHeaders);
+            const convertedDashboard = convertDashboard(dashboardWithLayoutAndSectionHeaders);
             expect(convertedDashboard).toMatchSnapshot();
         });
 
         it("should convert dashboard with layout with empty row headers", () => {
-            const convertedDashboard = convertDashboard(dashboardWithLayoutAndEmptyRowHeaders);
+            const convertedDashboard = convertDashboard(dashboardWithLayoutAndEmptySectionHeaders);
             expect(convertedDashboard).toMatchSnapshot();
         });
 

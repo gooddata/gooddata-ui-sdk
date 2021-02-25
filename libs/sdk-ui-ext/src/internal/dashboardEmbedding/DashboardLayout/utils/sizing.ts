@@ -4,54 +4,55 @@ import round from "lodash/round";
 import isNil from "lodash/isNil";
 import isEqual from "lodash/isEqual";
 import {
-    IFluidLayoutSizeByScreen,
-    isFluidLayout,
-    IFluidLayoutSize,
-    FluidLayoutFacade,
-    ResponsiveScreenType,
+    IDashboardLayoutSizeByScreenSize,
+    isDashboardLayout,
+    IDashboardLayoutSize,
+    ScreenSize,
     isWidget,
     isWidgetDefinition,
+    IDashboardLayoutItem,
+    IDashboardLayout,
+    IDashboardLayoutSection,
+    WidgetType,
 } from "@gooddata/sdk-backend-spi";
-import { ALL_SCREENS } from "../../FluidLayout";
 import {
-    IDashboardViewLayoutColumn,
-    IDashboardViewLayout,
-    IDashboardViewLayoutRow,
-} from "../interfaces/dashboardLayout";
-import { DashboardViewLayoutWidgetClass } from "../interfaces/dashboardLayoutSizing";
-import {
+    ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
-    WIDGET_DIMENSIONS_DEFAULT,
-    WIDGET_DIMENSIONS_TABLE,
+    INSIGHT_WIDGET_DIMENSIONS_DEFAULT,
+    KPI_WIDGET_DIMENSIONS_DEFAULT,
+    INSIGHT_WIDGET_DIMENSIONS_TABLE,
 } from "../constants";
+import { DashboardLayoutFacade } from "../facade/layout";
+import { VisType } from "@gooddata/sdk-ui";
+import { IDashboardLayoutItemFacade } from "../facade/interfaces";
 
 /**
- * Unify fluid layout columns height for all screens.
+ * Unify dashboard layout items height for all screens.
  *
- * @param columns - fluid layout columns
+ * @param items - dashboard layout items
  */
-export function unifyDashboardLayoutColumnHeights<TCustomContent>(
-    layout: IDashboardViewLayout<TCustomContent>,
-): IDashboardViewLayout<TCustomContent>;
-export function unifyDashboardLayoutColumnHeights<TCustomContent>(
-    columns: IDashboardViewLayoutColumn<TCustomContent>[],
-): IDashboardViewLayoutColumn<TCustomContent>[];
-export function unifyDashboardLayoutColumnHeights<TCustomContent>(
-    columnsOrLayout: IDashboardViewLayout<TCustomContent> | IDashboardViewLayoutColumn<TCustomContent>[],
-): IDashboardViewLayout<TCustomContent> | IDashboardViewLayoutColumn<TCustomContent>[] {
-    if (isFluidLayout(columnsOrLayout)) {
-        const updatedLayout: IDashboardViewLayout<TCustomContent> = {
-            ...columnsOrLayout,
-            rows: FluidLayoutFacade.for(columnsOrLayout)
-                .rows()
-                .reduce((acc: IDashboardViewLayoutRow<TCustomContent>[], row) => {
+export function unifyDashboardLayoutItemHeights<TWidget>(
+    layout: IDashboardLayout<TWidget>,
+): IDashboardLayout<TWidget>;
+export function unifyDashboardLayoutItemHeights<TWidget>(
+    items: IDashboardLayoutItem<TWidget>[],
+): IDashboardLayoutItem<TWidget>[];
+export function unifyDashboardLayoutItemHeights<TWidget>(
+    itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
+): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
+    if (isDashboardLayout<TWidget>(itemsOrLayout)) {
+        const updatedLayout: IDashboardLayout<TWidget> = {
+            ...itemsOrLayout,
+            sections: DashboardLayoutFacade.for(itemsOrLayout)
+                .sections()
+                .reduce((acc: IDashboardLayoutSection<TWidget>[], section) => {
                     return [
                         ...acc,
                         {
-                            ...row.raw(),
-                            columns: unifyDashboardLayoutColumnHeights(row.columns().raw()),
+                            ...section.raw(),
+                            items: unifyDashboardLayoutItemHeights(section.items().raw()),
                         },
                     ];
                 }, []),
@@ -60,46 +61,45 @@ export function unifyDashboardLayoutColumnHeights<TCustomContent>(
         return updatedLayout;
     }
 
-    const columnsWithSizeForAllScreens = columnsOrLayout.map((column) => ({
-        ...column,
-        size: dashboardLayoutColumnSizeForAllScreensFromXLSize(column.size.xl),
+    const itemsWithSizeForAllScreens = itemsOrLayout.map((item) => ({
+        ...item,
+        size: implicitLayoutItemSizeFromXlSize(item.size.xl),
     }));
 
-    const columnsWithUnifiedHeightForAllScreens: IDashboardViewLayoutColumn<
-        TCustomContent
-    >[] = ALL_SCREENS.reduce((acc, screen) => {
-        const fluidLayoutColumnsAsFutureGridRows = splitDashboardLayoutColumnsAsFutureGridRows(acc, screen);
+    const itemsWithUnifiedHeightForAllScreens: IDashboardLayoutItem<TWidget>[] = ALL_SCREENS.reduce(
+        (acc, screen) => {
+            const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
 
-        const fluidLayoutColumnsWithUnifiedHeight = flatten(
-            fluidLayoutColumnsAsFutureGridRows.map((futureGridRow) =>
-                unifyDashboardLayoutColumnHeightsForScreen(futureGridRow, screen),
-            ),
-        );
+            const itemsWithUnifiedHeight = flatten(
+                itemsAsFutureGridRows.map((futureGridRow) =>
+                    unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
+                ),
+            );
 
-        return fluidLayoutColumnsWithUnifiedHeight;
-    }, columnsWithSizeForAllScreens);
+            return itemsWithUnifiedHeight;
+        },
+        itemsWithSizeForAllScreens,
+    );
 
-    return columnsWithUnifiedHeightForAllScreens;
+    return itemsWithUnifiedHeightForAllScreens;
 }
 
 /**
- * Derive fluid layout size for all screens from fluid layout size defined for xl screen.
+ * Derive dashboard layout size for all screens from dashboard layout size defined for xl screen.
  *
- * @param xlSize - fluid layout size for xl screen
+ * @param xlSize - dashboard layout size for xl screen
  */
-function dashboardLayoutColumnSizeForAllScreensFromXLSize(
-    xlSize: IFluidLayoutSize,
-): IFluidLayoutSizeByScreen {
-    const xlWidth: number = xlSize.widthAsGridColumnsCount;
+function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashboardLayoutSizeByScreenSize {
+    const xlWidth: number = xlSize.gridWidth;
     const ratio: number = xlSize.heightAsRatio;
 
     switch (xlWidth) {
         case 0:
-            return dashboardLayoutColumnSizeForAllScreens(0, 0, 0, 0, 0, 0);
+            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0);
         case 1:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 2, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 2, 6, 12);
         case 2:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 4, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 4, 6, 12);
         case 3:
         case 4:
         case 5:
@@ -107,161 +107,161 @@ function dashboardLayoutColumnSizeForAllScreensFromXLSize(
         case 7:
         case 8:
         case 9:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 6, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 6, 12, 12);
         case 10:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
         case 11:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
         case 12:
-            return dashboardLayoutColumnSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
     }
 }
 
 /**
- * Create fluid layout column size for all screens,
+ * Create dashboard layout item size for all screens,
  * with identical height, defined as ratio,
- * but different width, defined as grid columns count.
+ * but different width, defined as grid items count.
  *
  * @param heightAsRatio - height as ratio to the width, defined in percents
- * @param xl - width as grid columns count for xl screen
- * @param lg - width as grid columns count for lg screen
- * @param md - width as grid columns count for md screen
- * @param sm - width as grid columns count for sm screen
- * @param xs - width as grid columns count for xs screen
+ * @param xl - width as grid items count for xl screen
+ * @param lg - width as grid items count for lg screen
+ * @param md - width as grid items count for md screen
+ * @param sm - width as grid items count for sm screen
+ * @param xs - width as grid items count for xs screen
  */
-function dashboardLayoutColumnSizeForAllScreens(
+function dashboardLayoutItemSizeForAllScreens(
     heightAsRatio: number,
     xl: number,
     lg: number,
     md: number,
     sm: number,
     xs: number,
-): IFluidLayoutSizeByScreen {
+): IDashboardLayoutSizeByScreenSize {
     return {
         xl: {
-            widthAsGridColumnsCount: xl,
+            gridWidth: xl,
             heightAsRatio,
         },
         lg: {
-            widthAsGridColumnsCount: lg,
+            gridWidth: lg,
             heightAsRatio,
         },
         md: {
-            widthAsGridColumnsCount: md,
+            gridWidth: md,
             heightAsRatio,
         },
         sm: {
-            widthAsGridColumnsCount: sm,
+            gridWidth: sm,
             heightAsRatio,
         },
         xs: {
-            widthAsGridColumnsCount: xs,
+            gridWidth: xs,
             heightAsRatio,
         },
     };
 }
 
 /**
- * Divide the columns into a list representing the future rows of the grid.
- * This is useful for performing column transformations, depending on how they really appear in the grid.
+ * Divide the items into a list representing the future rows of the grid.
+ * This is useful for performing item transformations, depending on how they really appear in the grid.
  *
- * @param columns - fluild layout columns
+ * @param items - dashboard layout items
  * @param screen - responsive screen class
  */
-function splitDashboardLayoutColumnsAsFutureGridRows<TCustomContent>(
-    columns: IDashboardViewLayoutColumn<TCustomContent>[],
-    screen: ResponsiveScreenType,
-): IDashboardViewLayoutColumn<TCustomContent>[][] {
-    const virtualRows: IDashboardViewLayoutColumn<TCustomContent>[][] = [];
+export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
+    items: IDashboardLayoutItem<TWidget>[],
+    screen: ScreenSize,
+): IDashboardLayoutItem<TWidget>[][] {
+    const renderedRows: IDashboardLayoutItem<TWidget>[][] = [];
 
     let currentRowWidth = 0;
-    let currentRow: IDashboardViewLayoutColumn<TCustomContent>[] = [];
+    let currentRow: IDashboardLayoutItem<TWidget>[] = [];
 
-    columns.forEach((column) => {
-        const columnSize: IFluidLayoutSize = column.size[screen];
+    items.forEach((item) => {
+        const itemSize: IDashboardLayoutSize = item.size[screen];
 
-        if (isNil(columnSize)) {
-            throw Error("Column size for current screen is undefined");
+        if (isNil(itemSize)) {
+            throw Error("Item size for current screen is undefined");
         }
 
-        if (currentRowWidth + columnSize.widthAsGridColumnsCount > DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
-            virtualRows.push(currentRow);
+        if (currentRowWidth + itemSize.gridWidth > DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
+            renderedRows.push(currentRow);
             currentRow = [];
             currentRowWidth = 0;
         }
 
-        currentRow.push(column);
-        currentRowWidth = currentRowWidth + columnSize.widthAsGridColumnsCount;
+        currentRow.push(item);
+        currentRowWidth = currentRowWidth + itemSize.gridWidth;
     });
 
     if (currentRow.length > 0) {
-        virtualRows.push(currentRow);
+        renderedRows.push(currentRow);
     }
 
-    return virtualRows;
+    return renderedRows;
 }
 
 /**
- * Calculate fluid layout column height for the provided screen.
- * Result is width of the column, defined as grid columns count,
+ * Calculate dashboard layout item height for the provided screen.
+ * Result is width of the item, defined as grid items count,
  * multiplied by height, defined as a ratio.
  *
- * @param column - fluid layout column
+ * @param item - dashboard layout item
  * @param screen -  responsive screen class
  */
-function dashboardLayoutColumnHeightForScreen<TCustomContent>(
-    column: IDashboardViewLayoutColumn<TCustomContent>,
-    screen: ResponsiveScreenType,
+function dashboardLayoutItemHeightForScreen<TWidget>(
+    item: IDashboardLayoutItem<TWidget>,
+    screen: ScreenSize,
 ) {
-    const { widthAsGridColumnsCount, heightAsRatio = 0 } = column.size?.[screen] ?? {};
-    if (!widthAsGridColumnsCount) {
+    const { gridWidth, heightAsRatio = 0 } = item.size?.[screen] ?? {};
+    if (!gridWidth) {
         return 0;
     }
-    return widthAsGridColumnsCount * heightAsRatio;
+    return gridWidth * heightAsRatio;
 }
 
 /**
- * Unify fluid layout columns height, defined as ratio, for the provided screen.
- * It overrides height of all columns to the highest column height found for the provided screen.
+ * Unify dashboard layout items height, defined as ratio, for the provided screen.
+ * It overrides height of all items to the highest item height found for the provided screen.
  *
- * @param columns - fluid layout columns
+ * @param items - dashboard layout items
  * @param screen -  responsive screen class
  */
-function unifyDashboardLayoutColumnHeightsForScreen<TCustomContent>(
-    columns: IDashboardViewLayoutColumn<TCustomContent>[],
-    screen: ResponsiveScreenType,
-): IDashboardViewLayoutColumn<TCustomContent>[] {
-    const heights = columns.map((column) => dashboardLayoutColumnHeightForScreen(column, screen));
+function unifyDashboardLayoutItemHeightsForScreen<TWidget>(
+    items: IDashboardLayoutItem<TWidget>[],
+    screen: ScreenSize,
+): IDashboardLayoutItem<TWidget>[] {
+    const heights = items.map((item) => dashboardLayoutItemHeightForScreen(item, screen));
     const maxHeight = Math.max(0, ...heights);
 
     if (maxHeight === 0) {
-        return columns;
+        return items;
     }
 
-    return columns.map((column) => updateDashboardLayoutColumnHeight(column, screen, maxHeight));
+    return items.map((item) => updateDashboardLayoutItemHeight(item, screen, maxHeight));
 }
 
-const updateDashboardLayoutColumnHeight = <TCustomContent>(
-    column: IDashboardViewLayoutColumn<TCustomContent>,
-    screen: ResponsiveScreenType,
+const updateDashboardLayoutItemHeight = <TWidget>(
+    item: IDashboardLayoutItem<TWidget>,
+    screen: ScreenSize,
     maxHeight: number,
-): IDashboardViewLayoutColumn<TCustomContent> => {
-    const columnSizeForCurrentScreen = column.size[screen];
-    const heightAsRatio = columnSizeForCurrentScreen?.widthAsGridColumnsCount
-        ? round(maxHeight / columnSizeForCurrentScreen.widthAsGridColumnsCount, 2)
+): IDashboardLayoutItem<TWidget> => {
+    const itemSizeForCurrentScreen = item.size[screen];
+    const heightAsRatio = itemSizeForCurrentScreen?.gridWidth
+        ? round(maxHeight / itemSizeForCurrentScreen.gridWidth, 2)
         : 0;
 
-    let updatedColumn = column;
+    let updatedColumn = item;
 
     if (
-        !isNil(columnSizeForCurrentScreen?.heightAsRatio) &&
-        columnSizeForCurrentScreen?.heightAsRatio !== heightAsRatio
+        !isNil(itemSizeForCurrentScreen?.heightAsRatio) &&
+        itemSizeForCurrentScreen?.heightAsRatio !== heightAsRatio
     ) {
-        if (isWidget(updatedColumn.content) || isWidgetDefinition(updatedColumn.content)) {
+        if (isWidget(updatedColumn.widget) || isWidgetDefinition(updatedColumn.widget)) {
             updatedColumn = {
                 ...updatedColumn,
-                content: {
-                    ...updatedColumn.content,
+                widget: {
+                    ...updatedColumn.widget,
                 },
             };
         }
@@ -294,66 +294,127 @@ const updateDashboardLayoutColumnHeight = <TCustomContent>(
     return updatedColumn;
 };
 
-export function getDashboardLayoutMinimumWidgetHeight(type: DashboardViewLayoutWidgetClass): number {
-    let dimension = WIDGET_DIMENSIONS_TABLE[type];
-
-    if (!dimension) {
-        dimension = WIDGET_DIMENSIONS_DEFAULT;
-    }
-
-    return dimension.defHeightPx;
-}
-
-export const getDashboardLayoutContentHeightForRatioAndScreen = (
-    size: IFluidLayoutSize,
-    screen: ResponsiveScreenType,
-): number => {
-    const { widthAsGridColumnsCount, heightAsRatio } = size;
-    // TODO: RAIL-2869  Migrate to ResponsiveContext
-    const actualWidth = DASHBOARD_LAYOUT_CONTAINER_WIDTHS[screen];
-    const actualColumnUnitWidth = actualWidth / DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
-    return actualColumnUnitWidth * widthAsGridColumnsCount * (heightAsRatio / 100);
-};
-
 /**
- * Tuple that represents a column position in the layout
- * [rowIndex, columnIndex]
+ * Tuple that represents a item position in the layout
+ * [sectionIndex, itemIndex]
  *
  * @internal
  */
-type ColumnPosition = [number, number];
+type ItemPosition = [number, number];
 
-export const getResizedColumnPositions = <TCustomContent>(
-    originalLayout: IDashboardViewLayout<TCustomContent>,
-    resizedLayout: IDashboardViewLayout<TCustomContent>,
-    positions: ColumnPosition[] = [],
-): ColumnPosition[] => {
-    const originalLayoutFacade = FluidLayoutFacade.for(originalLayout);
-    return FluidLayoutFacade.for(resizedLayout)
-        .rows()
-        .reduce((acc: ColumnPosition[], row) => {
-            return row.columns().reduce((acc, column) => {
+/**
+ *
+ * @internal
+ */
+export const getResizedItemPositions = <TWidget>(
+    originalLayout: IDashboardLayout<TWidget>,
+    resizedLayout: IDashboardLayout<TWidget>,
+    positions: ItemPosition[] = [],
+): ItemPosition[] => {
+    const originalLayoutFacade = DashboardLayoutFacade.for(originalLayout);
+    return DashboardLayoutFacade.for(resizedLayout)
+        .sections()
+        .reduce((acc: ItemPosition[], section) => {
+            return section.items().reduce((acc, item) => {
                 const originalColumn = originalLayoutFacade
-                    .rows()
-                    .row(row.index())
-                    .columns()
-                    .column(column.index());
-                const originalContent = originalColumn.content();
-                const updatedContent = column.content();
+                    .sections()
+                    .section(section.index())
+                    .items()
+                    .item(item.index());
+                const originalContent = originalColumn.widget();
+                const updatedContent = item.widget();
 
                 // Is nested layout?
-                if (isFluidLayout(originalContent) && isFluidLayout(updatedContent)) {
-                    return getResizedColumnPositions(originalContent, updatedContent, positions);
+                if (isDashboardLayout(originalContent) && isDashboardLayout(updatedContent)) {
+                    return getResizedItemPositions(originalContent, updatedContent, positions);
                 }
 
                 if (
-                    !isEqual(originalColumn.size(), column.size()) &&
+                    !isEqual(originalColumn.size(), item.size()) &&
                     (isWidget(updatedContent) || isWidgetDefinition(updatedContent))
                 ) {
-                    acc.push([column.row().index(), column.index()]);
+                    acc.push([item.section().index(), item.index()]);
                 }
 
                 return acc;
             }, acc);
         }, positions);
 };
+
+export const getDashboardLayoutItemHeightForRatioAndScreen = (
+    size: IDashboardLayoutSize,
+    screen: ScreenSize,
+): number => {
+    const { gridWidth, heightAsRatio } = size;
+    const actualWidth = DASHBOARD_LAYOUT_CONTAINER_WIDTHS[screen];
+    const actualColumnUnitWidth = actualWidth / DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+    return actualColumnUnitWidth * gridWidth * (heightAsRatio / 100);
+};
+
+export function getDashboardLayoutItemMaxGridWidth(
+    item: IDashboardLayoutItemFacade<any>,
+    screen: ScreenSize,
+): number {
+    let gridRowWidth = 0;
+    const sectionItems = item.section().items().all();
+
+    for (const sectionItem of sectionItems) {
+        const newWidth = sectionItem.sizeForScreen(screen).gridWidth + gridRowWidth;
+
+        if (newWidth <= DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
+            if (sectionItem.index() === item.index()) {
+                break;
+            }
+            gridRowWidth = newWidth;
+        } else {
+            if (sectionItem.index() === item.index()) {
+                return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+            }
+            gridRowWidth = sectionItem.sizeForScreen(screen)?.gridWidth;
+        }
+    }
+
+    return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
+}
+
+export function getDashboardLayoutWidgetMinGridWidth(widgetType: WidgetType, visType?: VisType): number {
+    if (widgetType === "kpi") {
+        return KPI_WIDGET_DIMENSIONS_DEFAULT.minWidth;
+    }
+
+    let dimension = INSIGHT_WIDGET_DIMENSIONS_TABLE[visType];
+
+    if (!dimension) {
+        dimension = INSIGHT_WIDGET_DIMENSIONS_DEFAULT;
+    }
+
+    return dimension.minWidth;
+}
+
+export function getDashboardLayoutWidgetDefaultGridWidth(widgetType: WidgetType, visType?: VisType): number {
+    if (widgetType === "kpi") {
+        return KPI_WIDGET_DIMENSIONS_DEFAULT.defWidth;
+    }
+
+    let dimension = INSIGHT_WIDGET_DIMENSIONS_TABLE[visType];
+
+    if (!dimension) {
+        dimension = INSIGHT_WIDGET_DIMENSIONS_DEFAULT;
+    }
+
+    return dimension.defWidth;
+}
+
+export function getDashboardLayoutWidgetDefaultHeight(widgetType: WidgetType, visType?: VisType): number {
+    if (widgetType === "kpi") {
+        return KPI_WIDGET_DIMENSIONS_DEFAULT.defHeightPx;
+    }
+
+    let dimension = INSIGHT_WIDGET_DIMENSIONS_TABLE[visType];
+
+    if (!dimension) {
+        dimension = INSIGHT_WIDGET_DIMENSIONS_DEFAULT;
+    }
+
+    return dimension.defHeightPx;
+}

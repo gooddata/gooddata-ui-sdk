@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { objRefToString, ObjRef, ObjRefInScope, areObjRefsEqual } from "../index";
 
 describe("objRefToString", () => {
@@ -63,7 +63,7 @@ describe("areObjRefsEqual", () => {
             { identifier: "/identifier1", type: "attribute" },
         ],
         [
-            false,
+            true,
             "identifier, identifier, one is missing obj type",
             { identifier: "/identifier1" },
             { identifier: "/identifier1", type: "attribute" },

@@ -1,11 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { VisType } from "@gooddata/sdk-ui";
 import {
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
-    DASHBOARD_LAYOUT_WIDGET_CLASS,
-} from "../constants";
+    DASHBOARD_LAYOUT_VIS_TYPE,
+} from "../../DashboardLayout/constants";
 
 const RATIO_16_9 = 9 / 16;
 const HEADER_HEIGHT = 330;
@@ -28,7 +28,7 @@ export function calculateGeoPushpinWidgetHeight(
 }
 
 export function isGeoPushpin(visType: VisType): boolean {
-    return visType === DASHBOARD_LAYOUT_WIDGET_CLASS.pushpin;
+    return visType === DASHBOARD_LAYOUT_VIS_TYPE.pushpin;
 }
 
 export function isFullWidthGeoPushpin(currentColumnWidth: number, visType: VisType): boolean {

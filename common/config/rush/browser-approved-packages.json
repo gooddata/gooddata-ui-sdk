@@ -108,7 +108,7 @@
     },
     {
       "name": "@gooddata/sdk-backend-base",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-backend-bear",

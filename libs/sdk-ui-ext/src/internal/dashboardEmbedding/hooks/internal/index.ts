@@ -4,7 +4,7 @@ export * from "./useColorPalette";
 export * from "./useCurrentUser";
 export * from "./useDashboardInsightExecution";
 export * from "./useDashboardKpiExecution";
-export * from "./useDashboardViewLayout";
+export * from "./useDashboardLayoutData";
 export * from "./useDeleteWidgetAlert";
 export * from "./useExportDashboardToPdf";
 export * from "./useKpiData";

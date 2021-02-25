@@ -90,6 +90,9 @@ export type DashboardDateFilterConfigMode = "readonly" | "hidden" | "active";
 // @alpha
 export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): ObjRef;
 
+// @alpha
+export type DashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<DashboardWidget>;
+
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 
@@ -114,7 +117,7 @@ export type DateFilterType = RelativeType | AbsoluteType;
 export type DateString = string;
 
 // @alpha
-export type DrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToLegacyDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
+export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
 // @alpha
 export type DrillOrigin = IDrillFromMeasure;
@@ -133,63 +136,6 @@ export type ErrorConverter = (e: Error) => AnalyticalBackendError;
 
 // @alpha
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
-
-// @alpha (undocumented)
-export class FluidLayoutBuilder<TContent> implements IFluidLayoutBuilder<TContent> {
-    protected constructor(layoutFacade: IFluidLayoutFacade<TContent>);
-    // (undocumented)
-    addRow: (create?: FluidLayoutRowModifications<TContent>, index?: number | undefined) => this;
-    // (undocumented)
-    build: () => IFluidLayout<TContent>;
-    // (undocumented)
-    facade(): IFluidLayoutFacade<TContent>;
-    static for<TContent>(layout: IFluidLayout<TContent>): FluidLayoutBuilder<TContent>;
-    static forNewLayout<TContent>(): FluidLayoutBuilder<TContent>;
-    // (undocumented)
-    protected layoutFacade: IFluidLayoutFacade<TContent>;
-    // (undocumented)
-    modify: (modifications: FluidLayoutModifications<TContent>) => this;
-    // (undocumented)
-    modifyRow: (index: number, modify: FluidLayoutRowModifications<TContent>) => this;
-    // (undocumented)
-    modifyRows: (modify: FluidLayoutRowModifications<TContent>, selector?: FluidLayoutRowsSelector<TContent>) => this;
-    // (undocumented)
-    moveRow: (fromIndex: number, toIndex: number) => this;
-    // (undocumented)
-    removeRow: (index: number) => this;
-    // (undocumented)
-    removeRows: (selector?: FluidLayoutRowsSelector<TContent>) => this;
-    // (undocumented)
-    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayout<TContent>>): this;
-    // (undocumented)
-    size: (valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutSize | undefined>) => this;
-}
-
-// @alpha
-export type FluidLayoutColumnModifications<TContent> = (columnBuilder: IFluidLayoutColumnBuilder<TContent>, columnFacade: IFluidLayoutColumnMethods<TContent>) => IFluidLayoutColumnBuilder<TContent>;
-
-// @alpha
-export type FluidLayoutColumnsSelector<TContent> = (columnsFacade: IFluidLayoutColumnsMethods<TContent>) => IFluidLayoutColumnMethods<TContent>[] | IFluidLayoutColumnMethods<TContent> | undefined;
-
-// @alpha
-export class FluidLayoutFacade<TContent> implements IFluidLayoutFacade<TContent> {
-    static for<TContent>(layout: IFluidLayout<TContent>): IFluidLayoutFacade<TContent>;
-    // (undocumented)
-    raw: () => IFluidLayout<TContent>;
-    // (undocumented)
-    rows: () => IFluidLayoutRowsMethods<TContent>;
-    // (undocumented)
-    size: () => IFluidLayoutSize | undefined;
-}
-
-// @alpha
-export type FluidLayoutModifications<TContent> = (layoutBuilder: IFluidLayoutBuilder<TContent>, layoutFacade: IFluidLayoutFacade<TContent>) => IFluidLayoutBuilder<TContent>;
-
-// @alpha
-export type FluidLayoutRowModifications<TContent> = (rowBuilder: IFluidLayoutRowBuilder<TContent>, rowFacade: IFluidLayoutRowMethods<TContent>) => IFluidLayoutRowBuilder<TContent>;
-
-// @alpha
-export type FluidLayoutRowsSelector<TContent> = (rowsFacade: IFluidLayoutRowsMethods<TContent>) => IFluidLayoutRowMethods<TContent>[] | IFluidLayoutRowMethods<TContent> | undefined;
 
 // @public
 export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalogFact;
@@ -483,16 +429,46 @@ export interface IDashboardDefinition extends IDashboardBase, Partial<IDashboard
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
 
 // @alpha
-export type IDashboardLayout = IFluidLayout<IDashboardLayoutContent>;
+export interface IDashboardLayout<TWidget = DashboardWidget> {
+    sections: IDashboardLayoutSection<TWidget>[];
+    size?: IDashboardLayoutSize;
+    type: "IDashboardLayout";
+}
 
 // @alpha
-export type IDashboardLayoutColumn = IFluidLayoutColumn<IDashboardLayoutContent>;
+export interface IDashboardLayoutItem<TWidget = DashboardWidget> {
+    size: IDashboardLayoutSizeByScreenSize;
+    type: "IDashboardLayoutItem";
+    widget?: TWidget;
+}
 
 // @alpha
-export type IDashboardLayoutContent = IWidget | IWidgetDefinition | IDashboardLayout;
+export interface IDashboardLayoutSection<TWidget = DashboardWidget> {
+    header?: IDashboardLayoutSectionHeader;
+    items: IDashboardLayoutItem<TWidget>[];
+    type: "IDashboardLayoutSection";
+}
 
 // @alpha
-export type IDashboardLayoutRow = IFluidLayoutRow<IDashboardLayoutContent>;
+export interface IDashboardLayoutSectionHeader {
+    description?: string;
+    title?: string;
+}
+
+// @alpha
+export interface IDashboardLayoutSize {
+    gridWidth: number;
+    heightAsRatio?: number;
+}
+
+// @alpha
+export interface IDashboardLayoutSizeByScreenSize {
+    lg?: IDashboardLayoutSize;
+    md?: IDashboardLayoutSize;
+    sm?: IDashboardLayoutSize;
+    xl: IDashboardLayoutSize;
+    xs?: IDashboardLayoutSize;
+}
 
 // @alpha
 export interface IDashboardObjectIdentity {
@@ -786,222 +762,6 @@ export interface IFilterContextBase {
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha
-export interface IFluidLayout<TContent> {
-    rows: IFluidLayoutRow<TContent>[];
-    size?: IFluidLayoutSize;
-    type: "fluidLayout";
-}
-
-// @alpha
-export interface IFluidLayoutBuilder<TContent> {
-    addRow(create?: (builder: IFluidLayoutRowBuilder<TContent>) => IFluidLayoutRowBuilder<TContent>, index?: number): this;
-    build(): IFluidLayout<TContent>;
-    facade(): IFluidLayoutFacade<TContent>;
-    modify(modifications: FluidLayoutModifications<TContent>): this;
-    modifyRow(index: number, modify: FluidLayoutRowModifications<TContent>): this;
-    modifyRows(modify: FluidLayoutRowModifications<TContent>, selector?: FluidLayoutRowsSelector<TContent>): this;
-    moveRow(fromIndex: number, toIndex: number): this;
-    removeRow(index: number): this;
-    removeRows(selector?: FluidLayoutRowsSelector<TContent>): this;
-    setLayout(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayout<TContent>>): this;
-    size(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutSize | undefined>): this;
-}
-
-// @alpha
-export interface IFluidLayoutColumn<TContent> {
-    content?: TContent;
-    size: IFluidLayoutSizeByScreen;
-}
-
-// @alpha
-export interface IFluidLayoutColumnBuilder<TContent> {
-    build(): IFluidLayoutColumn<TContent>;
-    content(valueOrTransform: ValueOrUpdateCallback<TContent | undefined>): this;
-    facade(): IFluidLayoutColumnMethods<TContent>;
-    modify(modifications: FluidLayoutColumnModifications<TContent>): this;
-    setColumn(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutColumn<TContent>>): this;
-    size(valueOrTransform: ValueOrUpdateCallback<IFluidLayoutSizeByScreen>): this;
-}
-
-// @alpha
-export interface IFluidLayoutColumnMethods<TContent> {
-    // (undocumented)
-    content(): TContent | undefined;
-    // (undocumented)
-    contentEquals(content: TContent): boolean;
-    // (undocumented)
-    contentIs(content: TContent): boolean;
-    // (undocumented)
-    hasContent(): boolean;
-    // (undocumented)
-    hasSizeForScreen(screen: ResponsiveScreenType): boolean;
-    // (undocumented)
-    index(): number;
-    // (undocumented)
-    indexIs(index: number): boolean;
-    // (undocumented)
-    isFirstInRow(): boolean;
-    // (undocumented)
-    isLastInRow(): boolean;
-    // (undocumented)
-    raw(): IFluidLayoutColumn<TContent>;
-    // (undocumented)
-    row(): IFluidLayoutRowMethods<TContent>;
-    // (undocumented)
-    size(): IFluidLayoutSizeByScreen;
-    // (undocumented)
-    sizeForScreen(screen: ResponsiveScreenType): IFluidLayoutSize | undefined;
-    // (undocumented)
-    test(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
-    // (undocumented)
-    testRaw(pred: (column: IFluidLayoutColumn<TContent>) => boolean): boolean;
-}
-
-// @alpha
-export interface IFluidLayoutColumnsMethods<TContent> {
-    // (undocumented)
-    all(): IFluidLayoutColumnMethods<TContent>[];
-    // (undocumented)
-    column(columnIndex: number): IFluidLayoutColumnMethods<TContent> | undefined;
-    // (undocumented)
-    count(): number;
-    // (undocumented)
-    every(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
-    // (undocumented)
-    filter(pred: (row: IFluidLayoutColumnMethods<TContent>) => boolean): IFluidLayoutColumnMethods<TContent>[];
-    // (undocumented)
-    find(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): IFluidLayoutColumnMethods<TContent> | undefined;
-    // (undocumented)
-    flatMap<TReturn>(callback: (row: IFluidLayoutColumnMethods<TContent>) => TReturn[]): TReturn[];
-    // (undocumented)
-    map<TReturn>(callback: (column: IFluidLayoutColumnMethods<TContent>) => TReturn): TReturn[];
-    // (undocumented)
-    raw(): IFluidLayoutColumn<TContent>[];
-    // (undocumented)
-    reduce<TReturn>(callback: (acc: TReturn, column: IFluidLayoutColumnMethods<TContent>) => TReturn, initialValue: TReturn): TReturn;
-    // (undocumented)
-    some(pred: (column: IFluidLayoutColumnMethods<TContent>) => boolean): boolean;
-}
-
-// @alpha
-export interface IFluidLayoutFacade<TContent> {
-    // (undocumented)
-    raw(): IFluidLayout<TContent>;
-    // (undocumented)
-    rows(): IFluidLayoutRowsMethods<TContent>;
-    // (undocumented)
-    size(): IFluidLayoutSize | undefined;
-}
-
-// @alpha
-export interface IFluidLayoutRow<TContent> {
-    columns: IFluidLayoutColumn<TContent>[];
-    header?: IFluidLayoutSectionHeader;
-}
-
-// @alpha
-export interface IFluidLayoutRowBuilder<TContent> {
-    addColumn(xlSize: IFluidLayoutSize, create?: (builder: IFluidLayoutColumnBuilder<TContent>) => IFluidLayoutColumnBuilder<TContent>, index?: number): this;
-    build(): IFluidLayoutRow<TContent>;
-    facade(): IFluidLayoutRowMethods<TContent>;
-    header(valueOrTransform: ValueOrUpdateCallback<IFluidLayoutSectionHeader | undefined>): this;
-    modify(modifications: FluidLayoutRowModifications<TContent>): this;
-    modifyColumn(index: number, modify: FluidLayoutColumnModifications<TContent>): this;
-    modifyColumns(modify: FluidLayoutColumnModifications<TContent>, selector?: FluidLayoutColumnsSelector<TContent>): this;
-    moveColumn(fromIndex: number, toIndex: number): this;
-    removeColumn(index: number): this;
-    removeColumns(selector?: FluidLayoutColumnsSelector<TContent>): this;
-    setRow(valueOrUpdateCallback: ValueOrUpdateCallback<IFluidLayoutRow<TContent>>): this;
-}
-
-// @alpha
-export interface IFluidLayoutRowMethods<TContent> {
-    // (undocumented)
-    columns(): IFluidLayoutColumnsMethods<TContent>;
-    // (undocumented)
-    description(): string | undefined;
-    // (undocumented)
-    descriptionEquals(title: string): boolean;
-    // (undocumented)
-    hasDescription(): boolean;
-    // (undocumented)
-    hasHeader(): boolean;
-    // (undocumented)
-    hasTitle(): boolean;
-    // (undocumented)
-    header(): IFluidLayoutSectionHeader | undefined;
-    // (undocumented)
-    headerEquals(header: IFluidLayoutSectionHeader): boolean;
-    // (undocumented)
-    index(): number;
-    // (undocumented)
-    indexIs(index: number): boolean;
-    // (undocumented)
-    isFirst(): boolean;
-    // (undocumented)
-    isLast(): boolean;
-    // (undocumented)
-    layout(): IFluidLayoutFacade<TContent>;
-    // (undocumented)
-    raw(): IFluidLayoutRow<TContent>;
-    // (undocumented)
-    test(pred: (column: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
-    // (undocumented)
-    testRaw(pred: (column: IFluidLayoutRow<TContent>) => boolean): boolean;
-    // (undocumented)
-    title(): string | undefined;
-    // (undocumented)
-    titleEquals(title: string): boolean;
-}
-
-// @alpha
-export interface IFluidLayoutRowsMethods<TContent> {
-    // (undocumented)
-    all(): IFluidLayoutRowMethods<TContent>[];
-    // (undocumented)
-    count(): number;
-    // (undocumented)
-    every(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
-    // (undocumented)
-    filter(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): IFluidLayoutRowMethods<TContent>[];
-    // (undocumented)
-    find(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): IFluidLayoutRowMethods<TContent> | undefined;
-    // (undocumented)
-    flatMap<TReturn>(callback: (row: IFluidLayoutRowMethods<TContent>) => TReturn[]): TReturn[];
-    // (undocumented)
-    map<TReturn>(callback: (row: IFluidLayoutRowMethods<TContent>) => TReturn): TReturn[];
-    // (undocumented)
-    raw(): IFluidLayoutRow<TContent>[];
-    // (undocumented)
-    reduce<TReturn>(callback: (acc: TReturn, row: IFluidLayoutRowMethods<TContent>) => TReturn, initialValue: TReturn): TReturn;
-    // (undocumented)
-    row(rowIndex: number): IFluidLayoutRowMethods<TContent> | undefined;
-    // (undocumented)
-    some(pred: (row: IFluidLayoutRowMethods<TContent>) => boolean): boolean;
-}
-
-// @alpha
-export interface IFluidLayoutSectionHeader {
-    description?: string;
-    title?: string;
-}
-
-// @alpha
-export interface IFluidLayoutSize {
-    heightAsRatio?: number;
-    widthAsGridColumnsCount: number;
-}
-
-// @alpha
-export interface IFluidLayoutSizeByScreen {
-    lg?: IFluidLayoutSize;
-    md?: IFluidLayoutSize;
-    sm?: IFluidLayoutSize;
-    xl: IFluidLayoutSize;
-    xs?: IFluidLayoutSize;
-}
-
 // @public
 export interface IGetVisualizationClassesOptions {
     includeDeprecated?: boolean;
@@ -1072,6 +832,10 @@ export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
 // @alpha
 export interface ILegacyKpiBase {
     // (undocumented)
+    comparisonDirection?: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: ILegacyKpiComparisonTypeComparison;
+    // (undocumented)
     metric: ObjRef;
 }
 
@@ -1079,23 +843,31 @@ export interface ILegacyKpiBase {
 export type ILegacyKpiComparisonDirection = "growIsGood" | "growIsBad";
 
 // @alpha
-export type ILegacyKpiComparisonTypeComparison = "previousPeriod" | "lastYear";
+export type ILegacyKpiComparisonTypeComparison = ILegacyKpiWithPreviousPeriodComparison["comparisonType"] | ILegacyKpiWithPopComparison["comparisonType"] | ILegacyKpiWithoutComparison["comparisonType"];
 
 // @alpha
-export type ILegacyKpiComparisonTypeNoComparison = "none";
-
-// @alpha
-export interface ILegacyKpiWithComparison extends ILegacyKpiBase {
-    // (undocumented)
-    comparisonDirection: ILegacyKpiComparisonDirection;
-    // (undocumented)
-    comparisonType: ILegacyKpiComparisonTypeComparison;
-}
+export type ILegacyKpiWithComparison = ILegacyKpiWithPreviousPeriodComparison | ILegacyKpiWithPopComparison;
 
 // @alpha
 export interface ILegacyKpiWithoutComparison extends ILegacyKpiBase {
     // (undocumented)
-    comparisonType: ILegacyKpiComparisonTypeNoComparison;
+    comparisonType: "none";
+}
+
+// @alpha
+export interface ILegacyKpiWithPopComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: "lastYear";
+}
+
+// @alpha
+export interface ILegacyKpiWithPreviousPeriodComparison extends ILegacyKpiBase {
+    // (undocumented)
+    comparisonDirection: ILegacyKpiComparisonDirection;
+    // (undocumented)
+    comparisonType: "previousPeriod";
 }
 
 // @alpha
@@ -1154,6 +926,9 @@ export interface IMetadataObject {
     unlisted: boolean;
     uri: string;
 }
+
+// @alpha
+export type InsightDrillDefinition = IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
@@ -1328,7 +1103,19 @@ export function isDashboardDateFilter(obj: unknown): obj is IDashboardDateFilter
 export function isDashboardDateFilterReference(obj: unknown): obj is IDashboardDateFilterReference;
 
 // @alpha
-export const isDashboardLayoutContent: (obj: unknown) => obj is IDashboardLayoutContent;
+export function isDashboardLayout<TWidget = DashboardWidget>(obj: unknown): obj is IDashboardLayout<TWidget>;
+
+// @alpha
+export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
+
+// @alpha
+export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardLayoutItem<TWidget>;
+
+// @alpha
+export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
+
+// @alpha
+export const isDashboardWidget: (obj: unknown) => obj is DashboardWidget;
 
 // @public
 export function isDataSetMetadataObject(obj: unknown): obj is IDataSetMetadataObject;
@@ -1399,16 +1186,16 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
 
 // @alpha
-export function isFluidLayout<TContent>(obj: unknown): obj is IFluidLayout<TContent>;
-
-// @alpha
-export const isFluidLayoutEmpty: (layout: IFluidLayout<any>) => boolean;
-
-// @alpha
 export function isInsightWidget(obj: unknown): obj is IInsightWidget;
 
 // @alpha
+export function isInsightWidgetDefinition(obj: unknown): obj is IInsightWidgetDefinition;
+
+// @alpha
 export function isKpiWidget(obj: unknown): obj is IKpiWidget;
+
+// @alpha
+export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
 
 // @alpha
 export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
@@ -1731,11 +1518,11 @@ export interface IWidgetReferences {
 }
 
 // @alpha
-export interface IWidgetWithLayoutPath {
+export interface IWidgetWithLayoutPath<TWidget = DashboardWidget> {
     // (undocumented)
     path: LayoutPath;
     // (undocumented)
-    widget: IWidget | IWidgetDefinition;
+    widget: TWidget;
 }
 
 // @public
@@ -1946,13 +1733,16 @@ export interface IWorkspaceUsersQueryOptions {
 }
 
 // @alpha
+export type KpiDrillDefinition = IDrillToLegacyDashboard;
+
+// @alpha
 export type LayoutPath = Array<string | number>;
 
 // @alpha (undocumented)
-export function layoutWidgets(layout: IDashboardLayout): Array<IWidgetDefinition | IWidget>;
+export function layoutWidgets<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>): Array<IWidgetDefinition | IWidget>;
 
 // @alpha
-export function layoutWidgetsWithPaths(layout: IDashboardLayout): IWidgetWithLayoutPath[];
+export function layoutWidgetsWithPaths<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
 // @public
 export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject;
@@ -2009,14 +1799,14 @@ export type RelativePresetType = "relativePreset";
 // @alpha
 export type RelativeType = "relative";
 
-// @alpha
-export type ResponsiveScreenType = "xl" | "lg" | "md" | "sm" | "xs";
-
 // @public
 export function resultHeaderName(header: IResultHeader): string;
 
 // @alpha
 export type ScheduledMailAttachment = IDashboardAttachment;
+
+// @alpha
+export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;
@@ -2048,13 +1838,10 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export type ValueOrUpdateCallback<TValue> = TValue | ((value: TValue) => TValue);
-
-// @alpha
-export function walkLayout(layout: IDashboardLayout, { rowCallback, columnCallback, widgetCallback, }: {
-    rowCallback?: (row: IDashboardLayoutRow, rowPath: LayoutPath) => void;
-    columnCallback?: (column: IDashboardLayoutColumn, columnPath: LayoutPath) => void;
-    widgetCallback?: (widget: IWidget | IWidgetDefinition, widgetPath: LayoutPath) => void;
+export function walkLayout<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
+    sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
+    itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
+    widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;
 }, path?: LayoutPath): void;
 
 // @alpha

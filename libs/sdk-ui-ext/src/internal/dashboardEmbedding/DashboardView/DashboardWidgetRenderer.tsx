@@ -4,13 +4,13 @@ import cx from "classnames";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     isWidget,
-    isDashboardLayoutContent,
+    isDashboardWidget,
     UnexpectedError,
     IWidgetAlert,
     IAnalyticalBackend,
     IFilterContext,
     ITempFilterContext,
-    ResponsiveScreenType,
+    ScreenSize,
     IWidget,
     FilterContextItem,
 } from "@gooddata/sdk-backend-spi";
@@ -21,6 +21,7 @@ import {
     IErrorProps,
     ILoadingProps,
     OnError,
+    VisType,
 } from "@gooddata/sdk-ui";
 import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
@@ -28,7 +29,6 @@ import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";
 import { getVisTypeCssClass } from "./utils";
-import { DashboardViewLayoutWidgetClass } from "../DashboardLayout";
 import { IDashboardFilter } from "../types";
 
 export type IDashboardWidgetRendererProps = {
@@ -41,10 +41,10 @@ export type IDashboardWidgetRendererProps = {
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
     onError?: OnError;
-    widgetClass?: DashboardViewLayoutWidgetClass;
+    visType?: VisType;
     insight?: IInsight;
     widget?: IWidget;
-    screen: ResponsiveScreenType;
+    screen: ScreenSize;
     dashboardRef: ObjRef;
     alert?: IWidgetAlert;
     onFiltersChange?: (filters: IDashboardFilter[]) => void;
@@ -62,7 +62,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
         onDrill,
         onError,
         workspace,
-        widgetClass,
+        visType,
         insight,
         screen,
         widget,
@@ -70,7 +70,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
         dashboardRef,
     } = props;
 
-    if (!isDashboardLayoutContent) {
+    if (!isDashboardWidget) {
         throw new UnexpectedError(
             "Cannot render custom widget with DefaultWidgetRenderer! Please handle custom widget rendering in your widgetRenderer.",
         );
@@ -83,7 +83,7 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
                     className={cx(
                         "type-visualization",
                         "gd-dashboard-view-widget",
-                        getVisTypeCssClass(widgetClass),
+                        getVisTypeCssClass(widget.type, visType),
                     )}
                     screen={screen}
                 >

@@ -1,20 +1,29 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2019 GoodData Corporation
+/* eslint-disable import/no-unresolved,import/default */
 import React from "react";
-import { DashboardView } from "@gooddata/sdk-ui-ext/esm/internal";
-import { idRef, newPositiveAttributeFilter } from "@gooddata/sdk-model";
-import { Ldm } from "../../ldm";
-import { MAPBOX_TOKEN } from "../../constants/fixtures";
 
-const dashboardRef = idRef("aeO5PVgShc0T");
-const filters = [
-    newPositiveAttributeFilter(Ldm.LocationState, {
-        uris: ["/gdc/md/xms7ga4tf3g3nzucd8380o2bev8oeknp/obj/2210/elements?id=6340116"],
-    }),
-];
-const config = { mapboxToken: MAPBOX_TOKEN };
+import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-const DashboardViewWithFilters: React.FC = () => {
-    return <DashboardView dashboard={dashboardRef} filters={filters} config={config} isReadOnly />;
-};
+import DashboardViewWithFilters from "./DashboardViewWithFiltersSrc";
+import DashboardViewWithFiltersSRC from "!raw-loader!./DashboardViewWithFiltersSrc";
+import DashboardViewWithFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithFiltersSrc";
 
-export default DashboardViewWithFilters;
+const DashboardView = (): JSX.Element => (
+    <div>
+        <h1>DashboardView with filters</h1>
+
+        <p>
+            Example of how to embed a Dashboard into your application with custom filters – the same Dashboard
+            as in the previous example filtered only to California (disregarding any filters set on the
+            Dashboard itself, if you do not want that, see the next example).
+        </p>
+
+        <ExampleWithSource
+            for={DashboardViewWithFilters}
+            source={DashboardViewWithFiltersSRC}
+            sourceJS={DashboardViewWithFiltersSRCJS}
+        />
+    </div>
+);
+
+export default DashboardView;

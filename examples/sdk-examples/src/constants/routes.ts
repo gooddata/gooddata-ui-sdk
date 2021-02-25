@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { BasicComponents } from "../examples/basic";
 import { PivotTable } from "../examples/pivotTable";
 import { InsightView } from "../examples/insightView";
@@ -40,7 +40,14 @@ import { PivotTableSizing } from "../examples/hidden/pivotTableSizing";
 import { Login } from "../components/login";
 import { WithSubRoutes } from "../components/WithSubRoutes";
 import { AboutThisProject } from "../components/AboutThisProject";
-import { DashboardView } from "../examples/dashboardEmbedding";
+
+import SimpleDashboardView from "../examples/dashboardEmbedding/SimpleDashboardView";
+import DashboardViewWithCustomCharts from "../examples/dashboardEmbedding/DashboardViewWithCustomCharts";
+import DashboardViewWithFilters from "../examples/dashboardEmbedding/DashboardViewWithFilters";
+import DashboardViewWithMergedFilters from "../examples/dashboardEmbedding/DashboardViewWithMergedFilters";
+import DashboardViewWithDrilling from "../examples/dashboardEmbedding/DashboardViewWithDrilling";
+import DashboardExport from "../examples/dashboardEmbedding/DashboardExport";
+import DashboardViewAdvancedCustomizations from "../examples/dashboardEmbedding/DashboardViewAdvancedCustomizations";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -82,6 +89,44 @@ export const insightViewUseCasesRoutes = [
     },
 ];
 
+export const dashboardViewUseCasesRoutes = [
+    {
+        path: "/dashboardView/simple",
+        title: "Simple",
+        Component: SimpleDashboardView,
+    },
+    {
+        path: "/dashboardView/with-filters",
+        title: "With filters",
+        Component: DashboardViewWithFilters,
+    },
+    {
+        path: "/dashboardView/with-merged-filters",
+        title: "With merged filters",
+        Component: DashboardViewWithMergedFilters,
+    },
+    {
+        path: "/dashboardView/with-drilling",
+        title: "With drilling",
+        Component: DashboardViewWithDrilling,
+    },
+    {
+        path: "/dashboardView/with-export",
+        title: "With export",
+        Component: DashboardExport,
+    },
+    {
+        path: "/dashboardView/custom-chart",
+        title: "With custom charts",
+        Component: DashboardViewWithCustomCharts,
+    },
+    {
+        path: "/dashboardView/advanced-customizations",
+        title: "With advanced customizations",
+        Component: DashboardViewAdvancedCustomizations,
+    },
+];
+
 export const drillingUseCasesRoutes = [
     {
         path: "/drilling/drill-with-external-data",
@@ -112,6 +157,10 @@ export const measureValueFilterUseCasesRoutes = [
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const InsightViewUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const DashboardViewUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: dashboardViewUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const AdvancedUseCasesRoutes = (props: any): JSX.Element =>
@@ -149,6 +198,13 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         redirectTo: insightViewUseCasesRoutes[0].path,
         title: "InsightView Component",
         Component: InsightViewUseCasesRoutes,
+    },
+    {
+        path: "/dashboardView",
+        pathMatch: "full",
+        redirectTo: dashboardViewUseCasesRoutes[0].path,
+        title: "DashboardView Component",
+        Component: DashboardViewUseCasesRoutes,
     },
     { path: "/sorting", title: "Sorting", Component: Sorting },
     {
@@ -216,7 +272,6 @@ export const hiddenPaths = [
         Component: PivotTableSizing,
     },
     { path: "/hidden/on-drill-drilling", title: "New drill handling by onDrill", Component: OnDrillHandling },
-    { path: "/hidden/dashboard-view", title: "DashboardView", Component: DashboardView },
 ];
 
 export const backendInfoRoutes = [
@@ -230,6 +285,7 @@ export const topNavigationRoutes = [{ path: "/", title: "Examples Gallery", Comp
 export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,
+    ...dashboardViewUseCasesRoutes,
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...measureValueFilterUseCasesRoutes,

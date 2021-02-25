@@ -2,14 +2,14 @@
 import React, { useEffect, useMemo } from "react";
 import { ErrorComponent as DefaultError, LoadingComponent as DefaultLoading } from "@gooddata/sdk-ui";
 import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { isFluidLayoutEmpty } from "@gooddata/sdk-backend-spi";
+import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
 import { useDashboard, useDashboardAlerts } from "../hooks";
 import {
     useAttributesWithDrillDown,
     useColorPalette,
-    useDashboardViewLayout,
+    useDashboardLayoutData,
     useUserWorkspaceSettings,
 } from "../hooks/internal";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
@@ -51,6 +51,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     ErrorComponent = DefaultError,
     LoadingComponent = DefaultLoading,
     widgetRenderer,
+    transformLayout,
     isReadOnly = false,
 }) => {
     const dashboardRef = typeof dashboard === "string" ? idRef(dashboard, "analyticalDashboard") : dashboard;
@@ -92,10 +93,10 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     });
 
     const {
-        error: dashboardViewLayoutError,
-        result: dashboardViewLayoutResult,
-        status: dashboardViewLayoutStatus,
-    } = useDashboardViewLayout({
+        error: dashboardLayoutError,
+        result: dashboardLayoutResult,
+        status: dashboardLayoutStatus,
+    } = useDashboardLayoutData({
         dashboardLayout: dashboardData?.layout,
         backend,
         workspace,
@@ -107,7 +108,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         userWorkspaceSettingsError ??
         colorPaletteError ??
         drillDownAttributesError ??
-        dashboardViewLayoutError;
+        dashboardLayoutError;
 
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
@@ -119,7 +120,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
             userWorkspaceSettings &&
             colorPalette &&
             drillDownAttributes &&
-            dashboardViewLayoutResult
+            dashboardLayoutResult
         ) {
             onDashboardLoaded?.({
                 alerts: alertsData,
@@ -133,7 +134,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         userWorkspaceSettings,
         colorPalette,
         drillDownAttributes,
-        dashboardViewLayoutResult,
+        dashboardLayoutResult,
     ]);
 
     useEffect(() => {
@@ -165,7 +166,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         userWorkspaceSettingsStatus,
         colorPaletteStatus,
         drillDownAttributesStatus,
-        dashboardViewLayoutStatus,
+        dashboardLayoutStatus,
     ];
 
     if (error) {
@@ -198,14 +199,15 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                         isVisible={isScheduledMailDialogVisible}
                                     />
                                 )}
-                                {isFluidLayoutEmpty(dashboardData.layout) ? (
+                                {isDashboardLayoutEmpty(dashboardData.layout) ? (
                                     <EmptyDashboardError ErrorComponent={ErrorComponent} />
                                 ) : (
                                     <DashboardRenderer
+                                        transformLayout={transformLayout}
                                         backend={backend}
                                         workspace={workspace}
                                         dashboardRef={dashboardRef}
-                                        dashboardViewLayout={dashboardData?.layout}
+                                        dashboardLayout={dashboardData?.layout}
                                         filters={sanitizedFilters}
                                         onFiltersChange={onFiltersChange}
                                         filterContext={dashboardData.filterContext}
@@ -214,10 +216,8 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                         ErrorComponent={ErrorComponent}
                                         LoadingComponent={LoadingComponent}
                                         className="gd-dashboards-root"
-                                        getDashboardViewLayoutWidgetClass={
-                                            dashboardViewLayoutResult.getDashboardViewLayoutWidgetClass
-                                        }
-                                        getInsightByRef={dashboardViewLayoutResult.getInsightByRef}
+                                        getVisType={dashboardLayoutResult.getVisType}
+                                        getInsightByRef={dashboardLayoutResult.getInsightByRef}
                                         widgetRenderer={widgetRenderer}
                                         areSectionHeadersEnabled={
                                             userWorkspaceSettings?.areSectionHeadersEnabled
