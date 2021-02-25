@@ -22,7 +22,7 @@ import {
     OnError,
     VisType,
 } from "@gooddata/sdk-ui";
-import { KpiView } from "../KpiView";
+import { KpiView } from "./KpiView";
 import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
 import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../../internal";
 import { getVisTypeCssClass } from "./utils";

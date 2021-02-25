@@ -21,9 +21,9 @@ import {
 import invariant from "ts-invariant";
 
 import { KpiExecutor } from "./KpiExecutor";
-import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../contexts";
-import { useKpiData } from "../hooks/internal";
-import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../types";
+import { useDashboardViewConfig, useDashboardViewIsReadOnly } from "../../contexts";
+import { useKpiData } from "../../hooks/internal";
+import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../../types";
 
 interface IKpiViewProps {
     /**

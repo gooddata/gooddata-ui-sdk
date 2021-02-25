@@ -15,13 +15,13 @@ import {
 } from "@gooddata/sdk-ui";
 import { isAttributeElementsByRef, objRefToString } from "@gooddata/sdk-model";
 
-import { dateDatasetsDataLoaderFactory } from "../../dataLoaders";
+import { dateDatasetsDataLoaderFactory } from "../../../dataLoaders";
 
 import {
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
     isBrokenAlertAttributeFilterInfo,
-} from "../../internal";
+} from "../../../internal";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;

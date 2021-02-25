@@ -4,8 +4,8 @@ import { IDrillEventContext } from "@gooddata/sdk-ui";
 import { ISeparators, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter } from "@gooddata/sdk-model";
 
-import { IKpiResult, KpiContent } from "../../internal";
-import { OnFiredDashboardViewDrillEvent } from "../types";
+import { IKpiResult, KpiContent } from "../../../internal";
+import { OnFiredDashboardViewDrillEvent } from "../../types";
 
 interface IKpiRendererProps {
     kpi: IKpiWidget | IKpiWidgetDefinition;

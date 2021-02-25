@@ -40,8 +40,8 @@ import {
     useExecution,
 } from "@gooddata/sdk-ui";
 
-import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
-import { useCurrentUser, useUserWorkspacePermissions } from "../hooks/internal";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
+import { useCurrentUser, useUserWorkspacePermissions } from "../../hooks/internal";
 import {
     DashboardItemHeadline,
     DashboardItemWithKpiAlert,
@@ -51,9 +51,9 @@ import {
     IKpiResult,
     dashboardFilterToFilterContextItem,
     stripDateDatasets,
-} from "../../internal";
-import { useUserWorkspaceSettings } from "../contexts";
-import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../types";
+} from "../../../internal";
+import { useUserWorkspaceSettings } from "../../contexts";
+import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../../types";
 
 import {
     IUseAlertManipulationHandlerConfig,
