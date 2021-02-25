@@ -146,7 +146,7 @@ export class AgGridDatasource implements IDatasource {
 
                         // Table descriptors contain attribute metadata & this attribute metadata contains totalItems
                         // it is essential to update the total items in descriptors to keep the descriptors in-sync
-                        this.config.tableDescriptor.updateTotalItems(dv);
+                        this.config.tableDescriptor.updateEffectiveTotals(dv);
 
                         this.processData(dv, params);
                     })
