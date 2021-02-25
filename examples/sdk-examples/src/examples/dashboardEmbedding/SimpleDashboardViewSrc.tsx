@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { DashboardView } from "@gooddata/sdk-ui-ext/esm/internal";
+import { DashboardView } from "@gooddata/sdk-ui-ext";
 import { idRef } from "@gooddata/sdk-model";
 import { MAPBOX_TOKEN } from "../../constants/fixtures";
 

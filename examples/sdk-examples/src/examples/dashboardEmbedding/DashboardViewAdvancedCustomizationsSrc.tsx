@@ -1,13 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { useState, useLayoutEffect } from "react";
-import { DashboardView } from "@gooddata/sdk-ui-ext/esm/internal";
-import { idRef } from "@gooddata/sdk-model";
-import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import {
+    DashboardView,
     DashboardLayoutItemModifications,
     DashboardLayoutTransform,
     DashboardLayoutItemsSelector,
-} from "@gooddata/sdk-ui-ext/esm/internal";
+} from "@gooddata/sdk-ui-ext";
+import { idRef } from "@gooddata/sdk-model";
+import { MAPBOX_TOKEN } from "../../constants/fixtures";
 import identity from "lodash/identity";
 
 const dashboardRef = idRef("aeO5PVgShc0T");

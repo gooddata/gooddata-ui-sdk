@@ -33,7 +33,7 @@ describe("DateTime", () => {
     });
 
     it("should render label", () => {
-        const label = "First occurence";
+        const label = "First occurrence";
         const component = renderComponent({ label });
         expect(component.find("label.gd-label").text()).toBe(label);
     });

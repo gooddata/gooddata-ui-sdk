@@ -4,7 +4,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IInsight, idRef, ObjRef } from "@gooddata/sdk-model";
 
 import { insightDataLoaderFactory } from "../InsightDataLoader";
-import { noopWorkspaceDashboardsService } from "./dataLoaders.mock";
+import { noopWorkspaceInsightsService } from "./dataLoaders.mock";
 
 describe("InsightDataLoader", () => {
     const workspace = "foo";
@@ -15,7 +15,7 @@ describe("InsightDataLoader", () => {
         workspace: () => ({
             ...baseBackend.workspace(workspace),
             insights: () => ({
-                ...noopWorkspaceDashboardsService,
+                ...noopWorkspaceInsightsService,
                 getInsight,
             }),
         }),

@@ -18,7 +18,9 @@ import {
 import { ObjRef } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * Set of convenience methods for a {@link @gooddata/sdk-backend-spi#IDashboardLayoutItem}.
+ *
+ * @beta
  */
 export interface IDashboardLayoutItemFacade<TWidget> {
     raw(): IDashboardLayoutItem<TWidget>;
@@ -52,7 +54,9 @@ export interface IDashboardLayoutItemFacade<TWidget> {
 }
 
 /**
- * @alpha
+ * Set of convenience methods for a collection of {@link @gooddata/sdk-backend-spi#IDashboardLayoutItem} items.
+ *
+ * @beta
  */
 export interface IDashboardLayoutItemsFacade<TWidget> {
     raw(): IDashboardLayoutItem<TWidget>[];
@@ -77,7 +81,9 @@ export interface IDashboardLayoutItemsFacade<TWidget> {
 }
 
 /**
- * @alpha
+ * Set of convenience methods for a {@link @gooddata/sdk-backend-spi#IDashboardLayoutSection}.
+ *
+ * @beta
  */
 export interface IDashboardLayoutSectionFacade<TWidget> {
     raw(): IDashboardLayoutSection<TWidget>;
@@ -104,7 +110,9 @@ export interface IDashboardLayoutSectionFacade<TWidget> {
 }
 
 /**
- * @alpha
+ * Set of convenience methods for a collection of {@link @gooddata/sdk-backend-spi#IDashboardLayoutSection} items.
+ *
+ * @beta
  */
 export interface IDashboardLayoutSectionsFacade<TWidget> {
     raw(): IDashboardLayoutSection<TWidget>[];
@@ -128,15 +136,15 @@ export interface IDashboardLayoutSectionsFacade<TWidget> {
 }
 
 /**
- * Layout facade is simple wrapper around {@link IDashboardLayout},
+ * Layout facade is simple wrapper around {@link @gooddata/sdk-backend-spi#IDashboardLayout},
  * that allows to query dashboard sections, items & widgets with ease thanks to set of common predicates & helper methods.
  * If you are extending the dashboard layout with some new functionality,
  * this is the place where you can put the new methods to cover it.
  *
  * Note: This class serves mainly for getting data from the layout.
- *       If you are looking for the layout transformations, check {@link IDashboardBuilder}
+ *       If you are looking for the layout transformations, check {@link IDashboardLayoutBuilder}
  *
- * @alpha
+ * @beta
  */
 export interface IDashboardLayoutFacade<TWidget> {
     size(): IDashboardLayoutSize | undefined;

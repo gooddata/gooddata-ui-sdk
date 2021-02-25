@@ -8,8 +8,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition, insightProperties, IColorPalette, insightTitle } from "@gooddata/sdk-model";
 
-import { IVisualization, IVisProps } from "../internal/interfaces/Visualization";
-import { FullVisualizationCatalog } from "../internal/components/VisualizationCatalog";
+import { IVisualization, IVisProps, FullVisualizationCatalog } from "../internal";
 import {
     GoodDataSdkError,
     fillMissingTitles,
