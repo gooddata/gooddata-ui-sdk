@@ -134,6 +134,8 @@ import { IGridRow } from "./impl/data/resultTypes";
 import { isSomeTotal } from "./impl/data/dataSourceUtils";
 import last from "lodash/last";
 import { isCellDrillable } from "./impl/drilling/cellDrillabilityPredicate";
+import debounce from "lodash/debounce";
+import { DebouncedFunc } from "lodash";
 
 const AG_NUMERIC_CELL_CLASSNAME = "ag-numeric-cell";
 const AG_NUMERIC_HEADER_CLASSNAME = "ag-numeric-header";
@@ -145,6 +147,7 @@ const DEFAULT_ROW_HEIGHT = 28;
 const DEFAULT_AUTOSIZE_PADDING = 12;
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
+const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
 export const DEFAULT_COLUMN_WIDTH = 200;
 export const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -216,6 +219,10 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
     private isMetaOrCtrlKeyPressed = false;
     private isAltKeyPressed = false;
 
+    private lastResizedWidth = 0;
+    private lastResizedHeight = 0;
+    private debouncedGridSizeChanged: DebouncedFunc<(gridSizeChangedEvent: any) => Promise<void>> | undefined;
+
     constructor(props: ICorePivotTableProps) {
         super(props);
 
@@ -229,6 +236,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         };
 
         this.errorMap = newErrorMapping(props.intl);
+        this.debouncedGridSizeChanged = debounce(this.gridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
         this.resizedColumnsStore = new ResizedColumnsStore();
     }
 
@@ -261,6 +269,8 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             top: 0,
             left: 0,
         };
+        this.lastResizedHeight = 0;
+        this.lastResizedWidth = 0;
 
         this.clearTimeouts();
     };
@@ -1231,6 +1241,20 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
         this.updateStickyRowContent(scrollPosition);
     };
 
+    private gridSizeChanged = async (gridSizeChangedEvent: any): Promise<void> => {
+        if (
+            this.firstDataRendered &&
+            !this.resizing &&
+            (this.lastResizedWidth !== gridSizeChangedEvent.clientWidth ||
+                this.lastResizedHeight !== gridSizeChangedEvent.clientHeight)
+        ) {
+            this.lastResizedWidth = gridSizeChangedEvent.clientWidth;
+            this.lastResizedHeight = gridSizeChangedEvent.clientHeight;
+
+            this.autoresizeColumns(this.gridApi!, this.columnApi!, true);
+        }
+    };
+
     private onContainerMouseDown = (event: MouseEvent) => {
         if (event.target && this.isHeaderResizer(event.target as HTMLElement)) {
             event.stopPropagation();
@@ -1331,6 +1355,7 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
             onGridReady: this.onGridReady,
             onFirstDataRendered: this.onFirstDataRendered,
             onBodyScroll: this.onBodyScroll,
+            onGridSizeChanged: this.debouncedGridSizeChanged,
 
             // Column types
             columnTypes: {
