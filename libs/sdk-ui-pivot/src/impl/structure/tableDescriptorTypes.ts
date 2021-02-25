@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
+import { IAttributeDescriptor, IResultAttributeHeader, ITotalDescriptor } from "@gooddata/sdk-backend-spi";
 import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 
@@ -31,7 +31,18 @@ export type SliceCol = {
     readonly attributeDescriptor: IAttributeDescriptor;
 
     /**
-     * column index among all slice columns
+     * Descriptors of totals that are defined on this column's granularity. Note that while the total
+     * descriptors are also part of the attributeDescriptor (above) the total descriptors there are a snapshot done
+     * at the time of table descriptor construction.
+     *
+     * User may change effective totals by configuring aggregations using the table's aggregation menu. If that
+     * happens the table will drive a new execution with updated totals. After it finishes, the effective totals
+     * in this field will be updated.
+     */
+    effectiveTotals: ITotalDescriptor[];
+
+    /**
+     * Column index among all slice columns
      */
     index: number;
 
