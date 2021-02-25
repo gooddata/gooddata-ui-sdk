@@ -11,7 +11,7 @@ const ThemeIsLoadingContext = React.createContext<boolean | undefined>(undefined
 ThemeIsLoadingContext.displayName = "ThemeIsLoadingContext";
 
 /**
- * @beta
+ * @public
  */
 export interface IThemeContextProviderProps {
     /**
@@ -28,7 +28,7 @@ export interface IThemeContextProviderProps {
 /**
  * Provides the theme object and themeIsLoading flag into context
  *
- * @beta
+ * @public
  */
 export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
     children,
@@ -56,7 +56,7 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
  * const theme = useTheme(fromArguments);
  *
  * @param theme - theme to use instead of context value. If undefined, the context value is used.
- * @beta
+ * @public
  */
 export const useTheme = (theme?: ITheme): ITheme | undefined => {
     const themeFromContext = React.useContext(ThemeContext);
@@ -66,7 +66,7 @@ export const useTheme = (theme?: ITheme): ITheme | undefined => {
 /**
  * Hook for reaching the themeIsLoading flag from context
  *
- * @beta
+ * @public
  */
 export const useThemeIsLoading = (): boolean | undefined => {
     const themeIsLoading = React.useContext(ThemeIsLoadingContext);
@@ -110,7 +110,7 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
 /**
  * Injects both theme object and isThemeLoading flag into component as properties
  *
- * @beta
+ * @public
  */
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
     Chart: React.ComponentType<T>,

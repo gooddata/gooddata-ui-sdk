@@ -8,13 +8,13 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-backend-spi';
 import { default as React_2 } from 'react';
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface IThemeContextProviderProps {
     theme: ITheme;
     themeIsLoading: boolean;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface IThemeProviderProps {
     backend?: IAnalyticalBackend;
     modifier?: ThemeModifier;
@@ -22,22 +22,22 @@ export interface IThemeProviderProps {
     workspace?: string;
 }
 
-// @beta
+// @public
 export const ThemeContextProvider: React_2.FC<IThemeContextProviderProps>;
 
-// @beta (undocumented)
+// @public (undocumented)
 export type ThemeModifier = (theme: ITheme) => ITheme;
 
-// @beta
+// @public
 export const ThemeProvider: React_2.FC<IThemeProviderProps>;
 
-// @beta
+// @public
 export const useTheme: (theme?: ITheme) => ITheme | undefined;
 
-// @beta
+// @public
 export const useThemeIsLoading: () => boolean | undefined;
 
-// @beta
+// @public
 export function withTheme<T extends {
     theme?: ITheme;
     workspace?: string;

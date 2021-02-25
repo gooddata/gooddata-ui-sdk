@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
+import identity from "lodash/identity";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -8,14 +9,12 @@ import { clearCssProperties, setCssProperties } from "../cssProperties";
 import { ThemeContextProvider } from "./Context";
 
 /**
- *
- * @beta
+ * @public
  */
 export type ThemeModifier = (theme: ITheme) => ITheme;
 
 /**
- *
- * @beta
+ * @public
  */
 export interface IThemeProviderProps {
     /**
@@ -55,14 +54,14 @@ export interface IThemeProviderProps {
  *
  * Both backend and workspace can be passed as an arguments, otherwise the component tries to get these from the context
  *
- * @beta
+ * @public
  */
 export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     children,
     theme: themeParam,
     backend: backendParam,
     workspace: workspaceParam,
-    modifier = (theme: ITheme): ITheme => theme,
+    modifier = identity,
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
