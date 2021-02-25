@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
@@ -255,7 +255,7 @@ describe("Catalogue", () => {
                 .then(() => {
                     const { bucketItems } = getRequestBody().dateDataSetsRequest;
 
-                    expect(bucketItems).toHaveLength(0);
+                    expect(bucketItems).toEqual(["/gdc/md/qamfsd9cw85e53mcqs74k8a0mwbf5gc2/obj/1233"]);
                 });
         });
 
