@@ -24,9 +24,11 @@ import {
 } from "@gooddata/sdk-ui";
 import { KpiView } from "../KpiView";
 import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
-import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
-import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
-import { DashboardItem } from "../DashboardItem/DashboardItem";
+import {
+    DashboardItem,
+    DashboardItemHeadline,
+    DashboardItemVisualization,
+} from "../../internal/dashboardEmbedding";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
 

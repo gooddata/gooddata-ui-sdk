@@ -49,10 +49,12 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
-    useAlertsContext,
+} from "../internal/dashboardEmbedding";
+import {
     DashboardWidgetRenderer,
     IDashboardWidgetRendererProps,
-} from "../internal/dashboardEmbedding";
+} from "./DashboardWidgetRenderer/DashboardWidgetRenderer";
+import { useAlerts } from "./contexts";
 
 interface IDashboardRendererProps {
     dashboardRef: ObjRef;
@@ -122,7 +124,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     dashboardRef,
     transformLayout,
 }) {
-    const { alerts } = useAlertsContext();
+    const { alerts } = useAlerts();
     const isThemeLoading = useThemeIsLoading();
 
     if (isThemeLoading) {

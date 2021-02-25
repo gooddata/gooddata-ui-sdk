@@ -7,6 +7,8 @@ import {
     IBrokenAlertFilterBasicInfo,
     enrichBrokenAlertsInfo,
     getBrokenAlertFiltersBasicInfo,
+    isBrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
 } from "./utils/brokenFilterUtils";
 import { evaluateAlertTriggered } from "./utils/alertThresholdUtils";
 
@@ -21,4 +23,6 @@ export {
     enrichBrokenAlertsInfo,
     getBrokenAlertFiltersBasicInfo,
     evaluateAlertTriggered,
+    isBrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
 };

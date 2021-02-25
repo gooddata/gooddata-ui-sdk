@@ -41,15 +41,17 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
-import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { useCurrentUser, useUserWorkspacePermissions } from "../hooks/internal";
 import {
+    DashboardItemHeadline,
     DashboardItemWithKpiAlert,
     evaluateAlertTriggered,
     getBrokenAlertFiltersBasicInfo,
-} from "../KpiAlerts";
-import { IKpiAlertResult, IKpiResult } from "../types";
-import { dashboardFilterToFilterContextItem, stripDateDatasets } from "../utils/filters";
+    IKpiAlertResult,
+    IKpiResult,
+    dashboardFilterToFilterContextItem,
+    stripDateDatasets,
+} from "../../internal/dashboardEmbedding";
 import { useUserWorkspaceSettings } from "../contexts";
 import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../types";
 

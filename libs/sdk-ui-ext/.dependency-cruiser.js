@@ -4,8 +4,7 @@ const options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
-        // TODO: uncomment this line when dashboardEmbedding is no longer internal (for now this is to avoid circular dependencies)
-        // depCruiser.isolatedSubmodule("internal", "src/internal"),
+        depCruiser.isolatedSubmodule("internal", "src/internal"),
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [
             "src/dataLoaders",
             "src/internal",
@@ -16,6 +15,7 @@ const options = {
             "src/dataLoaders",
             "src/internal",
             "src/internal/dashboardEmbedding",
+            "src/insightView/*", // we need to use some parts of insight view
         ]),
     ],
     options: depCruiser.DefaultOptions,

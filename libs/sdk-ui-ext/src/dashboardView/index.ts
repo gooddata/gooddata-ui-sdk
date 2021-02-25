@@ -6,14 +6,4 @@ export { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 export { mergeFiltersWithDashboard } from "./mergeFiltersWithDashboard";
 
 export * from "./types";
-export {
-    useDashboard,
-    IUseDashboardConfig,
-    useDashboardAlerts,
-    IUseDashboardAlertsConfig,
-    useDashboardWidgetExecution,
-    IUseDashboardWidgetExecutionConfig,
-    useDashboardPdfExporter,
-    IUseDashboardPdfExporterConfig,
-    IUseDashboardPdfExporterResult,
-} from "../internal/dashboardEmbedding";
+export * from "./hooks";

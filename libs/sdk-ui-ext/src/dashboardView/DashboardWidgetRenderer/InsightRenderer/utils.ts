@@ -1,7 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
 import { IWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter, newAllTimeFilter } from "@gooddata/sdk-model";
-import { hasDateFilterForDateDataset } from "../../utils/filters";
+import { hasDateFilterForDateDataset } from "../../../internal/dashboardEmbedding";
 
 export function addImplicitAllTimeFilter(widget: IWidgetDefinition, resolvedFilters: IFilter[]): IFilter[] {
     // if the widget is connected to a dateDataset and has no date filters for it in the context,

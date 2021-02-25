@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { IAnalyticalBackend, isWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-backend-spi";
 import { useSaveOrUpdateWidgetAlert } from "../../hooks/internal";
-import { KpiAlertOperationStatus } from "../../types";
+import { KpiAlertOperationStatus } from "../../../internal/dashboardEmbedding";
 import { useAlerts } from "../../contexts";
 
 interface IUseAlertSaveHandlerConfig {

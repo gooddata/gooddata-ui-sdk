@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IColorPalette } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,19 +9,10 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { dashboardDataLoaderFactory } from "../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { colorPaletteDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../utils";
 
-/**
- * @beta
- */
-export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
-    /**
-     * Reference to the dashboard to get.
-     */
-    dashboard: ObjRef;
-
+interface IUseColorPaletteConfig extends UseCancelablePromiseCallbacks<IColorPalette, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -30,7 +22,7 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace where the insight exists.
+     * Workspace to get the color palette for.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the hook MUST be called within an existing WorkspaceContext.
@@ -39,12 +31,11 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
 }
 
 /**
- * Hook allowing to download dashboard data
+ * Hook allowing to download color palette of the given workspace
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useDashboard({
-    dashboard,
+export function useColorPalette({
     backend,
     onCancel,
     onError,
@@ -52,19 +43,18 @@ export function useDashboard({
     onPending,
     onSuccess,
     workspace,
-}: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any> {
+}: IUseColorPaletteConfig): UseCancelablePromiseState<IColorPalette, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useDashboard");
-    workspaceInvariant(effectiveWorkspace, "useDashboard");
+    backendInvariant(effectiveBackend, "useColorPalette");
+    workspaceInvariant(effectiveWorkspace, "useColorPalette");
 
-    const loader = dashboardDataLoaderFactory.forWorkspace(effectiveWorkspace);
-    const promise = () => loader.getDashboard(effectiveBackend, dashboard);
+    const loader = colorPaletteDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getColorPalette(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        objRefToString(dashboard),
     ]);
 }

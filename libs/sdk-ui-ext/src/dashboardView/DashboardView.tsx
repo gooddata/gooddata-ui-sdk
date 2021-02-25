@@ -6,23 +6,23 @@ import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
 import { InternalIntlWrapper } from "../internal";
+import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding";
+import { useDashboard, useDashboardAlerts } from "./hooks";
 import {
     useAttributesWithDrillDown,
     useColorPalette,
     useDashboardLayoutData,
     useUserWorkspaceSettings,
+} from "./hooks/internal";
+import {
     AttributesWithDrillDownProvider,
     ColorPaletteProvider,
     DashboardAlertsProvider,
     DashboardViewConfigProvider,
     DashboardViewIsReadOnlyProvider,
     UserWorkspaceSettingsProvider,
-    ScheduledMailDialog,
-    filterArrayToFilterContextItems,
-    useDashboard,
-    useDashboardAlerts,
-} from "../internal/dashboardEmbedding";
-
+} from "./contexts";
+import { ScheduledMailDialog } from "./ScheduledMail";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";

@@ -8,8 +8,9 @@ import {
     KpiAlertDialog,
     IKpiAlertDialogProps,
     IBrokenAlertFilterBasicInfo,
-} from "../KpiAlerts";
-import { useBrokenAlertFiltersMeta } from "../KpiAlerts/useBrokenAlertFiltersMeta";
+} from "../../internal/dashboardEmbedding";
+
+import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
 
 interface IKpiAlertDialogWrapperProps
     extends WrappedComponentProps,

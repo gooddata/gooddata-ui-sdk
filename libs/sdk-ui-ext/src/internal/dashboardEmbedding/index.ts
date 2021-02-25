@@ -10,6 +10,11 @@ export {
     enrichBrokenAlertsInfo,
     getBrokenAlertFiltersBasicInfo,
     IAttributeFilterMetaCollection,
+    evaluateAlertTriggered,
+    isBrokenAlertAttributeFilter,
+    isBrokenAlertDateFilter,
+    isBrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
 } from "./KpiAlerts";
 
 export * from "./types";
@@ -17,6 +22,7 @@ export * from "./types";
 export { KpiContent } from "./KpiContent";
 
 export {
+    DashboardItem,
     DashboardItemHeadline,
     DashboardItemContent,
     DashboardItemVisualization,
@@ -24,17 +30,9 @@ export {
 } from "./DashboardItem";
 
 export * from "./DashboardLayout";
-export * from "./DashboardWidgetRenderer";
-export * from "./ScheduledMail";
-export { filterArrayToFilterContextItems } from "./utils/filters";
 export {
-    AttributesWithDrillDownProvider,
-    ColorPaletteProvider,
-    DashboardAlertsProvider,
-    DashboardViewConfigProvider,
-    DashboardViewIsReadOnlyProvider,
-    UserWorkspaceSettingsProvider,
-    useAlerts as useAlertsContext,
-} from "./contexts";
-export * from "./hooks";
-export * from "./hooks/internal";
+    filterArrayToFilterContextItems,
+    stripDateDatasets,
+    dashboardFilterToFilterContextItem,
+    hasDateFilterForDateDataset,
+} from "./utils/filters";

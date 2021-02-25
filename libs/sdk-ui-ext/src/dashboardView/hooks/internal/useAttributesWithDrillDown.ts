@@ -9,7 +9,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { attributesWithDrillDownDataLoaderFactory } from "../../../../dataLoaders";
+import { attributesWithDrillDownDataLoaderFactory } from "../../../dataLoaders";
 import { backendInvariant, workspaceInvariant } from "../utils";
 
 interface IAttributesWithDrillDownConfig

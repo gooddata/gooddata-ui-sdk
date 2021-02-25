@@ -30,8 +30,8 @@ import {
     isSomeHeaderPredicateMatched,
     DataViewFacade,
 } from "@gooddata/sdk-ui";
-import { InsightRenderer as InsightRendererImpl } from "../../../../insightView/InsightRenderer";
-import { InsightError } from "../../../../insightView/InsightError";
+import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
+import { InsightError } from "../../../insightView/InsightError";
 import { getImplicitDrillsWithPredicates } from "./drillingUtils";
 import { addImplicitAllTimeFilter } from "./utils";
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
