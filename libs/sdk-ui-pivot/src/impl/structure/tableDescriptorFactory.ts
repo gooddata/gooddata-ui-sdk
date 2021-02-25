@@ -247,6 +247,7 @@ function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
                 index: idx,
                 attributeDescriptor,
                 fullIndexPathToHere: [idx],
+                effectiveTotals: attributeDescriptor.attributeHeader.totalItems ?? [],
             };
         });
 }
