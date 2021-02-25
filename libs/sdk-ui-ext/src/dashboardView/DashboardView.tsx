@@ -5,28 +5,27 @@ import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provide
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
+import { InternalIntlWrapper } from "../internal";
 import {
     useAttributesWithDrillDown,
     useColorPalette,
     useDashboardLayoutData,
     useUserWorkspaceSettings,
-} from "../internal/dashboardEmbedding/hooks";
-import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider";
-import {
     AttributesWithDrillDownProvider,
     ColorPaletteProvider,
     DashboardAlertsProvider,
     DashboardViewConfigProvider,
     DashboardViewIsReadOnlyProvider,
     UserWorkspaceSettingsProvider,
-} from "../internal/dashboardEmbedding/DashboardView/contexts";
-import { ScheduledMailDialog } from "../internal/dashboardEmbedding/ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
-import { DashboardRenderer } from "../internal/dashboardEmbedding/DashboardView/DashboardRenderer";
-import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding/utils/filters";
+    ScheduledMailDialog,
+    filterArrayToFilterContextItems,
+    useDashboard,
+    useDashboardAlerts,
+} from "../internal/dashboardEmbedding";
 
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
+import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";
-import { useDashboard, useDashboardAlerts } from "./hooks";
 import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({

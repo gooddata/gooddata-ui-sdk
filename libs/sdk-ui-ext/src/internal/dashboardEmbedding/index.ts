@@ -12,7 +12,7 @@ export {
     IAttributeFilterMetaCollection,
 } from "./KpiAlerts";
 
-export { IKpiAlertResult, IKpiResult } from "./types";
+export * from "./types";
 
 export { KpiContent } from "./KpiContent";
 
@@ -23,11 +23,18 @@ export {
     DashboardItemHeadlineContainer,
 } from "./DashboardItem";
 
-export {
-    DASHBOARD_TITLE_MAX_LENGTH,
-    PLATFORM_DATE_FORMAT,
-    IScheduledMailDialogRendererOwnProps,
-    ScheduledMailDialogRenderer,
-} from "./ScheduledMail";
-
 export * from "./DashboardLayout";
+export * from "./DashboardWidgetRenderer";
+export * from "./ScheduledMail";
+export { filterArrayToFilterContextItems } from "./utils/filters";
+export {
+    AttributesWithDrillDownProvider,
+    ColorPaletteProvider,
+    DashboardAlertsProvider,
+    DashboardViewConfigProvider,
+    DashboardViewIsReadOnlyProvider,
+    UserWorkspaceSettingsProvider,
+    useAlerts as useAlertsContext,
+} from "./contexts";
+export * from "./hooks";
+export * from "./hooks/internal";

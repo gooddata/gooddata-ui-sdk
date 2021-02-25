@@ -24,7 +24,7 @@ import {
     IFilter,
     isDateFilter,
 } from "@gooddata/sdk-model";
-import { IDashboardFilter } from "../../../dashboardView/types";
+import { IDashboardFilter } from "../types";
 
 /**
  * Converts a {@link IDashboardFilter} to a {@link FilterContextItem}.

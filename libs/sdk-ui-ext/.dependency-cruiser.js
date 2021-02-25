@@ -12,6 +12,11 @@ const options = {
             // TODO: remove this line when dashboardEmbedding is no longer internal (for now this is to avoid circular dependencies)
             "src/internal/*",
         ]),
+        depCruiser.moduleWithDependencies("dashboardView", "src/dashboardView", [
+            "src/dataLoaders",
+            "src/internal",
+            "src/internal/dashboardEmbedding",
+        ]),
     ],
     options: depCruiser.DefaultOptions,
 };

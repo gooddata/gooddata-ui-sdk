@@ -1,38 +1,30 @@
 // (C) 2020-2021 GoodData Corporation
-import isEmpty from "lodash/isEmpty";
 import {
     IAnalyticalBackend,
     ITheme,
     IDashboard,
     IWidgetAlert,
-    ISeparators,
     IScheduledMailDefinition,
     IScheduledMail,
     IWidget,
     FilterContextItem,
     ILegacyKpi,
-    DrillDefinition,
 } from "@gooddata/sdk-backend-spi";
-import {
-    ObjRef,
-    IInsight,
-    IAbsoluteDateFilter,
-    IRelativeDateFilter,
-    IPositiveAttributeFilter,
-    INegativeAttributeFilter,
-} from "@gooddata/sdk-model";
+import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
     IErrorProps,
     ILoadingProps,
     OnError,
-    ILocale,
     VisType,
-    IDrillEvent,
-    OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import { IDashboardLayoutBuilder } from "../internal/dashboardEmbedding/DashboardLayout/builder/interfaces";
+import {
+    IDashboardLayoutBuilder,
+    IDashboardFilter,
+    OnFiredDashboardViewDrillEvent,
+    IDashboardViewConfig,
+} from "../internal/dashboardEmbedding";
 
 export {
     IDashboardLayoutBuilder,
@@ -43,14 +35,18 @@ export {
     DashboardLayoutItemsSelector,
     DashboardLayoutItemModifications,
     IDashboardLayoutItemBuilder,
-} from "../internal/dashboardEmbedding/DashboardLayout/builder/interfaces";
-export {
     IDashboardLayoutFacade,
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
-} from "../internal/dashboardEmbedding/DashboardLayout/facade/interfaces";
+    IDashboardFilter,
+    OnFiredDashboardViewDrillEvent,
+    IDashboardDrillEvent,
+    IDrillDownDefinition,
+    isDrillDownDefinition,
+    IDashboardViewConfig,
+} from "../internal/dashboardEmbedding";
 
 /**
  * @beta
@@ -79,67 +75,6 @@ export type DashboardLayoutTransform<TContent = any> = (
     layoutBuilder: IDashboardLayoutBuilder<TContent>,
     additionalProps: IDashboardLayoutTransformAdditionalProps,
 ) => IDashboardLayoutBuilder<TContent>;
-
-/**
- * @beta
- */
-export interface IDashboardViewConfig {
-    /**
-     * Token for Mapbox API. You need this to use GeoCharts in your dashboards.
-     *
-     * @remarks To create a Mapbox account and an access token, see [this guide](https://docs.mapbox.com/help/how-mapbox-works/access-tokens/).
-     */
-    mapboxToken: string;
-
-    /**
-     * Regional number formatting to use for measures on the dashboard.
-     */
-    separators?: ISeparators;
-
-    /**
-     * If true, drillable items in KPI's will not be underlined. Defaults to false.
-     */
-    disableKpiDrillUnderline?: boolean;
-
-    /**
-     * Locale to use for localization of texts appearing in the dashboard.
-     *
-     * Note: text values coming from the data itself are not localized.
-     */
-    locale?: ILocale;
-}
-
-/**
- * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
- * @beta
- */
-export interface IDrillDownDefinition {
-    type: "drillDown";
-    target: ObjRef;
-}
-
-/**
- * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
- * @beta
- */
-export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
-    return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
-}
-
-/**
- * A {@link @gooddata/sdk-ui#IDrillEvent} with added field that contains info about all the drilling interactions set in KPI dashboards
- * that are relevant to the given drill event (including drill downs).
- * @beta
- */
-export interface IDashboardDrillEvent extends IDrillEvent {
-    drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
-}
-
-/**
- * Callback called when a drill event occurs.
- * @beta
- */
-export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
 /**
  * @beta
@@ -416,13 +351,3 @@ export interface IWidgetPredicates {
      */
     isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
 }
-
-/**
- * Supported dashboard filter type.
- * @beta
- */
-export type IDashboardFilter =
-    | IAbsoluteDateFilter
-    | IRelativeDateFilter
-    | IPositiveAttributeFilter
-    | INegativeAttributeFilter;

@@ -2,7 +2,7 @@
 import { FilterContextItem, IDashboard } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual, filterObjRef, ObjRef, IFilter, isDateFilter } from "@gooddata/sdk-model";
 import { IDashboardFilter } from "./types";
-import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding/utils/filters";
+import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding";
 
 /**
  * Gets filters merged with the filters provided by the specified dashboard.
