@@ -15,6 +15,7 @@
         "noUnusedParameters": true,
         "noImplicitReturns": true,
         "moduleResolution": "node",
+        "resolveJsonModule": true,
         "baseUrl": "..",
         "paths": {
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
