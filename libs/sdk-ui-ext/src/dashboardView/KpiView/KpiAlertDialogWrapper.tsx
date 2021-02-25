@@ -8,7 +8,7 @@ import {
     KpiAlertDialog,
     IKpiAlertDialogProps,
     IBrokenAlertFilterBasicInfo,
-} from "../../internal/dashboardEmbedding";
+} from "../../internal";
 
 import { useBrokenAlertFiltersMeta } from "./useBrokenAlertFiltersMeta";
 

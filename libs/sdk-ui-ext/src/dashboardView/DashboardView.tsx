@@ -5,8 +5,7 @@ import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provide
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { InternalIntlWrapper } from "../internal";
-import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding";
+import { InternalIntlWrapper, filterArrayToFilterContextItems } from "../internal";
 import { useDashboard, useDashboardAlerts } from "./hooks";
 import {
     useAttributesWithDrillDown,

@@ -24,7 +24,7 @@ import {
     IDashboardFilter,
     OnFiredDashboardViewDrillEvent,
     IDashboardViewConfig,
-} from "../internal/dashboardEmbedding";
+} from "../internal";
 
 export {
     IDashboardLayoutBuilder,
@@ -46,7 +46,7 @@ export {
     IDrillDownDefinition,
     isDrillDownDefinition,
     IDashboardViewConfig,
-} from "../internal/dashboardEmbedding";
+} from "../internal";
 
 /**
  * @beta

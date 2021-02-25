@@ -24,11 +24,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { KpiView } from "../KpiView";
 import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
-import {
-    DashboardItem,
-    DashboardItemHeadline,
-    DashboardItemVisualization,
-} from "../../internal/dashboardEmbedding";
+import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../../internal";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
 

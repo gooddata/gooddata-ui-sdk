@@ -49,7 +49,7 @@ import {
     getDashboardLayoutWidgetDefaultHeight,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
-} from "../internal/dashboardEmbedding";
+} from "../internal";
 import {
     DashboardWidgetRenderer,
     IDashboardWidgetRendererProps,

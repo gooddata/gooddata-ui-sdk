@@ -21,7 +21,7 @@ import {
     IAttributeFilterMetaCollection,
     IBrokenAlertFilterBasicInfo,
     isBrokenAlertAttributeFilterInfo,
-} from "../../internal/dashboardEmbedding";
+} from "../../internal";
 
 export interface IBrokenAlertFiltersMeta {
     attributeFiltersMeta: IAttributeFilterMetaCollection;

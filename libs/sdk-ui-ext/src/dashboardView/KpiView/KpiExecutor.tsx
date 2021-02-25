@@ -51,7 +51,7 @@ import {
     IKpiResult,
     dashboardFilterToFilterContextItem,
     stripDateDatasets,
-} from "../../internal/dashboardEmbedding";
+} from "../../internal";
 import { useUserWorkspaceSettings } from "../contexts";
 import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../types";
 

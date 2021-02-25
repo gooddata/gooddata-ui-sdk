@@ -9,7 +9,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { IDashboardFilter } from "../../types";
-import { dashboardFilterToFilterContextItem } from "../../../internal/dashboardEmbedding";
+import { dashboardFilterToFilterContextItem } from "../../../internal";
 import { backendInvariant, workspaceInvariant } from "../utils";
 
 interface IUseExportDashboardToPdfConfig
