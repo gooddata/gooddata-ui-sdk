@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import flatten from "lodash/flatten";
 import get from "lodash/get";
 import pick from "lodash/pick";
@@ -72,14 +72,14 @@ export const isStacked = (chart: Highcharts.Chart): boolean => {
 
     if (
         get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
-        chart.axes.some((axis: any) => !isEmpty(axis.stacks))
+        chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
     ) {
         return true;
     }
 
     if (
         get(chart, "userOptions.plotOptions.series.stacking", false) &&
-        chart.axes.some((axis: any) => !isEmpty(axis.stacks))
+        chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
     ) {
         return true;
     }

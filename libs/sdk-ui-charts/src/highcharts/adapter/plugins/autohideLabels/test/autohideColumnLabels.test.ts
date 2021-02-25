@@ -136,13 +136,15 @@ describe("getStackTotalGroups", () => {
         };
         const yAxis: Highcharts.Axis[] = [
             {
-                stacks: {
-                    column0: [
-                        { x: 0, total: 678 },
-                        { x: 1, total: 958 },
-                    ],
+                stacking: {
+                    stacks: {
+                        column0: [
+                            { x: 0, total: 678 },
+                            { x: 1, total: 958 },
+                        ],
+                    },
+                    stackTotalGroup,
                 },
-                stackTotalGroup,
             },
         ] as any;
         const stackLabels = autohideColumnLabels.getStackTotalGroups(yAxis);
@@ -158,7 +160,9 @@ describe("getStackTotalGroups", () => {
         };
         const yAxis: Highcharts.Axis[] = [
             {
-                stacks: {},
+                stacking: {
+                    stacks: {},
+                },
                 series: [{ dataLabelsGroup }],
             },
         ] as any;
@@ -172,17 +176,19 @@ describe("getStackItems", () => {
     it("should return stack items", () => {
         const yAxis: Highcharts.Axis[] = [
             {
-                stacks: {
-                    column0: [
-                        { x: 0, total: 678 },
-                        { x: 1, total: 958 },
-                    ],
+                stacking: {
+                    stacks: {
+                        column0: [
+                            { x: 0, total: 678 },
+                            { x: 1, total: 958 },
+                        ],
+                    },
                 },
             },
         ] as any[];
         const stackItems = autohideColumnLabels.getStackItems(yAxis);
 
-        expect(stackItems).toEqual([(yAxis[0] as UnsafeInternals).stacks]);
+        expect(stackItems).toEqual([(yAxis[0] as UnsafeInternals).stacking.stacks]);
     });
 
     it("should return data label items", () => {
@@ -192,7 +198,9 @@ describe("getStackItems", () => {
         ];
         const yAxis: Highcharts.Axis[] = [
             {
-                stacks: {},
+                stacking: {
+                    stacks: {},
+                },
                 series: [{ data, type: VisualizationTypes.COLUMN }],
             },
         ] as any;

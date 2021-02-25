@@ -137,14 +137,14 @@ const DoNotRenderConfigPanel = "this-classname-should-not-exist-in-the-document"
 /*
  * This ready resolver returns true when both are true:
  *
- * -  3 visualizations are rendered
+ * -  4 visualizations are rendered
  * -  the config panel expander is rendered
  *
  * It is important that the story is ready for screenshot when both are true. Otherwise backstop can make
  * the screenshot before the expander is rendered.
  */
 const ReportReadyResolver = andResolver(
-    createElementCountResolver(3),
+    createElementCountResolver(4),
     createElementCountResolver(1, [ConfigurationPanelWrapper.DefaultExpandAllClassName]),
 );
 

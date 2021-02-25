@@ -20,24 +20,3 @@ export interface IHighchartsAxisExtend extends IHighchartsAxis {
         pointPlacement?: number,
     ): number | undefined;
 }
-
-type IHighchartsPoint = Partial<Highcharts.Point>;
-export type IHighchartsSeriesOptionsType = Partial<Highcharts.SeriesOptionsType>;
-
-interface IHighchartsSeries {
-    area?: Highcharts.SVGElement;
-    type: string;
-    name: string;
-    chart: Highcharts.Chart;
-    data: IHighchartsPoint[];
-    graph?: Highcharts.SVGElement;
-    options: IHighchartsSeriesOptionsType;
-    points: IHighchartsPoint[];
-    visible: boolean;
-    xAxis: IHighchartsAxisExtend;
-    yAxis: IHighchartsAxisExtend;
-}
-
-export interface IHighchartsSeriesExtend extends Partial<IHighchartsSeries> {
-    pointPlacementToXValue?(): number;
-}
