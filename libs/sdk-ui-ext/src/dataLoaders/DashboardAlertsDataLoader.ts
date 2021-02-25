@@ -2,8 +2,9 @@
 import LRUCache from "lru-cache";
 import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+
 import { DASHBOARD_CACHE_SIZE } from "./constants";
-import { dataLoaderAbstractFactory } from "../../../../dataLoaders/DataLoaderAbstractFactory";
+import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory";
 
 interface IDashboardAlertsDataLoader {
     /**

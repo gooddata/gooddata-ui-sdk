@@ -19,6 +19,9 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
+// @beta
+export function clearDashboardViewCaches(): void;
+
 // @public
 export function clearInsightViewCaches(): void;
 

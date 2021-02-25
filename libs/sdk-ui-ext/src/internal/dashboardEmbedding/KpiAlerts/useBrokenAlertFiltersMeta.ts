@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { isAttributeElementsByRef, objRefToString } from "@gooddata/sdk-model";
 
-import { dateDatasetsDataLoaderFactory } from "../hooks/dataLoaders";
+import { dateDatasetsDataLoaderFactory } from "../../../dataLoaders";
 
 import {
     IAttributeFilterMetaCollection,

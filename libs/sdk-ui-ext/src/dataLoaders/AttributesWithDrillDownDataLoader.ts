@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import { IAnalyticalBackend, ICatalogAttribute, ICatalogDateAttribute } from "@gooddata/sdk-backend-spi";
-import { dataLoaderAbstractFactory } from "../../../../dataLoaders/DataLoaderAbstractFactory";
+import { dataLoaderAbstractFactory } from "./DataLoaderAbstractFactory";
 
 interface IAttributesWithDrillDownDataLoader {
     /**

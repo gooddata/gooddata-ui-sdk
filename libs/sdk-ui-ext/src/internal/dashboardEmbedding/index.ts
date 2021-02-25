@@ -6,7 +6,6 @@
 
 // Hooks and data loading
 export * from "./hooks";
-export { clearDashboardViewCaches } from "./hooks/dataLoaders"; // TODO RAIL-2956 merge with other data loaders once moving to non internal
 
 // DashboardView itself
 export {

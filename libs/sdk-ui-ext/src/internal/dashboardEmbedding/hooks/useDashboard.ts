@@ -9,7 +9,7 @@ import {
     useWorkspace,
 } from "@gooddata/sdk-ui";
 import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { dashboardDataLoaderFactory } from "./dataLoaders";
+import { dashboardDataLoaderFactory } from "../../../dataLoaders";
 import { backendInvariant, workspaceInvariant } from "./utils";
 
 /**
