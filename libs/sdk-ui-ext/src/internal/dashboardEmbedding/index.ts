@@ -36,4 +36,5 @@ export {
     stripDateDatasets,
     dashboardFilterToFilterContextItem,
     hasDateFilterForDateDataset,
+    isDateFilterIrrelevant,
 } from "./utils/filters";
