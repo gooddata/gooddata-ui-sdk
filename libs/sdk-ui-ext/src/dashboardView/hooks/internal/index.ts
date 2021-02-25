@@ -14,4 +14,3 @@ export * from "./useSaveScheduledMail";
 export * from "./useUpdateWidgetAlert";
 export * from "./useUserWorkspacePermissions";
 export * from "./useUserWorkspaceSettings";
-export * from "./useWorkspaceUsers";

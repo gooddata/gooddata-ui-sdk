@@ -7,5 +7,3 @@ export {
     ScheduledMailDialogRenderer,
     IScheduledMailDialogRendererOwnProps,
 } from "./ScheduledMailDialog/ScheduledMailDialogRenderer";
-
-export { ScheduledMailDialog } from "./ScheduledMailDialog/ScheduledMailDialog";

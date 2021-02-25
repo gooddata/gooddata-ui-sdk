@@ -4,7 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { RepeatPeriodSelect, IRepeatPeriodSelectProps } from "../RepeatPeriodSelect";
-import { InternalIntlWrapper } from "../../../../../internal";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 describe("RepeatPeriodSelect", () => {
     function renderComponent(customProps: Partial<IRepeatPeriodSelectProps> = {}): ReactWrapper {

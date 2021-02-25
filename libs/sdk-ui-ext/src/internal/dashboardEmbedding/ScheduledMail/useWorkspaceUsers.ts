@@ -8,7 +8,7 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import invariant from "ts-invariant";
 
 interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
     /**
@@ -51,8 +51,15 @@ export function useWorkspaceUsers({
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useWorkspaceUsers");
-    workspaceInvariant(effectiveWorkspace, "useWorkspaceUsers");
+    invariant(
+        effectiveBackend,
+        "The effectiveBackend in useWorkspaceUsers must be defined. Either pass it as a config prop or make sure there is a BackendProvider up the component tree.",
+    );
+
+    invariant(
+        effectiveWorkspace,
+        "The effectiveWorkspace in useWorkspaceUsers must be defined. Either pass it as a config prop or make sure there is a WorkspaceProvider up the component tree.",
+    );
 
     const promise = () => {
         let loader = effectiveBackend.workspace(effectiveWorkspace).users();

@@ -9,7 +9,7 @@ import { RepeatFrequencySelect } from "../RepeatFrequencySelect";
 import { RepeatPeriodSelect } from "../RepeatPeriodSelect";
 import { RepeatTypeSelect } from "../RepeatTypeSelect";
 import { REPEAT_EXECUTE_ON, REPEAT_FREQUENCIES, REPEAT_TYPES } from "../../../constants";
-import { InternalIntlWrapper } from "../../../../../internal";
+import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 
 import {
     openDropdown,

@@ -12,10 +12,10 @@ import {
 } from "../ScheduledMailDialogRenderer";
 import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
-import { useWorkspaceUsers } from "../../../hooks/internal";
-import { InternalIntlWrapper } from "../../../../internal";
+import { useWorkspaceUsers } from "../../useWorkspaceUsers";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
-jest.mock("../../../hooks/internal/useWorkspaceUsers", () => ({
+jest.mock("../../useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({
         status: "success",
         result: [],
@@ -25,7 +25,7 @@ jest.mock("../../../hooks/internal/useWorkspaceUsers", () => ({
 
 describe("ScheduledMailDialogRenderer", () => {
     const SUBJECT_REGEX = /^ - (0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])-(19|20)\d\d$/;
-    const DATE_FORMART_REGEX = /^(19|20)\d\d-(0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])$/;
+    const DATE_FORMAT_REGEX = /^(19|20)\d\d-(0[1-9]|[1][012])-(0[1-9]|[12][0-9]|3[01])$/;
     const dashboard = uriRef("/dashboard");
 
     function renderComponent(customProps: Partial<IScheduledMailDialogRendererProps> = {}) {
@@ -116,7 +116,7 @@ describe("ScheduledMailDialogRenderer", () => {
         clickButtonSchedule(wrapper);
         const actualScheduleEmailObject: IScheduledMail = onSubmit.mock.calls[0][0];
         const startDate: string = actualScheduleEmailObject.when.startDate;
-        expect(DATE_FORMART_REGEX.test(startDate)).toBe(true);
+        expect(DATE_FORMAT_REGEX.test(startDate)).toBe(true);
     });
 
     it("should saving schedule email with kpiDashboardAttachment", () => {

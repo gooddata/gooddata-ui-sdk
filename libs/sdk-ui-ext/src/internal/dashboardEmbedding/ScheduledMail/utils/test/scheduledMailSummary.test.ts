@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 
 import { IntlShape } from "react-intl";
-import { createInternalIntl } from "../../../../internal";
+import { createInternalIntl } from "../../../../utils/internalIntlProvider";
 import { getScheduledEmailSummaryString } from "../scheduledMailSummary";
 import { IScheduleEmailRepeatOptions } from "../../interfaces";
 import { REPEAT_TYPES } from "../../constants";

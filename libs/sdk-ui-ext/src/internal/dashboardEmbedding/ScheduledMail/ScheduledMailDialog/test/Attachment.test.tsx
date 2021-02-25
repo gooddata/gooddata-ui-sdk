@@ -3,7 +3,7 @@ import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 
 import { Attachment, IAttachmentProps } from "../Attachment";
-import { InternalIntlWrapper } from "../../../../internal";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("Attachment", () => {
     const FILE_NAME = "ABC.pdf";

@@ -21,7 +21,7 @@ import {
     DashboardViewIsReadOnlyProvider,
     UserWorkspaceSettingsProvider,
 } from "./contexts";
-import { ScheduledMailDialog } from "./ScheduledMail";
+import { ScheduledMailDialog } from "./ScheduledMailDialog";
 import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { DashboardRenderer } from "./DashboardRenderer";
 import { EmptyDashboardError } from "./EmptyDashboardError";

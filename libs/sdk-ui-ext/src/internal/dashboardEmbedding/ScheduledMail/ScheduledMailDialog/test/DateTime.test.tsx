@@ -5,7 +5,7 @@ import noop from "lodash/noop";
 import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
 import { DateTime, IDateTimeProps } from "../DateTime";
-import { InternalIntlWrapper } from "../../../../internal";
+import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
 
 describe("DateTime", () => {
     function renderComponent(customProps: Partial<IDateTimeProps> = {}): ReactWrapper {

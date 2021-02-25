@@ -20,6 +20,7 @@ export {
 export * from "./types";
 
 export { KpiContent } from "./KpiContent";
+export * from "./ScheduledMail";
 
 export {
     DashboardItem,
