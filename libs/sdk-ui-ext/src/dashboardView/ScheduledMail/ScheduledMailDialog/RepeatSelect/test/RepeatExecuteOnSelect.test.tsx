@@ -6,7 +6,7 @@ import { mount, ReactWrapper } from "enzyme";
 import { REPEAT_EXECUTE_ON } from "../../../constants";
 import { getDate, getDayName, getWeek } from "../../../utils/datetime";
 import { RepeatExecuteOnSelect, IRepeatExecuteOnSelectProps } from "../RepeatExecuteOnSelect";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../../internal";
 
 import {
     getDropdownTitle,

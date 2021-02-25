@@ -4,7 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { Input, IInputProps } from "../Input";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../internal";
 
 describe("Input", () => {
     function renderComponent(customProps: Partial<IInputProps> = {}): ReactWrapper {

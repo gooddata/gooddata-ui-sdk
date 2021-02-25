@@ -5,7 +5,7 @@ import noop from "lodash/noop";
 import { Datepicker, Timepicker } from "@gooddata/sdk-ui-kit";
 
 import { DateTime, IDateTimeProps } from "../DateTime";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../internal";
 
 describe("DateTime", () => {
     function renderComponent(customProps: Partial<IDateTimeProps> = {}): ReactWrapper {
@@ -33,7 +33,7 @@ describe("DateTime", () => {
     });
 
     it("should render label", () => {
-        const label = "First occurence";
+        const label = "First occurrence";
         const component = renderComponent({ label });
         expect(component.find("label.gd-label").text()).toBe(label);
     });

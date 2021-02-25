@@ -13,7 +13,7 @@ import {
 import { DateTime } from "../DateTime";
 import { getUserTimezone, ITimezone } from "../../utils/timezone";
 import { useWorkspaceUsers } from "../../../hooks/internal";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../internal";
 
 jest.mock("../../../hooks/internal/useWorkspaceUsers", () => ({
     useWorkspaceUsers: (): ReturnType<typeof useWorkspaceUsers> => ({

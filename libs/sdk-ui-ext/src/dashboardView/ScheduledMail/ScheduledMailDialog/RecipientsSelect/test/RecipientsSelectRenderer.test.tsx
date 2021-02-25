@@ -6,7 +6,7 @@ import { uriRef } from "@gooddata/sdk-model";
 
 import { IRecipientsSelectRendererOwnProps, RecipientsSelectRenderer } from "../RecipientsSelectRenderer";
 import { IScheduleEmailRecipient } from "../../../interfaces";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../../internal";
 
 const currentUser: IScheduleEmailRecipient = {
     user: {

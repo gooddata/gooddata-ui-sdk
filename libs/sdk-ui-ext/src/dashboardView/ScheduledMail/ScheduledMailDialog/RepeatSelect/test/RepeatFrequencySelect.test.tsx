@@ -5,7 +5,7 @@ import { mount, ReactWrapper } from "enzyme";
 
 import { REPEAT_FREQUENCIES } from "../../../constants";
 import { RepeatFrequencySelect, IRepeatFrequencySelectProps } from "../RepeatFrequencySelect";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../../internal";
 
 import { getDropdownTitle, openDropdown, selectDropdownItem, REPEAT_FREQUENCY_INDEX } from "./testUtils";
 

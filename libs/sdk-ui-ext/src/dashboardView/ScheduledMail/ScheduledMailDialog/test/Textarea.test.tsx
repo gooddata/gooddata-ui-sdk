@@ -4,7 +4,7 @@ import { mount, ReactWrapper } from "enzyme";
 import noop from "lodash/noop";
 
 import { Textarea, ITextareaProps } from "../Textarea";
-import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../internal";
 
 describe("Textarea", () => {
     function renderComponent(customProps: Partial<ITextareaProps> = {}): ReactWrapper {

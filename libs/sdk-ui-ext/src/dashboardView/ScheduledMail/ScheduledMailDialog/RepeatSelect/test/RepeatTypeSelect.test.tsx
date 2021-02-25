@@ -6,7 +6,7 @@ import noop from "lodash/noop";
 import { RepeatTypeSelect, IRepeatTypeSelectProps } from "../RepeatTypeSelect";
 import { getDayName, getWeek } from "../../../utils/datetime";
 import { REPEAT_TYPES } from "../../../constants";
-import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
+import { InternalIntlWrapper } from "../../../../../internal";
 
 import {
     getDropdownTitle,
