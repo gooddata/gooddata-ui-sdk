@@ -8,8 +8,8 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { userWorkspacePermissionsDataLoaderFactory } from "../../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { userWorkspacePermissionsDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
 interface IUseUserWorkspacePermissionsConfig
     extends UseCancelablePromiseCallbacks<IWorkspacePermissions, GoodDataSdkError> {

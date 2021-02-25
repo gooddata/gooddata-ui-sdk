@@ -17,9 +17,9 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 import { IInsight } from "@gooddata/sdk-model";
-import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
-import { IDashboardFilter } from "../../types";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../converters";
+import { IDashboardFilter } from "../../../dashboardView/types";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
 interface IUseInsightExecutionConfig
     extends UseCancelablePromiseCallbacks<IPreparedExecution | undefined, GoodDataSdkError> {

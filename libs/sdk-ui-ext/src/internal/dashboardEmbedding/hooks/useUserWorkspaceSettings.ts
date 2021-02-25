@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IDashboard } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,19 +8,11 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { dashboardDataLoaderFactory } from "../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { userWorkspaceSettingsDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-/**
- * @beta
- */
-export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDashboard, GoodDataSdkError> {
-    /**
-     * Reference to the dashboard to get.
-     */
-    dashboard: ObjRef;
-
+interface IUseUserWorkspaceSettingsConfig
+    extends UseCancelablePromiseCallbacks<IUserWorkspaceSettings, GoodDataSdkError> {
     /**
      * Backend to work with.
      *
@@ -39,12 +31,11 @@ export interface IUseDashboardConfig extends UseCancelablePromiseCallbacks<IDash
 }
 
 /**
- * Hook allowing to download dashboard data
+ * Hook allowing to download user workspace settings
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useDashboard({
-    dashboard,
+export function useUserWorkspaceSettings({
     backend,
     onCancel,
     onError,
@@ -52,19 +43,18 @@ export function useDashboard({
     onPending,
     onSuccess,
     workspace,
-}: IUseDashboardConfig): UseCancelablePromiseState<IDashboard, any> {
+}: IUseUserWorkspaceSettingsConfig): UseCancelablePromiseState<IUserWorkspaceSettings, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useDashboard");
-    workspaceInvariant(effectiveWorkspace, "useDashboard");
+    backendInvariant(effectiveBackend, "useUserWorkspaceSettings");
+    workspaceInvariant(effectiveWorkspace, "useUserWorkspaceSettings");
 
-    const loader = dashboardDataLoaderFactory.forWorkspace(effectiveWorkspace);
-    const promise = () => loader.getDashboard(effectiveBackend, dashboard);
+    const loader = userWorkspaceSettingsDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getUserWorkspaceSettings(effectiveBackend);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        objRefToString(dashboard),
     ]);
 }

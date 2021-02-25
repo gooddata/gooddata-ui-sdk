@@ -13,7 +13,7 @@ import {
     newAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import isString from "lodash/isString";
-import { IDashboardFilter } from "./types";
+import { IDashboardFilter } from "../../dashboardView/types";
 
 /**
  * Gets {@link IDashboardFilter} items for filters specified in given filterContext in relation to the given widget.

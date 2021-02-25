@@ -5,15 +5,13 @@ import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provide
 import { isDashboardLayoutEmpty } from "@gooddata/sdk-backend-spi";
 import { idRef } from "@gooddata/sdk-model";
 
-import { useDashboard, useDashboardAlerts } from "../hooks";
 import {
     useAttributesWithDrillDown,
     useColorPalette,
     useDashboardLayoutData,
     useUserWorkspaceSettings,
-} from "../hooks/internal";
-import { IDashboardViewConfig, IDashboardViewProps } from "./types";
-import { InternalIntlWrapper } from "../../utils/internalIntlProvider";
+} from "../internal/dashboardEmbedding/hooks";
+import { InternalIntlWrapper } from "../internal/utils/internalIntlProvider";
 import {
     AttributesWithDrillDownProvider,
     ColorPaletteProvider,
@@ -21,12 +19,15 @@ import {
     DashboardViewConfigProvider,
     DashboardViewIsReadOnlyProvider,
     UserWorkspaceSettingsProvider,
-} from "./contexts";
-import { defaultThemeModifier } from "./defaultThemeModifier";
-import { ScheduledMailDialog } from "../ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
-import { DashboardRenderer } from "./DashboardRenderer";
+} from "../internal/dashboardEmbedding/DashboardView/contexts";
+import { ScheduledMailDialog } from "../internal/dashboardEmbedding/ScheduledMail/ScheduledMailDialog/ScheduledMailDialog";
+import { DashboardRenderer } from "../internal/dashboardEmbedding/DashboardView/DashboardRenderer";
+import { filterArrayToFilterContextItems } from "../internal/dashboardEmbedding/utils/filters";
+
+import { defaultDashboardThemeModifier } from "./defaultDashboardThemeModifier";
 import { EmptyDashboardError } from "./EmptyDashboardError";
-import { filterArrayToFilterContextItems } from "../utils/filters";
+import { useDashboard, useDashboardAlerts } from "./hooks";
+import { IDashboardViewConfig, IDashboardViewProps } from "./types";
 
 export const DashboardView: React.FC<IDashboardViewProps> = ({
     dashboard,
@@ -34,7 +35,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
     onFiltersChange,
     theme,
     disableThemeLoading = false,
-    themeModifier = defaultThemeModifier,
+    themeModifier = defaultDashboardThemeModifier,
     backend,
     workspace,
     onDrill,

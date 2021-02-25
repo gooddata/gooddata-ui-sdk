@@ -1,32 +1,29 @@
 // (C) 2020-2021 GoodData Corporation
+import { AnalyticalBackendError, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import {
-    IAnalyticalBackend,
-    IFilterContextDefinition,
-    IScheduledMail,
-    IScheduledMailDefinition,
-} from "@gooddata/sdk-backend-spi";
-import {
-    GoodDataSdkError,
     useBackend,
     useCancelablePromise,
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { IDashboardFilter } from "../../../dashboardView/types";
+import { dashboardFilterToFilterContextItem } from "../utils/filters";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-interface IUseSaveScheduledMailConfig
-    extends UseCancelablePromiseCallbacks<IScheduledMail, GoodDataSdkError> {
+interface IUseExportDashboardToPdfConfig
+    extends UseCancelablePromiseCallbacks<string, AnalyticalBackendError> {
     /**
-     * Definition of the scheduled email to save.
-     * Saves the scheduled email every time the reference equality of scheduledMail/filterContext changes.
+     * Reference to the dashboard to export.
      */
-    scheduledMail?: IScheduledMailDefinition;
+    dashboard?: ObjRef;
 
     /**
-     * Filter context, that will be applied to the attached dashboard.
+     * Optionally, specify filters to be applied to all the widgets in the dashboard.
+     * This will override any filters set on the dashboard itself.
      */
-    filterContext?: IFilterContextDefinition;
+    filters?: IDashboardFilter[];
 
     /**
      * Backend to work with.
@@ -46,13 +43,13 @@ interface IUseSaveScheduledMailConfig
 }
 
 /**
- * Hook allowing to schedule email
+ * Hook allowing to export a dashboard to a PDF
  * @param config - configuration of the hook
  * @internal
  */
-export function useSaveScheduledMail({
-    scheduledMail,
-    filterContext,
+export function useExportDashboardToPdf({
+    dashboard,
+    filters,
     backend,
     workspace,
     onCancel,
@@ -60,25 +57,28 @@ export function useSaveScheduledMail({
     onLoading,
     onPending,
     onSuccess,
-}: IUseSaveScheduledMailConfig): UseCancelablePromiseState<IScheduledMail, any> {
+}: IUseExportDashboardToPdfConfig): UseCancelablePromiseState<string, AnalyticalBackendError> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useSaveScheduledMail");
-    workspaceInvariant(effectiveWorkspace, "useSaveScheduledMail");
+    backendInvariant(effectiveBackend, "useExportDashboardToPdf");
+    workspaceInvariant(effectiveWorkspace, "useExportDashboardToPdf");
 
-    const promise = scheduledMail
+    const promise = dashboard
         ? () =>
               effectiveBackend
                   .workspace(effectiveWorkspace)
                   .dashboards()
-                  .createScheduledMail(scheduledMail, filterContext)
+                  .exportDashboardToPdf(
+                      dashboard,
+                      filters?.map(dashboardFilterToFilterContextItem) ?? undefined,
+                  )
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        scheduledMail,
-        filterContext,
+        dashboard,
+        filters,
     ]);
 }

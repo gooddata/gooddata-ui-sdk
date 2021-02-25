@@ -12,13 +12,13 @@ import { ObjRef } from "@gooddata/sdk-model";
 import { GoodDataSdkError, LoadingComponent, ErrorComponent } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
-import { useDashboard } from "../../hooks";
+import { useDashboard } from "../../../../dashboardView/hooks";
 import {
     useCurrentUser,
     useSaveScheduledMail,
     useUserWorkspacePermissions,
     useUserWorkspaceSettings,
-} from "../../hooks/internal";
+} from "../../hooks";
 
 import { ScheduledMailDialogRenderer } from "./ScheduledMailDialogRenderer";
 import { uriRef } from "@gooddata/sdk-model";

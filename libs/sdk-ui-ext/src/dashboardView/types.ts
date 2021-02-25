@@ -13,7 +13,14 @@ import {
     ILegacyKpi,
     DrillDefinition,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef, IInsight } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    IInsight,
+    IAbsoluteDateFilter,
+    IRelativeDateFilter,
+    IPositiveAttributeFilter,
+    INegativeAttributeFilter,
+} from "@gooddata/sdk-model";
 import {
     IDrillableItem,
     IHeaderPredicate,
@@ -25,11 +32,28 @@ import {
     IDrillEvent,
     OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
-import { IDashboardFilter } from "../types";
-import { IDashboardLayoutBuilder } from "../DashboardLayout/builder/interfaces";
+import { IDashboardLayoutBuilder } from "../internal/dashboardEmbedding/DashboardLayout/builder/interfaces";
+
+export {
+    IDashboardLayoutBuilder,
+    IDashboardLayoutSectionBuilder,
+    DashboardLayoutSectionModifications,
+    DashboardLayoutSectionsSelector,
+    DashboardLayoutModifications,
+    DashboardLayoutItemsSelector,
+    DashboardLayoutItemModifications,
+    IDashboardLayoutItemBuilder,
+} from "../internal/dashboardEmbedding/DashboardLayout/builder/interfaces";
+export {
+    IDashboardLayoutFacade,
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutItemsFacade,
+    IDashboardLayoutSectionFacade,
+    IDashboardLayoutSectionsFacade,
+} from "../internal/dashboardEmbedding/DashboardLayout/facade/interfaces";
 
 /**
- * @alpha
+ * @beta
  */
 export interface IDashboardLayoutTransformAdditionalProps {
     /**
@@ -43,13 +67,13 @@ export interface IDashboardLayoutTransformAdditionalProps {
     getInsight: (insightRef: ObjRef) => IInsight | undefined;
 
     /**
-     * Get widget alert - returns alert only in case it's a {@link IKpiWidget} and has alert set, undefined otherwise.
+     * Get widget alert - returns alert only in case it's a {@link @gooddata/sdk-backend-spi#IKpiWidget} and has alert set, undefined otherwise.
      */
     getWidgetAlert: (widgetRef: ObjRef) => IWidgetAlert;
 }
 
 /**
- * @alpha
+ * @beta
  */
 export type DashboardLayoutTransform<TContent = any> = (
     layoutBuilder: IDashboardLayoutBuilder<TContent>,
@@ -73,9 +97,7 @@ export interface IDashboardViewConfig {
     separators?: ISeparators;
 
     /**
-     * If true, drillable items in KPI's will not be underlined.
-     *
-     * @default false
+     * If true, drillable items in KPI's will not be underlined. Defaults to false.
      */
     disableKpiDrillUnderline?: boolean;
 
@@ -89,6 +111,7 @@ export interface IDashboardViewConfig {
 
 /**
  * Information about the DrillDown interaction - the attribute that is next in the drill down hierarchy.
+ * @beta
  */
 export interface IDrillDownDefinition {
     type: "drillDown";
@@ -97,15 +120,16 @@ export interface IDrillDownDefinition {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDrillDownDefinition}.
- * @alpha
+ * @beta
  */
 export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition {
     return !isEmpty(obj) && (obj as IDrillDownDefinition).type === "drillDown";
 }
 
 /**
- * A {@link IDrillEvent} with added field that contains info about all the drilling interactions set in KPI dashboards
+ * A {@link @gooddata/sdk-ui#IDrillEvent} with added field that contains info about all the drilling interactions set in KPI dashboards
  * that are relevant to the given drill event (including drill downs).
+ * @beta
  */
 export interface IDashboardDrillEvent extends IDrillEvent {
     drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
@@ -113,6 +137,7 @@ export interface IDashboardDrillEvent extends IDrillEvent {
 
 /**
  * Callback called when a drill event occurs.
+ * @beta
  */
 export type OnFiredDashboardViewDrillEvent = (event: IDashboardDrillEvent) => ReturnType<OnFiredDrillEvent>;
 
@@ -130,7 +155,7 @@ export interface IDashboardViewProps {
     /**
      * Optionally, specify filters to be applied to all the widgets in the dashboard.
      * If you specify this and want to merge your filters with the filters from the dashboard,
-     * you need to use the data from the {@link onDashboardLoaded} callback.
+     * you need to use the data from the {@link IDashboardViewProps.onDashboardLoaded} callback.
      * To make the merging of the filters easier, you can use the {@link mergeFiltersWithDashboard} function.
      *
      * Note: These filters are also applied to created scheduled e-mails.
@@ -190,7 +215,8 @@ export interface IDashboardViewProps {
      * globally (i.e. the theme is NOT constrained inside of a ThemeProvider).
      *
      * Turn this property to true if you need to avoid the global aspect of the themes, or you do not want to use themes at all.
-     * @default false
+     *
+     * Defaults to false.
      */
     disableThemeLoading?: boolean;
 
@@ -283,7 +309,7 @@ export interface IDashboardViewProps {
      * If set to true, the dashboard will be embedded in a read-only mode disabling any user interaction
      * that would alter any backend state (disabling creating/changing alerts, creating scheduled emails, etc.).
      *
-     * @default false i.e. NOT a read-only mode.
+     * Defaults to false i.e. NOT a read-only mode.
      */
     isReadOnly?: boolean;
 }
@@ -291,7 +317,7 @@ export interface IDashboardViewProps {
 /**
  * Render props for custom widget rendering.
  *
- * @alpha
+ * @beta
  */
 export type IDashboardWidgetRenderProps = {
     /**
@@ -345,13 +371,14 @@ export type IDashboardWidgetRenderProps = {
 
 /**
  * Component used for the widget rendering.
+ * @beta
  */
 export type IDashboardWidgetRenderer = (renderProps: IDashboardWidgetRenderProps) => JSX.Element;
 
 /**
  * Interface for testing the widget against common predicates
  *
- * @alpha
+ * @beta
  */
 export interface IWidgetPredicates {
     /**
@@ -389,3 +416,13 @@ export interface IWidgetPredicates {
      */
     isWidgetWithKpiType: (comparisonType: ILegacyKpi["comparisonType"]) => boolean;
 }
+
+/**
+ * Supported dashboard filter type.
+ * @beta
+ */
+export type IDashboardFilter =
+    | IAbsoluteDateFilter
+    | IRelativeDateFilter
+    | IPositiveAttributeFilter
+    | INegativeAttributeFilter;

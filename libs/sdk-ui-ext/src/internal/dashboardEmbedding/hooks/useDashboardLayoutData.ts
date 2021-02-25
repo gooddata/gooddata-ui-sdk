@@ -16,8 +16,8 @@ import {
     VisType,
 } from "@gooddata/sdk-ui";
 import { areObjRefsEqual, IInsight, insightVisualizationUrl, ObjRef } from "@gooddata/sdk-model";
-import { insightDataLoaderFactory } from "../../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { insightDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
 /**
  * @beta

@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,11 +8,14 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { userWorkspaceSettingsDataLoaderFactory } from "../../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-interface IUseUserWorkspaceSettingsConfig
-    extends UseCancelablePromiseCallbacks<IUserWorkspaceSettings, GoodDataSdkError> {
+interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
+    /**
+     *  Option to filter users by the provided string.
+     */
+    search?: string;
+
     /**
      * Backend to work with.
      *
@@ -22,7 +25,7 @@ interface IUseUserWorkspaceSettingsConfig
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace where the insight exists.
+     * Workspace to work with.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the hook MUST be called within an existing WorkspaceContext.
@@ -31,30 +34,37 @@ interface IUseUserWorkspaceSettingsConfig
 }
 
 /**
- * Hook allowing to download user workspace settings
+ * Hook allowing to download workspace users
  * @param config - configuration of the hook
  * @internal
  */
-export function useUserWorkspaceSettings({
+export function useWorkspaceUsers({
+    search,
     backend,
+    workspace,
     onCancel,
     onError,
     onLoading,
     onPending,
     onSuccess,
-    workspace,
-}: IUseUserWorkspaceSettingsConfig): UseCancelablePromiseState<IUserWorkspaceSettings, any> {
+}: IUseWorkspaceUsersConfig): UseCancelablePromiseState<IWorkspaceUser[], any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useUserWorkspaceSettings");
-    workspaceInvariant(effectiveWorkspace, "useUserWorkspaceSettings");
+    backendInvariant(effectiveBackend, "useWorkspaceUsers");
+    workspaceInvariant(effectiveWorkspace, "useWorkspaceUsers");
 
-    const loader = userWorkspaceSettingsDataLoaderFactory.forWorkspace(effectiveWorkspace);
-    const promise = () => loader.getUserWorkspaceSettings(effectiveBackend);
+    const promise = () => {
+        let loader = effectiveBackend.workspace(effectiveWorkspace).users();
+        if (search) {
+            loader = loader.withOptions({ search: `%${search}` });
+        }
+        return loader.queryAll();
+    };
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
+        search,
     ]);
 }

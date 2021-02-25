@@ -1,5 +1,10 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    isWidgetAlert,
+    IWidgetAlert,
+    IWidgetAlertDefinition,
+} from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,13 +13,14 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbacks<void, GoodDataSdkError> {
+interface IUseSaveOrUpdateWidgetAlertConfig
+    extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
     /**
-     * Widget alert to delete.
+     * Widget alert to save or update.
      */
-    widgetAlert?: IWidgetAlert;
+    widgetAlert?: IWidgetAlertDefinition | IWidgetAlert;
 
     /**
      * Backend to work with.
@@ -34,11 +40,11 @@ interface IUseDeleteWidgetAlertConfig extends UseCancelablePromiseCallbacks<void
 }
 
 /**
- * Hook allowing to delete a widget alert
+ * Hook allowing to save a widget alert
  * @param config - configuration of the hook
  * @internal
  */
-export function useDeleteWidgetAlert({
+export function useSaveOrUpdateWidgetAlert({
     widgetAlert,
     backend,
     workspace,
@@ -47,15 +53,18 @@ export function useDeleteWidgetAlert({
     onLoading,
     onPending,
     onSuccess,
-}: IUseDeleteWidgetAlertConfig): UseCancelablePromiseState<void, any> {
+}: IUseSaveOrUpdateWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useDeleteWidgetAlert");
-    workspaceInvariant(effectiveWorkspace, "useDeleteWidgetAlert");
+    backendInvariant(effectiveBackend, "useSaveOrUpdateWidgetAlert");
+    workspaceInvariant(effectiveWorkspace, "useSaveOrUpdateWidgetAlert");
 
     const promise = widgetAlert
-        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().deleteWidgetAlert(widgetAlert.ref)
+        ? () =>
+              isWidgetAlert(widgetAlert)
+                  ? effectiveBackend.workspace(effectiveWorkspace).dashboards().updateWidgetAlert(widgetAlert)
+                  : effectiveBackend.workspace(effectiveWorkspace).dashboards().createWidgetAlert(widgetAlert)
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [

@@ -3,7 +3,7 @@ import compact from "lodash/compact";
 import { DrillDefinition, ICatalogAttribute, ICatalogDateAttribute } from "@gooddata/sdk-backend-spi";
 import { isLocalIdRef, isIdentifierRef, isUriRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { HeaderPredicates, IAvailableDrillTargetAttribute, IHeaderPredicate } from "@gooddata/sdk-ui";
-import { IDrillDownDefinition } from "../types";
+import { IDrillDownDefinition } from "../../../../dashboardView/types";
 
 interface IImplicitDrillWithPredicates {
     drillDefinition: DrillDefinition | IDrillDownDefinition;

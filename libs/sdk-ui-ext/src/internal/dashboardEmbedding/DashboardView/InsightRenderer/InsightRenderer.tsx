@@ -41,7 +41,7 @@ import {
     useDashboardViewConfig,
     useUserWorkspaceSettings,
 } from "../contexts";
-import { OnFiredDashboardViewDrillEvent } from "../types";
+import { OnFiredDashboardViewDrillEvent } from "../../../../dashboardView/types";
 
 interface IInsightRendererProps {
     insightWidget: IInsightWidget;

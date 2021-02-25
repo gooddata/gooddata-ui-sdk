@@ -42,15 +42,16 @@ import {
 
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import { DashboardItemHeadline } from "../../DashboardItem/DashboardItemHeadline";
-import { useCurrentUser, useUserWorkspacePermissions } from "../../hooks/internal";
+import { useCurrentUser, useUserWorkspacePermissions } from "../../hooks";
 import {
     DashboardItemWithKpiAlert,
     evaluateAlertTriggered,
     getBrokenAlertFiltersBasicInfo,
 } from "../../KpiAlerts";
-import { IDashboardFilter, IKpiAlertResult, IKpiResult } from "../../types";
+import { IKpiAlertResult, IKpiResult } from "../../types";
 import { dashboardFilterToFilterContextItem, stripDateDatasets } from "../../utils/filters";
 import { useUserWorkspaceSettings } from "../contexts";
+import { OnFiredDashboardViewDrillEvent, IDashboardFilter } from "../../../../dashboardView/types";
 
 import {
     IUseAlertManipulationHandlerConfig,
@@ -59,7 +60,6 @@ import {
 } from "./alertManipulationHooks";
 import { KpiRenderer } from "./KpiRenderer";
 import { KpiAlertDialogWrapper } from "./KpiAlertDialogWrapper";
-import { OnFiredDashboardViewDrillEvent } from "../types";
 
 interface IKpiExecutorProps {
     dashboardRef: ObjRef;

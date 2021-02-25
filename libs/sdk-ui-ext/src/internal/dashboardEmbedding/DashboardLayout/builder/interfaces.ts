@@ -22,7 +22,7 @@ import {
 /**
  * Represents a query to select a subset of layout sections.
  *
- * @alpha
+ * @beta
  * @param sectionsFacade - sections facade to create a query
  * @returns array of section facades, single section facade, or undefined
  */
@@ -33,7 +33,7 @@ export type DashboardLayoutSectionsSelector<TWidget = DashboardWidget> = (
 /**
  * Represents a callback to modify the layout section.
  *
- * @alpha
+ * @beta
  * @param sectionBuilder - section builder on which the transformations will be performed
  * @param sectionFacade - section facade for convenient work with the item
  * @returns section builder with applied transforms
@@ -46,7 +46,7 @@ export type DashboardLayoutSectionModifications<TWidget = DashboardWidget> = (
 /**
  * Represents a query to select a subset of section items.
  *
- * @alpha
+ * @beta
  * @param itemsFacade - items facade to create a query
  * @returns array of item facades, single item facade, or undefined
  */
@@ -57,7 +57,7 @@ export type DashboardLayoutItemsSelector<TWidget = DashboardWidget> = (
 /**
  * Represents a callback to modify the layout item.
  *
- * @alpha
+ * @beta
  * @param itemBuilder - item builder on which the transformations will be performed
  * @param itemFacade - item facade for convenient work with the layout item
  * @returns section builder with applied transforms
@@ -70,7 +70,7 @@ export type DashboardLayoutItemModifications<TWidget = DashboardWidget> = (
 /**
  * Represents a callback to modify the layout.
  *
- * @alpha
+ * @beta
  * @param layoutBuilder - layout builder on which the transformations will be performed
  * @param layoutFacade - layout facade for convenient work with the layout
  * @returns layout builder with applied transforms
@@ -81,9 +81,9 @@ export type DashboardLayoutModifications<TWidget = DashboardWidget> = (
 ) => IDashboardLayoutBuilder<TWidget>;
 
 /**
- * Builder for convenient creation or transformation of any {@link IDashboardLayoutItem}.
+ * Builder for convenient creation or transformation of any {@link @gooddata/sdk-backend-spi#IDashboardLayoutItem}.
  *
- * @alpha
+ * @beta
  */
 export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
     /**
@@ -149,7 +149,7 @@ export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
      *
      * Note: When the item doesn't contain an insight widget, the error is thrown.
      *
-     * @param modify = callback to modify the widget
+     * @param modify - callback to modify the widget
      */
     modifyInsightWidget(modify: (builder: InsightWidgetBuilder) => InsightWidgetBuilder): this;
 
@@ -167,15 +167,15 @@ export interface IDashboardLayoutItemBuilder<TWidget = DashboardWidget> {
      *
      * Note: When the item doesn't contain a kpi widget, the error is thrown.
      *
-     * @param modify = callback to modify the widget
+     * @param modify - callback to modify the widget
      */
     modifyKpiWidget(modify: (builder: KpiWidgetBuilder) => KpiWidgetBuilder): this;
 }
 
 /**
- * Builder for convenient creation or transformation of any {@link IDashboardLayoutRow}.
+ * Builder for convenient creation or transformation of any {@link @gooddata/sdk-backend-spi#IDashboardLayoutRow}.
  *
- * @alpha
+ * @beta
  */
 export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
     /**
@@ -327,10 +327,10 @@ export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
 }
 
 /**
- * Builder for convenient creation or transformation of any {@link IDashboardLayout}.
+ * Builder for convenient creation or transformation of any {@link @gooddata/sdk-backend-spi#IDashboardLayout}.
  * The provided layout is not touched in any way, all operations performed on the layout are immutable.
  *
- * @alpha
+ * @beta
  */
 export interface IDashboardLayoutBuilder<TWidget = DashboardWidget> {
     /**

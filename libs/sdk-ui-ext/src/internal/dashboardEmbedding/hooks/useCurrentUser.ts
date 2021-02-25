@@ -7,7 +7,7 @@ import {
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
-import { backendInvariant } from "../utils";
+import { backendInvariant } from "../../../utils";
 
 interface IUseCurrentUserConfig extends UseCancelablePromiseCallbacks<IUser, GoodDataSdkError> {
     /**

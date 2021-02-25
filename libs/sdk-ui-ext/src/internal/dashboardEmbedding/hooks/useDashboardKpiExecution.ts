@@ -19,7 +19,7 @@ import {
 } from "@gooddata/sdk-ui";
 import compact from "lodash/compact";
 import { useKpiData } from "./useKpiData";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
 interface IUseKpiExecutionConfig
     extends UseCancelablePromiseCallbacks<IPreparedExecution | undefined, GoodDataSdkError> {

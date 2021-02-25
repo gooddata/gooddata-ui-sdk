@@ -1,9 +1,9 @@
 // (C) 2020-2021 GoodData Corporation
 import {
     IAnalyticalBackend,
-    isWidgetAlert,
-    IWidgetAlert,
-    IWidgetAlertDefinition,
+    IFilterContextDefinition,
+    IScheduledMail,
+    IScheduledMailDefinition,
 } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
@@ -13,14 +13,20 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-interface IUseSaveOrUpdateWidgetAlertConfig
-    extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
+interface IUseSaveScheduledMailConfig
+    extends UseCancelablePromiseCallbacks<IScheduledMail, GoodDataSdkError> {
     /**
-     * Widget alert to save or update.
+     * Definition of the scheduled email to save.
+     * Saves the scheduled email every time the reference equality of scheduledMail/filterContext changes.
      */
-    widgetAlert?: IWidgetAlertDefinition | IWidgetAlert;
+    scheduledMail?: IScheduledMailDefinition;
+
+    /**
+     * Filter context, that will be applied to the attached dashboard.
+     */
+    filterContext?: IFilterContextDefinition;
 
     /**
      * Backend to work with.
@@ -40,12 +46,13 @@ interface IUseSaveOrUpdateWidgetAlertConfig
 }
 
 /**
- * Hook allowing to save a widget alert
+ * Hook allowing to schedule email
  * @param config - configuration of the hook
  * @internal
  */
-export function useSaveOrUpdateWidgetAlert({
-    widgetAlert,
+export function useSaveScheduledMail({
+    scheduledMail,
+    filterContext,
     backend,
     workspace,
     onCancel,
@@ -53,23 +60,25 @@ export function useSaveOrUpdateWidgetAlert({
     onLoading,
     onPending,
     onSuccess,
-}: IUseSaveOrUpdateWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
+}: IUseSaveScheduledMailConfig): UseCancelablePromiseState<IScheduledMail, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useSaveOrUpdateWidgetAlert");
-    workspaceInvariant(effectiveWorkspace, "useSaveOrUpdateWidgetAlert");
+    backendInvariant(effectiveBackend, "useSaveScheduledMail");
+    workspaceInvariant(effectiveWorkspace, "useSaveScheduledMail");
 
-    const promise = widgetAlert
+    const promise = scheduledMail
         ? () =>
-              isWidgetAlert(widgetAlert)
-                  ? effectiveBackend.workspace(effectiveWorkspace).dashboards().updateWidgetAlert(widgetAlert)
-                  : effectiveBackend.workspace(effectiveWorkspace).dashboards().createWidgetAlert(widgetAlert)
+              effectiveBackend
+                  .workspace(effectiveWorkspace)
+                  .dashboards()
+                  .createScheduledMail(scheduledMail, filterContext)
         : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        widgetAlert,
+        scheduledMail,
+        filterContext,
     ]);
 }

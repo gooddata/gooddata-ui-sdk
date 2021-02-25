@@ -28,8 +28,7 @@ import { DashboardItemHeadline } from "../DashboardItem/DashboardItemHeadline";
 import { DashboardItemVisualization } from "../DashboardItem/DashboardItemVisualization";
 import { DashboardItem } from "../DashboardItem/DashboardItem";
 import { getVisTypeCssClass } from "./utils";
-import { IDashboardFilter } from "../types";
-import { OnFiredDashboardViewDrillEvent } from "./types";
+import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../../../dashboardView/types";
 
 export type IDashboardWidgetRendererProps = {
     backend?: IAnalyticalBackend;

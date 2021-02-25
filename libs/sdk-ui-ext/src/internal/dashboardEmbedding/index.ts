@@ -1,34 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
 
-/**
- * Soon to be publicly exported stuff
- */
-
-// Hooks and data loading
-export * from "./hooks";
-
-// DashboardView itself
-export {
-    DashboardView,
-    IDashboardViewProps,
-    defaultThemeModifier,
-    DashboardLayoutTransform,
-} from "./DashboardView";
-
-// Publicly documented utilities
-export { isDateFilterIrrelevant, mergeFiltersWithDashboard } from "./utils/filters";
-
-// Publicly documented types
-export { IDashboardFilter } from "./types";
-
-//
-//
-//
-
-/**
- * Stuff exported only for internal use (should probably stay in the /internal folder if possible)
- */
-
 export {
     DashboardItemWithKpiAlert,
     IDashboardItemWithKpiAlertProps,

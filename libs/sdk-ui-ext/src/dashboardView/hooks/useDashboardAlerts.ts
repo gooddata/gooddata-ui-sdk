@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { IAnalyticalBackend, IWorkspaceUser } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import {
     GoodDataSdkError,
     useBackend,
@@ -8,13 +8,19 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { ObjRef, objRefToString } from "@gooddata/sdk-model";
+import { dashboardAlertsDataLoaderFactory } from "../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../../utils";
 
-interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorkspaceUser[], GoodDataSdkError> {
+/**
+ * @beta
+ */
+export interface IUseDashboardAlertsConfig
+    extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
     /**
-     *  Option to filter users by the provided string.
+     * Reference to the dashboard to get alerts for.
      */
-    search?: string;
+    dashboard: ObjRef;
 
     /**
      * Backend to work with.
@@ -25,7 +31,7 @@ interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorksp
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace to work with.
+     * Workspace where the insight exists.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the hook MUST be called within an existing WorkspaceContext.
@@ -34,37 +40,32 @@ interface IUseWorkspaceUsersConfig extends UseCancelablePromiseCallbacks<IWorksp
 }
 
 /**
- * Hook allowing to download workspace users
+ * Hook allowing to download dashboard alerts data for the current user
  * @param config - configuration of the hook
- * @internal
+ * @beta
  */
-export function useWorkspaceUsers({
-    search,
+export function useDashboardAlerts({
+    dashboard,
     backend,
-    workspace,
     onCancel,
     onError,
     onLoading,
     onPending,
     onSuccess,
-}: IUseWorkspaceUsersConfig): UseCancelablePromiseState<IWorkspaceUser[], any> {
+    workspace,
+}: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useWorkspaceUsers");
-    workspaceInvariant(effectiveWorkspace, "useWorkspaceUsers");
+    backendInvariant(effectiveBackend, "useDashboardAlerts");
+    workspaceInvariant(effectiveWorkspace, "useDashboardAlerts");
 
-    const promise = () => {
-        let loader = effectiveBackend.workspace(effectiveWorkspace).users();
-        if (search) {
-            loader = loader.withOptions({ search: `%${search}` });
-        }
-        return loader.queryAll();
-    };
+    const loader = dashboardAlertsDataLoaderFactory.forWorkspace(effectiveWorkspace);
+    const promise = () => loader.getDashboardAlerts(effectiveBackend, dashboard);
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        search,
+        objRefToString(dashboard),
     ]);
 }

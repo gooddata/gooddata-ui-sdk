@@ -6,7 +6,7 @@ import { IFilter } from "@gooddata/sdk-model";
 
 import { KpiContent } from "../../KpiContent";
 import { IKpiResult } from "../../types";
-import { OnFiredDashboardViewDrillEvent } from "../types";
+import { OnFiredDashboardViewDrillEvent } from "../../../../dashboardView/types";
 
 interface IKpiRendererProps {
     kpi: IKpiWidget | IKpiWidgetDefinition;

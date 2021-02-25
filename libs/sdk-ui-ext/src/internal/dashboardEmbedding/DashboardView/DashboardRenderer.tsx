@@ -42,16 +42,16 @@ import {
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
 } from "../DashboardLayout";
-import { IDashboardFilter } from "../types";
-import { DashboardWidgetRenderer, IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
-import { useAlerts } from "./contexts";
 import {
+    IDashboardFilter,
     IDashboardWidgetRenderer,
     IDashboardWidgetRenderProps,
     IWidgetPredicates,
     DashboardLayoutTransform,
     OnFiredDashboardViewDrillEvent,
-} from "./types";
+} from "../../../dashboardView/types";
+import { DashboardWidgetRenderer, IDashboardWidgetRendererProps } from "./DashboardWidgetRenderer";
+import { useAlerts } from "./contexts";
 
 interface IDashboardRendererProps {
     dashboardRef: ObjRef;

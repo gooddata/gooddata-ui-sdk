@@ -4,7 +4,10 @@ import { ErrorComponent as DefaultError } from "@gooddata/sdk-ui";
 import { DashboardView } from "./DashboardView";
 import { IDashboardViewProps } from "./types";
 
-interface IDashboardViewErrorBoundaryState {
+/**
+ * @beta
+ */
+export interface IDashboardViewErrorBoundaryState {
     error: Error | undefined;
 }
 

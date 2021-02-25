@@ -8,19 +8,13 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { dashboardAlertsDataLoaderFactory } from "../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
-/**
- * @beta
- */
-export interface IUseDashboardAlertsConfig
-    extends UseCancelablePromiseCallbacks<IWidgetAlert[], GoodDataSdkError> {
+interface IUseUpdateWidgetAlertConfig extends UseCancelablePromiseCallbacks<IWidgetAlert, GoodDataSdkError> {
     /**
-     * Reference to the dashboard to get alerts for.
+     * Widget alert to update.
      */
-    dashboard: ObjRef;
+    widgetAlert?: IWidgetAlert;
 
     /**
      * Backend to work with.
@@ -31,7 +25,7 @@ export interface IUseDashboardAlertsConfig
     backend?: IAnalyticalBackend;
 
     /**
-     * Workspace where the insight exists.
+     * Workspace to work with.
      *
      * Note: the workspace must come either from this property or from WorkspaceContext. If you do not specify
      * workspace here, then the hook MUST be called within an existing WorkspaceContext.
@@ -40,32 +34,33 @@ export interface IUseDashboardAlertsConfig
 }
 
 /**
- * Hook allowing to download dashboard alerts data for the current user
+ * Hook allowing to update a widget alert
  * @param config - configuration of the hook
- * @beta
+ * @internal
  */
-export function useDashboardAlerts({
-    dashboard,
+export function useUpdateWidgetAlert({
+    widgetAlert,
     backend,
+    workspace,
     onCancel,
     onError,
     onLoading,
     onPending,
     onSuccess,
-    workspace,
-}: IUseDashboardAlertsConfig): UseCancelablePromiseState<IWidgetAlert[], GoodDataSdkError> {
+}: IUseUpdateWidgetAlertConfig): UseCancelablePromiseState<IWidgetAlert, any> {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
 
-    backendInvariant(effectiveBackend, "useDashboardAlerts");
-    workspaceInvariant(effectiveWorkspace, "useDashboardAlerts");
+    backendInvariant(effectiveBackend, "useUpdateWidgetAlert");
+    workspaceInvariant(effectiveWorkspace, "useUpdateWidgetAlert");
 
-    const loader = dashboardAlertsDataLoaderFactory.forWorkspace(effectiveWorkspace);
-    const promise = () => loader.getDashboardAlerts(effectiveBackend, dashboard);
+    const promise = widgetAlert
+        ? () => effectiveBackend.workspace(effectiveWorkspace).dashboards().updateWidgetAlert(widgetAlert)
+        : null;
 
     return useCancelablePromise({ promise, onCancel, onError, onLoading, onPending, onSuccess }, [
         effectiveBackend,
         effectiveWorkspace,
-        objRefToString(dashboard),
+        widgetAlert,
     ]);
 }

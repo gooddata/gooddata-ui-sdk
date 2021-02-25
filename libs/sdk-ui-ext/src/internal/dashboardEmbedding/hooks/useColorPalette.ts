@@ -9,8 +9,8 @@ import {
     UseCancelablePromiseState,
     useWorkspace,
 } from "@gooddata/sdk-ui";
-import { colorPaletteDataLoaderFactory } from "../../../../dataLoaders";
-import { backendInvariant, workspaceInvariant } from "../utils";
+import { colorPaletteDataLoaderFactory } from "../../../dataLoaders";
+import { backendInvariant, workspaceInvariant } from "../../../utils";
 
 interface IUseColorPaletteConfig extends UseCancelablePromiseCallbacks<IColorPalette, GoodDataSdkError> {
     /**

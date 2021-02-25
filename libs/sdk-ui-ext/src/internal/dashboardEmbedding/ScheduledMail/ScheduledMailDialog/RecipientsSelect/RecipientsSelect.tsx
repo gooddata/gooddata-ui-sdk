@@ -5,7 +5,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import sortBy from "lodash/sortBy";
 
-import { useWorkspaceUsers } from "../../../hooks/internal";
+import { useWorkspaceUsers } from "../../../hooks";
 import { IScheduleEmailRecipient } from "../../interfaces";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer";

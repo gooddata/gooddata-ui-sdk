@@ -17,11 +17,15 @@ import {
 } from "@gooddata/sdk-ui";
 import { ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { useDashboard } from "./useDashboard";
-import { useDashboardLayoutData, useDashboardInsightExecution, useDashboardKpiExecution } from "./internal";
-import { backendInvariant, workspaceInvariant } from "./utils";
+import {
+    useDashboardLayoutData,
+    useDashboardInsightExecution,
+    useDashboardKpiExecution,
+} from "../../internal/dashboardEmbedding/hooks";
+import { backendInvariant, workspaceInvariant } from "../../utils";
 
 /**
- * @alpha
+ * @beta
  */
 export interface IUseDashboardWidgetExecutionConfig {
     /**
