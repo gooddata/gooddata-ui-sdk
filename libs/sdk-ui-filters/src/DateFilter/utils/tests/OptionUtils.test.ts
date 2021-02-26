@@ -8,7 +8,11 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { IDateFilterOptionsByType } from "../../interfaces";
-import { getDateFilterOptionGranularity, filterVisibleDateFilterOptions } from "../OptionUtils";
+import {
+    getDateFilterOptionGranularity,
+    filterVisibleDateFilterOptions,
+    sanitizePresetIntervals,
+} from "../OptionUtils";
 import { absoluteFormFilter, relativePresetFilter } from "../Translations/tests/fixtures";
 
 describe("optionUtils", () => {
@@ -243,6 +247,89 @@ describe("filterVisibleDateFilterOptions", () => {
             const expected = {};
 
             expect(filterVisibleDateFilterOptions(input)).toEqual(expected);
+        });
+    });
+});
+
+describe("sanitizePresetIntervals", () => {
+    describe("absolute preset", () => {
+        const sanePreset: IAbsoluteDateFilterPreset = {
+            from: "2019-01-01",
+            localIdentifier: "YEAR_2019",
+            name: "The year 2019",
+            to: "2019-12-31",
+            type: "absolutePreset",
+            visible: true,
+        };
+
+        const twistedPreset: IAbsoluteDateFilterPreset = {
+            ...sanePreset,
+            from: sanePreset.to,
+            to: sanePreset.from,
+        };
+
+        it("should preserve sane preset", () => {
+            const input: IDateFilterOptionsByType = {
+                absolutePreset: [sanePreset],
+            };
+
+            expect(sanitizePresetIntervals(input)).toEqual(input);
+        });
+
+        it("should fix twisted preset", () => {
+            const input: IDateFilterOptionsByType = {
+                absolutePreset: [twistedPreset],
+            };
+
+            const expected: IDateFilterOptionsByType = {
+                absolutePreset: [sanePreset],
+            };
+
+            expect(sanitizePresetIntervals(input)).toEqual(expected);
+        });
+    });
+
+    describe("relative preset", () => {
+        const sanePreset: IRelativeDateFilterPresetOfGranularity<"GDC.time.month"> = {
+            from: -10,
+            granularity: "GDC.time.month",
+            localIdentifier: "THIS_MONTH",
+            to: 0,
+            type: "relativePreset",
+            name: "",
+            visible: true,
+        };
+
+        const twistedPreset: IRelativeDateFilterPresetOfGranularity<"GDC.time.month"> = {
+            ...sanePreset,
+            from: sanePreset.to,
+            to: sanePreset.from,
+        };
+
+        it("should preserve sane preset", () => {
+            const input: IDateFilterOptionsByType = {
+                relativePreset: {
+                    "GDC.time.month": [sanePreset],
+                },
+            };
+
+            expect(sanitizePresetIntervals(input)).toEqual(input);
+        });
+
+        it("should fix twisted preset", () => {
+            const input: IDateFilterOptionsByType = {
+                relativePreset: {
+                    "GDC.time.month": [twistedPreset],
+                },
+            };
+
+            const expected = {
+                relativePreset: {
+                    "GDC.time.month": [sanePreset],
+                },
+            };
+
+            expect(sanitizePresetIntervals(input)).toEqual(expected);
         });
     });
 });

@@ -3,6 +3,7 @@ import isEmpty from "lodash/isEmpty";
 import { DateFilterOption, DateFilterRelativeOptionGroup, IDateFilterOptionsByType } from "../interfaces";
 import {
     DateFilterGranularity,
+    IAbsoluteDateFilterPreset,
     IDateFilterOption,
     IRelativeDateFilterPreset,
     isRelativeDateFilterForm,
@@ -66,9 +67,7 @@ export function filterVisibleDateFilterOptions(
 
     const relativeForm = pickDateFilterOptionIfVisible(dateFilterOptions.relativeForm);
 
-    const absolutePreset =
-        dateFilterOptions.absolutePreset &&
-        dateFilterOptions.absolutePreset.filter(isDateFilterOptionVisible);
+    const absolutePreset = dateFilterOptions.absolutePreset?.filter(isDateFilterOptionVisible);
 
     const relativePreset =
         dateFilterOptions.relativePreset && filterVisibleRelativePresets(dateFilterOptions.relativePreset);
@@ -78,6 +77,48 @@ export function filterVisibleDateFilterOptions(
         absoluteForm,
         absolutePreset,
         relativeForm,
+        relativePreset,
+    });
+}
+
+function sanitizePreset<T extends IAbsoluteDateFilterPreset | IRelativeDateFilterPreset>(option: T): T {
+    if (option.from > option.to) {
+        return {
+            ...option,
+            from: option.to,
+            to: option.from,
+        };
+    }
+
+    return option;
+}
+
+function sanitizeRelativePresets(
+    relativePreset: DateFilterRelativeOptionGroup,
+): DateFilterRelativeOptionGroup {
+    return Object.keys(relativePreset).reduce((filtered: DateFilterRelativeOptionGroup, granularity) => {
+        const presetsOfGranularity: IRelativeDateFilterPreset[] = relativePreset[granularity];
+        filtered[granularity] = presetsOfGranularity.map(sanitizePreset);
+
+        return filtered;
+    }, {});
+}
+
+/**
+ * Returns dateFilterOptions with all the presets sanitized, i.e. having from <= to.
+ * @param dateFilterOptions - options to sanitize
+ */
+export function sanitizePresetIntervals(
+    dateFilterOptions: IDateFilterOptionsByType,
+): IDateFilterOptionsByType {
+    const absolutePreset = dateFilterOptions.absolutePreset?.map(sanitizePreset);
+
+    const relativePreset =
+        dateFilterOptions.relativePreset && sanitizeRelativePresets(dateFilterOptions.relativePreset);
+
+    return removeEmptyKeysFromDateFilterOptions({
+        ...dateFilterOptions,
+        absolutePreset,
         relativePreset,
     });
 }

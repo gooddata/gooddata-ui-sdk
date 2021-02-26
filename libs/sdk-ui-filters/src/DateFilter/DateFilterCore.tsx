@@ -1,5 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useMemo } from "react";
+import flow from "lodash/flow";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
 import MediaQuery from "react-responsive";
@@ -11,7 +12,7 @@ import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 import { formatAbsoluteDate } from "./utils/Translations/DateFilterTitle";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
-import { filterVisibleDateFilterOptions } from "./utils/OptionUtils";
+import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils";
 
 export interface IDateFilterCoreProps {
     dateFormat: string;
@@ -85,7 +86,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
 }) => {
     const verifiedDateFormat = verifyDateFormat(dateFormat);
     const filteredFilterOptions = useMemo(() => {
-        return filterVisibleDateFilterOptions(filterOptions);
+        return flow(filterVisibleDateFilterOptions, sanitizePresetIntervals)(filterOptions);
     }, [filterOptions]);
     return (
         <IntlWrapper locale={locale || "en-US"}>
