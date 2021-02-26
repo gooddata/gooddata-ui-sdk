@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
 export { IAttributeElementsChildren } from "./AttributeElements/types";
@@ -22,6 +22,7 @@ export {
     isRelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    filterVisibleDateFilterOptions,
 } from "./DateFilter";
 export {
     MeasureValueFilter,

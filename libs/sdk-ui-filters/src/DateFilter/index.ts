@@ -4,6 +4,7 @@ import { defaultDateFilterOptions } from "./constants/config";
 import { validateFilterOption } from "./validation/OptionValidation";
 import { mapOptionToAfm } from "./utils/AFMConversions";
 import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
+import { filterVisibleDateFilterOptions } from "./utils/OptionUtils";
 import {
     getDateFilterTitle,
     getDateFilterRepresentation,
@@ -35,6 +36,7 @@ const DateFilterHelpers = {
     mapOptionToAfm,
     formatAbsoluteDateRange,
     formatRelativeDateRange,
+    filterVisibleDateFilterOptions,
 };
 
 // This is 1:1 reexported by root index.ts and is part of SDK's public API
@@ -46,6 +48,7 @@ export {
     IDateFilterState,
     DateFilterHelpers,
     IDateFilterStatePropsIntersection,
+    filterVisibleDateFilterOptions,
 };
 
 export {
