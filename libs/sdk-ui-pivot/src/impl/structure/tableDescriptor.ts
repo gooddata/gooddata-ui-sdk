@@ -363,23 +363,18 @@ export class TableDescriptor {
     }
 
     /**
-     * Updates all attribute descriptors used in table's column descriptors so that they reflect total items
-     * specified in the provided data view facade.
+     * Updates effective totals for the slice cols using the new total descriptors included for their respective
+     * attributes in the new data view facade.
      *
      * @param dv - data view with same attribute structure but with added totals
      */
-    public updateTotalItems(dv: DataViewFacade): void {
+    public updateEffectiveTotals(dv: DataViewFacade): void {
         const idToDescriptor: Record<string, IAttributeDescriptor> = keyBy(
             dv.meta().attributeDescriptors(),
             (desc) => desc.attributeHeader.localIdentifier,
         );
 
-        this.headers.sliceCols.forEach((sliceCol) =>
-            updateAttributeDescriptorTotals(idToDescriptor, sliceCol.attributeDescriptor),
-        );
-        this.headers.groupingAttributes.forEach((attribute) =>
-            updateAttributeDescriptorTotals(idToDescriptor, attribute),
-        );
+        this.headers.sliceCols.forEach((sliceCol) => updateEffectiveTotals(sliceCol, idToDescriptor));
     }
 }
 
@@ -389,11 +384,8 @@ function attributeDescriptorLocalIdMatch(localId: string): (b: IAttributeDescrip
     };
 }
 
-function updateAttributeDescriptorTotals(
-    newDescriptors: Record<string, IAttributeDescriptor>,
-    target: IAttributeDescriptor,
-) {
-    const attributeLocalId = target.attributeHeader.localIdentifier;
+function updateEffectiveTotals(col: SliceCol, newDescriptors: Record<string, IAttributeDescriptor>) {
+    const attributeLocalId = col.attributeDescriptor.attributeHeader.localIdentifier;
     const newDescriptor = newDescriptors[attributeLocalId];
 
     // if this bombs then reinit logic of the entire pivot table is flawed because upon change of table structure is
@@ -403,5 +395,5 @@ function updateAttributeDescriptorTotals(
         `attempting to refresh attribute descriptors for different table. attribute with local id ${attributeLocalId} not found`,
     );
 
-    target.attributeHeader.totalItems = newDescriptor.attributeHeader.totalItems;
+    col.effectiveTotals = newDescriptor.attributeHeader.totalItems ?? [];
 }
