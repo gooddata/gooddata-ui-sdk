@@ -1,6 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { CorePivotTablePure } from "./CorePivotTable";
+import { CorePivotTableAgImpl } from "./CorePivotTable";
 import {
     attributeLocalId,
     bucketAttributes,
@@ -13,7 +13,7 @@ import {
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
-import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./types";
+import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./publicTypes";
 import omit from "lodash/omit";
 import {
     IntlTranslationsProvider,
@@ -108,7 +108,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
                 <IntlTranslationsProvider>
                     {(translationProps: ITranslationsComponentProps) => {
                         return (
-                            <CorePivotTablePure
+                            <CorePivotTableAgImpl
                                 {...corePivotProps}
                                 intl={translationProps.intl}
                                 execution={execution}

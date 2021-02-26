@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import once from "lodash/once";
 
-const getScrollbarWidthBody = (): number => {
+function getScrollbarWidthBody(): number {
     const outer = document.createElement("div");
     outer.style.visibility = "hidden";
     outer.style.width = "100px";
@@ -22,7 +22,7 @@ const getScrollbarWidthBody = (): number => {
     outer.parentNode?.removeChild(outer);
 
     return widthNoScroll - widthWithScroll;
-};
+}
 
 /**
  * Returns the current actual scrollbar width.
@@ -30,8 +30,8 @@ const getScrollbarWidthBody = (): number => {
  */
 export const getScrollbarWidth = once(getScrollbarWidthBody);
 
-export const sleep = async (delay: number): Promise<void> => {
+export async function sleep(delay: number): Promise<void> {
     return new Promise((resolve) => {
         setTimeout(resolve, delay);
     });
-};
+}

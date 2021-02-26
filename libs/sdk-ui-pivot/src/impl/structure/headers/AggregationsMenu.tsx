@@ -16,14 +16,13 @@ import noop from "lodash/noop";
 
 import Menu from "../../../menu/Menu";
 import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
-import { IMenuAggregationClickConfig } from "../../../types";
 import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import { AVAILABLE_TOTALS } from "../../base/constants";
 import { IColumnTotal } from "./aggregationsMenuTypes";
-import { DataViewFacade } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../tableDescriptor";
 import { isDataColGroup, isDataColLeaf, isDataColRootGroup, isSliceCol } from "../tableDescriptorTypes";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 /*
  * TODO: same thing is in sdk-ui-ext .. but pivot must not depend on it. we may be in need of some lower-level
@@ -41,7 +40,6 @@ export interface IAggregationsMenuProps {
     colId: string;
     getTableDescriptor: () => TableDescriptor;
     getExecutionDefinition: () => IExecutionDefinition;
-    getDataView: () => DataViewFacade;
     getTotals?: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
     onMenuOpenedChange: ({ opened, source }: IOnOpenedChangeParams) => void;
@@ -49,7 +47,7 @@ export interface IAggregationsMenuProps {
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
     public render(): React.ReactNode {
-        const { intl, colId, getTableDescriptor, getDataView, isMenuOpened, onMenuOpenedChange } = this.props;
+        const { intl, colId, getTableDescriptor, isMenuOpened, onMenuOpenedChange } = this.props;
 
         if (!colId) {
             return null;
@@ -57,12 +55,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
         // Because of Ag-grid react wrapper does not rerender the component when we pass
         // new gridOptions we need to pull the data manually on each render
-        const dv: DataViewFacade = getDataView();
         const tableDescriptor = getTableDescriptor();
-
-        if (!dv) {
-            return null;
-        }
 
         if (!tableDescriptor.canTableHaveTotals()) {
             return null;

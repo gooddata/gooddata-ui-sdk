@@ -9,12 +9,12 @@ import { IGridRow } from "../data/resultTypes";
 import { createDrillHeaders } from "./colDrillHeadersFactory";
 import { AnyCol } from "../structure/tableDescriptorTypes";
 
-export const isCellDrillable = (
+export function isCellDrillable(
     colDescriptor: AnyCol,
     row: IGridRow,
     dv: DataViewFacade,
     drillablePredicates: IHeaderPredicate[],
-): boolean => {
+): boolean {
     if (drillablePredicates.length === 0) {
         return false;
     }
@@ -23,4 +23,4 @@ export const isCellDrillable = (
     return headers.some((drillItem: IMappingHeader) =>
         isSomeHeaderPredicateMatched(drillablePredicates, drillItem, dv),
     );
-};
+}

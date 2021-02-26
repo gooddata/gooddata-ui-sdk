@@ -14,7 +14,7 @@ import {
     TwoMeasuresWithRowAttribute,
     TwoMeasuresWithTwoRowAndTwoColumnAttributes,
 } from "./columnSizing.fixture";
-import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../agGridColumnSizing";
+import { MANUALLY_SIZED_MAX_WIDTH, updateColumnDefinitionsWithWidths } from "../columnSizing";
 import { ReferenceData, ReferenceLdm } from "@gooddata/reference-workspace";
 
 // NOTE: the function under test mutate inputs (by design). each test must use its own instance of TableDescriptor

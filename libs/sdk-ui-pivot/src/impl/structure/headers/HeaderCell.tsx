@@ -3,13 +3,13 @@ import React from "react";
 import { IntlShape } from "react-intl";
 import cx from "classnames";
 
-import { IMenu, IMenuAggregationClickConfig } from "../../../types";
+import { IMenu } from "../../../publicTypes";
 import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
 import { HEADER_LABEL_CLASS } from "../../base/constants";
 import { TableDescriptor } from "../tableDescriptor";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 export type AlignPositions = "left" | "right" | "center";
 export const ALIGN_LEFT = "left";
@@ -20,7 +20,6 @@ export interface ICommonHeaderParams {
 
     onMenuAggregationClick?: (config: IMenuAggregationClickConfig) => void;
     getExecutionDefinition?: () => IExecutionDefinition;
-    getDataView?: () => DataViewFacade;
     getColumnTotals?: () => ITotal[];
     intl?: IntlShape;
 }
@@ -99,15 +98,7 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
     }
 
     private renderMenu() {
-        const {
-            intl,
-            colId,
-            menu,
-            getTableDescriptor,
-            getExecutionDefinition,
-            getDataView,
-            getColumnTotals,
-        } = this.props;
+        const { intl, colId, menu, getTableDescriptor, getExecutionDefinition, getColumnTotals } = this.props;
         const { isMenuOpen, isMenuButtonVisible } = this.state;
 
         if (!menu || !menu.aggregations) {
@@ -123,7 +114,6 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 showSubmenu={menu.aggregationsSubMenu!}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition!}
-                getDataView={getDataView!}
                 getTotals={getColumnTotals}
                 onMenuOpenedChange={this.handleMenuOpenedChange}
                 onAggregationSelect={this.menuItemClick}

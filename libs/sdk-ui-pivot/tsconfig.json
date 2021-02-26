@@ -10,6 +10,7 @@
         "moduleResolution": "node",
         "esModuleInterop": true,
         "importHelpers": true,
+        "strict": true,
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
@@ -27,5 +28,5 @@
     },
     "compileOnSave": false,
     "exclude": ["node_modules", "dist", "**/__mocks__/**/*"],
-    "include": ["src/index.ts", "src/typings.d.ts"],
+    "include": ["src/index.ts", "src/typings.d.ts"]
 }

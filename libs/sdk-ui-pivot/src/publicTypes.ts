@@ -1,14 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import {
-    IAttribute,
-    IAttributeOrMeasure,
-    INullableFilter,
-    ISortItem,
-    ITotal,
-    TotalType,
-} from "@gooddata/sdk-model";
+import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 import { ColumnWidthItem } from "./columnWidths";
@@ -95,43 +88,6 @@ export interface IPivotTableConfig {
     maxHeight?: number;
 }
 
-export interface IMenuAggregationClickConfig {
-    type: TotalType;
-    measureIdentifiers: string[];
-    attributeIdentifier: string;
-    include: boolean;
-}
-
-export interface IAttributeCell {
-    uri: string;
-    name: string;
-}
-
-export interface IAttributeCellForDrilling {
-    id: string;
-    name: string;
-}
-
-export type MeasureCell = number | string | null;
-export type TableCell = IAttributeCell | MeasureCell;
-export type TableCellForDrilling = IAttributeCellForDrilling | MeasureCell;
-export type TableRowForDrilling = TableCellForDrilling[];
-
-export interface ITableCellStyle {
-    backgroundColor?: string;
-    color?: string;
-    fontWeight?: React.CSSProperties["fontWeight"];
-}
-
-export interface ITableCellStyleAndFormattedValue {
-    style: ITableCellStyle;
-    formattedValue: string;
-}
-
-export function isAttributeCell(cell: TableCell): cell is IAttributeCell {
-    return (cell as IAttributeCell)?.uri !== undefined;
-}
-
 /**
  * @public
  */
@@ -204,6 +160,11 @@ export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedCompo
 /**
  * @public
  */
+export type ColumnResizedCallback = (columnWidths: ColumnWidthItem[]) => void;
+
+/**
+ * @public
+ */
 export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
      * Optionally customize size of page when fetching data from backend.
@@ -222,5 +183,5 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
      *
      * @param columnWidths - new widths for columns
      */
-    onColumnResized?: (columnWidths: ColumnWidthItem[]) => void;
+    onColumnResized?: ColumnResizedCallback;
 }

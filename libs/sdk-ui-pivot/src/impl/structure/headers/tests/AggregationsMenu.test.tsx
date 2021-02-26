@@ -31,7 +31,6 @@ describe("AggregationsMenu", () => {
     );
     const tableDescriptor = TableDescriptor.for(fixture);
     const getExecutionDefinition = () => emptyDef("testWorkspace");
-    const getDataView = () => fixture;
     const getTotals = () => [] as ITotal[];
     const getTableDescriptor = () => tableDescriptor;
     const onMenuOpenedChange = jest.fn();
@@ -47,7 +46,6 @@ describe("AggregationsMenu", () => {
                 colId={attributeColumnId}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition}
-                getDataView={getDataView}
                 getTotals={getTotals}
                 onMenuOpenedChange={onMenuOpenedChange}
                 onAggregationSelect={onAggregationSelect}
@@ -134,7 +132,6 @@ describe("AggregationsMenu", () => {
         const wrapper = render({
             showSubmenu: true,
             getTableDescriptor: () => tableDescriptor,
-            getDataView: () => fixture,
         });
 
         expect(wrapper.find(AggregationsSubMenu).length).toBe(0);

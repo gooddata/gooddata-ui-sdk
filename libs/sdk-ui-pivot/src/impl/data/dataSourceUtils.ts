@@ -1,12 +1,12 @@
 // (C) 2019-2021 GoodData Corporation
 import { GridApi } from "@ag-grid-community/all-modules";
-import ApiWrapper from "../base/agGridApiWrapper";
+import ApiWrapper from "../base/agApiWrapper";
 import isEqual from "lodash/isEqual";
 import { IGridTotalsRow } from "./resultTypes";
 import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
 import { IDimension } from "@gooddata/sdk-model";
 
-export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]): boolean => {
+export function areTotalsChanged(gridApi: GridApi | undefined, newTotals: IGridTotalsRow[]): boolean {
     const currentTotalsCount = gridApi?.getPinnedBottomRowCount() ?? 0;
     const newTotalsCount = newTotals?.length ?? 0;
 
@@ -21,22 +21,22 @@ export const areTotalsChanged = (gridApi: GridApi | undefined, newTotals: IGridT
     }
 
     return false;
-};
+}
 
-export const isInvalidGetRowsRequest = (startRow: number, gridApi: GridApi | undefined): boolean => {
+export function isInvalidGetRowsRequest(startRow: number, gridApi: GridApi | undefined): boolean {
     const bottomRowIndex = gridApi ? ApiWrapper.getPaginationBottomRowIndex(gridApi) : null;
     if (bottomRowIndex !== null) {
         return startRow > bottomRowIndex;
     }
 
     return false;
-};
+}
 
-export const isSomeTotal = (rowType: string | undefined): boolean => {
+export function isSomeTotal(rowType: string | undefined): boolean {
     const isRowTotal = rowType === ROW_TOTAL;
     const isRowSubtotal = rowType === ROW_SUBTOTAL;
     return isRowTotal || isRowSubtotal;
-};
+}
 
 export function getSubtotalStyles(dimension: IDimension | undefined): (string | null)[] {
     if (!dimension || !dimension.totals) {

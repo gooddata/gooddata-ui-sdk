@@ -4,7 +4,7 @@ import { DataViewFirstPage } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { TableDescriptor } from "../../structure/tableDescriptor";
 import { ColumnWidthItem } from "../../../columnWidths";
-import { ResizedColumnsStore } from "../agGridColumnSizing";
+import { ResizedColumnsStore } from "../columnSizing";
 import { Column, ColumnApi } from "@ag-grid-community/all-modules";
 
 const ColumnOnlyResult = recordedDataFacade(
@@ -40,10 +40,10 @@ export function testStore(
     tableDescriptor: TableDescriptor,
     ...widths: ColumnWidthItem[]
 ): ResizedColumnsStore {
-    const store = new ResizedColumnsStore();
+    const store = new ResizedColumnsStore(tableDescriptor);
 
     if (widths.length) {
-        store.updateColumnWidths(tableDescriptor, widths);
+        store.updateColumnWidths(widths);
     }
 
     return store;

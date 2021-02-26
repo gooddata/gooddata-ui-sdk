@@ -2,7 +2,7 @@
 import { IHeaderGroupParams } from "@ag-grid-community/all-modules";
 import React from "react";
 
-import { IMenu } from "../../../types";
+import { IMenu } from "../../../publicTypes";
 
 import HeaderCell, { ALIGN_LEFT, ICommonHeaderParams } from "./HeaderCell";
 import { agColId } from "../tableDescriptorTypes";
@@ -34,7 +34,6 @@ export default class ColumnGroupHeader extends React.Component<IProps> {
                 getTableDescriptor={this.props.getTableDescriptor}
                 getExecutionDefinition={this.props.getExecutionDefinition}
                 getColumnTotals={this.props.getColumnTotals}
-                getDataView={this.props.getDataView}
                 intl={intl}
             />
         );

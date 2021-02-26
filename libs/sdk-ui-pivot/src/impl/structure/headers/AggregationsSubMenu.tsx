@@ -11,9 +11,9 @@ import React from "react";
 import { IntlShape } from "react-intl";
 
 import SubMenu from "../../../menu/SubMenu";
-import { IMenuAggregationClickConfig } from "../../../types";
 import menuHelper from "./aggregationsMenuHelper";
 import { IColumnTotal } from "./aggregationsMenuTypes";
+import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 const MENU_HEADER_OFFSET = -36;
 

@@ -1,8 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 import aggregationsMenuHelper, { getUpdatedColumnTotals } from "../aggregationsMenuHelper";
-import { IMenuAggregationClickConfig } from "../../../../types";
 import { ITotal } from "@gooddata/sdk-model";
 import { IColumnTotal } from "../aggregationsMenuTypes";
+import { IMenuAggregationClickConfig } from "../../../privateTypes";
 
 describe("aggregationsMenuHelper", () => {
     describe("getTotalsForMeasureHeader", () => {

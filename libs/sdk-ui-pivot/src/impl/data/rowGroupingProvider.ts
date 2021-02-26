@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import max from "lodash/max";
 import { isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { IGridRow } from "./resultTypes";
@@ -38,10 +38,10 @@ class DefaultGroupingProvider implements IGroupingProvider {
 }
 
 class AttributeGroupingProvider implements IGroupingProvider {
-    private itemUris: IAttributesRowItemUris;
-    private itemRepetitions: IAttributesRowItemRepetitions;
-    private repetitionsCounts: number[] | null;
-    private maxRepetitions: number;
+    private itemUris: IAttributesRowItemUris = {};
+    private itemRepetitions: IAttributesRowItemRepetitions = {};
+    private repetitionsCounts: number[] | null = [];
+    private maxRepetitions: number = 0;
 
     constructor() {
         this.reset();
