@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
@@ -13,7 +14,8 @@ const DashboardView = (): JSX.Element => (
         <h1>DashboardView with export</h1>
 
         <p>
-            Example of how to export a dashboard. This will export the dashboard in the first example to PDF.
+            Example of how to export a dashboard. This will export the dashboard in the{" "}
+            <Link to="/dashboardView/simple">Simple example</Link> to PDF.
         </p>
 
         <ExampleWithSource
