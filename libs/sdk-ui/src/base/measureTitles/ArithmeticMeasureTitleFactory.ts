@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { getTranslation } from "../localization/IntlStore";
 import { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./MeasureTitle";
 import { ILocale } from "../localization/Locale";
@@ -14,7 +14,7 @@ export class ArithmeticMeasureTitleFactory {
 
     /**
      * Create a new instance of the class.
-     * @param {ILocale} locale - The locale used for translation.
+     * @param locale - The locale used for translation.
      */
     constructor(locale: ILocale) {
         this.locale = locale;
@@ -23,11 +23,11 @@ export class ArithmeticMeasureTitleFactory {
     /**
      * Returns formatted localized title string for arithmetic measure.
      *
-     * @param {IArithmeticMeasureTitleProps} arithmeticMeasureProps - The properties of arithmetic measure for which
+     * @param arithmeticMeasureProps - The properties of arithmetic measure for which
      *      the title must be obtained.
-     * @param {IMeasureTitleProps} measureTitleProps - The array of objects in which the title of master measures used
+     * @param measureTitleProps - The array of objects in which the title of master measures used
      *      in arithmetic measure is looked up.
-     * @returns {string} localized title of the arithmetic measure or null when arithmetic measure references invalid
+     * @returns localized title of the arithmetic measure or null when arithmetic measure references invalid
      *      master measures or invalid number of master measures.
      */
     public getTitle(

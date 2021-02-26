@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isError from "lodash/isError";
 
 /**
@@ -52,7 +52,6 @@ export const isCancelError = (obj: unknown): obj is CancelError => {
  * - For cancelable async operations, there are much better abstractions than promises, for example Tasks,
  * however there is no standard for this in JavaScript
  *
- * @param promise
  * @internal
  */
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T> {

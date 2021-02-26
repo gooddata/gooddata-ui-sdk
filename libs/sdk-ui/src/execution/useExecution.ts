@@ -4,6 +4,9 @@ import { IAttributeOrMeasure, IAttribute, ITotal, INullableFilter, ISortItem } f
 import { useBackend, useWorkspace } from "../base";
 import { createExecution } from "./createExecution";
 
+/**
+ * @beta
+ */
 export interface IUseExecutionConfig {
     /**
      * Data series will be built using the provided measures that are optionally further scoped for

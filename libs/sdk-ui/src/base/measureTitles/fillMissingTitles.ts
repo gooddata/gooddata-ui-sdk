@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IInsightDefinition,
     IBucket,
@@ -247,12 +247,12 @@ function updateVisualizationObjectTitles<T extends IInsightDefinition>(
  * have the title built from the current names of the referenced master measures and type of the arithmetic
  * operation.
  *
- * @param {IInsight|IInsightDefinition} insight - insight or insight definition that must be processed.
- * @param {Localization.ILocale} locale - locale used for localization of the measure titles.
- * @param {number} maxArithmeticMeasureTitleLength - maximum length of generated arithmetic measures titles.
+ * @param insight - insight or insight definition that must be processed.
+ * @param locale - locale used for localization of the measure titles.
+ * @param maxArithmeticMeasureTitleLength - maximum length of generated arithmetic measures titles.
  * Longer names will be shortened. Default value is 50 characters.
  *
- * @returns {IInsight}
+ * @returns a copy of insight with auto-generated titles for derived and arithmetic measures
  *
  * @internal
  */

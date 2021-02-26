@@ -75,6 +75,8 @@ export abstract class GoodDataSdkError extends Error {
 
 /**
  * This error means that server could not understand the request due to invalid syntax.
+ *
+ * @public
  */
 export class BadRequestSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -84,6 +86,8 @@ export class BadRequestSdkError extends GoodDataSdkError {
 
 /**
  * This error means that you are not authorized.
+ *
+ * @public
  */
 export class UnauthorizedSdkError extends GoodDataSdkError {
     public authenticationFlow?: AuthenticationFlow;
@@ -95,6 +99,8 @@ export class UnauthorizedSdkError extends GoodDataSdkError {
 
 /**
  * This error means that location bucket is missing
+ *
+ * @public
  */
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -104,6 +110,8 @@ export class GeoLocationMissingSdkError extends GoodDataSdkError {
 
 /**
  * This error means that mapbox token of GeoChart is missing
+ *
+ * @public
  */
 export class GeoTokenMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -113,6 +121,8 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
 
 /**
  * This error means that executed data were too large to be displayed by GoodData.UI.
+ *
+ * @public
  */
 export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -123,6 +133,8 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 /**
  * This error means that processed request would generate a result too large to be processed
  * by GoodData platform.
+ *
+ * @public
  */
 export class DataTooLargeToComputeSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -133,6 +145,8 @@ export class DataTooLargeToComputeSdkError extends GoodDataSdkError {
 /**
  * This error means that processed result contains negative values which does not make
  * sense within the given visualization (e.g. pie chart with negative values).
+ *
+ * @public
  */
 export class NegativeValuesSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -142,6 +156,8 @@ export class NegativeValuesSdkError extends GoodDataSdkError {
 
 /**
  * This error means that the processed result does not contain any data.
+ *
+ * @public
  */
 export class NoDataSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -151,6 +167,8 @@ export class NoDataSdkError extends GoodDataSdkError {
 
 /**
  * This error means that requested entity (e.g. a visualization) was not found on the server.
+ *
+ * @public
  */
 export class NotFoundSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -161,6 +179,8 @@ export class NotFoundSdkError extends GoodDataSdkError {
 /**
  * This error means that requested visualization is restricted by access rules within the GoodData platform.
  * Please contact your administrator.
+ *
+ * @public
  */
 export class ProtectedReportSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -170,6 +190,8 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 
 /**
  * This error means that GoodData.UI does not know how to handle such error.
+ *
+ * @public
  */
 export class UnexpectedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
@@ -179,6 +201,8 @@ export class UnexpectedSdkError extends GoodDataSdkError {
 
 /**
  * This error means that request has been cancelled usually after component has been unmounted.
+ *
+ * @public
  */
 export class CancelledSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {

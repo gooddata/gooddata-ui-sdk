@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IAttributeDescriptor,
     IDataView,
@@ -19,49 +19,82 @@ import {
 } from "./visualizationTypes";
 import isEmpty from "lodash/isEmpty";
 
+/**
+ * @public
+ */
 export interface IDrillableItemUri {
     uri: string;
 }
 
+/**
+ * @public
+ */
 export interface IDrillableItemIdentifier {
     identifier: string;
 }
 
+/**
+ * @public
+ */
 export type IDrillableItem =
     | IDrillableItemUri
     | IDrillableItemIdentifier
     | (IDrillableItemUri & IDrillableItemIdentifier);
 
+/**
+ * @public
+ */
 export function isDrillableItemUri(item: unknown): item is IDrillableItemUri {
     return (item as IDrillableItemUri).uri !== undefined;
 }
 
+/**
+ * @public
+ */
 export function isDrillableItemIdentifier(item: unknown): item is IDrillableItemIdentifier {
     return (item as IDrillableItemIdentifier).identifier !== undefined;
 }
 
+/**
+ * @public
+ */
 export type IDrillEventCallback = (event: IDrillEvent) => void | boolean;
 
+/**
+ * @public
+ */
 export interface IDrillIntersectionAttributeItem extends IAttributeDescriptor, IResultAttributeHeader {}
 
+/**
+ * @public
+ */
 export function isDrillIntersectionAttributeItem(
     header: DrillEventIntersectionElementHeader,
 ): header is IDrillIntersectionAttributeItem {
     return !isEmpty(header) && (header as IDrillIntersectionAttributeItem).attributeHeaderItem !== undefined;
 }
 
+/**
+ * @public
+ */
 export type DrillEventIntersectionElementHeader =
     | IAttributeDescriptor
     | IMeasureDescriptor
     | ITotalDescriptor
     | IDrillIntersectionAttributeItem;
 
-// Intersection element
+/**
+ * @public
+ */
 export interface IDrillEventIntersectionElement {
     header: DrillEventIntersectionElementHeader;
 }
 
-// Drill context for tables
+/**
+ * Drill context for table
+ *
+ * @public
+ */
 export interface IDrillEventContextTable {
     type: TableType;
     element: TableElementType;
@@ -71,7 +104,11 @@ export interface IDrillEventContextTable {
     intersection: IDrillEventIntersectionElement[];
 }
 
-// Drill context for headline
+/**
+ * Drill context for headline
+ *
+ * @public
+ */
 export interface IDrillEventContextHeadline {
     type: HeadlineType;
     element: HeadlineElementType;
@@ -79,7 +116,11 @@ export interface IDrillEventContextHeadline {
     intersection: IDrillEventIntersectionElement[];
 }
 
-// Drill context for XIRR
+/**
+ * Drill context for XIRR
+ *
+ * @public
+ */
 export interface IDrillEventContextXirr {
     type: XirrType;
     element: HeadlineElementType; // XIRR uses Headline internally, so its drill context is the same as that of Headline
@@ -87,7 +128,11 @@ export interface IDrillEventContextXirr {
     intersection: IDrillEventIntersectionElement[];
 }
 
-// Drill context for chart
+/**
+ * Drill context for pointy-charts
+ *
+ * @public
+ */
 export interface IDrillEventContextPoint {
     type: ChartType;
     element: ChartElementType;
@@ -99,7 +144,11 @@ export interface IDrillEventContextPoint {
     intersection: IDrillEventIntersectionElement[];
 }
 
-// Chart series point with intersection element
+/**
+ * Drill context for headline
+ *
+ * @internal
+ */
 export interface IDrillPoint {
     x: number;
     y: number;
@@ -107,15 +156,22 @@ export interface IDrillPoint {
     type?: ChartType;
 }
 
-// Drill context for chart element group (multiple series + click on axis value)
-// where every point has own intersection
+/**
+ * Drill context for chart element group (multiple series + click on axis value) where
+ * every point has own intersection.
+ *
+ * @public
+ */
 export interface IDrillEventContextGroup {
     type: ChartType;
     element: ChartElementType;
     points: IDrillPoint[];
 }
 
-// Drill context for all visualization types
+/**
+ * Drill context for all visualization type.
+ * @public
+ */
 export interface IDrillEventContext {
     type: VisType; // type of visualization
     element: VisElementType; // type of visualization element drilled
@@ -133,23 +189,38 @@ export interface IDrillEventContext {
     points?: IDrillPoint[];
 }
 
+/**
+ * @public
+ */
 export interface IDrillEvent {
     dataView: IDataView;
     drillContext: IDrillEventContext;
 }
 
+/**
+ * @public
+ */
 export interface IHighchartsParentTick {
     leaves: number;
     startAt: number;
     label: any;
 }
 
+/**
+ * @public
+ */
 export interface IHighchartsCategoriesTree {
     tick: IHighchartsParentTick;
 }
 
+/**
+ * @public
+ */
 export type OnFiredDrillEvent = IDrillEventCallback;
 
+/**
+ * @public
+ */
 export interface IDrillConfig {
     dataView: IDataView;
     onDrill: OnFiredDrillEvent;

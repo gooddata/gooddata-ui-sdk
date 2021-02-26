@@ -1,20 +1,20 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { useState, useEffect } from "react";
 import { IPagedResource } from "@gooddata/sdk-backend-spi";
 import { usePromiseCache } from "./usePromiseCache";
 
 /**
- * @internal
+ * @public
  */
-interface IUsePagedResourceState<TItem> {
+export interface IUsePagedResourceState<TItem> {
     totalItemsCount: number | undefined;
     items: Array<TItem | undefined>;
 }
 
 /**
- * @internal
+ * @public
  */
-interface IUsePagedResourceResult<TItem> extends IUsePagedResourceState<TItem> {
+export interface IUsePagedResourceResult<TItem> extends IUsePagedResourceState<TItem> {
     isLoading: boolean;
 }
 

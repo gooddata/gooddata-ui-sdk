@@ -31,12 +31,12 @@ import {
 /**
  * Methods to access result metadata - dimension descriptors and result headers.
  *
- * @internal
+ * @alpha
  */
 export interface IResultMetaMethods {
     /**
      * @returns data view's dimension descriptors
-     * @remarks see {@link IDimensionDescriptor} for more information of what this is
+     * @remarks see `IDimensionDescriptor` for more information of what this is
      */
     dimensions(): IDimensionDescriptor[];
 

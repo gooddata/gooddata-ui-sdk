@@ -22,7 +22,7 @@ export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkEr
 export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodDataSdkError>;
 
 /**
- * This hook provides easy way to export data in your preferred format (csv/xlsx/raw) for the provided {@link IPreparedExecution}.
+ * This hook provides easy way to export data in your preferred format (csv/xlsx/raw) for the provided `IPreparedExecution`.
  * As a result, you will receive a string with uri, so you can easily create a download link.
  * Be aware that execution is re-executed only on dependency list change, not on execution/exportConfig/callbacks change.
  *

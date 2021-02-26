@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IDataView,
     IExportConfig,
@@ -10,17 +10,38 @@ import { IColor, IColorPalette, ITotal, ISortItem } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
+/**
+ * @internal
+ */
 export interface ILoadingState {
     isLoading: boolean;
 }
 
+/**
+ * @public
+ */
 export type OnError = (error: GoodDataSdkError) => void;
+
+/**
+ * @public
+ */
 export type OnLoadingChanged = (loadingState: ILoadingState) => void;
 
+/**
+ * @public
+ */
 export interface IExtendedExportConfig extends IExportConfig {
     includeFilterContext?: boolean;
 }
+
+/**
+ * @public
+ */
 export type IExportFunction = (exportConfig: IExtendedExportConfig) => Promise<IExportResult>;
+
+/**
+ * @public
+ */
 export type OnExportReady = (exportFunction: IExportFunction) => void;
 
 /**
@@ -40,16 +61,25 @@ export interface IColorsData {
     colorPalette: IColorPalette;
 }
 
+/**
+ * @internal
+ */
 export interface IAvailableDrillTargets {
     attributes?: IAvailableDrillTargetAttribute[];
     measures?: IAvailableDrillTargetMeasure[];
 }
 
+/**
+ * @internal
+ */
 export interface IAvailableDrillTargetMeasure {
     measure: IMeasureDescriptor;
     attributes: IAttributeDescriptor[];
 }
 
+/**
+ * @internal
+ */
 export interface IAvailableDrillTargetAttribute {
     attribute: IAttributeDescriptor;
 }

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     DataValue,
     IAttributeDescriptor,
@@ -251,9 +251,9 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
      * Returns all data series in an array.
      *
      * Note: if you are looking for a subset of measures, always prefer using the first-class methods
-     * {@link allForMeasure} and {@link firstForMeasure} in favor of getting the array and filtering yourself.
+     * {@link IDataSeriesCollection#allForMeasure} and {@link IDataSeriesCollection#firstForMeasure} in favor of getting the array and filtering yourself.
      *
-     * @return empty if no data series
+     * @returns empty if no data series
      */
     toArray(): IDataSeries[];
 }
@@ -363,7 +363,7 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
  * origin of the data slices that can be iterated - their number and attributes or totals that were used
  * for slicing.
  *
- * The slices are iterated in the order in which they appear in the underlying results => server side sorting
+ * The slices are iterated in the order in which they appear in the underlying results; server side sorting
  * specified at the execution time is thus reflected and honored during the iteration.
  *
  * @alpha
@@ -382,7 +382,7 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
     /**
      * Returns all data slices in an array.
      *
-     * @return empty if no data slices
+     * @returns empty if no data slices
      */
     toArray(): IDataSlice[];
 }

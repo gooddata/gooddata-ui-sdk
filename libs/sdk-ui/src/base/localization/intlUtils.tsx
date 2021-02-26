@@ -18,6 +18,9 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
     });
 }
 
+/**
+ * @internal
+ */
 export function withIntl<P>(
     WrappedComponent: React.FC<P> | React.ComponentClass<P>,
     customLocale?: ILocale,

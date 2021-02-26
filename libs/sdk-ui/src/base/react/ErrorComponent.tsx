@@ -1,6 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 
+/**
+ * @public
+ */
 export interface IErrorProps {
     code?: string;
     icon?: string;
@@ -15,6 +18,8 @@ export interface IErrorProps {
 /**
  * [ErrorComponent](http://sdk.gooddata.com/gooddata-ui/docs/error_component.html)
  * is a component that renders a default error message
+ *
+ * @public
  */
 export class ErrorComponent extends React.Component<IErrorProps> {
     public static defaultProps: Partial<IErrorProps> = {

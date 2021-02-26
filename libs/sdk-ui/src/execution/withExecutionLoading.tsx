@@ -58,7 +58,7 @@ export type WithLoadingResult = {
 };
 
 /**
- * @internal
+ * @public
  */
 export interface IWithLoadingEvents<TProps> {
     /**

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
@@ -9,10 +9,10 @@ import { IDataAccessMethods } from "./dataAccess";
 import { newDataAccessMethods } from "./internal/dataAccessMethods";
 
 /**
- * This wrapper for {@link IDataView} provides various convenience methods to work with data and metadata stored inside
- * the provided instance of {@link IDataView}.
+ * This wrapper for `IDataView` provides various convenience methods to work with data and metadata stored inside
+ * the provided instance of `IDataView`.
  *
- * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the {@link IDataView} -
+ * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the `IDataView` -
  * to optimize performance of often-used lookups at the cost of extra memory.
  *
  * The facade is part of the public API and we strongly recommend to use it whenever client code needs to work with
@@ -43,7 +43,7 @@ export class DataViewFacade {
     //
 
     /**
-     * @param dataView
+     * @param dataView - instance of data view to create the facade for
      * @alpha
      */
     public static for(dataView: IDataView): DataViewFacade {
@@ -71,7 +71,7 @@ export class DataViewFacade {
     }
 
     /**
-     * @remarks see {@link IDataView.fingerprint} for more contractual information
+     * @remarks see `IDataView.fingerprint` for more contractual information
      * @returns fingerprint of the data view
      * @alpha
      */

@@ -95,7 +95,7 @@ export interface ILoadingInjectedProps {
  * all components and was linked to AFM and the paging and everything. We took this and gutted it out, changed to
  * work with executions and to only support reading all the data.
  *
- * @param InnerComponent
+ * @param InnerComponent - component to wrap
  * @internal
  */
 export function withEntireDataView<T extends IDataVisualizationProps>(
