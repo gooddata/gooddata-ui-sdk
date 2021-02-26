@@ -2,11 +2,13 @@
 
 _build_styles() {
     node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/internal/css styles/internal/scss
+    node-sass -q --importer node_modules/node-sass-magic-importer/dist/cli.js -o styles/css styles/scss
 }
 
 _clean() {
     rm -rf dist
     rm -rf esm
+    rm -rf styles/internal/css
     rm -rf styles/css
 }
 
@@ -40,8 +42,9 @@ build-dev-watch() {
 }
 
 build-styles() {
-  rm -rf styles/css
-  _build_styles
+    rm -rf styles/internal/css
+    rm -rf styles/css
+    _build_styles
 }
 
 FLAG=$1
