@@ -44,6 +44,7 @@ export type TableConfig = {
     onGridColumnsChanged: () => void;
     onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
     onSortChanged: (event: SortChangedEvent) => void;
+    onGridSizeChanged: (event: any) => void;
 
     onLoadingChanged: (loadingState: ILoadingState) => void;
     onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;

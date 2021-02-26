@@ -42,9 +42,11 @@ import { ColumnResizingConfig, IMenuAggregationClickConfig, TableConfig } from "
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
+import debounce from "lodash/debounce";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
+const AGGRID_ON_RESIZE_TIMEOUT = 300;
 
 /**
  * This class implements pivot table using the community version of ag-grid.
@@ -157,6 +159,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private readonly errorMap: IErrorDescriptors;
     private containerRef: HTMLDivElement | undefined;
+    private readonly debouncedGridSizeChanged: (gridSizeChangedEvent: any) => void;
 
     private internal: InternalTableState;
 
@@ -174,6 +177,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         this.errorMap = newErrorMapping(props.intl);
         this.internal = new InternalTableState();
+        this.debouncedGridSizeChanged = debounce(this.onGridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
     }
 
     //
@@ -475,6 +479,38 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.updateStickyRow();
     };
 
+    private onGridSizeChanged = (gridSizeChangedEvent: any): void => {
+        invariant(this.internal.table);
+
+        if (this.internal.table.isResizing()) {
+            // don't do anything if the table is already resizing. this copies what we have in v7 line however
+            // I think it opens room for racy/timing behavior. if the window is resized _while_ the table is resizing
+            // it is likely that it will not respect current window size.
+            //
+            // keeping it like this for now. if needed, we can enqueue an auto-resize request somewhere and process
+            // it after resizing finishes.
+            return;
+        }
+
+        if (!this.internal.firstDataRendered) {
+            // ag-grid does emit the grid size changed even before first data gets rendered (i suspect this is
+            // to cater for the initial render where it goes from nothing to something that has the headers, and then
+            // it starts rendering the data itself)
+            //
+            // Don't do anything, the resizing will be triggered after the first data is rendered
+            return;
+        }
+
+        if (
+            this.internal.checkAndUpdateLastSize(
+                gridSizeChangedEvent.clientWidth,
+                gridSizeChangedEvent.clientHeight,
+            )
+        ) {
+            this.autoresizeColumns(true);
+        }
+    };
+
     private onGridColumnResized = async (columnEvent: ColumnResizedEvent) => {
         invariant(this.internal.table);
 
@@ -580,7 +616,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return;
         }
 
-        this.internal.table?.growToFit(this.getResizingConfig());
+        this.internal.table.growToFit(this.getResizingConfig());
 
         if (!this.state.resized && !this.internal.table.isResizing()) {
             this.setState({
@@ -781,6 +817,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onGridColumnsChanged: this.onGridColumnsChanged,
             onGridColumnResized: this.onGridColumnResized,
             onSortChanged: this.onSortChanged,
+            onGridSizeChanged: this.debouncedGridSizeChanged,
 
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,

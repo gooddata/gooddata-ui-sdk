@@ -106,6 +106,7 @@ export function createGridOptions(
         onGridReady: config.onGridReady,
         onFirstDataRendered: config.onFirstDataRendered,
         onBodyScroll: config.onBodyScroll,
+        onGridSizeChanged: config.onGridSizeChanged,
 
         // Column types
         columnTypes: {

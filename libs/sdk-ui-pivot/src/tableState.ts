@@ -30,6 +30,8 @@ export class InternalTableState {
     };
     public isMetaOrCtrlKeyPressed: boolean = false;
     public isAltKeyPressed: boolean = false;
+    public lastResizedWidth = 0;
+    public lastResizedHeight = 0;
 
     private watchingIntervalId?: number;
 
@@ -63,5 +65,23 @@ export class InternalTableState {
         }
 
         this.watchingIntervalId = window.setInterval(handler, timeout);
+    };
+
+    /**
+     * Checks if the last size on record for this table is same as the provided sizes. If it is, don't
+     * do anything and return false. If the sizes differ, they will be updated and true is returned.
+     *
+     * @param width - width to test & update if needed
+     * @param height - height to test & update if needed
+     */
+    public checkAndUpdateLastSize = (width: number, height: number): boolean => {
+        if (this.lastResizedWidth !== width || this.lastResizedHeight !== height) {
+            this.lastResizedWidth = width;
+            this.lastResizedHeight = height;
+
+            return true;
+        }
+
+        return false;
     };
 }
