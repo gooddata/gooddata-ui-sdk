@@ -220,23 +220,25 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                     height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
                 />
             )}
-            <InsightRendererImpl
-                insight={insightWithAddedWidgetProperties}
-                backend={effectiveBackend}
-                workspace={effectiveWorkspace}
-                // if there are drillable items from the user, use them and only them
-                drillableItems={drillableItems ?? implicitDrills}
-                onDrill={onDrill ? handleDrill : undefined}
-                config={chartConfig}
-                onLoadingChanged={handleLoadingChanged}
-                locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
-                settings={userWorkspaceSettings}
-                colorPalette={colorPalette}
-                onError={handleError}
-                pushData={handlePushData}
-                ErrorComponent={ErrorComponent}
-                LoadingComponent={LoadingComponent}
-            />
+            {status === "success" && (
+                <InsightRendererImpl
+                    insight={insightWithAddedWidgetProperties}
+                    backend={effectiveBackend}
+                    workspace={effectiveWorkspace}
+                    // if there are drillable items from the user, use them and only them
+                    drillableItems={drillableItems ?? implicitDrills}
+                    onDrill={onDrill ? handleDrill : undefined}
+                    config={chartConfig}
+                    onLoadingChanged={handleLoadingChanged}
+                    locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
+                    settings={userWorkspaceSettings}
+                    colorPalette={colorPalette}
+                    onError={handleError}
+                    pushData={handlePushData}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
+            )}
         </IntlWrapper>
     );
 };
