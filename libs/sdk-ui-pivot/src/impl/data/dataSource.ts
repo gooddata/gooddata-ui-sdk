@@ -144,9 +144,10 @@ export class AgGridDatasource implements IDatasource {
                         this.gridApiProvider()?.setInfiniteRowCount(dataView.totalCount[0]);
                         this.currentSorts = dv.meta().effectiveSortItems();
 
-                        // Table descriptors contain attribute metadata & this attribute metadata contains totalItems
-                        // it is essential to update the total items in descriptors to keep the descriptors in-sync
-                        this.config.tableDescriptor.updateTotalItems(dv);
+                        // Table descriptors contain information about effective totals (e.g. totals set for the
+                        // table right now). After redrive of execution to change sorts/totals, code must make
+                        // sure that the new settings are reflected in the table descriptor.
+                        this.config.tableDescriptor.updateEffectiveTotals(dv);
 
                         this.processData(dv, params);
                     })
