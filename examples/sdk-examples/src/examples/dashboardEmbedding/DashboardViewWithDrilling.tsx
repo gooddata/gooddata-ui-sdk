@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 /* eslint-disable import/no-unresolved,import/default */
 import React from "react";
+import { Link } from "react-router-dom";
 
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
@@ -14,8 +15,8 @@ const DashboardView = (): JSX.Element => (
 
         <p>
             Example of how to embed a Dashboard into your application with added drilling – the same Dashboard
-            as in the previous examples with Daly City with enabled drilling (check the console logs for
-            results).
+            as in the <Link to="/dashboardView/simple">Simple example</Link> with Daly City with enabled
+            drilling (check the console logs for results).
         </p>
 
         <ExampleWithSource
