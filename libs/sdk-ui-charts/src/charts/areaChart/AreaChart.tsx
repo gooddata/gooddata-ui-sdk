@@ -193,7 +193,7 @@ export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProp
  * - multiple measures sliced by a single attribute, as different areas
  * - or a single measure split by one attribute into multiple areas with points intersecting attribute values
  *
- * Areas for multiple measures stack by default. Alternatively, the areas can overlap if ```{ stackMeasures: false }```.
+ * Areas for multiple measures stack by default. Alternatively, the areas can overlap if `{ stackMeasures: false }`.
  *
  * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
  * @public

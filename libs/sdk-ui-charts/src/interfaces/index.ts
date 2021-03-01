@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 export {
     IChartConfig,
@@ -12,6 +12,8 @@ export {
     ChartAlignTypes,
     IDataLabelsVisible,
     AxisNamePosition,
+    IDataPointsConfig,
+    IGridConfig,
 } from "./chartConfig";
 
 export {
