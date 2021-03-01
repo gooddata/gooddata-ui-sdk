@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { getColorPaletteFromColors } from "@gooddata/sdk-ui-vis-commons";
 import { IChartConfig } from "../../../interfaces";
@@ -33,6 +33,9 @@ export const DEFAULT_BULLET_GRAY_COLOR: IRgbColorValue = {
     b: 226,
 };
 
+/**
+ * @internal
+ */
 export function getValidColorPalette(config: IChartConfig): IColorPalette {
     return isEmpty(config.colorPalette)
         ? isEmpty(config.colors)

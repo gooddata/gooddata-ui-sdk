@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DataValue } from "@gooddata/sdk-backend-spi";
 import { ISeparators, numberFormat, colors2Object, INumberObject } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
@@ -8,22 +8,22 @@ import unescape from "lodash/unescape";
 const customEscape = (str: string) => str && escape(unescape(str));
 
 /**
- * @alpha
+ * @public
  */
 export type ValueFormatter = (value: DataValue, format: string) => string;
 
 /**
- * @alpha
+ * @public
  */
 export type HeaderTranslator = (value: string) => string;
 
 /**
- * Creates value formatter that uses @gooddata/numberjs to format raw measure values according
+ * Creates value formatter that uses `@gooddata/numberjs` to format raw measure values according
  * to the format string. By default, the format will strip away all the coloring information and
  * just return the value as string.
  *
- * @param separators - number separators to use. if not specified then numberjs defaults will be used
- * @alpha
+ * @param separators - number separators to use. if not specified then `numberjs` defaults will be used
+ * @public
  */
 export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter {
     return (value: DataValue, format: string) => {
@@ -37,14 +37,16 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
 }
 
 /**
- * Default configuration for the data access methods. Uses default numberjs formatter and no result formatting.
+ * Default configuration for the data access methods. Uses default `@gooddata/numberjs` formatter and no result formatting.
+ *
+ * @public
  */
 export const DefaultDataAccessConfig: DataAccessConfig = {
     valueFormatter: createNumberJsFormatter(),
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DataAccessConfig = {
     /**

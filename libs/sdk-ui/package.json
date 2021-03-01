@@ -31,7 +31,8 @@
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
-        "build": "bash scripts/build.sh",
+        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
+        "build": "bash scripts/build.sh && npm run api-extractor",
         "build-dev": "bash scripts/build.sh --dev",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
@@ -75,6 +76,7 @@
         "@gooddata/sdk-backend-base": "^8.3.0-alpha.2",
         "@gooddata/sdk-backend-mockingbird": "^8.3.0-alpha.2",
         "@gooddata/stylelint-config": "^5.0.0",
+        "@microsoft/api-extractor": "^7.3.8",
         "@types/enzyme-adapter-react-16": "^1.0.5",
         "@types/enzyme": "^3.10.3",
         "@types/hoist-non-react-statics": "^3.3.1",

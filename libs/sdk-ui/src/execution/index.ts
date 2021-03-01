@@ -10,6 +10,6 @@ export {
 } from "./withExecutionLoading";
 export { RawExecute, IRawExecuteProps } from "./RawExecute";
 export { Execute, IExecuteProps } from "./Execute";
-export { useDataExport } from "./useDataExport";
-export { useDataView } from "./useDataView";
+export { useDataExport, UseDataExportCallbacks, UseDataExportState } from "./useDataExport";
+export { useDataView, UseDataViewCallbacks, UseDataViewState } from "./useDataView";
 export { useExecution, IUseExecutionConfig } from "./useExecution";

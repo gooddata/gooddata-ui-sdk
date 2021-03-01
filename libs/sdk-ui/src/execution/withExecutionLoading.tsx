@@ -16,7 +16,7 @@ import {
 } from "../base";
 
 /**
- * @internal
+ * @public
  */
 export type DataViewWindow = {
     /**
@@ -31,7 +31,7 @@ export type DataViewWindow = {
 };
 
 /**
- * @internal
+ * @public
  */
 export type WithLoadingResult = {
     /**
@@ -58,7 +58,7 @@ export type WithLoadingResult = {
 };
 
 /**
- * @internal
+ * @public
  */
 export interface IWithLoadingEvents<TProps> {
     /**

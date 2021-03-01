@@ -53,14 +53,23 @@ export {
  */
 export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent";
 export { ErrorComponent, IErrorProps } from "./react/ErrorComponent";
-export { BackendProvider, useBackend, withBackend } from "./react/BackendContext";
-export { WorkspaceProvider, useWorkspace, withWorkspace } from "./react/WorkspaceContext";
-export { usePagedResource } from "./react/usePagedResource";
+export { BackendProvider, useBackend, withBackend, IBackendProviderProps } from "./react/BackendContext";
+export {
+    WorkspaceProvider,
+    useWorkspace,
+    withWorkspace,
+    IWorkspaceProviderProps,
+} from "./react/WorkspaceContext";
+export { usePagedResource, IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource";
 export {
     UseCancelablePromiseStatus,
     useCancelablePromise,
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
+    UseCancelablePromiseErrorState,
+    UseCancelablePromiseLoadingState,
+    UseCancelablePromisePendingState,
+    UseCancelablePromiseSuccessState,
 } from "./react/useCancelablePromise";
 export { withContexts } from "./react/withContexts";
 export { wrapDisplayName } from "./react/wrapDisplayName";
@@ -73,7 +82,7 @@ export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEn
 
 export { ILocale, DefaultLocale } from "./localization/Locale";
 export { getTranslation, getIntl } from "./localization/IntlStore";
-export { IntlWrapper, IIntlWrapperProps, messagesMap } from "./localization/IntlWrapper";
+export { IntlWrapper, IIntlWrapperProps, messagesMap, ITranslations } from "./localization/IntlWrapper";
 export {
     TranslationsProvider,
     IntlTranslationsProvider,
@@ -100,8 +109,16 @@ export {
     IHeaderPredicateContext,
     isHeaderPredicate,
 } from "./headerMatching/HeaderPredicate";
-import * as HeaderPredicates from "./headerMatching/HeaderPredicateFactory";
-export { HeaderPredicates };
+
+export {
+    HeaderPredicates,
+    attributeItemNameMatch,
+    composedFromIdentifier,
+    composedFromUri,
+    identifierMatch,
+    localIdentifierMatch,
+    uriMatch,
+} from "./headerMatching/HeaderPredicateFactory";
 
 /*
  * Derived measure title generation
@@ -176,16 +193,32 @@ export {
     HeadlineElementType,
     getVisualizationType,
     ChartElementType,
+    HeadlineType,
+    TableElementType,
+    TableType,
+    VisElementType,
+    XirrType,
 } from "./vis/visualizationTypes";
 export { Subtract } from "./typings/subtract";
 export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison";
-export { CatalogHelper } from "./helpers/CatalogHelper";
+export {
+    CatalogHelper,
+    IAttrItem,
+    IAttrs,
+    ICatalog,
+    IDataSet,
+    IDisplayForms,
+    IIdentifierWithTags,
+} from "./helpers/CatalogHelper";
 
 /*
  *
  */
 
 export { DataViewFacade } from "./results/facade";
+export { IExecutionDefinitionMethods } from "./results/internal/definitionMethods";
+export { IResultDataMethods } from "./results/internal/resultDataMethods";
+export { IResultMetaMethods } from "./results/internal/resultMetaMethods";
 export {
     DataSeriesId,
     DataPoint,

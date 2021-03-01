@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
-import { Chart } from "./adapter/Chart";
-import { ChartTransformation } from "./ChartTransformation";
-export { Chart, ChartTransformation };
-export { Visualization } from "./Visualization";
+// (C) 2019-2021 GoodData Corporation
+import { Chart, IChartProps } from "./adapter/Chart";
+import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation";
+export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer";
+export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
+export { Visualization, IVisualizationProps } from "./Visualization";
 
 /*
  * TODO: none of the stuff below this comment should be exported from highcharts. it should either be hidden

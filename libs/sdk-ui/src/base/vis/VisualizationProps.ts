@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IDrillableItem, OnFiredDrillEvent } from "./DrillEvents";
 import { IHeaderPredicate } from "../headerMatching/HeaderPredicate";
@@ -11,6 +11,8 @@ import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 /**
  * Super-interface for all visualization props; charts, tables or anything else - all should have these
  * basic props.
+ *
+ * @public
  */
 export interface IVisualizationProps {
     /**

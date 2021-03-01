@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     bucketIsEmpty,
     IAttribute,
@@ -13,7 +13,7 @@ import {
 /**
  * Methods to work with execution definition.
  *
- * @internal
+ * @alpha
  */
 export interface IExecutionDefinitionMethods {
     /**

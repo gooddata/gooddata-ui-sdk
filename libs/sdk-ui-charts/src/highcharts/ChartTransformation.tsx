@@ -30,6 +30,9 @@ export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
 }
 
+/**
+ * @internal
+ */
 export interface IChartTransformationProps extends WrappedComponentProps {
     config: IChartConfig;
     theme?: ITheme;
@@ -162,4 +165,7 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
     }
 }
 
+/**
+ * @internal
+ */
 export const ChartTransformation = injectIntl(withTheme(ChartTransformationImpl));

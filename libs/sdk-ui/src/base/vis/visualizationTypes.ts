@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 /**
  * @internal
@@ -30,7 +30,7 @@ export const VisualizationTypes = {
 };
 
 /**
- * @internal
+ * @public
  */
 export type ChartType =
     | "bar"
@@ -54,11 +54,29 @@ export type ChartType =
     | "pareto"
     | "alluvial";
 
+/**
+ * @public
+ */
 export type HeadlineType = "headline";
+
+/**
+ * @public
+ */
 export type XirrType = "xirr";
+
+/**
+ * @public
+ */
 export type TableType = "table";
+
+/**
+ * @public
+ */
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
+/**
+ * @public
+ */
 export type ChartElementType =
     | "slice"
     | "bar"
@@ -68,12 +86,30 @@ export type ChartElementType =
     | "target"
     | "primary"
     | "comparative";
+
+/**
+ * @public
+ */
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
+
+/**
+ * @public
+ */
 export type TableElementType = "cell";
+
+/**
+ * @public
+ */
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
 
+/**
+ * @internal
+ */
 export type VisualizationEnvironment = "none" | "dashboards";
 
+/**
+ * @internal
+ */
 export function getVisualizationType(type: ChartType): ChartType {
     if (type === VisualizationTypes.COMBO2) {
         return VisualizationTypes.COMBO;

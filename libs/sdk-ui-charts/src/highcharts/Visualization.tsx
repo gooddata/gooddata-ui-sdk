@@ -13,6 +13,9 @@ import isFunction from "lodash/isFunction";
 import noop from "lodash/noop";
 import omitBy from "lodash/omitBy";
 
+/**
+ * @internal
+ */
 export interface IVisualizationProps {
     height: number;
     width: number;
@@ -31,6 +34,9 @@ export interface IVisualizationProps {
     pushData?(data: any): void;
 }
 
+/**
+ * @internal
+ */
 export class Visualization extends React.Component<IVisualizationProps> {
     public static defaultProps = {
         locale: "en-US",

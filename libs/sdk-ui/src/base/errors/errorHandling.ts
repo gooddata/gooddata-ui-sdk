@@ -133,6 +133,7 @@ export function convertError(error: unknown): GoodDataSdkError {
  * Default error handler - logs error to console as error.
  *
  * @param error - error to log
+ * @public
  */
 export function defaultErrorHandler(error: unknown): void {
     console.error(error); // eslint-disable-line no-console

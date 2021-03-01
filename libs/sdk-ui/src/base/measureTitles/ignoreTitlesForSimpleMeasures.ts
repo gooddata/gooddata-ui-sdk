@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IInsightDefinition,
     IAttributeOrMeasure,
@@ -18,9 +18,8 @@ import {
  * For simple measures, their titles are removed.
  * For adhoc or non-simple measures, their titles are left intact.
  *
- * @param {IInsight|IInsightDefinition} insight - insight or insight definition that must be processed.
- *
- * @returns {IInsight}
+ * @param insight - insight or insight definition that must be processed.
+ * @returns a copy of insight modified bucket items
  *
  * @internal
  */

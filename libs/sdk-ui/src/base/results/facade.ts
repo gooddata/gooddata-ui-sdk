@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IDataView, IExecutionResult, IResultWarning } from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig";
@@ -9,10 +9,10 @@ import { IDataAccessMethods } from "./dataAccess";
 import { newDataAccessMethods } from "./internal/dataAccessMethods";
 
 /**
- * This wrapper for {@link IDataView} provides various convenience methods to work with data and metadata stored inside
- * the provided instance of {@link IDataView}.
+ * This wrapper for {@link @gooddata/sdk-backend-spi#IDataView} provides various convenience methods to work with data and metadata stored inside
+ * the provided instance of {@link @gooddata/sdk-backend-spi#IDataView}.
  *
- * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the {@link IDataView} -
+ * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the {@link @gooddata/sdk-backend-spi#IDataView} -
  * to optimize performance of often-used lookups at the cost of extra memory.
  *
  * The facade is part of the public API and we strongly recommend to use it whenever client code needs to work with
@@ -22,7 +22,7 @@ import { newDataAccessMethods } from "./internal/dataAccessMethods";
  * and further enhancements will happen, the methods will be removed, renamed and added in the future. The public
  * API WILL break.
  *
- * @alpha
+ * @public
  */
 export class DataViewFacade {
     private static Facades: WeakMap<IDataView, DataViewFacade> = new WeakMap<IDataView, DataViewFacade>();
@@ -43,8 +43,8 @@ export class DataViewFacade {
     //
 
     /**
-     * @param dataView
-     * @alpha
+     * @param dataView - instance of data view to create the facade for
+     * @public
      */
     public static for(dataView: IDataView): DataViewFacade {
         if (!DataViewFacade.Facades.has(dataView)) {
@@ -56,7 +56,7 @@ export class DataViewFacade {
 
     /**
      * @returns result of execution which returned this data view
-     * @alpha
+     * @public
      */
     public result(): IExecutionResult {
         return this.dataView.result;
@@ -64,16 +64,16 @@ export class DataViewFacade {
 
     /**
      * @returns execution result warnings
-     * @alpha
+     * @public
      */
     public warnings(): IResultWarning[] {
         return this.dataView.warnings ?? [];
     }
 
     /**
-     * @remarks see {@link IDataView.fingerprint} for more contractual information
+     * @remarks see {@link @gooddata/sdk-backend-spi#IDataView.fingerprint} for more contractual information
      * @returns fingerprint of the data view
-     * @alpha
+     * @public
      */
     public fingerprint(): string {
         return this.dataView.fingerprint();
@@ -81,7 +81,7 @@ export class DataViewFacade {
 
     /**
      * @returns methods to access data in a curated fashion using data slices and data series iterators
-     * @alpha
+     * @public
      */
     public data(config?: DataAccessConfig): IDataAccessMethods {
         if (!this.dataAccessMethods) {

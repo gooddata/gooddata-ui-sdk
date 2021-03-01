@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IHeaderPredicate, IHeaderPredicateContext } from "./HeaderPredicate";
 import {
     getMappingHeaderIdentifier,
@@ -306,3 +306,15 @@ export function composedFromIdentifier(identifier: string): IHeaderPredicate {
 
     return composedFromQualifier(identifierMatch(identifier));
 }
+
+/**
+ * @public
+ */
+export const HeaderPredicates = {
+    attributeItemNameMatch,
+    composedFromIdentifier,
+    composedFromUri,
+    identifierMatch,
+    localIdentifierMatch,
+    uriMatch,
+};

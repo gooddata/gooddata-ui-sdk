@@ -24,7 +24,7 @@ export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDat
 export type UseDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 /**
- * This hook provides easy way to get data for the provided {@link IPreparedExecution}.
+ * This hook provides easy way to get data for the provided {@link @gooddata/sdk-backend-spi#IPreparedExecution}.
  * You can use it to create custom visualizations on top of GoodData platform.
  * Be aware that execution is re-executed only on dependency list change, not on execution/window/callbacks change.
  *

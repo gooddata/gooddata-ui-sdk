@@ -2,10 +2,16 @@
 import React from "react";
 import { injectIntl, WrappedComponentProps, IntlShape } from "react-intl";
 
+/**
+ * @internal
+ */
 export interface ITranslationsProviderOwnProps {
     children: any;
 }
 
+/**
+ * @internal
+ */
 export interface ITranslationsComponentProps {
     numericSymbols: string[];
     emptyHeaderString: string;
@@ -23,8 +29,14 @@ const getNumericSymbols = (intl: IntlShape): string[] => {
     ].map((id: string) => intl.formatMessage({ id }));
 };
 
+/**
+ * @internal
+ */
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
 
+/**
+ * @internal
+ */
 export class TranslationsProvider extends React.PureComponent<ITranslationsProviderProps> {
     public render(): React.ReactNode {
         const props: ITranslationsComponentProps = {
@@ -41,4 +53,7 @@ export class TranslationsProvider extends React.PureComponent<ITranslationsProvi
     }
 }
 
+/**
+ * @internal
+ */
 export const IntlTranslationsProvider = injectIntl<"intl", ITranslationsProviderProps>(TranslationsProvider);

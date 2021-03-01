@@ -14,10 +14,16 @@ import ptBR from "./bundles/pt-BR.json";
 import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
 
+/**
+ * @internal
+ */
 export interface ITranslations {
     [key: string]: string;
 }
 
+/**
+ * @internal
+ */
 export const messagesMap: { [locale: string]: ITranslations } = {
     "en-US": translationUtils.removeMetadata(enUS),
     "de-DE": deDE,
@@ -30,10 +36,16 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "zh-Hans": zhHans,
 };
 
+/**
+ * @internal
+ */
 export interface IIntlWrapperProps {
     locale: string;
 }
 
+/**
+ * @internal
+ */
 export class IntlWrapper extends React.PureComponent<IIntlWrapperProps> {
     public static defaultProps: IIntlWrapperProps = {
         locale: DefaultLocale,
