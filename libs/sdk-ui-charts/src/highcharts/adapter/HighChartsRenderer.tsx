@@ -31,6 +31,9 @@ export interface IChartHTMLElement extends HTMLElement {
     getHighchartRef(): HTMLElement;
 }
 
+/**
+ * @internal
+ */
 export interface IHighChartsRendererProps {
     chartOptions: any;
     hcOptions: any;

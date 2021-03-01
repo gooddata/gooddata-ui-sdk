@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IChartConfig } from "./chartConfig";
@@ -20,16 +20,25 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
     height?: number;
 }
 
+/**
+ * @public
+ */
 export interface ILegendItem {
     name: string;
     color: string; // hex or RGB, can be used directly in CSS style
     onClick: () => void; // toggle to show/hide serie in chart
 }
 
+/**
+ * @public
+ */
 export interface ILegendData {
     legendItems: ILegendItem[];
 }
 
+/**
+ * @public
+ */
 export type OnLegendReady = (data: ILegendData) => void;
 
 /**

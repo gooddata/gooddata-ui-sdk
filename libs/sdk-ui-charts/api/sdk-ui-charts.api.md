@@ -45,7 +45,7 @@ export const BarChart: import("react").ComponentType<IBarChartProps>;
 // @internal
 export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export const BOTTOM = "bottom";
 
 // @public
@@ -54,7 +54,7 @@ export const BubbleChart: import("react").ComponentType<IBubbleChartProps>;
 // @public
 export const BulletChart: import("react").ComponentType<IBulletChartProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export class Chart extends React_2.Component<IChartProps> {
     // (undocumented)
     componentDidMount(): void;
@@ -81,7 +81,7 @@ export class Chart extends React_2.Component<IChartProps> {
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
-// @public (undocumented)
+// @internal (undocumented)
 export const ChartTransformation: React_2.ForwardRefExoticComponent<Pick<Pick<IChartTransformationProps, "locale" | "height" | "width" | "intl" | "renderer" | "config" | "dataView" | "onDrill" | "onLegendReady" | "afterRender" | "drillableItems" | "pushData" | "onDataTooLarge" | "onNegativeValues">, "locale" | "height" | "width" | "renderer" | "config" | "dataView" | "onDrill" | "onLegendReady" | "afterRender" | "drillableItems" | "pushData" | "onDataTooLarge" | "onNegativeValues"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
@@ -114,7 +114,7 @@ export const FLUID_LEGEND_THRESHOLD = 768;
 // @public
 export const FunnelChart: import("react").ComponentType<IFunnelChartProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export function getValidColorPalette(config: IChartConfig): IColorPalette;
 
 // @public
@@ -262,7 +262,7 @@ export interface IChartLimits {
     series?: number;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IChartProps {
     // (undocumented)
     callback(): void;
@@ -272,7 +272,7 @@ export interface IChartProps {
     domProps: any;
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IChartTransformationProps extends WrappedComponentProps {
     // (undocumented)
     afterRender(): void;
@@ -415,7 +415,7 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IHighChartsRendererProps {
     // (undocumented)
     afterRender(): void;
@@ -553,7 +553,7 @@ export interface ITreemapBucketProps {
 export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {
 }
 
-// @public (undocumented)
+// @internal (undocumented)
 export interface IVisualizationProps {
     // (undocumented)
     afterRender?: () => void;
@@ -597,7 +597,7 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 // @public
 export const LineChart: import("react").ComponentType<ILineChartProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export const MIDDLE = "middle";
 
 // @public (undocumented)
@@ -612,7 +612,7 @@ export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 // @public
 export const ScatterPlot: import("react").ComponentType<IScatterPlotProps>;
 
-// @public (undocumented)
+// @internal (undocumented)
 export const TOP = "top";
 
 // @public
@@ -624,7 +624,7 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 // @public
 export const ViewByAttributesLimit = 2;
 
-// @public (undocumented)
+// @internal (undocumented)
 export class Visualization extends React_2.Component<IVisualizationProps> {
     constructor(props: IVisualizationProps);
     // (undocumented)

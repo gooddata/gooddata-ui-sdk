@@ -25,12 +25,18 @@ patternFill(Highcharts);
 groupedCategories(Highcharts);
 initChartPlugins(Highcharts);
 
+/**
+ * @internal
+ */
 export interface IChartProps {
     config: IChartConfig;
     domProps: any;
     callback(): void;
 }
 
+/**
+ * @internal
+ */
 export class Chart extends React.Component<IChartProps> {
     public static defaultProps: Partial<IChartProps> = {
         callback: noop,
