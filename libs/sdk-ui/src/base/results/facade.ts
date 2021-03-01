@@ -9,10 +9,10 @@ import { IDataAccessMethods } from "./dataAccess";
 import { newDataAccessMethods } from "./internal/dataAccessMethods";
 
 /**
- * This wrapper for `IDataView` provides various convenience methods to work with data and metadata stored inside
- * the provided instance of `IDataView`.
+ * This wrapper for {@link @gooddata/sdk-backend-spi#IDataView} provides various convenience methods to work with data and metadata stored inside
+ * the provided instance of {@link @gooddata/sdk-backend-spi#IDataView}.
  *
- * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the `IDataView` -
+ * The facade keeps an ephemeral state - such as calculated indexes on top of the headers in the {@link @gooddata/sdk-backend-spi#IDataView} -
  * to optimize performance of often-used lookups at the cost of extra memory.
  *
  * The facade is part of the public API and we strongly recommend to use it whenever client code needs to work with
@@ -71,7 +71,7 @@ export class DataViewFacade {
     }
 
     /**
-     * @remarks see `IDataView.fingerprint` for more contractual information
+     * @remarks see {@link @gooddata/sdk-backend-spi#IDataView.fingerprint} for more contractual information
      * @returns fingerprint of the data view
      * @public
      */

@@ -36,7 +36,7 @@ import {
 export interface IResultMetaMethods {
     /**
      * @returns data view's dimension descriptors
-     * @remarks see `IDimensionDescriptor` for more information of what this is
+     * @remarks see {@link @gooddata/sdk-backend-spi#IDimensionDescriptor} for more information of what this is
      */
     dimensions(): IDimensionDescriptor[];
 

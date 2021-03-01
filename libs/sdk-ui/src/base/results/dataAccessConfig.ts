@@ -37,7 +37,7 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
 }
 
 /**
- * Default configuration for the data access methods. Uses default `numberjs` formatter and no result formatting.
+ * Default configuration for the data access methods. Uses default `@gooddata/numberjs` formatter and no result formatting.
  *
  * @public
  */
