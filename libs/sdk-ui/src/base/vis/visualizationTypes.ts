@@ -30,7 +30,7 @@ export const VisualizationTypes = {
 };
 
 /**
- * @internal
+ * @public
  */
 export type ChartType =
     | "bar"
@@ -55,27 +55,27 @@ export type ChartType =
     | "alluvial";
 
 /**
- * @internal
+ * @public
  */
 export type HeadlineType = "headline";
 
 /**
- * @internal
+ * @public
  */
 export type XirrType = "xirr";
 
 /**
- * @internal
+ * @public
  */
 export type TableType = "table";
 
 /**
- * @internal
+ * @public
  */
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
 /**
- * @internal
+ * @public
  */
 export type ChartElementType =
     | "slice"
@@ -88,17 +88,17 @@ export type ChartElementType =
     | "comparative";
 
 /**
- * @internal
+ * @public
  */
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 
 /**
- * @internal
+ * @public
  */
 export type TableElementType = "cell";
 
 /**
- * @internal
+ * @public
  */
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
 

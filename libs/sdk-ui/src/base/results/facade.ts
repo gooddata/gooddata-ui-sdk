@@ -22,7 +22,7 @@ import { newDataAccessMethods } from "./internal/dataAccessMethods";
  * and further enhancements will happen, the methods will be removed, renamed and added in the future. The public
  * API WILL break.
  *
- * @alpha
+ * @public
  */
 export class DataViewFacade {
     private static Facades: WeakMap<IDataView, DataViewFacade> = new WeakMap<IDataView, DataViewFacade>();
@@ -44,7 +44,7 @@ export class DataViewFacade {
 
     /**
      * @param dataView - instance of data view to create the facade for
-     * @alpha
+     * @public
      */
     public static for(dataView: IDataView): DataViewFacade {
         if (!DataViewFacade.Facades.has(dataView)) {
@@ -56,7 +56,7 @@ export class DataViewFacade {
 
     /**
      * @returns result of execution which returned this data view
-     * @alpha
+     * @public
      */
     public result(): IExecutionResult {
         return this.dataView.result;
@@ -64,7 +64,7 @@ export class DataViewFacade {
 
     /**
      * @returns execution result warnings
-     * @alpha
+     * @public
      */
     public warnings(): IResultWarning[] {
         return this.dataView.warnings ?? [];
@@ -73,7 +73,7 @@ export class DataViewFacade {
     /**
      * @remarks see `IDataView.fingerprint` for more contractual information
      * @returns fingerprint of the data view
-     * @alpha
+     * @public
      */
     public fingerprint(): string {
         return this.dataView.fingerprint();
@@ -81,7 +81,7 @@ export class DataViewFacade {
 
     /**
      * @returns methods to access data in a curated fashion using data slices and data series iterators
-     * @alpha
+     * @public
      */
     public data(config?: DataAccessConfig): IDataAccessMethods {
         if (!this.dataAccessMethods) {

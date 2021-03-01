@@ -139,10 +139,10 @@ export class CatalogHelper {
     visualizationTags(name: string): string;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export type ChartElementType = "slice" | "bar" | "point" | "label" | "cell" | "target" | "primary" | "comparative";
 
-// @internal (undocumented)
+// @public (undocumented)
 export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "scatter" | "bubble" | "heatmap" | "geo" | "pushpin" | "combo" | "combo2" | "histogram" | "bullet" | "treemap" | "waterfall" | "funnel" | "pareto" | "alluvial";
 
 // @public
@@ -166,16 +166,16 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
 // @internal (undocumented)
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 
-// @alpha
+// @public
 export function createNumberJsFormatter(separators?: ISeparators_2): ValueFormatter;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataAccessConfig = {
     valueFormatter: ValueFormatter;
     headerTranslator?: HeaderTranslator;
 };
 
-// @alpha
+// @public
 export type DataPoint = {
     readonly rawValue: DataValue;
     formattedValue(): null | string;
@@ -185,10 +185,10 @@ export type DataPoint = {
     readonly total?: boolean;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataPointCoordinates = number[];
 
-// @alpha
+// @public
 export type DataSeriesDescriptor = DataSeriesHeaders & DataSeriesDescriptorMethods & {
     readonly id: DataSeriesId;
     readonly measureDescriptor: IMeasureDescriptor;
@@ -197,41 +197,41 @@ export type DataSeriesDescriptor = DataSeriesHeaders & DataSeriesDescriptorMetho
     readonly attributeDefinitions?: IAttribute[];
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataSeriesDescriptorMethods = {
     measureTitle(): string;
     measureFormat(): string;
     scopeTitles(): string[];
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataSeriesHeaders = {
     readonly measureHeader: IResultMeasureHeader;
     readonly attributeHeaders?: IResultAttributeHeader[];
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataSeriesId = string;
 
-// @alpha
+// @public
 export type DataSliceDescriptor = DataSliceHeaders & DataSliceDescriptorMethods & {
     readonly id: DataSliceId;
     readonly descriptors: IAttributeDescriptor[];
     readonly definitions: IAttribute[];
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataSliceDescriptorMethods = {
     readonly sliceTitles: () => string[];
 };
 
-// @alpha
+// @public
 export type DataSliceHeaders = {
     readonly headers: Array<IResultAttributeHeader | IResultTotalHeader>;
     readonly isTotal?: boolean;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type DataSliceId = string;
 
 // @public
@@ -244,7 +244,7 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
-// @alpha
+// @public
 export class DataViewFacade {
     protected constructor(dataView: IDataView);
     // (undocumented)
@@ -269,7 +269,7 @@ export class DataViewFacade {
     warnings(): IResultWarning[];
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export type DataViewWindow = {
     offset: number[];
     size: number[];
@@ -278,7 +278,7 @@ export type DataViewWindow = {
 // @public (undocumented)
 export const DefaultColorPalette: IColorPalette;
 
-// @alpha
+// @public
 export const DefaultDataAccessConfig: DataAccessConfig;
 
 // @public
@@ -391,13 +391,13 @@ export const HeaderPredicates: {
     uriMatch: typeof uriMatch;
 };
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type HeaderTranslator = (value: string) => string;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type HeadlineElementType = "primaryValue" | "secondaryValue";
 
-// @internal (undocumented)
+// @public (undocumented)
 export type HeadlineType = "headline";
 
 // @internal
@@ -499,7 +499,7 @@ export interface IColorsData {
     colorPalette: IColorPalette;
 }
 
-// @alpha
+// @public
 export interface IDataAccessMethods {
     // (undocumented)
     series(): IDataSeriesCollection;
@@ -507,7 +507,7 @@ export interface IDataAccessMethods {
     slices(): IDataSliceCollection;
 }
 
-// @alpha
+// @public
 export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataPoint> {
     // (undocumented)
     dataPoints(): DataPoint[];
@@ -517,7 +517,7 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
     rawData(): DataValue[];
 }
 
-// @alpha
+// @public
 export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     allForMeasure(localIdOrMeasure: string | IMeasure): Iterable<IDataSeries>;
     readonly count: number;
@@ -539,7 +539,7 @@ export interface IDataSet {
     tags: string;
 }
 
-// @alpha
+// @public
 export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoint> {
     // (undocumented)
     dataPoints(): DataPoint[];
@@ -549,7 +549,7 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
     rawData(): DataValue[];
 }
 
-// @alpha
+// @public
 export interface IDataSliceCollection extends Iterable<IDataSlice> {
     readonly count: number;
     readonly descriptors: Array<IAttributeDescriptor | ITotal>;
@@ -710,7 +710,7 @@ export interface IDrillEventIntersectionElement {
 export interface IDrillIntersectionAttributeItem extends IAttributeDescriptor, IResultAttributeHeader {
 }
 
-// @internal
+// @public
 export interface IDrillPoint {
     // (undocumented)
     intersection: IDrillEventIntersectionElement[];
@@ -884,7 +884,7 @@ export interface ILoadingProps {
     width?: any;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export interface ILoadingState {
     // (undocumented)
     isLoading: boolean;
@@ -1230,10 +1230,10 @@ export type SdkErrorType = keyof typeof ErrorCodes;
 // @internal (undocumented)
 export type Subtract<T, K> = Pick<T, Exclude<keyof T, keyof K>>;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type TableElementType = "cell";
 
-// @internal (undocumented)
+// @public (undocumented)
 export type TableType = "table";
 
 // @internal (undocumented)
@@ -1341,13 +1341,13 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 // @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
 
-// @alpha (undocumented)
+// @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
 
-// @internal (undocumented)
+// @public (undocumented)
 export type VisType = ChartType | HeadlineType | TableType | XirrType;
 
 // @internal (undocumented)
@@ -1406,7 +1406,7 @@ export function withExecutionLoading<TProps>(params: IWithExecutionLoading<TProp
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: React_2.FC<P> | React_2.ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): React_2.ComponentType<P>;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type WithLoadingResult = {
     result: DataViewFacade | undefined;
     error: GoodDataSdkError | undefined;
@@ -1425,7 +1425,7 @@ export const WorkspaceProvider: React_2.FC<IWorkspaceProviderProps>;
 // @internal
 export const wrapDisplayName: (hocName: string, BaseComponent?: import("react").ComponentClass<any, any> | import("react").FunctionComponent<any> | undefined) => <T>(Component: import("react").ComponentType<T>) => import("react").ComponentType<T>;
 
-// @internal (undocumented)
+// @public (undocumented)
 export type XirrType = "xirr";
 
 

@@ -10,17 +10,17 @@ import {
 import { IAttribute, IMeasure, ITotal } from "@gooddata/sdk-model";
 
 /**
- * @alpha
+ * @public
  */
 export type DataSeriesId = string;
 
 /**
- * @alpha
+ * @public
  */
 export type DataSliceId = string;
 
 /**
- * @alpha
+ * @public
  */
 export type DataPointCoordinates = number[];
 
@@ -31,7 +31,7 @@ export type DataPointCoordinates = number[];
  * Technically, DataPoint is the raw data value stored in the data view decorated with all the metadata
  * there exists about that value.
  *
- * @alpha
+ * @public
  */
 export type DataPoint = {
     /**
@@ -72,7 +72,7 @@ export type DataPoint = {
 //
 
 /**
- * @alpha
+ * @public
  */
 export type DataSeriesHeaders = {
     /**
@@ -91,7 +91,7 @@ export type DataSeriesHeaders = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DataSeriesDescriptorMethods = {
     /**
@@ -113,7 +113,7 @@ export type DataSeriesDescriptorMethods = {
 /**
  * Full descriptive information about the data series.
  *
- * @alpha
+ * @public
  */
 export type DataSeriesDescriptor = DataSeriesHeaders &
     DataSeriesDescriptorMethods & {
@@ -160,7 +160,7 @@ export type DataSeriesDescriptor = DataSeriesHeaders &
  * For convenience, the data series is iterable over Data Points. You can use it either in for-of loop or
  * spread data series into an array of DataPoints.
  *
- * @alpha
+ * @public
  */
 export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataPoint> {
     /**
@@ -192,7 +192,7 @@ export interface IDataSeries extends DataSeriesDescriptorMethods, Iterable<DataP
  * origin of the data series that can be iterated - their number, measures they were calculated from and
  * optionally the scoping attributes.
  *
- * @alpha
+ * @public
  */
 export interface IDataSeriesCollection extends Iterable<IDataSeries> {
     /**
@@ -267,7 +267,7 @@ export interface IDataSeriesCollection extends Iterable<IDataSeries> {
  * for the slice. The slice MAY be for a total calculation, in which case the last header will be for the
  * total.
  *
- * @alpha
+ * @public
  */
 export type DataSliceHeaders = {
     /**
@@ -282,7 +282,7 @@ export type DataSliceHeaders = {
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DataSliceDescriptorMethods = {
     /**
@@ -295,7 +295,7 @@ export type DataSliceDescriptorMethods = {
  * Full descriptive information of a data slice includes all attribute element and total headers for the slice and
  * next to them descriptors of attribute objects whose elements figure in the headers.
  *
- * @alpha
+ * @public
  */
 export type DataSliceDescriptor = DataSliceHeaders &
     DataSliceDescriptorMethods & {
@@ -331,7 +331,7 @@ export type DataSliceDescriptor = DataSliceHeaders &
  * For convenience, the data slice is iterable over the Data Points. You can use it either in for-of loop or
  * spread data slice into an array of DataPoints.
  *
- * @alpha
+ * @public
  */
 export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoint> {
     /**
@@ -366,7 +366,7 @@ export interface IDataSlice extends DataSliceDescriptorMethods, Iterable<DataPoi
  * The slices are iterated in the order in which they appear in the underlying results; server side sorting
  * specified at the execution time is thus reflected and honored during the iteration.
  *
- * @alpha
+ * @public
  */
 export interface IDataSliceCollection extends Iterable<IDataSlice> {
     /**
@@ -391,7 +391,7 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
  * Defines methods to access data in the data view. These methods and types are recommended
  * in favor of directly accessing the underlying data, headers and descriptors.
  *
- * @alpha
+ * @public
  */
 export interface IDataAccessMethods {
     /**

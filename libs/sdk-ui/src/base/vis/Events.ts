@@ -11,7 +11,7 @@ import { GoodDataSdkError } from "../errors/GoodDataSdkError";
 import { IMappingHeader } from "../headerMatching/MappingHeader";
 
 /**
- * @internal
+ * @public
  */
 export interface ILoadingState {
     isLoading: boolean;

@@ -8,12 +8,12 @@ import unescape from "lodash/unescape";
 const customEscape = (str: string) => str && escape(unescape(str));
 
 /**
- * @alpha
+ * @public
  */
 export type ValueFormatter = (value: DataValue, format: string) => string;
 
 /**
- * @alpha
+ * @public
  */
 export type HeaderTranslator = (value: string) => string;
 
@@ -23,7 +23,7 @@ export type HeaderTranslator = (value: string) => string;
  * just return the value as string.
  *
  * @param separators - number separators to use. if not specified then `numberjs` defaults will be used
- * @alpha
+ * @public
  */
 export function createNumberJsFormatter(separators?: ISeparators): ValueFormatter {
     return (value: DataValue, format: string) => {
@@ -39,14 +39,14 @@ export function createNumberJsFormatter(separators?: ISeparators): ValueFormatte
 /**
  * Default configuration for the data access methods. Uses default `numberjs` formatter and no result formatting.
  *
- * @alpha
+ * @public
  */
 export const DefaultDataAccessConfig: DataAccessConfig = {
     valueFormatter: createNumberJsFormatter(),
 };
 
 /**
- * @alpha
+ * @public
  */
 export type DataAccessConfig = {
     /**

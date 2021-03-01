@@ -147,7 +147,7 @@ export interface IDrillEventContextPoint {
 /**
  * Drill context for headline
  *
- * @internal
+ * @public
  */
 export interface IDrillPoint {
     x: number;
