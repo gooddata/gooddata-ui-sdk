@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { DEFAULT_DATE_FORMAT } from "../../../constants/Platform";
 import {
     getDateFilterRepresentation,
@@ -69,7 +69,9 @@ describe("getDateFilterTitleUsingTranslator", () => {
         [-6, 0, "GDC.time.date", "filters.lastNDays", { n: 7 }],
         [0, 6, "GDC.time.date", "filters.nextNDays", { n: 7 }],
         [-6, -2, "GDC.time.date", "filters.interval.days.past", { from: 6, to: 2 }],
+        [-6, -6, "GDC.time.date", "filters.interval.days.past.sameValue", { value: 6 }],
         [2, 6, "GDC.time.date", "filters.interval.days.future", { from: 2, to: 6 }],
+        [6, 6, "GDC.time.date", "filters.interval.days.future.sameValue", { value: 6 }],
         [-5, 5, "GDC.time.date", "filters.interval.days.mixed", { from: 5, to: 5 }],
         // weeks
         [0, 0, "GDC.time.week_us", "filters.thisWeek.title", undefined],
@@ -78,7 +80,9 @@ describe("getDateFilterTitleUsingTranslator", () => {
         [-6, 0, "GDC.time.week_us", "filters.lastNWeeks", { n: 7 }],
         [0, 6, "GDC.time.week_us", "filters.nextNWeeks", { n: 7 }],
         [-6, -2, "GDC.time.week_us", "filters.interval.weeks.past", { from: 6, to: 2 }],
+        [-6, -6, "GDC.time.week_us", "filters.interval.weeks.past.sameValue", { value: 6 }],
         [2, 6, "GDC.time.week_us", "filters.interval.weeks.future", { from: 2, to: 6 }],
+        [6, 6, "GDC.time.week_us", "filters.interval.weeks.future.sameValue", { value: 6 }],
         [-5, 5, "GDC.time.week_us", "filters.interval.weeks.mixed", { from: 5, to: 5 }],
         // months
         [0, 0, "GDC.time.month", "filters.thisMonth.title", undefined],
@@ -87,7 +91,9 @@ describe("getDateFilterTitleUsingTranslator", () => {
         [-6, 0, "GDC.time.month", "filters.lastNMonths", { n: 7 }],
         [0, 6, "GDC.time.month", "filters.nextNMonths", { n: 7 }],
         [-6, -2, "GDC.time.month", "filters.interval.months.past", { from: 6, to: 2 }],
+        [-6, -6, "GDC.time.month", "filters.interval.months.past.sameValue", { value: 6 }],
         [2, 6, "GDC.time.month", "filters.interval.months.future", { from: 2, to: 6 }],
+        [6, 6, "GDC.time.month", "filters.interval.months.future.sameValue", { value: 6 }],
         [-5, 5, "GDC.time.month", "filters.interval.months.mixed", { from: 5, to: 5 }],
         // quarters
         [0, 0, "GDC.time.quarter", "filters.thisQuarter.title", undefined],
@@ -96,7 +102,9 @@ describe("getDateFilterTitleUsingTranslator", () => {
         [-6, 0, "GDC.time.quarter", "filters.lastNQuarters", { n: 7 }],
         [0, 6, "GDC.time.quarter", "filters.nextNQuarters", { n: 7 }],
         [-6, -2, "GDC.time.quarter", "filters.interval.quarters.past", { from: 6, to: 2 }],
+        [-6, -6, "GDC.time.quarter", "filters.interval.quarters.past.sameValue", { value: 6 }],
         [2, 6, "GDC.time.quarter", "filters.interval.quarters.future", { from: 2, to: 6 }],
+        [6, 6, "GDC.time.quarter", "filters.interval.quarters.future.sameValue", { value: 6 }],
         [-5, 5, "GDC.time.quarter", "filters.interval.quarters.mixed", { from: 5, to: 5 }],
         // years
         [0, 0, "GDC.time.year", "filters.thisYear.title", undefined],

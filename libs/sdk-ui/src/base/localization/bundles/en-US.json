@@ -528,9 +528,19 @@
         "comment": "Example: 'From 5 to 3 days ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.interval.days.past.sameValue": {
+        "value": "{value} {value, plural, one {day} other {days}} ago",
+        "comment": "Example: '5 days ago'. Don't translate placeholder '{value}'. In '{value, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "limit": 0
+    },
     "filters.interval.days.future": {
         "value": "From {from} to {to} {to, plural, one {day} other {days}} ahead",
         "comment": "Example: 'From 3 to 5 days ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.days.future.sameValue": {
+        "value": "{value} {value, plural, one {day} other {days}} ahead",
+        "comment": "Example: '5 days ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {DAY} other {DAYS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.days.mixed": {
@@ -543,9 +553,19 @@
         "comment": "Example: 'From 5 to 3 weeks ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.interval.weeks.past.sameValue": {
+        "value": "{value} {value, plural, one {week} other {weeks}} ago",
+        "comment": "Example: '5 weeks ago'. Don't translate placeholder '{value}'. In '{value, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "limit": 0
+    },
     "filters.interval.weeks.future": {
         "value": "From {from} to {to} {to, plural, one {week} other {weeks}} ahead",
         "comment": "Example: 'From 3 to 5 weeks ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.weeks.future.sameValue": {
+        "value": "{value} {value, plural, one {week} other {weeks}} ahead",
+        "comment": "Example: '5 weeks ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {WEEK} other {WEEKS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.weeks.mixed": {
@@ -558,9 +578,19 @@
         "comment": "Example: 'From 5 to 3 months ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.interval.months.past.sameValue": {
+        "value": "{value} {value, plural, one {month} other {months}} ago",
+        "comment": "Example: '5 months ago'. Don't translate placeholder '{value}'. In '{value, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "limit": 0
+    },
     "filters.interval.months.future": {
         "value": "From {from} to {to} {to, plural, one {month} other {months}} ahead",
         "comment": "Example: 'From 3 to 5 months ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.months.future.sameValue": {
+        "value": "{value} {value, plural, one {month} other {months}} ahead",
+        "comment": "Example: '5 months ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {MONTH} other {MONTHS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.months.mixed": {
@@ -573,9 +603,19 @@
         "comment": "Example: 'From 5 to 3 quarters ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.interval.quarters.past.sameValue": {
+        "value": "{value} {value, plural, one {quarter} other {quarters}} ago",
+        "comment": "Example: '5 quarters ago'. Don't translate placeholder '{value}'. In '{value, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "limit": 0
+    },
     "filters.interval.quarters.future": {
         "value": "From {from} to {to} {to, plural, one {quarter} other {quarters}} ahead",
         "comment": "Example: 'From 3 to 5 quarters ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.quarters.future.sameValue": {
+        "value": "{value} {value, plural, one {quarter} other {quarters}} ahead",
+        "comment": "Example: '5 quarters ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {QUARTER} other {QUARTERS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.quarters.mixed": {
@@ -588,9 +628,19 @@
         "comment": "Example: 'From 5 to 3 years ago'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
         "limit": 0
     },
+    "filters.interval.years.past.sameValue": {
+        "value": "{value} {value, plural, one {year} other {years}} ago",
+        "comment": "Example: '5 years ago'. Don't translate placeholder '{value}'. In '{value, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "limit": 0
+    },
     "filters.interval.years.future": {
         "value": "From {from} to {to} {to, plural, one {year} other {years}} ahead",
         "comment": "Example: 'From 3 to 5 years ahead'. Don't translate placeholders '{from}', '{to}'. In '{to, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
+        "limit": 0
+    },
+    "filters.interval.years.future.sameValue": {
+        "value": "{value} {value, plural, one {year} other {years}} ahead",
+        "comment": "Example: '5 years ahead'. Don't translate placeholder '{value}'. In '{value, plural, one {YEAR} other {YEARS}}' translate only uppercase words.",
         "limit": 0
     },
     "filters.interval.years.mixed": {
