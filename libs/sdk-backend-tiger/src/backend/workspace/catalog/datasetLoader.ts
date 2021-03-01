@@ -11,6 +11,7 @@ import {
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
+import values from "lodash/values";
 import {
     convertAttribute,
     convertDateAttribute,
@@ -96,7 +97,7 @@ function identifyDateDatasets(
         }
     });
 
-    return Object.values(datasets);
+    return values(datasets);
 }
 
 function createDateDatasets(attributes: JsonApiAttributeList): ICatalogDateDataset[] {

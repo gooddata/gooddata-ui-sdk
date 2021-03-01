@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IInsightsQueryOptions,
@@ -32,6 +32,7 @@ import {
     uriRef,
     idRef,
 } from "@gooddata/sdk-model";
+import values from "lodash/values";
 
 let adHocInsightCounter = 1;
 
@@ -89,7 +90,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             return new RecordingPager<IInsight>([], limit, offset);
         }
 
-        const insights = Object.values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
+        const insights = values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
 
         if (orderBy) {
             insights.sort(comparator(orderBy));

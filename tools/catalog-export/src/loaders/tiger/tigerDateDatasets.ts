@@ -16,6 +16,7 @@ import {
     getReferencedDataset,
     LabelMap,
 } from "./tigerCommon";
+import values from "lodash/values";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDataset;
@@ -50,7 +51,7 @@ function findDateDatasetsWithAttributes(
         }
     });
 
-    return Object.values(res);
+    return values(res);
 }
 
 function convertToExportableFormat(

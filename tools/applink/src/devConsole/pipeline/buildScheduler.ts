@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     BuildFinished,
     buildRequested,
@@ -17,6 +17,7 @@ import { findDependingPackages, naiveFilterDependencyGraph } from "../../base/de
 import flatten from "lodash/flatten";
 import uniq from "lodash/uniq";
 import { appLogError, appLogWarn } from "../ui/utils";
+import values from "lodash/values";
 
 type PackageState = {
     buildRequested: boolean;
@@ -278,7 +279,7 @@ export class BuildScheduler implements IEventListener {
         }
 
         const packagesWithCleanDeps = dirtyPackages.filter((pkg) => {
-            return Object.values(this.dependencyGraph!.outgoing[pkg] ?? []).every((dependency) => {
+            return values(this.dependencyGraph!.outgoing[pkg] ?? []).every((dependency) => {
                 const dependencyState = this.packageStates[dependency.to];
 
                 return !dependencyState.dirty && !dependencyState.failed;
@@ -289,6 +290,6 @@ export class BuildScheduler implements IEventListener {
     };
 
     private isAllClean = (): boolean => {
-        return Object.values(this.packageStates).every((s) => !s.dirty && !s.failed);
+        return values(this.packageStates).every((s) => !s.dirty && !s.failed);
     };
 }

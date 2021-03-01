@@ -13,11 +13,12 @@ import { storyGroupFor } from "./storyGroupFactory";
 import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 import { ScenarioStories } from "../../_infra/storyGroups";
+import values from "lodash/values";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 
 const backend = StorybookBackend();
-const ScenarioGroupsByVis = Object.values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
+const ScenarioGroupsByVis = values(groupBy<ScenarioGroup<any>>(allScenarios, (g) => g.vis));
 
 function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
     return () => {
