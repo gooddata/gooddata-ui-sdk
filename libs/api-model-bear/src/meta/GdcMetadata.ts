@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/fp/isEmpty";
 import has from "lodash/has";
 import {
@@ -155,12 +155,26 @@ export namespace GdcMetadata {
         contrast?: ThemeColor;
     }
 
+    export interface IThemeComplementaryPalette {
+        shade0: ThemeColor;
+        shade1?: ThemeColor;
+        shade2?: ThemeColor;
+        shade3?: ThemeColor;
+        shade4?: ThemeColor;
+        shade5?: ThemeColor;
+        shade6?: ThemeColor;
+        shade7?: ThemeColor;
+        shade8?: ThemeColor;
+        shade9: ThemeColor;
+    }
+
     export interface IThemePalette {
         primary?: IThemeColorFamily;
         error?: IThemeColorFamily;
         warning?: IThemeColorFamily;
         success?: IThemeColorFamily;
         info?: IThemeColorFamily;
+        complementary?: IThemeComplementaryPalette;
     }
 
     export interface ITheme extends IMetadataObject {

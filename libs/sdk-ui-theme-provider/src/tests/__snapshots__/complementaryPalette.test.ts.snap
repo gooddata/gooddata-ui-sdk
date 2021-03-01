@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 1`] = `
+Object {
+  "shade0": "#001122",
+  "shade1": "#01191f",
+  "shade2": "#02221d",
+  "shade3": "#032b1b",
+  "shade4": "#043319",
+  "shade5": "#053c17",
+  "shade6": "#064515",
+  "shade7": "#074d13",
+  "shade8": "#085611",
+  "shade9": "#095f0f",
+}
+`;
+
+exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 2`] = `
+Object {
+  "shade0": "#001122",
+  "shade1": "#32321b",
+  "shade2": "#645415",
+  "shade3": "#97760f",
+  "shade4": "#c99809",
+  "shade5": "#fcba03",
+  "shade6": "#bfa306",
+  "shade7": "#828c09",
+  "shade8": "#45750c",
+  "shade9": "#095f0f",
+}
+`;
+
+exports[`complementaryPalette getComplementaryPalette should generate missing colors in complementary palette 3`] = `
+Object {
+  "shade0": "#001122",
+  "shade1": "#01191f",
+  "shade2": "#02221d",
+  "shade3": "#032b1b",
+  "shade4": "#043319",
+  "shade5": "#053c17",
+  "shade6": "#064515",
+  "shade7": "#074d13",
+  "shade8": "#085611",
+  "shade9": "#095f0f",
+}
+`;

@@ -93,6 +93,7 @@ export {
     ThemeFontUri,
     ThemeColor,
     IThemeColorFamily,
+    IThemeComplementaryPalette,
     IThemeWidgetTitle,
     IThemeTypography,
     IThemePalette,

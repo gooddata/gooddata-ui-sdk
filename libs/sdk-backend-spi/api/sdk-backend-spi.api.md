@@ -1393,6 +1393,30 @@ export interface IThemeColorFamily {
 }
 
 // @beta
+export interface IThemeComplementaryPalette {
+    // (undocumented)
+    shade0: ThemeColor;
+    // (undocumented)
+    shade1?: ThemeColor;
+    // (undocumented)
+    shade2?: ThemeColor;
+    // (undocumented)
+    shade3?: ThemeColor;
+    // (undocumented)
+    shade4?: ThemeColor;
+    // (undocumented)
+    shade5?: ThemeColor;
+    // (undocumented)
+    shade6?: ThemeColor;
+    // (undocumented)
+    shade7?: ThemeColor;
+    // (undocumented)
+    shade8?: ThemeColor;
+    // (undocumented)
+    shade9: ThemeColor;
+}
+
+// @beta
 export interface IThemeKpi {
     primaryMeasureColor?: ThemeColor;
     secondaryInfoColor?: ThemeColor;
@@ -1405,6 +1429,7 @@ export interface IThemeKpi {
 
 // @beta
 export interface IThemePalette {
+    complementary?: IThemeComplementaryPalette;
     error?: IThemeColorFamily;
     info?: IThemeColorFamily;
     primary?: IThemeColorFamily;

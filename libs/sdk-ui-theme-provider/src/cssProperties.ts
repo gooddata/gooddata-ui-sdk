@@ -74,6 +74,7 @@ const customParserFunctions: ParserFunction[] = [
         key: "--gd-dashboards-content-kpiWidget-dropShadow",
         fn: (value: boolean) => (value ? DEFAULT_WIDGET_SHADOW : "none"),
     },
+    { key: "--gd-palette-complementary", fn: () => undefined },
 ];
 
 /**
@@ -89,13 +90,18 @@ export function parseThemeToCssProperties(
     for (const [key, value] of Object.entries(object)) {
         const newKey = `${currentKey}-${key}`;
 
-        if (isObject(value)) {
-            cssProperties.push(...parseThemeToCssProperties(value, parserFunctions, newKey));
-        } else {
-            const parse = parserFunctions.find((exception) => exception.key === newKey);
-            const newValue = parse ? parse.fn(value) : value;
-            if (newValue !== undefined) {
-                cssProperties.push({ key: newKey, value: newValue });
+        const parse = parserFunctions.find((exception) => exception.key === newKey);
+        const newValue = parse ? parse.fn(value) : value;
+
+        if (newValue !== undefined) {
+            if (isObject(newValue)) {
+                cssProperties.push(...parseThemeToCssProperties(newValue, parserFunctions, newKey));
+            } else {
+                const parse = parserFunctions.find((exception) => exception.key === newKey);
+                const newValue = parse ? parse.fn(value) : value;
+                if (newValue !== undefined) {
+                    cssProperties.push({ key: newKey, value: newValue });
+                }
             }
         }
     }
@@ -313,6 +319,16 @@ const generateDerivedColors = (palette: IThemePalette): CssProperty[] =>
 const generateChartDerivedColors = (chart: IThemeChart): CssProperty[] =>
     (chart && [...getChartDerivedColors(chart)].filter((property) => !!property)) || [];
 
+const generateComplementaryPalette = (palette: IThemePalette): CssProperty[] => {
+    if (!palette?.complementary) {
+        return [];
+    }
+
+    return Object.keys(palette.complementary).map((key, index) =>
+        getCssProperty(`palette-complementary-${index}`, palette.complementary[key]),
+    );
+};
+
 export const clearCssProperties = (): void => {
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
     themePropertiesElement && document.head.removeChild(themePropertiesElement);
@@ -341,6 +357,7 @@ export function setCssProperties(theme: ITheme): void {
         ...parseThemeToCssProperties(theme, customParserFunctions),
         ...generateDerivedColors(theme.palette),
         ...generateChartDerivedColors(theme.chart),
+        ...generateComplementaryPalette(theme.palette),
     ];
 
     const styleTag = document.createElement("style");
