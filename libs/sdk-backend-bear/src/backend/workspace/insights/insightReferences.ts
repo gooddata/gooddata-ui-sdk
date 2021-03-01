@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { IInsight, insightUri } from "@gooddata/sdk-model";
@@ -14,6 +14,7 @@ import union from "lodash/union";
 import { convertMetadataObject } from "../../../convertors/fromBackend/MetaConverter";
 import flow from "lodash/flow";
 import isEmpty from "lodash/isEmpty";
+import values from "lodash/values";
 import keyBy from "lodash/keyBy";
 import flatMap from "lodash/fp/flatMap";
 import uniqBy from "lodash/fp/uniqBy";
@@ -168,7 +169,7 @@ export class InsightReferencesQuery {
         return flow(
             flatMap((response: { entries: GdcMetadata.IObjectXrefEntry[] }) => response.entries),
             uniqBy((dataSet: GdcMetadata.IObjectXrefEntry) => dataSet.identifier),
-        )(Object.values(datasetResponses.useMany));
+        )(values(datasetResponses.useMany));
     };
 
     /**

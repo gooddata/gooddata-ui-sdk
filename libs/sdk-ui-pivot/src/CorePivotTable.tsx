@@ -204,15 +204,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const initializer = new TableFacadeInitializer(execution, this.getTableConfig(), this.props);
 
         initializer.initialize().then((result) => {
-            if (!result) {
+            if (!result || this.internal.initializer !== result.initializer) {
                 /*
-                 * This particular initialization was abandoned. The table now likely has a new
+                 * This particular initialization was abandoned.
                  */
                 return;
             }
 
             this.internal.initializer = undefined;
-            this.internal.table = result;
+            this.internal.table = result.table;
             this.setState({ readyToRender: true });
         });
 

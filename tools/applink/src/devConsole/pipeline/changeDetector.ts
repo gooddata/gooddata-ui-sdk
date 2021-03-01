@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { PackageDescriptor, SourceDescriptor, TargetDescriptor } from "../../base/types";
 import chokidar from "chokidar";
 import path from "path";
@@ -13,6 +13,7 @@ import {
 } from "../events";
 import { appLogImportant, appLogWarn } from "../ui/utils";
 import intersection from "lodash/intersection";
+import values from "lodash/values";
 
 /**
  * Change detector will wait until it has both source & target descriptors. After that it will determine
@@ -122,7 +123,7 @@ export class ChangeDetector implements IEventListener {
     };
 
     private startWatchingForChanges = (): void => {
-        const packages = Object.values(this.sourceDescriptor!.packages);
+        const packages = values(this.sourceDescriptor!.packages);
         const targetDependsOn = this.targetDescriptor!.dependencies.map((dep) => dep.pkg);
         const scope = intersection(packages, targetDependsOn);
 
@@ -200,7 +201,7 @@ export class ChangeDetector implements IEventListener {
             }
         }
 
-        this.eventBus.post(packagesChanged(Object.values(changes)));
+        this.eventBus.post(packagesChanged(values(changes)));
     };
 }
 

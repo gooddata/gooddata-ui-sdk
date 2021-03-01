@@ -1,9 +1,10 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import * as path from "path";
 import * as fs from "fs";
 import { readJsonSync } from "../base/utils";
 import { PackageJson, SourceDescriptor, TargetDependency, TargetDescriptor } from "../base/types";
+import values from "lodash/values";
 
 /**
  * Given app's root directory, this function finds all source packages on which the app depends. This is done
@@ -16,7 +17,7 @@ export function getTargetDescriptor(target: string, sourceDescriptor: SourceDesc
     const root = path.resolve(target);
     const dependencies: TargetDependency[] = [];
 
-    Object.values(sourceDescriptor.packages).forEach((pkg) => {
+    values(sourceDescriptor.packages).forEach((pkg) => {
         const directory = path.join(root, "node_modules", ...pkg.installDir);
 
         if (fs.existsSync(directory) && fs.statSync(directory).isDirectory()) {

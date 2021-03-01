@@ -1,10 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { dummyDataView, recordedDataViews, ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import flatMap from "lodash/flatMap";
 import { createDataAccessDigest, DataAccessDigest } from "../dataAccessDigest";
+import values from "lodash/values";
 
 function digestSnapshot(digest: DataAccessDigest) {
     return {
@@ -26,7 +27,7 @@ describe("createDataAccessDigest", () => {
         expect(digestSnapshot(digest)).toMatchSnapshot();
     });
 
-    const allScenarioRecordings = flatMap(Object.values(ReferenceRecordings.Scenarios), (group) =>
+    const allScenarioRecordings = flatMap(values(ReferenceRecordings.Scenarios), (group) =>
         Object.entries(group),
     );
 

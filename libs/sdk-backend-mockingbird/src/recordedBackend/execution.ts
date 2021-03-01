@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     DataValue,
@@ -42,6 +42,7 @@ import {
 import { Denormalizer, NormalizationState, AbstractExecutionFactory } from "@gooddata/sdk-backend-base";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
+import values from "lodash/values";
 
 //
 //
@@ -464,7 +465,7 @@ export function recordedDataViews(recordings: RecordingIndex): NamedDataView[] {
         return [];
     }
 
-    const executionRecordings = Object.values(recordings.executions);
+    const executionRecordings = values(recordings.executions);
 
     return flatMap(executionRecordings, expandRecordingToDataViews);
 }

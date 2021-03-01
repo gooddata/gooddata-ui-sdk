@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import fs from "fs";
 import path from "path";
 import spawn from "cross-spawn";
@@ -15,6 +15,7 @@ import {
 } from "../events";
 import intersection from "lodash/intersection";
 import isEmpty from "lodash/isEmpty";
+import values from "lodash/values";
 import { appLogInfo, appLogWarn } from "../ui/utils";
 
 const StdoutFilename = "applink.log";
@@ -56,7 +57,7 @@ export class PackageBuilder implements IEventListener {
         this.sourceDescriptor = event.body.sourceDescriptor;
         this.packageBuildScripts = {};
 
-        const packages = Object.values(this.sourceDescriptor.packages);
+        const packages = values(this.sourceDescriptor.packages);
 
         packages.forEach((pkg) => {
             const scripts = Object.keys(pkg.packageJson.scripts ?? {});

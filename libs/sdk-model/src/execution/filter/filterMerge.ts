@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { objRefToString } from "../../objRef";
 import {
     IAttributeFilter,
@@ -18,6 +18,7 @@ import compact from "lodash/compact";
 import groupBy from "lodash/groupBy";
 import last from "lodash/last";
 import invariant from "ts-invariant";
+import values from "lodash/values";
 
 type FilterByType = {
     attribute: IAttributeFilter[];
@@ -115,7 +116,7 @@ function mergeDateFilters(originalFilters: IDateFilter[], addedFilters: IDateFil
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(filterObjRef(f)));
 
-    return Object.values(grouped).reduce((filters, filtersForDimension) => {
+    return values(grouped).reduce((filters, filtersForDimension) => {
         // use the last filter for the dimension specified.
         // this makes sure that the added filter wins if it is specified
         const lastFilterForDimension = last(filtersForDimension)!;
@@ -136,5 +137,5 @@ function mergeMeasureValueFilters(
     const allFilters = [...originalFilters, ...addedFilters];
     const grouped = groupBy(allFilters, (f) => objRefToString(f.measureValueFilter.measure));
 
-    return Object.values(grouped).map((filters) => last(filters)!);
+    return values(grouped).map((filters) => last(filters)!);
 }

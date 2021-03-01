@@ -35,6 +35,7 @@ import { storyGroupFor } from "./storyGroupFactory";
 import groupBy from "lodash/groupBy";
 import keyBy from "lodash/keyBy";
 import sortBy from "lodash/sortBy";
+import values from "lodash/values";
 import { PlugVizStories } from "../../_infra/storyGroups";
 
 /*
@@ -87,7 +88,7 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
      * getting list of insights for storybook must be a sync operation, thus have to access the
      * recording index directly when building storybook...
      */
-    return Object.values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
+    return values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
 }
 
 const Insights = [
@@ -97,7 +98,7 @@ const Insights = [
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
-    Object.values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
+    values(groupBy<ScenarioGroup<any>>(AllTestScenarioGroups, (g) => g.vis)),
     (groups) => groups[0].vis,
 );
 
@@ -273,7 +274,7 @@ ScenarioGroupsByVis.forEach((groups) => {
 
             if (!insight) {
                 if (window.location.hostname === "localhost") {
-                    // tslint:disable-next-line:no-console
+                    // eslint-disable-next-line no-console
                     console.warn(
                         `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
                     );
