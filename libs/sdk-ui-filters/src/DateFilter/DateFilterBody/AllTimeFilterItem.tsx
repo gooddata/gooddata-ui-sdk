@@ -17,6 +17,6 @@ export const AllTimeFilterItem: React.FC<{
         onClick={() => onSelectedFilterOptionChange(filterOption)}
         className={cx("s-all-time", className)}
     >
-        <FormattedMessage id="filters.allTime.title" />
+        {filterOption.name ? filterOption.name : <FormattedMessage id="filters.allTime.title" />}
     </ListItem>
 );

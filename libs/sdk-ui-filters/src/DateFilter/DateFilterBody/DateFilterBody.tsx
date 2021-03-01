@@ -224,7 +224,11 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             isMobile && ITEM_CLASS_MOBILE,
                         )}
                     >
-                        <FormattedMessage id="filters.staticPeriod" />
+                        {filterOptions.absoluteForm.name ? (
+                            filterOptions.absoluteForm.name
+                        ) : (
+                            <FormattedMessage id="filters.staticPeriod" />
+                        )}
                     </ListItem>
                 )}
                 {isSelected && (!isMobile || isOnRoute) && (
@@ -276,7 +280,11 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             isMobile && ITEM_CLASS_MOBILE,
                         )}
                     >
-                        <FormattedMessage id="filters.floatingRange" />
+                        {filterOptions.relativeForm.name ? (
+                            filterOptions.relativeForm.name
+                        ) : (
+                            <FormattedMessage id="filters.floatingRange" />
+                        )}
                         {!isMobile && (
                             <ListItemTooltip>
                                 <FormattedMessage id="filters.floatingRange.tooltip" />
