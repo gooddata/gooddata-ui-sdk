@@ -84,6 +84,24 @@ const relativeDateRangeFormatters: Array<{
             ),
     },
     {
+        // From N days ago to N days ago
+        predicate: (from, to) => from < 0 && from === to,
+        formatter: (from, _to, intlGranularity, translator) =>
+            translator.formatMessage(
+                { id: `filters.interval.${intlGranularity}s.past.sameValue` },
+                { value: Math.abs(from) },
+            ),
+    },
+    {
+        // From N days ago to N days ahead
+        predicate: (from, to) => from > 0 && from === to,
+        formatter: (from, _to, intlGranularity, translator) =>
+            translator.formatMessage(
+                { id: `filters.interval.${intlGranularity}s.future.sameValue` },
+                { value: Math.abs(from) },
+            ),
+    },
+    {
         // From N days ago to M days ago
         predicate: (from, to) => from < 0 && to < 0,
         formatter: (from, to, intlGranularity, translator) =>
