@@ -1,4 +1,23 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 export * from "./interfaces";
 export * from "./charts";
-export * from "./highcharts";
+export {
+    ColorUtils,
+    TOP,
+    BOTTOM,
+    MIDDLE,
+    isAreaChart,
+    isBarChart,
+    isBubbleChart,
+    isBulletChart,
+    isColumnChart,
+    isComboChart,
+    isDonutChart,
+    isHeatmap,
+    isLineChart,
+    isPieChart,
+    isPieOrDonutChart,
+    isScatterPlot,
+    isTreemap,
+    updateConfigWithSettings,
+} from "./highcharts";

@@ -6,32 +6,23 @@
 
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
-import { default as Highcharts_2 } from 'highcharts';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IDataView } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
-import { IDrillableItem } from '@gooddata/sdk-ui';
 import { IFilter } from '@gooddata/sdk-model';
-import { IHeaderPredicate } from '@gooddata/sdk-ui';
-import { ILegendOptions } from '@gooddata/sdk-ui-vis-commons';
-import { ILegendProps } from '@gooddata/sdk-ui-vis-commons';
 import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
-import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
-import { IVisualizationProps as IVisualizationProps_2 } from '@gooddata/sdk-ui';
-import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
+import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { VisType } from '@gooddata/sdk-ui';
-import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export const AreaChart: import("react").ComponentType<IAreaChartProps>;
@@ -54,47 +45,13 @@ export const BubbleChart: import("react").ComponentType<IBubbleChartProps>;
 // @public
 export const BulletChart: import("react").ComponentType<IBulletChartProps>;
 
-// @internal (undocumented)
-export class Chart extends React_2.Component<IChartProps> {
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentDidUpdate(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    createChart(config: IChartConfig): void;
-    // (undocumented)
-    static defaultProps: Partial<IChartProps>;
-    // (undocumented)
-    getChart(): Highcharts_2.Chart;
-    // (undocumented)
-    getHighchartRef(): HTMLElement;
-    // (undocumented)
-    render(): React_2.ReactNode;
-    // (undocumented)
-    setChartRef: (ref: HTMLElement) => void;
-    // (undocumented)
-    shouldComponentUpdate(nextProps: IChartProps): boolean;
-}
-
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
-
-// @internal (undocumented)
-export const ChartTransformation: React_2.ForwardRefExoticComponent<Pick<Pick<IChartTransformationProps, "locale" | "height" | "width" | "intl" | "renderer" | "config" | "dataView" | "onDrill" | "onLegendReady" | "afterRender" | "drillableItems" | "pushData" | "onDataTooLarge" | "onNegativeValues">, "locale" | "height" | "width" | "renderer" | "config" | "dataView" | "onDrill" | "onLegendReady" | "afterRender" | "drillableItems" | "pushData" | "onDataTooLarge" | "onNegativeValues"> & {
-    forwardedRef?: React_2.Ref<any>;
-} & React_2.RefAttributes<any>> & {
-    WrappedComponent: React_2.ComponentType<Pick<IChartTransformationProps, "locale" | "height" | "width" | "intl" | "renderer" | "config" | "dataView" | "onDrill" | "onLegendReady" | "afterRender" | "drillableItems" | "pushData" | "onDataTooLarge" | "onNegativeValues">>;
-};
 
 export { ColorUtils }
 
 // @public
 export const ColumnChart: import("react").ComponentType<IColumnChartProps>;
-
-// @internal (undocumented)
-export const COMBO_SUPPORTED_CHARTS: ("area" | "line" | "column")[];
 
 // @public
 export const ComboChart: import("react").ComponentType<IComboChartProps>;
@@ -108,14 +65,8 @@ export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 // @public
 export const DonutChart: import("react").ComponentType<IDonutChartProps>;
 
-// @internal (undocumented)
-export const FLUID_LEGEND_THRESHOLD = 768;
-
 // @public
 export const FunnelChart: import("react").ComponentType<IFunnelChartProps>;
-
-// @internal (undocumented)
-export function getValidColorPalette(config: IChartConfig): IColorPalette;
 
 // @public
 export const Headline: React_2.ComponentType<IHeadlineProps>;
@@ -262,48 +213,6 @@ export interface IChartLimits {
     series?: number;
 }
 
-// @internal (undocumented)
-export interface IChartProps {
-    // (undocumented)
-    callback(): void;
-    // (undocumented)
-    config: IChartConfig;
-    // (undocumented)
-    domProps: any;
-}
-
-// @internal (undocumented)
-export interface IChartTransformationProps extends WrappedComponentProps {
-    // (undocumented)
-    afterRender(): void;
-    // (undocumented)
-    config: IChartConfig;
-    // (undocumented)
-    dataView: IDataView;
-    // (undocumented)
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    locale: string;
-    // (undocumented)
-    onDataTooLarge(chartOptions: any): void;
-    // (undocumented)
-    onDrill: OnFiredDrillEvent;
-    // (undocumented)
-    onLegendReady: OnLegendReady;
-    // (undocumented)
-    onNegativeValues(chartOptions: any): void;
-    // (undocumented)
-    pushData?(data: any): void;
-    // (undocumented)
-    renderer(arg: IHighChartsRendererProps): JSX.Element;
-    // (undocumented)
-    theme?: ITheme;
-    // (undocumented)
-    width: number;
-}
-
 export { IColorMapping }
 
 // @public (undocumented)
@@ -333,7 +242,7 @@ export interface IComboChartProps extends IBucketChartProps, IComboChartBucketPr
 }
 
 // @public
-export interface ICommonChartProps extends IVisualizationProps_2, IChartCallbacks {
+export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
     config?: IChartConfig;
     height?: number;
 }
@@ -413,32 +322,6 @@ export interface IHeatmapBucketProps {
 
 // @public (undocumented)
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
-}
-
-// @internal (undocumented)
-export interface IHighChartsRendererProps {
-    // (undocumented)
-    afterRender(): void;
-    // (undocumented)
-    chartOptions: any;
-    // (undocumented)
-    chartRenderer(chartProps: IChartProps): any;
-    // (undocumented)
-    documentObj?: Document;
-    // (undocumented)
-    hcOptions: any;
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    legend: ILegendOptions;
-    // (undocumented)
-    legendRenderer(legendProps: ILegendProps): any;
-    // (undocumented)
-    locale: string;
-    // (undocumented)
-    onLegendReady: OnLegendReady;
-    // (undocumented)
-    width: number;
 }
 
 // @public (undocumented)
@@ -553,36 +436,6 @@ export interface ITreemapBucketProps {
 export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {
 }
 
-// @internal (undocumented)
-export interface IVisualizationProps {
-    // (undocumented)
-    afterRender?: () => void;
-    // (undocumented)
-    config: IChartConfig;
-    // (undocumented)
-    dataView: IDataView;
-    // (undocumented)
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    locale?: string;
-    // (undocumented)
-    numericSymbols?: string[];
-    // (undocumented)
-    onDataTooLarge(): void;
-    // (undocumented)
-    onDrill?: OnFiredDrillEvent;
-    // (undocumented)
-    onLegendReady(): void;
-    // (undocumented)
-    onNegativeValues(): void;
-    // (undocumented)
-    pushData?(data: any): void;
-    // (undocumented)
-    width: number;
-}
-
 // @beta (undocumented)
 export interface IXirrBucketProps {
     attribute?: IAttribute;
@@ -623,26 +476,6 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 
 // @public
 export const ViewByAttributesLimit = 2;
-
-// @internal (undocumented)
-export class Visualization extends React_2.Component<IVisualizationProps> {
-    constructor(props: IVisualizationProps);
-    // (undocumented)
-    static defaultProps: {
-        locale: string;
-        numericSymbols: string[];
-        onDrill: () => boolean;
-        afterRender: (...args: any[]) => void;
-    };
-    // (undocumented)
-    render(): React_2.ReactNode;
-    // (undocumented)
-    setNumericSymbols(props: IVisualizationProps): void;
-    // (undocumented)
-    shouldComponentUpdate(nextProps: IVisualizationProps): boolean;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(nextProps: IVisualizationProps): void;
-}
 
 // @internal (undocumented)
 export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;
