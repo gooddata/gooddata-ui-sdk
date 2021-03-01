@@ -17,6 +17,11 @@ import { ICorePivotTableProps } from "../publicTypes";
 import invariant from "ts-invariant";
 import { TableFacade } from "./tableFacade";
 
+export type InitializerResult = {
+    initializer: TableFacadeInitializer;
+    table: TableFacade;
+};
+
 export class TableFacadeInitializer {
     private abandoned: boolean = false;
 
@@ -39,8 +44,15 @@ export class TableFacadeInitializer {
     /**
      * Drives initialization of the table facade. The initialization will emit all the essential
      * loading, error, onExportReady and pushData events using the callback functions specified in the {@link TableConfig}.
+     *
+     * If the initialization was abandoned at the right time, the result is 'undefined'. Otherwise the result
+     * contains pointer to the initializer instance and the table facade itself.
+     *
+     * To prevent race conditions in situations when caller may create, start and abandon multiple initializations,
+     * it is essential for the caller to check that the initialization result belongs to the currently active
+     * initializer.
      */
-    public initialize = (): Promise<TableFacade | undefined> => {
+    public initialize = (): Promise<InitializerResult | undefined> => {
         const { execution, config } = this;
 
         config.onLoadingChanged({ isLoading: true });
@@ -50,7 +62,7 @@ export class TableFacadeInitializer {
             .then((result) => {
                 return result
                     .readWindow([0, 0], [this.props.pageSize!, COLS_PER_PAGE])
-                    .then((dataView) => {
+                    .then((dataView): InitializerResult | undefined => {
                         if (this.abandoned) {
                             /*
                              * Stop right now if the component gets unmounted while it is still being
@@ -67,7 +79,10 @@ export class TableFacadeInitializer {
                         const availableDrillTargets = table.getAvailableDrillTargets();
                         config.pushData({ dataView, availableDrillTargets });
 
-                        return table;
+                        return {
+                            initializer: this,
+                            table,
+                        };
                     })
                     .catch((error) => {
                         if (this.abandoned) {
