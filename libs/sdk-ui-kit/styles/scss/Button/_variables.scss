@@ -12,19 +12,30 @@ $button-small-icon-width: 16px;
 $button-action-color-hover: $gd-color-text;
 
 $button-normal-bg: $gd-color-light;
-$button-normal-color: #778491;
-$button-normal-border-color: #ccd8e2;
-$button-normal-hover-bg: #f5f8fa;
-$button-normal-hover-border-color: transparentize(#1f3449, 0.8);
-$button-normal-active-gradient-top: #dee6ef;
-$button-normal-active-gradient-bottom: #ecf0f5;
-$button-normal-active-border-color: #b1c1d1;
-$button-normal-active-shadow: transparentize($button-normal-active-border-color, 0.35);
-$button-normal-hover-box-shadow: transparentize($button-normal-active-border-color, 0.4);
+$button-normal-color: var(--gd-palette-complementary-7, #778491);
+$button-normal-border-color: var(--gd-palette-complementary-4, #ccd8e2);
+$button-normal-hover-bg: var(--gd-palette-complementary-1, #f5f8fa);
+$button-normal-hover-border-color: var(--gd-palette-complementary-4, transparentize(#1f3449, 0.8));
+$button-normal-active-gradient-top: var(--gd-palette-complementary-2, #dee6ef);
+$button-normal-active-gradient-bottom: var(--gd-palette-complementary-2, #ecf0f5);
+$default-button-normal-active-border-color: #b1c1d1;
+$button-normal-active-border-color: var(
+    --gd-palette-complementary-5,
+    $default-button-normal-active-border-color
+);
+$button-normal-active-shadow: var(
+    --gd-shadow-color,
+    transparentize($default-button-normal-active-border-color, 0.35)
+);
+$button-normal-hover-box-shadow: var(
+    --gd-shadow-color,
+    transparentize($default-button-normal-active-border-color, 0.4)
+);
 
-$button-shadow-color: #14385d;
-$button-shadow-lighter: transparentize($button-shadow-color, 0.91);
-$button-shadow-darker: transparentize($button-shadow-color, 0.85);
+$default-button-shadow-color: #14385d;
+$button-shadow-color: var(--gd-shadow-color, $default-button-shadow-color);
+$button-shadow-lighter: var(--gd-shadow-color, transparentize($default-button-shadow-color, 0.91));
+$button-shadow-darker: var(--gd-shadow-color, transparentize($default-button-shadow-color, 0.85));
 
 // Branded colors calculation
 // primary color

@@ -10,11 +10,15 @@ $bubble-small-max-width: 200px;
 $bubble-skins: primary, secondary, dark, light, warning, negative;
 
 // Bubble
-$bubble-boxShadow: "0 1px 3px 0 rgba(20, 56, 93, 0.10), 0 2px 9px 0 rgba(20, 56, 93, 0.15)";
+$bubble-boxShadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+    0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
 $bubble-help-color: #bbb;
 $bubble-help-color-hover: #999;
 $bubble-borderWidth: 0;
-$bubble-bg-color: transparentize($gd-color-text, 0.05);
+$bubble-bg-color: var(
+    --gd-tooltip-backgroundColor,
+    var(--gd-palette-complementary-8, transparentize($default-gd-color-text, 0.05))
+);
 $bubble-secondary-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-highlight, 0.1));
 $bubble-light-base: rgba(255, 255, 255, 0.95);
 $bubble-warning-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-warning-text, 0.1));
@@ -22,9 +26,10 @@ $bubble-light-border-base: #c9d5e0;
 $bubble-primary-borderWidth: $bubble-borderWidth;
 $bubble-primary-color: var(--gd-tooltip-color, $gd-color-text-light);
 $bubble-primary-borderColor: $bubble-bg-color;
-$bubble-primary-arrowColor: var(--gd-tooltip-backgroundColor, $bubble-bg-color);
+$bubble-primary-arrowColor: $bubble-bg-color;
 $bubble-primary-arrowBorderColor: $bubble-bg-color;
-$bubble-primary-bgcolor: var(--gd-tooltip-backgroundColor, $bubble-bg-color);
+$bubble-primary-bgcolor: $bubble-bg-color;
+
 $bubble-secondary-borderWidth: $bubble-borderWidth;
 $bubble-secondary-color: $gd-color-text-light;
 $bubble-secondary-borderColor: $bubble-secondary-base;

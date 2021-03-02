@@ -69,7 +69,7 @@ $color-picker-spacing: 5px;
     &:active,
     &.gd-color-list-item-active {
         border-color: $gd-color-white;
-        box-shadow: 0 0 1px 1px transparentize($gd-color-dark, 0.85);
+        box-shadow: 0 0 1px 1px transparentize($default-gd-color-dark, 0.85);
         transform: scale(1.1);
     }
 }

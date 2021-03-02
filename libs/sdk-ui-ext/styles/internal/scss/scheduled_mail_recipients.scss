@@ -86,7 +86,7 @@
         // custom className from react-select rendered
         .gd-recipients__option:first-child {
             &.gd-recipients__option--is-focused {
-                border-top: 1px solid #ccd8e2;
+                border-top: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
             }
         }
     }
@@ -194,6 +194,7 @@
 
     // custom className from react-select rendered
     .gd-recipients__option--is-focused {
+        color: var(--gd-palette-complementary-9, inherit);
         background: none;
         background-color: $is-focused-background;
 

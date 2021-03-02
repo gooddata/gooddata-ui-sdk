@@ -12,21 +12,21 @@ $border-color: transparent;
 $font-size: 12px;
 $font-family: $gd-font-primary-without-custom;
 $foreground-color: $custom-foreground-color;
-$default-background: $gd-color-white;
+$default-background: $default-gd-color-white;
 $custom-background-color: var(--gd-chart-backgroundColor-base, $default-background);
-$header-background-color: $gd-color-white;
+$header-background-color: $default-gd-color-white;
 $odd-row-background-color: transparent;
 $primary-color: transparent;
 $secondary-foreground-color: $custom-secondary-foreground-color;
 $secondary-font-weight: normal;
-$hover-color: transparentize($gd-color-label, 0.9);
+$hover-color: transparentize($default-gd-color-label, 0.9);
 $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
-$cell-border-color: var(--gd-chart-textColor-base, transparentize($gd-color-disabled, 0.5));
+$cell-border-color: var(--gd-chart-textColor-base, transparentize($default-gd-color-disabled, 0.5));
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
     --gd-palette-primary-base-dimmed-darken03,
-    darken(mix($gd-color-highlight, $gd-color-text-light, 10%), 3%)
+    darken(mix($gd-color-highlight, $default-gd-color-text-light, 10%), 3%)
 );
 
 .gd-table-component {
@@ -190,13 +190,13 @@ $table-menu-hover: var(
 
             &,
             &.ag-cell-focus {
-                border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+                border-top: 1px solid transparentize($default-gd-color-disabled, 0.5);
             }
         }
 
         .gd-table-row-subtotal {
             font-weight: bold;
-            border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+            border-top: 1px solid transparentize($default-gd-color-disabled, 0.5);
             &-even {
                 background-color: #eff2f4;
             }
@@ -210,7 +210,7 @@ $table-menu-hover: var(
         }
 
         .gd-table-row-separator {
-            border-top: 1px solid transparentize($gd-color-disabled, 0.5);
+            border-top: 1px solid transparentize($default-gd-color-disabled, 0.5);
         }
 
         .ag-floating-top {

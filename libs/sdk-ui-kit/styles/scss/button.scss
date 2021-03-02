@@ -240,7 +240,7 @@
     &:hover,
     &:active,
     &.is-active {
-        color: $button-action-color-hover;
+        color: var(--gd-palette-complementary-7, $button-action-color-hover);
 
         &::after,
         &::before,
@@ -478,7 +478,7 @@
 
         @include active-states-and-self {
             color: $gd-color-disabled;
-            background: transparentize($gd-color-light, 0.7);
+            background: transparentize($default-gd-color-light, 0.7);
             border-color: rgba(210, 219, 227, 0.75);
 
             &::before,

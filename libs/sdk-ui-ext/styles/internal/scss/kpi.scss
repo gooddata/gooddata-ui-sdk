@@ -152,7 +152,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
             border-bottom: 1px dashed
                 var(
                     --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                    transparentize($gd-color-disabled, 0.5)
+                    transparentize($default-gd-color-disabled, 0.5)
                 );
             padding: 0 0 10px;
             text-align: center;
@@ -190,7 +190,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
         border-left: 1px dashed
             var(
                 --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                transparentize($gd-color-disabled, 0.5)
+                transparentize($default-gd-color-disabled, 0.5)
             );
     }
 
