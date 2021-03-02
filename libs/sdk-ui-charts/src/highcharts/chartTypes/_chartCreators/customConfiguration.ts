@@ -601,6 +601,10 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
         ...labelsConfig,
     };
 
+    // workaround for missing data labels on last stacked measure with limited axis
+    // see https://github.com/highcharts/highcharts/issues/15145
+    const dataLabelsBugWorkaround = stackMeasuresToPercent && canStackInPercent ? { inside: true } : {};
+
     return {
         plotOptions: {
             gdcOptions: {
@@ -612,15 +616,14 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(dataLabelFormatter, chartConfig),
-                    // workaround for missing data labels on last stacked measure with limimted axis
-                    // see https://github.com/highcharts/highcharts/issues/15145
-                    ...(stackMeasuresToPercent && canStackInPercent ? { inside: true } : {}),
+                    ...dataLabelsBugWorkaround,
                 },
             },
             column: {
                 dataLabels: {
                     ...DEFAULT_LABELS_CONFIG,
                     formatter: partial(dataLabelFormatter, chartConfig),
+                    ...dataLabelsBugWorkaround,
                 },
             },
             heatmap: {
