@@ -903,14 +903,14 @@ export const getAutoResizedColumns = (
     gridApi: GridApi | null,
     columnApi: ColumnApi | null,
     execution: IExecutionResult | null,
-    containerRef: HTMLDivElement,
+    containerRef: HTMLDivElement | null,
     options: {
         measureHeaders: boolean;
         padding: number;
         separators: any;
     },
 ): IResizedColumns => {
-    if (tableDescriptor && gridApi && columnApi && execution) {
+    if (tableDescriptor && gridApi && columnApi && execution && containerRef) {
         const columns = columnApi.getPrimaryColumns();
         const { headerFont, rowFont, subtotalFont, totalFont } = getTableFonts(containerRef);
         const canvas = document.createElement("canvas");
