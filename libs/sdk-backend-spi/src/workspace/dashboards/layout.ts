@@ -134,6 +134,11 @@ export interface IDashboardLayoutSize {
     gridWidth: number;
 
     /**
+     * Height, defined as a number of grid rows.
+     */
+    gridHeight?: number;
+
+    /**
      * Height defined as the ratio to the width in percent.
      * Examples:
      * - When heightAsRatio is 100, the column has a 1:1 ratio.

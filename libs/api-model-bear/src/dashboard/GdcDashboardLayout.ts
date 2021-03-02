@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
 import isEmpty from "lodash/isEmpty";
 
@@ -46,6 +46,7 @@ export namespace GdcDashboardLayout {
 
     export interface IFluidLayoutSize {
         width: number;
+        height?: number;
         heightAsRatio?: number;
     }
 

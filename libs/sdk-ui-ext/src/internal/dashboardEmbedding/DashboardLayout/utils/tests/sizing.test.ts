@@ -9,6 +9,7 @@ import {
     getDashboardLayoutWidgetDefaultGridWidth,
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutWidgetDefaultHeight,
+    getDashboardLayoutItemHeightForGrid,
 } from "../sizing";
 import { ALL_SCREENS } from "../..";
 import {
@@ -47,15 +48,6 @@ export const allVisTypes: VisType[] = [
 
 const layoutBuilder = DashboardLayoutBuilder.forNewLayout();
 
-chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
-    layoutBuilder.addSection((s) => {
-        visTypesInRow.forEach((visType, index) => {
-            s.addItem({ gridWidth: index, heightAsRatio: 50 }, (i) => i.newInsightWidget(idRef(visType)));
-        });
-        return s;
-    }),
-);
-
 describe("sizing", () => {
     describe("getDashboardLayoutWidgetDefaultHeight", () => {
         it.each(allVisTypes)("should get default height for insight widget %s", (visType) => {
@@ -72,8 +64,33 @@ describe("sizing", () => {
     });
 
     describe("unifyDashboardLayoutItemHeights", () => {
-        it("should unify dashboard layout column heights for various item sizes", () => {
+        it("should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is false", () => {
+            chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
+                layoutBuilder.addSection((s) => {
+                    visTypesInRow.forEach((visType, index) => {
+                        s.addItem({ gridWidth: index, heightAsRatio: 50 }, (i) =>
+                            i.newInsightWidget(idRef(visType)),
+                        );
+                    });
+                    return s;
+                }),
+            );
             expect(unifyDashboardLayoutItemHeights(layoutBuilder.build())).toMatchSnapshot();
+        });
+
+        it("should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is true", () => {
+            const newLayout = layoutBuilder.removeSections();
+            chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
+                newLayout.addSection((s) => {
+                    visTypesInRow.forEach((visType, index) => {
+                        s.addItem({ gridWidth: index, heightAsRatio: 50, gridHeight: 10 }, (i) =>
+                            i.newInsightWidget(idRef(visType)),
+                        );
+                    });
+                    return s;
+                }),
+            );
+            expect(unifyDashboardLayoutItemHeights(newLayout.build())).toMatchSnapshot();
         });
     });
 
@@ -105,6 +122,13 @@ describe("sizing", () => {
             expect(
                 getDashboardLayoutItemHeightForRatioAndScreen({ gridWidth: 0, heightAsRatio: 0 }, "xl"),
             ).toMatchSnapshot();
+        });
+    });
+
+    describe("getDashboardLayoutGridItemHeight", () => {
+        it("should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true", () => {
+            const gridHeight = 11;
+            expect(getDashboardLayoutItemHeightForGrid(gridHeight)).toMatchSnapshot();
         });
     });
 

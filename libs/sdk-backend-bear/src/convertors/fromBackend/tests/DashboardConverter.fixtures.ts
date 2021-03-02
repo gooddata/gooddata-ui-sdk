@@ -334,6 +334,76 @@ export const dashboardWithLayout: GdcDashboard.IWrappedAnalyticalDashboard = {
     },
 };
 
+export const dashboardWithLayoutAndCustomGridHeight: GdcDashboard.IWrappedAnalyticalDashboard = {
+    analyticalDashboard: {
+        content: {
+            widgets: [
+                visualizationWidgetBarChart.visualizationWidget.meta.uri!,
+                kpiWidget.kpi.meta.uri!,
+                visualizationWidgetHeadline.visualizationWidget.meta.uri!,
+            ],
+            layout: {
+                fluidLayout: {
+                    rows: [
+                        {
+                            columns: [
+                                {
+                                    size: {
+                                        xl: {
+                                            width: 12,
+                                            height: 12,
+                                        },
+                                    },
+                                    content: {
+                                        widget: {
+                                            qualifier: {
+                                                uri: visualizationWidgetHeadline.visualizationWidget.meta
+                                                    .uri!,
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    size: {
+                                        xl: {
+                                            width: 6,
+                                            height: 6,
+                                        },
+                                    },
+                                    content: {
+                                        widget: {
+                                            qualifier: {
+                                                uri: visualizationWidgetBarChart.visualizationWidget.meta
+                                                    .uri!,
+                                            },
+                                        },
+                                    },
+                                },
+                                {
+                                    size: {
+                                        xl: {
+                                            width: 2,
+                                            height: 6,
+                                        },
+                                    },
+                                    content: {
+                                        widget: {
+                                            qualifier: {
+                                                uri: kpiWidget.kpi.meta.uri!,
+                                            },
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+        },
+        meta: createObjectMeta("dashboardWithFilterContext"),
+    },
+};
+
 export const dashboardWithLayoutDependencies: BearDashboardDependency[] = [
     visualizationWidgetBarChart,
     visualizationBarChart,

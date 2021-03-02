@@ -163,6 +163,94 @@ Object {
 }
 `;
 
+exports[`dashboard converter convert dashboard should convert dashboard with layout with custom gridHeight 1`] = `
+Object {
+  "analyticalDashboard": Object {
+    "content": Object {
+      "filterContext": undefined,
+      "layout": Object {
+        "fluidLayout": Object {
+          "rows": Array [
+            Object {
+              "columns": Array [
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetHeadline",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "height": 10,
+                      "width": 12,
+                    },
+                  },
+                },
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetKpi",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "height": 6,
+                      "width": 6,
+                    },
+                  },
+                },
+              ],
+              "header": Object {
+                "title": "Section 1",
+              },
+            },
+            Object {
+              "columns": Array [
+                Object {
+                  "content": Object {
+                    "widget": Object {
+                      "qualifier": Object {
+                        "uri": "/gdc/md/obj/widgetBarChart",
+                      },
+                    },
+                  },
+                  "size": Object {
+                    "xl": Object {
+                      "height": 30,
+                      "width": 2,
+                    },
+                  },
+                },
+              ],
+              "header": Object {
+                "description": "Section 2 description",
+              },
+            },
+          ],
+        },
+      },
+      "widgets": Array [
+        "/gdc/md/obj/widgetHeadline",
+        "/gdc/md/obj/widgetKpi",
+        "/gdc/md/obj/widgetBarChart",
+      ],
+    },
+    "meta": Object {
+      "identifier": "emptyDashboard",
+      "locked": undefined,
+      "summary": "",
+      "tags": undefined,
+      "title": "emptyDashboard",
+      "uri": "/gdc/md/obj/emptyDashboard",
+    },
+  },
+}
+`;
+
 exports[`dashboard converter convert dashboard should convert dashboard with layout with empty row headers 1`] = `
 Object {
   "analyticalDashboard": Object {

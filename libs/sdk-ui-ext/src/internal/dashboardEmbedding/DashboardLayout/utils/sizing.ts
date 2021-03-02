@@ -23,6 +23,7 @@ import {
     INSIGHT_WIDGET_DIMENSIONS_DEFAULT,
     KPI_WIDGET_DIMENSIONS_DEFAULT,
     INSIGHT_WIDGET_DIMENSIONS_TABLE,
+    GRID_ROW_HEIGHT_IN_PX,
 } from "../constants";
 import { DashboardLayoutFacade } from "../facade/layout";
 import { VisType } from "@gooddata/sdk-ui";
@@ -91,15 +92,16 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
  */
 function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashboardLayoutSizeByScreenSize {
     const xlWidth: number = xlSize.gridWidth;
+    const xlHeight: number = xlSize.gridHeight;
     const ratio: number = xlSize.heightAsRatio;
 
     switch (xlWidth) {
         case 0:
-            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0);
+            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0, 0);
         case 1:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 2, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 2, 6, 12);
         case 2:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 4, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 4, 6, 12);
         case 3:
         case 4:
         case 5:
@@ -107,13 +109,13 @@ function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashbo
         case 7:
         case 8:
         case 9:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 6, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 6, 12, 12);
         case 10:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
         case 11:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
         case 12:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
     }
 }
 
@@ -123,6 +125,7 @@ function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashbo
  * but different width, defined as grid items count.
  *
  * @param heightAsRatio - height as ratio to the width, defined in percents
+ * @param gridHeight - height as number of grid rows
  * @param xl - width as grid items count for xl screen
  * @param lg - width as grid items count for lg screen
  * @param md - width as grid items count for md screen
@@ -131,12 +134,37 @@ function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashbo
  */
 function dashboardLayoutItemSizeForAllScreens(
     heightAsRatio: number,
+    gridHeight: number,
     xl: number,
     lg: number,
     md: number,
     sm: number,
     xs: number,
 ): IDashboardLayoutSizeByScreenSize {
+    if (gridHeight) {
+        return {
+            xl: {
+                gridWidth: xl,
+                gridHeight,
+            },
+            lg: {
+                gridWidth: lg,
+                gridHeight,
+            },
+            md: {
+                gridWidth: md,
+                gridHeight,
+            },
+            sm: {
+                gridWidth: sm,
+                gridHeight,
+            },
+            xs: {
+                gridWidth: xs,
+                gridHeight,
+            },
+        };
+    }
     return {
         xl: {
             gridWidth: xl,
@@ -203,20 +231,26 @@ export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
 
 /**
  * Calculate dashboard layout item height for the provided screen.
- * Result is width of the item, defined as grid items count,
- * multiplied by height, defined as a ratio.
+ * Result, if custom height is defined, is height of the item, defined
+ * as grid items count, multiplied by {@link GRID_ROW_HEIGHT_IN_PX} or width of the item,
+ * defined as grid items count, multiplied by height, defined as a ratio.
  *
  * @param item - dashboard layout item
- * @param screen -  responsive screen class
+ * @param screen - responsive screen class
  */
 function dashboardLayoutItemHeightForScreen<TWidget>(
     item: IDashboardLayoutItem<TWidget>,
     screen: ScreenSize,
 ) {
-    const { gridWidth, heightAsRatio = 0 } = item.size?.[screen] ?? {};
+    const { gridWidth, gridHeight, heightAsRatio = 0 } = item.size?.[screen] ?? {};
     if (!gridWidth) {
         return 0;
     }
+
+    if (gridHeight) {
+        return getDashboardLayoutItemHeightForGrid(gridHeight);
+    }
+
     return gridWidth * heightAsRatio;
 }
 
@@ -254,6 +288,7 @@ const updateDashboardLayoutItemHeight = <TWidget>(
     let updatedColumn = item;
 
     if (
+        !itemSizeForCurrentScreen?.gridHeight &&
         !isNil(itemSizeForCurrentScreen?.heightAsRatio) &&
         itemSizeForCurrentScreen?.heightAsRatio !== heightAsRatio
     ) {
@@ -341,15 +376,29 @@ export const getResizedItemPositions = <TWidget>(
         }, positions);
 };
 
+export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize, screen: ScreenSize) => {
+    const { heightAsRatio, gridHeight } = size;
+    if (gridHeight) {
+        return getDashboardLayoutItemHeightForGrid(gridHeight);
+    } else if (heightAsRatio) {
+        return getDashboardLayoutItemHeightForRatioAndScreen(size, screen);
+    }
+    return undefined;
+};
+
 export const getDashboardLayoutItemHeightForRatioAndScreen = (
     size: IDashboardLayoutSize,
     screen: ScreenSize,
 ): number => {
     const { gridWidth, heightAsRatio } = size;
     const actualWidth = DASHBOARD_LAYOUT_CONTAINER_WIDTHS[screen];
+
     const actualColumnUnitWidth = actualWidth / DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     return actualColumnUnitWidth * gridWidth * (heightAsRatio / 100);
 };
+
+export const getDashboardLayoutItemHeightForGrid = (gridHeight: number): number =>
+    gridHeight * GRID_ROW_HEIGHT_IN_PX;
 
 export function getDashboardLayoutItemMaxGridWidth(
     item: IDashboardLayoutItemFacade<any>,

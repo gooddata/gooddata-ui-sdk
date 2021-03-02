@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { convertDashboard } from "../DashboardConverter";
 import {
@@ -16,6 +16,7 @@ import {
     dashboardWithLayout,
     dashboardWithLayoutDependencies,
     dashboardWithExtendedDateFilterConfig,
+    dashboardWithLayoutAndCustomGridHeight,
 } from "./DashboardConverter.fixtures";
 
 describe("dashboard converter", () => {
@@ -65,6 +66,15 @@ describe("dashboard converter", () => {
         it("should convert dashboard with layout", () => {
             const convertedDashboard = convertDashboard(
                 dashboardWithLayout,
+                dashboardWithLayoutDependencies,
+                visualizationClasses,
+            );
+            expect(convertedDashboard).toMatchSnapshot();
+        });
+
+        it("should convert dashboard with layout with custom gridHeight", () => {
+            const convertedDashboard = convertDashboard(
+                dashboardWithLayoutAndCustomGridHeight,
                 dashboardWithLayoutDependencies,
                 visualizationClasses,
             );

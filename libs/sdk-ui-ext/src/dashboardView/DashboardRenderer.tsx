@@ -45,10 +45,10 @@ import {
 } from "./types";
 import {
     DashboardLayout,
-    getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutWidgetDefaultHeight,
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
+    getDashboardLayoutItemHeight,
 } from "../internal";
 import {
     DashboardWidgetRenderer,
@@ -177,12 +177,12 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 }
 
                 const currentSize = item.size()[screen];
-                const minHeight = !currentSize.heightAsRatio
-                    ? getDashboardLayoutWidgetDefaultHeight(widgetType, visType)
-                    : undefined;
-                const height = currentSize?.heightAsRatio
-                    ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
-                    : undefined;
+                const minHeight =
+                    !currentSize.gridHeight && !currentSize.heightAsRatio
+                        ? getDashboardLayoutWidgetDefaultHeight(widgetType, visType)
+                        : undefined;
+                const height = getDashboardLayoutItemHeight(currentSize, screen);
+
                 const allowOverflow = !!currentSize.heightAsRatio;
 
                 const computedRenderProps = {

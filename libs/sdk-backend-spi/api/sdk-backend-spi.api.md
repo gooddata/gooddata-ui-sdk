@@ -457,6 +457,7 @@ export interface IDashboardLayoutSectionHeader {
 
 // @alpha
 export interface IDashboardLayoutSize {
+    gridHeight?: number;
     gridWidth: number;
     heightAsRatio?: number;
 }
@@ -1164,6 +1165,7 @@ export interface ISettings {
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
     enableHidingOfDataPoints?: boolean;
+    enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;

@@ -12,6 +12,7 @@ export const DashboardLayoutItemRenderer: IDashboardLayoutItemRenderer<unknown> 
     const size = item.size();
     const currentScreenSizeConfiguration = item.sizeForScreen(screen);
     const ratio = currentScreenSizeConfiguration?.heightAsRatio;
+    const height = currentScreenSizeConfiguration?.gridHeight;
     const width = currentScreenSizeConfiguration?.gridWidth;
 
     const style = useMemo(() => {
@@ -42,6 +43,7 @@ export const DashboardLayoutItemRenderer: IDashboardLayoutItemRenderer<unknown> 
                 `s-fluid-layout-column-width-${width}`,
                 {
                     [`s-fluid-layout-column-ratio-${ratio}`]: !isNil(ratio),
+                    [`s-fluid-layout-column-height-${height}`]: !isNil(height),
                 },
                 className,
             )}
