@@ -327,13 +327,13 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
             this.renderFun(
-                <ReactMeasure client={true}>
-                    {({ measureRef, contentRect }: any) => {
+                <ReactMeasure client>
+                    {({ measureRef, contentRect }) => {
                         const clientHeight = contentRect.client.height;
 
                         /*
                          * For some reason (unknown to me), there was a big if; nil height meant that
-                         * the wrapper was to 100%; non-nil height ment fixed size header with the 328 magic
+                         * the wrapper was to 100%; non-nil height meant fixed size header with the 328 magic
                          * number.
                          *
                          * For a while, there were more differences between the two branches, however after
@@ -346,7 +346,20 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
 
                         const configWithMaxHeight: IPivotTableConfig = {
                             ...tableConfig,
-                            maxHeight: clientHeight,
+                            /*
+                             * For some mysterious reason, there sometimes is exactly 2px discrepancy between
+                             * the 100% div and the actual CorePivotTable. This 2px seems to be unrelated to any
+                             * CSS property (border, padding, etc.) not even the leeway variable in CorePivotTable.
+                             * So we compensate for those 2px, because otherwise the maxHeight will play catch up
+                             * with the 100% gd-table-dashboard-wrapper div which causes the table to grow
+                             * in height in 2px increments until it reaches its full size (then the resizing
+                             * stops as bodyHeight of the table gets smaller than the maxHeight and "wins")...
+                             *
+                             * Ideally, this maxHeight would not be needed at all (if I remove it altogether,
+                             * the problem goes away), however, it is necessary for ONE-4322 (there seems to be
+                             * no native way of doing this in ag-grid itself).
+                             */
+                            maxHeight: clientHeight - 2,
                             ...customVisualizationConfig,
                         };
 
