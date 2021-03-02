@@ -9,7 +9,7 @@
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
-                                    "item": { "identifier": "fact.uscities.population" }
+                                    "item": { "identifier": "fact.uscities.population", "type": "fact" }
                                 }
                             },
                             "format": "#,##0.00",
@@ -27,7 +27,7 @@
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
-                                    "item": { "identifier": "fact.uscities.density" }
+                                    "item": { "identifier": "fact.uscities.density", "type": "fact" }
                                 }
                             },
                             "format": "#,##0.00",
