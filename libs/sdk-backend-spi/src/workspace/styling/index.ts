@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 
 import { ITheme } from "./theme";
@@ -7,6 +7,7 @@ export {
     ThemeFontUri,
     ThemeColor,
     IThemeColorFamily,
+    IThemeComplementaryPalette,
     IThemeWidgetTitle,
     IThemeTypography,
     IThemePalette,

@@ -7,6 +7,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { clearCssProperties, setCssProperties } from "../cssProperties";
 import { ThemeContextProvider } from "./Context";
+import { getComplementaryPalette } from "../complementaryPalette";
 
 /**
  * @public
@@ -45,6 +46,21 @@ export interface IThemeProviderProps {
      */
     modifier?: ThemeModifier;
 }
+
+const prepareComplementaryPalette = (theme: ITheme): ITheme => {
+    if (theme?.palette?.complementary) {
+        return {
+            ...theme,
+            palette: {
+                ...theme.palette,
+                complementary: getComplementaryPalette(theme.palette.complementary),
+            },
+        };
+    }
+
+    return theme;
+};
+const prepareTheme = (theme: ITheme): ITheme => ({ ...theme, ...prepareComplementaryPalette(theme) });
 
 /**
  * Fetches the theme object from the backend upon mounting and passes both theme object and isThemeLoading flag
@@ -90,9 +106,10 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
 
             if (lastWorkspace.current === workspace) {
                 const modifiedTheme = modifier(selectedTheme);
-                setTheme(modifiedTheme);
+                const preparedTheme = prepareTheme(modifiedTheme);
+                setTheme(preparedTheme);
                 setIsLoading(false);
-                setCssProperties(modifiedTheme);
+                setCssProperties(preparedTheme);
             }
         };
 

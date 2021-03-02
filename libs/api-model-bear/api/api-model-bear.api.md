@@ -1581,7 +1581,32 @@ export namespace GdcMetadata {
         light?: ThemeColor;
     }
     // (undocumented)
+    export interface IThemeComplementaryPalette {
+        // (undocumented)
+        shade0: ThemeColor;
+        // (undocumented)
+        shade1?: ThemeColor;
+        // (undocumented)
+        shade2?: ThemeColor;
+        // (undocumented)
+        shade3?: ThemeColor;
+        // (undocumented)
+        shade4?: ThemeColor;
+        // (undocumented)
+        shade5?: ThemeColor;
+        // (undocumented)
+        shade6?: ThemeColor;
+        // (undocumented)
+        shade7?: ThemeColor;
+        // (undocumented)
+        shade8?: ThemeColor;
+        // (undocumented)
+        shade9: ThemeColor;
+    }
+    // (undocumented)
     export interface IThemePalette {
+        // (undocumented)
+        complementary?: IThemeComplementaryPalette;
         // (undocumented)
         error?: IThemeColorFamily;
         // (undocumented)

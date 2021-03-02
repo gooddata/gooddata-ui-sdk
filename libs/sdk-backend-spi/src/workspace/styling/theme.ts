@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 /**
  * Custom font URI which is used to override the default font
@@ -61,6 +61,31 @@ export interface IThemeColorFamily {
 }
 
 /**
+ * Used to color various elements across many components by replacing
+ * the default complementary palette of gray color shades
+ *
+ * Contains up to 10 shades, typically the first one being the lightest
+ * and the last being the darkest, or vice-versa for the dark-based designs
+ *
+ * The first and last shades are mandatory, the rest is automatically
+ * calculated if not provided
+ *
+ * @beta
+ */
+export interface IThemeComplementaryPalette {
+    shade0: ThemeColor;
+    shade1?: ThemeColor;
+    shade2?: ThemeColor;
+    shade3?: ThemeColor;
+    shade4?: ThemeColor;
+    shade5?: ThemeColor;
+    shade6?: ThemeColor;
+    shade7?: ThemeColor;
+    shade8?: ThemeColor;
+    shade9: ThemeColor;
+}
+
+/**
  * Customizable palette of major colors
  *
  * Inspired by Material UI palette: https://material-ui.com/customization/palette/
@@ -92,6 +117,13 @@ export interface IThemePalette {
      * Used to express info or progress
      */
     info?: IThemeColorFamily;
+
+    /**
+     * Used to color various elements across many components
+     *
+     * See {@link IThemeComplementaryPalette} for more details.
+     */
+    complementary?: IThemeComplementaryPalette;
 }
 
 /**
