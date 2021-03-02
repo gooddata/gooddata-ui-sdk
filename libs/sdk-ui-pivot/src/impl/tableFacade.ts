@@ -63,8 +63,26 @@ export class TableFacade {
     private resizing: boolean;
     private numberOfColumnResizedCalls: number;
     private agGridDataSource: AgGridDatasource;
+
+    /**
+     * GridApi is set in the finishInitialization and cleared up in destroy. This is intentional, the code in the
+     * facade and in the components below must be ready that api is not available and must short-circuit. It is
+     * especially important to prevent racy-errors in async actions that may be triggered on the facade _after_
+     * the table is re-rendered and the gridApi is for a destructed table.
+     *
+     * Note: see gridApiGuard. Always use the guard to access the GridApi. Never access the field directly.
+     *
+     * @private
+     */
     private gridApi: GridApi | undefined;
+
+    /**
+     * Lifecycle of this field is tied to gridApi. If the gridApiGuard returns an API, then it is for sure
+     * that the columnApi is also defined.
+     * @private
+     */
     private columnApi: ColumnApi | undefined;
+    private destroyed: boolean = false;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
 
@@ -102,11 +120,36 @@ export class TableFacade {
     };
 
     public refreshData = (): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
 
         // make ag-grid refresh data
         // see: https://www.ag-grid.com/javascript-grid-infinite-scrolling/#changing-the-datasource
-        this.gridApi.setDatasource(this.agGridDataSource);
+        gridApi.setDatasource(this.agGridDataSource);
+    };
+
+    /**
+     * Destroys the facade; this must do any essential cleanup of the resources and state so as to ensure
+     * that any asynchronous processing that may be connected to this facade will be muted.
+     *
+     * This is essential to prevent this error from happening: https://github.com/ag-grid/ag-grid/issues/3334
+     *
+     * The error (while manifesting in ag-grid) is related to operating with a gridApi that is not connected
+     * to a currently rendered table. Various errors occur in ag-grid but those are all symptoms of working
+     * with a zombie.
+     *
+     * As is, destroy will clean up all references to gridApi & column api, so that no code that already relies
+     * on their existence gets short-circuited.
+     */
+    public destroy = (): void => {
+        // in spirit of cleaning up the table & the old state, facade should call destroy() on
+        // the gridApi. The table never did that so i'm not going to temp the 'luck' at the moment
+        this.gridApi = undefined;
+        this.columnApi = undefined;
+        this.destroyed = true;
     };
 
     public isFullyInitialized = (): boolean => {
@@ -115,6 +158,22 @@ export class TableFacade {
 
     public clearFittedColumns = (): void => {
         this.growToFittedColumns = {};
+    };
+
+    /**
+     * All functions in the entire table should use this gridApiGuard to access an instance of ag-grid's GridApi.
+     *
+     * If the table facade is destroyed, the guard always returns false and emits a debug log. Otherwise it just
+     * returns the current value of gridApi field.
+     */
+    private gridApiGuard = (): GridApi | undefined => {
+        if (!this.destroyed) {
+            return this.gridApi;
+        }
+
+        // eslint-disable-next-line no-console
+        console.debug("Attempting to obtain gridApi for a destructed table.");
+        return undefined;
     };
 
     private updateColumnWidths = (resizingConfig: ColumnResizingConfig): void => {
@@ -145,7 +204,7 @@ export class TableFacade {
                 },
             },
             this.visibleData,
-            () => this.gridApi,
+            this.gridApiGuard,
             this.intl,
         );
 
@@ -170,11 +229,22 @@ export class TableFacade {
     };
 
     public refreshHeader = (): void => {
-        this.gridApi?.refreshHeader();
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
+
+        gridApi.refreshHeader();
     };
 
     public growToFit = (resizingConfig: ColumnResizingConfig): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
+
         invariant(this.columnApi);
 
         const columns = this.columnApi.getAllColumns();
@@ -188,7 +258,7 @@ export class TableFacade {
             const columnIds = agColIds(columns);
 
             setColumnMaxWidth(this.columnApi, columnIds, undefined);
-            this.gridApi?.sizeColumnsToFit();
+            gridApi.sizeColumnsToFit();
             setColumnMaxWidthIf(
                 this.columnApi,
                 columnIds,
@@ -248,7 +318,12 @@ export class TableFacade {
         resizingConfig: ColumnResizingConfig,
         force: boolean = false,
     ): Promise<boolean> => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return false;
+        }
+
         invariant(this.columnApi);
 
         if (this.resizing && !force) {
@@ -278,7 +353,12 @@ export class TableFacade {
     };
 
     private autoresizeAllColumns = async (resizingConfig: ColumnResizingConfig) => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
+
         invariant(this.columnApi);
 
         if (!this.shouldPerformAutoresize() || !resizingConfig.columnAutoresizeEnabled) {
@@ -295,13 +375,18 @@ export class TableFacade {
     };
 
     private updateAutoResizedColumns = (resizingConfig: ColumnResizingConfig): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
+
         invariant(this.columnApi);
         invariant(resizingConfig.containerRef);
 
         this.autoResizedColumns = getAutoResizedColumns(
             this.tableDescriptor,
-            this.gridApi,
+            gridApi,
             this.columnApi,
             this.currentResult,
             resizingConfig.containerRef,
@@ -314,7 +399,7 @@ export class TableFacade {
     };
 
     public isPivotTableReady = (): boolean => {
-        if (!this.gridApi) {
+        if (!this.gridApi || this.destroyed) {
             return false;
         }
 
@@ -343,16 +428,14 @@ export class TableFacade {
     };
 
     private shouldPerformAutoresize = (): boolean => {
-        if (!this.gridApi) {
-            /*
-             * This is here because of the various timeouts involved in pivot table rendering. Before code
-             * gets here, the table may be in a re-init stage
-             */
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
             return false;
         }
 
-        const horizontalPixelRange = this.gridApi.getHorizontalPixelRange();
-        const verticalPixelRange = this.gridApi.getVerticalPixelRange();
+        const horizontalPixelRange = gridApi.getHorizontalPixelRange();
+        const verticalPixelRange = gridApi.getVerticalPixelRange();
 
         return horizontalPixelRange.left === 0 && verticalPixelRange.top === 0;
     };
@@ -395,7 +478,12 @@ export class TableFacade {
         resizingConfig: ColumnResizingConfig,
         columns: Column[],
     ): Promise<void> => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
+
         invariant(this.columnApi);
 
         let columnsToReset = columns;
@@ -507,11 +595,17 @@ export class TableFacade {
     }
 
     public getTotalBodyHeight = (): number => {
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return 0;
+        }
+
         const dv = this.visibleData;
         const aggregationCount = sumBy(dv.rawData().totals(), (total) => total.length);
         const rowCount = dv.rawData().firstDimSize();
 
-        const headerHeight = ApiWrapper.getHeaderHeight(this.gridApi!);
+        const headerHeight = ApiWrapper.getHeaderHeight(gridApi);
 
         // add small room for error to avoid scrollbars that scroll one, two pixels
         // increased in order to resolve issue BB-1509
@@ -524,36 +618,50 @@ export class TableFacade {
     };
 
     public updateStickyRowContent = (stickyCtx: StickyRowConfig): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
+            return;
+        }
 
         updateStickyRowContentClassesAndData(
             stickyCtx.scrollPosition,
             stickyCtx.lastScrollPosition,
             DEFAULT_ROW_HEIGHT,
-            this.gridApi,
+            gridApi,
             this.getGroupingProvider(),
             ApiWrapper,
         );
     };
 
     public updateStickyRowPosition = (): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
 
-        updateStickyRowPosition(this.gridApi);
+        if (!gridApi) {
+            return;
+        }
+
+        updateStickyRowPosition(gridApi);
     };
 
     public initializeStickyRow = (): void => {
-        invariant(this.gridApi);
+        const gridApi = this.gridApiGuard();
 
-        initializeStickyRow(this.gridApi);
+        if (!gridApi) {
+            return;
+        }
+
+        initializeStickyRow(gridApi);
     };
 
     public stickyRowExists = (): boolean => {
-        if (!this.gridApi) {
+        const gridApi = this.gridApiGuard();
+
+        if (!gridApi) {
             return false;
         }
 
-        return stickyRowExists(this.gridApi);
+        return stickyRowExists(gridApi);
     };
 
     public getRowCount = (): number => {

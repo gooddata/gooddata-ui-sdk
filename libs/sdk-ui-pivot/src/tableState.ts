@@ -38,6 +38,7 @@ export class InternalTableState {
     public destroy = (): void => {
         this.abandonInitialization();
         this.stopWatching();
+        this.table?.destroy();
     };
 
     /**
