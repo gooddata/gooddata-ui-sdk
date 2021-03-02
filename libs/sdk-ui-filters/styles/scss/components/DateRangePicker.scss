@@ -49,7 +49,7 @@ $gd-day-picker-width: 268px;
             &[value=""]::before {
                 content: attr(placeholder);
                 margin-right: 5px;
-                color: transparentize($gd-color-link, 0.25);
+                color: transparentize($default-gd-color-link, 0.25);
             }
 
             @media #{$medium-up} {

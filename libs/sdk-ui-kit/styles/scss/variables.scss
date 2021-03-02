@@ -15,27 +15,37 @@ $gd-color-warning: #fada23;
 $gd-color-warning-text: #f18600;
 
 // gray colors
-$gd-color-white: #fff;
-$gd-color-light: #fcfcfd;
-$gd-color-disabled: #b0beca;
-$gd-color-state-blank: #94a1ad;
+$default-gd-color-white: #fff;
+$gd-color-white: var(--gd-palette-complementary-0, $default-gd-color-white);
+$default-gd-color-light: #fcfcfd;
+$gd-color-light: var(--gd-palette-complementary-0, $default-gd-color-light);
+$default-gd-color-disabled: #b0beca;
+$gd-color-disabled: var(--gd-palette-complementary-5, $default-gd-color-disabled);
+$default-gd-color-state-blank: #94a1ad;
+$gd-color-state-blank: var(--gd-palette-complementary-6, $default-gd-color-state-blank);
 
-$gd-color-link: #6d7680;
+$default-gd-color-link: #6d7680;
+$gd-color-link: var(--gd-palette-complementary-7, $default-gd-color-link);
+$default-gd-color-label: $default-gd-color-link;
 $gd-color-label: $gd-color-link;
-$gd-color-text: #464e56;
+$default-gd-color-text: #464e56;
+$gd-color-text: var(--gd-palette-complementary-8, $default-gd-color-text);
 $gd-color-text-dimmed: $gd-color-disabled;
 // keep it in sync with ThemeProvider:GD_COLOR_TEXT_LIGHT
-$gd-color-text-light: #fff;
-$gd-color-dark: #000;
+$default-gd-color-text-light: #fff;
+$gd-color-text-light: var(--gd-palette-complementary-0, $default-gd-color-text-light);
+$default-gd-color-dark: #000;
+$gd-color-dark: var(--gd-palette-complementary-9, $default-gd-color-dark);
 
-$gd-border-color: #dde4eb;
+$default-gd-border-color: #dde4eb;
+$gd-border-color: var(--gd-palette-complementary-3, $default-gd-border-color);
 // primary color - must not be used to create derived colors by scss color function
 $gd-palette-primary-base: var(--gd-palette-primary-base, $gd-color-highlight);
 
 // primary derived colors
 $gd-palette-primary-dimmed: var(
     --gd-palette-primary-dimmed,
-    mix($gd-color-highlight, $gd-color-text-light, 10%)
+    mix($gd-color-highlight, $default-gd-color-text-light, 10%)
 );
 $gd-palette-primary-base-t80: var(--gd-palette-primary-base-t80, transparentize($gd-color-highlight, 0.8));
 $gd-palette-primary-base-darken06: var(--gd-palette-primary-base-d06, darken($gd-color-highlight, 6%));
@@ -43,31 +53,37 @@ $gd-palette-primary-base-darken06: var(--gd-palette-primary-base-d06, darken($gd
 // error color
 $gd-palette-error-base: var(--gd-palette-error-base, $gd-color-negative);
 // error derived colors
-$gd-palette-error-dimmed: var(--gd-palette-error-dimmed, mix($gd-color-negative, $gd-color-text-light, 10%));
+$gd-palette-error-dimmed: var(
+    --gd-palette-error-dimmed,
+    mix($gd-color-negative, $default-gd-color-text-light, 10%)
+);
 
 // success color
 $gd-palette-success-base: var(--gd-palette-success-base, $gd-color-positive);
 // error derived colors
 $gd-palette-success-dimmed: var(
     --gd-palette-success-dimmed,
-    mix($gd-color-positive, $gd-color-text-light, 10%)
+    mix($gd-color-positive, $default-gd-color-text-light, 10%)
 );
 
 // secondary colors
-$gd-color-positive-dimmed: mix($gd-color-positive, $gd-color-text-light, 10%);
+$gd-color-positive-dimmed: mix($gd-color-positive, $default-gd-color-text-light, 10%);
 
 // warning colors
 $gd-palette-warning-base: var(--gd-palette-warning-base, $gd-color-warning);
 $gd-palette-warning-base-text: var(--gd-palette-warning-base, $gd-color-warning-text);
 $gd-palette-warning-dimmed: var(
     --gd-palette-warning-dimmed,
-    mix($gd-color-warning, $gd-color-text-light, 20%)
+    mix($gd-color-warning, $default-gd-color-text-light, 20%)
 );
 $gd-palette-warning-base-t50: var(--gd-palette-warning-base-t50, transparentize($gd-color-warning, 0.5));
-$gd-color-warning-label: var(--gd-palette-warning-text-dimmed, mix($gd-color-warning, $gd-color-text, 20%));
+$gd-color-warning-label: var(
+    --gd-palette-warning-text-dimmed,
+    mix($gd-color-warning, $default-gd-color-text, 20%)
+);
 $gd-color-warning-label-dimmed: var(
     --gd-palette-warning-dimmed40,
-    mix($gd-color-warning, $gd-color-text, 40%)
+    mix($gd-color-warning, $default-gd-color-text, 40%)
 );
 
 // font and typo
@@ -85,8 +101,8 @@ $gd-typo: (
 );
 
 // colors
-$is-focused-background: #ebeff4;
-$is-focused-color: #000;
+$is-focused-background: var(--gd-palette-complementary-2, #ebeff4);
+$is-focused-color: $gd-color-dark;
 
 $is-selected-color: $gd-palette-primary-base;
 $is-selected-background: none;
@@ -97,7 +113,7 @@ $is-selected-focused-background: $gd-palette-primary-dimmed;
 $is-negative-focused-color: #fff;
 $is-negative-focused-background: var(
     --gd-palette-error-dimmed90,
-    mix($gd-color-negative, $gd-color-text-light, 90%)
+    mix($gd-color-negative, $default-gd-color-text-light, 90%)
 );
 
 // other
@@ -106,8 +122,9 @@ $gd-rounded-small: 4px;
 $importantFlag: "";
 
 // from goodstrap Form/mixins
-$gd-input-text-border: #ccd8e2;
-$gd-input-text-hover-border: #b1c1d1;
+$default-gd-input-text-border: #ccd8e2;
+$gd-input-text-border: var(--gd-palette-complementary-4, $default-gd-input-text-border);
+$gd-input-text-hover-border: var(--gd-palette-complementary-5, #b1c1d1);
 $gd-input-text-box-shadow-color: #1f354a;
 
 $gd-outside-background-color: #eff1f3;

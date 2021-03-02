@@ -101,10 +101,14 @@
 
     h2 {
         @include gd-heading-2;
+
+        color: $gd-modal-title-color;
     }
 
     h3 {
         @include gd-heading-3;
+
+        color: $gd-modal-title-color;
     }
 }
 

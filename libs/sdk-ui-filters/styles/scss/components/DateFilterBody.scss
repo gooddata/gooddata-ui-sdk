@@ -151,7 +151,7 @@
             &,
             &:hover,
             &:active {
-                background-color: transparentize($gd-border-color, 0.8);
+                background-color: transparentize($default-gd-border-color, 0.8);
             }
         }
     }

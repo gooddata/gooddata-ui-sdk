@@ -68,7 +68,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     &:hover,
     .drag-preview & {
         &::after {
-            background: transparentize($gd-color-white, 0.05);
+            background: transparentize($default-gd-color-white, 0.05);
         }
     }
 

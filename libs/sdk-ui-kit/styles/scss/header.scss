@@ -171,7 +171,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             bottom: -1px;
             left: 15px;
             height: 1px;
-            border-bottom: 1px solid transparentize($gd-color-state-blank, 0.8);
+            border-bottom: 1px solid transparentize($default-gd-color-state-blank, 0.8);
         }
 
         &:hover,
@@ -221,7 +221,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    border-top: 1px solid transparentize($gd-color-state-blank, 0.8);
+    border-top: 1px solid transparentize($default-gd-color-state-blank, 0.8);
 
     .gd-header-menu {
         display: block;
@@ -234,7 +234,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     bottom: 0;
     left: 0;
     padding: 0 0 15px;
-    border-top: 1px solid transparentize($gd-color-state-blank, 0.8);
+    border-top: 1px solid transparentize($default-gd-color-state-blank, 0.8);
 }
 
 .gd-header-menu-item {
@@ -518,7 +518,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     width: calc(100% - 30px);
     height: 33px;
     margin: 0 15px;
-    border: 1px solid transparentize($gd-color-disabled, 0.6);
+    border: 1px solid transparentize($default-gd-color-disabled, 0.6);
     box-shadow: 0 1px 1px 0 transparentize(#14395d, 0.95);
     color: $gd-color-text-light;
     cursor: pointer;
@@ -540,7 +540,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 
     &:hover {
-        border-color: transparentize($gd-color-state-blank, 0.6);
+        border-color: transparentize($default-gd-color-state-blank, 0.6);
         background-color: $gd-color-link;
     }
 }

@@ -430,7 +430,7 @@ $menu-item-icon-width: 30px;
 
     .public_Scrollbar_face {
         &::after {
-            background-color: transparentize($gd-color-disabled, 0.7);
+            background-color: transparentize($default-gd-color-disabled, 0.7);
         }
 
         &Active::after {
