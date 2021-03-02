@@ -20,6 +20,7 @@ const customWidgetContainerStyle: React.CSSProperties = {
     padding: 5,
     height: "100%",
     width: "100%",
+    boxSizing: "border-box",
 };
 
 const CustomWidgetContainer: React.FC = ({ children }) => (
