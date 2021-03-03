@@ -81,7 +81,7 @@ export interface DeclarativeAnalyticalDashboard {
      * @type {string}
      * @memberof DeclarativeAnalyticalDashboard
      */
-    description: string;
+    description?: string;
     /**
      * A server agnostic definition of the visualization object in JSON format.
      * @type {object}
@@ -156,7 +156,7 @@ export interface DeclarativeAttribute {
      * @type {string}
      * @memberof DeclarativeAttribute
      */
-    description: string;
+    description?: string;
     /**
      * An array of attribute labels.
      * @type {Array<DeclarativeLabel>}
@@ -197,6 +197,43 @@ export enum DeclarativeColumnDataTypeEnum {
     BOOLEAN = "BOOLEAN",
 }
 
+/**
+ * Data discriminators serving the discrimination of what data users can see in workspaces.
+ * @export
+ * @interface DeclarativeDataDiscriminator
+ */
+export interface DeclarativeDataDiscriminator {
+    /**
+     * Data Discriminator ID. This ID is further used to refer to this instance of DD.
+     * @type {string}
+     * @memberof DeclarativeDataDiscriminator
+     */
+    id: string;
+    /**
+     * Data Discriminator title.
+     * @type {string}
+     * @memberof DeclarativeDataDiscriminator
+     */
+    title: string;
+    /**
+     * Data Discriminator description.
+     * @type {string}
+     * @memberof DeclarativeDataDiscriminator
+     */
+    description?: string;
+    /**
+     * Data Discriminator column name. Data are filtered using this physical column.
+     * @type {string}
+     * @memberof DeclarativeDataDiscriminator
+     */
+    columnName: string;
+    /**
+     * Data source name (ID). Data Discriminator must always be connected to single data source.
+     * @type {string}
+     * @memberof DeclarativeDataDiscriminator
+     */
+    dataSourceName: string;
+}
 /**
  * A data source.
  * @export
@@ -239,7 +276,7 @@ export interface DeclarativeDataset {
      * @type {string}
      * @memberof DeclarativeDataset
      */
-    description: string;
+    description?: string;
     /**
      * An array of grain identifiers.
      * @type {Array<GrainIdentifier>}
@@ -294,7 +331,7 @@ export interface DeclarativeDateDataset {
      * @type {string}
      * @memberof DeclarativeDateDataset
      */
-    description: string;
+    description?: string;
     /**
      *
      * @type {GranularitiesFormatting}
@@ -318,18 +355,15 @@ export enum DeclarativeDateDatasetGranularitiesEnum {
     HOUR = "HOUR",
     DAY = "DAY",
     WEEK = "WEEK",
-    EUWEEK = "EUWEEK",
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
     MINUTEOFHOUR = "MINUTE_OF_HOUR",
     HOUROFDAY = "HOUR_OF_DAY",
     DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFEUWEEK = "DAY_OF_EUWEEK",
     DAYOFMONTH = "DAY_OF_MONTH",
     DAYOFYEAR = "DAY_OF_YEAR",
     WEEKOFYEAR = "WEEK_OF_YEAR",
-    EUWEEKOFYEAR = "EUWEEK_OF_YEAR",
     MONTHOFYEAR = "MONTH_OF_YEAR",
     QUARTEROFYEAR = "QUARTER_OF_YEAR",
 }
@@ -357,7 +391,7 @@ export interface DeclarativeFact {
      * @type {string}
      * @memberof DeclarativeFact
      */
-    description: string;
+    description?: string;
     /**
      * A name of the source column in the table.
      * @type {string}
@@ -388,7 +422,7 @@ export interface DeclarativeFilterContext {
      * @type {string}
      * @memberof DeclarativeFilterContext
      */
-    description: string;
+    description?: string;
     /**
      * A server agnostic definition of the visualization object in JSON format.
      * @type {object}
@@ -419,7 +453,7 @@ export interface DeclarativeLabel {
      * @type {string}
      * @memberof DeclarativeLabel
      */
-    description: string;
+    description?: string;
     /**
      * A flag indicating whether the label should be treated as a primary one.
      * @type {boolean}
@@ -475,7 +509,7 @@ export interface DeclarativeMetric {
      * @type {string}
      * @memberof DeclarativeMetric
      */
-    description: string;
+    description?: string;
     /**
      * A server agnostic definition of the visualization object in JSON format.
      * @type {object}
@@ -582,7 +616,7 @@ export interface DeclarativeVisualizationObject {
      * @type {string}
      * @memberof DeclarativeVisualizationObject
      */
-    description: string;
+    description?: string;
     /**
      * A server agnostic definition of the visualization object in JSON format.
      * @type {object}
@@ -645,6 +679,12 @@ export interface DeclarativeWorkspaceModel {
      * @memberof DeclarativeWorkspaceModel
      */
     analytics: DeclarativeAnalyticsLayer;
+    /**
+     *
+     * @type {Array<DeclarativeDataDiscriminator>}
+     * @memberof DeclarativeWorkspaceModel
+     */
+    dataDiscriminators: Array<DeclarativeDataDiscriminator>;
 }
 /**
  *
@@ -1117,10 +1157,23 @@ export interface JsonApiApiToken {
     type: string;
     /**
      *
-     * @type {object}
+     * @type {JsonApiApiTokenAttributes}
      * @memberof JsonApiApiToken
      */
-    attributes?: object;
+    attributes?: JsonApiApiTokenAttributes;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiApiTokenAttributes
+ */
+export interface JsonApiApiTokenAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiApiTokenAttributes
+     */
+    bearerToken?: string;
 }
 /**
  *
@@ -1180,10 +1233,10 @@ export interface JsonApiApiTokenWithLinks {
     type: string;
     /**
      *
-     * @type {object}
+     * @type {JsonApiApiTokenAttributes}
      * @memberof JsonApiApiTokenWithLinks
      */
-    attributes?: object;
+    attributes?: JsonApiApiTokenAttributes;
     /**
      *
      * @type {ObjectLinks}
@@ -1263,18 +1316,15 @@ export enum JsonApiAttributeAttributesGranularityEnum {
     HOUR = "HOUR",
     DAY = "DAY",
     WEEK = "WEEK",
-    WEEKEU = "WEEK_EU",
     MONTH = "MONTH",
     QUARTER = "QUARTER",
     YEAR = "YEAR",
     MINUTEOFHOUR = "MINUTE_OF_HOUR",
     HOUROFDAY = "HOUR_OF_DAY",
     DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
     DAYOFMONTH = "DAY_OF_MONTH",
     DAYOFYEAR = "DAY_OF_YEAR",
     WEEKOFYEAR = "WEEK_OF_YEAR",
-    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
     MONTHOFYEAR = "MONTH_OF_YEAR",
     QUARTEROFYEAR = "QUARTER_OF_YEAR",
 }
@@ -1337,10 +1387,10 @@ export interface JsonApiAttributeList {
 export interface JsonApiAttributeRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiAttributeRelationships
      */
-    dataset?: JsonApiUserGroupRelationshipsUserGroup;
+    dataset?: JsonApiOrganizationRelationshipsUser;
     /**
      *
      * @type {JsonApiACLRelationshipsUsers}
@@ -1382,6 +1432,131 @@ export interface JsonApiAttributeWithLinks {
      *
      * @type {ObjectLinks}
      * @memberof JsonApiAttributeWithLinks
+     */
+    links?: ObjectLinks;
+}
+/**
+ * JSON:API representation of dataDiscriminator entity.
+ * @export
+ * @interface JsonApiDataDiscriminator
+ */
+export interface JsonApiDataDiscriminator {
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataDiscriminator
+     */
+    id: string;
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiDataDiscriminator
+     */
+    type: string;
+    /**
+     *
+     * @type {JsonApiDataDiscriminatorAttributes}
+     * @memberof JsonApiDataDiscriminator
+     */
+    attributes?: JsonApiDataDiscriminatorAttributes;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDataDiscriminatorAttributes
+ */
+export interface JsonApiDataDiscriminatorAttributes {
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorAttributes
+     */
+    title?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorAttributes
+     */
+    description?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorAttributes
+     */
+    columnName?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorAttributes
+     */
+    dataSourceName?: string;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDataDiscriminatorDocument
+ */
+export interface JsonApiDataDiscriminatorDocument {
+    /**
+     *
+     * @type {JsonApiDataDiscriminator}
+     * @memberof JsonApiDataDiscriminatorDocument
+     */
+    data: JsonApiDataDiscriminator;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiDataDiscriminatorDocument
+     */
+    links?: ObjectLinks;
+}
+/**
+ * A JSON:API document with a list of resources
+ * @export
+ * @interface JsonApiDataDiscriminatorList
+ */
+export interface JsonApiDataDiscriminatorList {
+    /**
+     *
+     * @type {Array<JsonApiDataDiscriminatorWithLinks>}
+     * @memberof JsonApiDataDiscriminatorList
+     */
+    data: Array<JsonApiDataDiscriminatorWithLinks>;
+    /**
+     *
+     * @type {ListLinks}
+     * @memberof JsonApiDataDiscriminatorList
+     */
+    links?: ListLinks;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiDataDiscriminatorWithLinks
+ */
+export interface JsonApiDataDiscriminatorWithLinks {
+    /**
+     * API identifier of an object
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorWithLinks
+     */
+    id: string;
+    /**
+     * Object type
+     * @type {string}
+     * @memberof JsonApiDataDiscriminatorWithLinks
+     */
+    type: string;
+    /**
+     *
+     * @type {JsonApiDataDiscriminatorAttributes}
+     * @memberof JsonApiDataDiscriminatorWithLinks
+     */
+    attributes?: JsonApiDataDiscriminatorAttributes;
+    /**
+     *
+     * @type {ObjectLinks}
+     * @memberof JsonApiDataDiscriminatorWithLinks
      */
     links?: ObjectLinks;
 }
@@ -1926,10 +2101,10 @@ export interface JsonApiFactList {
 export interface JsonApiFactRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiFactRelationships
      */
-    dataset?: JsonApiUserGroupRelationshipsUserGroup;
+    dataset?: JsonApiOrganizationRelationshipsUser;
 }
 /**
  *
@@ -2237,10 +2412,10 @@ export interface JsonApiLabelList {
 export interface JsonApiLabelRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiLabelRelationships
      */
-    attribute?: JsonApiUserGroupRelationshipsUserGroup;
+    attribute?: JsonApiOrganizationRelationshipsUser;
 }
 /**
  *
@@ -2619,6 +2794,12 @@ export interface JsonApiOrganization {
      * @memberof JsonApiOrganization
      */
     attributes?: JsonApiOrganizationAttributes;
+    /**
+     *
+     * @type {JsonApiOrganizationRelationships}
+     * @memberof JsonApiOrganization
+     */
+    relationships?: JsonApiOrganizationRelationships;
 }
 /**
  *
@@ -2644,6 +2825,18 @@ export interface JsonApiOrganizationAttributes {
      * @memberof JsonApiOrganizationAttributes
      */
     oauthIssuerLocation?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationAttributes
+     */
+    oauthClientId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof JsonApiOrganizationAttributes
+     */
+    oauthClientSecret?: string;
 }
 /**
  *
@@ -2663,6 +2856,12 @@ export interface JsonApiOrganizationDocument {
      * @memberof JsonApiOrganizationDocument
      */
     links?: ObjectLinks;
+    /**
+     * Included resources
+     * @type {Array<JsonApiUserWithLinks | JsonApiUserGroupWithLinks>}
+     * @memberof JsonApiOrganizationDocument
+     */
+    included?: Array<JsonApiUserWithLinks | JsonApiUserGroupWithLinks>;
 }
 /**
  * A JSON:API document with a list of resources
@@ -2682,6 +2881,44 @@ export interface JsonApiOrganizationList {
      * @memberof JsonApiOrganizationList
      */
     links?: ListLinks;
+    /**
+     * Included resources
+     * @type {Array<JsonApiUserWithLinks | JsonApiUserGroupWithLinks>}
+     * @memberof JsonApiOrganizationList
+     */
+    included?: Array<JsonApiUserWithLinks | JsonApiUserGroupWithLinks>;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationRelationships
+ */
+export interface JsonApiOrganizationRelationships {
+    /**
+     *
+     * @type {JsonApiOrganizationRelationshipsUser}
+     * @memberof JsonApiOrganizationRelationships
+     */
+    user?: JsonApiOrganizationRelationshipsUser;
+    /**
+     *
+     * @type {JsonApiOrganizationRelationshipsUser}
+     * @memberof JsonApiOrganizationRelationships
+     */
+    userGroup?: JsonApiOrganizationRelationshipsUser;
+}
+/**
+ *
+ * @export
+ * @interface JsonApiOrganizationRelationshipsUser
+ */
+export interface JsonApiOrganizationRelationshipsUser {
+    /**
+     *
+     * @type {JsonApiRelToOne}
+     * @memberof JsonApiOrganizationRelationshipsUser
+     */
+    data?: JsonApiRelToOne | null;
 }
 /**
  *
@@ -2707,6 +2944,12 @@ export interface JsonApiOrganizationWithLinks {
      * @memberof JsonApiOrganizationWithLinks
      */
     attributes?: JsonApiOrganizationAttributes;
+    /**
+     *
+     * @type {JsonApiOrganizationRelationships}
+     * @memberof JsonApiOrganizationWithLinks
+     */
+    relationships?: JsonApiOrganizationRelationships;
     /**
      *
      * @type {ObjectLinks}
@@ -2855,10 +3098,10 @@ export interface JsonApiSourceTableList {
 export interface JsonApiSourceTableRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiSourceTableRelationships
      */
-    source?: JsonApiUserGroupRelationshipsUserGroup;
+    source?: JsonApiOrganizationRelationshipsUser;
 }
 /**
  *
@@ -3186,29 +3429,16 @@ export interface JsonApiUserGroupList {
 export interface JsonApiUserGroupRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiUserGroupRelationships
      */
-    userGroup?: JsonApiUserGroupRelationshipsUserGroup;
+    userGroup?: JsonApiOrganizationRelationshipsUser;
     /**
      *
      * @type {JsonApiACLRelationshipsUsers}
      * @memberof JsonApiUserGroupRelationships
      */
     acls?: JsonApiACLRelationshipsUsers;
-}
-/**
- *
- * @export
- * @interface JsonApiUserGroupRelationshipsUserGroup
- */
-export interface JsonApiUserGroupRelationshipsUserGroup {
-    /**
-     *
-     * @type {JsonApiRelToOne}
-     * @memberof JsonApiUserGroupRelationshipsUserGroup
-     */
-    data?: JsonApiRelToOne | null;
 }
 /**
  *
@@ -3586,10 +3816,10 @@ export interface JsonApiWorkspaceList {
 export interface JsonApiWorkspaceRelationships {
     /**
      *
-     * @type {JsonApiUserGroupRelationshipsUserGroup}
+     * @type {JsonApiOrganizationRelationshipsUser}
      * @memberof JsonApiWorkspaceRelationships
      */
-    workspace?: JsonApiUserGroupRelationshipsUserGroup;
+    workspace?: JsonApiOrganizationRelationshipsUser;
 }
 /**
  *
@@ -3742,62 +3972,6 @@ export interface ObjectLinksContainer {
     links?: ObjectLinks;
 }
 /**
- *
- * @export
- * @interface Organization
- */
-export interface Organization {
-    /**
-     *
-     * @type {StockIdNoneScope}
-     * @memberof Organization
-     */
-    stockId: StockIdNoneScope;
-    /**
-     *
-     * @type {string}
-     * @memberof Organization
-     */
-    name?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Organization
-     */
-    hostname?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Organization
-     */
-    oauthIssuerLocation?: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Organization
-     */
-    id?: string;
-}
-/**
- *
- * @export
- * @interface Profile
- */
-export interface Profile {
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
-    organisationId: string;
-    /**
-     *
-     * @type {string}
-     * @memberof Profile
-     */
-    userId: string;
-}
-/**
  * A reference identifier.
  * @export
  * @interface ReferenceIdentifier
@@ -3850,25 +4024,6 @@ export interface RepresentationModelObject {
      * @memberof RepresentationModelObject
      */
     _links?: Array<Link>;
-}
-/**
- *
- * @export
- * @interface StockIdNoneScope
- */
-export interface StockIdNoneScope {
-    /**
-     *
-     * @type {string}
-     * @memberof StockIdNoneScope
-     */
-    apiId: string;
-    /**
-     *
-     * @type {object}
-     * @memberof StockIdNoneScope
-     */
-    scope?: object;
 }
 /**
  *
@@ -5510,42 +5665,33 @@ export class OptionsControllerApi extends BaseAPI implements OptionsControllerAp
 export const OrganizationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * Completely remove and discontinue the organization.
-         * @summary Drop organization
+         *
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dropOrganization(params: {}, options: any = {}): RequestArgs {
-            const {} = params;
-            const localVarPath = `/api/organization`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+        getEntityOrganizations(
+            params: {
+                id: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { id, variableParam, include } = params;
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
+                throw new RequiredError(
+                    "id",
+                    "Required parameter id was null or undefined when calling getEntityOrganizations.",
+                );
             }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Gets a basic information about organization.
-         * @summary Get organization info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganization(params: {}, options: any = {}): RequestArgs {
-            const {} = params;
-            const localVarPath = `/api/organization`;
+            const localVarPath = `/api/admin/organizations/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -5555,6 +5701,22 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
             // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
@@ -5566,27 +5728,42 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             };
         },
         /**
-         * Sets a basic information about organization.
-         * @summary Update organization info
-         * @param {Organization} organization
+         *
+         * @param {string} id
+         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateOrganization(
+        updateEntityOrganizations(
             params: {
-                organization: Organization;
+                id: string;
+                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
             },
             options: any = {},
         ): RequestArgs {
-            const { organization } = params;
-            // verify required parameter 'organization' is not null or undefined
-            if (organization === null || organization === undefined) {
+            const { id, jsonApiOrganizationDocument, variableParam, include } = params;
+            // verify required parameter 'id' is not null or undefined
+            if (id === null || id === undefined) {
                 throw new RequiredError(
-                    "organization",
-                    "Required parameter organization was null or undefined when calling updateOrganization.",
+                    "id",
+                    "Required parameter id was null or undefined when calling updateEntityOrganizations.",
                 );
             }
-            const localVarPath = `/api/organization`;
+            // verify required parameter 'jsonApiOrganizationDocument' is not null or undefined
+            if (jsonApiOrganizationDocument === null || jsonApiOrganizationDocument === undefined) {
+                throw new RequiredError(
+                    "jsonApiOrganizationDocument",
+                    "Required parameter jsonApiOrganizationDocument was null or undefined when calling updateEntityOrganizations.",
+                );
+            }
+            const localVarPath = `/api/admin/organizations/{id}`.replace(
+                `{${"id"}}`,
+                encodeURIComponent(String(id)),
+            );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -5596,18 +5773,34 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
-            localVarHeaderParameter["Content-Type"] = "application/json";
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
             // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
             const needsSerialization =
-                typeof organization !== "string" ||
+                typeof jsonApiOrganizationDocument !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(organization !== undefined ? organization : {})
-                : organization || "";
+                ? JSON.stringify(jsonApiOrganizationDocument !== undefined ? jsonApiOrganizationDocument : {})
+                : jsonApiOrganizationDocument || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -5624,63 +5817,53 @@ export const OrganizationControllerApiAxiosParamCreator = function (configuratio
 export const OrganizationControllerApiFp = function (configuration?: Configuration) {
     return {
         /**
-         * Completely remove and discontinue the organization.
-         * @summary Drop organization
+         *
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dropOrganization(
-            params: {},
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<object> {
-            const localVarAxiosArgs = OrganizationControllerApiAxiosParamCreator(
-                configuration,
-            ).dropOrganization(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Gets a basic information about organization.
-         * @summary Get organization info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganization(
-            params: {},
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Organization> {
-            const localVarAxiosArgs = OrganizationControllerApiAxiosParamCreator(
-                configuration,
-            ).getOrganization(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         * Sets a basic information about organization.
-         * @summary Update organization info
-         * @param {Organization} organization
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOrganization(
+        getEntityOrganizations(
             params: {
-                organization: Organization;
+                id: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
             },
             options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<object> {
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationDocument> {
             const localVarAxiosArgs = OrganizationControllerApiAxiosParamCreator(
                 configuration,
-            ).updateOrganization(params, options);
+            ).getEntityOrganizations(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityOrganizations(
+            params: {
+                id: string;
+                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationDocument> {
+            const localVarAxiosArgs = OrganizationControllerApiAxiosParamCreator(
+                configuration,
+            ).updateEntityOrganizations(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -5703,43 +5886,45 @@ export const OrganizationControllerApiFactory = function (
 ) {
     return {
         /**
-         * Completely remove and discontinue the organization.
-         * @summary Drop organization
+         *
+         * @param {string} id
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        dropOrganization(params: {}, options?: any): AxiosPromise<object> {
-            return OrganizationControllerApiFp(configuration).dropOrganization(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Gets a basic information about organization.
-         * @summary Get organization info
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getOrganization(params: {}, options?: any): AxiosPromise<Organization> {
-            return OrganizationControllerApiFp(configuration).getOrganization(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         * Sets a basic information about organization.
-         * @summary Update organization info
-         * @param {Organization} organization
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateOrganization(
+        getEntityOrganizations(
             params: {
-                organization: Organization;
+                id: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
             },
             options?: any,
-        ): AxiosPromise<object> {
-            return OrganizationControllerApiFp(configuration).updateOrganization(params, options)(
+        ): AxiosPromise<JsonApiOrganizationDocument> {
+            return OrganizationControllerApiFp(configuration).getEntityOrganizations(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         *
+         * @param {string} id
+         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityOrganizations(
+            params: {
+                id: string;
+                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiOrganizationDocument> {
+            return OrganizationControllerApiFp(configuration).updateEntityOrganizations(params, options)(
                 axios,
                 basePath,
             );
@@ -5754,37 +5939,42 @@ export const OrganizationControllerApiFactory = function (
  */
 export interface OrganizationControllerApiInterface {
     /**
-     * Completely remove and discontinue the organization.
-     * @summary Drop organization
+     *
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApiInterface
      */
-    dropOrganization(params: {}, options?: any): AxiosPromise<object>;
-
-    /**
-     * Gets a basic information about organization.
-     * @summary Get organization info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApiInterface
-     */
-    getOrganization(params: {}, options?: any): AxiosPromise<Organization>;
-
-    /**
-     * Sets a basic information about organization.
-     * @summary Update organization info
-     * @param {Organization} organization
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApiInterface
-     */
-    updateOrganization(
+    getEntityOrganizations(
         params: {
-            organization: Organization;
+            id: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
         },
         options?: any,
-    ): AxiosPromise<object>;
+    ): AxiosPromise<JsonApiOrganizationDocument>;
+
+    /**
+     *
+     * @param {string} id
+     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApiInterface
+     */
+    updateEntityOrganizations(
+        params: {
+            id: string;
+            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiOrganizationDocument>;
 }
 
 /**
@@ -5795,48 +5985,48 @@ export interface OrganizationControllerApiInterface {
  */
 export class OrganizationControllerApi extends BaseAPI implements OrganizationControllerApiInterface {
     /**
-     * Completely remove and discontinue the organization.
-     * @summary Drop organization
+     *
+     * @param {string} id
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof OrganizationControllerApi
      */
-    public dropOrganization(params: {}, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).dropOrganization(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Gets a basic information about organization.
-     * @summary Get organization info
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public getOrganization(params: {}, options?: any) {
-        return OrganizationControllerApiFp(this.configuration).getOrganization(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     * Sets a basic information about organization.
-     * @summary Update organization info
-     * @param {Organization} organization
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationControllerApi
-     */
-    public updateOrganization(
+    public getEntityOrganizations(
         params: {
-            organization: Organization;
+            id: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
         },
         options?: any,
     ) {
-        return OrganizationControllerApiFp(this.configuration).updateOrganization(params, options)(
+        return OrganizationControllerApiFp(this.configuration).getEntityOrganizations(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
+    /**
+     *
+     * @param {string} id
+     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof OrganizationControllerApi
+     */
+    public updateEntityOrganizations(
+        params: {
+            id: string;
+            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ) {
+        return OrganizationControllerApiFp(this.configuration).updateEntityOrganizations(params, options)(
             this.axios,
             this.basePath,
         );
@@ -6475,74 +6665,6 @@ export const OrganizationModelControllerApiAxiosParamCreator = function (configu
         },
         /**
          *
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createEntityOrganizations(
-            params: {
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { jsonApiOrganizationDocument, variableParam, include } = params;
-            // verify required parameter 'jsonApiOrganizationDocument' is not null or undefined
-            if (jsonApiOrganizationDocument === null || jsonApiOrganizationDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiOrganizationDocument",
-                    "Required parameter jsonApiOrganizationDocument was null or undefined when calling createEntityOrganizations.",
-                );
-            }
-            const localVarPath = `/api/organizations`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (variableParam !== undefined) {
-                if (typeof variableParam === "object") {
-                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["variableParam"] = variableParam;
-                }
-            }
-
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof jsonApiOrganizationDocument !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(jsonApiOrganizationDocument !== undefined ? jsonApiOrganizationDocument : {})
-                : jsonApiOrganizationDocument || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
          * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -6908,59 +7030,6 @@ export const OrganizationModelControllerApiAxiosParamCreator = function (configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { id, variableParam } = params;
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling deleteEntityOrganizations.",
-                );
-            }
-            const localVarPath = `/api/organizations/{id}`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (variableParam !== undefined) {
-                if (typeof variableParam === "object") {
-                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["variableParam"] = variableParam;
-                }
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         deleteEntityUserGroups(
             params: {
                 id: string;
@@ -7280,83 +7349,6 @@ export const OrganizationModelControllerApiAxiosParamCreator = function (configu
         ): RequestArgs {
             const { variableParam, include, page, size, sort } = params;
             const localVarPath = `/api/modelModules`;
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (variableParam !== undefined) {
-                if (typeof variableParam === "object") {
-                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["variableParam"] = variableParam;
-                }
-            }
-
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
-            }
-
-            if (page !== undefined) {
-                if (typeof page === "object") {
-                    addFlattenedObjectTo(page, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["page"] = page;
-                }
-            }
-
-            if (size !== undefined) {
-                if (typeof size === "object") {
-                    addFlattenedObjectTo(size, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["size"] = size;
-                }
-            }
-
-            if (sort) {
-                localVarQueryParameter["sort"] = sort;
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {number} [page] Zero-based page index (0..N)
-         * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllEntitiesOrganizations(
-            params: {
-                variableParam?: { [key: string]: object };
-                include?: object;
-                page?: number;
-                size?: number;
-                sort?: Array<string>;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { variableParam, include, page, size, sort } = params;
-            const localVarPath = `/api/organizations`;
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -7837,69 +7829,6 @@ export const OrganizationModelControllerApiAxiosParamCreator = function (configu
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { id, variableParam, include } = params;
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling getEntityOrganizations.",
-                );
-            }
-            const localVarPath = `/api/organizations/{id}`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (variableParam !== undefined) {
-                if (typeof variableParam === "object") {
-                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["variableParam"] = variableParam;
-                }
-            }
-
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
-            }
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getEntityUserGroups(
             params: {
                 id: string;
@@ -8303,86 +8232,6 @@ export const OrganizationModelControllerApiAxiosParamCreator = function (configu
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(jsonApiModelModuleDocument !== undefined ? jsonApiModelModuleDocument : {})
                 : jsonApiModelModuleDocument || "";
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateEntityOrganizations(
-            params: {
-                id: string;
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { id, jsonApiOrganizationDocument, variableParam, include } = params;
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new RequiredError(
-                    "id",
-                    "Required parameter id was null or undefined when calling updateEntityOrganizations.",
-                );
-            }
-            // verify required parameter 'jsonApiOrganizationDocument' is not null or undefined
-            if (jsonApiOrganizationDocument === null || jsonApiOrganizationDocument === undefined) {
-                throw new RequiredError(
-                    "jsonApiOrganizationDocument",
-                    "Required parameter jsonApiOrganizationDocument was null or undefined when calling updateEntityOrganizations.",
-                );
-            }
-            const localVarPath = `/api/organizations/{id}`.replace(
-                `{${"id"}}`,
-                encodeURIComponent(String(id)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            if (variableParam !== undefined) {
-                if (typeof variableParam === "object") {
-                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["variableParam"] = variableParam;
-                }
-            }
-
-            if (include !== undefined) {
-                if (typeof include === "object") {
-                    addFlattenedObjectTo(include, localVarQueryParameter);
-                } else {
-                    localVarQueryParameter["include"] = include;
-                }
-            }
-
-            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-            const needsSerialization =
-                typeof jsonApiOrganizationDocument !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(jsonApiOrganizationDocument !== undefined ? jsonApiOrganizationDocument : {})
-                : jsonApiOrganizationDocument || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -8887,33 +8736,6 @@ export const OrganizationModelControllerApiFp = function (configuration?: Config
         },
         /**
          *
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createEntityOrganizations(
-            params: {
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationDocument> {
-            const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
-                configuration,
-            ).createEntityOrganizations(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
          * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -9060,31 +8882,6 @@ export const OrganizationModelControllerApiFp = function (configuration?: Config
             const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
                 configuration,
             ).deleteEntityModelModules(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
-            const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
-                configuration,
-            ).deleteEntityOrganizations(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -9253,37 +9050,6 @@ export const OrganizationModelControllerApiFp = function (configuration?: Config
             const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
                 configuration,
             ).getAllEntitiesModelModules(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {number} [page] Zero-based page index (0..N)
-         * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllEntitiesOrganizations(
-            params: {
-                variableParam?: { [key: string]: object };
-                include?: object;
-                page?: number;
-                size?: number;
-                sort?: Array<string>;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationList> {
-            const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
-                configuration,
-            ).getAllEntitiesOrganizations(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -9474,33 +9240,6 @@ export const OrganizationModelControllerApiFp = function (configuration?: Config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationDocument> {
-            const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
-                configuration,
-            ).getEntityOrganizations(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getEntityUserGroups(
             params: {
                 id: string;
@@ -9653,35 +9392,6 @@ export const OrganizationModelControllerApiFp = function (configuration?: Config
             const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
                 configuration,
             ).updateEntityModelModules(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateEntityOrganizations(
-            params: {
-                id: string;
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationDocument> {
-            const localVarAxiosArgs = OrganizationModelControllerApiAxiosParamCreator(
-                configuration,
-            ).updateEntityOrganizations(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -9988,27 +9698,6 @@ export const OrganizationModelControllerApiFactory = function (
         },
         /**
          *
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        createEntityOrganizations(
-            params: {
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options?: any,
-        ): AxiosPromise<JsonApiOrganizationDocument> {
-            return OrganizationModelControllerApiFp(configuration).createEntityOrganizations(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
          * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -10123,25 +9812,6 @@ export const OrganizationModelControllerApiFactory = function (
             options?: any,
         ): AxiosPromise<void> {
             return OrganizationModelControllerApiFp(configuration).deleteEntityModelModules(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        deleteEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-            },
-            options?: any,
-        ): AxiosPromise<void> {
-            return OrganizationModelControllerApiFp(configuration).deleteEntityOrganizations(params, options)(
                 axios,
                 basePath,
             );
@@ -10274,31 +9944,6 @@ export const OrganizationModelControllerApiFactory = function (
             options?: any,
         ): AxiosPromise<JsonApiModelModuleList> {
             return OrganizationModelControllerApiFp(configuration).getAllEntitiesModelModules(
-                params,
-                options,
-            )(axios, basePath);
-        },
-        /**
-         *
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {number} [page] Zero-based page index (0..N)
-         * @param {number} [size] The size of the page to be returned
-         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getAllEntitiesOrganizations(
-            params: {
-                variableParam?: { [key: string]: object };
-                include?: object;
-                page?: number;
-                size?: number;
-                sort?: Array<string>;
-            },
-            options?: any,
-        ): AxiosPromise<JsonApiOrganizationList> {
-            return OrganizationModelControllerApiFp(configuration).getAllEntitiesOrganizations(
                 params,
                 options,
             )(axios, basePath);
@@ -10449,27 +10094,6 @@ export const OrganizationModelControllerApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getEntityOrganizations(
-            params: {
-                id: string;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options?: any,
-        ): AxiosPromise<JsonApiOrganizationDocument> {
-            return OrganizationModelControllerApiFp(configuration).getEntityOrganizations(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
         getEntityUserGroups(
             params: {
                 id: string;
@@ -10590,29 +10214,6 @@ export const OrganizationModelControllerApiFactory = function (
             options?: any,
         ): AxiosPromise<JsonApiModelModuleDocument> {
             return OrganizationModelControllerApiFp(configuration).updateEntityModelModules(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
-         * @param {string} id
-         * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-         * @param {{ [key: string]: object; }} [variableParam]
-         * @param {object} [include]
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        updateEntityOrganizations(
-            params: {
-                id: string;
-                jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-                variableParam?: { [key: string]: object };
-                include?: object;
-            },
-            options?: any,
-        ): AxiosPromise<JsonApiOrganizationDocument> {
-            return OrganizationModelControllerApiFp(configuration).updateEntityOrganizations(params, options)(
                 axios,
                 basePath,
             );
@@ -10863,24 +10464,6 @@ export interface OrganizationModelControllerApiInterface {
 
     /**
      *
-     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApiInterface
-     */
-    createEntityOrganizations(
-        params: {
-            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ): AxiosPromise<JsonApiOrganizationDocument>;
-
-    /**
-     *
      * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -10974,22 +10557,6 @@ export interface OrganizationModelControllerApiInterface {
      * @memberof OrganizationModelControllerApiInterface
      */
     deleteEntityModelModules(
-        params: {
-            id: string;
-            variableParam?: { [key: string]: object };
-        },
-        options?: any,
-    ): AxiosPromise<void>;
-
-    /**
-     *
-     * @param {string} id
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApiInterface
-     */
-    deleteEntityOrganizations(
         params: {
             id: string;
             variableParam?: { [key: string]: object };
@@ -11122,28 +10689,6 @@ export interface OrganizationModelControllerApiInterface {
      * @throws {RequiredError}
      * @memberof OrganizationModelControllerApiInterface
      */
-    getAllEntitiesOrganizations(
-        params: {
-            variableParam?: { [key: string]: object };
-            include?: object;
-            page?: number;
-            size?: number;
-            sort?: Array<string>;
-        },
-        options?: any,
-    ): AxiosPromise<JsonApiOrganizationList>;
-
-    /**
-     *
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {number} [page] Zero-based page index (0..N)
-     * @param {number} [size] The size of the page to be returned
-     * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApiInterface
-     */
     getAllEntitiesUserGroups(
         params: {
             variableParam?: { [key: string]: object };
@@ -11262,24 +10807,6 @@ export interface OrganizationModelControllerApiInterface {
      * @throws {RequiredError}
      * @memberof OrganizationModelControllerApiInterface
      */
-    getEntityOrganizations(
-        params: {
-            id: string;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ): AxiosPromise<JsonApiOrganizationDocument>;
-
-    /**
-     *
-     * @param {string} id
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApiInterface
-     */
     getEntityUserGroups(
         params: {
             id: string;
@@ -11384,26 +10911,6 @@ export interface OrganizationModelControllerApiInterface {
         },
         options?: any,
     ): AxiosPromise<JsonApiModelModuleDocument>;
-
-    /**
-     *
-     * @param {string} id
-     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApiInterface
-     */
-    updateEntityOrganizations(
-        params: {
-            id: string;
-            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ): AxiosPromise<JsonApiOrganizationDocument>;
 
     /**
      *
@@ -11692,29 +11199,6 @@ export class OrganizationModelControllerApi extends BaseAPI
 
     /**
      *
-     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApi
-     */
-    public createEntityOrganizations(
-        params: {
-            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ) {
-        return OrganizationModelControllerApiFp(this.configuration).createEntityOrganizations(
-            params,
-            options,
-        )(this.axios, this.basePath);
-    }
-
-    /**
-     *
      * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -11843,27 +11327,6 @@ export class OrganizationModelControllerApi extends BaseAPI
             this.axios,
             this.basePath,
         );
-    }
-
-    /**
-     *
-     * @param {string} id
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApi
-     */
-    public deleteEntityOrganizations(
-        params: {
-            id: string;
-            variableParam?: { [key: string]: object };
-        },
-        options?: any,
-    ) {
-        return OrganizationModelControllerApiFp(this.configuration).deleteEntityOrganizations(
-            params,
-            options,
-        )(this.axios, this.basePath);
     }
 
     /**
@@ -12005,33 +11468,6 @@ export class OrganizationModelControllerApi extends BaseAPI
         options?: any,
     ) {
         return OrganizationModelControllerApiFp(this.configuration).getAllEntitiesModelModules(
-            params,
-            options,
-        )(this.axios, this.basePath);
-    }
-
-    /**
-     *
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {number} [page] Zero-based page index (0..N)
-     * @param {number} [size] The size of the page to be returned
-     * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApi
-     */
-    public getAllEntitiesOrganizations(
-        params: {
-            variableParam?: { [key: string]: object };
-            include?: object;
-            page?: number;
-            size?: number;
-            sort?: Array<string>;
-        },
-        options?: any,
-    ) {
-        return OrganizationModelControllerApiFp(this.configuration).getAllEntitiesOrganizations(
             params,
             options,
         )(this.axios, this.basePath);
@@ -12196,29 +11632,6 @@ export class OrganizationModelControllerApi extends BaseAPI
      * @throws {RequiredError}
      * @memberof OrganizationModelControllerApi
      */
-    public getEntityOrganizations(
-        params: {
-            id: string;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ) {
-        return OrganizationModelControllerApiFp(this.configuration).getEntityOrganizations(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     *
-     * @param {string} id
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApi
-     */
     public getEntityUserGroups(
         params: {
             id: string;
@@ -12357,31 +11770,6 @@ export class OrganizationModelControllerApi extends BaseAPI
     /**
      *
      * @param {string} id
-     * @param {JsonApiOrganizationDocument} jsonApiOrganizationDocument
-     * @param {{ [key: string]: object; }} [variableParam]
-     * @param {object} [include]
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof OrganizationModelControllerApi
-     */
-    public updateEntityOrganizations(
-        params: {
-            id: string;
-            jsonApiOrganizationDocument: JsonApiOrganizationDocument;
-            variableParam?: { [key: string]: object };
-            include?: object;
-        },
-        options?: any,
-    ) {
-        return OrganizationModelControllerApiFp(this.configuration).updateEntityOrganizations(
-            params,
-            options,
-        )(this.axios, this.basePath);
-    }
-
-    /**
-     *
-     * @param {string} id
      * @param {JsonApiUserGroupDocument} jsonApiUserGroupDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -12456,131 +11844,91 @@ export class OrganizationModelControllerApi extends BaseAPI
 }
 
 /**
- * ProfileControllerApi - axios parameter creator
+ * UserModelControllerApi - axios parameter creator
  * @export
  */
-export const ProfileControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const UserModelControllerApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          *
+         * @param {string} userId
+         * @param {JsonApiApiTokenDocument} jsonApiApiTokenDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        index(params: {}, options: any = {}): RequestArgs {
-            const {} = params;
-            const localVarPath = `/metadata-profile`;
+        createEntityApiTokens(
+            params: {
+                userId: string;
+                jsonApiApiTokenDocument: JsonApiApiTokenDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { userId, jsonApiApiTokenDocument, variableParam, include } = params;
+            // verify required parameter 'userId' is not null or undefined
+            if (userId === null || userId === undefined) {
+                throw new RequiredError(
+                    "userId",
+                    "Required parameter userId was null or undefined when calling createEntityApiTokens.",
+                );
+            }
+            // verify required parameter 'jsonApiApiTokenDocument' is not null or undefined
+            if (jsonApiApiTokenDocument === null || jsonApiApiTokenDocument === undefined) {
+                throw new RequiredError(
+                    "jsonApiApiTokenDocument",
+                    "Required parameter jsonApiApiTokenDocument was null or undefined when calling createEntityApiTokens.",
+                );
+            }
+            const localVarPath = `/api/users/{userId}/apiTokens`.replace(
+                `{${"userId"}}`,
+                encodeURIComponent(String(userId)),
+            );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
             // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof jsonApiApiTokenDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(jsonApiApiTokenDocument !== undefined ? jsonApiApiTokenDocument : {})
+                : jsonApiApiTokenDocument || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
                 options: localVarRequestOptions,
             };
         },
-    };
-};
-
-/**
- * ProfileControllerApi - functional programming interface
- * @export
- */
-export const ProfileControllerApiFp = function (configuration?: Configuration) {
-    return {
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        index(
-            params: {},
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Profile> {
-            const localVarAxiosArgs = ProfileControllerApiAxiosParamCreator(configuration).index(
-                params,
-                options,
-            );
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-    };
-};
-
-/**
- * ProfileControllerApi - factory interface
- * @export
- */
-export const ProfileControllerApiFactory = function (
-    configuration?: Configuration,
-    basePath?: string,
-    axios?: AxiosInstance,
-) {
-    return {
-        /**
-         *
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        index(params: {}, options?: any): AxiosPromise<Profile> {
-            return ProfileControllerApiFp(configuration).index(params, options)(axios, basePath);
-        },
-    };
-};
-
-/**
- * ProfileControllerApi - interface
- * @export
- * @interface ProfileControllerApi
- */
-export interface ProfileControllerApiInterface {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProfileControllerApiInterface
-     */
-    index(params: {}, options?: any): AxiosPromise<Profile>;
-}
-
-/**
- * ProfileControllerApi - object-oriented interface
- * @export
- * @class ProfileControllerApi
- * @extends {BaseAPI}
- */
-export class ProfileControllerApi extends BaseAPI implements ProfileControllerApiInterface {
-    /**
-     *
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ProfileControllerApi
-     */
-    public index(params: {}, options?: any) {
-        return ProfileControllerApiFp(this.configuration).index(params, options)(this.axios, this.basePath);
-    }
-}
-
-/**
- * UserModelControllerApi - axios parameter creator
- * @export
- */
-export const UserModelControllerApiAxiosParamCreator = function (configuration?: Configuration) {
-    return {
         /**
          *
          * @param {string} userId
@@ -12840,6 +12188,35 @@ export const UserModelControllerApiFp = function (configuration?: Configuration)
         /**
          *
          * @param {string} userId
+         * @param {JsonApiApiTokenDocument} jsonApiApiTokenDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityApiTokens(
+            params: {
+                userId: string;
+                jsonApiApiTokenDocument: JsonApiApiTokenDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiApiTokenDocument> {
+            const localVarAxiosArgs = UserModelControllerApiAxiosParamCreator(
+                configuration,
+            ).createEntityApiTokens(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} userId
          * @param {string} id
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {*} [options] Override http request option.
@@ -12948,6 +12325,29 @@ export const UserModelControllerApiFactory = function (
         /**
          *
          * @param {string} userId
+         * @param {JsonApiApiTokenDocument} jsonApiApiTokenDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityApiTokens(
+            params: {
+                userId: string;
+                jsonApiApiTokenDocument: JsonApiApiTokenDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiApiTokenDocument> {
+            return UserModelControllerApiFp(configuration).createEntityApiTokens(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         *
+         * @param {string} userId
          * @param {string} id
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {*} [options] Override http request option.
@@ -13034,6 +12434,26 @@ export interface UserModelControllerApiInterface {
     /**
      *
      * @param {string} userId
+     * @param {JsonApiApiTokenDocument} jsonApiApiTokenDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserModelControllerApiInterface
+     */
+    createEntityApiTokens(
+        params: {
+            userId: string;
+            jsonApiApiTokenDocument: JsonApiApiTokenDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiApiTokenDocument>;
+
+    /**
+     *
+     * @param {string} userId
      * @param {string} id
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {*} [options] Override http request option.
@@ -13107,6 +12527,31 @@ export interface UserModelControllerApiInterface {
  * @extends {BaseAPI}
  */
 export class UserModelControllerApi extends BaseAPI implements UserModelControllerApiInterface {
+    /**
+     *
+     * @param {string} userId
+     * @param {JsonApiApiTokenDocument} jsonApiApiTokenDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof UserModelControllerApi
+     */
+    public createEntityApiTokens(
+        params: {
+            userId: string;
+            jsonApiApiTokenDocument: JsonApiApiTokenDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ) {
+        return UserModelControllerApiFp(this.configuration).createEntityApiTokens(params, options)(
+            this.axios,
+            this.basePath,
+        );
+    }
+
     /**
      *
      * @param {string} userId
@@ -13278,6 +12723,88 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                           : {},
                   )
                 : jsonApiAnalyticalDashboardDocument || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, jsonApiDataDiscriminatorDocument, variableParam, include } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling createEntityDataDiscriminators.",
+                );
+            }
+            // verify required parameter 'jsonApiDataDiscriminatorDocument' is not null or undefined
+            if (jsonApiDataDiscriminatorDocument === null || jsonApiDataDiscriminatorDocument === undefined) {
+                throw new RequiredError(
+                    "jsonApiDataDiscriminatorDocument",
+                    "Required parameter jsonApiDataDiscriminatorDocument was null or undefined when calling createEntityDataDiscriminators.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/objects/dataDiscriminators`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof jsonApiDataDiscriminatorDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiDataDiscriminatorDocument !== undefined ? jsonApiDataDiscriminatorDocument : {},
+                  )
+                : jsonApiDataDiscriminatorDocument || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -13565,6 +13092,67 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 );
             }
             const localVarPath = `/api/workspaces/{workspaceId}/objects/analyticalDashboards/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "DELETE", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, objectId, variableParam } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling deleteEntityDataDiscriminators.",
+                );
+            }
+            // verify required parameter 'objectId' is not null or undefined
+            if (objectId === null || objectId === undefined) {
+                throw new RequiredError(
+                    "objectId",
+                    "Required parameter objectId was null or undefined when calling deleteEntityDataDiscriminators.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/objects/dataDiscriminators/{objectId}`
                 .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
                 .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
@@ -13897,6 +13485,95 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 );
             }
             const localVarPath = `/api/workspaces/{workspaceId}/objects/attributes`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            if (page !== undefined) {
+                if (typeof page === "object") {
+                    addFlattenedObjectTo(page, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["page"] = page;
+                }
+            }
+
+            if (size !== undefined) {
+                if (typeof size === "object") {
+                    addFlattenedObjectTo(size, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["size"] = size;
+                }
+            }
+
+            if (sort) {
+                localVarQueryParameter["sort"] = sort;
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntitiesDataDiscriminators(
+            params: {
+                workspaceId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+                page?: number;
+                size?: number;
+                sort?: Array<string>;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, variableParam, include, page, size, sort } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling getEntitiesDataDiscriminators.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/objects/dataDiscriminators`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -14818,6 +14495,77 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const { workspaceId, objectId, variableParam, include } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling getEntityDataDiscriminators.",
+                );
+            }
+            // verify required parameter 'objectId' is not null or undefined
+            if (objectId === null || objectId === undefined) {
+                throw new RequiredError(
+                    "objectId",
+                    "Required parameter objectId was null or undefined when calling getEntityDataDiscriminators.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/objects/dataDiscriminators/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getEntityDatasets(
             params: {
                 workspaceId: string;
@@ -15482,6 +15230,102 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): RequestArgs {
+            const {
+                workspaceId,
+                objectId,
+                jsonApiDataDiscriminatorDocument,
+                variableParam,
+                include,
+            } = params;
+            // verify required parameter 'workspaceId' is not null or undefined
+            if (workspaceId === null || workspaceId === undefined) {
+                throw new RequiredError(
+                    "workspaceId",
+                    "Required parameter workspaceId was null or undefined when calling updateEntityDataDiscriminators.",
+                );
+            }
+            // verify required parameter 'objectId' is not null or undefined
+            if (objectId === null || objectId === undefined) {
+                throw new RequiredError(
+                    "objectId",
+                    "Required parameter objectId was null or undefined when calling updateEntityDataDiscriminators.",
+                );
+            }
+            // verify required parameter 'jsonApiDataDiscriminatorDocument' is not null or undefined
+            if (jsonApiDataDiscriminatorDocument === null || jsonApiDataDiscriminatorDocument === undefined) {
+                throw new RequiredError(
+                    "jsonApiDataDiscriminatorDocument",
+                    "Required parameter jsonApiDataDiscriminatorDocument was null or undefined when calling updateEntityDataDiscriminators.",
+                );
+            }
+            const localVarPath = `/api/workspaces/{workspaceId}/objects/dataDiscriminators/{objectId}`
+                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "PUT", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (variableParam !== undefined) {
+                if (typeof variableParam === "object") {
+                    addFlattenedObjectTo(variableParam, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["variableParam"] = variableParam;
+                }
+            }
+
+            if (include !== undefined) {
+                if (typeof include === "object") {
+                    addFlattenedObjectTo(include, localVarQueryParameter);
+                } else {
+                    localVarQueryParameter["include"] = include;
+                }
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/vnd.gooddata.api+json";
+
+            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
+            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
+            delete localVarUrlObj.search;
+            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
+            const needsSerialization =
+                typeof jsonApiDataDiscriminatorDocument !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(
+                      jsonApiDataDiscriminatorDocument !== undefined ? jsonApiDataDiscriminatorDocument : {},
+                  )
+                : jsonApiDataDiscriminatorDocument || "";
+
+            return {
+                url: globalImportUrl.format(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -15798,6 +15642,35 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
         /**
          *
          * @param {string} workspaceId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
+                configuration,
+            ).createEntityDataDiscriminators(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
          * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -15901,6 +15774,33 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
                 configuration,
             ).deleteEntityAnalyticalDashboards(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void> {
+            const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
+                configuration,
+            ).deleteEntityDataDiscriminators(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -16048,6 +15948,39 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
                 configuration,
             ).getEntitiesAttributes(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntitiesDataDiscriminators(
+            params: {
+                workspaceId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+                page?: number;
+                size?: number;
+                sort?: Array<string>;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataDiscriminatorList> {
+            const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
+                configuration,
+            ).getEntitiesDataDiscriminators(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -16387,6 +16320,35 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
+                configuration,
+            ).getEntityDataDiscriminators(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getEntityDatasets(
             params: {
                 workspaceId: string;
@@ -16645,6 +16607,37 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options: any = {},
+        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            const localVarAxiosArgs = WorkspaceObjectControllerApiAxiosParamCreator(
+                configuration,
+            ).updateEntityDataDiscriminators(params, options);
+            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+                const axiosRequestArgs = {
+                    ...localVarAxiosArgs.options,
+                    url: basePath + localVarAxiosArgs.url,
+                };
+                return axios.request(axiosRequestArgs);
+            };
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -16773,6 +16766,29 @@ export const WorkspaceObjectControllerApiFactory = function (
         /**
          *
          * @param {string} workspaceId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            return WorkspaceObjectControllerApiFp(configuration).createEntityDataDiscriminators(
+                params,
+                options,
+            )(axios, basePath);
+        },
+        /**
+         *
+         * @param {string} workspaceId
          * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -16856,6 +16872,27 @@ export const WorkspaceObjectControllerApiFactory = function (
             options?: any,
         ): AxiosPromise<void> {
             return WorkspaceObjectControllerApiFp(configuration).deleteEntityAnalyticalDashboards(
+                params,
+                options,
+            )(axios, basePath);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+            },
+            options?: any,
+        ): AxiosPromise<void> {
+            return WorkspaceObjectControllerApiFp(configuration).deleteEntityDataDiscriminators(
                 params,
                 options,
             )(axios, basePath);
@@ -16976,6 +17013,33 @@ export const WorkspaceObjectControllerApiFactory = function (
                 axios,
                 basePath,
             );
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {number} [page] Zero-based page index (0..N)
+         * @param {number} [size] The size of the page to be returned
+         * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getEntitiesDataDiscriminators(
+            params: {
+                workspaceId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+                page?: number;
+                size?: number;
+                sort?: Array<string>;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiDataDiscriminatorList> {
+            return WorkspaceObjectControllerApiFp(configuration).getEntitiesDataDiscriminators(
+                params,
+                options,
+            )(axios, basePath);
         },
         /**
          *
@@ -17248,6 +17312,29 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            return WorkspaceObjectControllerApiFp(configuration).getEntityDataDiscriminators(params, options)(
+                axios,
+                basePath,
+            );
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getEntityDatasets(
             params: {
                 workspaceId: string;
@@ -17452,6 +17539,31 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {string} objectId
+         * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+         * @param {{ [key: string]: object; }} [variableParam]
+         * @param {object} [include]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        updateEntityDataDiscriminators(
+            params: {
+                workspaceId: string;
+                objectId: string;
+                jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+                variableParam?: { [key: string]: object };
+                include?: object;
+            },
+            options?: any,
+        ): AxiosPromise<JsonApiDataDiscriminatorDocument> {
+            return WorkspaceObjectControllerApiFp(configuration).updateEntityDataDiscriminators(
+                params,
+                options,
+            )(axios, basePath);
+        },
+        /**
+         *
+         * @param {string} workspaceId
+         * @param {string} objectId
          * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
          * @param {{ [key: string]: object; }} [variableParam]
          * @param {object} [include]
@@ -17555,6 +17667,26 @@ export interface WorkspaceObjectControllerApiInterface {
     /**
      *
      * @param {string} workspaceId
+     * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApiInterface
+     */
+    createEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiDataDiscriminatorDocument>;
+
+    /**
+     *
+     * @param {string} workspaceId
      * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -17622,6 +17754,24 @@ export interface WorkspaceObjectControllerApiInterface {
      * @memberof WorkspaceObjectControllerApiInterface
      */
     deleteEntityAnalyticalDashboards(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            variableParam?: { [key: string]: object };
+        },
+        options?: any,
+    ): AxiosPromise<void>;
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApiInterface
+     */
+    deleteEntityDataDiscriminators(
         params: {
             workspaceId: string;
             objectId: string;
@@ -17731,6 +17881,30 @@ export interface WorkspaceObjectControllerApiInterface {
         },
         options?: any,
     ): AxiosPromise<JsonApiAttributeList>;
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {number} [page] Zero-based page index (0..N)
+     * @param {number} [size] The size of the page to be returned
+     * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApiInterface
+     */
+    getEntitiesDataDiscriminators(
+        params: {
+            workspaceId: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
+            page?: number;
+            size?: number;
+            sort?: Array<string>;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiDataDiscriminatorList>;
 
     /**
      *
@@ -17974,6 +18148,26 @@ export interface WorkspaceObjectControllerApiInterface {
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
      */
+    getEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiDataDiscriminatorDocument>;
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApiInterface
+     */
     getEntityDatasets(
         params: {
             workspaceId: string;
@@ -18150,6 +18344,28 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {string} objectId
+     * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApiInterface
+     */
+    updateEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ): AxiosPromise<JsonApiDataDiscriminatorDocument>;
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
      * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -18248,6 +18464,31 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
     /**
      *
      * @param {string} workspaceId
+     * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApi
+     */
+    public createEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ) {
+        return WorkspaceObjectControllerApiFp(this.configuration).createEntityDataDiscriminators(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     *
+     * @param {string} workspaceId
      * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -18338,6 +18579,29 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         options?: any,
     ) {
         return WorkspaceObjectControllerApiFp(this.configuration).deleteEntityAnalyticalDashboards(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApi
+     */
+    public deleteEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            variableParam?: { [key: string]: object };
+        },
+        options?: any,
+    ) {
+        return WorkspaceObjectControllerApiFp(this.configuration).deleteEntityDataDiscriminators(
             params,
             options,
         )(this.axios, this.basePath);
@@ -18468,6 +18732,35 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             this.axios,
             this.basePath,
         );
+    }
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {number} [page] Zero-based page index (0..N)
+     * @param {number} [size] The size of the page to be returned
+     * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApi
+     */
+    public getEntitiesDataDiscriminators(
+        params: {
+            workspaceId: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
+            page?: number;
+            size?: number;
+            sort?: Array<string>;
+        },
+        options?: any,
+    ) {
+        return WorkspaceObjectControllerApiFp(this.configuration).getEntitiesDataDiscriminators(
+            params,
+            options,
+        )(this.axios, this.basePath);
     }
 
     /**
@@ -18762,6 +19055,31 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
      */
+    public getEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ) {
+        return WorkspaceObjectControllerApiFp(this.configuration).getEntityDataDiscriminators(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApi
+     */
     public getEntityDatasets(
         params: {
             workspaceId: string;
@@ -18983,6 +19301,33 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {string} objectId
+     * @param {JsonApiDataDiscriminatorDocument} jsonApiDataDiscriminatorDocument
+     * @param {{ [key: string]: object; }} [variableParam]
+     * @param {object} [include]
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof WorkspaceObjectControllerApi
+     */
+    public updateEntityDataDiscriminators(
+        params: {
+            workspaceId: string;
+            objectId: string;
+            jsonApiDataDiscriminatorDocument: JsonApiDataDiscriminatorDocument;
+            variableParam?: { [key: string]: object };
+            include?: object;
+        },
+        options?: any,
+    ) {
+        return WorkspaceObjectControllerApiFp(this.configuration).updateEntityDataDiscriminators(
+            params,
+            options,
+        )(this.axios, this.basePath);
+    }
+
+    /**
+     *
+     * @param {string} workspaceId
+     * @param {string} objectId
      * @param {JsonApiFilterContextDocument} jsonApiFilterContextDocument
      * @param {{ [key: string]: object; }} [variableParam]
      * @param {object} [include]
@@ -19073,7 +19418,7 @@ export const WorkspaceRootModelControllerApiAxiosParamCreator = function (config
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRootJsonApi(
+        getRootJsonApi1(
             params: {
                 workspaceId: string;
             },
@@ -19084,53 +19429,10 @@ export const WorkspaceRootModelControllerApiAxiosParamCreator = function (config
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
                     "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getRootJsonApi.",
+                    "Required parameter workspaceId was null or undefined when calling getRootJsonApi1.",
                 );
             }
             const localVarPath = `/api/workspaces/{workspaceId}/objects`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
-            // @ts-ignore fix override query string Detail: https://stackoverflow.com/a/7517673/1077943
-            delete localVarUrlObj.search;
-            localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
-
-            return {
-                url: globalImportUrl.format(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         *
-         * @param {string} workspaceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRootJsonApi2(
-            params: {
-                workspaceId: string;
-            },
-            options: any = {},
-        ): RequestArgs {
-            const { workspaceId } = params;
-            // verify required parameter 'workspaceId' is not null or undefined
-            if (workspaceId === null || workspaceId === undefined) {
-                throw new RequiredError(
-                    "workspaceId",
-                    "Required parameter workspaceId was null or undefined when calling getRootJsonApi2.",
-                );
-            }
-            const localVarPath = `/api/workspaces/{workspaceId}/model`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -19168,7 +19470,7 @@ export const WorkspaceRootModelControllerApiFp = function (configuration?: Confi
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRootJsonApi(
+        getRootJsonApi1(
             params: {
                 workspaceId: string;
             },
@@ -19176,30 +19478,7 @@ export const WorkspaceRootModelControllerApiFp = function (configuration?: Confi
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepresentationModelObject> {
             const localVarAxiosArgs = WorkspaceRootModelControllerApiAxiosParamCreator(
                 configuration,
-            ).getRootJsonApi(params, options);
-            return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
-                const axiosRequestArgs = {
-                    ...localVarAxiosArgs.options,
-                    url: basePath + localVarAxiosArgs.url,
-                };
-                return axios.request(axiosRequestArgs);
-            };
-        },
-        /**
-         *
-         * @param {string} workspaceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRootJsonApi2(
-            params: {
-                workspaceId: string;
-            },
-            options: any = {},
-        ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RepresentationModelObject> {
-            const localVarAxiosArgs = WorkspaceRootModelControllerApiAxiosParamCreator(
-                configuration,
-            ).getRootJsonApi2(params, options);
+            ).getRootJsonApi1(params, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs = {
                     ...localVarAxiosArgs.options,
@@ -19227,30 +19506,13 @@ export const WorkspaceRootModelControllerApiFactory = function (
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getRootJsonApi(
+        getRootJsonApi1(
             params: {
                 workspaceId: string;
             },
             options?: any,
         ): AxiosPromise<RepresentationModelObject> {
-            return WorkspaceRootModelControllerApiFp(configuration).getRootJsonApi(params, options)(
-                axios,
-                basePath,
-            );
-        },
-        /**
-         *
-         * @param {string} workspaceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getRootJsonApi2(
-            params: {
-                workspaceId: string;
-            },
-            options?: any,
-        ): AxiosPromise<RepresentationModelObject> {
-            return WorkspaceRootModelControllerApiFp(configuration).getRootJsonApi2(params, options)(
+            return WorkspaceRootModelControllerApiFp(configuration).getRootJsonApi1(params, options)(
                 axios,
                 basePath,
             );
@@ -19271,21 +19533,7 @@ export interface WorkspaceRootModelControllerApiInterface {
      * @throws {RequiredError}
      * @memberof WorkspaceRootModelControllerApiInterface
      */
-    getRootJsonApi(
-        params: {
-            workspaceId: string;
-        },
-        options?: any,
-    ): AxiosPromise<RepresentationModelObject>;
-
-    /**
-     *
-     * @param {string} workspaceId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WorkspaceRootModelControllerApiInterface
-     */
-    getRootJsonApi2(
+    getRootJsonApi1(
         params: {
             workspaceId: string;
         },
@@ -19308,32 +19556,13 @@ export class WorkspaceRootModelControllerApi extends BaseAPI
      * @throws {RequiredError}
      * @memberof WorkspaceRootModelControllerApi
      */
-    public getRootJsonApi(
+    public getRootJsonApi1(
         params: {
             workspaceId: string;
         },
         options?: any,
     ) {
-        return WorkspaceRootModelControllerApiFp(this.configuration).getRootJsonApi(params, options)(
-            this.axios,
-            this.basePath,
-        );
-    }
-
-    /**
-     *
-     * @param {string} workspaceId
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof WorkspaceRootModelControllerApi
-     */
-    public getRootJsonApi2(
-        params: {
-            workspaceId: string;
-        },
-        options?: any,
-    ) {
-        return WorkspaceRootModelControllerApiFp(this.configuration).getRootJsonApi2(params, options)(
+        return WorkspaceRootModelControllerApiFp(this.configuration).getRootJsonApi1(params, options)(
             this.axios,
             this.basePath,
         );

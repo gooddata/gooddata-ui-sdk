@@ -6,7 +6,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost:9007",
+            "url": "https://staging.anywhere.gooddata.com",
             "description": "Generated server url"
         },
         {
@@ -15,82 +15,6 @@
         }
     ],
     "paths": {
-        "/api/organization": {
-            "get": {
-                "tags": ["organization-controller"],
-                "summary": "Get organization info",
-                "description": "Gets a basic information about organization.",
-                "operationId": "getOrganization",
-                "responses": {
-                    "200": {
-                        "description": "Current information about organization.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Organization"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "summary": "Update organization info",
-                "description": "Sets a basic information about organization.",
-                "operationId": "updateOrganization",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Organization"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "204": {
-                        "description": "A new info was successfully set.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict on organization id.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["organization-controller"],
-                "summary": "Drop organization",
-                "description": "Completely remove and discontinue the organization.",
-                "operationId": "dropOrganization",
-                "responses": {
-                    "204": {
-                        "description": "Organization was successfully discarded.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Unit"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/layout/workspaces": {
             "get": {
                 "tags": ["declarative-layout-controller"],
@@ -365,66 +289,10 @@
                 }
             }
         },
-        "/metadata-profile": {
-            "get": {
-                "tags": ["profile-controller"],
-                "operationId": "index",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Profile"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/model": {
-            "get": {
-                "tags": ["workspace-root-model-controller"],
-                "operationId": "getRootJsonApi_2",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RepresentationModelObject"
-                                }
-                            },
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RepresentationModelObject"
-                                }
-                            },
-                            "application/hal+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RepresentationModel"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/workspaces/{workspaceId}/objects": {
             "get": {
                 "tags": ["workspace-root-model-controller"],
-                "operationId": "getRootJsonApi",
+                "operationId": "getRootJsonApi_1",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -439,12 +307,12 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/vnd.gooddata.api+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/RepresentationModelObject"
                                 }
                             },
-                            "application/vnd.gooddata.api+json": {
+                            "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/RepresentationModelObject"
                                 }
@@ -634,7 +502,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -677,7 +545,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -730,7 +598,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -746,6 +614,104 @@
                 "responses": {
                     "204": {
                         "description": "Successfully deleted"
+                    }
+                }
+            }
+        },
+        "/api/admin/organizations/{id}": {
+            "get": {
+                "tags": ["organization-controller"],
+                "operationId": "getEntity@Organizations",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiOrganizationDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["organization-controller"],
+                "operationId": "updateEntity@Organizations",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiOrganizationDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiOrganizationDocument"
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -869,7 +835,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -912,7 +878,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -965,7 +931,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1104,7 +1070,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1147,7 +1113,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1200,242 +1166,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "Successfully deleted"
-                    }
-                }
-            }
-        },
-        "/api/organizations": {
-            "get": {
-                "tags": ["organization-model-controller"],
-                "operationId": "getAllEntities@Organizations",
-                "parameters": [
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    {
-                        "name": "page",
-                        "in": "query",
-                        "description": "Zero-based page index (0..N)",
-                        "schema": {
-                            "type": "integer",
-                            "default": "0"
-                        }
-                    },
-                    {
-                        "name": "size",
-                        "in": "query",
-                        "description": "The size of the page to be returned",
-                        "schema": {
-                            "type": "integer",
-                            "default": "20"
-                        }
-                    },
-                    {
-                        "name": "sort",
-                        "in": "query",
-                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationList"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "tags": ["organization-model-controller"],
-                "operationId": "createEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiOrganizationDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "201": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/organizations/{id}": {
-            "get": {
-                "tags": ["organization-model-controller"],
-                "operationId": "getEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiOrganizationDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "tags": ["organization-model-controller"],
-                "operationId": "deleteEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1574,7 +1305,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1617,7 +1348,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1670,7 +1401,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1809,7 +1540,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1852,7 +1583,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1905,7 +1636,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -1996,6 +1727,58 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": ["user-model-controller"],
+                "operationId": "createEntity@ApiTokens",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiApiTokenDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiApiTokenDocument"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/api/users/{userId}/apiTokens/{id}": {
@@ -2016,7 +1799,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -2096,7 +1879,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -2235,7 +2018,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -2278,7 +2061,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -2331,7 +2114,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                             "type": "string"
                         }
                     },
@@ -3010,6 +2793,278 @@
                                 }
                             }
                         }
+                    }
+                }
+            }
+        },
+        "/api/workspaces/{workspaceId}/objects/dataDiscriminators": {
+            "get": {
+                "tags": ["workspace-object-controller"],
+                "operationId": "getEntities@DataDiscriminators",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Zero-based page index (0..N)",
+                        "schema": {
+                            "type": "integer",
+                            "default": "0"
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "description": "The size of the page to be returned",
+                        "schema": {
+                            "type": "integer",
+                            "default": "20"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiDataDiscriminatorList"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["workspace-object-controller"],
+                "operationId": "createEntity@DataDiscriminators",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiDataDiscriminatorDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiDataDiscriminatorDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/workspaces/{workspaceId}/objects/dataDiscriminators/{objectId}": {
+            "get": {
+                "tags": ["workspace-object-controller"],
+                "operationId": "getEntity@DataDiscriminators",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiDataDiscriminatorDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": ["workspace-object-controller"],
+                "operationId": "updateEntity@DataDiscriminators",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/vnd.gooddata.api+json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/JsonApiDataDiscriminatorDocument"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Request successfully processed",
+                        "content": {
+                            "application/vnd.gooddata.api+json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JsonApiDataDiscriminatorDocument"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["workspace-object-controller"],
+                "operationId": "deleteEntity@DataDiscriminators",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "objectId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "variableParam",
+                        "in": "query",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successfully deleted"
                     }
                 }
             }
@@ -4458,47 +4513,8 @@
     },
     "components": {
         "schemas": {
-            "NoneScope": {
-                "type": "object"
-            },
-            "Organization": {
-                "required": ["stockId"],
-                "type": "object",
-                "properties": {
-                    "stockId": {
-                        "$ref": "#/components/schemas/StockIdNoneScope"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "hostname": {
-                        "type": "string"
-                    },
-                    "oauthIssuerLocation": {
-                        "type": "string"
-                    },
-                    "id": {
-                        "type": "string"
-                    }
-                }
-            },
-            "StockIdNoneScope": {
-                "required": ["apiId"],
-                "type": "object",
-                "properties": {
-                    "apiId": {
-                        "type": "string"
-                    },
-                    "scope": {
-                        "$ref": "#/components/schemas/NoneScope"
-                    }
-                }
-            },
-            "Unit": {
-                "type": "object"
-            },
             "DeclarativeAnalyticalDashboard": {
-                "required": ["content", "description", "id", "title"],
+                "required": ["content", "id", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4556,7 +4572,7 @@
                 }
             },
             "DeclarativeAttribute": {
-                "required": ["description", "id", "labels", "title"],
+                "required": ["id", "labels", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4602,6 +4618,38 @@
                 },
                 "description": "A table column."
             },
+            "DeclarativeDataDiscriminator": {
+                "required": ["columnName", "dataSourceName", "id", "title"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Data Discriminator ID. This ID is further used to refer to this instance of DD.",
+                        "example": "country_id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Data Discriminator title.",
+                        "example": "Country ID"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Data Discriminator description.",
+                        "example": "ID of country"
+                    },
+                    "columnName": {
+                        "type": "string",
+                        "description": "Data Discriminator column name. Data are filtered using this physical column.",
+                        "example": "country_id"
+                    },
+                    "dataSourceName": {
+                        "type": "string",
+                        "description": "Data source name (ID). Data Discriminator must always be connected to single data source.",
+                        "example": "sampleDataSource"
+                    }
+                },
+                "description": "Data discriminators serving the discrimination of what data users can see in workspaces."
+            },
             "DeclarativeDataSource": {
                 "required": ["name", "tables"],
                 "type": "object",
@@ -4622,16 +4670,7 @@
                 "description": "A data source."
             },
             "DeclarativeDataset": {
-                "required": [
-                    "attributes",
-                    "description",
-                    "facts",
-                    "grain",
-                    "id",
-                    "references",
-                    "sourceTable",
-                    "title"
-                ],
+                "required": ["attributes", "facts", "grain", "id", "references", "sourceTable", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4686,7 +4725,7 @@
                 "description": "A dataset defined by its properties."
             },
             "DeclarativeDateDataset": {
-                "required": ["description", "granularities", "granularitiesFormatting", "id", "title"],
+                "required": ["granularities", "granularitiesFormatting", "id", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4717,18 +4756,15 @@
                                 "HOUR",
                                 "DAY",
                                 "WEEK",
-                                "EUWEEK",
                                 "MONTH",
                                 "QUARTER",
                                 "YEAR",
                                 "MINUTE_OF_HOUR",
                                 "HOUR_OF_DAY",
                                 "DAY_OF_WEEK",
-                                "DAY_OF_EUWEEK",
                                 "DAY_OF_MONTH",
                                 "DAY_OF_YEAR",
                                 "WEEK_OF_YEAR",
-                                "EUWEEK_OF_YEAR",
                                 "MONTH_OF_YEAR",
                                 "QUARTER_OF_YEAR"
                             ]
@@ -4738,7 +4774,7 @@
                 "description": "A date dataset."
             },
             "DeclarativeFact": {
-                "required": ["description", "id", "sourceColumn", "title"],
+                "required": ["id", "sourceColumn", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4765,7 +4801,7 @@
                 "description": "A dataset fact."
             },
             "DeclarativeFilterContext": {
-                "required": ["content", "description", "id", "title"],
+                "required": ["content", "id", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4789,7 +4825,7 @@
                 }
             },
             "DeclarativeLabel": {
-                "required": ["description", "id", "primary", "sourceColumn", "title"],
+                "required": ["id", "primary", "sourceColumn", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4842,7 +4878,7 @@
                 "description": "A logical data model (LDM) representation."
             },
             "DeclarativeMetric": {
-                "required": ["content", "description", "id", "title"],
+                "required": ["content", "id", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4922,7 +4958,7 @@
                 "description": "A database table."
             },
             "DeclarativeVisualizationObject": {
-                "required": ["content", "description", "id", "title"],
+                "required": ["content", "id", "title"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -4964,7 +5000,7 @@
                 }
             },
             "DeclarativeWorkspaceModel": {
-                "required": ["analytics", "ldm", "pdm"],
+                "required": ["analytics", "dataDiscriminators", "ldm", "pdm"],
                 "type": "object",
                 "properties": {
                     "ldm": {
@@ -4975,6 +5011,12 @@
                     },
                     "analytics": {
                         "$ref": "#/components/schemas/DeclarativeAnalyticsLayer"
+                    },
+                    "dataDiscriminators": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/DeclarativeDataDiscriminator"
+                        }
                     }
                 }
             },
@@ -5082,18 +5124,6 @@
                     }
                 },
                 "description": "Entities describing users' view on data."
-            },
-            "Profile": {
-                "required": ["organisationId", "userId"],
-                "type": "object",
-                "properties": {
-                    "organisationId": {
-                        "type": "string"
-                    },
-                    "userId": {
-                        "type": "string"
-                    }
-                }
             },
             "Link": {
                 "type": "object",
@@ -5242,7 +5272,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5310,7 +5340,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5379,7 +5409,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5404,6 +5434,21 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiUserWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiUserGroupWithLinks"
+                                }
+                            ]
+                        }
                     }
                 }
             },
@@ -5412,7 +5457,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5433,6 +5478,33 @@
                             },
                             "oauthIssuerLocation": {
                                 "type": "string"
+                            },
+                            "oauthClientId": {
+                                "type": "string"
+                            },
+                            "oauthClientSecret": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "user": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            },
+                            "userGroup": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
                             }
                         }
                     }
@@ -5471,7 +5543,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5540,7 +5612,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5611,7 +5683,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -5644,558 +5716,6 @@
                     }
                 },
                 "description": "JSON:API representation of workspace entity."
-            },
-            "JsonApiAttributeDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAttribute"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiAttribute": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "attribute"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "granularity": {
-                                "type": "string",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "WEEK_EU",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_WEEK_EU",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "WEEK_OF_YEAR_EU",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
-                                ]
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            },
-                            "labels": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of attribute entity."
-            },
-            "JsonApiDatasetDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiDataset"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiFactWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiDataset": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataset"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["NORMAL", "DATE"]
-                            },
-                            "grain": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["id", "type"],
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "enum": ["attribute", "dataset"]
-                                        }
-                                    }
-                                }
-                            },
-                            "referenceProperties": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["identifier", "multivalue", "sourceColumns"],
-                                    "type": "object",
-                                    "properties": {
-                                        "identifier": {
-                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
-                                        },
-                                        "multivalue": {
-                                            "type": "boolean"
-                                        },
-                                        "sourceColumns": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "sourceTable": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attributes": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            },
-                            "facts": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            },
-                            "datasets": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataset entity."
-            },
-            "DatasetReferenceIdentifier": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["dataset"]
-                    }
-                }
-            },
-            "JsonApiFactDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiFact"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiFact": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "fact"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of fact entity."
-            },
-            "JsonApiLabelDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiLabel"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiLabel": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "label"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "primary": {
-                                "type": "boolean"
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attribute": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of label entity."
-            },
-            "JsonApiSourceTablesDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiSourceTables"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiSourceTableWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiSourceTables": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "source"
-                    },
-                    "attributes": {
-                        "type": "object"
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "tables": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "A defined data source for analytics data"
-            },
-            "JsonApiSourceTableDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiSourceTable"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiSourceTablesWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            "JsonApiSourceTable": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "table"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "columns": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["dataType", "name"],
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "dataType": {
-                                            "type": "string",
-                                            "enum": [
-                                                "INT",
-                                                "STRING",
-                                                "DATE",
-                                                "NUMERIC",
-                                                "TIMESTAMP",
-                                                "BOOLEAN"
-                                            ]
-                                        }
-                                    },
-                                    "description": "A source table column"
-                                }
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "source": {
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "A source table"
             },
             "JsonApiAnalyticalDashboardDocument": {
                 "required": ["data"],
@@ -6238,7 +5758,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -6359,7 +5879,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -6467,7 +5987,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -6589,7 +6109,7 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
                         "type": "string",
                         "description": "API identifier of an object",
                         "example": "id1"
@@ -6683,6 +6203,106 @@
                 },
                 "description": "JSON:API representation of visualizationObject entity."
             },
+            "JsonApiDataDiscriminatorDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDataDiscriminator"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiDataDiscriminator": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataDiscriminator"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "columnName": {
+                                "type": "string"
+                            },
+                            "dataSourceName": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataDiscriminator entity."
+            },
+            "JsonApiApiTokenWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiApiToken"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiApiTokenList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiApiTokenWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiApiToken": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "bearerToken": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
+            },
             "JsonApiAttributeWithLinks": {
                 "allOf": [
                     {
@@ -6724,6 +6344,82 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiAttribute": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "attribute"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of attribute entity."
             },
             "JsonApiDatasetWithLinks": {
                 "allOf": [
@@ -6770,6 +6466,127 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiDataset": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataset"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["NORMAL", "DATE"]
+                            },
+                            "grain": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["id", "type"],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["attribute", "dataset"]
+                                        }
+                                    }
+                                }
+                            },
+                            "referenceProperties": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["identifier", "multivalue", "sourceColumns"],
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
+                                        },
+                                        "multivalue": {
+                                            "type": "boolean"
+                                        },
+                                        "sourceColumns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "sourceTable": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            },
+                            "datasets": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataset entity."
+            },
+            "DatasetReferenceIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["dataset"]
+                    }
+                }
+            },
             "JsonApiFactWithLinks": {
                 "allOf": [
                     {
@@ -6808,6 +6625,57 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFact": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "fact"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of fact entity."
             },
             "JsonApiLabelWithLinks": {
                 "allOf": [
@@ -6848,6 +6716,60 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiLabel": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "label"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "primary": {
+                                "type": "boolean"
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attribute": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of label entity."
+            },
             "JsonApiSourceTablesWithLinks": {
                 "allOf": [
                     {
@@ -6887,6 +6809,40 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiSourceTables": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "source"
+                    },
+                    "attributes": {
+                        "type": "object"
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "tables": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "A defined data source for analytics data"
+            },
             "JsonApiSourceTableWithLinks": {
                 "allOf": [
                     {
@@ -6925,6 +6881,66 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiSourceTable": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "table"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "columns": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["dataType", "name"],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "dataType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "INT",
+                                                "STRING",
+                                                "DATE",
+                                                "NUMERIC",
+                                                "TIMESTAMP",
+                                                "BOOLEAN"
+                                            ]
+                                        }
+                                    },
+                                    "description": "A source table column"
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "source": {
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "A source table"
             },
             "JsonApiAnalyticalDashboardWithLinks": {
                 "allOf": [
@@ -7124,6 +7140,198 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiDataDiscriminatorWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataDiscriminator"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataDiscriminatorList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataDiscriminatorWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiApiTokenDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiApiToken"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    }
+                }
+            },
+            "JsonApiAttributeDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiAttribute"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "JsonApiDatasetDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiDataset"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiFactWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "JsonApiFactDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiFact"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "JsonApiLabelDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiLabel"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "JsonApiSourceTablesDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiSourceTables"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiSourceTableWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
+            "JsonApiSourceTableDocument": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiSourceTable"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiSourceTablesWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                }
+            },
             "JsonApiACLWithLinks": {
                 "allOf": [
                     {
@@ -7243,6 +7451,21 @@
                     },
                     "links": {
                         "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiUserWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiUserGroupWithLinks"
+                                }
+                            ]
+                        }
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
@@ -7369,66 +7592,6 @@
                     }
                 },
                 "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiApiTokenWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiApiToken"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiApiTokenList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiApiTokenWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiApiToken": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken"
-                    },
-                    "attributes": {
-                        "type": "object"
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
-            "JsonApiApiTokenDocument": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiApiToken"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    }
-                }
             }
         }
     }

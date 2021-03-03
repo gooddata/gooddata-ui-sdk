@@ -1,3 +1,5 @@
+// (C) 2021 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -945,9 +947,6 @@ export enum FormOfGranularityEnum {
     HOUROFDAY = "HOUR_OF_DAY",
     MINUTEOFHOUR = "MINUTE_OF_HOUR",
     WEEKOFYEAR = "WEEK_OF_YEAR",
-    WEEKOFYEAREU = "WEEK_OF_YEAR_EU",
-    DAYOFWEEKEU = "DAY_OF_WEEK_EU",
-    WEEKEU = "WEEK_EU",
 }
 
 /**
