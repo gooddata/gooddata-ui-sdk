@@ -266,6 +266,7 @@ export {
     ILegacyKpiWithoutComparison,
     isLegacyKpiWithComparison,
     isLegacyKpiWithoutComparison,
+    isLegacyKpi,
 } from "./workspace/dashboards/kpi";
 export {
     IWidgetAlertBase,

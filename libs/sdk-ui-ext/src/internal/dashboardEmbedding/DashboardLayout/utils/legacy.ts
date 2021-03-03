@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import { VisType } from "@gooddata/sdk-ui";
+import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "../../../components/pluggableVisualizations/constants";
 import {
-    DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
     DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
     DASHBOARD_LAYOUT_VIS_TYPE,
@@ -18,7 +18,7 @@ export function calculateGeoPushpinWidgetHeight(
 ): React.CSSProperties {
     const widgetHeight = Math.round(visualizationItemWidth * RATIO_16_9);
     const widgetMaxHeight = windowHeight - HEADER_HEIGHT - PADDING_BOTTOM;
-    const defaultVisualizationHeight = DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT - HEADLINE_OUTER_HEIGHT;
+    const defaultVisualizationHeight = DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX - HEADLINE_OUTER_HEIGHT;
     const maxHeight =
         widgetMaxHeight > defaultVisualizationHeight ? widgetMaxHeight : defaultVisualizationHeight;
     return {

@@ -29,11 +29,8 @@ import {
     IVisualization,
     IDrillDownContext,
 } from "../interfaces/Visualization";
-import {
-    FullVisualizationCatalog,
-    IVisualizationCatalog,
-    PluggableVisualizationFactory,
-} from "./VisualizationCatalog";
+import { PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor";
+import { FullVisualizationCatalog, IVisualizationCatalog } from "./VisualizationCatalog";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
@@ -173,7 +170,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
         let visFactory: PluggableVisualizationFactory | undefined;
 
         try {
-            visFactory = this.props.visualizationCatalog.forUri(visUri);
+            visFactory = this.props.visualizationCatalog.forUri(visUri).getFactory();
         } catch (e) {
             // eslint-disable-next-line no-console
             console.error(`Error: unsupported visualization type - ${visUri}`);

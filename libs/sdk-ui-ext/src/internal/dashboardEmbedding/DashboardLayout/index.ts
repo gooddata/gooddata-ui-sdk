@@ -1,7 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 export {
-    IDashboardItemDefaultDimensions,
-    IDashboardItemDefaultDimensionsByVisType,
     IDashboardLayoutItemKeyGetter,
     IDashboardLayoutItemKeyGetterProps,
     IDashboardLayoutItemRenderProps,
@@ -39,13 +37,7 @@ export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader";
 export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer";
 export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer";
 export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer";
-export {
-    calculateGeoPushpinWidgetHeight,
-    getGeoPushpinWidgetStyle,
-    getResponsiveClassName,
-    isFullWidthGeoPushpin,
-    isGeoPushpin,
-} from "./utils/legacy";
+export { getGeoPushpinWidgetStyle, isGeoPushpin } from "./utils/legacy";
 export {
     getDashboardLayoutItemHeightForRatioAndScreen,
     getDashboardLayoutItemMaxGridWidth,
