@@ -54,7 +54,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                 screen={screen}
             />
         ));
-        return gridRowRenderer ? gridRowRenderer({ children: rowItems, screen, section }) : rowItems;
+        return gridRowRenderer
+            ? gridRowRenderer({ children: rowItems, screen, section, items: itemsInRow })
+            : rowItems;
     });
 
     return sectionRenderer({

@@ -27,6 +27,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         itemKeyGetter,
         itemRenderer,
         widgetRenderer,
+        gridRowRenderer,
         className,
         debug,
         onMouseLeave,
@@ -72,6 +73,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                             sectionHeaderRenderer={sectionHeaderRenderer}
                                             itemKeyGetter={itemKeyGetter}
                                             itemRenderer={itemRenderer}
+                                            gridRowRenderer={gridRowRenderer}
                                             widgetRenderer={(renderProps) => {
                                                 const isResizedByLayoutSizingStrategy = resizedItemPositions.some(
                                                     (position) =>

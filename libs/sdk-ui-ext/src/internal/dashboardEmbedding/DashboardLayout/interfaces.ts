@@ -320,6 +320,11 @@ export type IDashboardLayoutGridRowRenderProps<TWidget = DashboardWidget> = {
     section: IDashboardLayoutSectionFacade<TWidget>;
 
     /**
+     * Layout items - keep in mind that these items are only items in the current grid row, not the entire section.
+     */
+    items: IDashboardLayoutItemFacade<TWidget>[];
+
+    /**
      * Current screen type with respect to the set breakpoints.
      */
     screen: ScreenSize;
