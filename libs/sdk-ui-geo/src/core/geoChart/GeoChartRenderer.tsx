@@ -227,7 +227,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
             this.navigationControlButton = new mapboxgl.NavigationControl({
                 showCompass: false,
             });
-            this.chart!.addControl(this.navigationControlButton, "bottom-right");
+            this.chart!.addControl(this.navigationControlButton, "top-right");
         }
     };
 
