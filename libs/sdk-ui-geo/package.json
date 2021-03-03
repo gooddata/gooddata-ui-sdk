@@ -68,7 +68,8 @@
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.6.0",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "@gooddata/sdk-ui-kit": "^8.3.0-alpha.16"
     },
     "peerDependencies": {
         "react": "^16.10.0",

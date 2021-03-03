@@ -1,5 +1,5 @@
 // (C) 2019 GoodData Corporation
-import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IInsight,
     IInsightDefinition,
@@ -62,7 +62,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     onLoadingChanged: OnLoadingChanged;
     isMdObjectValid?: boolean;
     configPanelClassName?: string;
-
+    theme?: ITheme;
     onExtendedReferencePointChanged?(): void;
 
     onNewDerivedBucketItemsPlaced?(): void;
@@ -222,6 +222,7 @@ export class BaseVisualization extends React.PureComponent<IBaseVisualizationPro
                     totalsEditAllowed: this.props.totalsEditAllowed,
                 },
                 config: this.props.config,
+                theme: this.props.theme,
             },
             this.props.insight,
             this.props.insightPropertiesMeta,

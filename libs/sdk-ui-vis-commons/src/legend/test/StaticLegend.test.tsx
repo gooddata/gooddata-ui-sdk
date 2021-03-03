@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { IStaticLegendProps, StaticLegend } from "../StaticLegend";
 import { withIntl } from "@gooddata/sdk-ui";
-import { LegendItem } from "../LegendItem";
+import LegendItem from "../LegendItem";
 import { IPushpinCategoryLegendItem } from "../types";
 
 describe("StaticLegend", () => {

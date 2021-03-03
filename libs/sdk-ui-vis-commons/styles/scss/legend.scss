@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/core/styles/variables";
-@import "~@gooddata/goodstrap/lib/core/styles/mixins";
-
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 $legend-paging-background: #eee;
 $legend-right-width: 190px;
 $paging-button-small-size: 22px;
@@ -39,7 +38,6 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
 .viz-legend {
     display: flex;
-    background-color: var(--gd-chart-backgroundColor-base, $gd-color-white);
 
     .series {
         display: flex;
@@ -66,7 +64,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
             flex: 1 1 auto;
             font-size: 12px;
             line-height: 20px;
-            color: var(--gd-chart-textColor-dark, $gd-color-link);
+            color: var(--gd-chart-legendValueColor, $gd-color-link);
 
             @include text-overflow();
         }
@@ -76,7 +74,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
         cursor: default;
         margin-right: -10px;
         .series-text {
-            color: var(--gd-chart-textColor-light, $gd-color-text-dimmed);
+            color: var(--gd-chart-legendLabelColor, $gd-color-text-dimmed);
         }
     }
 
@@ -98,12 +96,12 @@ $responsive-legend: "only screen and (max-width: 767px)";
 
             @include active-states-and-self {
                 text-decoration: none;
-                background-color: $legend-paging-background;
+                background-color: var(--gd-palette-complementary-2, $legend-paging-background);
 
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: $gd-color-dark;
+                    color: var(--gd-palette-complementary-7, $default-gd-color-dark);
                 }
             }
 
@@ -111,7 +109,7 @@ $responsive-legend: "only screen and (max-width: 767px)";
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: $gd-color-highlight;
+                    color: $gd-palette-primary-base;
                 }
             }
 
@@ -119,7 +117,10 @@ $responsive-legend: "only screen and (max-width: 767px)";
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
                 @include active-states-and-self {
-                    background-color: transparentize($legend-paging-background, 0.5);
+                    background-color: var(
+                        --gd-palette-complementary-1,
+                        transparentize($legend-paging-background, 0.5)
+                    );
 
                     // refactor?
                     // stylelint-disable-next-line max-nesting-depth

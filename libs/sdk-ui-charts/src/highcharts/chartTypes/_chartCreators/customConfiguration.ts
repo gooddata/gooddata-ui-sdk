@@ -14,7 +14,6 @@ import isNil from "lodash/isNil";
 import pickBy from "lodash/pickBy";
 import numberJS from "@gooddata/numberjs";
 import cx from "classnames";
-import { transparentize } from "polished";
 
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -931,9 +930,8 @@ function getGridConfiguration(
 ) {
     const gridEnabled = get(chartOptions, "grid.enabled", true);
     const { yAxes = [], xAxes = [] } = chartOptions;
-    const gridColor = theme?.chart?.textColor?.base
-        ? transparentize(0.9, theme?.chart?.textColor.base)
-        : styleVariables.gdColorGrid;
+    const gridColor =
+        theme?.chart?.gridColor ?? theme?.palette?.complementary?.shade3 ?? styleVariables.gdColorGrid;
 
     const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: gridColor } : { gridLineWidth: 0 };
 
@@ -1032,6 +1030,13 @@ function getAxesConfiguration(
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
 
+    const axisValueColor =
+        theme?.chart?.axisValueColor ??
+        theme?.palette?.complementary?.shade6 ??
+        styleVariables.gdColorStateBlank;
+    const axisLabelColor =
+        theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.shade7 ?? styleVariables.gdColorLink;
+
     return {
         plotOptions: {
             series: {
@@ -1077,7 +1082,7 @@ function getAxesConfiguration(
                 labels: {
                     ...labelsEnabled,
                     style: {
-                        color: theme?.chart?.textColor?.base || styleVariables.gdColorStateBlank,
+                        color: axisValueColor,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                     ...rotationProp,
@@ -1086,7 +1091,7 @@ function getAxesConfiguration(
                     enabled: visible,
                     margin: 15,
                     style: {
-                        color: theme?.chart?.textColor?.dark || styleVariables.gdColorLink,
+                        color: axisLabelColor,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                 },
@@ -1152,7 +1157,7 @@ function getAxesConfiguration(
                 labels: {
                     ...labelsEnabled,
                     style: {
-                        color: theme?.chart?.textColor?.base || styleVariables.gdColorStateBlank,
+                        color: axisValueColor,
                         font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                     autoRotation: [-90],
@@ -1167,7 +1172,7 @@ function getAxesConfiguration(
                     margin: 10,
                     style: {
                         textOverflow: "ellipsis",
-                        color: theme?.chart?.textColor?.dark || styleVariables.gdColorLink,
+                        color: axisLabelColor,
                         font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
                     },
                 },

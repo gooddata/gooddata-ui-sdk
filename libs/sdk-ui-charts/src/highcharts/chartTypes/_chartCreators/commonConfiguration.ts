@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import invoke from "lodash/invoke";
 import isEmpty from "lodash/isEmpty";
@@ -40,7 +40,12 @@ function fixNumericalAxisOutOfMinMaxRange(axis: IHighchartsAxisExtend) {
 let previousChart: any = null;
 
 function getThemedConfiguration(theme: ITheme): any {
-    const backgroundColor = theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground;
+    const backgroundColor =
+        theme?.chart?.backgroundColor ??
+        theme?.palette?.complementary?.shade0 ??
+        styleVariables.gdColorBackground;
+    const axisLineColor =
+        theme?.chart?.axisColor ?? theme?.palette?.complementary?.shade4 ?? styleVariables.gdColorAxisLine;
 
     return {
         credits: {
@@ -56,11 +61,11 @@ function getThemedConfiguration(theme: ITheme): any {
         },
         drilldown: {
             activeDataLabelStyle: {
-                color: "#000",
+                color: theme?.palette?.complementary?.shade9 ?? "#000",
                 textDecoration: "none",
             },
             activeAxisLabelStyle: {
-                color: styleVariables.gdColorText,
+                color: theme?.palette?.complementary?.shade8 ?? styleVariables.gdColorText,
                 textDecoration: "none",
             },
             drillUpButton: {
@@ -130,7 +135,7 @@ function getThemedConfiguration(theme: ITheme): any {
         },
         xAxis: [
             {
-                lineColor: theme?.chart?.textColor?.base || styleVariables.gdColorAxisLine,
+                lineColor: axisLineColor,
                 events: {
                     afterSetAxisTranslation() {
                         fixNumericalAxisOutOfMinMaxRange(this);
@@ -140,7 +145,7 @@ function getThemedConfiguration(theme: ITheme): any {
         ],
         yAxis: [
             {
-                lineColor: theme?.chart?.textColor?.base || styleVariables.gdColorAxisLine,
+                lineColor: axisLineColor,
             },
         ],
     };

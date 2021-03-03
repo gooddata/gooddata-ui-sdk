@@ -19,6 +19,7 @@ import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
@@ -121,6 +122,8 @@ export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps 
 export interface IBaseChartProps extends ICoreChartProps {
     // (undocumented)
     onLegendReady?: OnLegendReady;
+    // (undocumented)
+    theme?: ITheme;
     // (undocumented)
     type: ChartType;
     // (undocumented)

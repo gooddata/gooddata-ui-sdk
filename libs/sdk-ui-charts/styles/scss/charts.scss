@@ -7,7 +7,7 @@
     align-items: stretch;
     width: 100%;
     height: 100%;
-    background-color: var(--gd-chart-backgroundColor-base);
+    background-color: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0));
 
     &.flex-direction-row {
         flex-direction: row;
@@ -52,6 +52,7 @@
     }
     // stylelint-disable declaration-no-important
     .gd-axis-label-drilling-disabled & {
+        // TODO: Drilling
         color: $gd-color-state-blank !important;
         pointer-events: none;
         text-decoration: none !important; // Override Highcharts inline style
@@ -88,5 +89,5 @@
 
 .gd-contrast-label,
 .gd-contrast-label text {
-    fill: var(--gd-chart-backgroundColor-contrast, "#000");
+    fill: var(--gd-palette-complementary-9, "#000");
 }

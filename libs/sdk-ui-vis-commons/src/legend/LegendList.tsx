@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LegendItem } from "./LegendItem";
+import LegendItem from "./LegendItem";
 import { LegendAxisIndicator } from "./LegendAxisIndicator";
 import { LEGEND_AXIS_INDICATOR, LEGEND_SEPARATOR } from "./helpers";
 import { ItemBorderRadiusPredicate } from "./types";
