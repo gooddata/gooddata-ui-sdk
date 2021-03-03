@@ -480,7 +480,18 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private onGridSizeChanged = (gridSizeChangedEvent: any): void => {
-        invariant(this.internal.table);
+        if (!this.internal.firstDataRendered) {
+            // ag-grid does emit the grid size changed even before first data gets rendered (i suspect this is
+            // to cater for the initial render where it goes from nothing to something that has the headers, and then
+            // it starts rendering the data itself)
+            //
+            // Don't do anything, the resizing will be triggered after the first data is rendered
+            return;
+        }
+
+        if (!this.internal.table) {
+            return;
+        }
 
         if (this.internal.table.isResizing()) {
             // don't do anything if the table is already resizing. this copies what we have in v7 line however
@@ -489,15 +500,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             //
             // keeping it like this for now. if needed, we can enqueue an auto-resize request somewhere and process
             // it after resizing finishes.
-            return;
-        }
-
-        if (!this.internal.firstDataRendered) {
-            // ag-grid does emit the grid size changed even before first data gets rendered (i suspect this is
-            // to cater for the initial render where it goes from nothing to something that has the headers, and then
-            // it starts rendering the data itself)
-            //
-            // Don't do anything, the resizing will be triggered after the first data is rendered
             return;
         }
 
