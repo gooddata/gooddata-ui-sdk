@@ -54,6 +54,19 @@ export class TableFacade {
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
 
+    /**
+     * When user changes sorts or totals by interacting with the table, the current execution result will
+     * be transformed to include these new properties. The transformation creates a new prepared execution
+     * which the data source will drive to obtain the new data.
+     *
+     * This field is set as soon as the new transformed execution gets created and will live until either
+     * the execution fails or a first page of the data is sent to ag-grid to render.
+     *
+     * In all other cases this field be undefined.
+     *
+     * @private
+     */
+    private transformedExecution: IPreparedExecution | undefined;
     private currentResult: IExecutionResult;
     private visibleData: DataViewFacade;
     private currentFingerprint: string;
@@ -198,6 +211,8 @@ export class TableFacade {
                 getGroupRows: options.getGroupRows,
                 getColumnTotals: options.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
+                onExecutionTransformed: this.onExecutionTransformed,
+                onTransformedExecutionFailed: this.onTransformedExecutionFailed,
                 dataViewTransform: (dataView) => {
                     this.fixEmptyHeaders(dataView);
                     return dataView;
@@ -211,8 +226,18 @@ export class TableFacade {
         return dataSource;
     };
 
+    private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
+        console.debug("onExecutionTransformed", newExecution.definition);
+        this.transformedExecution = newExecution;
+    };
+
+    private onTransformedExecutionFailed = (): void => {
+        this.transformedExecution = undefined;
+    };
+
     private onPageLoaded = (dv: DataViewFacade): void => {
         const oldResult = this.currentResult;
+        this.transformedExecution = undefined;
         this.currentResult = dv.result();
         this.visibleData = dv;
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
@@ -582,16 +607,43 @@ export class TableFacade {
     };
 
     /**
-     * Tests whether the other prepared execution's definition matches the definition
-     * that was used to obtain the current execution result with which the table operates.
+     * Tests whether the provided prepared execution matches the execution that is used to obtain data for this
+     * table facade.
      *
-     * Note that during table lifecycle, changes such adding sorts and totals WILL lead
-     * to modification of the execution definition and in return modification of
+     * This is slightly trickier as it needs to accommodate for situations where the underlying execution
+     * is being transformed to include new server side sorts / totals. If that operation is in progress, then
+     * the transformedExecution will be defined. The code should only compare against this 'soon to be next'
+     * execution. This is essential to 'sink' any unneeded full reinits that may happen in some contexts (such as AD)
+     * which also listen to sort/total changes and prepare execution for the table from outside. Since
+     * the transformation is already in progress, there is no point to reacting to these external stimuli.
+     *
+     * If the transformation is not happening, then the table is showing data for an existing execution result - in that
+     * case the matching goes against the definition backing that result.
      *
      * @param other
      */
-    public isMatchingCurrentResult(other: IPreparedExecution): boolean {
-        return this.currentFingerprint === other.fingerprint();
+    public isMatchingExecution(other: IPreparedExecution): boolean {
+        if (this.transformedExecution) {
+            const matchingTransformed = this.transformedExecution.fingerprint() === other.fingerprint();
+
+            if (!matchingTransformed) {
+                console.debug(
+                    "transformed execution does not match",
+                    this.transformedExecution.definition,
+                    other.definition,
+                );
+            }
+
+            return matchingTransformed;
+        }
+
+        const matchingCurrentlyRendered = this.currentFingerprint === other.fingerprint();
+
+        if (!matchingCurrentlyRendered) {
+            console.debug("current result does not match", this.currentResult.definition, other.definition);
+        }
+
+        return matchingCurrentlyRendered;
     }
 
     public getTotalBodyHeight = (): number => {

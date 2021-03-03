@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { IntlShape } from "react-intl";
-import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
 import { COLS_PER_PAGE } from "../base/constants";
 import { GroupingProviderFactory, IGroupingProvider } from "./rowGroupingProvider";
@@ -24,9 +24,13 @@ export type DatasourceConfig = {
     getGroupRows: () => boolean;
     getColumnTotals: () => ITotal[];
     onPageLoaded: OnPageLoaded;
+    onExecutionTransformed: OnExecutionTransformed;
+    onTransformedExecutionFailed: OnTransformedExecutionFailed;
     dataViewTransform: (dv: IDataView) => IDataView;
 };
 export type OnPageLoaded = (dv: DataViewFacade) => void;
+export type OnExecutionTransformed = (newExecution: IPreparedExecution) => void;
+export type OnTransformedExecutionFailed = () => void;
 
 export function createAgGridDatasource(
     config: DatasourceConfig,
@@ -110,7 +114,7 @@ export class AgGridDatasource implements IDatasource {
         desiredSorts: ISortItem[],
         desiredTotals: ITotal[],
     ): void => {
-        const { startRow, endRow, failCallback, sortModel } = params;
+        const { sortModel } = params;
         const result = this.currentResult;
         const definition = result.definition;
         /*
@@ -125,13 +129,25 @@ export class AgGridDatasource implements IDatasource {
          */
         this.resetGroupingProvider(sortModel);
 
-        result
+        const transformedExecution = result
             .transform()
             .withSorting(...desiredSorts)
             .withDimensions(
                 dimensionSetTotals(definition.dimensions[0], desiredTotals),
                 definition.dimensions[1],
-            )
+            );
+
+        this.config.onExecutionTransformed(transformedExecution);
+        this.driveExecutionAndUpdateDatasource(transformedExecution, params);
+    };
+
+    private driveExecutionAndUpdateDatasource = (
+        execution: IPreparedExecution,
+        params: IGetRowsParams,
+    ): void => {
+        const { startRow, endRow, failCallback } = params;
+
+        execution
             .execute()
             .then((newResult) => {
                 this.currentResult = newResult;
@@ -152,6 +168,8 @@ export class AgGridDatasource implements IDatasource {
                         this.processData(dv, params);
                     })
                     .catch((err) => {
+                        this.config.onTransformedExecutionFailed();
+
                         // eslint-disable-next-line no-console
                         console.error("Error while doing execution to obtain data view", err);
 
@@ -159,6 +177,8 @@ export class AgGridDatasource implements IDatasource {
                     });
             })
             .catch((err) => {
+                this.config.onTransformedExecutionFailed();
+
                 // eslint-disable-next-line no-console
                 console.error("Error while doing execution to obtain transformed results", err);
 

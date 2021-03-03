@@ -42,6 +42,15 @@ export class TableFacadeInitializer {
     };
 
     /**
+     * Tests whether the other execution is the same as the one used by the initializer.
+     *
+     * @param other - other execution to test
+     */
+    public isSameExecution(other: IPreparedExecution): boolean {
+        return this.execution.fingerprint() === other.fingerprint();
+    }
+
+    /**
      * Drives initialization of the table facade. The initialization will emit all the essential
      * loading, error, onExportReady and pushData events using the callback functions specified in the {@link TableConfig}.
      *

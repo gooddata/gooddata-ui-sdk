@@ -24,6 +24,7 @@ import {
     IErrorDescriptors,
     ILoadingState,
     IntlWrapper,
+    IPushData,
     LoadingComponent,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
@@ -275,6 +276,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
              * Note: compared to v7 version of the table, this only happens if someone actually changes the
              * execution-related props of the table. This branch will not hit any other time.
              */
+            console.debug(
+                "triggering reinit",
+                this.props.execution.definition,
+                prevProps.execution.definition,
+            );
             this.reinitialize(this.props.execution);
         } else {
             /*
@@ -329,15 +335,38 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             return true;
         }
 
-        const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
-
         if (!this.internal.table) {
-            // table is not yet initialized. do reinit in case the execution being initialized (one in prevProps) is
-            // different from the new execution.
-            return !prepExecutionSame;
+            // Table is not yet fully initialized. See if the initialization is in progress. If so, see if
+            // the init is for same execution or not. Otherwise fall back to compare props vs props.
+            //
+            // Note: testing the exec used by initializer is crucial in contexts (say AD) where for instance
+            // a change in sorts triggers new reinit in table itself and also sends an event up to the app. The app
+            // then sends the
+            if (this.internal.initializer) {
+                const initializeForSameExec = this.internal.initializer.isSameExecution(this.props.execution);
+
+                if (!initializeForSameExec) {
+                    console.debug(
+                        "initializer for different execution",
+                        this.props.execution,
+                        prevProps.execution,
+                    );
+                }
+
+                return !initializeForSameExec;
+            } else {
+                const prepExecutionSame =
+                    this.props.execution.fingerprint() === prevProps.execution.fingerprint();
+
+                if (!prepExecutionSame) {
+                    console.debug("have to reinit table", this.props.execution, prevProps.execution);
+                }
+
+                return !prepExecutionSame;
+            }
         }
 
-        return !prepExecutionSame && !this.internal.table.isMatchingCurrentResult(this.props.execution);
+        return !this.internal.table.isMatchingExecution(this.props.execution);
     }
 
     /**
@@ -570,7 +599,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns());
 
-        this.props.pushData!({
+        console.debug("onSortChanged", sortItems);
+
+        this.pushDataGuard({
             properties: {
                 sortItems,
             },
@@ -610,7 +641,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
 
-        this.props.pushData!({
+        this.pushDataGuard({
             properties: {
                 totals: newColumnTotals,
             },
@@ -859,6 +890,18 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return props.config?.columnSizing?.defaultWidth ?? "unset";
     };
 
+    /**
+     * All pushData calls done by the table must go through this guard. The guard exists to ensure a 'disconnect'
+     * between push data handling and the calling function processing. When the pushData is handled by the application,
+     * it MAY (and in our case it DOES) trigger processing that lands back in the table. This opens
+     * additional set of invariants to check / be prepared for in order to optimize the renders and re-renders.
+     */
+    private pushDataGuard = (data: IPushData): void => {
+        setTimeout(() => {
+            this.props.pushData?.(data);
+        }, 0);
+    };
+
     private getTableConfig = (): TableConfig => {
         return {
             hasColumnWidths: this.hasColumnWidths(),
@@ -882,7 +925,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
             onExportReady: this.props.onExportReady ?? noop,
-            pushData: this.props.pushData ?? noop,
+            pushData: this.pushDataGuard,
             onPageLoaded: this.onPageLoaded,
             onMenuAggregationClick: this.onMenuAggregationClick,
         };
