@@ -1648,7 +1648,31 @@ export class CorePivotTablePure extends React.Component<ICorePivotTableProps, IC
 
         const desiredHeight = this.calculateDesiredHeight(dv);
 
-        if (this.state.desiredHeight !== desiredHeight) {
+        /*
+         * For some mysterious reasons, there sometimes is exactly 2px discrepancy between the current height
+         * and the maxHeight coming from the config. This 2px seems to be unrelated to any CSS property (border,
+         * padding, etc.) not even the leeway variable in getTotalBodyHeight.
+         * In these cases there is a positive feedback loop between the maxHeight and the config:
+         *
+         * increase in desiredHeight -> increase in config.maxHeight -> increase in desiredHeight -> ...
+         *
+         * This causes the table to grow in height in 2px increments until it reaches its full size - then
+         * the resizing stops as bodyHeight of the table gets smaller than the maxHeight and "wins"
+         * in calculateDesiredHeight)...
+         *
+         * So we ignore changes smaller than those 2px to break the loop as it is quite unlikely that such a small
+         * change would be legitimate (and if it is, a mismatch of 2px should not have practical consequences).
+         *
+         * Ideally, this maxHeight would not be needed at all (if I remove it altogether, the problem goes away),
+         * however, it is necessary for ONE-4322 (there seems to be no native way of doing this in ag-grid itself).
+         */
+        const HEIGHT_CHANGE_TOLERANCE = 2;
+
+        if (
+            this.state.desiredHeight === undefined ||
+            (desiredHeight !== undefined &&
+                Math.abs(this.state.desiredHeight - desiredHeight) > HEIGHT_CHANGE_TOLERANCE)
+        ) {
             this.setState({ desiredHeight });
         }
     }
