@@ -138,8 +138,10 @@ const customKpiHeaderTextStyle: React.CSSProperties = {
     whiteSpace: "nowrap",
     overflow: "hidden",
 };
-const customKpiValueStyle: React.CSSProperties = {
+const customKpiValueContainerStyle: React.CSSProperties = {
     fontSize: 24,
+    lineHeight: "initial",
+    padding: 7,
     fontWeight: "bold",
     display: "flex",
     alignItems: "center",
@@ -147,6 +149,11 @@ const customKpiValueStyle: React.CSSProperties = {
     height: "100%",
     width: "100%",
     backgroundColor: "#333",
+};
+const customKpiValueStyle: React.CSSProperties = {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    width: "100%",
 };
 
 const CustomKpi: React.FC<CustomWidgetProps> = ({ widgetRef, filters, ErrorComponent, LoadingComponent }) => {
@@ -173,6 +180,15 @@ const CustomKpi: React.FC<CustomWidgetProps> = ({ widgetRef, filters, ErrorCompo
     }
 
     const kpiMeasure = dataView?.meta().measureDescriptors()[0];
+    const kpiValue =
+        kpiMeasure &&
+        dataView &&
+        dataView
+            .data()
+            .series()
+            .firstForMeasure(kpiMeasure.measureHeaderItem.localIdentifier)
+            .dataPoints()[0]
+            .formattedValue();
 
     return (
         <CustomWidgetContainer>
@@ -188,15 +204,10 @@ const CustomKpi: React.FC<CustomWidgetProps> = ({ widgetRef, filters, ErrorCompo
                                 .measureTitle()}
                     </div>
                 </div>
-                <div style={customKpiValueStyle}>
-                    {kpiMeasure &&
-                        dataView &&
-                        dataView
-                            .data()
-                            .series()
-                            .firstForMeasure(kpiMeasure.measureHeaderItem.localIdentifier)
-                            .dataPoints()[0]
-                            .formattedValue()}
+                <div style={customKpiValueContainerStyle}>
+                    <span style={customKpiValueStyle} title={kpiValue ?? undefined}>
+                        {kpiValue}
+                    </span>
                 </div>
             </div>
         </CustomWidgetContainer>
