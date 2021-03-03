@@ -54,7 +54,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             kpi={kpi}
             kpiResult={kpiResult}
             isKpiUnderlineHiddenWhenClickable={disableDrillUnderline}
-            onKpiValueClick={isDrillable && onPrimaryValueClick}
+            onKpiValueClick={isDrillable && onDrill && onPrimaryValueClick}
             filters={filters}
             separators={separators}
         />
