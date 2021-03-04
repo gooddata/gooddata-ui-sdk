@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     AbsoluteDateFilter,
     AttributeFilter,
@@ -12,10 +12,10 @@ import {
     RankingFilterBodyOperatorEnum,
     RelativeDateFilter,
 } from "@gooddata/api-client-tiger";
-import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
+    IAttributeElements,
     IAttributeFilter,
     IFilter,
     IMeasureValueFilter,
@@ -63,6 +63,20 @@ export function newFilterWithApplyOnResult(
 
 type ApplyOnResultProp = { applyOnResult?: boolean };
 
+function extractValuesFromAttributeElements(attributeElements: IAttributeElements): string[] {
+    if (isAttributeElementsByValue(attributeElements)) {
+        return attributeElements.values;
+    }
+
+    // XXX: there is no other way now then to be lenient. the KD does not support text filters and always works
+    //  primarily with URIs. Changing / refactoring KD in this area is out of question. So this code is now
+    //  more lenient and if it finds attribute elements to be URIs, it will use them in the filter.
+    //
+    //  Furthermore.. this is not 100% wrong anyway as tiger elements have URIs which are in the end
+    //  text values as well :)
+    return attributeElements.uris;
+}
+
 function convertPositiveFilter(
     filter: IPositiveAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
@@ -70,14 +84,12 @@ function convertPositiveFilter(
     const displayFormRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
 
-    if (!isAttributeElementsByValue(attributeElements)) {
-        throw new NotSupported("Tiger backend only allows specifying attribute elements by value");
-    }
-
     return {
         positiveAttributeFilter: {
             displayForm: toDisplayFormQualifier(displayFormRef),
-            in: attributeElements,
+            in: {
+                values: extractValuesFromAttributeElements(attributeElements),
+            },
             ...applyOnResultProp,
         },
     };
@@ -90,14 +102,12 @@ function convertNegativeFilter(
     const displayFormRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
 
-    if (!isAttributeElementsByValue(attributeElements)) {
-        throw new NotSupported("Tiger backend only allows specifying attribute elements by value");
-    }
-
     return {
         negativeAttributeFilter: {
             displayForm: toDisplayFormQualifier(displayFormRef),
-            notIn: attributeElements,
+            notIn: {
+                values: extractValuesFromAttributeElements(attributeElements),
+            },
             ...applyOnResultProp,
         },
     };
