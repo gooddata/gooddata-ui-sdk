@@ -151,7 +151,10 @@
             &,
             &:hover,
             &:active {
-                background-color: transparentize($default-gd-border-color, 0.8);
+                background-color: var(
+                    --gd-palette-complementary-2,
+                    transparentize($default-gd-border-color, 0.8)
+                );
             }
         }
     }
