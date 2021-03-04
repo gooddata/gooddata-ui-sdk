@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
@@ -6,13 +6,17 @@ import {
     IWorkspaceAttributesService,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
-import { idRef, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
+import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import flatMap from "lodash/flatMap";
 import {
-    newAttributeDisplayFormMetadataObject,
-    newAttributeMetadataObject,
-} from "@gooddata/sdk-backend-base";
+    convertAttributesWithSideloadedLabels,
+    convertAttributeWithSideloadedLabels,
+    convertLabelWithSideloadedAttribute,
+} from "../../../convertors/fromBackend/MetadataConverter";
+import { invariant } from "ts-invariant";
 
 export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -22,16 +26,30 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     }
 
     public getAttributeDisplayForm = async (ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject> => {
-        return this.authCall(async () =>
-            newAttributeDisplayFormMetadataObject(ref, (df) =>
-                df.title("Display form").attribute(idRef("attr.dummy")),
-            ),
-        );
+        return this.authCall(async (client) => loadAttributeDisplayForm(client, this.workspace, ref));
     };
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
-        return this.authCall(async () => newAttributeMetadataObject(ref, (att) => att.title("dummyTitle")));
+        return this.authCall(async (client) => loadAttribute(client, this.workspace, ref));
     };
+
+    public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        return this.authCall(async (client) => {
+            const allAttributes = await loadAttributes(client, this.workspace);
+
+            return flatMap(allAttributes, (attr) => attr.displayForms).filter((df) =>
+                refs.find((ref) => areObjRefsEqual(ref, df.ref)),
+            );
+        });
+    }
+
+    public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        return this.authCall(async (client) => {
+            const allAttributes = await loadAttributes(client, this.workspace);
+
+            return allAttributes.filter((attr) => refs.find((ref) => areObjRefsEqual(ref, attr.ref)));
+        });
+    }
 
     getCommonAttributes(): Promise<ObjRef[]> {
         throw new NotSupported("not supported");
@@ -40,12 +58,68 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     getCommonAttributesBatch(): Promise<ObjRef[][]> {
         throw new NotSupported("not supported");
     }
+}
 
-    getAttributeDisplayForms(_: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        throw new NotSupported("not supported");
-    }
+function loadAttributeDisplayForm(
+    client: ITigerClient,
+    workspace: string,
+    ref: ObjRef,
+): Promise<IAttributeDisplayFormMetadataObject> {
+    invariant(isIdentifierRef(ref));
 
-    getAttributes(_: ObjRef[]): Promise<IAttributeMetadataObject[]> {
-        throw new NotSupported("not supported");
-    }
+    return client.workspaceObjects
+        .getEntityLabels(
+            {
+                workspaceId: workspace,
+                objectId: ref.identifier,
+            },
+            {
+                headers: jsonApiHeaders,
+                params: {
+                    include: "attributes",
+                },
+            },
+        )
+        .then((res) => convertLabelWithSideloadedAttribute(res.data));
+}
+
+function loadAttribute(
+    client: ITigerClient,
+    workspace: string,
+    ref: ObjRef,
+): Promise<IAttributeMetadataObject> {
+    invariant(isIdentifierRef(ref));
+
+    return client.workspaceObjects
+        .getEntityAttributes(
+            {
+                workspaceId: workspace,
+                objectId: ref.identifier,
+            },
+            {
+                headers: jsonApiHeaders,
+                params: {
+                    include: "labels",
+                },
+            },
+        )
+        .then((res) => convertAttributeWithSideloadedLabels(res.data));
+}
+
+function loadAttributes(client: ITigerClient, workspace: string): Promise<IAttributeMetadataObject[]> {
+    return client.workspaceObjects
+        .getEntitiesAttributes(
+            {
+                workspaceId: workspace,
+            },
+            {
+                headers: jsonApiHeaders,
+                query: {
+                    include: "labels",
+                    // TODO - update after paging is fixed in MDC-354
+                    size: "500",
+                },
+            },
+        )
+        .then((res) => convertAttributesWithSideloadedLabels(res.data));
 }

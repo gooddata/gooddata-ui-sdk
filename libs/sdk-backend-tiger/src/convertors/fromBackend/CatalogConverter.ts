@@ -10,7 +10,6 @@ import {
 import { toSdkGranularity } from "./dateGranularityConversions";
 import {
     IGroupableCatalogItemBuilder,
-    IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
     newCatalogAttribute,
     newCatalogDateAttribute,
@@ -26,27 +25,13 @@ import {
     ICatalogMeasure,
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
-
-type MetadataObject =
-    | JsonApiAttributeWithLinks
-    | JsonApiFactWithLinks
-    | JsonApiMetricWithLinks
-    | JsonApiLabelWithLinks;
-
-const commonMetadataObjectModifications = <TItem extends MetadataObject, T extends IMetadataObjectBuilder>(
-    item: TItem,
-) => (builder: T) =>
-    builder
-        .id(item.id)
-        .uri(item.links!.self)
-        .title(item.attributes?.title || "")
-        .description(item.attributes?.description || "");
+import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
 
 const commonGroupableCatalogItemModifications = <
     TItem extends IGroupableCatalogItemBase,
     T extends IGroupableCatalogItemBuilder<TItem>
 >(
-    item: MetadataObject,
+    item: MetadataObjectFromApi,
 ) => (builder: T) => {
     const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
     return builder.groups(tags);
