@@ -23,7 +23,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     height: $gd-header-height;
     padding: 0 0 0 20px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
-    color: $gd-color-text-light;
+    color: #fff;
     font-family: $gd-font-primary-without-custom;
     background: #000;
 
@@ -467,7 +467,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         display: block;
         height: 0;
         transition: 0.4s;
-        border-bottom: 1px solid $gd-color-text-light;
+        border-bottom: 1px solid var(--gd-palette-complementary-7, $gd-color-text-light);
     }
 
     &::before {

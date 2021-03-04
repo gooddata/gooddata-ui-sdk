@@ -19,6 +19,16 @@
         span {
             flex: 0 1 auto;
         }
+
+        .gd-list-item-tooltip {
+            color: var(--gd-palette-complementary-8, initial);
+        }
+
+        &:hover {
+            .gd-list-item-tooltip {
+                color: var(--gd-palette-complementary-9, initial);
+            }
+        }
     }
 
     .gd-customizable-checkmark-mobile-date-filter {

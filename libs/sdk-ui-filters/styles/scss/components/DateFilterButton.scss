@@ -68,7 +68,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     &:hover,
     .drag-preview & {
         &::after {
-            background: transparentize($default-gd-color-white, 0.05);
+            background: var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05));
         }
     }
 
@@ -112,7 +112,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
             &,
             .edit-mode-on & {
                 box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
-                border-color: $button-normal-hover-border-color;
+                border-color: var(--gd-palette-complementary-5, $button-normal-hover-border-color);
 
                 // refactor
                 // stylelint-disable-next-line max-line-length
@@ -282,7 +282,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
     height: auto;
     margin: 0;
     padding: 10px;
-    box-shadow: 0 1px 2px 0 rgba(20, 56, 93, 0.1);
+    box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
     line-height: 25px;
     border-width: 1px 0;
     border-top: 1px solid $gd-border-color;

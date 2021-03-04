@@ -86,7 +86,8 @@ $gd-day-picker-width: 268px;
         left: 0;
         width: $gd-day-picker-width;
         padding: 20px 15px 15px;
-        box-shadow: 0 2px 5px 0 transparentize($gd-date-range-picker-shadow-color, 0.85);
+        box-shadow: 0 2px 5px 0
+            var(--gd-shadow-color, transparentize($gd-date-range-picker-shadow-color, 0.85));
         background: $gd-color-white;
         user-select: none;
 
@@ -166,7 +167,7 @@ $gd-day-picker-width: 268px;
             font-weight: 400;
             font-size: 17px;
             text-align: center;
-            color: #000;
+            color: $gd-color-dark;
             cursor: default;
         }
 
@@ -185,7 +186,7 @@ $gd-day-picker-width: 268px;
             font-weight: 400;
             font-size: 13px;
             text-align: center;
-            color: $gd-color-state-blank;
+            color: var(--gd-palette-complementary-8, $gd-color-state-blank);
             cursor: help;
 
             abbr {
