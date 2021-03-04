@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter";
-import { absoluteFilter, relativeFilter, visualizationObjectFilter } from "./InvalidInputs.fixture";
+import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture";
 import {
     DateGranularity,
     idRef,
@@ -98,13 +98,22 @@ describe("tiger filter converter from model to AFM", () => {
     describe("convert filter", () => {
         const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
         const negativeAttributeFilter = newNegativeAttributeFilter(ReferenceLdm.Product.Name, ["value 2"]);
+        const positiveAttributeFilterWithUris = newPositiveAttributeFilter(ReferenceLdm.Product.Name, {
+            uris: ["value"],
+        });
+        const negativeAttributeFilterWithUris = newNegativeAttributeFilter(ReferenceLdm.Product.Name, {
+            uris: ["value"],
+        });
+
         const Scenarios: Array<[string, any]> = [
             ["positive attribute filter", positiveAttributeFilter],
+            ["positive attribute filter with uri attribute elements", positiveAttributeFilterWithUris],
             [
                 "positive attribute filter with applyOnResult true",
                 newFilterWithApplyOnResult(positiveAttributeFilter, true),
             ],
             ["negative attribute filter", negativeAttributeFilter],
+            ["negative attribute filter with uri attribute elements", negativeAttributeFilterWithUris],
             [
                 "negative attribute filter with applyOnResult false",
                 newFilterWithApplyOnResult(negativeAttributeFilter, false),
@@ -139,18 +148,6 @@ describe("tiger filter converter from model to AFM", () => {
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
             expect(convertFilter(input)).toMatchSnapshot();
-        });
-
-        it("should throw an error since tiger database only supports specifying positive attribute elements by value", () => {
-            expect(() =>
-                convertFilter(visualizationObjectFilter.positiveAttributeFilter),
-            ).toThrowErrorMatchingSnapshot();
-        });
-
-        it("should throw an error since tiger database only supports specifying negative attribute elements by value", () => {
-            expect(() =>
-                convertFilter(visualizationObjectFilter.negativeAttributeFilter),
-            ).toThrowErrorMatchingSnapshot();
         });
 
         it("should filter out empty attribute filters and not cause RAIL-2083", () => {

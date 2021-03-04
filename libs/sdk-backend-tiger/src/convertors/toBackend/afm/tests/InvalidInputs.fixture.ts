@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /**
@@ -10,9 +10,6 @@ import {
     newAbsoluteDateFilter,
     newRelativeDateFilter,
     DateGranularity,
-    newPositiveAttributeFilter,
-    newNegativeAttributeFilter,
-    newMeasureValueFilter,
     IMeasure,
     newPreviousPeriodMeasure,
     newAttribute,
@@ -37,14 +34,6 @@ export const relativeFilter = {
         undefined,
         30,
     ),
-};
-
-export const visualizationObjectFilter = {
-    // Tiger only allows specifying attribute elements by value
-    positiveAttributeFilter: newPositiveAttributeFilter(ReferenceLdm.Product.Name, { uris: "value" }),
-    negativeAttributeFilter: newNegativeAttributeFilter(ReferenceLdm.Product.Name, { uris: "value" }),
-    // Tiger does not support measure value filters
-    measureValueFilter: newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN_OR_EQUAL_TO", 5),
 };
 
 // Measure converter: unsupported measure definition

@@ -97,6 +97,24 @@ Object {
 }
 `;
 
+exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with uri attribute elements 1`] = `
+Object {
+  "negativeAttributeFilter": Object {
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "notIn": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter 1`] = `
 Object {
   "positiveAttributeFilter": Object {
@@ -119,6 +137,24 @@ exports[`tiger filter converter from model to AFM convert filter should return p
 Object {
   "positiveAttributeFilter": Object {
     "applyOnResult": true,
+    "displayForm": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
+    },
+    "in": Object {
+      "values": Array [
+        "value",
+      ],
+    },
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with uri attribute elements 1`] = `
+Object {
+  "positiveAttributeFilter": Object {
     "displayForm": Object {
       "identifier": Object {
         "id": "label.product.id.name",
@@ -227,10 +263,6 @@ Object {
   },
 }
 `;
-
-exports[`tiger filter converter from model to AFM convert filter should throw an error since tiger database only supports specifying negative attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
-
-exports[`tiger filter converter from model to AFM convert filter should throw an error since tiger database only supports specifying positive attribute elements by value 1`] = `"Tiger backend only allows specifying attribute elements by value"`;
 
 exports[`tiger filter converter from model to AFM convert measure value filter should convert specified using id of metric 1`] = `
 Object {
