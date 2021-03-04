@@ -7,11 +7,16 @@ import {
     IFilterContext,
     IFilterContextDefinition,
     IListedDashboard,
+    isFilterContext,
     isFilterContextDefinition,
+    isTempFilterContext,
+    ITempFilterContext,
     IWorkspaceDashboardsService,
     NotSupported,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
@@ -59,7 +64,9 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 },
                 {
                     headers: jsonApiHeaders,
-                    include: "filterContexts",
+                    params: {
+                        include: "filterContexts",
+                    },
                 },
             );
         });
@@ -144,8 +151,52 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return convertDashboard(result.data, filterContext);
     };
 
-    public updateDashboard = async () => {
-        throw new NotSupported("Not supported");
+    public updateDashboard = async (
+        originalDashboard: IDashboard,
+        updatedDashboard: IDashboardDefinition,
+    ): Promise<IDashboard> => {
+        if (!areObjRefsEqual(originalDashboard.ref, updatedDashboard.ref)) {
+            throw new Error("Cannot update dashboard with different refs!");
+        } else if (isEqual(originalDashboard, updatedDashboard)) {
+            return originalDashboard;
+        }
+
+        // Missing refs means that the dashboard is not yet stored, so let's create it
+        if (!originalDashboard.ref && !updatedDashboard.ref) {
+            return this.createDashboard(updatedDashboard);
+        }
+
+        const filterContext = await this.processFilterContextUpdate(
+            originalDashboard.filterContext,
+            updatedDashboard.filterContext,
+        );
+
+        const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
+        const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceObjects.updateEntityAnalyticalDashboards(
+                {
+                    workspaceId: this.workspace,
+                    objectId,
+                    jsonApiAnalyticalDashboardDocument: {
+                        data: {
+                            id: objectId,
+                            type: "analyticalDashboard",
+                            attributes: {
+                                content: dashboardContent,
+                                title: updatedDashboard.title,
+                                description: updatedDashboard.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertDashboard(result.data, filterContext);
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {
@@ -227,6 +278,57 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     jsonApiFilterContextDocument: {
                         data: {
                             id: uuidv4(),
+                            type: "filterContext",
+                            attributes: {
+                                content: tigerFilterContext,
+                                title: filterContext.title || "",
+                                description: filterContext.description || "",
+                            },
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertFilterContextFromBackend(result.data);
+    };
+
+    private processFilterContextUpdate = async (
+        originalFilterContext: IFilterContext | ITempFilterContext | undefined,
+        updatedFilterContext: IFilterContext | ITempFilterContext | IFilterContextDefinition | undefined,
+    ): Promise<IFilterContext | undefined> => {
+        if (isTempFilterContext(originalFilterContext)) {
+            throw new UnexpectedError("Cannot update temp filter context!");
+        } else if (isFilterContextDefinition(updatedFilterContext)) {
+            // Create a new filter context
+            return this.createFilterContext(updatedFilterContext);
+        } else if (isFilterContext(updatedFilterContext)) {
+            // Update the current filter context
+            const shouldUpdateFilterContext = !isEqual(originalFilterContext, updatedFilterContext);
+            if (shouldUpdateFilterContext) {
+                return this.updateFilterContext(updatedFilterContext);
+            }
+        }
+
+        // No change, return the original filter context
+        return originalFilterContext;
+    };
+
+    private updateFilterContext = async (filterContext: IFilterContext): Promise<IFilterContext> => {
+        const tigerFilterContext = convertFilterContextToBackend(filterContext);
+        const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
+
+        const result = await this.authCall((sdk) => {
+            return sdk.workspaceObjects.updateEntityFilterContexts(
+                {
+                    workspaceId: this.workspace,
+                    objectId,
+                    jsonApiFilterContextDocument: {
+                        data: {
+                            id: objectId,
                             type: "filterContext",
                             attributes: {
                                 content: tigerFilterContext,
