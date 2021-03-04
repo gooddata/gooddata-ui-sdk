@@ -1,18 +1,27 @@
 // (C) 2020-2021 GoodData Corporation
 import {
+    AnalyticalDashboardObjectModel,
+    isFilterContextData,
     JsonApiAnalyticalDashboardAttributes,
     JsonApiAnalyticalDashboardDocument,
     JsonApiAnalyticalDashboardList,
-    JsonApiFilterContextDocument,
-    AnalyticalDashboardObjectModel,
-    isFilterContextData,
     JsonApiAnalyticalDashboardWithLinks,
+    JsonApiFilterContextDocument,
     JsonApiFilterContextWithLinks,
 } from "@gooddata/api-client-tiger";
-import { IDashboard, IFilterContext, IListedDashboard } from "@gooddata/sdk-backend-spi";
+import {
+    DashboardWidget,
+    IDashboard,
+    IDashboardLayout,
+    IFilterContext,
+    IListedDashboard,
+    LayoutPath,
+    walkLayout,
+} from "@gooddata/sdk-backend-spi";
 
-import { idRef, ObjectType } from "@gooddata/sdk-model";
+import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
+import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export const convertAnalyticalDashboard = (
@@ -37,6 +46,24 @@ export const convertAnalyticalDashboardToListItems = (
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };
 
+function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undefined) {
+    if (!layout) {
+        return;
+    }
+
+    const widgetsPaths: LayoutPath[] = [];
+    walkLayout(layout, {
+        widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
+    });
+
+    return widgetsPaths.reduce((layout, widgetPath, index) => {
+        return updateWith(layout, widgetPath, (widget) => ({
+            ...widget,
+            ref: idRef((widget.insight as IdentifierRef).identifier + "_widget-" + index),
+        }));
+    }, layout);
+}
+
 export function convertAnalyticalDashboardContent(
     analyticalDashboard: AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"],
 ): AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"] {
@@ -45,7 +72,7 @@ export function convertAnalyticalDashboardContent(
         tags: analyticalDashboard.tags,
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         filterContextRef: cloneWithSanitizedIds(analyticalDashboard.filterContextRef),
-        layout: cloneWithSanitizedIds(analyticalDashboard.layout),
+        layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
     };
 }
 
