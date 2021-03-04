@@ -54,6 +54,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsLegacyReports: true,
     supportsRankingFilter: true,
     supportsElementsQueryParentFiltering: true,
+    supportsKpiWidget: true,
 };
 
 /**

@@ -68,6 +68,11 @@ export interface IBackendCapabilities {
     supportsElementsQueryParentFiltering?: boolean;
 
     /**
+     * Indicates whether backend supports a special dashboard-specific KPI Widget.
+     */
+    supportsKpiWidget?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
