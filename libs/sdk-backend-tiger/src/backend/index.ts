@@ -49,6 +49,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsCsvUploader: false,
     supportsRankingFilter: true,
     supportsElementsQueryParentFiltering: false,
+    supportsKpiWidget: false,
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -31,6 +31,7 @@ import { TigerWorkspaceDashboards } from "./dashboards";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 import { TigerWorkspaceMeasures } from "./measures";
 import { TigerWorkspaceFacts } from "./facts";
+import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -95,6 +96,6 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("Not supported");
     }
     public dateFilterConfigs(): IDateFilterConfigsQuery {
-        throw new NotSupported("not supported");
+        return new TigerWorkspaceDateFilterConfigsQuery();
     }
 }
