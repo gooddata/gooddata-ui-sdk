@@ -1677,7 +1677,7 @@ export interface RelativeDateFilterBody {
      * @type {string}
      * @memberof RelativeDateFilterBody
      */
-    granularity: string;
+    granularity: RelativeDateFilterBodyGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
@@ -1691,6 +1691,29 @@ export interface RelativeDateFilterBody {
      */
     to: number;
 }
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RelativeDateFilterBodyGranularityEnum {
+    MINUTE = "MINUTE",
+    HOUR = "HOUR",
+    DAY = "DAY",
+    WEEK = "WEEK",
+    MONTH = "MONTH",
+    QUARTER = "QUARTER",
+    YEAR = "YEAR",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    HOUROFDAY = "HOUR_OF_DAY",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+}
+
 /**
  * A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension.
  * @export
@@ -1702,7 +1725,7 @@ export interface RelativeDateFilterBodyAllOf {
      * @type {string}
      * @memberof RelativeDateFilterBodyAllOf
      */
-    granularity: string;
+    granularity: RelativeDateFilterBodyAllOfGranularityEnum;
     /**
      * Start of the filtering interval. Specified by number of periods (with respect to given granularity). Typically negative (historical time interval like -2 for \'2 days/weeks, ... ago\').
      * @type {number}
@@ -1716,6 +1739,29 @@ export interface RelativeDateFilterBodyAllOf {
      */
     to: number;
 }
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RelativeDateFilterBodyAllOfGranularityEnum {
+    MINUTE = "MINUTE",
+    HOUR = "HOUR",
+    DAY = "DAY",
+    WEEK = "WEEK",
+    MONTH = "MONTH",
+    QUARTER = "QUARTER",
+    YEAR = "YEAR",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    HOUROFDAY = "HOUR_OF_DAY",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+}
+
 /**
  *
  * @export
@@ -2153,7 +2199,7 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                     "Required parameter label was null or undefined when calling processElementsRequest.",
                 );
             }
-            const localVarPath = `/api/workspaces/{workspaceId}/label-elements`.replace(
+            const localVarPath = `/api/workspaces/{workspaceId}/labelElements`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );
@@ -2662,7 +2708,7 @@ export const ValidObjectsControllerApiAxiosParamCreator = function (configuratio
                     "Required parameter afmValidObjectsQuery was null or undefined when calling processAfmValidObjectsQuery.",
                 );
             }
-            const localVarPath = `/api/workspaces/{workspaceId}/valid-objects`.replace(
+            const localVarPath = `/api/workspaces/{workspaceId}/validObjects`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
             );

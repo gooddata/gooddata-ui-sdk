@@ -397,7 +397,7 @@ export interface DeclarativeDataset {
     grain: Array<GrainIdentifier>;
     id: string;
     references: Array<DeclarativeReference>;
-    sourceTable: string;
+    sourceTableId: string;
     title: string;
 }
 
@@ -665,7 +665,8 @@ export interface DeclarativeReference {
 // @public
 export interface DeclarativeTable {
     columns: Array<DeclarativeColumn>;
-    name: string;
+    id: string;
+    path: Array<string>;
 }
 
 // @public
@@ -1261,7 +1262,6 @@ export interface JsonApiDatasetAttributes {
     description?: string;
     grain?: Array<JsonApiDatasetAttributesGrain>;
     referenceProperties?: Array<JsonApiDatasetAttributesReferenceProperties>;
-    sourceTable?: string;
     tags?: Array<string>;
     title?: string;
     type?: JsonApiDatasetAttributesTypeEnum;
@@ -1299,14 +1299,14 @@ export enum JsonApiDatasetAttributesTypeEnum {
 // @public
 export interface JsonApiDatasetDocument {
     data: JsonApiDataset;
-    included?: Array<JsonApiAttributeWithLinks | JsonApiFactWithLinks | JsonApiDatasetWithLinks>;
+    included?: Array<JsonApiSourceTableWithLinks | JsonApiAttributeWithLinks | JsonApiFactWithLinks | JsonApiDatasetWithLinks>;
     links?: ObjectLinks;
 }
 
 // @public
 export interface JsonApiDatasetList {
     data: Array<JsonApiDatasetWithLinks>;
-    included?: Array<JsonApiAttributeWithLinks | JsonApiFactWithLinks | JsonApiDatasetWithLinks>;
+    included?: Array<JsonApiSourceTableWithLinks | JsonApiAttributeWithLinks | JsonApiFactWithLinks | JsonApiDatasetWithLinks>;
     links?: ListLinks;
 }
 
@@ -1315,6 +1315,7 @@ export interface JsonApiDatasetRelationships {
     attributes?: JsonApiACLRelationshipsUsers;
     datasets?: JsonApiACLRelationshipsUsers;
     facts?: JsonApiACLRelationshipsUsers;
+    table?: JsonApiOrganizationRelationshipsUser;
 }
 
 // @public
@@ -1669,6 +1670,7 @@ export interface JsonApiSourceTable {
 // @public
 export interface JsonApiSourceTableAttributes {
     columns?: Array<JsonApiSourceTableAttributesColumns>;
+    path?: Array<string>;
 }
 
 // @public
@@ -1959,18 +1961,6 @@ export interface LabelElementsRequestArgs {
 }
 
 // @public
-export interface Link {
-    deprecation?: string;
-    href?: string;
-    hreflang?: string;
-    name?: string;
-    profile?: string;
-    templated?: boolean;
-    title?: string;
-    type?: string;
-}
-
-// @public
 export interface ListLinks {
     next?: string;
     self: string;
@@ -2186,6 +2176,30 @@ export interface OptionsControllerApiInterface {
 // @public
 export class OrganizationControllerApi extends MetadataBaseApi implements OrganizationControllerApiInterface {
     // (undocumented)
+    getEntityAcls1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    // (undocumented)
+    getEntityDataSources(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    // (undocumented)
+    getEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
+    // (undocumented)
     getEntityOrganizations(params: {
         id: string;
         variableParam?: {
@@ -2193,6 +2207,59 @@ export class OrganizationControllerApi extends MetadataBaseApi implements Organi
         };
         include?: object;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    getEntityUserGroups(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    // (undocumented)
+    getEntityUsers(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    // (undocumented)
+    getEntityWorkspaces(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
+    // (undocumented)
+    getOrganizationUsers11(params: {}, options?: any): AxiosPromise<JsonApiACLDocument | JsonApiDataSourceDocument | JsonApiModelModuleDocument | JsonApiOrganizationDocument | JsonApiUserDocument | JsonApiUserGroupDocument | JsonApiWorkspaceDocument>;
+    // (undocumented)
+    updateEntityAcls1(params: {
+        id: string;
+        jsonApiACLDocument: JsonApiACLDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    // (undocumented)
+    updateEntityDataSources(params: {
+        id: string;
+        jsonApiDataSourceDocument: JsonApiDataSourceDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    // (undocumented)
+    updateEntityModelModules(params: {
+        id: string;
+        jsonApiModelModuleDocument: JsonApiModelModuleDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
     updateEntityOrganizations(params: {
         id: string;
@@ -2202,12 +2269,106 @@ export class OrganizationControllerApi extends MetadataBaseApi implements Organi
         };
         include?: object;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    updateEntityUserGroups(params: {
+        id: string;
+        jsonApiUserGroupDocument: JsonApiUserGroupDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    // (undocumented)
+    updateEntityUsers(params: {
+        id: string;
+        jsonApiUserDocument: JsonApiUserDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    // (undocumented)
+    updateEntityWorkspaces(params: {
+        id: string;
+        jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
 }
 
 // @public
 export const OrganizationControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityAcls1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityDataSources(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
     getEntityOrganizations(params: {
         id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityUserGroups(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityUsers(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityWorkspaces(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getOrganizationUsers11(params: {}, options?: any): MetadataRequestArgs;
+    updateEntityAcls1(params: {
+        id: string;
+        jsonApiACLDocument: JsonApiACLDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityDataSources(params: {
+        id: string;
+        jsonApiDataSourceDocument: JsonApiDataSourceDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityModelModules(params: {
+        id: string;
+        jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
             [key: string]: object;
         } | undefined;
@@ -2216,6 +2377,30 @@ export const OrganizationControllerApiAxiosParamCreator: (configuration?: Metada
     updateEntityOrganizations(params: {
         id: string;
         jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityUserGroups(params: {
+        id: string;
+        jsonApiUserGroupDocument: JsonApiUserGroupDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityUsers(params: {
+        id: string;
+        jsonApiUserDocument: JsonApiUserDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityWorkspaces(params: {
+        id: string;
+        jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
             [key: string]: object;
         } | undefined;
@@ -2225,6 +2410,27 @@ export const OrganizationControllerApiAxiosParamCreator: (configuration?: Metada
 
 // @public
 export const OrganizationControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
+    getEntityAcls1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    getEntityDataSources(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    getEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     getEntityOrganizations(params: {
         id: string;
         variableParam?: {
@@ -2232,6 +2438,52 @@ export const OrganizationControllerApiFactory: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    getEntityUserGroups(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    getEntityUsers(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    getEntityWorkspaces(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
+    getOrganizationUsers11(params: {}, options?: any): AxiosPromise<JsonApiDataSourceDocument | JsonApiACLDocument | JsonApiModelModuleDocument | JsonApiOrganizationDocument | JsonApiUserGroupDocument | JsonApiUserDocument | JsonApiWorkspaceDocument>;
+    updateEntityAcls1(params: {
+        id: string;
+        jsonApiACLDocument: JsonApiACLDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    updateEntityDataSources(params: {
+        id: string;
+        jsonApiDataSourceDocument: JsonApiDataSourceDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    updateEntityModelModules(params: {
+        id: string;
+        jsonApiModelModuleDocument: JsonApiModelModuleDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     updateEntityOrganizations(params: {
         id: string;
         jsonApiOrganizationDocument: JsonApiOrganizationDocument;
@@ -2240,10 +2492,55 @@ export const OrganizationControllerApiFactory: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    updateEntityUserGroups(params: {
+        id: string;
+        jsonApiUserGroupDocument: JsonApiUserGroupDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    updateEntityUsers(params: {
+        id: string;
+        jsonApiUserDocument: JsonApiUserDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    updateEntityWorkspaces(params: {
+        id: string;
+        jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
 };
 
 // @public
 export const OrganizationControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
+    getEntityAcls1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiACLDocument>;
+    getEntityDataSources(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceDocument>;
+    getEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleDocument>;
     getEntityOrganizations(params: {
         id: string;
         variableParam?: {
@@ -2251,6 +2548,52 @@ export const OrganizationControllerApiFp: (configuration?: MetadataConfiguration
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationDocument>;
+    getEntityUserGroups(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupDocument>;
+    getEntityUsers(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDocument>;
+    getEntityWorkspaces(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDocument>;
+    getOrganizationUsers11(params: {}, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceDocument | JsonApiACLDocument | JsonApiModelModuleDocument | JsonApiOrganizationDocument | JsonApiUserGroupDocument | JsonApiUserDocument | JsonApiWorkspaceDocument>;
+    updateEntityAcls1(params: {
+        id: string;
+        jsonApiACLDocument: JsonApiACLDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiACLDocument>;
+    updateEntityDataSources(params: {
+        id: string;
+        jsonApiDataSourceDocument: JsonApiDataSourceDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceDocument>;
+    updateEntityModelModules(params: {
+        id: string;
+        jsonApiModelModuleDocument: JsonApiModelModuleDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleDocument>;
     updateEntityOrganizations(params: {
         id: string;
         jsonApiOrganizationDocument: JsonApiOrganizationDocument;
@@ -2259,11 +2602,59 @@ export const OrganizationControllerApiFp: (configuration?: MetadataConfiguration
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationDocument>;
+    updateEntityUserGroups(params: {
+        id: string;
+        jsonApiUserGroupDocument: JsonApiUserGroupDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupDocument>;
+    updateEntityUsers(params: {
+        id: string;
+        jsonApiUserDocument: JsonApiUserDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDocument>;
+    updateEntityWorkspaces(params: {
+        id: string;
+        jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiWorkspaceDocument>;
 };
 
 // @public
 export interface OrganizationControllerApiInterface {
     // (undocumented)
+    getEntityAcls1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    // (undocumented)
+    getEntityDataSources(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    // (undocumented)
+    getEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
+    // (undocumented)
     getEntityOrganizations(params: {
         id: string;
         variableParam?: {
@@ -2271,6 +2662,59 @@ export interface OrganizationControllerApiInterface {
         };
         include?: object;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    getEntityUserGroups(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    // (undocumented)
+    getEntityUsers(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    // (undocumented)
+    getEntityWorkspaces(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
+    // (undocumented)
+    getOrganizationUsers11(params: {}, options?: any): AxiosPromise<JsonApiDataSourceDocument | JsonApiACLDocument | JsonApiModelModuleDocument | JsonApiOrganizationDocument | JsonApiUserGroupDocument | JsonApiUserDocument | JsonApiWorkspaceDocument>;
+    // (undocumented)
+    updateEntityAcls1(params: {
+        id: string;
+        jsonApiACLDocument: JsonApiACLDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiACLDocument>;
+    // (undocumented)
+    updateEntityDataSources(params: {
+        id: string;
+        jsonApiDataSourceDocument: JsonApiDataSourceDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
+    // (undocumented)
+    updateEntityModelModules(params: {
+        id: string;
+        jsonApiModelModuleDocument: JsonApiModelModuleDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
     updateEntityOrganizations(params: {
         id: string;
@@ -2280,6 +2724,33 @@ export interface OrganizationControllerApiInterface {
         };
         include?: object;
     }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    updateEntityUserGroups(params: {
+        id: string;
+        jsonApiUserGroupDocument: JsonApiUserGroupDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
+    // (undocumented)
+    updateEntityUsers(params: {
+        id: string;
+        jsonApiUserDocument: JsonApiUserDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiUserDocument>;
+    // (undocumented)
+    updateEntityWorkspaces(params: {
+        id: string;
+        jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
 }
 
 // @public
@@ -2344,6 +2815,14 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
+    createEntityOrganizations(params: {
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
     createEntityUserGroups(params: {
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -2383,6 +2862,13 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     }, options?: any): AxiosPromise<void>;
     // (undocumented)
     deleteEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+    }, options?: any): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityOrganizations(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2440,6 +2926,16 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         sort?: Array<string>;
     }, options?: any): AxiosPromise<JsonApiModelModuleList>;
     // (undocumented)
+    getAllEntitiesOrganizations(params: {
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+        page?: number;
+        size?: number;
+        sort?: Array<string>;
+    }, options?: any): AxiosPromise<JsonApiOrganizationList>;
+    // (undocumented)
     getAllEntitiesUserGroups(params: {
         variableParam?: {
             [key: string]: object;
@@ -2478,7 +2974,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
     // (undocumented)
-    getEntityDataSources(params: {
+    getEntityDataSources1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2486,7 +2982,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
     // (undocumented)
-    getEntityModelModules(params: {
+    getEntityModelModules1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2494,7 +2990,15 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
-    getEntityUserGroups(params: {
+    getEntityOrganizations1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    getEntityUserGroups1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2502,7 +3006,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
     // (undocumented)
-    getEntityUsers(params: {
+    getEntityUsers1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2510,7 +3014,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
     // (undocumented)
-    getEntityWorkspaces(params: {
+    getEntityWorkspaces1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2527,7 +3031,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
     // (undocumented)
-    updateEntityDataSources(params: {
+    updateEntityDataSources1(params: {
         id: string;
         jsonApiDataSourceDocument: JsonApiDataSourceDocument;
         variableParam?: {
@@ -2536,7 +3040,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
     // (undocumented)
-    updateEntityModelModules(params: {
+    updateEntityModelModules1(params: {
         id: string;
         jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
@@ -2545,7 +3049,16 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
-    updateEntityUserGroups(params: {
+    updateEntityOrganizations1(params: {
+        id: string;
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    updateEntityUserGroups1(params: {
         id: string;
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -2554,7 +3067,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
     // (undocumented)
-    updateEntityUsers(params: {
+    updateEntityUsers1(params: {
         id: string;
         jsonApiUserDocument: JsonApiUserDocument;
         variableParam?: {
@@ -2563,7 +3076,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
     // (undocumented)
-    updateEntityWorkspaces(params: {
+    updateEntityWorkspaces1(params: {
         id: string;
         jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
@@ -2624,6 +3137,13 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
+    createEntityOrganizations(params: {
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
     createEntityUserGroups(params: {
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -2658,6 +3178,12 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
     }, options?: any): MetadataRequestArgs;
     deleteEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+    }, options?: any): MetadataRequestArgs;
+    deleteEntityOrganizations(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2708,6 +3234,15 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         size?: number | undefined;
         sort?: string[] | undefined;
     }, options?: any): MetadataRequestArgs;
+    getAllEntitiesOrganizations(params: {
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+        page?: number | undefined;
+        size?: number | undefined;
+        sort?: string[] | undefined;
+    }, options?: any): MetadataRequestArgs;
     getAllEntitiesUserGroups(params: {
         variableParam?: {
             [key: string]: object;
@@ -2742,35 +3277,42 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    getEntityDataSources(params: {
+    getEntityDataSources1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    getEntityModelModules(params: {
+    getEntityModelModules1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    getEntityUserGroups(params: {
+    getEntityOrganizations1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    getEntityUsers(params: {
+    getEntityUserGroups1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    getEntityWorkspaces(params: {
+    getEntityUsers1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    getEntityWorkspaces1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2785,7 +3327,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    updateEntityDataSources(params: {
+    updateEntityDataSources1(params: {
         id: string;
         jsonApiDataSourceDocument: JsonApiDataSourceDocument;
         variableParam?: {
@@ -2793,7 +3335,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    updateEntityModelModules(params: {
+    updateEntityModelModules1(params: {
         id: string;
         jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
@@ -2801,7 +3343,15 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    updateEntityUserGroups(params: {
+    updateEntityOrganizations1(params: {
+        id: string;
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): MetadataRequestArgs;
+    updateEntityUserGroups1(params: {
         id: string;
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -2809,7 +3359,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    updateEntityUsers(params: {
+    updateEntityUsers1(params: {
         id: string;
         jsonApiUserDocument: JsonApiUserDocument;
         variableParam?: {
@@ -2817,7 +3367,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
         } | undefined;
         include?: object | undefined;
     }, options?: any): MetadataRequestArgs;
-    updateEntityWorkspaces(params: {
+    updateEntityWorkspaces1(params: {
         id: string;
         jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
@@ -2878,6 +3428,13 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
+    createEntityOrganizations(params: {
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
     createEntityUserGroups(params: {
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -2912,6 +3469,12 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
     }, options?: any): AxiosPromise<void>;
     deleteEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+    }, options?: any): AxiosPromise<void>;
+    deleteEntityOrganizations(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -2962,6 +3525,15 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         size?: number | undefined;
         sort?: string[] | undefined;
     }, options?: any): AxiosPromise<JsonApiModelModuleList>;
+    getAllEntitiesOrganizations(params: {
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+        page?: number | undefined;
+        size?: number | undefined;
+        sort?: string[] | undefined;
+    }, options?: any): AxiosPromise<JsonApiOrganizationList>;
     getAllEntitiesUserGroups(params: {
         variableParam?: {
             [key: string]: object;
@@ -2996,35 +3568,42 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
-    getEntityDataSources(params: {
+    getEntityDataSources1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
-    getEntityModelModules(params: {
+    getEntityModelModules1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
-    getEntityUserGroups(params: {
+    getEntityOrganizations1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    getEntityUserGroups1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
-    getEntityUsers(params: {
+    getEntityUsers1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
-    getEntityWorkspaces(params: {
+    getEntityWorkspaces1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3039,7 +3618,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
-    updateEntityDataSources(params: {
+    updateEntityDataSources1(params: {
         id: string;
         jsonApiDataSourceDocument: JsonApiDataSourceDocument;
         variableParam?: {
@@ -3047,7 +3626,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
-    updateEntityModelModules(params: {
+    updateEntityModelModules1(params: {
         id: string;
         jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
@@ -3055,7 +3634,15 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
-    updateEntityUserGroups(params: {
+    updateEntityOrganizations1(params: {
+        id: string;
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    updateEntityUserGroups1(params: {
         id: string;
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -3063,7 +3650,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
-    updateEntityUsers(params: {
+    updateEntityUsers1(params: {
         id: string;
         jsonApiUserDocument: JsonApiUserDocument;
         variableParam?: {
@@ -3071,7 +3658,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
         } | undefined;
         include?: object | undefined;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
-    updateEntityWorkspaces(params: {
+    updateEntityWorkspaces1(params: {
         id: string;
         jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
@@ -3132,6 +3719,13 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleDocument>;
+    createEntityOrganizations(params: {
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationDocument>;
     createEntityUserGroups(params: {
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -3166,6 +3760,12 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
     deleteEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<void>;
+    deleteEntityOrganizations(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3216,6 +3816,15 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         size?: number | undefined;
         sort?: string[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleList>;
+    getAllEntitiesOrganizations(params: {
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+        page?: number | undefined;
+        size?: number | undefined;
+        sort?: string[] | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationList>;
     getAllEntitiesUserGroups(params: {
         variableParam?: {
             [key: string]: object;
@@ -3250,35 +3859,42 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiACLDocument>;
-    getEntityDataSources(params: {
+    getEntityDataSources1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceDocument>;
-    getEntityModelModules(params: {
+    getEntityModelModules1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleDocument>;
-    getEntityUserGroups(params: {
+    getEntityOrganizations1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationDocument>;
+    getEntityUserGroups1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupDocument>;
-    getEntityUsers(params: {
+    getEntityUsers1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDocument>;
-    getEntityWorkspaces(params: {
+    getEntityWorkspaces1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3293,7 +3909,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiACLDocument>;
-    updateEntityDataSources(params: {
+    updateEntityDataSources1(params: {
         id: string;
         jsonApiDataSourceDocument: JsonApiDataSourceDocument;
         variableParam?: {
@@ -3301,7 +3917,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiDataSourceDocument>;
-    updateEntityModelModules(params: {
+    updateEntityModelModules1(params: {
         id: string;
         jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
@@ -3309,7 +3925,15 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiModelModuleDocument>;
-    updateEntityUserGroups(params: {
+    updateEntityOrganizations1(params: {
+        id: string;
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        } | undefined;
+        include?: object | undefined;
+    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiOrganizationDocument>;
+    updateEntityUserGroups1(params: {
         id: string;
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -3317,7 +3941,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserGroupDocument>;
-    updateEntityUsers(params: {
+    updateEntityUsers1(params: {
         id: string;
         jsonApiUserDocument: JsonApiUserDocument;
         variableParam?: {
@@ -3325,7 +3949,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
         } | undefined;
         include?: object | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiUserDocument>;
-    updateEntityWorkspaces(params: {
+    updateEntityWorkspaces1(params: {
         id: string;
         jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
@@ -3397,6 +4021,14 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
+    createEntityOrganizations(params: {
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
     createEntityUserGroups(params: {
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -3436,6 +4068,13 @@ export interface OrganizationModelControllerApiInterface {
     }, options?: any): AxiosPromise<void>;
     // (undocumented)
     deleteEntityModelModules(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+    }, options?: any): AxiosPromise<void>;
+    // (undocumented)
+    deleteEntityOrganizations(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3493,6 +4132,16 @@ export interface OrganizationModelControllerApiInterface {
         sort?: Array<string>;
     }, options?: any): AxiosPromise<JsonApiModelModuleList>;
     // (undocumented)
+    getAllEntitiesOrganizations(params: {
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+        page?: number;
+        size?: number;
+        sort?: Array<string>;
+    }, options?: any): AxiosPromise<JsonApiOrganizationList>;
+    // (undocumented)
     getAllEntitiesUserGroups(params: {
         variableParam?: {
             [key: string]: object;
@@ -3531,7 +4180,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
     // (undocumented)
-    getEntityDataSources(params: {
+    getEntityDataSources1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3539,7 +4188,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
     // (undocumented)
-    getEntityModelModules(params: {
+    getEntityModelModules1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3547,7 +4196,15 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
-    getEntityUserGroups(params: {
+    getEntityOrganizations1(params: {
+        id: string;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    getEntityUserGroups1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3555,7 +4212,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
     // (undocumented)
-    getEntityUsers(params: {
+    getEntityUsers1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3563,7 +4220,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
     // (undocumented)
-    getEntityWorkspaces(params: {
+    getEntityWorkspaces1(params: {
         id: string;
         variableParam?: {
             [key: string]: object;
@@ -3580,7 +4237,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiACLDocument>;
     // (undocumented)
-    updateEntityDataSources(params: {
+    updateEntityDataSources1(params: {
         id: string;
         jsonApiDataSourceDocument: JsonApiDataSourceDocument;
         variableParam?: {
@@ -3589,7 +4246,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiDataSourceDocument>;
     // (undocumented)
-    updateEntityModelModules(params: {
+    updateEntityModelModules1(params: {
         id: string;
         jsonApiModelModuleDocument: JsonApiModelModuleDocument;
         variableParam?: {
@@ -3598,7 +4255,16 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiModelModuleDocument>;
     // (undocumented)
-    updateEntityUserGroups(params: {
+    updateEntityOrganizations1(params: {
+        id: string;
+        jsonApiOrganizationDocument: JsonApiOrganizationDocument;
+        variableParam?: {
+            [key: string]: object;
+        };
+        include?: object;
+    }, options?: any): AxiosPromise<JsonApiOrganizationDocument>;
+    // (undocumented)
+    updateEntityUserGroups1(params: {
         id: string;
         jsonApiUserGroupDocument: JsonApiUserGroupDocument;
         variableParam?: {
@@ -3607,7 +4273,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserGroupDocument>;
     // (undocumented)
-    updateEntityUsers(params: {
+    updateEntityUsers1(params: {
         id: string;
         jsonApiUserDocument: JsonApiUserDocument;
         variableParam?: {
@@ -3616,7 +4282,7 @@ export interface OrganizationModelControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiUserDocument>;
     // (undocumented)
-    updateEntityWorkspaces(params: {
+    updateEntityWorkspaces1(params: {
         id: string;
         jsonApiWorkspaceDocument: JsonApiWorkspaceDocument;
         variableParam?: {
@@ -3783,25 +4449,83 @@ export interface RelativeDateFilterBody {
     applyOnResult?: boolean;
     dataset: ObjectIdentifier;
     from: number;
-    granularity: string;
+    granularity: RelativeDateFilterBodyGranularityEnum;
     to: number;
 }
 
 // @public
 export interface RelativeDateFilterBodyAllOf {
     from: number;
-    granularity: string;
+    granularity: RelativeDateFilterBodyAllOfGranularityEnum;
     to: number;
 }
 
 // @public
-export interface RepresentationModel {
-    _links?: Array<Link>;
+export enum RelativeDateFilterBodyAllOfGranularityEnum {
+    // (undocumented)
+    DAY = "DAY",
+    // (undocumented)
+    DAYOFMONTH = "DAY_OF_MONTH",
+    // (undocumented)
+    DAYOFWEEK = "DAY_OF_WEEK",
+    // (undocumented)
+    DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    // (undocumented)
+    MONTH = "MONTH",
+    // (undocumented)
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    // (undocumented)
+    QUARTER = "QUARTER",
+    // (undocumented)
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    // (undocumented)
+    WEEK = "WEEK",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    YEAR = "YEAR"
 }
 
 // @public
-export interface RepresentationModelObject {
-    _links?: Array<Link>;
+export enum RelativeDateFilterBodyGranularityEnum {
+    // (undocumented)
+    DAY = "DAY",
+    // (undocumented)
+    DAYOFMONTH = "DAY_OF_MONTH",
+    // (undocumented)
+    DAYOFWEEK = "DAY_OF_WEEK",
+    // (undocumented)
+    DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    // (undocumented)
+    MONTH = "MONTH",
+    // (undocumented)
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    // (undocumented)
+    QUARTER = "QUARTER",
+    // (undocumented)
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    // (undocumented)
+    WEEK = "WEEK",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    YEAR = "YEAR"
 }
 
 // @public
@@ -5975,43 +6699,6 @@ export interface WorkspaceObjectControllerApiInterface {
         };
         include?: object;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectDocument>;
-}
-
-// @public
-export class WorkspaceRootModelControllerApi extends MetadataBaseApi implements WorkspaceRootModelControllerApiInterface {
-    // (undocumented)
-    getRootJsonApi1(params: {
-        workspaceId: string;
-    }, options?: any): AxiosPromise<RepresentationModelObject>;
-}
-
-// @public
-export const WorkspaceRootModelControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
-    getRootJsonApi1(params: {
-        workspaceId: string;
-    }, options?: any): MetadataRequestArgs;
-};
-
-// @public
-export const WorkspaceRootModelControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
-    getRootJsonApi1(params: {
-        workspaceId: string;
-    }, options?: any): AxiosPromise<RepresentationModelObject>;
-};
-
-// @public
-export const WorkspaceRootModelControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
-    getRootJsonApi1(params: {
-        workspaceId: string;
-    }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<RepresentationModelObject>;
-};
-
-// @public
-export interface WorkspaceRootModelControllerApiInterface {
-    // (undocumented)
-    getRootJsonApi1(params: {
-        workspaceId: string;
-    }, options?: any): AxiosPromise<RepresentationModelObject>;
 }
 
 

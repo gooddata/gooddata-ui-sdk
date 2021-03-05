@@ -72,9 +72,9 @@
                 }
             }
         },
-        "/api/workspaces/{workspaceId}/valid-objects": {
+        "/api/workspaces/{workspaceId}/validObjects": {
             "post": {
-                "tags": ["valid-objects-controller"],
+                "tags": ["validObjects-controller"],
                 "summary": "Valid objects",
                 "description": "Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.",
                 "operationId": "processAfmValidObjectsQuery",
@@ -114,7 +114,7 @@
                 }
             }
         },
-        "/api/workspaces/{workspaceId}/label-elements": {
+        "/api/workspaces/{workspaceId}/labelElements": {
             "get": {
                 "tags": ["elements-controller"],
                 "summary": "Listing of label values.",
@@ -886,7 +886,24 @@
                             "granularity": {
                                 "type": "string",
                                 "description": "Date granularity specifying particular date attribute in given dimension.",
-                                "example": "day"
+                                "example": "DAY",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
                             },
                             "from": {
                                 "type": "integer",
@@ -1412,7 +1429,7 @@
                     "next": {
                         "type": "string",
                         "description": "Link to next page, or null if this is last page.",
-                        "example": "https://sample.gooddata.com/api/workspaces/sampleWorkspace/label-elements?label=sample.price&limit=5&offset=10"
+                        "example": "https://sample.gooddata.com/api/workspaces/sampleWorkspace/labelElements?label=sample.price&limit=5&offset=10"
                     }
                 },
                 "description": "Current page description."
