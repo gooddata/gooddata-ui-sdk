@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
+import { getLuminance } from "polished";
 import identity from "lodash/identity";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -51,6 +52,7 @@ const prepareComplementaryPalette = (theme: ITheme): ITheme => {
     if (theme?.palette?.complementary) {
         return {
             ...theme,
+
             palette: {
                 ...theme.palette,
                 complementary: getComplementaryPalette(theme.palette.complementary),
@@ -60,7 +62,45 @@ const prepareComplementaryPalette = (theme: ITheme): ITheme => {
 
     return theme;
 };
-const prepareTheme = (theme: ITheme): ITheme => ({ ...theme, ...prepareComplementaryPalette(theme) });
+
+export const prepareBaseColors = (theme: ITheme): ITheme => {
+    const defaultPrimary = "#14b2e2";
+    const defaultSuccess = "#00c18d";
+    const defaultError = "#e54d42";
+    const defaultWarning = "#fada23";
+
+    if (theme?.palette?.complementary) {
+        return {
+            ...theme,
+            palette: {
+                ...theme.palette,
+                ...(theme.palette.primary ? {} : { primary: { base: defaultPrimary } }),
+                ...(theme.palette.success ? {} : { success: { base: defaultSuccess } }),
+                ...(theme.palette.error ? {} : { error: { base: defaultError } }),
+                ...(theme.palette.warning ? {} : { warning: { base: defaultWarning } }),
+            },
+        };
+    }
+
+    return theme;
+};
+
+const prepareTheme = (theme: ITheme): ITheme => ({
+    ...theme,
+    ...prepareComplementaryPalette(theme),
+    ...prepareBaseColors(theme),
+});
+
+export const isDarkTheme = (theme: ITheme) => {
+    const firstColor = theme?.palette?.complementary?.shade0;
+    const lastColor = theme?.palette?.complementary?.shade9;
+
+    if (!firstColor || !lastColor) {
+        return false;
+    }
+
+    return getLuminance(firstColor) < getLuminance(lastColor);
+};
 
 /**
  * Fetches the theme object from the backend upon mounting and passes both theme object and isThemeLoading flag
@@ -92,7 +132,8 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
         clearCssProperties();
         // no need to load anything if the themeParam is present
         if (themeParam) {
-            setCssProperties(themeParam);
+            const preparedTheme = prepareTheme(themeParam);
+            setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             return;
         }
 
@@ -109,7 +150,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
                 const preparedTheme = prepareTheme(modifiedTheme);
                 setTheme(preparedTheme);
                 setIsLoading(false);
-                setCssProperties(preparedTheme);
+                setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             }
         };
 

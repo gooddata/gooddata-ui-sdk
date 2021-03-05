@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2021 GoodData Corporation
 import { IThemeComplementaryPalette } from "@gooddata/sdk-backend-spi";
 
 import { getComplementaryPalette } from "../complementaryPalette";
