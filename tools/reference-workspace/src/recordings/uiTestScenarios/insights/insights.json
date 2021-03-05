@@ -676,6 +676,9 @@
     "ColumnChart.93d3b4d7b56be8ef943fc3c591374740": {
         "comment": "Auto-generated insight for test scenario ColumnChart - data labels - default."
     },
+    "ColumnChart.9734f5d20a842690a4ad77294a025f1a": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - Stack measures to 100% with and axis min/max."
+    },
     "ColumnChart.9b5eb36b8b1a70103433cdd071f5048c": {
         "comment": "Auto-generated insight for test scenario ColumnChart - stack measures to 100% and dual axis."
     },

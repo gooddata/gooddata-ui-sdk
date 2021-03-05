@@ -1,0 +1,62 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [],
+        "identifier": "ColumnChart.9734f5d20a842690a4ad77294a025f1a",
+        "properties": {
+            "controls": {
+                "dataLabels": { "visible": true },
+                "stackMeasuresToPercent": true,
+                "yaxis": { "max": "0.9", "min": "0.1" }
+            }
+        },
+        "sorts": [],
+        "title": "ColumnChart - Stack measures to 100% with and axis min/max",
+        "uri": "ColumnChart.9734f5d20a842690a4ad77294a025f1a",
+        "visualizationUrl": "local:column"
+    }
+}

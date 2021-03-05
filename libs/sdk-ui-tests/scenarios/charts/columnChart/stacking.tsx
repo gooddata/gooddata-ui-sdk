@@ -36,6 +36,19 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
             },
         },
     })
+    .addScenario("Stack measures to 100% with and axis min/max", {
+        ...ColumnChartWithTwoMeasuresAndTwoViewBy,
+        config: {
+            stackMeasuresToPercent: true,
+            dataLabels: {
+                visible: true,
+            },
+            yaxis: {
+                min: "0.1",
+                max: "0.9",
+            },
+        },
+    })
     .addScenario("two measures with dual axis ignores stack measures", {
         ...ColumnChartWithTwoMeasuresAndTwoViewBy,
         config: {

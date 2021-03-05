@@ -1,0 +1,102 @@
+[
+    {
+        "n2oMap": {
+            "a_label.uscities.city.location": "a_label.uscities.city.location",
+            "a_label.uscities.state_name": "a_label.uscities.state_name",
+            "m_fact.uscities.density_sum": "m_35a08895_fact.uscities.density_sum"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "label.uscities.city.location",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_label.uscities.city.location"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.uscities.state_name", "type": "displayForm" },
+                        "localIdentifier": "a_label.uscities.state_name"
+                    }
+                }
+            ],
+            "buckets": [
+                { "items": [], "localIdentifier": "size" },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Density",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "fact.uscities.density", "type": "fact" }
+                                    }
+                                },
+                                "format": "#,##0.00",
+                                "localIdentifier": "m_35a08895_fact.uscities.density_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.city.location",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.city.location"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "location"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.uscities.state_name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.uscities.state_name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.uscities.city.location", "a_label.uscities.state_name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Density",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "fact.uscities.density", "type": "fact" }
+                            }
+                        },
+                        "format": "#,##0.00",
+                        "localIdentifier": "m_35a08895_fact.uscities.density_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "live-examples-workspace"
+        },
+        "scenario": "location, segment and color",
+        "vis": "GeoPushpinChart"
+    }
+]

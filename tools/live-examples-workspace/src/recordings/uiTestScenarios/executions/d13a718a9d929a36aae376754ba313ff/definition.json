@@ -1,0 +1,37 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.uscities.city.location", "type": "displayForm" },
+                "localIdentifier": "a_label.uscities.city.location"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.uscities.city", "type": "displayForm" },
+                "localIdentifier": "a_label.uscities.city"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_label.uscities.city.location", "a_label.uscities.city"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "fact.uscities.density", "type": "fact" }
+                    }
+                },
+                "localIdentifier": "m_fact.uscities.density_sum"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "live-examples-workspace"
+}

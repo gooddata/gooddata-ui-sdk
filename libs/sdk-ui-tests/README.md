@@ -154,7 +154,7 @@ When creating new test scenarios, proceed as follows:
 -   Add new scenarios in sdk-ui-tests, make sure new scenarios are included in barrel exports all the way to the root
     scenarios index
 -   Execute `rush populate-ref` in terminal => writes new execution defs
--   Execute `./bin/refresh-recordings.sh && npm run build` => captures execution recordings (if needed) and builds
+-   Execute `rushx refresh-recordings` => captures execution recordings (if needed) and builds
     the recording index
 -   Commit
 

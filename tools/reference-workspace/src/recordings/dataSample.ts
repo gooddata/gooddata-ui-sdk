@@ -1,8 +1,6 @@
-// (C) 2021 GoodData Corporation
-
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-02-09T16:28:02.821Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-03-02T09:36:51.622Z; */
 
 const df_label_product_id_name = require("./metadata/displayForms/label.product.id.name/elements.json");
 const df_label_owner_department = require("./metadata/displayForms/label.owner.department/elements.json");
