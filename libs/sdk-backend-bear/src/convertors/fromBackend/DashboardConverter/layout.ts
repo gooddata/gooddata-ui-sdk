@@ -22,6 +22,11 @@ export const convertLayoutSize = (size: GdcDashboardLayout.IFluidLayoutSize): ID
     const converted: IDashboardLayoutSize = {
         gridWidth: size.width,
     };
+
+    if (size.height) {
+        converted.gridHeight = size.height;
+    }
+
     if (size.heightAsRatio) {
         converted.heightAsRatio = size.heightAsRatio;
     }

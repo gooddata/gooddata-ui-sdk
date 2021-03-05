@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`sizing getDashboardLayoutGridItemHeight should calculate widget height for selected gridHeight when FF enableKDWidgetCustomHeight is true 1`] = `220`;
+
 exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 1`] = `0`;
 
 exports[`sizing getDashboardLayoutItemHeightForRatioAndScreen should calculate widget height for lg screen with ratio 50 2`] = `55.083333333333336`;
@@ -292,7 +294,7 @@ exports[`sizing getDashboardLayoutWidgetDefaultHeight should get default height 
 
 exports[`sizing getDashboardLayoutWidgetDefaultHeight should get default height for unknown widget 1`] = `450`;
 
-exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes 1`] = `
+exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is false 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -1093,6 +1095,829 @@ Object {
             "xs": Object {
               "gridWidth": 12,
               "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "xirr",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is true 1`] = `
+Object {
+  "sections": Array [
+    Object {
+      "items": Array [
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "md": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "sm": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "xl": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "xs": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "alluvial",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 1,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 1,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "area",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "bar",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 3,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 3,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "bubble",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "bullet",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 5,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 5,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "column",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "combo",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 7,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 7,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "combo2",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 8,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 8,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "donut",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 9,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 9,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "funnel",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 10,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 10,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "geo",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 11,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 11,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "headline",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "md": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "sm": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "xl": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+            "xs": Object {
+              "gridWidth": 0,
+              "heightAsRatio": 0,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "heatmap",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 1,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 1,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "histogram",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 2,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "line",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 3,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 3,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "pareto",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 4,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "pushpin",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 5,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 5,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "pie",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "scatter",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 7,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 7,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "table",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 8,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 8,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "treemap",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 9,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 6,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 9,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": Object {
+            "description": "",
+            "drills": Array [],
+            "ignoreDashboardFilters": Array [],
+            "insight": Object {
+              "identifier": "waterfall",
+            },
+            "title": "",
+            "type": "insight",
+          },
+        },
+        Object {
+          "size": Object {
+            "lg": Object {
+              "gridHeight": 10,
+              "gridWidth": 10,
+            },
+            "md": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "sm": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
+            },
+            "xl": Object {
+              "gridHeight": 10,
+              "gridWidth": 10,
+            },
+            "xs": Object {
+              "gridHeight": 10,
+              "gridWidth": 12,
             },
           },
           "type": "IDashboardLayoutItem",

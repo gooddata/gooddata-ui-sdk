@@ -292,6 +292,165 @@ Object {
 }
 `;
 
+exports[`dashboard converter convert dashboard should convert dashboard with layout with custom gridHeight 1`] = `
+Object {
+  "created": "2020-05-05 00:00:00",
+  "dateFilterConfig": undefined,
+  "description": "",
+  "filterContext": undefined,
+  "identifier": "dashboardWithFilterContext",
+  "isLocked": false,
+  "layout": Object {
+    "sections": Array [
+      Object {
+        "items": Array [
+          Object {
+            "size": Object {
+              "xl": Object {
+                "gridHeight": 12,
+                "gridWidth": 12,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
+                    },
+                    "type": "drillFromMeasure",
+                  },
+                  "target": Object {
+                    "identifier": "dashboardId",
+                  },
+                  "transition": "in-place",
+                  "type": "drillToDashboard",
+                },
+              ],
+              "identifier": "visualizationWidgetHeadline",
+              "ignoreDashboardFilters": Array [
+                Object {
+                  "displayForm": Object {
+                    "uri": "/gdc/md/displayForm",
+                  },
+                  "type": "attributeFilterReference",
+                },
+              ],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationHeadline",
+              },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+              },
+              "title": "visualizationWidgetHeadline",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetHeadline",
+            },
+          },
+          Object {
+            "size": Object {
+              "xl": Object {
+                "gridHeight": 6,
+                "gridWidth": 6,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "localIdentifier": "m1",
+                    },
+                    "type": "drillFromMeasure",
+                  },
+                  "target": Object {
+                    "uri": "/targetVisualization",
+                  },
+                  "transition": "pop-up",
+                  "type": "drillToInsight",
+                },
+              ],
+              "identifier": "visualizationWidgetBarChart",
+              "ignoreDashboardFilters": Array [],
+              "insight": Object {
+                "uri": "/gdc/md/obj/visualizationBarChart",
+              },
+              "properties": Object {},
+              "ref": Object {
+                "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+              },
+              "title": "visualizationWidgetBarChart",
+              "type": "insight",
+              "uri": "/gdc/md/obj/visualizationWidgetBarChart",
+            },
+          },
+          Object {
+            "size": Object {
+              "xl": Object {
+                "gridHeight": 6,
+                "gridWidth": 2,
+              },
+            },
+            "type": "IDashboardLayoutItem",
+            "widget": Object {
+              "dateDataSet": undefined,
+              "description": "",
+              "drills": Array [
+                Object {
+                  "origin": Object {
+                    "measure": Object {
+                      "uri": "/measure",
+                    },
+                    "type": "drillFromMeasure",
+                  },
+                  "tab": "testTab",
+                  "target": Object {
+                    "uri": "test",
+                  },
+                  "transition": "in-place",
+                  "type": "drillToLegacyDashboard",
+                },
+              ],
+              "identifier": "kpiWidget",
+              "ignoreDashboardFilters": Array [],
+              "kpi": Object {
+                "comparisonDirection": "growIsGood",
+                "comparisonType": "previousPeriod",
+                "metric": Object {
+                  "uri": "/measure",
+                },
+              },
+              "ref": Object {
+                "uri": "/gdc/md/obj/kpiWidget",
+              },
+              "title": "kpiWidget",
+              "type": "kpi",
+              "uri": "/gdc/md/obj/kpiWidget",
+            },
+          },
+        ],
+        "type": "IDashboardLayoutSection",
+      },
+    ],
+    "type": "IDashboardLayout",
+  },
+  "ref": Object {
+    "uri": "/gdc/md/obj/dashboardWithFilterContext",
+  },
+  "tags": undefined,
+  "title": "dashboardWithFilterContext",
+  "updated": "2020-05-05 10:10:10",
+  "uri": "/gdc/md/obj/dashboardWithFilterContext",
+}
+`;
+
 exports[`dashboard converter convert dashboard should convert dashboard without layout, and create implicit layout 1`] = `
 Object {
   "created": "2020-05-05 00:00:00",

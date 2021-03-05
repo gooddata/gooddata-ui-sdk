@@ -13,6 +13,7 @@ import {
     widgetHeadline,
     widgetKpi,
     widgetKpiWithDrilling,
+    dashboardWithLayoutAndCustomGridHeight,
 } from "./DashboardConverter.fixtures";
 
 describe("dashboard converter", () => {
@@ -34,6 +35,11 @@ describe("dashboard converter", () => {
 
         it("should convert dashboard with layout", () => {
             const convertedDashboard = convertDashboard(dashboardWithLayoutAndSectionHeaders);
+            expect(convertedDashboard).toMatchSnapshot();
+        });
+
+        it("should convert dashboard with layout with custom gridHeight", () => {
+            const convertedDashboard = convertDashboard(dashboardWithLayoutAndCustomGridHeight);
             expect(convertedDashboard).toMatchSnapshot();
         });
 

@@ -271,6 +271,8 @@ export namespace GdcDashboardLayout {
     // (undocumented)
     export interface IFluidLayoutSize {
         // (undocumented)
+        height?: number;
+        // (undocumented)
         heightAsRatio?: number;
         // (undocumented)
         width: number;

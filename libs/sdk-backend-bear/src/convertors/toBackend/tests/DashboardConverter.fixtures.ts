@@ -244,3 +244,58 @@ export const dashboardWithExtendedDateFilterConfig: IDashboard = {
         },
     },
 };
+
+export const dashboardWithLayoutAndCustomGridHeight: IDashboard = {
+    ...emptyDashboard,
+    layout: {
+        type: "IDashboardLayout",
+        sections: [
+            {
+                type: "IDashboardLayoutSection",
+                header: {
+                    title: "Section 1",
+                },
+                items: [
+                    {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridWidth: 12,
+                                gridHeight: 10,
+                            },
+                        },
+                        widget: widgetHeadline,
+                    },
+                    {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridWidth: 6,
+                                gridHeight: 6,
+                            },
+                        },
+                        widget: widgetKpi,
+                    },
+                ],
+            },
+            {
+                type: "IDashboardLayoutSection",
+                header: {
+                    description: "Section 2 description",
+                },
+                items: [
+                    {
+                        type: "IDashboardLayoutItem",
+                        size: {
+                            xl: {
+                                gridWidth: 2,
+                                gridHeight: 30,
+                            },
+                        },
+                        widget: widgetBarChart,
+                    },
+                ],
+            },
+        ],
+    },
+};

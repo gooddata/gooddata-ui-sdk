@@ -95,6 +95,11 @@ export interface ISettings {
      */
     areSectionHeadersEnabled?: boolean;
 
+    /**
+     * Indicates whether the user can change widget height in KPI dashboards.
+     */
+    enableKDWidgetCustomHeight?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

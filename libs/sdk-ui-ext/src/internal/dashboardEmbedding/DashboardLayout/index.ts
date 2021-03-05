@@ -52,6 +52,7 @@ export {
     getDashboardLayoutWidgetDefaultGridWidth,
     getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutWidgetMinGridWidth,
+    getDashboardLayoutItemHeight,
 } from "./utils/sizing";
 export { DashboardLayoutBuilder } from "./builder/layout";
 export { DashboardLayoutFacade } from "./facade/layout";

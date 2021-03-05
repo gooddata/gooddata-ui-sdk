@@ -78,6 +78,7 @@ export const DASHBOARD_LAYOUT_VIS_TYPE: {
 export const DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS = 150;
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 450;
 export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 240;
+export const GRID_ROW_HEIGHT_IN_PX = 20;
 
 export const INSIGHT_WIDGET_DIMENSIONS_DEFAULT: IDashboardItemDefaultDimensions = {
     minWidth: 4,
