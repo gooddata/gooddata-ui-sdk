@@ -81,11 +81,13 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
         throw new NotSupported("not supported");
     }
 
-    public getAttributeDisplayForms(_: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        throw new NotSupported("not supported");
+    public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
+        const loader = this.getAttributeDisplayForm.bind(this);
+        return Promise.all(refs.map(loader));
     }
 
-    public getAttributes(_: ObjRef[]): Promise<IAttributeMetadataObject[]> {
-        throw new NotSupported("not supported");
+    public getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]> {
+        const loader = this.getAttribute.bind(this);
+        return Promise.all(refs.map(loader));
     }
 }
