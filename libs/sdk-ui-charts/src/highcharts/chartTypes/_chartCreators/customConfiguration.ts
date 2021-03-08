@@ -113,7 +113,7 @@ function getTitleConfiguration(chartOptions: IChartOptions) {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function formatOverlappingForParentAttribute(category: any): string {
-    // category is passed from 'grouped-categories' which is npm highcharts plug-in
+    // category is passed from 'grouped-categories' which is highcharts plug-in
     if (!category) {
         return formatOverlapping.call(this);
     }

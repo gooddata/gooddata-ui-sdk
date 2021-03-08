@@ -591,10 +591,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "highcharts-grouped-categories",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "history",
       "allowedCategories": [ "examples" ]
     },

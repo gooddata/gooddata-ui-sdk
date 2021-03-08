@@ -6,6 +6,7 @@ import { linearTickPositions } from "./plugins/linearTickPositions";
 import { groupCategoriesWrapper } from "./plugins/group-categories-wrapper";
 import { renderBubbles } from "./plugins/renderBubbles";
 import { adjustTickAmount } from "./plugins/adjustTickAmount";
+import { groupedCategories } from "./plugins/3rdParty/grouped-categories";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function initChartPlugins(Highcharts: any): void {
@@ -13,6 +14,7 @@ export function initChartPlugins(Highcharts: any): void {
     extendDataLabelColors(Highcharts);
     applyPointHaloOptions(Highcharts);
     linearTickPositions(Highcharts);
+    groupedCategories(Highcharts);
     groupCategoriesWrapper(Highcharts);
     adjustTickAmount(Highcharts);
     // modify rendering bubbles in bubble chart after upgrade to Highcharts v7.1.1
