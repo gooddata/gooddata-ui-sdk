@@ -2,7 +2,7 @@
 import { ReferenceLdm, ReferenceLdmExt } from "@gooddata/reference-workspace";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
-import { newAttributeSort, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { newAttributeSort, newMeasureSort, newMeasureValueFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 
 export const ColumnChartWithSingleMeasureAndViewBy = {
@@ -87,4 +87,8 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
         sortBy: [newMeasureSort(ReferenceLdm.Won, "asc")],
     })
     .addScenario("viewBy date and PoP measure", ColumnChartViewByDateAndPop)
-    .addScenario("arithmetic measures", ColumnChartWithArithmeticMeasuresAndViewBy);
+    .addScenario("dense chart with two view by", {
+        measures: [ReferenceLdm.Amount_1.Sum],
+        filters: [newMeasureValueFilter(ReferenceLdm.Amount_1.Sum, "GREATER_THAN", 5000000)],
+        viewBy: [ReferenceLdm.Product.Name, ReferenceLdm.Opportunity.Name],
+    });

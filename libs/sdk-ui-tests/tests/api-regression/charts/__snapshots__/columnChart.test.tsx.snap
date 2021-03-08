@@ -977,187 +977,6 @@ Object {
 }
 `;
 
-exports[`ColumnChart with arithmetic measures should create expected execution definition 1`] = `
-Object {
-  "attributes": Array [
-    Object {
-      "attribute": Object {
-        "displayForm": Object {
-          "identifier": "label.product.id.name",
-          "type": "displayForm",
-        },
-        "localIdentifier": "a_label.product.id.name",
-      },
-    },
-  ],
-  "buckets": Array [
-    Object {
-      "items": Array [
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "aangOxLSeztu",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_aangOxLSeztu",
-          },
-        },
-        Object {
-          "measure": Object {
-            "definition": Object {
-              "measureDefinition": Object {
-                "item": Object {
-                  "identifier": "acugFHNJgsBy",
-                  "type": "measure",
-                },
-              },
-            },
-            "localIdentifier": "m_acugFHNJgsBy",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Calculated 'Lost' measure",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_aangOxLSeztu",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "difference",
-              },
-            },
-            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-          },
-        },
-        Object {
-          "measure": Object {
-            "alias": "Ratio of Won and Lost",
-            "definition": Object {
-              "arithmeticMeasure": Object {
-                "measureIdentifiers": Array [
-                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-                  "m_acugFHNJgsBy",
-                ],
-                "operator": "ratio",
-              },
-            },
-            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-          },
-        },
-      ],
-      "localIdentifier": "measures",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "attribute": Object {
-            "displayForm": Object {
-              "identifier": "label.product.id.name",
-              "type": "displayForm",
-            },
-            "localIdentifier": "a_label.product.id.name",
-          },
-        },
-      ],
-      "localIdentifier": "view",
-    },
-    Object {
-      "items": Array [],
-      "localIdentifier": "stack",
-    },
-  ],
-  "dimensions": Array [
-    Object {
-      "itemIdentifiers": Array [
-        "measureGroup",
-      ],
-    },
-    Object {
-      "itemIdentifiers": Array [
-        "a_label.product.id.name",
-      ],
-    },
-  ],
-  "filters": Array [],
-  "measures": Array [
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "aangOxLSeztu",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_aangOxLSeztu",
-      },
-    },
-    Object {
-      "measure": Object {
-        "definition": Object {
-          "measureDefinition": Object {
-            "item": Object {
-              "identifier": "acugFHNJgsBy",
-              "type": "measure",
-            },
-          },
-        },
-        "localIdentifier": "m_acugFHNJgsBy",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Calculated 'Lost' measure",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_aangOxLSeztu",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "difference",
-          },
-        },
-        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      },
-    },
-    Object {
-      "measure": Object {
-        "alias": "Ratio of Won and Lost",
-        "definition": Object {
-          "arithmeticMeasure": Object {
-            "measureIdentifiers": Array [
-              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
-              "m_acugFHNJgsBy",
-            ],
-            "operator": "ratio",
-          },
-        },
-        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
-      },
-    },
-  ],
-  "postProcessing": Object {},
-  "sortBy": Array [],
-  "workspace": "reference-workspace",
-}
-`;
-
-exports[`ColumnChart with arithmetic measures should create expected props for core chart 1`] = `
-Object {
-  "config": Object {
-    "stackMeasures": undefined,
-    "stackMeasuresToPercent": undefined,
-  },
-  "exportTitle": "ColumnChart",
-}
-`;
-
 exports[`ColumnChart with assign color to attribute element stack should create expected execution definition 1`] = `
 Object {
   "attributes": Array [
@@ -2924,6 +2743,136 @@ Object {
     "dataLabels": Object {
       "visible": true,
     },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+}
+`;
+
+exports[`ColumnChart with dense chart with two view by should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.opportunity.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.opportunity.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "aggregation": "sum",
+                "item": Object {
+                  "identifier": "fact.opportunitysnapshot.amount",
+                  "type": "fact",
+                },
+              },
+            },
+            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.opportunity.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.opportunity.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "a_label.opportunity.id.name",
+      ],
+    },
+  ],
+  "filters": Array [
+    Object {
+      "measureValueFilter": Object {
+        "condition": Object {
+          "comparison": Object {
+            "operator": "GREATER_THAN",
+            "value": 5000000,
+          },
+        },
+        "measure": Object {
+          "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+        },
+      },
+    },
+  ],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "aggregation": "sum",
+            "item": Object {
+              "identifier": "fact.opportunitysnapshot.amount",
+              "type": "fact",
+            },
+          },
+        },
+        "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with dense chart with two view by should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
     "stackMeasures": undefined,
     "stackMeasuresToPercent": undefined,
   },
