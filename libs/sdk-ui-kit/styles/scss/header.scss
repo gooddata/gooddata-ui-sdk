@@ -467,7 +467,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         display: block;
         height: 0;
         transition: 0.4s;
-        border-bottom: 1px solid var(--gd-palette-complementary-7, $gd-color-text-light);
+        border-bottom: 1px solid var(--gd-palette-complementary-7, $default-gd-color-text-light);
     }
 
     &::before {

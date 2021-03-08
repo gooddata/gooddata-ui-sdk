@@ -298,10 +298,10 @@ textarea {
     flex: 0 0 auto;
     @include gd-input-base;
 
-    color: var(--gd-palette-complementary-6, $gd-color-disabled);
+    color: var(--gd-palette-complementary-6, $default-gd-color-disabled);
     min-width: 30px;
     text-align: center;
-    background-color: var(--gd-palette-complementary-1, $gd-color-light);
+    background-color: var(--gd-palette-complementary-1, $default-gd-color-light);
 }
 
 .gd-input-prefix {
@@ -546,7 +546,7 @@ textarea {
     &:hover,
     &:active {
         .input-label-text::after {
-            border: 1px solid var(--gd-palette-complementary-5, $gd-color-state-blank);
+            border: 1px solid var(--gd-palette-complementary-5, $default-gd-color-state-blank);
             background: var(--gd-palette-complementary-3, #d7dfe5);
         }
 
