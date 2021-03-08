@@ -182,20 +182,59 @@ export interface IThemeKpi {
 
 /**
  * Charts customization
- * Experimental support for theming of charts.
- * Not production ready yet!
  *
- * @internal
+ * @beta
  */
 export interface IThemeChart {
     /**
      * Background color
      */
-    backgroundColor?: IThemeColorFamily;
+    backgroundColor?: ThemeColor;
+
     /**
-     * Texts color
+     * Grid line color
      */
-    textColor?: IThemeColorFamily;
+    gridColor?: ThemeColor;
+
+    /**
+     * Axis line color
+     */
+    axisColor?: ThemeColor;
+
+    /**
+     * Axis label color, title name of axis
+     */
+    axisLabelColor?: ThemeColor;
+
+    /**
+     * Axis value color, numbers or names under axis
+     */
+    axisValueColor?: ThemeColor;
+
+    /**
+     * Legend value color
+     */
+    legendValueColor?: ThemeColor;
+
+    /**
+     * Tooltip background color
+     */
+    tooltipBackgroundColor?: ThemeColor;
+
+    /**
+     * Tooltip border color
+     */
+    tooltipBorderColor?: ThemeColor;
+
+    /**
+     * Tooltip label color
+     */
+    tooltipLabelColor?: ThemeColor;
+
+    /**
+     * Tooltip value color
+     */
+    tooltipValueColor?: ThemeColor;
 }
 
 /**

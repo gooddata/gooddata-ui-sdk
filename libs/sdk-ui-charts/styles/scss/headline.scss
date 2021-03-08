@@ -1,6 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/core/styles/typo-mixins";
-@import "~@gooddata/goodstrap/lib/core/styles/layout";
+@import "~@gooddata/sdk-ui-kit/styles/scss/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/layout";
 
 .headline {
     text-align: center;
@@ -38,7 +39,8 @@
     .headline-secondary-item {
         flex-shrink: 1;
         padding-right: 0;
-        border-left: 1px dashed var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
+        border-left: 1px dashed
+            var(--gd-kpi-secondaryInfoColor, transparentize($default-gd-color-disabled, 0.5));
 
         &.is-drillable {
             cursor: pointer;
@@ -123,7 +125,7 @@
             .headline-secondary-item {
                 border-left: 0;
                 border-bottom: 1px dashed
-                    var(--gd-kpi-secondaryInfoColor, transparentize($gd-color-disabled, 0.5));
+                    var(--gd-kpi-secondaryInfoColor, transparentize($default-gd-color-disabled, 0.5));
                 padding: 0 0 10px;
                 text-align: center;
             }

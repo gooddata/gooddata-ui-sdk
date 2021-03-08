@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import Highcharts from "../lib";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -8,7 +8,7 @@ export const WHITE_LABEL: Highcharts.CSSObject = {
 };
 
 export const BLACK_LABEL: Highcharts.CSSObject = {
-    color: "#000000",
+    color: "var(--gd-palette-complementary-9, #000000)",
     textShadow: "none",
 };
 

@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import isEmpty from "lodash/isEmpty";
-import { IAnalyticalBackend, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IExecutionFactory, ISettings, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     Identifier,
@@ -63,6 +63,7 @@ export interface IVisProps {
     locale?: ILocale;
     dateFormat?: string;
     config?: IGdcConfig;
+    theme?: ITheme;
 
     /*
      * This can be used to override configuration of visualization when embedding through InsightView. The pluggable

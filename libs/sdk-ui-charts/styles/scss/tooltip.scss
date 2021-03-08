@@ -1,28 +1,16 @@
 // (C) 2007-2020 GoodData Corporation
-@import "~@gooddata/goodstrap/lib/Bubble/styles/mixins";
-@import "~@gooddata/goodstrap/lib/core/styles/variables";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 @import "variables";
 
 .gd-viz-tooltip {
     position: relative;
     border-radius: 3px;
     font-family: $font-stack-roman;
-    color: var(--gd-chart-backgroundColor-contrast, $gd-color-dark);
-    background-color: var(--gd-chart-backgroundColor-base-t05, transparentize($gd-color-white, 0.05));
-
-    .tt-name {
-        font-family: $font-stack-roman;
-        font-size: 12px;
-        word-wrap: break-word;
-        text-transform: uppercase;
-        color: #999;
-    }
-
-    .tt-tooltip {
-        margin-top: 2px;
-        margin-bottom: 14px;
-        font-size: 14px;
-    }
+    color: var(--gd-chart-tooltipLabelColor, var(--gd-palette-complementary-6, $gd-color-dark));
+    background-color: var(
+        --gd-chart-tooltipBackgroundColor,
+        var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05))
+    );
 }
 
 .gd-viz-tooltip-stroke {
@@ -31,7 +19,7 @@
     right: 0;
     left: 0;
     height: 0;
-    border-top: 3px solid #848484;
+    border-top: 3px solid var(--gd-palette-complementary-3, #848484);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
@@ -41,8 +29,12 @@
     padding: 10px 9px 9px;
     border-radius: 3px;
     border: 1px solid;
-    border-color: var(--gd-chart-textColor-light, transparentize($bubble-light-border-base, 0.3));
-    box-shadow: 0 1px 3px 0 rgba(20, 56, 93, 0.1), 0 2px 9px 0 rgba(20, 56, 93, 0.15);
+    border-color: var(
+        --gd-chart-tooltipBorderColor,
+        var(--gd-palette-complementary-3, transparentize(#c9d5e0, 0.3))
+    );
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+        0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     line-height: 1.3;
     white-space: normal;
 
@@ -68,7 +60,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: left;
-    color: var(--gd-chart-textColor-dark, $gd-color-label);
+    color: var(--gd-chart-tooltipLabelColor, $gd-color-label);
 }
 
 .gd-viz-tooltip-value-wraper {
@@ -86,6 +78,7 @@
     margin-right: -1em;
     padding-right: 1em;
     word-wrap: break-word;
+    color: var(--gd-chart-tooltipValueColor, $gd-color-dark);
 
     &::before {
         content: "...";

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 import { LINE_WIDTH } from "../lineChart/lineConfiguration";
 import { IChartConfig } from "../../../interfaces";
@@ -68,7 +68,7 @@ export function getComboConfiguration(
                   borderColor: "#00000000",
               },
           };
-    const COMBO_TEMPLATE = {
+    return {
         chart: {
             type: getDefaultChartType(config),
             spacingTop: 20,
@@ -88,7 +88,10 @@ export function getComboConfiguration(
                 marker: {
                     symbol: "circle",
                     radius: 4.5,
-                    lineColor: theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground,
+                    lineColor:
+                        theme?.chart?.backgroundColor ??
+                        theme?.palette?.complementary?.shade0 ??
+                        styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.3,
@@ -108,7 +111,10 @@ export function getComboConfiguration(
                 marker: {
                     symbol: "circle",
                     radius: 4.5,
-                    lineColor: theme?.chart?.backgroundColor?.base || styleVariables.gdColorBackground,
+                    lineColor:
+                        theme?.chart?.backgroundColor ??
+                        theme?.palette?.complementary?.shade0 ??
+                        styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,
                 fillOpacity: 0.6,
@@ -122,5 +128,4 @@ export function getComboConfiguration(
             ...series,
         },
     };
-    return COMBO_TEMPLATE;
 }

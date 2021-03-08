@@ -2,7 +2,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import { ILegendListProps, LegendList, LegendSeparator } from "../LegendList";
-import { LegendItem } from "../LegendItem";
+import LegendItem from "../LegendItem";
 import noop from "lodash/noop";
 import { LegendAxisIndicator } from "../LegendAxisIndicator";
 import { withIntl } from "@gooddata/sdk-ui";

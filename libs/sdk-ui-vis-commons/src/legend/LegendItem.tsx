@@ -1,29 +1,34 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import unescape from "lodash/unescape";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-const DISABLED_COLOR = "#CCCCCC";
+const DEFAULT_DISABLED_COLOR = "#CCCCCC";
 
 interface ILegendItemProps {
     item: any;
     width?: number;
     enableBorderRadius?: boolean;
     onItemClick: (item: any) => void;
+    theme?: ITheme;
 }
 
-export class LegendItem extends React.Component<ILegendItemProps> {
+class LegendItem extends React.Component<ILegendItemProps> {
     public render(): React.ReactNode {
-        const { item, width, enableBorderRadius = false } = this.props;
+        const { item, width, enableBorderRadius = false, theme } = this.props;
+        const disabledColor = theme?.palette?.complementary?.shade5 ?? DEFAULT_DISABLED_COLOR;
+
         const iconStyle = {
             borderRadius: enableBorderRadius ? "50%" : "0",
-            backgroundColor: item.isVisible ? item.color : DISABLED_COLOR,
+            backgroundColor: item.isVisible ? item.color : disabledColor,
         };
 
         // normal state styled by css
         const nameStyle = item.isVisible
             ? {}
             : {
-                  color: DISABLED_COLOR,
+                  color: disabledColor,
               };
 
         const style = width ? { width: `${width}px` } : {};
@@ -42,3 +47,5 @@ export class LegendItem extends React.Component<ILegendItemProps> {
         );
     }
 }
+
+export default withTheme(LegendItem);

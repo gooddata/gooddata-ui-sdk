@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import { LegendItem } from "../LegendItem";
+import LegendItem from "../LegendItem";
 
 describe("LegendItem", () => {
     const item = {

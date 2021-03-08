@@ -3,7 +3,7 @@ import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import { FluidLegend } from "../FluidLegend";
-import { LegendItem } from "../LegendItem";
+import LegendItem from "../LegendItem";
 
 describe("FluidLegend", () => {
     function render(customProps: any = {}) {

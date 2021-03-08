@@ -1381,10 +1381,18 @@ export interface ITheme {
     typography?: IThemeTypography;
 }
 
-// @internal
+// @beta
 export interface IThemeChart {
-    backgroundColor?: IThemeColorFamily;
-    textColor?: IThemeColorFamily;
+    axisColor?: ThemeColor;
+    axisLabelColor?: ThemeColor;
+    axisValueColor?: ThemeColor;
+    backgroundColor?: ThemeColor;
+    gridColor?: ThemeColor;
+    legendValueColor?: ThemeColor;
+    tooltipBackgroundColor?: ThemeColor;
+    tooltipBorderColor?: ThemeColor;
+    tooltipLabelColor?: ThemeColor;
+    tooltipValueColor?: ThemeColor;
 }
 
 // @beta
