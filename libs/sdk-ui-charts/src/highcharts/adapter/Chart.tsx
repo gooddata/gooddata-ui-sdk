@@ -13,7 +13,6 @@ import bulletModule from "highcharts/modules/bullet";
 import funnelModule from "highcharts/modules/funnel";
 import heatmap from "highcharts/modules/heatmap";
 import patternFill from "highcharts/modules/pattern-fill";
-import groupedCategories from "highcharts-grouped-categories";
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
@@ -22,7 +21,6 @@ funnelModule(Highcharts);
 heatmap(Highcharts);
 HighchartsMore(Highcharts);
 patternFill(Highcharts);
-groupedCategories(Highcharts);
 initChartPlugins(Highcharts);
 
 /**

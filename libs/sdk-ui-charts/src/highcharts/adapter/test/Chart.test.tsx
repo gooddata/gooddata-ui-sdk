@@ -41,10 +41,6 @@ jest.mock("highcharts/modules/pattern-fill", () => {
     return (H: any) => H;
 });
 
-jest.mock("highcharts-grouped-categories", () => {
-    return (H: any) => H;
-});
-
 jest.mock("../chartPlugins", () => {
     return {
         initChartPlugins: (H: any) => H,

@@ -17,5 +17,3 @@ declare module "*.json" {
 declare module "custom-event" {
     export = CustomEvent;
 }
-
-declare module "highcharts-grouped-categories";
