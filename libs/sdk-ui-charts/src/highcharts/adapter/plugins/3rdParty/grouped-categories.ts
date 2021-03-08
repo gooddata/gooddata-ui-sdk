@@ -1,5 +1,6 @@
 // Derived from https://github.com/blacklabel/grouped_categories
 // Original licence https://github.com/blacklabel/grouped_categories/blob/master/license.txt
+// see "GoodData change" to find altered code
 
 /* eslint-disable */
 // @ts-nocheck
@@ -384,6 +385,16 @@ export function groupedCategories(HC) {
                 }),
             );
         }
+
+        /* GoodData change - added following lines #1 */
+        if (tick.label && axis.isGrouped) {
+            if (axis.options.labels.useHTML) {
+                tick.label.textPxLength = tick.label.htmlGetBBox().width;
+            } else {
+                tick.label.textPxLength = tick.label.getBBox().width;
+            }
+        }
+        /* end of GoodData change #1 */
 
         // create elements for parent categories
         if (axis.isGrouped && axis.options.labels.enabled) {
