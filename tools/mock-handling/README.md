@@ -51,6 +51,6 @@ The recording directory passed to the tooling is expected to follow this layout:
 
 ## License
 
-(C) 2020 GoodData Corporation
+(C) 2020-2021 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](LICENSE).
