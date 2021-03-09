@@ -38,6 +38,7 @@ export namespace EmbeddedAnalyticalDesigner {
     export enum GdcAdCommandType {
         Clear = "clear",
         DrillableItems = "drillableItems",
+        Empty = "empty",
         Export = "exportInsight",
         OpenInsight = "openInsight",
         Redo = "redo",

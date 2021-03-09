@@ -90,6 +90,11 @@ export namespace EmbeddedAnalyticalDesigner {
         Clear = "clear",
 
         /**
+         * The command empties buckets and filters but keeps insight title, id and URL
+         */
+        Empty = "empty",
+
+        /**
          * The command undo to previous state
          */
         Undo = "undo",
