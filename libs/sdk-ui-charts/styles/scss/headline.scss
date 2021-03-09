@@ -32,7 +32,10 @@
             }
         }
         .headline-value--empty {
-            color: var(--gd-kpi-primaryMeasureColor, $gd-color-disabled);
+            color: var(
+                --gd-kpi-primaryMeasureColor,
+                var(--gd-palette-complementary-6, $default-gd-color-disabled)
+            );
         }
     }
 
@@ -67,7 +70,10 @@
     }
 
     .headline-value--empty {
-        color: var(--gd-kpi-secondaryInfoColor, $gd-color-disabled);
+        color: var(
+            --gd-kpi-secondaryInfoColor,
+            var(--gd-palette-complementary-6, $default-gd-color-disabled)
+        );
     }
 
     .headline-item-link {

@@ -6,7 +6,7 @@ import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 // keep it in sync with SCSS:$gd-color-text-light
 const GD_COLOR_TEXT_LIGHT = "#fff";
 const GD_COLOR_TEXT = "#464e56";
-const DEFAULT_WIDGET_SHADOW = "1px 2px 8px rgba(20, 56, 93, 0.2)";
+const DEFAULT_WIDGET_SHADOW = "1px 2px 8px var(--gd-shadow-color, rgba(20, 56, 93, 0.2))";
 
 /**
  *
