@@ -38,7 +38,7 @@ export function getColumnConfiguration(
                     allowOverlap: false,
                     ...(theme?.palette?.complementary && {
                         style: {
-                            color: theme?.palette?.complementary?.shade9,
+                            color: theme?.palette?.complementary?.c9,
                             textOutline: "none",
                         },
                     }),

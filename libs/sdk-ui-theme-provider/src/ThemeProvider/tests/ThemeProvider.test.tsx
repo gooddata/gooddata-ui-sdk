@@ -208,13 +208,13 @@ describe("isDarkTheme", () => {
     });
 
     it("should return false when the theme has a light-based complementary palette", () => {
-        const theme: ITheme = { palette: { complementary: { shade0: "#fff", shade9: "#000" } } };
+        const theme: ITheme = { palette: { complementary: { c0: "#fff", c9: "#000" } } };
 
         expect(isDarkTheme(theme)).toEqual(false);
     });
 
     it("should return true when the theme has a dark-based complementary palette", () => {
-        const theme: ITheme = { palette: { complementary: { shade0: "#000", shade9: "#fff" } } };
+        const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
 
         expect(isDarkTheme(theme)).toEqual(true);
     });
@@ -225,7 +225,7 @@ describe("prepareBaseColors", () => {
         const theme: ITheme = {
             palette: {
                 error: { base: "#f00", contrast: "#0ff" },
-                complementary: { shade0: "#fff", shade9: "#000" },
+                complementary: { c0: "#fff", c9: "#000" },
             },
         };
 
@@ -235,7 +235,7 @@ describe("prepareBaseColors", () => {
                 warning: { base: "#fada23" },
                 success: { base: "#00c18d" },
                 error: { base: "#f00", contrast: "#0ff" },
-                complementary: { shade0: "#fff", shade9: "#000" },
+                complementary: { c0: "#fff", c9: "#000" },
             },
         };
 

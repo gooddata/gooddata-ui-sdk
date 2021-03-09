@@ -73,16 +73,16 @@ export interface IThemeColorFamily {
  * @beta
  */
 export interface IThemeComplementaryPalette {
-    shade0: ThemeColor;
-    shade1?: ThemeColor;
-    shade2?: ThemeColor;
-    shade3?: ThemeColor;
-    shade4?: ThemeColor;
-    shade5?: ThemeColor;
-    shade6?: ThemeColor;
-    shade7?: ThemeColor;
-    shade8?: ThemeColor;
-    shade9: ThemeColor;
+    c0: ThemeColor;
+    c1?: ThemeColor;
+    c2?: ThemeColor;
+    c3?: ThemeColor;
+    c4?: ThemeColor;
+    c5?: ThemeColor;
+    c6?: ThemeColor;
+    c7?: ThemeColor;
+    c8?: ThemeColor;
+    c9: ThemeColor;
 }
 
 /**

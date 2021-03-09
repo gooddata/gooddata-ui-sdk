@@ -45,8 +45,8 @@ describe("derivedColors", () => {
 
     describe("mixWith0ComplementaryColor", () => {
         const Scenarios: Array<[number, ThemeColor, IThemePalette]> = [
-            [0.5, "#f00", { complementary: { shade0: "#fff", shade9: "#000" } }],
-            [0.5, "#f00", { complementary: { shade0: "#000", shade9: "#fff" } }],
+            [0.5, "#f00", { complementary: { c0: "#fff", c9: "#000" } }],
+            [0.5, "#f00", { complementary: { c0: "#000", c9: "#fff" } }],
         ];
 
         it.each(Scenarios)(
@@ -59,8 +59,8 @@ describe("derivedColors", () => {
 
     describe("mixWith8ComplementaryColor", () => {
         const Scenarios: Array<[number, ThemeColor, IThemePalette]> = [
-            [0.5, "#f00", { complementary: { shade0: "#fff", shade8: "#333", shade9: "#000" } }],
-            [0.5, "#f00", { complementary: { shade0: "#000", shade8: "#ccc", shade9: "#fff" } }],
+            [0.5, "#f00", { complementary: { c0: "#fff", c8: "#333", c9: "#000" } }],
+            [0.5, "#f00", { complementary: { c0: "#000", c8: "#ccc", c9: "#fff" } }],
         ];
 
         it.each(Scenarios)(

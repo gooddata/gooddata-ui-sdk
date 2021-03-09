@@ -92,8 +92,8 @@ const prepareTheme = (theme: ITheme): ITheme => ({
 });
 
 export const isDarkTheme = (theme: ITheme): boolean => {
-    const firstColor = theme?.palette?.complementary?.shade0;
-    const lastColor = theme?.palette?.complementary?.shade9;
+    const firstColor = theme?.palette?.complementary?.c0;
+    const lastColor = theme?.palette?.complementary?.c9;
 
     if (!firstColor || !lastColor) {
         return false;

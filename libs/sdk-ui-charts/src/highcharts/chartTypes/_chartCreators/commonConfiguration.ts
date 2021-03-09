@@ -42,10 +42,10 @@ let previousChart: any = null;
 function getThemedConfiguration(theme: ITheme): any {
     const backgroundColor =
         theme?.chart?.backgroundColor ??
-        theme?.palette?.complementary?.shade0 ??
+        theme?.palette?.complementary?.c0 ??
         styleVariables.gdColorBackground;
     const axisLineColor =
-        theme?.chart?.axisColor ?? theme?.palette?.complementary?.shade4 ?? styleVariables.gdColorAxisLine;
+        theme?.chart?.axisColor ?? theme?.palette?.complementary?.c4 ?? styleVariables.gdColorAxisLine;
 
     return {
         credits: {
@@ -61,11 +61,11 @@ function getThemedConfiguration(theme: ITheme): any {
         },
         drilldown: {
             activeDataLabelStyle: {
-                color: theme?.palette?.complementary?.shade9 ?? "#000",
+                color: theme?.palette?.complementary?.c9 ?? "#000",
                 textDecoration: "none",
             },
             activeAxisLabelStyle: {
-                color: theme?.palette?.complementary?.shade8 ?? styleVariables.gdColorText,
+                color: theme?.palette?.complementary?.c8 ?? styleVariables.gdColorText,
                 textDecoration: "none",
             },
             drillUpButton: {

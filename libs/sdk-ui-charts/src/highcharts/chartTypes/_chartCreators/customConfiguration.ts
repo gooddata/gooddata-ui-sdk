@@ -931,7 +931,7 @@ function getGridConfiguration(
     const gridEnabled = get(chartOptions, "grid.enabled", true);
     const { yAxes = [], xAxes = [] } = chartOptions;
     const gridColor =
-        theme?.chart?.gridColor ?? theme?.palette?.complementary?.shade3 ?? styleVariables.gdColorGrid;
+        theme?.chart?.gridColor ?? theme?.palette?.complementary?.c3 ?? styleVariables.gdColorGrid;
 
     const config = gridEnabled ? { gridLineWidth: 1, gridLineColor: gridColor } : { gridLineWidth: 0 };
 
@@ -1031,11 +1031,9 @@ function getAxesConfiguration(
     const type = chartOptions.type as ChartType;
 
     const axisValueColor =
-        theme?.chart?.axisValueColor ??
-        theme?.palette?.complementary?.shade6 ??
-        styleVariables.gdColorStateBlank;
+        theme?.chart?.axisValueColor ?? theme?.palette?.complementary?.c6 ?? styleVariables.gdColorStateBlank;
     const axisLabelColor =
-        theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.shade7 ?? styleVariables.gdColorLink;
+        theme?.chart?.axisLabelColor ?? theme?.palette?.complementary?.c7 ?? styleVariables.gdColorLink;
 
     return {
         plotOptions: {

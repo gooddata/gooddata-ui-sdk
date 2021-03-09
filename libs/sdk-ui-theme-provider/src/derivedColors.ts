@@ -20,13 +20,13 @@ export const mixWith0ComplementaryColor = (
     amount: number,
     color: ThemeColor,
     palette: IThemePalette,
-): ThemeColor => color && mix(amount, color, palette?.complementary?.shade0 || GD_COLOR_TEXT_LIGHT);
+): ThemeColor => color && mix(amount, color, palette?.complementary?.c0 || GD_COLOR_TEXT_LIGHT);
 
 export const mixWith8ComplementaryColor = (
     amount: number,
     color: ThemeColor,
     palette: IThemePalette,
-): ThemeColor => color && mix(amount, color, palette?.complementary?.shade8 || GD_COLOR_TEXT);
+): ThemeColor => color && mix(amount, color, palette?.complementary?.c8 || GD_COLOR_TEXT);
 
 const getCommonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
     getCssProperty(
