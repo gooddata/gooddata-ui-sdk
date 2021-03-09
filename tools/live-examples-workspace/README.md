@@ -15,6 +15,6 @@ This is stored in [src/ldm](src/ldm) and consists of two files:
 
 ## License
 
-(C) 2020 GoodData Corporation
+(C) 2020-2021 GoodData Corporation
 
 This project is under MIT License. See [LICENSE](LICENSE).
