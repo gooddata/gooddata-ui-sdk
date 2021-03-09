@@ -1,5 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
-import { JsonApiAttributeAttributesGranularityEnum } from "@gooddata/api-client-tiger";
+import {
+    JsonApiAttributeAttributesGranularityEnum,
+    RelativeDateFilterBodyGranularityEnum,
+} from "@gooddata/api-client-tiger";
 import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 
@@ -8,7 +11,7 @@ type TigerToSdk = {
 };
 
 type SdkToTiger = {
-    [key in DateAttributeGranularity]: JsonApiAttributeAttributesGranularityEnum | undefined;
+    [key in DateAttributeGranularity]: RelativeDateFilterBodyGranularityEnum | undefined;
 };
 
 /*
@@ -61,23 +64,23 @@ export function toSdkGranularity(
 }
 
 const SdkToTigerGranularityMap: SdkToTiger = {
-    "GDC.time.year": JsonApiAttributeAttributesGranularityEnum.YEAR,
-    "GDC.time.quarter": JsonApiAttributeAttributesGranularityEnum.QUARTER,
-    "GDC.time.month": JsonApiAttributeAttributesGranularityEnum.MONTH,
-    "GDC.time.week_us": JsonApiAttributeAttributesGranularityEnum.WEEK,
-    "GDC.time.week": JsonApiAttributeAttributesGranularityEnum.WEEK,
-    "GDC.time.date": JsonApiAttributeAttributesGranularityEnum.DAY,
-    "GDC.time.hour": JsonApiAttributeAttributesGranularityEnum.HOUR,
-    "GDC.time.minute": JsonApiAttributeAttributesGranularityEnum.MINUTE,
+    "GDC.time.year": RelativeDateFilterBodyGranularityEnum.YEAR,
+    "GDC.time.quarter": RelativeDateFilterBodyGranularityEnum.QUARTER,
+    "GDC.time.month": RelativeDateFilterBodyGranularityEnum.MONTH,
+    "GDC.time.week_us": RelativeDateFilterBodyGranularityEnum.WEEK,
+    "GDC.time.week": RelativeDateFilterBodyGranularityEnum.WEEK,
+    "GDC.time.date": RelativeDateFilterBodyGranularityEnum.DAY,
+    "GDC.time.hour": RelativeDateFilterBodyGranularityEnum.HOUR,
+    "GDC.time.minute": RelativeDateFilterBodyGranularityEnum.MINUTE,
 
-    "GDC.time.quarter_in_year": JsonApiAttributeAttributesGranularityEnum.QUARTEROFYEAR,
-    "GDC.time.month_in_year": JsonApiAttributeAttributesGranularityEnum.MONTHOFYEAR,
-    "GDC.time.week_in_year": JsonApiAttributeAttributesGranularityEnum.WEEKOFYEAR,
-    "GDC.time.day_in_year": JsonApiAttributeAttributesGranularityEnum.DAYOFYEAR,
-    "GDC.time.day_in_month": JsonApiAttributeAttributesGranularityEnum.DAYOFMONTH,
-    "GDC.time.day_in_week": JsonApiAttributeAttributesGranularityEnum.DAYOFWEEK,
-    "GDC.time.hour_in_day": JsonApiAttributeAttributesGranularityEnum.HOUROFDAY,
-    "GDC.time.minute_in_hour": JsonApiAttributeAttributesGranularityEnum.MINUTEOFHOUR,
+    "GDC.time.quarter_in_year": RelativeDateFilterBodyGranularityEnum.QUARTEROFYEAR,
+    "GDC.time.month_in_year": RelativeDateFilterBodyGranularityEnum.MONTHOFYEAR,
+    "GDC.time.week_in_year": RelativeDateFilterBodyGranularityEnum.WEEKOFYEAR,
+    "GDC.time.day_in_year": RelativeDateFilterBodyGranularityEnum.DAYOFYEAR,
+    "GDC.time.day_in_month": RelativeDateFilterBodyGranularityEnum.DAYOFMONTH,
+    "GDC.time.day_in_week": RelativeDateFilterBodyGranularityEnum.DAYOFWEEK,
+    "GDC.time.hour_in_day": RelativeDateFilterBodyGranularityEnum.HOUROFDAY,
+    "GDC.time.minute_in_hour": RelativeDateFilterBodyGranularityEnum.MINUTEOFHOUR,
 
     "GDC.time.day_in_euweek": undefined,
     "GDC.time.day_in_quarter": undefined,
@@ -95,7 +98,7 @@ const SdkToTigerGranularityMap: SdkToTiger = {
  */
 export function toTigerGranularity(
     granularity: DateAttributeGranularity,
-): JsonApiAttributeAttributesGranularityEnum {
+): RelativeDateFilterBodyGranularityEnum {
     const tigerGranularity = SdkToTigerGranularityMap[granularity];
 
     if (!tigerGranularity) {

@@ -21,8 +21,8 @@ program
     .parse(process.argv);
 
 const specs = [
-    { path: "/api/schema-metadata", name: "metadata-json-api" },
-    { path: "/api/schema-afm", name: "afm-rest-api" },
+    { path: "/api/schemas/metadata", name: "metadata-json-api" },
+    { path: "/api/schemas/afm", name: "afm-rest-api" },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
