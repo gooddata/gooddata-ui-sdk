@@ -1,7 +1,13 @@
 // (C) 2019-2020 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
-import { parseThemeToCssProperties, ParserFunction, clearCssProperties, handleUnits } from "../cssProperties";
+import {
+    parseThemeToCssProperties,
+    ParserFunction,
+    clearCssProperties,
+    handleUnits,
+    generateShadowColor,
+} from "../cssProperties";
 
 describe("cssProperties", () => {
     describe("parseThemeToCssProperties", () => {
@@ -112,6 +118,37 @@ describe("cssProperties", () => {
         });
         it("should work with NaN value", () => {
             expect(handleUnits("NaN")).toBe("NaN");
+        });
+    });
+
+    describe("generateShadowColor", () => {
+        const theme: ITheme = {
+            palette: {
+                complementary: {
+                    shade0: "#fff",
+                    shade8: "#222",
+                    shade9: "#000",
+                },
+            },
+        };
+        it("it should return '--gd-shadow-color' css property with black color if theme is dark", () => {
+            expect(generateShadowColor(theme.palette, true)).toEqual([
+                {
+                    key: "--gd-shadow-color",
+                    value: "#000",
+                },
+            ]);
+        });
+        it("it should return '--gd-shadow-color' css property with 8th color from complementary palette if theme is light", () => {
+            expect(generateShadowColor(theme.palette, false)).toEqual([
+                {
+                    key: "--gd-shadow-color",
+                    value: "#222",
+                },
+            ]);
+        });
+        it("it should return nothing if complementary palette is not provided", () => {
+            expect(generateShadowColor({}, true)).toEqual([]);
         });
     });
 });

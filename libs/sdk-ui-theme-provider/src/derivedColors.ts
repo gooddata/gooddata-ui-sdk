@@ -7,20 +7,26 @@ import { CssProperty, getCssProperty } from "./cssProperty";
 const GD_COLOR_TEXT_LIGHT = "#fff";
 const GD_COLOR_TEXT = "#464e56";
 
-export const getHigherContrastColor = (amount: number, color: ThemeColor, isDarkTheme: boolean) =>
+export const getHigherContrastColor = (amount: number, color: ThemeColor, isDarkTheme: boolean): ThemeColor =>
     color && ((isDarkTheme && lighten(amount, color)) || darken(amount, color));
 
-export const getLowerContrastColor = (amount: number, color: ThemeColor, isDarkTheme: boolean) =>
+export const getLowerContrastColor = (amount: number, color: ThemeColor, isDarkTheme: boolean): ThemeColor =>
     color && ((isDarkTheme && darken(amount, color)) || lighten(amount, color));
 
-export const getLeastContrastColor = (color: ThemeColor, isDarkTheme: boolean) =>
+export const getLeastContrastColor = (color: ThemeColor, isDarkTheme: boolean): ThemeColor =>
     color && setLightness(isDarkTheme ? 0.04 : 0.96, color);
 
-export const mixWith0ComplementaryColor = (amount: number, color: ThemeColor, palette: IThemePalette) =>
-    color && mix(amount, color, palette?.complementary?.shade0 || GD_COLOR_TEXT_LIGHT);
+export const mixWith0ComplementaryColor = (
+    amount: number,
+    color: ThemeColor,
+    palette: IThemePalette,
+): ThemeColor => color && mix(amount, color, palette?.complementary?.shade0 || GD_COLOR_TEXT_LIGHT);
 
-export const mixWith8ComplementaryColor = (amount: number, color: ThemeColor, palette: IThemePalette) =>
-    color && mix(amount, color, palette?.complementary?.shade8 || GD_COLOR_TEXT);
+export const mixWith8ComplementaryColor = (
+    amount: number,
+    color: ThemeColor,
+    palette: IThemePalette,
+): ThemeColor => color && mix(amount, color, palette?.complementary?.shade8 || GD_COLOR_TEXT);
 
 const getCommonDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => [
     getCssProperty(

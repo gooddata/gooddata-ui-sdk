@@ -5,7 +5,9 @@ import { CssProperty, getCssProperty } from "./cssProperty";
 import { generateDerivedColors } from "./derivedColors";
 
 // keep it in sync with SCSS:$gd-color-text-light
-const DEFAULT_WIDGET_SHADOW = "1px 2px 8px var(--gd-shadow-color, rgba(20, 56, 93, 0.2))";
+const DEFAULT_SHADOW_COLOR = "rgba(20, 56, 93, 0.2)";
+const DEFAULT_WIDGET_SHADOW = `1px 2px 8px var(--gd-shadow-color, ${DEFAULT_SHADOW_COLOR})`;
+const BLACK_COLOR = "#000";
 
 /**
  *
@@ -113,6 +115,19 @@ const generateComplementaryPalette = (palette: IThemePalette): CssProperty[] => 
     );
 };
 
+export const generateShadowColor = (palette: IThemePalette, isDarkTheme: boolean): CssProperty[] => {
+    if (!palette?.complementary) {
+        return [];
+    }
+
+    return [
+        getCssProperty(
+            "shadow-color",
+            isDarkTheme ? BLACK_COLOR : palette.complementary?.shade8 || DEFAULT_SHADOW_COLOR,
+        ),
+    ];
+};
+
 export const clearCssProperties = (): void => {
     const themePropertiesElement = document.getElementById("gdc-theme-properties");
     themePropertiesElement && document.head.removeChild(themePropertiesElement);
@@ -141,6 +156,7 @@ export function setCssProperties(theme: ITheme, isDarkTheme: boolean): void {
         ...parseThemeToCssProperties(theme, customParserFunctions),
         ...generateDerivedColors(theme.palette, isDarkTheme),
         ...generateComplementaryPalette(theme.palette),
+        ...generateShadowColor(theme.palette, isDarkTheme),
     ];
 
     const styleTag = document.createElement("style");
