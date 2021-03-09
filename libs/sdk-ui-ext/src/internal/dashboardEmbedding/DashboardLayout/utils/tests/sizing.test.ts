@@ -10,6 +10,8 @@ import {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutItemHeightForGrid,
+    getDashboardLayoutItemHeight,
+    getLayoutWithoutGridHeights,
 } from "../sizing";
 import { ALL_SCREENS } from "../..";
 import {
@@ -64,7 +66,7 @@ describe("sizing", () => {
     });
 
     describe("unifyDashboardLayoutItemHeights", () => {
-        it("should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is false", () => {
+        it("should unify dashboard layout column heights for various item sizes", () => {
             chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
                 layoutBuilder.addSection((s) => {
                     visTypesInRow.forEach((visType, index) => {
@@ -75,22 +77,17 @@ describe("sizing", () => {
                     return s;
                 }),
             );
+
             expect(unifyDashboardLayoutItemHeights(layoutBuilder.build())).toMatchSnapshot();
         });
+    });
 
-        it("should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is true", () => {
-            const newLayout = layoutBuilder.removeSections();
-            chunk(allVisTypes, DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT).forEach((visTypesInRow) =>
-                newLayout.addSection((s) => {
-                    visTypesInRow.forEach((visType, index) => {
-                        s.addItem({ gridWidth: index, heightAsRatio: 50, gridHeight: 10 }, (i) =>
-                            i.newInsightWidget(idRef(visType)),
-                        );
-                    });
-                    return s;
-                }),
-            );
-            expect(unifyDashboardLayoutItemHeights(newLayout.build())).toMatchSnapshot();
+    describe("getLayoutWithoutGridHeights", () => {
+        it("should remove gridHeight from dashboard layout item size", () => {
+            const layout = DashboardLayoutBuilder.forNewLayout()
+                .addSection((s) => s.addItem({ gridWidth: 10, gridHeight: 30 }))
+                .build();
+            expect(getLayoutWithoutGridHeights(layout)).toMatchSnapshot();
         });
     });
 
@@ -122,6 +119,20 @@ describe("sizing", () => {
             expect(
                 getDashboardLayoutItemHeightForRatioAndScreen({ gridWidth: 0, heightAsRatio: 0 }, "xl"),
             ).toMatchSnapshot();
+        });
+    });
+
+    describe("getDashboardLayoutItemHeight", () => {
+        it("should calculate widget height when custom heigh is specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1, gridHeight: 30 })).toBe(600);
+        });
+
+        it("should return undefined for widget height when custom height is not specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1 })).toBe(undefined);
+        });
+
+        it("should return undefined for widget height when heightAsRatio is specified", () => {
+            expect(getDashboardLayoutItemHeight({ gridWidth: 1, heightAsRatio: 120 })).toBe(undefined);
         });
     });
 

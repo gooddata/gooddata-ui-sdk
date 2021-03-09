@@ -49,12 +49,13 @@ import {
     DashboardLayoutBuilder,
     DashboardLayoutItemModifications,
     getDashboardLayoutItemHeight,
+    getDashboardLayoutItemHeightForRatioAndScreen,
 } from "../internal";
 import {
     DashboardWidgetRenderer,
     IDashboardWidgetRendererProps,
 } from "./DashboardWidgetRenderer/DashboardWidgetRenderer";
-import { useAlerts } from "./contexts";
+import { useAlerts, useUserWorkspaceSettings } from "./contexts";
 
 interface IDashboardRendererProps {
     dashboardRef: ObjRef;
@@ -132,6 +133,8 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
         return <LoadingComponent />;
     }
 
+    const userWorkspaceSettings = useUserWorkspaceSettings();
+
     const getWidgetAlert = (widgetRef: ObjRef) =>
         alerts?.find((alert) => areObjRefsEqual(alert.widget, widgetRef));
 
@@ -177,11 +180,16 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 }
 
                 const currentSize = item.size()[screen];
+
                 const minHeight =
-                    !currentSize.gridHeight && !currentSize.heightAsRatio
+                    getDashboardLayoutItemHeight(currentSize) ||
+                    (!currentSize.heightAsRatio
                         ? getDashboardLayoutWidgetDefaultHeight(widgetType, visType)
+                        : undefined);
+                const height =
+                    currentSize.heightAsRatio && !currentSize.gridHeight
+                        ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
                         : undefined;
-                const height = getDashboardLayoutItemHeight(currentSize, screen);
 
                 const allowOverflow = !!currentSize.heightAsRatio;
 
@@ -259,6 +267,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
             // When section headers are enabled, use default DashboardLayout rowHeaderRenderer.
             // When turned off, render nothing.
             sectionHeaderRenderer={areSectionHeadersEnabled ? undefined : () => null}
+            enableCustomHeight={userWorkspaceSettings.enableKDWidgetCustomHeight}
         />
     );
 });

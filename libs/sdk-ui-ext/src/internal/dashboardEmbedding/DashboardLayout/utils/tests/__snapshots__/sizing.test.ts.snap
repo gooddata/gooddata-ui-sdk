@@ -294,820 +294,18 @@ exports[`sizing getDashboardLayoutWidgetDefaultHeight should get default height 
 
 exports[`sizing getDashboardLayoutWidgetDefaultHeight should get default height for unknown widget 1`] = `450`;
 
-exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is false 1`] = `
+exports[`sizing getLayoutWithoutGridHeights should remove gridHeight from dashboard layout item size 1`] = `
 Object {
   "sections": Array [
     Object {
       "items": Array [
         Object {
           "size": Object {
-            "lg": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "md": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "sm": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "xl": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "xs": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "alluvial",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 1,
-              "heightAsRatio": 200,
-            },
-            "md": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 150,
-            },
-            "sm": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 1,
-              "heightAsRatio": 200,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "area",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 100,
-            },
-            "md": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 75,
-            },
-            "sm": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 100,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "bar",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 3,
-              "heightAsRatio": 66.67,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 3,
-              "heightAsRatio": 66.67,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "bubble",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "bullet",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 5,
-              "heightAsRatio": 60,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 5,
-              "heightAsRatio": 60,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "column",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "combo",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 7,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 7,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "combo2",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 8,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 8,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "donut",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 9,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 9,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "funnel",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 10,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
             "xl": Object {
               "gridWidth": 10,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "geo",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 11,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 11,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "headline",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-      ],
-      "type": "IDashboardLayoutSection",
-    },
-    Object {
-      "items": Array [
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "md": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "sm": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "xl": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-            "xs": Object {
-              "gridWidth": 0,
-              "heightAsRatio": 0,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "heatmap",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 1,
-              "heightAsRatio": 200,
-            },
-            "md": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 150,
-            },
-            "sm": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 1,
-              "heightAsRatio": 200,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "histogram",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 100,
-            },
-            "md": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 75,
-            },
-            "sm": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 2,
-              "heightAsRatio": 100,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "line",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 3,
-              "heightAsRatio": 66.67,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 3,
-              "heightAsRatio": 66.67,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "pareto",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 4,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "pushpin",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 5,
-              "heightAsRatio": 60,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 5,
-              "heightAsRatio": 60,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "pie",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "scatter",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 7,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 7,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "table",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 8,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 8,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "treemap",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 9,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 6,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 9,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "waterfall",
-            },
-            "title": "",
-            "type": "insight",
-          },
-        },
-        Object {
-          "size": Object {
-            "lg": Object {
-              "gridWidth": 10,
-              "heightAsRatio": 50,
-            },
-            "md": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "sm": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-            "xl": Object {
-              "gridWidth": 10,
-              "heightAsRatio": 50,
-            },
-            "xs": Object {
-              "gridWidth": 12,
-              "heightAsRatio": 50,
-            },
-          },
-          "type": "IDashboardLayoutItem",
-          "widget": Object {
-            "description": "",
-            "drills": Array [],
-            "ignoreDashboardFilters": Array [],
-            "insight": Object {
-              "identifier": "xirr",
-            },
-            "title": "",
-            "type": "insight",
-          },
         },
       ],
       "type": "IDashboardLayoutSection",
@@ -1117,7 +315,7 @@ Object {
 }
 `;
 
-exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is true 1`] = `
+exports[`sizing unifyDashboardLayoutItemHeights should unify dashboard layout column heights for various item sizes 1`] = `
 Object {
   "sections": Array [
     Object {
@@ -1160,24 +358,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 1,
+              "heightAsRatio": 200,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 150,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 1,
+              "heightAsRatio": 200,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1195,24 +393,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 100,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 75,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 100,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1230,24 +428,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 3,
+              "heightAsRatio": 66.67,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 3,
+              "heightAsRatio": 66.67,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1265,24 +463,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1300,24 +498,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 5,
+              "heightAsRatio": 60,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 5,
+              "heightAsRatio": 60,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1335,24 +533,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1370,24 +568,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 7,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 7,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1405,24 +603,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 8,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 8,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1440,24 +638,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 9,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 9,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1475,24 +673,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 10,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 10,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1510,24 +708,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 11,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 11,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1585,24 +783,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 1,
+              "heightAsRatio": 200,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 150,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 1,
+              "heightAsRatio": 200,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1620,24 +818,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 100,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 75,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 2,
+              "heightAsRatio": 100,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1655,24 +853,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 3,
+              "heightAsRatio": 66.67,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 3,
+              "heightAsRatio": 66.67,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1690,24 +888,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 4,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1725,24 +923,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 5,
+              "heightAsRatio": 60,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 5,
+              "heightAsRatio": 60,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1760,24 +958,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1795,24 +993,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 7,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 7,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1830,24 +1028,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 8,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 8,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1865,24 +1063,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 9,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 6,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 9,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1900,24 +1098,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
-              "gridHeight": 10,
               "gridWidth": 10,
+              "heightAsRatio": 50,
             },
             "md": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "sm": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
             "xl": Object {
-              "gridHeight": 10,
               "gridWidth": 10,
+              "heightAsRatio": 50,
             },
             "xs": Object {
-              "gridHeight": 10,
               "gridWidth": 12,
+              "heightAsRatio": 50,
             },
           },
           "type": "IDashboardLayoutItem",
