@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prepareTheme should prepare the theme 1`] = `
+Object {
+  "palette": Object {
+    "complementary": Object {
+      "c0": "#fff",
+      "c1": "#e2e2e2",
+      "c2": "#c6c6c6",
+      "c3": "#aaa",
+      "c4": "#8d8d8d",
+      "c5": "#717171",
+      "c6": "#555",
+      "c7": "#383838",
+      "c8": "#1c1c1c",
+      "c9": "#000",
+    },
+    "error": Object {
+      "base": "#f00",
+      "contrast": "#0ff",
+    },
+    "primary": Object {
+      "base": "#14b2e2",
+    },
+    "success": Object {
+      "base": "#00c18d",
+    },
+    "warning": Object {
+      "base": "#fada23",
+    },
+  },
+}
+`;

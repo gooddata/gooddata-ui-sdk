@@ -8,7 +8,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import { clearCssProperties, setCssProperties } from "../cssProperties";
 import { ThemeContextProvider } from "./Context";
-import { getComplementaryPalette } from "../complementaryPalette";
+import { prepareTheme } from "./prepareTheme";
 
 /**
  * @public
@@ -47,49 +47,6 @@ export interface IThemeProviderProps {
      */
     modifier?: ThemeModifier;
 }
-
-const prepareComplementaryPalette = (theme: ITheme): ITheme => {
-    if (theme?.palette?.complementary) {
-        return {
-            ...theme,
-
-            palette: {
-                ...theme.palette,
-                complementary: getComplementaryPalette(theme.palette.complementary),
-            },
-        };
-    }
-
-    return theme;
-};
-
-export const prepareBaseColors = (theme: ITheme): ITheme => {
-    const defaultPrimary = "#14b2e2";
-    const defaultSuccess = "#00c18d";
-    const defaultError = "#e54d42";
-    const defaultWarning = "#fada23";
-
-    if (theme?.palette?.complementary) {
-        return {
-            ...theme,
-            palette: {
-                ...theme.palette,
-                ...(theme.palette.primary ? {} : { primary: { base: defaultPrimary } }),
-                ...(theme.palette.success ? {} : { success: { base: defaultSuccess } }),
-                ...(theme.palette.error ? {} : { error: { base: defaultError } }),
-                ...(theme.palette.warning ? {} : { warning: { base: defaultWarning } }),
-            },
-        };
-    }
-
-    return theme;
-};
-
-const prepareTheme = (theme: ITheme): ITheme => ({
-    ...theme,
-    ...prepareComplementaryPalette(theme),
-    ...prepareBaseColors(theme),
-});
 
 export const isDarkTheme = (theme: ITheme): boolean => {
     const firstColor = theme?.palette?.complementary?.c0;

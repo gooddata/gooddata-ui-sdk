@@ -8,7 +8,7 @@ import { ITheme } from "@gooddata/sdk-backend-spi";
 import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep";
 
-import { isDarkTheme, prepareBaseColors, ThemeModifier, ThemeProvider } from "../ThemeProvider";
+import { isDarkTheme, ThemeModifier, ThemeProvider } from "../ThemeProvider";
 import { IThemeContextProviderProps, withTheme } from "../Context";
 
 const renderComponent = async (component: React.ReactElement) => {
@@ -217,28 +217,5 @@ describe("isDarkTheme", () => {
         const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
 
         expect(isDarkTheme(theme)).toEqual(true);
-    });
-});
-
-describe("prepareBaseColors", () => {
-    it("should fill the base colors if complementary palette is provided, but base colors are missing", () => {
-        const theme: ITheme = {
-            palette: {
-                error: { base: "#f00", contrast: "#0ff" },
-                complementary: { c0: "#fff", c9: "#000" },
-            },
-        };
-
-        const expectedTheme: ITheme = {
-            palette: {
-                primary: { base: "#14b2e2" },
-                warning: { base: "#fada23" },
-                success: { base: "#00c18d" },
-                error: { base: "#f00", contrast: "#0ff" },
-                complementary: { c0: "#fff", c9: "#000" },
-            },
-        };
-
-        expect(prepareBaseColors(theme)).toEqual(expectedTheme);
     });
 });
