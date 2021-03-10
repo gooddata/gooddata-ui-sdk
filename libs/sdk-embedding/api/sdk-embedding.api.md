@@ -24,6 +24,10 @@ export namespace EmbeddedAnalyticalDesigner {
     export type ClearCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.Clear, undefined>;
     export type ClearFinished = IGdcAdMessageEvent<GdcAdEventType.ClearFinished, IAvailableCommands>;
     export type ClearFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearFinished, IAvailableCommands>;
+    export type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
+    export type ClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
+    export type ClearInsightFinished = IGdcAdMessageEvent<GdcAdEventType.ClearInsightFinished, IAvailableCommands>;
+    export type ClearInsightFinishedData = IGdcAdMessageEnvelope<GdcAdEventType.ClearInsightFinished, IAvailableCommands>;
     export type DrillableItemsCommand = IGdcAdMessageEvent<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
     export type DrillableItemsCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.DrillableItems, IDrillableItemsCommandBody>;
     export type ExportFinished = IGdcAdMessageEvent<GdcAdEventType.ExportFinished, ExportFinishedBody>;
@@ -37,6 +41,7 @@ export namespace EmbeddedAnalyticalDesigner {
     export type FilterContextChangedData = IGdcAdMessageEnvelope<GdcAdEventType.FilterContextChanged, FilterContextChangedBody>;
     export enum GdcAdCommandType {
         Clear = "clear",
+        ClearInsight = "clearInsight",
         DrillableItems = "drillableItems",
         Export = "exportInsight",
         OpenInsight = "openInsight",
@@ -50,6 +55,7 @@ export namespace EmbeddedAnalyticalDesigner {
     }
     export enum GdcAdEventType {
         ClearFinished = "clearFinished",
+        ClearInsightFinished = "clearInsightFinished",
         Drill = "drill",
         ExportFinished = "exportInsightFinished",
         FilterContextChanged = "filterContextChanged",
@@ -118,6 +124,8 @@ export namespace EmbeddedAnalyticalDesigner {
     }
     export function isClearCommandData(obj: unknown): obj is ClearCommandData;
     export function isClearFinishedData(obj: unknown): obj is ClearFinishedData;
+    export function isClearInsightCommandData(obj: unknown): obj is ClearInsightCommandData;
+    export function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFinishedData;
     export function isDrillableItemsCommandData(obj: unknown): obj is DrillableItemsCommandData;
     export function isExportFinishedData(obj: unknown): obj is ExportFinishedData;
     export function isExportInsightCommandData(obj: unknown): obj is ExportInsightCommandData;
