@@ -35,7 +35,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
     const {
         section,
         sectionRenderer = DashboardLayoutSectionRenderer,
-        sectionHeaderRenderer,
+        sectionHeaderRenderer = DashboardLayoutSectionHeaderRenderer,
         itemKeyGetter = ({ item }) => item.index(),
         gridRowRenderer = ({ children }) => children,
         itemRenderer,
