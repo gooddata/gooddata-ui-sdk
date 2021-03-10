@@ -125,9 +125,9 @@ describe("cssProperties", () => {
         const theme: ITheme = {
             palette: {
                 complementary: {
-                    shade0: "#fff",
-                    shade8: "#222",
-                    shade9: "#000",
+                    c0: "#fff",
+                    c8: "#222",
+                    c9: "#000",
                 },
             },
         };

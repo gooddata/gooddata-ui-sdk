@@ -17,7 +17,7 @@ interface ILegendItemProps {
 class LegendItem extends React.Component<ILegendItemProps> {
     public render(): React.ReactNode {
         const { item, width, enableBorderRadius = false, theme } = this.props;
-        const disabledColor = theme?.palette?.complementary?.shade5 ?? DEFAULT_DISABLED_COLOR;
+        const disabledColor = theme?.palette?.complementary?.c5 ?? DEFAULT_DISABLED_COLOR;
 
         const iconStyle = {
             borderRadius: enableBorderRadius ? "50%" : "0",

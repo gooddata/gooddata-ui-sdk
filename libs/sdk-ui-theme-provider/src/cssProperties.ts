@@ -123,7 +123,7 @@ export const generateShadowColor = (palette: IThemePalette, isDarkTheme: boolean
     return [
         getCssProperty(
             "shadow-color",
-            isDarkTheme ? BLACK_COLOR : palette.complementary?.shade8 || DEFAULT_SHADOW_COLOR,
+            isDarkTheme ? BLACK_COLOR : palette.complementary?.c8 || DEFAULT_SHADOW_COLOR,
         ),
     ];
 };

@@ -90,7 +90,7 @@ export function getComboConfiguration(
                     radius: 4.5,
                     lineColor:
                         theme?.chart?.backgroundColor ??
-                        theme?.palette?.complementary?.shade0 ??
+                        theme?.palette?.complementary?.c0 ??
                         styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,
@@ -113,7 +113,7 @@ export function getComboConfiguration(
                     radius: 4.5,
                     lineColor:
                         theme?.chart?.backgroundColor ??
-                        theme?.palette?.complementary?.shade0 ??
+                        theme?.palette?.complementary?.c0 ??
                         styleVariables.gdColorBackground,
                 },
                 lineWidth: LINE_WIDTH,

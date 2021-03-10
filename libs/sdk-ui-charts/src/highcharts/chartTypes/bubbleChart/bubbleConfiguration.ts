@@ -24,7 +24,7 @@ export function getBubbleConfiguration(
                             enabled: true,
                             lineColor:
                                 theme?.chart?.backgroundColor ??
-                                theme?.palette?.complementary?.shade0 ??
+                                theme?.palette?.complementary?.c0 ??
                                 styleVariables.gdColorBackground,
                         },
                     },
