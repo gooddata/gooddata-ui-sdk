@@ -62,7 +62,7 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
             // TODO: this is here because /api/profile is now weird and returns some dummy HTML page
             //  for everyone - it's not really an authenticated resource. until the profile is
             //  fixed the code tries to access user's org which is properly protected by auth.
-            await client.axios.get<TigerUserProfile>("/api/organization");
+            await client.axios.get<TigerUserProfile>("/api/entities/organization");
 
             return (await client.axios.get<TigerUserProfile>("/api/profile")).data;
         } catch (err) {
