@@ -58,6 +58,7 @@ import { BearWorkspaceInsights } from "../insights";
 import { WidgetReferencesQuery } from "./widgetReferences";
 import invariant from "ts-invariant";
 import { resolveWidgetFilters } from "./widgetFilters";
+import { sanitizeFilterContext } from "./filterContexts";
 
 type DashboardDependencyCategory = Extract<
     GdcMetadata.ObjectCategory,
@@ -511,7 +512,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     private createBearFilterContext = async (
         filterContext: IFilterContextDefinition,
     ): Promise<IFilterContext> => {
-        const bearFilterContext = fromSdkModel.convertFilterContext(filterContext);
+        const sanitizedFilterContext = await this.sanitizeFilterContext(filterContext);
+        const bearFilterContext = fromSdkModel.convertFilterContext(sanitizedFilterContext);
         const savedBearFilterContext = await this.authCall((sdk) =>
             sdk.md.createObject(this.workspace, bearFilterContext),
         );
@@ -520,9 +522,16 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     private updateBearFilterContext = async (filterContext: IFilterContext): Promise<IFilterContext> => {
-        const bearFilterContext = fromSdkModel.convertFilterContext(filterContext);
+        const sanitizedFilterContext = await this.sanitizeFilterContext(filterContext);
+        const bearFilterContext = fromSdkModel.convertFilterContext(sanitizedFilterContext);
         await this.updateBearMetadataObject(filterContext.ref, bearFilterContext);
         return filterContext;
+    };
+
+    private sanitizeFilterContext = <T extends IFilterContextDefinition>(filterContext: T): Promise<T> => {
+        return sanitizeFilterContext(filterContext, (refs) =>
+            objRefsToUris(refs, this.workspace, this.authCall),
+        );
     };
 
     // Widgets
