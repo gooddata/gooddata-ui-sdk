@@ -218,9 +218,7 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
                                         getVisType={dashboardLayoutResult.getVisType}
                                         getInsightByRef={dashboardLayoutResult.getInsightByRef}
                                         widgetRenderer={widgetRenderer}
-                                        areSectionHeadersEnabled={
-                                            userWorkspaceSettings?.areSectionHeadersEnabled
-                                        }
+                                        areSectionHeadersEnabled={userWorkspaceSettings?.enableSectionHeaders}
                                     />
                                 )}
                             </DashboardViewIsReadOnlyProvider>
