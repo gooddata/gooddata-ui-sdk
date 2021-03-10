@@ -90,6 +90,11 @@ export namespace EmbeddedAnalyticalDesigner {
         Clear = "clear",
 
         /**
+         * The command empties insight buckets and filters but keeps title and ID in the URL
+         */
+        ClearInsight = "clearInsight",
+
+        /**
          * The command undo to previous state
          */
         Undo = "undo",
@@ -145,6 +150,11 @@ export namespace EmbeddedAnalyticalDesigner {
          * Type represent that the insight editor is cleared
          */
         ClearFinished = "clearFinished",
+
+        /**
+         * Type represent that the insight is cleared
+         */
+        ClearInsightFinished = "clearInsightFinished",
 
         /**
          * Type represent that the insight is saved
@@ -397,6 +407,37 @@ export namespace EmbeddedAnalyticalDesigner {
      */
     export function isClearCommandData(obj: unknown): obj is ClearCommandData {
         return isObject(obj) && getEventType(obj) === GdcAdCommandType.Clear;
+    }
+
+    //
+    // ClearInsight command
+    //
+
+    /**
+     * Triggers the clearInsight action to reset the insight to empty state
+     *
+     * @public
+     */
+    export type ClearInsightCommand = IGdcAdMessageEvent<GdcAdCommandType.ClearInsight, undefined>;
+
+    /**
+     * Data type of clearInsight command
+     *
+     * Note: it has empty content and just wrapped to application and product data structure
+     *
+     * @public
+     */
+    export type ClearInsightCommandData = IGdcAdMessageEnvelope<GdcAdCommandType.ClearInsight, undefined>;
+
+    /**
+     * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearInsightCommandData}
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isClearInsightCommandData(obj: unknown): obj is ClearInsightCommandData {
+        return isObject(obj) && getEventType(obj) === GdcAdCommandType.ClearInsight;
     }
 
     //
@@ -932,7 +973,6 @@ export namespace EmbeddedAnalyticalDesigner {
      * Data type of event that was emitted after finish clear action
      *
      * Note: The main event data was wrapped to application and product data structure
-     * @remarks See {@link EmbeddedAnalyticalDesigner.UndoFinishedBody}
      *
      * @public
      */
@@ -947,6 +987,43 @@ export namespace EmbeddedAnalyticalDesigner {
      */
     export function isClearFinishedData(obj: unknown): obj is ClearFinishedData {
         return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearFinished;
+    }
+
+    //
+    // clearInsight finished
+    //
+
+    /**
+     * This event is emitted when AD successfully performs clearInsight operation.
+     *
+     * @public
+     */
+    export type ClearInsightFinished = IGdcAdMessageEvent<
+        GdcAdEventType.ClearInsightFinished,
+        IAvailableCommands
+    >;
+
+    /**
+     * Data type of event that was emitted after finish clearInsight action
+     *
+     * Note: The main event data was wrapped to application and product data structure
+     *
+     * @public
+     */
+    export type ClearInsightFinishedData = IGdcAdMessageEnvelope<
+        GdcAdEventType.ClearInsightFinished,
+        IAvailableCommands
+    >;
+
+    /**
+     * Type-guard checking whether an object is an instance of {@link EmbeddedAnalyticalDesigner.ClearInsightFinishedData}
+     *
+     * @param obj - object to test
+     *
+     * @public
+     */
+    export function isClearInsightFinishedData(obj: unknown): obj is ClearInsightFinishedData {
+        return isObject(obj) && getEventType(obj) === GdcAdEventType.ClearInsightFinished;
     }
 
     //
