@@ -918,6 +918,15 @@ export enum GrainIdentifierTypeEnum {
 }
 
 // @public
+export interface GrandTotal {
+    function: string;
+    includedDimensions: {
+        [key: string]: IncludedDimensionProps;
+    };
+    localIdentifier: string;
+}
+
+// @public
 export interface GranularitiesFormatting {
     titleBase: string;
     titlePattern: string;
@@ -930,6 +939,13 @@ export interface HeaderGroup {
 
 // @public
 export type Identifier = LocalIdentifier | ObjectIdentifier;
+
+// @public
+export interface IncludedDimensionProps {
+    dimensionAttributesValues: {
+        [key: string]: Array<string>;
+    };
+}
 
 // @public
 export interface InlineFilterDefinition {
@@ -4644,6 +4660,7 @@ export type ResultDimensionHeader = ResultDimension["headers"][number];
 // @public
 export interface ResultSpec {
     dimensions: Array<Dimension>;
+    grandTotals?: Array<GrandTotal>;
 }
 
 // @public
@@ -4736,6 +4753,20 @@ export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => ValidObje
 
 // @public (undocumented)
 export const tigerWorkspaceObjectsClientFactory: (axios: AxiosInstance) => WorkspaceObjectControllerApiInterface;
+
+// @public
+export enum TotalFunction {
+    // (undocumented)
+    AVG = "AVG",
+    // (undocumented)
+    MAX = "MAX",
+    // (undocumented)
+    MED = "MED",
+    // (undocumented)
+    MIN = "MIN",
+    // (undocumented)
+    SUM = "SUM"
+}
 
 // @public
 export class UserModelControllerApi extends MetadataBaseApi implements UserModelControllerApiInterface {

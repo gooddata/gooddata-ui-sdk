@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { toAfmExecution } from "../toAfmResultSpec";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { defWithAlias, defWithoutFilters } from "./InvalidInputs.fixture";
@@ -10,9 +10,6 @@ import {
     newAttributeSort,
     defSetDimensions,
     newDimension,
-    newTotal,
-    newTwoDimensional,
-    MeasureGroupIdentifier,
     newNegativeAttributeFilter,
     defWithFilters,
 } from "@gooddata/sdk-model";
@@ -38,23 +35,6 @@ describe("converts execution definition to AFM Execution", () => {
 
     it.each(Scenarios)("should return AFM Execution with %s", (_desc, input) => {
         expect(toAfmExecution(input)).toMatchSnapshot();
-    });
-
-    it("throw when dimension has non-native totals", () => {
-        const Total = newTotal("sum", ReferenceLdm.Won, ReferenceLdm.Account.Name);
-        const Dimensions = newTwoDimensional(["localId1"], [MeasureGroupIdentifier, Total]);
-
-        expect(() =>
-            toAfmExecution(defSetDimensions(emptyDef(workspace), Dimensions)),
-        ).toThrowErrorMatchingSnapshot();
-    });
-    it("throw error with dimensions with native totals but no attribute in bucket", () => {
-        const Total = newTotal("nat", ReferenceLdm.Won, ReferenceLdm.Account.Name);
-        const Dimensions = newTwoDimensional(["localId1"], [MeasureGroupIdentifier, Total]);
-
-        expect(() =>
-            toAfmExecution(defSetDimensions(emptyDef(workspace), Dimensions)),
-        ).toThrowErrorMatchingSnapshot();
     });
 
     it("should remove empty attribute filters and not cause RAIL-2083", () => {
