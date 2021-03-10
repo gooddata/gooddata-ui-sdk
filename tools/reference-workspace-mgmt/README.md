@@ -10,4 +10,4 @@ the reference-workspace project itself. See the reference-project for more infor
 
 (C) 2020-2021 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/reference-workspace-mgmt/LICENSE).
