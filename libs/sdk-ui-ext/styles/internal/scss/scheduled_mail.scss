@@ -138,6 +138,10 @@ $vertical-space: 10px;
                 @include input-styles;
             }
 
+            .input-text:hover {
+                color: var(--gd-palette-complementary-8);
+            }
+
             .gd-datepicker-icon {
                 top: -2px;
             }

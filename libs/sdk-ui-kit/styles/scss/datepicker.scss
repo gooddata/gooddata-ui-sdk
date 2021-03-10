@@ -94,7 +94,7 @@
 .gd-datepicker-picker {
     position: absolute;
     padding: 20px 15px 15px;
-    background: white;
+    background: $gd-color-white;
     user-select: none;
     text-align: left;
 
@@ -198,7 +198,7 @@
 
     .DayPicker-Weekday {
         display: table-cell;
-        color: $gd-color-state-blank;
+        color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
         cursor: help;
         padding-bottom: 0.5em;
         font-family: $gd-font-primary;
