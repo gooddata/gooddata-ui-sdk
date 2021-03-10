@@ -47,10 +47,10 @@ const layoutWithHalfSizeItems: DashboardLayoutTransform = (layout) => {
 };
 
 const layoutWithInsightsOnly: DashboardLayoutTransform = (layout) =>
-    layout.modifySections((section) => section.removeItems(selectAllItemsWithKpis));
+    layout.modifySections((section) => section.removeItems(selectAllItemsWithKpis)).removeEmptySections();
 
 const layoutWithKpiOnly: DashboardLayoutTransform = (layout) =>
-    layout.modifySections((section) => section.removeItems(selectAllItemsWithInsights));
+    layout.modifySections((section) => section.removeItems(selectAllItemsWithInsights)).removeEmptySections();
 
 const layoutWithChangedSectionOrder: DashboardLayoutTransform = (layout) => layout.moveSection(0, 1);
 

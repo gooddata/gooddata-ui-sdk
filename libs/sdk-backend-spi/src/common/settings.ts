@@ -91,9 +91,9 @@ export interface ISettings {
     enableKDZooming?: boolean;
 
     /**
-     * Indicates, whether dashboard "row headers" are enabled
+     * Indicates, whether dashboard "section headers" are enabled
      */
-    areSectionHeadersEnabled?: boolean;
+    enableSectionHeaders?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

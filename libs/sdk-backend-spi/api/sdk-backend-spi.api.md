@@ -1158,7 +1158,6 @@ export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADMeasureValueFilterNullAsZeroOption?: string;
-    areSectionHeadersEnabled?: boolean;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
@@ -1169,6 +1168,7 @@ export interface ISettings {
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;
     enablePushpinGeoChart?: boolean;
+    enableSectionHeaders?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
