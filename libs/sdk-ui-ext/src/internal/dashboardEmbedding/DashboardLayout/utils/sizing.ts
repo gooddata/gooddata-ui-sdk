@@ -36,13 +36,17 @@ import { IDashboardLayoutItemFacade } from "../facade/interfaces";
  */
 export function unifyDashboardLayoutItemHeights<TWidget>(
     layout: IDashboardLayout<TWidget>,
+    enableCustomHeight: boolean,
 ): IDashboardLayout<TWidget>;
 export function unifyDashboardLayoutItemHeights<TWidget>(
     items: IDashboardLayoutItem<TWidget>[],
+    enableCustomHeight: boolean,
 ): IDashboardLayoutItem<TWidget>[];
 export function unifyDashboardLayoutItemHeights<TWidget>(
     itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
+    enableCustomHeight: boolean,
 ): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
+    console.log("tete", enableCustomHeight);
     if (isDashboardLayout<TWidget>(itemsOrLayout)) {
         const updatedLayout: IDashboardLayout<TWidget> = {
             ...itemsOrLayout,
@@ -53,7 +57,7 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
                         ...acc,
                         {
                             ...section.raw(),
-                            items: unifyDashboardLayoutItemHeights(section.items().raw()),
+                            items: unifyDashboardLayoutItemHeights(section.items().raw(), enableCustomHeight),
                         },
                     ];
                 }, []),
@@ -64,7 +68,7 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
 
     const itemsWithSizeForAllScreens = itemsOrLayout.map((item) => ({
         ...item,
-        size: implicitLayoutItemSizeFromXlSize(item.size.xl),
+        size: implicitLayoutItemSizeFromXlSize(item.size.xl, enableCustomHeight),
     }));
 
     const itemsWithUnifiedHeightForAllScreens: IDashboardLayoutItem<TWidget>[] = ALL_SCREENS.reduce(
@@ -90,18 +94,39 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
  *
  * @param xlSize - dashboard layout size for xl screen
  */
-function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashboardLayoutSizeByScreenSize {
+function implicitLayoutItemSizeFromXlSize(
+    xlSize: IDashboardLayoutSize,
+    enableCustomHeight?: boolean,
+): IDashboardLayoutSizeByScreenSize {
     const xlWidth: number = xlSize.gridWidth;
     const xlHeight: number = xlSize.gridHeight;
     const ratio: number = xlSize.heightAsRatio;
 
     switch (xlWidth) {
         case 0:
-            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0, 0);
+            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0, 0, enableCustomHeight);
         case 1:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 2, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                2,
+                6,
+                12,
+                enableCustomHeight,
+            );
         case 2:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 4, 6, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                4,
+                6,
+                12,
+                enableCustomHeight,
+            );
         case 3:
         case 4:
         case 5:
@@ -109,13 +134,49 @@ function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashbo
         case 7:
         case 8:
         case 9:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 6, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                6,
+                12,
+                12,
+                enableCustomHeight,
+            );
         case 10:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                12,
+                12,
+                12,
+                enableCustomHeight,
+            );
         case 11:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                12,
+                12,
+                12,
+                enableCustomHeight,
+            );
         case 12:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
+            return dashboardLayoutItemSizeForAllScreens(
+                ratio,
+                xlHeight,
+                xlWidth,
+                xlWidth,
+                12,
+                12,
+                12,
+                enableCustomHeight,
+            );
     }
 }
 
@@ -131,6 +192,7 @@ function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashbo
  * @param md - width as grid items count for md screen
  * @param sm - width as grid items count for sm screen
  * @param xs - width as grid items count for xs screen
+ * @param enableCustomHeight - feature flag value for widget height customization
  */
 function dashboardLayoutItemSizeForAllScreens(
     heightAsRatio: number,
@@ -140,8 +202,9 @@ function dashboardLayoutItemSizeForAllScreens(
     md: number,
     sm: number,
     xs: number,
+    enableCustomHeight: boolean,
 ): IDashboardLayoutSizeByScreenSize {
-    if (gridHeight) {
+    if (enableCustomHeight) {
         return {
             xl: {
                 gridWidth: xl,
@@ -376,13 +439,15 @@ export const getResizedItemPositions = <TWidget>(
         }, positions);
 };
 
-export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize, screen: ScreenSize) => {
-    const { heightAsRatio, gridHeight } = size;
-    if (gridHeight) {
+export const getDashboardLayoutHeight = (
+    size: IDashboardLayoutSize,
+    enableCustomHeight: boolean,
+): number | undefined => {
+    const { gridHeight } = size;
+    if (gridHeight && enableCustomHeight) {
         return getDashboardLayoutItemHeightForGrid(gridHeight);
-    } else if (heightAsRatio) {
-        return getDashboardLayoutItemHeightForRatioAndScreen(size, screen);
     }
+
     return undefined;
 };
 

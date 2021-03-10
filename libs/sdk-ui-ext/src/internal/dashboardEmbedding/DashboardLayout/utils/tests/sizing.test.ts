@@ -10,6 +10,7 @@ import {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutWidgetDefaultHeight,
     getDashboardLayoutItemHeightForGrid,
+    getDashboardLayoutHeight,
 } from "../sizing";
 import { ALL_SCREENS } from "../..";
 import {
@@ -75,7 +76,7 @@ describe("sizing", () => {
                     return s;
                 }),
             );
-            expect(unifyDashboardLayoutItemHeights(layoutBuilder.build())).toMatchSnapshot();
+            expect(unifyDashboardLayoutItemHeights(layoutBuilder.build(), false)).toMatchSnapshot();
         });
 
         it("should unify dashboard layout column heights for various item sizes when FF enableKDWidgetCustomHeight is true", () => {
@@ -90,7 +91,7 @@ describe("sizing", () => {
                     return s;
                 }),
             );
-            expect(unifyDashboardLayoutItemHeights(newLayout.build())).toMatchSnapshot();
+            expect(unifyDashboardLayoutItemHeights(newLayout.build(), true)).toMatchSnapshot();
         });
     });
 
@@ -122,6 +123,24 @@ describe("sizing", () => {
             expect(
                 getDashboardLayoutItemHeightForRatioAndScreen({ gridWidth: 0, heightAsRatio: 0 }, "xl"),
             ).toMatchSnapshot();
+        });
+    });
+
+    describe("getDashboardLayoutHeight", () => {
+        it("should calculate widget height when custom heigh is specified and FF enableKDWidgetCustomHeight is true", () => {
+            expect(getDashboardLayoutHeight({ gridWidth: 1, gridHeight: 30 }, true)).toBe(600);
+        });
+
+        it("should return undefined for widget height when custom height is not specified and FF enableKDWidgetCustomHeight is true", () => {
+            expect(getDashboardLayoutHeight({ gridWidth: 1 }, true)).toBe(undefined);
+        });
+
+        it("should return undefined for widget height when heightAsRatio is specified and FF enableKDWidgetCustomHeight is true", () => {
+            expect(getDashboardLayoutHeight({ gridWidth: 1, heightAsRatio: 120 }, true)).toBe(undefined);
+        });
+
+        it("should return undefined for widget height when FF enableKDWidgetCustomHeight is false", () => {
+            expect(getDashboardLayoutHeight({ gridWidth: 1, gridHeight: 30 }, false)).toBe(undefined);
         });
     });
 

@@ -405,6 +405,11 @@ export type IDashboardLayoutRenderProps<TWidget = DashboardWidget> = {
      * Enable debug mode? (In debug mode, sections & items are highlighted for better overview of the layout structure).
      */
     debug?: boolean;
+
+    /**
+     * Checks if feature flag isEnableKDWidgetCustomHeight is enabled
+     */
+    enableCustomHeight?: boolean;
 };
 
 /**

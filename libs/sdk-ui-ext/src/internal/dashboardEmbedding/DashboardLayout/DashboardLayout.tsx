@@ -31,10 +31,13 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         className,
         debug,
         onMouseLeave,
+        enableCustomHeight,
     } = props;
-
+    console.log("AAAAAA", enableCustomHeight);
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
-        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(layout));
+        const layoutFacade = DashboardLayoutFacade.for(
+            unifyDashboardLayoutItemHeights(layout, enableCustomHeight),
+        );
         const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
     }, [layout]);

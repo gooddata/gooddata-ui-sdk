@@ -1125,24 +1125,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "md": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "sm": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "xl": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "xs": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
           },
           "type": "IDashboardLayoutItem",
@@ -1550,24 +1550,24 @@ Object {
         Object {
           "size": Object {
             "lg": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "md": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "sm": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "xl": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
             "xs": Object {
+              "gridHeight": 0,
               "gridWidth": 0,
-              "heightAsRatio": 0,
             },
           },
           "type": "IDashboardLayoutItem",
