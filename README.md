@@ -44,6 +44,6 @@ In case the pull brings in new projects or large bulk of changes, it is safer (a
 
 (C) 2017-2020 GoodData Corporation
 
-This repository is under the a GoodData commercial license available in the [LICENSE](LICENSE) file because it contains a
+This repository is under the a GoodData commercial license available in the [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/LICENSE) file because it contains a
 commercial package, HighCharts. Subdirectories containing the MIT license are not subject to the GoodData
 commercial license and do not contain any commercial code.
