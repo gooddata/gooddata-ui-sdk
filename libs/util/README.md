@@ -15,4 +15,4 @@ There are two main criteria for functions to land here:
 
 (C) 2020-2021 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/util/LICENSE).

@@ -53,4 +53,4 @@ The recording directory passed to the tooling is expected to follow this layout:
 
 (C) 2020-2021 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/mock-handling/LICENSE).

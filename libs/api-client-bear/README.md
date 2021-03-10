@@ -77,4 +77,4 @@ Then you can import the library file and global variable `gooddata` contains all
 
 (C) 2020-2021 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](LICENSE).
+This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/api-client-bear/LICENSE).
