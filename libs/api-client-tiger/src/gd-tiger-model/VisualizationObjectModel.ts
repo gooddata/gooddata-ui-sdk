@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ISortItem, ITotal } from "@gooddata/sdk-model";
 import {
     FilterDefinition,
@@ -15,7 +15,7 @@ export namespace VisualizationObjectModel {
             title: string;
             visualizationUrl: string;
             buckets: IBucket[];
-            filters: FilterDefinition[]; // TODO make sure this includes Measure value filters when they land in tiger
+            filters: FilterDefinition[];
             sorts: ISortItem[];
             properties: VisualizationProperties;
         };
