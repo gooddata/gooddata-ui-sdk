@@ -210,6 +210,13 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     // we need sdk-ui intl wrapper (this is how InsightView does this as well) for error messages etc.
     // ideally, we would merge InternalIntlWrapper and sdk-ui intl wrapper, but there is no clean way to do that
     const locale = dashboardViewConfig?.locale ?? userWorkspaceSettings?.locale;
+    /*
+     * if there are drillable items from the user, use them and only them
+     *
+     * also pass any drillable items only if there is an onDrill specified, otherwise pass undefined
+     * so that the items are not shown as active since nothing can happen on click without the onDrill provided
+     */
+    const drillableItemsToUse = onDrill ? drillableItems ?? implicitDrills : undefined;
     return (
         <IntlWrapper locale={locale}>
             {(status === "loading" || status === "pending" || isVisualizationLoading) && <LoadingComponent />}
@@ -220,23 +227,24 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                     height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
                 />
             )}
-            <InsightRendererImpl
-                insight={insightWithAddedWidgetProperties}
-                backend={effectiveBackend}
-                workspace={effectiveWorkspace}
-                // if there are drillable items from the user, use them and only them
-                drillableItems={drillableItems ?? implicitDrills}
-                onDrill={onDrill ? handleDrill : undefined}
-                config={chartConfig}
-                onLoadingChanged={handleLoadingChanged}
-                locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
-                settings={userWorkspaceSettings}
-                colorPalette={colorPalette}
-                onError={handleError}
-                pushData={handlePushData}
-                ErrorComponent={ErrorComponent}
-                LoadingComponent={LoadingComponent}
-            />
+            {status === "success" && (
+                <InsightRendererImpl
+                    insight={insightWithAddedWidgetProperties}
+                    backend={effectiveBackend}
+                    workspace={effectiveWorkspace}
+                    drillableItems={drillableItemsToUse}
+                    onDrill={onDrill ? handleDrill : undefined}
+                    config={chartConfig}
+                    onLoadingChanged={handleLoadingChanged}
+                    locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
+                    settings={userWorkspaceSettings}
+                    colorPalette={colorPalette}
+                    onError={handleError}
+                    pushData={handlePushData}
+                    ErrorComponent={ErrorComponent}
+                    LoadingComponent={LoadingComponent}
+                />
+            )}
         </IntlWrapper>
     );
 };
