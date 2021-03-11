@@ -30,7 +30,11 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         const client = context.client as ITigerClient;
 
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        return client.axios.post("/logout");
+        try {
+            await client.axios.post("/logout");
+        } catch (error) {
+            convertApiError(error);
+        }
     }
 
     public async getCurrentPrincipal(

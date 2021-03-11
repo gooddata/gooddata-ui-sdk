@@ -29,6 +29,7 @@ import { TigerWorkspaceStyling } from "./styling";
 import { TigerWorkspaceInsights } from "./insights";
 import { TigerWorkspaceDashboards } from "./dashboards";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
+import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
 import { TigerWorkspaceMeasures } from "./measures";
 import { TigerWorkspaceFacts } from "./facts";
 import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs";
@@ -43,7 +44,14 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public async getDescriptor(): Promise<IWorkspaceDescriptor> {
         if (!this.descriptor) {
-            throw new NotSupported("Fetching descriptor asynchronously is not supported");
+            const workspaceDescriptor = workspaceConverter(
+                (
+                    await this.authCall(async (sdk) => {
+                        return sdk.organizationObjects.getEntityWorkspaces1({ id: this.workspace });
+                    })
+                ).data.data,
+            );
+            return workspaceDescriptor;
         }
         return this.descriptor;
     }
