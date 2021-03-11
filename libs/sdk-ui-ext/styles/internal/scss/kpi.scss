@@ -95,7 +95,11 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
         }
 
         .kpi-link-style-underline::after {
-            border-bottom: 2px solid $gd-kpi-primaryMeasureColor;
+            border-bottom: 2px solid
+                var(
+                    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+                    var(--gd-palette-complementary-9, $default-gd-color-link)
+                );
         }
 
         &.is-empty-value {
@@ -123,7 +127,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
 
     &.is-empty-value,
     &.is-error-value {
-        color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-state-blank);
+        color: var(--gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor, $gd-color-state-blank);
     }
 }
 
@@ -190,7 +194,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
         border-left: 1px dashed
             var(
                 --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                transparentize($default-gd-color-disabled, 0.5)
+                var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.5))
             );
     }
 
