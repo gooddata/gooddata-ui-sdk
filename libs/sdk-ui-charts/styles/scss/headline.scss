@@ -33,7 +33,7 @@
         }
         .headline-value--empty {
             color: var(
-                --gd-kpi-primaryMeasureColor,
+                --gd-kpi-secondaryInfoColor,
                 var(--gd-palette-complementary-6, $default-gd-color-disabled)
             );
         }
@@ -43,7 +43,10 @@
         flex-shrink: 1;
         padding-right: 0;
         border-left: 1px dashed
-            var(--gd-kpi-secondaryInfoColor, transparentize($default-gd-color-disabled, 0.5));
+            var(
+                --gd-kpi-secondaryInfoColor,
+                var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.5))
+            );
 
         &.is-drillable {
             cursor: pointer;

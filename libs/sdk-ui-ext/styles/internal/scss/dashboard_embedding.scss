@@ -75,7 +75,16 @@
     &:hover {
         a.kpi-link {
             .kpi-value {
-                color: $gd-kpi-primaryMeasureColor;
+                color: var(
+                    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+                    var(--gd-palette-complementary-9, $default-gd-color-link)
+                );
+            }
+            .kpi-value.is-empty-value {
+                color: var(
+                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+                    var(--gd-palette-complementary-6)
+                );
             }
         }
     }
@@ -264,7 +273,7 @@
     .dash-item-action-options:not(.disabled):hover,
     .dash-item-action-widget-options-active {
         color: $gd-color-text-light;
-        background-color: $gd-color-text-dimmed;
+        background-color: var(--gd-palette-complementary-7, $gd-color-text-dimmed);
     }
 }
 
