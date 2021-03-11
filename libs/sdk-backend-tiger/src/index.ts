@@ -47,3 +47,4 @@ export {
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
 } from "./auth";
+export { getOrganizationTitle } from "./utils/api";
