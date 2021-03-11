@@ -10,6 +10,7 @@ import { UnexpectedError } from "@gooddata/sdk-backend-spi";
  * @public
  */
 export const getOrganizationTitle = async (): Promise<string> => {
+    // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
     const data = (await sdk.axios.get("/api/entities/organization")).data;
     return data.data.attributes.name;
 };
