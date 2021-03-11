@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React, { createRef } from "react";
 import Measure from "react-measure";
-import ResponsiveText from "@gooddata/goodstrap/lib/ResponsiveText/ResponsiveText";
+import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
