@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 03 Dec 2020 09:40:04 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Mar 2021 10:47:16 GMT and should not be manually modified.
+
+## 8.2.0
+Thu, 11 Mar 2021 10:47:16 GMT
+
+### Updates
+
+- The ThemeProvider component is no longer in beta and is considered stable.
+- DashboardView, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage.
+- The capability to validate URLs against an organization’s whitelist is added to the backend. Currently, the implementation supports only the sdk-backend-bear package backend. The sdk-backend-tiger package backend considers all validation requests valid. The responses from the backend are cached by the decorated caching backend layer.
 
 ## 8.1.0
 Thu, 03 Dec 2020 09:40:04 GMT
