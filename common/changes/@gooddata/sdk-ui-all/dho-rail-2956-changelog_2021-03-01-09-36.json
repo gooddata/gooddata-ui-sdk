@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "DashboardView, a component to embed a dashboard created in KPI Dashboards, is added in a beta stage.",
+            "comment": "DashboardView, a component for embedding dashboards created in KPI Dashboards, is added in the beta stage.",
             "type": "none"
         }
     ],

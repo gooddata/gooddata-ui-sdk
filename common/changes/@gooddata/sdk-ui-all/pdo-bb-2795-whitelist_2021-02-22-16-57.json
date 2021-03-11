@@ -1,11 +1,11 @@
 {
-  "changes": [
-    {
-      "packageName": "@gooddata/sdk-ui-all",
-      "comment": "Added capability to validate URLs against organization's whitelist on backend. The implementation supports only Bear backend for now. Tiger backend consideres all validation requests as invalid. The responses from backend are cached by decorated caching backend layer.",
-      "type": "none"
-    }
-  ],
-  "packageName": "@gooddata/sdk-ui-all",
-  "email": "petr.dolejsi@gooddata.com"
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "The capability to validate URLs against an organization’s whitelist is added to the backend. Currently, the implementation supports only the sdk-backend-bear package backend. The sdk-backend-tiger package backend considers all validation requests valid. The responses from the backend are cached by the decorated caching backend layer.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "petr.dolejsi@gooddata.com"
 }
