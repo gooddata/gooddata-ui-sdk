@@ -947,8 +947,17 @@ export interface IObjectExpressionToken {
 
 // @public
 export interface IOrganization {
+    getDescriptor(): Promise<IOrganizationDescriptor>;
     readonly organizationId: string;
     securitySettings(): ISecuritySettingsService;
+}
+
+// @public
+export interface IOrganizationDescriptor {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
 }
 
 // @public

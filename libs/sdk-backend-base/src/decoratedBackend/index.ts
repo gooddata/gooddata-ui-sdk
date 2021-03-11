@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -25,6 +25,7 @@ import {
     IWorkspaceDescriptor,
     IOrganization,
     ISecuritySettingsService,
+    IOrganizationDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -174,6 +175,10 @@ class OrganizationDecorator implements IOrganization {
         this.decorated = decorated;
         this.factories = factories;
         this.organizationId = decorated.organizationId;
+    }
+
+    public getDescriptor(): Promise<IOrganizationDescriptor> {
+        return this.decorated.getDescriptor();
     }
 
     public securitySettings(): ISecuritySettingsService {

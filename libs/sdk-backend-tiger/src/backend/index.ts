@@ -15,7 +15,6 @@ import {
     IAuthenticationContext,
     isNotAuthenticated,
     IOrganization,
-    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -36,6 +35,7 @@ import {
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
 import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
+import { TigerOrganization } from "./organization";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateTotals: false,
@@ -146,21 +146,7 @@ export class TigerBackend implements IAnalyticalBackend {
     }
 
     public organization(organizationId: string): IOrganization {
-        return {
-            organizationId,
-            securitySettings: () => ({
-                scope: organizationId,
-                isUrlValid: (url: string, context: ValidationContext) => {
-                    // eslint-disable-next-line no-console
-                    console.warn(
-                        "'isUrlValid' function is not supported by Tiger backend, false is returned for parameters:",
-                        url,
-                        context,
-                    );
-                    return Promise.resolve(true);
-                },
-            }),
-        };
+        return new TigerOrganization(this.authApiCall, organizationId);
     }
 
     public currentUser(): IUserService {

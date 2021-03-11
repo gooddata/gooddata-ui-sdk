@@ -32,6 +32,7 @@ import {
     IOrganization,
     ISecuritySettingsService,
     ValidationContext,
+    IOrganizationDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -195,6 +196,12 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             : implConfig.securitySettingsOrganizationScope;
     return {
         organizationId,
+        getDescriptor(): Promise<IOrganizationDescriptor> {
+            return Promise.resolve({
+                id: organizationId,
+                title: "mock organization",
+            });
+        },
         securitySettings(): ISecuritySettingsService {
             return {
                 scope: scopeFactory(organizationId),

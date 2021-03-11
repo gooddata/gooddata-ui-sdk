@@ -34,6 +34,7 @@ import {
     IOrganization,
     ISecuritySettingsService,
     ValidationContext,
+    IOrganizationDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -358,6 +359,13 @@ class DummyWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
 class DummyOrganization implements IOrganization {
     constructor(public organizationId: string) {}
+
+    getDescriptor(): Promise<IOrganizationDescriptor> {
+        return Promise.resolve({
+            id: this.organizationId,
+            title: "dummy organization",
+        });
+    }
 
     securitySettings(): ISecuritySettingsService {
         return {

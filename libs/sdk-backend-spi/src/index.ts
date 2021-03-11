@@ -367,5 +367,5 @@ export {
     ITextExpressionToken,
 } from "./workspace/fromModel/ldm/measure";
 
-export { IOrganization } from "./organization";
+export { IOrganization, IOrganizationDescriptor } from "./organization";
 export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings";
