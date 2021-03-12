@@ -167,6 +167,7 @@ export interface IAnalyticalBackend {
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     organization(organizationId: string): IOrganization;
+    organizations(): IOrganizations;
     withAuthentication(provider: IAuthenticationProvider): IAnalyticalBackend;
     withTelemetry(componentName: string, props: object): IAnalyticalBackend;
     workspace(id: string): IAnalyticalWorkspace;
@@ -958,6 +959,11 @@ export interface IOrganizationDescriptor {
     id: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IOrganizations {
+    getCurrentOrganization(): Promise<IOrganization>;
 }
 
 // @public

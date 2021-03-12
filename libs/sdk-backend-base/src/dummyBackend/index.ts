@@ -35,6 +35,7 @@ import {
     ISecuritySettingsService,
     ValidationContext,
     IOrganizationDescriptor,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -100,6 +101,13 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
         },
         organization(organizationId: string): IOrganization {
             return new DummyOrganization(organizationId);
+        },
+        organizations(): IOrganizations {
+            return {
+                getCurrentOrganization() {
+                    return Promise.resolve(new DummyOrganization("dummy-organization-id"));
+                },
+            };
         },
         currentUser(): IUserService {
             throw new NotSupported("not supported");

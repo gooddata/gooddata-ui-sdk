@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { GdcExecution } from "@gooddata/api-model-bear";
 import {
     IAnalyticalBackendConfig,
@@ -34,6 +34,7 @@ import {
     NotSupported,
     IWorkspaceDescriptor,
     IOrganization,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -113,6 +114,9 @@ export function legacyRecordedBackend(
             return this;
         },
         organization(_organizationId: string): IOrganization {
+            throw new NotSupported("not yet supported");
+        },
+        organizations(): IOrganizations {
             throw new NotSupported("not yet supported");
         },
         currentUser(): IUserService {

@@ -15,6 +15,7 @@ import {
     IAuthenticationContext,
     isNotAuthenticated,
     IOrganization,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
@@ -35,7 +36,7 @@ import {
 } from "@gooddata/sdk-backend-base";
 import { DateFormatter } from "../convertors/fromBackend/dateFormatting/types";
 import { createDefaultDateFormatter } from "../convertors/fromBackend/dateFormatting/defaultDateFormatter";
-import { TigerOrganization } from "./organization";
+import { TigerOrganization, TigerOrganizations } from "./organization";
 
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateTotals: false,
@@ -147,6 +148,10 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public organization(organizationId: string): IOrganization {
         return new TigerOrganization(this.authApiCall, organizationId);
+    }
+
+    public organizations(): IOrganizations {
+        return new TigerOrganizations(this.authApiCall);
     }
 
     public currentUser(): IUserService {

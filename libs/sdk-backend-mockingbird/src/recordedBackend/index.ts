@@ -33,6 +33,7 @@ import {
     ISecuritySettingsService,
     ValidationContext,
     IOrganizationDescriptor,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { RecordedExecutionFactory } from "./execution";
@@ -90,6 +91,9 @@ export function recordedBackend(
         },
         organization(organizationId: string): IOrganization {
             return recordedOrganization(organizationId, config);
+        },
+        organizations(): IOrganizations {
+            return recordedOrganizations(config);
         },
         currentUser(): IUserService {
             return recordedUserService(config);
@@ -212,6 +216,14 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     return Promise.resolve(true);
                 },
             };
+        },
+    };
+}
+
+function recordedOrganizations(implConfig: RecordedBackendConfig): IOrganizations {
+    return {
+        getCurrentOrganization(): Promise<IOrganization> {
+            return Promise.resolve(recordedOrganization("mock-organization", implConfig));
         },
     };
 }

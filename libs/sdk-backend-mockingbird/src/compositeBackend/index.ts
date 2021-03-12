@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAuthenticatedPrincipal,
@@ -9,6 +9,7 @@ import {
     IWorkspacesQueryFactory,
     NotSupported,
     IOrganization,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 
 import invariant from "ts-invariant";
@@ -60,6 +61,9 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
         },
         organization(organizationId: string): IOrganization {
             return primaryBackend.organization(organizationId);
+        },
+        organizations(): IOrganizations {
+            return primaryBackend.organizations();
         },
         currentUser(): IUserService {
             return primaryBackend.currentUser();

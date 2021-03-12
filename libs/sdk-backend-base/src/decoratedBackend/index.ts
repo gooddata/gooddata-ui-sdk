@@ -26,6 +26,7 @@ import {
     IOrganization,
     ISecuritySettingsService,
     IOrganizationDescriptor,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -71,6 +72,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public organization(organizationId: string): IOrganization {
         return new OrganizationDecorator(this.decorated.organization(organizationId), this.factories);
+    }
+
+    public organizations(): IOrganizations {
+        return new OrganizationsDecorator(this.decorated.organizations(), this.factories);
     }
 
     public currentUser(): IUserService {
@@ -189,6 +194,15 @@ class OrganizationDecorator implements IOrganization {
         }
 
         return this.decorated.securitySettings();
+    }
+}
+
+class OrganizationsDecorator implements IOrganizations {
+    constructor(private readonly decorated: IOrganizations, private readonly factories: DecoratorFactories) {}
+
+    public async getCurrentOrganization(): Promise<IOrganization> {
+        const fromDecorated = await this.decorated.getCurrentOrganization();
+        return new OrganizationDecorator(fromDecorated, this.factories);
     }
 }
 

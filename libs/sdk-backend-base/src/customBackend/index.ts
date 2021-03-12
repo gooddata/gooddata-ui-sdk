@@ -13,6 +13,7 @@ import {
     NotAuthenticated,
     NotSupported,
     IOrganization,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import { TelemetryData } from "../toolkit/backend";
 import {
@@ -110,6 +111,10 @@ export class CustomBackend implements IAnalyticalBackend {
 
     public organization = (_organizationId: string): IOrganization => {
         throw new NotSupported("organization is not supported");
+    };
+
+    public organizations = (): IOrganizations => {
+        throw new NotSupported("organizations is not supported");
     };
 
     private getAuthenticationContext = (useClient?: any): IAuthenticationContext => {
