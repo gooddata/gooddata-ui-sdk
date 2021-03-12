@@ -1,5 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
-import { ICustomGridOptions, TableMethods } from "./privateTypes";
+import {
+    ICustomGridOptions,
+    TableAgGridCallbacks,
+    TableConfigAccessors,
+    TableMenuCallbacks,
+} from "./privateTypes";
 import { ICommonHeaderParams } from "./structure/headers/HeaderCell";
 import { cellClassFactory } from "./cell/cellClass";
 import ColumnHeader from "./structure/headers/ColumnHeader";
@@ -25,7 +30,7 @@ import { createLoadingRenderer } from "./data/loadingRenderer";
 
 export function createGridOptions(
     table: TableFacade,
-    tableMethods: TableMethods,
+    tableMethods: TableAgGridCallbacks & TableConfigAccessors & TableMenuCallbacks,
     props: Readonly<ICorePivotTableProps>,
 ): ICustomGridOptions {
     const { colDefs } = table.tableDescriptor;
