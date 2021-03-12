@@ -15,11 +15,6 @@ import {
 } from "@ag-grid-community/all-modules";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
-/*
- * The types defined in this file are used internally thorough different components. They are never intended
- * for public exports.
- */
-
 export interface IMenuAggregationClickConfig {
     type: TotalType;
     measureIdentifiers: string[];
@@ -27,7 +22,29 @@ export interface IMenuAggregationClickConfig {
     include: boolean;
 }
 
-export type TableConfig = {
+/*
+ * The types defined in this file are used internally thorough different components. They are never intended
+ * for public exports.
+ */
+
+export type TableLegacyCallbacks = {
+    pushData: (data: IPushData) => void;
+};
+
+/**
+ * Callbacks for table / data loading.
+ */
+export type TableDataCallbacks = {
+    onLoadingChanged: (loadingState: ILoadingState) => void;
+    onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;
+    onExportReady: OnExportReady;
+    onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
+};
+
+/**
+ * Accessors for static and dynamic table configuration.
+ */
+export type TableConfigAccessors = {
     hasColumnWidths: boolean;
 
     getExecutionDefinition: () => IExecutionDefinition;
@@ -36,7 +53,12 @@ export type TableConfig = {
     getColumnTotals: () => ITotal[];
 
     getResizingConfig: () => ColumnResizingConfig;
+};
 
+/**
+ * Callbacks that are configured in ag-grid's grid options
+ */
+export type TableAgGridCallbacks = {
     onGridReady: (event: GridReadyEvent) => void;
     onFirstDataRendered: (_event: AgGridEvent) => Promise<void>;
     onBodyScroll: (event: BodyScrollEvent) => void;
@@ -45,16 +67,24 @@ export type TableConfig = {
     onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
     onSortChanged: (event: SortChangedEvent) => void;
     onGridSizeChanged: (event: any) => void;
+};
 
-    onLoadingChanged: (loadingState: ILoadingState) => void;
-    onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;
-    onExportReady: OnExportReady;
-
-    pushData: (data: IPushData) => void;
-
-    onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
+/**
+ * Callbacks related to menu events.
+ */
+export type TableMenuCallbacks = {
     onMenuAggregationClick: (menuAggregationClickConfig: IMenuAggregationClickConfig) => void;
 };
+
+/**
+ * This type contains all essential pivot table component methods (accessors and callbacks) which the different
+ * sub-components of the CorePivotTableAgImpl may need.
+ */
+export type TableMethods = TableDataCallbacks &
+    TableLegacyCallbacks &
+    TableConfigAccessors &
+    TableAgGridCallbacks &
+    TableMenuCallbacks;
 
 export type ColumnResizingConfig = {
     defaultWidth: number;

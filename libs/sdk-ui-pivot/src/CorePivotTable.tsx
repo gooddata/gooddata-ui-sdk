@@ -42,7 +42,7 @@ import noop from "lodash/noop";
 import debounce from "lodash/debounce";
 import { invariant } from "ts-invariant";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
-import { ColumnResizingConfig, IMenuAggregationClickConfig, TableConfig } from "./impl/privateTypes";
+import { ColumnResizingConfig, IMenuAggregationClickConfig, TableMethods } from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
@@ -206,7 +206,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
         this.internal.abandonInitialization();
 
-        const initializer = new TableFacadeInitializer(execution, this.getTableConfig(), this.props);
+        const initializer = new TableFacadeInitializer(execution, this.getTableMethods(), this.props);
 
         initializer.initialize().then((result) => {
             if (!result || this.internal.initializer !== result.initializer) {
@@ -460,7 +460,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         if (!this.internal.gridOptions) {
             this.internal.gridOptions = createGridOptions(
                 this.internal.table,
-                this.getTableConfig(),
+                this.getTableMethods(),
                 this.props,
             );
         }
@@ -902,7 +902,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }, 0);
     };
 
-    private getTableConfig = (): TableConfig => {
+    private getTableMethods = (): TableMethods => {
         return {
             hasColumnWidths: this.hasColumnWidths(),
 

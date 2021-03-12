@@ -42,7 +42,12 @@ import {
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./stickyRowHandler";
-import { ColumnResizingConfig, TableConfig, StickyRowConfig } from "./privateTypes";
+import {
+    ColumnResizingConfig,
+    StickyRowConfig,
+    TableDataCallbacks,
+    TableConfigAccessors,
+} from "./privateTypes";
 import { ICorePivotTableProps } from "../publicTypes";
 
 const HEADER_CELL_BORDER = 1;
@@ -102,7 +107,7 @@ export class TableFacade {
     constructor(
         result: IExecutionResult,
         dataView: IDataView,
-        config: TableConfig,
+        tableMethods: TableDataCallbacks & TableConfigAccessors,
         props: Readonly<ICorePivotTableProps>,
     ) {
         this.intl = props.intl;
@@ -119,8 +124,8 @@ export class TableFacade {
         this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
         this.numberOfColumnResizedCalls = 0;
 
-        this.agGridDataSource = this.createDataSource(config);
-        this.updateColumnWidths(config.getResizingConfig());
+        this.agGridDataSource = this.createDataSource(tableMethods);
+        this.updateColumnWidths(tableMethods.getResizingConfig());
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -169,6 +174,15 @@ export class TableFacade {
         return this.gridApi !== undefined;
     };
 
+    /**
+     * Tests whether the table's data source is currently undergoing transformation & data loading. This will
+     * be return true when for instance sorts or totals change and the table's data source drives new execution
+     * with the updated sorts or totals.
+     */
+    public isTransforming = (): boolean => {
+        return this.transformedExecution !== undefined;
+    };
+
     public clearFittedColumns = (): void => {
         this.growToFittedColumns = {};
     };
@@ -202,14 +216,16 @@ export class TableFacade {
         );
     };
 
-    private createDataSource = (options: TableConfig): AgGridDatasource => {
-        this.onPageLoadedCallback = options.onPageLoaded;
+    private createDataSource = (
+        tableMethods: TableDataCallbacks & TableConfigAccessors,
+    ): AgGridDatasource => {
+        this.onPageLoadedCallback = tableMethods.onPageLoaded;
 
         const dataSource = createAgGridDatasource(
             {
                 tableDescriptor: this.tableDescriptor,
-                getGroupRows: options.getGroupRows,
-                getColumnTotals: options.getColumnTotals,
+                getGroupRows: tableMethods.getGroupRows,
+                getColumnTotals: tableMethods.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
                 onExecutionTransformed: this.onExecutionTransformed,
                 onTransformedExecutionFailed: this.onTransformedExecutionFailed,
@@ -227,6 +243,7 @@ export class TableFacade {
     };
 
     private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
+        // eslint-disable-next-line no-console
         console.debug("onExecutionTransformed", newExecution.definition);
         this.transformedExecution = newExecution;
     };
@@ -627,6 +644,7 @@ export class TableFacade {
             const matchingTransformed = this.transformedExecution.fingerprint() === other.fingerprint();
 
             if (!matchingTransformed) {
+                // eslint-disable-next-line no-console
                 console.debug(
                     "transformed execution does not match",
                     this.transformedExecution.definition,
@@ -640,6 +658,7 @@ export class TableFacade {
         const matchingCurrentlyRendered = this.currentFingerprint === other.fingerprint();
 
         if (!matchingCurrentlyRendered) {
+            // eslint-disable-next-line no-console
             console.debug("current result does not match", this.currentResult.definition, other.definition);
         }
 
