@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAnalyticalBackendConfig,
@@ -25,6 +25,8 @@ import {
     IWorkspaceDescriptor,
     IOrganization,
     ISecuritySettingsService,
+    IOrganizationDescriptor,
+    IOrganizations,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty";
 
@@ -70,6 +72,10 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
 
     public organization(organizationId: string): IOrganization {
         return new OrganizationDecorator(this.decorated.organization(organizationId), this.factories);
+    }
+
+    public organizations(): IOrganizations {
+        return new OrganizationsDecorator(this.decorated.organizations(), this.factories);
     }
 
     public currentUser(): IUserService {
@@ -176,6 +182,10 @@ class OrganizationDecorator implements IOrganization {
         this.organizationId = decorated.organizationId;
     }
 
+    public getDescriptor(): Promise<IOrganizationDescriptor> {
+        return this.decorated.getDescriptor();
+    }
+
     public securitySettings(): ISecuritySettingsService {
         const { securitySettings } = this.factories;
 
@@ -184,6 +194,15 @@ class OrganizationDecorator implements IOrganization {
         }
 
         return this.decorated.securitySettings();
+    }
+}
+
+class OrganizationsDecorator implements IOrganizations {
+    constructor(private readonly decorated: IOrganizations, private readonly factories: DecoratorFactories) {}
+
+    public async getCurrentOrganization(): Promise<IOrganization> {
+        const fromDecorated = await this.decorated.getCurrentOrganization();
+        return new OrganizationDecorator(fromDecorated, this.factories);
     }
 }
 

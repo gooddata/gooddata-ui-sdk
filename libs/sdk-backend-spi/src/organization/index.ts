@@ -14,7 +14,34 @@ export interface IOrganization {
     readonly organizationId: string;
 
     /**
+     * Returns details about the organization.
+     */
+    getDescriptor(): Promise<IOrganizationDescriptor>;
+
+    /**
      * Returns service that can be used to query and update organization security settings.
      */
     securitySettings(): ISecuritySettingsService;
+}
+
+/**
+ * Provides functions to obtain {@link IOrganization} instances
+ *
+ * @public
+ */
+export interface IOrganizations {
+    /**
+     * Gets the organization the current user is part of.
+     */
+    getCurrentOrganization(): Promise<IOrganization>;
+}
+
+/**
+ * Organization descriptor contains details about the organization that services analytical workspaces.
+ *
+ * @public
+ */
+export interface IOrganizationDescriptor {
+    id: string;
+    title: string;
 }

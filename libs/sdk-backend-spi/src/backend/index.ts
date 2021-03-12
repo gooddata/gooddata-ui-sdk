@@ -6,7 +6,7 @@ import { IWorkspacesQueryFactory, IAnalyticalWorkspace } from "../workspace";
 import { IUserService } from "../user";
 import { NotAuthenticated } from "../errors";
 import { IBackendCapabilities } from "./capabilities";
-import { IOrganization } from "../organization";
+import { IOrganization, IOrganizations } from "../organization";
 
 /**
  * Specifies platform agnostic configuration of an analytical backend. Only config items that make sense for
@@ -123,6 +123,11 @@ export interface IAnalyticalBackend {
      * @param organizationId - unique ID of the organization
      */
     organization(organizationId: string): IOrganization;
+
+    /**
+     * Returns a service that can be obtained to obtain organizations.
+     */
+    organizations(): IOrganizations;
 
     /**
      * Returns a service for interacting with the currently authenticated user.

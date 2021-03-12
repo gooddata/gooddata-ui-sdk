@@ -1,19 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import { isUriRef, ObjRef, Uri, isIdentifierRef } from "@gooddata/sdk-model";
-import sdk from "@gooddata/api-client-tiger";
-import { TigerAuthenticatedCallGuard } from "../types";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
-
-/**
- * Returns organization name
- *
- * @public
- */
-export const getOrganizationTitle = async (): Promise<string> => {
-    // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-    const data = (await sdk.axios.get("/api/entities/organization")).data;
-    return data.data.attributes.name;
-};
+import { TigerAuthenticatedCallGuard } from "../types";
 
 /**
  * Converts ObjRef instance to URI. For UriRef returns the uri as is, for IdentifierRef calls the backend and gets the URI.
