@@ -33,7 +33,7 @@ build-dev() {
 
 build-dev-watch() {
     _common-build
-    tsc --watch -p tsconfig.dev.json &
+    tsc --watch -p tsconfig.dev.json
     _build_styles
 }
 
