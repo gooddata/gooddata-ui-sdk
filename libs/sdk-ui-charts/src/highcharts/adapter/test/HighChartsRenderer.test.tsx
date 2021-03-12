@@ -10,7 +10,7 @@ import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highCharts
 import { Chart } from "../Chart";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
 import { Legend } from "@gooddata/sdk-ui-vis-commons";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess";
 

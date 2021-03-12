@@ -53,11 +53,11 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/goodstrap": "^70.2.2",
         "@gooddata/numberjs": "^3.2.5",
         "@gooddata/sdk-backend-spi": "^8.3.0-alpha.26",
         "@gooddata/sdk-model": "^8.3.0-alpha.26",
         "@gooddata/sdk-ui": "^8.3.0-alpha.26",
+        "@gooddata/sdk-ui-kit": "^8.3.0-alpha.26",
         "@gooddata/sdk-ui-theme-provider": "^8.3.0-alpha.26",
         "@gooddata/sdk-ui-vis-commons": "^8.3.0-alpha.26",
         "@gooddata/util": "^8.3.0-alpha.26",
@@ -71,8 +71,7 @@
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.6.0",
-        "tslib": "^2.0.0",
-        "@gooddata/sdk-ui-kit": "^8.3.0-alpha.26"
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",

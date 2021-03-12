@@ -17,8 +17,7 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
-import Bubble from "@gooddata/goodstrap/lib/Bubble/Bubble";
-import BubbleHoverTrigger from "@gooddata/goodstrap/lib/Bubble/BubbleHoverTrigger";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 
 /**
