@@ -18,7 +18,10 @@ import {
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
 import { transformResultDimensions } from "../../../convertors/fromBackend/afm/dimensions";
-import { transformExecutionResult } from "../../../convertors/fromBackend/afm/result";
+import {
+    transformExecutionResult,
+    transformGrandTotalData,
+} from "../../../convertors/fromBackend/afm/result";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 
@@ -142,10 +145,7 @@ class TigerDataView implements IDataView {
         this.count = transformedResult.count;
         this.totalCount = transformedResult.total;
 
-        /*
-        this.totals = dataResult.totals ? dataResult.totals : [[[]]];
-
-        */
+        this.totals = transformGrandTotalData(result.definition, execResult.grandTotals ?? []);
 
         this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
     }

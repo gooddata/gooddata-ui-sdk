@@ -1562,7 +1562,7 @@
                 "description": "Contains the dimension-specific header information."
             },
             "ExecutionResult": {
-                "required": ["data", "dimensionHeaders", "paging"],
+                "required": ["data", "dimensionHeaders", "grandTotals", "paging"],
                 "type": "object",
                 "properties": {
                     "data": {
@@ -1583,11 +1583,31 @@
                             "$ref": "#/components/schemas/DimensionHeader"
                         }
                     },
+                    "grandTotals": {
+                        "type": "array",
+                        "description": "An array with grand totals data corresponding to grand totals definition in result spec.",
+                        "items": {
+                            "$ref": "#/components/schemas/ExecutionResultGrandTotal"
+                        }
+                    },
                     "paging": {
                         "$ref": "#/components/schemas/ExecutionResultPaging"
                     }
                 },
                 "description": "Contains the result of an AFM execution."
+            },
+            "ExecutionResultGrandTotal": {
+                "required": ["data", "localIdentifier"],
+                "type": "object",
+                "description": "Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec.",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    },
+                    "localIdentifier": {
+                        "type": "string"
+                    }
+                }
             },
             "ExecutionResultHeader": {
                 "type": "object",

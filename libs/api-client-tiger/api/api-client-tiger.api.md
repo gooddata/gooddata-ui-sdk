@@ -842,7 +842,14 @@ export interface ExecutionResponse {
 export interface ExecutionResult {
     data: Array<object>;
     dimensionHeaders: Array<DimensionHeader>;
+    grandTotals: Array<ExecutionResultGrandTotal>;
     paging: ExecutionResultPaging;
+}
+
+// @public
+export interface ExecutionResultGrandTotal {
+    data: object;
+    localIdentifier: string;
 }
 
 // @public

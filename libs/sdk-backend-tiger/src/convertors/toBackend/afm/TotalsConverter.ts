@@ -1,9 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
-import { IDimension, IExecutionDefinition, MeasureGroupIdentifier, TotalType } from "@gooddata/sdk-model";
+import {
+    IDimension,
+    IExecutionDefinition,
+    ITotal,
+    MeasureGroupIdentifier,
+    TotalType,
+} from "@gooddata/sdk-model";
 import groupBy from "lodash/groupBy";
 import flatMap from "lodash/flatMap";
 import isEmpty from "lodash/isEmpty";
-import keys from "lodash/keys";
 import { GrandTotal, TotalFunction } from "@gooddata/api-client-tiger";
 
 /**
@@ -17,31 +22,53 @@ import { GrandTotal, TotalFunction } from "@gooddata/api-client-tiger";
  * TODO: subtotals
  */
 export function convertTotals(def: IExecutionDefinition): Array<GrandTotal> {
-    validateTotals(def.dimensions);
     const allDimensionIndexes = def.dimensions.map((_dim, idx) => idx);
-    return flatMap(def.dimensions, (dim, dimIdx) => {
-        const totalsByType = groupBy(dim.totals || [], (total) => total.type);
+    return withTotals(def.dimensions, (dimIdx, _typeIdx, totalsOfType) => {
         // (one-dimensional) grand total is defined in Tiger by all dimensions except the current one
         const includedDimensionIndexes = allDimensionIndexes.filter((idx) => dimIdx != idx);
-
-        return keys(totalsByType).map((type) => {
-            const measureIdentifiers = totalsByType[type].map((total) => total.measureIdentifier);
-            const includedDimensionss = includedDimensionIndexes.map((includedDimIdx) => {
-                const dim = def.dimensions[includedDimIdx];
-                const dimensionAttributesValues = dim.itemIdentifiers.includes(MeasureGroupIdentifier)
-                    ? { dimensionAttributesValues: { [MeasureGroupIdentifier]: measureIdentifiers } }
-                    : null;
-                // FIXME synchronize dimensionIdentifier naming with convertDimensions
-                return { [`dim_${includedDimIdx}`]: dimensionAttributesValues };
-            });
-
-            return {
-                localIdentifier: `total_${dimIdx}_${type}`,
-                _function: convertTotalType(type as TotalType),
-                includedDimensions: Object.assign({}, ...includedDimensionss),
-            };
+        const measureIdentifiers = totalsOfType.map((total) => total.measureIdentifier);
+        const includedDimensionss = includedDimensionIndexes.map((includedDimIdx) => {
+            const dim = def.dimensions[includedDimIdx];
+            const dimensionAttributesValues = dim.itemIdentifiers.includes(MeasureGroupIdentifier)
+                ? { dimensionAttributesValues: { [MeasureGroupIdentifier]: measureIdentifiers } }
+                : null;
+            // FIXME synchronize dimensionIdentifier naming with convertDimensions
+            return { [`dim_${includedDimIdx}`]: dimensionAttributesValues };
         });
+        const totalType = totalsOfType[0].type;
+
+        return {
+            localIdentifier: totalLocalIdentifier(totalType, dimIdx),
+            function: convertTotalType(totalType as TotalType),
+            includedDimensions: Object.assign({}, ...includedDimensionss),
+        };
     });
+}
+
+/**
+ * Traverse given dimensions and their total definitions, group those by total type and call totalProcessor on each
+ * of these groups, together with current dimension index (dimIdx) and total type index in that dimension (typeIdx).
+ *
+ * This function captures the contract between execution response and execution result. Both of these response
+ * structures are synchronized using local identifiers induced from dimIdx typeIdx. In the future the function should
+ * be replaced by explicit concept of total local identifiers both in ITotal and ITotalDescriptor. Currently, given
+ * the rather limit functionality of general totals API, it's needed/useful only in Tiger.
+ */
+export function withTotals<T>(
+    dimensions: IDimension[],
+    totalProcessor: (dimIdx: number, typeIdx: number, totalsOfType: ITotal[]) => T,
+): T[] {
+    validateTotals(dimensions);
+    return flatMap(dimensions, (dim, dimIdx) => {
+        const totalsByType = groupBy(dim.totals || [], (total) => total.type);
+        return Object.keys(totalsByType).map((type, typeIdx) =>
+            totalProcessor(dimIdx, typeIdx, totalsByType[type]),
+        );
+    });
+}
+
+export function totalLocalIdentifier(type: TotalType, dimIdx: number) {
+    return `total_${dimIdx}_${type}`;
 }
 
 function validateTotals(dimensions: IDimension[]) {

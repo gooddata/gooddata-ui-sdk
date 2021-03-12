@@ -841,11 +841,36 @@ export interface ExecutionResult {
      */
     dimensionHeaders: Array<DimensionHeader>;
     /**
+     * An array with grand totals data corresponding to grand totals definition in result spec.
+     * @type {Array<ExecutionResultGrandTotal>}
+     * @memberof ExecutionResult
+     */
+    grandTotals: Array<ExecutionResultGrandTotal>;
+    /**
      *
      * @type {ExecutionResultPaging}
      * @memberof ExecutionResult
      */
     paging: ExecutionResultPaging;
+}
+/**
+ * Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec.
+ * @export
+ * @interface ExecutionResultGrandTotal
+ */
+export interface ExecutionResultGrandTotal {
+    /**
+     *
+     * @type {object}
+     * @memberof ExecutionResultGrandTotal
+     */
+    data: object;
+    /**
+     *
+     * @type {string}
+     * @memberof ExecutionResultGrandTotal
+     */
+    localIdentifier: string;
 }
 /**
  * @type ExecutionResultHeader

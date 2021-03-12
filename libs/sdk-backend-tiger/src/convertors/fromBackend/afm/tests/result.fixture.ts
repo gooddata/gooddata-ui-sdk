@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IDimensionDescriptor } from "@gooddata/sdk-backend-spi";
 import { ExecutionResult } from "@gooddata/api-client-tiger";
 import { idRef } from "@gooddata/sdk-model";
@@ -45,6 +45,7 @@ export const mockResult: ExecutionResult = {
         offset: [0, 0],
         total: [1, 2],
     },
+    grandTotals: [],
 };
 
 export const mockDimensions: IDimensionDescriptor[] = [
