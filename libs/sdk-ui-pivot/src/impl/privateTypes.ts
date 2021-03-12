@@ -22,6 +22,9 @@ export interface IMenuAggregationClickConfig {
     include: boolean;
 }
 
+export type OnExecutionTransformed = (newExecution: IPreparedExecution) => void;
+export type OnTransformedExecutionFailed = () => void;
+
 /*
  * The types defined in this file are used internally thorough different components. They are never intended
  * for public exports.
@@ -39,6 +42,7 @@ export type TableDataCallbacks = {
     onError: (error: GoodDataSdkError, execution: IPreparedExecution) => void;
     onExportReady: OnExportReady;
     onPageLoaded: (dv: DataViewFacade, newResult: boolean) => void;
+    onExecutionTransformed: OnExecutionTransformed;
 };
 
 /**

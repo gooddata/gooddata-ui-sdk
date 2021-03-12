@@ -12,6 +12,7 @@ const TestTableDataCallbacks: TableDataCallbacks = {
     onExportReady: noop,
     onLoadingChanged: noop,
     onPageLoaded: noop,
+    onExecutionTransformed: noop,
 };
 
 const TestTableLegacyCallbacks: TableLegacyCallbacks = {

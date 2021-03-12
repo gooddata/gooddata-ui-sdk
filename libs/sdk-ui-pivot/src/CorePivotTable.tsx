@@ -276,6 +276,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
              * Note: compared to v7 version of the table, this only happens if someone actually changes the
              * execution-related props of the table. This branch will not hit any other time.
              */
+            // eslint-disable-next-line no-console
             console.debug(
                 "triggering reinit",
                 this.props.execution.definition,
@@ -346,6 +347,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                 const initializeForSameExec = this.internal.initializer.isSameExecution(this.props.execution);
 
                 if (!initializeForSameExec) {
+                    // eslint-disable-next-line no-console
                     console.debug(
                         "initializer for different execution",
                         this.props.execution,
@@ -359,6 +361,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
                     this.props.execution.fingerprint() === prevProps.execution.fingerprint();
 
                 if (!prepExecutionSame) {
+                    // eslint-disable-next-line no-console
                     console.debug("have to reinit table", this.props.execution, prevProps.execution);
                 }
 
@@ -599,6 +602,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns());
 
+        // eslint-disable-next-line no-console
         console.debug("onSortChanged", sortItems);
 
         this.pushDataGuard({
@@ -635,7 +639,28 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             this.props.onExportReady?.(this.internal.table.createExportFunction(this.props.exportTitle));
         }
 
+        this.updateStickyRow();
         this.updateDesiredHeight();
+    };
+
+    /**
+     * This will be called when user changes sorts or adds totals. This means complete re-execution with
+     * new sorts or totals. Loading indicators will be shown instead of all rendered rows thanks to the
+     * LoadingRenderer used in all cells of the left-most column.
+     *
+     * The table must take care to remove the sticky (top-pinned) row - it is treated differently by
+     * ag-grid and will be literally sticking there on its own with the loading indicators.
+     *
+     * Once transformation finishes - indicated by call to onPageLoaded, table can re-instance the sticky row.
+     *
+     * @param _newExecution
+     */
+    private onExecutionTransformed = (_newExecution: IPreparedExecution): void => {
+        if (!this.internal.table) {
+            return;
+        }
+
+        this.internal.table.clearStickyRow();
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
@@ -927,6 +952,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onExportReady: this.props.onExportReady ?? noop,
             pushData: this.pushDataGuard,
             onPageLoaded: this.onPageLoaded,
+            onExecutionTransformed: this.onExecutionTransformed,
             onMenuAggregationClick: this.onMenuAggregationClick,
         };
     };

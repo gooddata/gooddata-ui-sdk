@@ -18,6 +18,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../structure/tableDescriptor";
+import { OnExecutionTransformed, OnTransformedExecutionFailed } from "../privateTypes";
 
 export type DatasourceConfig = {
     tableDescriptor: TableDescriptor;
@@ -29,8 +30,6 @@ export type DatasourceConfig = {
     dataViewTransform: (dv: IDataView) => IDataView;
 };
 export type OnPageLoaded = (dv: DataViewFacade) => void;
-export type OnExecutionTransformed = (newExecution: IPreparedExecution) => void;
-export type OnTransformedExecutionFailed = () => void;
 
 export function createAgGridDatasource(
     config: DatasourceConfig,

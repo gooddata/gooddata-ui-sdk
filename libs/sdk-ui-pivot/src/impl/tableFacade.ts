@@ -47,6 +47,7 @@ import {
     StickyRowConfig,
     TableDataCallbacks,
     TableConfigAccessors,
+    OnExecutionTransformed,
 } from "./privateTypes";
 import { ICorePivotTableProps } from "../publicTypes";
 
@@ -103,6 +104,7 @@ export class TableFacade {
     private destroyed: boolean = false;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
+    private onExecutionTransformedCallback: OnExecutionTransformed | undefined;
 
     constructor(
         result: IExecutionResult,
@@ -125,6 +127,7 @@ export class TableFacade {
         this.numberOfColumnResizedCalls = 0;
 
         this.agGridDataSource = this.createDataSource(tableMethods);
+        this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
     }
 
@@ -246,6 +249,7 @@ export class TableFacade {
         // eslint-disable-next-line no-console
         console.debug("onExecutionTransformed", newExecution.definition);
         this.transformedExecution = newExecution;
+        this.onExecutionTransformedCallback?.(newExecution);
     };
 
     private onTransformedExecutionFailed = (): void => {
@@ -715,6 +719,10 @@ export class TableFacade {
         updateStickyRowPosition(gridApi);
     };
 
+    /**
+     * Initializes a single empty pinned top row in ag-grid. This is where table code can push sticky row data
+     * as user keeps scrolling the table.
+     */
     public initializeStickyRow = (): void => {
         const gridApi = this.gridApiGuard();
 
@@ -723,6 +731,14 @@ export class TableFacade {
         }
 
         initializeStickyRow(gridApi);
+    };
+
+    /**
+     * Clears the pinned top row in ag-grid.
+     */
+    public clearStickyRow = (): void => {
+        //
+        this.initializeStickyRow();
     };
 
     public stickyRowExists = (): boolean => {
