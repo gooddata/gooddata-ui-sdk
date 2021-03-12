@@ -18,6 +18,16 @@ export interface IBackendCapabilities {
     canCalculateTotals?: boolean;
 
     /**
+     * Indicates whether the backend is capable to calculate and include grand totals in the resulting data view.
+     */
+    canCalculateGrandTotals?: boolean;
+
+    /**
+     * Indicates whether the backend is capable to calculate and include subtotals in the resulting data view.
+     */
+    canCalculateSubTotals?: boolean;
+
+    /**
      * Indicates whether the backend is capable to sort the result data view.
      */
     canSortData?: boolean;

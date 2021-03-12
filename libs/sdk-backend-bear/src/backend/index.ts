@@ -43,6 +43,8 @@ import { IDrillableItemsCommandBody } from "@gooddata/sdk-embedding";
 import { BearOrganization, BearOrganizations } from "./organization";
 
 const CAPABILITIES: IBackendCapabilities = {
+    canCalculateGrandTotals: true,
+    canCalculateSubTotals: true,
     canCalculateTotals: true,
     canExportCsv: true,
     canExportXlsx: true,

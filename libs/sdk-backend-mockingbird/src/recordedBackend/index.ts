@@ -74,6 +74,8 @@ export function recordedBackend(
     index: RecordingIndex,
     config: RecordedBackendConfig = defaultConfig,
     capabilities: IBackendCapabilities = {
+        canCalculateGrandTotals: true,
+        canCalculateSubTotals: true,
         canCalculateTotals: true,
     },
 ): IAnalyticalBackend {
