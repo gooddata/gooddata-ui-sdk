@@ -1,0 +1,51 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,##0.00",
+                                    "localIdentifier": "m_fact.opportunitysnapshot.amount_sum",
+                                    "name": "m_fact.opportunitysnapshot.amount_sum"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.product.id",
+                            "name": "Product",
+                            "uri": "/gdc/md/referenceworkspace/obj/1054"
+                        },
+                        "identifier": "label.product.id.name",
+                        "localIdentifier": "a_label.product.id.name",
+                        "name": "Product Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1055"
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.opportunity.id",
+                            "name": "Opportunity",
+                            "uri": "/gdc/md/referenceworkspace/obj/1066"
+                        },
+                        "identifier": "label.opportunity.id.name",
+                        "localIdentifier": "a_label.opportunity.id.name",
+                        "name": "Opportunity Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1067"
+                    }
+                }
+            ]
+        }
+    ]
+}

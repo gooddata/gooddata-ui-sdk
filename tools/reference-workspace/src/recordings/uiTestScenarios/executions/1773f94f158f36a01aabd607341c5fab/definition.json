@@ -1,0 +1,44 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                "localIdentifier": "a_label.product.id.name"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "label.opportunity.id.name", "type": "displayForm" },
+                "localIdentifier": "a_label.opportunity.id.name"
+            }
+        }
+    ],
+    "buckets": [],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_label.product.id.name", "a_label.opportunity.id.name"] }
+    ],
+    "filters": [
+        {
+            "measureValueFilter": {
+                "condition": { "comparison": { "operator": "GREATER_THAN", "value": 5000000 } },
+                "measure": { "localIdentifier": "m_fact.opportunitysnapshot.amount_sum" }
+            }
+        }
+    ],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "aggregation": "sum",
+                        "item": { "identifier": "fact.opportunitysnapshot.amount", "type": "fact" }
+                    }
+                },
+                "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

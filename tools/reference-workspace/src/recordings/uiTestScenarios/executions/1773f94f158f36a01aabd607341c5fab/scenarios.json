@@ -1,0 +1,100 @@
+[
+    {
+        "n2oMap": {
+            "a_label.opportunity.id.name": "a_label.opportunity.id.name",
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_fact.opportunitysnapshot.amount_sum": "m_fact.opportunitysnapshot.amount_sum"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.opportunity.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.opportunity.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": {
+                                            "identifier": "fact.opportunitysnapshot.amount",
+                                            "type": "fact"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        },
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.opportunity.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.opportunity.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                },
+                { "items": [], "localIdentifier": "stack" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name", "a_label.opportunity.id.name"] }
+            ],
+            "filters": [
+                {
+                    "measureValueFilter": {
+                        "condition": { "comparison": { "operator": "GREATER_THAN", "value": 5000000 } },
+                        "measure": { "localIdentifier": "m_fact.opportunitysnapshot.amount_sum" }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "fact.opportunitysnapshot.amount", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "dense chart with two view by",
+        "vis": "ColumnChart"
+    }
+]

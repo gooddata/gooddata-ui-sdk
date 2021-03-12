@@ -1,0 +1,60 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_fact.opportunitysnapshot.amount_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    },
+                    {
+                        "attribute": {
+                            "displayForm": {
+                                "identifier": "label.opportunity.id.name",
+                                "type": "displayForm"
+                            },
+                            "localIdentifier": "a_label.opportunity.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [
+            {
+                "measureValueFilter": {
+                    "condition": { "comparison": { "operator": "GREATER_THAN", "value": 5000000 } },
+                    "measure": { "localIdentifier": "m_fact.opportunitysnapshot.amount_sum" }
+                }
+            }
+        ],
+        "identifier": "ColumnChart.da2f10a3af96a2912f8db54115c386c2",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "ColumnChart - dense chart with two view by",
+        "uri": "ColumnChart.da2f10a3af96a2912f8db54115c386c2",
+        "visualizationUrl": "local:column"
+    }
+}

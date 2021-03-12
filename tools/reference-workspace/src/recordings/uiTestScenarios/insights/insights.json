@@ -728,6 +728,11 @@
     "ColumnChart.d21d7ef7e9ed02fbd0987e704fd96f68": {
         "comment": "Auto-generated insight for test scenario ColumnChart - two measures and two viewBy with right axis and stackMeasuresToPercent."
     },
+    "ColumnChart.da2f10a3af96a2912f8db54115c386c2": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - dense chart with two view by.",
+        "scenarioName": "dense chart with two view by",
+        "visName": "ColumnChart"
+    },
     "ColumnChart.da946854c93045942fc9af202cb05ed1": {
         "comment": "Auto-generated insight for test scenario ColumnChart - dual axis with no labels on right Y axis."
     },
