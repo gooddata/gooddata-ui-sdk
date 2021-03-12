@@ -1,8 +1,17 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { transformResultDimensions } from "../dimensions";
-import { mockDimensions } from "./dimensions.fixture";
-import { emptyDef, idRef, newDefForItems, newMeasure } from "@gooddata/sdk-model";
+import { mockDimensions, mockMultipleDimensions } from "./dimensions.fixture";
+import {
+    defWithDimensions,
+    emptyDef,
+    idRef,
+    MeasureGroupIdentifier,
+    newDefForItems,
+    newDimension,
+    newMeasure,
+    newTotal,
+} from "@gooddata/sdk-model";
 
 describe("transformResultDimensions", () => {
     it("should fill in uris and refs for attribute descriptors", () => {
@@ -18,5 +27,18 @@ describe("transformResultDimensions", () => {
                 ]),
             ),
         ).toMatchSnapshot();
+    });
+
+    const Total1 = newTotal("sum", "measureLocalId", "localAttr1");
+    const Subtotal1 = newTotal("sum", "measureLocalId", "localAttr2");
+    const Total2 = newTotal("max", "measureLocalId", "localAttr3");
+    const TotalDef = defWithDimensions(
+        emptyDef("test"),
+        newDimension(["localAttr1", "localAttr2"], [Total1, Subtotal1]),
+        newDimension([MeasureGroupIdentifier]),
+        newDimension(["localAttr3"], [Total2]),
+    );
+    it("should fill in totals", () => {
+        expect(transformResultDimensions(mockMultipleDimensions, TotalDef)).toMatchSnapshot();
     });
 });
