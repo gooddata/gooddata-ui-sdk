@@ -4,6 +4,7 @@ import {
     JsonApiAttributeDocument,
     JsonApiAttributeList,
     JsonApiAttributeWithLinks,
+    JsonApiDatasetWithLinks,
     JsonApiFactWithLinks,
     JsonApiLabel,
     JsonApiLabelDocument,
@@ -12,11 +13,16 @@ import {
     JsonApiMetricWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
-import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject } from "@gooddata/sdk-backend-spi";
+import {
+    IAttributeDisplayFormMetadataObject,
+    IAttributeMetadataObject,
+    IDataSetMetadataObject,
+} from "@gooddata/sdk-backend-spi";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,
+    newDataSetMetadataObject,
 } from "@gooddata/sdk-backend-base";
 import { idRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
@@ -25,14 +31,15 @@ export type MetadataObjectFromApi =
     | JsonApiAttributeWithLinks
     | JsonApiFactWithLinks
     | JsonApiMetricWithLinks
-    | JsonApiLabelWithLinks;
+    | JsonApiLabelWithLinks
+    | JsonApiDatasetWithLinks;
 
 export const commonMetadataObjectModifications = <
     TItem extends MetadataObjectFromApi,
     T extends IMetadataObjectBuilder
 >(
     item: TItem,
-) => (builder: T) =>
+) => (builder: T): T =>
     builder
         .id(item.id)
         .uri(item.links!.self)
@@ -199,4 +206,15 @@ export function convertAttributesWithSideloadedLabels(
      */
 
     return attributes.data.map((attribute) => convertAttributeWithLinks(attribute, labels));
+}
+
+/**
+ * Converts sideloaded dataset into {@link IDataSetMetadataObject}
+ *
+ * @param dataset - sideloaded dataset
+ */
+export function convertDatasetWithLinks(dataset: JsonApiDatasetWithLinks): IDataSetMetadataObject {
+    return newDataSetMetadataObject(idRef(dataset.id, "dataSet"), (m) =>
+        m.modify(commonMetadataObjectModifications(dataset)),
+    );
 }
