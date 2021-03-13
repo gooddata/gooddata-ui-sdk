@@ -117,6 +117,21 @@ const AGGRID_ON_RESIZE_TIMEOUT = 300;
  * Finally there is the sticky row handling which contains some nasty code & at times works with ag-grid internals
  * to get the job done.
  *
+ * Control flow
+ * ------------
+ *
+ * To maintain some kind of sanity in this complex component there are two general rules:
+ *
+ * 1.  TableMethods or its subtypes are the only way how pivot table component passes down its essential functions
+ *     to sub-components.
+ *
+ * 2.  All table functionality and features MUST be orchestrated from the pivot table component itself.
+ *     The facade or other subcomponents merely _do the work_ but they do not make 'high level decisions' of
+ *     what the table should be doing.
+ *
+ * These rules are in place to try and get to 'top-down' control flow.
+ *
+ *
  * Known flaws
  * -----------
  *

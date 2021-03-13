@@ -54,6 +54,21 @@ import { ICorePivotTableProps } from "../publicTypes";
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
 
+/**
+ * This class is a collection of higher-level operations with the table. On top of that the facade keeps track
+ * of the state of the data rendered by the table (currentResult, visibleData etc).
+ *
+ * The facade uses different other sub-modules to get the job done. Most notable are:
+ *
+ * -  table descriptor
+ * -  ag-grid data source
+ * -  column resizing store & functions related to it
+ * -  sticky row handler and the related ag-grid API Wrapper
+ *
+ * TODO: This class requires further refactoring. The state maintained by the table is problematic. It needs
+ *  to belong to something else. The data related stuff should likely go into the data source and for the
+ *  resizing we need some additional higher-level component on top of the resized column store & friends.
+ */
 export class TableFacade {
     private readonly intl: IntlShape;
 
