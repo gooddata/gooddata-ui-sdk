@@ -1,11 +1,12 @@
 // (C) 2021 GoodData Corporation
 import {
     DataCol,
-    DataColGroup,
-    DataColLeaf,
-    isDataColGroup,
-    isDataColLeaf,
-    isDataColRootGroup,
+    ScopeCol,
+    SeriesCol,
+    isScopeCol,
+    isSeriesCol,
+    isRootCol,
+    LeafDataCol,
 } from "./tableDescriptorTypes";
 import {
     ColumnLocator,
@@ -18,7 +19,7 @@ import { colMeasureLocalId } from "./colAccessors";
 
 /**
  * Given data sheet columns, this function will traverse them in order to attempt to match the provided
- * column locators. This function works recursively, if the cols are composite (data col root or group) then
+ * column locators. This function works recursively, if the cols are composite (root col or scope col) then
  * after successfully matching locator, the code proceed further to search through the children.
  *
  * @param cols - columns to search
@@ -27,16 +28,16 @@ import { colMeasureLocalId } from "./colAccessors";
 export function searchForLocatorMatch(
     cols: DataCol[],
     locators: ColumnLocator[],
-): DataColLeaf | DataColGroup | undefined {
-    let found: DataColLeaf | DataColGroup | undefined = undefined;
+): SeriesCol | ScopeCol | undefined {
+    let found: LeafDataCol | undefined = undefined;
 
     for (const col of cols) {
-        if (isDataColRootGroup(col)) {
+        if (isRootCol(col)) {
             // root group is there for better presentation. can be safely skipped during search.
             found = searchForLocatorMatch(col.children, locators);
-        } else if (isDataColGroup(col)) {
+        } else if (isScopeCol(col)) {
             /*
-             * Find attribute locator which matches current col group's attribute - to compare apples with apples.
+             * Find attribute locator which matches current scope col's attribute - to compare apples with apples.
              *
              * Once code has that, it can compare the URI of attribute element for which this group was created with
              * the excepted attribute element in the locator.
@@ -50,7 +51,7 @@ export function searchForLocatorMatch(
             });
 
             if (!matchingLocator) {
-                // if there is no matching attribute locator yet code is on data col group, then it
+                // if there is no matching attribute locator yet code is on scope col, then it
                 // means there are less attributes in the table than there are attribute locators. the
                 // table has changed yet some sort items hang around. bail out immediately with no match.
                 return undefined;
@@ -78,7 +79,7 @@ export function searchForLocatorMatch(
                     found = searchForLocatorMatch(col.children, remainingLocators);
                 }
             }
-        } else if (isDataColLeaf(col)) {
+        } else if (isSeriesCol(col)) {
             if (locators.length > 1 || !isMeasureColumnLocator(locators[0])) {
                 // code has reached the leaves. at this point there must be just one locator left and it must
                 // be the measure column locator. if this is not the case, then there are too many locators -

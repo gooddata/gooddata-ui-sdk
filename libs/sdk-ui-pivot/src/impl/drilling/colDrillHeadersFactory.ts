@@ -1,10 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
 import {
     AnyCol,
-    DataColGroup,
-    DataColLeaf,
-    isDataColGroup,
-    isDataColLeaf,
+    ScopeCol,
+    SeriesCol,
+    isScopeCol,
+    isSeriesCol,
     isSliceCol,
     SliceCol,
 } from "../structure/tableDescriptorTypes";
@@ -13,7 +13,7 @@ import { IAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-bac
 import invariant, { InvariantError } from "ts-invariant";
 import { IGridRow } from "../data/resultTypes";
 
-export function createDataColLeafHeaders(col: DataColLeaf): IMappingHeader[] {
+export function createDataColLeafHeaders(col: SeriesCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     if (col.seriesDescriptor.attributeDescriptors) {
@@ -44,7 +44,7 @@ export function createSliceColHeaders(col: SliceCol, row: IGridRow): IMappingHea
     return result;
 }
 
-export function createDataColGroupHeaders(col: DataColGroup): IMappingHeader[] {
+export function createDataColGroupHeaders(col: ScopeCol): IMappingHeader[] {
     const mappingHeaders: IMappingHeader[] = [];
 
     col.descriptorsToHere.forEach((descriptor, index) => {
@@ -69,9 +69,9 @@ export function createDataColGroupHeaders(col: DataColGroup): IMappingHeader[] {
  * @param row - row
  */
 export function createDrillHeaders(col: AnyCol, row?: IGridRow): IMappingHeader[] {
-    if (isDataColLeaf(col)) {
+    if (isSeriesCol(col)) {
         return createDataColLeafHeaders(col);
-    } else if (isDataColGroup(col)) {
+    } else if (isScopeCol(col)) {
         return createDataColGroupHeaders(col);
     } else if (isSliceCol(col)) {
         // if this bombs, then the client is not calling the function at the right time. in order

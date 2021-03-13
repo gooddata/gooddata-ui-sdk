@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 
-import { DataColGroup, DataColLeaf, isDataColGroup } from "./tableDescriptorTypes";
+import { isScopeCol, LeafDataCol } from "./tableDescriptorTypes";
 import { ColumnLocator, IAttributeColumnLocator, IMeasureColumnLocator } from "../../columnWidths";
 import { IAttributeDescriptor, IMeasureDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
@@ -32,13 +32,13 @@ function createMeasureLocator(descriptor: IMeasureDescriptor): IMeasureColumnLoc
 }
 
 /**
- * Given either data col group or a data col leaf, this function will create column locator that can be used in
+ * Given a leaf data col, this function will create column locator that can be used in
  * width items.
  *
  * @param col - col definition to get locators for
  */
-export function createColumnLocator(col: DataColGroup | DataColLeaf): ColumnLocator[] {
-    if (isDataColGroup(col)) {
+export function createColumnLocator(col: LeafDataCol): ColumnLocator[] {
+    if (isScopeCol(col)) {
         const { descriptorsToHere, headersToHere } = col;
         const descriptorsAndHeaders = zip(descriptorsToHere, headersToHere);
         descriptorsAndHeaders.push([col.attributeDescriptor, col.header]);

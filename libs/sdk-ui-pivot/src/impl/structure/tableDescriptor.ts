@@ -2,17 +2,16 @@
 
 import {
     AnyCol,
-    DataColLeaf,
-    isDataColGroup,
-    isDataColLeaf,
+    isScopeCol,
+    isSeriesCol,
     isSliceCol,
-    isDataColRootGroup,
+    isRootCol,
     SliceCol,
     TableColDefs,
     TableCols,
     agColId,
-    DataColGroup,
-    isEmptyDataColGroup,
+    isEmptyScopeCol,
+    LeafDataCol,
 } from "./tableDescriptorTypes";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
@@ -35,16 +34,10 @@ import keyBy from "lodash/keyBy";
  * Column Descriptors vs ag-grid ColDefs | ColGroupDefs
  * ----------------------------------------------------
  *
- * Column Descriptors (shortened to `Col` sakes of brevity) are our implementation-specific descriptors for
+ * Column Descriptors (shortened to `Col` for sakes of brevity) are our implementation-specific descriptors for
  * the table columns and their grouping into column groups. They contain all the essential GD-specific metadata about
  * the content of the respective table column (attribute descriptors, headers, measure descriptors) and additional
  * structural information.
- *
- * Column Descriptors are divided into two groups: slicing column descriptors and data column descriptors. The
- * slicing columns essentially describe the row attribute columns, while the data columns describe columns that may
- * contains the computed metric values. The data column is a composite. In tables the scope metrics for one or more
- * attributes, the table columns will be further grouped by the different attribute elements to which the metrics
- * were scoped to.
  *
  * The ag-grid ColDefs and ColGroupDefs are (naturally) used to construct the ag-grid table :) They are built to
  * reflect the column descriptors but only contain the information needed by ag-grid itself.
@@ -65,8 +58,8 @@ export class TableDescriptor {
      * This field contains descriptors of leaf columns zipped with their respective ColDef that should
      * be used for ag-grid.
      */
-    public readonly zippedLeaves: Array<[DataColLeaf | DataColGroup, ColDef]> = [];
-    private readonly measureColumns: number;
+    public readonly zippedLeaves: Array<[LeafDataCol, ColDef]> = [];
+    private readonly _seriesColsCount: number;
 
     private constructor(
         private readonly dv: DataViewFacade,
@@ -75,7 +68,7 @@ export class TableDescriptor {
     ) {
         this._initializeZippedLeaves();
         this._initializeZippedSliceCols();
-        this.measureColumns = headers.leafDataCols.filter(isDataColLeaf).length;
+        this._seriesColsCount = headers.leafDataCols.filter(isSeriesCol).length;
     }
 
     /**
@@ -158,7 +151,7 @@ export class TableDescriptor {
      * all available attribute values.
      *
      * Also note that table MAY have more data leaf columns than there are number of measures. If the measures
-     * are further scoped for values of some attribute's elements, then there will be one data col for each combination
+     * are further scoped for values of some attribute's elements, then there will be one series col for each combination
      * of measure X attribute element.
      *
      * @returns empty if there are no measures
@@ -171,13 +164,14 @@ export class TableDescriptor {
      * Returns count of leaf data cols. This represents the actual width of the data sheet holding the computed metric
      * values.
      */
-    public dataColLeavesCount(): number {
-        return this.measureColumns;
+    public seriesColsCount(): number {
+        return this._seriesColsCount;
     }
 
     /**
-     * Tests whether the column with the provided id is the first (e.g. left-most) column in the table. Table always starts with
-     * slicing columns followed by data columns.
+     * Tests whether the column with the provided id is the first (e.g. left-most) column in the table. Table with
+     * slicing attributes has first col a SliceCol. Table without slicing attributes starts with either SeriesCol or
+     * with ScopeCol (in case table does not contain measures)
      *
      * @param c - column id, Column, ColDef or ColGroupDef from ag-grid
      */
@@ -205,11 +199,11 @@ export class TableDescriptor {
         const col = this.getCol(c);
 
         switch (col.type) {
-            case "leafColumnDescriptor":
-            case "columnGroupHeaderDescriptor": {
+            case "seriesCol":
+            case "scopeCol": {
                 return col.fullIndexPathToHere.every((idx) => idx === 0);
             }
-            case "columnGroupRootDescriptor": {
+            case "rootCol": {
                 return true;
             }
             default: {
@@ -219,12 +213,12 @@ export class TableDescriptor {
     }
 
     /**
-     * Tests whether the table has grouped data columns.
+     * Tests whether the table has scoping cols. Scoping cols mean table's data cols are organizes into a tree hierarchy.
      */
-    public hasGroupedDataCols(): boolean {
+    public hasScopingCols(): boolean {
         const firstRoot = this.headers.rootDataCols[0];
 
-        return firstRoot && (isDataColGroup(firstRoot) || isDataColRootGroup(firstRoot));
+        return firstRoot && (isScopeCol(firstRoot) || isRootCol(firstRoot));
     }
 
     /**
@@ -244,13 +238,13 @@ export class TableDescriptor {
      *
      * @param col - column to get absolute index of
      */
-    public getAbsoluteLeafColIndex(col: SliceCol | DataColLeaf | DataColGroup): number {
+    public getAbsoluteLeafColIndex(col: SliceCol | LeafDataCol): number {
         if (isSliceCol(col)) {
             return col.index;
-        } else if (isDataColGroup(col)) {
+        } else if (isScopeCol(col)) {
             // if this bombs, caller is not operating with the leaf columns correctly and sent over
             // a col that is not a leaf
-            invariant(isEmptyDataColGroup(col));
+            invariant(isEmptyScopeCol(col));
 
             return this.sliceColCount() + this.headers.leafDataCols.findIndex((leaf) => leaf.id === col.id);
         }
@@ -277,9 +271,7 @@ export class TableDescriptor {
      *
      * @param measureWidthItem - item to match
      */
-    public matchMeasureWidthItem(
-        measureWidthItem: IMeasureColumnWidthItem,
-    ): DataColLeaf | DataColGroup | undefined {
+    public matchMeasureWidthItem(measureWidthItem: IMeasureColumnWidthItem): LeafDataCol | undefined {
         return searchForLocatorMatch(
             this.headers.rootDataCols,
             measureWidthItem.measureColumnWidthItem.locators,
@@ -292,7 +284,7 @@ export class TableDescriptor {
      * sum or have no rows whatsover.
      */
     public canTableHaveTotals(): boolean {
-        return this.sliceColCount() > 0 && this.dataColLeavesCount() > 0;
+        return this.sliceColCount() > 0 && this.seriesColsCount() > 0;
     }
 
     /**

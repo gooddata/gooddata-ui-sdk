@@ -10,7 +10,7 @@ import {
     isResultTotalHeader,
 } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
-import { isDataColLeaf, SliceCol } from "../structure/tableDescriptorTypes";
+import { isSeriesCol, SliceCol } from "../structure/tableDescriptorTypes";
 import { TableDescriptor } from "../structure/tableDescriptor";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
 import { getSubtotalStyles } from "./dataSourceUtils";
@@ -169,7 +169,7 @@ export function getRowTotals(
             // if code bombs here then there must be something wrong in the table / datasource code because
             // totals cannot (by definition) appear in a table that does not have measures - yet here we are
             // processing totals
-            invariant(isDataColLeaf(leafDescriptor));
+            invariant(isSeriesCol(leafDescriptor));
 
             measureCells[leafDescriptor.id] = value;
 

@@ -147,7 +147,7 @@ export interface IPivotTableBucketProps {
     columns?: IAttribute[];
 
     /**
-     * Optionally specify attributes, whose value's will be used as rows in the table.
+     * Optionally specify attributes, whose elements will be used to populate table rows.
      */
     rows?: IAttribute[];
 

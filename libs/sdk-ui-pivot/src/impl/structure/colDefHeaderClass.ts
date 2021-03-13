@@ -2,7 +2,7 @@
 import { TableFacade } from "../tableFacade";
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
 import cx from "classnames";
-import { agColId, ColumnGroupingDescriptorId, isDataColLeaf, isSliceCol } from "./tableDescriptorTypes";
+import { agColId, ColumnGroupingDescriptorId, isSeriesCol, isSliceCol } from "./tableDescriptorTypes";
 import { ICorePivotTableProps } from "../../publicTypes";
 
 export type HeaderClassProvider = (headerClassParams: any) => string;
@@ -35,8 +35,8 @@ export function headerClassFactory(
             const colDesc = tableDescriptor.getCol(colId);
             const treeIndexes = colDesc.fullIndexPathToHere;
             const indexWithinGroup = treeIndexes ? treeIndexes[treeIndexes.length - 1] : undefined;
-            const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasGroupedDataCols();
-            const absoluteColIndex = isDataColLeaf(colDesc)
+            const noLeftBorder = tableDescriptor.isFirstCol(colId) || !tableDescriptor.hasScopingCols();
+            const absoluteColIndex = isSeriesCol(colDesc)
                 ? tableDescriptor.getAbsoluteLeafColIndex(colDesc)
                 : undefined;
 
