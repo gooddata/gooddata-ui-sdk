@@ -187,6 +187,8 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     // (undocumented)
     raw(): IDashboardLayoutItem<TWidget>;
     // (undocumented)
+    ref(): ObjRef | undefined;
+    // (undocumented)
     section(): IDashboardLayoutSectionFacade<TWidget>;
     // (undocumented)
     size(): IDashboardLayoutSizeByScreenSize;

@@ -10,6 +10,7 @@ import {
     isDashboardLayout,
     isInsightWidget,
     isInsightWidgetDefinition,
+    isWidget,
     isKpiWidget,
     isKpiWidgetDefinition,
     IWidget,
@@ -69,6 +70,12 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
         return this.item.widget;
     }
 
+    public ref(): ObjRef | undefined {
+        if (this.isWidgetItem() || this.isKpiWidgetItem()) {
+            return this.item.widget.ref;
+        }
+    }
+
     public widgetEquals(widget: TWidget | undefined): boolean {
         return isEqual(this.widget(), widget);
     }
@@ -102,7 +109,7 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
     }
 
     public isWidgetItem(): this is DashboardLayoutItemFacade<IWidget> {
-        return isKpiWidget(this.widget());
+        return isWidget(this.widget());
     }
     public isWidgetDefinitionItem(): this is DashboardLayoutItemFacade<IWidgetDefinition> {
         return isKpiWidget(this.widget());

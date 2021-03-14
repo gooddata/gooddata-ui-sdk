@@ -10,6 +10,7 @@ const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = {
     raw: () => null,
     widget: () => null,
     section: () => undefined,
+    ref: () => undefined,
     size: () => ({ xl: { gridWidth: 12 } }),
     sizeForScreen: () => ({ gridWidth: 12 }),
     isLast: () => true,

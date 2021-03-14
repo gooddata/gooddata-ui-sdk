@@ -1899,7 +1899,7 @@ export function walkLayout<TWidget extends DashboardWidget>(layout: IDashboardLa
 export function widgetId(widget: IWidget): string;
 
 // @alpha
-export type WidgetType = "kpi" | "insight";
+export type WidgetType = "kpi" | "insight" | "widget";
 
 // @alpha
 export function widgetType(widget: IWidget): WidgetType;

@@ -12,7 +12,7 @@ import { CatalogItem } from "../fromModel/ldm/catalog";
  * Temporary type to distinguish between kpi and insight
  * @alpha
  */
-export type WidgetType = "kpi" | "insight";
+export type WidgetType = "kpi" | "insight" | "widget";
 
 /**
  * Widgets are insights or kpis with additional settings - drilling and alerting
@@ -190,7 +190,12 @@ export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition
  * @internal
  */
 function hasWidgetProps(obj: unknown): boolean {
-    return !isEmpty(obj) && ((obj as IWidgetBase).type === "kpi" || (obj as IWidgetBase).type === "insight");
+    return (
+        !isEmpty(obj) &&
+        ((obj as IWidgetBase).type === "kpi" ||
+            (obj as IWidgetBase).type === "insight" ||
+            (obj as IWidgetBase).type === "widget")
+    );
 }
 
 /**
