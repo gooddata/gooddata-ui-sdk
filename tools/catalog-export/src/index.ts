@@ -18,8 +18,14 @@ import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
 
 program
     .version(pkg.version)
-    .option("--project-id <id>", "Project id for which you want to export the catalog.")
-    .option("--project-name <value>", "Project name for which you want to export the catalog.")
+    .option(
+        "--project-id <id>",
+        "Project id for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
+    )
+    .option(
+        "--project-name <value>",
+        "Project name for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
+    )
     .option(
         "--workspace-id <id>",
         "Workspace id for which you want to export the catalog. This is a synonym for project-id. If not specified, code will fall back to use project-id.",
