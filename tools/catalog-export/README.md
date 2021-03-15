@@ -50,7 +50,7 @@ The program is able to run in interactive or silent modes:
 
 ## Tiger usage notes
 
-The program can retrieve and generate catalogs from either GoodData Platform (bear) or GoodData Anywhere (tiger)
+The program can retrieve and generate catalogs from either GoodData Platform (bear) or GoodData Cloud Native (tiger)
 backends. The program does not do auto-detection of the backend type - you have to indicate type of backend
 either through config or on command line.
 
@@ -62,14 +62,11 @@ setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
 {
     "hostname": "https://your.hostname.or.ip",
     "backend": "tiger",
-    "projectId": "your workspace",
+    "workspaceId": "your workspace identifier",
     "username": "tiger_user_id",
     "output": "workspaceObjects.ts"
 }
 ```
-
-> Note: you have to enter `projectId` or use the `--project-id` option with tiger. Unlike for bear, the
-> catalog-export will not prompt you to select a workspace from a list of available workspaces.
 
 ### Tiger Authentication
 
@@ -79,6 +76,24 @@ Tiger backend.
 
 While the configuration allows to specify `username` this is optional and will be used only to open a browser window
 at location where you can obtain an API Token.
+
+## Workspace or project?
+
+The GoodData Cloud Native (tiger backend) uses the term 'workspace' to identify the entity which contains LDM and data and from
+which you can calculate analytics.
+
+On the other hand, the GoodData Platform (bear backend) historically uses the term 'project' to identify the same type of entity and
+started using the term 'workspace' recently.
+
+For this reason, the program supports both workspace-id and project-id command line arguments and workspaceId and projectId
+configuration parameters. These are essentially synonymous for now with the plan to remove the project-id argument and
+projectId configuration parameter in favor for the workspace variant.
+
+At the moment you can use either project-id or workspace-id and the end result will be the same. If you specify both
+of these parameters then the workspace-id has the priority.
+
+If you use the project-id when exporting catalog from tiger backend the program will warn you that you are using a
+deprecated option.
 
 ## Recommendations
 

@@ -8,7 +8,7 @@ import {
     VariableDeclarationKind,
     VariableStatementStructure,
 } from "ts-morph";
-import { Attribute, DateDataSet, DisplayForm, Fact, Metric, ProjectMetadata } from "../base/types";
+import { Attribute, DateDataSet, DisplayForm, Fact, Metric, WorkspaceMetadata } from "../base/types";
 import { createUniqueVariableName, TakenNamesSet } from "./titles";
 
 export type TypescriptOutput = {
@@ -279,7 +279,7 @@ function generateAttributeConstant(
 }
 
 function generateAttributes(
-    projectMeta: ProjectMetadata,
+    projectMeta: WorkspaceMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     return projectMeta.catalog.attributes.map((a) => generateAttributeConstant(a));
 }
@@ -342,7 +342,7 @@ function generateMeasuresFromFacts(fact: Fact): OptionalKind<VariableStatementSt
  * @param projectMeta
  */
 function generateMeasures(
-    projectMeta: ProjectMetadata,
+    projectMeta: WorkspaceMetadata,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     const fromMetrics = projectMeta.catalog.metrics.map(generateMeasureFromMetric);
     const fromFacts = projectMeta.catalog.facts.map(generateMeasuresFromFacts);
@@ -436,7 +436,7 @@ function generateDateDataSetMapping(
 }
 
 function generateDateDataSets(
-    projectMeta: ProjectMetadata,
+    projectMeta: WorkspaceMetadata,
     tiger: boolean,
 ): ReadonlyArray<OptionalKind<VariableStatementStructure>> {
     let naming = DateDataSetNaming;
@@ -455,7 +455,7 @@ function generateDateDataSets(
  *
  * @param projectMeta - project metadata containing the insights
  */
-function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableStatementStructure> {
+function generateInsights(projectMeta: WorkspaceMetadata): OptionalKind<VariableStatementStructure> {
     const insightInitializer: string[] = projectMeta.insights.map((insight) => {
         const propName = uniqueVariable(insight.title);
         const jsDoc = `/** \n* Insight Title: ${insight.title}  \n* Insight ID: ${insight.identifier}\n*/`;
@@ -481,7 +481,7 @@ function generateInsights(projectMeta: ProjectMetadata): OptionalKind<VariableSt
  * @param projectMeta - project metadata containing the analyticalDashboards
  */
 function generateAnalyticalDashboards(
-    projectMeta: ProjectMetadata,
+    projectMeta: WorkspaceMetadata,
 ): OptionalKind<VariableStatementStructure> {
     const analyticalDashboardInitializer: string[] = projectMeta.analyticalDashboards.map((dashboard) => {
         const propName = uniqueVariable(dashboard.title);
@@ -519,7 +519,7 @@ function generateAnalyticalDashboards(
  * @return return of the transformation process, new file is not saved at this point
  */
 export function transformToTypescript(
-    projectMeta: ProjectMetadata,
+    projectMeta: WorkspaceMetadata,
     outputFile: string,
     tiger: boolean,
 ): TypescriptOutput {

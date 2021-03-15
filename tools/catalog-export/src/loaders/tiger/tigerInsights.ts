@@ -7,13 +7,13 @@ import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
  * Load insights that are stored in workspace metadata so that their links can be included
  * in the generated output for easy embedding access.
  *
- * @param _projectId - project id, ignored for now as tiger is single-workspace
+ * @param workspaceId - workspace id
  * @param tigerClient - tiger client to use for communication
  */
-export async function loadInsights(_projectId: string, tigerClient: ITigerClient): Promise<ObjectMeta[]> {
+export async function loadInsights(workspaceId: string, tigerClient: ITigerClient): Promise<ObjectMeta[]> {
     const result = await tigerClient.workspaceObjects.getEntitiesVisualizationObjects(
         {
-            workspaceId: _projectId,
+            workspaceId,
         },
         {
             headers: jsonApiHeaders,

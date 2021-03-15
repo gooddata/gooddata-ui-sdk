@@ -3,14 +3,14 @@ import gooddata from "@gooddata/api-client-bear";
 import { ObjectMeta } from "../../base/types";
 
 /**
- * Loads information about analytical dashboards defined in the project. Only descriptive information about
+ * Loads information about analytical dashboards defined in the workspace. Only descriptive information about
  * each analytical dashboard is returned.
  *
- * @param projectId - project to get analytical dashboards from
+ * @param workspaceId - workspace to get analytical dashboards from
  * @return array of analytical dashboard meta
  */
-export async function loadAnalyticalDashboard(projectId: string): Promise<ObjectMeta[]> {
-    const analyticalDashboards = await gooddata.md.getAnalyticalDashboards(projectId);
+export async function loadAnalyticalDashboard(workspaceId: string): Promise<ObjectMeta[]> {
+    const analyticalDashboards = await gooddata.md.getAnalyticalDashboards(workspaceId);
 
     return analyticalDashboards.map((dashboard: any) => {
         return {

@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { transformToTypescript } from "../transform/toTypescript";
 import { format } from "prettier";
 import * as fs from "fs";
-import { ProjectMetadata } from "../base/types";
+import { WorkspaceMetadata } from "../base/types";
 
 /**
  * Exports project metadata into javascript file containing sdk-model entity definitions (attribute, measure, etc)
@@ -14,7 +14,7 @@ import { ProjectMetadata } from "../base/types";
  * @param outputFile - output typescript file - WILL be overwritten
  */
 export async function exportMetadataToJavascript(
-    projectMetadata: ProjectMetadata,
+    projectMetadata: WorkspaceMetadata,
     outputFile: string,
     tiger = false,
 ): Promise<void> {

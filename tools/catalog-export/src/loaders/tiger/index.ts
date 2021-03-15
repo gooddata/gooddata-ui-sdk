@@ -1,28 +1,32 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
+import {
+    CatalogExportConfig,
+    CatalogExportError,
+    getConfiguredWorkspaceId,
+    getConfiguredWorkspaceName,
+    WorkspaceMetadata,
+} from "../../base/types";
 import ora from "ora";
-import { logError, logInfo } from "../../cli/loggers";
-import { promptUsername } from "../../cli/prompts";
+import { logError, logInfo, logWarn } from "../../cli/loggers";
+import { WorkspaceChoices, promptWorkspaceId, promptUsername } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
+import { JsonApiWorkspaceList } from "@gooddata/api-client-tiger";
 
 /**
  * Tests if the provided tiger client can access the backend.
  * @param tigerClient - tiger client to test
  */
-async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
+async function probeAccess(tigerClient: ITigerClient): Promise<boolean> {
     try {
-        await tigerClient.workspaceObjects.getEntitiesMetrics(
-            {
-                workspaceId: projectId,
-            },
-            {
-                headers: jsonApiHeaders,
-            },
+        await tigerClient.organizationObjects.getAllEntitiesWorkspaces(
+            { page: 0, size: 1 },
+            { headers: jsonApiHeaders },
         );
+
         return true;
     } catch (err) {
         if (err?.response?.status === 401) {
@@ -62,11 +66,7 @@ function getTigerApiToken(): string | undefined {
  * @param usernameFromConfig - username that may have been provided in a config or CLI
  * @param passwordFromConfig - password that may have been provided in a config or CLI
  */
-async function getTigerClient(
-    hostname: string,
-    usernameFromConfig: string | null,
-    projectIdFromConfig: string,
-): Promise<ITigerClient> {
+async function getTigerClient(hostname: string, usernameFromConfig: string | null): Promise<ITigerClient> {
     const token = getTigerApiToken();
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
@@ -76,7 +76,7 @@ async function getTigerClient(
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
-        const hasAccess = await probeAccess(tigerClient, projectIdFromConfig);
+        const hasAccess = await probeAccess(tigerClient);
 
         if (!hasAccess) {
             if (hasToken) {
@@ -115,39 +115,78 @@ async function getTigerClient(
     }
 }
 
+async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceList> {
+    const response = await client.organizationObjects.getAllEntitiesWorkspaces(
+        {
+            page: 0,
+            size: 500,
+        },
+        { headers: jsonApiHeaders },
+    );
+
+    return response.data;
+}
+
+async function selectWorkspace(client: ITigerClient): Promise<string> {
+    const workspaces = await loadWorkspaces(client);
+
+    const choices: WorkspaceChoices[] = workspaces.data.map((ws) => {
+        return {
+            name: ws.attributes?.name ?? ws.id,
+            value: ws.id,
+        };
+    });
+
+    return promptWorkspaceId(choices, "workspace");
+}
+
+async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): Promise<string | null> {
+    const workspaces = await loadWorkspaces(client);
+    const workspace = workspaces.data.find((ws) => ws.attributes?.name === workspaceName);
+
+    return workspace?.id ?? null;
+}
+
 /**
- * Given the export config, ask for any missing information and then load project metadata from
- * a tiger project.
+ * Given the export config, ask for any missing information and then load workspace metadata from
+ * a tiger workspace.
  *
- * @param config - tool configuration, may be missing username, password and project id - in that case code
+ * @param config - tool configuration, may be missing username, password and workspace id - in that case code
  *  will prompt
  *
- * @returns loaded project metadata
+ * @returns loaded workspace metadata
  *
  * @throws CatalogExportError upon any error.
  */
-export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    const { projectId, hostname, username } = config;
+export async function loadWorkspaceMetadataFromTiger(
+    config: CatalogExportConfig,
+): Promise<WorkspaceMetadata> {
+    const { hostname, username } = config;
 
-    if (!projectId) {
-        throw new CatalogExportError(
-            "Please specify workspace identifier in either .gdcatalogrc or via the --project-id argument.",
-            1,
-        );
+    const tigerClient = await getTigerClient(hostname!, username);
+
+    let workspaceId = getConfiguredWorkspaceId(config, true);
+    const workspaceName = getConfiguredWorkspaceName(config, true);
+
+    if (workspaceName && !workspaceId) {
+        workspaceId = await lookupWorkspaceId(tigerClient, workspaceName);
+
+        if (!workspaceId) {
+            logWarn(`Workspace with name '${workspaceName}' does not exist.`);
+        }
     }
 
-    const tigerClient = await getTigerClient(hostname!, username, projectId);
+    if (!workspaceId) {
+        workspaceId = await selectWorkspace(tigerClient);
+    }
 
-    const projectSpinner = ora();
+    const workspaceSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(projectId, tigerClient);
+        return await tigerLoad(workspaceId, tigerClient);
     } catch (err) {
-        projectSpinner.stop();
+        workspaceSpinner.stop();
 
-        throw new CatalogExportError(
-            `Unable to obtain project metadata from platform. The error was: ${err}`,
-            1,
-        );
+        throw new CatalogExportError(`Unable to obtain workspace metadata. The error was: ${err}`, 1);
     }
 }

@@ -1,29 +1,51 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
-import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
+import {
+    CatalogExportConfig,
+    CatalogExportError,
+    getConfiguredWorkspaceId,
+    getConfiguredWorkspaceName,
+    WorkspaceMetadata,
+} from "../../base/types";
 import { DEFAULT_HOSTNAME } from "../../base/constants";
 import * as pkg from "../../../package.json";
 import ora from "ora";
 import { log, logError } from "../../cli/loggers";
-import { promptPassword, promptProjectId, promptUsername } from "../../cli/prompts";
+import { promptPassword, promptWorkspaceId, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
-import gooddata from "@gooddata/api-client-bear";
+import gooddata, { SDK } from "@gooddata/api-client-bear";
 import { bearLoad } from "./bearLoad";
 
+async function selectBearWorkspace(client: SDK): Promise<string> {
+    const metadataResponse = await client.xhr.get("/gdc/md");
+    const metadata = metadataResponse.getData();
+    const choices = metadata.about.links.map((link: any) => {
+        return {
+            name: link.title,
+            value: link.identifier,
+        };
+    });
+
+    return promptWorkspaceId(choices);
+}
+
 /**
- * Given the export config, ask for any missing information and then load project metadata from
+ * Given the export config, ask for any missing information and then load workspace metadata from
  * a bear project.
  *
- * @param config - tool configuration, may be missing username, password and project id - in that case code
- *  will promp
+ * @param config - tool configuration, may be missing username, password and workspace id - in that case code
+ *  will prompt
  *
- * @returns loaded project metadata
+ * @returns loaded workspace metadata
  *
  * @throws CatalogExportError upon any error.
  */
-export async function loadProjectMetadataFromBear(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    const { projectName, hostname } = config;
-    let { projectId, username, password } = config;
+export async function loadWorkspaceMetadataFromBear(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
+    const workspaceName = getConfiguredWorkspaceName(config);
+    let workspaceId = getConfiguredWorkspaceId(config);
+
+    const { hostname } = config;
+    let { username, password } = config;
 
     gooddata.config.setCustomDomain(hostname || DEFAULT_HOSTNAME);
     gooddata.config.setJsPackage(pkg.name, pkg.version);
@@ -57,34 +79,34 @@ export async function loadProjectMetadataFromBear(config: CatalogExportConfig): 
         throw new CatalogExportError(`Unable to log in to platform. The error was: ${err}`, 1);
     }
 
-    const projectSpinner = ora();
+    const workspaceSpinner = ora();
     try {
-        if (projectName && !projectId) {
-            log("Project Name", projectName);
-            projectSpinner.start("Loading project");
+        if (workspaceName && !workspaceId) {
+            log("Project Name", workspaceName);
+            workspaceSpinner.start("Loading project");
             const metadataResponse = await gooddata.xhr.get("/gdc/md");
             const metadata = metadataResponse.getData();
-            projectSpinner.stop();
-            const projectMetadata = metadata.about
+            workspaceSpinner.stop();
+            const workspaceMetadata = metadata.about
                 ? metadata.about.links.find((link: any) => {
-                      return link.title === projectName;
+                      return link.title === workspaceName;
                   })
                 : null;
-            if (projectMetadata) {
-                projectId = projectMetadata.identifier;
+            if (workspaceMetadata) {
+                workspaceId = workspaceMetadata.identifier;
             } else {
-                logError(`Could not find a project with name '${projectName}'`);
+                logError(`Could not find a project with name '${workspaceName}'`);
             }
         }
-        if (projectId) {
-            log("Project ID", projectId);
+        if (workspaceId) {
+            log("Project ID", workspaceId);
         } else {
-            projectId = await promptProjectId();
+            workspaceId = await selectBearWorkspace(gooddata);
         }
 
-        return bearLoad(projectId);
+        return bearLoad(workspaceId);
     } catch (err) {
-        projectSpinner.stop();
+        workspaceSpinner.stop();
 
         throw new CatalogExportError(
             `Unable to obtain project metadata from platform. The error was: ${err}`,

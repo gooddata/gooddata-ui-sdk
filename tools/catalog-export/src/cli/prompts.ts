@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import { DistinctQuestion, prompt } from "inquirer";
-import gooddata from "@gooddata/api-client-bear";
 import { DEFAULT_OUTPUT_FILE_NAME } from "../base/constants";
 import * as path from "path";
 import * as fs from "fs";
@@ -27,32 +26,37 @@ export async function promptPassword(): Promise<string> {
     return passwordResponse.password;
 }
 
-export async function promptProjectId(): Promise<string> {
-    const metadataResponse = await gooddata.xhr.get("/gdc/md");
-    const metadata = metadataResponse.getData();
-    const projectChoices = metadata.about.links.map((link: any) => {
-        return {
-            name: link.title,
-            value: link.identifier,
-        };
-    });
+export type WorkspaceChoices = {
+    name: string;
+    value: string;
+};
 
-    const projectQuestion: DistinctQuestion = {
+export async function promptWorkspaceId(
+    choices: WorkspaceChoices[],
+    wording: string = "project",
+): Promise<string> {
+    const question: DistinctQuestion = {
         type: "list",
-        name: "projectId",
-        message: "Choose a project:",
-        choices: projectChoices,
+        name: "id",
+        message: `Choose a ${wording}:`,
+        choices,
     };
 
-    const projectResponse = await prompt(projectQuestion);
-    return projectResponse.projectId;
+    const response = await prompt(question);
+    return response.id;
 }
 
 export async function confirmFileRewrite(fileName: string): Promise<boolean> {
+    let message = `The file ${fileName} already exists. Would you like to merge the new data with the file? (It will keep your possibly renamed "keys")`;
+
+    if (!fileName.endsWith(".json")) {
+        message = `The file ${fileName} already exists. Would you like to overwrite it?`;
+    }
+
     const shouldRewriteQuestion: DistinctQuestion = {
         type: "confirm",
         name: "shouldRewrite",
-        message: `The file ${fileName} already exists. Would you like to merge the new data with the file? (It will keep your possibly renamed "keys")`,
+        message,
         default: true,
     };
 

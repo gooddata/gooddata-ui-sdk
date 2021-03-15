@@ -1,39 +1,39 @@
 // (C) 2007-2021 GoodData Corporation
 import ora from "ora";
 import { logError } from "../../cli/loggers";
-import { CatalogExportError, ProjectMetadata } from "../../base/types";
+import { CatalogExportError, WorkspaceMetadata } from "../../base/types";
 import { loadCatalog } from "./bearCatalog";
 import { loadDateDataSets } from "./bearDateDatasets";
 import { loadInsights } from "./bearInsights";
 import { loadAnalyticalDashboard } from "./bearAnalyticalDashboard";
 
 /**
- * Loads all project metadata that can be used for exporting into catalog.
+ * Loads all workspace metadata that can be used for exporting into catalog.
  *
- * @param projectId - project identifier
+ * @param workspaceId - workspace identifier
  * @throws CatalogExportError
  */
-export async function bearLoad(projectId: string): Promise<ProjectMetadata> {
+export async function bearLoad(workspaceId: string): Promise<WorkspaceMetadata> {
     const spinner = ora();
 
     try {
         spinner.start("Loading catalog of attributes and metrics…");
-        const catalog = await loadCatalog(projectId);
+        const catalog = await loadCatalog(workspaceId);
         spinner.succeed("Catalog loaded");
 
         spinner.start("Loading date data sets…");
-        const dateDataSets = await loadDateDataSets(projectId);
+        const dateDataSets = await loadDateDataSets(workspaceId);
         spinner.succeed("Date data sets loaded");
 
         spinner.start("Loading insights…");
-        const insights = await loadInsights(projectId);
+        const insights = await loadInsights(workspaceId);
         spinner.succeed("Insights loaded");
 
         spinner.start("Loading analytical dashboards…");
-        const analyticalDashboards = await loadAnalyticalDashboard(projectId);
+        const analyticalDashboards = await loadAnalyticalDashboard(workspaceId);
         spinner.succeed("Analytical dashboards loaded");
         return {
-            projectId,
+            workspaceId,
             catalog,
             dateDataSets,
             insights,

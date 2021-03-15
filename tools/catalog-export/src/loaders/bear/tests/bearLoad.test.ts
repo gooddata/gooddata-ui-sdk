@@ -3,11 +3,11 @@ import { bearLoad } from "../bearLoad";
 
 jest.mock("@gooddata/api-client-bear");
 
-describe("loadProjectMetadata", () => {
+describe("bearLoad", () => {
     it("should transfer project ID", async () => {
         const result = await bearLoad("test");
 
-        expect(result.projectId).toEqual("test");
+        expect(result.workspaceId).toEqual("test");
     });
 
     it("should load ldm", async () => {

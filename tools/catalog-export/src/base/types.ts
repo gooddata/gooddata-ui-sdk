@@ -1,5 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import { logWarn } from "../cli/loggers";
 
 /**
  * This exception is thrown when a fatal error occurs during the export processing - be it during interfacing with
@@ -33,14 +34,29 @@ export type CatalogExportConfig = {
 
     /**
      * Identifier of the project
+     *
+     * @deprecated in favor of workspaceId
      */
     projectId: string | null;
+
+    /**
+     * Identifier of the workspace
+     */
+    workspaceId: string | null;
+
+    /**
+     * Name of the project - if project ID is not specified, then name must be specified and
+     * will be used to find projects that match (fully) this name.
+     *
+     * @deprecated in favor of workspaceName
+     */
+    projectName: string | null;
 
     /**
      * Name of the project - if project ID is not specified, then name must be specified and
      * will be used to find projects that match (fully) this name.
      */
-    projectName: string | null;
+    workspaceName: string | null;
 
     /**
      * User to authenticate as.
@@ -62,6 +78,48 @@ export type CatalogExportConfig = {
      */
     backend: SupportedBackendTypes | null;
 };
+
+export function getConfiguredWorkspaceId(
+    config: CatalogExportConfig,
+    deprecationWarning: boolean = false,
+): string | null {
+    if (config.workspaceId) {
+        return config.workspaceId;
+    }
+
+    if (config.projectId) {
+        if (deprecationWarning) {
+            logWarn(
+                "The use of `project-id` argument and `projectId` configuration parameter are deprecated and will be removed in next major release. Please switch to use `workspace-id` argument or `workspaceId` parameter instead. This is just a naming change and has no functional impact.",
+            );
+        }
+
+        return config.projectId;
+    }
+
+    return null;
+}
+
+export function getConfiguredWorkspaceName(
+    config: CatalogExportConfig,
+    deprecationWarning: boolean = false,
+): string | null {
+    if (config.workspaceName) {
+        return config.workspaceName;
+    }
+
+    if (config.projectName) {
+        if (deprecationWarning) {
+            logWarn(
+                "The use of `project-name` argument and `projectName` configuration parameter are deprecated and will be removed in next major release. Please switch to use `workspace-name` argument or `workspaceName` parameter instead. This is just a naming change and has no functional impact.",
+            );
+        }
+
+        return config.projectName;
+    }
+
+    return null;
+}
 
 /**
  * Subset of object meta used in exporter
@@ -123,8 +181,8 @@ export type Catalog = {
     facts: Fact[];
 };
 
-export type ProjectMetadata = {
-    projectId: string;
+export type WorkspaceMetadata = {
+    workspaceId: string;
     catalog: Catalog;
     dateDataSets: DateDataSet[];
     insights: ObjectMeta[];

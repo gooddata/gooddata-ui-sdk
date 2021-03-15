@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import program from "commander";
 import chalk from "chalk";
 import * as path from "path";
@@ -9,17 +9,31 @@ import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
-import { CatalogExportConfig, isCatalogExportError, ProjectMetadata } from "./base/types";
+import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
-import { loadProjectMetadataFromBear } from "./loaders/bear";
-import { loadProjectMetadataFromTiger } from "./loaders/tiger";
+import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
+import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
 
 program
     .version(pkg.version)
-    .option("--project-id <id>", "Project id for which you want to export the catalog.")
-    .option("--project-name <value>", "Project name for which you want to export the catalog.")
+    .option(
+        "--project-id <id>",
+        "Project id for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
+    )
+    .option(
+        "--project-name <value>",
+        "Project name for which you want to export the catalog. This option is deprecated in favor of workspace-id. It will disappear in the next major release.",
+    )
+    .option(
+        "--workspace-id <id>",
+        "Workspace id for which you want to export the catalog. This is a synonym for project-id. If not specified, code will fall back to use project-id.",
+    )
+    .option(
+        "--workspace-name <value>",
+        "Workspace name for which you want to export the catalog. This is a synonym for project-name. If not specified, code will fall back to use project-name.",
+    )
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--output <value>",
@@ -34,12 +48,12 @@ program
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
-async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<ProjectMetadata> {
+async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
     if (config.backend === "tiger") {
-        return loadProjectMetadataFromTiger(config);
+        return loadWorkspaceMetadataFromTiger(config);
     }
 
-    return loadProjectMetadataFromBear(config);
+    return loadWorkspaceMetadataFromBear(config);
 }
 
 async function run() {
