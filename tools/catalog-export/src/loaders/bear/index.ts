@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import { DEFAULT_HOSTNAME } from "../../base/constants";
@@ -7,8 +7,21 @@ import ora from "ora";
 import { log, logError } from "../../cli/loggers";
 import { promptPassword, promptProjectId, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
-import gooddata from "@gooddata/api-client-bear";
+import gooddata, { SDK } from "@gooddata/api-client-bear";
 import { bearLoad } from "./bearLoad";
+
+async function selectBearWorkspace(client: SDK): Promise<string> {
+    const metadataResponse = await client.xhr.get("/gdc/md");
+    const metadata = metadataResponse.getData();
+    const projectChoices = metadata.about.links.map((link: any) => {
+        return {
+            name: link.title,
+            value: link.identifier,
+        };
+    });
+
+    return promptProjectId(projectChoices);
+}
 
 /**
  * Given the export config, ask for any missing information and then load project metadata from
@@ -79,7 +92,7 @@ export async function loadProjectMetadataFromBear(config: CatalogExportConfig): 
         if (projectId) {
             log("Project ID", projectId);
         } else {
-            projectId = await promptProjectId();
+            projectId = await selectBearWorkspace(gooddata);
         }
 
         return bearLoad(projectId);

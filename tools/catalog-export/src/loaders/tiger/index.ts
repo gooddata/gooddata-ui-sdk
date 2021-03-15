@@ -3,7 +3,7 @@
 import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
 import ora from "ora";
 import { logError, logInfo } from "../../cli/loggers";
-import { promptUsername } from "../../cli/prompts";
+import { ProjectChoices, promptProjectId, promptUsername } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
@@ -13,16 +13,13 @@ import open from "open";
  * Tests if the provided tiger client can access the backend.
  * @param tigerClient - tiger client to test
  */
-async function probeAccess(tigerClient: ITigerClient, projectId: string): Promise<boolean> {
+async function probeAccess(tigerClient: ITigerClient): Promise<boolean> {
     try {
-        await tigerClient.workspaceObjects.getEntitiesMetrics(
-            {
-                workspaceId: projectId,
-            },
-            {
-                headers: jsonApiHeaders,
-            },
+        await tigerClient.organizationObjects.getAllEntitiesWorkspaces(
+            { page: 0, size: 1 },
+            { headers: jsonApiHeaders },
         );
+
         return true;
     } catch (err) {
         if (err?.response?.status === 401) {
@@ -62,21 +59,18 @@ function getTigerApiToken(): string | undefined {
  * @param usernameFromConfig - username that may have been provided in a config or CLI
  * @param passwordFromConfig - password that may have been provided in a config or CLI
  */
-async function getTigerClient(
-    hostname: string,
-    usernameFromConfig: string | null,
-    projectIdFromConfig: string,
-): Promise<ITigerClient> {
+async function getTigerClient(hostname: string, usernameFromConfig: string | null): Promise<ITigerClient> {
     const token = getTigerApiToken();
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
 
+    console.log("tiger hostname", hostname);
     const tigerClient = createTigerClient(hostname, token);
 
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
-        const hasAccess = await probeAccess(tigerClient, projectIdFromConfig);
+        const hasAccess = await probeAccess(tigerClient);
 
         if (!hasAccess) {
             if (hasToken) {
@@ -115,6 +109,25 @@ async function getTigerClient(
     }
 }
 
+async function selectWorkspace(client: ITigerClient): Promise<string> {
+    const workspaces = await client.organizationObjects.getAllEntitiesWorkspaces(
+        {
+            page: 0,
+            size: 500,
+        },
+        { headers: jsonApiHeaders },
+    );
+
+    const choices: ProjectChoices[] = workspaces.data.data.map((ws) => {
+        return {
+            name: ws.attributes?.name ?? ws.id,
+            value: ws.id,
+        };
+    });
+
+    return promptProjectId(choices);
+}
+
 /**
  * Given the export config, ask for any missing information and then load project metadata from
  * a tiger project.
@@ -127,16 +140,14 @@ async function getTigerClient(
  * @throws CatalogExportError upon any error.
  */
 export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    const { projectId, hostname, username } = config;
+    let { projectId } = config;
+    const { hostname, username } = config;
+
+    const tigerClient = await getTigerClient(hostname!, username);
 
     if (!projectId) {
-        throw new CatalogExportError(
-            "Please specify workspace identifier in either .gdcatalogrc or via the --project-id argument.",
-            1,
-        );
+        projectId = await selectWorkspace(tigerClient);
     }
-
-    const tigerClient = await getTigerClient(hostname!, username, projectId);
 
     const projectSpinner = ora();
     try {
