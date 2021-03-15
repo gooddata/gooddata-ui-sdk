@@ -77,6 +77,24 @@ Tiger backend.
 While the configuration allows to specify `username` this is optional and will be used only to open a browser window
 at location where you can obtain an API Token.
 
+## Workspace or project?
+
+The GoodData Cloud Native (tiger backend) uses the term 'workspace' to identify the entity which contains LDM and data and from
+which you can calculate analytics.
+
+On the other hand, the GoodData Platform (bear backend) historically uses the term 'project' to identify the same type of entity and
+started using the term 'workspace' recently.
+
+For this reason, the program supports both workspace-id and project-id command line arguments and workspaceId and projectId
+configuration parameters. These are essentially synonymous for now with the plan to remove the project-id argument and
+projectId configuration parameter in favor for the workspace variant.
+
+At the moment you can use either project-id or workspace-id and the end result will be the same. If you specify both
+of these parameters then the workspace-id has the priority.
+
+If you use the project-id when exporting catalog from tiger backend the program will warn you that you are using a
+deprecated option.
+
 ## Recommendations
 
 Working with the catalog-export and its outputs on daily basis, we found a few good practices that we suggest for
