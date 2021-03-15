@@ -5,7 +5,7 @@ import { DEFAULT_HOSTNAME } from "../../base/constants";
 import * as pkg from "../../../package.json";
 import ora from "ora";
 import { log, logError } from "../../cli/loggers";
-import { promptPassword, promptProjectId, promptUsername } from "../../cli/prompts";
+import { promptPassword, promptWorkspaceId, promptUsername } from "../../cli/prompts";
 import { clearLine } from "../../cli/clear";
 import gooddata, { SDK } from "@gooddata/api-client-bear";
 import { bearLoad } from "./bearLoad";
@@ -20,7 +20,7 @@ async function selectBearWorkspace(client: SDK): Promise<string> {
         };
     });
 
-    return promptProjectId(projectChoices);
+    return promptWorkspaceId(projectChoices);
 }
 
 /**

@@ -31,16 +31,19 @@ export type ProjectChoices = {
     value: string;
 };
 
-export async function promptProjectId(choices: ProjectChoices[]): Promise<string> {
-    const projectQuestion: DistinctQuestion = {
+export async function promptWorkspaceId(
+    choices: ProjectChoices[],
+    wording: string = "project",
+): Promise<string> {
+    const question: DistinctQuestion = {
         type: "list",
-        name: "projectId",
-        message: "Choose a project:",
+        name: "id",
+        message: `Choose a ${wording}:`,
         choices,
     };
 
-    const projectResponse = await prompt(projectQuestion);
-    return projectResponse.projectId;
+    const response = await prompt(question);
+    return response.id;
 }
 
 export async function confirmFileRewrite(fileName: string): Promise<boolean> {

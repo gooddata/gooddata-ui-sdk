@@ -1,13 +1,20 @@
 // (C) 2007-2021 GoodData Corporation
 
-import { CatalogExportConfig, CatalogExportError, ProjectMetadata } from "../../base/types";
+import {
+    CatalogExportConfig,
+    CatalogExportError,
+    getConfiguredWorkspaceId,
+    getConfiguredWorkspaceName,
+    ProjectMetadata,
+} from "../../base/types";
 import ora from "ora";
-import { logError, logInfo } from "../../cli/loggers";
-import { ProjectChoices, promptProjectId, promptUsername } from "../../cli/prompts";
+import { logError, logInfo, logWarn } from "../../cli/loggers";
+import { ProjectChoices, promptWorkspaceId, promptUsername } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
+import { JsonApiWorkspaceList } from "@gooddata/api-client-tiger";
 
 /**
  * Tests if the provided tiger client can access the backend.
@@ -64,7 +71,6 @@ async function getTigerClient(hostname: string, usernameFromConfig: string | nul
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
 
-    console.log("tiger hostname", hostname);
     const tigerClient = createTigerClient(hostname, token);
 
     try {
@@ -109,8 +115,8 @@ async function getTigerClient(hostname: string, usernameFromConfig: string | nul
     }
 }
 
-async function selectWorkspace(client: ITigerClient): Promise<string> {
-    const workspaces = await client.organizationObjects.getAllEntitiesWorkspaces(
+async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceList> {
+    const response = await client.organizationObjects.getAllEntitiesWorkspaces(
         {
             page: 0,
             size: 500,
@@ -118,14 +124,27 @@ async function selectWorkspace(client: ITigerClient): Promise<string> {
         { headers: jsonApiHeaders },
     );
 
-    const choices: ProjectChoices[] = workspaces.data.data.map((ws) => {
+    return response.data;
+}
+
+async function selectWorkspace(client: ITigerClient): Promise<string> {
+    const workspaces = await loadWorkspaces(client);
+
+    const choices: ProjectChoices[] = workspaces.data.map((ws) => {
         return {
             name: ws.attributes?.name ?? ws.id,
             value: ws.id,
         };
     });
 
-    return promptProjectId(choices);
+    return promptWorkspaceId(choices, "workspace");
+}
+
+async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): Promise<string | null> {
+    const workspaces = await loadWorkspaces(client);
+    const workspace = workspaces.data.find((ws) => ws.attributes?.name === workspaceName);
+
+    return workspace?.id ?? null;
 }
 
 /**
@@ -140,25 +159,32 @@ async function selectWorkspace(client: ITigerClient): Promise<string> {
  * @throws CatalogExportError upon any error.
  */
 export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
-    let { projectId } = config;
     const { hostname, username } = config;
 
     const tigerClient = await getTigerClient(hostname!, username);
 
-    if (!projectId) {
-        projectId = await selectWorkspace(tigerClient);
+    let workspaceId = getConfiguredWorkspaceId(config, true);
+    const workspaceName = getConfiguredWorkspaceName(config, true);
+
+    if (workspaceName && !workspaceId) {
+        workspaceId = await lookupWorkspaceId(tigerClient, workspaceName);
+
+        if (!workspaceId) {
+            logWarn(`Workspace with name '${workspaceName}' does not exist.`);
+        }
+    }
+
+    if (!workspaceId) {
+        workspaceId = await selectWorkspace(tigerClient);
     }
 
     const projectSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(projectId, tigerClient);
+        return await tigerLoad(workspaceId, tigerClient);
     } catch (err) {
         projectSpinner.stop();
 
-        throw new CatalogExportError(
-            `Unable to obtain project metadata from platform. The error was: ${err}`,
-            1,
-        );
+        throw new CatalogExportError(`Unable to obtain workspace metadata. The error was: ${err}`, 1);
     }
 }

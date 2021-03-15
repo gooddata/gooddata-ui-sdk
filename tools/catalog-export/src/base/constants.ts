@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { CatalogExportConfig } from "./types";
 
 export const DEFAULT_HOSTNAME = "https://secure.gooddata.com";
@@ -9,6 +9,8 @@ export const DEFAULT_CONFIG: CatalogExportConfig = {
     hostname: null,
     projectId: null,
     projectName: null,
+    workspaceId: null,
+    workspaceName: null,
     username: null,
     password: null,
     output: null,

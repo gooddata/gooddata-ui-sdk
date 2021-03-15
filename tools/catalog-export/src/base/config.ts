@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import identity from "lodash/identity";
 import pick from "lodash/pick";
@@ -16,6 +16,8 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
                 "hostname",
                 "projectId",
                 "projectName",
+                "workspaceId",
+                "workspaceName",
                 "username",
                 "password",
                 "output",
@@ -31,6 +33,8 @@ function retrieveConfigFromObject(obj: object): CatalogExportConfig {
         hostname: get(obj, "hostname", null),
         projectId: get(obj, "projectId", null),
         projectName: get(obj, "projectName", null),
+        workspaceId: get(obj, "workspaceId", null),
+        workspaceName: get(obj, "workspaceName", null),
         username: get(obj, "username", null),
         password: get(obj, "password", null),
         output: get(obj, "output", null),

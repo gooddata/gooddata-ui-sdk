@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import program from "commander";
 import chalk from "chalk";
 import * as path from "path";
@@ -20,6 +20,14 @@ program
     .version(pkg.version)
     .option("--project-id <id>", "Project id for which you want to export the catalog.")
     .option("--project-name <value>", "Project name for which you want to export the catalog.")
+    .option(
+        "--workspace-id <id>",
+        "Workspace id for which you want to export the catalog. This is a synonym for project-id. If not specified, code will fall back to use project-id.",
+    )
+    .option(
+        "--workspace-name <value>",
+        "Workspace name for which you want to export the catalog. This is a synonym for project-name. If not specified, code will fall back to use project-name.",
+    )
     .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--output <value>",
