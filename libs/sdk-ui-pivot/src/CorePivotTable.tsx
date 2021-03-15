@@ -42,7 +42,12 @@ import noop from "lodash/noop";
 import debounce from "lodash/debounce";
 import { invariant } from "ts-invariant";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
-import { ColumnResizingConfig, IMenuAggregationClickConfig, TableMethods } from "./impl/privateTypes";
+import {
+    ColumnResizingConfig,
+    IMenuAggregationClickConfig,
+    TableAgGridCallbacks,
+    TableMethods,
+} from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
@@ -177,10 +182,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private readonly errorMap: IErrorDescriptors;
     private containerRef: HTMLDivElement | undefined;
-    private readonly debouncedGridSizeChanged: (gridSizeChangedEvent: any) => void;
     private pivotTableId: string;
 
     private internal: InternalTableState;
+    private boundAgGridCallbacks: TableAgGridCallbacks;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -196,7 +201,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         this.errorMap = newErrorMapping(props.intl);
         this.internal = new InternalTableState();
-        this.debouncedGridSizeChanged = debounce(this.onGridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
+        this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
         this.pivotTableId = uuidv4().replace(/-/g, "");
     }
 
@@ -260,6 +265,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             () => {
                 this.internal.destroy();
                 this.internal = new InternalTableState();
+                this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
                 this.internal.initializer = this.initialize(execution);
             },
         );
@@ -348,6 +354,9 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
         if (!drillingIsSame) {
+            // eslint-disable-next-line no-console
+            console.debug("drilling is different", prevProps.drillableItems, this.props.drillableItems);
+
             return true;
         }
 
@@ -942,6 +951,61 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         }, 0);
     };
 
+    /**
+     * Wraps the provided callback function with a guard that checks whether the current table state is the same
+     * as the state snapshotted at the time of callback creation. If the state differs, the wrapped function WILL NOT
+     * be called.
+     *
+     * @param callback - function to wrap with state guard
+     */
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    private stateBoundCallback = <T extends Function>(callback: T): T => {
+        const forInternalState = this.internal;
+        const guarded: T = (((...args: any) => {
+            if (this.internal !== forInternalState) {
+                return;
+            }
+            return callback(...args);
+        }) as unknown) as T;
+
+        return guarded;
+    };
+
+    /**
+     * All callback functions that the table passes to ag-grid must be bound to the current internal state of the table. The
+     * callback functions MUST be noop if the internal state at the time of call is different from the internal state
+     * at the time of creation.
+     *
+     * This is essential to prevent errors stemming for racy behavior triggered by ag-grid. ag-grid often triggers
+     * event callbacks using setTimeout(). It can happen, that once the event is actually processed the ag-grid table
+     * which caused it is unmounted. Doing anything with the unmounted table's gridApi leads to errors.
+     *
+     * Without this, table may trigger ag-grid errors such as this:
+     *
+     * https://github.com/ag-grid/ag-grid/issues/3457
+     *
+     * or this:
+     *
+     * https://github.com/ag-grid/ag-grid/issues/3334
+     */
+    private createBoundAgGridCallbacks = (): TableAgGridCallbacks => {
+        const debouncedGridSizeChanged = debounce(
+            this.stateBoundCallback(this.onGridSizeChanged),
+            AGGRID_ON_RESIZE_TIMEOUT,
+        );
+
+        return {
+            onGridReady: this.stateBoundCallback(this.onGridReady),
+            onFirstDataRendered: this.stateBoundCallback(this.onFirstDataRendered),
+            onBodyScroll: this.stateBoundCallback(this.onBodyScroll),
+            onModelUpdated: this.stateBoundCallback(this.onModelUpdated),
+            onGridColumnsChanged: this.stateBoundCallback(this.onGridColumnsChanged),
+            onGridColumnResized: this.stateBoundCallback(this.onGridColumnResized),
+            onSortChanged: this.stateBoundCallback(this.onSortChanged),
+            onGridSizeChanged: debouncedGridSizeChanged,
+        };
+    };
+
     private getTableMethods = (): TableMethods => {
         return {
             hasColumnWidths: this.hasColumnWidths(),
@@ -950,17 +1014,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getMenuConfig: this.getMenuConfig,
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
-
             getResizingConfig: this.getResizingConfig,
-
-            onGridReady: this.onGridReady,
-            onFirstDataRendered: this.onFirstDataRendered,
-            onBodyScroll: this.onBodyScroll,
-            onModelUpdated: this.onModelUpdated,
-            onGridColumnsChanged: this.onGridColumnsChanged,
-            onGridColumnResized: this.onGridColumnResized,
-            onSortChanged: this.onSortChanged,
-            onGridSizeChanged: this.debouncedGridSizeChanged,
 
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
@@ -969,6 +1023,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onPageLoaded: this.onPageLoaded,
             onExecutionTransformed: this.onExecutionTransformed,
             onMenuAggregationClick: this.onMenuAggregationClick,
+
+            ...this.boundAgGridCallbacks,
         };
     };
 
