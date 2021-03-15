@@ -72,6 +72,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                     {
                         page: offset / limit,
                         size: limit,
+                        sort: ["name"], // This is default behavior in gdc-bear
                     },
                     { headers: jsonApiHeaders },
                 );
