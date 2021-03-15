@@ -5,11 +5,11 @@ import {
     CatalogExportError,
     getConfiguredWorkspaceId,
     getConfiguredWorkspaceName,
-    ProjectMetadata,
+    WorkspaceMetadata,
 } from "../../base/types";
 import ora from "ora";
 import { logError, logInfo, logWarn } from "../../cli/loggers";
-import { ProjectChoices, promptWorkspaceId, promptUsername } from "../../cli/prompts";
+import { WorkspaceChoices, promptWorkspaceId, promptUsername } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
@@ -130,7 +130,7 @@ async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceLis
 async function selectWorkspace(client: ITigerClient): Promise<string> {
     const workspaces = await loadWorkspaces(client);
 
-    const choices: ProjectChoices[] = workspaces.data.map((ws) => {
+    const choices: WorkspaceChoices[] = workspaces.data.map((ws) => {
         return {
             name: ws.attributes?.name ?? ws.id,
             value: ws.id,
@@ -148,17 +148,19 @@ async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): P
 }
 
 /**
- * Given the export config, ask for any missing information and then load project metadata from
- * a tiger project.
+ * Given the export config, ask for any missing information and then load workspace metadata from
+ * a tiger workspace.
  *
- * @param config - tool configuration, may be missing username, password and project id - in that case code
+ * @param config - tool configuration, may be missing username, password and workspace id - in that case code
  *  will prompt
  *
- * @returns loaded project metadata
+ * @returns loaded workspace metadata
  *
  * @throws CatalogExportError upon any error.
  */
-export async function loadProjectMetadataFromTiger(config: CatalogExportConfig): Promise<ProjectMetadata> {
+export async function loadWorkspaceMetadataFromTiger(
+    config: CatalogExportConfig,
+): Promise<WorkspaceMetadata> {
     const { hostname, username } = config;
 
     const tigerClient = await getTigerClient(hostname!, username);
@@ -178,12 +180,12 @@ export async function loadProjectMetadataFromTiger(config: CatalogExportConfig):
         workspaceId = await selectWorkspace(tigerClient);
     }
 
-    const projectSpinner = ora();
+    const workspaceSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
         return await tigerLoad(workspaceId, tigerClient);
     } catch (err) {
-        projectSpinner.stop();
+        workspaceSpinner.stop();
 
         throw new CatalogExportError(`Unable to obtain workspace metadata. The error was: ${err}`, 1);
     }

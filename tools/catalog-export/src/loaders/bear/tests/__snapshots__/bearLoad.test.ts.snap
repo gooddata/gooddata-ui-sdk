@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`loadProjectMetadata should load analytical dashboards 1`] = `
+exports[`bearLoad should load analytical dashboards 1`] = `
 Array [
   Object {
     "identifier": "afMA17GSbk31",
@@ -20,7 +20,7 @@ Array [
 ]
 `;
 
-exports[`loadProjectMetadata should load date data sets 1`] = `
+exports[`bearLoad should load date data sets 1`] = `
 Array [
   Object {
     "dateDataSet": Object {
@@ -545,7 +545,7 @@ Array [
 ]
 `;
 
-exports[`loadProjectMetadata should load ldm 1`] = `
+exports[`bearLoad should load ldm 1`] = `
 Object {
   "attributes": Array [
     Object {
@@ -1026,7 +1026,7 @@ Object {
 }
 `;
 
-exports[`loadProjectMetadata should load visualizations 1`] = `
+exports[`bearLoad should load visualizations 1`] = `
 Array [
   Object {
     "identifier": "abhJpedgcfU2",

@@ -1,14 +1,16 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { getConfigFromProgram } from "../config";
 import { CatalogExportConfig } from "../types";
 
 describe("getConfigFromProgram", () => {
     const EMPTY_CONFIG: CatalogExportConfig = {
         projectName: null,
+        workspaceName: null,
         hostname: null,
         output: null,
         password: null,
         projectId: null,
+        workspaceId: null,
         username: null,
         backend: null,
     };
@@ -24,8 +26,8 @@ describe("getConfigFromProgram", () => {
         ],
         [
             "prefer input over default",
-            { username: "valid", projectId: "abc" },
-            { ...EMPTY_CONFIG, projectId: "xyz" },
+            { username: "valid", projectId: "abc", workspaceId: "abc" },
+            { ...EMPTY_CONFIG, projectId: "xyz", workspaceId: "abc" },
         ],
         ["propagate tiger backend type", { backend: "tiger" }, null],
     ];

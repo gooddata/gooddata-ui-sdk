@@ -54,14 +54,14 @@ function convertAttributes(attributes: JsonApiAttributeList): Attribute[] {
 
 /**
  * Loads metric, attribute and fact catalog
- * @param _projectId
+ * @param workspaceId
  * @param tigerClient
  */
-export async function loadCatalog(_projectId: string, tigerClient: ITigerClient): Promise<Catalog> {
+export async function loadCatalog(workspaceId: string, tigerClient: ITigerClient): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
         tigerClient.workspaceObjects.getEntitiesMetrics(
             {
-                workspaceId: _projectId,
+                workspaceId,
             },
             {
                 headers: jsonApiHeaders,
@@ -69,7 +69,7 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
         ),
         tigerClient.workspaceObjects.getEntitiesFacts(
             {
-                workspaceId: _projectId,
+                workspaceId,
             },
             {
                 headers: jsonApiHeaders,
@@ -77,7 +77,7 @@ export async function loadCatalog(_projectId: string, tigerClient: ITigerClient)
         ),
         tigerClient.workspaceObjects.getEntitiesAttributes(
             {
-                workspaceId: _projectId,
+                workspaceId,
             },
             {
                 headers: jsonApiHeaders,

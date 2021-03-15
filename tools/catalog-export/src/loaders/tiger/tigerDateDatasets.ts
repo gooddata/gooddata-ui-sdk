@@ -77,12 +77,12 @@ function convertToExportableFormat(
 }
 
 export async function loadDateDataSets(
-    _projectId: string,
+    workspaceId: string,
     tigerClient: ITigerClient,
 ): Promise<DateDataSet[]> {
     const result = await tigerClient.workspaceObjects.getEntitiesAttributes(
         {
-            workspaceId: _projectId,
+            workspaceId,
         },
         {
             headers: jsonApiHeaders,

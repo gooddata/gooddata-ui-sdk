@@ -1,16 +1,16 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import { ObjectMeta } from "../../base/types";
 
 /**
- * Loads information about insights defined in the project. Only descriptive information about
+ * Loads information about insights defined in the workspace. Only descriptive information about
  * each insight is returned.
  *
- * @param projectId - project to get insights from
+ * @param workspaceId - workspace to get insights from
  * @return array of insight metadata
  */
-export async function loadInsights(projectId: string): Promise<ObjectMeta[]> {
-    const visualizations = await gooddata.md.getVisualizations(projectId);
+export async function loadInsights(workspaceId: string): Promise<ObjectMeta[]> {
+    const visualizations = await gooddata.md.getVisualizations(workspaceId);
 
     return visualizations.map((vis: any) => {
         return {

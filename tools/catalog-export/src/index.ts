@@ -9,12 +9,12 @@ import { clearTerminal } from "./cli/clear";
 import { requestFilePath } from "./cli/prompts";
 import { getConfigFromConfigFile, getConfigFromProgram } from "./base/config";
 import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_OUTPUT_FILE_NAME } from "./base/constants";
-import { CatalogExportConfig, isCatalogExportError, ProjectMetadata } from "./base/types";
+import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types";
 import { exportMetadataToCatalog } from "./exports/metaToCatalog";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript";
-import { loadProjectMetadataFromBear } from "./loaders/bear";
-import { loadProjectMetadataFromTiger } from "./loaders/tiger";
+import { loadWorkspaceMetadataFromBear } from "./loaders/bear";
+import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger";
 
 program
     .version(pkg.version)
@@ -42,12 +42,12 @@ program
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
-async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<ProjectMetadata> {
+async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
     if (config.backend === "tiger") {
-        return loadProjectMetadataFromTiger(config);
+        return loadWorkspaceMetadataFromTiger(config);
     }
 
-    return loadProjectMetadataFromBear(config);
+    return loadWorkspaceMetadataFromBear(config);
 }
 
 async function run() {

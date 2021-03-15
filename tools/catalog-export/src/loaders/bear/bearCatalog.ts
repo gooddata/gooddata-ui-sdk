@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import pmap from "p-map";
 import flatMap from "lodash/flatMap";
@@ -28,9 +28,9 @@ function getRequestOptions(offset: number = 0) {
     };
 }
 
-async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
+async function loadCatalogueItems(workspaceId: string): Promise<CatalogItem[]> {
     const options = getRequestOptions(0);
-    const response: CatalogItemsResponse = await gooddata.catalogue.loadItems(projectId, options);
+    const response: CatalogItemsResponse = await gooddata.catalogue.loadItems(workspaceId, options);
     const { totals, catalog: firstPageItems } = response;
     const { available } = totals;
 
@@ -46,7 +46,7 @@ async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
     const loadPage = async (offset: number): Promise<CatalogItemsResponse> => {
         const pageOpts = getRequestOptions(offset);
 
-        return gooddata.catalogue.loadItems(projectId, pageOpts);
+        return gooddata.catalogue.loadItems(workspaceId, pageOpts);
     };
 
     // and dispatch their load in concurrent fashion
@@ -56,14 +56,14 @@ async function loadCatalogueItems(projectId: string): Promise<CatalogItem[]> {
 }
 
 /**
- * This function loads attributes, metrics and facts from project's catalog. It uses the same data source
+ * This function loads attributes, metrics and facts from workspace's catalog. It uses the same data source
  * as the Analytical Designer.
  *
- * @param projectId - project to get metadata from
+ * @param workspaceId - workspace to get metadata from
  * @returns catalog with attributes, metrics and facts
  */
-export async function loadCatalog(projectId: string): Promise<Catalog> {
-    const allCatalogueItems = await loadCatalogueItems(projectId);
+export async function loadCatalog(workspaceId: string): Promise<Catalog> {
+    const allCatalogueItems = await loadCatalogueItems(workspaceId);
     const result: Catalog = {
         attributes: [],
         metrics: [],

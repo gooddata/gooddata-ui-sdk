@@ -26,13 +26,13 @@ export async function promptPassword(): Promise<string> {
     return passwordResponse.password;
 }
 
-export type ProjectChoices = {
+export type WorkspaceChoices = {
     name: string;
     value: string;
 };
 
 export async function promptWorkspaceId(
-    choices: ProjectChoices[],
+    choices: WorkspaceChoices[],
     wording: string = "project",
 ): Promise<string> {
     const question: DistinctQuestion = {

@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { transformToCatalog } from "../transform/toCatalog";
 import * as fs from "fs";
-import { ProjectMetadata } from "../base/types";
+import { WorkspaceMetadata } from "../base/types";
 
 /**
  * Exports project metadata into catalog JSON file. If the output file already exists, its contents
@@ -11,7 +11,7 @@ import { ProjectMetadata } from "../base/types";
  * @param outputFile - output file where the catalog should be saved
  */
 export async function exportMetadataToCatalog(
-    projectMetadata: ProjectMetadata,
+    projectMetadata: WorkspaceMetadata,
     outputFile: string,
 ): Promise<void> {
     let existingCatalog: any | undefined;

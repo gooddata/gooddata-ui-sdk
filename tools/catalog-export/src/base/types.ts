@@ -181,8 +181,8 @@ export type Catalog = {
     facts: Fact[];
 };
 
-export type ProjectMetadata = {
-    projectId: string;
+export type WorkspaceMetadata = {
+    workspaceId: string;
     catalog: Catalog;
     dateDataSets: DateDataSet[];
     insights: ObjectMeta[];

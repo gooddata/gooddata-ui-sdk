@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { ProjectMetadata, Attribute } from "../base/types";
+import { WorkspaceMetadata, Attribute } from "../base/types";
 import { createUniqueName } from "./titles";
 import cloneDeep from "lodash/cloneDeep";
 import findKey from "lodash/findKey";
@@ -58,7 +58,7 @@ type TitleToItemMap = { [key: string]: IIdentifierWithTags };
 // transformation functions
 //
 
-function createMeasures(projectMeta: ProjectMetadata): TitleToItemMap {
+function createMeasures(projectMeta: WorkspaceMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.catalog.metrics.forEach((metric) => {
@@ -118,11 +118,11 @@ function createAttributes(attributes: Attribute[]): IAttrs {
     return newAttrs;
 }
 
-function createCatalogAttributes(projectMeta: ProjectMetadata): IAttrs {
+function createCatalogAttributes(projectMeta: WorkspaceMetadata): IAttrs {
     return createAttributes(projectMeta.catalog.attributes);
 }
 
-function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
+function createDateDatasets(projectMeta: WorkspaceMetadata): TitleToDataSet {
     const newDataSets: TitleToDataSet = {};
 
     projectMeta.dateDataSets.forEach((dd) => {
@@ -141,7 +141,7 @@ function createDateDatasets(projectMeta: ProjectMetadata): TitleToDataSet {
     return newDataSets;
 }
 
-function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
+function createVisualizations(projectMeta: WorkspaceMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.insights.forEach((insight) => {
@@ -153,7 +153,7 @@ function createVisualizations(projectMeta: ProjectMetadata): TitleToItemMap {
     return newMapping;
 }
 
-function createDashboards(projectMeta: ProjectMetadata): TitleToItemMap {
+function createDashboards(projectMeta: WorkspaceMetadata): TitleToItemMap {
     const newMapping: TitleToItemMap = {};
 
     projectMeta.analyticalDashboards.forEach((dashboard) => {
@@ -229,7 +229,7 @@ function mergeData(
  * @param projectMeta - project metadata to work with
  * @param existingCatalog - existing catalog structure to merge with
  */
-export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog?: object): any {
+export function transformToCatalog(projectMeta: WorkspaceMetadata, existingCatalog?: object): any {
     const measures = createMeasures(projectMeta);
     const measuresProp = !isEmpty(measures) ? { measures } : {};
     const attributes = createCatalogAttributes(projectMeta);
@@ -238,7 +238,7 @@ export function transformToCatalog(projectMeta: ProjectMetadata, existingCatalog
     const dashboards = createDashboards(projectMeta);
 
     const newCatalog: ICatalog = {
-        projectId: projectMeta.projectId,
+        projectId: projectMeta.workspaceId,
         ...measuresProp,
         attributes,
         visualizations,

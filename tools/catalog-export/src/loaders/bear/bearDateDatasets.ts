@@ -1,21 +1,21 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import { GdcDataSets } from "@gooddata/api-model-bear";
 import get from "lodash/get";
 import { Attribute, DateDataSet, DisplayForm } from "../../base/types";
 
 /**
- * Loads date data sets defined in the provided project. This function retrieves the minimum
+ * Loads date data sets defined in the provided workspace. This function retrieves the minimum
  * descriptive information about the data set, its attributes and display forms.
  *
- * @param projectId - project to get date data sets from
+ * @param workspaceId - workspace to get date data sets from
  * @returns list of date data sets
  */
-export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]> {
+export async function loadDateDataSets(workspaceId: string): Promise<DateDataSet[]> {
     const dateDataSets: DateDataSet[] = [];
     const attributeUriToDs: { [uri: string]: DateDataSet } = {};
 
-    const dataSets = await gooddata.md.getObjectsByQuery<GdcDataSets.IWrappedDataSet>(projectId, {
+    const dataSets = await gooddata.md.getObjectsByQuery<GdcDataSets.IWrappedDataSet>(workspaceId, {
         category: "dataSet",
     });
 
@@ -43,7 +43,7 @@ export async function loadDateDataSets(projectId: string): Promise<DateDataSet[]
             });
         });
 
-    const objects = await gooddata.md.getObjects(projectId, Object.keys(attributeUriToDs));
+    const objects = await gooddata.md.getObjects(workspaceId, Object.keys(attributeUriToDs));
 
     objects.forEach((attr: any) => {
         const dataSet = attributeUriToDs[attr.attribute.meta.uri];
