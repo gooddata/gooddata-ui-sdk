@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { Velocity, Won } from "../../../../__mocks__/model";
 import { newPositiveAttributeFilter } from "../../filter/factory";
 import {
@@ -41,6 +41,9 @@ describe("measure factories", () => {
             expect(
                 newMeasure("foo", (m) => m.filters(newPositiveAttributeFilter("filter", { uris: ["baz"] }))),
             ).toMatchSnapshot();
+        });
+        it("should sanitize automatically generated localId", () => {
+            expect(newMeasure("id:with:colons")).toMatchSnapshot();
         });
     });
 

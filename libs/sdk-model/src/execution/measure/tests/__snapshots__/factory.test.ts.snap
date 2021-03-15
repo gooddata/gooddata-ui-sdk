@@ -273,6 +273,21 @@ Object {
 }
 `;
 
+exports[`measure factories newMeasure should sanitize automatically generated localId 1`] = `
+Object {
+  "measure": Object {
+    "definition": Object {
+      "measureDefinition": Object {
+        "item": Object {
+          "identifier": "id:with:colons",
+        },
+      },
+    },
+    "localIdentifier": "m_id_with_colons",
+  },
+}
+`;
+
 exports[`measure factories newPopMeasure should return a simple PoP measure from attribute ref 1`] = `
 Object {
   "measure": Object {
