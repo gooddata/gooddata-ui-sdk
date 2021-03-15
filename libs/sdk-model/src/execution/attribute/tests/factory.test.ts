@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { modifyAttribute, newAttribute } from "../factory";
 import { Account } from "../../../../__mocks__/model";
 
@@ -13,6 +13,10 @@ describe("newAttribute", () => {
 
     it("should return an attribute with a custom localId", () => {
         expect(newAttribute("foo", (a) => a.localId("custom"))).toMatchSnapshot();
+    });
+
+    it("should sanitize automatically generated localId", () => {
+        expect(newAttribute("id:with:colons")).toMatchSnapshot();
     });
 });
 

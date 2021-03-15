@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
 import identity from "lodash/identity";
@@ -25,6 +25,7 @@ import { IMeasureFilter } from "../filter";
 import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
 import invariant, { InvariantError } from "ts-invariant";
+import { sanitizeLocalId } from "../../sanitizeLocalId";
 
 /**
  * Simplified Previous Period Data DataSet specification
@@ -232,9 +233,11 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
             return this.measure.localIdentifier!;
         }
 
-        return ["m", this.buildEnvelopeLocalIdPart(), this.generateLocalId()]
-            .filter((part) => !isEmpty(part))
-            .join("_");
+        return sanitizeLocalId(
+            ["m", this.buildEnvelopeLocalIdPart(), this.generateLocalId()]
+                .filter((part) => !isEmpty(part))
+                .join("_"),
+        );
     }
 
     private buildEnvelopeLocalIdPart(): string {

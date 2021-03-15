@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import identity from "lodash/identity";
 import cloneDeep from "lodash/cloneDeep";
 import isEmpty from "lodash/isEmpty";
@@ -6,6 +6,7 @@ import { IAttribute, isAttribute } from "./index";
 import { ObjRef, objRefToString, Identifier, isObjRef } from "../../objRef";
 import { idRef } from "../../objRef/factory";
 import SparkMD5 from "spark-md5";
+import { sanitizeLocalId } from "../../sanitizeLocalId";
 
 /**
  * Input to the AttributeBuilder.
@@ -133,9 +134,11 @@ export class AttributeBuilder {
             return this.attribute.localIdentifier;
         }
 
-        return ["a", this.calculateAliasHash(), objRefToString(this.attribute.displayForm)]
-            .filter((part) => !isEmpty(part))
-            .join("_");
+        return sanitizeLocalId(
+            ["a", this.calculateAliasHash(), objRefToString(this.attribute.displayForm)]
+                .filter((part) => !isEmpty(part))
+                .join("_"),
+        );
     }
 
     private calculateAliasHash(): string {

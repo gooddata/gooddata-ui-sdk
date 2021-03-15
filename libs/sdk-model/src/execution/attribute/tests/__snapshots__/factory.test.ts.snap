@@ -62,3 +62,15 @@ Object {
   },
 }
 `;
+
+exports[`newAttribute should sanitize automatically generated localId 1`] = `
+Object {
+  "attribute": Object {
+    "displayForm": Object {
+      "identifier": "id:with:colons",
+      "type": "displayForm",
+    },
+    "localIdentifier": "a_id_with_colons",
+  },
+}
+`;
