@@ -82,7 +82,7 @@ export function generateHeaderMenuItemsGroups(
         href: `/dashboards/#/project/${workspaceId}`,
     };
     const analyticalDesignerItem = {
-        key: shouldEnableNewNavigation(featureFlags) ? "gs.header.analyze.new" : "gs.header.analyze",
+        key: "gs.header.analyze",
         className: "s-menu-analyze",
         href: `/analyze/#/${workspaceId}/reportId/edit`,
     };
