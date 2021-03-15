@@ -363,10 +363,6 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         if (!this.internal.table) {
             // Table is not yet fully initialized. See if the initialization is in progress. If so, see if
             // the init is for same execution or not. Otherwise fall back to compare props vs props.
-            //
-            // Note: testing the exec used by initializer is crucial in contexts (say AD) where for instance
-            // a change in sorts triggers new reinit in table itself and also sends an event up to the app. The app
-            // then sends the
             if (this.internal.initializer) {
                 const initializeForSameExec = this.internal.initializer.isSameExecution(this.props.execution);
 
@@ -677,7 +673,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      *
      * Once transformation finishes - indicated by call to onPageLoaded, table can re-instance the sticky row.
      *
-     * @param _newExecution
+     * @param _newExecution - the new execution which is being run and will be used to populate the table
      */
     private onExecutionTransformed = (_newExecution: IPreparedExecution): void => {
         if (!this.internal.table) {
