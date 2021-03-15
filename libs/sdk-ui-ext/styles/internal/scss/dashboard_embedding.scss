@@ -83,7 +83,7 @@
             .kpi-value.is-empty-value {
                 color: var(
                     --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                    var(--gd-palette-complementary-6)
+                    var(--gd-palette-complementary-6, inherit)
                 );
             }
         }

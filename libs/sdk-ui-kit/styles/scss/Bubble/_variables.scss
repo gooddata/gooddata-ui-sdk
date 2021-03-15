@@ -22,7 +22,8 @@ $bubble-bg-color: var(
 $bubble-secondary-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-highlight, 0.1));
 $bubble-light-base: rgba(255, 255, 255, 0.95);
 $bubble-warning-base: var(--gd-palette-primary-base-t10, transparentize($gd-color-warning-text, 0.1));
-$bubble-light-border-base: #c9d5e0;
+$default-bubble-light-border-base: #c9d5e0;
+$bubble-light-border-base: var(--gd-palette-complementary-3, $default-bubble-light-border-base);
 $bubble-primary-borderWidth: $bubble-borderWidth;
 $bubble-primary-color: var(--gd-tooltip-color, $gd-color-text-light);
 $bubble-primary-borderColor: $bubble-bg-color;

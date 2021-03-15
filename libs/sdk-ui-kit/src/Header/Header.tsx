@@ -1,8 +1,10 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component, createRef } from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 import uniqueId from "lodash/uniqueId";
 import debounce from "lodash/debounce";
@@ -12,7 +14,6 @@ import addCSS from "@gooddata/goodstrap/lib/core/addCSS";
 import HeaderMenu from "@gooddata/goodstrap/lib/Header/HeaderMenu";
 import HeaderAccount from "@gooddata/goodstrap/lib/Header/HeaderAccount";
 
-import { Button } from "../Button";
 import { Overlay } from "../Overlay";
 import { HeaderHelp } from "./HeaderHelp";
 
@@ -24,6 +25,7 @@ import {
     getWorkspacePickerHoverColor,
 } from "./colors";
 import { removeFromDom } from "../utils/domUtilities";
+import { Icon } from "../Icon";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -80,6 +82,7 @@ export interface IAppHeaderProps {
     onHelpClick?: (isOpen: boolean) => void;
 
     helpRedirectUrl?: string;
+    theme?: ITheme;
 }
 /**
  * @internal
@@ -337,19 +340,24 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderLogoutButton = () => {
-        const t = this.props.intl.formatMessage;
         const [logoutMenuItem] = this.props.accountMenuItems.filter(
             (item) => item.key === "gs.header.logout",
         );
 
         return logoutMenuItem ? (
-            <Button
-                value={t({ id: "gs.header.logout" })}
-                className="logout-button"
+            <button
+                className="logout-button gd-button s-logout"
                 onClick={(e: React.MouseEvent) => {
                     this.props.onMenuItemClick(logoutMenuItem, e);
                 }}
-            />
+            >
+                <span className="icon-logout">
+                    <Icon name="Logout" color={this.props.theme?.palette?.complementary?.c0} />
+                </span>
+                <span className="gd-button-text">
+                    <FormattedMessage id="gs.header.logout" />
+                </span>
+            </button>
         ) : (
             false
         );
@@ -388,4 +396,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 /**
  * @internal
  */
-export const AppHeader = injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore);
+export const AppHeader = withTheme(
+    injectIntl<"intl", IAppHeaderProps & WrappedComponentProps>(AppHeaderCore),
+);

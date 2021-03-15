@@ -106,7 +106,7 @@
                 // stylelint-disable-next-line max-nesting-depth
                 &,
                 &:hover {
-                    background-color: var(--gd-palette-complementary-1, #fff);
+                    background-color: $gd-color-white;
                 }
             }
         }

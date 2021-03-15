@@ -87,7 +87,9 @@
         top: auto;
         bottom: 100%;
 
-        @include box-shadow(0 0 5px 0 transparentize($gd-datepicker-shadow-color, 0.85));
+        @include box-shadow(
+            0 0 5px 0 var(--gd-shadow-color, transparentize($gd-datepicker-shadow-color, 0.85))
+        );
     }
 }
 
@@ -98,7 +100,9 @@
     user-select: none;
     text-align: left;
 
-    @include box-shadow(0 2px 5px 0 transparentize($gd-datepicker-shadow-color, 0.85));
+    @include box-shadow(
+        0 2px 5px 0 var(--gd-shadow-color, transparentize($gd-datepicker-shadow-color, 0.85))
+    );
 
     .DayPicker {
         position: relative;

@@ -21,7 +21,7 @@ $loading-dot-delay: 0.16;
         height: 8px;
         margin-right: 6px;
         border-radius: 100%;
-        background-color: $gd-color-disabled;
+        background-color: var(--gd-palette-complementary-6, $default-gd-color-disabled);
         animation: bouncedelay 1.4s infinite ease-in-out;
         animation-fill-mode: both;
     }

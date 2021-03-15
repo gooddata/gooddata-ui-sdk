@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
 import {
@@ -135,7 +135,7 @@ describe("cssProperties", () => {
             expect(generateShadowColor(theme.palette, true)).toEqual([
                 {
                     key: "--gd-shadow-color",
-                    value: "#000",
+                    value: "rgba(0,0,0,0.5)",
                 },
             ]);
         });
@@ -143,7 +143,7 @@ describe("cssProperties", () => {
             expect(generateShadowColor(theme.palette, false)).toEqual([
                 {
                     key: "--gd-shadow-color",
-                    value: "#222",
+                    value: "rgba(34,34,34,0.2)",
                 },
             ]);
         });
