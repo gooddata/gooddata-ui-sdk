@@ -14,6 +14,7 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
@@ -90,6 +91,8 @@ export interface IColumnSizing {
 export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
     // (undocumented)
     execution: IPreparedExecution;
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @public

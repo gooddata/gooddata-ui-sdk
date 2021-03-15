@@ -238,6 +238,68 @@ export interface IThemeChart {
 }
 
 /**
+ * Table customization
+ *
+ * @beta
+ */
+export interface IThemeTable {
+    /**
+     * Background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Grid line color
+     */
+    gridColor?: ThemeColor;
+
+    /**
+     * Value color
+     */
+    valueColor?: ThemeColor;
+
+    /**
+     * Color of null value (dash)
+     */
+    nullValueColor?: ThemeColor;
+
+    /**
+     * Color of loading icon
+     */
+    loadingIconColor?: ThemeColor;
+
+    /**
+     * Background color of hovered row
+     */
+    hoverBackgroundColor?: ThemeColor;
+
+    /**
+     * Color of header labels
+     */
+    headerLabelColor?: ThemeColor;
+
+    /**
+     * Background color of hovered header row
+     */
+    headerHoverBackgroundColor?: ThemeColor;
+
+    /**
+     * Background color of total values
+     */
+    totalBackgroundColor?: ThemeColor;
+
+    /**
+     * Background color of subtotal values
+     */
+    subtotalBackgroundColor?: ThemeColor;
+
+    /**
+     * Color of total value
+     */
+    totalValueColor?: ThemeColor;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * Only the primary color main value is mandatory
@@ -350,6 +412,11 @@ export interface ITheme {
      * Chart customizable UI properties
      */
     chart?: IThemeChart;
+
+    /**
+     * Table customizable UI properties
+     */
+    table?: IThemeTable;
 
     /**
      * KPI dashboards specific properties

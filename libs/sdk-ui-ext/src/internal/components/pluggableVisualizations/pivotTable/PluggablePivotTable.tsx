@@ -295,6 +295,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             dimensions,
             config = {},
             customVisualizationConfig = {},
+            theme,
         } = options;
         const { maxHeight, maxWidth } = config;
         const height = dimensions?.height;
@@ -329,6 +330,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             drillableItems,
             config: tableConfig,
             locale,
+            theme,
         };
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {

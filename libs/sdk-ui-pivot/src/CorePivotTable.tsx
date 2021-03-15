@@ -26,6 +26,7 @@ import {
     LoadingComponent,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
+import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { getUpdatedColumnTotals } from "./impl/structure/headers/aggregationsMenuHelper";
 import { getScrollbarWidth } from "./impl/utils";
 import { IScrollPosition } from "./impl/stickyRowHandler";
@@ -364,10 +365,14 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     private renderLoading() {
-        const { LoadingComponent } = this.props;
+        const { LoadingComponent, theme } = this.props;
+
+        const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
 
         return (
-            <div className="s-loading gd-table-loading">{LoadingComponent ? <LoadingComponent /> : null}</div>
+            <div className="s-loading gd-table-loading">
+                {LoadingComponent ? <LoadingComponent color={color} /> : null}
+            </div>
         );
     }
 
@@ -880,13 +885,15 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 }
 
-const CorePivotTableWithIntl = injectIntl(CorePivotTableAgImpl);
+const CorePivotTableWithIntl = injectIntl(withTheme(CorePivotTableAgImpl));
 
 /**
  * @internal
  */
 export const CorePivotTable: React.FC<ICorePivotTableProps> = (props) => (
-    <IntlWrapper locale={props.locale}>
-        <CorePivotTableWithIntl {...props} />
-    </IntlWrapper>
+    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+        <IntlWrapper locale={props.locale}>
+            <CorePivotTableWithIntl {...props} />
+        </IntlWrapper>
+    </ThemeContextProvider>
 );

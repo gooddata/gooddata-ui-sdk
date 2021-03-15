@@ -13,6 +13,7 @@ export {
     IThemePalette,
     IThemeKpi,
     IThemeChart,
+    IThemeTable,
     ITheme,
 } from "./theme";
 

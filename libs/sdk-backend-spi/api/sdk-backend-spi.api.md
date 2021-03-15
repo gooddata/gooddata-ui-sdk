@@ -1405,6 +1405,7 @@ export interface ITheme {
         borderRadius?: string;
     };
     palette?: IThemePalette;
+    table?: IThemeTable;
     tooltip?: {
         backgroundColor?: ThemeColor;
         color?: ThemeColor;
@@ -1477,6 +1478,21 @@ export interface IThemePalette {
     primary?: IThemeColorFamily;
     success?: IThemeColorFamily;
     warning?: IThemeColorFamily;
+}
+
+// @beta
+export interface IThemeTable {
+    backgroundColor?: ThemeColor;
+    gridColor?: ThemeColor;
+    headerHoverBackgroundColor?: ThemeColor;
+    headerLabelColor?: ThemeColor;
+    hoverBackgroundColor?: ThemeColor;
+    loadingIconColor?: ThemeColor;
+    nullValueColor?: ThemeColor;
+    subtotalBackgroundColor?: ThemeColor;
+    totalBackgroundColor?: ThemeColor;
+    totalValueColor?: ThemeColor;
+    valueColor?: ThemeColor;
 }
 
 // @beta
