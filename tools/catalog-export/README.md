@@ -50,7 +50,7 @@ The program is able to run in interactive or silent modes:
 
 ## Tiger usage notes
 
-The program can retrieve and generate catalogs from either GoodData Platform (bear) or GoodData Anywhere (tiger)
+The program can retrieve and generate catalogs from either GoodData Platform (bear) or GoodData Cloud Native (tiger)
 backends. The program does not do auto-detection of the backend type - you have to indicate type of backend
 either through config or on command line.
 
@@ -62,14 +62,11 @@ setting in the `.gdcatalogrc`. Here is an example of full config for tiger:
 {
     "hostname": "https://your.hostname.or.ip",
     "backend": "tiger",
-    "projectId": "your workspace",
+    "workspaceId": "your workspace identifier",
     "username": "tiger_user_id",
     "output": "workspaceObjects.ts"
 }
 ```
-
-> Note: you have to enter `projectId` or use the `--project-id` option with tiger. Unlike for bear, the
-> catalog-export will not prompt you to select a workspace from a list of available workspaces.
 
 ### Tiger Authentication
 
