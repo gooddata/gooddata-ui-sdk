@@ -2,6 +2,7 @@
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { IHeaderMenuItem } from "./Header";
 import { isFreemiumEdition, shouldHidePPExperience } from "../utils/featureFlags";
+import { shouldEnableNewNavigation } from "../utils/featureFlags";
 
 /**
  * @internal
@@ -24,7 +25,6 @@ export function generateHeaderMenuItemsGroups(
     const {
         enableCsvUploader,
         enableDataSection,
-        enableNewNavigationForResponsiveUi,
         analyticalDesigner,
         enableAnalyticalDashboards,
     } = featureFlags;
@@ -77,7 +77,7 @@ export function generateHeaderMenuItemsGroups(
     const insightItemsGroup = [];
 
     const kpiDashboardsItem = {
-        key: enableNewNavigationForResponsiveUi ? "gs.header.kpis.new" : "gs.header.kpis",
+        key: shouldEnableNewNavigation(featureFlags) ? "gs.header.kpis.new" : "gs.header.kpis",
         className: "s-menu-kpis",
         href: `/dashboards/#/project/${workspaceId}`,
     };
