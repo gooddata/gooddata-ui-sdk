@@ -65,7 +65,7 @@ function loadAttributeDisplayForm(
     workspace: string,
     ref: ObjRef,
 ): Promise<IAttributeDisplayFormMetadataObject> {
-    invariant(isIdentifierRef(ref));
+    invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
     return client.workspaceObjects
         .getEntityLabels(
@@ -88,7 +88,7 @@ function loadAttribute(
     workspace: string,
     ref: ObjRef,
 ): Promise<IAttributeMetadataObject> {
-    invariant(isIdentifierRef(ref));
+    invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
     return client.workspaceObjects
         .getEntityAttributes(
