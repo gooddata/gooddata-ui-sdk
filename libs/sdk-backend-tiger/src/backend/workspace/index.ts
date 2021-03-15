@@ -81,7 +81,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public facts(): IWorkspaceFactsService {
-        return new TigerWorkspaceFacts();
+        return new TigerWorkspaceFacts(this.authCall, this.workspace);
     }
 
     public styling(): IWorkspaceStylingService {
