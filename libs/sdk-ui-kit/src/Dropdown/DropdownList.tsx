@@ -30,7 +30,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
 
     showSearch?: boolean;
     disableAutofocus?: boolean;
-    searchFieldSize?: "small";
+    searchFieldSize?: "small" | "normal";
     searchPlaceholder?: string;
     searchString?: string;
     onSearch?: (searchString: string) => void;
@@ -48,8 +48,19 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     closeDropdown?: () => void;
 }
 
+/**
+ * @internal
+ */
 export const LOADING_HEIGHT = 100;
+
+/**
+ * @internal
+ */
 export const DEFAULT_ITEM_HEIGHT = 28;
+
+/**
+ * @internal
+ */
 export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 const defaultNoData = injectIntl(

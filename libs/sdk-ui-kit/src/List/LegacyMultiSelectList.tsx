@@ -3,14 +3,14 @@ import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import { isImmutable, fromJS } from "immutable";
-import { guidFor } from "@gooddata/goodstrap/lib/core/Guid";
-import FlexDimensions from "@gooddata/goodstrap/lib/core/FlexDimensions";
 
-import { Button } from "../Button/Button";
+import { Button } from "../Button";
 import { LegacyList } from "./LegacyList";
 import { ScrollCallback } from "./List";
 import { LegacyListItem } from "./LegacyListItem";
 import LegacyMultiSelectListItem from "./LegacyMultiSelectListItem";
+import { guidFor } from "./guid";
+import { FlexDimensions } from "../FlexDimensions";
 
 /**
  * @internal

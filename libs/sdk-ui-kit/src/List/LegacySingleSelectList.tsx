@@ -2,11 +2,11 @@
 import React, { Component } from "react";
 import pick from "lodash/pick";
 import cx from "classnames";
-import { guidFor } from "@gooddata/goodstrap/lib/core/Guid";
 
 import { LegacyList } from "./LegacyList";
 import { LegacyListItem } from "./LegacyListItem";
 import { LegacySingleSelectListItem } from "./LegacySingleSelectListItem";
+import { guidFor } from "./guid";
 
 /**
  * @internal

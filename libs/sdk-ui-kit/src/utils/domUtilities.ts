@@ -3,7 +3,7 @@
 import { IRegion } from "../typings/domUtilities";
 
 /**
- * Removes the element specifed from the DOM
+ * Removes the element specified from the DOM
  * @param {HTMLElement} element
  */
 export const removeFromDom = (element: HTMLElement): void => {
@@ -89,6 +89,7 @@ export const isFixedPosition = (element: HTMLElement | string): boolean => {
  * in local (relative to offset parent of element)
  * coordinate space
  * @param {HTMLElement|string} elementOrSelector
+ * @param getRegionBasedOnPosition
  */
 export const elementRegion = (
     elementOrSelector: HTMLElement | string,

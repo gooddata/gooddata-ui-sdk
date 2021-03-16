@@ -2,7 +2,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
-import Dropdown from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+import { DropdownButton } from "@gooddata/sdk-ui-kit";
 
 import PushpinSizeControl, { IPushpinSizeControl } from "../PushpinSizeControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
@@ -34,8 +34,8 @@ describe("PushpinSizeControl", () => {
             const wrapper = createComponent({
                 disabled: true,
             });
-            const smallestDropdown = wrapper.find(Dropdown).first();
-            const largestDropdown = wrapper.find(Dropdown).last();
+            const smallestDropdown = wrapper.find(DropdownButton).first();
+            const largestDropdown = wrapper.find(DropdownButton).last();
 
             expect(smallestDropdown.prop("disabled")).toBe(true);
             expect(largestDropdown.prop("disabled")).toBe(true);

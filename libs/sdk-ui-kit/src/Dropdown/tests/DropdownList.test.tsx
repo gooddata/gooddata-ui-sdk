@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { DropdownList, IDropdownListNoDataRenderProps, IDropdownListProps } from "../DropdownList";
 import { IRenderItemProps, List } from "../../List";

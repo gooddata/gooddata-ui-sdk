@@ -4,9 +4,9 @@
 
 ```ts
 
+import { ColorFormats } from 'tinycolor2';
 import { Component } from 'react';
 import { CSSProperties } from 'react';
-import { guidFor } from '@gooddata/goodstrap/lib/core/Guid';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-backend-spi';
@@ -14,7 +14,7 @@ import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
-import * as React_3 from 'react';
+import { ReactNode } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal (undocumented)
@@ -26,7 +26,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "badges" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "userName" | "disableHelpDropdown" | "onHelpClick">>;
+export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "userName" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "badges" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "disableHelpDropdown" | "onHelpClick">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -131,7 +131,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React_2.PureCo
 }
 
 // @internal (undocumented)
-export class Button extends React_3.Component<IButtonProps> {
+export class Button extends React_2.Component<IButtonProps> {
     // (undocumented)
     buttonNode: HTMLElement;
     // (undocumented)
@@ -148,7 +148,7 @@ export class Button extends React_3.Component<IButtonProps> {
         iconRight: string;
     };
     // (undocumented)
-    render(): React_3.ReactNode;
+    render(): React_2.ReactNode;
     }
 
 // @internal (undocumented)
@@ -188,6 +188,16 @@ export interface CheckboxProps {
 export type Color = string;
 
 // @internal (undocumented)
+export const ColorPicker: React_2.ForwardRefExoticComponent<Pick<IColorPickerProps & WrappedComponentProps<"intl">, "onCancel" | "onSubmit" | "initialRgbColor"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IColorPickerProps & WrappedComponentProps<"intl">>;
+};
+
+// @internal (undocumented)
+export const ColorPickerPointer: React_2.FC;
+
+// @internal (undocumented)
 export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 
 // @internal (undocumented)
@@ -208,6 +218,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 
 // @internal (undocumented)
+export function dateDatasets(dateDatasets: IDateDataset[], recommendedDate?: IDateDataset, unrelatedDate?: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
+
+// @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
@@ -215,6 +228,12 @@ export class Datepicker extends React_2.PureComponent<IDatePickerOwnProps> {
     // (undocumented)
     render(): React_2.ReactNode;
 }
+
+// @internal (undocumented)
+export const DEFAULT_ITEM_HEIGHT = 28;
+
+// @internal (undocumented)
+export const DEFAULT_MOBILE_ITEM_HEIGHT = 40;
 
 // @internal (undocumented)
 export class Dialog extends Component<IDialogBaseProps> {
@@ -252,6 +271,72 @@ export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
 
 // @internal (undocumented)
+export class EditableLabel extends Component<IEditableLabelProps, IEditableLabelState> {
+    constructor(props: IEditableLabelProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: {
+        children: boolean;
+        className: string;
+        maxLength: number;
+        maxRows: number;
+        onCancel: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        onEditingStart: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        onChange: {
+            <T>(value: T): T;
+            (): undefined;
+        };
+        placeholder: string;
+        scrollToEndOnEditingStart: boolean;
+        textareaInOverlay: boolean;
+        autofocus: boolean;
+    };
+    // (undocumented)
+    edit: (e?: React_2.MouseEvent<HTMLDivElement>) => void;
+    // (undocumented)
+    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
+    // (undocumented)
+    isMultiLine(): boolean;
+    // (undocumented)
+    measureRootDimensions(): void;
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
+    // (undocumented)
+    onDocumentClick: (e: MouseEvent) => void;
+    // (undocumented)
+    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
+    // (undocumented)
+    onSelectStart(e: React_2.MouseEvent): void;
+    // (undocumented)
+    onSubmit: () => void;
+    // (undocumented)
+    removeListeners(): void;
+    // (undocumented)
+    render(): ReactNode;
+    // (undocumented)
+    renderEditableLabelEdit(): ReactNode;
+    // (undocumented)
+    renderTextarea(style?: {}): ReactNode;
+    // (undocumented)
+    renderTextAreaInOverlay(): ReactNode;
+    // (undocumented)
+    selectAndFocus: () => void;
+    // (undocumented)
+    UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
+}
+
+// @internal (undocumented)
 export enum ENUM_KEY_CODE {
     // (undocumented)
     KEY_CODE_ENTER = 13,
@@ -276,14 +361,45 @@ export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
 }
 
 // @internal (undocumented)
+export const FilterLabel: React_2.ForwardRefExoticComponent<Pick<IFilterLabelProps & WrappedComponentProps<"intl">, "title" | "selection" | "isAllSelected" | "isDate" | "selectionSize" | "noData"> & {
+    forwardedRef?: React_2.Ref<any>;
+} & React_2.RefAttributes<any>> & {
+    WrappedComponent: React_2.ComponentType<IFilterLabelProps & WrappedComponentProps<"intl">>;
+};
+
+// @internal (undocumented)
+export class FlexDimensions extends Component<IFlexDimensionsProps, IFlexDimensionsState> {
+    constructor(props: IFlexDimensionsProps);
+    // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
+    componentWillUnmount(): void;
+    // (undocumented)
+    static defaultProps: {
+        children: boolean;
+        className: string;
+        measureWidth: boolean;
+        measureHeight: boolean;
+    };
+    // (undocumented)
+    getChildrenDimensions(): Partial<IFlexDimensionsState>;
+    // (undocumented)
+    render(): ReactNode;
+    // (undocumented)
+    renderChildren(): ReactNode;
+    // (undocumented)
+    updateSize: () => void;
+    }
+
+// @internal (undocumented)
 export class FullScreenOverlay extends Overlay<IOverlayState> {
     constructor(props: IOverlayProps<any>);
-    // (undocumented)
-    componentWillMount(): void;
     // (undocumented)
     componentWillUnmount(): void;
     // (undocumented)
     protected getOverlayStyles: () => React.CSSProperties;
+    // (undocumented)
+    UNSAFE_componentWillMount(): void;
 }
 
 // @internal (undocumented)
@@ -331,6 +447,12 @@ export type GetPositionedSelfRegion = {
     selfRegion: IRegion;
     alignPoint: IAlignPoint;
 };
+
+// @internal (undocumented)
+export function getRecommendedDateDataset(items: IDateDataset[]): IDateDataset;
+
+// @internal
+export function guidFor(obj: any): string;
 
 // @internal (undocumented)
 export const Header: React_2.FC<IHeaderProps>;
@@ -529,6 +651,22 @@ export interface IButtonProps {
 }
 
 // @internal (undocumented)
+export interface IColorPickerProps {
+    // (undocumented)
+    initialRgbColor: ColorFormats.RGB;
+    // (undocumented)
+    onCancel: () => void;
+    // (undocumented)
+    onSubmit: (color: ColorFormats.RGB) => void;
+}
+
+// @internal (undocumented)
+export interface IColorPickerState {
+    // (undocumented)
+    draftHslColor: ColorFormats.HSL;
+}
+
+// @internal (undocumented)
 export interface ICommunityEditionDialogProps {
     // (undocumented)
     closeButtonText: string;
@@ -581,6 +719,24 @@ export interface ICustomizableCheckmarkProps {
     height?: number;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IDateDataset {
+    // (undocumented)
+    identifier: string;
+    // (undocumented)
+    relevance?: number;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IDateDatasetHeader {
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: "header";
 }
 
 // @internal (undocumented)
@@ -728,7 +884,7 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => React_2.ReactNode;
     // (undocumented)
-    searchFieldSize?: "small";
+    searchFieldSize?: "small" | "normal";
     // (undocumented)
     searchPlaceholder?: string;
     // (undocumented)
@@ -784,6 +940,48 @@ export interface IDropdownTagsProps {
 }
 
 // @internal (undocumented)
+export interface IEditableLabelProps {
+    // (undocumented)
+    autofocus?: boolean;
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    maxLength?: number;
+    // (undocumented)
+    maxRows?: number;
+    // (undocumented)
+    onCancel?: (value: string) => void;
+    // (undocumented)
+    onChange?: (value: string) => void;
+    // (undocumented)
+    onEditingStart?: () => void;
+    // (undocumented)
+    onSubmit: (value: string) => void;
+    // (undocumented)
+    placeholder?: string;
+    // (undocumented)
+    scrollToEndOnEditingStart?: boolean;
+    // (undocumented)
+    textareaInOverlay?: boolean;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
+export interface IEditableLabelState {
+    // (undocumented)
+    isEditing: boolean;
+    // (undocumented)
+    textareaFontSize?: number;
+    // (undocumented)
+    textareaWidth: number;
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
 export interface IExportDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
@@ -830,6 +1028,48 @@ export interface IExportDialogData {
 }
 
 // @internal (undocumented)
+export interface IFilterLabelProps {
+    // (undocumented)
+    isAllSelected?: boolean;
+    // (undocumented)
+    isDate?: boolean;
+    // (undocumented)
+    noData?: boolean;
+    // (undocumented)
+    selection?: string;
+    // (undocumented)
+    selectionSize?: number;
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IFilterLabelState {
+    // (undocumented)
+    hasEllipsis: boolean;
+}
+
+// @internal (undocumented)
+export interface IFlexDimensionsProps {
+    // (undocumented)
+    children?: React_2.ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    measureHeight?: boolean;
+    // (undocumented)
+    measureWidth?: boolean;
+}
+
+// @internal (undocumented)
+export interface IFlexDimensionsState {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
 export interface IFormatPreset {
     // (undocumented)
     format: string | null;
@@ -853,6 +1093,24 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderAccountProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    items?: IHeaderMenuItem[];
+    // (undocumented)
+    onMenuItemClick: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    // (undocumented)
+    userName?: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderAccountState {
+    // (undocumented)
+    isOpen: boolean;
 }
 
 // @internal (undocumented)
@@ -905,6 +1163,16 @@ export interface IHeaderMenuItem {
     onClick?: (obj: any) => void;
     // (undocumented)
     target?: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderMenuProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    // (undocumented)
+    sections?: IHeaderMenuItem[][];
 }
 
 // @internal (undocumented)
@@ -974,14 +1242,21 @@ export interface IIconProps {
 }
 
 // @internal (undocumented)
+export interface IInsightListItemDateConfig {
+    // (undocumented)
+    date: Date;
+    // (undocumented)
+    isCurrentYear: boolean;
+    // (undocumented)
+    isToday: boolean;
+    // (undocumented)
+    isYesterday: boolean;
+}
+
+// @internal (undocumented)
 export interface IInsightListItemDateProps {
     // (undocumented)
-    config: {
-        isCurrentYear: boolean;
-        isToday: boolean;
-        isYesterday: boolean;
-        date: Date;
-    };
+    config: IInsightListItemDateConfig;
 }
 
 // @internal (undocumented)
@@ -1786,7 +2061,7 @@ export const InsightListItem: React_2.ForwardRefExoticComponent<Pick<IInsightLis
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
-export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "className" | "onSelect" | "items" | "isLoading" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
+export const InvertableList: React_2.ForwardRefExoticComponent<Pick<IInvertableListProps<unknown>, "height" | "width" | "tagName" | "className" | "onSelect" | "isLoading" | "items" | "itemsCount" | "itemHeight" | "renderItem" | "onScrollEnd" | "isMobile" | "isInverted" | "selectedItems" | "filteredItemsCount" | "maxSelectionSize" | "renderLimitHit" | "renderNoItems" | "renderLoading" | "getItemKey" | "noItemsFound" | "showSearchField" | "smallSearch" | "actionsAsCheckboxes" | "searchPlaceholder" | "searchString" | "onSearch"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
     WrappedComponent: React_2.ComponentType<IInvertableListProps<unknown>>;
@@ -1928,6 +2203,9 @@ export interface IResponsiveTextProps {
 }
 
 // @internal (undocumented)
+export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
+
+// @internal (undocumented)
 export function isFreemiumEdition(platformEdition: string): boolean;
 
 // @internal (undocumented)
@@ -1984,6 +2262,12 @@ export interface ISnapPoints {
     child: SnapPoint;
     // (undocumented)
     parent: SnapPoint;
+}
+
+// @internal (undocumented)
+export interface ISpinnerProps {
+    // (undocumented)
+    className?: string;
 }
 
 // @internal (undocumented)
@@ -2202,6 +2486,9 @@ export class List<T> extends Component<IListProps<T>> {
 }
 
 // @internal (undocumented)
+export const LOADING_HEIGHT = 100;
+
+// @internal (undocumented)
 export const LoadingDots: React_2.FC<ILoadingDotsProps>;
 
 // @internal (undocumented)
@@ -2237,6 +2524,9 @@ export const NoData: React_2.FC<INoDataProps>;
 
 // @internal
 export function normalizeTime(time: Date): Date;
+
+// @internal (undocumented)
+export const otherHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
 export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
@@ -2275,10 +2565,19 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
+export function preselectDateDataset(dateDatasets: IDateDataset[], recommendedDate: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
+
+// @internal (undocumented)
 export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export const recommendedHeader: IDateDatasetHeader;
+
+// @internal (undocumented)
+export const relatedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: React_2.Provider<IResponsiveConfig>;
@@ -2373,6 +2672,18 @@ export enum SnapPoint {
 }
 
 // @internal (undocumented)
+export class Spinner extends PureComponent<ISpinnerProps> {
+    // (undocumented)
+    static defaultProps: {
+        className: string;
+    };
+    // (undocumented)
+    generateSpinnerTicks(): ReactNode[];
+    // (undocumented)
+    render(): ReactNode;
+}
+
+// @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 
 // @internal (undocumented)
@@ -2396,7 +2707,13 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 }
 
 // @internal (undocumented)
+export function transform2Dropdown(dateDatasets: IDateDataset[]): Array<IDateDataset | IDateDatasetHeader>;
+
+// @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal (undocumented)
+export const unrelatedHeader: IDateDatasetHeader;
 
 // @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;

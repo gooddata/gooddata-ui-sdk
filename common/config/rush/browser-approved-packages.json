@@ -260,23 +260,27 @@
     },
     {
       "name": "@types/json-stable-stringify",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "@types/json5",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "@types/kefir",
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/lodash",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": ["examples", "production", "tools"]
     },
     {
       "name": "@types/lru-cache",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/mapbox-gl",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/md5",
@@ -376,23 +380,27 @@
     },
     {
       "name": "@types/spark-md5",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/stringify-object",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": ["production", "tools"]
+    },
+    {
+      "name": "@types/tinycolor2",
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/uuid",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "@types/yup",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": ["examples"]
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": ["examples", "production", "tools"]
     },
     {
       "name": "@typescript-eslint/parser",
@@ -476,27 +484,31 @@
     },
     {
       "name": "css-loader",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": ["examples", "production"]
     },
     {
       "name": "custom-event",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "date-fns",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
+    },
+    {
+      "name": "date-fns-tz",
+      "allowedCategories": ["production"]
     },
     {
       "name": "dependency-cruiser",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "dotenv",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "dotenv-webpack",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": ["examples"]
     },
     {
       "name": "downshift",
@@ -644,23 +656,27 @@
     },
     {
       "name": "json-stable-stringify",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "json5",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": ["tools"]
+    },
+    {
+      "name": "kefir",
+      "allowedCategories": ["production"]
     },
     {
       "name": "lodash",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": ["examples", "production", "tools"]
     },
     {
       "name": "lodash-webpack-plugin",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "lru-cache",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "mapbox-gl",
@@ -800,23 +816,27 @@
     },
     {
       "name": "react-select",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": ["examples", "production"]
     },
     {
       "name": "react-syntax-highlighter",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": ["examples"]
+    },
+    {
+      "name": "react-textarea-autosize",
+      "allowedCategories": ["production"]
     },
     {
       "name": "react-transition-group",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "react-truncate",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "react-window",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "recharts",
@@ -872,23 +892,27 @@
     },
     {
       "name": "supertest",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": ["examples"]
     },
     {
       "name": "testcafe",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": ["examples", "production"]
+    },
+    {
+      "name": "tinycolor2",
+      "allowedCategories": ["production"]
     },
     {
       "name": "ts-invariant",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": ["examples", "production"]
     },
     {
       "name": "ts-jest",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": ["production", "tools"]
     },
     {
       "name": "ts-loader",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": ["production"]
     },
     {
       "name": "ts-morph",

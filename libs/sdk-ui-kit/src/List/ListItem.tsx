@@ -54,7 +54,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 
     public componentDidMount(): void {
         if (this.titleRef.current) {
-            // Checks if ellipsis has been applicated on title span
+            // Checks if ellipsis has been applied on title span
             const isOverflowed = this.titleRef.current.offsetWidth < this.titleRef.current.scrollWidth;
             if (isOverflowed) {
                 // eslint-disable-next-line react/no-did-mount-set-state

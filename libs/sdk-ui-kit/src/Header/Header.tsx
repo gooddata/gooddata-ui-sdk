@@ -4,18 +4,13 @@ import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl"
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import cx from "classnames";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ITheme } from "@gooddata/sdk-backend-spi";
 
 import uniqueId from "lodash/uniqueId";
 import debounce from "lodash/debounce";
 
-import addCSS from "@gooddata/goodstrap/lib/core/addCSS";
-
-import HeaderMenu from "@gooddata/goodstrap/lib/Header/HeaderMenu";
-import HeaderAccount from "@gooddata/goodstrap/lib/Header/HeaderAccount";
-
 import { Overlay } from "../Overlay";
-import { HeaderHelp } from "./HeaderHelp";
+import { removeFromDom } from "../utils/domUtilities";
+import { Icon } from "../Icon";
 
 import {
     getItemActiveColor,
@@ -24,8 +19,11 @@ import {
     getSeparatorColor,
     getWorkspacePickerHoverColor,
 } from "./colors";
-import { removeFromDom } from "../utils/domUtilities";
-import { Icon } from "../Icon";
+import { addCssToStylesheet } from "./addCssToStylesheet";
+import { IAppHeaderProps, IAppHeaderState, IHeaderMenuItem } from "./typings";
+import { HeaderHelp } from "./HeaderHelp";
+import { HeaderAccount } from "./HeaderAccount";
+import { HeaderMenu } from "./HeaderMenu";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -39,63 +37,6 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
     return Array.from(element.querySelectorAll(selector))
         .map(getOuterWidth)
         .reduce((sum, childWidth) => sum + childWidth, SAFETY_PADDING);
-}
-/**
- * @internal
- */
-export interface IHeaderMenuItem {
-    key: string;
-    href?: string;
-    isActive?: boolean;
-    className?: string;
-    target?: string;
-    onClick?: (obj: any) => void;
-}
-
-/**
- * @internal
- */
-export interface IAppHeaderProps {
-    className?: string;
-
-    onLogoClick?: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
-    onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React.MouseEvent) => void;
-
-    menuItemsGroups?: IHeaderMenuItem[][];
-    accountMenuItems?: IHeaderMenuItem[];
-    helpMenuItems?: IHeaderMenuItem[];
-
-    badges?: React.ReactNode;
-
-    logoUrl?: string;
-    logoHref?: string;
-    logoTitle?: string;
-
-    documentationUrl?: string;
-
-    workspacePicker: React.ReactNode;
-
-    headerColor?: string;
-    headerTextColor?: string;
-    activeColor?: string;
-
-    userName: string;
-
-    disableHelpDropdown?: boolean;
-    onHelpClick?: (isOpen: boolean) => void;
-
-    helpRedirectUrl?: string;
-    theme?: ITheme;
-}
-/**
- * @internal
- */
-export interface IAppHeaderState {
-    childrenWidth: number;
-    guid: string;
-    isOverlayMenuOpen: boolean;
-    responsiveMode: boolean;
-    isHelpMenuOpen: boolean;
 }
 
 class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
@@ -224,7 +165,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         css.push(`.${guid} .hamburger-icon:not(.is-open):after { border-color: ${textColor}}`);
         css.push(`.${guid} .hamburger-icon:not(.is-open):before { border-color: ${textColor}}`);
 
-        this.stylesheet = addCSS(`header-css-${guid}`, css.join("\n"), true);
+        this.stylesheet = addCssToStylesheet(`header-css-${guid}`, css.join("\n"), true);
     };
 
     private setOverlayMenu = (isOverlayMenuOpen: boolean) => {
@@ -402,6 +343,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         );
     };
 }
+
 /**
  * @internal
  */

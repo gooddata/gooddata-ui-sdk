@@ -1,7 +1,8 @@
 // (C) 2020-2021 GoodData Corporation
-import { IHeaderMenuItem } from "./Header";
 import { ISettings } from "@gooddata/sdk-backend-spi";
+
 import { generateSupportUrl } from "../utils/featureFlags";
+import { IHeaderMenuItem } from "./typings";
 
 type TUTMContent =
     | "main_menu_help_documentation"

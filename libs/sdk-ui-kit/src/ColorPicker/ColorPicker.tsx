@@ -1,0 +1,98 @@
+// (C) 2007-2020 GoodData Corporation
+import React, { Component } from "react";
+import isEqual from "lodash/isEqual";
+import { injectIntl, WrappedComponentProps } from "react-intl";
+import { ColorFormats } from "tinycolor2";
+
+import { Button } from "../Button";
+
+import { ColorPickerMatrix } from "./components/ColorPickerMatrix";
+import { HexColorInput } from "./components/HexColorInput";
+import { HueColorPicker } from "./components/HueColorPicker";
+import { ColorsPreview } from "./components/ColorsPreview";
+import { getRgbFromHslColor, getHslFromRgbColor, isHslColorBlackOrWhite } from "./utils";
+import { IColorPickerProps, IColorPickerState } from "./typings";
+
+class WrappedColorPicker extends Component<IColorPickerProps & WrappedComponentProps, IColorPickerState> {
+    constructor(props: IColorPickerProps & WrappedComponentProps) {
+        super(props);
+
+        const currentHslColor = getHslFromRgbColor(this.props.initialRgbColor);
+
+        this.state = {
+            draftHslColor: currentHslColor,
+        };
+
+        this.onColorSelected = this.onColorSelected.bind(this);
+        this.onHexInputColorSelected = this.onHexInputColorSelected.bind(this);
+    }
+
+    onColorSelected(selectedColor: ColorFormats.HSL) {
+        this.setState({
+            draftHslColor: selectedColor,
+        });
+    }
+
+    onHexInputColorSelected(selectedColor: ColorFormats.HSL) {
+        if (isHslColorBlackOrWhite(selectedColor)) {
+            this.setState({
+                draftHslColor: {
+                    ...selectedColor,
+                    h: this.state.draftHslColor.h,
+                },
+            });
+        } else {
+            this.onColorSelected(selectedColor);
+        }
+    }
+
+    render() {
+        const currentHslColor = getHslFromRgbColor(this.props.initialRgbColor);
+        const t = this.props.intl.formatMessage;
+
+        return (
+            <div className="color-picker-container">
+                <ColorPickerMatrix
+                    initColor={this.state.draftHslColor}
+                    onColorSelected={this.onColorSelected}
+                />
+                <div className="color-picker-control-wrapper">
+                    <HueColorPicker initColor={this.state.draftHslColor} onChange={this.onColorSelected} />
+                    <HexColorInput
+                        initColor={this.state.draftHslColor}
+                        onInputChanged={this.onHexInputColorSelected}
+                        placeholder={t({ id: "gs.color-picker.inputPlaceholder" })}
+                        label={t({ id: "gs.color-picker.hex" })}
+                    />
+                    <ColorsPreview
+                        currentHslColor={currentHslColor}
+                        draftHslColor={this.state.draftHslColor}
+                        currentTextLabel={t({ id: "gs.color-picker.currentColor" })}
+                        draftTextLabel={t({ id: "gs.color-picker.newColor" })}
+                    />
+                    <div className="color-picker-buttons-wrapper">
+                        <Button
+                            value={t({ id: "gs.color-picker.cancelButton" })}
+                            className="gd-button-secondary gd-button color-picker-button"
+                            onClick={this.props.onCancel}
+                        />
+                        <Button
+                            value={t({ id: "gs.color-picker.okButton" })}
+                            disabled={isEqual(
+                                this.props.initialRgbColor,
+                                getRgbFromHslColor(this.state.draftHslColor),
+                            )}
+                            className="gd-button-action gd-button color-picker-ok-button"
+                            onClick={() => this.props.onSubmit(getRgbFromHslColor(this.state.draftHslColor))}
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+/**
+ * @internal
+ */
+export const ColorPicker = injectIntl(WrappedColorPicker);

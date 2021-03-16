@@ -4,9 +4,8 @@ import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
-import { getDateTimeConfig } from "@gooddata/goodstrap/lib/data/date";
 
-import { InsightListItemDate } from "./InsightListItemDate";
+import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate";
 import { Button } from "../Button";
 import { ShortenedText } from "../ShortenedText";
 
@@ -125,7 +124,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             return <span />;
         }
 
-        return <InsightListItemDate config={getDateTimeConfig(date, {})} />;
+        return <InsightListItemDate config={getDateTimeConfig(date)} />;
     };
 
     private renderActions = () => {

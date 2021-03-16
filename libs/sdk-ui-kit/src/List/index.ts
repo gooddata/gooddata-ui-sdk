@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 export {
     Item,
@@ -13,7 +13,11 @@ export {
 // components from goodstrap/lib/@next
 export { DateDatasetsListItem, IDateDatasetsListItemProps } from "./DateDatasetsListItem";
 export { InsightListItem, IInsightListItemProps } from "./InsightListItem";
-export { InsightListItemDate, IInsightListItemDateProps } from "./InsightListItemDate";
+export {
+    InsightListItemDate,
+    IInsightListItemDateProps,
+    IInsightListItemDateConfig,
+} from "./InsightListItemDate";
 export {
     default as InvertableList,
     IInvertableListProps,
@@ -35,3 +39,4 @@ export {
     ILegacySingleSelectListItemState,
 } from "./LegacySingleSelectListItem";
 export { LegacySingleSelectList, ILegacySingleSelectListProps } from "./LegacySingleSelectList";
+export { guidFor } from "./guid";

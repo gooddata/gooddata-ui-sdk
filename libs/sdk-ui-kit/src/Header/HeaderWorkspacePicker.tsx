@@ -4,10 +4,11 @@ import { injectIntl, IntlShape } from "react-intl";
 import get from "lodash/get";
 import cx from "classnames";
 
-import { DropdownList, Dropdown, NoData } from "@gooddata/goodstrap/lib/@next";
-
 import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton";
 import { HeaderWorkspacePickerItem } from "./HeaderWorkspacePickerItem";
+import { Dropdown, DropdownList } from "../Dropdown";
+import { NoData } from "../NoData";
+
 /**
  * @internal
  */
@@ -17,6 +18,7 @@ export interface IHeaderWorkspace {
     description: string;
     isDemo?: boolean;
 }
+
 /**
  * @internal
  */

@@ -3,11 +3,12 @@ import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
-import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { IColor } from "@gooddata/sdk-model";
 import { colorPalette } from "../../../../../tests/mocks/testColorHelper";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider";
 import ColorDropdown, { IColorDropdownOwnProps, IconPosition } from "../ColorDropdown";
+import { ColorPicker } from "@gooddata/sdk-ui-kit";
+
 import ColorPaletteItem from "../ColorPaletteItem";
 import ColorPalette from "../ColorPalette";
 import CustomColorButton from "../CustomColorButton";

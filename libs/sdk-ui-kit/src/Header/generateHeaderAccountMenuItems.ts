@@ -1,6 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-import { IHeaderMenuItem } from "./Header";
 import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
+
+import { IHeaderMenuItem } from "./typings";
 
 /**
  * @internal

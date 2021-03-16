@@ -18,7 +18,7 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
         });
     }
 
-    componentWillMount(): void {
+    UNSAFE_componentWillMount(): void {
         const { body } = document;
 
         const { overflow } = getComputedStyle(body);

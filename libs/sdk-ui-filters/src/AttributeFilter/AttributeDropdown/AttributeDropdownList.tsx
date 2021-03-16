@@ -2,8 +2,7 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { IAttributeElement } from "@gooddata/sdk-backend-spi";
-import { LegacyInvertableList } from "@gooddata/sdk-ui-kit";
-import LoadingMask from "@gooddata/goodstrap/lib/core/LoadingMask";
+import { LegacyInvertableList, LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { AttributeFilterItem } from "./AttributeFilterItem";
 import { AttributeListItem } from "./types";
@@ -12,7 +11,7 @@ const ITEM_HEIGHT = 28;
 export const MAX_SELECTION_SIZE = 500;
 const VISIBLE_ITEMS_COUNT = 10;
 
-const ListLoading = () => <LoadingMask style={{ height: 306 }} />;
+const ListLoading = () => <LoadingMask height={306} />;
 
 const ListError = () => (
     <div className="gd-message error">

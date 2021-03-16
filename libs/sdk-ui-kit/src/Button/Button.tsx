@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import * as React from "react";
+import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 import noop from "lodash/noop";

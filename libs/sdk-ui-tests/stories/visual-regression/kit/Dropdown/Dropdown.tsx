@@ -36,10 +36,11 @@ const renderDropdown = (
     buttonProps: Partial<IDropdownButtonProps> = {},
 ) => (
     <Dropdown
-        renderBody={() => (
+        renderBody={({ isMobile }) => (
             <DropdownList
                 width={250}
                 height={100}
+                isMobile={isMobile}
                 renderItem={({ item, height, width }) => (
                     <div
                         style={{

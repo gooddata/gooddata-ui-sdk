@@ -5,11 +5,11 @@ import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import result from "lodash/result";
 import cx from "classnames";
-import { propsEqual } from "@gooddata/goodstrap/lib/core/immutable";
 
 import { IAlignPoint } from "../typings/positioning";
 import { ArrowDirections, ArrowOffsets } from "./typings";
 import { Overlay } from "../Overlay";
+import { propsEqual } from "../utils/immutable";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",
@@ -28,7 +28,7 @@ const ARROW_DIRECTIONS: ArrowDirections = {
 export const X_SHIFT = 7;
 export const Y_SHIFT = 11;
 
-// FIXME: constats are bad, we know :(
+// FIXME: constants are bad, we know :(
 const ARROW_OFFSETS: ArrowOffsets = {
     ".. cc": [0, 0],
 
@@ -117,7 +117,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
     }
 
     shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean {
-        const propsChanged = !propsEqual(this.props, nextProps);
+        const propsChanged = !propsEqual<IBubbleProps>(this.props, nextProps);
         const alignmentChanged = !isEqual(this.state.optimalAlignPoints, nextState.optimalAlignPoints);
 
         return propsChanged || alignmentChanged;
