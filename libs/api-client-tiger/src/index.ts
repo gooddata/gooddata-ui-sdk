@@ -109,3 +109,11 @@ export const jsonApiHeaders = {
     Accept: JSON_API_HEADER_VALUE,
     "Content-Type": JSON_API_HEADER_VALUE,
 };
+
+export {
+    MetadataUtilities,
+    MetadataGetEntitiesResult,
+    MetadataGetEntitiesFn,
+    MetadataGetEntitiesOptions,
+    MetadataGetEntitiesParams,
+} from "./metadataUtilities";

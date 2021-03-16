@@ -2057,12 +2057,40 @@ export interface MetadataConfigurationParameters {
     username?: string;
 }
 
+// @internal
+export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult> = (params: MetadataGetEntitiesParams, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+
+// @internal
+export type MetadataGetEntitiesOptions = {
+    headers?: object;
+    query?: {
+        page?: number;
+        size?: number;
+        include?: any;
+        sort?: any;
+    };
+};
+
+// @internal
+export type MetadataGetEntitiesParams = {
+    workspaceId: string;
+};
+
+// @internal
+export type MetadataGetEntitiesResult = JsonApiOrganizationList | JsonApiWorkspaceList | JsonApiVisualizationObjectList | JsonApiAnalyticalDashboardList | JsonApiDatasetList | JsonApiAttributeList | JsonApiLabelList | JsonApiMetricList | JsonApiFactList | JsonApiFilterContextList;
+
 // @public
 export interface MetadataRequestArgs {
     // (undocumented)
     options: any;
     // (undocumented)
     url: string;
+}
+
+// @internal
+export class MetadataUtilities {
+    static getAllPagesOf: <T extends MetadataGetEntitiesResult>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T>, params: MetadataGetEntitiesParams, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
+    static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T;
 }
 
 // @public
