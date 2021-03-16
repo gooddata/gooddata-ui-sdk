@@ -22,7 +22,12 @@ import {
     insightSetFilters,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
-import { VisualizationObjectModel, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import {
+    VisualizationObjectModel,
+    jsonApiHeaders,
+    MetadataUtilities,
+    MetadataGetEntitiesOptions,
+} from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
     visualizationObjectsItemToInsight,
@@ -34,6 +39,7 @@ import { convertVisualizationObject } from "../../../convertors/fromBackend/Visu
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -54,71 +60,38 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
-        const insightsResponse = await this.authCall((sdk) => {
-            const orderBy = options?.orderBy;
-            if (orderBy === "updated") {
-                // eslint-disable-next-line no-console
-                console.warn('Tiger does not support sorting by "updated" in getInsights');
-            }
+        const orderBy = options?.orderBy;
+        const optionsToUse: MetadataGetEntitiesOptions = {
+            query: {
+                ...(orderBy !== "updated" ? { sort: orderBy } : {}),
+            },
+        };
 
-            const sanitizedOrderBy = orderBy !== "updated" ? orderBy : undefined;
+        const allInsights = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getEntitiesVisualizationObjects,
+                { workspaceId: this.workspace },
+                optionsToUse,
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((res) => {
+                    if (options?.title) {
+                        const lowercaseSearch = options.title.toLocaleLowerCase();
 
-            const filter = options?.title
-                ? {
-                      filter: {
-                          // the % sign means 0..many characters so %foo% means infix match of foo (case insensitive)
-                          title: { LIKE: `%${options.title}%` },
-                      },
-                  }
-                : undefined;
+                        return res.data
+                            .filter((vo) => {
+                                const title = vo.attributes?.title;
 
-            return sdk.workspaceObjects.getEntitiesVisualizationObjects(
-                {
-                    workspaceId: this.workspace,
-                },
-                {
-                    headers: jsonApiHeaders,
-                    ...(options?.limit ? { pageLimit: options?.limit } : {}),
-                    pageOffset: options?.offset ?? 0,
-                    ...((filter ? { filter } : {}) as any),
-                    ...(sanitizedOrderBy ? { sort: sanitizedOrderBy } : {}),
-                },
-            );
+                                return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
+                            })
+                            .map(visualizationObjectsItemToInsight);
+                    }
+                    return res.data.map(visualizationObjectsItemToInsight);
+                });
         });
-        const { data: visualizationObjects } = insightsResponse.data;
-        const insights = visualizationObjects.map(visualizationObjectsItemToInsight);
 
-        // TODO - where to get this "meta" information in new MD?
-        // Count the objects from API vs get it from backend?
-        const totalCount = insights.length;
-        //const totalCount = (meta?.totalResourceCount as unknown) as number;
-        // TODO - how to deal with pagination?
-        //const hasNextPage = !!links?.next;
-        const hasNextPage = false;
-
-        const emptyResult: IInsightsQueryResult = {
-            items: [],
-            // TODO default to some backend limit here
-            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            limit: options?.limit!,
-            offset: options?.offset ?? 0,
-            totalCount,
-            next: () => Promise.resolve(emptyResult),
-        };
-
-        const result: IInsightsQueryResult = {
-            items: insights,
-            // TODO default to some backend limit here
-            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-            limit: options?.limit!,
-            offset: options?.offset ?? 0,
-            totalCount,
-            next: hasNextPage
-                ? () => this.getInsights({ ...options, offset: (options?.offset ?? 0) + insights.length })
-                : () => Promise.resolve(emptyResult),
-        };
-
-        return result;
+        return new InMemoryPaging(allInsights, options?.limit ?? 50, 0);
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
