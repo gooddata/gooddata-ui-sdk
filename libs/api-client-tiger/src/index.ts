@@ -15,7 +15,7 @@ import {
     MetadataBaseApi,
     MetadataRequestArgs,
 } from "./workspaceObjects";
-import { tigerOrganizationObjectsClientFactory } from "./OrganizationObjects";
+import { tigerOrganizationObjectsClientFactory } from "./organizationObjects";
 import { tigerValidObjectsClientFactory } from "./validObjects";
 import {
     axios as defaultAxios,
