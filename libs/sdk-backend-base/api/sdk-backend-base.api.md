@@ -52,6 +52,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IMetadataObject } from '@gooddata/sdk-backend-spi';
 import { InsightDrillDefinition } from '@gooddata/sdk-backend-spi';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IResultHeader } from '@gooddata/sdk-backend-spi';
@@ -202,10 +203,8 @@ export type CachingConfiguration = {
 export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttribute> extends GroupableCatalogItemBuilder<T> {
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
-
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
-
     // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
     // (undocumented)
@@ -539,6 +538,21 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     title(title: string): this;
     unlisted(value: boolean): this;
     uri(uri: string): this;
+}
+
+// @internal
+export class InMemoryPaging<T> implements IPagedResource<T> {
+    constructor(all: T[], limit?: number, offset?: number);
+    // (undocumented)
+    readonly items: T[];
+    // (undocumented)
+    readonly limit: number;
+    // (undocumented)
+    next(): Promise<IPagedResource<T>>;
+    // (undocumented)
+    readonly offset: number;
+    // (undocumented)
+    readonly totalCount: number;
 }
 
 // @alpha (undocumented)
