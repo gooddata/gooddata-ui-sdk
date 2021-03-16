@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { isVisualizationObjectsItem, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { isVisualizationObjectsItem, jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
     IDashboardDefinition,
@@ -37,17 +37,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     // Public methods
     public getDashboards = async (): Promise<IListedDashboard[]> => {
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.getEntitiesAnalyticalDashboards(
-                {
-                    workspaceId: this.workspace,
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+        const result = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getEntitiesAnalyticalDashboards,
+                { workspaceId: this.workspace },
+            ).then(MetadataUtilities.mergeEntitiesResults);
         });
-        return convertAnalyticalDashboardToListItems(result.data);
+
+        return convertAnalyticalDashboardToListItems(result);
     };
 
     public getDashboard = async (ref: ObjRef, filterContextRef?: ObjRef): Promise<IDashboard> => {

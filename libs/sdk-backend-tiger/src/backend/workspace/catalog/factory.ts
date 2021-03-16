@@ -18,7 +18,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
-import { jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { MetadataUtilities } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -85,34 +85,27 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
-        const measures = await this.authCall((sdk) =>
-            sdk.workspaceObjects.getEntitiesMetrics(
-                {
-                    workspaceId: this.workspace,
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
-        );
+        const measures = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesMetrics, {
+                workspaceId: this.workspace,
+            }).then(MetadataUtilities.mergeEntitiesResults);
+        });
 
-        return measures.data.data.map(convertMeasure);
+        return measures.data.map(convertMeasure);
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
         const { includeTags = [] } = this.options;
-        const facts = await this.authCall((sdk) =>
-            sdk.workspaceObjects.getEntitiesFacts(
-                {
-                    workspaceId: this.workspace,
-                },
-                {
-                    query: { tags: includeTags.join(",") },
-                    headers: jsonApiHeaders,
-                },
-            ),
-        );
-        return facts.data.data.map(convertFact);
+        const facts = await this.authCall((client) => {
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getEntitiesFacts,
+                { workspaceId: this.workspace },
+                { query: { tags: includeTags.join(",") } },
+            ).then(MetadataUtilities.mergeEntitiesResults);
+        });
+
+        return facts.data.map(convertFact);
     };
 
     // Groups are collected from all catalog entities.

@@ -9,7 +9,7 @@ import {
 import { areObjRefsEqual, isIdentifierRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { TigerWorkspaceElements } from "./elements";
-import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { ITigerClient, jsonApiHeaders, MetadataUtilities } from "@gooddata/api-client-tiger";
 import flatMap from "lodash/flatMap";
 import {
     convertAttributesWithSideloadedLabels,
@@ -62,7 +62,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 
 function loadAttributeDisplayForm(
     client: ITigerClient,
-    workspace: string,
+    workspaceId: string,
     ref: ObjRef,
 ): Promise<IAttributeDisplayFormMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
@@ -70,7 +70,7 @@ function loadAttributeDisplayForm(
     return client.workspaceObjects
         .getEntityLabels(
             {
-                workspaceId: workspace,
+                workspaceId,
                 objectId: ref.identifier,
             },
             {
@@ -85,7 +85,7 @@ function loadAttributeDisplayForm(
 
 function loadAttribute(
     client: ITigerClient,
-    workspace: string,
+    workspaceId: string,
     ref: ObjRef,
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
@@ -93,7 +93,7 @@ function loadAttribute(
     return client.workspaceObjects
         .getEntityAttributes(
             {
-                workspaceId: workspace,
+                workspaceId,
                 objectId: ref.identifier,
             },
             {
@@ -106,20 +106,13 @@ function loadAttribute(
         .then((res) => convertAttributeWithSideloadedLabels(res.data));
 }
 
-function loadAttributes(client: ITigerClient, workspace: string): Promise<IAttributeMetadataObject[]> {
-    return client.workspaceObjects
-        .getEntitiesAttributes(
-            {
-                workspaceId: workspace,
-            },
-            {
-                headers: jsonApiHeaders,
-                query: {
-                    include: "labels",
-                    // TODO - update after paging is fixed in MDC-354
-                    size: "500",
-                },
-            },
-        )
-        .then((res) => convertAttributesWithSideloadedLabels(res.data));
+function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
+    return MetadataUtilities.getAllPagesOf(
+        client,
+        client.workspaceObjects.getEntitiesAttributes,
+        { workspaceId },
+        { query: { include: "labels" } },
+    )
+        .then(MetadataUtilities.mergeEntitiesResults)
+        .then(convertAttributesWithSideloadedLabels);
 }

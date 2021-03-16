@@ -8,7 +8,7 @@ import {
     JsonApiLabelWithLinks,
     JsonApiAttributeWithLinks,
     JsonApiDatasetWithLinks,
-    jsonApiHeaders,
+    MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
 import values from "lodash/values";
@@ -117,26 +117,17 @@ function createDateDatasets(attributes: JsonApiAttributeList): ICatalogDateDatas
 }
 
 export async function loadAttributesAndDateDatasets(
-    sdk: ITigerClient,
+    client: ITigerClient,
     workspaceId: string,
     includeTags: string[],
 ): Promise<CatalogItem[]> {
-    const attributesResponse = await sdk.workspaceObjects.getEntitiesAttributes(
-        {
-            workspaceId: workspaceId,
-        },
-        {
-            headers: jsonApiHeaders,
-            query: {
-                include: "labels,datasets",
-                // TODO - update after paging is fixed in MDC-354
-                size: "500",
-                tags: includeTags.join(","),
-            },
-        },
-    );
+    const attributes = await MetadataUtilities.getAllPagesOf(
+        client,
+        client.workspaceObjects.getEntitiesAttributes,
+        { workspaceId },
+        { query: { include: "labels,datasets", tags: includeTags.join(",") } },
+    ).then(MetadataUtilities.mergeEntitiesResults);
 
-    const attributes = attributesResponse.data;
     const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes);
     const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
 
