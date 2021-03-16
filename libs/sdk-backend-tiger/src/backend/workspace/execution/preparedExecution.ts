@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IExecutionFactory, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import {
@@ -32,17 +32,17 @@ export class TigerPreparedExecution implements IPreparedExecution {
 
         const afmExecution = toAfmExecution(this.definition);
 
-        return this.authCall((sdk) => sdk.execution.executeAfm(this.definition.workspace, afmExecution)).then(
-            (response) => {
-                return new TigerExecutionResult(
-                    this.authCall,
-                    this.definition,
-                    this.executionFactory,
-                    response,
-                    this.dateFormatter,
-                );
-            },
-        );
+        return this.authCall((client) =>
+            client.execution.executeAfm(this.definition.workspace, afmExecution),
+        ).then((response) => {
+            return new TigerExecutionResult(
+                this.authCall,
+                this.definition,
+                this.executionFactory,
+                response,
+                this.dateFormatter,
+            );
+        });
     }
 
     public withDimensions(...dimsOrGen: Array<IDimension | DimensionGenerator>): IPreparedExecution {

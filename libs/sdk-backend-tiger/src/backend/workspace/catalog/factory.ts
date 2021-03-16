@@ -81,7 +81,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         // TODO convert objRef[] to tags (string[])
         //const { includeTags = [] } = this.options;
         const includeTags: string[] = [];
-        return this.authCall((sdk) => loadAttributesAndDateDatasets(sdk, this.workspace, includeTags));
+        return this.authCall((client) => loadAttributesAndDateDatasets(client, this.workspace, includeTags));
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {

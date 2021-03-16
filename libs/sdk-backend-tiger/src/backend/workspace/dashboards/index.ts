@@ -54,8 +54,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const id = await objRefToIdentifier(ref, this.authCall);
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.getEntityAnalyticalDashboards(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -86,8 +86,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             : undefined;
 
         const id = await objRefToIdentifier(ref, this.authCall);
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.getEntityAnalyticalDashboards(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.getEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId: id,
@@ -124,8 +124,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         }
 
         const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.createEntityAnalyticalDashboards(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.createEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     jsonApiAnalyticalDashboardDocument: {
@@ -171,8 +171,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.updateEntityAnalyticalDashboards(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.updateEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -200,8 +200,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        await this.authCall((sdk) =>
-            sdk.workspaceObjects.deleteEntityAnalyticalDashboards(
+        await this.authCall((client) =>
+            client.workspaceObjects.deleteEntityAnalyticalDashboards(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -269,8 +269,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IFilterContext> => {
         const tigerFilterContext = convertFilterContextToBackend(filterContext);
 
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.createEntityFilterContexts(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.createEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     jsonApiFilterContextDocument: {
@@ -319,8 +319,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const tigerFilterContext = convertFilterContextToBackend(filterContext);
         const objectId = await objRefToIdentifier(filterContext.ref, this.authCall);
 
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.updateEntityFilterContexts(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.updateEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     objectId,
@@ -347,8 +347,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
     private getFilterContext = async (filterContextRef: ObjRef) => {
         const filterContextId = await objRefToIdentifier(filterContextRef, this.authCall);
-        const result = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.getEntityFilterContexts(
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.getEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
                     objectId: filterContextId,

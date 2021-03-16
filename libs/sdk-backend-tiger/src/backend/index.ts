@@ -77,20 +77,7 @@ export type TigerBackendConfig = {
 };
 
 /**
- * This implementation of analytical backend uses the gooddata-js API client to realize the SPI.
- *
- * The only thing worth noting about this impl is the handling of SDK instance creation and authentication:
- *
- * - New instance of axios HTTP client is created for each instance of TigerBackend; new instance of TigerBackend is created
- *   every time onHostname, withCredentials or withTelemetry methods are called (similar to how we did it
- *   so far with the clone())
- *
- * - Authentication (login) is not currently done; TODO: configure axios to use basic auth supported by tiger
- *
- * - Authentication is done at construction time; the constructor MAY receive an instance of deferred authentication -
- *   this is to cater for cases when withCredentials is called, new instance of backend is returned and then
- *   someone calls withTelemetry on this instance => in that case there is no need to re-initiate login.
- *
+ * An implementation of analytical backend for GoodData CloudNative (codename tiger).
  */
 export class TigerBackend implements IAnalyticalBackend {
     public readonly capabilities: IBackendCapabilities = CAPABILITIES;
@@ -98,7 +85,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: TigerBackendConfig;
-    private readonly sdk: ITigerClient;
+    private readonly client: ITigerClient;
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
 
@@ -115,9 +102,9 @@ export class TigerBackend implements IAnalyticalBackend {
         this.dateFormatter = implConfig.dateFormatter ?? createDefaultDateFormatter();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
-        this.sdk = tigerClientFactory(axios);
+        this.client = tigerClientFactory(axios);
 
-        this.authProvider.initializeClient?.(this.sdk);
+        this.authProvider.initializeClient?.(this.client);
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
@@ -170,7 +157,7 @@ export class TigerBackend implements IAnalyticalBackend {
     public isAuthenticated = (): Promise<IAuthenticatedPrincipal | null> => {
         return new Promise((resolve, reject) => {
             this.authProvider
-                .getCurrentPrincipal({ client: this.sdk, backend: this })
+                .getCurrentPrincipal({ client: this.client, backend: this })
                 .then((res) => {
                     resolve(res);
                 })
@@ -186,8 +173,8 @@ export class TigerBackend implements IAnalyticalBackend {
 
     public authenticate = (force: boolean): Promise<IAuthenticatedPrincipal> => {
         if (!force) {
-            return this.authApiCall(async (sdk) => {
-                const principal = await this.authProvider.getCurrentPrincipal({ client: sdk, backend: this });
+            return this.authApiCall(async (client) => {
+                const principal = await this.authProvider.getCurrentPrincipal({ client, backend: this });
                 invariant(principal, "Principal must be defined");
                 return principal!;
             });
@@ -195,7 +182,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
         return this.triggerAuthentication(true).catch((err) => {
             if (isNotAuthenticated(err)) {
-                this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+                this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
             }
 
             throw err;
@@ -214,7 +201,7 @@ export class TigerBackend implements IAnalyticalBackend {
         call: AuthenticatedAsyncCall<ITigerClient, T>,
         errorConverter: ErrorConverter = convertApiError,
     ): Promise<T> => {
-        return call(this.sdk, await this.getAsyncCallContext())
+        return call(this.client, await this.getAsyncCallContext())
             .catch((err) => {
                 if (!isNotAuthenticatedResponse(err)) {
                     throw errorConverter(err);
@@ -222,7 +209,7 @@ export class TigerBackend implements IAnalyticalBackend {
 
                 return this.triggerAuthentication()
                     .then(async (_) => {
-                        return call(this.sdk, await this.getAsyncCallContext()).catch((e) => {
+                        return call(this.client, await this.getAsyncCallContext()).catch((e) => {
                             throw errorConverter(e);
                         });
                     })
@@ -232,7 +219,7 @@ export class TigerBackend implements IAnalyticalBackend {
             })
             .catch((err) => {
                 if (isNotAuthenticated(err)) {
-                    this.authProvider.onNotAuthenticated?.({ client: this.sdk, backend: this }, err);
+                    this.authProvider.onNotAuthenticated?.({ client: this.client, backend: this }, err);
                 }
 
                 throw err;
@@ -240,7 +227,7 @@ export class TigerBackend implements IAnalyticalBackend {
     };
 
     private getAuthenticationContext = (): IAuthenticationContext => {
-        return { client: this.sdk, backend: this };
+        return { client: this.client, backend: this };
     };
 
     private getAsyncCallContext = async (): Promise<IAuthenticatedAsyncCallContext> => {
@@ -250,7 +237,7 @@ export class TigerBackend implements IAnalyticalBackend {
             }
 
             const principal = await this.authProvider.getCurrentPrincipal({
-                client: this.sdk,
+                client: this.client,
                 backend: this,
             });
             if (principal) {
@@ -276,7 +263,7 @@ export class TigerBackend implements IAnalyticalBackend {
             this.authProvider.reset();
         }
 
-        return this.authProvider.authenticate({ client: this.sdk, backend: this });
+        return this.authProvider.authenticate({ client: this.client, backend: this });
     };
 }
 

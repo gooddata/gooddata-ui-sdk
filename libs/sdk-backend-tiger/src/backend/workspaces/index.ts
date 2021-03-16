@@ -67,8 +67,8 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             next: () => Promise.resolve(emptyResult),
         };
         const workspaces = (
-            await this.authCall(async (sdk) => {
-                return sdk.organizationObjects.getAllEntitiesWorkspaces(
+            await this.authCall(async (client) => {
+                return client.organizationObjects.getAllEntitiesWorkspaces(
                     {
                         page: offset / limit,
                         size: limit,

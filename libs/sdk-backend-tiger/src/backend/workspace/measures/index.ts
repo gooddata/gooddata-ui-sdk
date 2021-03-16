@@ -20,8 +20,8 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             throw new Error("only identifiers supported");
         }
 
-        const metricMetadata = await this.authCall((sdk) =>
-            sdk.workspaceObjects.getEntityMetrics(
+        const metricMetadata = await this.authCall((client) =>
+            client.workspaceObjects.getEntityMetrics(
                 {
                     objectId: ref.identifier,
                     workspaceId: this.workspace,
