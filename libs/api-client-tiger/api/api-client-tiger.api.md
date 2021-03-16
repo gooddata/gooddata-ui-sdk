@@ -2058,7 +2058,7 @@ export interface MetadataConfigurationParameters {
 }
 
 // @internal
-export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult> = (params: MetadataGetEntitiesParams, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
 // @internal
 export type MetadataGetEntitiesOptions = {
@@ -2089,7 +2089,7 @@ export interface MetadataRequestArgs {
 
 // @internal
 export class MetadataUtilities {
-    static getAllPagesOf: <T extends MetadataGetEntitiesResult>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T>, params: MetadataGetEntitiesParams, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
+    static getAllPagesOf: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
     static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T;
 }
 
