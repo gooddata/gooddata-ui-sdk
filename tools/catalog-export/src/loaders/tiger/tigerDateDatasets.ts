@@ -76,7 +76,7 @@ function convertToExportableFormat(
     });
 }
 
-export async function loadDateDataSets(workspaceId: string, client: ITigerClient): Promise<DateDataSet[]> {
+export async function loadDateDataSets(client: ITigerClient, workspaceId: string): Promise<DateDataSet[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
         client.workspaceObjects.getEntitiesAttributes,

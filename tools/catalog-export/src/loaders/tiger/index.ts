@@ -18,11 +18,11 @@ import { JsonApiWorkspaceList } from "@gooddata/api-client-tiger";
 
 /**
  * Tests if the provided tiger client can access the backend.
- * @param tigerClient - tiger client to test
+ * @param client - tiger client to test
  */
-async function probeAccess(tigerClient: ITigerClient): Promise<boolean> {
+async function probeAccess(client: ITigerClient): Promise<boolean> {
     try {
-        await tigerClient.organizationObjects.getAllEntitiesWorkspaces(
+        await client.organizationObjects.getAllEntitiesWorkspaces(
             { page: 0, size: 1 },
             { headers: jsonApiHeaders },
         );
@@ -64,19 +64,18 @@ function getTigerApiToken(): string | undefined {
  * Gets the tiger client asking for credentials if they are needed.
  * @param hostname - hostname to use
  * @param usernameFromConfig - username that may have been provided in a config or CLI
- * @param passwordFromConfig - password that may have been provided in a config or CLI
  */
 async function getTigerClient(hostname: string, usernameFromConfig: string | null): Promise<ITigerClient> {
     const token = getTigerApiToken();
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
 
-    const tigerClient = createTigerClient(hostname, token);
+    const client = createTigerClient(hostname, token);
 
     try {
         // check if user has access; if the auth is not enabled, it is no problem that user does not have
         // token set
-        const hasAccess = await probeAccess(tigerClient);
+        const hasAccess = await probeAccess(client);
 
         if (!hasAccess) {
             if (hasToken) {
@@ -105,7 +104,7 @@ async function getTigerClient(hostname: string, usernameFromConfig: string | nul
             throw new CatalogExportError("API token not set or no longer valid.", 1);
         }
 
-        return tigerClient;
+        return client;
     } catch (err) {
         if (askedForLogin) {
             throw err;
@@ -163,13 +162,13 @@ export async function loadWorkspaceMetadataFromTiger(
 ): Promise<WorkspaceMetadata> {
     const { hostname, username } = config;
 
-    const tigerClient = await getTigerClient(hostname!, username);
+    const client = await getTigerClient(hostname!, username);
 
     let workspaceId = getConfiguredWorkspaceId(config, true);
     const workspaceName = getConfiguredWorkspaceName(config, true);
 
     if (workspaceName && !workspaceId) {
-        workspaceId = await lookupWorkspaceId(tigerClient, workspaceName);
+        workspaceId = await lookupWorkspaceId(client, workspaceName);
 
         if (!workspaceId) {
             logWarn(`Workspace with name '${workspaceName}' does not exist.`);
@@ -177,13 +176,13 @@ export async function loadWorkspaceMetadataFromTiger(
     }
 
     if (!workspaceId) {
-        workspaceId = await selectWorkspace(tigerClient);
+        workspaceId = await selectWorkspace(client);
     }
 
     const workspaceSpinner = ora();
     try {
         // await is important here, otherwise errors thrown from the load would not be handled by this catch block
-        return await tigerLoad(workspaceId, tigerClient);
+        return await tigerLoad(client, workspaceId);
     } catch (err) {
         workspaceSpinner.stop();
 

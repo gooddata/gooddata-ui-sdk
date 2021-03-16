@@ -8,24 +8,24 @@ import { loadInsights } from "./tigerInsights";
 import { loadDateDataSets } from "./tigerDateDatasets";
 import { loadAnalyticalDashboards } from "./tigerAnalyticalDashboards";
 
-export async function tigerLoad(workspaceId: string, tigerClient: ITigerClient): Promise<WorkspaceMetadata> {
+export async function tigerLoad(client: ITigerClient, workspaceId: string): Promise<WorkspaceMetadata> {
     const spinner = ora();
 
     try {
         spinner.start("Loading catalog of attributes and metrics…");
-        const catalog = await loadCatalog(workspaceId, tigerClient);
+        const catalog = await loadCatalog(client, workspaceId);
         spinner.succeed("Catalog loaded");
 
         spinner.start("Loading date data sets…");
-        const dateDataSets = await loadDateDataSets(workspaceId, tigerClient);
+        const dateDataSets = await loadDateDataSets(client, workspaceId);
         spinner.succeed("Date data sets loaded");
 
         spinner.start("Loading insights…");
-        const insights = await loadInsights(workspaceId, tigerClient);
+        const insights = await loadInsights(client, workspaceId);
         spinner.succeed("Insights loaded");
 
         spinner.start("Loading analytical dashboards");
-        const analyticalDashboards = await loadAnalyticalDashboards(workspaceId, tigerClient);
+        const analyticalDashboards = await loadAnalyticalDashboards(client, workspaceId);
         spinner.succeed("Analytical dashboards loaded");
 
         return {

@@ -7,10 +7,10 @@ import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
  * Load insights that are stored in workspace metadata so that their links can be included
  * in the generated output for easy embedding access.
  *
- * @param workspaceId - workspace id
  * @param client - tiger client to use for communication
+ * @param workspaceId - workspace id
  */
-export async function loadInsights(workspaceId: string, client: ITigerClient): Promise<ObjectMeta[]> {
+export async function loadInsights(client: ITigerClient, workspaceId: string): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
         client.workspaceObjects.getEntitiesVisualizationObjects,

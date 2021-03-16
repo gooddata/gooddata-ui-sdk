@@ -8,12 +8,12 @@ import { MetadataUtilities } from "@gooddata/api-client-tiger";
  * Load analytical dashboards that are stored in workspace metadata so that their links can be included
  * in the generated output for easy embedding access.
  *
- * @param workspaceId - workspace id
  * @param client - tiger client to use for communication
+ * @param workspaceId - workspace id
  */
 export async function loadAnalyticalDashboards(
-    workspaceId: string,
     client: ITigerClient,
+    workspaceId: string,
 ): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
