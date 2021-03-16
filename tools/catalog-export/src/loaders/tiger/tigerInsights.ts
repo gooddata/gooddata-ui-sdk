@@ -1,26 +1,23 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
 
 /**
  * Load insights that are stored in workspace metadata so that their links can be included
  * in the generated output for easy embedding access.
  *
  * @param workspaceId - workspace id
- * @param tigerClient - tiger client to use for communication
+ * @param client - tiger client to use for communication
  */
-export async function loadInsights(workspaceId: string, tigerClient: ITigerClient): Promise<ObjectMeta[]> {
-    const result = await tigerClient.workspaceObjects.getEntitiesVisualizationObjects(
-        {
-            workspaceId,
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    );
+export async function loadInsights(workspaceId: string, client: ITigerClient): Promise<ObjectMeta[]> {
+    const result = await MetadataUtilities.getAllPagesOf(
+        client,
+        client.workspaceObjects.getEntitiesVisualizationObjects,
+        { workspaceId },
+    ).then(MetadataUtilities.mergeEntitiesResults);
 
-    return result.data.data.map((vis) => {
+    return result.data.map((vis) => {
         return {
             title: vis.attributes?.title ?? vis.id,
             identifier: vis.id,

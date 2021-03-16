@@ -5,7 +5,7 @@ import {
     JsonApiFactList,
     JsonApiMetricList,
     ITigerClient,
-    jsonApiHeaders,
+    MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
@@ -55,44 +55,27 @@ function convertAttributes(attributes: JsonApiAttributeList): Attribute[] {
 /**
  * Loads metric, attribute and fact catalog
  * @param workspaceId
- * @param tigerClient
+ * @param client
  */
-export async function loadCatalog(workspaceId: string, tigerClient: ITigerClient): Promise<Catalog> {
+export async function loadCatalog(workspaceId: string, client: ITigerClient): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
-        tigerClient.workspaceObjects.getEntitiesMetrics(
-            {
-                workspaceId,
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        ),
-        tigerClient.workspaceObjects.getEntitiesFacts(
-            {
-                workspaceId,
-            },
-            {
-                headers: jsonApiHeaders,
-            },
-        ),
-        tigerClient.workspaceObjects.getEntitiesAttributes(
-            {
-                workspaceId,
-            },
-            {
-                headers: jsonApiHeaders,
-                query: {
-                    include: "labels",
-                    // TODO - update after paging is fixed in MDC-354
-                    size: "500",
-                },
-            },
-        ),
+        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesMetrics, {
+            workspaceId,
+        }).then(MetadataUtilities.mergeEntitiesResults),
+        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesFacts, {
+            workspaceId,
+        }).then(MetadataUtilities.mergeEntitiesResults),
+        MetadataUtilities.getAllPagesOf(
+            client,
+            client.workspaceObjects.getEntitiesAttributes,
+            { workspaceId },
+            { query: { include: "labels" } },
+        ).then(MetadataUtilities.mergeEntitiesResults),
     ]);
 
     return {
-        metrics: convertMetrics(metricsResult.data),
-        facts: convertFacts(factsResult.data),
-        attributes: convertAttributes(attributesResult.data),
+        metrics: convertMetrics(metricsResult),
+        facts: convertFacts(factsResult),
+        attributes: convertAttributes(attributesResult),
     };
 }
