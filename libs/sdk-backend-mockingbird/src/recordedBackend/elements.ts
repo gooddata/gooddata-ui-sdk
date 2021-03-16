@@ -11,7 +11,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { RecordingIndex } from "./types";
-import { identifierToRecording, RecordingPager } from "./utils";
+import { identifierToRecording } from "./utils";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 /**
  * @internal
@@ -57,7 +58,7 @@ class RecordedElements implements IElementsQuery {
             elements = elements.filter((item) => item.title.toLowerCase().includes(filter.toLowerCase()));
         }
 
-        return Promise.resolve(new RecordingPager<IAttributeElement>(elements, this.limit, this.offset));
+        return Promise.resolve(new InMemoryPaging<IAttributeElement>(elements, this.limit, this.offset));
     }
 
     public withLimit(limit: number): IElementsQuery {

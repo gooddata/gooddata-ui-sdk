@@ -11,7 +11,7 @@ import {
     UnexpectedResponseError,
 } from "@gooddata/sdk-backend-spi";
 import { InsightRecording, RecordedRefType, RecordingIndex } from "./types";
-import { identifierToRecording, RecordingPager } from "./utils";
+import { identifierToRecording } from "./utils";
 import isEmpty from "lodash/isEmpty";
 import cloneDeep from "lodash/cloneDeep";
 import {
@@ -33,6 +33,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 import values from "lodash/values";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 
 let adHocInsightCounter = 1;
 
@@ -87,7 +88,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
         const { limit, offset, orderBy } = query ?? {};
 
         if (isEmpty(this.insights)) {
-            return new RecordingPager<IInsight>([], limit, offset);
+            return new InMemoryPaging<IInsight>([], limit, offset);
         }
 
         const insights = values(this.insights).map((rec) => this.createInsightWithRef(rec.obj));
@@ -96,7 +97,7 @@ export class RecordedInsights implements IWorkspaceInsightsService {
             insights.sort(comparator(orderBy));
         }
 
-        return new RecordingPager<IInsight>(insights, limit, offset);
+        return new InMemoryPaging<IInsight>(insights, limit, offset);
     }
 
     public async updateInsight(insight: IInsight): Promise<IInsight> {
