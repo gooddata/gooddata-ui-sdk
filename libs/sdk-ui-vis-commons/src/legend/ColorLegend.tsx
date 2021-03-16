@@ -9,6 +9,8 @@ import {
 } from "./helpers";
 import { TOP } from "./PositionTypes";
 import { IColorLegendItem } from "./types";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 /**
  * @internal
@@ -19,6 +21,7 @@ export interface IColorLegendProps {
     position: string;
     isSmall?: boolean;
     format?: string;
+    theme?: ITheme;
 }
 
 interface IColorLabelsProps {
@@ -65,8 +68,8 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
 /**
  * @internal
  */
-export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | null {
-    const { data, format, numericSymbols, isSmall = false, position } = colorLegendProps;
+export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
+    const { data, format, numericSymbols, isSmall = false, position, theme } = colorLegendProps;
     if (!data.length) {
         return null;
     }
@@ -77,6 +80,7 @@ export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | 
         numericSymbols,
         isSmall,
         position,
+        theme,
     );
     const classes = cx(...config.classes);
     const renderLabelsFirst = config.position === TOP;
@@ -89,4 +93,4 @@ export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | 
             {!renderLabelsFirst && <ColorLabels labels={labels} />}
         </div>
     );
-}
+});

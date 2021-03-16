@@ -113,7 +113,7 @@ export function withThemeIsLoading<T extends { themeIsLoading?: boolean }>(
  * @public
  */
 export function withTheme<T extends { theme?: ITheme; workspace?: string }>(
-    Chart: React.ComponentType<T>,
+    Component: React.ComponentType<T>,
 ): React.ComponentType<Omit<T, "theme" | "themeIsLoading">> {
-    return compose(wrapDisplayName("withContexts"), withThemeObject, withThemeIsLoading)(Chart);
+    return compose(wrapDisplayName("withContexts"), withThemeObject, withThemeIsLoading)(Component);
 }

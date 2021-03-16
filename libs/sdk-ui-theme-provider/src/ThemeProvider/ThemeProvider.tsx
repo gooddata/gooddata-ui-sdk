@@ -48,6 +48,9 @@ export interface IThemeProviderProps {
     modifier?: ThemeModifier;
 }
 
+/**
+ * @internal
+ */
 export const isDarkTheme = (theme: ITheme): boolean => {
     const firstColor = theme?.palette?.complementary?.c0;
     const lastColor = theme?.palette?.complementary?.c9;

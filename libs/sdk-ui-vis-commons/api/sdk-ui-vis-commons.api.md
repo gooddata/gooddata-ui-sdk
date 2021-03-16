@@ -13,6 +13,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { IMappingHeader } from '@gooddata/sdk-ui';
 import { IRgbColorValue } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { default as React_2 } from 'react';
 import { Rect } from 'react-measure';
 
@@ -23,11 +24,11 @@ export class AttributeColorStrategy extends ColorStrategy {
 }
 
 // @internal (undocumented)
-export function ColorLegend(colorLegendProps: IColorLegendProps): JSX.Element | null;
+export const ColorLegend: React_2.ComponentType<Pick<IColorLegendProps, "data" | "format" | "position" | "numericSymbols" | "isSmall">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
-    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade);
+    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme);
     // (undocumented)
     protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
     // (undocumented)
@@ -44,6 +45,8 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected outputColorAssignment: IColorAssignment[];
     // (undocumented)
     protected palette: string[];
+    // (undocumented)
+    protected theme?: ITheme;
 }
 
 // @internal (undocumented)
@@ -151,6 +154,8 @@ export interface IColorLegendProps {
     numericSymbols: string[];
     // (undocumented)
     position: string;
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @public (undocumented)

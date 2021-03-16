@@ -1,6 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
-export { IThemeProviderProps, ThemeProvider, ThemeModifier } from "./ThemeProvider/ThemeProvider";
+export {
+    IThemeProviderProps,
+    ThemeProvider,
+    ThemeModifier,
+    isDarkTheme,
+} from "./ThemeProvider/ThemeProvider";
 export {
     IThemeContextProviderProps,
     withTheme,

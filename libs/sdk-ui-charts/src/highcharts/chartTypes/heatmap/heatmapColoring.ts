@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     ColorStrategy,
     ICreateColorAssignmentReturnValue,
@@ -6,14 +6,17 @@ import {
     getColorFromMapping,
     getRgbStringFromRGB,
     isCustomPalette,
+    normalizeColorToRGB,
 } from "@gooddata/sdk-ui-vis-commons";
 import { IColorPalette, IRgbColorValue, isColorFromPalette, isRgbColor } from "@gooddata/sdk-model";
+import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces";
 import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-ui";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
-import isEqual from "lodash/isEqual";
 import range from "lodash/range";
+import isEqual from "lodash/isEqual";
 import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../_util/color";
+import { darken, mix, saturate } from "polished";
 
 type HighChartColorPalette = string[];
 
@@ -55,11 +58,21 @@ export class HeatmapColorStrategy extends ColorStrategy {
         };
     }
 
+    private getThemeBackgroundColor() {
+        return this.theme?.chart?.backgroundColor ?? this.theme?.palette?.complementary?.c0;
+    }
+
+    private getBackgroundColor() {
+        return this.getThemeBackgroundColor() ?? "#fff";
+    }
+
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[]): string[] {
-        if (isRgbColor(colorAssignment[0].color)) {
-            if (isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR)) {
-                return HEATMAP_BLUE_COLOR_PALETTE;
-            }
+        if (
+            isRgbColor(colorAssignment[0].color) &&
+            isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR) &&
+            normalizeColorToRGB(this.getBackgroundColor()) === "rgb(255,255,255)"
+        ) {
+            return HEATMAP_BLUE_COLOR_PALETTE;
         }
 
         if (isColorFromPalette(colorAssignment[0].color)) {
@@ -71,26 +84,24 @@ export class HeatmapColorStrategy extends ColorStrategy {
         return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IRgbColorValue);
     }
 
-    private getCustomHeatmapColorPalette(baseColor: IRgbColorValue): HighChartColorPalette {
-        const { r, g, b } = baseColor;
-        const colorItemsCount = 6;
-        const channels = [r, g, b];
-        const steps = channels.map((channel) => (255 - channel) / colorItemsCount);
-        const generatedColors = this.getCalculatedColors(colorItemsCount, channels, steps);
-        return ["rgb(255,255,255)", ...generatedColors.reverse(), getRgbStringFromRGB(baseColor)];
+    private getCustomHeatmapColorPalette(baseColorRGB: IRgbColorValue): HighChartColorPalette {
+        const themeBackgroundColor = this.getThemeBackgroundColor();
+        const backgroundColor = this.getBackgroundColor();
+        const baseColor = getRgbStringFromRGB(baseColorRGB);
+        const baseColorLast = saturate(0.16, darken(0.2, baseColor));
+
+        if (themeBackgroundColor && !isDarkTheme(this.theme)) {
+            return [
+                ...this.generatePalette(baseColor, backgroundColor, 5),
+                ...this.generatePalette(baseColorLast, baseColor, 3).slice(1), // Need to remove overlapping color with slice
+            ];
+        } else {
+            return this.generatePalette(baseColor, backgroundColor, 7);
+        }
     }
 
-    private getCalculatedColors(count: number, channels: number[], steps: number[]): HighChartColorPalette {
-        return range(1, count).map(
-            (index: number) =>
-                `rgb(${this.getCalculatedChannel(channels[0], index, steps[0])},` +
-                `${this.getCalculatedChannel(channels[1], index, steps[1])},` +
-                `${this.getCalculatedChannel(channels[2], index, steps[2])})`,
-        );
-    }
-
-    private getCalculatedChannel(channel: number, index: number, step: number): number {
-        return Math.trunc(channel + index * step);
+    private generatePalette(colorA: string, colorB: string, steps: number): string[] {
+        return range(steps).map((step) => normalizeColorToRGB(mix((1 / (steps - 1)) * step, colorA, colorB)));
     }
 
     private getDefaultColorAssignment(

@@ -1,10 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import { IColor, IColorPalette, IColorPaletteItem, isColorFromPalette } from "@gooddata/sdk-model";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color";
 import uniqBy from "lodash/uniqBy";
 import { IColorMapping } from "./types";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -32,6 +33,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected palette: string[];
     protected fullColorAssignment: IColorAssignment[];
     protected outputColorAssignment: IColorAssignment[];
+    protected theme?: ITheme;
 
     constructor(
         colorPalette: IColorPalette,
@@ -41,7 +43,10 @@ export abstract class ColorStrategy implements IColorStrategy {
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
+        theme?: ITheme,
     ) {
+        this.theme = theme;
+
         const { fullColorAssignment, outputColorAssignment } = this.createColorAssignment(
             colorPalette,
             colorMapping,

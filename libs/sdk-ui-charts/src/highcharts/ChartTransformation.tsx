@@ -119,10 +119,10 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
     }
 
     public assignChartOptions(props: IChartTransformationProps): IChartOptions {
-        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData, config } = props;
+        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData, config, theme } = props;
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
 
-        this.chartOptions = getChartOptions(dataView, config, drillablePredicates);
+        this.chartOptions = getChartOptions(dataView, config, drillablePredicates, theme);
         const validationResult = validateData(config.limits, this.chartOptions);
 
         if (validationResult.dataTooLarge) {
