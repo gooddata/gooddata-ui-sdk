@@ -977,6 +977,8 @@ export interface ITigerClient {
     // (undocumented)
     axios: AxiosInstance;
     // (undocumented)
+    declarativeLayout: ReturnType<typeof tigerDeclarativeLayoutClientFactory>;
+    // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
@@ -4689,6 +4691,9 @@ export interface SortKeyValueValue {
 
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
+
+// @public (undocumented)
+export const tigerDeclarativeLayoutClientFactory: (axios: AxiosInstance) => DeclarativeLayoutControllerApiInterface;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
