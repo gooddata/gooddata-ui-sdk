@@ -30,16 +30,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         );
         const displayFormDetails = wrappedDisplayForm.attributeDisplayForm;
 
-        const attrRef = uriRef(displayFormDetails.content.formOf);
-
-        return newAttributeDisplayFormMetadataObject(ref, (df) =>
-            df
-                .attribute(attrRef)
-                .title(displayFormDetails.meta.title)
-                .description(displayFormDetails.meta.summary!)
-                .id(displayFormDetails.meta.identifier!)
-                .uri(displayFormDetails.meta.uri!),
-        );
+        return this.buildAttributeDisplayForm(displayFormDetails);
     };
 
     public getAttribute = async (ref: ObjRef): Promise<IAttributeMetadataObject> => {
@@ -50,15 +41,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
         const { title, uri, isProduction, identifier, summary } = wrappedAttribute.attribute.meta;
         const { displayForms } = wrappedAttribute.attribute.content;
         const attributeDisplayForms = displayForms.map((displayForm) =>
-            newAttributeDisplayFormMetadataObject(uriRef(displayForm.meta.uri!), (df) =>
-                df
-                    .attribute(ref)
-                    .title(displayForm.meta.title)
-                    .description(displayForm.meta.summary!)
-                    .id(displayForm.meta.identifier!)
-                    .uri(displayForm.meta.uri!)
-                    .displayFormType(displayForm.content.type),
-            ),
+            this.buildAttributeDisplayForm(displayForm),
         );
 
         return newAttributeMetadataObject(ref, (a) =>
@@ -147,7 +130,7 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
     ): IAttributeDisplayFormMetadataObject => {
         const {
             meta: { title, summary, identifier, uri },
-            content: { formOf, default: defaultDisplayForm },
+            content: { formOf, default: defaultDisplayForm, type },
         } = displayFormDetails;
         const ref: UriRef = uriRef(uri!);
         const isDefaultDf = !!(defaultDisplayForm === 1);
@@ -158,7 +141,8 @@ export class BearWorkspaceAttributes implements IWorkspaceAttributesService {
                 .description(summary!)
                 .isDefault(isDefaultDf)
                 .id(identifier!)
-                .uri(uri!),
+                .uri(uri!)
+                .displayFormType(type),
         );
     };
 }
