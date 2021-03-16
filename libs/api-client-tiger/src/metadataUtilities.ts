@@ -4,20 +4,20 @@ import { AxiosPromise } from "axios";
 import flatMap from "lodash/flatMap";
 import merge from "lodash/merge";
 import uniqBy from "lodash/uniqBy";
+import { ITigerClient } from "./client";
+import { jsonApiHeaders } from "./constants";
 import {
-    ITigerClient,
     JsonApiAnalyticalDashboardList,
     JsonApiAttributeList,
     JsonApiDatasetList,
     JsonApiFactList,
     JsonApiFilterContextList,
-    jsonApiHeaders,
     JsonApiLabelList,
     JsonApiMetricList,
     JsonApiOrganizationList,
     JsonApiVisualizationObjectList,
     JsonApiWorkspaceList,
-} from "./index";
+} from "./generated/metadata-json-api";
 
 const DefaultPageSize = 250;
 const DefaultOptions = {
