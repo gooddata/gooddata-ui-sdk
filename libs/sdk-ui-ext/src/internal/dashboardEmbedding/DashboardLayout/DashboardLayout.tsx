@@ -2,13 +2,17 @@
 import React, { useMemo } from "react";
 import { Container, ScreenClassProvider, ScreenClassRender } from "react-grid-system";
 import { setConfiguration } from "react-grid-system";
-import { ScreenSize } from "@gooddata/sdk-backend-spi";
+import { ScreenSize, IDashboardLayout } from "@gooddata/sdk-backend-spi";
 import { DashboardLayoutSection } from "./DashboardLayoutSection";
 import { IDashboardLayoutRenderProps } from "./interfaces";
 import cx from "classnames";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "./constants";
 import { DashboardLayoutFacade } from "./facade/layout";
-import { getResizedItemPositions, unifyDashboardLayoutItemHeights } from "./utils/sizing";
+import {
+    getResizedItemPositions,
+    unifyDashboardLayoutItemHeights,
+    getLayoutWithoutGridHeights,
+} from "./utils/sizing";
 import isEqual from "lodash/isEqual";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
@@ -31,13 +35,23 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         className,
         debug,
         onMouseLeave,
+        enableCustomHeight,
     } = props;
 
+    const removeHeights = (layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
+        if (enableCustomHeight) {
+            return layout;
+        }
+
+        return getLayoutWithoutGridHeights(layout);
+    };
+
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
-        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(layout));
+        const updatedLayout = removeHeights(layout, enableCustomHeight);
+        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(updatedLayout));
         const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
-    }, [layout]);
+    }, [layout, enableCustomHeight]);
 
     return (
         <div

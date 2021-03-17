@@ -28,6 +28,7 @@ import {
 import { DashboardLayoutFacade } from "../facade/layout";
 import { VisType } from "@gooddata/sdk-ui";
 import { IDashboardLayoutItemFacade } from "../facade/interfaces";
+import { DashboardLayoutBuilder } from "./../builder/layout";
 
 /**
  * Unify dashboard layout items height for all screens.
@@ -376,13 +377,12 @@ export const getResizedItemPositions = <TWidget>(
         }, positions);
 };
 
-export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize, screen: ScreenSize) => {
-    const { heightAsRatio, gridHeight } = size;
+export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize): number | undefined => {
+    const { gridHeight } = size;
     if (gridHeight) {
         return getDashboardLayoutItemHeightForGrid(gridHeight);
-    } else if (heightAsRatio) {
-        return getDashboardLayoutItemHeightForRatioAndScreen(size, screen);
     }
+
     return undefined;
 };
 
@@ -466,4 +466,39 @@ export function getDashboardLayoutWidgetDefaultHeight(widgetType: WidgetType, vi
     }
 
     return dimension.defHeightPx;
+}
+
+export function getLayoutWithoutGridHeights<TWidget>(
+    layout: IDashboardLayout<TWidget>,
+): IDashboardLayout<TWidget> {
+    const layoutBuilder = DashboardLayoutBuilder.for(layout);
+    return layoutBuilder
+        .modifySections((section) =>
+            section.modifyItems((itemBuilder, itemFacade) => {
+                const widget = itemFacade.widget();
+                if (isDashboardLayout(widget)) {
+                    const updatedLayout = (getLayoutWithoutGridHeights(widget) as unknown) as TWidget;
+                    return itemBuilder.widget(updatedLayout);
+                }
+
+                const itemWithoutGridHeight = removeGridHeightFromItemSize(itemFacade.raw());
+                return itemBuilder.setItem(itemWithoutGridHeight);
+            }),
+        )
+        .build();
+}
+
+function removeGridHeightFromItemSize<TWidget>(item: IDashboardLayoutItem<TWidget>) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { gridHeight, ...rest } = item.size.xl;
+
+    return {
+        ...item,
+        size: {
+            ...item.size,
+            xl: {
+                ...rest,
+            },
+        },
+    };
 }
