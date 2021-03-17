@@ -35,6 +35,13 @@ export {
     MetadataGetEntitiesParams,
 } from "./metadataUtilities";
 
+export {
+    OrganizationUtilities,
+    OrganizationGetEntitiesResult,
+    OrganizationGetEntitiesFn,
+    OrganizationGetEntitiesOptions,
+} from "./organizationUtilities";
+
 const defaultTigerClient: ITigerClient = tigerClientFactory(defaultAxios);
 
 export default defaultTigerClient;

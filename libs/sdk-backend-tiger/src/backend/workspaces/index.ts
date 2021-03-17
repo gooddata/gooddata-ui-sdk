@@ -1,10 +1,17 @@
 // (C) 2019-2021 GoodData Corporation
-import { IWorkspacesQueryFactory, IWorkspacesQuery, IWorkspacesQueryResult } from "@gooddata/sdk-backend-spi";
-import { jsonApiHeaders } from "@gooddata/api-client-tiger";
+import {
+    IWorkspacesQueryFactory,
+    IWorkspacesQuery,
+    IWorkspacesQueryResult,
+    IAnalyticalWorkspace,
+} from "@gooddata/sdk-backend-spi";
+import { JsonApiWorkspaceList, OrganizationUtilities } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { TigerWorkspace } from "../workspace";
+import { IWorkspaceDescriptor } from "../../../../sdk-backend-spi/dist/workspace/index";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(
@@ -21,7 +28,6 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     }
 }
 
-// TODO: Add paging when paging is added to the response while getting workspaces
 class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
@@ -53,41 +59,74 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this.queryWorker(this.offset, this.limit, this.search);
     }
 
+    private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceList): IWorkspaceDescriptor[] => {
+        return result.data.map(workspaceConverter);
+    };
+
+    private searchWorkspaceDescriptors = (search?: string) => (
+        results: IWorkspaceDescriptor[],
+    ): IWorkspaceDescriptor[] => {
+        if (search) {
+            const lowercaseSearch = search.toLocaleLowerCase();
+
+            return results.filter((workspace) => {
+                const { title } = workspace;
+
+                return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
+            });
+        }
+        return results;
+    };
+
+    private descriptorToAnalyticalWorkspace = (descriptor: IWorkspaceDescriptor): IAnalyticalWorkspace =>
+        new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
+
+    private descriptorsToAnalyticalWorkspaces = (
+        descriptors: IWorkspaceDescriptor[],
+    ): IAnalyticalWorkspace[] => descriptors.map(this.descriptorToAnalyticalWorkspace);
+
     private async queryWorker(
         offset: number,
         limit: number,
         search?: string,
     ): Promise<IWorkspacesQueryResult> {
-        const emptyResult: IWorkspacesQueryResult = {
-            search,
-            items: [],
-            limit,
-            offset,
-            totalCount: 0,
-            next: () => Promise.resolve(emptyResult),
-        };
-        const workspaces = (
-            await this.authCall(async (client) => {
-                return client.organizationObjects.getAllEntitiesWorkspaces(
-                    {
-                        page: offset / limit,
-                        size: limit,
-                        sort: ["name"], // This is default behavior in gdc-bear
-                    },
-                    { headers: jsonApiHeaders },
-                );
-            })
-        ).data.data;
-        return {
-            search,
-            items: workspaces.map((workspace) => {
-                const descriptor = workspaceConverter(workspace);
-                return new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
-            }),
-            limit,
-            offset,
-            totalCount: workspaces.length,
-            next: () => Promise.resolve(emptyResult),
-        };
+        const allWorkspaces = await this.authCall((client) => {
+            return OrganizationUtilities.getAllPagesOf(
+                client,
+                client.organizationObjects.getAllEntitiesWorkspaces,
+                { sort: ["name"] },
+            )
+                .then(OrganizationUtilities.mergeEntitiesResults)
+                .then(this.resultToWorkspaceDescriptors)
+                .then(this.searchWorkspaceDescriptors(search))
+                .then(this.descriptorsToAnalyticalWorkspaces);
+        });
+
+        return new WorkspacesInMemoryPaging(allWorkspaces, limit ?? 50, offset ?? 0, search);
+    }
+}
+
+class WorkspacesInMemoryPaging extends InMemoryPaging<IAnalyticalWorkspace>
+    implements IWorkspacesQueryResult {
+    constructor(
+        all: IAnalyticalWorkspace[],
+        limit = 50,
+        offset = 0,
+        public readonly search: string | undefined = undefined,
+    ) {
+        super(all, limit, offset);
+    }
+
+    public async next(): Promise<IWorkspacesQueryResult> {
+        if (this.items.length === 0) {
+            return this;
+        }
+
+        return new WorkspacesInMemoryPaging(
+            this.all,
+            this.limit,
+            this.offset + this.items.length,
+            this.search,
+        );
     }
 }

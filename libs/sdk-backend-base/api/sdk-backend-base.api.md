@@ -544,6 +544,8 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
 export class InMemoryPaging<T> implements IPagedResource<T> {
     constructor(all: T[], limit?: number, offset?: number);
     // (undocumented)
+    protected readonly all: T[];
+    // (undocumented)
     readonly items: T[];
     // (undocumented)
     readonly limit: number;
