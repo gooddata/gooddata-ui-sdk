@@ -185,6 +185,9 @@ export interface CheckboxProps {
     value: boolean;
 }
 
+// @internal
+export type Color = string;
+
 // @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
@@ -514,6 +517,9 @@ export interface IButtonProps {
 }
 
 // @internal (undocumented)
+export const Icon: React_2.FC<IIconProps>;
+
+// @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     cancelButtonText?: string;
@@ -534,6 +540,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     warning?: string | React.ReactElement;
 }
+
+// @internal (undocumented)
+export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -899,6 +908,16 @@ export interface IHeaderWorkspacePickerProps {
     totalWorkspacesCount?: number;
     // (undocumented)
     workspaces?: IHeaderWorkspace[];
+}
+
+// @internal (undocumented)
+export interface IIconProps {
+    // (undocumented)
+    color?: Color;
+    // (undocumented)
+    colorPalette?: Array<Color>;
+    // (undocumented)
+    name: IconName;
 }
 
 // @internal (undocumented)

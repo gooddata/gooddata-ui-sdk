@@ -30,3 +30,4 @@ export * from "./NoData";
 export * from "./DocumentHeader";
 export * from "./Dropdown";
 export * from "./responsive";
+export * from "./Icon";
