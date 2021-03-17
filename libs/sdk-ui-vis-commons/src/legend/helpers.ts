@@ -1,12 +1,15 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import range from "lodash/range";
 import get from "lodash/get";
 import head from "lodash/head";
 import last from "lodash/last";
 import inRange from "lodash/inRange";
+import isEqual from "lodash/isEqual";
 import { numberFormat } from "@gooddata/numberjs";
 import { IColorLegendItem } from "./types";
 import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
+import { ITheme } from "@gooddata/sdk-backend-spi";
+import { parseRGBString } from "../coloring/color";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -440,10 +443,15 @@ function getColorLegendLabels(
 
 const MIDDLE_LEGEND_BOX_INDEX = 3;
 
-function getColorBoxes(series: IColorLegendItem[]): IColorLegendBox[] {
+function getColorBoxes(series: IColorLegendItem[], theme?: ITheme): IColorLegendBox[] {
+    const backgroundColor = theme?.chart?.backgroundColor ?? theme?.palette?.complementary?.c0 ?? "#fff";
+    const borderColor = theme?.palette?.complementary?.c4 ?? "#ccc";
+
     const getBoxStyle = (item: IColorLegendItem) => ({
         backgroundColor: item.color,
-        border: item.color === "rgb(255,255,255)" ? "1px solid #ccc" : "none",
+        border: isEqual(parseRGBString(item.color), parseRGBString(backgroundColor))
+            ? `1px solid ${borderColor}`
+            : "none",
     });
 
     return series.map((item: IColorLegendItem, index: number) => {
@@ -464,6 +472,7 @@ export function getColorLegendConfiguration(
     numericSymbols: string[],
     isSmall: boolean,
     position: string | null,
+    theme?: ITheme,
 ): IColorLegendConfig {
     const legendLabels = getColorLegendLabels(series, format, numericSymbols);
     let finalPosition;
@@ -482,7 +491,7 @@ export function getColorLegendConfiguration(
 
     const isVertical = finalPosition === LEFT || finalPosition === RIGHT;
     const finalLabels = getColorLegendLabelsConfiguration(legendLabels, isSmall, isVertical);
-    const boxes = getColorBoxes(series);
+    const boxes = getColorBoxes(series, theme);
 
     return {
         classes,

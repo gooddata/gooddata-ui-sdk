@@ -79,6 +79,7 @@ Object {
     "palette": Array [
       "rgb(20,178,226)",
     ],
+    "theme": undefined,
   },
   "geoData": Object {
     "location": Object {
@@ -280,6 +281,7 @@ Object {
       "rgb(0,193,141)",
       "rgb(229,77,66)",
     ],
+    "theme": undefined,
   },
   "geoData": Object {
     "color": Object {

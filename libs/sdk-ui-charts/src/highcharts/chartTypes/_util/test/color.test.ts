@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IHeaderPredicate, DefaultColorPalette, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     getColorMappingPredicate,
@@ -22,12 +22,12 @@ describe("Transformation", () => {
 
 describe("normalizeColorToRGB", () => {
     it("should just return the original color it is not in hex format", () => {
-        const color = "rgb(255, 255, 255)";
+        const color = "rgb(255,255,255)";
         expect(normalizeColorToRGB(color)).toEqual(color);
     });
     it("should return color in rgb format if supplied color is in hex format", () => {
         const color = "#ffffff";
-        const expectedColor = "rgb(255, 255, 255)";
+        const expectedColor = "rgb(255,255,255)";
         expect(normalizeColorToRGB(color)).toEqual(expectedColor);
     });
 });

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IColorPalette } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../interfaces";
@@ -17,6 +17,7 @@ import { HeatmapColorStrategy } from "../heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../treemap/treemapColoring";
 import { BubbleChartColorStrategy } from "../bubbleChart/bubbleChartColoring";
 import { ScatterPlotColorStrategy } from "../scatterPlot/scatterPlotColoring";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const attributeChartSupportedTypes = [
     VisualizationTypes.PIE,
@@ -41,6 +42,7 @@ export class ColorFactory {
         stackByAttribute: any,
         dv: DataViewFacade,
         type: string,
+        theme?: ITheme,
     ): IColorStrategy {
         if (isHeatmap(type)) {
             return new HeatmapColorStrategy(
@@ -49,6 +51,7 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
@@ -59,6 +62,7 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
@@ -69,6 +73,7 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
@@ -79,6 +84,7 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
@@ -89,6 +95,7 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
@@ -99,9 +106,17 @@ export class ColorFactory {
                 viewByAttribute,
                 stackByAttribute,
                 dv,
+                theme,
             );
         }
 
-        return new MeasureColorStrategy(colorPalette, colorMapping, viewByAttribute, stackByAttribute, dv);
+        return new MeasureColorStrategy(
+            colorPalette,
+            colorMapping,
+            viewByAttribute,
+            stackByAttribute,
+            dv,
+            theme,
+        );
     }
 }

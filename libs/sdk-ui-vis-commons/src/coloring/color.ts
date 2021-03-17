@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IColor, IColorPalette, IColorPaletteItem, IRgbColorValue } from "@gooddata/sdk-model";
 import { isAttributeDescriptor, isResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import {
@@ -67,13 +67,37 @@ export function getLighterColorFromRGB(color: IRgbColorValue, percent: number): 
 }
 
 /**
+ * Takes short or long format of HEX color and returns long format.
+ * @param color short `#123` or long `#112233` format
+ * @returns long hex format `#112233`
+ */
+function convertToLongHexFormat(color: string): string {
+    if (color.length === 4) {
+        const [r, g, b] = color.split("").slice(1);
+        return "#" + r + r + g + g + b + b;
+    }
+    return color;
+}
+
+/**
  * @internal
  */
 export function normalizeColorToRGB(color: string): string {
+    if (typeof color !== "string") {
+        return color;
+    }
+
+    if (color.slice(0, 3) === "rgb") {
+        return color.replace(/\s/g, "");
+    }
+
     const hexPattern = /#([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})/i;
-    return color.replace(hexPattern, (_prefix: string, r: string, g: string, b: string) => {
-        return `rgb(${[r, g, b].map((value) => parseInt(value, 16).toString(10)).join(", ")})`;
-    });
+    return convertToLongHexFormat(color).replace(
+        hexPattern,
+        (_prefix: string, r: string, g: string, b: string) => {
+            return `rgb(${[r, g, b].map((value) => parseInt(value, 16).toString(10)).join(",")})`;
+        },
+    );
 }
 
 /**
@@ -144,6 +168,21 @@ export function getColorByGuid(colorPalette: IColorPalette, guid: string, index:
  */
 export function getRgbStringFromRGB(color: IRgbColorValue): string {
     return `rgb(${color.r},${color.g},${color.b})`;
+}
+
+/**
+ * @internal
+ */
+export function parseRGBString(color: string): IRgbColorValue | null {
+    const normalizedColor = normalizeColorToRGB(color);
+    const result = /rgb\((.*)\)/.exec(normalizedColor);
+    if (result === null) {
+        return null;
+    }
+
+    const values = result[1];
+    const [r, g, b] = values.split(",").map((i) => parseInt(i));
+    return { r, g, b };
 }
 
 /**

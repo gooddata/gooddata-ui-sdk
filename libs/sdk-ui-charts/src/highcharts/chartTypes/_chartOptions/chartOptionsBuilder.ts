@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IDataView, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
 
@@ -62,6 +62,7 @@ import {
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -306,6 +307,7 @@ export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
     drillableItems: IHeaderPredicate[],
+    theme?: ITheme,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -333,6 +335,7 @@ export function getChartOptions(
         stackByAttribute,
         dv,
         type,
+        theme,
     );
 
     const gridEnabled = get(config, "grid.enabled", true);

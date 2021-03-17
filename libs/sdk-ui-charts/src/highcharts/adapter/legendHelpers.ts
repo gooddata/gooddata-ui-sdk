@@ -1,17 +1,12 @@
-// (C) 2007-2020 GoodData Corporation
-import range from "lodash/range";
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import head from "lodash/head";
-import last from "lodash/last";
 import isEmpty from "lodash/isEmpty";
-import inRange from "lodash/inRange";
 
-import { formatLegendLabel, isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
+import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
 import { ISeriesItem, IChartOptions } from "../typings/unsafe";
-import { IHeatmapLegendItem } from "@gooddata/sdk-ui-vis-commons";
-import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -225,42 +220,6 @@ export function buildHeatmapLabelsConfig(
     });
 }
 
-const LABEL_LENGHT_THRESHOLDS = [5, 8, 10, 15, 18];
-const SMALL_LABEL_LENGHT_THRESHOLDS = [4, 7, 9, 13, 15];
-
-function getHeatmapLegendLabelsConfiguration(legendLabels: string[], isSmall: boolean, isVertical: boolean) {
-    const firstLabelLength = head(legendLabels).length;
-    const lastLabelLength = last(legendLabels).length;
-    const maxLabelLength = firstLabelLength > lastLabelLength ? firstLabelLength : lastLabelLength;
-    const labelLengths = isSmall ? SMALL_LABEL_LENGHT_THRESHOLDS : LABEL_LENGHT_THRESHOLDS;
-
-    let shorteningLevel: number;
-    let shorteningConfig;
-
-    if (isVertical) {
-        shorteningConfig = verticalHeatmapConfig;
-    } else {
-        if (inRange(maxLabelLength, 0, labelLengths[0])) {
-            shorteningLevel = 5;
-        } else if (inRange(maxLabelLength, labelLengths[0], labelLengths[1])) {
-            shorteningLevel = 4;
-        } else if (inRange(maxLabelLength, labelLengths[1], labelLengths[2])) {
-            shorteningLevel = 3;
-        } else if (inRange(maxLabelLength, labelLengths[2], labelLengths[3])) {
-            shorteningLevel = 2;
-        } else if (inRange(maxLabelLength, labelLengths[3], labelLengths[4])) {
-            shorteningLevel = 1;
-        } else if (maxLabelLength > labelLengths[4]) {
-            shorteningLevel = 0;
-        }
-        shorteningConfig = isSmall
-            ? heatmapSmallLegendConfigMatrix[shorteningLevel]
-            : heatmapLegendConfigMatrix[shorteningLevel];
-    }
-
-    return buildHeatmapLabelsConfig(legendLabels, shorteningConfig);
-}
-
 export function calculateFluidLegend(
     seriesCount: number,
     containerWidth: number,
@@ -325,78 +284,6 @@ export function calculateStaticLegend(
     return {
         hasPaging: true,
         visibleItemsCount: getStaticVisibleItemsCount(containerHeight, true),
-    };
-}
-
-function getHeatmapLegendLabels(series: IHeatmapLegendItem[], format: string, numericSymbols: string[]) {
-    const min = get(head(series), "range.from", 0);
-    const max = get(last(series), "range.to", 0);
-    const diff = max - min;
-
-    return range(series.length + 1).map((index) => {
-        let value;
-
-        if (index === 0) {
-            value = get(series, "0.range.from", 0);
-        } else if (index === series.length) {
-            value = get(series, `${index - 1}.range.to`, 0);
-        } else {
-            value = get(series, `${index}.range.from`, 0);
-        }
-
-        return formatLegendLabel(value, format, diff, numericSymbols);
-    });
-}
-
-const MIDDLE_LEGEND_BOX_INDEX = 3;
-
-function getHeatmapBoxes(series: IHeatmapLegendItem[]): IHeatmapLegendBox[] {
-    const getBoxStyle = (item: IHeatmapLegendItem) => ({
-        backgroundColor: item.color,
-        border: item.color === "rgb(255,255,255)" ? "1px solid #ccc" : "none",
-    });
-
-    return series.map((item: IHeatmapLegendItem, index: number) => {
-        const style = getBoxStyle(item);
-        const middle = index === MIDDLE_LEGEND_BOX_INDEX ? "middle" : null;
-
-        return {
-            class: middle,
-            key: `item-${index}`,
-            style,
-        };
-    });
-}
-
-export function getHeatmapLegendConfiguration(
-    series: IHeatmapLegendItem[],
-    format: string,
-    numericSymbols: string[],
-    isSmall: boolean,
-    position: string,
-): IHeatmapLegendConfig {
-    const legendLabels = getHeatmapLegendLabels(series, format, numericSymbols);
-    const small = isSmall ? "small" : null;
-
-    let finalPosition;
-
-    if (isSmall) {
-        finalPosition = position === TOP ? TOP : BOTTOM;
-    } else {
-        finalPosition = position || RIGHT;
-    }
-
-    const classes = ["viz-legend", "heatmap-legend", `position-${finalPosition}`, small];
-
-    const isVertical = finalPosition === LEFT || finalPosition === RIGHT;
-    const finalLabels = getHeatmapLegendLabelsConfiguration(legendLabels, isSmall, isVertical);
-    const boxes = getHeatmapBoxes(series);
-
-    return {
-        classes,
-        labels: finalLabels as any,
-        boxes,
-        position: finalPosition,
     };
 }
 
