@@ -330,32 +330,6 @@
                 }
             }
         },
-        "/api/dataSources/{dataSourceId}/uploadNotification": {
-            "post": {
-                "tags": ["notification-controller"],
-                "summary": "Register an upload notification",
-                "description": "Notification sets up all reports to be computed again with new data.",
-                "operationId": "registerUploadNotification_1",
-                "parameters": [
-                    {
-                        "name": "dataSourceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "An upload notification has been successfully registered."
-                    },
-                    "404": {
-                        "description": "Data source with given name does not exist."
-                    }
-                }
-            }
-        },
         "/api/options": {
             "get": {
                 "tags": ["options-controller"],
@@ -647,692 +621,6 @@
                 }
             }
         },
-        "/api/entities/admin/acls/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@Acls_1",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiACLOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@Acls_1",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiACLInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiACLOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/dataSources/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@DataSources",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiDataSourceOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@DataSources",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiDataSourceInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiDataSourceOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/modelModules/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@ModelModules",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiModelModuleOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@ModelModules",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiModelModuleInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiModelModuleOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/organizations/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@Organizations",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiOrganizationInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiOrganizationOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/userGroups/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@UserGroups",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiUserGroupOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@UserGroups",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiUserGroupInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiUserGroupOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/users/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@Users",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiUserOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@Users",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiUserInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiUserOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/entities/admin/workspaces/{id}": {
-            "get": {
-                "tags": ["organization-controller"],
-                "operationId": "getEntity@Workspaces",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiWorkspaceOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": ["organization-controller"],
-                "operationId": "updateEntity@Workspaces",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "variableParam",
-                        "in": "query",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    {
-                        "name": "include",
-                        "in": "query",
-                        "required": false,
-                        "schema": {
-                            "type": "object"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/vnd.gooddata.api+json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/JsonApiWorkspaceInDocument"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Request successfully processed",
-                        "content": {
-                            "application/vnd.gooddata.api+json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/JsonApiWorkspaceOutDocument"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/entities/dataSources": {
             "get": {
                 "tags": ["organization-model-controller"],
@@ -1445,7 +733,7 @@
         "/api/entities/dataSources/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@DataSources_1",
+                "operationId": "getEntity@DataSources",
                 "parameters": [
                     {
                         "name": "id",
@@ -1488,7 +776,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@DataSources_1",
+                "operationId": "updateEntity@DataSources",
                 "parameters": [
                     {
                         "name": "id",
@@ -1680,7 +968,7 @@
         "/api/entities/modelModules/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@ModelModules_1",
+                "operationId": "getEntity@ModelModules",
                 "parameters": [
                     {
                         "name": "id",
@@ -1723,7 +1011,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@ModelModules_1",
+                "operationId": "updateEntity@ModelModules",
                 "parameters": [
                     {
                         "name": "id",
@@ -1806,7 +1094,7 @@
         "/api/entities/organization": {
             "get": {
                 "tags": ["organization-controller"],
-                "operationId": "getOrganization@Users_1_1",
+                "operationId": "getOrganization@Users",
                 "responses": {
                     "200": {
                         "description": "Request successfully processed",
@@ -1955,7 +1243,7 @@
         "/api/entities/organizations/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@Organizations_1",
+                "operationId": "getEntity@Organizations",
                 "parameters": [
                     {
                         "name": "id",
@@ -1998,7 +1286,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@Organizations_1",
+                "operationId": "updateEntity@Organizations",
                 "parameters": [
                     {
                         "name": "id",
@@ -2190,7 +1478,7 @@
         "/api/entities/userGroups/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@UserGroups_1",
+                "operationId": "getEntity@UserGroups",
                 "parameters": [
                     {
                         "name": "id",
@@ -2233,7 +1521,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@UserGroups_1",
+                "operationId": "updateEntity@UserGroups",
                 "parameters": [
                     {
                         "name": "id",
@@ -2425,7 +1713,7 @@
         "/api/entities/users/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@Users_1",
+                "operationId": "getEntity@Users",
                 "parameters": [
                     {
                         "name": "id",
@@ -2468,7 +1756,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@Users_1",
+                "operationId": "updateEntity@Users",
                 "parameters": [
                     {
                         "name": "id",
@@ -2903,7 +2191,7 @@
         "/api/entities/workspaces/{id}": {
             "get": {
                 "tags": ["organization-model-controller"],
-                "operationId": "getEntity@Workspaces_1",
+                "operationId": "getEntity@Workspaces",
                 "parameters": [
                     {
                         "name": "id",
@@ -2946,7 +2234,7 @@
             },
             "put": {
                 "tags": ["organization-model-controller"],
-                "operationId": "updateEntity@Workspaces_1",
+                "operationId": "updateEntity@Workspaces",
                 "parameters": [
                     {
                         "name": "id",
