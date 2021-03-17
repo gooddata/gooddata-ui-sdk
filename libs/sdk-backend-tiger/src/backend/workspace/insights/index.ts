@@ -91,13 +91,13 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 });
         });
 
-        return new InMemoryPaging(allInsights, options?.limit ?? 50, 0);
+        return new InMemoryPaging(allInsights, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
         const id = await objRefToIdentifier(ref, this.authCall);
-        const response = await this.authCall((sdk) =>
-            sdk.workspaceObjects.getEntityVisualizationObjects(
+        const response = await this.authCall((client) =>
+            client.workspaceObjects.getEntityVisualizationObjects(
                 {
                     objectId: id,
                     workspaceId: this.workspace,
@@ -124,8 +124,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
-        const createResponse = await this.authCall((sdk) => {
-            return sdk.workspaceObjects.createEntityVisualizationObjects(
+        const createResponse = await this.authCall((client) => {
+            return client.workspaceObjects.createEntityVisualizationObjects(
                 {
                     workspaceId: this.workspace,
                     jsonApiVisualizationObjectDocument: {
@@ -150,8 +150,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     };
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
-        await this.authCall((sdk) => {
-            return sdk.workspaceObjects.updateEntityVisualizationObjects(
+        await this.authCall((client) => {
+            return client.workspaceObjects.updateEntityVisualizationObjects(
                 {
                     objectId: insightId(insight),
                     workspaceId: this.workspace,
@@ -178,8 +178,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        await this.authCall((sdk) =>
-            sdk.workspaceObjects.deleteEntityVisualizationObjects({
+        await this.authCall((client) =>
+            client.workspaceObjects.deleteEntityVisualizationObjects({
                 objectId: id,
                 workspaceId: this.workspace,
             }),

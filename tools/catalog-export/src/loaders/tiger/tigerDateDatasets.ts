@@ -6,7 +6,7 @@ import {
     JsonApiAttribute,
     JsonApiDataset,
     ITigerClient,
-    jsonApiHeaders,
+    MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import {
     convertAttribute,
@@ -76,28 +76,17 @@ function convertToExportableFormat(
     });
 }
 
-export async function loadDateDataSets(
-    workspaceId: string,
-    tigerClient: ITigerClient,
-): Promise<DateDataSet[]> {
-    const result = await tigerClient.workspaceObjects.getEntitiesAttributes(
-        {
-            workspaceId,
-        },
-        {
-            headers: jsonApiHeaders,
-            query: {
-                include: "labels,datasets",
-                // TODO - update after paging is fixed in MDC-354
-                size: "500",
-            },
-        },
-    );
+export async function loadDateDataSets(client: ITigerClient, workspaceId: string): Promise<DateDataSet[]> {
+    const result = await MetadataUtilities.getAllPagesOf(
+        client,
+        client.workspaceObjects.getEntitiesAttributes,
+        { workspaceId },
+        { query: { include: "labels,datasets" } },
+    ).then(MetadataUtilities.mergeEntitiesResults);
+    const labelsMap = createLabelMap(result.included);
+    const datasetsMap = createDatasetMap(result.included);
 
-    const labelsMap = createLabelMap(result.data.included);
-    const datasetsMap = createDatasetMap(result.data.included);
-
-    const dateDatasets = findDateDatasetsWithAttributes(result.data, datasetsMap);
+    const dateDatasets = findDateDatasetsWithAttributes(result, datasetsMap);
 
     return convertToExportableFormat(dateDatasets, labelsMap);
 }

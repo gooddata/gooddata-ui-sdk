@@ -2068,6 +2068,7 @@ export type MetadataGetEntitiesOptions = {
         size?: number;
         include?: any;
         sort?: any;
+        tags?: any;
     };
 };
 

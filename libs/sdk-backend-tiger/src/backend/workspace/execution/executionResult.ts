@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { AfmExecutionResponse, ExecutionResult } from "@gooddata/api-client-tiger";
 import {
@@ -63,8 +63,8 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async readAll(): Promise<IDataView> {
-        const executionResultPromise = this.authCall((sdk) =>
-            sdk.execution.executionResult(this.workspace, this.resultId),
+        const executionResultPromise = this.authCall((client) =>
+            client.execution.executionResult(this.workspace, this.resultId),
         );
 
         return this.asDataView(executionResultPromise);
@@ -74,8 +74,8 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneOffset = sanitizeOffset(offset);
         const saneSize = sanitizeSize(size);
 
-        const executionResultPromise = this.authCall((sdk) =>
-            sdk.execution.executionResult(this.workspace, this.resultId, saneOffset, saneSize),
+        const executionResultPromise = this.authCall((client) =>
+            client.execution.executionResult(this.workspace, this.resultId, saneOffset, saneSize),
         );
 
         return this.asDataView(executionResultPromise);

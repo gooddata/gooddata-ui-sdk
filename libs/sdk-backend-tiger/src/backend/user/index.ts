@@ -13,8 +13,8 @@ export class TigerUserService implements IUserService {
 
     public async getUser(): Promise<IUser> {
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        return this.authCall(async (sdk) => {
-            const profile = await sdk.axios.get<IUserProfile>("/api/profile");
+        return this.authCall(async (client) => {
+            const profile = await client.axios.get<IUserProfile>("/api/profile");
             return convertUser(profile.data);
         });
     }

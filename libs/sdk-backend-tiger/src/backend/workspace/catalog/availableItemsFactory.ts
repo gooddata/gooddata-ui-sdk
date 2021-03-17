@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     CatalogItem,
     CatalogItemType,
@@ -152,8 +152,8 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             },
         };
 
-        const availableItemsResponse = await this.authCall((sdk) =>
-            sdk.validObjects.processAfmValidObjectsQuery({
+        const availableItemsResponse = await this.authCall((client) =>
+            client.validObjects.processAfmValidObjectsQuery({
                 workspaceId: this.workspace,
                 afmValidObjectsQuery,
             }),
