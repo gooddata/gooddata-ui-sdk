@@ -91,7 +91,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 });
         });
 
-        return new InMemoryPaging(allInsights, options?.limit ?? 50, 0);
+        return new InMemoryPaging(allInsights, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
