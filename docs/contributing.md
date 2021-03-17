@@ -55,6 +55,10 @@ Long story short, here are facts and commands you need to know:
 
 -   `rush add` - adds a new dependency to a project.
 
+**IMPORTANT**: When `rush` runs builds in the projects it will truncate the project's build outputs when emitting to
+console. It will, however, store full build output into each project's directory. It will create files `<projectId>.build.log`
+and this will contain the full build output.
+
 > Note: Rush by default tries to use all cores available on the machine. It is possible to override this using
 > the `--parallelism` option on the CLI or using the `RUSH_PARALLELISM` environment variable.
 
