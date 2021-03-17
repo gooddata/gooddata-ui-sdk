@@ -52,13 +52,6 @@ export function isBrokenAlertAttributeFilterInfo(
     return isDashboardAttributeFilter(item.alertFilter);
 }
 
-function isFilterNoop(filter: IDashboardAttributeFilter): boolean {
-    return (
-        filter.attributeFilter.negativeSelection &&
-        attributeElementsIsEmpty(filter.attributeFilter.attributeElements)
-    );
-}
-
 /**
  * Gets the information about the so called broken alert filters. These are filters that are set up on the alert,
  * but the currently applied filters either do not contain them, or the KPI has started ignoring them
@@ -100,15 +93,13 @@ export function getBrokenAlertFiltersBasicInfo(
             return;
         }
 
-        // deleted attribute filters are broken only if they are not noop
+        // deleted attribute filters are broken even if they are noop
         const isInAppliedFilters = appliedAttributeFilters.some((f) =>
             areObjRefsEqual(filterObjRef(f), alertFilter.attributeFilter.displayForm),
         );
 
         const isDeleted = !isInAppliedFilters;
-        const isNoop = isFilterNoop(alertFilter);
-
-        if (isDeleted && !isNoop) {
+        if (isDeleted) {
             result.push({
                 alertFilter,
                 brokenType: "deleted",

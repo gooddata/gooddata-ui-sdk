@@ -204,6 +204,21 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
             expect(actual).toEqual(expected);
         });
 
+        it("should detect deleted attribute filter even if it is noop", () => {
+            const alert = getAlertWithFilters([noopAttributeFilter]);
+            const kpi = kpiBase;
+
+            const expected: IBrokenAlertFilterBasicInfo[] = [
+                {
+                    alertFilter: noopAttributeFilter,
+                    brokenType: "deleted",
+                },
+            ];
+
+            const actual = getBrokenAlertFiltersBasicInfo(alert, kpi, []);
+            expect(actual).toEqual(expected);
+        });
+
         it("should NOT detect attribute filter if it is applied", () => {
             const alert = getAlertWithFilters([attributeFilter]);
             const kpi = kpiBase;
@@ -211,14 +226,6 @@ describe("getBrokenAlertFiltersBasicInfo", () => {
             const actual = getBrokenAlertFiltersBasicInfo(alert, kpi, [
                 newPositiveAttributeFilter(displayForm, { uris: ["/gdc/md/foo?id=1"] }),
             ]);
-            expect(actual).toEqual([]);
-        });
-
-        it("should NOT detect deleted attribute filter if it is noop", () => {
-            const alert = getAlertWithFilters([noopAttributeFilter]);
-            const kpi = kpiBase;
-
-            const actual = getBrokenAlertFiltersBasicInfo(alert, kpi, []);
             expect(actual).toEqual([]);
         });
     });
