@@ -864,6 +864,6 @@ describe("createPivotTableConfig", () => {
     ];
 
     it.each(Scenarios)("should create valid %s", (_desc, config, env, settings, columnWidths) => {
-        expect(createPivotTableConfig(config, env, settings, columnWidths)).toMatchSnapshot();
+        expect(createPivotTableConfig(config, env, settings, true, true, columnWidths)).toMatchSnapshot();
     });
 });

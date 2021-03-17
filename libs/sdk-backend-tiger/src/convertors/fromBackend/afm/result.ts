@@ -2,6 +2,7 @@
 import {
     DimensionHeader,
     ExecutionResult,
+    ExecutionResultGrandTotal,
     isResultAttributeHeader,
     JsonApiAttributeAttributesGranularityEnum,
 } from "@gooddata/api-client-tiger";
@@ -14,10 +15,12 @@ import {
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
+import { DateAttributeGranularity, IExecutionDefinition } from "@gooddata/sdk-model";
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter";
 import { DateFormatter } from "../dateFormatting/types";
 import { toSdkGranularity } from "../dateGranularityConversions";
+import { totalLocalIdentifier, withTotals } from "../../toBackend/afm/TotalsConverter";
+import isEmpty from "lodash/isEmpty";
 
 export type Data = DataValue[] | DataValue[][];
 
@@ -130,4 +133,23 @@ export function transformExecutionResult(
         count: result.paging.count,
         total: result.paging.total,
     };
+}
+
+export function transformGrandTotalData(
+    definition: IExecutionDefinition,
+    grandTotals: ExecutionResultGrandTotal[],
+): DataValue[][][] | undefined {
+    if (definition.dimensions.every((dim) => isEmpty(dim.totals))) {
+        // SDK cannot work with explicit empty totals, undefined must be returned instead
+        return undefined;
+    }
+    const grandTotalsData: DataValue[][][] = definition.dimensions.map((_) => []);
+    const grandTotalsByLocalId = new Map(grandTotals.map((total) => [total.localIdentifier, total.data]));
+    withTotals(definition.dimensions, (dimIdx, typeIdx, totalsOfType) => {
+        const totalType = totalsOfType[0].type;
+        const localId = totalLocalIdentifier(totalType, dimIdx);
+        // Tiger API supports multi-dimensional totals but SDK limits to single dim totals only
+        grandTotalsData[dimIdx][typeIdx] = grandTotalsByLocalId.get(localId) as Array<DataValue>;
+    });
+    return grandTotalsData;
 }

@@ -1,13 +1,15 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAttributeDescriptor,
     IMeasureGroupDescriptor,
     IMeasureDescriptor,
     IDimensionDescriptor,
+    ITotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { isAttributeHeader, ResultDimension } from "@gooddata/api-client-tiger";
 
 import {
+    Identifier,
     idRef,
     IExecutionDefinition,
     isIdentifierRef,
@@ -18,12 +20,16 @@ import {
 } from "@gooddata/sdk-model";
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
+import groupBy from "lodash/groupBy";
 
 const DEFAULT_FORMAT = "#,#.##";
+
+type AttrTotals = Record<Identifier, ITotalDescriptor[]>;
 
 function transformDimension(
     dim: ResultDimension,
     simpleMeasureRefs: Record<string, ObjRef>,
+    attrTotals: AttrTotals,
 ): IDimensionDescriptor {
     return {
         headers: dim.headers.map((header, headerIdx) => {
@@ -49,6 +55,7 @@ function transformDimension(
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.name,
+                        totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
                     },
                 };
 
@@ -95,9 +102,22 @@ function transformDimension(
 }
 
 /**
+ * Compute mapping from attribute identifiers to all ITotalDescriptors corresponding to that attribute.
+ */
+function getAttrTotals(def: IExecutionDefinition): AttrTotals {
+    const attrTotals: AttrTotals[] = def.dimensions.map((dim) => {
+        const totalsByAttrId = groupBy(dim.totals ?? [], (total) => total.attributeIdentifier);
+        return mapValues(totalsByAttrId, (totals) =>
+            totals.map((total) => ({ totalHeaderItem: { name: total.type } })),
+        );
+    });
+    return Object.assign({}, ...attrTotals);
+}
+
+/**
  * Transforms dimensions in the result provided by backend to the unified model used in SDK. The tiger backend
  * does not return all the data needed by the SPI. For some information, the transformation needs to look into
- * the input execution definition. At the moment, this is the case for 'ref' fields
+ * the input execution definition.
  *
  * @param dimensions - dimensions from execution result
  * @param def - execution definition, this is needed to augment the descriptors with data required by the SPI which
@@ -114,5 +134,5 @@ export function transformResultDimensions(
         measureItem(m),
     );
 
-    return dimensions.map((dim) => transformDimension(dim, measureRefs));
+    return dimensions.map((dim) => transformDimension(dim, measureRefs, getAttrTotals(def)));
 }

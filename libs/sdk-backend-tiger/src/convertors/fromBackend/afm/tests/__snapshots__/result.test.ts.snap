@@ -50,3 +50,21 @@ Object {
   ],
 }
 `;
+
+exports[`transformGrandTotalData should transform grand total data 1`] = `
+Array [
+  Array [
+    Array [
+      1,
+      2,
+      3,
+    ],
+    Array [
+      0,
+      0,
+      0,
+    ],
+  ],
+  Array [],
+]
+`;

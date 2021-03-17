@@ -46,7 +46,7 @@ const generate = async (specMeta, outputDir, outputFile) => {
      * --reserved-words-mappings in=in,for=for
      */
     await exec(
-        `openapi-generator generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in`,
+        `openapi-generator generate -i ${inputPath} -g typescript-axios -o ${outputPath} -t openapi-generator -p withInterfaces=true --reserved-words-mappings in=in,function=function`,
     );
 };
 

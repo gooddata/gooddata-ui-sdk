@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     Dimension,
     DimensionItemValue,
@@ -184,12 +184,8 @@ function dimensionsWithSorts(
  */
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
     const dimensionsWithoutSorts: VisualizationObjectModel.IDimension[] = def.dimensions.map((dim, idx) => {
-        if (!isEmpty(dim.totals)) {
-            throw new Error("Tiger backend does not support totals.");
-        }
-
         return {
-            localIdentifier: `dim_${idx}`,
+            localIdentifier: `dim_${idx}`, // FIXME synchronize with convertTotals
             itemIdentifiers: dim.itemIdentifiers,
         };
     });

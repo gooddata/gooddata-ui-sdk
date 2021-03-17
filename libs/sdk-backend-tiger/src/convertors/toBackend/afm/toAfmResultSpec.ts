@@ -1,10 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
 import { convertMeasure } from "./MeasureConverter";
 import { convertAttribute } from "./AttributeConverter";
 import { convertDimensions } from "./DimensionsConverter";
 import { convertAfmFilters } from "./AfmFiltersConverter";
+import { convertTotals } from "./TotalsConverter";
 
 function convertAFM(def: IExecutionDefinition): AFM {
     const attributes: AttributeItem[] = def.attributes.map(convertAttribute);
@@ -26,10 +27,9 @@ function convertAFM(def: IExecutionDefinition): AFM {
 }
 
 function convertResultSpec(def: IExecutionDefinition): ResultSpec {
-    const convertedDimensions = convertDimensions(def);
-
-    return { dimensions: convertedDimensions };
+    return { dimensions: convertDimensions(def), grandTotals: convertTotals(def) };
 }
+
 /**
  * Converts execution definition to AFM Execution
  *

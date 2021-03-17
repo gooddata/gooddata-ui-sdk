@@ -841,11 +841,36 @@ export interface ExecutionResult {
      */
     dimensionHeaders: Array<DimensionHeader>;
     /**
+     * An array with grand totals data corresponding to grand totals definition in result spec.
+     * @type {Array<ExecutionResultGrandTotal>}
+     * @memberof ExecutionResult
+     */
+    grandTotals: Array<ExecutionResultGrandTotal>;
+    /**
      *
      * @type {ExecutionResultPaging}
      * @memberof ExecutionResult
      */
     paging: ExecutionResultPaging;
+}
+/**
+ * Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec.
+ * @export
+ * @interface ExecutionResultGrandTotal
+ */
+export interface ExecutionResultGrandTotal {
+    /**
+     *
+     * @type {object}
+     * @memberof ExecutionResultGrandTotal
+     */
+    data: object;
+    /**
+     *
+     * @type {string}
+     * @memberof ExecutionResultGrandTotal
+     */
+    localIdentifier: string;
 }
 /**
  * @type ExecutionResultHeader
@@ -950,6 +975,31 @@ export enum FormOfGranularityEnum {
 }
 
 /**
+ * Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them.
+ * @export
+ * @interface GrandTotal
+ */
+export interface GrandTotal {
+    /**
+     * Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.
+     * @type {string}
+     * @memberof GrandTotal
+     */
+    localIdentifier: string;
+    /**
+     * Aggregation function for grand total computation.
+     * @type {string}
+     * @memberof GrandTotal
+     */
+    function: string;
+    /**
+     * Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions\' attributes (see ```dimensionAttributesValues```).
+     * @type {{ [key: string]: IncludedDimensionProps; }}
+     * @memberof GrandTotal
+     */
+    includedDimensions: { [key: string]: IncludedDimensionProps };
+}
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and measure groups.
  * @export
  * @interface HeaderGroup
@@ -968,6 +1018,19 @@ export interface HeaderGroup {
  * @export
  */
 export type Identifier = LocalIdentifier | ObjectIdentifier;
+/**
+ *
+ * @export
+ * @interface IncludedDimensionProps
+ */
+export interface IncludedDimensionProps {
+    /**
+     * Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual measures (treated as values of the \"measureGroup\" pseudo attribute).
+     * @type {{ [key: string]: Array<string>; }}
+     * @memberof IncludedDimensionProps
+     */
+    dimensionAttributesValues: { [key: string]: Array<string> };
+}
 /**
  * Filter in form of direct MAQL query.
  * @export
@@ -1776,7 +1839,7 @@ export interface ResultDimension {
     headers: Array<MeasureGroupHeader | AttributeHeader>;
 }
 /**
- * Structure holding array of dimensions related to the request.
+ * Specifies how the result data will formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).
  * @export
  * @interface ResultSpec
  */
@@ -1787,6 +1850,12 @@ export interface ResultSpec {
      * @memberof ResultSpec
      */
     dimensions: Array<Dimension>;
+    /**
+     *
+     * @type {Array<GrandTotal>}
+     * @memberof ResultSpec
+     */
+    grandTotals?: Array<GrandTotal>;
 }
 /**
  *
@@ -1919,6 +1988,18 @@ export interface SortKeyValueValue {
      * @memberof SortKeyValueValue
      */
     dataColumnLocators: Array<DimensionLocator>;
+}
+/**
+ * Sorting elements - ascending/descending order.
+ * @export
+ * @enum {string}
+ */
+export enum TotalFunction {
+    SUM = "SUM",
+    MIN = "MIN",
+    MAX = "MAX",
+    AVG = "AVG",
+    MED = "MED",
 }
 
 /**

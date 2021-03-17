@@ -447,6 +447,54 @@
                     }
                 }
             },
+            "GrandTotal": {
+                "required": ["localIdentifier", "function", "includedDimensions"],
+                "type": "object",
+                "description": "Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them.",
+                "properties": {
+                    "localIdentifier": {
+                        "type": "string",
+                        "description": "Grand total identification within this request. The corresponding data in the result are expected to be matched using this identifier.",
+                        "example": "firstGrandTotal"
+                    },
+                    "function": {
+                        "type": "string",
+                        "description": "Aggregation function for grand total computation.",
+                        "example": "SUM"
+                    },
+                    "includedDimensions": {
+                        "type": "object",
+                        "description": "Mapping specifying dimensions on which this grand total will be computed. Dimensions are referenced via their localIdentifiers. Optionally one can specify also the values (properties) of the dimensions' attributes (see ```dimensionAttributesValues```).",
+                        "example": "{\"dim1\": null, \"dim2\": {\"dimensionAttributesValues\": {\"measureGroup\": [\"m1\"]}}",
+                        "additionalProperties": {
+                            "$ref": "#/components/schemas/IncludedDimensionProps"
+                        }
+                    }
+                }
+            },
+            "IncludedDimensionProps": {
+                "required": ["dimensionAttributesValues"],
+                "type": "object",
+                "nullable": true,
+                "properties": {
+                    "dimensionAttributesValues": {
+                        "type": "object",
+                        "description": "Allows to customize for which attribute values the grand total will be computed. If the values for particular attribute are not specified then the totals for all values are computed. Note that this also covers the case of individual measures (treated as values of the \"measureGroup\" pseudo attribute).",
+                        "example": "{\"measureGroup\": [\"m1\"], \"status\": [\"Lost\", \"Won\"]}",
+                        "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "TotalFunction": {
+                "type": "string",
+                "description": "Sorting elements - ascending/descending order.",
+                "enum": ["SUM", "MIN", "MAX", "AVG", "MED"]
+            },
             "SortKeyAttribute": {
                 "required": ["attribute"],
                 "type": "object",
@@ -1082,12 +1130,18 @@
             "ResultSpec": {
                 "required": ["dimensions"],
                 "type": "object",
-                "description": "Structure holding array of dimensions related to the request.",
+                "description": "Specifies how the result data will formatted (```dimensions```) and which additional data shall be computed (```grandTotals```).",
                 "properties": {
                     "dimensions": {
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/Dimension"
+                        }
+                    },
+                    "grandTotals": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GrandTotal"
                         }
                     }
                 }
@@ -1508,7 +1562,7 @@
                 "description": "Contains the dimension-specific header information."
             },
             "ExecutionResult": {
-                "required": ["data", "dimensionHeaders", "paging"],
+                "required": ["data", "dimensionHeaders", "grandTotals", "paging"],
                 "type": "object",
                 "properties": {
                     "data": {
@@ -1529,11 +1583,31 @@
                             "$ref": "#/components/schemas/DimensionHeader"
                         }
                     },
+                    "grandTotals": {
+                        "type": "array",
+                        "description": "An array with grand totals data corresponding to grand totals definition in result spec.",
+                        "items": {
+                            "$ref": "#/components/schemas/ExecutionResultGrandTotal"
+                        }
+                    },
                     "paging": {
                         "$ref": "#/components/schemas/ExecutionResultPaging"
                     }
                 },
                 "description": "Contains the result of an AFM execution."
+            },
+            "ExecutionResultGrandTotal": {
+                "required": ["data", "localIdentifier"],
+                "type": "object",
+                "description": "Contains the data related to a grand total, including the reference to localIdentifier as specified in result spec.",
+                "properties": {
+                    "data": {
+                        "type": "object"
+                    },
+                    "localIdentifier": {
+                        "type": "string"
+                    }
+                }
             },
             "ExecutionResultHeader": {
                 "type": "object",

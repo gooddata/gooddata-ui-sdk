@@ -114,7 +114,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private readonly settings: ISettings;
-    private supportsTotals: boolean;
+    private supportsGrandTotals: boolean;
+    private supportsSubTotals: boolean;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -125,7 +126,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
         this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
-        this.supportsTotals = props.backend.capabilities.canCalculateTotals ?? false;
+        this.supportsGrandTotals = props.backend.capabilities.canCalculateGrandTotals ?? false;
+        this.supportsSubTotals = props.backend.capabilities.canCalculateSubTotals ?? false;
     }
 
     public unmount(): void {
@@ -310,8 +312,14 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         );
 
         const tableConfig: IPivotTableConfig = {
-            ...createPivotTableConfig(config, this.environment, this.settings, columnWidths),
-            ...(!this.supportsTotals ? { menu: {} } : {}), // suppress the menu for backends without totals
+            ...createPivotTableConfig(
+                config,
+                this.environment,
+                this.settings,
+                this.supportsGrandTotals,
+                this.supportsSubTotals,
+                columnWidths,
+            ),
             ...customVisualizationConfig,
             maxHeight,
             maxWidth,
@@ -465,6 +473,8 @@ export function createPivotTableConfig(
     config: IGdcConfig,
     environment: VisualizationEnvironment,
     settings: ISettings,
+    supportsGrandTotals: boolean,
+    supportsSubTotals: boolean,
     columnWidths: ColumnWidthItem[],
 ): IPivotTableConfig {
     let tableConfig: IPivotTableConfig = {
@@ -475,8 +485,8 @@ export function createPivotTableConfig(
         tableConfig = {
             ...tableConfig,
             menu: {
-                aggregations: true,
-                aggregationsSubMenu: true,
+                aggregations: supportsGrandTotals,
+                aggregationsSubMenu: supportsSubTotals,
             },
         };
     }

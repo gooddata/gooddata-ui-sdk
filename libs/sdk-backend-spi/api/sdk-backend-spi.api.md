@@ -273,6 +273,8 @@ export interface IAuthenticationProvider {
 // @public
 export interface IBackendCapabilities {
     [key: string]: undefined | boolean | number | string;
+    canCalculateGrandTotals?: boolean;
+    canCalculateSubTotals?: boolean;
     canCalculateTotals?: boolean;
     canExecuteByReference?: boolean;
     canExportCsv?: boolean;
