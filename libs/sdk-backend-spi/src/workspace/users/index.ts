@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -25,12 +25,22 @@ export interface IWorkspaceUser {
      * Contact email of the user
      */
     email: string;
+
     /**
-     * First name
+     * Full name.
+     *
+     * Note: This property has higher priority than firstName / lastName.
+     * Backend implementation MUST fill this property if user names are supported.
+     */
+    fullName?: string;
+
+    /**
+     * First name - when backend implementations supports it.
      */
     firstName?: string;
+
     /**
-     * Last name
+     * Last name - when backend implementations supports it.
      */
     lastName?: string;
 }

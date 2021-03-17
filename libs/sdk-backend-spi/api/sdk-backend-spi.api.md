@@ -1487,6 +1487,7 @@ export interface ITotalDescriptor {
 export interface IUser {
     email?: string;
     firstName?: string;
+    fullName?: string;
     lastName?: string;
     login: string;
     ref: ObjRef;
@@ -1766,6 +1767,7 @@ export interface IWorkspaceStylingService {
 export interface IWorkspaceUser {
     email: string;
     firstName?: string;
+    fullName?: string;
     lastName?: string;
     login: string;
     ref: ObjRef;
@@ -1884,6 +1886,9 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
     // (undocumented)
     readonly responseBody: unknown;
 }
+
+// @alpha
+export function userFullName(user: IUser): string | undefined;
 
 // @public
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";

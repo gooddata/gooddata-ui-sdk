@@ -21,7 +21,6 @@ export const convertUser = (user: IUserProfile): IUser => {
     return {
         ref: uriRef(links!.user!),
         login: userId!,
-        firstName: name,
-        lastName: "",
+        fullName: name,
     };
 };
