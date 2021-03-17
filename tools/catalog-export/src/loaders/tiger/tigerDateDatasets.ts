@@ -2,9 +2,9 @@
 
 import { Attribute, DateDataSet } from "../../base/types";
 import {
-    JsonApiAttributeList,
-    JsonApiAttribute,
-    JsonApiDataset,
+    JsonApiAttributeOutList,
+    JsonApiAttributeOut,
+    JsonApiDatasetOut,
     ITigerClient,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
@@ -19,12 +19,12 @@ import {
 import values from "lodash/values";
 
 type DatasetWithAttributes = {
-    dataset: JsonApiDataset;
-    attributes: JsonApiAttribute[];
+    dataset: JsonApiDatasetOut;
+    attributes: JsonApiAttributeOut[];
 };
 
 function findDateDatasetsWithAttributes(
-    attributes: JsonApiAttributeList,
+    attributes: JsonApiAttributeOutList,
     datasetsMap: DatasetMap,
 ): DatasetWithAttributes[] {
     const res: { [id: string]: DatasetWithAttributes } = {};

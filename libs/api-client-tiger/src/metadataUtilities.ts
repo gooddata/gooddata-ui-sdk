@@ -7,14 +7,14 @@ import uniqBy from "lodash/uniqBy";
 import { ITigerClient } from "./client";
 import { jsonApiHeaders } from "./constants";
 import {
-    JsonApiAnalyticalDashboardList,
-    JsonApiAttributeList,
-    JsonApiDatasetList,
-    JsonApiFactList,
-    JsonApiFilterContextList,
-    JsonApiLabelList,
-    JsonApiMetricList,
-    JsonApiVisualizationObjectList,
+    JsonApiAnalyticalDashboardOutList,
+    JsonApiAttributeOutList,
+    JsonApiDatasetOutList,
+    JsonApiFactOutList,
+    JsonApiFilterContextOutList,
+    JsonApiLabelOutList,
+    JsonApiMetricOutList,
+    JsonApiVisualizationObjectOutList,
 } from "./generated/metadata-json-api";
 
 const DefaultPageSize = 250;
@@ -63,14 +63,14 @@ export type MetadataGetEntitiesOptions = {
  * @internal
  */
 export type MetadataGetEntitiesResult =
-    | JsonApiVisualizationObjectList
-    | JsonApiAnalyticalDashboardList
-    | JsonApiDatasetList
-    | JsonApiAttributeList
-    | JsonApiLabelList
-    | JsonApiMetricList
-    | JsonApiFactList
-    | JsonApiFilterContextList;
+    | JsonApiVisualizationObjectOutList
+    | JsonApiAnalyticalDashboardOutList
+    | JsonApiDatasetOutList
+    | JsonApiAttributeOutList
+    | JsonApiLabelOutList
+    | JsonApiMetricOutList
+    | JsonApiFactOutList
+    | JsonApiFilterContextOutList;
 
 /**
  * All API client getEntities* functions follow this signature.

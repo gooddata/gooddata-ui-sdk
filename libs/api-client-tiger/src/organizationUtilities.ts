@@ -7,11 +7,11 @@ import uniqBy from "lodash/uniqBy";
 import { ITigerClient } from "./client";
 import { jsonApiHeaders } from "./constants";
 import {
-    JsonApiACLList,
-    JsonApiOrganizationList,
-    JsonApiUserList,
-    JsonApiUserGroupList,
-    JsonApiWorkspaceList,
+    JsonApiACLOutList,
+    JsonApiOrganizationOutList,
+    JsonApiUserOutList,
+    JsonApiUserGroupOutList,
+    JsonApiWorkspaceOutList,
 } from "./generated/metadata-json-api";
 
 const DefaultPageSize = 250;
@@ -51,11 +51,11 @@ export type OrganizationGetEntitiesOptions = {
  * @internal
  */
 export type OrganizationGetEntitiesResult =
-    | JsonApiACLList
-    | JsonApiOrganizationList
-    | JsonApiUserList
-    | JsonApiUserGroupList
-    | JsonApiWorkspaceList;
+    | JsonApiACLOutList
+    | JsonApiOrganizationOutList
+    | JsonApiUserOutList
+    | JsonApiUserGroupOutList
+    | JsonApiWorkspaceOutList;
 
 /**
  * All API client getEntities* functions follow this signature.

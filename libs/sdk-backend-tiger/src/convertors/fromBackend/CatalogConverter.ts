@@ -1,11 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 import { idRef } from "@gooddata/sdk-model";
 import {
-    JsonApiAttributeWithLinks,
-    JsonApiDatasetWithLinks,
-    JsonApiFactWithLinks,
-    JsonApiLabelWithLinks,
-    JsonApiMetricWithLinks,
+    JsonApiAttributeOutWithLinks,
+    JsonApiDatasetOutWithLinks,
+    JsonApiFactOutWithLinks,
+    JsonApiLabelOutWithLinks,
+    JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { toSdkGranularity } from "./dateGranularityConversions";
 import {
@@ -38,10 +38,10 @@ const commonGroupableCatalogItemModifications = <
 };
 
 export const convertAttribute = (
-    attribute: JsonApiAttributeWithLinks,
-    defaultLabel: JsonApiLabelWithLinks,
-    geoLabels: JsonApiLabelWithLinks[],
-    allLabels: JsonApiLabelWithLinks[],
+    attribute: JsonApiAttributeOutWithLinks,
+    defaultLabel: JsonApiLabelOutWithLinks,
+    geoLabels: JsonApiLabelOutWithLinks[],
+    allLabels: JsonApiLabelOutWithLinks[],
 ): ICatalogAttribute => {
     const geoPinDisplayForms = geoLabels.map((label) => {
         return newAttributeDisplayFormMetadataObject(
@@ -70,7 +70,7 @@ export const convertAttribute = (
     );
 };
 
-export const convertMeasure = (measure: JsonApiMetricWithLinks): ICatalogMeasure => {
+export const convertMeasure = (measure: JsonApiMetricOutWithLinks): ICatalogMeasure => {
     const maql = measure.attributes?.content?.maql;
 
     return newCatalogMeasure((catalogM) =>
@@ -82,7 +82,7 @@ export const convertMeasure = (measure: JsonApiMetricWithLinks): ICatalogMeasure
     );
 };
 
-export const convertFact = (fact: JsonApiFactWithLinks): ICatalogFact => {
+export const convertFact = (fact: JsonApiFactOutWithLinks): ICatalogFact => {
     return newCatalogFact((catalogF) =>
         catalogF
             .fact(idRef(fact.id, "fact"), (f) => f.modify(commonMetadataObjectModifications(fact)))
@@ -91,8 +91,8 @@ export const convertFact = (fact: JsonApiFactWithLinks): ICatalogFact => {
 };
 
 export const convertDateAttribute = (
-    attribute: JsonApiAttributeWithLinks,
-    label: JsonApiLabelWithLinks,
+    attribute: JsonApiAttributeOutWithLinks,
+    label: JsonApiLabelOutWithLinks,
 ): ICatalogDateAttribute => {
     return newCatalogDateAttribute((dateAttribute) => {
         return dateAttribute
@@ -107,7 +107,7 @@ export const convertDateAttribute = (
 };
 
 export const convertDateDataset = (
-    dataset: JsonApiDatasetWithLinks,
+    dataset: JsonApiDatasetOutWithLinks,
     attributes: ICatalogDateAttribute[],
 ): ICatalogDateDataset => {
     return newCatalogDateDataset((dateDataset) => {

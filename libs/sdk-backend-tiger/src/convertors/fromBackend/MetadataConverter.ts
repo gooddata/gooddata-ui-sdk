@@ -1,16 +1,16 @@
 // (C) 2019-2021 GoodData Corporation
 import {
-    JsonApiAttribute,
-    JsonApiAttributeDocument,
-    JsonApiAttributeList,
-    JsonApiAttributeWithLinks,
-    JsonApiDatasetWithLinks,
-    JsonApiFactWithLinks,
-    JsonApiLabel,
-    JsonApiLabelDocument,
-    JsonApiLabelWithLinks,
+    JsonApiAttributeOut,
+    JsonApiAttributeOutDocument,
+    JsonApiAttributeOutList,
+    JsonApiAttributeOutWithLinks,
+    JsonApiDatasetOutWithLinks,
+    JsonApiFactOutWithLinks,
+    JsonApiLabelOut,
+    JsonApiLabelOutDocument,
+    JsonApiLabelOutWithLinks,
     JsonApiLinkage,
-    JsonApiMetricWithLinks,
+    JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
 import {
@@ -28,11 +28,11 @@ import { idRef } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
 
 export type MetadataObjectFromApi =
-    | JsonApiAttributeWithLinks
-    | JsonApiFactWithLinks
-    | JsonApiMetricWithLinks
-    | JsonApiLabelWithLinks
-    | JsonApiDatasetWithLinks;
+    | JsonApiAttributeOutWithLinks
+    | JsonApiFactOutWithLinks
+    | JsonApiMetricOutWithLinks
+    | JsonApiLabelOutWithLinks
+    | JsonApiDatasetOutWithLinks;
 
 export const commonMetadataObjectModifications = <
     TItem extends MetadataObjectFromApi,
@@ -46,20 +46,20 @@ export const commonMetadataObjectModifications = <
         .title(item.attributes?.title || "")
         .description(item.attributes?.description || "");
 
-function createLabelMap(included: any[] | undefined): Record<string, JsonApiLabelWithLinks> {
+function createLabelMap(included: any[] | undefined): Record<string, JsonApiLabelOutWithLinks> {
     if (!included) {
         return {};
     }
 
-    const labels: JsonApiLabel[] = included
+    const labels: JsonApiLabelOut[] = included
         .map((include) => {
             if ((include as JsonApiLinkage).type !== "label") {
                 return null;
             }
 
-            return include as JsonApiLabelWithLinks;
+            return include as JsonApiLabelOutWithLinks;
         })
-        .filter((include): include is JsonApiLabelWithLinks => include !== null);
+        .filter((include): include is JsonApiLabelOutWithLinks => include !== null);
 
     return keyBy(labels, (t) => t.id);
 }
@@ -68,8 +68,8 @@ function createLabelMap(included: any[] | undefined): Record<string, JsonApiLabe
  * Converts all labels of this attribute. The map contains sideloaded label information
  */
 function convertAttributeLabels(
-    attribute: JsonApiAttribute,
-    labelsMap: Record<string, JsonApiLabelWithLinks>,
+    attribute: JsonApiAttributeOut,
+    labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
 
@@ -90,8 +90,8 @@ function convertAttributeLabels(
  * Converts attribute when its sideloaded
  */
 function convertAttributeWithLinks(
-    attribute: JsonApiAttributeWithLinks,
-    labels: Record<string, JsonApiLabel>,
+    attribute: JsonApiAttributeOutWithLinks,
+    labels: Record<string, JsonApiLabelOut>,
 ): IAttributeMetadataObject {
     return newAttributeMetadataObject(idRef(attribute.id, "attribute"), (m) =>
         m
@@ -104,8 +104,8 @@ function convertAttributeWithLinks(
  * Converts attribute when its top-level
  */
 function convertAttributeDocument(
-    attributeDoc: JsonApiAttributeDocument,
-    labels: Record<string, JsonApiLabel>,
+    attributeDoc: JsonApiAttributeOutDocument,
+    labels: Record<string, JsonApiLabelOut>,
 ): IAttributeMetadataObject {
     const attribute = attributeDoc.data;
 
@@ -124,7 +124,7 @@ function convertAttributeDocument(
  * contain relationships
  */
 function convertLabelWithLinks(
-    label: JsonApiLabelWithLinks,
+    label: JsonApiLabelOutWithLinks,
     attributeId: string,
 ): IAttributeDisplayFormMetadataObject {
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
@@ -141,7 +141,7 @@ function convertLabelWithLinks(
 /**
  * Converts label when its top-level
  */
-function convertLabelDocument(labelDoc: JsonApiLabelDocument): IAttributeDisplayFormMetadataObject {
+function convertLabelDocument(labelDoc: JsonApiLabelOutDocument): IAttributeDisplayFormMetadataObject {
     const label = labelDoc.data;
     const attributes = label.attributes;
 
@@ -171,7 +171,7 @@ function convertLabelDocument(labelDoc: JsonApiLabelDocument): IAttributeDisplay
  * @param labelDoc - response from backend
  */
 export function convertLabelWithSideloadedAttribute(
-    labelDoc: JsonApiLabelDocument,
+    labelDoc: JsonApiLabelOutDocument,
 ): IAttributeDisplayFormMetadataObject {
     return convertLabelDocument(labelDoc);
 }
@@ -182,7 +182,7 @@ export function convertLabelWithSideloadedAttribute(
  * @param attribute - response from backend
  */
 export function convertAttributeWithSideloadedLabels(
-    attribute: JsonApiAttributeDocument,
+    attribute: JsonApiAttributeOutDocument,
 ): IAttributeMetadataObject {
     const labels = createLabelMap(attribute.included);
 
@@ -195,7 +195,7 @@ export function convertAttributeWithSideloadedLabels(
  * @param attributes - response from backend
  */
 export function convertAttributesWithSideloadedLabels(
-    attributes: JsonApiAttributeList,
+    attributes: JsonApiAttributeOutList,
 ): IAttributeMetadataObject[] {
     const labels = createLabelMap(attributes.included);
 
@@ -213,7 +213,7 @@ export function convertAttributesWithSideloadedLabels(
  *
  * @param dataset - sideloaded dataset
  */
-export function convertDatasetWithLinks(dataset: JsonApiDatasetWithLinks): IDataSetMetadataObject {
+export function convertDatasetWithLinks(dataset: JsonApiDatasetOutWithLinks): IDataSetMetadataObject {
     return newDataSetMetadataObject(idRef(dataset.id, "dataSet"), (m) =>
         m.modify(commonMetadataObjectModifications(dataset)),
     );

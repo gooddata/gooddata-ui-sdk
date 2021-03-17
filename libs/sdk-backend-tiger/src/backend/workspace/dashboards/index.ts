@@ -128,7 +128,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.workspaceObjects.createEntityAnalyticalDashboards(
                 {
                     workspaceId: this.workspace,
-                    jsonApiAnalyticalDashboardDocument: {
+                    jsonApiAnalyticalDashboardInDocument: {
                         data: {
                             id: uuidv4(),
                             type: "analyticalDashboard",
@@ -176,7 +176,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId,
-                    jsonApiAnalyticalDashboardDocument: {
+                    jsonApiAnalyticalDashboardInDocument: {
                         data: {
                             id: objectId,
                             type: "analyticalDashboard",
@@ -273,7 +273,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return client.workspaceObjects.createEntityFilterContexts(
                 {
                     workspaceId: this.workspace,
-                    jsonApiFilterContextDocument: {
+                    jsonApiFilterContextInDocument: {
                         data: {
                             id: uuidv4(),
                             type: "filterContext",
@@ -324,7 +324,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 {
                     workspaceId: this.workspace,
                     objectId,
-                    jsonApiFilterContextDocument: {
+                    jsonApiFilterContextInDocument: {
                         data: {
                             id: objectId,
                             type: "filterContext",
