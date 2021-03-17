@@ -1,5 +1,3 @@
-// (C) 2021 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -18,7 +16,7 @@ import { Configuration } from "./configuration";
 // @ts-ignore
 import globalAxios, { AxiosPromise, AxiosInstance } from "axios";
 
-export const BASE_PATH = "http://localhost".replace(/\/+$/, "");
+export const BASE_PATH = "http://localhost:3000".replace(/\/+$/, "");
 
 /**
  *
