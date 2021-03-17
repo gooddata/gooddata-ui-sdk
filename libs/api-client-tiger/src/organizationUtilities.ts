@@ -7,14 +7,11 @@ import uniqBy from "lodash/uniqBy";
 import { ITigerClient } from "./client";
 import { jsonApiHeaders } from "./constants";
 import {
-    JsonApiAnalyticalDashboardList,
-    JsonApiAttributeList,
-    JsonApiDatasetList,
-    JsonApiFactList,
-    JsonApiFilterContextList,
-    JsonApiLabelList,
-    JsonApiMetricList,
-    JsonApiVisualizationObjectList,
+    JsonApiACLList,
+    JsonApiOrganizationList,
+    JsonApiUserList,
+    JsonApiUserGroupList,
+    JsonApiWorkspaceList,
 } from "./generated/metadata-json-api";
 
 const DefaultPageSize = 250;
@@ -25,28 +22,19 @@ const DefaultOptions = {
     },
 };
 
-function createOptionsForPage(page: number, options: MetadataGetEntitiesOptions): MetadataGetEntitiesOptions {
+function createOptionsForPage(
+    page: number,
+    options: OrganizationGetEntitiesOptions,
+): OrganizationGetEntitiesOptions {
     return merge({}, DefaultOptions, options, { query: { page } });
 }
 
 /**
  * Common parameters for all API client getEntities* parameters.
  *
- * Note: the different generated client functions are actually incorrect. They list page, size, include, sort in
- * the params but they are not picked from there anyway. They need to be passed in options as query parameters.
- *
  * @internal
  */
-export type MetadataGetEntitiesParams = {
-    workspaceId: string;
-};
-
-/**
- * Common parameters for all API client getEntities* parameters.
- *
- * @internal
- */
-export type MetadataGetEntitiesOptions = {
+export type OrganizationGetEntitiesOptions = {
     headers?: object;
     query?: {
         page?: number;
@@ -62,32 +50,29 @@ export type MetadataGetEntitiesOptions = {
  *
  * @internal
  */
-export type MetadataGetEntitiesResult =
-    | JsonApiVisualizationObjectList
-    | JsonApiAnalyticalDashboardList
-    | JsonApiDatasetList
-    | JsonApiAttributeList
-    | JsonApiLabelList
-    | JsonApiMetricList
-    | JsonApiFactList
-    | JsonApiFilterContextList;
+export type OrganizationGetEntitiesResult =
+    | JsonApiACLList
+    | JsonApiOrganizationList
+    | JsonApiUserList
+    | JsonApiUserGroupList
+    | JsonApiWorkspaceList;
 
 /**
  * All API client getEntities* functions follow this signature.
  *
  * @internal
  */
-export type MetadataGetEntitiesFn<
-    T extends MetadataGetEntitiesResult,
-    P extends MetadataGetEntitiesParams
-> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P> = (
+    params: P,
+    options: OrganizationGetEntitiesOptions,
+) => AxiosPromise<T>;
 
 /**
- * Tiger metadata utility functions
+ * Tiger organization utility functions
  *
  * @internal
  */
-export class MetadataUtilities {
+export class OrganizationUtilities {
     /**
      * Given a function to get a paged list of metadata entities, API call parameters and options, this function will
      * retrieve all pages from the metadata.
@@ -103,16 +88,13 @@ export class MetadataUtilities {
      * @param options - options accepted by the function
      * @internal
      */
-    public static getAllPagesOf = async <
-        T extends MetadataGetEntitiesResult,
-        P extends MetadataGetEntitiesParams
-    >(
+    public static getAllPagesOf = async <T extends OrganizationGetEntitiesResult, P>(
         client: ITigerClient,
-        entitiesGet: MetadataGetEntitiesFn<T, P>,
+        entitiesGet: OrganizationGetEntitiesFn<T, P>,
         params: P,
-        options: MetadataGetEntitiesOptions = {},
+        options: OrganizationGetEntitiesOptions = {},
     ): Promise<T[]> => {
-        const boundGet = entitiesGet.bind(client.workspaceObjects);
+        const boundGet = entitiesGet.bind(client.organizationObjects);
         const results: T[] = [];
         const pageSize = options.query?.size ?? DefaultPageSize;
         let reachedEnd = false;
@@ -144,7 +126,7 @@ export class MetadataUtilities {
      * @param pages - pages to merge
      * @internal
      */
-    public static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T {
+    public static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T {
         return {
             data: flatMap(pages, (page) => page.data) as any,
             included: uniqBy(

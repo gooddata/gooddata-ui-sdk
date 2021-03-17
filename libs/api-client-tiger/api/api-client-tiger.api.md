@@ -977,6 +977,8 @@ export interface ITigerClient {
     // (undocumented)
     axios: AxiosInstance;
     // (undocumented)
+    declarativeLayout: ReturnType<typeof tigerDeclarativeLayoutClientFactory>;
+    // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
@@ -2078,7 +2080,7 @@ export type MetadataGetEntitiesParams = {
 };
 
 // @internal
-export type MetadataGetEntitiesResult = JsonApiOrganizationList | JsonApiWorkspaceList | JsonApiVisualizationObjectList | JsonApiAnalyticalDashboardList | JsonApiDatasetList | JsonApiAttributeList | JsonApiLabelList | JsonApiMetricList | JsonApiFactList | JsonApiFilterContextList;
+export type MetadataGetEntitiesResult = JsonApiVisualizationObjectList | JsonApiAnalyticalDashboardList | JsonApiDatasetList | JsonApiAttributeList | JsonApiLabelList | JsonApiMetricList | JsonApiFactList | JsonApiFilterContextList;
 
 // @public
 export interface MetadataRequestArgs {
@@ -2781,6 +2783,24 @@ export interface OrganizationControllerApiInterface {
         include?: object;
     }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
 }
+
+// @internal
+export type OrganizationGetEntitiesFn<T extends OrganizationGetEntitiesResult, P> = (params: P, options: OrganizationGetEntitiesOptions) => AxiosPromise<T>;
+
+// @internal
+export type OrganizationGetEntitiesOptions = {
+    headers?: object;
+    query?: {
+        page?: number;
+        size?: number;
+        include?: any;
+        sort?: any;
+        tags?: any;
+    };
+};
+
+// @internal
+export type OrganizationGetEntitiesResult = JsonApiACLList | JsonApiOrganizationList | JsonApiUserList | JsonApiUserGroupList | JsonApiWorkspaceList;
 
 // @public
 export class OrganizationModelControllerApi extends MetadataBaseApi implements OrganizationModelControllerApiInterface {
@@ -4321,6 +4341,12 @@ export interface OrganizationModelControllerApiInterface {
     }, options?: any): AxiosPromise<JsonApiWorkspaceDocument>;
 }
 
+// @internal
+export class OrganizationUtilities {
+    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P>(client: ITigerClient, entitiesGet: OrganizationGetEntitiesFn<T, P>, params: P, options?: OrganizationGetEntitiesOptions) => Promise<T[]>;
+    static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T;
+}
+
 // @public
 export interface Paging {
     count: number;
@@ -4689,6 +4715,9 @@ export interface SortKeyValueValue {
 
 // @public
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
+
+// @public (undocumented)
+export const tigerDeclarativeLayoutClientFactory: (axios: AxiosInstance) => DeclarativeLayoutControllerApiInterface;
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => {

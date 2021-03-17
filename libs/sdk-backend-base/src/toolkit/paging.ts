@@ -14,7 +14,7 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
     public readonly offset: number;
     public readonly totalCount: number;
 
-    constructor(private readonly all: T[], limit = 50, offset = 0) {
+    constructor(protected readonly all: T[], limit = 50, offset = 0) {
         invariant(offset >= 0, `paging offset must be non-negative, got: ${offset}`);
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 
