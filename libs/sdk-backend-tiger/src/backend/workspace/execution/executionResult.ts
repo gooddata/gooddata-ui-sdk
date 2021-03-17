@@ -67,7 +67,12 @@ export class TigerExecutionResult implements IExecutionResult {
 
     public async readAll(): Promise<IDataView> {
         const executionResultPromise = this.authCall((client) =>
-            client.execution.executionResult(this.workspace, this.resultId),
+            client.executionResult
+                .retrieveResult({
+                    workspaceId: this.workspace,
+                    resultId: this.resultId,
+                })
+                .then(({ data }) => data),
         );
 
         return this.asDataView(executionResultPromise);
@@ -78,7 +83,14 @@ export class TigerExecutionResult implements IExecutionResult {
         const saneSize = sanitizeSize(size);
 
         const executionResultPromise = this.authCall((client) =>
-            client.execution.executionResult(this.workspace, this.resultId, saneOffset, saneSize),
+            client.executionResult
+                .retrieveResult({
+                    workspaceId: this.workspace,
+                    resultId: this.resultId,
+                    limit: saneSize,
+                    offset: saneOffset,
+                })
+                .then(({ data }) => data),
         );
 
         return this.asDataView(executionResultPromise);

@@ -1125,6 +1125,8 @@ export interface ITigerClient {
     // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     // (undocumented)
+    executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
+    // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
     organizationObjects: ReturnType<typeof tigerOrganizationObjectsClientFactory>;
@@ -5351,10 +5353,10 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 export const tigerDeclarativeLayoutClientFactory: (axios: AxiosInstance) => DeclarativeLayoutControllerApiInterface;
 
 // @public
-export const tigerExecutionClientFactory: (axios: AxiosInstance) => {
-    executeAfm: (workspaceId: string, execution: AfmExecution) => Promise<AfmExecutionResponse>;
-    executionResult: (workspaceId: string, resultId: string, offset?: number[] | undefined, size?: number[] | undefined) => Promise<ExecutionResult>;
-};
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => AfmControllerApiInterface;
+
+// @public
+export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => ResultControllerApiInterface;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => ElementsControllerApiInterface;
