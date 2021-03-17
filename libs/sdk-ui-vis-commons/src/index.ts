@@ -26,6 +26,7 @@ export {
     parseRGBColorCode,
     getValidColorPalette,
     ColorUtils,
+    parseRGBString,
 } from "./coloring/color";
 
 export { IColorMapping } from "./coloring/types";

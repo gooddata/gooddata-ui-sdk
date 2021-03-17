@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-
 import {
     getOccupiedMeasureBucketsLocalIdentifiers,
     isComparativeSeries,
@@ -7,6 +6,7 @@ import {
     isTargetSeries,
 } from "./bulletChartSeries";
 import { IColorPalette, Identifier, isColorFromPalette, isRgbColor, IColor } from "@gooddata/sdk-model";
+import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
@@ -19,6 +19,8 @@ import {
     getColorFromMapping,
     getLighterColorFromRGB,
     getRgbStringFromRGB,
+    normalizeColorToRGB,
+    parseRGBString,
 } from "@gooddata/sdk-ui-vis-commons";
 import { DEFAULT_BULLET_GRAY_COLOR } from "../_util/color";
 
@@ -109,11 +111,16 @@ class BulletChartColorStrategy extends ColorStrategy {
                     }) ||
                     (isTargetSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
                         type: "rgb",
-                        value: getLighterColorFromRGB(colorPalette[0].fill, -0.3),
+                        value: getLighterColorFromRGB(
+                            colorPalette[0].fill,
+                            isDarkTheme(this.theme) ? 0.3 : -0.3,
+                        ),
                     }) ||
                     (isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
                         type: "rgb",
-                        value: DEFAULT_BULLET_GRAY_COLOR,
+                        value: this.theme?.palette?.complementary
+                            ? parseRGBString(normalizeColorToRGB(this.theme?.palette?.complementary?.c2))
+                            : DEFAULT_BULLET_GRAY_COLOR,
                     });
 
                 return {
