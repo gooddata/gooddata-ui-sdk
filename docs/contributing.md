@@ -280,6 +280,13 @@ This will make sure that the SDK8 files in your app are from your local SDK8 ver
 > not change the case. A webpack build of the target application may then fail with `Module not found: Error: [CaseSensitivePathsPlugin]`
 > because imports are for the new file name while the node_modules contains the old file names.
 
+#### Using `applink` tool
+
+Applink can make your life easier by watching for source code changes, automatically rebuilding the impacted packages and syncing
+their artifacts into the target application's `node_modules` similar to what you would be doing manually with `rsync`.
+
+To learn more about it check out the [tools/applink/README.md](../tools/applink/README.md).
+
 ## CI jobs and gating
 
 Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
