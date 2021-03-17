@@ -1,8 +1,8 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import blessed from "blessed";
 import { AppLog } from "./appLog";
 import { PackageList } from "./packageList";
-import { appLogWarn, getTerminalSize } from "./utils";
+import { appLogInfo, appLogWarn, getTerminalSize } from "./utils";
 import { AppMenu, AppMenuItem } from "./appMenu";
 import {
     autobuildToggled,
@@ -41,6 +41,10 @@ export class TerminalUi implements IEventListener {
         this.menu = this.createApplicationMenu();
 
         this.screen.render();
+
+        appLogInfo(
+            "Hint: it is also possible use non-F-keys to trigger menu functions. You can use just the respective number instead or 'q' for quit.",
+        );
     }
 
     public static init(eventBus: EventBus = GlobalEventBus): TerminalUi {
@@ -151,7 +155,7 @@ export class TerminalUi implements IEventListener {
             {
                 name: "Log Toggle",
                 keyName: "F2",
-                registerKeys: ["f2"],
+                registerKeys: ["f2", "2"],
                 registerCb: () => {
                     this.log.toggleExpand();
 
@@ -171,7 +175,7 @@ export class TerminalUi implements IEventListener {
                     }
                 },
                 keyName: "F3",
-                registerKeys: ["f3"],
+                registerKeys: ["f3", "3"],
                 registerCb: (item: AppMenuItem) => {
                     item.itemState = !item.itemState;
                     this.eventBus.post(autobuildToggled(item.itemState));
@@ -181,7 +185,7 @@ export class TerminalUi implements IEventListener {
             {
                 name: "BuildOne",
                 keyName: "F7",
-                registerKeys: ["f7"],
+                registerKeys: ["f7", "7"],
                 registerCb: () => {
                     if (!this.selectedPackages.length) {
                         return;
@@ -198,7 +202,7 @@ export class TerminalUi implements IEventListener {
             {
                 name: "BuildDeps",
                 keyName: "F8",
-                registerKeys: ["f8"],
+                registerKeys: ["f8", "8"],
                 registerCb: () => {
                     if (!this.selectedPackages.length) {
                         return;
@@ -214,7 +218,7 @@ export class TerminalUi implements IEventListener {
             {
                 name: "BuildAll",
                 keyName: "F9",
-                registerKeys: ["f9"],
+                registerKeys: ["f9", "9"],
                 registerCb: () => {
                     // fire package change for all packages. these form transitive closure so it is ok to
                     // mark changes as independent (means less initial processing for scheduler).
@@ -229,7 +233,7 @@ export class TerminalUi implements IEventListener {
             {
                 name: "Quit",
                 keyName: "F10",
-                registerKeys: ["f10"],
+                registerKeys: ["f10", "0", "q"],
                 registerCb: () => {
                     process.exit(0);
                 },
