@@ -270,6 +270,12 @@ This will make sure that the SDK8 files in your app are from your local SDK8 ver
 > 2. after it finishes, run your app's dev server
 > 3. change the SDK code and run `rush build -t [the package you make changes in]` and then run `rsync` without stopping your app
 
+> Caveat: there is one problem with the `rsync` method on OS X when using case-insensitive but case-preserving file system -
+> which seems to be the default. If you rename files and change just the character case then the rsync
+> will not create new files with the updated casing in the target node_modules; it will update all the file contents but
+> not change the case. A webpack build of the target application may then fail with `Module not found: Error: [CaseSensitivePathsPlugin]`
+> because imports are for the new file name while the node_modules contains the old file names.
+
 ## CI jobs and gating
 
 Every pull-request can be merged by adding `merge` label. This triggers test scripts and once they pass, the pull-request is automatically merged. All related scripts run in docker, see `./common/scripts/ci/` for individual scripts being run on jenkins slaves.
