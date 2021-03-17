@@ -23,9 +23,8 @@ export class InMemoryPaging<T> implements IPagedResource<T> {
 
         // offset is at most at the end of all available elements
         this.offset = Math.min(offset, all.length);
-        // limit is capped to size of current page
-
-        this.limit = Math.max(limit, this.items.length);
+        // limit is always kept as-requested
+        this.limit = limit;
 
         this.totalCount = all.length;
     }
