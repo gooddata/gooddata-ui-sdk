@@ -7,7 +7,7 @@ import {
     ObjectIdentifier,
     ResultDimension,
 } from "../generated/afm-rest-api";
-import { JsonApiFilterContext, JsonApiVisualizationObject } from "../generated/metadata-json-api";
+import { JsonApiFilterContextIn, JsonApiVisualizationObjectIn } from "../generated/metadata-json-api";
 
 export type ResultDimensionHeader = ResultDimension["headers"][number];
 
@@ -30,10 +30,10 @@ export function isResultAttributeHeader(
 
 export function isVisualizationObjectsItem(
     visualizationObject: unknown,
-): visualizationObject is JsonApiVisualizationObject {
-    return (visualizationObject as JsonApiVisualizationObject).type === "visualizationObject";
+): visualizationObject is JsonApiVisualizationObjectIn {
+    return (visualizationObject as JsonApiVisualizationObjectIn).type === "visualizationObject";
 }
 
-export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContext {
-    return (filterContext as JsonApiFilterContext).type === "filterContext";
+export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn {
+    return (filterContext as JsonApiFilterContextIn).type === "filterContext";
 }
