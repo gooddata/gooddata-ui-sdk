@@ -77,6 +77,7 @@ export function recordedBackend(
         canCalculateGrandTotals: true,
         canCalculateSubTotals: true,
         canCalculateTotals: true,
+        canCalculateNativeTotals: true,
     },
 ): IAnalyticalBackend {
     const backend: IAnalyticalBackend = {

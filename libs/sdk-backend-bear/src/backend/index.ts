@@ -46,6 +46,7 @@ const CAPABILITIES: IBackendCapabilities = {
     canCalculateGrandTotals: true,
     canCalculateSubTotals: true,
     canCalculateTotals: true,
+    canCalculateNativeTotals: true,
     canExportCsv: true,
     canExportXlsx: true,
     canSortData: true,
