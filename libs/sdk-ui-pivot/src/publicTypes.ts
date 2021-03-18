@@ -1,7 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IAttributeOrMeasure,
+    INullableFilter,
+    ISortItem,
+    ITotal,
+    TotalType,
+} from "@gooddata/sdk-model";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { WrappedComponentProps } from "react-intl";
 import { ColumnWidthItem } from "./columnWidths";
@@ -12,13 +19,27 @@ import { ColumnWidthItem } from "./columnWidths";
 export interface IMenu {
     /**
      * If true, grand totals can be added to the table using table menu.
+     *
+     * Default: false
      */
     aggregations?: boolean;
 
     /**
      * If true, subtotals can be added to the table using table menu.
+     *
+     * Default: false
      */
     aggregationsSubMenu?: boolean;
+
+    /**
+     * Optionally specifies which aggregation functions can be selected from the menu.
+     *
+     * Note: this option only impacts available menu items. It will not be used to filter totals that
+     * you specify on the pivot table props.
+     *
+     * Default: all available types.
+     */
+    aggregationTypes?: TotalType[];
 }
 
 /**
