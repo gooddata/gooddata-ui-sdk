@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-export { PivotTable } from "./PivotTable";
+export { PivotTable, pivotTableMenuForCapabilities } from "./PivotTable";
 export { CorePivotTable } from "./CorePivotTable";
 
 export {

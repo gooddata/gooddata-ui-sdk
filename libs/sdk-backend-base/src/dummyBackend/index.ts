@@ -88,7 +88,12 @@ export const defaultDummyBackendConfig: DummyBackendConfig = {
  */
 export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendConfig): IAnalyticalBackend {
     const noopBackend: IAnalyticalBackend = {
-        capabilities: {},
+        capabilities: {
+            canCalculateTotals: true,
+            canCalculateSubTotals: true,
+            canCalculateNativeTotals: true,
+            canCalculateGrandTotals: true,
+        },
         config,
         onHostname(hostname: string): IAnalyticalBackend {
             return dummyBackend({ ...config, hostname });

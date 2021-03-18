@@ -7,6 +7,7 @@
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
@@ -17,6 +18,7 @@ import { ITotal } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { TotalType } from '@gooddata/sdk-model';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
@@ -111,6 +113,7 @@ export interface IMeasureColumnWidthItem {
 export interface IMenu {
     aggregations?: boolean;
     aggregationsSubMenu?: boolean;
+    aggregationTypes?: TotalType[];
 }
 
 // @public (undocumented)
@@ -192,6 +195,9 @@ export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locat
 
 // @public
 export const PivotTable: React_2.ComponentType<IPivotTableProps>;
+
+// @public
+export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
 
 
 // (No @packageDocumentation comment for this package)

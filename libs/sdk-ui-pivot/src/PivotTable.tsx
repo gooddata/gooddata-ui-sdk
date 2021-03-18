@@ -13,7 +13,13 @@ import {
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
-import { ICorePivotTableProps, IPivotTableBucketProps, IPivotTableProps } from "./publicTypes";
+import {
+    ICorePivotTableProps,
+    IMenu,
+    IPivotTableBucketProps,
+    IPivotTableConfig,
+    IPivotTableProps,
+} from "./publicTypes";
 import omit from "lodash/omit";
 import {
     IntlTranslationsProvider,
@@ -23,8 +29,9 @@ import {
     BucketNames,
     IntlWrapper,
 } from "@gooddata/sdk-ui";
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
+import { AVAILABLE_TOTALS } from "./impl/base/constants";
 
 /**
  * Prepares new execution matching pivot table props.
@@ -35,17 +42,8 @@ import invariant from "ts-invariant";
 function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     const { backend, workspace, filters, sortBy = [] } = props;
 
-    invariant(
-        backend,
-        "Backend was not provided in prepareExecution. Either pass it as a prop or use BackendContext.",
-    );
-    invariant(
-        workspace,
-        "Workspace was not provided in prepareExecution. Either pass it as a prop or use WorkspaceContext.",
-    );
-
-    return backend
-        .workspace(workspace)
+    return backend!
+        .workspace(workspace!)
         .execution()
         .forBuckets(getBuckets(props), filters)
         .withDimensions(pivotDimensions)
@@ -92,15 +90,28 @@ type IPivotTableNonBucketProps = Subtract<IPivotTableProps, IPivotTableBucketPro
 
 class RenderPivotTable extends React.Component<IPivotTableProps> {
     public render() {
-        const { exportTitle } = this.props;
+        const { exportTitle, backend, workspace, config = {} } = this.props;
+
+        invariant(
+            backend,
+            "Backend was not provided for PivotTable. Either pass it as a prop or use BackendContext.",
+        );
+
+        invariant(
+            workspace,
+            "Workspace was not provided for PivotTable. Either pass it as a prop or use WorkspaceContext.",
+        );
 
         const newProps: IPivotTableNonBucketProps = omit<IPivotTableProps, keyof IPivotTableBucketProps>(
             this.props,
             ["measures", "rows", "columns", "totals", "filters", "sortBy"],
         );
 
+        const pivotTableConfig: IPivotTableConfig = {
+            ...config,
+            menu: pivotTableMenuForCapabilities(backend.capabilities, config?.menu),
+        };
         const corePivotProps: Partial<ICorePivotTableProps> = omit(newProps, ["backend", "workspace"]);
-
         const execution = prepareExecution(this.props);
 
         return (
@@ -110,6 +121,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
                         return (
                             <CorePivotTableAgImpl
                                 {...corePivotProps}
+                                config={pivotTableConfig}
                                 intl={translationProps.intl}
                                 execution={execution}
                                 exportTitle={exportTitle || "PivotTable"}
@@ -129,3 +141,48 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
  * @public
  */
 export const PivotTable = withContexts(RenderPivotTable);
+
+/**
+ * Given analytical backend capabilities and the desired aggregations menu config, this function will correct the menu
+ * configuration so that it fits the capabilities.
+ *
+ * The function will explicitly set the options regardless of what is the (current) default value of the option if
+ * it is not present in the menu. The backend capabilities are a hard stop for features.
+ *
+ * Note: the {@link PivotTable} will use this function out of the box to ensure the effective menu configuration
+ * matches the backend capabilities. You don't need to use when creating a PivotTable.
+ *
+ * @param capabilities - backend capabilities
+ * @param desiredMenu - aggregation menu configuration desired by the client
+ * @public
+ */
+export function pivotTableMenuForCapabilities(
+    capabilities: IBackendCapabilities,
+    desiredMenu: IMenu = {},
+): IMenu {
+    const effectiveMenu = { ...desiredMenu };
+
+    if (!capabilities.canCalculateGrandTotals) {
+        return {
+            aggregations: false,
+        };
+    }
+
+    if (!capabilities.canCalculateSubTotals) {
+        effectiveMenu.aggregationsSubMenu = false;
+    }
+
+    if (!capabilities.canCalculateNativeTotals) {
+        effectiveMenu.aggregationTypes = (effectiveMenu.aggregationTypes ?? AVAILABLE_TOTALS).filter(
+            (totalType) => totalType !== "nat",
+        );
+    }
+
+    if (effectiveMenu.aggregationTypes && effectiveMenu.aggregationTypes.length === 0) {
+        return {
+            aggregations: false,
+        };
+    }
+
+    return effectiveMenu;
+}
