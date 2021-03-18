@@ -13,8 +13,7 @@ const currentUser: IScheduleEmailRecipient = {
         login: "user@gooddata.com",
         ref: uriRef("/gdc/user"),
         email: "user@gooddata.com",
-        firstName: "John",
-        lastName: "Doe",
+        fullName: "John Doe",
     },
 };
 
@@ -24,8 +23,7 @@ const options: IScheduleEmailRecipient[] = [
             login: "user2@gooddata.com",
             ref: uriRef("/gdc/user2"),
             email: "user2@gooddata.com",
-            firstName: "Jack",
-            lastName: "Sparrow",
+            fullName: "Jack Sparrow",
         },
     },
     {

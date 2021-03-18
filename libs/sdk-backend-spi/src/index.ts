@@ -21,7 +21,7 @@ export {
     ISeparators,
 } from "./common/settings";
 
-export { IUserService, IUser } from "./user";
+export { IUserService, IUser, userFullName } from "./user";
 export { IUserSettingsService } from "./user/settings";
 
 export { IExecutionFactory, IPreparedExecution, IExecutionResult, IDataView } from "./workspace/execution";
