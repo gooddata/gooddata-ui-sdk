@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     calculateGeoPushpinWidgetHeight,
@@ -51,15 +51,22 @@ describe("legacy", () => {
         };
 
         it.each([
-            ["return height and maxHeight", 12, expectedGeoPushpinFullWidthStyle],
-            ["doesn't return height and maxHeight", 8, null],
-        ])("should getStyle %s", (_text, currentColumnWidth, expected) => {
+            ["return height and maxHeight", 12, expectedGeoPushpinFullWidthStyle, false],
+            ["doesn't return height and maxHeight", 8, null, false],
+            ["doesn't return height and maxHeight when enableCustomHeight FF is set to true", 12, null, true],
+        ])("should getStyle %s", (_text, currentColumnWidth, expected, enableCustomHeight) => {
             const visType = "pushpin";
             const visWidth = 1000;
             const windowHeight = 768;
-            expect(getGeoPushpinWidgetStyle(visType, visWidth, currentColumnWidth, windowHeight)).toEqual(
-                expected,
-            );
+            expect(
+                getGeoPushpinWidgetStyle(
+                    visType,
+                    visWidth,
+                    currentColumnWidth,
+                    windowHeight,
+                    enableCustomHeight,
+                ),
+            ).toEqual(expected);
         });
     });
 });

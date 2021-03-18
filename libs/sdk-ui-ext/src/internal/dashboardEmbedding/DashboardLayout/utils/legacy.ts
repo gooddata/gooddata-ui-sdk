@@ -40,8 +40,9 @@ export function getGeoPushpinWidgetStyle(
     visualizationItemWidth: number,
     currentColumnWidth: number,
     windowHeight: number,
+    enableCustomHeight: boolean,
 ): React.CSSProperties {
-    if (isFullWidthGeoPushpin(currentColumnWidth, visType)) {
+    if (isFullWidthGeoPushpin(currentColumnWidth, visType) && !enableCustomHeight) {
         const { height, maxHeight } = calculateGeoPushpinWidgetHeight(windowHeight, visualizationItemWidth);
         return {
             height,
