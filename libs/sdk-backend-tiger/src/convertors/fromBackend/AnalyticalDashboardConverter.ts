@@ -2,12 +2,12 @@
 import {
     AnalyticalDashboardObjectModel,
     isFilterContextData,
-    JsonApiAnalyticalDashboardAttributes,
-    JsonApiAnalyticalDashboardDocument,
-    JsonApiAnalyticalDashboardList,
-    JsonApiAnalyticalDashboardWithLinks,
-    JsonApiFilterContextDocument,
-    JsonApiFilterContextWithLinks,
+    JsonApiAnalyticalDashboardInAttributes,
+    JsonApiAnalyticalDashboardOutDocument,
+    JsonApiAnalyticalDashboardOutList,
+    JsonApiAnalyticalDashboardOutWithLinks,
+    JsonApiFilterContextOutDocument,
+    JsonApiFilterContextOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
     DashboardWidget,
@@ -25,9 +25,9 @@ import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export const convertAnalyticalDashboard = (
-    analyticalDashboard: JsonApiAnalyticalDashboardWithLinks,
+    analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
 ): IListedDashboard => {
-    const attributes = analyticalDashboard.attributes as JsonApiAnalyticalDashboardAttributes;
+    const attributes = analyticalDashboard.attributes as JsonApiAnalyticalDashboardInAttributes;
     const { title, description } = attributes;
     return {
         ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
@@ -41,7 +41,7 @@ export const convertAnalyticalDashboard = (
 };
 
 export const convertAnalyticalDashboardToListItems = (
-    analyticalDashboards: JsonApiAnalyticalDashboardList,
+    analyticalDashboards: JsonApiAnalyticalDashboardOutList,
 ): IListedDashboard[] => {
     return analyticalDashboards.data.map(convertAnalyticalDashboard);
 };
@@ -77,7 +77,7 @@ export function convertAnalyticalDashboardContent(
 }
 
 export function convertDashboard(
-    analyticalDashboard: JsonApiAnalyticalDashboardDocument,
+    analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext,
 ): IDashboard {
     const { id, attributes = {} } = analyticalDashboard.data;
@@ -100,7 +100,9 @@ export function convertDashboard(
     };
 }
 
-export function convertFilterContextFromBackend(filterContext: JsonApiFilterContextDocument): IFilterContext {
+export function convertFilterContextFromBackend(
+    filterContext: JsonApiFilterContextOutDocument,
+): IFilterContext {
     const { id, type, attributes } = filterContext.data;
     const { title = "", description = "", content } = attributes!;
 
@@ -117,7 +119,7 @@ export function convertFilterContextFromBackend(filterContext: JsonApiFilterCont
 }
 
 export function getFilterContextFromIncluded(included: any[]): IFilterContext | undefined {
-    const filterContext = included.find(isFilterContextData) as JsonApiFilterContextWithLinks;
+    const filterContext = included.find(isFilterContextData) as JsonApiFilterContextOutWithLinks;
     if (!filterContext) {
         return;
     }

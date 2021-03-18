@@ -14,7 +14,7 @@ import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
 import open from "open";
-import { JsonApiWorkspaceList } from "@gooddata/api-client-tiger";
+import { JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 
 /**
  * Tests if the provided tiger client can access the backend.
@@ -114,7 +114,7 @@ async function getTigerClient(hostname: string, usernameFromConfig: string | nul
     }
 }
 
-async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceList> {
+async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceOutList> {
     const response = await client.organizationObjects.getAllEntitiesWorkspaces(
         {
             page: 0,

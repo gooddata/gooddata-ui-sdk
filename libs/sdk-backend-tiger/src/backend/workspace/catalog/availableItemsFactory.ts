@@ -153,7 +153,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
         };
 
         const availableItemsResponse = await this.authCall((client) =>
-            client.validObjects.processAfmValidObjectsQuery({
+            client.validObjects.computeValidObjects({
                 workspaceId: this.workspace,
                 afmValidObjectsQuery,
             }),

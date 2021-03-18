@@ -1,11 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
 import {
-    JsonApiAttribute,
-    JsonApiFact,
-    JsonApiLabel,
-    JsonApiMetric,
-    JsonApiMetricDocument,
+    JsonApiAttributeOut,
+    JsonApiFactOut,
+    JsonApiLabelOut,
+    JsonApiMetricOut,
+    JsonApiMetricOutDocument,
     jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
@@ -41,7 +41,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     private resolveToken(
         regexToken: IExpressionToken,
-        metric: JsonApiMetricDocument,
+        metric: JsonApiMetricOutDocument,
     ): IMeasureExpressionToken {
         if (regexToken.type === "text" || regexToken.type === "quoted_text") {
             return { type: "text", value: regexToken.value };
@@ -61,7 +61,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     ): IMeasureExpressionToken {
         const includedObject = includedObjects.find((includedObject) => {
             return includedObject.id === objectId && includedObject.type === objectType;
-        }) as JsonApiMetric | JsonApiLabel | JsonApiAttribute | JsonApiFact;
+        }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut;
 
         interface ITypeMapping {
             [tokenObjectType: string]: IMeasureExpressionToken["type"];

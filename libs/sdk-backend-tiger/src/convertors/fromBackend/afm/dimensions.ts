@@ -82,7 +82,7 @@ function transformDimension(
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
                                     localIdentifier: m.measureHeaderItem.localIdentifier,
-                                    name: m.measureHeaderItem.localIdentifier,
+                                    name: m.measureHeaderItem.name ?? m.measureHeaderItem.localIdentifier,
                                     format: m.measureHeaderItem.format ?? DEFAULT_FORMAT,
                                     identifier,
                                     ref,

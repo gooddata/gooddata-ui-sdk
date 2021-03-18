@@ -4,7 +4,7 @@ import {
     ExecutionResult,
     ExecutionResultGrandTotal,
     isResultAttributeHeader,
-    JsonApiAttributeAttributesGranularityEnum,
+    JsonApiAttributeOutAttributesGranularityEnum,
 } from "@gooddata/api-client-tiger";
 import {
     DataValue,
@@ -33,12 +33,12 @@ export type TransformerResult = {
 };
 
 // gets all the enum values
-const supportedSuffixes: string[] = Object.keys(JsonApiAttributeAttributesGranularityEnum)
+const supportedSuffixes: string[] = Object.keys(JsonApiAttributeOutAttributesGranularityEnum)
     .filter((item) => isNaN(Number(item)))
     .map(
         (key) =>
-            JsonApiAttributeAttributesGranularityEnum[
-                key as keyof typeof JsonApiAttributeAttributesGranularityEnum
+            JsonApiAttributeOutAttributesGranularityEnum[
+                key as keyof typeof JsonApiAttributeOutAttributesGranularityEnum
             ],
     );
 
@@ -51,7 +51,7 @@ function getGranularity(header: IDimensionItemDescriptor): DateAttributeGranular
     const suffix = identifier.substr(identifier.lastIndexOf(".") + 1);
 
     return supportedSuffixes.includes(suffix)
-        ? toSdkGranularity(suffix as JsonApiAttributeAttributesGranularityEnum)
+        ? toSdkGranularity(suffix as JsonApiAttributeOutAttributesGranularityEnum)
         : undefined; // not a date attribute
 }
 

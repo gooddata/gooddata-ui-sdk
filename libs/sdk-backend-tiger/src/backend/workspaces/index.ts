@@ -5,7 +5,7 @@ import {
     IWorkspacesQueryResult,
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
-import { JsonApiWorkspaceList, OrganizationUtilities } from "@gooddata/api-client-tiger";
+import { JsonApiWorkspaceOutList, OrganizationUtilities } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter";
@@ -59,7 +59,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this.queryWorker(this.offset, this.limit, this.search);
     }
 
-    private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceList): IWorkspaceDescriptor[] => {
+    private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceOutList): IWorkspaceDescriptor[] => {
         return result.data.map(workspaceConverter);
     };
 

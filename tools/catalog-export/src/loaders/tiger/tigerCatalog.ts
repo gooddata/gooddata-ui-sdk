@@ -1,15 +1,15 @@
 // (C) 2007-2021 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types";
 import {
-    JsonApiAttributeList,
-    JsonApiFactList,
-    JsonApiMetricList,
+    JsonApiAttributeOutList,
+    JsonApiFactOutList,
+    JsonApiMetricOutList,
     ITigerClient,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
-function convertMetrics(metrics: JsonApiMetricList): Metric[] {
+function convertMetrics(metrics: JsonApiMetricOutList): Metric[] {
     return metrics.data.map((metric) => {
         return {
             metric: {
@@ -23,7 +23,7 @@ function convertMetrics(metrics: JsonApiMetricList): Metric[] {
     });
 }
 
-function convertFacts(facts: JsonApiFactList): Fact[] {
+function convertFacts(facts: JsonApiFactOutList): Fact[] {
     return facts.data.map((fact) => {
         return {
             fact: {
@@ -37,7 +37,7 @@ function convertFacts(facts: JsonApiFactList): Fact[] {
     });
 }
 
-function convertAttributes(attributes: JsonApiAttributeList): Attribute[] {
+function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
     const labels = createLabelMap(attributes.included);
 
     /*

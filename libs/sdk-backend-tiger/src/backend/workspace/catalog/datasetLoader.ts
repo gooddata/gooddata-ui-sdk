@@ -1,13 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 
 import {
-    JsonApiAttributeList,
-    JsonApiDataset,
+    JsonApiAttributeOutList,
+    JsonApiDatasetOut,
     ITigerClient,
     JsonApiLinkage,
-    JsonApiLabelWithLinks,
-    JsonApiAttributeWithLinks,
-    JsonApiDatasetWithLinks,
+    JsonApiLabelOutWithLinks,
+    JsonApiAttributeOutWithLinks,
+    JsonApiDatasetOutWithLinks,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { CatalogItem, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-backend-spi";
@@ -27,24 +27,24 @@ function lookupRelatedObject(included: JsonApiLinkage[] | undefined, id: string,
 }
 
 function getAttributeLabels(
-    attribute: JsonApiAttributeWithLinks,
+    attribute: JsonApiAttributeOutWithLinks,
     included: JsonApiLinkage[] | undefined,
-): JsonApiLabelWithLinks[] {
+): JsonApiLabelOutWithLinks[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
-    const allLabels: JsonApiLabelWithLinks[] = labelsRefs
+    const allLabels: JsonApiLabelOutWithLinks[] = labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
             if (!obj) {
                 return;
             }
-            return obj as JsonApiLabelWithLinks;
+            return obj as JsonApiLabelOutWithLinks;
         })
-        .filter((obj): obj is JsonApiLabelWithLinks => obj !== undefined);
+        .filter((obj): obj is JsonApiLabelOutWithLinks => obj !== undefined);
 
     return allLabels;
 }
 
-function isGeoLabel(label: JsonApiLabelWithLinks): boolean {
+function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     /*
      * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
      *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
@@ -53,7 +53,7 @@ function isGeoLabel(label: JsonApiLabelWithLinks): boolean {
     return label.id.search(/^.*\.geo__/) > -1;
 }
 
-function createNonDateAttributes(attributes: JsonApiAttributeList): ICatalogAttribute[] {
+function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {
     const nonDateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity === undefined);
 
     return nonDateAttributes.map((attribute) => {
@@ -67,12 +67,12 @@ function createNonDateAttributes(attributes: JsonApiAttributeList): ICatalogAttr
 }
 
 type DatasetWithAttributes = {
-    dataset: JsonApiDatasetWithLinks;
-    attributes: JsonApiAttributeWithLinks[];
+    dataset: JsonApiDatasetOutWithLinks;
+    attributes: JsonApiAttributeOutWithLinks[];
 };
 
 function identifyDateDatasets(
-    dateAttributes: JsonApiAttributeWithLinks[],
+    dateAttributes: JsonApiAttributeOutWithLinks[],
     included: JsonApiLinkage[] | undefined,
 ) {
     const datasets: { [id: string]: DatasetWithAttributes } = {};
@@ -82,7 +82,7 @@ function identifyDateDatasets(
         if (!ref) {
             return;
         }
-        const dataset = lookupRelatedObject(included, ref.id, ref.type) as JsonApiDataset;
+        const dataset = lookupRelatedObject(included, ref.id, ref.type) as JsonApiDatasetOut;
         if (!dataset) {
             return;
         }
@@ -100,7 +100,7 @@ function identifyDateDatasets(
     return values(datasets);
 }
 
-function createDateDatasets(attributes: JsonApiAttributeList): ICatalogDateDataset[] {
+function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDataset[] {
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 

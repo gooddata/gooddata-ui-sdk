@@ -33,13 +33,16 @@ export class TigerPreparedExecution implements IPreparedExecution {
         const afmExecution = toAfmExecution(this.definition);
 
         return this.authCall((client) =>
-            client.execution.executeAfm(this.definition.workspace, afmExecution),
+            client.execution.computeReport({
+                workspaceId: this.definition.workspace,
+                afmExecution,
+            }),
         ).then((response) => {
             return new TigerExecutionResult(
                 this.authCall,
                 this.definition,
                 this.executionFactory,
-                response,
+                response.data,
                 this.dateFormatter,
             );
         });

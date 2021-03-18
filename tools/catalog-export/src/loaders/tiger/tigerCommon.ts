@@ -1,31 +1,31 @@
 // (C) 2007-2021 GoodData Corporation
 import {
-    JsonApiAttribute,
-    JsonApiDataset,
-    JsonApiLabel,
-    JsonApiAttributeRelationships,
+    JsonApiAttributeOut,
+    JsonApiDatasetOut,
+    JsonApiLabelOut,
+    JsonApiAttributeOutRelationships,
     JsonApiLinkage,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
 import { Attribute, DisplayForm } from "../../base/types";
 
-export type LabelMap = { [id: string]: JsonApiLabel };
-export type DatasetMap = { [id: string]: JsonApiDataset };
+export type LabelMap = { [id: string]: JsonApiLabelOut };
+export type DatasetMap = { [id: string]: JsonApiDatasetOut };
 
 export function createLabelMap(included: any[] | undefined): LabelMap {
     if (!included) {
         return {};
     }
 
-    const labels: JsonApiLabel[] = included
+    const labels: JsonApiLabelOut[] = included
         .map((include) => {
             if ((include as JsonApiLinkage).type !== "label") {
                 return null;
             }
 
-            return include as JsonApiLabel;
+            return include as JsonApiLabelOut;
         })
-        .filter((include): include is JsonApiLabel => include !== null);
+        .filter((include): include is JsonApiLabelOut => include !== null);
 
     return keyBy(labels, (t) => t.id);
 }
@@ -35,15 +35,15 @@ export function createDatasetMap(included: any[] | undefined): DatasetMap {
         return {};
     }
 
-    const datasets: JsonApiDataset[] = included
+    const datasets: JsonApiDatasetOut[] = included
         .map((include) => {
             if ((include as JsonApiLinkage).type !== "dataset") {
                 return null;
             }
 
-            return include as JsonApiDataset;
+            return include as JsonApiDatasetOut;
         })
-        .filter((include): include is JsonApiDataset => include !== null);
+        .filter((include): include is JsonApiDatasetOut => include !== null);
 
     return keyBy(datasets, (t) => t.id);
 }
@@ -51,12 +51,12 @@ export function createDatasetMap(included: any[] | undefined): DatasetMap {
 export function getReferencedDataset(
     relationships: object | undefined,
     datasetsMap: DatasetMap,
-): JsonApiDataset | undefined {
+): JsonApiDatasetOut | undefined {
     if (!relationships) {
         return;
     }
 
-    const datasetsRef: JsonApiLinkage = (relationships as JsonApiAttributeRelationships)?.dataset
+    const datasetsRef: JsonApiLinkage = (relationships as JsonApiAttributeOutRelationships)?.dataset
         ?.data as JsonApiLinkage;
 
     if (!datasetsRef) {
@@ -66,7 +66,7 @@ export function getReferencedDataset(
     return datasetsMap[datasetsRef.id];
 }
 
-export function convertLabels(attribute: JsonApiAttribute, labelsMap: LabelMap): DisplayForm[] {
+export function convertLabels(attribute: JsonApiAttributeOut, labelsMap: LabelMap): DisplayForm[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
     return labelsRefs
         .map((ref) => {
@@ -87,7 +87,7 @@ export function convertLabels(attribute: JsonApiAttribute, labelsMap: LabelMap):
         .filter((df): df is DisplayForm => df !== undefined);
 }
 
-export function convertAttribute(attribute: JsonApiAttribute, labels: LabelMap): Attribute | undefined {
+export function convertAttribute(attribute: JsonApiAttributeOut, labels: LabelMap): Attribute | undefined {
     return {
         attribute: {
             content: {

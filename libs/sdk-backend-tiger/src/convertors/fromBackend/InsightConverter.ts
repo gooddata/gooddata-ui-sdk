@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { VisualizationObjectModel, JsonApiVisualizationObjectWithLinks } from "@gooddata/api-client-tiger";
+import { VisualizationObjectModel, JsonApiVisualizationObjectOutWithLinks } from "@gooddata/api-client-tiger";
 import { idRef, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { convertVisualizationObject } from "./VisualizationObjectConverter";
 
@@ -19,8 +19,8 @@ export const insightFromInsightDefinition = (
 };
 
 export const visualizationObjectsItemToInsight = (
-    visualizationObject: JsonApiVisualizationObjectWithLinks,
-) => {
+    visualizationObject: JsonApiVisualizationObjectOutWithLinks,
+): IInsight => {
     return insightFromInsightDefinition(
         convertVisualizationObject(
             visualizationObject!.attributes!.content! as VisualizationObjectModel.IVisualizationObject,

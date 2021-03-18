@@ -128,7 +128,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             return client.workspaceObjects.createEntityVisualizationObjects(
                 {
                     workspaceId: this.workspace,
-                    jsonApiVisualizationObjectDocument: {
+                    jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: uuidv4(),
                             type: "visualizationObject",
@@ -155,7 +155,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 {
                     objectId: insightId(insight),
                     workspaceId: this.workspace,
-                    jsonApiVisualizationObjectDocument: {
+                    jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: insightId(insight),
                             type: "visualizationObject",

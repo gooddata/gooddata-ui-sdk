@@ -72,7 +72,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         }
 
         const response = await this.authCall((client) => {
-            const elementsRequest: Parameters<typeof client.labelElements.processElementsRequest>[0] = {
+            const elementsRequest: Parameters<typeof client.labelElements.computeLabelElements>[0] = {
                 ...(options?.complement && { complementFilter: options.complement }),
                 ...(options?.filter && { patternFilter: options.filter }),
                 ...(options?.order && { sortOrder: options.order === "asc" ? "ASC" : "DESC" }),
@@ -82,7 +82,7 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                 workspaceId: this.workspace,
             };
 
-            return client.labelElements.processElementsRequest(elementsRequest);
+            return client.labelElements.computeLabelElements(elementsRequest);
         });
 
         const { paging, elements } = response.data;
