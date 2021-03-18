@@ -381,6 +381,9 @@ export function parseRGBColorCode(color: string): {
     B: number;
 };
 
+// @internal (undocumented)
+export function parseRGBString(color: string): IRgbColorValue | null;
+
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 

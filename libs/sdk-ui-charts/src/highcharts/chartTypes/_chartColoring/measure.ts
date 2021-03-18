@@ -9,6 +9,7 @@ import {
     getLighterColorFromRGB,
 } from "@gooddata/sdk-ui-vis-commons";
 import { IColor, IColorFromPalette, IColorPalette, isColorFromPalette, RgbType } from "@gooddata/sdk-model";
+import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IColorMapping } from "../../../interfaces";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
@@ -147,7 +148,7 @@ export class MeasureColorStrategy extends ColorStrategy {
             ...mapItem,
             color: {
                 type: "rgb" as RgbType,
-                value: getLighterColorFromRGB(rgbColor, 0.6),
+                value: getLighterColorFromRGB(rgbColor, isDarkTheme(this.theme) ? -0.6 : 0.6),
             },
         };
     }

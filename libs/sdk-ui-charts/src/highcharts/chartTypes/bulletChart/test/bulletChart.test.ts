@@ -8,6 +8,7 @@ import { IColorMapping } from "../../../../interfaces";
 import { ReferenceLdm, ReferenceLdmExt, ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 const defaultColorMapping: IColorMapping[] = [
     {
@@ -27,10 +28,11 @@ const getBulletColorStrategy = (props: {
     palette?: IColorPalette;
     colorMapping?: IColorMapping[];
     dv: DataViewFacade;
+    theme?: ITheme;
 }): IColorStrategy => {
-    const { palette, colorMapping = defaultColorMapping, dv } = props;
+    const { palette, colorMapping = defaultColorMapping, dv, theme } = props;
 
-    return ColorFactory.getColorStrategy(palette, colorMapping, undefined, undefined, dv, "bullet");
+    return ColorFactory.getColorStrategy(palette, colorMapping, undefined, undefined, dv, "bullet", theme);
 };
 
 const PrimaryAndComparative = recordedDataFacade(
@@ -62,6 +64,32 @@ describe("BulletChartColorStrategy", () => {
                 });
             },
         );
+
+        it("should generate the default color assignment differently when dark based theme is applied", () => {
+            const darkBasedTheme: ITheme = {
+                palette: {
+                    complementary: {
+                        c0: "#000",
+                        c1: "#1c1c1c",
+                        c2: "#383838",
+                        c3: "#555",
+                        c4: "#717171",
+                        c5: "#8d8d8d",
+                        c6: "#aaa",
+                        c7: "#c6c6c6",
+                        c8: "#e2e2e2",
+                        c9: "#fff",
+                    },
+                },
+            };
+            const colorStrategy = getBulletColorStrategy({ dv: AllMeasures, theme: darkBasedTheme });
+
+            const expectedColors = ["rgb(20,178,226)", "rgb(91,201,235)", "rgb(56,56,56)"];
+
+            range(expectedColors.length).map((itemIndex) => {
+                expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
+            });
+        });
     });
 
     describe("colorMapping", () => {
