@@ -38,6 +38,10 @@ export type CompositeBackendPart = {
  * For all other services available on the top-level backend API, the composite backend delegates to the first backend
  * on the list.
  *
+ * Note on backend capabilities: the composite backend will inherit capabilities from the first backend component. It
+ * will not do any other processing in regards to capabilities. This can potentially be limiting and breaking in
+ * situations when the backend is composed from multiple different implementations, each with different capabilities.
+ *
  * @param components - backends to compose from, must contain at least one backend
  * @internal
  */
