@@ -126,6 +126,7 @@ export interface IAttributeFilter {
     attribute: string;
     isInverted: boolean;
     totalElementsCount: number;
+    displayFormRef: ObjRef;
     selectedElements: Array<{
         title: string;
         uri: string;
