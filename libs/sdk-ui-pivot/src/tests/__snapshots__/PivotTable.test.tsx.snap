@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`pivotTableMenuForCapabilities should disable aggregations in default menu when no grand totals capability 1`] = `
+Object {
+  "aggregations": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable aggregations in default menu when no grand totals capability even if subtotals capability is available 1`] = `
+Object {
+  "aggregations": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable aggregations in menu when no grand totals capability 1`] = `
+Object {
+  "aggregations": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable aggregations in menu when no grand totals capability even if subtotals capability is available 1`] = `
+Object {
+  "aggregations": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable aggregations when no available total types left 1`] = `
+Object {
+  "aggregations": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable subtotals and limit total types in default menu when no subtotals and no native totals capability 1`] = `
+Object {
+  "aggregationTypes": Array [
+    "sum",
+    "max",
+    "min",
+    "avg",
+    "med",
+  ],
+  "aggregationsSubMenu": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable subtotals and limit total types in menu when no subtotals and no native totals capability 1`] = `
+Object {
+  "aggregationTypes": Array [
+    "sum",
+    "max",
+    "min",
+    "avg",
+    "med",
+  ],
+  "aggregations": true,
+  "aggregationsSubMenu": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable subtotals in default menu when no subtotals capability 1`] = `
+Object {
+  "aggregationsSubMenu": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should disable subtotals in menu when no subtotals capability 1`] = `
+Object {
+  "aggregations": true,
+  "aggregationsSubMenu": false,
+}
+`;
+
+exports[`pivotTableMenuForCapabilities should keep default menu config as is if all capabilities 1`] = `Object {}`;
+
+exports[`pivotTableMenuForCapabilities should keep menu config as is if all capabilities 1`] = `
+Object {
+  "aggregations": true,
+  "aggregationsSubMenu": true,
+}
+`;

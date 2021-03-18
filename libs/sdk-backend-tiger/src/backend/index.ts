@@ -41,6 +41,7 @@ import { TigerOrganization, TigerOrganizations } from "./organization";
 const CAPABILITIES: IBackendCapabilities = {
     canCalculateGrandTotals: true,
     canCalculateSubTotals: false,
+    canCalculateNativeTotals: false,
     canCalculateTotals: false,
     canExportCsv: false,
     canExportXlsx: false,

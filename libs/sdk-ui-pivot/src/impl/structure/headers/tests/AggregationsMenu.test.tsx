@@ -43,6 +43,7 @@ describe("AggregationsMenu", () => {
                 isMenuOpened={true}
                 isMenuButtonVisible={true}
                 showSubmenu={false}
+                availableTotalTypes={AVAILABLE_TOTALS}
                 colId={attributeColumnId}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition}
@@ -66,6 +67,18 @@ describe("AggregationsMenu", () => {
         const wrapper = render();
 
         expect(wrapper.find(".s-menu-aggregation").length).toBe(AVAILABLE_TOTALS.length);
+    });
+
+    it("should render main menu with only available total items", () => {
+        const wrapper = render({ availableTotalTypes: ["sum", "avg"] });
+
+        expect(wrapper.find(".s-menu-aggregation").length).toBe(2);
+    });
+
+    it("should render main menu with submenu with only available total items", () => {
+        const wrapper = render({ availableTotalTypes: ["sum", "avg"], showSubmenu: true });
+
+        expect(wrapper.find(".s-menu-aggregation").length).toBe(2);
     });
 
     it('should render "sum" as only selected item in main menu', () => {

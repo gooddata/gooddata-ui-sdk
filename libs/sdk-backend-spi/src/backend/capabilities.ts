@@ -28,6 +28,11 @@ export interface IBackendCapabilities {
     canCalculateSubTotals?: boolean;
 
     /**
+     * Indicates whether the backend is capable to calculate and include native totals (aka rollups) in the resulting data view.
+     */
+    canCalculateNativeTotals?: boolean;
+
+    /**
      * Indicates whether the backend is capable to sort the result data view.
      */
     canSortData?: boolean;

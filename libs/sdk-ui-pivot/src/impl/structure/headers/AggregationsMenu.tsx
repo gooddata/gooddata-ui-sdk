@@ -18,7 +18,6 @@ import Menu from "../../../menu/Menu";
 import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
 import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
-import { AVAILABLE_TOTALS } from "../../base/constants";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 import { TableDescriptor } from "../tableDescriptor";
 import { isDataColGroup, isDataColLeaf, isDataColRootGroup, isSliceCol } from "../tableDescriptorTypes";
@@ -37,6 +36,7 @@ export interface IAggregationsMenuProps {
     isMenuOpened: boolean;
     isMenuButtonVisible: boolean;
     showSubmenu: boolean;
+    availableTotalTypes: TotalType[];
     colId: string;
     getTableDescriptor: () => TableDescriptor;
     getExecutionDefinition: () => IExecutionDefinition;
@@ -175,12 +175,12 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
         measureLocalIdentifiers: string[],
         rowAttributeDescriptors: IAttributeDescriptor[],
     ) {
-        const { intl, onAggregationSelect, showSubmenu } = this.props;
+        const { intl, onAggregationSelect, showSubmenu, availableTotalTypes } = this.props;
         const firstAttributeIdentifier = attributeDescriptorLocalId(rowAttributeDescriptors[0]);
         const isFilteredByMeasureValue = this.isTableFilteredByMeasureValue();
         const isFilteredByRankingFilter = this.isTableFilteredByRankingFilter();
 
-        return AVAILABLE_TOTALS.map((totalType: TotalType) => {
+        return availableTotalTypes.map((totalType: TotalType) => {
             const isSelected = menuHelper.isTotalEnabledForAttribute(
                 firstAttributeIdentifier,
                 totalType,

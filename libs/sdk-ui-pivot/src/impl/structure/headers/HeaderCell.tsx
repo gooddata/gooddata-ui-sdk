@@ -6,7 +6,7 @@ import cx from "classnames";
 import { IMenu } from "../../../publicTypes";
 import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
 import AggregationsMenu from "./AggregationsMenu";
-import { HEADER_LABEL_CLASS } from "../../base/constants";
+import { AVAILABLE_TOTALS, HEADER_LABEL_CLASS } from "../../base/constants";
 import { TableDescriptor } from "../tableDescriptor";
 import { IExecutionDefinition, ITotal, SortDirection } from "@gooddata/sdk-model";
 import { IMenuAggregationClickConfig } from "../../privateTypes";
@@ -111,7 +111,8 @@ export default class HeaderCell extends React.Component<IHeaderCellProps, IHeade
                 colId={colId!}
                 isMenuOpened={isMenuOpen}
                 isMenuButtonVisible={isMenuButtonVisible}
-                showSubmenu={menu.aggregationsSubMenu!}
+                showSubmenu={menu.aggregationsSubMenu ?? false}
+                availableTotalTypes={menu.aggregationTypes ?? AVAILABLE_TOTALS}
                 getTableDescriptor={getTableDescriptor}
                 getExecutionDefinition={getExecutionDefinition!}
                 getTotals={getColumnTotals}

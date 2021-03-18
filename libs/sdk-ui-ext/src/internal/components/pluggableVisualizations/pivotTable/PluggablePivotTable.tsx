@@ -11,7 +11,7 @@ import get from "lodash/get";
 import isNil from "lodash/isNil";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import { IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, IExecutionFactory, ISettings } from "@gooddata/sdk-backend-spi";
 import {
     bucketAttribute,
     IDimension,
@@ -34,6 +34,7 @@ import {
     IColumnSizing,
     ICorePivotTableProps,
     IPivotTableConfig,
+    pivotTableMenuForCapabilities,
 } from "@gooddata/sdk-ui-pivot";
 import React from "react";
 import { render } from "react-dom";
@@ -114,8 +115,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private renderFun: RenderFunction;
     private readonly settings: ISettings;
-    private supportsGrandTotals: boolean;
-    private supportsSubTotals: boolean;
+    private backendCapabilities: IBackendCapabilities;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -126,8 +126,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
         this.onColumnResized = this.onColumnResized.bind(this);
         this.handlePushData = this.handlePushData.bind(this);
         this.supportedPropertiesList = PIVOT_TABLE_SUPPORTED_PROPERTIES;
-        this.supportsGrandTotals = props.backend.capabilities.canCalculateGrandTotals ?? false;
-        this.supportsSubTotals = props.backend.capabilities.canCalculateSubTotals ?? false;
+        this.backendCapabilities = props.backend.capabilities;
     }
 
     public unmount(): void {
@@ -316,8 +315,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                 config,
                 this.environment,
                 this.settings,
-                this.supportsGrandTotals,
-                this.supportsSubTotals,
+                this.backendCapabilities,
                 columnWidths,
             ),
             ...customVisualizationConfig,
@@ -473,8 +471,7 @@ export function createPivotTableConfig(
     config: IGdcConfig,
     environment: VisualizationEnvironment,
     settings: ISettings,
-    supportsGrandTotals: boolean,
-    supportsSubTotals: boolean,
+    capabilities: IBackendCapabilities,
     columnWidths: ColumnWidthItem[],
 ): IPivotTableConfig {
     let tableConfig: IPivotTableConfig = {
@@ -484,10 +481,10 @@ export function createPivotTableConfig(
     if (environment !== "dashboards") {
         tableConfig = {
             ...tableConfig,
-            menu: {
-                aggregations: supportsGrandTotals,
-                aggregationsSubMenu: supportsSubTotals,
-            },
+            menu: pivotTableMenuForCapabilities(capabilities, {
+                aggregations: true,
+                aggregationsSubMenu: true,
+            }),
         };
     }
 

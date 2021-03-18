@@ -25,7 +25,7 @@ import { DefaultLocale, IDrillableItem, ILocale, VisualizationEnvironment } from
 import { ColumnWidthItem, CorePivotTable } from "@gooddata/sdk-ui-pivot";
 import { IInsight, ISortItem } from "@gooddata/sdk-model";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { ISettings } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, ISettings } from "@gooddata/sdk-backend-spi";
 import noop from "lodash/noop";
 import cloneDeep from "lodash/cloneDeep";
 import {
@@ -863,7 +863,15 @@ describe("createPivotTableConfig", () => {
         ],
     ];
 
+    const AllTotalCapabilities: IBackendCapabilities = {
+        canCalculateTotals: true,
+        canCalculateGrandTotals: true,
+        canCalculateSubTotals: true,
+        canCalculateNativeTotals: true,
+    };
     it.each(Scenarios)("should create valid %s", (_desc, config, env, settings, columnWidths) => {
-        expect(createPivotTableConfig(config, env, settings, true, true, columnWidths)).toMatchSnapshot();
+        expect(
+            createPivotTableConfig(config, env, settings, AllTotalCapabilities, columnWidths),
+        ).toMatchSnapshot();
     });
 });
