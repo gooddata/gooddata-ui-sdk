@@ -20,10 +20,9 @@ import {
 } from "../../../DashboardLayout/constants";
 import { VisType } from "@gooddata/sdk-ui";
 import { DashboardLayoutBuilder } from "../../builder/layout";
-import { idRef } from "@gooddata/sdk-model";
+import { idRef, newInsightDefinition } from "@gooddata/sdk-model";
 
 export const allVisTypes: VisType[] = [
-    "alluvial",
     "area",
     "bar",
     "bubble",
@@ -33,18 +32,14 @@ export const allVisTypes: VisType[] = [
     "combo2",
     "donut",
     "funnel",
-    "geo",
     "headline",
     "heatmap",
-    "histogram",
     "line",
-    "pareto",
     "pushpin",
     "pie",
     "scatter",
     "table",
     "treemap",
-    "waterfall",
     "xirr",
 ];
 
@@ -52,16 +47,27 @@ const layoutBuilder = DashboardLayoutBuilder.forNewLayout();
 
 describe("sizing", () => {
     describe("getDashboardLayoutWidgetDefaultHeight", () => {
-        it.each(allVisTypes)("should get default height for insight widget %s", (visType) => {
-            expect(getDashboardLayoutWidgetDefaultHeight("insight", visType)).toMatchSnapshot();
-        });
+        describe.each([false, true])("with customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it.each(allVisTypes)("should get default height for insight widget %s", (visType) => {
+                expect(
+                    getDashboardLayoutWidgetDefaultHeight(
+                        settings,
+                        "insight",
+                        newInsightDefinition(`local:${visType}`),
+                    ),
+                ).toMatchSnapshot();
+            });
 
-        it("should get default height for kpi widget", () => {
-            expect(getDashboardLayoutWidgetDefaultHeight("kpi")).toMatchSnapshot();
-        });
+            it("should get default height for kpi widget", () => {
+                expect(getDashboardLayoutWidgetDefaultHeight(settings, "kpi")).toMatchSnapshot();
+            });
 
-        it("should get default height for unknown widget", () => {
-            expect(getDashboardLayoutWidgetDefaultHeight("unknown" as any)).toMatchSnapshot();
+            it("should get default height for unknown widget", () => {
+                expect(getDashboardLayoutWidgetDefaultHeight(settings, "unknown" as any)).toMatchSnapshot();
+            });
         });
     });
 
@@ -144,67 +150,89 @@ describe("sizing", () => {
     });
 
     describe("getDashboardLayoutWidgetDefaultGridWidth", () => {
-        it("should get default width for insight with unknown vis type", () => {
-            expect(getDashboardLayoutWidgetDefaultGridWidth("insight")).toBe(6);
-        });
+        describe.each([false, true])("is independent on customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it("should get default width for insight with unknown vis type", () => {
+                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "insight")).toBe(6);
+            });
 
-        it("should get default width for kpi", () => {
-            expect(getDashboardLayoutWidgetDefaultGridWidth("kpi")).toBe(2);
-        });
+            it("should get default width for kpi", () => {
+                expect(getDashboardLayoutWidgetDefaultGridWidth(settings, "kpi")).toBe(2);
+            });
 
-        it.each([
-            ["Headline", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
-            ["Column Chart", DASHBOARD_LAYOUT_VIS_TYPE.column, 6],
-            ["Bar Chart", DASHBOARD_LAYOUT_VIS_TYPE.bar, 6],
-            ["Line Chart", DASHBOARD_LAYOUT_VIS_TYPE.line, 6],
-            ["Area Chart", DASHBOARD_LAYOUT_VIS_TYPE.area, 6],
-            ["Combo Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo, 6],
-            ["Combo2 Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 6],
-            ["Scatter Plot", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 6],
-            ["Bubble Chart", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 6],
-            ["Pie Chart", DASHBOARD_LAYOUT_VIS_TYPE.pie, 6],
-            ["Donut Chart", DASHBOARD_LAYOUT_VIS_TYPE.donut, 6],
-            ["Treemap", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 6],
-            ["Heatmap", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 6],
-            ["Table", DASHBOARD_LAYOUT_VIS_TYPE.table, 12],
-            ["Geochart", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
-        ])("should get default width for %s", (_name, visType, width) => {
-            expect(getDashboardLayoutWidgetDefaultGridWidth("insight", visType as any)).toBe(width);
+            it.each([
+                ["Headline", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
+                ["Column Chart", DASHBOARD_LAYOUT_VIS_TYPE.column, 6],
+                ["Bar Chart", DASHBOARD_LAYOUT_VIS_TYPE.bar, 6],
+                ["Line Chart", DASHBOARD_LAYOUT_VIS_TYPE.line, 6],
+                ["Area Chart", DASHBOARD_LAYOUT_VIS_TYPE.area, 6],
+                ["Combo Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo, 6],
+                ["Combo2 Chart", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 6],
+                ["Scatter Plot", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 6],
+                ["Bubble Chart", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 6],
+                ["Pie Chart", DASHBOARD_LAYOUT_VIS_TYPE.pie, 6],
+                ["Donut Chart", DASHBOARD_LAYOUT_VIS_TYPE.donut, 6],
+                ["Treemap", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 6],
+                ["Heatmap", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 6],
+                ["Table", DASHBOARD_LAYOUT_VIS_TYPE.table, 12],
+                ["Geochart", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
+            ])("should get default width for %s", (_name, visType, width) => {
+                expect(
+                    getDashboardLayoutWidgetDefaultGridWidth(
+                        settings,
+                        "insight",
+                        newInsightDefinition(`local:${visType}`),
+                    ),
+                ).toBe(width);
+            });
         });
     });
 
     describe("getDashboardLayoutWidgetMinGridWidth", () => {
-        it("should get minimum width for uknown visType", () => {
-            expect(getDashboardLayoutWidgetMinGridWidth("insight")).toBe(4);
-        });
+        describe.each([false, true])("is independent on customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it("should get minimum width for uknown visType", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "insight")).toBe(4);
+            });
 
-        it("should get minimum width for kpi", () => {
-            expect(getDashboardLayoutWidgetMinGridWidth("kpi")).toBe(2);
-        });
+            it("should get minimum width for kpi", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "kpi")).toBe(2);
+            });
 
-        it.each([
-            ["KPI", "kpi", undefined, 2],
-            ["Headline", "insight", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
-            ["Column Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.column, 4],
-            ["Bar Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bar, 4],
-            ["Line Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.line, 4],
-            ["Area Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.area, 4],
-            ["Combo Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo, 4],
-            ["Combo2 Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 4],
-            ["Scatter Plot", "insight", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 4],
-            ["Bubble Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 4],
-            ["Pie Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pie, 4],
-            ["Donut Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.donut, 4],
-            ["Treemap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 4],
-            ["Heatmap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 4],
-            ["Table", "insight", DASHBOARD_LAYOUT_VIS_TYPE.table, 3],
-            ["Geochart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
-        ])(
-            "should get default height for %s found in widgets by qualifier",
-            (_name, widgetType, visType, width) => {
-                expect(getDashboardLayoutWidgetMinGridWidth(widgetType as WidgetType, visType)).toBe(width);
-            },
-        );
+            it.each([
+                ["KPI", "kpi", undefined, 2],
+                ["Headline", "insight", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2],
+                ["Column Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.column, 4],
+                ["Bar Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bar, 4],
+                ["Line Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.line, 4],
+                ["Area Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.area, 4],
+                ["Combo Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo, 4],
+                ["Combo2 Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.combo2, 4],
+                ["Scatter Plot", "insight", DASHBOARD_LAYOUT_VIS_TYPE.scatter, 4],
+                ["Bubble Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.bubble, 4],
+                ["Pie Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pie, 4],
+                ["Donut Chart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.donut, 4],
+                ["Treemap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.treemap, 4],
+                ["Heatmap", "insight", DASHBOARD_LAYOUT_VIS_TYPE.heatmap, 4],
+                ["Table", "insight", DASHBOARD_LAYOUT_VIS_TYPE.table, 3],
+                ["Geochart", "insight", DASHBOARD_LAYOUT_VIS_TYPE.pushpin, 6],
+            ])(
+                "should get default height for %s found in widgets by qualifier",
+                (_name, widgetType, visType, width) => {
+                    expect(
+                        getDashboardLayoutWidgetMinGridWidth(
+                            settings,
+                            widgetType as WidgetType,
+                            newInsightDefinition(`local:${visType}`),
+                        ),
+                    ).toBe(width);
+                },
+            );
+        });
     });
 
     describe("getDashboardLayoutItemMaxGridWidth", () => {

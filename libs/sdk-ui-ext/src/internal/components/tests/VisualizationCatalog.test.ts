@@ -1,11 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { newInsightDefinition } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { PluggableBarChart } from "../pluggableVisualizations/barChart/PluggableBarChart";
+import { BarChartDescriptor } from "../pluggableVisualizations/barChart/BarChartDescriptor";
 import { CatalogViaTypeToClassMap } from "../VisualizationCatalog";
 
 describe("CatalogViaTypeToClassMap", () => {
-    const TestCatalog = new CatalogViaTypeToClassMap({ someType: PluggableBarChart });
+    const TestCatalog = new CatalogViaTypeToClassMap({ someType: BarChartDescriptor });
     it("resolves URI", () => {
         const factory = TestCatalog.forUri("local:someType");
 
@@ -13,13 +13,13 @@ describe("CatalogViaTypeToClassMap", () => {
     });
 
     it("indicates support for URI", () => {
-        const result = TestCatalog.hasFactoryForUri("local:someType");
+        const result = TestCatalog.hasDescriptorForUri("local:someType");
 
         expect(result).toBeTruthy();
     });
 
     it("indicates no support for unknown URI", () => {
-        const result = TestCatalog.hasFactoryForUri("local:unknownType");
+        const result = TestCatalog.hasDescriptorForUri("local:unknownType");
 
         expect(result).toBeFalsy();
     });
@@ -31,13 +31,13 @@ describe("CatalogViaTypeToClassMap", () => {
     });
 
     it("indicates support for insight", () => {
-        const result = TestCatalog.hasFactoryForInsight(newInsightDefinition("local:someType"));
+        const result = TestCatalog.hasDescriptorForInsight(newInsightDefinition("local:someType"));
 
         expect(result).toBeTruthy();
     });
 
     it("indicates no support for insight with unknown visualization class", () => {
-        const result = TestCatalog.hasFactoryForInsight(newInsightDefinition("local:unknownType"));
+        const result = TestCatalog.hasDescriptorForInsight(newInsightDefinition("local:unknownType"));
 
         expect(result).toBeFalsy();
     });

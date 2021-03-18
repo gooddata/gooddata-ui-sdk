@@ -1,38 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
-import { VisType } from "@gooddata/sdk-ui";
 import { DashboardWidget, IDashboardLayout, ScreenSize } from "@gooddata/sdk-backend-spi";
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./facade/interfaces";
-
-/**
- * Default size configuration for selected visualization types.
- *
- * @alpha
- */
-export type IDashboardItemDefaultDimensionsByVisType = {
-    [visType in VisType]?: IDashboardItemDefaultDimensions;
-};
-
-/**
- * Default size configuration for the layout item.
- *
- * @alpha
- */
-export interface IDashboardItemDefaultDimensions {
-    /**
-     * Minimal width of the item, defined as grid columns count.
-     */
-    minWidth: number;
-
-    /**
-     * Default width of the item, defined as grid columns count.
-     */
-    defWidth: number;
-
-    /**
-     * Default height of the item, defined in pixels.
-     */
-    defHeightPx: number;
-}
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.

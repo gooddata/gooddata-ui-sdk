@@ -17,6 +17,7 @@ import {
     IDashboardLayout,
     widgetType as getWidgetType,
     WidgetType,
+    isKpiWidget,
 } from "@gooddata/sdk-backend-spi";
 import {
     ObjRef,
@@ -166,6 +167,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 let visType: VisType;
                 let widgetType: WidgetType;
                 let insight: IInsight;
+                let content: IInsight | ILegacyKpi;
                 const widget = item.widget();
                 if (isDashboardLayout(widget)) {
                     throw new UnexpectedError("Nested layouts not yet supported.");
@@ -177,6 +179,10 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 }
                 if (isInsightWidget(widget)) {
                     insight = getInsightByRef(widget.insight);
+                    content = insight;
+                }
+                if (isKpiWidget(widget)) {
+                    content = widget.kpi;
                 }
 
                 const currentSize = item.size()[screen];
@@ -184,7 +190,7 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
                 const minHeight =
                     getDashboardLayoutItemHeight(currentSize) ||
                     (!currentSize.heightAsRatio
-                        ? getDashboardLayoutWidgetDefaultHeight(widgetType, visType)
+                        ? getDashboardLayoutWidgetDefaultHeight(userWorkspaceSettings, widgetType, content)
                         : undefined);
                 const height =
                     currentSize.heightAsRatio && !currentSize.gridHeight

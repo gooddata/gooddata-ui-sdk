@@ -9,6 +9,14 @@ import { ObjRef } from "@gooddata/sdk-model";
 export type ILegacyKpi = ILegacyKpiWithComparison | ILegacyKpiWithoutComparison;
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link ILegacyKpi}.
+ * @alpha
+ */
+export function isLegacyKpi(obj: unknown): obj is ILegacyKpi {
+    return isLegacyKpiWithComparison(obj) || isLegacyKpiWithoutComparison(obj);
+}
+
+/**
  * Common kpi properties
  * @alpha
  */

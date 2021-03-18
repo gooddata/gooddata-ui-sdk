@@ -1,33 +1,26 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import last from "lodash/last";
 import { IInsightDefinition, insightVisualizationUrl } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
-import { IVisConstruct, IVisualization } from "../interfaces/Visualization";
-import { PluggableAreaChart } from "./pluggableVisualizations/areaChart/PluggableAreaChart";
-import { PluggableBarChart } from "./pluggableVisualizations/barChart/PluggableBarChart";
-import { PluggableBubbleChart } from "./pluggableVisualizations/bubbleChart/PluggableBubbleChart";
-import { PluggableBulletChart } from "./pluggableVisualizations/bulletChart/PluggableBulletChart";
-import { PluggableColumnChart } from "./pluggableVisualizations/columnChart/PluggableColumnChart";
-import { PluggableComboChart } from "./pluggableVisualizations/comboChart/PluggableComboChart";
-import { PluggableComboChartDeprecated } from "./pluggableVisualizations/comboChart/PluggableComboChartDeprecated";
-import { PluggableDonutChart } from "./pluggableVisualizations/donutChart/PluggableDonutChart";
-import { PluggableFunnelChart } from "./pluggableVisualizations/funnelChart/PluggableFunnelChart";
-import { PluggableHeadline } from "./pluggableVisualizations/headline/PluggableHeadline";
-import { PluggableHeatmap } from "./pluggableVisualizations/heatMap/PluggableHeatmap";
-import { PluggableLineChart } from "./pluggableVisualizations/lineChart/PluggableLineChart";
-import { PluggablePieChart } from "./pluggableVisualizations/pieChart/PluggablePieChart";
-import { PluggablePivotTable } from "./pluggableVisualizations/pivotTable/PluggablePivotTable";
-import { PluggableScatterPlot } from "./pluggableVisualizations/scatterPlot/PluggableScatterPlot";
-import { PluggableTreemap } from "./pluggableVisualizations/treeMap/PluggableTreemap";
-import { PluggableXirr } from "./pluggableVisualizations/xirr/PluggableXirr";
-import { PluggableGeoPushpinChart } from "./pluggableVisualizations/geoChart/PluggableGeoPushpinChart";
-
-/**
- * Factories that create a new instance of pluggable visualization.
- *
- * @alpha
- */
-export type PluggableVisualizationFactory = (params: IVisConstruct) => IVisualization;
+import { IVisualizationDescriptor } from "../interfaces/VisualizationDescriptor";
+import { AreaChartDescriptor } from "./pluggableVisualizations/areaChart/AreaChartDescriptor";
+import { BarChartDescriptor } from "./pluggableVisualizations/barChart/BarChartDescriptor";
+import { BubbleChartDescriptor } from "./pluggableVisualizations/bubbleChart/BubbleChartDescriptor";
+import { BulletChartDescriptor } from "./pluggableVisualizations/bulletChart/BulletChartDescriptor";
+import { ColumnChartDescriptor } from "./pluggableVisualizations/columnChart/ColumnChartDescriptor";
+import { ComboChartDescriptor } from "./pluggableVisualizations/comboChart/ComboChartDescriptor";
+import { ComboChartDescriptorDeprecated } from "./pluggableVisualizations/comboChart/ComboChartDescriptorDeprecated";
+import { DonutChartDescriptor } from "./pluggableVisualizations/donutChart/DonutChartDescriptor";
+import { FunnelChartDescriptor } from "./pluggableVisualizations/funnelChart/FunnelChartDescriptor";
+import { HeadlineDescriptor } from "./pluggableVisualizations/headline/HeadlineDescriptor";
+import { HeatmapDescriptor } from "./pluggableVisualizations/heatMap/HeatmapDescriptor";
+import { LineChartDescriptor } from "./pluggableVisualizations/lineChart/LineChartDescriptor";
+import { PieChartDescriptor } from "./pluggableVisualizations/pieChart/PieChartDescriptor";
+import { PivotTableDescriptor } from "./pluggableVisualizations/pivotTable/PivotTableDescriptor";
+import { ScatterPlotDescriptor } from "./pluggableVisualizations/scatterPlot/ScatterPlotDescriptor";
+import { TreemapDescriptor } from "./pluggableVisualizations/treeMap/TreemapDescriptor";
+import { XirrDescriptor } from "./pluggableVisualizations/xirr/XirrDescriptor";
+import { GeoPushpinChartDescriptor } from "./pluggableVisualizations/geoChart/GeoPushpinChartDescriptor";
 
 /**
  * Visualization catalog is able to resolve visualization class to factory function that will
@@ -37,36 +30,36 @@ export type PluggableVisualizationFactory = (params: IVisConstruct) => IVisualiz
  */
 export interface IVisualizationCatalog {
     /**
-     * Looks up pluggable visualization factory by vis class URI.
+     * Looks up pluggable visualization descriptor by vis class URI.
      *
      * @param uri - visualization URI (in format such as local:<type>)
      * @alpha
      */
-    forUri(uri: string): PluggableVisualizationFactory;
+    forUri(uri: string): IVisualizationDescriptor;
 
     /**
-     * Looks up whether there is a pluggable visualization factory for a given vis class URI.
+     * Looks up whether there is a pluggable visualization descriptor for a given vis class URI.
      *
      * @param uri - visualization URI (in format such as local:<type>)
      * @alpha
      */
-    hasFactoryForUri(uri: string): boolean;
+    hasDescriptorForUri(uri: string): boolean;
 
     /**
-     * Looks up pluggable visualization implementation that should render the provided insight.
+     * Looks up pluggable visualization descriptor that provides all access to the visualization.
      *
      * @param insight - insight to render
      * @alpha
      */
-    forInsight(insight: IInsightDefinition): PluggableVisualizationFactory;
+    forInsight(insight: IInsightDefinition): IVisualizationDescriptor;
 
     /**
-     * Looks up whether there is a pluggable visualization factory for the provided insight.
+     * Looks up whether there is a pluggable visualization descriptor for the provided insight.
      *
      * @param insight - insight to query for
      * @alpha
      */
-    hasFactoryForInsight(insight: IInsightDefinition): boolean;
+    hasDescriptorForInsight(insight: IInsightDefinition): boolean;
 }
 
 type TypeToClassMapping = {
@@ -79,21 +72,21 @@ type TypeToClassMapping = {
 export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
     constructor(private readonly mapping: TypeToClassMapping) {}
 
-    public forUri(uri: string): PluggableVisualizationFactory {
+    public forUri(uri: string): IVisualizationDescriptor {
         const VisType = this.findInMapping(uri);
 
         if (!VisType) {
             throw new UnexpectedSdkError(`Unknown visualization class URI: ${uri}`);
         }
 
-        return (params) => new VisType(params);
+        return new VisType();
     }
 
-    public hasFactoryForUri(uri: string): boolean {
+    public hasDescriptorForUri(uri: string): boolean {
         return !!this.findInMapping(uri);
     }
 
-    public forInsight(insight: IInsightDefinition): PluggableVisualizationFactory {
+    public forInsight(insight: IInsightDefinition): IVisualizationDescriptor {
         /*
          * the URIs follow "local:visualizationType" format
          */
@@ -102,9 +95,9 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
         return this.forUri(visClassUri);
     }
 
-    public hasFactoryForInsight(insight: IInsightDefinition): boolean {
+    public hasDescriptorForInsight(insight: IInsightDefinition): boolean {
         const visClassUri = insightVisualizationUrl(insight);
-        return this.hasFactoryForUri(visClassUri);
+        return this.hasDescriptorForUri(visClassUri);
     }
 
     private findInMapping(uri: string): any | undefined {
@@ -122,23 +115,23 @@ export class CatalogViaTypeToClassMap implements IVisualizationCatalog {
  * Compile-time pluggable visualization 'catalog'.
  */
 const DefaultVisualizations = {
-    bar: PluggableBarChart,
-    bullet: PluggableBulletChart,
-    column: PluggableColumnChart,
-    line: PluggableLineChart,
-    area: PluggableAreaChart,
-    pie: PluggablePieChart,
-    donut: PluggableDonutChart,
-    table: PluggablePivotTable,
-    headline: PluggableHeadline,
-    scatter: PluggableScatterPlot,
-    bubble: PluggableBubbleChart,
-    heatmap: PluggableHeatmap,
-    combo: PluggableComboChartDeprecated, // old combo chart
-    combo2: PluggableComboChart, // new combo chart
-    treemap: PluggableTreemap,
-    funnel: PluggableFunnelChart,
-    pushpin: PluggableGeoPushpinChart,
+    bar: BarChartDescriptor,
+    bullet: BulletChartDescriptor,
+    column: ColumnChartDescriptor,
+    line: LineChartDescriptor,
+    area: AreaChartDescriptor,
+    pie: PieChartDescriptor,
+    donut: DonutChartDescriptor,
+    table: PivotTableDescriptor,
+    headline: HeadlineDescriptor,
+    scatter: ScatterPlotDescriptor,
+    bubble: BubbleChartDescriptor,
+    heatmap: HeatmapDescriptor,
+    combo: ComboChartDescriptorDeprecated, // old combo chart
+    combo2: ComboChartDescriptor, // new combo chart
+    treemap: TreemapDescriptor,
+    funnel: FunnelChartDescriptor,
+    pushpin: GeoPushpinChartDescriptor,
 };
 
 /**
@@ -158,5 +151,5 @@ export const DefaultVisualizationCatalog: IVisualizationCatalog = new CatalogVia
  */
 export const FullVisualizationCatalog: IVisualizationCatalog = new CatalogViaTypeToClassMap({
     ...DefaultVisualizations,
-    xirr: PluggableXirr,
+    xirr: XirrDescriptor,
 });

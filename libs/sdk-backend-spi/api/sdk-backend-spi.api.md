@@ -1219,6 +1219,9 @@ export function isKpiWidget(obj: unknown): obj is IKpiWidget;
 export function isKpiWidgetDefinition(obj: unknown): obj is IKpiWidgetDefinition;
 
 // @alpha
+export function isLegacyKpi(obj: unknown): obj is ILegacyKpi;
+
+// @alpha
 export function isLegacyKpiWithComparison(obj: unknown): obj is ILegacyKpiWithComparison;
 
 // @alpha

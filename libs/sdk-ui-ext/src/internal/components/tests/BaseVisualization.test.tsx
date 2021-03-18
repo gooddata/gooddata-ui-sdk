@@ -23,6 +23,8 @@ import { CatalogViaTypeToClassMap, IVisualizationCatalog } from "../Visualizatio
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { DummyVisConstruct } from "../pluggableVisualizations/tests/visConstruct.fixture";
+import { BaseChartDescriptor } from "../pluggableVisualizations/baseChart/BaseChartDescriptor";
+import { PluggableVisualizationFactory } from "../../interfaces/VisualizationDescriptor";
 
 const { delay } = testUtils;
 
@@ -63,9 +65,15 @@ class DummyClass extends AbstractPluggableVisualization {
     }
 }
 
+class DummyClassDescriptor extends BaseChartDescriptor {
+    public getFactory(): PluggableVisualizationFactory {
+        return (params) => new DummyClass(params);
+    }
+}
+
 describe("BaseVisualization", () => {
     const defaultVisualizationsCatalog = new CatalogViaTypeToClassMap({
-        table: DummyClass,
+        table: DummyClassDescriptor,
     });
 
     const defaultProps: IBaseVisualizationProps = {
@@ -115,6 +123,12 @@ describe("BaseVisualization", () => {
             }
         }
 
+        class DummyTableDescriptor extends DummyClassDescriptor {
+            public getFactory(): PluggableVisualizationFactory {
+                return (params) => new DummyTable(params);
+            }
+        }
+
         const columnConstructorCall = jest.fn();
         const columnAddBucketItemsCall = jest.fn();
         class DummyColumn extends DummyClass {
@@ -132,9 +146,15 @@ describe("BaseVisualization", () => {
             }
         }
 
+        class DummyColumnDescriptor extends DummyClassDescriptor {
+            public getFactory(): PluggableVisualizationFactory {
+                return () => new DummyColumn();
+            }
+        }
+
         const visualizationCatalog = new CatalogViaTypeToClassMap({
-            table: DummyTable,
-            column: DummyColumn,
+            table: DummyTableDescriptor,
+            column: DummyColumnDescriptor,
         });
 
         const component = createComponent({

@@ -1,7 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-// (C) 2007-2020 GoodData Corporation
 import { Configuration } from "react-grid-system";
-import { IDashboardItemDefaultDimensions, IDashboardItemDefaultDimensionsByVisType } from "./interfaces";
 import { ScreenSize } from "@gooddata/sdk-backend-spi";
 import { VisType } from "@gooddata/sdk-ui";
 
@@ -76,41 +74,4 @@ export const DASHBOARD_LAYOUT_VIS_TYPE: {
 };
 
 export const DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS = 150;
-export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT = 450;
-export const DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT = 240;
 export const GRID_ROW_HEIGHT_IN_PX = 20;
-
-export const INSIGHT_WIDGET_DIMENSIONS_DEFAULT: IDashboardItemDefaultDimensions = {
-    minWidth: 4,
-    defWidth: 6,
-    defHeightPx: DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-};
-
-export const KPI_WIDGET_DIMENSIONS_DEFAULT: IDashboardItemDefaultDimensions = {
-    minWidth: 2,
-    defWidth: 2,
-    defHeightPx: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-};
-
-export const INSIGHT_WIDGET_DIMENSIONS_TABLE: IDashboardItemDefaultDimensionsByVisType = {
-    headline: {
-        minWidth: 2,
-        defWidth: 2,
-        defHeightPx: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-    },
-    xirr: {
-        minWidth: 2,
-        defWidth: 2,
-        defHeightPx: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
-    },
-    table: {
-        minWidth: 3,
-        defWidth: 12,
-        defHeightPx: DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    },
-    pushpin: {
-        minWidth: 6,
-        defWidth: 6,
-        defHeightPx: DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT,
-    },
-};
