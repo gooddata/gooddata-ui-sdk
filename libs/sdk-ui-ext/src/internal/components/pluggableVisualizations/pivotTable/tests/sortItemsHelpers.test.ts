@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import {
@@ -7,7 +7,7 @@ import {
     IBucketItem,
     IExtendedReferencePoint,
 } from "../../../../interfaces/Visualization";
-import { IMeasureSortItem, ISortItem, SortDirection } from "@gooddata/sdk-model";
+import { IMeasureSortItem, ISortItem, SortDirection, uriRef } from "@gooddata/sdk-model";
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
@@ -200,6 +200,7 @@ describe("addDefaultSort", () => {
             [
                 {
                     attribute: "irrelevant",
+                    displayFormRef: uriRef("irrelevant/attribute/df/uri"),
                     isInverted: true,
                     selectedElements: [filterElement],
                     totalElementsCount: 4,
@@ -235,6 +236,7 @@ describe("isSortItemVisible", () => {
             isInverted: boolean,
         ): IBucketFilter => ({
             attribute: "irrelevant",
+            displayFormRef: uriRef("irrelevant/attribute/df/uri"),
             isInverted,
             totalElementsCount: 5,
             selectedElements,

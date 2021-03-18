@@ -184,6 +184,7 @@ export const masterMeasuresWithPercentage: IBucketItem[] = masterMeasureItems.ma
 
 export const attributeFilter: IAttributeFilter = {
     attribute: "some.attribute",
+    displayFormRef: uriRef("some/attribute/df/uri"),
     isInverted: false,
     selectedElements: [],
     totalElementsCount: 10,
@@ -284,6 +285,7 @@ export const attributeFilterBucketItem: IFilters = {
             filters: [
                 {
                     attribute: "attr.account.id",
+                    displayFormRef: uriRef("account/attribute/df/uri"),
                     selectedElements: [],
                     totalElementsCount: 10,
                     isInverted: false,
@@ -360,7 +362,7 @@ export const geoAttributeItems: IBucketItem[] = [
         type: "attribute",
         aggregation: null,
         attribute: "attr.owner.country",
-        locationDisplayFormRef: { uri: "/geo/attribute/displayform/uri/1" },
+        locationDisplayFormRef: uriRef("/geo/attribute/displayform/uri/1"),
         dfRef: { uri: "/geo/attribute/displayform/uri/2" },
     },
     {
@@ -380,6 +382,7 @@ export const geoAttributeFilters: IFiltersBucketItem[] = [
         filters: [
             {
                 attribute: "attr.owner.country",
+                displayFormRef: uriRef("owner/attribute/df/uri"),
                 isInverted: false,
                 totalElementsCount: 10,
                 selectedElements: [
@@ -399,6 +402,7 @@ export const geoAttributeFilters: IFiltersBucketItem[] = [
         filters: [
             {
                 attribute: "attr.owner.city",
+                displayFormRef: uriRef("owner/attribute/df/uri"),
                 totalElementsCount: 10,
                 isInverted: true,
                 selectedElements: [
@@ -421,6 +425,7 @@ export const attributeFilters: IFiltersBucketItem[] = [
         filters: [
             {
                 attribute: "attr.owner.department",
+                displayFormRef: uriRef("owner/attribute/df/uri"),
                 isInverted: false,
                 totalElementsCount: 10,
                 selectedElements: [
@@ -440,6 +445,7 @@ export const attributeFilters: IFiltersBucketItem[] = [
         filters: [
             {
                 attribute: "attr.stage.iswon",
+                displayFormRef: uriRef("iswon/attribute/df/uri"),
                 totalElementsCount: 10,
                 isInverted: true,
                 selectedElements: [
@@ -458,6 +464,7 @@ export const attributeFilters: IFiltersBucketItem[] = [
         filters: [
             {
                 attribute: "attr.owner.region",
+                displayFormRef: uriRef("owner/attribute/df/uri"),
                 isInverted: true,
                 totalElementsCount: 10,
                 selectedElements: [],
