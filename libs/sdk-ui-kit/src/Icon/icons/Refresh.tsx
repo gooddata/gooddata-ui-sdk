@@ -10,8 +10,8 @@ import { IIconProps } from "../typings";
 export const Refresh: React.FC<IIconProps> = ({ color }) => {
     return (
         <svg
-            width="12px"
-            height="10px"
+            width="16px"
+            height="16px"
             viewBox="0 0 12 10"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
