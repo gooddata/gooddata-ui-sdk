@@ -27,6 +27,7 @@ import {
     jsonApiHeaders,
     MetadataUtilities,
     MetadataGetEntitiesOptions,
+    JsonApiAnalyticalDashboardOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -37,6 +38,7 @@ import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
 import { convertVisualizationObject } from "../../../convertors/fromBackend/VisualizationObjectConverter";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
+import { convertAnalyticalDashboardToMetadataObject } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -193,8 +195,29 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         return Promise.resolve({});
     };
 
-    public getInsightReferencingObjects = async (_ref: ObjRef): Promise<IInsightReferencing> => {
-        return Promise.resolve({});
+    public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        const apiResult = await this.authCall((client) =>
+            client.workspaceObjects.getEntityVisualizationObjects(
+                {
+                    objectId: id,
+                    workspaceId: this.workspace,
+                },
+                {
+                    headers: jsonApiHeaders,
+                    params: {
+                        include: "analyticalDashboards",
+                    },
+                },
+            ),
+        );
+
+        const dashboards = (apiResult.data.included ?? []) as JsonApiAnalyticalDashboardOutWithLinks[];
+
+        return Promise.resolve({
+            analyticalDashboards: dashboards.map(convertAnalyticalDashboardToMetadataObject),
+        });
     };
 
     public getInsightWithAddedFilters = async <T extends IInsightDefinition>(
