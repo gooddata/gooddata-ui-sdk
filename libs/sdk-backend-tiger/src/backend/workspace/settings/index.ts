@@ -14,7 +14,8 @@ const HardcodedSettings = {
 
     // AD specific
     analyticalDesigner: true,
-    enablePushpinGeoChart: true,
+    // geochart must be disabled for now on tiger backend due to missing mapbox token infrastructure there (RAIL-3058)
+    enablePushpinGeoChart: false,
     enableBulletChart: true,
     enableComboChart: true,
     enableNewADFilterBar: true,

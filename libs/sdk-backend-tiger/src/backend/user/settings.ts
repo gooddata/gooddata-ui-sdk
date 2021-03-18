@@ -24,7 +24,8 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableComboChart: true,
                 enableNewADFilterBar: true,
                 enableMeasureValueFilters: true,
-                enablePushpinGeoChart: true,
+                // geochart must be disabled for now on tiger backend due to missing mapbox token infrastructure there (RAIL-3058)
+                enablePushpinGeoChart: false,
                 hidePixelPerfectExperience: true,
                 enableBulletChart: true,
                 enableCsvUploader: true,
