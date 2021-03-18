@@ -48,7 +48,7 @@ export function compositeBackend(...components: CompositeBackendPart[]): IAnalyt
     const config = primaryBackend.config;
 
     const backend: IAnalyticalBackend = {
-        capabilities: {},
+        capabilities: primaryBackend.capabilities,
         config,
         onHostname(_hostname: string): IAnalyticalBackend {
             return backend;
