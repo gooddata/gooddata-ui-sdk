@@ -22,7 +22,7 @@
          * API extractor version >=7.8.2 fails to cope with inline imports. Must wait for a fix.
          */
         "@microsoft/api-extractor": "7.8.1",
-        "@microsoft/api-documenter": "^7.3.16",
+        "@microsoft/api-documenter": "^7.12.13",
         "@gooddata/frontend-npm-scripts": "1.2.0",
 
         /*
