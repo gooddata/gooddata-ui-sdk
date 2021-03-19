@@ -11,4 +11,6 @@ export type IconName =
     | "Date"
     | "Explore"
     | "Logout"
-    | "Pdf";
+    | "Pdf"
+    | "ExternalLink"
+    | "Hyperlink";

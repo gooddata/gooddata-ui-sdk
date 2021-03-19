@@ -17,6 +17,8 @@ export const Date: React.FC<IIconProps> = ({ color }) => {
             y="0px"
             viewBox="-40 -40 100 100"
             enableBackground="new -40 -40 100 100"
+            width="16px"
+            height="16px"
             xmlSpace="preserve"
         >
             <g>

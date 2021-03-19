@@ -7,3 +7,5 @@ export { Date } from "./Date";
 export { Explore } from "./Explore";
 export { Logout } from "./Logout";
 export { Pdf } from "./Pdf";
+export { ExternalLink } from "./ExternalLink";
+export { Hyperlink } from "./Hyperlink";

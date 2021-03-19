@@ -8,7 +8,7 @@ import { IIconProps } from "../typings";
  */
 export const DrillDown: React.FC<IIconProps> = ({ color }) => {
     return (
-        <svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <g id="Symbols" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g
                     id="drill-ico-3"
