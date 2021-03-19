@@ -115,6 +115,7 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
             onLegendReady,
             locale,
             legend: legendOptions,
+            theme,
         };
     }
 

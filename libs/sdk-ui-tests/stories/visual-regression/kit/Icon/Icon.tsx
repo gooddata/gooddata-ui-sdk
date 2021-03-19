@@ -28,6 +28,7 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Pdf" color="#0f0" />
             <IconWrapper name="ExternalLink" color="#f00" />
             <IconWrapper name="Hyperlink" color="#f00" />
+            <IconWrapper name="Undo" color="#f00" />
         </div>
     );
 };

@@ -9,3 +9,4 @@ export { Logout } from "./Logout";
 export { Pdf } from "./Pdf";
 export { ExternalLink } from "./ExternalLink";
 export { Hyperlink } from "./Hyperlink";
+export { Undo } from "./Undo";

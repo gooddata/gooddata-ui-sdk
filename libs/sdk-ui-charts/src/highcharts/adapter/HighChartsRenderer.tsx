@@ -17,8 +17,9 @@ import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
-import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 /**
  * @internal
@@ -41,6 +42,7 @@ export interface IHighChartsRendererProps {
     width: number;
     legend: ILegendOptions;
     locale: string;
+    theme?: ITheme;
     onLegendReady: OnLegendReady;
     legendRenderer(legendProps: ILegendProps): any;
     chartRenderer(chartProps: IChartProps): any;
@@ -304,6 +306,7 @@ export class HighChartsRenderer extends React.PureComponent<
     private renderZoomOutButton() {
         const {
             hcOptions: { chart },
+            theme,
         } = this.props;
         if (chart && chart.zoomType) {
             return (
@@ -317,7 +320,9 @@ export class HighChartsRenderer extends React.PureComponent<
                         className="viz-zoom-out s-zoom-out"
                         onClick={this.onZoomOutButtonClick}
                         style={{ display: "none" }}
-                    ></button>
+                    >
+                        <Icon name="Undo" color={theme?.palette?.complementary?.c7} />
+                    </button>
                     <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
                         {chart.resetZoomButton?.tooltip}
                     </Bubble>
