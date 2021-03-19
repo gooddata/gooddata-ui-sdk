@@ -175,6 +175,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@microsoft/api-documenter",
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
       "name": "@microsoft/api-extractor",
       "allowedCategories": [ "production", "tools" ]
     },
