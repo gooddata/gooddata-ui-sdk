@@ -20,8 +20,10 @@ import {
     mergeFilters,
     insightFilters,
     insightSetFilters,
+    insightUpdated,
 } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
+import sortBy from "lodash/sortBy";
 import {
     VisualizationObjectModel,
     jsonApiHeaders,
@@ -63,9 +65,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsights = async (options?: IInsightsQueryOptions): Promise<IInsightsQueryResult> => {
         const orderBy = options?.orderBy;
+        const usesOrderingByUpdated = !orderBy || orderBy === "updated";
         const optionsToUse: MetadataGetEntitiesOptions = {
             query: {
-                ...(orderBy !== "updated" ? { sort: orderBy } : {}),
+                ...(usesOrderingByUpdated ? {} : { sort: orderBy }),
             },
         };
 
@@ -93,7 +96,21 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 });
         });
 
-        return new InMemoryPaging(allInsights, options?.limit ?? 50, options?.offset ?? 0);
+        // tiger does not support the "updated" property of the metadata objects at the moment
+        // -> fall back to title ordering in a future-compatible way if "updated" ordering was requested
+        let sanitizedOrder = allInsights;
+        if (usesOrderingByUpdated && allInsights.length > 0) {
+            // tiger started sending "updated" property -> use it to sort
+            if (insightUpdated(allInsights[0])) {
+                sanitizedOrder = sortBy(allInsights, (insight) => insightUpdated(insight));
+            }
+            // tiger still does not support the "updated" property -> sort by title
+            else {
+                sanitizedOrder = sortBy(allInsights, (insight) => insightTitle(insight));
+            }
+        }
+
+        return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getInsight = async (ref: ObjRef): Promise<IInsight> => {
