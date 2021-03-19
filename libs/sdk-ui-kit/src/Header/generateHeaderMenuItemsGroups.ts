@@ -15,7 +15,6 @@ export function generateHeaderMenuItemsGroups(
     tabId?: string,
     hasNoDataSet?: boolean,
     backendSupportsDataItem?: boolean,
-    disableAnalyticalDashboards?: boolean,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
@@ -103,8 +102,7 @@ export function generateHeaderMenuItemsGroups(
     };
 
     const showKpiDashboardsItem =
-        (hasAnalyticalDashboards || (canCreateAnalyticalDashboard === true && enableAnalyticalDashboards)) &&
-        !disableAnalyticalDashboards;
+        hasAnalyticalDashboards || (canCreateAnalyticalDashboard === true && enableAnalyticalDashboards);
     const showAnalyticalDesignerItem = canCreateVisualization === true && analyticalDesigner;
 
     const canAccessLoadCsvPage = canUploadNonProductionCSV === true && enableCsvUploader;
