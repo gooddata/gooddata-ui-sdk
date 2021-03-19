@@ -124,5 +124,9 @@ export {
     newVariableMetadataObject,
     VariableMetadataObjectBuilder,
 } from "./ldmFactories/metadata/variableFactory";
+export {
+    newDashboardMetadataObject,
+    DashboardMetadataObjectBuilder,
+} from "./ldmFactories/metadata/dashboardFactory";
 
 export { ResultHeaderTransformer, transformResultHeaders } from "./convertors/fromBackend/afm/result";

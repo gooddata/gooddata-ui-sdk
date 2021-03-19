@@ -37,8 +37,8 @@ import {
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
 import { convertVisualizationObject } from "../../../convertors/fromBackend/VisualizationObjectConverter";
+import { convertAnalyticalDashboardWithLinks } from "../../../convertors/fromBackend/MetadataConverter";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
-import { convertAnalyticalDashboardToMetadataObject } from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
 
 import { visualizationClasses as visualizationClassesMocks } from "./mocks/visualizationClasses";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
@@ -216,7 +216,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const dashboards = (apiResult.data.included ?? []) as JsonApiAnalyticalDashboardOutWithLinks[];
 
         return Promise.resolve({
-            analyticalDashboards: dashboards.map(convertAnalyticalDashboardToMetadataObject),
+            analyticalDashboards: dashboards.map(convertAnalyticalDashboardWithLinks),
         });
     };
 

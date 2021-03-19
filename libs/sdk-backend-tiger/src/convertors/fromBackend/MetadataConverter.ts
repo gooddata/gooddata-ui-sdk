@@ -1,5 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import {
+    JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAttributeOut,
     JsonApiAttributeOutDocument,
     JsonApiAttributeOutList,
@@ -16,12 +17,14 @@ import keyBy from "lodash/keyBy";
 import {
     IAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
+    IDashboardMetadataObject,
     IDataSetMetadataObject,
 } from "@gooddata/sdk-backend-spi";
 import {
     IMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
     newAttributeMetadataObject,
+    newDashboardMetadataObject,
     newDataSetMetadataObject,
 } from "@gooddata/sdk-backend-base";
 import { idRef } from "@gooddata/sdk-model";
@@ -32,7 +35,8 @@ export type MetadataObjectFromApi =
     | JsonApiFactOutWithLinks
     | JsonApiMetricOutWithLinks
     | JsonApiLabelOutWithLinks
-    | JsonApiDatasetOutWithLinks;
+    | JsonApiDatasetOutWithLinks
+    | JsonApiAnalyticalDashboardOutWithLinks;
 
 export const commonMetadataObjectModifications = <
     TItem extends MetadataObjectFromApi,
@@ -216,5 +220,18 @@ export function convertAttributesWithSideloadedLabels(
 export function convertDatasetWithLinks(dataset: JsonApiDatasetOutWithLinks): IDataSetMetadataObject {
     return newDataSetMetadataObject(idRef(dataset.id, "dataSet"), (m) =>
         m.modify(commonMetadataObjectModifications(dataset)),
+    );
+}
+
+/**
+ * Converts sideloaded dashboard into {@link IDashboardMetadataObject}
+ *
+ * @param dashboard - sideloaded dashboard
+ */
+export function convertAnalyticalDashboardWithLinks(
+    dashboard: JsonApiAnalyticalDashboardOutWithLinks,
+): IDashboardMetadataObject {
+    return newDashboardMetadataObject(idRef(dashboard.id, "analyticalDashboard"), (m) =>
+        m.modify(commonMetadataObjectModifications(dashboard)),
     );
 }

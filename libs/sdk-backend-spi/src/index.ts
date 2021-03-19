@@ -347,6 +347,8 @@ export {
     isMetadataObject,
     MetadataObject,
     metadataObjectId,
+    IDashboardMetadataObject,
+    isDashboardMetadataObject,
 } from "./workspace/fromModel/ldm/metadata";
 
 export {

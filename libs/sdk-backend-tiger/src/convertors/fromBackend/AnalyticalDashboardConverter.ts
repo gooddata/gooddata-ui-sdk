@@ -15,7 +15,6 @@ import {
     IDashboardLayout,
     IFilterContext,
     IListedDashboard,
-    IMetadataObject,
     LayoutPath,
     walkLayout,
 } from "@gooddata/sdk-backend-spi";
@@ -24,24 +23,6 @@ import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
-
-export const convertAnalyticalDashboardToMetadataObject = (
-    analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
-): IMetadataObject => {
-    const attributes = analyticalDashboard.attributes as JsonApiAnalyticalDashboardInAttributes;
-    const { title, description } = attributes;
-    return {
-        ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
-        uri: analyticalDashboard.links!.self,
-        id: analyticalDashboard.id,
-        deprecated: false,
-        production: true,
-        type: "analyticalDashboard",
-        unlisted: false,
-        title: title ?? "",
-        description: description ?? "",
-    };
-};
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,

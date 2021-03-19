@@ -27,6 +27,7 @@ import { ICatalogFact } from '@gooddata/sdk-backend-spi';
 import { ICatalogGroup } from '@gooddata/sdk-backend-spi';
 import { ICatalogMeasure } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterReference } from '@gooddata/sdk-backend-spi';
+import { IDashboardMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataSetMetadataObject } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDimension } from '@gooddata/sdk-model';
@@ -280,6 +281,10 @@ export type CustomCallContext = {
     state: CustomBackendState;
     client: any;
 };
+
+// @beta
+export class DashboardMetadataObjectBuilder<T extends IDashboardMetadataObject = IDashboardMetadataObject> extends MetadataObjectBuilder<T> {
+}
 
 // @beta (undocumented)
 export type DataProvider = (context: DataProviderContext) => Promise<IDataView>;
@@ -671,6 +676,9 @@ export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroup
 
 // @beta
 export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder>) => ICatalogMeasure;
+
+// @beta
+export const newDashboardMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DashboardMetadataObjectBuilder>) => IDashboardMetadataObject;
 
 // @beta
 export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>) => IDataSetMetadataObject;
