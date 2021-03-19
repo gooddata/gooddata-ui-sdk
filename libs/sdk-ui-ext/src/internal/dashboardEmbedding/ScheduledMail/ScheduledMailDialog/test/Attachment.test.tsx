@@ -36,6 +36,6 @@ describe("Attachment", () => {
 
     it("should render fileName", () => {
         const component = renderComponent();
-        expect(component.find("span").text()).toBe(`${FILE_NAME} (with currently set filters)`);
+        expect(component.find(".s-attachment-name").text()).toBe(`${FILE_NAME} (with currently set filters)`);
     });
 });

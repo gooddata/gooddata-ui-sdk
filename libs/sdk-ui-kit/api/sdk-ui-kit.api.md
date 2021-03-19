@@ -10,6 +10,7 @@ import { guidFor } from '@gooddata/goodstrap/lib/core/Guid';
 import { IntlShape } from 'react-intl';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
@@ -25,9 +26,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.FC<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>> & {
-    WrappedComponent: React_2.ComponentType<IAppHeaderProps & WrappedComponentProps<"intl">>;
-};
+export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "userName" | "disableHelpDropdown" | "onHelpClick">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -389,6 +388,8 @@ export interface IAppHeaderProps {
     onLogoClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
+    // (undocumented)
+    theme?: ITheme;
     // (undocumented)
     userName: string;
     // (undocumented)

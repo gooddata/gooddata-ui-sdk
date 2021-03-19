@@ -1,5 +1,6 @@
 // (C) 2020-2021 GoodData Corporation
 import isObject from "lodash/isObject";
+import { transparentize } from "polished";
 import { IThemePalette, ITheme } from "@gooddata/sdk-backend-spi";
 import { CssProperty, getCssProperty } from "./cssProperty";
 import { generateDerivedColors } from "./derivedColors";
@@ -123,7 +124,9 @@ export const generateShadowColor = (palette: IThemePalette, isDarkTheme: boolean
     return [
         getCssProperty(
             "shadow-color",
-            isDarkTheme ? BLACK_COLOR : palette.complementary?.c8 || DEFAULT_SHADOW_COLOR,
+            isDarkTheme
+                ? transparentize(0.5, BLACK_COLOR)
+                : transparentize(0.8, palette.complementary?.c8) || DEFAULT_SHADOW_COLOR,
         ),
     ];
 };

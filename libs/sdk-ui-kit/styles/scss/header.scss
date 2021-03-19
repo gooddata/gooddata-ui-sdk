@@ -2,9 +2,6 @@
 @import "./variables.scss";
 @import "./mixins.scss";
 
-$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
-$base_path: $gdc-goodstrap-basepath + "./core/styles/";
-
 $gd-header-height: 44px;
 $gd-header-animation-easing: cubic-bezier(0.23, 1, 0.32, 1);
 $gd-header-project-width: 230px;
@@ -109,7 +106,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     width: 240px;
     white-space: nowrap;
     color: $gd-color-state-blank;
-    background-color: #2c343f;
+    background-color: var(--gd-palette-complementary-1, #2c343f);
 
     * {
         box-sizing: border-box;
@@ -148,7 +145,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         height: 43px;
         padding: 0 15px;
         line-height: 43px;
-        color: $gd-color-state-blank;
+        color: var(--gd-palette-complementary-8, $default-gd-color-state-blank);
         cursor: pointer;
         font-size: 16px;
 
@@ -171,14 +168,17 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             bottom: -1px;
             left: 15px;
             height: 1px;
-            border-bottom: 1px solid transparentize($default-gd-color-state-blank, 0.8);
+            border-bottom: 1px solid
+                var(--gd-palette-complementary-4, transparentize($default-gd-color-state-blank, 0.8));
         }
 
-        &:hover,
-        &.active {
+        &:hover {
             border: none;
-            color: $gd-color-text-light;
-            background-color: #131c28;
+            color: var(--gd-palette-complementary-9, $default-gd-color-text-light);
+
+            &::before {
+                background-color: var(--gd-palette-complementary-6, inherit);
+            }
 
             &::after {
                 display: none;
@@ -186,7 +186,14 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         }
 
         &.active {
+            border: none;
+            color: var(--gd-palette-complementary-9, $default-gd-color-text-light);
+            background-color: var(--gd-palette-complementary-0, #131c28);
             font-weight: bold;
+
+            &::after {
+                display: none;
+            }
 
             &::before {
                 background-color: $gd-palette-primary-base;
@@ -221,7 +228,8 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     left: 0;
     overflow-x: hidden;
     overflow-y: auto;
-    border-top: 1px solid transparentize($default-gd-color-state-blank, 0.8);
+    border-top: 1px solid
+        var(--gd-palette-complementary-4, transparentize($default-gd-color-state-blank, 0.8));
 
     .gd-header-menu {
         display: block;
@@ -234,7 +242,8 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     bottom: 0;
     left: 0;
     padding: 0 0 15px;
-    border-top: 1px solid transparentize($default-gd-color-state-blank, 0.8);
+    border-top: 1px solid
+        var(--gd-palette-complementary-4, transparentize($default-gd-color-state-blank, 0.8));
 }
 
 .gd-header-menu-item {
@@ -467,7 +476,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         display: block;
         height: 0;
         transition: 0.4s;
-        border-bottom: 1px solid var(--gd-palette-complementary-7, $default-gd-color-text-light);
+        border-bottom: 1px solid $default-gd-color-text-light;
     }
 
     &::before {
@@ -494,6 +503,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             top: 21px;
             right: 9px;
             left: 9px;
+            border-color: var(--gd-palette-complementary-6, inherit);
         }
 
         &::before {
@@ -508,6 +518,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             right: 50%;
             left: 50%;
             opacity: 0;
+            border-color: var(--gd-palette-complementary-6, inherit);
         }
     }
 }
@@ -519,7 +530,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     height: 33px;
     margin: 0 15px;
     border: 1px solid transparentize($default-gd-color-disabled, 0.6);
-    box-shadow: 0 1px 1px 0 transparentize(#14395d, 0.95);
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, transparentize(#14395d, 0.95));
     color: $gd-color-text-light;
     cursor: pointer;
     transition: 0.2s;
@@ -528,15 +539,16 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     text-align: center;
     background-color: $gd-color-state-blank;
 
-    &::before {
-        content: "";
+    .icon-logout {
         position: relative;
-        top: 2px;
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin: -2px 5px 0 -4px;
-        background-image: url($base_path + "./icons/logout.svg");
+        top: 1px;
+        margin-right: 5px;
+        margin-left: -4px;
+    }
+
+    .gd-button-text {
+        position: relative;
+        top: -1px;
     }
 
     &:hover {

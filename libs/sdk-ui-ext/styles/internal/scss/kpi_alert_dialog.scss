@@ -3,26 +3,17 @@
 @import "~@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables";
 @import "variables";
 
-$dialog-border: $bubble-light-border-base;
+$dialog-border: $default-bubble-light-border-base;
 $dialog-background: $is-focused-background;
 
-.icon-calendar-kpi::before {
-    content: "";
+.icon-calendar-kpi {
     position: relative;
     top: -2px;
     display: inline-block;
     width: 16px;
     height: 16px;
-    margin-left: 5px;
-    vertical-align: bottom;
-    background: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/date.svg") no-repeat center;
-}
-
-// TODO: when extendedDateFilters feature flag is removed (RAIL-1307)
-//       we can remove this override and have 0 margin on the
-//       .icon-calendar-kpi::before itself
-.icon-calendar-kpi-no-margin::before {
     margin-left: 0;
+    vertical-align: bottom;
 }
 
 .kpi-alert-dialog-overlay {
@@ -38,7 +29,7 @@ $dialog-background: $is-focused-background;
     position: relative;
     z-index: 10;
     min-height: 148px;
-    border: 1px solid transparentize($dialog-border, 0.5);
+    border: 1px solid var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
     border-radius: 5px;
     box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
     background: $dialog-background;
@@ -161,7 +152,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-right-color: transparentize($dialog-border, 0.5);
+            border-right-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
         }
 
         &::after {
@@ -184,7 +175,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-left-color: transparentize($dialog-border, 0.5);
+            border-left-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
         }
     }
 }
@@ -245,7 +236,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-bottom-color: transparentize($dialog-border, 0.5);
+            border-bottom-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
         }
 
         &::after {
@@ -264,7 +255,7 @@ $dialog-background: $is-focused-background;
         }
 
         &::before {
-            border-top-color: transparentize($dialog-border, 0.5);
+            border-top-color: var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
         }
 
         &::after {
@@ -422,6 +413,7 @@ $dialog-background: $is-focused-background;
         max-height: 117px;
         margin: 5px 0;
         font-size: 14px;
+        color: var(--gd-palette-complementary-8, inherit);
 
         &.more-items {
             padding: 5px 0;

@@ -509,7 +509,7 @@ $menu-item-icon-width: 30px;
     z-index: 10;
     display: inline-block;
     padding: 8px 0;
-    box-shadow: 0 1px 20px rgba(20, 56, 93, 0.2);
+    box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.2));
     background: $gd-color-white;
     border-radius: 3px;
 }
