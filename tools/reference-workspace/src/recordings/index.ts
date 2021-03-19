@@ -1,6 +1,8 @@
+// (C) 2021 GoodData Corporation
+
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-03-08T14:57:46.404Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2021-03-19T16:19:51.618Z; */
 
 const fp_00ab8c432637030b305313405b3f4efc = {
     definition: require("./uiTestScenarios/executions/00ab8c432637030b305313405b3f4efc/definition.json"),
@@ -83,6 +85,12 @@ const fp_17662e51ac28bd3756cd43f58679fd89 = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/17662e51ac28bd3756cd43f58679fd89/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/17662e51ac28bd3756cd43f58679fd89/dataView_o0_0s22_1000.json"),
     scenarios: require("./uiTestScenarios/executions/17662e51ac28bd3756cd43f58679fd89/scenarios.json"),
+};
+const fp_1773f94f158f36a01aabd607341c5fab = {
+    definition: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/scenarios.json"),
 };
 const fp_179f06a3a73ef41de634960f77cded42 = {
     definition: require("./uiTestScenarios/executions/179f06a3a73ef41de634960f77cded42/definition.json"),
@@ -778,12 +786,6 @@ const fp_ff74085f6f31c71f4797251924d3205d = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s100_1000.json"),
     dataView_o0_0s22_1000: require("./uiTestScenarios/executions/ff74085f6f31c71f4797251924d3205d/dataView_o0_0s22_1000.json"),
 };
-const fp_1773f94f158f36a01aabd607341c5fab = {
-    definition: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/1773f94f158f36a01aabd607341c5fab/scenarios.json"),
-};
 export const Scenarios = {
     ComboChart: {
         MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_00ab8c432637030b305313405b3f4efc },
@@ -947,6 +949,7 @@ export const Scenarios = {
     },
     ColumnChart: {
         TwoMeasuresWithTwoViewBy: { scenarioIndex: 1, execution: fp_036a8d52f628b2c9847579f40be9afed },
+        DenseChartWithTwoViewBy: { scenarioIndex: 0, execution: fp_1773f94f158f36a01aabd607341c5fab },
         TwoMeasuresWithViewBySortedByMeasure: {
             scenarioIndex: 2,
             execution: fp_2176513b2ab7574386aeb644eaaa1bc6,
@@ -974,7 +977,6 @@ export const Scenarios = {
             scenarioIndex: 3,
             execution: fp_e1030dca208f6b7b3ac060bfdb341df6,
         },
-        DenseChartWithTwoViewBy: { scenarioIndex: 0, execution: fp_1773f94f158f36a01aabd607341c5fab },
     },
     LineChart: {
         SingleMeasureWithTrendByAndSegmentBy: {
@@ -2998,6 +3000,7 @@ export const Recordings = {
         fp_1494c32c1045f1684b4c59654c46f671,
         fp_15dd8db0e7c949c054ed836c4865a465,
         fp_17662e51ac28bd3756cd43f58679fd89,
+        fp_1773f94f158f36a01aabd607341c5fab,
         fp_179f06a3a73ef41de634960f77cded42,
         fp_17bdc7cd45b303fc54f97cde57ba1816,
         fp_1d7bbf8347dc010b86bf16a1916decb6,
@@ -3114,7 +3117,6 @@ export const Recordings = {
         fp_fd4473fef32dc8b57cdba96564af53e1,
         fp_fde7a6a9ba205f28ce4a5391836f1153,
         fp_ff74085f6f31c71f4797251924d3205d,
-        fp_1773f94f158f36a01aabd607341c5fab,
     },
     metadata: {
         catalog,
