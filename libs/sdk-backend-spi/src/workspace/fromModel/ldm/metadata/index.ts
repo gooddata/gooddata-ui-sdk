@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IMetadataObject, isMetadataObject } from "./types";
 
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute";
@@ -10,6 +10,7 @@ import { IFactMetadataObject, isFactMetadataObject } from "./fact";
 import { IMeasureMetadataObject, isMeasureMetadataObject } from "./measure";
 import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
 import { IVariableMetadataObject, isVariableMetadataObject } from "./variable";
+import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard";
 
 export {
     IMetadataObject,
@@ -26,6 +27,8 @@ export {
     isDataSetMetadataObject,
     IVariableMetadataObject,
     isVariableMetadataObject,
+    IDashboardMetadataObject,
+    isDashboardMetadataObject,
 };
 
 /**
@@ -39,7 +42,8 @@ export type MetadataObject =
     | IFactMetadataObject
     | IMeasureMetadataObject
     | IDataSetMetadataObject
-    | IVariableMetadataObject;
+    | IVariableMetadataObject
+    | IDashboardMetadataObject;
 
 /**
  * Get metadata object identifier

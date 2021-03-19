@@ -476,6 +476,12 @@ export interface IDashboardLayoutSizeByScreenSize {
     xs?: IDashboardLayoutSize;
 }
 
+// @public
+export interface IDashboardMetadataObject extends IMetadataObject {
+    // (undocumented)
+    type: "analyticalDashboard";
+}
+
 // @alpha
 export interface IDashboardObjectIdentity {
     readonly identifier: string;
@@ -1133,6 +1139,9 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
 
 // @alpha
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
+
+// @public
+export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
 
 // @alpha
 export const isDashboardWidget: (obj: unknown) => obj is DashboardWidget;
@@ -1804,7 +1813,7 @@ export function layoutWidgets<TWidget extends DashboardWidget>(layout: IDashboar
 export function layoutWidgetsWithPaths<TWidget extends DashboardWidget>(layout: IDashboardLayout<TWidget>): IWidgetWithLayoutPath<TWidget>[];
 
 // @public
-export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject;
+export type MetadataObject = IAttributeMetadataObject | IAttributeDisplayFormMetadataObject | IFactMetadataObject | IMeasureMetadataObject | IDataSetMetadataObject | IVariableMetadataObject | IDashboardMetadataObject;
 
 // @public
 export const metadataObjectId: (metadataObject: MetadataObject) => string;
