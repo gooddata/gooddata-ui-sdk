@@ -106,7 +106,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             }
             // tiger still does not support the "updated" property -> sort by title
             else {
-                sanitizedOrder = sortBy(allInsights, (insight) => insightTitle(insight));
+                sanitizedOrder = sortBy(allInsights, (insight) => insightTitle(insight).toUpperCase());
             }
         }
 
