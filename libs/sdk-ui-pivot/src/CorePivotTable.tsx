@@ -294,6 +294,13 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             if (!isEqual(prevColumnWidths, columnWidths)) {
                 this.internal.table?.applyColumnSizes(this.getResizingConfig());
             }
+
+            if (
+                this.props.config?.maxHeight &&
+                !isEqual(this.props.config?.maxHeight, prevProps.config?.maxHeight)
+            ) {
+                this.updateDesiredHeight();
+            }
         }
     }
 
