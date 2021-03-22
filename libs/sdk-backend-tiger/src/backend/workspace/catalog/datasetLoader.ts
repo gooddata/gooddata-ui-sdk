@@ -46,7 +46,7 @@ function getAttributeLabels(
 
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     /*
-     * TODO: this is temporary way to identify labels with geo pushpin; normally this should be done
+     * TODO: TIGER-HACK this is temporary way to identify labels with geo pushpin; normally this should be done
      *  using some indicator on the metadata object. for sakes of speed & after agreement with tiger team
      *  falling back to use of id convention.
      */

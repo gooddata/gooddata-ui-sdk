@@ -30,7 +30,7 @@ export function createNotAuthenticatedError(error: Error): NotAuthenticated | un
 
     const exc = new NotAuthenticated("No session or session expired", error);
 
-    // TODO: both of these params need to come from the backend.
+    // TODO: TIGER-HACK both of these params need to come from the backend.
     //  current problems:
     //  - some resources do not send login URL (empty 401), some do
     //  - no resources send returnRedirectParam
