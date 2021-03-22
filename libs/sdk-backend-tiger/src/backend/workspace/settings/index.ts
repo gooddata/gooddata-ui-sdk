@@ -33,6 +33,7 @@ const HardcodedSettings = {
     enableAnalyticalDashboards: true,
     hidePixelPerfectExperience: true,
     enableKPIDashboardDependentFilters: false,
+    enableKDWidgetCustomHeight: true,
 };
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
