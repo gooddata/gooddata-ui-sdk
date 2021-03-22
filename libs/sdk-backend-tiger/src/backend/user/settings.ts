@@ -41,6 +41,7 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableMultipleDates: true,
                 enableDomainHomepage: true,
                 enableKPIDashboardDependentFilters: false,
+                enableKDWidgetCustomHeight: true,
             };
         });
     }
