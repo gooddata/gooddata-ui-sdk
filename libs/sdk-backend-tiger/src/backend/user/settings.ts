@@ -42,6 +42,11 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableDomainHomepage: true,
                 enableKPIDashboardDependentFilters: false,
                 enableKDWidgetCustomHeight: true,
+
+                // embedding AD in KD
+                enableExploreInsightsFromKD: true,
+                enableEditInsightsFromKD: true,
+                enableKPIDashboardNewInsight: true,
             };
         });
     }
