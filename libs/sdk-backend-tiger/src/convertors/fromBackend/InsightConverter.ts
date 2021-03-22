@@ -14,6 +14,11 @@ export const insightFromInsightDefinition = (
             identifier: id,
             uri,
             ref: idRef(id, "visualizationObject"),
+            // TODO: TIGER-HACK: vis objects inherited from parent must be read-only. However there is no
+            //  first-class way to discover this at the moment through the API. This hack relies on Tiger behavior
+            //  where objects inherited from parent workspace have their id's in format `some_workspace_id:object_id`.
+            //  Nothing else to do but to check for the colon. Luckily, the colon character cannot be used by clients.
+            isLocked: id.indexOf(":") > -1,
         },
     };
 };
