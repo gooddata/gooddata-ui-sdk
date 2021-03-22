@@ -20,6 +20,7 @@ export interface IThemeContextProviderProps {
 // @public (undocumented)
 export interface IThemeProviderProps {
     backend?: IAnalyticalBackend;
+    enableComplementaryPalette?: boolean;
     modifier?: ThemeModifier;
     theme?: ITheme;
     workspace?: string;
