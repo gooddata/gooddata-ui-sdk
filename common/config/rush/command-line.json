@@ -105,6 +105,13 @@
     },
     {
       "commandKind": "global",
+      "name": "build-docs",
+      "summary": "Builds API documentation for the entire SDK.",
+      "shellCommand": "bash common/scripts/build-docs.sh",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "populate-ref",
       "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
       "shellCommand": "bash common/scripts/populate-ref.sh",
