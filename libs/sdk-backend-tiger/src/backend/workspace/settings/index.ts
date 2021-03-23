@@ -34,6 +34,11 @@ const HardcodedSettings = {
     hidePixelPerfectExperience: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
+
+    // embedding AD in KD
+    enableExploreInsightsFromKD: true,
+    enableEditInsightsFromKD: true,
+    enableKPIDashboardNewInsight: true,
 };
 
 export class TigerWorkspaceSettings implements IWorkspaceSettingsService {
