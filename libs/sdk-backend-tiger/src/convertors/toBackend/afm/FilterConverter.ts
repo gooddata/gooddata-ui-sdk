@@ -15,6 +15,7 @@ import {
 import {
     filterIsEmpty,
     IAbsoluteDateFilter,
+    IAttribute,
     IAttributeElements,
     IAttributeFilter,
     IFilter,
@@ -214,10 +215,18 @@ function convertMeasureValueFilter(
     return null;
 }
 
-function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOnResultProp): RankingFilter {
+function convertRankingFilter(
+    filter: IRankingFilter,
+    applyOnResultProp: ApplyOnResultProp,
+    afmAttributes: IAttribute[],
+): RankingFilter {
     const { measure, attributes, operator, value } = filter.rankingFilter;
     const dimensionalityProp = attributes
-        ? { dimensionality: attributes.map(toRankingFilterDimensionalityIdentifier) }
+        ? {
+              dimensionality: attributes.map((attr) =>
+                  toRankingFilterDimensionalityIdentifier(attr, afmAttributes),
+              ),
+          }
         : {};
     return {
         rankingFilter: {
@@ -230,7 +239,10 @@ function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOn
     };
 }
 
-export function convertFilter(filter0: IFilter | IFilterWithApplyOnResult): FilterDefinition | null {
+export function convertFilter(
+    filter0: IFilter | IFilterWithApplyOnResult,
+    afmAttributes: IAttribute[] = [],
+): FilterDefinition | null {
     const [filter, applyOnResult] = isFilter(filter0)
         ? [filter0, undefined]
         : [filter0.filter, filter0.applyOnResult];
@@ -244,7 +256,7 @@ export function convertFilter(filter0: IFilter | IFilterWithApplyOnResult): Filt
     } else if (isMeasureValueFilter(filter)) {
         return convertMeasureValueFilter(filter, applyOnResultProp);
     } else if (isRankingFilter(filter)) {
-        return convertRankingFilter(filter, applyOnResultProp);
+        return convertRankingFilter(filter, applyOnResultProp, afmAttributes);
     } else {
         // eslint-disable-next-line no-console
         console.warn("Tiger does not support this filter. The filter will be ignored");

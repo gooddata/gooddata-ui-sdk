@@ -2,6 +2,9 @@
 import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
+    attributeDisplayFormRef,
+    attributesFind,
+    IAttribute,
     isIdentifierRef,
     isLocalIdRef,
     isObjRef,
@@ -9,6 +12,7 @@ import {
     ObjRef,
     ObjRefInScope,
 } from "@gooddata/sdk-model";
+import { invariant } from "ts-invariant";
 import { TigerAfmType, TigerObjectType } from "../../types";
 import {
     isTigerCompatibleType,
@@ -102,12 +106,19 @@ export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope): LocalI
 /**
  * @internal
  */
-export function toRankingFilterDimensionalityIdentifier(ref: ObjRefInScope): ObjectIdentifier {
+export function toRankingFilterDimensionalityIdentifier(
+    ref: ObjRefInScope,
+    afmAttributes: IAttribute[],
+): ObjectIdentifier {
     if (isObjRef(ref)) {
         return toObjQualifier(ref);
     } else {
-        throw new NotSupported(
-            "Tiger backend only allows specifying ranking attributes by object identifiers",
-        );
+        invariant(afmAttributes.length > 0);
+
+        const attribute = attributesFind(afmAttributes, ref.localIdentifier);
+
+        invariant(attribute);
+
+        return toObjQualifier(attributeDisplayFormRef(attribute));
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     newMeasureValueFilter,
     newRankingFilter,
@@ -15,7 +15,7 @@ describe("convertAfmFilters", () => {
 
     it("should transform measure based filter of ratio measure", () => {
         const ratioFilter = newMeasureValueFilter("ratio", "GREATER_THAN", 128);
-        expect(convertAfmFilters(afmMeasures, [ratioFilter])).toMatchSnapshot();
+        expect(convertAfmFilters([], afmMeasures, [ratioFilter])).toMatchSnapshot();
     });
 
     it("should not transform measure based filter of non-ratio measure", () => {
@@ -25,11 +25,11 @@ describe("convertAfmFilters", () => {
             "TOP",
             3,
         );
-        expect(convertAfmFilters(afmMeasures, [nonRatioFilter])).toMatchSnapshot();
+        expect(convertAfmFilters([], afmMeasures, [nonRatioFilter])).toMatchSnapshot();
     });
 
     it("should keep non-measure based filter", () => {
         const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceLdm.Product.Name, ["value"]);
-        expect(convertAfmFilters(afmMeasures, [positiveAttributeFilter])).toMatchSnapshot();
+        expect(convertAfmFilters([], afmMeasures, [positiveAttributeFilter])).toMatchSnapshot();
     });
 });

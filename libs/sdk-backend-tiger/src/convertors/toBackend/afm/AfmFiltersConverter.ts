@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { FilterDefinition, MeasureItem } from "@gooddata/api-client-tiger";
 import {
+    IAttribute,
     Identifier,
     IFilter,
     IMeasure,
@@ -70,6 +71,7 @@ function determineComputeRatioMeasureNumerators(
  * being generated (intended to be used by the callers in crafting the final backend AFM).
  */
 export function convertAfmFilters(
+    afmAttributes: IAttribute[],
     afmMeasures: IMeasure[],
     afmFilters: IFilter[],
 ): { filters: FilterDefinition[]; auxMeasures: MeasureItem[] } {
@@ -99,7 +101,7 @@ export function convertAfmFilters(
         }
     });
     return {
-        filters: compact(transformedFilters.map(convertFilter)),
+        filters: compact(transformedFilters.map((filter) => convertFilter(filter, afmAttributes))),
         auxMeasures: Array.from(computeRatioMeasureNumerators.values()).map(convertMeasure),
     };
 }

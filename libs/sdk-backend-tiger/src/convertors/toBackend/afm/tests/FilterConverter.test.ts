@@ -14,6 +14,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
+import { InvariantError } from "ts-invariant";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {
@@ -156,6 +157,24 @@ describe("tiger filter converter from model to AFM", () => {
 
             expect(convertFilter(emptyPositiveFilter)).toBeNull();
             expect(convertFilter(emptyNegativeFilter)).toBeNull();
+        });
+
+        it("should convert ranking filter when localIds used for attributes", () => {
+            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+
+            expect(convertFilter(rankingFilter, [ReferenceLdm.IsActive])).toMatchSnapshot();
+        });
+
+        it("should throw error when converting ranking filter with localIds used for attributes and no attribute list", () => {
+            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+
+            expect(() => convertFilter(rankingFilter)).toThrow(InvariantError);
+        });
+
+        it("should throw error when converting ranking filter with localIds used for attributes and no matching attribute provided", () => {
+            const rankingFilter = newRankingFilter(ReferenceLdm.Won, [ReferenceLdm.IsActive], "TOP", 3);
+
+            expect(() => convertFilter(rankingFilter, [ReferenceLdm.Product.Name])).toThrow(InvariantError);
         });
     });
 });
