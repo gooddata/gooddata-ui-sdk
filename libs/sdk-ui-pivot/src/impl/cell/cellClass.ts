@@ -8,7 +8,7 @@ import cx from "classnames";
 import { invariant } from "ts-invariant";
 import { isDataColLeaf, isDataColRootGroup } from "../structure/tableDescriptorTypes";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
-import { ROW_SUBTOTAL, ROW_TOTAL } from "../base/constants";
+import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
 import last from "lodash/last";
 import { getCellClassNames } from "./cellUtils";
@@ -49,7 +49,8 @@ export function cellClassFactory(
         const isRowSubtotal = row.type === ROW_SUBTOTAL;
         let hasDrillableHeader = false;
 
-        if (!isRowTotal && !isRowSubtotal && !isEmptyCell) {
+        const cellAllowsDrill = !isEmptyCell || colDef.type === MEASURE_COLUMN;
+        if (!isRowTotal && !isRowSubtotal && cellAllowsDrill) {
             hasDrillableHeader = isCellDrillable(col, row, dv, drillablePredicates);
         }
 
