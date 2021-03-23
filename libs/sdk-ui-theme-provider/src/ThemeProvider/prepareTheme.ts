@@ -38,7 +38,22 @@ export const prepareBaseColors = (theme: ITheme): ITheme => {
     return theme;
 };
 
-export const prepareTheme = (theme: ITheme): ITheme => {
+const stripComplementaryPalette = (theme: ITheme): ITheme => {
+    const strippedTheme = {
+        ...theme,
+    };
+
+    delete strippedTheme.palette.complementary;
+    delete strippedTheme.chart;
+
+    return strippedTheme;
+};
+
+export const prepareTheme = (theme: ITheme, enableComplementaryPalette = true): ITheme => {
+    if (!enableComplementaryPalette) {
+        return stripComplementaryPalette(theme);
+    }
+
     const themeWithComplementaryPalette = {
         ...theme,
         ...prepareComplementaryPalette(theme),

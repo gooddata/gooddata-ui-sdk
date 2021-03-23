@@ -14,6 +14,22 @@ describe("prepareTheme", () => {
 
         expect(prepareTheme(theme)).toMatchSnapshot();
     });
+
+    it("should return theme without complementary palette", () => {
+        const theme: ITheme = {
+            palette: {
+                complementary: { c0: "#fff", c9: "#000" },
+            },
+            chart: {
+                backgroundColor: "#fff",
+            },
+        };
+
+        const strippedTheme = prepareTheme(theme, false);
+
+        expect(strippedTheme.palette.complementary).toEqual(undefined);
+        expect(strippedTheme.chart).toEqual(undefined);
+    });
 });
 
 describe("prepareBaseColors", () => {

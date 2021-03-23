@@ -46,6 +46,13 @@ export interface IThemeProviderProps {
      * If provided it is called with loaded theme to allow its modification according to the app needs.
      */
     modifier?: ThemeModifier;
+
+    /**
+     * Flag determining whether the complementary palette is enabled or not. If set to false, complementary
+     * palette is discarted.
+     * Useful for applications not yet fully supporting dark-based themes achievable with the complementary palette.
+     */
+    enableComplementaryPalette?: boolean;
 }
 
 /**
@@ -78,6 +85,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
     backend: backendParam,
     workspace: workspaceParam,
     modifier = identity,
+    enableComplementaryPalette = true,
 }) => {
     const backend = useBackend(backendParam);
     const workspace = useWorkspace(workspaceParam);
@@ -92,7 +100,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
         clearCssProperties();
         // no need to load anything if the themeParam is present
         if (themeParam) {
-            const preparedTheme = prepareTheme(themeParam);
+            const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
             setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             return;
         }
@@ -107,7 +115,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
 
             if (lastWorkspace.current === workspace) {
                 const modifiedTheme = modifier(selectedTheme);
-                const preparedTheme = prepareTheme(modifiedTheme);
+                const preparedTheme = prepareTheme(modifiedTheme, enableComplementaryPalette);
                 setTheme(preparedTheme);
                 setIsLoading(false);
                 setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
