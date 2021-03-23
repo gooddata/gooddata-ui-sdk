@@ -24,7 +24,7 @@ export namespace AnalyticalDashboardModelV2 {
         return !isEmpty(dashboard) && (dashboard as IAnalyticalDashboard).version === "2";
     }
 
-    export function isFilterContext(filterContext: IFilterContext): filterContext is IFilterContext {
+    export function isFilterContext(filterContext: unknown): filterContext is IFilterContext {
         return !isEmpty(filterContext) && (filterContext as IFilterContext).version === "2";
     }
 }

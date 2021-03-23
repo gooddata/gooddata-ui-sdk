@@ -39,7 +39,7 @@ import {
 
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { objRefToUri, objRefToIdentifier } from "../../../utils/api";
-import { convertVisualizationObject } from "../../../convertors/fromBackend/VisualizationObjectConverter";
+import { convertVisualizationObject } from "../../../convertors/fromBackend/visualizationObjects/VisualizationObjectConverter";
 import { convertAnalyticalDashboardWithLinks } from "../../../convertors/fromBackend/MetadataConverter";
 import { convertInsight } from "../../../convertors/toBackend/InsightConverter";
 

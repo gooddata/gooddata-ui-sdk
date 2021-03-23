@@ -6,7 +6,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { idRef, IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { isInheritedObject } from "./utils";
-import { convertVisualizationObject } from "./VisualizationObjectConverter";
+import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter";
 
 export const insightFromInsightDefinition = (
     insight: IInsightDefinition,

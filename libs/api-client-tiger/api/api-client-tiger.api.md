@@ -212,7 +212,7 @@ export namespace AnalyticalDashboardModelV2 {
     // (undocumented)
     export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
     // (undocumented)
-    export function isFilterContext(filterContext: IFilterContext): filterContext is IFilterContext;
+    export function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 }
 
 // @public

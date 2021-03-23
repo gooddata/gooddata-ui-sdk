@@ -23,7 +23,7 @@ import {
     convertDashboard,
     convertFilterContextFromBackend,
     getFilterContextFromIncluded,
-} from "../../../convertors/fromBackend/AnalyticalDashboardConverter";
+} from "../../../convertors/fromBackend/analyticalDashboards/AnalyticalDashboardConverter";
 import { visualizationObjectsItemToInsight } from "../../../convertors/fromBackend/InsightConverter";
 import {
     convertAnalyticalDashboard,
