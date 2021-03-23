@@ -25,7 +25,8 @@ export const Icon: React.FC<IIconProps> = (props) => {
         case "Pdf":
         case "ExternalLink":
         case "Hyperlink":
-        case "Undo": {
+        case "Undo":
+        case "Home": {
             const IconComponent = Icons[name];
             return <IconComponent name={name} color={color} colorPalette={colorPalette} />;
         }

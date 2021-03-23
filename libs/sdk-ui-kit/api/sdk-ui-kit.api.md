@@ -543,7 +543,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo";
+export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo" | "Home";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1348,6 +1348,14 @@ export interface ILoadingMaskProps {
 }
 
 // @internal (undocumented)
+export interface ILoadingSpinner {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    color?: string;
+}
+
+// @internal (undocumented)
 export interface IMeasureNumberFormatOwnProps {
     // (undocumented)
     anchorElementSelector?: string;
@@ -2028,6 +2036,8 @@ export interface IWorkspacePickerHomeFooterProps {
     href?: string;
     // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLAnchorElement, MouseEvent>) => void;
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @internal @deprecated (undocumented)
@@ -2144,6 +2154,9 @@ export const LoadingDots: React_2.FC<ILoadingDotsProps>;
 
 // @internal (undocumented)
 export const LoadingMask: React_2.FC<ILoadingMaskProps>;
+
+// @internal (undocumented)
+export const LoadingSpinner: React_2.FC<ILoadingSpinner>;
 
 // @internal (undocumented)
 export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFormatOwnProps> {
@@ -2340,7 +2353,7 @@ export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 export const useResponsiveContext: () => IResponsiveConfig;
 
 // @internal (undocumented)
-export const WorkspacePickerHomeFooter: React_2.FC<IWorkspacePickerHomeFooterProps>;
+export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;
 
 
 // (No @packageDocumentation comment for this package)
