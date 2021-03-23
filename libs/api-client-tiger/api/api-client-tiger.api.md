@@ -166,8 +166,8 @@ export interface AfmValidObjectsResponse {
 }
 
 // @public (undocumented)
-export namespace AnalyticalDashboardObjectModel {
-    // (undocumented)
+export namespace AnalyticalDashboardModelV1 {
+    // @deprecated (undocumented)
     export interface IAnalyticalDashboard {
         // (undocumented)
         analyticalDashboard: {
@@ -176,13 +176,43 @@ export namespace AnalyticalDashboardObjectModel {
             dateFilterConfig?: IDashboardDateFilterConfig;
         };
     }
-    // (undocumented)
+    // @deprecated (undocumented)
     export interface IFilterContext {
         // (undocumented)
         filterContext: {
             filters: IFilterContext["filters"];
         };
     }
+    // (undocumented)
+    export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
+    // (undocumented)
+    export function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
+}
+
+// @public (undocumented)
+export namespace AnalyticalDashboardModelV2 {
+    // (undocumented)
+    export interface IAnalyticalDashboard {
+        // (undocumented)
+        dateFilterConfig?: IDashboardDateFilterConfig;
+        // (undocumented)
+        filterContextRef?: ObjRef;
+        // (undocumented)
+        layout?: IDashboardLayout;
+        // (undocumented)
+        version: "2";
+    }
+    // (undocumented)
+    export interface IFilterContext {
+        // (undocumented)
+        filters: IFilterContext["filters"];
+        // (undocumented)
+        version: "2";
+    }
+    // (undocumented)
+    export function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
+    // (undocumented)
+    export function isFilterContext(filterContext: IFilterContext): filterContext is IFilterContext;
 }
 
 // @public
@@ -5651,7 +5681,87 @@ export interface ValidObjectsControllerApiInterface {
 }
 
 // @public (undocumented)
-export namespace VisualizationObjectModel {
+export namespace VisualizationObjectModelV1 {
+    // @deprecated (undocumented)
+    export interface IAttribute {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        displayForm: ObjectIdentifier;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export type IAttributeOrMeasure = IMeasure | IAttribute;
+    // (undocumented)
+    export interface IBucket {
+        // (undocumented)
+        items: IAttributeOrMeasure[];
+        // (undocumented)
+        localIdentifier?: string;
+        // (undocumented)
+        totals?: ITotal[];
+    }
+    // (undocumented)
+    export type Identifier = string;
+    // @deprecated (undocumented)
+    export interface IDimension {
+        // (undocumented)
+        itemIdentifiers: Identifier[];
+        // (undocumented)
+        localIdentifier: string;
+        // (undocumented)
+        sorting?: SortKey[];
+        // (undocumented)
+        totals?: ITotalItem[];
+    }
+    // @deprecated (undocumented)
+    export interface IMeasure {
+        // (undocumented)
+        alias?: string;
+        // (undocumented)
+        definition: MeasureDefinition;
+        // (undocumented)
+        format?: string;
+        // (undocumented)
+        localIdentifier: Identifier;
+    }
+    // (undocumented)
+    export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
+    // @deprecated (undocumented)
+    export interface ITotalItem {
+        // (undocumented)
+        attributeIdentifier: LocalIdentifier;
+        // (undocumented)
+        measureIdentifier: LocalIdentifier;
+        // (undocumented)
+        type: TotalType;
+    }
+    // @deprecated (undocumented)
+    export interface IVisualizationObject {
+        // (undocumented)
+        visualizationObject: {
+            title: string;
+            visualizationUrl: string;
+            buckets: IBucket[];
+            filters: FilterDefinition[];
+            sorts: ISortItem[];
+            properties: VisualizationProperties;
+        };
+    }
+    // (undocumented)
+    export type SortKey = SortKeyAttribute | SortKeyValue;
+    // (undocumented)
+    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
+    // (undocumented)
+    export type VisualizationProperties = {
+        [key: string]: any;
+    };
+    {};
+}
+
+// @public (undocumented)
+export namespace VisualizationObjectModelV2 {
     // (undocumented)
     export interface IAttribute {
         // (undocumented)
@@ -5697,6 +5807,8 @@ export namespace VisualizationObjectModel {
         localIdentifier: Identifier;
     }
     // (undocumented)
+    export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
+    // (undocumented)
     export interface ITotalItem {
         // (undocumented)
         attributeIdentifier: LocalIdentifier;
@@ -5708,14 +5820,17 @@ export namespace VisualizationObjectModel {
     // (undocumented)
     export interface IVisualizationObject {
         // (undocumented)
-        visualizationObject: {
-            title: string;
-            visualizationUrl: string;
-            buckets: IBucket[];
-            filters: FilterDefinition[];
-            sorts: ISortItem[];
-            properties: VisualizationProperties;
-        };
+        buckets: IBucket[];
+        // (undocumented)
+        filters: FilterDefinition[];
+        // (undocumented)
+        properties: VisualizationProperties;
+        // (undocumented)
+        sorts: ISortItem[];
+        // (undocumented)
+        version: "2";
+        // (undocumented)
+        visualizationUrl: string;
     }
     // (undocumented)
     export type SortKey = SortKeyAttribute | SortKeyValue;

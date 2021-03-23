@@ -1,4 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
+import isEmpty from "lodash/isEmpty";
 import { ISortItem, ITotal } from "@gooddata/sdk-model";
 import {
     FilterDefinition,
@@ -9,7 +10,10 @@ import {
     SortKeyValue,
 } from "../generated/afm-rest-api";
 
-export namespace VisualizationObjectModel {
+export namespace VisualizationObjectModelV1 {
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IVisualizationObject} instead
+     */
     export interface IVisualizationObject {
         visualizationObject: {
             title: string;
@@ -27,12 +31,18 @@ export namespace VisualizationObjectModel {
         totals?: ITotal[];
     }
 
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IAttribute} instead
+     */
     export interface IAttribute {
         localIdentifier: Identifier;
         displayForm: ObjectIdentifier;
         alias?: string;
     }
 
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IMeasure} instead
+     */
     export interface IMeasure {
         localIdentifier: Identifier;
         definition: MeasureDefinition;
@@ -40,6 +50,9 @@ export namespace VisualizationObjectModel {
         format?: string;
     }
 
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IDimension} instead
+     */
     export interface IDimension {
         localIdentifier: string;
         itemIdentifiers: Identifier[];
@@ -47,6 +60,9 @@ export namespace VisualizationObjectModel {
         totals?: ITotalItem[];
     }
 
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.ITotalItem} instead
+     */
     export interface ITotalItem {
         measureIdentifier: LocalIdentifier;
         type: TotalType;
@@ -63,4 +79,13 @@ export namespace VisualizationObjectModel {
     type VisualizationProperties = {
         [key: string]: any;
     };
+
+    export function isVisualizationObject(
+        visualizationObject: unknown,
+    ): visualizationObject is IVisualizationObject {
+        return (
+            !isEmpty(visualizationObject) &&
+            !!(visualizationObject as IVisualizationObject).visualizationObject
+        );
+    }
 }

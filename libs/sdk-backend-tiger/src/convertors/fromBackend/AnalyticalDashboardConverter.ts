@@ -1,6 +1,8 @@
 // (C) 2020-2021 GoodData Corporation
+import invariant from "ts-invariant";
 import {
-    AnalyticalDashboardObjectModel,
+    AnalyticalDashboardModelV1,
+    AnalyticalDashboardModelV2,
     isFilterContextData,
     JsonApiAnalyticalDashboardInAttributes,
     JsonApiAnalyticalDashboardOutDocument,
@@ -11,7 +13,9 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     DashboardWidget,
+    FilterContextItem,
     IDashboard,
+    IDashboardDateFilterConfig,
     IDashboardLayout,
     IFilterContext,
     IListedDashboard,
@@ -20,7 +24,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
-import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 import { isInheritedObject } from "./utils";
@@ -65,12 +68,41 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undef
     }, layout);
 }
 
-export function convertAnalyticalDashboardContent(
-    analyticalDashboard: AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"],
-): AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"] {
+interface IAnalyticalDashboardContent {
+    layout?: IDashboardLayout;
+    dateFilterConfig?: IDashboardDateFilterConfig;
+}
+
+function getConvertedAnalyticalDashboardContent(
+    analyticalDashboard:
+        | AnalyticalDashboardModelV1.IAnalyticalDashboard
+        | AnalyticalDashboardModelV2.IAnalyticalDashboard,
+): IAnalyticalDashboardContent {
+    if (AnalyticalDashboardModelV1.isAnalyticalDashboard(analyticalDashboard)) {
+        return getConvertedAnalyticalDashboardContentV1(analyticalDashboard);
+    }
+
+    if (AnalyticalDashboardModelV2.isAnalyticalDashboard(analyticalDashboard)) {
+        return getConvertedAnalyticalDashboardContentV2(analyticalDashboard);
+    }
+
+    invariant(false, "Unknown analytical dashboard version");
+}
+
+function getConvertedAnalyticalDashboardContentV1(
+    analyticalDashboard: AnalyticalDashboardModelV1.IAnalyticalDashboard,
+): IAnalyticalDashboardContent {
+    return {
+        dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.dateFilterConfig),
+        layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.layout)),
+    };
+}
+
+function getConvertedAnalyticalDashboardContentV2(
+    analyticalDashboard: AnalyticalDashboardModelV2.IAnalyticalDashboard,
+): IAnalyticalDashboardContent {
     return {
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
-        filterContextRef: cloneWithSanitizedIds(analyticalDashboard.filterContextRef),
         layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
     };
 }
@@ -82,8 +114,10 @@ export function convertDashboard(
     const { id, attributes = {} } = analyticalDashboard.data;
     const { title = "", description = "", content } = attributes;
 
-    const dashboardData = convertAnalyticalDashboardContent(
-        (content as AnalyticalDashboardObjectModel.IAnalyticalDashboard).analyticalDashboard,
+    const { dateFilterConfig, layout } = getConvertedAnalyticalDashboardContent(
+        content as
+            | AnalyticalDashboardModelV1.IAnalyticalDashboard
+            | AnalyticalDashboardModelV2.IAnalyticalDashboard,
     );
 
     return {
@@ -98,7 +132,8 @@ export function convertDashboard(
         isLocked: isInheritedObject(id),
         tags: attributes.tags,
         filterContext,
-        ...omit(dashboardData, ["filterContextRef"]),
+        dateFilterConfig,
+        layout,
     };
 }
 
@@ -114,10 +149,36 @@ export function convertFilterContextFromBackend(
         uri: filterContext.links!.self,
         title,
         description,
-        filters: cloneWithSanitizedIds(
-            (content as AnalyticalDashboardObjectModel.IFilterContext).filterContext.filters,
+        filters: convertedFilterContextFilters(
+            content as AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
         ),
     };
+}
+
+function convertedFilterContextFilters(
+    content: AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
+): FilterContextItem[] {
+    if (AnalyticalDashboardModelV1.isFilterContext(content)) {
+        return convertedFilterContextFiltersV1(content);
+    }
+
+    if (AnalyticalDashboardModelV2.isFilterContext(content)) {
+        return convertedFilterContextFiltersV2(content);
+    }
+
+    invariant(false, "Unknown filter context version");
+}
+
+function convertedFilterContextFiltersV1(
+    content: AnalyticalDashboardModelV1.IFilterContext,
+): FilterContextItem[] {
+    return cloneWithSanitizedIds(content.filterContext.filters);
+}
+
+function convertedFilterContextFiltersV2(
+    content: AnalyticalDashboardModelV2.IFilterContext,
+): FilterContextItem[] {
+    return cloneWithSanitizedIds(content.filters);
 }
 
 export function getFilterContextFromIncluded(included: any[]): IFilterContext | undefined {
@@ -135,8 +196,8 @@ export function getFilterContextFromIncluded(included: any[]): IFilterContext | 
         uri: filterContext.links!.self,
         title,
         description,
-        filters: cloneWithSanitizedIds(
-            (content as AnalyticalDashboardObjectModel.IFilterContext).filterContext.filters,
+        filters: convertedFilterContextFilters(
+            content as AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
         ),
     };
 }

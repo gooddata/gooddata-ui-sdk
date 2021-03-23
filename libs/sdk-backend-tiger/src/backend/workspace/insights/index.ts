@@ -25,11 +25,12 @@ import {
 import { v4 as uuidv4 } from "uuid";
 import sortBy from "lodash/sortBy";
 import {
-    VisualizationObjectModel,
     jsonApiHeaders,
     MetadataUtilities,
     MetadataGetEntitiesOptions,
     JsonApiAnalyticalDashboardOutWithLinks,
+    VisualizationObjectModelV1,
+    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -129,7 +130,10 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const { data: visualizationObject, links } = response.data;
         const insight = insightFromInsightDefinition(
             convertVisualizationObject(
-                visualizationObject.attributes!.content! as VisualizationObjectModel.IVisualizationObject,
+                visualizationObject.attributes!.content! as
+                    | VisualizationObjectModelV1.IVisualizationObject
+                    | VisualizationObjectModelV2.IVisualizationObject,
+                visualizationObject.attributes!.title!,
             ),
             visualizationObject.id,
             links!.self,

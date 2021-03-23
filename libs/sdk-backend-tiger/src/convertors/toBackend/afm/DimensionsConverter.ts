@@ -5,7 +5,7 @@ import {
     SortDirection as TigerSortDirection,
     SortKeyAttribute,
     SortKeyValue,
-    VisualizationObjectModel,
+    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
@@ -21,9 +21,9 @@ import isEmpty from "lodash/isEmpty";
 type SortKey = SortKeyAttribute | SortKeyValue;
 
 function merge(
-    dims: VisualizationObjectModel.IDimension[],
+    dims: VisualizationObjectModelV2.IDimension[],
     sorting: SortKey[][],
-): VisualizationObjectModel.IDimension[] {
+): VisualizationObjectModelV2.IDimension[] {
     return dims.map((dim, idx) => {
         if (!isEmpty(sorting[idx])) {
             return {
@@ -103,9 +103,9 @@ function convertMeasureLocators(locators: ILocatorItem[]): DimensionItemValue[] 
  * @param sorts - sort items defined by SDK user
  */
 function dimensionsWithSorts(
-    dims: VisualizationObjectModel.IDimension[],
+    dims: VisualizationObjectModelV2.IDimension[],
     sorts: ISortItem[],
-): VisualizationObjectModel.IDimension[] {
+): VisualizationObjectModelV2.IDimension[] {
     if (isEmpty(sorts)) {
         return dims;
     }
@@ -183,7 +183,7 @@ function dimensionsWithSorts(
  * @param def
  */
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
-    const dimensionsWithoutSorts: VisualizationObjectModel.IDimension[] = def.dimensions.map((dim, idx) => {
+    const dimensionsWithoutSorts: VisualizationObjectModelV2.IDimension[] = def.dimensions.map((dim, idx) => {
         return {
             localIdentifier: `dim_${idx}`, // FIXME synchronize with convertTotals
             itemIdentifiers: dim.itemIdentifiers,

@@ -7,8 +7,10 @@ import {
     setGlobalAuthorizationToken,
 } from "./axios";
 
-export { VisualizationObjectModel } from "./gd-tiger-model/VisualizationObjectModel";
-export { AnalyticalDashboardObjectModel } from "./gd-tiger-model/AnalyticalDashboardObjectModel";
+export { VisualizationObjectModelV1 } from "./gd-tiger-model/VisualizationObjectModelV1";
+export { VisualizationObjectModelV2 } from "./gd-tiger-model/VisualizationObjectModelV2";
+export { AnalyticalDashboardModelV1 } from "./gd-tiger-model/AnalyticalDashboardModelV1";
+export { AnalyticalDashboardModelV2 } from "./gd-tiger-model/AnalyticalDashboardModelV2";
 
 export {
     isAttributeHeader,
