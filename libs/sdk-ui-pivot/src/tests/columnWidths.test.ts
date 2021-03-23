@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import {
     IAttributeColumnLocator,
@@ -44,13 +44,9 @@ describe("newWidthForAttributeColumn", () => {
 });
 
 describe("newWidthForSelectedColumns", () => {
-    const Scenarios: Array<[
-        string,
-        IMeasure | string,
-        IAttributeColumnLocator[],
-        number,
-        boolean | undefined,
-    ]> = [
+    const Scenarios: Array<
+        [string, IMeasure | string, IAttributeColumnLocator[], number, boolean | undefined]
+    > = [
         ["when measure as value and without grow to fit prop", ReferenceLdm.Amount, [], 10, undefined],
         ["when measure as localId and without grow to fit prop", "localId", [], 10, undefined],
         ["with grow to fit prop false", ReferenceLdm.Amount, [], 10, false],

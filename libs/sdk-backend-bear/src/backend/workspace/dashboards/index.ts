@@ -558,11 +558,10 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): IWidgetWithLayoutPath<IWidgetDefinition>[] => {
         const widgetsWithPath = updatedLayout ? layoutWidgetsWithPaths(updatedLayout) : [];
 
-        const createdWidgets: IWidgetWithLayoutPath<
-            IWidgetDefinition
-        >[] = widgetsWithPath.filter((widgetWithPath): widgetWithPath is IWidgetWithLayoutPath<
-            IWidgetDefinition
-        > => isWidgetDefinition(widgetWithPath.widget));
+        const createdWidgets: IWidgetWithLayoutPath<IWidgetDefinition>[] = widgetsWithPath.filter(
+            (widgetWithPath): widgetWithPath is IWidgetWithLayoutPath<IWidgetDefinition> =>
+                isWidgetDefinition(widgetWithPath.widget),
+        );
 
         return createdWidgets;
     };

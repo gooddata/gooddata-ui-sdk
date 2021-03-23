@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { SDK } from "@gooddata/api-client-bear";
 import invariant from "ts-invariant";
 import {
@@ -50,7 +50,8 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
  *
  * @public
  */
-export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase
+export class FixedLoginAndPasswordAuthProvider
+    extends BearAuthProviderBase
     implements IAuthenticationProvider {
     constructor(private readonly username: string, private readonly password: string) {
         super();

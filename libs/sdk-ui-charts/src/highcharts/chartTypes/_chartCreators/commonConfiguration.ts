@@ -152,11 +152,13 @@ function getThemedConfiguration(theme: ITheme): any {
 }
 
 function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
-    set(configuration, "chart.events.drilldown", function chartDrilldownHandler(
-        event: Highcharts.DrilldownEventObject,
-    ) {
-        chartClick(drillConfig, event, this.container, chartOptions.type);
-    });
+    set(
+        configuration,
+        "chart.events.drilldown",
+        function chartDrilldownHandler(event: Highcharts.DrilldownEventObject) {
+            chartClick(drillConfig, event, this.container, chartOptions.type);
+        },
+    );
 
     return configuration;
 }

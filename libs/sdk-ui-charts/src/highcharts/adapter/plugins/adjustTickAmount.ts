@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 /**
  * Highcharts extension that overwrites 'axis.adjustTickAmount' of Highcharts
  * Original code snippet
@@ -350,20 +350,22 @@ export function shouldBeHandledByHighcharts(axis: Highcharts.Axis): boolean {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const adjustTickAmount = (HighchartsInstance: any): void => {
-    Highcharts.wrap(HighchartsInstance.Axis.prototype, "adjustTickAmount", function (
-        proceed: Highcharts.WrapProceedFunction,
-    ) {
-        // eslint-disable-next-line @typescript-eslint/no-this-alias
-        const axis = this;
+    Highcharts.wrap(
+        HighchartsInstance.Axis.prototype,
+        "adjustTickAmount",
+        function (proceed: Highcharts.WrapProceedFunction) {
+            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            const axis = this;
 
-        if (shouldBeHandledByHighcharts(axis)) {
-            proceed.call(axis);
-        } else {
-            customAdjustTickAmount.call(axis);
-        }
+            if (shouldBeHandledByHighcharts(axis)) {
+                proceed.call(axis);
+            } else {
+                customAdjustTickAmount.call(axis);
+            }
 
-        if (!isSingleAxisChart(axis)) {
-            alignYAxes(axis);
-        }
-    });
+            if (!isSingleAxisChart(axis)) {
+                alignYAxes(axis);
+            }
+        },
+    );
 };
