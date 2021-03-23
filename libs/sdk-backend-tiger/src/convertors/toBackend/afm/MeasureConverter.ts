@@ -8,7 +8,7 @@ import {
     PopDateMeasureDefinition,
     SimpleMeasureDefinition,
     SimpleMeasureDefinitionMeasureAggregationEnum,
-    VisualizationObjectModel,
+    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
     ArithmeticMeasureOperator,
@@ -35,7 +35,7 @@ import {
 } from "../ObjRefConverter";
 import { convertFilter } from "./FilterConverter";
 
-export function convertMeasure(measure: IMeasure): VisualizationObjectModel.IMeasure {
+export function convertMeasure(measure: IMeasure): VisualizationObjectModelV2.IMeasure {
     const {
         measure: { definition },
     } = measure;

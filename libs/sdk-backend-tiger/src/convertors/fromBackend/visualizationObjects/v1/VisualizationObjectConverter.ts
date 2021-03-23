@@ -1,11 +1,11 @@
 // (C) 2019-2021 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { VisualizationObjectModel } from "@gooddata/api-client-tiger";
-import { cloneWithSanitizedIds } from "./IdSanitization";
+import { VisualizationObjectModelV1 } from "@gooddata/api-client-tiger";
+import { cloneWithSanitizedIds } from "../../IdSanitization";
 
-export const convertVisualizationObject = (
-    visualizationObject: VisualizationObjectModel.IVisualizationObject,
-): IInsightDefinition => {
+export function convertVisualizationObject(
+    visualizationObject: VisualizationObjectModelV1.IVisualizationObject,
+): IInsightDefinition {
     return {
         insight: {
             ...visualizationObject.visualizationObject,
@@ -14,4 +14,4 @@ export const convertVisualizationObject = (
             sorts: cloneWithSanitizedIds(visualizationObject.visualizationObject.sorts) ?? [],
         },
     };
-};
+}

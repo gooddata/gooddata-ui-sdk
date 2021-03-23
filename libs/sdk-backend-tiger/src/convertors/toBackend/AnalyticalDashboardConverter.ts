@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-import { AnalyticalDashboardObjectModel } from "@gooddata/api-client-tiger";
+import { AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
 import {
     DashboardWidget,
     IDashboardDefinition,
@@ -35,24 +35,22 @@ function removeWidgetIdentifiersInLayout(layout: IDashboardLayout<DashboardWidge
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
-): AnalyticalDashboardObjectModel.IAnalyticalDashboard {
+): AnalyticalDashboardModelV2.IAnalyticalDashboard {
     const layout = removeWidgetIdentifiersInLayout(dashboard.layout);
 
     return {
-        analyticalDashboard: {
-            dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
-            filterContextRef: cloneWithSanitizedIds(filterContextRef),
-            layout: cloneWithSanitizedIds(layout),
-        },
+        dateFilterConfig: cloneWithSanitizedIds(dashboard.dateFilterConfig),
+        filterContextRef: cloneWithSanitizedIds(filterContextRef),
+        layout: cloneWithSanitizedIds(layout),
+        version: "2",
     };
 }
 
 export function convertFilterContextToBackend(
     filterContext: IFilterContextDefinition,
-): AnalyticalDashboardObjectModel.IFilterContext {
+): AnalyticalDashboardModelV2.IFilterContext {
     return {
-        filterContext: {
-            filters: cloneWithSanitizedIds(filterContext.filters),
-        },
+        filters: cloneWithSanitizedIds(filterContext.filters),
+        version: "2",
     };
 }

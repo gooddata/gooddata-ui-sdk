@@ -1,17 +1,17 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { VisualizationObjectModel } from "@gooddata/api-client-tiger";
+import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { cloneWithSanitizedIds } from "./IdSanitization";
 
 export const convertInsight = (
     insight: IInsightDefinition,
-): VisualizationObjectModel.IVisualizationObject => {
+): VisualizationObjectModelV2.IVisualizationObject => {
+    const { title: _, ...insightData } = insight.insight;
     return {
-        visualizationObject: {
-            ...insight.insight,
-            buckets: cloneWithSanitizedIds(insight.insight.buckets),
-            filters: cloneWithSanitizedIds(insight.insight.filters),
-            sorts: cloneWithSanitizedIds(insight.insight.sorts),
-        },
+        ...insightData,
+        buckets: cloneWithSanitizedIds(insight.insight.buckets),
+        filters: cloneWithSanitizedIds(insight.insight.filters),
+        sorts: cloneWithSanitizedIds(insight.insight.sorts),
+        version: "2",
     };
 };
