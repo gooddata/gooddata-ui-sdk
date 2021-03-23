@@ -219,17 +219,21 @@
     position: absolute;
     top: -85px;
     right: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 36px;
     height: 36px;
     border: none;
-    color: transparent;
     cursor: pointer;
     transition: $transition-length;
     border-radius: 50%;
     background-color: $button-grey-background;
-    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon_undo.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
 
     @media #{$xsmall-only}, #{$small-only} {
         top: -73px;

@@ -13,4 +13,5 @@ export type IconName =
     | "Logout"
     | "Pdf"
     | "ExternalLink"
-    | "Hyperlink";
+    | "Hyperlink"
+    | "Undo";
