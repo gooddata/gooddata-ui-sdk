@@ -23,6 +23,7 @@ import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
 import omit from "lodash/omit";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "./IdSanitization";
+import { isInheritedObject } from "./utils";
 
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
@@ -68,8 +69,6 @@ export function convertAnalyticalDashboardContent(
     analyticalDashboard: AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"],
 ): AnalyticalDashboardObjectModel.IAnalyticalDashboard["analyticalDashboard"] {
     return {
-        isLocked: analyticalDashboard.isLocked,
-        tags: analyticalDashboard.tags,
         dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig),
         filterContextRef: cloneWithSanitizedIds(analyticalDashboard.filterContextRef),
         layout: setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
@@ -95,6 +94,9 @@ export function convertDashboard(
         description,
         created: "",
         updated: "",
+        // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
+        isLocked: isInheritedObject(id),
+        tags: attributes.tags,
         filterContext,
         ...omit(dashboardData, ["filterContextRef"]),
     };

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     IDashboardDateFilterConfig,
     IDashboardLayout,
@@ -9,8 +9,6 @@ import { ObjRef } from "@gooddata/sdk-model";
 export namespace AnalyticalDashboardObjectModel {
     export interface IAnalyticalDashboard {
         analyticalDashboard: {
-            isLocked?: boolean;
-            tags?: string[];
             layout?: IDashboardLayout;
             filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;
