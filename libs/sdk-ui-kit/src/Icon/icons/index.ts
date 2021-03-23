@@ -10,3 +10,4 @@ export { Pdf } from "./Pdf";
 export { ExternalLink } from "./ExternalLink";
 export { Hyperlink } from "./Hyperlink";
 export { Undo } from "./Undo";
+export { Home } from "./Home";

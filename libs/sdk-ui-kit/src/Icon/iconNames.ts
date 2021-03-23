@@ -14,4 +14,5 @@ export type IconName =
     | "Pdf"
     | "ExternalLink"
     | "Hyperlink"
-    | "Undo";
+    | "Undo"
+    | "Home";

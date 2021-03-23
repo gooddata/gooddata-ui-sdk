@@ -29,6 +29,7 @@ const IconTest: React.FC = () => {
             <IconWrapper name="ExternalLink" color="#f00" />
             <IconWrapper name="Hyperlink" color="#f00" />
             <IconWrapper name="Undo" color="#f00" />
+            <IconWrapper name="Home" color="#00f" />
         </div>
     );
 };

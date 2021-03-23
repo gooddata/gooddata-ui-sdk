@@ -31,3 +31,4 @@ export * from "./DocumentHeader";
 export * from "./Dropdown";
 export * from "./responsive";
 export * from "./Icon";
+export * from "./LoadingSpinner";

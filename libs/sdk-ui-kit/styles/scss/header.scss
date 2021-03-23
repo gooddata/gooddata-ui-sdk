@@ -621,15 +621,23 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     border-top: 1px solid $gd-border-color;
 
     .gd-workspace-picker-home-footer {
-        display: block;
         color: $gd-color-text;
-        background: url("~@gooddata/sdk-ui-kit/esm/assets/home.svg") no-repeat;
         padding-left: 30px;
         text-decoration: none;
 
         &:hover {
             color: $is-focused-color;
             text-decoration: underline;
+        }
+
+        .icon-home {
+            position: absolute;
+            margin-left: -30px;
+
+            svg {
+                width: 20px;
+                height: 20px;
+            }
         }
     }
 }
