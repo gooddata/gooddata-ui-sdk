@@ -171,8 +171,6 @@ export namespace AnalyticalDashboardObjectModel {
     export interface IAnalyticalDashboard {
         // (undocumented)
         analyticalDashboard: {
-            isLocked?: boolean;
-            tags?: string[];
             layout?: IDashboardLayout;
             filterContextRef?: ObjRef;
             dateFilterConfig?: IDashboardDateFilterConfig;
