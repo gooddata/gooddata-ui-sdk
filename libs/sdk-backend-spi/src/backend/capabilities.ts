@@ -78,6 +78,11 @@ export interface IBackendCapabilities {
     supportsRankingFilter?: boolean;
 
     /**
+     * Indicates whether backend supports ranking filters in combination with measure value filters (in the same execution).
+     */
+    supportsRankingFilterWithMeasureValueFilter?: boolean;
+
+    /**
      * Indicates whether backend supports element query parent filtering.
      */
     supportsElementsQueryParentFiltering?: boolean;
