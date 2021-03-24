@@ -107,10 +107,10 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
 
     render(): React.ReactNode {
         return (
-            <>
+            <div className="gd-kpi-widget-content">
                 {this.renderValue()}
                 {this.renderPeriodOverPeriod()}
-            </>
+            </div>
         );
     }
 }

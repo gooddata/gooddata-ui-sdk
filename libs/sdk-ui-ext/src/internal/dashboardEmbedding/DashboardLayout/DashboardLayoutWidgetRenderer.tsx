@@ -19,7 +19,7 @@ export function DashboardLayoutWidgetRenderer(
         children,
     } = props;
 
-    const { heightAsRatio } = item.size()[screen];
+    const { heightAsRatio, gridHeight } = item.size()[screen];
 
     const style = React.useMemo(() => {
         const computedStyle: CSSProperties = {
@@ -45,8 +45,14 @@ export function DashboardLayoutWidgetRenderer(
         return computedStyle;
     }, [heightAsRatio, debug, screen, height, minHeight, isResizedByLayoutSizingStrategy]);
 
+    const getClassNames = () => {
+        return cx("gd-fluidlayout-column-container", className, {
+            "custom-height": !!gridHeight,
+        });
+    };
+
     return (
-        <div ref={contentRef} className={cx("gd-fluidlayout-column-container", className)} style={style}>
+        <div ref={contentRef} className={getClassNames()} style={style}>
             {children}
         </div>
     );

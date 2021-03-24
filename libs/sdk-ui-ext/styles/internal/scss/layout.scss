@@ -51,6 +51,22 @@ $gd-dashboards-section-description-color: var(
     }
 }
 
+.gd-fluidlayout-column-container.custom-height {
+    .kpi-with-pop {
+        min-height: 100%;
+    }
+
+    .gd-visualization-content {
+        position: absolute;
+    }
+
+    .gd-kpi-widget-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .gd-fluidlayout-row {
     position: relative;
 }
