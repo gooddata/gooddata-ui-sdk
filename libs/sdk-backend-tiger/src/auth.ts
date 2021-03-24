@@ -33,7 +33,10 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         try {
             await client.axios.post("/logout");
         } catch (error) {
-            convertApiError(error);
+            // eslint-disable-next-line no-console
+            console.debug("Error during logout", error);
+
+            throw convertApiError(error);
         }
     }
 
