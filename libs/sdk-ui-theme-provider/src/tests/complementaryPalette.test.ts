@@ -24,8 +24,14 @@ describe("complementaryPalette", () => {
             ],
         ];
 
-        it.each(Scenarios)("should generate missing colors in complementary palette", (providedPalette) => {
-            expect(getComplementaryPalette(providedPalette)).toMatchSnapshot();
+        it.each(Scenarios)("should generate missing colors in complementary palette", (palette) => {
+            expect(getComplementaryPalette(palette)).toMatchSnapshot();
+        });
+
+        it("should generate missing colors in complementary palette even the input not in order", () => {
+            const palette = { c9: "#095f0f", c5: "#fcba03", c0: "#001122" };
+
+            expect(getComplementaryPalette(palette)).toMatchSnapshot();
         });
     });
 });
