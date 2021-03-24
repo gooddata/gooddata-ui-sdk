@@ -289,6 +289,7 @@ export interface IBackendCapabilities {
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
+    supportsRankingFilterWithMeasureValueFilter?: boolean;
 }
 
 // @public
