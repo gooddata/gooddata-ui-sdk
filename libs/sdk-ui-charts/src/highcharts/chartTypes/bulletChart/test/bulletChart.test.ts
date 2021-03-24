@@ -84,7 +84,7 @@ describe("BulletChartColorStrategy", () => {
             };
             const colorStrategy = getBulletColorStrategy({ dv: AllMeasures, theme: darkBasedTheme });
 
-            const expectedColors = ["rgb(20,178,226)", "rgb(91,201,235)", "rgb(56,56,56)"];
+            const expectedColors = ["rgb(20,178,226)", "rgb(138,217,241)", "rgb(56,56,56)"];
 
             range(expectedColors.length).map((itemIndex) => {
                 expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColors[itemIndex]);
