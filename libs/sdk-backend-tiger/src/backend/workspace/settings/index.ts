@@ -12,6 +12,11 @@ const HardcodedSettings = {
     platformEdition: "enterprise",
     enableDomainHomepage: true,
 
+    // pivot table specific
+    enableTableColumnsManualResizing: true,
+    enableTableColumnsAutoResizing: true,
+    enableTableColumnsGrowToFit: true,
+
     // AD specific
     analyticalDesigner: true,
     // geochart must be disabled for now on tiger backend due to missing mapbox token infrastructure there (RAIL-3058)
