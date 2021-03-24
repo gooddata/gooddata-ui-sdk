@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { tokenizeExpression } from "../measureExpressionTokens";
 
 describe("tokenizeExpression", () => {
@@ -19,6 +19,17 @@ describe("tokenizeExpression", () => {
             { type: "quoted_text", value: '"Canceled"' },
             { type: "text", value: ")) by all except " },
             { type: "attribute", value: "attribute/attr.customer.c_custkey" },
+        ]);
+    });
+
+    it("parses MAQL without whitespace around operators (RAIL-3132)", () => {
+        const tokens = tokenizeExpression("SELECT SUM({fact/order_lines.price}*{fact/order_lines.quantity})");
+        expect(tokens).toEqual([
+            { type: "text", value: "SELECT SUM(" },
+            { type: "fact", value: "fact/order_lines.price" },
+            { type: "text", value: "*" },
+            { type: "fact", value: "fact/order_lines.quantity" },
+            { type: "text", value: ")" },
         ]);
     });
 });
