@@ -106,7 +106,8 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     }
 }
 
-class WorkspacesInMemoryPaging extends InMemoryPaging<IAnalyticalWorkspace>
+class WorkspacesInMemoryPaging
+    extends InMemoryPaging<IAnalyticalWorkspace>
     implements IWorkspacesQueryResult {
     constructor(
         all: IAnalyticalWorkspace[],

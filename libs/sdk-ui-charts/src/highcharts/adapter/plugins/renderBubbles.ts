@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 /* *
  * (c) 2010-2019 Torstein Honsi
  *
@@ -43,22 +43,26 @@ export function renderBubbles(HighchartsInstance: any): void {
 
     if (HighchartsInstance.seriesTypes.bubble) {
         // Set default size for bubbles in bubble chart where size value is not provided
-        wrap(HighchartsInstance.seriesTypes.bubble.prototype, "getRadius", function (
-            proceed: any,
-            zMin: number,
-            zMax: number,
-            minSize: number,
-            maxSize: number,
-            value: number,
-        ) {
-            let radius = proceed.apply(this, [zMin, zMax, minSize, maxSize, value]);
-            if (isNaN(value) && isNil(radius)) {
-                // Relative size, a number between 0 and 1 (default is 0.5)
-                // Use Math.sqrt for bubble is sized by area
-                radius = Math.ceil(minSize + Math.sqrt(0.5) * (maxSize - minSize)) / 2;
-            }
-            return radius;
-        });
+        wrap(
+            HighchartsInstance.seriesTypes.bubble.prototype,
+            "getRadius",
+            function (
+                proceed: any,
+                zMin: number,
+                zMax: number,
+                minSize: number,
+                maxSize: number,
+                value: number,
+            ) {
+                let radius = proceed.apply(this, [zMin, zMax, minSize, maxSize, value]);
+                if (isNaN(value) && isNil(radius)) {
+                    // Relative size, a number between 0 and 1 (default is 0.5)
+                    // Use Math.sqrt for bubble is sized by area
+                    radius = Math.ceil(minSize + Math.sqrt(0.5) * (maxSize - minSize)) / 2;
+                }
+                return radius;
+            },
+        );
 
         // #SD-479 fix bubbles is not rendered with min/max config
         wrap(HighchartsInstance.Axis.prototype, "beforePadding", function (_proceed: any) {

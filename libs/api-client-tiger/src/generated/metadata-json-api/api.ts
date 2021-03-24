@@ -6085,7 +6085,8 @@ export interface DeclarativeLayoutControllerApiInterface {
  * @class DeclarativeLayoutControllerApi
  * @extends {BaseAPI}
  */
-export class DeclarativeLayoutControllerApi extends BaseAPI
+export class DeclarativeLayoutControllerApi
+    extends BaseAPI
     implements DeclarativeLayoutControllerApiInterface {
     /**
      * Retrieve current analytics model of the workspace.
@@ -15888,7 +15889,8 @@ export interface OrganizationModelControllerApiInterface {
  * @class OrganizationModelControllerApi
  * @extends {BaseAPI}
  */
-export class OrganizationModelControllerApi extends BaseAPI
+export class OrganizationModelControllerApi
+    extends BaseAPI
     implements OrganizationModelControllerApiInterface {
     /**
      *

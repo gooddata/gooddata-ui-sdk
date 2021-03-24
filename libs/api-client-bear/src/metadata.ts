@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
 import get from "lodash/get";
 import chunk from "lodash/chunk";
@@ -52,9 +52,9 @@ export class MetadataModule {
             throw new Error("Attribute of the provided element has no default display form!");
         }
         const defaultDisplayFormUri = defaultDisplayForm.meta.uri;
-        const defaultDisplayFormElementValue = await this.xhr.getParsed<
-            GdcMetadata.IWrappedAttributeElements
-        >(`${defaultDisplayFormUri}/elements?id=${elementId}`);
+        const defaultDisplayFormElementValue = await this.xhr.getParsed<GdcMetadata.IWrappedAttributeElements>(
+            `${defaultDisplayFormUri}/elements?id=${elementId}`,
+        );
 
         const firstElement = defaultDisplayFormElementValue.attributeElements.elements[0];
         return firstElement;

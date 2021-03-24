@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { IMetadataObject } from "@gooddata/sdk-backend-spi";
 import { Builder, IBuilder } from "../builder";
@@ -72,7 +72,8 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
  *
  * @beta
  */
-export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T>
+export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject>
+    extends Builder<T>
     implements IMetadataObjectBuilder {
     public title(title: string): this {
         this.item.title = title;

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import identity from "lodash/identity";
 import { ObjRef } from "@gooddata/sdk-model";
 import { ICatalogGroup, IGroupableCatalogItemBase } from "@gooddata/sdk-backend-spi";
@@ -9,9 +9,8 @@ import { Builder, builderFactory, BuilderModifications, IBuilder } from "../buil
  *
  * @beta
  */
-export interface IGroupableCatalogItemBuilder<
-    T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase
-> extends IBuilder<T> {
+export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase>
+    extends IBuilder<T> {
     groups(tagRefs: ObjRef[]): this;
 }
 

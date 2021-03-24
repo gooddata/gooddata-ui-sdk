@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import identity from "lodash/identity";
 import { DateAttributeGranularity, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -78,9 +78,9 @@ export const newCatalogDateAttribute = (
  *
  * @beta
  */
-export class CatalogDateDatasetBuilder<T extends ICatalogDateDataset = ICatalogDateDataset> extends Builder<
-    T
-> {
+export class CatalogDateDatasetBuilder<
+    T extends ICatalogDateDataset = ICatalogDateDataset
+> extends Builder<T> {
     public relevance(relevance: number): this {
         this.item.relevance = relevance;
         return this;

@@ -801,13 +801,9 @@ describe("createPivotTableConfig", () => {
         },
     ];
 
-    const Scenarios: Array<[
-        string,
-        IGdcConfig,
-        VisualizationEnvironment | undefined,
-        ISettings,
-        ColumnWidthItem[],
-    ]> = [
+    const Scenarios: Array<
+        [string, IGdcConfig, VisualizationEnvironment | undefined, ISettings, ColumnWidthItem[]]
+    > = [
         ["config without menus for dashboard env", {}, "dashboards", {}, undefined],
         ["config with menus for non-dashboard env", {}, "none", {}, undefined],
         ["config with menus for undefined env", {}, "none", {}, undefined],

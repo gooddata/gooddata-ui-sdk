@@ -23,12 +23,9 @@ describe("objRefToString", () => {
 });
 
 describe("areObjRefsEqual", () => {
-    const Scenarios: Array<[
-        boolean,
-        string,
-        ObjRefInScope | null | undefined,
-        ObjRefInScope | null | undefined,
-    ]> = [
+    const Scenarios: Array<
+        [boolean, string, ObjRefInScope | null | undefined, ObjRefInScope | null | undefined]
+    > = [
         // same type
         [true, "uri, uri, same value", { uri: "/uri" }, { uri: "/uri" }],
         [false, "uri, uri, different value", { uri: "/uri1" }, { uri: "/uri2" }],
