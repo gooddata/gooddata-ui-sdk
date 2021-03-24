@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 export type ExpressionTokenType = "text" | "quoted_text" | "fact" | "metric" | "attribute" | "label";
 
 export interface IExpressionToken {
@@ -10,10 +10,10 @@ const REMOVE_BRACKETS_REGEXP = /[[\]{}]/g;
 const TOKEN_TYPE_REGEXP_PAIRS: Array<[ExpressionTokenType, RegExp]> = [
     ["text", /^[^{}[\]"]+/],
     ["quoted_text", /^"(?:[^"\\]|\\\\.)*"/],
-    ["fact", /^\{fact\/\S*\}/],
-    ["metric", /^\{metric\/\S*\}/],
-    ["label", /^\{label\/\S*\}/],
-    ["attribute", /^\{attribute\/\S*\}/],
+    ["fact", /^\{fact\/[^}]*\}/],
+    ["metric", /^\{metric\/[^}]*\}/],
+    ["label", /^\{label\/[^}]*\}/],
+    ["attribute", /^\{attribute\/[^}]*\}/],
 ];
 
 export const tokenizeExpression = (expression: string): IExpressionToken[] => {

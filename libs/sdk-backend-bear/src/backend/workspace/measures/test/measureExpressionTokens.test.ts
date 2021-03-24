@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { tokenizeExpression } from "../measureExpressionTokens";
 
 describe("tokenizeExpression", () => {
@@ -21,6 +21,19 @@ describe("tokenizeExpression", () => {
             { type: "text", value: ") and " },
             { type: "identifier", value: "snapshot.year" },
             { type: "text", value: " > 2011" },
+        ]);
+    });
+
+    it("parses MAQL without whitespace around operators (RAIL-3132)", () => {
+        const tokens = tokenizeExpression(
+            "SELECT SUM({fact.opportunitysnapshot.amount}*{fact.opportunitysnapshot.amount2})",
+        );
+        expect(tokens).toEqual([
+            { type: "text", value: "SELECT SUM(" },
+            { type: "identifier", value: "fact.opportunitysnapshot.amount" },
+            { type: "text", value: "*" },
+            { type: "identifier", value: "fact.opportunitysnapshot.amount2" },
+            { type: "text", value: ")" },
         ]);
     });
 });
