@@ -43,6 +43,11 @@ export class TigerUserSettingsService implements IUserSettingsService {
                 enableKPIDashboardDependentFilters: false,
                 enableKDWidgetCustomHeight: true,
 
+                // pivot table specific
+                enableTableColumnsManualResizing: true,
+                enableTableColumnsAutoResizing: true,
+                enableTableColumnsGrowToFit: true,
+
                 // embedding AD in KD
                 enableExploreInsightsFromKD: true,
                 enableEditInsightsFromKD: true,
