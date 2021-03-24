@@ -380,7 +380,7 @@ $dialog-background: $is-focused-background;
     + .email-info {
         padding-top: 15px;
         border-top: 1px solid $gd-border-color;
-        color: $gd-color-label;
+        color: var(--gd-palette-complementary-8, $default-gd-color-label);
     }
 
     .underline-dotted {
