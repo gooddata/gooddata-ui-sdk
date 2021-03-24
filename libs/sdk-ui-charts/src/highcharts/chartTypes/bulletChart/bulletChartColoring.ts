@@ -113,7 +113,7 @@ class BulletChartColorStrategy extends ColorStrategy {
                         type: "rgb",
                         value: getLighterColorFromRGB(
                             colorPalette[0].fill,
-                            isDarkTheme(this.theme) ? 0.3 : -0.3,
+                            isDarkTheme(this.theme) ? 0.5 : -0.3,
                         ),
                     }) ||
                     (isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
