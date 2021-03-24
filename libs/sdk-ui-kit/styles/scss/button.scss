@@ -240,7 +240,7 @@
     &:hover,
     &:active,
     &.is-active {
-        color: var(--gd-palette-complementary-7, $button-action-color-hover);
+        color: $button-action-color-hover;
 
         &::after,
         &::before,
@@ -281,7 +281,7 @@
     &:hover,
     &:focus,
     &:active {
-        color: $gd-color-dark;
+        color: var(--gd-palette-complementary-8, $default-gd-color-dark);
     }
 
     .gd-button-text {
