@@ -99,6 +99,7 @@ export {
     IThemePalette,
     IThemeKpi,
     IThemeChart,
+    IThemeTable,
     ITheme,
 } from "./workspace/styling";
 

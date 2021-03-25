@@ -1,6 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
-import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IPreparedExecution, ITheme } from "@gooddata/sdk-backend-spi";
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -176,6 +176,7 @@ export interface IPivotTableBucketProps {
  */
 export interface ICorePivotTableProps extends IPivotTableBaseProps, WrappedComponentProps {
     execution: IPreparedExecution;
+    theme?: ITheme;
 }
 
 /**

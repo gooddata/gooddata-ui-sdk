@@ -52,7 +52,7 @@ export function getMeasureCellStyle(
 
     if (label === "") {
         return {
-            color: "#94a1ad",
+            color: "var(--gd-table-nullValueColor, var(--gd-palette-complementary-6, #94a1ad))",
             fontWeight: "bold",
         };
     }

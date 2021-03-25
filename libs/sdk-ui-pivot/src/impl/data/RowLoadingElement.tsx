@@ -2,6 +2,7 @@
 import { ICellRendererParams } from "@ag-grid-community/all-modules";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import React from "react";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { VALUE_CLASS } from "../base/constants";
 
 /**
@@ -22,5 +23,9 @@ export function RowLoadingElement(props: ICellRendererParams): JSX.Element {
         // there is props.formattedValue, but this is null for row attributes for some reason
         return <span className={`${VALUE_CLASS} s-loading-done`}>{props.formatValue(props.value)}</span>;
     }
-    return <LoadingComponent width={36} imageHeight={8} height={26} speed={2} />;
+
+    const theme = useTheme();
+    const color = theme?.table?.loadingIconColor ?? theme?.palette?.complementary?.c6 ?? undefined;
+
+    return <LoadingComponent color={color} width={36} imageHeight={8} height={26} speed={2} />;
 }

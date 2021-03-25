@@ -51,7 +51,7 @@ describe("Table utils - Cell", () => {
     describe("getMeasureCellStyle", () => {
         it("should get empty value style when cellContent=null", () => {
             expect(getMeasureCellStyle(null, "[red]$#,##0.00", undefined, true)).toEqual({
-                color: "#94a1ad",
+                color: "var(--gd-table-nullValueColor, var(--gd-palette-complementary-6, #94a1ad))",
                 fontWeight: "bold",
             });
         });
