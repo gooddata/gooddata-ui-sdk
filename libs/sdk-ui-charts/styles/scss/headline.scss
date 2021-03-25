@@ -134,7 +134,10 @@
             .headline-secondary-item {
                 border-left: 0;
                 border-bottom: 1px dashed
-                    var(--gd-kpi-secondaryInfoColor, transparentize($default-gd-color-disabled, 0.5));
+                    var(
+                        --gd-kpi-secondaryInfoColor,
+                        var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.5))
+                    );
                 padding: 0 0 10px;
                 text-align: center;
             }
