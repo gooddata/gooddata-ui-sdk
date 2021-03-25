@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "Die Geo-Diagramm-Konfiguration benötigt einen gültigen API-Zugriffstoken.",
     "visualization.tooltip.resetZoom": "Vergrößern zurücksetzen",
     "visualization.tooltip.interaction": "Klicken Sie das Diagramm um zu drillen",
+    "gs.filterLabel.all": "Alle ",
+    "gs.filterLabel.none": "Keine",
     "gs.filter.loading": "Filter wird geladen…",
     "gs.filter.error": "Fehler beim Laden des Filters",
     "gs.list.loading": "Liste wird geladen…",

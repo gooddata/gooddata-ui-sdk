@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "Geochart 配置需要有效的 API 访问令牌。",
     "visualization.tooltip.resetZoom": "重置缩放",
     "visualization.tooltip.interaction": "点击图表以深入查看",
+    "gs.filterLabel.all": "全部",
+    "gs.filterLabel.none": "无",
     "gs.filter.loading": "正在加载筛选器...",
     "gs.filter.error": "加载筛选器时出错",
     "gs.list.loading": "正在加载列表...",

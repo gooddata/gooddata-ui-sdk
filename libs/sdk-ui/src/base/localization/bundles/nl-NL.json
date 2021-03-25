@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "U hebt een API-toegangstoken nodig voor de configuratie met de geografische kaart.",
     "visualization.tooltip.resetZoom": "Zoomen resetten",
     "visualization.tooltip.interaction": "Klik op grafiek om in te zoomen",
+    "gs.filterLabel.all": "Alles",
+    "gs.filterLabel.none": "Geen",
     "gs.filter.loading": "Filter wordt ingelezen…",
     "gs.filter.error": "Fout bij inlezen filter",
     "gs.list.loading": "Lijst wordt ingelezen…",

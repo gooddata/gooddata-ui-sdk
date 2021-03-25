@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "A configuração do gráfico geográfico exige um token de acesso à API válido.",
     "visualization.tooltip.resetZoom": "Repor zoom",
     "visualization.tooltip.interaction": "Clique no gráfico para explorar",
+    "gs.filterLabel.all": "Todos",
+    "gs.filterLabel.none": "Nenhum",
     "gs.filter.loading": "A carregar filtro…",
     "gs.filter.error": "Erro ao carregar filtro",
     "gs.list.loading": "A carregar lista…",
