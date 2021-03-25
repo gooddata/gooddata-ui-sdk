@@ -1,7 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import {
     Dimension,
-    DimensionItemValue,
     SortDirection as TigerSortDirection,
     SortKeyAttribute,
     SortKeyValue,
@@ -66,20 +65,21 @@ function extractItemValueFromElement(elementUri: string): string {
     return elementUri;
 }
 
-function convertMeasureLocators(locators: ILocatorItem[]): DimensionItemValue[] {
-    return locators.map<DimensionItemValue>((locator) => {
+function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: string } {
+    const dataColumnLocators = locators.map<{ [key: string]: string }>((locator) => {
         if (isAttributeLocator(locator)) {
             return {
-                itemIdentifier: locator.attributeLocatorItem.attributeIdentifier,
-                itemValue: extractItemValueFromElement(locator.attributeLocatorItem.element),
+                [locator.attributeLocatorItem.attributeIdentifier]: extractItemValueFromElement(
+                    locator.attributeLocatorItem.element,
+                ),
             };
         } else {
             return {
-                itemIdentifier: MeasureGroupIdentifier,
-                itemValue: locator.measureLocatorItem.measureIdentifier,
+                [MeasureGroupIdentifier]: locator.measureLocatorItem.measureIdentifier,
             };
         }
     });
+    return Object.assign({}, ...dataColumnLocators);
 }
 
 /**
@@ -160,12 +160,11 @@ function dimensionsWithSorts(
             const valueSortKey: SortKeyValue = {
                 value: {
                     direction: convertSortDirection(sortItem.measureSortItem.direction),
-                    dataColumnLocators: [
-                        {
-                            dimensionIdentifier: measureDim.localIdentifier,
-                            locator: convertMeasureLocators(sortItem.measureSortItem.locators),
-                        },
-                    ],
+                    dataColumnLocators: {
+                        [measureDim.localIdentifier]: convertMeasureLocators(
+                            sortItem.measureSortItem.locators,
+                        ),
+                    },
                 },
             };
 

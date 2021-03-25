@@ -251,21 +251,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -291,21 +282,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -331,17 +313,11 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "ASC",
         },
       },
@@ -417,21 +393,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -457,21 +424,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -497,17 +455,11 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "ASC",
         },
       },
@@ -577,21 +529,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -617,21 +560,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -657,17 +591,11 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_0",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_0": Object {
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "ASC",
         },
       },
@@ -730,21 +658,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -770,21 +689,12 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "localId1",
-                  "itemValue": "PrimaryLabelValue",
-                },
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "localId1": "PrimaryLabelValue",
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "DESC",
         },
       },
@@ -810,17 +720,11 @@ Array [
     "sorting": Array [
       Object {
         "value": Object {
-          "dataColumnLocators": Array [
-            Object {
-              "dimensionIdentifier": "dim_1",
-              "locator": Array [
-                Object {
-                  "itemIdentifier": "measureGroup",
-                  "itemValue": "testMeasure",
-                },
-              ],
+          "dataColumnLocators": Object {
+            "dim_1": Object {
+              "measureGroup": "testMeasure",
             },
-          ],
+          },
           "direction": "ASC",
         },
       },

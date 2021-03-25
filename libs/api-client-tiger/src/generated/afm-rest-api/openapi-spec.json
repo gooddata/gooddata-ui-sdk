@@ -529,10 +529,11 @@
                                 "$ref": "#/components/schemas/SortDirection"
                             },
                             "dataColumnLocators": {
-                                "type": "array",
-                                "description": "For each other dimension, specifies location, which value should be used for sorting.",
-                                "items": {
-                                    "$ref": "#/components/schemas/DimensionLocator"
+                                "type": "object",
+                                "description": "Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.",
+                                "example": "{\"dim2\": {\"status\": \"lost\", \"measureGroup\": \"m1\"}}",
+                                "additionalProperties": {
+                                    "$ref": "#/components/schemas/DataColumnLocator"
                                 }
                             }
                         }
@@ -544,40 +545,12 @@
                 "description": "Sorting elements - ascending/descending order.",
                 "enum": ["ASC", "DESC"]
             },
-            "DimensionLocator": {
-                "required": ["dimensionIdentifier", "locator"],
+            "DataColumnLocator": {
                 "type": "object",
-                "description": "Locator of data value in one dimension",
-                "properties": {
-                    "dimensionIdentifier": {
-                        "type": "string",
-                        "description": "Dimension 'localIdentifier' reference.",
-                        "example": "firstDimension"
-                    },
-                    "locator": {
-                        "type": "array",
-                        "description": "List specifying full location of a dimension tuple.",
-                        "items": {
-                            "$ref": "#/components/schemas/DimensionItemValue"
-                        }
-                    }
-                }
-            },
-            "DimensionItemValue": {
-                "required": ["itemIdentifier", "itemValue"],
-                "type": "object",
-                "description": "Locator of data value in one dimension item.",
-                "properties": {
-                    "itemIdentifier": {
-                        "type": "string",
-                        "description": "Dimension item reference - either 'localIdentifier' from 'AttributeItem', or \"measureGroup\".",
-                        "example": "attribute1"
-                    },
-                    "itemValue": {
-                        "type": "string",
-                        "description": "Attribute value (in case of 'localIdentifier' from 'AttributeItem' in 'itemIdentifier') or 'localIdentifier' from 'MeasureItem' (in case of \"measureGroup\" in 'itemIdentifier').'",
-                        "example": "attribute1_valueA"
-                    }
+                "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
+                "example": "{\"status\": \"lost\", \"measureGroup\": \"m1\"}",
+                "additionalProperties": {
+                    "type": "string"
                 }
             },
             "CommonFilter": {

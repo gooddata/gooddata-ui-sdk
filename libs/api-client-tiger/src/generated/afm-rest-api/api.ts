@@ -666,44 +666,6 @@ export interface DimensionHeader {
     headerGroups: Array<HeaderGroup>;
 }
 /**
- * Locator of data value in one dimension item.
- * @export
- * @interface DimensionItemValue
- */
-export interface DimensionItemValue {
-    /**
-     * Dimension item reference - either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\".
-     * @type {string}
-     * @memberof DimensionItemValue
-     */
-    itemIdentifier: string;
-    /**
-     * Attribute value (in case of \'localIdentifier\' from \'AttributeItem\' in \'itemIdentifier\') or \'localIdentifier\' from \'MeasureItem\' (in case of \"measureGroup\" in \'itemIdentifier\').\'
-     * @type {string}
-     * @memberof DimensionItemValue
-     */
-    itemValue: string;
-}
-/**
- * Locator of data value in one dimension
- * @export
- * @interface DimensionLocator
- */
-export interface DimensionLocator {
-    /**
-     * Dimension \'localIdentifier\' reference.
-     * @type {string}
-     * @memberof DimensionLocator
-     */
-    dimensionIdentifier: string;
-    /**
-     * List specifying full location of a dimension tuple.
-     * @type {Array<DimensionItemValue>}
-     * @memberof DimensionLocator
-     */
-    locator: Array<DimensionItemValue>;
-}
-/**
  * List of returned elements.
  * @export
  * @interface Element
@@ -1989,11 +1951,11 @@ export interface SortKeyValueValue {
      */
     direction?: SortDirection;
     /**
-     * For each other dimension, specifies location, which value should be used for sorting.
-     * @type {Array<DimensionLocator>}
+     * Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.
+     * @type {{ [key: string]: { [key: string]: string; }; }}
      * @memberof SortKeyValueValue
      */
-    dataColumnLocators: Array<DimensionLocator>;
+    dataColumnLocators: { [key: string]: { [key: string]: string } };
 }
 /**
  * Sorting elements - ascending/descending order.

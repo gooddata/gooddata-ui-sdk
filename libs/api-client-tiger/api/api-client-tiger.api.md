@@ -780,18 +780,6 @@ export interface DimensionHeader {
 }
 
 // @public
-export interface DimensionItemValue {
-    itemIdentifier: string;
-    itemValue: string;
-}
-
-// @public
-export interface DimensionLocator {
-    dimensionIdentifier: string;
-    locator: Array<DimensionItemValue>;
-}
-
-// @public
 interface Element_2 {
     primaryTitle: string;
     title: string;
@@ -5255,7 +5243,11 @@ export interface SortKeyValue {
 
 // @public
 export interface SortKeyValueValue {
-    dataColumnLocators: Array<DimensionLocator>;
+    dataColumnLocators: {
+        [key: string]: {
+            [key: string]: string;
+        };
+    };
     direction?: SortDirection;
 }
 
