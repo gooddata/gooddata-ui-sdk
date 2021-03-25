@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "A configuração de Geochart requer um token de acesso válido à API.",
     "visualization.tooltip.resetZoom": "Redefinir zoom",
     "visualization.tooltip.interaction": "Clique no gráfico para detalhar",
+    "gs.filterLabel.all": "Todos",
+    "gs.filterLabel.none": "Nenhum",
     "gs.filter.loading": "Carregando filtro…",
     "gs.filter.error": "Erro ao carregar filtro",
     "gs.list.loading": "Carregando lista…",

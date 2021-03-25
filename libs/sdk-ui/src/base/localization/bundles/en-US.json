@@ -214,6 +214,16 @@
         "comment": "",
         "limit": 0
     },
+    "gs.filterLabel.all": {
+        "value": "All",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.filterLabel.none": {
+        "value": "None",
+        "comment": "",
+        "limit": 0
+    },
     "gs.filter.loading": {
         "value": "Loading filter…",
         "comment": "Use '…' as one character, not 3 dots ('...').",

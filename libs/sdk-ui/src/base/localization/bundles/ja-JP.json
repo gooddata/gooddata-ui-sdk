@@ -42,6 +42,8 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "Geochart 設定には有効な API アクセストークンが必要です。",
     "visualization.tooltip.resetZoom": "ズームをリセット",
     "visualization.tooltip.interaction": "チャートをクリックしてドリル",
+    "gs.filterLabel.all": "すべて",
+    "gs.filterLabel.none": "なし",
     "gs.filter.loading": "フィルターを読み込み中…",
     "gs.filter.error": "フィルターの読み込みエラー",
     "gs.list.loading": "リストを読み込み中…",
