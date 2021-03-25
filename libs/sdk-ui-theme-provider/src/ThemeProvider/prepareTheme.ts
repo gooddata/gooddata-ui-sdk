@@ -43,8 +43,8 @@ const stripComplementaryPalette = (theme: ITheme): ITheme => {
         ...theme,
     };
 
-    delete strippedTheme.palette.complementary;
-    delete strippedTheme.chart;
+    strippedTheme?.palette?.complementary && delete strippedTheme.palette.complementary;
+    strippedTheme?.chart && delete strippedTheme.chart;
 
     return strippedTheme;
 };
