@@ -51,6 +51,15 @@ export interface IHeaderMenuItem {
     target?: string;
     onClick?: (obj: any) => void;
 }
+
+/**
+ * @internal
+ */
+export interface IHeaderBadge {
+    key: string;
+    render: () => React.ReactNode;
+}
+
 /**
  * @internal
  */
@@ -63,6 +72,8 @@ export interface IAppHeaderProps {
     menuItemsGroups?: IHeaderMenuItem[][];
     accountMenuItems?: IHeaderMenuItem[];
     helpMenuItems?: IHeaderMenuItem[];
+
+    badges?: IHeaderBadge[];
 
     logoUrl?: string;
     logoHref?: string;
@@ -315,6 +326,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderVerticalMenu = () => {
+        const { badges = [] } = this.props;
+
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.addHelpItemGroup(this.props.menuItemsGroups)
             : this.getHelpMenu();
@@ -330,6 +343,11 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     />
                 </div>
                 <div className="gd-header-menu-vertical-footer">
+                    {badges.length > 0 && (
+                        <div className="gd-header-vertical-badges">
+                            {badges.map((badge) => badge.render())}
+                        </div>
+                    )}
                     <div className="gd-header-menu-vertical-bottom-item">
                         <span className="gd-header-username icon-user">{this.props.userName}</span>
                     </div>
@@ -364,6 +382,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderStandardNav = () => {
+        const { badges = [] } = this.props;
+
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
                 <HeaderMenu
@@ -389,6 +409,11 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     className="gd-header-measure"
                     items={this.props.accountMenuItems}
                 />
+                {badges.length > 0 && (
+                    <div className="gd-header-badges gd-header-measure">
+                        {badges.map((badge) => badge.render())}
+                    </div>
+                )}
             </div>
         );
     };

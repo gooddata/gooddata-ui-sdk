@@ -402,7 +402,9 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         content: "\e612";
         position: absolute;
         top: 0;
-        right: 11px;
+        // stylelint-disable-next-line declaration-no-important
+        right: initial !important; // override goodstrap for now which sets this
+        margin-left: 11px;
         width: 12px;
         opacity: 0.5;
         text-align: center;
@@ -802,5 +804,41 @@ button.gd-button-primary {
         > span {
             margin-left: 22px;
         }
+    }
+}
+
+.gd-header-badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    margin: 0 10px;
+}
+
+.gd-header-vertical-badges {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 15px;
+    margin-top: 10px;
+}
+
+.gd-header-badge {
+    border-radius: 6px;
+
+    transition: all 0.2s;
+    height: 22px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 22px;
+    padding: 0 10px;
+
+    cursor: default;
+
+    white-space: nowrap;
+
+    & + & {
+        margin-left: 5px;
     }
 }
