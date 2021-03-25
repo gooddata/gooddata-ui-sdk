@@ -1,9 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import { storiesOf } from "@storybook/react";
 import React from "react";
-import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { PivotTable, IPivotTableProps } from "@gooddata/sdk-ui-pivot";
 import { PivotTableWithSingleMeasureAndTwoRowsAndCols } from "../../../../scenarios/pivotTable/base";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
+import { withScreenshot, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -12,10 +12,11 @@ import "@gooddata/sdk-ui-pivot/styles/css/pivotTable.css";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
 import { action } from "@storybook/addon-actions";
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_infra/ScreenshotReadyWrapper";
+import { AmountMeasurePredicate } from "../../../../scenarios/_infra/predicates";
 
 const backend = StorybookBackend();
 
-const PivotTableTest = () => (
+const PivotTableTest = (config: Partial<IPivotTableProps> = {}) => (
     <div
         style={{
             width: 800,
@@ -43,6 +44,7 @@ const PivotTableTest = () => (
                 },
             }}
             onColumnResized={action("columnResized")}
+            {...config}
         />
     </div>
 );
@@ -66,6 +68,24 @@ storiesOf(`${CustomStories}/Pivot Table`, module).add("themed", () =>
             hoverSelector:
                 ".s-table-measure-column-header-group-cell-0.s-table-measure-column-header-cell-0.s-table-measure-column-header-index-2",
             postInteractionWait: 200,
+        },
+    ),
+);
+
+storiesOf(`${CustomStories}/Pivot Table`, module).add("drill underline style", () =>
+    withMultipleScreenshots(
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <PivotTableTest drillableItems={[AmountMeasurePredicate]} />,
+        </ScreenshotReadyWrapper>,
+        {
+            "standard cell": {
+                hoverSelector: ".s-cell-1-2",
+                postInteractionWait: 1000,
+            },
+            "empty cell": {
+                hoverSelector: ".s-cell-3-2",
+                postInteractionWait: 1000,
+            },
         },
     ),
 );
