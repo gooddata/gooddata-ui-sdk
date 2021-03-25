@@ -2,7 +2,6 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { Headline } from "@gooddata/sdk-ui-charts";
-import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 import { HeadlineWithTwoMeasures } from "../../../../scenarios/charts/headline/base";
 import { withScreenshot } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
@@ -11,33 +10,11 @@ import { ScreenshotReadyWrapper, createElementCountResolver } from "../../../_in
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "../insightStories.css";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
+import { wrapWithTheme } from "../../themeWrapper";
 
-const backend = StorybookBackend({
-    theme: {
-        kpi: {
-            primaryMeasureColor: "#f00",
-            secondaryInfoColor: "#00f",
-        },
-    },
-});
+const backend = StorybookBackend();
 
 storiesOf(`${CustomStories}/Headline`, module)
-    .add("themed", () =>
-        withScreenshot(
-            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
-                <ThemeProvider backend={backend} workspace={ReferenceWorkspaceId}>
-                    <div className="dashboard-like-6">
-                        <Headline
-                            backend={backend}
-                            workspace={ReferenceWorkspaceId}
-                            primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
-                            secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
-                        />
-                    </div>
-                </ThemeProvider>
-            </ScreenshotReadyWrapper>,
-        ),
-    )
     .add("responsive", () =>
         withScreenshot(
             <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
@@ -58,5 +35,21 @@ storiesOf(`${CustomStories}/Headline`, module)
                     />
                 </div>
             </ScreenshotReadyWrapper>,
+        ),
+    )
+    .add("themed", () =>
+        withScreenshot(
+            wrapWithTheme(
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <div className="dashboard-like-6">
+                        <Headline
+                            backend={backend}
+                            workspace={ReferenceWorkspaceId}
+                            primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                            secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                        />
+                    </div>
+                </ScreenshotReadyWrapper>,
+            ),
         ),
     );

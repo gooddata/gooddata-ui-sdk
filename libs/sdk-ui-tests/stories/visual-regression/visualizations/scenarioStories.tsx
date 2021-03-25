@@ -14,6 +14,7 @@ import groupBy from "lodash/groupBy";
 import sortBy from "lodash/sortBy";
 import { ScenarioStories } from "../../_infra/storyGroups";
 import values from "lodash/values";
+import { wrapWithTheme } from "../themeWrapper";
 
 const DefaultWrapperStyle = { width: 800, height: 400 };
 
@@ -28,6 +29,20 @@ function simpleStory(Component: React.ComponentType, props: any, wrapperStyle: a
                     <Component {...props} />
                 </div>
             </ScreenshotReadyWrapper>,
+        );
+    };
+}
+
+function themedStory(Component: React.ComponentType, props: any, wrapperStyle: any) {
+    return () => {
+        return withScreenshot(
+            wrapWithTheme(
+                <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+                    <div style={wrapperStyle}>
+                        <Component {...props} />
+                    </div>
+                </ScreenshotReadyWrapper>,
+            ),
         );
     };
 }
@@ -87,7 +102,12 @@ ScenarioGroupsByVis.forEach((groups) => {
                 const { propsFactory, workspaceType, component: Component } = scenario;
                 const props = propsFactory(backend, workspaceType);
 
-                storiesForChart.add(name, simpleStory(Component, props, wrapperStyle));
+                storiesForChart.add(
+                    name,
+                    scenario.tags.includes("themed")
+                        ? themedStory(Component, props, wrapperStyle)
+                        : simpleStory(Component, props, wrapperStyle),
+                );
             });
         }
     }

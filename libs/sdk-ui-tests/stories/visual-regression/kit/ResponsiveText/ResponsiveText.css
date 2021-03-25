@@ -1,11 +1,12 @@
 /* (C) 2007-2020 GoodData Corporation */
 .responsive-text-wrapper {
     padding: 1rem;
-    border: 1px solid silver;
+    border: 1px solid var(--gd-palette-complementary-5, silver);
     white-space: nowrap;
     margin-bottom: 1rem;
     font-size: 60px;
     text-align: center;
+    color: var(--gd-palette-complementary-8, inherit);
 }
 
 .responsive-text-relative-wrapper {

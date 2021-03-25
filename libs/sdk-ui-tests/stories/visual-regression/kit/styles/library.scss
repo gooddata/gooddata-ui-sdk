@@ -3,7 +3,7 @@
 $goodstrap-fontFamily: "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
 
 $goodstrap-sideMenuTrigger: 40em;
-$goodstrap-bg-color: #fff;
+$goodstrap-bg-color: var(--gd-palette-complementary-0, #fff);
 
 // stylelint-disable value-no-vendor-prefix, declaration-block-no-duplicate-properties, max-line-length
 @mixin gradient-linear($topColor, $bottomColor) {
@@ -58,8 +58,8 @@ $goodstrap-bg-color: #fff;
     position: relative;
     margin: 15px 0;
     padding: 20px 20px 0;
-    border: 1px solid #ccc;
-    background: #fff;
+    border: 1px solid var(--gd-palette-complementary-3, #ccc);
+    background: var(--gd-palette-complementary-0, #fff);
     min-height: 20px;
     border-radius: 4px 4px 4px 0;
 }
@@ -71,16 +71,19 @@ $goodstrap-bg-color: #fff;
     display: block;
     margin: 20px -20px 0;
     padding: 5px 7px;
-    color: #555;
+    color: var(--gd-palette-complementary-7, #555);
     cursor: pointer;
-    border-top: 1px dotted #eee;
+    border-top: 1px dotted var(--gd-palette-complementary-2, #eee);
     font-size: 12px;
-    @include gradient-linear(#fff, #ccc);
+    @include gradient-linear(
+        var(--gd-palette-complementary-0, #fff),
+        var(--gd-palette-complementary-3, #ccc)
+    );
 }
 
 pre.prettyprint,
 code.prettyprint {
-    background-color: #eee;
+    background-color: var(--gd-palette-complementary-2, #eee);
     @include transition("background-color", 0.8s);
 
     &.flash {
@@ -90,7 +93,7 @@ code.prettyprint {
 
 pre.prettyprint {
     padding: 1em 1.5em;
-    border: 1px solid #ddd;
+    border: 1px solid var(--gd-palette-complementary-4, #ddd);
     white-space: pre-wrap;
     border-radius: 5px;
 }
@@ -106,7 +109,7 @@ pre.prettyprint {
         margin: 0.5em 0;
         line-height: 1.4rem;
         font-size: 34px;
-        color: black;
+        color: var(--gd-palette-complementary-9, #000);
 
         .title-bg {
             position: relative;
@@ -124,7 +127,7 @@ pre.prettyprint {
                 right: 0;
                 left: 50px;
                 height: 1px;
-                background: #ddd;
+                background: var(--gd-palette-complementary-4, #ddd);
             }
         }
     }
@@ -162,7 +165,7 @@ pre.prettyprint {
         }
         tr td {
             padding: 10px;
-            border-top: 1px solid #ccc;
+            border-top: 1px solid var(--gd-palette-complementary-3, #ccc);
         }
     }
 
@@ -205,9 +208,9 @@ pre.prettyprint {
 
     code {
         padding: 2px 4px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--gd-palette-complementary-3, #ccc);
         white-space: nowrap;
-        background: white;
+        background: var(--gd-palette-complementary-0, #fff);
         font-size: 90%;
     }
 

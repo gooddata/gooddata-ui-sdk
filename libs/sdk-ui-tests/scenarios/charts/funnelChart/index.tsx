@@ -2,5 +2,6 @@
 
 import base from "./base";
 import coloring from "./coloring";
+import theming from "./theming";
 
-export default [base, ...coloring];
+export default [base, ...coloring, theming];

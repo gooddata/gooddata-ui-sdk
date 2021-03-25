@@ -5,7 +5,7 @@
     > h2 {
         font-size: 34px;
         margin: 0.5em 0;
-        color: black;
+        color: var(--gd-palette-complementary-9, #000);
     }
 
     > h2:nth-of-type(n + 2) {
@@ -43,9 +43,9 @@
 
     code {
         padding: 2px 4px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--gd-palette-complementary-3, #ccc);
         white-space: nowrap;
-        background: white;
+        background: var(--gd-palette-complementary-0, #fff);
         font-size: 90%;
     }
 }
@@ -57,7 +57,7 @@
     }
 
     > div {
-        color: #a4b2bf;
+        color: var(--gd-palette-complementary-5, #a4b2bf);
         font-size: 14px;
     }
 }

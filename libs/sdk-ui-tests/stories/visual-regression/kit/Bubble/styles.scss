@@ -50,7 +50,7 @@
 .bubble-align-example-target {
     width: 150px;
     height: 70px;
-    background: silver;
+    background: var(--gd-palette-complementary-5, silver);
 }
 
 .bubble-align-point-example .bubble-align-example-target {
@@ -65,7 +65,7 @@
     width: 20px;
     height: 20px;
     border: 1px dashed black;
-    background: rgba(255, 255, 255, 0.75);
+    background: var(--gd-palette-complementary-3, rgba(255, 255, 255, 0.75));
     border-radius: 50%;
     font-size: 90%;
     text-align: center;

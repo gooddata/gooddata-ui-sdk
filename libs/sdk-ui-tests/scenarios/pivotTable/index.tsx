@@ -9,6 +9,7 @@ import totals from "./totals";
 import drilling from "./drilling";
 import grouping from "./grouping";
 import experimental from "./experimental";
+import theming from "./theming";
 
 export default [
     base,
@@ -20,4 +21,5 @@ export default [
     drilling,
     grouping,
     experimental,
+    theming,
 ];

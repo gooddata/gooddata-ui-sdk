@@ -2,5 +2,6 @@
 
 import base from "./base";
 import drilling from "./drilling";
+import theming from "./theming";
 
-export default [base, drilling];
+export default [base, drilling, theming];
