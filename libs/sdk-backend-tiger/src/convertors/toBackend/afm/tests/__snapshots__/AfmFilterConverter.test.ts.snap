@@ -6,16 +6,16 @@ Object {
   "filters": Array [
     Object {
       "positiveAttributeFilter": Object {
-        "displayForm": Object {
-          "identifier": Object {
-            "id": "label.product.id.name",
-            "type": "label",
-          },
-        },
         "in": Object {
           "values": Array [
             "value",
           ],
+        },
+        "label": Object {
+          "identifier": Object {
+            "id": "label.product.id.name",
+            "type": "label",
+          },
         },
       },
     },

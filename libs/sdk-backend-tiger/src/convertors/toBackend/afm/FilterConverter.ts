@@ -38,7 +38,7 @@ import {
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions";
 import {
     toDateDataSetQualifier,
-    toDisplayFormQualifier,
+    toLabelQualifier,
     toMeasureValueFilterMeasureQualifier,
     toRankingFilterDimensionalityIdentifier,
 } from "../ObjRefConverter";
@@ -82,12 +82,12 @@ function convertPositiveFilter(
     filter: IPositiveAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
 ): PositiveAttributeFilter {
-    const displayFormRef = filter.positiveAttributeFilter.displayForm;
+    const labelRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
 
     return {
         positiveAttributeFilter: {
-            displayForm: toDisplayFormQualifier(displayFormRef),
+            label: toLabelQualifier(labelRef),
             in: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },
@@ -100,12 +100,12 @@ function convertNegativeFilter(
     filter: INegativeAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
 ): NegativeAttributeFilter {
-    const displayFormRef = filter.negativeAttributeFilter.displayForm;
+    const labelRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
 
     return {
         negativeAttributeFilter: {
-            displayForm: toDisplayFormQualifier(displayFormRef),
+            label: toLabelQualifier(labelRef),
             notIn: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },
