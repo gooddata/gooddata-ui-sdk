@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IInsight,
     IBucket,
@@ -21,6 +21,7 @@ import omit from "lodash/omit";
 import { GdcVisualizationObject } from "@gooddata/api-model-bear";
 import { convertReferencesToUris } from "./ReferenceConverter";
 import { deserializeProperties, serializeProperties } from "./PropertiesConverter";
+import { fromBearRef, fromScopedBearRef } from "./ObjRefConverter";
 
 // we use more lenient uri "detection" here because the one in bear-client makes some legacy data fail
 // as the objId is not always just a number
@@ -41,7 +42,7 @@ const convertMeasureValueFilter = (
     return {
         measureValueFilter: {
             condition: filter.measureValueFilter.condition,
-            measure: filter.measureValueFilter.measure,
+            measure: fromScopedBearRef(filter.measureValueFilter.measure, "measure"),
         },
     };
 };
@@ -50,7 +51,7 @@ const convertRankingFilter = (filter: GdcVisualizationObject.IRankingFilter): IR
     const { measures, operator, value, attributes } = filter.rankingFilter;
     return {
         rankingFilter: {
-            measure: measures[0],
+            measure: fromScopedBearRef(measures[0], "measure"),
             operator,
             value,
             attributes,
@@ -73,14 +74,14 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
         if (GdcVisualizationObject.isPositiveAttributeFilter(filter)) {
             return {
                 positiveAttributeFilter: {
-                    displayForm: filter.positiveAttributeFilter.displayForm,
+                    displayForm: fromBearRef(filter.positiveAttributeFilter.displayForm, "displayForm"),
                     in: convertAttributeElements(filter.positiveAttributeFilter.in),
                 },
             };
         }
         return {
             negativeAttributeFilter: {
-                displayForm: filter.negativeAttributeFilter.displayForm,
+                displayForm: fromBearRef(filter.negativeAttributeFilter.displayForm, "displayForm"),
                 notIn: convertAttributeElements(filter.negativeAttributeFilter.notIn),
             },
         };
@@ -88,7 +89,7 @@ const convertMeasureFilter = (filter: GdcVisualizationObject.Filter): IMeasureFi
         if (GdcVisualizationObject.isAbsoluteDateFilter(filter)) {
             return {
                 absoluteDateFilter: {
-                    dataSet: filter.absoluteDateFilter.dataSet,
+                    dataSet: fromBearRef(filter.absoluteDateFilter.dataSet, "dataSet"),
                     from: filter.absoluteDateFilter.from || "", // TODO can we really do this (should we?)
                     to: filter.absoluteDateFilter.to || "",
                 },
@@ -150,7 +151,12 @@ const convertMeasure = (measure: GdcVisualizationObject.IMeasure): IMeasure => {
 };
 
 const convertAttribute = (attribute: GdcVisualizationObject.IAttribute): IAttribute => {
-    return { attribute: attribute.visualizationAttribute };
+    return {
+        attribute: {
+            ...attribute.visualizationAttribute,
+            displayForm: fromBearRef(attribute.visualizationAttribute.displayForm, "displayForm"),
+        },
+    };
 };
 
 const convertBucketItem = (bucketItem: GdcVisualizationObject.BucketItem): IAttributeOrMeasure => {
