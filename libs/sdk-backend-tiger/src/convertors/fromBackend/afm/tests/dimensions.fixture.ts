@@ -22,14 +22,12 @@ export const mockDimensions: ResultDimension[] = [
         headers: [
             {
                 attributeHeader: {
-                    identifier: "event_date.quarter.label",
+                    label: { identifier: { id: "event_date.quarter.label", type: "label" } },
                     localIdentifier: "fd48e8fd32b54b1baba3e3ccdd719f26",
-                    name: "event_date - Quarter/Year",
-                    formOf: {
-                        primaryLabelIdentifier: "event_date.quarter",
-                        identifier: "event_date.quarter",
-                        name: "event_date - Quarter/Year",
-                    },
+                    labelName: "event_date - Quarter/Year",
+                    primaryLabel: { identifier: { id: "event_date.quarter", type: "label" } },
+                    attribute: { identifier: { id: "event_date.quarter", type: "attribute" } },
+                    attributeName: "event_date - Quarter/Year",
                 },
             },
         ],
@@ -41,26 +39,22 @@ export const mockMultipleDimensions: ResultDimension[] = [
         headers: [
             {
                 attributeHeader: {
-                    identifier: "event_date.quarter.label",
+                    label: { identifier: { id: "event_date.quarter.label", type: "label" } },
                     localIdentifier: "localAttr1",
-                    name: "event_date - Quarter/Year",
-                    formOf: {
-                        primaryLabelIdentifier: "event_date.quarter",
-                        identifier: "event_date.quarter",
-                        name: "event_date - Quarter/Year",
-                    },
+                    labelName: "event_date - Quarter/Year",
+                    primaryLabel: { identifier: { id: "event_date.quarter", type: "label" } },
+                    attribute: { identifier: { id: "event_date.quarter", type: "attribute" } },
+                    attributeName: "event_date - Quarter/Year",
                 },
             },
             {
                 attributeHeader: {
-                    identifier: "event_date.quarter.label",
+                    label: { identifier: { id: "event_date.quarter.label", type: "label" } },
                     localIdentifier: "localAttr2",
-                    name: "event_date - Quarter/Year",
-                    formOf: {
-                        primaryLabelIdentifier: "event_date.quarter",
-                        identifier: "event_date.quarter",
-                        name: "event_date - Quarter/Year",
-                    },
+                    labelName: "event_date - Quarter/Year",
+                    primaryLabel: { identifier: { id: "event_date.quarter", type: "label" } },
+                    attribute: { identifier: { id: "event_date.quarter", type: "attribute" } },
+                    attributeName: "event_date - Quarter/Year",
                 },
             },
         ],
@@ -85,14 +79,12 @@ export const mockMultipleDimensions: ResultDimension[] = [
         headers: [
             {
                 attributeHeader: {
-                    identifier: "event_date.quarter.label",
+                    label: { identifier: { id: "event_date.quarter.label", type: "label" } },
                     localIdentifier: "localAttr3",
-                    name: "event_date - Quarter/Year",
-                    formOf: {
-                        primaryLabelIdentifier: "event_date.quarter",
-                        identifier: "event_date.quarter",
-                        name: "event_date - Quarter/Year",
-                    },
+                    labelName: "event_date - Quarter/Year",
+                    primaryLabel: { identifier: { id: "event_date.quarter", type: "label" } },
+                    attribute: { identifier: { id: "event_date.quarter", type: "attribute" } },
+                    attributeName: "event_date - Quarter/Year",
                 },
             },
         ],

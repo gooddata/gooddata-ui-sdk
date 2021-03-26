@@ -230,10 +230,47 @@ export interface AttributeHeader {
 
 // @public
 export interface AttributeHeaderAttributeHeader {
-    formOf: FormOf;
-    identifier: string;
+    attribute: ObjectIdentifier;
+    attributeName: string;
+    granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
+    label: ObjectIdentifier;
+    labelName: string;
     localIdentifier: string;
-    name: string;
+    primaryLabel: ObjectIdentifier;
+}
+
+// @public
+export enum AttributeHeaderAttributeHeaderGranularityEnum {
+    // (undocumented)
+    DAY = "DAY",
+    // (undocumented)
+    DAYOFMONTH = "DAY_OF_MONTH",
+    // (undocumented)
+    DAYOFWEEK = "DAY_OF_WEEK",
+    // (undocumented)
+    DAYOFYEAR = "DAY_OF_YEAR",
+    // (undocumented)
+    HOUR = "HOUR",
+    // (undocumented)
+    HOUROFDAY = "HOUR_OF_DAY",
+    // (undocumented)
+    MINUTE = "MINUTE",
+    // (undocumented)
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    // (undocumented)
+    MONTH = "MONTH",
+    // (undocumented)
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    // (undocumented)
+    QUARTER = "QUARTER",
+    // (undocumented)
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    // (undocumented)
+    WEEK = "WEEK",
+    // (undocumented)
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+    // (undocumented)
+    YEAR = "YEAR"
 }
 
 // @public
@@ -919,48 +956,6 @@ export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefini
 
 // @public
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
-
-// @public
-export interface FormOf {
-    granularity?: FormOfGranularityEnum;
-    identifier: string;
-    name: string;
-    primaryLabelIdentifier: string;
-}
-
-// @public
-export enum FormOfGranularityEnum {
-    // (undocumented)
-    DAY = "DAY",
-    // (undocumented)
-    DAYOFMONTH = "DAY_OF_MONTH",
-    // (undocumented)
-    DAYOFWEEK = "DAY_OF_WEEK",
-    // (undocumented)
-    DAYOFYEAR = "DAY_OF_YEAR",
-    // (undocumented)
-    HOUR = "HOUR",
-    // (undocumented)
-    HOUROFDAY = "HOUR_OF_DAY",
-    // (undocumented)
-    MINUTE = "MINUTE",
-    // (undocumented)
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    // (undocumented)
-    MONTH = "MONTH",
-    // (undocumented)
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    // (undocumented)
-    QUARTER = "QUARTER",
-    // (undocumented)
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
-    // (undocumented)
-    WEEK = "WEEK",
-    // (undocumented)
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-    // (undocumented)
-    YEAR = "YEAR"
-}
 
 // @public
 export interface GrainIdentifier {

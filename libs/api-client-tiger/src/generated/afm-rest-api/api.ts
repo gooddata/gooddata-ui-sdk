@@ -333,26 +333,67 @@ export interface AttributeHeaderAttributeHeader {
      * @type {string}
      * @memberof AttributeHeaderAttributeHeader
      */
-    identifier: string;
-    /**
-     *
-     * @type {string}
-     * @memberof AttributeHeaderAttributeHeader
-     */
     localIdentifier: string;
     /**
      *
+     * @type {ObjectIdentifier}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    attribute: ObjectIdentifier;
+    /**
+     *
      * @type {string}
      * @memberof AttributeHeaderAttributeHeader
      */
-    name: string;
+    attributeName: string;
     /**
      *
-     * @type {FormOf}
+     * @type {ObjectIdentifier}
      * @memberof AttributeHeaderAttributeHeader
      */
-    formOf: FormOf;
+    label: ObjectIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    labelName: string;
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    primaryLabel: ObjectIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeHeaderAttributeHeader
+     */
+    granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
 }
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum AttributeHeaderAttributeHeaderGranularityEnum {
+    YEAR = "YEAR",
+    DAY = "DAY",
+    HOUR = "HOUR",
+    MINUTE = "MINUTE",
+    QUARTER = "QUARTER",
+    MONTH = "MONTH",
+    WEEK = "WEEK",
+    QUARTEROFYEAR = "QUARTER_OF_YEAR",
+    MONTHOFYEAR = "MONTH_OF_YEAR",
+    DAYOFYEAR = "DAY_OF_YEAR",
+    DAYOFWEEK = "DAY_OF_WEEK",
+    DAYOFMONTH = "DAY_OF_MONTH",
+    HOUROFDAY = "HOUR_OF_DAY",
+    MINUTEOFHOUR = "MINUTE_OF_HOUR",
+    WEEKOFYEAR = "WEEK_OF_YEAR",
+}
+
 /**
  *
  * @export
@@ -882,60 +923,6 @@ export type FilterDefinition =
  * @export
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
-/**
- *
- * @export
- * @interface FormOf
- */
-export interface FormOf {
-    /**
-     *
-     * @type {string}
-     * @memberof FormOf
-     */
-    identifier: string;
-    /**
-     *
-     * @type {string}
-     * @memberof FormOf
-     */
-    primaryLabelIdentifier: string;
-    /**
-     *
-     * @type {string}
-     * @memberof FormOf
-     */
-    name: string;
-    /**
-     *
-     * @type {string}
-     * @memberof FormOf
-     */
-    granularity?: FormOfGranularityEnum;
-}
-
-/**
- * @export
- * @enum {string}
- */
-export enum FormOfGranularityEnum {
-    YEAR = "YEAR",
-    DAY = "DAY",
-    HOUR = "HOUR",
-    MINUTE = "MINUTE",
-    QUARTER = "QUARTER",
-    MONTH = "MONTH",
-    WEEK = "WEEK",
-    QUARTEROFYEAR = "QUARTER_OF_YEAR",
-    MONTHOFYEAR = "MONTH_OF_YEAR",
-    DAYOFYEAR = "DAY_OF_YEAR",
-    DAYOFWEEK = "DAY_OF_WEEK",
-    DAYOFMONTH = "DAY_OF_MONTH",
-    HOUROFDAY = "HOUR_OF_DAY",
-    MINUTEOFHOUR = "MINUTE_OF_HOUR",
-    WEEKOFYEAR = "WEEK_OF_YEAR",
-}
-
 /**
  * Definition of a grand total. Grand total data will be computed into a separate section of the result structure so that client has more options how to visualize them.
  * @export

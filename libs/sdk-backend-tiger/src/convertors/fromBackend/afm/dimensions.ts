@@ -45,16 +45,16 @@ function transformDimension(
                 const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
                         uri: `/obj/${headerIdx}`,
-                        identifier: h.attributeHeader.identifier,
-                        ref: idRef(h.attributeHeader.identifier, "displayForm"),
+                        identifier: h.attributeHeader.label.identifier.id,
+                        ref: idRef(h.attributeHeader.label.identifier.id, "displayForm"),
                         formOf: {
-                            identifier: h.attributeHeader.formOf.identifier,
-                            name: h.attributeHeader.formOf.name,
+                            identifier: h.attributeHeader.attribute.identifier.id,
+                            name: h.attributeHeader.attributeName,
                             uri: `/obj/${headerIdx}`,
-                            ref: idRef(h.attributeHeader.formOf.identifier, "attribute"),
+                            ref: idRef(h.attributeHeader.attribute.identifier.id, "attribute"),
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
-                        name: h.attributeHeader.name,
+                        name: h.attributeHeader.labelName,
                         totalItems: attrTotals[h.attributeHeader.localIdentifier] ?? [],
                     },
                 };
