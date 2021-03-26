@@ -336,6 +336,9 @@ export const Header: React_2.FC<IHeaderProps>;
 export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
 
 // @internal (undocumented)
+export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
+
+// @internal (undocumented)
 export const HeaderDataMenu: React_2.ForwardRefExoticComponent<Pick<IHeaderDataMenuProps, "className" | "onMenuItemClick" | "dataMenuItems"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
@@ -845,11 +848,17 @@ export interface IHeaderBadgeProps {
     // (undocumented)
     backgroundColor?: string;
     // (undocumented)
-    borderColor?: string;
-    // (undocumented)
     className?: string;
     // (undocumented)
     color?: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
+    // (undocumented)
+    renderModalContent: (parameters: {
+        closeModal: () => void;
+    }) => React_2.ReactNode;
 }
 
 // @internal (undocumented)

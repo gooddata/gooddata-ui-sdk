@@ -11,3 +11,4 @@ export { IUiSettings, generateHeaderAccountMenuItems } from "./generateHeaderAcc
 export { generateHeaderHelpMenuItems } from "./generateHeaderHelpMenuItems";
 export { generateHeaderMenuItemsGroups } from "./generateHeaderMenuItemsGroups";
 export { HeaderBadge, IHeaderBadgeProps } from "./HeaderBadge";
+export { HeaderBadgeWithModal, IHeaderBadgeWithModalProps } from "./HeaderBadgeWithModal";

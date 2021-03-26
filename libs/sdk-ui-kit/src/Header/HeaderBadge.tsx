@@ -9,21 +9,14 @@ export interface IHeaderBadgeProps {
     className?: string;
     color?: string;
     backgroundColor?: string;
-    borderColor?: string;
 }
 
 /**
  * @internal
  */
-export const HeaderBadge: React.FC<IHeaderBadgeProps> = ({
-    children,
-    color,
-    backgroundColor,
-    borderColor,
-    className,
-}) => {
+export const HeaderBadge: React.FC<IHeaderBadgeProps> = ({ children, color, backgroundColor, className }) => {
     return (
-        <div className={cx("gd-header-badge", className)} style={{ color, backgroundColor, borderColor }}>
+        <div className={cx("gd-header-badge", className)} style={{ color, backgroundColor }}>
             {children}
         </div>
     );
