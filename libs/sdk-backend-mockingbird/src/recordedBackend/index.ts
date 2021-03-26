@@ -78,6 +78,7 @@ export function recordedBackend(
         canCalculateSubTotals: true,
         canCalculateTotals: true,
         canCalculateNativeTotals: true,
+        supportsCsvUploader: true,
     },
 ): IAnalyticalBackend {
     const backend: IAnalyticalBackend = {
