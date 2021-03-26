@@ -172,6 +172,9 @@ function recordedWorkspace(
         getDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
+        getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+            throw new NotSupported("not supported");
+        },
         execution(): IExecutionFactory {
             return new RecordedExecutionFactory(recordings, workspace);
         },

@@ -200,6 +200,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         getDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
+        getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+            throw new NotSupported("not supported");
+        },
         execution(): IExecutionFactory {
             return new DummyExecutionFactory(config, workspace);
         },

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IPagedResource } from "../common/paging";
 import { IExecutionFactory } from "./execution";
 import { IWorkspaceInsightsService } from "./insights";
@@ -27,6 +27,11 @@ export interface IAnalyticalWorkspace {
      * Returns details about the analytical workspace.
      */
     getDescriptor(): Promise<IWorkspaceDescriptor>;
+
+    /**
+     * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.
+     */
+    getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
 
     /**
      * Returns factory that can be used to query workspace catalog items - attributes, measures, facts and date data sets.
@@ -106,6 +111,11 @@ export interface IWorkspaceDescriptor {
     title: string;
     description: string;
     isDemo?: boolean;
+
+    /**
+     * Identifier of the parent workspace
+     */
+    parentWorkspace?: string;
 }
 
 /**

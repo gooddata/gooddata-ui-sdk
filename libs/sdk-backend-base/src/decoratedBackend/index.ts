@@ -106,6 +106,10 @@ class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.getDescriptor();
     }
 
+    public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+        return this.decorated.getParentWorkspace();
+    }
+
     public attributes(): IWorkspaceAttributesService {
         return this.decorated.attributes();
     }

@@ -47,13 +47,24 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
             const workspaceDescriptor = workspaceConverter(
                 (
                     await this.authCall(async (client) => {
-                        return client.organizationObjects.getEntityWorkspaces1({ id: this.workspace });
+                        return client.organizationObjects.getEntityWorkspaces1(
+                            { id: this.workspace },
+                            { params: { include: "workspaces" } },
+                        );
                     })
                 ).data.data,
             );
             return workspaceDescriptor;
         }
         return this.descriptor;
+    }
+
+    public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+        const descriptor = await this.getDescriptor();
+        if (descriptor.parentWorkspace) {
+            return new TigerWorkspace(this.authCall, descriptor.parentWorkspace, this.dateFormatter);
+        }
+        return undefined;
     }
 
     public attributes(): IWorkspaceAttributesService {

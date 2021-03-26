@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -33,6 +33,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public getDescriptor(): Promise<IWorkspaceDescriptor> {
         throw new NotSupported("getting workspace descriptor is not supported");
+    }
+
+    public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+        throw new NotSupported("getting parent workspace is not supported");
     }
 
     public execution(): IExecutionFactory {
