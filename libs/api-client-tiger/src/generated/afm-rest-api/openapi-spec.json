@@ -1310,57 +1310,55 @@
                 "type": "object",
                 "properties": {
                     "attributeHeader": {
-                        "required": ["identifier", "localIdentifier", "name", "formOf"],
+                        "required": [
+                            "localIdentifier",
+                            "attribute",
+                            "attributeName",
+                            "label",
+                            "labelName",
+                            "primaryLabel"
+                        ],
                         "type": "object",
                         "properties": {
-                            "identifier": {
-                                "type": "string"
-                            },
                             "localIdentifier": {
                                 "type": "string"
                             },
-                            "name": {
+                            "attribute": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "attributeName": {
                                 "type": "string"
                             },
-                            "formOf": {
-                                "$ref": "#/components/schemas/FormOf"
+                            "label": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "labelName": {
+                                "type": "string"
+                            },
+                            "primaryLabel": {
+                                "$ref": "#/components/schemas/ObjectIdentifier"
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "YEAR",
+                                    "DAY",
+                                    "HOUR",
+                                    "MINUTE",
+                                    "QUARTER",
+                                    "MONTH",
+                                    "WEEK",
+                                    "QUARTER_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "DAY_OF_YEAR",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "HOUR_OF_DAY",
+                                    "MINUTE_OF_HOUR",
+                                    "WEEK_OF_YEAR"
+                                ]
                             }
                         }
-                    }
-                }
-            },
-            "FormOf": {
-                "required": ["identifier", "primaryLabelIdentifier", "name"],
-                "type": "object",
-                "properties": {
-                    "identifier": {
-                        "type": "string"
-                    },
-                    "primaryLabelIdentifier": {
-                        "type": "string"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "granularity": {
-                        "type": "string",
-                        "enum": [
-                            "YEAR",
-                            "DAY",
-                            "HOUR",
-                            "MINUTE",
-                            "QUARTER",
-                            "MONTH",
-                            "WEEK",
-                            "QUARTER_OF_YEAR",
-                            "MONTH_OF_YEAR",
-                            "DAY_OF_YEAR",
-                            "DAY_OF_WEEK",
-                            "DAY_OF_MONTH",
-                            "HOUR_OF_DAY",
-                            "MINUTE_OF_HOUR",
-                            "WEEK_OF_YEAR"
-                        ]
                     }
                 }
             },
