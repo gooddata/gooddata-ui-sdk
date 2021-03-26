@@ -188,6 +188,9 @@ export interface CheckboxProps {
 export type Color = string;
 
 // @internal (undocumented)
+export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
+
+// @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -523,6 +526,23 @@ export interface IButtonProps {
     type?: string;
     // (undocumented)
     value?: string;
+}
+
+// @internal (undocumented)
+export interface ICommunityEditionDialogProps {
+    // (undocumented)
+    closeButtonText: string;
+    // (undocumented)
+    headerText: string;
+    // (undocumented)
+    infoText: string;
+    // (undocumented)
+    links: {
+        text: string;
+        uri: string;
+    }[];
+    // (undocumented)
+    onClose: () => void;
 }
 
 // @internal (undocumented)
