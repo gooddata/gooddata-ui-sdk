@@ -17,7 +17,7 @@ import {
     IOrganization,
     IOrganizations,
 } from "@gooddata/sdk-backend-spi";
-import { newAxios, tigerClientFactory, ITigerClient } from "@gooddata/api-client-tiger";
+import { newAxios, tigerClientFactory, ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
 
@@ -81,6 +81,21 @@ export type TigerBackendConfig = {
 };
 
 /**
+ * TigerBackend-specific functions.
+ * If possible, avoid these functions, they are here for specific use cases.
+ */
+type TigerSpecificFunctions = {
+    isCommunityEdition?: () => Promise<boolean>;
+};
+
+/**
+ * Provides a way for the BearBackend to expose some of its backend specific functions.
+ */
+type TigerSpecificFunctionsSubscription = {
+    onTigerSpecificFunctionsReady?: (functions: TigerSpecificFunctions) => void;
+};
+
+/**
  * An implementation of analytical backend for GoodData CloudNative (codename tiger).
  */
 export class TigerBackend implements IAnalyticalBackend {
@@ -88,14 +103,14 @@ export class TigerBackend implements IAnalyticalBackend {
     public readonly config: IAnalyticalBackendConfig;
 
     private readonly telemetry: TelemetryData;
-    private readonly implConfig: TigerBackendConfig;
+    private readonly implConfig: TigerBackendConfig & TigerSpecificFunctionsSubscription;
     private readonly client: ITigerClient;
     private readonly authProvider: IAuthProviderCallGuard;
     private readonly dateFormatter: DateFormatter;
 
     constructor(
         config: IAnalyticalBackendConfig = {},
-        implConfig: TigerBackendConfig = {},
+        implConfig: TigerBackendConfig & TigerSpecificFunctionsSubscription = {},
         telemetry: TelemetryData = {},
         authProvider?: IAuthProviderCallGuard,
     ) {
@@ -109,6 +124,28 @@ export class TigerBackend implements IAnalyticalBackend {
         this.client = tigerClientFactory(axios);
 
         this.authProvider.initializeClient?.(this.client);
+
+        if (this.implConfig.onTigerSpecificFunctionsReady) {
+            const specificFunctions: TigerSpecificFunctions = {
+                isCommunityEdition: async () => {
+                    try {
+                        return this.authApiCall(async (sdk) => {
+                            const response = await sdk.organizationObjects.getAllEntitiesWorkspaces(
+                                { page: 0, size: 1 },
+                                { headers: jsonApiHeaders },
+                            );
+
+                            // the header name are all lowercase in this object
+                            return response.headers["gooddata-deployment"] === "aio";
+                        });
+                    } catch {
+                        return false;
+                    }
+                },
+            };
+
+            this.implConfig.onTigerSpecificFunctionsReady(specificFunctions);
+        }
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {
