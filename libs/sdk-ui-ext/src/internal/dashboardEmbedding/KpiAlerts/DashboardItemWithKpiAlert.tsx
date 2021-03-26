@@ -252,6 +252,7 @@ export class DashboardItemWithKpiAlert extends Component<
         const { kpiAlertResult } = this.props;
         const isNoData = isNoDataSdkError(this.props.alertExecutionError);
         const hasEvaluationResult = isNoData || kpiAlertResult?.measureResult !== undefined;
+
         const content = cx(this.props.contentClassName, {
             "is-alert-dialog": this.props.isAlertDialogOpen,
             "has-set-alert": !!this.props.alert,
