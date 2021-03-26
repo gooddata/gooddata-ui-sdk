@@ -12,6 +12,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             "TestDashboardId",
             "TestTabId",
             false,
+            false,
         );
         expect(items).toEqual([
             [
@@ -61,6 +62,7 @@ describe("generateHeaderMenuItemsGroups", () => {
             "TestWorkspaceId",
             "TestDashboardId",
             "TestTabId",
+            false,
             false,
         );
         expect(items).toEqual([
@@ -180,6 +182,53 @@ describe("generateHeaderMenuItemsGroups", () => {
                     className: "s-menu-load",
                     href: "/data/#/projects/TestWorkspaceId/datasets",
                     key: "gs.header.load",
+                },
+            ],
+        ]);
+    });
+
+    it("should not return load item if backendSupportsCsvUploader is false", () => {
+        const items = generateHeaderMenuItemsGroups(
+            getAccountMenuFeatureFlagsMock(true, true, false, true, "enterprise"),
+            getWorkspacePermissionsMock(true, true),
+            true,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            "TestTabId",
+            false,
+            false,
+            false,
+        );
+        expect(items).toEqual([
+            [
+                {
+                    className: "s-menu-dashboards",
+                    href: "/#s=/gdc/projects/TestWorkspaceId|projectDashboardPage|TestDashboardId|TestTabId",
+                    key: "gs.header.dashboards",
+                },
+                {
+                    className: "s-menu-reports",
+                    href: "/#s=/gdc/projects/TestWorkspaceId|domainPage|all-reports",
+                    key: "gs.header.reports",
+                },
+            ],
+            [
+                {
+                    className: "s-menu-kpis",
+                    href: "/dashboards/#/project/TestWorkspaceId",
+                    key: "gs.header.kpis",
+                },
+                {
+                    className: "s-menu-analyze",
+                    href: "/analyze/#/TestWorkspaceId/reportId/edit",
+                    key: "gs.header.analyze",
+                },
+            ],
+            [
+                {
+                    className: "s-menu-manage",
+                    href: "/#s=/gdc/projects/TestWorkspaceId|dataPage|",
+                    key: "gs.header.manage",
                 },
             ],
         ]);
