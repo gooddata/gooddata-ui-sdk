@@ -29,7 +29,7 @@ import get from "lodash/get";
 import { InvariantError } from "ts-invariant";
 import {
     toDateDataSetQualifier,
-    toDisplayFormQualifier,
+    toLabelQualifier,
     toFactQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter";
@@ -135,7 +135,7 @@ function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): PopDate
             measureIdentifier: toLocalIdentifier(popMeasureDefinition.measureIdentifier),
             dateAttributes: [
                 {
-                    attribute: toDisplayFormQualifier(attributeRef),
+                    attribute: toLabelQualifier(attributeRef),
                     periodsAgo: 1,
                 },
             ],

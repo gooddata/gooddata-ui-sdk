@@ -325,321 +325,6 @@
                     }
                 }
             }
-        },
-        "/api/workspaces/{workspaceId}/afm": {
-            "post": {
-                "tags": ["afm-controller"],
-                "summary": "Executes analytical request and returns link to the result",
-                "description": "AFM is a combination of attributes, measures and filters that describe a query you want to execute.",
-                "operationId": "processAfmRequest",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "pattern": "[a-zA-Z0-9._-]+"
-                        }
-                    },
-                    {
-                        "name": "skip-cache",
-                        "in": "header",
-                        "description": "Ignore all caches during execution of current request.",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    },
-                    {
-                        "name": "timestamp",
-                        "in": "header",
-                        "required": false,
-                        "example": "2020-06-03T10:15:30+01:00",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AfmExecution"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "AFM Execution response with links to the result and server-enhanced dimensions from the original request.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AfmExecutionResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/validObjects": {
-            "post": {
-                "tags": ["validObjects-controller"],
-                "summary": "Valid objects",
-                "description": "Returns list containing attributes, facts, or measures, which can be added to given AFM while still keeping it computable.",
-                "operationId": "processAfmValidObjectsQuery",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "pattern": "[a-zA-Z0-9._-]+"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AfmValidObjectsQuery"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "List of attributes, facts and measures valid with respect to given AFM.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AfmValidObjectsResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/labelElements": {
-            "get": {
-                "tags": ["elements-controller"],
-                "summary": "Listing of label values.",
-                "description": "Returns paged list of elements (values) of given label satisfying given filtering criteria.",
-                "operationId": "processElementsRequest",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "pattern": "[a-zA-Z0-9._-]+"
-                        }
-                    },
-                    {
-                        "name": "label",
-                        "in": "query",
-                        "description": "Requested label.",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "sortOrder",
-                        "in": "query",
-                        "description": "Sort order of returned items.\nItems are sorted by ```label``` title.",
-                        "required": false,
-                        "schema": {
-                            "type": "string",
-                            "enum": ["ASC", "DESC"],
-                            "default": "ASC"
-                        }
-                    },
-                    {
-                        "name": "includeTotalWithoutFilters",
-                        "in": "query",
-                        "description": "Specify if ```totalCountWithoutFilters``` should be returned.",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    },
-                    {
-                        "name": "complementFilter",
-                        "in": "query",
-                        "description": "Inverse filter:\n* ```false``` - return items matching ```patternFilter```\n* ```true``` - return items not matching ```patternFilter```",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean",
-                            "default": false
-                        }
-                    },
-                    {
-                        "name": "patternFilter",
-                        "in": "query",
-                        "description": "Return only items, whose ```label``` title case insensitively contains ```filter``` as substring.",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Request page with this offset.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 0
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Return only this number of items.",
-                        "required": false,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int32",
-                            "default": 1000
-                        }
-                    },
-                    {
-                        "name": "skip-cache",
-                        "description": "Ignore all caches during execution of current request.",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "boolean"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "List of label values.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ElementsResponse"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/workspaces/{workspaceId}/result/{resultId}": {
-            "get": {
-                "tags": ["result-controller"],
-                "summary": "Get a single execution result",
-                "description": "Gets a single execution result.",
-                "operationId": "getResult",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "type": "string",
-                            "pattern": "[a-zA-Z0-9._-]+"
-                        }
-                    },
-                    {
-                        "name": "resultId",
-                        "in": "path",
-                        "description": "Result ID",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
-                    },
-                    {
-                        "name": "offset",
-                        "in": "query",
-                        "description": "Request page with these offsets. Format is offset=1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.",
-                        "required": false,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer",
-                                "format": "int32"
-                            },
-                            "default": []
-                        }
-                    },
-                    {
-                        "name": "limit",
-                        "in": "query",
-                        "description": "Return only this number of items. Format is limit=1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.",
-                        "required": false,
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "integer",
-                                "format": "int32"
-                            },
-                            "default": []
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Execution result was found and returned.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ExecutionResult"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Limit and/or offset query parameters (paging) were invalid.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Execution result was not found.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "The result processing has failed unexpectedly.",
-                        "content": {
-                            "*/*": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorMessage"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
     },
     "components": {
@@ -717,14 +402,14 @@
                 }
             },
             "AttributeItem": {
-                "required": ["displayForm", "localIdentifier"],
+                "required": ["label", "localIdentifier"],
                 "type": "object",
                 "properties": {
                     "localIdentifier": {
                         "type": "string",
                         "pattern": "^[a-zA-Z0-9_\\-.]+$"
                     },
-                    "displayForm": {
+                    "label": {
                         "$ref": "#/components/schemas/ObjectIdentifier"
                     }
                 }
@@ -844,10 +529,11 @@
                                 "$ref": "#/components/schemas/SortDirection"
                             },
                             "dataColumnLocators": {
-                                "type": "array",
-                                "description": "For each other dimension, specifies location, which value should be used for sorting.",
-                                "items": {
-                                    "$ref": "#/components/schemas/DimensionLocator"
+                                "type": "object",
+                                "description": "Mapping from dimensions to data column locators. Locators for each dimension opposite to the sorted one must be specified.",
+                                "example": "{\"dim2\": {\"status\": \"lost\", \"measureGroup\": \"m1\"}}",
+                                "additionalProperties": {
+                                    "$ref": "#/components/schemas/DataColumnLocator"
                                 }
                             }
                         }
@@ -859,40 +545,12 @@
                 "description": "Sorting elements - ascending/descending order.",
                 "enum": ["ASC", "DESC"]
             },
-            "DimensionLocator": {
-                "required": ["dimensionIdentifier", "locator"],
+            "DataColumnLocator": {
                 "type": "object",
-                "description": "Locator of data value in one dimension",
-                "properties": {
-                    "dimensionIdentifier": {
-                        "type": "string",
-                        "description": "Dimension 'localIdentifier' reference.",
-                        "example": "firstDimension"
-                    },
-                    "locator": {
-                        "type": "array",
-                        "description": "List specifying full location of a dimension tuple.",
-                        "items": {
-                            "$ref": "#/components/schemas/DimensionItemValue"
-                        }
-                    }
-                }
-            },
-            "DimensionItemValue": {
-                "required": ["itemIdentifier", "itemValue"],
-                "type": "object",
-                "description": "Locator of data value in one dimension item.",
-                "properties": {
-                    "itemIdentifier": {
-                        "type": "string",
-                        "description": "Dimension item reference - either 'localIdentifier' from 'AttributeItem', or \"measureGroup\".",
-                        "example": "attribute1"
-                    },
-                    "itemValue": {
-                        "type": "string",
-                        "description": "Attribute value (in case of 'localIdentifier' from 'AttributeItem' in 'itemIdentifier') or 'localIdentifier' from 'MeasureItem' (in case of \"measureGroup\" in 'itemIdentifier').'",
-                        "example": "attribute1_valueA"
-                    }
+                "description": "Mapping from dimension items (either 'localIdentifier' from 'AttributeItem', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.",
+                "example": "{\"status\": \"lost\", \"measureGroup\": \"m1\"}",
+                "additionalProperties": {
+                    "type": "string"
                 }
             },
             "CommonFilter": {
@@ -931,10 +589,10 @@
                         "$ref": "#/components/schemas/CommonFilter"
                     },
                     {
-                        "required": ["displayForm"],
+                        "required": ["label"],
                         "type": "object",
                         "properties": {
-                            "displayForm": {
+                            "label": {
                                 "$ref": "#/components/schemas/ObjectIdentifier"
                             }
                         }
@@ -956,7 +614,7 @@
             "PositiveAttributeFilter": {
                 "required": ["positiveAttributeFilter"],
                 "type": "object",
-                "description": "Filter able to limit element values by displayForm and related selected elements.",
+                "description": "Filter able to limit element values by label and related selected elements.",
                 "properties": {
                     "positiveAttributeFilter": {
                         "$ref": "#/components/schemas/PositiveAttributeFilterBody"
@@ -982,7 +640,7 @@
             "NegativeAttributeFilter": {
                 "required": ["negativeAttributeFilter"],
                 "type": "object",
-                "description": "Filter able to limit element values by displayForm and related selected negated elements.",
+                "description": "Filter able to limit element values by label and related selected negated elements.",
                 "properties": {
                     "negativeAttributeFilter": {
                         "$ref": "#/components/schemas/NegativeAttributeFilterBody"
@@ -1803,7 +1461,7 @@
                     "next": {
                         "type": "string",
                         "description": "Link to next page, or null if this is last page.",
-                        "example": "https://sample.gooddata.com/api/workspaces/sampleWorkspace/labelElements?label=sample.price&limit=5&offset=10"
+                        "example": "https://sample.gooddata.com/api/actions/workspaces/sampleWorkspace/execution/collectLabelElements?label=sample.price&limit=5&offset=10"
                     }
                 },
                 "description": "Current page description."

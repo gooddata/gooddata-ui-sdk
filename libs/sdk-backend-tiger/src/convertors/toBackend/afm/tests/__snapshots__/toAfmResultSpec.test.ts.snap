@@ -4,22 +4,22 @@ exports[`converts execution definition to AFM Execution should remove empty attr
 Array [
   Object {
     "positiveAttributeFilter": Object {
-      "displayForm": Object {
-        "identifier": Object {
-          "id": "label.product.id.name",
-          "type": "label",
-        },
-      },
       "in": Object {
         "values": Array [
           "value 1",
         ],
       },
+      "label": Object {
+        "identifier": Object {
+          "id": "label.product.id.name",
+          "type": "label",
+        },
+      },
     },
   },
   Object {
     "negativeAttributeFilter": Object {
-      "displayForm": Object {
+      "label": Object {
         "identifier": Object {
           "id": "label.product.id.name",
           "type": "label",
@@ -40,7 +40,7 @@ Object {
   "execution": Object {
     "attributes": Array [
       Object {
-        "displayForm": Object {
+        "label": Object {
           "identifier": Object {
             "id": "label.account.id.name",
             "type": "label",
@@ -49,7 +49,7 @@ Object {
         "localIdentifier": "a_label.account.id.name",
       },
       Object {
-        "displayForm": Object {
+        "label": Object {
           "identifier": Object {
             "id": "label.activity.id.subject",
             "type": "label",
@@ -62,16 +62,16 @@ Object {
     "filters": Array [
       Object {
         "positiveAttributeFilter": Object {
-          "displayForm": Object {
-            "identifier": Object {
-              "id": "label.account.id.name",
-              "type": "label",
-            },
-          },
           "in": Object {
             "values": Array [
               "myAccount",
             ],
+          },
+          "label": Object {
+            "identifier": Object {
+              "id": "label.account.id.name",
+              "type": "label",
+            },
           },
         },
       },
@@ -120,7 +120,7 @@ Object {
     "attributes": Array [
       Object {
         "alias": "alias",
-        "displayForm": Object {
+        "label": Object {
           "identifier": Object {
             "id": "attribute1",
             "type": "label",
@@ -129,7 +129,7 @@ Object {
         "localIdentifier": "a_724874d1_attribute1",
       },
       Object {
-        "displayForm": Object {
+        "label": Object {
           "identifier": Object {
             "id": "attribute2",
             "type": "label",

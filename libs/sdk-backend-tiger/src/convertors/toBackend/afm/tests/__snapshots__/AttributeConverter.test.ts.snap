@@ -3,7 +3,7 @@
 exports[`attribute converter should return attribute with alias 1`] = `
 Object {
   "alias": "alias",
-  "displayForm": Object {
+  "label": Object {
     "identifier": Object {
       "id": "label.account.id.name",
       "type": "label",
@@ -15,7 +15,7 @@ Object {
 
 exports[`attribute converter should return attribute with empty localId 1`] = `
 Object {
-  "displayForm": Object {
+  "label": Object {
     "identifier": Object {
       "id": "label.account.id.name",
       "type": "label",
@@ -27,7 +27,7 @@ Object {
 
 exports[`attribute converter should return simple attribute 1`] = `
 Object {
-  "displayForm": Object {
+  "label": Object {
     "identifier": Object {
       "id": "label.account.id.name",
       "type": "label",

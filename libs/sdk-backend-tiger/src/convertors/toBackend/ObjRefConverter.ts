@@ -63,7 +63,7 @@ export function toFactQualifier(ref: ObjRef): ObjectIdentifier {
 /**
  * @internal
  */
-export function toDisplayFormQualifier(ref: ObjRef): ObjectIdentifier {
+export function toLabelQualifier(ref: ObjRef): ObjectIdentifier {
     return toObjQualifier(ref, "label");
 }
 

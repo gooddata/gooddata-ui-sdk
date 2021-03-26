@@ -28,7 +28,7 @@ export namespace VisualizationObjectModelV2 {
 
     export interface IAttribute {
         localIdentifier: Identifier;
-        displayForm: ObjectIdentifier;
+        label: ObjectIdentifier;
         alias?: string;
     }
 

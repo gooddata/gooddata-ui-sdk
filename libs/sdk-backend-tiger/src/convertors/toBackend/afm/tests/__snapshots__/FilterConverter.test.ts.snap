@@ -85,7 +85,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter 1`] = `
 Object {
   "negativeAttributeFilter": Object {
-    "displayForm": Object {
+    "label": Object {
       "identifier": Object {
         "id": "label.product.id.name",
         "type": "label",
@@ -104,7 +104,7 @@ exports[`tiger filter converter from model to AFM convert filter should return n
 Object {
   "negativeAttributeFilter": Object {
     "applyOnResult": false,
-    "displayForm": Object {
+    "label": Object {
       "identifier": Object {
         "id": "label.product.id.name",
         "type": "label",
@@ -122,7 +122,7 @@ Object {
 exports[`tiger filter converter from model to AFM convert filter should return negative attribute filter with uri attribute elements 1`] = `
 Object {
   "negativeAttributeFilter": Object {
-    "displayForm": Object {
+    "label": Object {
       "identifier": Object {
         "id": "label.product.id.name",
         "type": "label",
@@ -140,16 +140,16 @@ Object {
 exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter 1`] = `
 Object {
   "positiveAttributeFilter": Object {
-    "displayForm": Object {
-      "identifier": Object {
-        "id": "label.product.id.name",
-        "type": "label",
-      },
-    },
     "in": Object {
       "values": Array [
         "value",
       ],
+    },
+    "label": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
     },
   },
 }
@@ -159,16 +159,16 @@ exports[`tiger filter converter from model to AFM convert filter should return p
 Object {
   "positiveAttributeFilter": Object {
     "applyOnResult": true,
-    "displayForm": Object {
-      "identifier": Object {
-        "id": "label.product.id.name",
-        "type": "label",
-      },
-    },
     "in": Object {
       "values": Array [
         "value",
       ],
+    },
+    "label": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
     },
   },
 }
@@ -177,16 +177,16 @@ Object {
 exports[`tiger filter converter from model to AFM convert filter should return positive attribute filter with uri attribute elements 1`] = `
 Object {
   "positiveAttributeFilter": Object {
-    "displayForm": Object {
-      "identifier": Object {
-        "id": "label.product.id.name",
-        "type": "label",
-      },
-    },
     "in": Object {
       "values": Array [
         "value",
       ],
+    },
+    "label": Object {
+      "identifier": Object {
+        "id": "label.product.id.name",
+        "type": "label",
+      },
     },
   },
 }
