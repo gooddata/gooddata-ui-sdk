@@ -95,6 +95,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                 client,
                 client.organizationObjects.getAllEntitiesWorkspaces,
                 { sort: ["name"] },
+                { query: { include: "workspaces" } },
             )
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then(this.resultToWorkspaceDescriptors)

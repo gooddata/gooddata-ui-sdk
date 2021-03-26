@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
     IAnalyticalWorkspace,
@@ -60,6 +60,11 @@ export class BearWorkspace implements IAnalyticalWorkspace {
         }
 
         return this.descriptor;
+    }
+
+    public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
+        // Bear has no workspace parenting
+        return undefined;
     }
 
     public attributes(): IWorkspaceAttributesService {

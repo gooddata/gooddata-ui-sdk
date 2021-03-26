@@ -189,6 +189,7 @@ export interface IAnalyticalWorkspace {
     execution(): IExecutionFactory;
     facts(): IWorkspaceFactsService;
     getDescriptor(): Promise<IWorkspaceDescriptor>;
+    getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
     measures(): IWorkspaceMeasuresService;
     permissions(): IWorkspacePermissionsService;
@@ -1720,6 +1721,7 @@ export interface IWorkspaceDescriptor {
     id: string;
     // (undocumented)
     isDemo?: boolean;
+    parentWorkspace?: string;
     // (undocumented)
     title: string;
 }
