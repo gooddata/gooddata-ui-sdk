@@ -15,6 +15,7 @@ export function generateHeaderMenuItemsGroups(
     tabId?: string,
     hasNoDataSet?: boolean,
     backendSupportsDataItem?: boolean,
+    backendSupportsCsvUploader: boolean = true,
 ): IHeaderMenuItem[][] {
     if (!workspaceId) {
         return [];
@@ -120,7 +121,7 @@ export function generateHeaderMenuItemsGroups(
     if (showAnalyticalDesignerItem) {
         insightItemsGroup.push(analyticalDesignerItem);
     }
-    if (showLoadCsvItem) {
+    if (showLoadCsvItem && backendSupportsCsvUploader) {
         insightItemsGroup.push(loadCsvItem);
     }
     if (showDataItem) {
