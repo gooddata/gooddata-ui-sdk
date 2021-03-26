@@ -17,6 +17,7 @@ import {
     isGoodDataSdkError,
     UnexpectedSdkError,
     OnLoadingChanged,
+    OnError,
 } from "@gooddata/sdk-ui";
 import { IInsightViewProps } from "./types";
 import { InsightRenderer } from "./InsightRenderer";
@@ -210,6 +211,11 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         this.props.onLoadingChanged?.({ isLoading });
     };
 
+    private handleError: OnError = (error): void => {
+        this.setError(error);
+        this.props.onError?.(error);
+    };
+
     public render(): React.ReactNode {
         const { LoadingComponent } = this.props;
         const { error, isDataLoading, isVisualizationLoading } = this.state;
@@ -227,6 +233,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                     locale={this.props.locale || (this.state.settings?.locale as ILocale) || DefaultLocale}
                     settings={this.state.settings}
                     onLoadingChanged={this.handleLoadingChanged}
+                    onError={this.handleError}
                 />
             </>
         );
