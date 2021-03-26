@@ -1,11 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
-import { Header, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import { Header, Icon, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
 import {
     attributeDescriptorLocalId,
     attributeDescriptorName,
     IAttributeDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import { TotalType } from "@gooddata/sdk-model";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
@@ -28,6 +29,21 @@ export interface IAggregationsSubMenuProps {
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
 }
 
+const HeaderIcon = () => {
+    const theme = useTheme();
+    return (
+        <div className="gd-aggregation-submenu-header-icon">
+            <Icon
+                name="Rows"
+                colorPalette={{
+                    evenColor: theme?.palette?.complementary?.c7,
+                    oddColor: theme?.palette?.complementary?.c4,
+                }}
+            />
+        </div>
+    );
+};
+
 export default class AggregationsSubMenu extends React.Component<IAggregationsSubMenuProps> {
     public static defaultProps: Partial<IAggregationsSubMenuProps> = {
         isMenuOpened: false,
@@ -41,7 +57,10 @@ export default class AggregationsSubMenu extends React.Component<IAggregationsSu
             <SubMenu toggler={toggler} offset={MENU_HEADER_OFFSET} {...menuOpenedProp}>
                 <ItemsWrapper>
                     <div className="gd-aggregation-submenu s-table-header-submenu-content">
-                        <Header>{intl.formatMessage({ id: "visualizations.menu.aggregations.rows" })}</Header>
+                        <Header>
+                            <HeaderIcon />
+                            <span>{intl.formatMessage({ id: "visualizations.menu.aggregations.rows" })}</span>
+                        </Header>
                         {this.renderSubMenuItems()}
                     </div>
                 </ItemsWrapper>

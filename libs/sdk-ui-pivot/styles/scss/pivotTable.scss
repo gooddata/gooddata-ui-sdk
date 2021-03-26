@@ -34,7 +34,7 @@ $cell-horizontal-border: none;
 $cell-border: 1px dashed transparent;
 $cell-border-color: var(
     --gd-table-gridColor,
-    var(--gd-palette-complementary-5, transparentize($default-gd-color-disabled, 0.5))
+    var(--gd-palette-complementary-4, transparentize($default-gd-color-disabled, 0.5))
 );
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
@@ -223,21 +223,13 @@ $subtotal-odd-background-color: var(
 
             &,
             &.ag-cell-focus {
-                border-top: 1px solid
-                    var(
-                        --gd-table-gridColor,
-                        var(--gd-palette-complementary-5, transparentize($default-gd-color-disabled, 0.5))
-                    );
+                border-top: 1px solid $cell-border-color;
             }
         }
 
         .gd-table-row-subtotal {
             font-weight: bold;
-            border-top: 1px solid
-                var(
-                    --gd-table-gridColor,
-                    var(--gd-palette-complementary-5, transparentize($default-gd-color-disabled, 0.5))
-                );
+            border-top: 1px solid $cell-border-color;
             &-even {
                 background-color: $subtotal-even-background-color;
             }
@@ -251,11 +243,7 @@ $subtotal-odd-background-color: var(
         }
 
         .gd-table-row-separator {
-            border-top: 1px solid
-                var(
-                    --gd-table-gridColor,
-                    var(--gd-palette-complementary-5, transparentize($default-gd-color-disabled, 0.5))
-                );
+            border-top: 1px solid $cell-border-color;
         }
 
         .ag-floating-top {
@@ -415,7 +403,7 @@ $subtotal-odd-background-color: var(
         align-items: center;
         overflow: hidden;
         border-top: 2px solid transparent;
-        background-color: $gd-palette-primary-dimmed;
+        background-color: $header-hover-background-color;
         opacity: 0;
         cursor: pointer;
         transition: width 200ms, opacity 100ms;
@@ -425,9 +413,7 @@ $subtotal-odd-background-color: var(
         }
 
         .menu-icon {
-            width: 16px;
-            height: 16px;
-            background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/menu-burger.svg");
+            display: flex;
         }
 
         &--hide {
@@ -492,17 +478,6 @@ $subtotal-odd-background-color: var(
 }
 
 .gd-aggregation-menu-item {
-    .gd-list-item-header::before {
-        content: "";
-        position: absolute;
-        top: 13px;
-        left: 10px;
-        display: block;
-        width: 12px;
-        height: 11px;
-        background-image: url("~@gooddata/goodstrap/lib/core/styles/icons/rows.svg");
-    }
-
     .gd-list-item.gd-menu-item {
         padding: 0;
         cursor: default;
@@ -525,10 +500,21 @@ $subtotal-odd-background-color: var(
         }
     }
 
-    .gd-aggregation-submenu .gd-aggregation-menu-item-inner {
-        max-width: 190px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .gd-aggregation-submenu {
+        .gd-list-item-header {
+            position: relative;
+
+            .gd-aggregation-submenu-header-icon {
+                position: absolute;
+                left: 10px;
+            }
+        }
+
+        .gd-aggregation-menu-item-inner {
+            max-width: 190px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 
     .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {
