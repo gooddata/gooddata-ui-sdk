@@ -110,6 +110,21 @@ export interface ISettings {
      */
     enableEmbedButtonInKD?: boolean;
 
+    /**
+     * Indicates whether the drill to dashboard is enabled.
+     */
+    enableKPIDashboardDrillToDashboard?: boolean;
+
+    /**
+     * Indicates whether the drill to insight is enabled.
+     */
+    enableKPIDashboardDrillToInsight?: boolean;
+
+    /**
+     * Indicates whether the drill to url is enabled.
+     */
+    enableKPIDashboardDrillToURL?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
