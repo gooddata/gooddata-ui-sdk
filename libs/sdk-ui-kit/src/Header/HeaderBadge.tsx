@@ -1,12 +1,10 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import cx from "classnames";
 
 /**
  * @internal
  */
 export interface IHeaderBadgeProps {
-    className?: string;
     color?: string;
     backgroundColor?: string;
 }
@@ -14,9 +12,9 @@ export interface IHeaderBadgeProps {
 /**
  * @internal
  */
-export const HeaderBadge: React.FC<IHeaderBadgeProps> = ({ children, color, backgroundColor, className }) => {
+export const HeaderBadge: React.FC<IHeaderBadgeProps> = ({ children, color, backgroundColor }) => {
     return (
-        <div className={cx("gd-header-badge", className)} style={{ color, backgroundColor }}>
+        <div className="gd-header-badge" style={{ color, backgroundColor }}>
             {children}
         </div>
     );

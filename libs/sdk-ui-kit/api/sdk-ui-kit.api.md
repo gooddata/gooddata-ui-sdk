@@ -868,8 +868,6 @@ export interface IHeaderBadgeProps {
     // (undocumented)
     backgroundColor?: string;
     // (undocumented)
-    className?: string;
-    // (undocumented)
     color?: string;
 }
 
