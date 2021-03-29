@@ -278,18 +278,12 @@ class HeaderExamples extends Component {
                 userName="Short"
                 headerColor={headerColor}
                 badges={[
-                    {
-                        render: () => (
-                            <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2">
-                                First
-                            </HeaderBadge>
-                        ),
-                        key: "first badge",
-                    },
-                    {
-                        render: () => <HeaderBadge backgroundColor="red">Second</HeaderBadge>,
-                        key: "second badge",
-                    },
+                    <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
+                        First
+                    </HeaderBadge>,
+                    <HeaderBadge backgroundColor="red" key="second">
+                        Second
+                    </HeaderBadge>,
                 ]}
             />
         );

@@ -1,5 +1,5 @@
 // (C) 2020-2021 GoodData Corporation
-export { AppHeader, IHeaderMenuItem, IAppHeaderProps, IAppHeaderState, IHeaderBadge } from "./Header";
+export { AppHeader, IHeaderMenuItem, IAppHeaderProps, IAppHeaderState } from "./Header";
 export { WorkspacePickerHomeFooter, IWorkspacePickerHomeFooterProps } from "./WorkspacePickerHomeFooter";
 export {
     IHeaderWorkspace,

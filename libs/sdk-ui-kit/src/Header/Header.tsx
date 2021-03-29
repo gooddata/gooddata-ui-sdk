@@ -55,14 +55,6 @@ export interface IHeaderMenuItem {
 /**
  * @internal
  */
-export interface IHeaderBadge {
-    key: string;
-    render: () => React.ReactNode;
-}
-
-/**
- * @internal
- */
 export interface IAppHeaderProps {
     className?: string;
 
@@ -73,7 +65,7 @@ export interface IAppHeaderProps {
     accountMenuItems?: IHeaderMenuItem[];
     helpMenuItems?: IHeaderMenuItem[];
 
-    badges?: IHeaderBadge[];
+    badges?: React.ReactNode;
 
     logoUrl?: string;
     logoHref?: string;
@@ -343,11 +335,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     />
                 </div>
                 <div className="gd-header-menu-vertical-footer">
-                    {badges.length > 0 && (
-                        <div className="gd-header-vertical-badges">
-                            {badges.map((badge) => badge.render())}
-                        </div>
-                    )}
+                    {!!badges && <div className="gd-header-vertical-badges">{badges}</div>}
                     <div className="gd-header-menu-vertical-bottom-item">
                         <span className="gd-header-username icon-user">{this.props.userName}</span>
                     </div>
@@ -409,11 +397,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     className="gd-header-measure"
                     items={this.props.accountMenuItems}
                 />
-                {badges.length > 0 && (
-                    <div className="gd-header-badges gd-header-measure">
-                        {badges.map((badge) => badge.render())}
-                    </div>
-                )}
+                {!!badges && <div className="gd-header-badges gd-header-measure">{badges}</div>}
             </div>
         );
     };

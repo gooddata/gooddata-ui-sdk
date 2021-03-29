@@ -370,7 +370,7 @@ export interface IAppHeaderProps {
     // (undocumented)
     activeColor?: string;
     // (undocumented)
-    badges?: IHeaderBadge[];
+    badges?: React_2.ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -853,14 +853,6 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
-}
-
-// @internal (undocumented)
-export interface IHeaderBadge {
-    // (undocumented)
-    key: string;
-    // (undocumented)
-    render: () => React_2.ReactNode;
 }
 
 // @internal (undocumented)
