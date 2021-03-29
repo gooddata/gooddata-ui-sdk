@@ -100,6 +100,16 @@ export interface ISettings {
      */
     enableKDWidgetCustomHeight?: boolean;
 
+    /**
+     * Indicates whether the user can save and existing dashboard in KPI dashboards as new.
+     */
+    enableKPIDashboardSaveAsNew?: boolean;
+
+    /**
+     * Indicates whether the Embed dashboard button is available in KPI dashboards.
+     */
+    enableEmbedButtonInKD?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

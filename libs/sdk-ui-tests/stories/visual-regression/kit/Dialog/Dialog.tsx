@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
-import { Button, Dialog, ConfirmDialog, ExportDialog } from "@gooddata/sdk-ui-kit";
+import { Button, Dialog, ConfirmDialog, ExportDialog, CommunityEditionDialog } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
@@ -15,6 +15,7 @@ class DialogExamples extends PureComponent {
         confirmDialogOpen: false,
         confirmDialogWithWarningOpen: false,
         exportDialogOpen: false,
+        communityDialogOpen: false,
     };
 
     private onExportCancel = () => {
@@ -109,6 +110,29 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderCommunityEditionDialogContent(): JSX.Element {
+        return (
+            <CommunityEditionDialog
+                onClose={() => {
+                    this.setState({ communityDialogOpen: false });
+                }}
+                headerText="About GoodData.CN community edition"
+                infoText="The community edition is meant for evaluation purposes only."
+                closeButtonText="Close"
+                links={[
+                    {
+                        text: "Licence information",
+                        uri: "#licence",
+                    },
+                    {
+                        text: "Terms of use",
+                        uri: "#tou",
+                    },
+                ]}
+            />
+        );
+    }
+
     public renderDialogExample(): JSX.Element {
         return (
             <div id="dialog-example">
@@ -171,6 +195,21 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderCommunityEditionDialogExample(): JSX.Element {
+        return (
+            <div id="community-dialog-example">
+                <Button
+                    value="Open community edition dialog"
+                    className="gd-button-positive s-community-dialog-button"
+                    onClick={() => {
+                        this.setState({ communityDialogOpen: !this.state.communityDialogOpen });
+                    }}
+                />
+                {this.state.communityDialogOpen && this.renderCommunityEditionDialogContent()}
+            </div>
+        );
+    }
+
     public render(): JSX.Element {
         return (
             <div className="library-component screenshot-target">
@@ -185,6 +224,9 @@ class DialogExamples extends PureComponent {
 
                 <h4>Export dialog</h4>
                 {this.renderExportDialogExample()}
+
+                <h4>Community edition dialog</h4>
+                {this.renderCommunityEditionDialogExample()}
             </div>
         );
     }
@@ -200,6 +242,11 @@ const exportDialogProps = {
     postInteractionWait: 200,
 };
 
+const communityEditionDialogProps = {
+    clickSelector: "#community-dialog-example button",
+    postInteractionWait: 200,
+};
+
 const screenshotProps = {
     dialog: {
         clickSelector: "#dialog-example button",
@@ -211,6 +258,7 @@ const screenshotProps = {
     },
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
     "export-dialog": exportDialogProps,
+    "community-edition-dialog": communityEditionDialogProps,
 };
 
 const screenshotPropsThemed = {

@@ -26,7 +26,7 @@ export type Alignment = {
 };
 
 // @internal (undocumented)
-export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "userName" | "disableHelpDropdown" | "onHelpClick">>;
+export const AppHeader: React_2.ComponentType<Pick<import("react-intl").WithIntlProps<IAppHeaderProps & WrappedComponentProps<"intl">>, "forwardedRef" | "className" | "onMenuItemClick" | "helpRedirectUrl" | "onLogoClick" | "menuItemsGroups" | "accountMenuItems" | "helpMenuItems" | "badges" | "logoUrl" | "logoHref" | "logoTitle" | "documentationUrl" | "workspacePicker" | "headerColor" | "headerTextColor" | "activeColor" | "userName" | "disableHelpDropdown" | "onHelpClick">>;
 
 // @internal (undocumented)
 export type ArrowDirections = Record<string, string>;
@@ -188,6 +188,9 @@ export interface CheckboxProps {
 export type Color = string;
 
 // @internal (undocumented)
+export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
+
+// @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -333,6 +336,12 @@ export type GetPositionedSelfRegion = {
 export const Header: React_2.FC<IHeaderProps>;
 
 // @internal (undocumented)
+export const HeaderBadge: React_2.FC<IHeaderBadgeProps>;
+
+// @internal (undocumented)
+export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
+
+// @internal (undocumented)
 export const HeaderDataMenu: React_2.ForwardRefExoticComponent<Pick<IHeaderDataMenuProps, "className" | "onMenuItemClick" | "dataMenuItems"> & {
     forwardedRef?: React_2.Ref<any>;
 } & React_2.RefAttributes<any>> & {
@@ -360,6 +369,8 @@ export interface IAppHeaderProps {
     accountMenuItems?: IHeaderMenuItem[];
     // (undocumented)
     activeColor?: string;
+    // (undocumented)
+    badges?: React_2.ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -515,6 +526,23 @@ export interface IButtonProps {
     type?: string;
     // (undocumented)
     value?: string;
+}
+
+// @internal (undocumented)
+export interface ICommunityEditionDialogProps {
+    // (undocumented)
+    closeButtonText: string;
+    // (undocumented)
+    headerText: string;
+    // (undocumented)
+    infoText: string;
+    // (undocumented)
+    links: {
+        text: string;
+        uri: string;
+    }[];
+    // (undocumented)
+    onClose: () => void;
 }
 
 // @internal (undocumented)
@@ -825,6 +853,22 @@ export interface IFormatTemplate {
     localIdentifier: string;
     // (undocumented)
     name: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderBadgeProps {
+    // (undocumented)
+    backgroundColor?: string;
+    // (undocumented)
+    color?: string;
+}
+
+// @internal (undocumented)
+export interface IHeaderBadgeWithModalProps extends IHeaderBadgeProps {
+    // (undocumented)
+    renderModalContent: (parameters: {
+        closeModal: () => void;
+    }) => React_2.ReactNode;
 }
 
 // @internal (undocumented)

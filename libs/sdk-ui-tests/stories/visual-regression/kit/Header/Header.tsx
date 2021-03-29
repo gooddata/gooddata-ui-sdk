@@ -9,6 +9,7 @@ import {
     IAppHeaderProps,
     HeaderWorkspacePicker,
     WorkspacePickerHomeFooter,
+    HeaderBadge,
 } from "@gooddata/sdk-ui-kit";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -256,16 +257,35 @@ class HeaderExamples extends Component {
         );
 
         return (
-            <>
-                <AppHeader
-                    {...this.getExampleProps()}
-                    className="s-freemium-header"
-                    logoUrl={gd}
-                    userName="Freemium user"
-                    workspacePicker={newFreemiumWorkspacePicker}
-                    logoHref="/custom/logo/href"
-                />
-            </>
+            <AppHeader
+                {...this.getExampleProps()}
+                className="s-freemium-header"
+                logoUrl={gd}
+                userName="Freemium user"
+                workspacePicker={newFreemiumWorkspacePicker}
+                logoHref="/custom/logo/href"
+            />
+        );
+    }
+
+    private renderBadgesExample(headerColor?: string) {
+        return (
+            <AppHeader
+                {...this.getExampleProps()}
+                logoUrl={gd}
+                logoTitle="GoodData"
+                workspacePicker={null}
+                userName="Short"
+                headerColor={headerColor}
+                badges={[
+                    <HeaderBadge backgroundColor="rgba(20,178,226,0.3)" color="#14B2E2" key="first">
+                        First
+                    </HeaderBadge>,
+                    <HeaderBadge backgroundColor="red" key="second">
+                        Second
+                    </HeaderBadge>,
+                ]}
+            />
         );
     }
 
@@ -290,6 +310,12 @@ class HeaderExamples extends Component {
                 <br />
                 <h4>Custom workspace picker footer</h4>
                 {this.renderCustomWorkspacePickerExample()}
+
+                <br />
+                <h4>Badges support</h4>
+                {this.renderBadgesExample()}
+                <br />
+                {this.renderBadgesExample("#ffffff")}
             </div>
         );
     }

@@ -402,7 +402,9 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         content: "\e612";
         position: absolute;
         top: 0;
-        right: 11px;
+        // stylelint-disable-next-line declaration-no-important
+        right: initial !important; // override goodstrap for now which sets this
+        margin-left: 11px;
         width: 12px;
         opacity: 0.5;
         text-align: center;
@@ -802,5 +804,64 @@ button.gd-button-primary {
         > span {
             margin-left: 22px;
         }
+    }
+}
+
+.gd-header-badges {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    margin: 0 10px;
+}
+
+.gd-header-vertical-badges {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 15px;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.gd-header-badge {
+    height: 22px;
+    padding: 0 10px;
+    line-height: 22px;
+    white-space: nowrap;
+    cursor: default;
+    transition: all 0.2s;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 400;
+
+    & + & {
+        margin-left: 5px;
+    }
+}
+
+.gd-header-badge-button {
+    box-sizing: content-box;
+    display: inline;
+    align-items: normal;
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: none;
+    font: inherit;
+    // stylelint-disable-next-line declaration-no-important
+    background: none !important;
+    cursor: pointer;
+    font-family: $gd-font-primary-without-custom;
+    border-style: none;
+    perspective-origin: 0 0;
+    text-align: start;
+    transform-origin: 0 0;
+    -moz-appearance: none;
+    -webkit-logical-height: 1em; /* Chrome ignores auto, so we have to use this hack to set the correct height  */
+    -webkit-logical-width: auto; /* Chrome ignores auto, but here for completeness */
+
+    &:focus {
+        outline: 0;
     }
 }

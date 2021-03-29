@@ -1193,9 +1193,11 @@ export interface ISettings {
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
+    enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
+    enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleDates?: boolean;

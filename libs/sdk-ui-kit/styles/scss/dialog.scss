@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 @import "./Dialog/_mixins";
+@import "./variables";
 
 // STYLES FROM GOODSTRAP
 .modalityPlugin-mask {
@@ -197,5 +198,28 @@
 
     .input-label-text {
         margin-left: 3px;
+    }
+}
+
+/* Community edition Dialog
+   ========================================================================== */
+
+.gd-community-dialog-header {
+    margin-top: 0;
+    margin-bottom: 1em; // override goodstrap
+}
+
+.gd-community-dialog-links {
+    padding: 0;
+    list-style: none;
+
+    li {
+        &:not(:last-child) {
+            margin-bottom: 0.7em;
+        }
+
+        a {
+            color: $default-gd-color-link;
+        }
     }
 }
