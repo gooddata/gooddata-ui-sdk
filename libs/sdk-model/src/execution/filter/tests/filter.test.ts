@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { Account, ClosedDate, Won } from "../../../../__mocks__/model";
 import {
@@ -20,6 +20,8 @@ import {
     absoluteDateFilterValues,
     relativeDateFilterValues,
     filterMeasureRef,
+    rankingFilterOperator,
+    rankingFilterValue,
 } from "../index";
 import { ObjRef, ObjRefInScope } from "../../../objRef";
 import { localIdRef } from "../../..";
@@ -192,5 +194,25 @@ describe("measureValueFilterCondition", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => measureValueFilterCondition(input)).toThrow();
+    });
+});
+
+describe("rankingFilterOperator", () => {
+    it("should return proper operator for ranking filter", () => {
+        expect(rankingFilterOperator(RankingFilter)).toEqual("TOP");
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => rankingFilterOperator(input)).toThrow();
+    });
+});
+
+describe("rankingFilterValue", () => {
+    it("should return proper operator for ranking filter", () => {
+        expect(rankingFilterValue(RankingFilter)).toEqual(5);
+    });
+
+    it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
+        expect(() => rankingFilterValue(input)).toThrow();
     });
 });

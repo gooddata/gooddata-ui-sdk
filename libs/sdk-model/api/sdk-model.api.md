@@ -1240,6 +1240,12 @@ export type RangeConditionOperator = "BETWEEN" | "NOT_BETWEEN";
 export type RankingFilterOperator = "TOP" | "BOTTOM";
 
 // @public
+export function rankingFilterOperator(filter: IRankingFilter): RankingFilterOperator;
+
+// @public
+export function rankingFilterValue(filter: IRankingFilter): number;
+
+// @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter): IRelativeDateFilterValues;
 
 // @public (undocumented)

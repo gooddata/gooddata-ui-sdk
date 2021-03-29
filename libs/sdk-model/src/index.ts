@@ -133,6 +133,8 @@ export {
     measureValueFilterCondition,
     measureValueFilterMeasure,
     measureValueFilterOperator,
+    rankingFilterOperator,
+    rankingFilterValue,
 } from "./execution/filter";
 
 export {

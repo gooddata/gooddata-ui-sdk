@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import invariant from "ts-invariant";
 import { ObjRef, ObjRefInScope } from "../../objRef";
@@ -660,4 +660,26 @@ export function measureValueFilterOperator(
     }
 
     return;
+}
+
+/**
+ * Gets operator used in ranking filter.
+ *
+ * @param filter - filter to get operator from
+ * @public
+ */
+export function rankingFilterOperator(filter: IRankingFilter): RankingFilterOperator {
+    invariant(filter, "filter must be specified");
+    return filter.rankingFilter.operator;
+}
+
+/**
+ * Gets value used in ranking filter.
+ *
+ * @param filter - filter to get operator from
+ * @public
+ */
+export function rankingFilterValue(filter: IRankingFilter): number {
+    invariant(filter, "filter must be specified");
+    return filter.rankingFilter.value;
 }
