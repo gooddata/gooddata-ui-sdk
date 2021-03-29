@@ -1193,6 +1193,7 @@ export interface ISettings {
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;
+    enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;

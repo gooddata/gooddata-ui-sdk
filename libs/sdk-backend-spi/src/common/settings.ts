@@ -105,6 +105,11 @@ export interface ISettings {
      */
     enableKPIDashboardSaveAsNew?: boolean;
 
+    /**
+     * Indicates whether the Embed dashboard button is available in KPI dashboards.
+     */
+    enableEmbedButtonInKD?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
