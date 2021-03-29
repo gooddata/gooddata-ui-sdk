@@ -46,6 +46,11 @@ export const DefaultUiSettings: ISettings = {
     enableEditInsightsFromKD: true,
     enableKPIDashboardNewInsight: true,
 
+    // drilling
+    enableKPIDashboardDrillToDashboard: true,
+    enableKPIDashboardDrillToInsight: true,
+    enableKPIDashboardDrillToURL: true,
+
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",

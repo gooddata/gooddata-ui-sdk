@@ -1197,6 +1197,9 @@ export interface ISettings {
     enableHidingOfDataPoints?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
+    enableKPIDashboardDrillToDashboard?: boolean;
+    enableKPIDashboardDrillToInsight?: boolean;
+    enableKPIDashboardDrillToURL?: boolean;
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
