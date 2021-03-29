@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
+import { Identifier, LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     attributeDisplayFormRef,
@@ -51,6 +51,16 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): Object
             type: toTigerType(ref.type as TigerCompatibleObjectType, defaultValue),
         },
     };
+}
+
+export function toObjQualifierInScope(ref: ObjRefInScope, defaultValue?: TigerAfmType): Identifier {
+    if (isLocalIdRef(ref)) {
+        return {
+            localIdentifier: ref.localIdentifier,
+        };
+    }
+
+    return toObjQualifier(ref, defaultValue);
 }
 
 /**

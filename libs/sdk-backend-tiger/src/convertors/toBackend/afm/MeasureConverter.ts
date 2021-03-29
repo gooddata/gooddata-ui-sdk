@@ -1,17 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 import {
     ArithmeticMeasureDefinition,
-    ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
     FilterDefinitionForSimpleMeasure,
     MeasureDefinition,
     PopDatasetMeasureDefinition,
     PopDateMeasureDefinition,
     SimpleMeasureDefinition,
-    SimpleMeasureDefinitionMeasureAggregationEnum,
     VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
-    ArithmeticMeasureOperator,
     IArithmeticMeasureDefinition,
     IMeasure,
     IMeasureDefinition,
@@ -22,11 +19,11 @@ import {
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
-    MeasureAggregation,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
 import get from "lodash/get";
-import { InvariantError } from "ts-invariant";
+import { toTigerAggregation } from "../../fromBackend/aggregationConversions";
+import { toTigerArithmeticOperator } from "../../fromBackend/arithmeticOperatorConversions";
 import {
     toDateDataSetQualifier,
     toLabelQualifier,
@@ -70,34 +67,6 @@ function convertMeasureDefinition(definition: IMeasureDefinitionType): MeasureDe
     }
 }
 
-function convertAggregation(
-    aggregation?: MeasureAggregation,
-): SimpleMeasureDefinitionMeasureAggregationEnum | undefined {
-    if (!aggregation) {
-        return undefined;
-    }
-    if (aggregation === "sum") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.SUM;
-    }
-    if (aggregation === "avg") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.AVG;
-    }
-    if (aggregation === "count") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.COUNT;
-    }
-    if (aggregation === "max") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MAX;
-    }
-    if (aggregation === "median") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MEDIAN;
-    }
-    if (aggregation === "min") {
-        return SimpleMeasureDefinitionMeasureAggregationEnum.MIN;
-    }
-
-    return SimpleMeasureDefinitionMeasureAggregationEnum.RUNSUM;
-}
-
 function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleMeasureDefinition {
     const { measureDefinition } = definition;
 
@@ -108,7 +77,7 @@ function convertSimpleMeasureDefinition(definition: IMeasureDefinition): SimpleM
         : [];
     const filtersProp = filters.length ? { filters } : {};
 
-    const aggregation = convertAggregation(measureDefinition.aggregation);
+    const aggregation = toTigerAggregation(measureDefinition.aggregation);
     const aggregationProp = aggregation ? { aggregation } : {};
 
     const computeRatio = measureDefinition.computeRatio;
@@ -163,25 +132,6 @@ function convertPreviousPeriodMeasureDefinition(
     };
 }
 
-function convertArithmeticMeasureOperator(
-    operator: ArithmeticMeasureOperator,
-): ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum {
-    switch (operator) {
-        case "sum":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.SUM;
-        case "difference":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.DIFFERENCE;
-        case "multiplication":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.MULTIPLICATION;
-        case "ratio":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.RATIO;
-        case "change":
-            return ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum.CHANGE;
-        default:
-            throw new InvariantError(`Unknown arithmetic measure operator "${operator}"`);
-    }
-}
-
 function convertArithmeticMeasureDefinition(
     definition: IArithmeticMeasureDefinition,
 ): ArithmeticMeasureDefinition {
@@ -189,7 +139,7 @@ function convertArithmeticMeasureDefinition(
     return {
         arithmeticMeasure: {
             measureIdentifiers: arithmeticMeasure.measureIdentifiers.map(toLocalIdentifier),
-            operator: convertArithmeticMeasureOperator(arithmeticMeasure.operator),
+            operator: toTigerArithmeticOperator(arithmeticMeasure.operator),
         },
     };
 }

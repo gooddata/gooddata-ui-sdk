@@ -7,7 +7,9 @@ import { DateAttributeGranularity } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 
 type TigerToSdk = {
-    [key in JsonApiAttributeOutAttributesGranularityEnum]: DateAttributeGranularity;
+    [key in
+        | JsonApiAttributeOutAttributesGranularityEnum
+        | RelativeDateFilterBodyGranularityEnum]: DateAttributeGranularity;
 };
 
 type SdkToTiger = {
@@ -58,7 +60,7 @@ const TigerToSdkGranularityMap: TigerToSdk = {
  * @param granularity - tiger granularity
  */
 export function toSdkGranularity(
-    granularity: JsonApiAttributeOutAttributesGranularityEnum,
+    granularity: JsonApiAttributeOutAttributesGranularityEnum | RelativeDateFilterBodyGranularityEnum,
 ): DateAttributeGranularity {
     return TigerToSdkGranularityMap[granularity];
 }

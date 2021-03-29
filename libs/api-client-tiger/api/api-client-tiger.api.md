@@ -5543,9 +5543,9 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         localIdentifier: Identifier;
     }
-    // (undocumented)
+    // @deprecated (undocumented)
     export type IAttributeOrMeasure = IMeasure | IAttribute;
-    // (undocumented)
+    // @deprecated (undocumented)
     export interface IBucket {
         // (undocumented)
         items: IAttributeOrMeasure[];
@@ -5578,6 +5578,10 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         localIdentifier: Identifier;
     }
+    // (undocumented)
+    export function isAttribute(obj: unknown): obj is IAttribute;
+    // (undocumented)
+    export function isMeasure(obj: unknown): obj is IMeasure;
     // (undocumented)
     export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
     // @deprecated (undocumented)
@@ -5658,6 +5662,10 @@ export namespace VisualizationObjectModelV2 {
         // (undocumented)
         localIdentifier: Identifier;
     }
+    // (undocumented)
+    export function isAttribute(obj: unknown): obj is IAttribute;
+    // (undocumented)
+    export function isMeasure(obj: unknown): obj is IMeasure;
     // (undocumented)
     export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
     // (undocumented)

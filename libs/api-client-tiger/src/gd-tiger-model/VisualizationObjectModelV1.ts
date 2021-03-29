@@ -25,7 +25,10 @@ export namespace VisualizationObjectModelV1 {
         };
     }
 
-    interface IBucket {
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IBucket} instead
+     */
+    export interface IBucket {
         localIdentifier?: string;
         items: IAttributeOrMeasure[];
         totals?: ITotal[];
@@ -73,7 +76,10 @@ export namespace VisualizationObjectModelV1 {
 
     type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
-    type IAttributeOrMeasure = IMeasure | IAttribute;
+    /**
+     * @deprecated use {@link VisualizationObjectModelV2.IAttributeOrMeasure} instead
+     */
+    export type IAttributeOrMeasure = IMeasure | IAttribute;
     type Identifier = string;
 
     type VisualizationProperties = {
@@ -87,5 +93,13 @@ export namespace VisualizationObjectModelV1 {
             !isEmpty(visualizationObject) &&
             !!(visualizationObject as IVisualizationObject).visualizationObject
         );
+    }
+
+    export function isMeasure(obj: unknown): obj is IMeasure {
+        return !isEmpty(obj) && !!(obj as IMeasure).definition;
+    }
+
+    export function isAttribute(obj: unknown): obj is IAttribute {
+        return !isEmpty(obj) && !!(obj as IAttribute).displayForm;
     }
 }

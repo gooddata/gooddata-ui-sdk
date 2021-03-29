@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
-import { ObjectIdentifier } from "@gooddata/api-client-tiger";
+import { Identifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, ObjRef } from "@gooddata/sdk-model";
+import { idRef, isLocalIdRef, isUriRef, localIdRef, ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 import { TigerObjectType } from "../../types";
@@ -20,10 +20,15 @@ export function toObjRef(qualifier: ObjectIdentifier): ObjRef {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
 
-    return {
-        identifier: qualifier.identifier.id,
-        type: toObjectType(qualifier.identifier.type as TigerObjectType),
-    };
+    return idRef(qualifier.identifier.id, toObjectType(qualifier.identifier.type as TigerObjectType));
+}
+
+export function toObjRefInScope(qualifier: Identifier): ObjRefInScope {
+    if (isLocalIdRef(qualifier)) {
+        return localIdRef(qualifier.localIdentifier);
+    }
+
+    return toObjRef(qualifier);
 }
 
 export type JsonApiId = {
