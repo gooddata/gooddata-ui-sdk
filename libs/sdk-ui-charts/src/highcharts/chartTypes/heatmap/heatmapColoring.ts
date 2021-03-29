@@ -15,7 +15,11 @@ import { IColorAssignment, IMappingHeader, DataViewFacade } from "@gooddata/sdk-
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import range from "lodash/range";
 import isEqual from "lodash/isEqual";
-import { DEFAULT_HEATMAP_BLUE_COLOR, HEATMAP_BLUE_COLOR_PALETTE } from "../_util/color";
+import {
+    DEFAULT_HEATMAP_BLUE_BASE_COLOR,
+    DEFAULT_HEATMAP_BLUE_COLOR,
+    HEATMAP_BLUE_COLOR_PALETTE,
+} from "../_util/color";
 import { darken, mix, saturate } from "polished";
 
 type HighChartColorPalette = string[];
@@ -67,21 +71,23 @@ export class HeatmapColorStrategy extends ColorStrategy {
     }
 
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[]): string[] {
+        const colorAssignmentColor = colorAssignment[0].color;
+
         if (
-            isRgbColor(colorAssignment[0].color) &&
-            isEqual(colorAssignment[0].color.value, DEFAULT_HEATMAP_BLUE_COLOR) &&
-            normalizeColorToRGB(this.getBackgroundColor()) === "rgb(255,255,255)"
+            isRgbColor(colorAssignmentColor) &&
+            isEqual(colorAssignmentColor.value, DEFAULT_HEATMAP_BLUE_COLOR)
         ) {
-            return HEATMAP_BLUE_COLOR_PALETTE;
+            return normalizeColorToRGB(this.getBackgroundColor()) === "rgb(255,255,255)"
+                ? HEATMAP_BLUE_COLOR_PALETTE
+                : this.getCustomHeatmapColorPalette(DEFAULT_HEATMAP_BLUE_BASE_COLOR);
         }
 
-        if (isColorFromPalette(colorAssignment[0].color)) {
-            return this.getCustomHeatmapColorPalette(
-                getColorByGuid(colorPalette, colorAssignment[0].color.value as string, 0),
-            );
+        if (isColorFromPalette(colorAssignmentColor)) {
+            const colorFromPalette = getColorByGuid(colorPalette, colorAssignmentColor.value, 0);
+            return this.getCustomHeatmapColorPalette(colorFromPalette);
         }
 
-        return this.getCustomHeatmapColorPalette(colorAssignment[0].color.value as IRgbColorValue);
+        return this.getCustomHeatmapColorPalette(colorAssignmentColor.value);
     }
 
     private getCustomHeatmapColorPalette(baseColorRGB: IRgbColorValue): HighChartColorPalette {

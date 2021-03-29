@@ -21,7 +21,9 @@ export const HEATMAP_BLUE_COLOR_PALETTE = [
     "rgb(0,110,145)",
 ];
 
-export const DEFAULT_HEATMAP_BLUE_COLOR: IRgbColorValue = { r: 20, g: 178, b: 226 };
+export const DEFAULT_HEATMAP_BLUE_COLOR: IRgbColorValue = { r: 0, g: 110, b: 145 };
+
+export const DEFAULT_HEATMAP_BLUE_BASE_COLOR: IRgbColorValue = { r: 20, g: 178, b: 226 };
 
 export const DEFAULT_BULLET_GRAY_COLOR: IRgbColorValue = {
     r: 217,
