@@ -33,6 +33,7 @@ export const DefaultUiSettings: ISettings = {
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
     enableSectionHeaders: true,
+    enableKPIDashboardSaveAsNew: true,
 
     // pivot table specific
     enableTableColumnsManualResizing: true,
