@@ -1,4 +1,8 @@
 // (C) 2019 GoodData Corporation
+import cx from "classnames";
+import React from "react";
+import { IntlShape } from "react-intl";
+import noop from "lodash/noop";
 import { attributeDescriptorLocalId, IAttributeDescriptor } from "@gooddata/sdk-backend-spi";
 import {
     IExecutionDefinition,
@@ -8,11 +12,9 @@ import {
     measureValueFilterCondition,
     isRankingFilter,
 } from "@gooddata/sdk-model";
-import cx from "classnames";
-import React from "react";
-import { IntlShape } from "react-intl";
-import { Bubble, BubbleHoverTrigger, Header, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
-import noop from "lodash/noop";
+import { Bubble, BubbleHoverTrigger, Header, Icon, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 import Menu from "../../../menu/Menu";
 import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
@@ -43,7 +45,17 @@ export interface IAggregationsMenuProps {
     getTotals?: () => ITotal[];
     onAggregationSelect: (clickConfig: IMenuAggregationClickConfig) => void;
     onMenuOpenedChange: ({ opened, source }: IOnOpenedChangeParams) => void;
+    theme?: ITheme;
 }
+
+const MenuToggler = () => {
+    const theme = useTheme();
+    return (
+        <div className="menu-icon">
+            <Icon name="BurgerMenu" color={theme?.palette?.complementary?.c8} />
+        </div>
+    );
+};
 
 export default class AggregationsMenu extends React.Component<IAggregationsMenuProps> {
     public render(): React.ReactNode {
@@ -77,7 +89,7 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
         return (
             <Menu
-                toggler={<div className="menu-icon" />}
+                toggler={<MenuToggler />}
                 togglerWrapperClassName={this.getTogglerClassNames()}
                 opened={isMenuOpened}
                 onOpenedChange={onMenuOpenedChange}

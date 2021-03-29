@@ -543,7 +543,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo" | "Home";
+export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo" | "Home" | "BurgerMenu" | "Rows";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -916,7 +916,9 @@ export interface IIconProps {
     // (undocumented)
     color?: Color;
     // (undocumented)
-    colorPalette?: Array<Color>;
+    colorPalette?: {
+        [key: string]: Color | undefined;
+    };
     // (undocumented)
     name: IconName;
 }

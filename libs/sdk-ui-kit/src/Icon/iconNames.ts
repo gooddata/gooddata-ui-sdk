@@ -15,4 +15,6 @@ export type IconName =
     | "ExternalLink"
     | "Hyperlink"
     | "Undo"
-    | "Home";
+    | "Home"
+    | "BurgerMenu"
+    | "Rows";
