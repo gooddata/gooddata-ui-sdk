@@ -13,11 +13,11 @@ import {
     IDashboardLayoutItem,
     IDashboardLayout,
     IDashboardLayoutSection,
-    ILegacyKpi,
     isLegacyKpiWithoutComparison,
     WidgetType,
     isLegacyKpi,
     ISettings,
+    ILegacyKpi,
 } from "@gooddata/sdk-backend-spi";
 import {
     ALL_SCREENS,
@@ -436,10 +436,12 @@ export function getDashboardLayoutItemMaxGridWidth(
     return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
 }
 
+type MensurableWidgetContent = IInsightDefinition | ILegacyKpi;
+
 const getSizeInfo = (
     settings: ISettings,
     widgetType: WidgetType,
-    widgetContent?: IInsightDefinition | ILegacyKpi,
+    widgetContent?: MensurableWidgetContent,
 ): IVisualizationSizeInfo => {
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
@@ -450,7 +452,7 @@ const getSizeInfo = (
 
 const getVisualizationSizeInfo = (
     settings: ISettings,
-    insight?: IInsightDefinition | ILegacyKpi,
+    insight?: MensurableWidgetContent,
 ): IVisualizationSizeInfo => {
     let sizeInfo;
     if (isInsight(insight)) {
@@ -470,10 +472,7 @@ const getVisualizationSizeInfo = (
     return sizeInfo;
 };
 
-const getKpiSizeInfo = (
-    settings: ISettings,
-    kpi?: IInsightDefinition | ILegacyKpi,
-): IVisualizationSizeInfo => {
+const getKpiSizeInfo = (settings: ISettings, kpi?: MensurableWidgetContent): IVisualizationSizeInfo => {
     if (!settings.enableKDWidgetCustomHeight) {
         return KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
     }
@@ -502,7 +501,7 @@ const getKpiSizeInfo = (
 export function getDashboardLayoutWidgetMinGridWidth(
     settings: ISettings,
     widgetType: WidgetType,
-    widgetContent?: IInsightDefinition | ILegacyKpi, // undefined for placeholders
+    widgetContent?: MensurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
 
@@ -512,7 +511,7 @@ export function getDashboardLayoutWidgetMinGridWidth(
 export function getDashboardLayoutWidgetDefaultGridWidth(
     settings: ISettings,
     widgetType: WidgetType,
-    widgetContent?: IInsightDefinition | ILegacyKpi, // undefined for placeholders
+    widgetContent?: MensurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
 
@@ -522,10 +521,28 @@ export function getDashboardLayoutWidgetDefaultGridWidth(
 export function getDashboardLayoutWidgetDefaultHeight(
     settings: ISettings,
     widgetType: WidgetType,
-    widgetContent?: IInsightDefinition | ILegacyKpi, // undefined for placeholders
+    widgetContent?: MensurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
     return fluidLayoutDescriptor.toHeightInPx(sizeInfo.height.default);
+}
+
+export function getDashboardLayoutWidgetMinGridHeight(
+    settings: ISettings,
+    widgetType: WidgetType,
+    widgetContent?: MensurableWidgetContent,
+): number {
+    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
+    return sizeInfo.height.min;
+}
+
+export function getDashboardLayoutWidgetMaxGridHeight(
+    settings: ISettings,
+    widgetType: WidgetType,
+    widgetContent?: MensurableWidgetContent,
+): number {
+    const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
+    return sizeInfo.height.max;
 }
 
 export function getLayoutWithoutGridHeights<TWidget>(

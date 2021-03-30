@@ -8,7 +8,7 @@ export class FluidLayoutDescriptor implements IFluidLayoutDescriptor {
     gridRowHeight = GRID_ROW_HEIGHT_IN_PX;
 
     public toGridHeight(heightPx: number): number {
-        return heightPx / this.gridRowHeight;
+        return Math.round(heightPx / this.gridRowHeight);
     }
     public toHeightInPx(height: number): number {
         return height * this.gridRowHeight;

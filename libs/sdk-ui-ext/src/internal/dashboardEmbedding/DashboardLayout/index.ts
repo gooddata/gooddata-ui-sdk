@@ -46,6 +46,8 @@ export {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutItemHeight,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMaxGridHeight,
 } from "./utils/sizing";
 export { DashboardLayoutBuilder } from "./builder/layout";
 export { DashboardLayoutFacade } from "./facade/layout";
@@ -66,3 +68,5 @@ export {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
 } from "./facade/interfaces";
+
+export { fluidLayoutDescriptor } from "./FluidLayoutDescriptor";
