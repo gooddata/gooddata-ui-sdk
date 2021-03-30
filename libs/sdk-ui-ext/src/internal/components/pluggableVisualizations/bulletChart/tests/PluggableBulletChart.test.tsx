@@ -541,6 +541,73 @@ describe("PluggableBulletChart", () => {
                     },
                 ]);
             });
+
+            it("should remove first derived measure when filter is not related", async () => {
+                const referencePoint: IReferencePoint = {
+                    buckets: [
+                        {
+                            localIdentifier: "measures",
+                            items: [
+                                referencePointMocks.derivedMeasureItems[0],
+                                referencePointMocks.masterMeasureItems[0],
+                            ],
+                        },
+                        {
+                            localIdentifier: "attribute",
+                            items: [
+                                {
+                                    ...referencePointMocks.dateItem,
+                                    dateDatasetRef: {
+                                        uri: "/gdc/md/a1",
+                                    },
+                                },
+                            ],
+                        },
+                        {
+                            localIdentifier: "columns",
+                            items: [
+                                {
+                                    ...referencePointMocks.dateItem,
+                                    localIdentifier: "a2",
+                                    dateDatasetRef: {
+                                        uri: "/gdc/md/a2",
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                    filters: referencePointMocks.attributeFilterBucketItem,
+                };
+
+                const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(referencePoint);
+
+                expect(extendedReferencePoint.buckets).toEqual([
+                    {
+                        localIdentifier: "measures",
+                        items: [referencePointMocks.masterMeasureItems[0]],
+                    },
+                    {
+                        localIdentifier: "secondary_measures",
+                        items: [],
+                    },
+                    {
+                        localIdentifier: "tertiary_measures",
+                        items: [],
+                    },
+                    {
+                        localIdentifier: "view",
+                        items: [
+                            {
+                                ...referencePointMocks.dateItem,
+                                localIdentifier: "a1",
+                                dateDatasetRef: {
+                                    uri: "/gdc/md/a1",
+                                },
+                            },
+                        ],
+                    },
+                ]);
+            });
         });
     });
 

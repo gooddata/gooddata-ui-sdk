@@ -20,6 +20,8 @@ import {
     findDerivedBucketItem,
     isDerivedBucketItem,
     hasDerivedBucketItems,
+    isComparisonAvailable,
+    removeAllDerivedMeasures,
 } from "../../../utils/bucketHelper";
 
 import { BUCKETS } from "../../../constants/bucket";
@@ -53,7 +55,16 @@ export class PluggableBulletChart extends PluggableBaseChart {
             uiConfig: cloneDeep(DEFAULT_BULLET_CHART_CONFIG),
         };
 
-        const buckets = transformBuckets(newReferencePoint.buckets);
+        let buckets = transformBuckets(newReferencePoint.buckets);
+
+        if (!isComparisonAvailable(buckets, newReferencePoint.filters)) {
+            // When in first measure bucket after transformBuckets is just one PoP measure and DataFilter is not related
+            // than in configureOverTimeComparison method this measure is removed and chart stay in inconstant state
+            // after 1st transformBuckets we have to check if comparison is not available and than remove all derived measures
+            // from original reference point and than transform buckets again
+            newReferencePoint = removeAllDerivedMeasures(newReferencePoint);
+            buckets = transformBuckets(newReferencePoint.buckets);
+        }
 
         newReferencePoint[BUCKETS] = buckets;
 
