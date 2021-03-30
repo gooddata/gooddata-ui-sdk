@@ -2,6 +2,7 @@
 import React from "react";
 import compact from "lodash/compact";
 import isEqual from "lodash/isEqual";
+import compose from "lodash/flowRight";
 import noop from "lodash/noop";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
@@ -19,6 +20,7 @@ import {
     OnLoadingChanged,
     OnError,
 } from "@gooddata/sdk-ui";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IInsightViewProps } from "./types";
 import { InsightRenderer } from "./InsightRenderer";
 import { InsightError } from "./InsightError";
@@ -240,7 +242,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
     }
 }
 
-export const IntlInsightView = withContexts(injectIntl(InsightViewCore));
+export const IntlInsightView = compose(withTheme, withContexts, injectIntl)(InsightViewCore);
 
 /**
  * Renders insight which was previously created and saved in the Analytical Designer.

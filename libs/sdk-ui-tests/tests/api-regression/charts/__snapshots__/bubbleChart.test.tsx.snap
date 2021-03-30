@@ -156,6 +156,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -310,6 +312,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -465,6 +469,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -619,6 +625,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -774,6 +782,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -927,6 +937,8 @@ Object {
 exports[`BubbleChart with arithmetic measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1144,6 +1156,8 @@ Object {
     ],
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1319,6 +1333,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1494,6 +1510,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1669,6 +1687,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1844,6 +1864,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2002,6 +2024,8 @@ Object {
     ],
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2202,6 +2226,8 @@ Object {
     ],
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2395,6 +2421,8 @@ Object {
     ],
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2545,6 +2573,8 @@ exports[`BubbleChart with coloring - default should create expected props for co
 Object {
   "config": Object {},
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2699,6 +2729,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2849,6 +2881,8 @@ exports[`BubbleChart with data labels - default should create expected props for
 Object {
   "config": Object {},
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3003,6 +3037,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3161,6 +3197,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3315,6 +3353,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3469,6 +3509,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3623,6 +3665,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3777,6 +3821,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3931,6 +3977,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4085,6 +4133,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4239,6 +4289,8 @@ Object {
     },
   },
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4395,6 +4447,8 @@ Object {
 exports[`BubbleChart with x and y axis and size measures with viewBy and sorted by attr should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4544,6 +4598,8 @@ Object {
 exports[`BubbleChart with x and y axis and size measures with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4693,6 +4749,8 @@ Object {
 exports[`BubbleChart with x and y axis and size measures with viewBy with nulls in data should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4815,6 +4873,8 @@ Object {
 exports[`BubbleChart with x and y axis measures with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4937,6 +4997,8 @@ Object {
 exports[`BubbleChart with x axis and size measures with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5010,6 +5072,8 @@ Object {
 exports[`BubbleChart with x axis measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5105,6 +5169,8 @@ Object {
 exports[`BubbleChart with x axis measure with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5227,5 +5293,7 @@ Object {
 exports[`BubbleChart with y axis and size measures with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "BubbleChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

@@ -5,7 +5,7 @@ import { render } from "react-dom";
 import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import { IExecutionFactory, IExportResult, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import { IExecutionFactory, IExportResult, ITheme, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition, insightProperties, IColorPalette, insightTitle } from "@gooddata/sdk-model";
 
 import { IVisualization, IVisProps, FullVisualizationCatalog } from "../internal";
@@ -37,6 +37,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     settings: IUserWorkspaceSettings | undefined;
     colorPalette: IColorPalette | undefined;
     onError?: (error: GoodDataSdkError | undefined) => void;
+    theme?: ITheme;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -92,6 +93,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 isInEditMode: false,
             },
             customVisualizationConfig: config,
+            theme: this.props.theme,
         };
 
         this.visualization.update(

@@ -144,6 +144,8 @@ Object {
 exports[`Treemap with arithmetic measures and segment should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -342,6 +344,8 @@ Object {
     ],
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -481,6 +485,8 @@ Object {
     ],
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -662,6 +668,8 @@ Object {
     ],
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -836,6 +844,8 @@ Object {
     ],
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -967,6 +977,8 @@ exports[`Treemap with coloring - default should create expected props for core c
 Object {
   "config": Object {},
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1102,6 +1114,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1233,6 +1247,8 @@ exports[`Treemap with data labels - default should create expected props for cor
 Object {
   "config": Object {},
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1368,6 +1384,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1507,6 +1525,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1642,6 +1662,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1777,6 +1799,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1912,6 +1936,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2047,6 +2073,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2182,6 +2210,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2317,6 +2347,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2452,6 +2484,8 @@ Object {
     },
   },
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2543,6 +2577,8 @@ Object {
 exports[`Treemap with single measure and segment should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2648,6 +2684,8 @@ Object {
 exports[`Treemap with single measure and viewBy filtered to one element should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2739,6 +2777,8 @@ Object {
 exports[`Treemap with single measure and viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2808,6 +2848,8 @@ Object {
 exports[`Treemap with single measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2938,6 +2980,8 @@ Object {
 exports[`Treemap with single measure, viewBy and segment should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3055,6 +3099,8 @@ Object {
 exports[`Treemap with two measures and segmentBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3172,6 +3218,8 @@ Object {
 exports[`Treemap with two measures and viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3267,5 +3315,7 @@ Object {
 exports[`Treemap with two measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "Treemap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
