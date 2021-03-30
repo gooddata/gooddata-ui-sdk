@@ -10,7 +10,7 @@ import {
     ICatalogMeasure,
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
-import { IdentifierRef, ObjRef } from "@gooddata/sdk-model";
+import { IdentifierRef, isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertFact, convertMeasure } from "../../../convertors/fromBackend/CatalogConverter";
 import { TigerWorkspaceCatalog } from "./catalog";
@@ -19,6 +19,7 @@ import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import invariant from "ts-invariant";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     constructor(
@@ -64,11 +65,22 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
     };
 
     public load = async (): Promise<IWorkspaceCatalog> => {
-        const loadersResults = await Promise.all([
-            this.loadMeasures(),
-            this.loadFacts(),
-            this.loadAttributesAndDates(),
-        ]);
+        const promises: Promise<CatalogItem[]>[] = [];
+
+        if (this.options.types.includes("measure")) {
+            promises.push(this.loadMeasures());
+        }
+        if (this.options.types.includes("fact")) {
+            promises.push(this.loadFacts());
+        }
+
+        const includeAttributes = this.options.types.includes("attribute");
+        const includeDateDatasets = this.options.types.includes("dateDataset");
+        if (includeAttributes || includeDateDatasets) {
+            promises.push(this.loadAttributesAndDates(includeAttributes, includeDateDatasets));
+        }
+
+        const loadersResults = await Promise.all(promises);
 
         const catalogItems: CatalogItem[] = flatten<CatalogItem>(loadersResults);
 
@@ -77,31 +89,49 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         return new TigerWorkspaceCatalog(this.authCall, this.workspace, groups, catalogItems, this.options);
     };
 
-    private loadAttributesAndDates = async (): Promise<CatalogItem[]> => {
-        // TODO convert objRef[] to tags (string[])
-        //const { includeTags = [] } = this.options;
-        const includeTags: string[] = [];
-        return this.authCall((client) => loadAttributesAndDateDatasets(client, this.workspace, includeTags));
+    private tagsToIdentifiers = (tags: ObjRef[]): string[] => {
+        return tags.map((ref) => {
+            // Tags cannot be accessed by any separate endpoint, so it doesn't make sense to reference them by uri.
+            // We will likely change the tag type signature from ObjRef to plain string in the future.
+            invariant(!isUriRef(ref), "Tags cannot be referenced by uri!");
+            return ref.identifier;
+        });
+    };
+
+    private loadAttributesAndDates = async (
+        loadAttributes: boolean,
+        loadDateDataSets: boolean,
+    ): Promise<CatalogItem[]> => {
+        const tags = this.tagsToIdentifiers(this.options.includeTags);
+        return this.authCall((client) =>
+            loadAttributesAndDateDatasets(client, this.workspace, tags, loadAttributes, loadDateDataSets),
+        );
     };
 
     private loadMeasures = async (): Promise<ICatalogMeasure[]> => {
+        const tags = this.tagsToIdentifiers(this.options.includeTags);
         const measures = await this.authCall((client) => {
-            return MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesMetrics, {
-                workspaceId: this.workspace,
-            }).then(MetadataUtilities.mergeEntitiesResults);
+            return MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getEntitiesMetrics,
+                {
+                    workspaceId: this.workspace,
+                },
+                { query: { tags: tags.join(",") } },
+            ).then(MetadataUtilities.mergeEntitiesResults);
         });
 
         return measures.data.map(convertMeasure);
     };
 
     private loadFacts = async (): Promise<ICatalogFact[]> => {
-        const { includeTags = [] } = this.options;
+        const tags = this.tagsToIdentifiers(this.options.includeTags);
         const facts = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
                 client.workspaceObjects.getEntitiesFacts,
                 { workspaceId: this.workspace },
-                { query: { tags: includeTags.join(",") } },
+                { query: { tags: tags.join(",") } },
             ).then(MetadataUtilities.mergeEntitiesResults);
         });
 
