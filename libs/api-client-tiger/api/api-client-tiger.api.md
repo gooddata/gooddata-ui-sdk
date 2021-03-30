@@ -12,7 +12,6 @@ import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
-import { ITotal } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 
@@ -5537,7 +5536,7 @@ export interface ValidObjectsControllerApiInterface {
 
 // @public (undocumented)
 export namespace VisualizationObjectModelV1 {
-    // @deprecated (undocumented)
+    // @deprecated
     export interface IAttribute {
         // (undocumented)
         alias?: string;
@@ -5547,19 +5546,8 @@ export namespace VisualizationObjectModelV1 {
         localIdentifier: Identifier;
     }
     // (undocumented)
-    export type IAttributeOrMeasure = IMeasure | IAttribute;
-    // (undocumented)
-    export interface IBucket {
-        // (undocumented)
-        items: IAttributeOrMeasure[];
-        // (undocumented)
-        localIdentifier?: string;
-        // (undocumented)
-        totals?: ITotal[];
-    }
-    // (undocumented)
     export type Identifier = string;
-    // @deprecated (undocumented)
+    // @deprecated
     export interface IDimension {
         // (undocumented)
         itemIdentifiers: Identifier[];
@@ -5570,7 +5558,7 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         totals?: ITotalItem[];
     }
-    // @deprecated (undocumented)
+    // @deprecated
     export interface IMeasure {
         // (undocumented)
         alias?: string;
@@ -5583,7 +5571,7 @@ export namespace VisualizationObjectModelV1 {
     }
     // (undocumented)
     export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
-    // @deprecated (undocumented)
+    // @deprecated
     export interface ITotalItem {
         // (undocumented)
         attributeIdentifier: LocalIdentifier;
@@ -5592,14 +5580,14 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         type: TotalType;
     }
-    // @deprecated (undocumented)
+    // @deprecated
     export interface IVisualizationObject {
         // (undocumented)
         visualizationObject: {
             title: string;
             visualizationUrl: string;
             buckets: IBucket[];
-            filters: FilterDefinition[];
+            filters: IFilter[];
             sorts: ISortItem[];
             properties: VisualizationProperties;
         };
@@ -5608,10 +5596,6 @@ export namespace VisualizationObjectModelV1 {
     export type SortKey = SortKeyAttribute | SortKeyValue;
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    // (undocumented)
-    export type VisualizationProperties = {
-        [key: string]: any;
-    };
     {};
 }
 

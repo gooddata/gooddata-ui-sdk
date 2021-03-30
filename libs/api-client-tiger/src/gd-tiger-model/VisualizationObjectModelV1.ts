@@ -1,8 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
 import {
-    FilterDefinition,
     LocalIdentifier,
     MeasureDefinition,
     ObjectIdentifier,
@@ -12,6 +11,8 @@ import {
 
 export namespace VisualizationObjectModelV1 {
     /**
+     * Visualization object used to store its data as a metadata object
+     *
      * @deprecated use {@link VisualizationObjectModelV2.IVisualizationObject} instead
      */
     export interface IVisualizationObject {
@@ -19,19 +20,15 @@ export namespace VisualizationObjectModelV1 {
             title: string;
             visualizationUrl: string;
             buckets: IBucket[];
-            filters: FilterDefinition[];
+            filters: IFilter[];
             sorts: ISortItem[];
             properties: VisualizationProperties;
         };
     }
 
-    interface IBucket {
-        localIdentifier?: string;
-        items: IAttributeOrMeasure[];
-        totals?: ITotal[];
-    }
-
     /**
+     * Attribute format used in executions
+     *
      * @deprecated use {@link VisualizationObjectModelV2.IAttribute} instead
      */
     export interface IAttribute {
@@ -41,6 +38,8 @@ export namespace VisualizationObjectModelV1 {
     }
 
     /**
+     * Measure format used in executions
+     *
      * @deprecated use {@link VisualizationObjectModelV2.IMeasure} instead
      */
     export interface IMeasure {
@@ -51,6 +50,8 @@ export namespace VisualizationObjectModelV1 {
     }
 
     /**
+     * Dimension format used in executions
+     *
      * @deprecated use {@link VisualizationObjectModelV2.IDimension} instead
      */
     export interface IDimension {
@@ -61,6 +62,8 @@ export namespace VisualizationObjectModelV1 {
     }
 
     /**
+     * Total format used in executions
+     *
      * @deprecated use {@link VisualizationObjectModelV2.ITotalItem} instead
      */
     export interface ITotalItem {
@@ -73,12 +76,7 @@ export namespace VisualizationObjectModelV1 {
 
     type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
-    type IAttributeOrMeasure = IMeasure | IAttribute;
     type Identifier = string;
-
-    type VisualizationProperties = {
-        [key: string]: any;
-    };
 
     export function isVisualizationObject(
         visualizationObject: unknown,
