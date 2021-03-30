@@ -318,7 +318,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderVerticalMenu = () => {
-        const { badges = [] } = this.props;
+        const { badges } = this.props;
 
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.addHelpItemGroup(this.props.menuItemsGroups)
@@ -370,7 +370,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private renderStandardNav = () => {
-        const { badges = [] } = this.props;
+        const { badges } = this.props;
 
         return (
             <div className="gd-header-stretch gd-header-menu-wrapper">
