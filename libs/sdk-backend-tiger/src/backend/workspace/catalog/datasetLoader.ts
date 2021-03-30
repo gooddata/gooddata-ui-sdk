@@ -104,7 +104,7 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
     const dateAttributes = attributes.data.filter((attr) => attr.attributes?.granularity !== undefined);
     const dateDatasets = identifyDateDatasets(dateAttributes, attributes.included);
 
-    return dateDatasets.map((dd) => {
+    const converted = dateDatasets.map((dd) => {
         const catalogDateAttributes = dd.attributes.map((attribute) => {
             const labels = getAttributeLabels(attribute, attributes.included);
             const defaultLabel = labels[0];
@@ -114,22 +114,38 @@ function createDateDatasets(attributes: JsonApiAttributeOutList): ICatalogDateDa
 
         return convertDateDataset(dd.dataset, catalogDateAttributes);
     });
+
+    return converted;
 }
 
 export async function loadAttributesAndDateDatasets(
     client: ITigerClient,
     workspaceId: string,
-    includeTags: string[],
+    includeObjectWithTags: string[],
+    loadAttributes?: boolean,
+    loadDateDatasets?: boolean,
 ): Promise<CatalogItem[]> {
+    const includeObjects = ["labels"];
+    if (loadDateDatasets) {
+        includeObjects.push("datasets");
+    }
     const attributes = await MetadataUtilities.getAllPagesOf(
         client,
         client.workspaceObjects.getEntitiesAttributes,
         { workspaceId },
-        { query: { include: "labels,datasets", tags: includeTags.join(",") } },
+        { query: { include: includeObjects.join(","), tags: includeObjectWithTags.join(",") } },
     ).then(MetadataUtilities.mergeEntitiesResults);
 
-    const nonDateAttributes: CatalogItem[] = createNonDateAttributes(attributes);
-    const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
+    const catalogItems: CatalogItem[] = [];
 
-    return nonDateAttributes.concat(dateDatasets);
+    if (loadAttributes) {
+        const nonDateAttributes = createNonDateAttributes(attributes);
+        catalogItems.push(...nonDateAttributes);
+    }
+    if (loadDateDatasets) {
+        const dateDatasets: CatalogItem[] = createDateDatasets(attributes);
+        catalogItems.push(...dateDatasets);
+    }
+
+    return catalogItems;
 }
