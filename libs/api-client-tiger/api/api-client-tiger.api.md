@@ -6,12 +6,15 @@
 
 import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
+import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
 export interface AbsoluteDateFilter {
@@ -5614,7 +5617,6 @@ export namespace VisualizationObjectModelV1 {
 
 // @public (undocumented)
 export namespace VisualizationObjectModelV2 {
-    // (undocumented)
     export interface IAttribute {
         // (undocumented)
         alias?: string;
@@ -5624,19 +5626,7 @@ export namespace VisualizationObjectModelV2 {
         localIdentifier: Identifier;
     }
     // (undocumented)
-    export type IAttributeOrMeasure = IMeasure | IAttribute;
-    // (undocumented)
-    export interface IBucket {
-        // (undocumented)
-        items: IAttributeOrMeasure[];
-        // (undocumented)
-        localIdentifier?: string;
-        // (undocumented)
-        totals?: ITotal[];
-    }
-    // (undocumented)
     export type Identifier = string;
-    // (undocumented)
     export interface IDimension {
         // (undocumented)
         itemIdentifiers: Identifier[];
@@ -5647,7 +5637,6 @@ export namespace VisualizationObjectModelV2 {
         // (undocumented)
         totals?: ITotalItem[];
     }
-    // (undocumented)
     export interface IMeasure {
         // (undocumented)
         alias?: string;
@@ -5660,7 +5649,6 @@ export namespace VisualizationObjectModelV2 {
     }
     // (undocumented)
     export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
-    // (undocumented)
     export interface ITotalItem {
         // (undocumented)
         attributeIdentifier: LocalIdentifier;
@@ -5669,12 +5657,11 @@ export namespace VisualizationObjectModelV2 {
         // (undocumented)
         type: TotalType;
     }
-    // (undocumented)
     export interface IVisualizationObject {
         // (undocumented)
         buckets: IBucket[];
         // (undocumented)
-        filters: FilterDefinition[];
+        filters: IFilter[];
         // (undocumented)
         properties: VisualizationProperties;
         // (undocumented)
@@ -5688,10 +5675,6 @@ export namespace VisualizationObjectModelV2 {
     export type SortKey = SortKeyAttribute | SortKeyValue;
     // (undocumented)
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    // (undocumented)
-    export type VisualizationProperties = {
-        [key: string]: any;
-    };
     {};
 }
 

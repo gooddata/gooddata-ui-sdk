@@ -1,8 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
 import {
-    FilterDefinition,
     LocalIdentifier,
     MeasureDefinition,
     ObjectIdentifier,
@@ -11,27 +10,30 @@ import {
 } from "../generated/afm-rest-api";
 
 export namespace VisualizationObjectModelV2 {
+    /**
+     * Visualization object used to store its data as a metadata object
+     */
     export interface IVisualizationObject {
         version: "2";
         visualizationUrl: string;
         buckets: IBucket[];
-        filters: FilterDefinition[];
+        filters: IFilter[];
         sorts: ISortItem[];
         properties: VisualizationProperties;
     }
 
-    interface IBucket {
-        localIdentifier?: string;
-        items: IAttributeOrMeasure[];
-        totals?: ITotal[];
-    }
-
+    /**
+     * Attribute format used in executions
+     */
     export interface IAttribute {
         localIdentifier: Identifier;
         label: ObjectIdentifier;
         alias?: string;
     }
 
+    /**
+     * Measure format used in executions
+     */
     export interface IMeasure {
         localIdentifier: Identifier;
         definition: MeasureDefinition;
@@ -39,6 +41,9 @@ export namespace VisualizationObjectModelV2 {
         format?: string;
     }
 
+    /**
+     * Dimension format used in executions
+     */
     export interface IDimension {
         localIdentifier: string;
         itemIdentifiers: Identifier[];
@@ -46,6 +51,9 @@ export namespace VisualizationObjectModelV2 {
         totals?: ITotalItem[];
     }
 
+    /**
+     * Total format used in executions
+     */
     export interface ITotalItem {
         measureIdentifier: LocalIdentifier;
         type: TotalType;
@@ -56,12 +64,7 @@ export namespace VisualizationObjectModelV2 {
 
     type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
 
-    type IAttributeOrMeasure = IMeasure | IAttribute;
     type Identifier = string;
-
-    type VisualizationProperties = {
-        [key: string]: any;
-    };
 
     export function isVisualizationObject(
         visualizationObject: unknown,
