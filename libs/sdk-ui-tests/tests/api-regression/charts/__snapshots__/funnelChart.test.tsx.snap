@@ -118,6 +118,8 @@ Object {
 exports[`FunnelChart with arithmetic measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -273,6 +275,8 @@ Object {
     ],
   },
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -458,6 +462,8 @@ Object {
     ],
   },
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -554,6 +560,8 @@ Object {
     ],
   },
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -692,6 +700,8 @@ Object {
     ],
   },
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -823,6 +833,8 @@ Object {
     ],
   },
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -911,6 +923,8 @@ exports[`FunnelChart with coloring - default should create expected props for co
 Object {
   "config": Object {},
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -976,6 +990,8 @@ Object {
 exports[`FunnelChart with single measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1063,6 +1079,8 @@ Object {
 exports[`FunnelChart with single measure with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1150,6 +1168,8 @@ Object {
 exports[`FunnelChart with single measure with viewBy sorted by attribute should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1241,5 +1261,7 @@ Object {
 exports[`FunnelChart with two measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "FunnelChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

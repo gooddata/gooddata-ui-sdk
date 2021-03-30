@@ -122,6 +122,8 @@ Object {
     },
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -303,6 +305,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -431,6 +435,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -601,6 +607,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -764,6 +772,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -885,6 +895,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1009,6 +1021,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1130,6 +1144,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1254,6 +1270,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1382,6 +1400,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1506,6 +1526,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1618,6 +1640,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1727,6 +1751,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1839,6 +1865,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1951,6 +1979,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2075,6 +2105,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2196,6 +2228,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2320,6 +2354,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2444,6 +2480,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2568,6 +2606,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2692,6 +2732,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2816,6 +2858,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2940,6 +2984,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3064,6 +3110,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3188,6 +3236,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3261,6 +3311,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3377,6 +3429,8 @@ Object {
     "stacking": false,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3473,6 +3527,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3589,6 +3645,8 @@ Object {
     "stacking": false,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3705,6 +3763,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3824,6 +3884,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3939,6 +4001,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4034,6 +4098,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4155,6 +4221,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4277,6 +4345,8 @@ Object {
     "stacking": false,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4399,6 +4469,8 @@ Object {
     "stacking": false,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4521,6 +4593,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4643,6 +4717,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4765,6 +4841,8 @@ Object {
     "stacking": true,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4886,6 +4964,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5014,6 +5094,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5148,6 +5230,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5270,5 +5354,7 @@ Object {
     "stacking": false,
   },
   "exportTitle": "AreaChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

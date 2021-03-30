@@ -120,6 +120,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -245,6 +247,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -422,6 +426,8 @@ Object {
 exports[`LineChart with arithmetic measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -596,6 +602,8 @@ Object {
     ],
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -722,6 +730,8 @@ Object {
     ],
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -890,6 +900,8 @@ Object {
     ],
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1051,6 +1063,8 @@ Object {
     ],
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1169,6 +1183,8 @@ exports[`LineChart with coloring - default should create expected props for core
 Object {
   "config": Object {},
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1291,6 +1307,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1409,6 +1427,8 @@ exports[`LineChart with data labels - default should create expected props for c
 Object {
   "config": Object {},
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1531,6 +1551,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1657,6 +1679,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1779,6 +1803,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1889,6 +1915,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1995,6 +2023,8 @@ exports[`LineChart with data points - dense chart - default should create expect
 Object {
   "config": Object {},
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2105,6 +2135,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2215,6 +2247,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2397,6 +2431,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2575,6 +2611,8 @@ exports[`LineChart with data points - sparse chart - default should create expec
 Object {
   "config": Object {},
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2757,6 +2795,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2939,6 +2979,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3123,6 +3165,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3269,6 +3313,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3415,6 +3461,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3561,6 +3609,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3707,6 +3757,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3829,6 +3881,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3951,6 +4005,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4073,6 +4129,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4195,6 +4253,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4317,6 +4377,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4439,6 +4501,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4582,6 +4646,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4725,6 +4791,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4868,6 +4936,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5011,6 +5081,8 @@ Object {
     },
   },
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5080,6 +5152,8 @@ Object {
 exports[`LineChart with single measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5171,6 +5245,8 @@ Object {
 exports[`LineChart with single measure with % and trendBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5282,6 +5358,8 @@ Object {
 exports[`LineChart with single measure with trendBy and segmentBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5373,6 +5451,8 @@ Object {
 exports[`LineChart with single measure with trendBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5497,6 +5577,8 @@ Object {
 exports[`LineChart with two measures with trendBy and sort by attribute should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5627,6 +5709,8 @@ Object {
 exports[`LineChart with two measures with trendBy and sort by measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5744,5 +5828,7 @@ Object {
 exports[`LineChart with two measures with trendBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

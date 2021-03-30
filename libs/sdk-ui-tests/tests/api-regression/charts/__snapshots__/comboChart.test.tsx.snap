@@ -180,6 +180,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -363,6 +365,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -545,6 +549,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -789,6 +795,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -935,6 +943,8 @@ Object {
     },
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1081,6 +1091,8 @@ Object {
     },
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1227,6 +1239,8 @@ Object {
     },
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1373,6 +1387,8 @@ Object {
     },
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1562,6 +1578,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1793,6 +1811,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2017,6 +2037,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2199,6 +2221,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2324,6 +2348,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2446,6 +2472,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2571,6 +2599,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2700,6 +2730,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2825,6 +2857,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2966,6 +3000,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3104,6 +3140,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3245,6 +3283,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3386,6 +3426,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3513,6 +3555,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3637,6 +3681,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3764,6 +3810,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3891,6 +3939,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4013,6 +4063,8 @@ Object {
     "stackMeasures": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4135,6 +4187,8 @@ Object {
     "stackMeasures": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4379,6 +4433,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4623,6 +4679,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4746,6 +4804,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4930,6 +4990,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5114,6 +5176,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5298,6 +5362,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5482,6 +5548,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5666,6 +5734,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5850,6 +5920,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6034,6 +6106,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6218,6 +6292,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6402,6 +6478,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6564,6 +6642,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6726,6 +6806,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6888,6 +6970,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7050,6 +7134,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7212,6 +7298,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7374,6 +7462,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7536,6 +7626,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7698,6 +7790,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7860,6 +7954,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7984,6 +8080,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8108,6 +8206,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8232,6 +8332,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8356,6 +8458,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8480,6 +8584,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8604,6 +8710,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8728,6 +8836,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8852,6 +8962,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8976,6 +9088,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9078,6 +9192,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9180,6 +9296,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9282,6 +9400,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9384,6 +9504,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9486,6 +9608,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9588,6 +9712,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9690,6 +9816,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9792,6 +9920,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9894,6 +10024,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10019,6 +10151,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10144,6 +10278,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10269,6 +10405,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10394,6 +10532,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10519,6 +10659,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10644,6 +10786,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10804,6 +10948,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11046,6 +11192,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11146,6 +11294,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11268,6 +11418,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11397,6 +11549,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11532,6 +11686,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11667,6 +11823,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11740,6 +11898,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11835,6 +11995,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -11927,6 +12089,8 @@ exports[`ComboChart with one secondary measure with viewBy should create expecte
 Object {
   "config": Object {},
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -12110,6 +12274,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -12293,6 +12459,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -12477,6 +12645,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -12661,6 +12831,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -12844,6 +13016,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -13027,6 +13201,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -13145,5 +13321,7 @@ exports[`ComboChart with two secondary measure with viewBy should create expecte
 Object {
   "config": Object {},
   "exportTitle": "ComboChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

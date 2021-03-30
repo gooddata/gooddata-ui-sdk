@@ -4,6 +4,7 @@ import compose from "lodash/flowRight";
 import { IChartDefinition, getCoreChartProps } from "../_commons/chartDefinition";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { withContexts, wrapDisplayName } from "@gooddata/sdk-ui";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 /**
  * Hoc that transforms incoming props to BaseChart props according to chart definition
@@ -26,4 +27,9 @@ function withChartDefinition<TBucketProps extends object, TProps extends TBucket
 export const withChart = <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
     chartDefinition: IChartDefinition<TBucketProps, TProps>,
 ) => (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> =>
-    compose(wrapDisplayName("withChart"), withContexts, withChartDefinition(chartDefinition))(Chart);
+    compose(
+        wrapDisplayName("withChart"),
+        withTheme,
+        withContexts,
+        withChartDefinition(chartDefinition),
+    )(Chart);

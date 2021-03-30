@@ -125,6 +125,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -300,6 +302,8 @@ Object {
     ],
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -444,6 +448,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -588,6 +594,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -732,6 +740,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -876,6 +886,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1003,6 +1015,8 @@ Object {
     ],
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1172,6 +1186,8 @@ Object {
     ],
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1334,6 +1350,8 @@ Object {
     ],
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1453,6 +1471,8 @@ exports[`ScatterPlot with coloring - default should create expected props for co
 Object {
   "config": Object {},
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1576,6 +1596,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1695,6 +1717,8 @@ exports[`ScatterPlot with data labels - default should create expected props for
 Object {
   "config": Object {},
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1818,6 +1842,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1945,6 +1971,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2068,6 +2096,8 @@ Object {
     },
   },
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2186,6 +2216,8 @@ Object {
 exports[`ScatterPlot with x and y axis measures and attribute should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2311,6 +2343,8 @@ Object {
 exports[`ScatterPlot with x and y axis measures and attribute with attr sorting should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2429,6 +2463,8 @@ Object {
 exports[`ScatterPlot with x and y axis measures and attribute with nulls in data should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2520,6 +2556,8 @@ Object {
 exports[`ScatterPlot with x axis measure and attribute should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2589,6 +2627,8 @@ Object {
 exports[`ScatterPlot with x axis measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2680,5 +2720,7 @@ Object {
 exports[`ScatterPlot with y axis measure and attribute should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

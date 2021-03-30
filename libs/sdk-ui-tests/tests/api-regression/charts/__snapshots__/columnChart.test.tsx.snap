@@ -144,6 +144,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -290,6 +292,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -433,6 +437,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -576,6 +582,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -701,6 +709,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -828,6 +838,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -974,6 +986,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1155,6 +1169,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1361,6 +1377,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1544,6 +1562,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1672,6 +1692,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1842,6 +1864,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2005,6 +2029,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2126,6 +2152,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2250,6 +2278,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2371,6 +2401,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2495,6 +2527,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2623,6 +2657,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2747,6 +2783,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2877,6 +2915,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3085,6 +3125,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3293,6 +3335,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3501,6 +3545,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3709,6 +3755,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3854,6 +3902,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4041,6 +4091,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4228,6 +4280,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4414,6 +4468,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4601,6 +4657,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4745,6 +4803,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4869,6 +4929,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4993,6 +5055,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5117,6 +5181,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5241,6 +5307,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5365,6 +5433,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5489,6 +5559,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5613,6 +5685,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5758,6 +5832,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5903,6 +5979,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6048,6 +6126,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6193,6 +6273,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6336,6 +6418,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6479,6 +6563,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6578,6 +6664,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6673,6 +6761,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6746,6 +6836,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6841,6 +6933,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6975,6 +7069,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7104,6 +7200,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7219,6 +7317,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7314,6 +7414,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7451,6 +7553,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7588,6 +7692,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7687,6 +7793,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7873,6 +7981,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8059,6 +8169,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8251,6 +8363,8 @@ Object {
     },
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8397,6 +8511,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8537,6 +8653,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8677,6 +8795,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8825,6 +8945,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8974,6 +9096,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9122,6 +9246,8 @@ Object {
     [Function],
   ],
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9221,6 +9347,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9366,6 +9494,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9511,6 +9641,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9651,6 +9783,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9772,6 +9906,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9900,6 +10036,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10034,6 +10172,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10185,5 +10325,7 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

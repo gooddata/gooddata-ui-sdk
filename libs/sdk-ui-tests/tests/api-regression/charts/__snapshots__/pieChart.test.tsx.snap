@@ -148,6 +148,8 @@ Object {
 exports[`PieChart with arithmetic measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -303,6 +305,8 @@ Object {
     ],
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -458,6 +462,8 @@ Object {
     ],
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -554,6 +560,8 @@ Object {
     ],
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -692,6 +700,8 @@ Object {
     ],
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -823,6 +833,8 @@ Object {
     ],
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -911,6 +923,8 @@ exports[`PieChart with coloring - default should create expected props for core 
 Object {
   "config": Object {},
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1003,6 +1017,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1091,6 +1107,8 @@ exports[`PieChart with data labels - default should create expected props for co
 Object {
   "config": Object {},
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1183,6 +1201,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1279,6 +1299,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1371,6 +1393,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1463,6 +1487,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1555,6 +1581,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1647,6 +1675,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1739,6 +1769,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1831,6 +1863,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1923,6 +1957,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2019,6 +2055,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2115,6 +2153,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2211,6 +2251,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2307,6 +2349,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2403,6 +2447,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2499,6 +2545,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2564,6 +2612,8 @@ Object {
 exports[`PieChart with single measure should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2651,6 +2701,8 @@ Object {
 exports[`PieChart with single measure with viewBy should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2742,6 +2794,8 @@ Object {
 exports[`PieChart with two measures should create expected props for core chart 1`] = `
 Object {
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2834,6 +2888,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2922,6 +2978,8 @@ exports[`PieChart with vertical alignment - default should create expected props
 Object {
   "config": Object {},
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3014,6 +3072,8 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3106,5 +3166,7 @@ Object {
     },
   },
   "exportTitle": "PieChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;

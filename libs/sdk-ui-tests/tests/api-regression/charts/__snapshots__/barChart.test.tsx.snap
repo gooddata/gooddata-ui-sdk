@@ -122,6 +122,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -249,6 +251,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -395,6 +399,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -538,6 +544,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -681,6 +689,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -862,6 +872,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1043,6 +1055,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1249,6 +1263,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1432,6 +1448,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1560,6 +1578,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1730,6 +1750,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1893,6 +1915,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2014,6 +2038,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2138,6 +2164,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2259,6 +2287,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2383,6 +2413,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2511,6 +2543,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2635,6 +2669,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2825,6 +2861,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3015,6 +3053,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3205,6 +3245,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3395,6 +3437,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3562,6 +3606,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3729,6 +3775,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -3896,6 +3944,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4063,6 +4113,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4208,6 +4260,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4394,6 +4448,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4538,6 +4594,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4749,6 +4807,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4873,6 +4933,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -4997,6 +5059,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5121,6 +5185,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5245,6 +5311,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5369,6 +5437,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5493,6 +5563,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5638,6 +5710,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5783,6 +5857,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -5928,6 +6004,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6073,6 +6151,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6216,6 +6296,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6359,6 +6441,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6458,6 +6542,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6553,6 +6639,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6626,6 +6714,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6721,6 +6811,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6855,6 +6947,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -6970,6 +7064,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7065,6 +7161,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7202,6 +7300,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7388,6 +7488,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7574,6 +7676,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7766,6 +7870,8 @@ Object {
     },
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -7906,6 +8012,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8046,6 +8154,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8192,6 +8302,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8340,6 +8452,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8489,6 +8603,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8637,6 +8753,8 @@ Object {
     [Function],
   ],
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8782,6 +8900,8 @@ Object {
     "stackMeasuresToPercent": true,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -8927,6 +9047,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9067,6 +9189,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9234,6 +9358,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9355,6 +9481,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9483,6 +9611,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9617,6 +9747,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9768,6 +9900,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9877,6 +10011,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -9982,6 +10118,8 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -10077,5 +10215,7 @@ Object {
     "stackMeasuresToPercent": undefined,
   },
   "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
 }
 `;
