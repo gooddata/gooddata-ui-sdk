@@ -2,6 +2,7 @@
 import chunk from "lodash/chunk";
 import flatMap from "lodash/flatMap";
 import { IDashboardLayoutSize, ScreenSize, WidgetType } from "@gooddata/sdk-backend-spi";
+import { newKpiWidget } from "@gooddata/sdk-backend-base";
 import {
     getDashboardLayoutItemHeightForRatioAndScreen,
     unifyDashboardLayoutItemHeights,
@@ -12,6 +13,8 @@ import {
     getDashboardLayoutItemHeightForGrid,
     getDashboardLayoutItemHeight,
     getLayoutWithoutGridHeights,
+    getDashboardLayoutWidgetMinGridHeight,
+    getDashboardLayoutWidgetMaxGridHeight,
 } from "../sizing";
 import { ALL_SCREENS } from "../..";
 import {
@@ -44,6 +47,11 @@ export const allVisTypes: VisType[] = [
 ];
 
 const layoutBuilder = DashboardLayoutBuilder.forNewLayout();
+const measureRef = idRef("measure");
+const kpiWidget = newKpiWidget(measureRef, (w) => w.title("Kpi widget"));
+const kpiWidgetPop = newKpiWidget(measureRef, (w) =>
+    w.title("Kpi Pop widget").comparisonType("previousPeriod").comparisonDirection("growIsBad"),
+);
 
 describe("sizing", () => {
     describe("getDashboardLayoutWidgetDefaultHeight", () => {
@@ -61,12 +69,78 @@ describe("sizing", () => {
                 ).toMatchSnapshot();
             });
 
-            it("should get default height for kpi widget", () => {
-                expect(getDashboardLayoutWidgetDefaultHeight(settings, "kpi")).toMatchSnapshot();
+            it("should get default height for kpi without pop widget", () => {
+                expect(
+                    getDashboardLayoutWidgetDefaultHeight(settings, "kpi", kpiWidget.kpi),
+                ).toMatchSnapshot();
+            });
+
+            it("should get default height for kpi with pop widget", () => {
+                expect(
+                    getDashboardLayoutWidgetDefaultHeight(settings, "kpi", kpiWidgetPop.kpi),
+                ).toMatchSnapshot();
             });
 
             it("should get default height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetDefaultHeight(settings, "unknown" as any)).toMatchSnapshot();
+            });
+        });
+    });
+
+    describe("getDashboardLayoutWidgetMinGridHeight", () => {
+        describe.each([false, true])("with customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it.each(allVisTypes)("should get min height for insight widget %s", (visType) => {
+                expect(
+                    getDashboardLayoutWidgetMinGridHeight(
+                        settings,
+                        "insight",
+                        newInsightDefinition(`local:${visType}`),
+                    ),
+                ).toMatchSnapshot();
+            });
+
+            it("should get min height for kpi without pop widget", () => {
+                expect(
+                    getDashboardLayoutWidgetMinGridHeight(settings, "kpi", kpiWidget.kpi),
+                ).toMatchSnapshot();
+            });
+
+            it("should get min height for kpi with pop widget", () => {
+                expect(
+                    getDashboardLayoutWidgetMinGridHeight(settings, "kpi", kpiWidgetPop.kpi),
+                ).toMatchSnapshot();
+            });
+
+            it("should get min height for unknown widget", () => {
+                expect(getDashboardLayoutWidgetMinGridHeight(settings, "unknown" as any)).toMatchSnapshot();
+            });
+        });
+    });
+
+    describe("getDashboardLayoutWidgetMaxGridHeight", () => {
+        describe.each([false, true])("with customHeight %s", (enableKDWidgetCustomHeight) => {
+            const settings = {
+                enableKDWidgetCustomHeight,
+            };
+            it.each(allVisTypes)("should get max height for insight widget %s", (visType) => {
+                expect(
+                    getDashboardLayoutWidgetMaxGridHeight(
+                        settings,
+                        "insight",
+                        newInsightDefinition(`local:${visType}`),
+                    ),
+                ).toMatchSnapshot();
+            });
+
+            it("should get max height for kpi widget", () => {
+                expect(getDashboardLayoutWidgetMaxGridHeight(settings, "kpi")).toMatchSnapshot();
+            });
+
+            it("should get max height for unknown widget", () => {
+                expect(getDashboardLayoutWidgetMaxGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
         });
     });

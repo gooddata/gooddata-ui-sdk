@@ -38,6 +38,8 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationSizeInfo = {
     },
     height: {
         default: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
+        min: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
+        max: DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT,
     },
 };
 
