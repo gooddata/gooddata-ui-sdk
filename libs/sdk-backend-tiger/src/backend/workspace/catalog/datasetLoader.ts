@@ -58,9 +58,9 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
 
     return nonDateAttributes.map((attribute) => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
-        const nonGeoLabels = allLabels.filter((label) => !isGeoLabel(label));
         const geoLabels = allLabels.filter(isGeoLabel);
-        const defaultLabel = nonGeoLabels[0] ?? geoLabels[0];
+        // exactly one label is guaranteed to be primary
+        const defaultLabel = allLabels.filter((label) => label.attributes!.primary)[0];
 
         return convertAttribute(attribute, defaultLabel, geoLabels, allLabels);
     });
