@@ -351,6 +351,7 @@ export function getChartOptions(
         stackByAttribute,
         type,
         colorStrategy,
+        theme,
     );
 
     const drillableSeries = getDrillableSeries(

@@ -63,5 +63,71 @@
         },
         "scenario": "correct config",
         "vis": "Xirr"
+    },
+    {
+        "n2oMap": {
+            "a_timeline.aag81lMifn6q": "a_timeline.aag81lMifn6q",
+            "m_aadpHDMBecIy": "m_aadpHDMBecIy"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "timeline.aag81lMifn6q", "type": "displayForm" },
+                        "localIdentifier": "a_timeline.aag81lMifn6q"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aadpHDMBecIy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "timeline.aag81lMifn6q",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_timeline.aag81lMifn6q"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["measureGroup", "a_timeline.aag81lMifn6q"] }],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aadpHDMBecIy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aadpHDMBecIy"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "themed",
+        "vis": "Xirr"
     }
 ]

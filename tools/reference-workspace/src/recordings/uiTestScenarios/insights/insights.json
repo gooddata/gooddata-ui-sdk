@@ -36,6 +36,11 @@
     "AreaChart.50f413bdfea27a250f7bb584fd2796ac": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - forced visible."
     },
+    "AreaChart.52eb3b8d825ceba66864e12fa1db7113": {
+        "comment": "Auto-generated insight for test scenario AreaChart - themed.",
+        "scenarioName": "themed",
+        "visName": "AreaChart"
+    },
     "AreaChart.543d2d6b6ad82c742f65843929e2e2e9": {
         "comment": "Auto-generated insight for test scenario AreaChart - data labels - default."
     },
@@ -67,6 +72,9 @@
     },
     "AreaChart.8dbe31697789a4e464134ace891be7a1": {
         "comment": "Auto-generated insight for test scenario AreaChart - data points - sparse chart - forced visible."
+    },
+    "AreaChart.8e8af17e1365acee583b670300326efd": {
+        "comment": "Auto-generated insight for test scenario AreaChart - coloring - custom palette."
     },
     "AreaChart.9d2908f6b71d80aca6157eb1c8d6d413": {
         "comment": "Auto-generated insight for test scenario AreaChart - single measure with viewBy and stackBy and disabled stacking."
@@ -323,6 +331,11 @@
         "scenarioName": "two measures with viewBy sorted by measure",
         "visName": "BarChart"
     },
+    "BarChart.f6e39f363ddd7112e014a602dcc995ea": {
+        "comment": "Auto-generated insight for test scenario BarChart - themed.",
+        "scenarioName": "themed",
+        "visName": "BarChart"
+    },
     "BarChart.f8703d07954b73f2b8351cf3dc1602c8": {
         "comment": "Auto-generated insight for test scenario BarChart - dual axis name customization - middle."
     },
@@ -356,6 +369,11 @@
     },
     "BubbleChart.4275769d6ca57e43e8ae3fb29732c5b0": {
         "comment": "Auto-generated insight for test scenario BubbleChart - data labels - forced visible."
+    },
+    "BubbleChart.43c5649cdb367935f15e8e69fe85a895": {
+        "comment": "Auto-generated insight for test scenario BubbleChart - themed.",
+        "scenarioName": "themed",
+        "visName": "BubbleChart"
     },
     "BubbleChart.59dbe407a6045bfe2aa7a60afca1597a": {
         "comment": "Auto-generated insight for test scenario BubbleChart - assign color to attribute bubbles."
@@ -496,6 +514,11 @@
     },
     "BulletChart.97af170b51b9cfc849dd85269c4d721c": {
         "comment": "Auto-generated insight for test scenario BulletChart - data labels - forced hidden."
+    },
+    "BulletChart.9be07d86a1096d1fd5b70c69382b02b8": {
+        "comment": "Auto-generated insight for test scenario BulletChart - themed.",
+        "scenarioName": "themed",
+        "visName": "BulletChart"
     },
     "BulletChart.a8755ab06b1f32f6a5f616f2277a3815": {
         "comment": "Auto-generated insight for test scenario BulletChart - legend position - auto legend."
@@ -642,6 +665,11 @@
     },
     "ColumnChart.62f9bd47437b41467139e109d2485e1c": {
         "comment": "Auto-generated insight for test scenario ColumnChart - single measure with stack to 100%."
+    },
+    "ColumnChart.664abe005b55b0467cc05cdaac3791a6": {
+        "comment": "Auto-generated insight for test scenario ColumnChart - themed.",
+        "scenarioName": "themed",
+        "visName": "ColumnChart"
     },
     "ColumnChart.671c7835d4a865083973fc18fe44709d": {
         "comment": "Auto-generated insight for test scenario ColumnChart - single axis name customization - high."
@@ -884,6 +912,11 @@
     "ComboChart.709200a13cc59b9ddea45280fd54557d": {
         "comment": "Auto-generated insight for test scenario ComboChart - legend position - disabled."
     },
+    "ComboChart.71fd05988f1418549928ffe9a2ce06b6": {
+        "comment": "Auto-generated insight for test scenario ComboChart - themed.",
+        "scenarioName": "themed",
+        "visName": "ComboChart"
+    },
     "ComboChart.7b9f8804a0583d9541325829dab5dd2b": {
         "comment": "Auto-generated insight for test scenario ComboChart - dual axis two measures without slicingarea-column."
     },
@@ -1065,6 +1098,11 @@
     "DonutChart.2373f0f706a1afc63c7e580cb15fdad4": {
         "comment": "Auto-generated insight for test scenario DonutChart - data labels - forced visible."
     },
+    "DonutChart.2fe4d70fba5af83a3f350e7358504d4f": {
+        "comment": "Auto-generated insight for test scenario DonutChart - themed.",
+        "scenarioName": "themed",
+        "visName": "DonutChart"
+    },
     "DonutChart.408ee39e4a296288e0828526fcb6ecb4": {
         "comment": "Auto-generated insight for test scenario DonutChart - data labels - forced visible and german separators."
     },
@@ -1152,6 +1190,11 @@
         "scenarioName": "single measure",
         "visName": "FunnelChart"
     },
+    "FunnelChart.cb31fbf27a3db63eb6524cc8660b03fd": {
+        "comment": "Auto-generated insight for test scenario FunnelChart - themed.",
+        "scenarioName": "themed",
+        "visName": "FunnelChart"
+    },
     "FunnelChart.e26196f7a6b5f1f5b1147a1791ec065f": {
         "comment": "Auto-generated insight for test scenario FunnelChart - single measure with viewBy.",
         "scenarioName": "single measure with viewBy",
@@ -1168,6 +1211,11 @@
     "Headline.346303855acfc20de32fcfcef4a77a57": {
         "comment": "Auto-generated insight for test scenario Headline - two measures.",
         "scenarioName": "two measures",
+        "visName": "Headline"
+    },
+    "Headline.90d166ce3513a8ecb3abf8f0737f9965": {
+        "comment": "Auto-generated insight for test scenario Headline - themed.",
+        "scenarioName": "themed",
         "visName": "Headline"
     },
     "Headline.c73ecf1483cf081dfceb7661de46ef40": {
@@ -1255,6 +1303,16 @@
     "Heatmap.a2950fddaa59d9999e22607cb40d091d": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend on left."
     },
+    "Heatmap.a2db3e5e502d4b4d81a3ba13ce532af2": {
+        "comment": "Auto-generated insight for test scenario Heatmap - themed.",
+        "scenarioName": "themed",
+        "visName": "Heatmap"
+    },
+    "Heatmap.af6093abd513214ff6645f14f3db3b19": {
+        "comment": "Auto-generated insight for test scenario Heatmap - themed with null values.",
+        "scenarioName": "themed with null values",
+        "visName": "Heatmap"
+    },
     "Heatmap.c6c2be21010fed976c107e2a32e2af73": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - auto legend."
     },
@@ -1323,6 +1381,11 @@
     },
     "LineChart.78f74c25d0e6f6da93bbb7f3ca1474df": {
         "comment": "Auto-generated insight for test scenario LineChart - data labels - forced visible and german separators."
+    },
+    "LineChart.794efc983374160157463eb4eebca602": {
+        "comment": "Auto-generated insight for test scenario LineChart - themed.",
+        "scenarioName": "themed",
+        "visName": "LineChart"
     },
     "LineChart.85909a0a262e8fac3660c88b40095580": {
         "comment": "Auto-generated insight for test scenario LineChart - single axis name configuration - invisible."
@@ -1439,6 +1502,11 @@
     },
     "PieChart.67803f60cb018b90fe25766649c033e4": {
         "comment": "Auto-generated insight for test scenario PieChart - data labels - forced hidden."
+    },
+    "PieChart.69f2c3f83ea5831e372628cbc6cc17ad": {
+        "comment": "Auto-generated insight for test scenario PieChart - themed.",
+        "scenarioName": "themed",
+        "visName": "PieChart"
     },
     "PieChart.6d5b1a9ea3c8220947f5bd68ca8038cf": {
         "comment": "Auto-generated insight for test scenario PieChart - legend position - two measures - disabled."
@@ -1590,6 +1658,11 @@
     },
     "PivotTable.5fcccd2691c4bfdb0dcdf3a7725b0866": {
         "comment": "Auto-generated insight for test scenario PivotTable - with two measures, grand totals and subtotals with auto-resizing."
+    },
+    "PivotTable.6505c191912087a7187a8365369df497": {
+        "comment": "Auto-generated insight for test scenario PivotTable - themed.",
+        "scenarioName": "themed",
+        "visName": "PivotTable"
     },
     "PivotTable.6cfa2f092c46cab1b6e3f43ddf1b7fe2": {
         "comment": "Auto-generated insight for test scenario PivotTable - german number format."
@@ -1758,6 +1831,11 @@
     "PivotTable.fff21a04fbd4b7be1c351eda8937cd60": {
         "comment": "Auto-generated insight for test scenario PivotTable - simple table with custom attribute column size."
     },
+    "ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - themed.",
+        "scenarioName": "themed",
+        "visName": "ScatterPlot"
+    },
     "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - x axis measure.",
         "scenarioName": "x axis measure",
@@ -1827,6 +1905,11 @@
     "Treemap.042d603619b6518846d7d1d10d84a9a2": {
         "comment": "Auto-generated insight for test scenario Treemap - two measures and viewBy.",
         "scenarioName": "two measures and viewBy",
+        "visName": "Treemap"
+    },
+    "Treemap.08fcc2ee2d0b64e9bb656b8ae15d8a77": {
+        "comment": "Auto-generated insight for test scenario Treemap - themed.",
+        "scenarioName": "themed",
         "visName": "Treemap"
     },
     "Treemap.3a9842f85bdccd25ac36ec80cfecfae7": {
@@ -1921,6 +2004,11 @@
     "Xirr.e5deb6dfe7ff06cdc5210a56fc84c841": {
         "comment": "Auto-generated insight for test scenario Xirr - semantically wrong measure.",
         "scenarioName": "semantically wrong measure",
+        "visName": "Xirr"
+    },
+    "Xirr.feb8ea5ece361cf1c5681654f085f9a5": {
+        "comment": "Auto-generated insight for test scenario Xirr - themed.",
+        "scenarioName": "themed",
         "visName": "Xirr"
     }
 }

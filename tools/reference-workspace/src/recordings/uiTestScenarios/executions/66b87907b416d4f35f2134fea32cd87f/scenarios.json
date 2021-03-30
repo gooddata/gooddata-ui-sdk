@@ -122,5 +122,130 @@
         },
         "scenario": "primary, target and comparative measures with viewBy",
         "vis": "BulletChart"
+    },
+    {
+        "n2oMap": {
+            "a_label.product.id.name": "a_label.product.id.name",
+            "m_aangOxLSeztu": "m_aangOxLSeztu",
+            "m_acugFHNJgsBy": "m_acugFHNJgsBy",
+            "m_f72796b0fbc7c0dc4d17a1e68c1a9933": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                        "localIdentifier": "a_label.product.id.name"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_acugFHNJgsBy"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                    }
+                                },
+                                "localIdentifier": "m_aangOxLSeztu"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "secondary_measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Calculated 'Lost' measure",
+                                "definition": {
+                                    "arithmeticMeasure": {
+                                        "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                        "operator": "difference"
+                                    }
+                                },
+                                "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tertiary_measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "label.product.id.name",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_label.product.id.name"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "view"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_label.product.id.name"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_acugFHNJgsBy"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                            }
+                        },
+                        "localIdentifier": "m_aangOxLSeztu"
+                    }
+                },
+                {
+                    "measure": {
+                        "alias": "Calculated 'Lost' measure",
+                        "definition": {
+                            "arithmeticMeasure": {
+                                "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                "operator": "difference"
+                            }
+                        },
+                        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "themed",
+        "vis": "BulletChart"
     }
 ]

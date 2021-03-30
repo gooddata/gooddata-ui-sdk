@@ -45,6 +45,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: AreaChart - themed 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: AreaChart - two measures with undefined values 1`] = `
 Object {
   "seriesCount": 2,
@@ -135,6 +144,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: BarChart - themed 1`] = `
+Object {
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with two viewBy 1`] = `
 Object {
   "seriesCount": 2,
@@ -190,6 +208,15 @@ Object {
 `;
 
 exports[`createDataAccessDigest should find slices and series for: BubbleChart - arithmetic measure 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: BubbleChart - themed 1`] = `
 Object {
   "seriesCount": 3,
   "seriesIdx": 1,
@@ -342,6 +369,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: BulletChart - themed 1`] = `
+Object {
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: ColumnChart - arithmetic measures 1`] = `
 Object {
   "seriesCount": 4,
@@ -408,6 +444,15 @@ Object {
 exports[`createDataAccessDigest should find slices and series for: ColumnChart - single ratio measure with viewBy 1`] = `
 Object {
   "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - themed 1`] = `
+Object {
+  "seriesCount": 2,
   "seriesIdx": 0,
   "slicesCount": 6,
   "slicesIdx": 1,
@@ -567,6 +612,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: ComboChart - themed 1`] = `
+Object {
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: ComboChart - two secondary measure with viewBy 1`] = `
 Object {
   "seriesCount": 2,
@@ -595,6 +649,15 @@ Object {
 `;
 
 exports[`createDataAccessDigest should find slices and series for: DonutChart - single measure with viewBy 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: DonutChart - themed 1`] = `
 Object {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -684,6 +747,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: FunnelChart - themed 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: FunnelChart - two measures 1`] = `
 Object {
   "seriesCount": 2,
@@ -696,6 +768,15 @@ Object {
 exports[`createDataAccessDigest should find slices and series for: Headline - single measure 1`] = `
 Object {
   "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Headline - themed 1`] = `
+Object {
+  "seriesCount": 2,
   "seriesIdx": 0,
   "slicesCount": 0,
   "slicesIdx": undefined,
@@ -774,6 +855,24 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: Heatmap - themed 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Heatmap - themed with null values 1`] = `
+Object {
+  "seriesCount": 7,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: LineChart - arithmetic measures 1`] = `
 Object {
   "seriesCount": 4,
@@ -816,6 +915,15 @@ Object {
   "seriesIdx": 1,
   "slicesCount": 2,
   "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: LineChart - themed 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 18,
+  "slicesIdx": 1,
 }
 `;
 
@@ -873,6 +981,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: PieChart - themed 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: PieChart - two measures 1`] = `
 Object {
   "seriesCount": 2,
@@ -905,6 +1022,15 @@ Object {
   "seriesCount": 2,
   "seriesIdx": 1,
   "slicesCount": 0,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ScatterPlot - themed 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
   "slicesIdx": 0,
 }
 `;
@@ -1017,6 +1143,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: Treemap - themed 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 12,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: Treemap - two measures 1`] = `
 Object {
   "seriesCount": 2,
@@ -1065,6 +1200,15 @@ Object {
 exports[`createDataAccessDigest should find slices and series for: Xirr - semantically wrong measure 1`] = `
 Object {
   "seriesCount": 21,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": undefined,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: Xirr - themed 1`] = `
+Object {
+  "seriesCount": 4,
   "seriesIdx": 0,
   "slicesCount": 0,
   "slicesIdx": undefined,

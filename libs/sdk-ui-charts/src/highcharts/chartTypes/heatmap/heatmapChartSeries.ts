@@ -1,29 +1,31 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { IPatternObject, IPointData } from "../../typings/unsafe";
 import { GRAY, TRANSPARENT, WHITE } from "../_util/color";
 import { DataViewFacade } from "@gooddata/sdk-ui";
-import { DataValue, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+import { DataValue, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import { parseValue, unwrap } from "../_util/common";
 import isNil from "lodash/isNil";
 
-const nullColor: IPatternObject = {
+const getNullColor = (theme?: ITheme): IPatternObject => ({
     pattern: {
         path: {
             d: "M 10 0 L 0 10 M 9 11 L 11 9 M 4 11 L 11 4 M -1 1 L 1 -1 M -1 6 L 6 -1",
-            stroke: GRAY,
+            stroke: theme?.palette?.complementary?.c4 ?? GRAY,
             strokeWidth: 1,
-            fill: WHITE,
+            fill: theme?.palette?.complementary?.c0 ?? WHITE,
         },
         width: 10,
         height: 10,
     },
-};
+});
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getHeatmapSeries(
     dv: DataViewFacade,
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
+    theme?: ITheme,
 ) {
+    const nullColor = getNullColor(theme);
     const data: IPointData[] = [];
     dv.rawData()
         .twoDimData()
@@ -35,7 +37,7 @@ export function getHeatmapSeries(
                     data.push({
                         ...pointData,
                         borderWidth: 1,
-                        borderColor: GRAY,
+                        borderColor: theme?.palette?.complementary?.c4 ?? GRAY,
                         color: TRANSPARENT,
                     });
                     data.push({
