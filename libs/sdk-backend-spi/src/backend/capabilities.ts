@@ -93,6 +93,11 @@ export interface IBackendCapabilities {
     supportsKpiWidget?: boolean;
 
     /**
+     * Indicates whether backend supports hyperlink attribute labels.
+     */
+    supportsHyperlinkAttributeLabels?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
