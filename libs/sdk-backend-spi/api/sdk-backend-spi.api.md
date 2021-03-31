@@ -287,6 +287,7 @@ export interface IBackendCapabilities {
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
     supportsRankingFilter?: boolean;
