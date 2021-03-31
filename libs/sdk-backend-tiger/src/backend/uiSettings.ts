@@ -31,7 +31,7 @@ export const DefaultUiSettings: ISettings = {
     enableMultipleDates: true,
     enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
-    enableKDWidgetCustomHeight: true,
+    enableKDWidgetCustomHeight: false,
     enableSectionHeaders: true,
     enableKPIDashboardSaveAsNew: true,
     enableEmbedButtonInKD: true,
