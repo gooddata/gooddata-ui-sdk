@@ -5,6 +5,7 @@ import { ItemsWrapper, Separator, Header, Item } from "@gooddata/sdk-ui-kit";
 
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
+import { wrapWithTheme } from "../../themeWrapper";
 
 import "./styles.scss";
 
@@ -33,3 +34,4 @@ const ListExamples = () => (
 );
 
 storiesOf(`${UiKit}/Menu List`, module).add("full-featured", () => <ListExamples />);
+storiesOf(`${UiKit}/Menu List`, module).add("themed", () => wrapWithTheme(<ListExamples />));

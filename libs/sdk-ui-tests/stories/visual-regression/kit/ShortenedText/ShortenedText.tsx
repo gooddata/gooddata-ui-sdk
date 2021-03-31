@@ -10,7 +10,7 @@ import "./ShortenedText.css";
 
 const ShortenedTextExamples: React.FC = () => {
     return (
-        <div className="screenshot-target">
+        <div className="screenshot-target shortened-text-wrapper">
             <div style={{ width: 150 }}>
                 <ShortenedText
                     className="example-long-text"

@@ -34,4 +34,9 @@ export const ScenarioGroupNames = {
      * Group for coloring customization scenarios
      */
     Coloring: ["customization", "color"],
+
+    /**
+     * Group for theming customization scenarios
+     */
+    Theming: ["customization", "theme"],
 };

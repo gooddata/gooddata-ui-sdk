@@ -6,5 +6,6 @@ import coloring from "./coloring";
 import customization from "./customization";
 import drilling from "./drilling";
 import stacking from "./stacking";
+import theming from "./theming";
 
-export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking];
+export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking, theming];

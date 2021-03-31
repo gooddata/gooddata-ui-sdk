@@ -10,6 +10,7 @@ import "@gooddata/sdk-ui-filters/styles/css/attributeFilter.css";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { ReferenceWorkspaceId, StorybookBackend } from "../../../_infra/backend";
+import { wrapWithTheme } from "../../themeWrapper";
 
 const wrapperStyle = { width: 400, height: 600, padding: "1em 1em" };
 const backend = StorybookBackend();
@@ -146,6 +147,28 @@ storiesOf(`${FilterStories}/AttributeFilter`, module)
                 },
                 clear: {
                     clickSelectors: [".s-product__all_except_wonderkid__expl_____3_", ".s-clear"],
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        );
+    })
+    .add("themed", () => {
+        return withMultipleScreenshots(
+            wrapWithTheme(
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceLdm.Product.Name, [])}
+                        onApply={action("on-apply")}
+                    />
+                </div>,
+            ),
+            {
+                closed: {},
+                opened: { clickSelector: ".s-product", postInteractionWait: LongPostInteractionTimeout },
+                "select-all": {
+                    clickSelectors: [".s-product", ".s-select_all"],
                     postInteractionWait: LongPostInteractionTimeout,
                 },
             },

@@ -5,6 +5,8 @@ import { recordedBackend } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
+import "./themeWrapper.scss";
+
 const workspace = "testWorkspace";
 const theme: ITheme = {
     palette: {
@@ -19,6 +21,10 @@ const theme: ITheme = {
         },
         warning: {
             base: "#b300db",
+        },
+        complementary: {
+            c0: "#303030",
+            c9: "#ffffff",
         },
     },
     button: {
@@ -41,11 +47,40 @@ const theme: ITheme = {
         borderColor: "#00594c",
         borderRadius: "20px",
     },
+    kpi: {
+        primaryMeasureColor: "#f00",
+        secondaryInfoColor: "#0f0",
+    },
+    table: {
+        backgroundColor: "#303030",
+        gridColor: "#fff",
+        headerHoverBackgroundColor: "#888",
+        headerLabelColor: "#e0e0e0",
+        hoverBackgroundColor: "#555",
+        nullValueColor: "#f00",
+        loadingIconColor: "#0f0",
+        subtotalBackgroundColor: "#00f",
+        totalBackgroundColor: "#00f",
+        totalValueColor: "#00f",
+        valueColor: "#fff",
+    },
+    chart: {
+        backgroundColor: "#303030",
+        gridColor: "#999",
+        axisColor: "#eaeaea",
+        axisLabelColor: "#eaeaea",
+        axisValueColor: "#eaeaea",
+        legendValueColor: "#eaeaea",
+        tooltipBackgroundColor: "#333",
+        tooltipBorderColor: "#555",
+        tooltipLabelColor: "#eaeaea",
+        tooltipValueColor: "#fff",
+    },
 };
 const backend = recordedBackend(ReferenceRecordings.Recordings, { theme });
 
 export const wrapWithTheme = (component: JSX.Element): JSX.Element => (
     <ThemeProvider workspace={workspace} backend={backend}>
-        {component}
+        <div className="theme-wrapper">{component}</div>
     </ThemeProvider>
 );

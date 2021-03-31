@@ -7,7 +7,6 @@ import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(...ScenarioGroupNames.Coloring)
-    .withGroupNames("customization")
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("coloring", AreaChartWithTwoMeasuresAndViewBy, coloringCustomizer);
