@@ -177,7 +177,7 @@ export interface IAuthenticationProvider {
     initializeClient?(client: any): void;
 
     /**
-     * Optionally specify function to call when the Analytical Backend runs into NotAuthenticated error.
+     * Optionally specify function to call when the Analytical Backend raises a NotAuthenticated error.
      *
      * @param context - context in which the authentication is done
      * @param error - an instance of NotAuthenticated error

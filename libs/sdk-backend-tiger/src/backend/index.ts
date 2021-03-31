@@ -208,7 +208,7 @@ export class TigerBackend implements IAnalyticalBackend {
                     resolve(res);
                 })
                 .catch((err) => {
-                    if (isNotAuthenticatedResponse(err)) {
+                    if (isNotAuthenticatedResponse(err) || isNotAuthenticated(err)) {
                         resolve(null);
                     }
 
