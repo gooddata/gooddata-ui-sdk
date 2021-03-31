@@ -4,11 +4,11 @@ import {
     ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
     FilterDefinitionForSimpleMeasure,
     MeasureDefinition,
+    MeasureItem,
     PopDatasetMeasureDefinition,
     PopDateMeasureDefinition,
     SimpleMeasureDefinition,
     SimpleMeasureDefinitionMeasureAggregationEnum,
-    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
     ArithmeticMeasureOperator,
@@ -35,7 +35,7 @@ import {
 } from "../ObjRefConverter";
 import { convertFilter } from "./FilterConverter";
 
-export function convertMeasure(measure: IMeasure): VisualizationObjectModelV2.IMeasure {
+export function convertMeasure(measure: IMeasure): MeasureItem {
     const {
         measure: { definition },
     } = measure;

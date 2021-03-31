@@ -5601,46 +5601,8 @@ export namespace VisualizationObjectModelV1 {
 
 // @public (undocumented)
 export namespace VisualizationObjectModelV2 {
-    export interface IAttribute {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        label: ObjectIdentifier;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
-    // (undocumented)
-    export type Identifier = string;
-    export interface IDimension {
-        // (undocumented)
-        itemIdentifiers: Identifier[];
-        // (undocumented)
-        localIdentifier: string;
-        // (undocumented)
-        sorting?: SortKey[];
-        // (undocumented)
-        totals?: ITotalItem[];
-    }
-    export interface IMeasure {
-        // (undocumented)
-        alias?: string;
-        // (undocumented)
-        definition: MeasureDefinition;
-        // (undocumented)
-        format?: string;
-        // (undocumented)
-        localIdentifier: Identifier;
-    }
     // (undocumented)
     export function isVisualizationObject(visualizationObject: unknown): visualizationObject is IVisualizationObject;
-    export interface ITotalItem {
-        // (undocumented)
-        attributeIdentifier: LocalIdentifier;
-        // (undocumented)
-        measureIdentifier: LocalIdentifier;
-        // (undocumented)
-        type: TotalType;
-    }
     export interface IVisualizationObject {
         // (undocumented)
         buckets: IBucket[];
@@ -5655,11 +5617,6 @@ export namespace VisualizationObjectModelV2 {
         // (undocumented)
         visualizationUrl: string;
     }
-    // (undocumented)
-    export type SortKey = SortKeyAttribute | SortKeyValue;
-    // (undocumented)
-    export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-    {};
 }
 
 // @public

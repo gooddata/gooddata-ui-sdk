@@ -21,7 +21,7 @@ import {
     insightFilters,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
-import { AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
+import { AfmValidObjectsQuery, AfmValidObjectsQueryTypesEnum } from "@gooddata/api-client-tiger";
 import intersectionWith from "lodash/intersectionWith";
 import uniq from "lodash/uniq";
 
@@ -142,7 +142,7 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
 
         const { filters: afmFilters, auxMeasures } = convertAfmFilters(attributes, measures, filters);
 
-        const afmValidObjectsQuery = {
+        const afmValidObjectsQuery: AfmValidObjectsQuery = {
             types: relevantRestrictingTypes.map(mapToTigerType),
             afm: {
                 attributes: attributes.map(convertAttribute),
