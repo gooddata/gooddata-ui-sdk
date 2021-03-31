@@ -1,13 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
-import {
-    LocalIdentifier,
-    MeasureDefinition,
-    ObjectIdentifier,
-    SortKeyAttribute,
-    SortKeyValue,
-} from "../generated/afm-rest-api";
 
 export namespace VisualizationObjectModelV2 {
     /**
@@ -21,50 +14,6 @@ export namespace VisualizationObjectModelV2 {
         sorts: ISortItem[];
         properties: VisualizationProperties;
     }
-
-    /**
-     * Attribute format used in executions
-     */
-    export interface IAttribute {
-        localIdentifier: Identifier;
-        label: ObjectIdentifier;
-        alias?: string;
-    }
-
-    /**
-     * Measure format used in executions
-     */
-    export interface IMeasure {
-        localIdentifier: Identifier;
-        definition: MeasureDefinition;
-        alias?: string;
-        format?: string;
-    }
-
-    /**
-     * Dimension format used in executions
-     */
-    export interface IDimension {
-        localIdentifier: string;
-        itemIdentifiers: Identifier[];
-        sorting?: SortKey[];
-        totals?: ITotalItem[];
-    }
-
-    /**
-     * Total format used in executions
-     */
-    export interface ITotalItem {
-        measureIdentifier: LocalIdentifier;
-        type: TotalType;
-        attributeIdentifier: LocalIdentifier;
-    }
-
-    type SortKey = SortKeyAttribute | SortKeyValue;
-
-    type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
-
-    type Identifier = string;
 
     export function isVisualizationObject(
         visualizationObject: unknown,

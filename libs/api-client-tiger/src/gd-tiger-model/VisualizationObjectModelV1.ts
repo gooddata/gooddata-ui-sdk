@@ -29,7 +29,7 @@ export namespace VisualizationObjectModelV1 {
     /**
      * Attribute format used in executions
      *
-     * @deprecated use {@link VisualizationObjectModelV2.IAttribute} instead
+     * @deprecated use {@link AttributeItem} instead
      */
     export interface IAttribute {
         localIdentifier: Identifier;
@@ -40,7 +40,7 @@ export namespace VisualizationObjectModelV1 {
     /**
      * Measure format used in executions
      *
-     * @deprecated use {@link VisualizationObjectModelV2.IMeasure} instead
+     * @deprecated use {@link MeasureItem} instead
      */
     export interface IMeasure {
         localIdentifier: Identifier;
@@ -52,7 +52,7 @@ export namespace VisualizationObjectModelV1 {
     /**
      * Dimension format used in executions
      *
-     * @deprecated use {@link VisualizationObjectModelV2.IDimension} instead
+     * @deprecated use {@link Dimension} instead
      */
     export interface IDimension {
         localIdentifier: string;
@@ -64,7 +64,7 @@ export namespace VisualizationObjectModelV1 {
     /**
      * Total format used in executions
      *
-     * @deprecated use {@link VisualizationObjectModelV2.ITotalItem} instead
+     * @deprecated use {@link GrandTotal} instead
      */
     export interface ITotalItem {
         measureIdentifier: LocalIdentifier;

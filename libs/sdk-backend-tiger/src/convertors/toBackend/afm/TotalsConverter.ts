@@ -67,7 +67,7 @@ export function withTotals<T>(
     });
 }
 
-export function totalLocalIdentifier(type: TotalType, dimIdx: number) {
+export function totalLocalIdentifier(type: TotalType, dimIdx: number): string {
     return `total_${dimIdx}_${type}`;
 }
 

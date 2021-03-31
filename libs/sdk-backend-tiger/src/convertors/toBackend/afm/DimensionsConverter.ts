@@ -4,7 +4,6 @@ import {
     SortDirection as TigerSortDirection,
     SortKeyAttribute,
     SortKeyValue,
-    VisualizationObjectModelV2,
 } from "@gooddata/api-client-tiger";
 import {
     IExecutionDefinition,
@@ -19,10 +18,7 @@ import isEmpty from "lodash/isEmpty";
 
 type SortKey = SortKeyAttribute | SortKeyValue;
 
-function merge(
-    dims: VisualizationObjectModelV2.IDimension[],
-    sorting: SortKey[][],
-): VisualizationObjectModelV2.IDimension[] {
+function merge(dims: Dimension[], sorting: SortKey[][]): Dimension[] {
     return dims.map((dim, idx) => {
         if (!isEmpty(sorting[idx])) {
             return {
@@ -102,10 +98,7 @@ function convertMeasureLocators(locators: ILocatorItem[]): { [key: string]: stri
  * @param dims - dimensions to add sorting to
  * @param sorts - sort items defined by SDK user
  */
-function dimensionsWithSorts(
-    dims: VisualizationObjectModelV2.IDimension[],
-    sorts: ISortItem[],
-): VisualizationObjectModelV2.IDimension[] {
+function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[] {
     if (isEmpty(sorts)) {
         return dims;
     }
@@ -161,7 +154,7 @@ function dimensionsWithSorts(
                 value: {
                     direction: convertSortDirection(sortItem.measureSortItem.direction),
                     dataColumnLocators: {
-                        [measureDim.localIdentifier]: convertMeasureLocators(
+                        [measureDim.localIdentifier!]: convertMeasureLocators(
                             sortItem.measureSortItem.locators,
                         ),
                     },
@@ -182,7 +175,7 @@ function dimensionsWithSorts(
  * @param def
  */
 export function convertDimensions(def: IExecutionDefinition): Dimension[] {
-    const dimensionsWithoutSorts: VisualizationObjectModelV2.IDimension[] = def.dimensions.map((dim, idx) => {
+    const dimensionsWithoutSorts: Dimension[] = def.dimensions.map((dim, idx) => {
         return {
             localIdentifier: `dim_${idx}`, // FIXME synchronize with convertTotals
             itemIdentifiers: dim.itemIdentifiers,
