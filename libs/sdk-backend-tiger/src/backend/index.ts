@@ -328,12 +328,17 @@ function createAxios(
 function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
     client.interceptors.response.use(identity, (error) => {
         const response: AxiosResponse = error.response;
-        if (inRange(response.status, 400, 600)) {
+
+        // If the response is an object (JSON parsed by axios) and there is a problem, then log error
+        // into console for easier diagnostics.
+        if (inRange(response.status, 400, 600) && typeof response.data === "object") {
             // Title is redundant (Bad Request)
             const details = omit(response.data, ["title"]);
             // eslint-disable-next-line no-console
             console.error("Tiger backend threw an error:", details);
         }
+
+        return Promise.reject(error);
     });
 
     return client;
