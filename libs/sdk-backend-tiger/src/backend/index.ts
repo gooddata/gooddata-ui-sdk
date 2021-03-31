@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { AxiosInstance } from "axios";
+import { AxiosInstance, AxiosResponse } from "axios";
 import invariant from "ts-invariant";
 import {
     IAnalyticalBackendConfig,
@@ -20,6 +20,9 @@ import {
 import { newAxios, tigerClientFactory, ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty";
 import isString from "lodash/isString";
+import inRange from "lodash/inRange";
+import identity from "lodash/identity";
+import omit from "lodash/omit";
 
 import { convertApiError } from "../utils/errorHandling";
 
@@ -121,6 +124,8 @@ export class TigerBackend implements IAnalyticalBackend {
         this.dateFormatter = implConfig.dateFormatter ?? createDefaultDateFormatter();
 
         const axios = createAxios(this.config, this.implConfig, this.telemetry);
+        interceptBackendErrorsToConsole(axios);
+
         this.client = tigerClientFactory(axios);
 
         this.authProvider.initializeClient?.(this.client);
@@ -317,6 +322,20 @@ function createAxios(
     const headers = createHeaders(implConfig, telemetry);
 
     return newAxios(baseUrl, headers);
+}
+
+function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
+    client.interceptors.response.use(identity, (error) => {
+        const response: AxiosResponse = error.response;
+        if (inRange(response.status, 400, 600)) {
+            // Title is redundant (Bad Request)
+            const details = omit(response.data, ["title"]);
+            // eslint-disable-next-line no-console
+            console.error("Tiger backend threw an error:", details);
+        }
+    });
+
+    return client;
 }
 
 function createHeaders(implConfig: TigerBackendConfig, telemetry: TelemetryData): { [name: string]: string } {
