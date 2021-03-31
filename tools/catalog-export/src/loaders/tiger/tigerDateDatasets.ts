@@ -3,7 +3,7 @@
 import { Attribute, DateDataSet } from "../../base/types";
 import {
     JsonApiAttributeOutList,
-    JsonApiAttributeOut,
+    JsonApiAttributeOutWithLinks,
     JsonApiDatasetOut,
     ITigerClient,
     MetadataUtilities,
@@ -20,7 +20,7 @@ import values from "lodash/values";
 
 type DatasetWithAttributes = {
     dataset: JsonApiDatasetOut;
-    attributes: JsonApiAttributeOut[];
+    attributes: JsonApiAttributeOutWithLinks[];
 };
 
 function findDateDatasetsWithAttributes(
@@ -79,9 +79,8 @@ function convertToExportableFormat(
 export async function loadDateDataSets(client: ITigerClient, workspaceId: string): Promise<DateDataSet[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getEntitiesAttributes,
-        { workspaceId },
-        { query: { include: "labels,datasets" } },
+        client.workspaceObjects.getAllEntitiesAttributes,
+        { workspaceId, include: ["labels", "datasets"] },
     ).then(MetadataUtilities.mergeEntitiesResults);
     const labelsMap = createLabelMap(result.included);
     const datasetsMap = createDatasetMap(result.included);

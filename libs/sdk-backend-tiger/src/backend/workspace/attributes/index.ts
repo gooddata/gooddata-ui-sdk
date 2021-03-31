@@ -109,7 +109,7 @@ function loadAttribute(
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
     return MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getEntitiesAttributes,
+        client.workspaceObjects.getAllEntitiesAttributes,
         { workspaceId },
         { query: { include: "labels" } },
     )

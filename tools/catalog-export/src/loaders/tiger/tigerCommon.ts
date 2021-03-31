@@ -1,10 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
 import {
-    JsonApiAttributeOut,
     JsonApiDatasetOut,
     JsonApiLabelOut,
     JsonApiAttributeOutRelationships,
     JsonApiLinkage,
+    JsonApiAttributeOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy";
 import { Attribute, DisplayForm } from "../../base/types";
@@ -66,7 +66,7 @@ export function getReferencedDataset(
     return datasetsMap[datasetsRef.id];
 }
 
-export function convertLabels(attribute: JsonApiAttributeOut, labelsMap: LabelMap): DisplayForm[] {
+export function convertLabels(attribute: JsonApiAttributeOutWithLinks, labelsMap: LabelMap): DisplayForm[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
     return labelsRefs
         .map((ref) => {
@@ -87,7 +87,10 @@ export function convertLabels(attribute: JsonApiAttributeOut, labelsMap: LabelMa
         .filter((df): df is DisplayForm => df !== undefined);
 }
 
-export function convertAttribute(attribute: JsonApiAttributeOut, labels: LabelMap): Attribute | undefined {
+export function convertAttribute(
+    attribute: JsonApiAttributeOutWithLinks,
+    labels: LabelMap,
+): Attribute | undefined {
     return {
         attribute: {
             content: {

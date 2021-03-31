@@ -2,7 +2,6 @@
 
 import {
     JsonApiAttributeOutList,
-    JsonApiDatasetOut,
     ITigerClient,
     JsonApiLinkage,
     JsonApiLabelOutWithLinks,
@@ -82,7 +81,7 @@ function identifyDateDatasets(
         if (!ref) {
             return;
         }
-        const dataset = lookupRelatedObject(included, ref.id, ref.type) as JsonApiDatasetOut;
+        const dataset = lookupRelatedObject(included, ref.id, ref.type) as JsonApiDatasetOutWithLinks;
         if (!dataset) {
             return;
         }
@@ -131,7 +130,7 @@ export async function loadAttributesAndDateDatasets(
     }
     const attributes = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getEntitiesAttributes,
+        client.workspaceObjects.getAllEntitiesAttributes,
         { workspaceId },
         { query: { include: includeObjects.join(","), tags: includeObjectWithTags.join(",") } },
     ).then(MetadataUtilities.mergeEntitiesResults);

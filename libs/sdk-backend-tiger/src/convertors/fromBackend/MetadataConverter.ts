@@ -7,9 +7,9 @@ import {
     JsonApiAttributeOutWithLinks,
     JsonApiDatasetOutWithLinks,
     JsonApiFactOutWithLinks,
-    JsonApiLabelOut,
     JsonApiLabelOutDocument,
     JsonApiLabelOutWithLinks,
+    JsonApiLabelOutWithLinksTypeEnum,
     JsonApiLinkage,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
@@ -50,20 +50,16 @@ export const commonMetadataObjectModifications = <
         .title(item.attributes?.title || "")
         .description(item.attributes?.description || "");
 
-function createLabelMap(included: any[] | undefined): Record<string, JsonApiLabelOutWithLinks> {
+function createLabelMap(
+    included: JsonApiAttributeOutDocument["included"] | undefined,
+): Record<string, JsonApiLabelOutWithLinks> {
     if (!included) {
         return {};
     }
 
-    const labels: JsonApiLabelOut[] = included
-        .map((include) => {
-            if ((include as JsonApiLinkage).type !== "label") {
-                return null;
-            }
-
-            return include as JsonApiLabelOutWithLinks;
-        })
-        .filter((include): include is JsonApiLabelOutWithLinks => include !== null);
+    const labels = included.filter((include): include is JsonApiLabelOutWithLinks => {
+        return include.type === JsonApiLabelOutWithLinksTypeEnum.Label;
+    });
 
     return keyBy(labels, (t) => t.id);
 }
@@ -72,7 +68,7 @@ function createLabelMap(included: any[] | undefined): Record<string, JsonApiLabe
  * Converts all labels of this attribute. The map contains sideloaded label information
  */
 function convertAttributeLabels(
-    attribute: JsonApiAttributeOut,
+    attribute: JsonApiAttributeOut | JsonApiAttributeOutWithLinks,
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {
     const labelsRefs = attribute.relationships?.labels?.data as JsonApiLinkage[];
@@ -95,7 +91,7 @@ function convertAttributeLabels(
  */
 function convertAttributeWithLinks(
     attribute: JsonApiAttributeOutWithLinks,
-    labels: Record<string, JsonApiLabelOut>,
+    labels: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeMetadataObject {
     return newAttributeMetadataObject(idRef(attribute.id, "attribute"), (m) =>
         m
@@ -109,7 +105,7 @@ function convertAttributeWithLinks(
  */
 function convertAttributeDocument(
     attributeDoc: JsonApiAttributeOutDocument,
-    labels: Record<string, JsonApiLabelOut>,
+    labels: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeMetadataObject {
     const attribute = attributeDoc.data;
 

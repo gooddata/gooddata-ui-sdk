@@ -4,7 +4,6 @@ import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
     isFilterContextData,
-    JsonApiAnalyticalDashboardInAttributes,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiAnalyticalDashboardOutList,
     JsonApiAnalyticalDashboardOutWithLinks,
@@ -28,14 +27,13 @@ import { idRef, ObjectType } from "@gooddata/sdk-model";
 export const convertAnalyticalDashboard = (
     analyticalDashboard: JsonApiAnalyticalDashboardOutWithLinks,
 ): IListedDashboard => {
-    const attributes = analyticalDashboard.attributes as JsonApiAnalyticalDashboardInAttributes;
-    const { title, description } = attributes;
+    const attributes = analyticalDashboard.attributes;
     return {
         ref: idRef(analyticalDashboard.id, "analyticalDashboard"),
         uri: analyticalDashboard.links!.self,
         identifier: analyticalDashboard.id,
-        title: title ?? "",
-        description: description ?? "",
+        title: attributes?.title ?? "",
+        description: attributes?.description ?? "",
         created: "",
         updated: "",
     };
@@ -94,8 +92,10 @@ function convertFilterContextFilters(
     invariant(false, "Unknown filter context version");
 }
 
-export function getFilterContextFromIncluded(included: any[]): IFilterContext | undefined {
-    const filterContext = included.find(isFilterContextData) as JsonApiFilterContextOutWithLinks;
+export function getFilterContextFromIncluded(
+    included: JsonApiAnalyticalDashboardOutDocument["included"],
+): IFilterContext | undefined {
+    const filterContext = included?.find(isFilterContextData) as JsonApiFilterContextOutWithLinks;
     if (!filterContext) {
         return;
     }

@@ -94,8 +94,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             return OrganizationUtilities.getAllPagesOf(
                 client,
                 client.organizationObjects.getAllEntitiesWorkspaces,
-                { sort: ["name"] },
-                { query: { include: "workspaces" } },
+                { sort: ["name"], include: ["workspaces"] },
             )
                 .then(OrganizationUtilities.mergeEntitiesResults)
                 .then(this.resultToWorkspaceDescriptors)
