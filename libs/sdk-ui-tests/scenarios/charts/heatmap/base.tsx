@@ -10,6 +10,12 @@ export const HeatmapWithMeasureRowsAndColumns = {
     columns: ReferenceLdm.Region,
 };
 
+export const HeatmapWithNullDataPoints = {
+    measure: ReferenceLdm.Amount,
+    rows: ReferenceLdm.Product.Name,
+    columns: ReferenceLdm.ClosedYear,
+};
+
 /*
  * TODO: stories not transferred:
  *  - with left out some label of yaxis
@@ -32,8 +38,4 @@ export default scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
         columns: ReferenceLdm.Product.Name,
     })
     .addScenario("measure, rows and columns", HeatmapWithMeasureRowsAndColumns)
-    .addScenario("measure, rows and columns with null data points", {
-        measure: ReferenceLdm.Amount,
-        rows: ReferenceLdm.Product.Name,
-        columns: ReferenceLdm.ClosedYear,
-    });
+    .addScenario("measure, rows and columns with null data points", HeatmapWithNullDataPoints);

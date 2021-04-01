@@ -1,0 +1,58 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [],
+        "identifier": "Treemap.08fcc2ee2d0b64e9bb656b8ae15d8a77",
+        "properties": { "controls": {} },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } },
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                }
+            }
+        ],
+        "title": "Treemap - themed",
+        "uri": "Treemap.08fcc2ee2d0b64e9bb656b8ae15d8a77",
+        "visualizationUrl": "local:treemap"
+    }
+}

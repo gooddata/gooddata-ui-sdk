@@ -1,0 +1,38 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            }
+        ],
+        "filters": [],
+        "identifier": "Headline.90d166ce3513a8ecb3abf8f0737f9965",
+        "properties": { "controls": {} },
+        "sorts": [],
+        "title": "Headline - themed",
+        "uri": "Headline.90d166ce3513a8ecb3abf8f0737f9965",
+        "visualizationUrl": "local:headline"
+    }
+}

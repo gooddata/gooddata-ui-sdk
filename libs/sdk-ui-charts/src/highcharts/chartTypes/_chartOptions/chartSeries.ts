@@ -1,5 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
-import { IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-backend-spi";
+// (C) 2007-2021 GoodData Corporation
+import { IMeasureDescriptor, IMeasureGroupDescriptor, ITheme } from "@gooddata/sdk-backend-spi";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { IPointData, ISeriesItemConfig } from "../../typings/unsafe";
@@ -150,9 +150,10 @@ export function getSeries(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     type: string,
     colorStrategy: IColorStrategy,
+    theme?: ITheme,
 ): any {
     if (isHeatmap(type)) {
-        return getHeatmapSeries(dv, measureGroup);
+        return getHeatmapSeries(dv, measureGroup, theme);
     } else if (isScatterPlot(type)) {
         return getScatterPlotSeries(dv, stackByAttribute, colorStrategy);
     } else if (isBubbleChart(type)) {
