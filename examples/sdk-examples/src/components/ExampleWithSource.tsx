@@ -28,9 +28,30 @@ const SourceSection: React.FC<ISourceSectionProps> = ({ source, sourceJS }) => {
                 :global(pre) {
                     overflow: auto;
                 }
+
+                .gd-source-button {
+                    font-family: Avenir, "Helvetica Neue", arial, sans-serif;
+                    text-transform: none;
+                }
+
+                .gd-source-button:focus {
+                    border-color: rgba(20, 178, 226, 0.75);
+                }
+
+                --gd-shadow-color: initial;
+                --gd-palette-complementary-0: initial;
+                --gd-palette-complementary-1: initial;
+                --gd-palette-complementary-2: initial;
+                --gd-palette-complementary-3: initial;
+                --gd-palette-complementary-4: initial;
+                --gd-palette-complementary-5: initial;
+                --gd-palette-complementary-6: initial;
+                --gd-palette-complementary-7: initial;
+                --gd-palette-complementary-8: initial;
+                --gd-palette-complementary-9: initial;
             `}</style>
             <button
-                className={`gd-button gd-button-secondary button-dropdown icon-right ${iconClassName}`}
+                className={`gd-button gd-button-secondary button-dropdown icon-right gd-source-button ${iconClassName}`}
                 onClick={() => setState(!hidden)}
             >
                 source code
@@ -64,7 +85,7 @@ export const ExampleWithSource: React.FC<IExampleWithSourceProps> = ({
                 .example {
                     padding: 20px;
                     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
-                    background-color: white;
+                    background-color: var(--gd-palette-complementary-0, #fff);
                 }
             `}</style>
             <div className="example">
