@@ -17,4 +17,5 @@ export type IconName =
     | "Undo"
     | "Home"
     | "BurgerMenu"
-    | "Rows";
+    | "Rows"
+    | "DragHandle";

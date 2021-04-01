@@ -227,6 +227,13 @@ const getFormDerivedColors = (palette: IThemePalette, isDarkTheme: boolean): Css
     ),
 ];
 
+const getComplementaryPaletteDerivedColors = (palette: IThemePalette) => [
+    getCssProperty(
+        "palette-complementary-0-t50",
+        palette?.complementary?.c0 && transparentize(0.5, palette.complementary.c0),
+    ),
+];
+
 /**
  * @internal
  */
@@ -245,5 +252,6 @@ export const generateDerivedColors = (palette: IThemePalette, isDarkTheme: boole
         ...getMeasureNumberFormatDialogDerivedColors(palette, isDarkTheme),
         ...getPivotTableDerivedColors(palette, isDarkTheme),
         ...getFormDerivedColors(palette, isDarkTheme),
+        ...getComplementaryPaletteDerivedColors(palette),
     ].filter((property) => !!property);
 };

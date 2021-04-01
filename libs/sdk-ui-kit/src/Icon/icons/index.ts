@@ -13,3 +13,4 @@ export { Undo } from "./Undo";
 export { Home } from "./Home";
 export { BurgerMenu } from "./BurgerMenu";
 export { Rows } from "./Rows";
+export { DragHandle } from "./DragHandle";

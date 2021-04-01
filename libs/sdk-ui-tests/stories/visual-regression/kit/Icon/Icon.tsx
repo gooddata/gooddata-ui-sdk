@@ -26,10 +26,11 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Explore" color="#00f" />
             <IconWrapper name="Logout" color="#f00" />
             <IconWrapper name="Pdf" color="#0f0" />
-            <IconWrapper name="ExternalLink" color="#f00" />
+            <IconWrapper name="ExternalLink" color="#00f" />
             <IconWrapper name="Hyperlink" color="#f00" />
-            <IconWrapper name="Undo" color="#f00" />
+            <IconWrapper name="Undo" color="#0f0" />
             <IconWrapper name="Home" color="#00f" />
+            <IconWrapper name="DragHandle" color="#f00" />
         </div>
     );
 };
