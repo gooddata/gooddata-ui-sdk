@@ -6,6 +6,8 @@
 @import "~fixed-data-table-2/dist/fixed-data-table.css";
 
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+@import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
+
 $base_path: $gdc-goodstrap-basepath + "./core/styles/";
 
 $menu-item-icon-width: 30px;
