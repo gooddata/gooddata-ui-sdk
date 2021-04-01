@@ -13,7 +13,7 @@ import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
 export async function loadInsights(client: ITigerClient, workspaceId: string): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getEntitiesVisualizationObjects,
+        client.workspaceObjects.getAllEntitiesVisualizationObjects,
         { workspaceId },
     ).then(MetadataUtilities.mergeEntitiesResults);
 

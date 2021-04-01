@@ -7,8 +7,6 @@ import uniqBy from "lodash/uniqBy";
 import { ITigerClient } from "./client";
 import { jsonApiHeaders } from "./constants";
 import {
-    JsonApiACLOutList,
-    JsonApiOrganizationOutList,
     JsonApiUserOutList,
     JsonApiUserGroupOutList,
     JsonApiWorkspaceOutList,
@@ -51,8 +49,6 @@ export type OrganizationGetEntitiesOptions = {
  * @internal
  */
 export type OrganizationGetEntitiesResult =
-    | JsonApiACLOutList
-    | JsonApiOrganizationOutList
     | JsonApiUserOutList
     | JsonApiUserGroupOutList
     | JsonApiWorkspaceOutList;

@@ -31,6 +31,7 @@ import {
     JsonApiAnalyticalDashboardOutWithLinks,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
+    JsonApiVisualizationObjectInTypeEnum,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -76,7 +77,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const allInsights = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getEntitiesVisualizationObjects,
+                client.workspaceObjects.getAllEntitiesVisualizationObjects,
                 { workspaceId: this.workspace },
                 optionsToUse,
             )
@@ -154,7 +155,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: uuidv4(),
-                            type: "visualizationObject",
+                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),
@@ -181,7 +182,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                     jsonApiVisualizationObjectInDocument: {
                         data: {
                             id: insightId(insight),
-                            type: "visualizationObject",
+                            type: JsonApiVisualizationObjectInTypeEnum.VisualizationObject,
                             attributes: {
                                 description: insightTitle(insight),
                                 content: convertInsight(insight),

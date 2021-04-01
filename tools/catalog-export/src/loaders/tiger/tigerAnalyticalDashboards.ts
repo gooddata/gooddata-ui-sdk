@@ -17,7 +17,7 @@ export async function loadAnalyticalDashboards(
 ): Promise<ObjectMeta[]> {
     const result = await MetadataUtilities.getAllPagesOf(
         client,
-        client.workspaceObjects.getEntitiesAnalyticalDashboards,
+        client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
         { workspaceId },
     ).then(MetadataUtilities.mergeEntitiesResults);
 

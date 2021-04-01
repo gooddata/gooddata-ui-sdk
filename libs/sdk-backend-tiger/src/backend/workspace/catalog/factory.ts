@@ -113,7 +113,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const measures = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getEntitiesMetrics,
+                client.workspaceObjects.getAllEntitiesMetrics,
                 {
                     workspaceId: this.workspace,
                 },
@@ -129,7 +129,7 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
         const facts = await this.authCall((client) => {
             return MetadataUtilities.getAllPagesOf(
                 client,
-                client.workspaceObjects.getEntitiesFacts,
+                client.workspaceObjects.getAllEntitiesFacts,
                 { workspaceId: this.workspace },
                 { query: { tags: tags.join(",") } },
             ).then(MetadataUtilities.mergeEntitiesResults);

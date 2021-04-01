@@ -60,18 +60,16 @@ function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
  */
 export async function loadCatalog(client: ITigerClient, workspaceId: string): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
-        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesMetrics, {
+        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesMetrics, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),
-        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getEntitiesFacts, {
+        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesFacts, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),
-        MetadataUtilities.getAllPagesOf(
-            client,
-            client.workspaceObjects.getEntitiesAttributes,
-            { workspaceId },
-            { query: { include: "labels" } },
-        ).then(MetadataUtilities.mergeEntitiesResults),
+        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesAttributes, {
+            workspaceId,
+            include: ["labels"],
+        }).then(MetadataUtilities.mergeEntitiesResults),
     ]);
 
     return {

@@ -47,10 +47,10 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
             const workspaceDescriptor = workspaceConverter(
                 (
                     await this.authCall(async (client) => {
-                        return client.organizationObjects.getEntityWorkspaces1(
-                            { id: this.workspace },
-                            { params: { include: "workspaces" } },
-                        );
+                        return client.organizationObjects.getEntityWorkspaces({
+                            id: this.workspace,
+                            include: ["workspaces"],
+                        });
                     })
                 ).data.data,
             );
