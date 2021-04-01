@@ -6,19 +6,19 @@ import { IIconProps } from "../typings";
 /**
  * @internal
  */
-export const Date: React.FC<IIconProps> = ({ color }) => {
+export const Date: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
         <svg
+            className={className}
+            width={width ?? 16}
+            height={height ?? 16}
             version="1.1"
-            id="Layer_1"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
             x="0px"
             y="0px"
             viewBox="-40 -40 100 100"
             enableBackground="new -40 -40 100 100"
-            width="16px"
-            height="16px"
             xmlSpace="preserve"
         >
             <g>
@@ -29,7 +29,7 @@ export const Date: React.FC<IIconProps> = ({ color }) => {
                     C52-31.6,48.6-35,44.5-35z M-32.5-30H-20v7.5c0,1.4,1.1,2.5,2.5,2.5c1.4,0,2.5-1.1,2.5-2.5V-30H27v7.5c0,1.4,1.1,2.5,2.5,2.5
                     c1.4,0,2.5-1.1,2.5-2.5V-30h12.5c1.4,0,2.5,1.1,2.5,2.5v13.3h-82v-13.3C-35-28.8-33.9-30-32.5-30z M44.5,43h-77
                     c-1.4,0-2.5-1.1-2.5-2.5V-9.1h82v49.6C47,41.8,45.9,43,44.5,43z"
-                        fill={color || "#94a1ad"}
+                        fill={color ?? "#94a1ad"}
                     />
                 </g>
                 <g>
@@ -41,7 +41,7 @@ export const Date: React.FC<IIconProps> = ({ color }) => {
                     c-2.5,1.5-6.4,1.4-9.2,1.2c-1.3-0.1-2.8-0.2-4-0.9c-0.5-0.3-1-0.6-1.4-1.1c-0.5-0.6-0.5-1.5-1.1-2.1c-0.8-0.9-2.2-0.9-3.2-0.3
                     c-1.3,0.8-1.2,2.4-0.7,3.6c2.8,5.7,10.9,6.1,16.7,5.5c3.1-0.4,6.3-1.3,8.2-3.8c1.9-2.6,2-6.5,0.9-9.4C5.7,19,4.6,18,3.4,16.9
                     C4.2,16.1,4.9,15.3,5.5,14.3z M-8.2,17.8L-8.2,17.8L-8.2,17.8L-8.2,17.8z"
-                        fill={color || "#94a1ad"}
+                        fill={color ?? "#94a1ad"}
                     />
                     <path
                         d="M31.8,1.2c-0.1-0.2-0.2-0.4-0.3-0.6c-0.1-0.2-0.2-0.3-0.4-0.4c-0.2-0.2-0.4-0.3-0.8-0.4c-0.2-0.1-0.3-0.1-0.5-0.1
@@ -50,7 +50,7 @@ export const Date: React.FC<IIconProps> = ({ color }) => {
                     c0.3-0.1,0.5-0.3,0.8-0.5L27,7.2v24.4c0,0.2,0.1,0.4,0.2,0.7c0.1,0.3,0.3,0.5,0.5,0.7c0.2,0.2,0.4,0.4,0.8,0.5
                     c0.3,0.1,0.7,0.2,1,0.2s0.7-0.1,0.9-0.2c0.3-0.1,0.5-0.3,0.8-0.5c0.2-0.2,0.3-0.4,0.5-0.7c0.1-0.3,0.2-0.6,0.2-0.9V1.6
                     C31.9,1.6,31.8,1.4,31.8,1.2z"
-                        fill={color || "#94a1ad"}
+                        fill={color ?? "#94a1ad"}
                     />
                 </g>
             </g>

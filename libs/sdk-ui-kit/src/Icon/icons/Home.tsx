@@ -6,9 +6,16 @@ import { IIconProps } from "../typings";
 /**
  * @internal
  */
-export const Home: React.FC<IIconProps> = ({ color }) => {
+export const Home: React.FC<IIconProps> = ({ color, className, width, height }) => {
     return (
-        <svg width="16px" height="16px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <svg
+            className={className}
+            width={width ?? 16}
+            height={height ?? 16}
+            viewBox="0 0 20 20"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+        >
             <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g transform="translate(-276.000000, -1255.000000)" fill={color ?? "#6D7680"}>
                     <g transform="translate(258.000000, 1124.500000)">

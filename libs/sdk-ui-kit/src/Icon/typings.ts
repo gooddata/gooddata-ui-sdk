@@ -14,6 +14,9 @@ export type Color = string;
  */
 export interface IIconProps {
     name: IconName;
+    className?: string;
+    width?: number;
+    height?: number;
     color?: Color;
     colorPalette?: { [key: string]: Color | undefined };
 }

@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 @import "./variables.scss";
+@import "./Button/variables";
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 $base-path: $gdc-goodstrap-basepath + "./core/styles/images/visualization-types/";
 $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, funnel, headline, heatmap, line,
@@ -56,8 +57,8 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
     &:hover {
         position: relative;
-        box-shadow: 0 1px 3px 0 rgba(20, 56, 93, 0.1), 0 2px 9px 0 rgba(20, 56, 93, 0.15);
-        background-color: #fff;
+        box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
+        background-color: var(--gd-palette-complementary-0, #fff);
     }
 
     &.is-selected {

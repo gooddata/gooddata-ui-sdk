@@ -12,7 +12,7 @@ function iconNotFoundCheck(_param: never): never {
  * @internal
  */
 export const Icon: React.FC<IIconProps> = (props) => {
-    const { name, color, colorPalette } = props;
+    const { name, className, color, colorPalette } = props;
 
     switch (name) {
         case "Refresh":
@@ -28,9 +28,12 @@ export const Icon: React.FC<IIconProps> = (props) => {
         case "Undo":
         case "Home":
         case "BurgerMenu":
-        case "Rows": {
+        case "Rows":
+        case "DragHandle": {
             const IconComponent = Icons[name];
-            return <IconComponent name={name} color={color} colorPalette={colorPalette} />;
+            return (
+                <IconComponent className={className} name={name} color={color} colorPalette={colorPalette} />
+            );
         }
         default: {
             iconNotFoundCheck(name);
