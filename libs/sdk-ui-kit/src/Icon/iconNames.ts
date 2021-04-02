@@ -18,4 +18,6 @@ export type IconName =
     | "Home"
     | "BurgerMenu"
     | "Rows"
-    | "DragHandle";
+    | "DragHandle"
+    | "Interaction"
+    | "AttributeFilter";

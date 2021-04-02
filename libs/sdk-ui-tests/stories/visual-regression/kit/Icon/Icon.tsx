@@ -31,6 +31,8 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Undo" color="#0f0" />
             <IconWrapper name="Home" color="#00f" />
             <IconWrapper name="DragHandle" color="#f00" />
+            <IconWrapper name="AttributeFilter" color="#0f0" />
+            <IconWrapper name="Interaction" color="#00f" />
         </div>
     );
 };

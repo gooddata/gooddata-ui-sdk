@@ -14,3 +14,5 @@ export { Home } from "./Home";
 export { BurgerMenu } from "./BurgerMenu";
 export { Rows } from "./Rows";
 export { DragHandle } from "./DragHandle";
+export { Interaction } from "./Interaction";
+export { AttributeFilter } from "./AttributeFilter";
