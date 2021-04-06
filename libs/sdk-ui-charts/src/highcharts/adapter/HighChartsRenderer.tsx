@@ -1,6 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { Rect } from "react-measure";
 import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import set from "lodash/set";
@@ -88,7 +87,7 @@ export class HighChartsRenderer extends React.PureComponent<
         documentObj: document,
     };
 
-    private highchartsRendererRef = React.createRef<HTMLDivElement>();
+    private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
     private chartRef: IChartHTMLElement;
 
     constructor(props: IHighChartsRendererProps) {
@@ -219,11 +218,6 @@ export class HighChartsRenderer extends React.PureComponent<
 
         yAxis.forEach((axis: Highcharts.AxisOptions) => updateAxisTitleStyle(axis));
 
-        if (this.props.height) {
-            // fixed chart height is used in Dashboard mobile view
-            // with minHeight of the container (legend overlaps)
-            config.chart.height = this.props.height;
-        }
         if (chartConfig.chart.zoomType) {
             config.chart.events = {
                 ...config.chart.events,
@@ -281,7 +275,7 @@ export class HighChartsRenderer extends React.PureComponent<
             format,
             locale,
             showFluidLegend,
-            validateOverHeight: this.validateOverHeight,
+            validateOverHeight: () => {},
         };
 
         return legendRenderer(legendProps);
@@ -289,7 +283,7 @@ export class HighChartsRenderer extends React.PureComponent<
 
     public renderHighcharts(): React.ReactNode {
         // shrink chart to give space to legend items
-        const style = { flex: "1 1 auto", position: "relative" };
+        const style = { flex: "1 1 auto", position: "relative", overflow: "hidden" };
         const chartProps = {
             domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style },
             ref: this.setChartRef,
@@ -348,7 +342,6 @@ export class HighChartsRenderer extends React.PureComponent<
 
         const isLegendRenderedFirst: boolean =
             legend.position === TOP || legend.position === LEFT || showFluidLegend;
-
         return (
             <div className={classes} ref={this.highchartsRendererRef}>
                 {this.renderZoomOutButton()}
@@ -358,33 +351,6 @@ export class HighChartsRenderer extends React.PureComponent<
             </div>
         );
     }
-
-    private validateOverHeight = (legendRect: Rect) => {
-        const { legend } = this.props;
-        if (!this.isBottomLegend(legend)) {
-            return;
-        }
-
-        const containerRect: ClientRect = this.highchartsRendererRef.current.getBoundingClientRect();
-        const chartHeight: number = this.chartRef.getChart().chartHeight;
-        const isLegendOverHeight: boolean = legendRect.height > containerRect.height - chartHeight;
-
-        if (isLegendOverHeight) {
-            const hcContainer = this.chartRef.getHighchartRef();
-            set(hcContainer, "style", "flex: 1 0 auto; position: relative;");
-
-            this.chartRef.getChart().update(
-                {
-                    chart: {
-                        height: containerRect.height, // stretch chart fully
-                    },
-                },
-                false,
-                false,
-                false,
-            );
-        }
-    };
 
     private realignPieOrDonutChart() {
         const {
