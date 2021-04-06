@@ -26,7 +26,7 @@ const baseAnimationDuration = 1.4;
 export class LoadingComponent extends React.Component<ILoadingProps> {
     public static defaultProps: Partial<ILoadingProps> = {
         className: "s-loading",
-        color: "#94a1ad",
+        color: "var(--gd-palette-complementary-6, #94a1ad)",
         speed: 1,
         inline: false,
         height: "100%",

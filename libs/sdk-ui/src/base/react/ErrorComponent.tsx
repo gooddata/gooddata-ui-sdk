@@ -56,7 +56,7 @@ export class ErrorComponent extends React.Component<IErrorProps> {
                         fontSize: "14px",
                         fontWeight: 400,
                         lineHeight: "normal",
-                        color: "#94a1ad",
+                        color: "var(--gd-palette-complementary-6, #94a1ad)",
                         textAlign: "center",
                     }}
                 >
