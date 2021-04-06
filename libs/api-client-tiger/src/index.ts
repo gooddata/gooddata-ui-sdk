@@ -14,7 +14,7 @@ export { AnalyticalDashboardModelV2 } from "./gd-tiger-model/AnalyticalDashboard
 
 export {
     isAttributeHeader,
-    isObjectIdentifier,
+    isAfmObjectIdentifier,
     isResultAttributeHeader,
     isVisualizationObjectsItem,
     isFilterContextData,
