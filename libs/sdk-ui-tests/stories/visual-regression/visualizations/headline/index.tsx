@@ -14,6 +14,10 @@ import { wrapWithTheme } from "../../themeWrapper";
 
 const backend = StorybookBackend();
 
+const config = {
+    enableCompactSize: true,
+};
+
 storiesOf(`${CustomStories}/Headline`, module)
     .add("responsive", () =>
         withScreenshot(
@@ -51,5 +55,38 @@ storiesOf(`${CustomStories}/Headline`, module)
                     </div>
                 </ScreenshotReadyWrapper>,
             ),
+        ),
+    )
+    .add("compactSize", () =>
+        withScreenshot(
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(3)}>
+                <div style={{ width: 150, height: 120, border: "1px solid black" }}>
+                    <Headline
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                        secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                        config={config}
+                    />
+                </div>
+                <div style={{ width: 180, height: 160, border: "1px solid black" }}>
+                    <Headline
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                        secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                        config={config}
+                    />
+                </div>
+                <div style={{ width: 150, height: 260, border: "1px solid black" }}>
+                    <Headline
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        primaryMeasure={HeadlineWithTwoMeasures.primaryMeasure}
+                        secondaryMeasure={HeadlineWithTwoMeasures.secondaryMeasure}
+                        config={config}
+                    />
+                </div>
+            </ScreenshotReadyWrapper>,
         ),
     );

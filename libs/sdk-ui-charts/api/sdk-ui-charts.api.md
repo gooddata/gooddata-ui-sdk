@@ -180,6 +180,7 @@ export interface IChartConfig {
     dataPoints?: IDataPointsConfig;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
+    enableCompactSize?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
     legend?: ILegendConfig;

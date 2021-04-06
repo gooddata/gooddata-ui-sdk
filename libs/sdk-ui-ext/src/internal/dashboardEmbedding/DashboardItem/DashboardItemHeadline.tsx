@@ -6,11 +6,12 @@ import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer
 
 interface IDashboardItemHeadlineProps {
     title: string;
+    clientHeight?: number;
 }
 
-export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({ title }) => {
+export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({ title, clientHeight }) => {
     return (
-        <DashboardItemHeadlineContainer>
+        <DashboardItemHeadlineContainer clientHeight={clientHeight}>
             <Truncate lines={2} ellipsis={"..."} className="item-headline-inner s-headline">
                 {title}
             </Truncate>

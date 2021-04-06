@@ -1,10 +1,15 @@
 // (C) 2007-2018 GoodData Corporation
 @import "~@gooddata/sdk-ui-kit/styles/scss/variables";
 @import "~@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
+@import "~@gooddata/sdk-ui-kit/styles/scss/mixins";
 @import "~@gooddata/sdk-ui-kit/styles/scss/layout";
+
+$legend-paging-background: #eee;
 
 .headline {
     text-align: center;
+    width: 100%;
+    height: 100%;
 
     .headline-primary-item {
         @include gd-heading-1;
@@ -117,6 +122,21 @@
         margin-bottom: 15px;
         color: var(--gd-kpi-secondaryInfoColor, $gd-color-state-blank);
 
+        .pagination {
+            position: absolute;
+            top: 8px;
+            width: 22px;
+            height: 22px;
+
+            &.first-item {
+                left: 0;
+            }
+
+            &.second-item {
+                right: 0;
+            }
+        }
+
         &.gd-small,
         &.gd-shortened-label {
             display: flex;
@@ -152,6 +172,18 @@
         }
     }
 
+    .headline-paginated-compare-section {
+        height: 40px;
+
+        .headline-compare-section-item {
+            margin: 0 10px;
+        }
+
+        .headline-secondary-item {
+            border-left: 0;
+        }
+    }
+
     .headline-compare-section-item {
         overflow: hidden;
         margin: 0;
@@ -181,6 +213,50 @@
             padding: 0;
             font-size: 12px;
             white-space: nowrap;
+        }
+    }
+
+    .headline-pagination {
+        button.first-item,
+        .second-item {
+            padding: 0;
+            border-radius: 50%;
+
+            &::before {
+                font-size: 11px;
+            }
+
+            @include active-states-and-self {
+                text-decoration: none;
+                background-color: var(--gd-palette-complementary-2, $legend-paging-background);
+
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: var(--gd-palette-complementary-7, $default-gd-color-dark);
+                }
+            }
+
+            &:hover {
+                // stylelint-disable-next-line max-nesting-depth
+                &::before {
+                    color: $gd-palette-primary-base;
+                }
+            }
+
+            &[disabled] {
+                // stylelint-disable-next-line max-nesting-depth
+                @include active-states-and-self {
+                    background-color: var(
+                        --gd-palette-complementary-1,
+                        transparentize($legend-paging-background, 0.5)
+                    );
+
+                    // stylelint-disable-next-line max-nesting-depth
+                    &::before {
+                        color: $gd-color-disabled;
+                    }
+                }
+            }
         }
     }
 }

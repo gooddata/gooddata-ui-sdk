@@ -13,6 +13,7 @@ interface IInsightErrorProps {
     error: GoodDataSdkError;
     ErrorComponent?: React.ComponentType<IErrorProps>;
     height?: number | string | null;
+    clientHeight?: number;
 }
 
 const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = ({
@@ -20,6 +21,7 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
     ErrorComponent = DefaultError,
     height,
     intl,
+    clientHeight,
 }) => {
     const errorMapping = useMemo<IErrorDescriptors>(() => newErrorMapping(intl), [intl]);
     const errorProps = useMemo(() => errorMapping[error.getMessage()] ?? { message: error.message }, [
@@ -27,7 +29,7 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
         error,
     ]);
 
-    return <ErrorComponent {...errorProps} height={height} />;
+    return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
 };
 
 export const InsightError = injectIntl(InsightErrorCore);

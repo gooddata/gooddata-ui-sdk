@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
-import React from "react";
+import React, { CSSProperties } from "react";
 import cx from "classnames";
+import Measure from "react-measure";
 import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import {
     isWidget,
@@ -27,6 +28,8 @@ import { InsightRenderer } from "./InsightRenderer/InsightRenderer";
 import { DashboardItem, DashboardItemHeadline, DashboardItemVisualization } from "../../internal";
 import { getVisTypeCssClass } from "./utils";
 import { IDashboardFilter, OnFiredDashboardViewDrillEvent } from "../types";
+
+const dashboardStyle: CSSProperties = { height: "100%", width: "100%" };
 
 export type IDashboardWidgetRendererProps = {
     backend?: IAnalyticalBackend;
@@ -76,34 +79,48 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
     if (isWidget(widget)) {
         if (widget.type === "insight") {
             return (
-                <DashboardItem
-                    className={cx(
-                        "type-visualization",
-                        "gd-dashboard-view-widget",
-                        getVisTypeCssClass(widget.type, visType),
-                    )}
-                    screen={screen}
-                >
-                    <DashboardItemVisualization
-                        renderHeadline={() => <DashboardItemHeadline title={widget.title} />}
-                    >
-                        {() => (
-                            <InsightRenderer
-                                insight={insight}
-                                insightWidget={widget}
-                                backend={backend}
-                                workspace={workspace}
-                                filters={filters}
-                                filterContext={filterContext}
-                                drillableItems={drillableItems}
-                                onDrill={onDrill}
-                                onError={onError}
-                                ErrorComponent={ErrorComponent}
-                                LoadingComponent={LoadingComponent}
-                            />
-                        )}
-                    </DashboardItemVisualization>
-                </DashboardItem>
+                <Measure client>
+                    {({ measureRef, contentRect }) => {
+                        return (
+                            <div style={dashboardStyle} ref={measureRef}>
+                                <DashboardItem
+                                    className={cx(
+                                        "type-visualization",
+                                        "gd-dashboard-view-widget",
+                                        getVisTypeCssClass(widget.type, visType),
+                                    )}
+                                    screen={screen}
+                                >
+                                    <DashboardItemVisualization
+                                        renderHeadline={() => (
+                                            <DashboardItemHeadline
+                                                title={widget.title}
+                                                clientHeight={contentRect.client?.height}
+                                            />
+                                        )}
+                                    >
+                                        {() => (
+                                            <InsightRenderer
+                                                clientHeight={contentRect.client?.height}
+                                                insight={insight}
+                                                insightWidget={widget}
+                                                backend={backend}
+                                                workspace={workspace}
+                                                filters={filters}
+                                                filterContext={filterContext}
+                                                drillableItems={drillableItems}
+                                                onDrill={onDrill}
+                                                onError={onError}
+                                                ErrorComponent={ErrorComponent}
+                                                LoadingComponent={LoadingComponent}
+                                            />
+                                        )}
+                                    </DashboardItemVisualization>
+                                </DashboardItem>
+                            </div>
+                        );
+                    }}
+                </Measure>
             );
         }
 

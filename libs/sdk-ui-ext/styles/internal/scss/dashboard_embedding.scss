@@ -184,7 +184,6 @@
     position: relative;
     z-index: 1;
     height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
-    margin-top: 10px;
     line-height: ($item-headline-lineHeight + $item-headline-padding-vertical) * 2;
 
     @media #{$xsmall-only}, #{$small-only} {
