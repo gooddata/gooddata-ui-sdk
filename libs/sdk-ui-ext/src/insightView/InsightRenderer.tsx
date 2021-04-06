@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { render } from "react-dom";
 import noop from "lodash/noop";
 import isEqual from "lodash/isEqual";
+import compose from "lodash/flowRight";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IExecutionFactory, IExportResult, ITheme, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { IInsightDefinition, insightProperties, IColorPalette, insightTitle } from "@gooddata/sdk-model";
@@ -26,6 +27,7 @@ import {
     ExecutionFactoryUpgradingToExecByReference,
     ExecutionFactoryWithFixedFilters,
 } from "@gooddata/sdk-backend-base";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IInsightViewProps } from "./types";
 
 /**
@@ -223,7 +225,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     }
 }
 
-export const IntlInsightRenderer = withContexts(injectIntl(InsightRendererCore));
+export const IntlInsightRenderer = compose(injectIntl, withTheme, withContexts)(InsightRendererCore);
 
 /**
  * Renders insight passed as a parameter.
