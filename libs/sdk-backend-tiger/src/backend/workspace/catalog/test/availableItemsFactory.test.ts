@@ -1,36 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { CatalogItem } from "@gooddata/sdk-backend-spi";
 import { uriRef } from "@gooddata/sdk-model";
-import { convertResponseToObjRefs, filterAvailableItems } from "../availableItemsFactory";
-import { JsonApiId } from "../../../../convertors/fromBackend/ObjRefConverter";
+import { filterAvailableItems } from "../availableItemsFactory";
 
 describe("available item filtering", () => {
-    describe("response conversion", () => {
-        const StringScenarios: Array<[string, string]> = [
-            ["label id", "label/some_id"],
-            ["attribute id", "attribute/some_id"],
-            ["metric", "metric/some_id"],
-            ["fact", "fact/some_id"],
-        ];
-
-        const ObjectScenarios: Array<[string, JsonApiId]> = [
-            ["label id", { id: "id", type: "label" }],
-            ["attribute id", { id: "id", type: "attribute" }],
-            ["metric", { id: "id", type: "metric" }],
-            ["fact", { id: "id", type: "fact" }],
-        ];
-
-        it.each(StringScenarios)("should convert %s when it comes as string", (_desc, input) => {
-            expect(convertResponseToObjRefs([input])).toMatchSnapshot();
-        });
-
-        it.each(ObjectScenarios)("should convert %s when it comes as object", (_desc, input) => {
-            expect(convertResponseToObjRefs([input])).toMatchSnapshot();
-        });
-    });
-
     describe("item filtering", () => {
         /*
          * Note: reference workspace is created from bear. The 'refs' are thus UriRefs as that's what bear returns;
