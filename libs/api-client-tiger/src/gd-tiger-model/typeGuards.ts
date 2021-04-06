@@ -1,10 +1,10 @@
 // (C) 2019-2021 GoodData Corporation
 
 import {
+    AfmObjectIdentifier,
     AttributeExecutionResultHeader,
     AttributeHeader,
     ExecutionResultHeader,
-    ObjectIdentifier,
     ResultDimension,
 } from "../generated/afm-rest-api";
 import {
@@ -18,10 +18,10 @@ export function isAttributeHeader(header: ResultDimensionHeader): header is Attr
     return header && (header as AttributeHeader).attributeHeader !== undefined;
 }
 
-export const isObjectIdentifier = (value: unknown): value is ObjectIdentifier => {
+export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentifier => {
     return !!(
-        (value as Partial<ObjectIdentifier>)?.identifier?.id &&
-        (value as Partial<ObjectIdentifier>)?.identifier?.type
+        (value as Partial<AfmObjectIdentifier>)?.identifier?.id &&
+        (value as Partial<AfmObjectIdentifier>)?.identifier?.type
     );
 };
 

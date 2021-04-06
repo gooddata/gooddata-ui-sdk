@@ -23,7 +23,7 @@ export interface AbsoluteDateFilter {
 // @public
 export interface AbsoluteDateFilterBody {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     from: string;
     to: string;
 }
@@ -37,12 +37,12 @@ export interface AbsoluteDateFilterBodyAllOf {
 // @public
 export interface AbstractMeasureValueFilter {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 
 // @public
 export interface AbstractMeasureValueFilterAllOf {
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 
 // @public
@@ -112,6 +112,11 @@ export interface AfmExecution {
 // @public
 export interface AfmExecutionResponse {
     executionResponse: ExecutionResponse;
+}
+
+// @public
+export interface AfmObjectIdentifier {
+    identifier: ObjectIdentifier;
 }
 
 // @public
@@ -277,7 +282,7 @@ export enum AttributeHeaderAttributeHeaderGranularityEnum {
 
 // @public
 export interface AttributeItem {
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     localIdentifier: string;
 }
 
@@ -290,23 +295,23 @@ export interface AttributeResultHeader {
 // @public
 export interface CommonAttributeFilter {
     applyOnResult?: boolean;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonAttributeFilterAllOf {
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonDateFilter {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonDateFilterAllOf {
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 
 // @public
@@ -317,7 +322,7 @@ export interface CommonFilter {
 // @public
 export interface CommonMeasureValueFilter {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measure: Identifier;
     treatNullValuesAs?: number;
 }
@@ -336,7 +341,7 @@ export interface ComparisonMeasureValueFilter {
 // @public
 export interface ComparisonMeasureValueFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measure: Identifier;
     operator: ComparisonMeasureValueFilterBodyOperatorEnum;
     treatNullValuesAs?: number;
@@ -1221,7 +1226,7 @@ export interface HeaderGroup {
 }
 
 // @public
-export type Identifier = LocalIdentifier | ObjectIdentifier;
+export type Identifier = AfmObjectIdentifier | LocalIdentifier;
 
 // @public
 export interface IncludedDimensionProps {
@@ -1257,13 +1262,13 @@ export interface InlineMeasureDefinitionInline {
 }
 
 // @public (undocumented)
+export const isAfmObjectIdentifier: (value: unknown) => value is AfmObjectIdentifier;
+
+// @public (undocumented)
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
-
-// @public (undocumented)
-export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
 
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
@@ -2641,16 +2646,11 @@ export interface MeasureGroupHeader {
 
 // @public
 export interface MeasureGroupHeaderMeasureGroupHeader {
-    items: Array<MeasureHeaderItem>;
+    measureGroupHeaderItems: Array<MeasureHeaderItemOut>;
 }
 
 // @public
-export interface MeasureHeaderItem {
-    measureHeaderItem: MeasureHeaderItemMeasureHeaderItem;
-}
-
-// @public
-export interface MeasureHeaderItemMeasureHeaderItem {
+export interface MeasureHeaderItemOut {
     format?: string;
     localIdentifier: string;
     name?: string;
@@ -2753,7 +2753,7 @@ export interface NegativeAttributeFilter {
 // @public
 export interface NegativeAttributeFilterBody {
     applyOnResult?: boolean;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     notIn: AttributeFilterElements;
 }
 
@@ -2769,11 +2769,6 @@ export function newAxios(baseUrl?: string, headers?: {
 
 // @public
 export interface ObjectIdentifier {
-    identifier: ObjectIdentifierIdentifier;
-}
-
-// @public
-export interface ObjectIdentifierIdentifier {
     id: string;
     type: string;
 }
@@ -3738,7 +3733,7 @@ export interface Paging {
 
 // @public
 export interface PopDataset {
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     periodsAgo: number;
 }
 
@@ -3755,7 +3750,7 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
 
 // @public
 export interface PopDate {
-    attribute: ObjectIdentifier;
+    attribute: AfmObjectIdentifier;
     periodsAgo: number;
 }
 
@@ -3779,7 +3774,7 @@ export interface PositiveAttributeFilter {
 export interface PositiveAttributeFilterBody {
     applyOnResult?: boolean;
     in: AttributeFilterElements;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
@@ -3795,7 +3790,7 @@ export interface RangeMeasureValueFilter {
 // @public
 export interface RangeMeasureValueFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     from: number;
     measure: Identifier;
     operator: RangeMeasureValueFilterBodyOperatorEnum;
@@ -3834,7 +3829,7 @@ export interface RankingFilter {
 // @public
 export interface RankingFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measures: Array<Identifier>;
     operator: RankingFilterBodyOperatorEnum;
     value: number;
@@ -3883,7 +3878,7 @@ export interface RelativeDateFilter {
 // @public
 export interface RelativeDateFilterBody {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     from: number;
     granularity: RelativeDateFilterBodyGranularityEnum;
     to: number;
@@ -4060,7 +4055,7 @@ export interface SimpleMeasureDefinitionMeasure {
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     computeRatio?: boolean;
     filters?: Array<FilterDefinitionForSimpleMeasure>;
-    item: ObjectIdentifier;
+    item: AfmObjectIdentifier;
 }
 
 // @public
@@ -4393,7 +4388,7 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         alias?: string;
         // (undocumented)
-        displayForm: ObjectIdentifier;
+        displayForm: AfmObjectIdentifier;
         // (undocumented)
         localIdentifier: Identifier;
     }
