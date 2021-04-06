@@ -2,9 +2,9 @@
 import isEmpty from "lodash/isEmpty";
 import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
 import {
+    AfmObjectIdentifier,
     LocalIdentifier,
     MeasureDefinition,
-    ObjectIdentifier,
     SortKeyAttribute,
     SortKeyValue,
 } from "../generated/afm-rest-api";
@@ -33,7 +33,7 @@ export namespace VisualizationObjectModelV1 {
      */
     export interface IAttribute {
         localIdentifier: Identifier;
-        displayForm: ObjectIdentifier;
+        displayForm: AfmObjectIdentifier;
         alias?: string;
     }
 

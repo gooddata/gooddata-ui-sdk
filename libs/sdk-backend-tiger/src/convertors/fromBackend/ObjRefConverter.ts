@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { ObjectIdentifier } from "@gooddata/api-client-tiger";
+import { AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { isUriRef, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
@@ -15,7 +15,7 @@ export function toObjectType(value: TigerObjectType): TigerCompatibleObjectType 
     return tigerIdTypeToObjectType[value];
 }
 
-export function toObjRef(qualifier: ObjectIdentifier): ObjRef {
+export function toObjRef(qualifier: AfmObjectIdentifier): ObjRef {
     if (isUriRef(qualifier)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
