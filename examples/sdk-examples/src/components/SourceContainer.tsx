@@ -39,10 +39,12 @@ export const SourceContainer: React.FC<ISourceContainerProps> = ({ isJS, toggleI
                     .gd-tab,
                     .gd-tab:hover {
                         color: #94a1ad;
+                        font-family: Avenir, "Helvetica Neue", arial, sans-serif;
                     }
 
                     .gd-tab.is-active {
                         color: #ffffff;
+                        border-color: #14b2e2;
                     }
                 `}
             </style>

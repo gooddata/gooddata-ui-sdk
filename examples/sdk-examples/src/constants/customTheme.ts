@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
 export const customTheme: ITheme = {
@@ -31,10 +31,26 @@ export const customTheme: ITheme = {
         warning: {
             base: "#ddff19",
         },
+        complementary: {
+            c0: "#303030",
+            c9: "#ffffff",
+        },
     },
     tooltip: {
         backgroundColor: "#101050",
         color: "#fff",
+    },
+    chart: {
+        backgroundColor: "#303030",
+        gridColor: "#999",
+        axisColor: "#eaeaea",
+        axisLabelColor: "#eaeaea",
+        axisValueColor: "#eaeaea",
+        legendValueColor: "#eaeaea",
+        tooltipBackgroundColor: "#333",
+        tooltipBorderColor: "#555",
+        tooltipLabelColor: "#eaeaea",
+        tooltipValueColor: "#fff",
     },
     typography: {
         font: "url(https://cdn.jsdelivr.net/npm/roboto-font@0.1.0/fonts/Roboto/roboto-regular-webfont.ttf)",

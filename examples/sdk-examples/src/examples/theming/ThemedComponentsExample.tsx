@@ -3,17 +3,22 @@
 import React, { useState } from "react";
 import { Button, ExportDialog } from "@gooddata/sdk-ui-kit";
 import { ThemeProvider, useTheme, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
-import { newPositiveAttributeFilter, newRankingFilter } from "@gooddata/sdk-model";
-import { AttributeFilter, RankingFilter } from "@gooddata/sdk-ui-filters";
+import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { AttributeFilter } from "@gooddata/sdk-ui-filters";
+import { BarChart } from "@gooddata/sdk-ui-charts";
 
-import { attributeDropdownItems, measureDropdownItems } from "../rankingFilter/RankingFilterExample";
 import { DateFilterComponentExample } from "../dateFilter/DateFilterComponentExample";
 import { Ldm, LdmExt } from "../../ldm";
 import { customTheme } from "../../constants/customTheme";
 
+const style = {
+    color: "var(--gd-palette-complementary-8, #464e56)",
+    backgroundColor: "var(--gd-palette-complementary-0, #fff)",
+};
+
 export const ThemeProviderExample: React.FC = () => {
     return (
-        <div className="s-theme-provider">
+        <div className="s-theme-provider" style={style}>
             <ThemeProvider theme={customTheme}>
                 <ThemedComponentsExample />
             </ThemeProvider>
@@ -43,17 +48,6 @@ const ThemedComponentsExample: React.FC = () => {
                     <AttributeFilter
                         filter={newPositiveAttributeFilter(Ldm.EmployeeName.Default, ["Abbie Adams"])}
                         onApply={() => {}}
-                    />
-                    <br />
-                    <br />
-                    RankingFilter
-                    <br />
-                    <RankingFilter
-                        measureItems={measureDropdownItems}
-                        attributeItems={attributeDropdownItems}
-                        filter={newRankingFilter(LdmExt.franchiseSalesLocalId, "TOP", 3)}
-                        onApply={() => {}}
-                        buttonTitle={"Ranking filter configuration"}
                     />
                     <br />
                     <br />
@@ -90,6 +84,13 @@ const ThemedComponentsExample: React.FC = () => {
                             }}
                         />
                     )}
+                    <br />
+                    <br />
+                    Bar chart
+                    <br />
+                    <div style={{ height: 300 }}>
+                        <BarChart measures={[LdmExt.TotalSales1]} viewBy={Ldm.LocationResort} />
+                    </div>
                 </div>
             )}
         </div>
