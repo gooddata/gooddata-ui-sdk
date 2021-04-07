@@ -1,9 +1,10 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import ColorPicker from "@gooddata/goodstrap/lib/ColorPicker/ColorPicker";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { IRgbColorValue, IColor, isColorFromPalette, isRgbColor, IColorPalette } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
+import { ColorPicker } from "@gooddata/sdk-ui-kit";
+
 import ColorOverlay, { DropdownVersionType } from "./ColorOverlay";
 import ColorPalette from "./ColorPalette";
 import CustomColorButton from "./CustomColorButton";
@@ -119,7 +120,6 @@ class ColorDropdown extends React.PureComponent<IColorDropdownProps, IColorDropd
                 initialRgbColor={this.getSelectedColorFromPalette()}
                 onSubmit={this.onColorPickerSubmit}
                 onCancel={this.onColorPickerCancel}
-                intl={this.props.intl}
             />
         );
     }

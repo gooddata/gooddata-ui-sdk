@@ -10,12 +10,12 @@ import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 import "element-closest-polyfill";
-import { propsEqual } from "@gooddata/goodstrap/lib/core/immutable";
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
+import { propsEqual } from "../utils/immutable";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },
@@ -124,7 +124,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     }
 
     public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
-        const propsChanged = !propsEqual(this.props, nextProps);
+        const propsChanged = !propsEqual<IOverlayProps<T>>(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
 
         return propsChanged || positionChanged;
@@ -285,11 +285,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         // non-ignored node clicked, give shouldCloseOnClick the chance
         // to override closing the dialog
-        if (!this.props.shouldCloseOnClick(e)) {
-            return false;
-        }
-
-        return true;
+        return this.props.shouldCloseOnClick(e);
     };
 
     private hasClickedOnIgnoredNode = (e: any) => {
@@ -312,14 +308,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             return true;
         }
 
-        const clickInsideIgnoredClassElement = this.props.ignoreClicksOnByClass.some((selector) =>
-            clickedElement.closest(selector),
-        );
-        if (clickInsideIgnoredClassElement) {
-            return true;
-        }
-
-        return false;
+        return this.props.ignoreClicksOnByClass.some((selector) => clickedElement.closest(selector));
     };
 
     private isAligned = () => {

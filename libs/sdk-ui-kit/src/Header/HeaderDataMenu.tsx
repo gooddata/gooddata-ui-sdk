@@ -3,9 +3,11 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import uniqueId from "lodash/uniqueId";
 import cx from "classnames";
-import { IHeaderMenuItem } from "./Header";
+
 import { Button } from "../Button";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
+
+import { IHeaderMenuItem } from "./typings";
 
 /**
  * @internal

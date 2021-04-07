@@ -35,4 +35,4 @@ export const ResponsiveContextProvider = responsiveContext.Provider;
  *
  * @internal
  */
-export const useResponsiveContext = () => useContext(responsiveContext);
+export const useResponsiveContext = (): IResponsiveConfig => useContext<IResponsiveConfig>(responsiveContext);

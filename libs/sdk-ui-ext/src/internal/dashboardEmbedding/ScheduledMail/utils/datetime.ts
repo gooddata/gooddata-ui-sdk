@@ -1,6 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import isDate from "lodash/isDate";
-import { format } from "date-fns";
+import format from "date-fns/format";
 
 import { PLATFORM_DATE_FORMAT } from "../constants";
 

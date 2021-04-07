@@ -1,14 +1,14 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import DisabledBubbleMessage from "../DisabledBubbleMessage";
+import { Dropdown, DropdownList, DropdownButton, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import cloneDeep from "lodash/cloneDeep";
+import set from "lodash/set";
 
+import DisabledBubbleMessage from "../DisabledBubbleMessage";
 import { getTranslation } from "../../utils/translations";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import { IDropdownItem } from "../../interfaces/Dropdown";
-import cloneDeep from "lodash/cloneDeep";
-import set from "lodash/set";
 
 export interface IDropdownControlProps {
     valuePath: string;
@@ -19,6 +19,7 @@ export interface IDropdownControlProps {
     disabled?: boolean;
     width?: number;
     showDisabledMessage?: boolean;
+
     pushData(data: any): void;
 }
 
@@ -51,19 +52,31 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                     <span className="input-label-text">{getTranslation(labelText, intl)}</span>
                     <label className="adi-bucket-inputfield gd-input gd-input-small">
                         <Dropdown
-                            disabled={disabled}
-                            button={this.getDropdownButton(selectedItem)}
+                            renderButton={({ isOpen, toggleDropdown }) => {
+                                return this.getDropdownButton(selectedItem, disabled, isOpen, toggleDropdown);
+                            }}
                             closeOnParentScroll={true}
                             closeOnMouseDrag={true}
                             alignPoints={DROPDOWN_ALIGNMENTS}
-                            body={
-                                <DropdownBody
-                                    width={width}
-                                    items={items}
-                                    onSelect={this.onSelect}
-                                    selection={selectedItem}
-                                />
-                            }
+                            renderBody={({ closeDropdown, isMobile }) => {
+                                return (
+                                    <DropdownList
+                                        width={width}
+                                        isMobile={isMobile}
+                                        items={items}
+                                        renderItem={({ item }) => (
+                                            <SingleSelectListItem
+                                                title={item.title}
+                                                isSelected={item.value === selectedItem.value}
+                                                onClick={() => {
+                                                    this.onSelect(item);
+                                                    closeDropdown();
+                                                }}
+                                            />
+                                        )}
+                                    />
+                                );
+                            }}
                             className="adi-bucket-dropdown"
                         />
                     </label>
@@ -72,10 +85,23 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
         );
     }
 
-    private getDropdownButton(selectedItem: IDropdownItem) {
+    private getDropdownButton(
+        selectedItem: IDropdownItem,
+        disabled: boolean,
+        isOpen: boolean,
+        toggleDropdown: () => void,
+    ) {
         const { icon, title } = selectedItem;
 
-        return <DropdownButton value={title} iconLeft={icon} />;
+        return (
+            <DropdownButton
+                value={title}
+                iconLeft={icon}
+                isOpen={isOpen}
+                onClick={toggleDropdown}
+                disabled={disabled}
+            />
+        );
     }
 
     private onSelect(selectedItem: IDropdownItem) {

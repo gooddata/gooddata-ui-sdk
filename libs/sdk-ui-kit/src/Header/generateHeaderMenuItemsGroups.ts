@@ -1,7 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 import { ISettings, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
-import { IHeaderMenuItem } from "./Header";
 import { isFreemiumEdition, shouldHidePPExperience, shouldEnableNewNavigation } from "../utils/featureFlags";
+
+import { IHeaderMenuItem } from "./typings";
 
 /**
  * @internal

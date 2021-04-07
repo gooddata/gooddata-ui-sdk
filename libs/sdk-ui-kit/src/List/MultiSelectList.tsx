@@ -2,10 +2,10 @@
 import React, { Component } from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
-// eslint-disable-next-line import/no-unresolved, import/extensions
-import FlexDimensions from "@gooddata/goodstrap/lib/core/FlexDimensions";
+
 import { List } from "./List";
-import { Button } from "../Button/Button";
+import { Button } from "../Button";
+import { FlexDimensions } from "../FlexDimensions";
 
 /**
  * @internal

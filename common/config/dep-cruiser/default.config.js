@@ -163,11 +163,31 @@ const DefaultRules = [
         name: "not-to-whole-lodash",
         comment:
             "This module depends on the whole lodash. Please use individual imports - eg." +
-            ' `import isEqual from "lodash/isEqual";` instead of `import { isEqual } from "lodash";`' +
+            " `import isEqual from \"lodash/isEqual\";` instead of `import { isEqual } from \"lodash\";`" +
             "This helps to keep the resulting bundles smaller for the users",
         severity: "error",
         from: {},
         to: { path: "lodash/lodash.js", dependencyTypes: ["npm"] },
+    },
+    {
+        name: "not-to-whole-date-fns",
+        comment:
+            "This module depends on the whole date-fns. Please use individual imports - eg." +
+            " `import format from \"date-fns/format\";` instead of `import { format } from \"date-fns\";`" +
+            "This helps to keep the resulting bundles smaller for the users",
+        severity: "error",
+        from: {},
+        to: { path: "date-fns/index.js", dependencyTypes: ["npm"] },
+    },
+    {
+        name: "not-to-whole-date-fns-tz",
+        comment:
+            "This module depends on the whole date-fns-tz. Please use individual imports - eg." +
+            " `import format from \"date-fns-tz/format\";` instead of `import { format } from \"date-fns-tz\";`" +
+            "This helps to keep the resulting bundles smaller for the users",
+        severity: "error",
+        from: {},
+        to: { path: "date-fns-tz/index.js", dependencyTypes: ["npm"] },
     },
 ];
 

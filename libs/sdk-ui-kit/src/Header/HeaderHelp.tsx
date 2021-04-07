@@ -1,9 +1,10 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
-import { Overlay } from "../Overlay";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty";
+
+import { Overlay } from "../Overlay";
 
 interface IHelpItem {
     key: string;

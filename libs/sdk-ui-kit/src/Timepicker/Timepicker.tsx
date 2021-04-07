@@ -4,11 +4,13 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
+
+import { OverlayPositionType } from "../typings/overlay";
+import { Dropdown, DropdownButton, DropdownList } from "../Dropdown";
 
 import { formatTime, normalizeTime, updateTime, HOURS_IN_DAY, TIME_ANCHOR } from "./utils/timeUtilities";
 import { SelectedTime } from "./typings";
-import { OverlayPositionType } from "../typings/overlay";
+import { SingleSelectListItem } from "../List";
 
 const DEFAULT_WIDTH = 199;
 const MINUTES_IN_HOUR = 60;
@@ -56,6 +58,14 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
             dropdownWidth: DEFAULT_WIDTH,
             selectedTime: normalizeTime(props.time || new Date()),
         };
+    }
+
+    public UNSAFE_componentWillReceiveProps(newProps: TimePickerProps): void {
+        if (newProps.time !== this.props.time) {
+            this.setState({
+                selectedTime: normalizeTime(newProps.time || new Date()),
+            });
+        }
     }
 
     public componentDidMount(): void {
@@ -130,16 +140,32 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             align: "tl bl",
                         },
                     ]}
-                    button={<DropdownButton value={formatTime(time.h, time.m)} iconLeft="icon-timer" />}
-                    body={
-                        <DropdownBody
+                    renderButton={({ openDropdown, isOpen }) => (
+                        <DropdownButton
+                            value={formatTime(time.h, time.m)}
+                            isOpen={isOpen}
+                            onClick={openDropdown}
+                            iconLeft="icon-timer"
+                        />
+                    )}
+                    renderBody={({ closeDropdown, isMobile }) => (
+                        <DropdownList
+                            isMobile={isMobile}
                             width={dropdownWidth}
                             items={items}
+                            renderItem={({ item }) => (
+                                <SingleSelectListItem
+                                    title={item.title}
+                                    isSelected={item === currentItem}
+                                    onClick={() => {
+                                        this.handleTimeChanged(item);
+                                        closeDropdown();
+                                    }}
+                                />
+                            )}
                             maxVisibleItemsCount={maxVisibleItemsCount}
-                            selection={currentItem}
-                            onSelect={this.handleTimeChanged}
                         />
-                    }
+                    )}
                     overlayZIndex={overlayZIndex}
                 />
             </div>

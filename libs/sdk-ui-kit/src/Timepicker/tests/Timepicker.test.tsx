@@ -1,12 +1,12 @@
 // (C) 2007-2020 GoodData Corporation
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import { mount, ReactWrapper } from "enzyme";
 import moment from "moment";
 import { createIntlMock, withIntl } from "@gooddata/sdk-ui";
+
 import { TimePickerProps, WrappedTimepicker } from "../Timepicker";
-import Dropdown, { DropdownBody, DropdownButton } from "@gooddata/goodstrap/lib/Dropdown/Dropdown";
-import SingleSelectList from "@gooddata/goodstrap/lib/List/SingleSelectList";
-import SingleSelectListItem from "@gooddata/goodstrap/lib/List/SingleSelectListItem";
+import { List, SingleSelectListItem } from "../../List";
+import { DropdownButton, Dropdown, DropdownList, IDropdownProps } from "../../Dropdown";
 
 describe("TimePicker", () => {
     const TEST_TIME = new Date();
@@ -44,8 +44,8 @@ describe("TimePicker", () => {
     }
 
     function select1Hour30Minutes(component: ReactWrapper) {
-        const dropdownBody = component.find(DropdownBody);
-        const list = dropdownBody.find(SingleSelectList);
+        const dropdownBody = component.find(DropdownList);
+        const list = dropdownBody.find(List);
         const item = list.find(SingleSelectListItem).at(3);
         item.simulate("click");
     }
@@ -74,7 +74,11 @@ describe("TimePicker", () => {
                 });
                 openTimePicker(component);
 
-                const dropdownBody = component.find(Dropdown);
+                const dropdownBody: ReactWrapper<
+                    PropsWithChildren<IDropdownProps>,
+                    never,
+                    unknown
+                > = component.find(Dropdown);
                 const dropdownBodyProps = dropdownBody.props();
                 expect(dropdownBodyProps.overlayPositionType).toBe(overlayPositionType);
                 expect(dropdownBodyProps.overlayZIndex).toBe(overlayZIndex);
@@ -87,7 +91,7 @@ describe("TimePicker", () => {
                 });
                 openTimePicker(component);
 
-                const dropdownBody = component.find(DropdownBody);
+                const dropdownBody = component.find(List);
                 expect(dropdownBody.props().maxVisibleItemsCount).toBe(maxVisibleItemsCount);
             });
 

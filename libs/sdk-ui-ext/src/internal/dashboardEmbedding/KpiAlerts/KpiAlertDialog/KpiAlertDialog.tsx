@@ -3,9 +3,7 @@ import React, { Component } from "react";
 import isEqual from "lodash/isEqual";
 import last from "lodash/last";
 import { FormattedHTMLMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import ReactMessage from "@gooddata/goodstrap/lib/Messages/Message";
-import Spinner from "@gooddata/goodstrap/lib/core/Spinner";
-import { Button, Input, Typography, Overlay, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { Button, Input, Typography, Overlay, useMediaQuery, Spinner, Message } from "@gooddata/sdk-ui-kit";
 import {
     IDashboardDateFilter,
     isDashboardAttributeFilter,
@@ -383,7 +381,7 @@ export class KpiAlertDialog extends Component<
         const filtersDiffer = !areKpiAlertFiltersSameAsDashboard(this.props.alert, this.props.filters);
         const shouldShowFiltersDifferMessage = !!this.props.alert && filtersDiffer;
         return shouldShowFiltersDifferMessage ? (
-            <ReactMessage type="warning">
+            <Message type="warning">
                 <FormattedHTMLMessage id="kpiAlertDialog.filtersDiffer" />
                 {!!this.props.onApplyAlertFiltersClick && (
                     <>
@@ -393,7 +391,7 @@ export class KpiAlertDialog extends Component<
                         </a>
                     </>
                 )}
-            </ReactMessage>
+            </Message>
         ) : (
             false
         );
@@ -401,9 +399,9 @@ export class KpiAlertDialog extends Component<
 
     renderErrorMessage(messageId: string): React.ReactNode {
         return (
-            <ReactMessage type="error">
+            <Message type="error">
                 <FormattedHTMLMessage id={messageId} />
-            </ReactMessage>
+            </Message>
         );
     }
 
