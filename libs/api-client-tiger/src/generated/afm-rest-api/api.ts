@@ -1111,46 +1111,33 @@ export interface MeasureExecutionResultHeader {
 export interface MeasureGroupHeader {
     /**
      *
-     * @type {MeasureGroupHeaderMeasureGroupHeader}
+     * @type {Array<MeasureHeaderOut>}
      * @memberof MeasureGroupHeader
      */
-    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
+    measureGroupHeaders: Array<MeasureHeaderOut>;
 }
 /**
  *
  * @export
- * @interface MeasureGroupHeaderMeasureGroupHeader
+ * @interface MeasureHeaderOut
  */
-export interface MeasureGroupHeaderMeasureGroupHeader {
-    /**
-     *
-     * @type {Array<MeasureHeaderItemOut>}
-     * @memberof MeasureGroupHeaderMeasureGroupHeader
-     */
-    measureGroupHeaderItems: Array<MeasureHeaderItemOut>;
-}
-/**
- *
- * @export
- * @interface MeasureHeaderItemOut
- */
-export interface MeasureHeaderItemOut {
+export interface MeasureHeaderOut {
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemOut
+     * @memberof MeasureHeaderOut
      */
     localIdentifier: string;
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemOut
+     * @memberof MeasureHeaderOut
      */
     format?: string;
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemOut
+     * @memberof MeasureHeaderOut
      */
     name?: string;
 }

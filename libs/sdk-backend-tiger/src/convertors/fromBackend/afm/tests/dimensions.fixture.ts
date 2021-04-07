@@ -5,14 +5,12 @@ export const mockDimensions: ResultDimension[] = [
     {
         headers: [
             {
-                measureGroupHeader: {
-                    measureGroupHeaderItems: [
-                        {
-                            localIdentifier: "measureLocalId",
-                            format: "#,##0.00",
-                        },
-                    ],
-                },
+                measureGroupHeaders: [
+                    {
+                        localIdentifier: "measureLocalId",
+                        format: "#,##0.00",
+                    },
+                ],
             },
         ],
     },
@@ -60,14 +58,12 @@ export const mockMultipleDimensions: ResultDimension[] = [
     {
         headers: [
             {
-                measureGroupHeader: {
-                    measureGroupHeaderItems: [
-                        {
-                            localIdentifier: "measureLocalId",
-                            format: "#,##0.00",
-                        },
-                    ],
-                },
+                measureGroupHeaders: [
+                    {
+                        localIdentifier: "measureLocalId",
+                        format: "#,##0.00",
+                    },
+                ],
             },
         ],
     },
