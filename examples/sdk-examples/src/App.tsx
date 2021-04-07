@@ -107,7 +107,7 @@ export const App: React.FC = () => {
                                 flex-direction: column;
                                 justify-content: flex-start;
                                 align-items: stretch;
-                                width: 100%;
+                                overflow: hidden;
                                 padding: 20px 40px;
                             }
                         `}</style>
