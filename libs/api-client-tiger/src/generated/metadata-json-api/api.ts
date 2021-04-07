@@ -24,7 +24,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 // utility function that adds support for nested objects in query
 const addFlattenedObjectTo = (object: any, target: any): void => {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
+    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
+        depth: 0,
+    });
     Object.keys(flattened).forEach((key) => {
         target[key] = (flattened as any)[key];
     });
