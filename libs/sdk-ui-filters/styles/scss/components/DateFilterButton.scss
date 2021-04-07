@@ -158,7 +158,7 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
         &.is-active {
             &::after {
                 box-shadow: none;
-                background: #eff2f4;
+                background-color: var(--gd-palette-complementary-1, #eff2f4);
                 border-color: transparent;
             }
         }

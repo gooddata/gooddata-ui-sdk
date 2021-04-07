@@ -47,6 +47,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
     align-items: stretch;
     margin: 0 3px 0 15px;
     padding: 5px 2px;
+    border: 1px solid transparent;
     cursor: pointer;
     align-content: stretch;
     border-radius: 3px;
@@ -57,6 +58,7 @@ $visualization-types: area, bar, bubble, column, combo, combo2, donut, dual, fun
 
     &:hover {
         position: relative;
+        border-color: var(--gd-palette-complementary-5, transparent);
         box-shadow: 0 1px 3px 0 $button-shadow-lighter, 0 2px 9px 0 $button-shadow-darker;
         background-color: var(--gd-palette-complementary-0, #fff);
     }

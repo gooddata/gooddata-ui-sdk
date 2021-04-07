@@ -4,15 +4,15 @@ import React from "react";
 import * as Icons from "./icons";
 import { IIconProps } from "./typings";
 
-function iconNotFoundCheck(_param: never): never {
-    throw new Error("Icon not found");
+function iconNotFoundCheck(name: never): never {
+    throw new Error(`Icon ${name} not found`);
 }
 
 /**
  * @internal
  */
 export const Icon: React.FC<IIconProps> = (props) => {
-    const { name, className, color, colorPalette } = props;
+    const { name, className, width, height, color, colorPalette } = props;
 
     switch (name) {
         case "Refresh":
@@ -29,10 +29,19 @@ export const Icon: React.FC<IIconProps> = (props) => {
         case "Home":
         case "BurgerMenu":
         case "Rows":
-        case "DragHandle": {
+        case "DragHandle":
+        case "Interaction":
+        case "AttributeFilter": {
             const IconComponent = Icons[name];
             return (
-                <IconComponent className={className} name={name} color={color} colorPalette={colorPalette} />
+                <IconComponent
+                    className={className}
+                    name={name}
+                    width={width}
+                    height={height}
+                    color={color}
+                    colorPalette={colorPalette}
+                />
             );
         }
         default: {
