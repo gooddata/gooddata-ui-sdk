@@ -10,6 +10,8 @@ import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
+import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
+import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 
 export { AnonymousAuthProvider }
 
@@ -70,8 +72,11 @@ export const BearToBackendConvertors: {
 
 // @public
 export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
+    constructor(notAuthenticatedHandler?: NotAuthenticatedHandler | undefined);
     // (undocumented)
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
+    // (undocumented)
+    onNotAuthenticated: (context: IAuthenticationContext, error: NotAuthenticated) => void;
 }
 
 // @public
