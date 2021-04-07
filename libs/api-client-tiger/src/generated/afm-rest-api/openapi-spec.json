@@ -1272,24 +1272,18 @@
                 }
             },
             "MeasureGroupHeader": {
-                "required": ["measureGroupHeader"],
+                "required": ["measureGroupHeaders"],
                 "type": "object",
                 "properties": {
-                    "measureGroupHeader": {
-                        "required": ["measureGroupHeaderItems"],
-                        "type": "object",
-                        "properties": {
-                            "measureGroupHeaderItems": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/MeasureHeaderItemOut"
-                                }
-                            }
+                    "measureGroupHeaders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureHeaderOut"
                         }
                     }
                 }
             },
-            "MeasureHeaderItemOut": {
+            "MeasureHeaderOut": {
                 "required": ["localIdentifier"],
                 "type": "object",
                 "properties": {
