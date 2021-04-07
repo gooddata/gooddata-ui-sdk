@@ -6,6 +6,7 @@ import {
     IAuthenticatedPrincipal,
     IAuthenticationProvider,
     NotAuthenticated,
+    NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -70,12 +71,28 @@ export class FixedLoginAndPasswordAuthProvider
 }
 
 /**
- * This implementation of authentication provider expects that the authentication is provided externally.
- * It cannot perform the login itself.
+ * This implementation of authentication provider defers the responsibility for performing authentication
+ * to the context in which it exists. In other words it expects that the application will take care of driving
+ * the authentication and creating a correct session in which the Bear backend can make authenticated calls.
+ *
+ * You may use the provider's ability to use passed `NotAuthenticatedHandler` function. This will be called
+ * every time a NotAuthenticated error is raised by the backend. Your application can pass a custom handler of
+ * this event - typically something that will start driving the authentication from a single place.
+ *
+ * Note: the not authenticated handler MAY be called many times in succession so you may want to wrap it in a
+ * call guard or in a debounce.
  *
  * @public
  */
 export class ContextDeferredAuthProvider extends BearAuthProviderBase implements IAuthenticationProvider {
+    public constructor(private readonly notAuthenticatedHandler?: NotAuthenticatedHandler) {
+        super();
+    }
+
+    public onNotAuthenticated = (context: IAuthenticationContext, error: NotAuthenticated): void => {
+        this.notAuthenticatedHandler?.(context, error);
+    };
+
     public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         const sdk = context.client as SDK;
 
