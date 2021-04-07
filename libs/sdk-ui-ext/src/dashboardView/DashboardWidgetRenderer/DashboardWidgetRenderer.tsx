@@ -88,19 +88,23 @@ export const DashboardWidgetRenderer: React.FC<IDashboardWidgetRendererProps> = 
                         renderHeadline={() => <DashboardItemHeadline title={widget.title} />}
                     >
                         {() => (
-                            <InsightRenderer
-                                insight={insight}
-                                insightWidget={widget}
-                                backend={backend}
-                                workspace={workspace}
-                                filters={filters}
-                                filterContext={filterContext}
-                                drillableItems={drillableItems}
-                                onDrill={onDrill}
-                                onError={onError}
-                                ErrorComponent={ErrorComponent}
-                                LoadingComponent={LoadingComponent}
-                            />
+                            <div className="visualization-content">
+                                <div className="gd-visualization-content">
+                                    <InsightRenderer
+                                        insight={insight}
+                                        insightWidget={widget}
+                                        backend={backend}
+                                        workspace={workspace}
+                                        filters={filters}
+                                        filterContext={filterContext}
+                                        drillableItems={drillableItems}
+                                        onDrill={onDrill}
+                                        onError={onError}
+                                        ErrorComponent={ErrorComponent}
+                                        LoadingComponent={LoadingComponent}
+                                    />
+                                </div>
+                            </div>
                         )}
                     </DashboardItemVisualization>
                 </DashboardItem>

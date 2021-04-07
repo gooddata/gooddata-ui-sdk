@@ -335,3 +335,15 @@
         display: block;
     }
 }
+
+.visualization-content {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+}
+
+.gd-visualization-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
