@@ -2641,16 +2641,11 @@ export interface MeasureExecutionResultHeader {
 
 // @public
 export interface MeasureGroupHeader {
-    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
+    measureGroupHeaders: Array<MeasureHeaderOut>;
 }
 
 // @public
-export interface MeasureGroupHeaderMeasureGroupHeader {
-    measureGroupHeaderItems: Array<MeasureHeaderItemOut>;
-}
-
-// @public
-export interface MeasureHeaderItemOut {
+export interface MeasureHeaderOut {
     format?: string;
     localIdentifier: string;
     name?: string;

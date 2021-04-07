@@ -74,7 +74,7 @@ function transformDimension(
                  */
                 const measureDescriptor: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
-                        items: h.measureGroupHeader.measureGroupHeaderItems.map((m) => {
+                        items: h.measureGroupHeaders.map((m) => {
                             const ref = simpleMeasureRefs[m.localIdentifier];
                             const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
                             const uri = ref ? `/obj/${headerIdx}` : undefined;
