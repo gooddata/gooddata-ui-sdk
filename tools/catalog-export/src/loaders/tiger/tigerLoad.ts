@@ -24,7 +24,7 @@ export async function tigerLoad(client: ITigerClient, workspaceId: string): Prom
         const insights = await loadInsights(client, workspaceId);
         spinner.succeed("Insights loaded");
 
-        spinner.start("Loading analytical dashboards");
+        spinner.start("Loading analytical dashboards…");
         const analyticalDashboards = await loadAnalyticalDashboards(client, workspaceId);
         spinner.succeed("Analytical dashboards loaded");
 
@@ -37,6 +37,14 @@ export async function tigerLoad(client: ITigerClient, workspaceId: string): Prom
         };
     } catch (err) {
         spinner.fail();
+        if (err?.response?.status === 404) {
+            // handle known error more gracefully to avoid general-type error messages
+            logError(
+                `Workspace with id '${workspaceId}' was not found. Please make sure you are passing a correct value to the 'workspace-id' argument.`,
+            );
+            process.exit(1);
+        }
+
         const more = err.response ? err.response.url : "";
         logError(`Exception: ${err.message} ${more}\n${err.stack}`);
 
