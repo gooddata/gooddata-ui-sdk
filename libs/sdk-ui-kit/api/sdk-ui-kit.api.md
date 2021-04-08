@@ -218,7 +218,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 
 // @internal (undocumented)
-export function dateDatasets(dateDatasets: IDateDataset[], recommendedDate?: IDateDataset, unrelatedDate?: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
+export function dateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
@@ -452,7 +452,7 @@ export type GetPositionedSelfRegion = {
 };
 
 // @internal (undocumented)
-export function getRecommendedDateDataset(items: IDateDataset[]): IDateDataset;
+export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal
 export function guidFor(obj: any): string;
@@ -2576,7 +2576,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
-export function preselectDateDataset(dateDatasets: IDateDataset[], recommendedDate: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
+export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export enum PresetType {
@@ -2718,7 +2718,7 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 }
 
 // @internal (undocumented)
-export function transform2Dropdown(dateDatasets: IDateDataset[]): Array<IDateDataset | IDateDatasetHeader>;
+export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
