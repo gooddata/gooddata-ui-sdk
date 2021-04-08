@@ -32,7 +32,7 @@ const KpiAlertDialogDateRangeComponent: React.FC<IKpiAlertDialogDateRangeProps &
             values={{
                 calendarIcon: (
                     <span className="icon-calendar-kpi">
-                        <Icon name="Date" color={theme?.palette?.complementary?.c6} />
+                        <Icon.Date color={theme?.palette?.complementary?.c6} />
                     </span>
                 ),
                 range: <strong>{rangeText}</strong>,

@@ -33,13 +33,12 @@ const HeaderIcon = () => {
     const theme = useTheme();
     return (
         <div className="gd-aggregation-submenu-header-icon">
-            <Icon
-                name="Rows"
+            <Icon.Rows
                 width={12}
                 height={11}
                 colorPalette={{
-                    evenColor: theme?.palette?.complementary?.c7,
-                    oddColor: theme?.palette?.complementary?.c4,
+                    even: theme?.palette?.complementary?.c7,
+                    odd: theme?.palette?.complementary?.c4,
                 }}
             />
         </div>

@@ -27,7 +27,7 @@ const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterPro
     return (
         <a className={mergedClassNames} href={href} onClick={onClick}>
             <span className="icon-home">
-                <Icon name="Home" color={theme?.palette?.complementary?.c7} />
+                <Icon.Home color={theme?.palette?.complementary?.c7} />
             </span>
             {children}
         </a>

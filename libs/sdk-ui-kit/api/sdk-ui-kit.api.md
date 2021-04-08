@@ -687,7 +687,25 @@ export interface ICommunityEditionDialogProps {
 }
 
 // @internal (undocumented)
-export const Icon: React_2.FC<IIconProps>;
+export const Icon: {
+    Refresh: import("react").FC<import("./typings").IIconProps>;
+    DrillDown: import("react").FC<import("./typings").IIconProps>;
+    DrillToDashboard: import("react").FC<import("./typings").IIconProps>;
+    DrillToInsight: import("react").FC<import("./typings").IIconProps>;
+    Date: import("react").FC<import("./typings").IIconProps>;
+    Explore: import("react").FC<import("./typings").IIconProps>;
+    Logout: import("react").FC<import("./typings").IIconProps>;
+    Pdf: import("react").FC<import("./typings").IIconProps>;
+    ExternalLink: import("react").FC<import("./typings").IIconProps>;
+    Hyperlink: import("react").FC<import("./typings").IIconProps>;
+    Undo: import("react").FC<import("./typings").IIconProps>;
+    Home: import("react").FC<import("./typings").IIconProps>;
+    BurgerMenu: import("react").FC<import("./typings").IIconProps>;
+    Rows: import("react").FC<import("./icons/Rows").IRowsIconProps>;
+    DragHandle: import("react").FC<import("./typings").IIconProps>;
+    Interaction: import("react").FC<import("./typings").IIconProps>;
+    AttributeFilter: import("react").FC<import("./typings").IIconProps>;
+};
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -710,9 +728,6 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     warning?: string | React.ReactElement;
 }
-
-// @internal (undocumented)
-export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo" | "Home" | "BurgerMenu" | "Rows" | "DragHandle" | "Interaction" | "AttributeFilter";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1246,8 +1261,6 @@ export interface IIconProps {
     };
     // (undocumented)
     height?: number;
-    // (undocumented)
-    name: IconName;
     // (undocumented)
     width?: number;
 }

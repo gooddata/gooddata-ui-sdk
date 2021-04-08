@@ -52,7 +52,7 @@ const MenuToggler = () => {
     const theme = useTheme();
     return (
         <div className="menu-icon">
-            <Icon name="BurgerMenu" color={theme?.palette?.complementary?.c8} />
+            <Icon.BurgerMenu color={theme?.palette?.complementary?.c8} />
         </div>
     );
 };
