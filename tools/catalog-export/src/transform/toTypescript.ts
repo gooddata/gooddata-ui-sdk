@@ -160,6 +160,8 @@ function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
     return {
         moduleSpecifier: "@gooddata/sdk-model",
         namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition", "idRef"],
+        leadingTrivia:
+            "// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)",
     };
 }
 
