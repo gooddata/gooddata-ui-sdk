@@ -47,6 +47,7 @@ export const ResponsiveExample: React.FC = () => {
                                     height={usedHeight}
                                     measures={[LdmExt.TotalSales1]}
                                     viewBy={Ldm.LocationResort}
+                                    stackBy={Ldm.DateMonth.Short}
                                 />
                             </div>
                         );
