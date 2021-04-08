@@ -350,9 +350,6 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                         const pivotWrapperStyle: React.CSSProperties = {
                             height: isNil(height) ? "100%" : 328,
                             textAlign: "left",
-                            display: "flex",
-                            flex: "1 1 auto",
-                            flexDirection: "column",
                         };
 
                         const configWithMaxHeight: IPivotTableConfig = {
