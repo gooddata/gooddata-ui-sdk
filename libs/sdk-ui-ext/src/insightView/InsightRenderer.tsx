@@ -42,11 +42,8 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
 
-const visualizationUriRootStyle: React.CSSProperties = {
+const visualizationUriRootStyle = {
     height: "100%",
-    display: "flex",
-    flex: "1 1 auto",
-    flexDirection: "column",
 };
 
 // this needs to be a pure component as it can happen that this might be rendered multiple times

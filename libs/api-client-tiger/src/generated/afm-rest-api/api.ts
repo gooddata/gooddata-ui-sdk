@@ -2528,11 +2528,11 @@ export const ResultControllerApiAxiosParamCreator = function (configuration?: Co
             const localVarQueryParameter = {} as any;
 
             if (offset) {
-                localVarQueryParameter["offset"] = offset;
+                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
             }
 
             if (limit) {
-                localVarQueryParameter["limit"] = limit;
+                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };

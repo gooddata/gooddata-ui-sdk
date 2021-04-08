@@ -30,9 +30,6 @@
 }
 
 .highcharts-container {
-    // Without position: static, there is a sizing issue in Safari (in DashboardView)
-    // stylelint-disable-next-line declaration-no-important
-    position: static !important;
     // If the outer container have scroll bar, the chart can be showed by scrolling.
     // stylelint-disable-next-line declaration-no-important
     overflow: visible !important;

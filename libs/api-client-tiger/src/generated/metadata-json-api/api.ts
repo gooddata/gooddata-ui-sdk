@@ -804,6 +804,79 @@ export interface DeclarativeWorkspaces {
     workspaceDataFilters: Array<DeclarativeWorkspaceDataFilter>;
 }
 /**
+ * A request containing all information needed for generation of logical model.
+ * @export
+ * @interface GenerateLdmRequest
+ */
+export interface GenerateLdmRequest {
+    /**
+     * A separator between prefixes and the names.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    separator: string;
+    /**
+     * Tables starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    tablePrefix?: string;
+    /**
+     * Views starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    viewPrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as primary labels. The prefix is then followed by the value of `separator` parameter. Given the primary label prefix is `pl` and separator is `__`, the columns with name like `pl__country_id` will be considered as primary labels.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    primaryLabelPrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as secondary labels. The prefix is then followed by the value of `separator` parameter. Given the secondary label prefix is `sl` and separator is `__`, the columns with name like `sl__country_id_country_name` will be considered as secondary labels.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    secondaryLabelPrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as facts. The prefix is then followed by the value of `separator` parameter. Given the fact prefix is `f` and separator is `__`, the columns with name like `f__sold` will be considered as facts.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    factPrefix?: string;
+    /**
+     * Option to control date granularities for date datasets. Empty value enables common date granularities (DAY, WEEK, MONTH, QUARTER, YEAR). Default value is `all` which enables all available date granularities, including time granularities (like hours, minutes).
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    dateGranularities?: string;
+    /**
+     * Columns starting with this prefix will be considered as grains. The prefix is then followed by the value of `separator` parameter. Given the grain prefix is `g` and separator is `__`, the columns with name like `g__name` will be considered as grains.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    grainPrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `r` and separator is `__`, the columns with name like `r__customer_name` will be considered as references.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    referencePrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as grain references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `gr` and separator is `__`, the columns with name like `gr__customer_name` will be considered as grain references.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    grainReferencePrefix?: string;
+    /**
+     * Columns starting with this prefix will be considered as denormalization references. The prefix is then followed by the value of `separator` parameter. Given the denormalization reference prefix is `dr` and separator is `__`, the columns with name like `dr__customer_name` will be considered as denormalization references.
+     * @type {string}
+     * @memberof GenerateLdmRequest
+     */
+    denormPrefix?: string;
+}
+/**
  * A grain identifier.
  * @export
  * @interface GrainIdentifier
@@ -989,11 +1062,12 @@ export interface JsonApiAnalyticalDashboardOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
+     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
      * @memberof JsonApiAnalyticalDashboardOutDocument
      */
     included?: Array<
         | JsonApiVisualizationObjectOutWithLinks
+        | JsonApiAnalyticalDashboardOutWithLinks
         | JsonApiLabelOutWithLinks
         | JsonApiMetricOutWithLinks
         | JsonApiDatasetOutWithLinks
@@ -1020,11 +1094,12 @@ export interface JsonApiAnalyticalDashboardOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
+     * @type {Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>}
      * @memberof JsonApiAnalyticalDashboardOutList
      */
     included?: Array<
         | JsonApiVisualizationObjectOutWithLinks
+        | JsonApiAnalyticalDashboardOutWithLinks
         | JsonApiLabelOutWithLinks
         | JsonApiMetricOutWithLinks
         | JsonApiDatasetOutWithLinks
@@ -1043,6 +1118,12 @@ export interface JsonApiAnalyticalDashboardOutRelationships {
      * @memberof JsonApiAnalyticalDashboardOutRelationships
      */
     visualizationObjects?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
+    /**
+     *
+     * @type {JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects}
+     * @memberof JsonApiAnalyticalDashboardOutRelationships
+     */
+    analyticalDashboards?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects}
@@ -2875,7 +2956,7 @@ export interface JsonApiMetricIn {
      * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricIn
      */
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
 }
 
 /**
@@ -2915,7 +2996,7 @@ export interface JsonApiMetricInAttributes {
      * @type {JsonApiMetricInAttributesContent}
      * @memberof JsonApiMetricInAttributes
      */
-    content?: JsonApiMetricInAttributesContent;
+    content: JsonApiMetricInAttributesContent;
 }
 /**
  *
@@ -2972,7 +3053,7 @@ export interface JsonApiMetricOut {
      * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOut
      */
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -3103,7 +3184,7 @@ export interface JsonApiMetricOutWithLinks {
      * @type {JsonApiMetricInAttributes}
      * @memberof JsonApiMetricOutWithLinks
      */
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
     /**
      *
      * @type {JsonApiMetricOutRelationships}
@@ -3868,7 +3949,7 @@ export interface JsonApiVisualizationObjectOutDocument {
     links?: ObjectLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>}
      * @memberof JsonApiVisualizationObjectOutDocument
      */
     included?: Array<
@@ -3876,7 +3957,6 @@ export interface JsonApiVisualizationObjectOutDocument {
         | JsonApiAttributeOutWithLinks
         | JsonApiLabelOutWithLinks
         | JsonApiMetricOutWithLinks
-        | JsonApiAnalyticalDashboardOutWithLinks
         | JsonApiDatasetOutWithLinks
     >;
 }
@@ -3900,7 +3980,7 @@ export interface JsonApiVisualizationObjectOutList {
     links?: ListLinks;
     /**
      * Included resources
-     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiDatasetOutWithLinks>}
+     * @type {Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>}
      * @memberof JsonApiVisualizationObjectOutList
      */
     included?: Array<
@@ -3908,7 +3988,6 @@ export interface JsonApiVisualizationObjectOutList {
         | JsonApiAttributeOutWithLinks
         | JsonApiLabelOutWithLinks
         | JsonApiMetricOutWithLinks
-        | JsonApiAnalyticalDashboardOutWithLinks
         | JsonApiDatasetOutWithLinks
     >;
 }
@@ -3942,12 +4021,6 @@ export interface JsonApiVisualizationObjectOutRelationships {
      * @memberof JsonApiVisualizationObjectOutRelationships
      */
     metrics?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
-    /**
-     *
-     * @type {JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects}
-     * @memberof JsonApiVisualizationObjectOutRelationships
-     */
-    analyticalDashboards?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     /**
      *
      * @type {JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects}
@@ -4697,85 +4770,6 @@ export enum ReferenceIdentifierTypeEnum {
 }
 
 /**
- * A request containing all information critical to model scanning.
- * @export
- * @interface ScanRequest
- */
-export interface ScanRequest {
-    /**
-     * A separator between prefixes and the names.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    separator: string;
-    /**
-     * Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    tablePrefix?: string;
-    /**
-     * Views starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    viewPrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as primary labels. The prefix is then followed by the value of `separator` parameter. Given the primary label prefix is `pl` and separator is `__`, the columns with name like `pl__country_id` will be considered as primary labels.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    primaryLabelPrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as secondary labels. The prefix is then followed by the value of `separator` parameter. Given the secondary label prefix is `sl` and separator is `__`, the columns with name like `sl__country_id_country_name` will be considered as secondary labels.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    secondaryLabelPrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as facts. The prefix is then followed by the value of `separator` parameter. Given the fact prefix is `f` and separator is `__`, the columns with name like `f__sold` will be considered as facts.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    factPrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as dates. The prefix is then followed by the value of `separator` parameter. Given the date prefix is `d` and separator is `__`, the columns with name like `d__sale_date` will be considered as dates.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    datePrefix?: string;
-    /**
-     * Option to control date granularities for date datasets. Empty value enables common date granularities (DAY, WEEK, MONTH, QUARTER, YEAR). Default value is `all` which enables all available date granularities, including time granularities (like hours, minutes).
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    dateGranularities?: string;
-    /**
-     * Columns starting with this prefix will be considered as grains. The prefix is then followed by the value of `separator` parameter. Given the grain prefix is `g` and separator is `__`, the columns with name like `g__name` will be considered as grains.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    grainPrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `r` and separator is `__`, the columns with name like `r__customer_name` will be considered as references.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    referencePrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as grain references. The prefix is then followed by the value of `separator` parameter. Given the reference prefix is `gr` and separator is `__`, the columns with name like `gr__customer_name` will be considered as grain references.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    grainReferencePrefix?: string;
-    /**
-     * Columns starting with this prefix will be considered as denormalization references. The prefix is then followed by the value of `separator` parameter. Given the denormalization reference prefix is `dr` and separator is `__`, the columns with name like `dr__customer_name` will be considered as denormalization references.
-     * @type {string}
-     * @memberof ScanRequest
-     */
-    denormPrefix?: string;
-}
-/**
  * Store filter into this workspace. Empty if it is part of layout of workspaces.
  * @export
  * @interface WorkspaceIdentifier
@@ -4813,18 +4807,18 @@ export const DataSourceActionsControllerApiAxiosParamCreator = function (configu
          * Generate LDM from PDM stored in data source.
          * @summary Generate LDM from PDM
          * @param {string} dataSourceId
-         * @param {ScanRequest} scanRequest
+         * @param {GenerateLdmRequest} generateLdmRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         generateLogicalModel(
             params: {
                 dataSourceId: string;
-                scanRequest: ScanRequest;
+                generateLdmRequest: GenerateLdmRequest;
             },
             options: any = {},
         ): RequestArgs {
-            const { dataSourceId, scanRequest } = params;
+            const { dataSourceId, generateLdmRequest } = params;
             // verify required parameter 'dataSourceId' is not null or undefined
             if (dataSourceId === null || dataSourceId === undefined) {
                 throw new RequiredError(
@@ -4832,11 +4826,11 @@ export const DataSourceActionsControllerApiAxiosParamCreator = function (configu
                     "Required parameter dataSourceId was null or undefined when calling generateLogicalModel.",
                 );
             }
-            // verify required parameter 'scanRequest' is not null or undefined
-            if (scanRequest === null || scanRequest === undefined) {
+            // verify required parameter 'generateLdmRequest' is not null or undefined
+            if (generateLdmRequest === null || generateLdmRequest === undefined) {
                 throw new RequiredError(
-                    "scanRequest",
-                    "Required parameter scanRequest was null or undefined when calling generateLogicalModel.",
+                    "generateLdmRequest",
+                    "Required parameter generateLdmRequest was null or undefined when calling generateLogicalModel.",
                 );
             }
             const localVarPath = `/api/actions/dataSources/{dataSourceId}/generateLogicalModel`.replace(
@@ -4859,11 +4853,11 @@ export const DataSourceActionsControllerApiAxiosParamCreator = function (configu
             delete localVarUrlObj.search;
             localVarRequestOptions.headers = { ...localVarHeaderParameter, ...options.headers };
             const needsSerialization =
-                typeof scanRequest !== "string" ||
+                typeof generateLdmRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(scanRequest !== undefined ? scanRequest : {})
-                : scanRequest || "";
+                ? JSON.stringify(generateLdmRequest !== undefined ? generateLdmRequest : {})
+                : generateLdmRequest || "";
 
             return {
                 url: globalImportUrl.format(localVarUrlObj),
@@ -4927,14 +4921,14 @@ export const DataSourceActionsControllerApiFp = function (configuration?: Config
          * Generate LDM from PDM stored in data source.
          * @summary Generate LDM from PDM
          * @param {string} dataSourceId
-         * @param {ScanRequest} scanRequest
+         * @param {GenerateLdmRequest} generateLdmRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         generateLogicalModel(
             params: {
                 dataSourceId: string;
-                scanRequest: ScanRequest;
+                generateLdmRequest: GenerateLdmRequest;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeModel> {
@@ -4990,14 +4984,14 @@ export const DataSourceActionsControllerApiFactory = function (
          * Generate LDM from PDM stored in data source.
          * @summary Generate LDM from PDM
          * @param {string} dataSourceId
-         * @param {ScanRequest} scanRequest
+         * @param {GenerateLdmRequest} generateLdmRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         generateLogicalModel(
             params: {
                 dataSourceId: string;
-                scanRequest: ScanRequest;
+                generateLdmRequest: GenerateLdmRequest;
             },
             options?: any,
         ): AxiosPromise<DeclarativeModel> {
@@ -5037,7 +5031,7 @@ export interface DataSourceActionsControllerApiInterface {
      * Generate LDM from PDM stored in data source.
      * @summary Generate LDM from PDM
      * @param {string} dataSourceId
-     * @param {ScanRequest} scanRequest
+     * @param {GenerateLdmRequest} generateLdmRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataSourceActionsControllerApiInterface
@@ -5045,7 +5039,7 @@ export interface DataSourceActionsControllerApiInterface {
     generateLogicalModel(
         params: {
             dataSourceId: string;
-            scanRequest: ScanRequest;
+            generateLdmRequest: GenerateLdmRequest;
         },
         options?: any,
     ): AxiosPromise<DeclarativeModel>;
@@ -5079,7 +5073,7 @@ export class DataSourceActionsControllerApi
      * Generate LDM from PDM stored in data source.
      * @summary Generate LDM from PDM
      * @param {string} dataSourceId
-     * @param {ScanRequest} scanRequest
+     * @param {GenerateLdmRequest} generateLdmRequest
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DataSourceActionsControllerApi
@@ -5087,7 +5081,7 @@ export class DataSourceActionsControllerApi
     public generateLogicalModel(
         params: {
             dataSourceId: string;
-            scanRequest: ScanRequest;
+            generateLdmRequest: GenerateLdmRequest;
         },
         options?: any,
     ) {
@@ -6008,8 +6002,8 @@ export const DeclarativeLayoutControllerApiAxiosParamCreator = function (configu
             };
         },
         /**
-         * Sets complete layout of workspaces, their hierarchy, models.
-         * @summary Set all workspaces layout
+         * Gets complete layout of workspaces, their hierarchy, models.
+         * @summary Get all workspaces layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6470,8 +6464,8 @@ export const DeclarativeLayoutControllerApiFp = function (configuration?: Config
             };
         },
         /**
-         * Sets complete layout of workspaces, their hierarchy, models.
-         * @summary Set all workspaces layout
+         * Gets complete layout of workspaces, their hierarchy, models.
+         * @summary Get all workspaces layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6732,8 +6726,8 @@ export const DeclarativeLayoutControllerApiFactory = function (
             );
         },
         /**
-         * Sets complete layout of workspaces, their hierarchy, models.
-         * @summary Set all workspaces layout
+         * Gets complete layout of workspaces, their hierarchy, models.
+         * @summary Get all workspaces layout
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -6924,8 +6918,8 @@ export interface DeclarativeLayoutControllerApiInterface {
     ): AxiosPromise<DeclarativeWorkspaceModel>;
 
     /**
-     * Sets complete layout of workspaces, their hierarchy, models.
-     * @summary Set all workspaces layout
+     * Gets complete layout of workspaces, their hierarchy, models.
+     * @summary Get all workspaces layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApiInterface
@@ -7121,8 +7115,8 @@ export class DeclarativeLayoutControllerApi
     }
 
     /**
-     * Sets complete layout of workspaces, their hierarchy, models.
-     * @summary Set all workspaces layout
+     * Gets complete layout of workspaces, their hierarchy, models.
+     * @summary Get all workspaces layout
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DeclarativeLayoutControllerApi
@@ -11804,7 +11798,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -11814,7 +11808,12 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -12043,7 +12042,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -12052,9 +12051,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): RequestArgs {
@@ -12515,7 +12512,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -12527,7 +12524,12 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 workspaceId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
                 page?: number;
                 size?: number;
@@ -13112,7 +13114,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -13123,9 +13125,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             params: {
                 workspaceId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
                 page?: number;
                 size?: number;
                 sort?: Array<string>;
@@ -13370,7 +13370,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13380,7 +13380,12 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 objectId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -13841,7 +13846,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -13850,9 +13855,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 workspaceId: string;
                 objectId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): RequestArgs {
@@ -14045,7 +14048,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14056,7 +14059,12 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -14314,7 +14322,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14324,9 +14332,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                 objectId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): RequestArgs {
@@ -14518,7 +14524,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14528,7 +14534,12 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -14607,7 +14618,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -14616,9 +14627,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -14801,7 +14810,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -14813,7 +14822,12 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 workspaceId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
                 page?: number;
                 size?: number;
@@ -15034,7 +15048,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -15045,9 +15059,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
             params: {
                 workspaceId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
                 page?: number;
                 size?: number;
                 sort?: Array<string>;
@@ -15139,7 +15151,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15149,7 +15161,12 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 objectId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -15344,7 +15361,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15353,9 +15370,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 workspaceId: string;
                 objectId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -15437,7 +15452,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15448,7 +15463,12 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options: any = {},
@@ -15532,7 +15552,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15542,9 +15562,7 @@ export const WorkspaceObjectControllerApiFp = function (configuration?: Configur
                 objectId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options: any = {},
         ): (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -15608,7 +15626,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} workspaceId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15618,7 +15636,12 @@ export const WorkspaceObjectControllerApiFactory = function (
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options?: any,
@@ -15679,7 +15702,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} workspaceId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -15688,9 +15711,7 @@ export const WorkspaceObjectControllerApiFactory = function (
                 workspaceId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options?: any,
         ): AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -15831,7 +15852,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -15843,7 +15864,12 @@ export const WorkspaceObjectControllerApiFactory = function (
                 workspaceId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
                 page?: number;
                 size?: number;
@@ -16022,7 +16048,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          *
          * @param {string} workspaceId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {number} [page] Zero-based page index (0..N)
          * @param {number} [size] The size of the page to be returned
          * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -16033,9 +16059,7 @@ export const WorkspaceObjectControllerApiFactory = function (
             params: {
                 workspaceId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
                 page?: number;
                 size?: number;
                 sort?: Array<string>;
@@ -16106,7 +16130,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16116,7 +16140,12 @@ export const WorkspaceObjectControllerApiFactory = function (
                 objectId: string;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options?: any,
@@ -16269,7 +16298,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} workspaceId
          * @param {string} objectId
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16278,9 +16307,7 @@ export const WorkspaceObjectControllerApiFactory = function (
                 workspaceId: string;
                 objectId: string;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options?: any,
         ): AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -16341,7 +16368,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} objectId
          * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+         * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16352,7 +16379,12 @@ export const WorkspaceObjectControllerApiFactory = function (
                 jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
                 predicate?: { [key: string]: object };
                 include?: Array<
-                    "visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts"
+                    | "visualizationObjects"
+                    | "analyticalDashboards"
+                    | "labels"
+                    | "metrics"
+                    | "datasets"
+                    | "filterContexts"
                 >;
             },
             options?: any,
@@ -16418,7 +16450,7 @@ export const WorkspaceObjectControllerApiFactory = function (
          * @param {string} objectId
          * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
          * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+         * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -16428,9 +16460,7 @@ export const WorkspaceObjectControllerApiFactory = function (
                 objectId: string;
                 jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
                 predicate?: { [key: string]: object };
-                include?: Array<
-                    "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-                >;
+                include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             },
             options?: any,
         ): AxiosPromise<JsonApiVisualizationObjectOutDocument> {
@@ -16478,7 +16508,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} workspaceId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -16488,7 +16518,14 @@ export interface WorkspaceObjectControllerApiInterface {
             workspaceId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
@@ -16538,7 +16575,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} workspaceId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -16548,9 +16585,7 @@ export interface WorkspaceObjectControllerApiInterface {
             workspaceId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
@@ -16669,7 +16704,7 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -16681,7 +16716,14 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
             page?: number;
             size?: number;
             sort?: Array<string>;
@@ -16837,7 +16879,7 @@ export interface WorkspaceObjectControllerApiInterface {
      *
      * @param {string} workspaceId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -16849,9 +16891,7 @@ export interface WorkspaceObjectControllerApiInterface {
         params: {
             workspaceId: string;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             page?: number;
             size?: number;
             sort?: Array<string>;
@@ -16912,7 +16952,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} workspaceId
      * @param {string} objectId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -16922,7 +16962,14 @@ export interface WorkspaceObjectControllerApiInterface {
             workspaceId: string;
             objectId: string;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
@@ -17052,7 +17099,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} workspaceId
      * @param {string} objectId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -17062,9 +17109,7 @@ export interface WorkspaceObjectControllerApiInterface {
             workspaceId: string;
             objectId: string;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
@@ -17115,7 +17160,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} objectId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -17126,7 +17171,14 @@ export interface WorkspaceObjectControllerApiInterface {
             objectId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
@@ -17181,7 +17233,7 @@ export interface WorkspaceObjectControllerApiInterface {
      * @param {string} objectId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApiInterface
@@ -17192,9 +17244,7 @@ export interface WorkspaceObjectControllerApiInterface {
             objectId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
@@ -17234,7 +17284,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} workspaceId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -17244,7 +17294,14 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             workspaceId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ) {
@@ -17309,7 +17366,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} workspaceId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -17319,9 +17376,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             workspaceId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ) {
@@ -17475,7 +17530,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -17487,7 +17542,14 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
             page?: number;
             size?: number;
             sort?: Array<string>;
@@ -17678,7 +17740,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      *
      * @param {string} workspaceId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {number} [page] Zero-based page index (0..N)
      * @param {number} [size] The size of the page to be returned
      * @param {Array<string>} [sort] Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -17690,9 +17752,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
         params: {
             workspaceId: string;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
             page?: number;
             size?: number;
             sort?: Array<string>;
@@ -17768,7 +17828,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} workspaceId
      * @param {string} objectId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -17778,7 +17838,14 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             workspaceId: string;
             objectId: string;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ) {
@@ -17943,7 +18010,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} workspaceId
      * @param {string} objectId
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -17953,9 +18020,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             workspaceId: string;
             objectId: string;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ) {
@@ -18021,7 +18086,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} objectId
      * @param {JsonApiAnalyticalDashboardInDocument} jsonApiAnalyticalDashboardInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'visualizationObjects' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
+     * @param {Array<'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -18032,7 +18097,14 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             objectId: string;
             jsonApiAnalyticalDashboardInDocument: JsonApiAnalyticalDashboardInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+            include?: Array<
+                | "visualizationObjects"
+                | "analyticalDashboards"
+                | "labels"
+                | "metrics"
+                | "datasets"
+                | "filterContexts"
+            >;
         },
         options?: any,
     ) {
@@ -18102,7 +18174,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
      * @param {string} objectId
      * @param {JsonApiVisualizationObjectInDocument} jsonApiVisualizationObjectInDocument
      * @param {{ [key: string]: object; }} [predicate] Composed query parameters used for filtering. \&#39;id\&#39; parameter can be used for all objects. Other parameters are present according to object type (title, description,...). You can specify any object parameter and parameter of related entity up to 2nd level (for example name&#x3D;John&amp;language&#x3D;english,czech&amp;address.city&#x3D;London&amp;father.id&#x3D;123).
-     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'analyticalDashboards' | 'datasets'>} [include] Array of included entities
+     * @param {Array<'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets'>} [include] Array of included entities
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof WorkspaceObjectControllerApi
@@ -18113,9 +18185,7 @@ export class WorkspaceObjectControllerApi extends BaseAPI implements WorkspaceOb
             objectId: string;
             jsonApiVisualizationObjectInDocument: JsonApiVisualizationObjectInDocument;
             predicate?: { [key: string]: object };
-            include?: Array<
-                "facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets"
-            >;
+            include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         },
         options?: any,
     ) {
