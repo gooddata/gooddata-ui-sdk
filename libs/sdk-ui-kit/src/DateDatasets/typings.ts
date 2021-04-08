@@ -4,7 +4,7 @@
  * @internal
  */
 export interface IDateDataset {
-    identifier: string;
+    id: string;
     title: string;
     relevance?: number;
 }

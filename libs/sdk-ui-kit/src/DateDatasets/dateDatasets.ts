@@ -131,7 +131,7 @@ export function preselectDateDataset(
     dateDatasets: IDateDataset[],
     recommendedDate: IDateDataset,
 ): Array<IDateDataset | IDateDatasetHeader> {
-    const others = dateDatasets.filter((d) => d.identifier !== recommendedDate.identifier);
+    const others = dateDatasets.filter((d) => d.id !== recommendedDate.id);
 
     if (others.length > 0) {
         return getRecommendedItems(recommendedDate, others);

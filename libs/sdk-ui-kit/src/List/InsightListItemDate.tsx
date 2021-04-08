@@ -60,8 +60,8 @@ export interface IDateTimeConfigOptions {
 /**
  * Build date time config for InsightListItemDate component.
  *
- * @param date
- * @param options
+ * @param date - string ISO date
+ * @param options - optional options object
  * @returns date time config
  *
  * @internal
