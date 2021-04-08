@@ -87,6 +87,16 @@ const ScenarioConfig = [
             readySelector: ".screenshot-target",
         },
     },
+    {
+        /*
+         * Tests for UI KIT Icon components
+         */
+        idRegex: /(12).*Icon.*/g,
+        config: {
+            readySelector: ".screenshot-target",
+            misMatchThreshold: 0.01,
+        },
+    },
 ];
 
 // --------------------------------------------------------------------

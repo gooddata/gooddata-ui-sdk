@@ -1,5 +1,4 @@
 // (C) 2021 GoodData Corporation
-import { IconName } from "./iconNames";
 
 /**
  * Color in format supported by SVG
@@ -13,7 +12,6 @@ export type Color = string;
  * @internal
  */
 export interface IIconProps {
-    name: IconName;
     className?: string;
     width?: number;
     height?: number;
