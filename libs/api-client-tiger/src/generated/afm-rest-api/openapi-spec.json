@@ -258,6 +258,8 @@
                         "in": "query",
                         "description": "Request page with these offsets. Format is offset=1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.",
                         "required": false,
+                        "style": "form",
+                        "explode": false,
                         "schema": {
                             "type": "array",
                             "items": {
@@ -265,13 +267,16 @@
                                 "format": "int32"
                             },
                             "default": []
-                        }
+                        },
+                        "example": "offset=1,10"
                     },
                     {
                         "name": "limit",
                         "in": "query",
                         "description": "Return only this number of items. Format is limit=1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.",
                         "required": false,
+                        "style": "form",
+                        "explode": false,
                         "schema": {
                             "type": "array",
                             "items": {
@@ -279,7 +284,8 @@
                                 "format": "int32"
                             },
                             "default": []
-                        }
+                        },
+                        "example": "limit=1,10"
                     }
                 ],
                 "responses": {

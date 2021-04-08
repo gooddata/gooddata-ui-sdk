@@ -7,19 +7,19 @@
     "servers": [
         {
             "url": "/",
-            "description": "GoodData Anywhere endpoint"
+            "description": "GoodData.CN endpoint"
         }
     ],
     "paths": {
         "/api/layout/workspaces": {
             "get": {
                 "tags": ["declarative-layout-controller"],
-                "summary": "Set all workspaces layout",
-                "description": "Sets complete layout of workspaces, their hierarchy, models.",
+                "summary": "Get all workspaces layout",
+                "description": "Gets complete layout of workspaces, their hierarchy, models.",
                 "operationId": "getWorkspacesLayout",
                 "responses": {
-                    "204": {
-                        "description": "All workspaces layout set.",
+                    "200": {
+                        "description": "Retrieved layout of all workspaces.",
                         "content": {
                             "*/*": {
                                 "schema": {
@@ -396,7 +396,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ScanRequest"
+                                "$ref": "#/components/schemas/GenerateLdmRequest"
                             }
                         }
                     },
@@ -2201,6 +2201,7 @@
                                 "type": "string",
                                 "enum": [
                                     "visualizationObjects",
+                                    "analyticalDashboards",
                                     "labels",
                                     "metrics",
                                     "datasets",
@@ -2208,7 +2209,7 @@
                                 ]
                             }
                         },
-                        "example": "include=visualizationObjects,labels,metrics,datasets,filterContexts"
+                        "example": "include=visualizationObjects,analyticalDashboards,labels,metrics,datasets,filterContexts"
                     },
                     {
                         "name": "page",
@@ -2293,6 +2294,7 @@
                                 "type": "string",
                                 "enum": [
                                     "visualizationObjects",
+                                    "analyticalDashboards",
                                     "labels",
                                     "metrics",
                                     "datasets",
@@ -2300,7 +2302,7 @@
                                 ]
                             }
                         },
-                        "example": "include=visualizationObjects,labels,metrics,datasets,filterContexts"
+                        "example": "include=visualizationObjects,analyticalDashboards,labels,metrics,datasets,filterContexts"
                     }
                 ],
                 "requestBody": {
@@ -2376,6 +2378,7 @@
                                 "type": "string",
                                 "enum": [
                                     "visualizationObjects",
+                                    "analyticalDashboards",
                                     "labels",
                                     "metrics",
                                     "datasets",
@@ -2383,7 +2386,7 @@
                                 ]
                             }
                         },
-                        "example": "include=visualizationObjects,labels,metrics,datasets,filterContexts"
+                        "example": "include=visualizationObjects,analyticalDashboards,labels,metrics,datasets,filterContexts"
                     }
                 ],
                 "responses": {
@@ -2447,6 +2450,7 @@
                                 "type": "string",
                                 "enum": [
                                     "visualizationObjects",
+                                    "analyticalDashboards",
                                     "labels",
                                     "metrics",
                                     "datasets",
@@ -2454,7 +2458,7 @@
                                 ]
                             }
                         },
-                        "example": "include=visualizationObjects,labels,metrics,datasets,filterContexts"
+                        "example": "include=visualizationObjects,analyticalDashboards,labels,metrics,datasets,filterContexts"
                     }
                 ],
                 "requestBody": {
@@ -3866,17 +3870,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "enum": [
-                                    "facts",
-                                    "attributes",
-                                    "labels",
-                                    "metrics",
-                                    "analyticalDashboards",
-                                    "datasets"
-                                ]
+                                "enum": ["facts", "attributes", "labels", "metrics", "datasets"]
                             }
                         },
-                        "example": "include=facts,attributes,labels,metrics,analyticalDashboards,datasets"
+                        "example": "include=facts,attributes,labels,metrics,datasets"
                     },
                     {
                         "name": "page",
@@ -3959,17 +3956,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "enum": [
-                                    "facts",
-                                    "attributes",
-                                    "labels",
-                                    "metrics",
-                                    "analyticalDashboards",
-                                    "datasets"
-                                ]
+                                "enum": ["facts", "attributes", "labels", "metrics", "datasets"]
                             }
                         },
-                        "example": "include=facts,attributes,labels,metrics,analyticalDashboards,datasets"
+                        "example": "include=facts,attributes,labels,metrics,datasets"
                     }
                 ],
                 "requestBody": {
@@ -4043,17 +4033,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "enum": [
-                                    "facts",
-                                    "attributes",
-                                    "labels",
-                                    "metrics",
-                                    "analyticalDashboards",
-                                    "datasets"
-                                ]
+                                "enum": ["facts", "attributes", "labels", "metrics", "datasets"]
                             }
                         },
-                        "example": "include=facts,attributes,labels,metrics,analyticalDashboards,datasets"
+                        "example": "include=facts,attributes,labels,metrics,datasets"
                     }
                 ],
                 "responses": {
@@ -4115,17 +4098,10 @@
                             "type": "array",
                             "items": {
                                 "type": "string",
-                                "enum": [
-                                    "facts",
-                                    "attributes",
-                                    "labels",
-                                    "metrics",
-                                    "analyticalDashboards",
-                                    "datasets"
-                                ]
+                                "enum": ["facts", "attributes", "labels", "metrics", "datasets"]
                             }
                         },
-                        "example": "include=facts,attributes,labels,metrics,analyticalDashboards,datasets"
+                        "example": "include=facts,attributes,labels,metrics,datasets"
                     }
                 ],
                 "requestBody": {
@@ -5398,7 +5374,7 @@
                 },
                 "description": "A physical data model (PDM) tables."
             },
-            "ScanRequest": {
+            "GenerateLdmRequest": {
                 "required": ["separator"],
                 "type": "object",
                 "properties": {
@@ -5409,12 +5385,12 @@
                     },
                     "tablePrefix": {
                         "type": "string",
-                        "description": "Tables starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.",
+                        "description": "Tables starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the table prefix is `out_table` and separator is `__`, the table with name like `out_table__customers` will be scanned.",
                         "example": "out_table"
                     },
                     "viewPrefix": {
                         "type": "string",
-                        "description": "Views starting with this prefix will be scanned. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.",
+                        "description": "Views starting with this prefix will be included. The prefix is then followed by the value of `separator` parameter. Given the view prefix is `out_view` and separator is `__`, the table with name like `out_view__us_customers` will be scanned.",
                         "example": "out_view"
                     },
                     "primaryLabelPrefix": {
@@ -5431,11 +5407,6 @@
                         "type": "string",
                         "description": "Columns starting with this prefix will be considered as facts. The prefix is then followed by the value of `separator` parameter. Given the fact prefix is `f` and separator is `__`, the columns with name like `f__sold` will be considered as facts.",
                         "example": "f"
-                    },
-                    "datePrefix": {
-                        "type": "string",
-                        "description": "Columns starting with this prefix will be considered as dates. The prefix is then followed by the value of `separator` parameter. Given the date prefix is `d` and separator is `__`, the columns with name like `d__sale_date` will be considered as dates.",
-                        "example": "d"
                     },
                     "dateGranularities": {
                         "type": "string",
@@ -5463,7 +5434,7 @@
                         "example": "dr"
                     }
                 },
-                "description": "A request containing all information critical to model scanning."
+                "description": "A request containing all information needed for generation of logical model."
             },
             "ObjectLinks": {
                 "required": ["self"],
@@ -5675,6 +5646,9 @@
                                     "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
                                 },
                                 {
+                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                                },
+                                {
                                     "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
                                 },
                                 {
@@ -5739,6 +5713,15 @@
                         "type": "object",
                         "properties": {
                             "visualizationObjects": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            },
+                            "analyticalDashboards": {
                                 "required": ["data"],
                                 "type": "object",
                                 "properties": {
@@ -5963,7 +5946,7 @@
                 }
             },
             "JsonApiMetricIn": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -5979,6 +5962,7 @@
                         "enum": ["metric"]
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -6044,7 +6028,7 @@
                 }
             },
             "JsonApiMetricOut": {
-                "required": ["id", "type"],
+                "required": ["attributes", "id", "type"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -6060,6 +6044,7 @@
                         "enum": ["metric"]
                     },
                     "attributes": {
+                        "required": ["content"],
                         "type": "object",
                         "properties": {
                             "title": {
@@ -6217,9 +6202,6 @@
                                     "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
                                 },
                                 {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                                },
-                                {
                                     "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
                                 }
                             ]
@@ -6302,15 +6284,6 @@
                                 }
                             },
                             "metrics": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            },
-                            "analyticalDashboards": {
                                 "required": ["data"],
                                 "type": "object",
                                 "properties": {
@@ -6935,900 +6908,6 @@
                 },
                 "description": "JSON:API representation of workspace entity."
             },
-            "JsonApiDataSourceTableOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDataSourceTableOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDataSourceTableOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataSourceTable",
-                        "enum": ["dataSourceTable"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "path": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "columns": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["dataType", "name"],
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "dataType": {
-                                            "type": "string",
-                                            "enum": [
-                                                "INT",
-                                                "STRING",
-                                                "DATE",
-                                                "NUMERIC",
-                                                "TIMESTAMP",
-                                                "BOOLEAN"
-                                            ]
-                                        },
-                                        "isPrimaryKey": {
-                                            "type": "boolean"
-                                        },
-                                        "referencedTableId": {
-                                            "type": "string"
-                                        },
-                                        "referencedTableColumn": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "description": "Table columns in data source"
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "Tables in data source"
-            },
-            "JsonApiAnalyticalDashboardOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiAnalyticalDashboardOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiAttributeOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAttributeOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiAttributeOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiAttributeOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "attribute",
-                        "enum": ["attribute"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "granularity": {
-                                "type": "string",
-                                "enum": [
-                                    "MINUTE",
-                                    "HOUR",
-                                    "DAY",
-                                    "WEEK",
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR",
-                                    "MINUTE_OF_HOUR",
-                                    "HOUR_OF_DAY",
-                                    "DAY_OF_WEEK",
-                                    "DAY_OF_MONTH",
-                                    "DAY_OF_YEAR",
-                                    "WEEK_OF_YEAR",
-                                    "MONTH_OF_YEAR",
-                                    "QUARTER_OF_YEAR"
-                                ]
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            },
-                            "labels": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of attribute entity."
-            },
-            "JsonApiDatasetOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDatasetOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDatasetOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDatasetOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataset",
-                        "enum": ["dataset"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": ["NORMAL", "DATE"]
-                            },
-                            "grain": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["id", "type"],
-                                    "type": "object",
-                                    "properties": {
-                                        "id": {
-                                            "type": "string"
-                                        },
-                                        "type": {
-                                            "type": "string",
-                                            "enum": ["attribute", "dataset"]
-                                        }
-                                    }
-                                }
-                            },
-                            "referenceProperties": {
-                                "type": "array",
-                                "items": {
-                                    "required": ["identifier", "multivalue", "sourceColumns"],
-                                    "type": "object",
-                                    "properties": {
-                                        "identifier": {
-                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
-                                        },
-                                        "multivalue": {
-                                            "type": "boolean"
-                                        },
-                                        "sourceColumns": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            "dataSourceTableId": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attributes": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            },
-                            "facts": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            },
-                            "references": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToMany"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataset entity."
-            },
-            "DatasetReferenceIdentifier": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "type": {
-                        "type": "string",
-                        "enum": ["dataset"]
-                    }
-                }
-            },
-            "JsonApiFactOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiFactOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiFactOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiFactOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "fact",
-                        "enum": ["fact"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "dataset": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of fact entity."
-            },
-            "JsonApiFilterContextOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiFilterContextOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiLabelOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiLabelOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiLabelOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiLabelOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "label",
-                        "enum": ["label"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "primary": {
-                                "type": "boolean"
-                            },
-                            "sourceColumn": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "attribute": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of label entity."
-            },
-            "JsonApiMetricOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiMetricOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiMetricOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiVisualizationObjectOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiVisualizationObjectOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiWorkspaceDataFilterSettingOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiWorkspaceDataFilterSettingOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiWorkspaceDataFilterSettingOut": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceDataFilterSetting",
-                        "enum": ["workspaceDataFilterSetting"]
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "type": "string"
-                            },
-                            "description": {
-                                "type": "string"
-                            },
-                            "filterValues": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "workspaceDataFilter": {
-                                "required": ["data"],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiRelToOne"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceDataFilterSetting entity."
-            },
-            "JsonApiWorkspaceDataFilterOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiWorkspaceDataFilterOutList": {
-                "required": ["data"],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "anyOf": [
-                                {
-                                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
             "JsonApiDataSourceOutWithLinks": {
                 "allOf": [
                     {
@@ -7973,6 +7052,96 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiDataSourceTableOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataSourceTableOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataSourceTableOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceTableOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDataSourceTableOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataSourceTable",
+                        "enum": ["dataSourceTable"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "path": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "columns": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["dataType", "name"],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "dataType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "INT",
+                                                "STRING",
+                                                "DATE",
+                                                "NUMERIC",
+                                                "TIMESTAMP",
+                                                "BOOLEAN"
+                                            ]
+                                        },
+                                        "isPrimaryKey": {
+                                            "type": "boolean"
+                                        },
+                                        "referencedTableId": {
+                                            "type": "string"
+                                        },
+                                        "referencedTableColumn": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "description": "Table columns in data source"
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "Tables in data source"
+            },
             "JsonApiAttributeOutDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -7999,6 +7168,85 @@
                         }
                     }
                 }
+            },
+            "JsonApiAttributeOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "attribute",
+                        "enum": ["attribute"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            },
+                            "labels": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of attribute entity."
             },
             "JsonApiDatasetOutDocument": {
                 "required": ["data"],
@@ -8030,6 +7278,131 @@
                     }
                 }
             },
+            "JsonApiDatasetOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataset",
+                        "enum": ["dataset"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["NORMAL", "DATE"]
+                            },
+                            "grain": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["id", "type"],
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "type": "string",
+                                            "enum": ["attribute", "dataset"]
+                                        }
+                                    }
+                                }
+                            },
+                            "referenceProperties": {
+                                "type": "array",
+                                "items": {
+                                    "required": ["identifier", "multivalue", "sourceColumns"],
+                                    "type": "object",
+                                    "properties": {
+                                        "identifier": {
+                                            "$ref": "#/components/schemas/DatasetReferenceIdentifier"
+                                        },
+                                        "multivalue": {
+                                            "type": "boolean"
+                                        },
+                                        "sourceColumns": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "dataSourceTableId": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attributes": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            },
+                            "facts": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            },
+                            "references": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToMany"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataset entity."
+            },
+            "DatasetReferenceIdentifier": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": ["dataset"]
+                    }
+                }
+            },
             "JsonApiFactOutDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -8053,6 +7426,59 @@
                         }
                     }
                 }
+            },
+            "JsonApiFactOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "fact",
+                        "enum": ["fact"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "dataset": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of fact entity."
             },
             "JsonApiLabelOutDocument": {
                 "required": ["data"],
@@ -8078,6 +7504,62 @@
                     }
                 }
             },
+            "JsonApiLabelOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "label",
+                        "enum": ["label"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "primary": {
+                                "type": "boolean"
+                            },
+                            "sourceColumn": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "attribute": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of label entity."
+            },
             "JsonApiWorkspaceDataFilterSettingOutDocument": {
                 "required": ["data"],
                 "type": "object",
@@ -8101,6 +7583,497 @@
                         }
                     }
                 }
+            },
+            "JsonApiWorkspaceDataFilterSettingOut": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "pattern": "^([.A-Za-z0-9_-]{1,255}:)?[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceDataFilterSetting",
+                        "enum": ["workspaceDataFilterSetting"]
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "type": "string"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "filterValues": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "workspaceDataFilter": {
+                                "required": ["data"],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiRelToOne"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspaceDataFilterSetting entity."
+            },
+            "JsonApiAnalyticalDashboardOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiAnalyticalDashboardOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiAttributeOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAttributeOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiAttributeOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiDatasetOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDatasetOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDatasetOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFactOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiFactOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiFactOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiFilterContextOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiFilterContextOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiFilterContextOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiFilterContextOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiLabelOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiLabelOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiLabelOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiMetricOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiMetricOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiMetricOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiVisualizationObjectOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiVisualizationObjectOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiFactOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiAttributeOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiLabelOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiMetricOutWithLinks"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/JsonApiDatasetOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiWorkspaceDataFilterSettingOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceDataFilterSettingOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
+            },
+            "JsonApiWorkspaceDataFilterOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiWorkspaceDataFilterOutList": {
+                "required": ["data"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/JsonApiWorkspaceDataFilterSettingOutWithLinks"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiOrganizationOutDocument": {
                 "required": ["data"],
