@@ -423,6 +423,9 @@ export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspace
 // @internal (undocumented)
 export function generateSupportUrl(projectId?: string, sessionId?: string, userEmail?: string, url?: string): string;
 
+// @internal
+export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
+
 // @internal (undocumented)
 export type GetOptimalAlignment = {
     targetRegion: IRegion;
@@ -724,7 +727,7 @@ export interface ICustomizableCheckmarkProps {
 // @internal (undocumented)
 export interface IDateDataset {
     // (undocumented)
-    identifier: string;
+    id: string;
     // (undocumented)
     relevance?: number;
     // (undocumented)
@@ -779,6 +782,14 @@ export interface IDatePickerOwnProps {
     size?: string;
     // (undocumented)
     tabIndex?: number;
+}
+
+// @internal (undocumented)
+export interface IDateTimeConfigOptions {
+    // (undocumented)
+    dateTimezone?: string;
+    // (undocumented)
+    now?: Date;
 }
 
 // @internal (undocumented)

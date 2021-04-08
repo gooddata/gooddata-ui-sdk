@@ -17,6 +17,8 @@ export {
     InsightListItemDate,
     IInsightListItemDateProps,
     IInsightListItemDateConfig,
+    IDateTimeConfigOptions,
+    getDateTimeConfig,
 } from "./InsightListItemDate";
 export {
     default as InvertableList,
