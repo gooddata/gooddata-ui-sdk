@@ -45,13 +45,13 @@ function transformDimension(
                 const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
                         uri: `/obj/${headerIdx}`,
-                        identifier: h.attributeHeader.label.identifier.id,
-                        ref: idRef(h.attributeHeader.label.identifier.id, "displayForm"),
+                        identifier: h.attributeHeader.label.id,
+                        ref: idRef(h.attributeHeader.label.id, "displayForm"),
                         formOf: {
-                            identifier: h.attributeHeader.attribute.identifier.id,
+                            identifier: h.attributeHeader.attribute.id,
                             name: h.attributeHeader.attributeName,
                             uri: `/obj/${headerIdx}`,
-                            ref: idRef(h.attributeHeader.attribute.identifier.id, "attribute"),
+                            ref: idRef(h.attributeHeader.attribute.id, "attribute"),
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
                         name: h.attributeHeader.labelName,
@@ -74,16 +74,16 @@ function transformDimension(
                  */
                 const measureDescriptor: IMeasureGroupDescriptor = {
                     measureGroupHeader: {
-                        items: h.measureGroupHeader.items.map((m) => {
-                            const ref = simpleMeasureRefs[m.measureHeaderItem.localIdentifier];
+                        items: h.measureGroupHeaders.map((m) => {
+                            const ref = simpleMeasureRefs[m.localIdentifier];
                             const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
                             const uri = ref ? `/obj/${headerIdx}` : undefined;
 
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
-                                    localIdentifier: m.measureHeaderItem.localIdentifier,
-                                    name: m.measureHeaderItem.name ?? m.measureHeaderItem.localIdentifier,
-                                    format: m.measureHeaderItem.format ?? DEFAULT_FORMAT,
+                                    localIdentifier: m.localIdentifier,
+                                    name: m.name ?? m.localIdentifier,
+                                    format: m.format ?? DEFAULT_FORMAT,
                                     identifier,
                                     ref,
                                     uri,

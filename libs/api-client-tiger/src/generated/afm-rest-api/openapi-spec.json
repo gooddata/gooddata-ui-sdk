@@ -7,7 +7,7 @@
     "servers": [
         {
             "url": "/",
-            "description": "GoodData Anywhere endpoint"
+            "description": "GoodData.CN endpoint"
         }
     ],
     "paths": {
@@ -258,6 +258,8 @@
                         "in": "query",
                         "description": "Request page with these offsets. Format is offset=1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.",
                         "required": false,
+                        "style": "form",
+                        "explode": false,
                         "schema": {
                             "type": "array",
                             "items": {
@@ -265,13 +267,16 @@
                                 "format": "int32"
                             },
                             "default": []
-                        }
+                        },
+                        "example": "offset=1,10"
                     },
                     {
                         "name": "limit",
                         "in": "query",
                         "description": "Return only this number of items. Format is limit=1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.",
                         "required": false,
+                        "style": "form",
+                        "explode": false,
                         "schema": {
                             "type": "array",
                             "items": {
@@ -279,7 +284,8 @@
                                 "format": "int32"
                             },
                             "default": []
-                        }
+                        },
+                        "example": "limit=1,10"
                     }
                 ],
                 "responses": {
@@ -410,7 +416,7 @@
                         "pattern": "^[a-zA-Z0-9_\\-.]+$"
                     },
                     "label": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
                     }
                 }
             },
@@ -593,7 +599,7 @@
                         "type": "object",
                         "properties": {
                             "label": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
                             }
                         }
                     }
@@ -674,7 +680,7 @@
                             "dimensionality": {
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/ObjectIdentifier"
+                                    "$ref": "#/components/schemas/AfmObjectIdentifier"
                                 }
                             }
                         }
@@ -835,7 +841,7 @@
                         "type": "object",
                         "properties": {
                             "dataset": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
                             }
                         }
                     }
@@ -1037,7 +1043,7 @@
                 "type": "object",
                 "properties": {
                     "dataset": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
                     },
                     "periodsAgo": {
                         "type": "integer",
@@ -1072,7 +1078,7 @@
                 "type": "object",
                 "properties": {
                     "attribute": {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
                     },
                     "periodsAgo": {
                         "type": "integer",
@@ -1130,7 +1136,7 @@
                         "type": "object",
                         "properties": {
                             "item": {
-                                "$ref": "#/components/schemas/ObjectIdentifier"
+                                "$ref": "#/components/schemas/AfmObjectIdentifier"
                             },
                             "aggregation": {
                                 "type": "string",
@@ -1160,7 +1166,7 @@
                 "description": "Abstract identifier type",
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/ObjectIdentifier"
+                        "$ref": "#/components/schemas/AfmObjectIdentifier"
                     },
                     {
                         "$ref": "#/components/schemas/LocalIdentifier"
@@ -1168,23 +1174,27 @@
                 ]
             },
             "ObjectIdentifier": {
-                "required": ["identifier"],
+                "required": ["id", "type"],
                 "type": "object",
                 "description": "Identifier of LDM object determined by ID & type.",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "sample_item.price"
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "fact"
+                    }
+                }
+            },
+            "AfmObjectIdentifier": {
+                "required": ["identifier"],
+                "type": "object",
+                "description": "ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.",
+                "properties": {
                     "identifier": {
-                        "required": ["id", "type"],
-                        "type": "object",
-                        "properties": {
-                            "id": {
-                                "type": "string",
-                                "example": "sample_item.price"
-                            },
-                            "type": {
-                                "type": "string",
-                                "example": "fact"
-                            }
-                        }
+                        "$ref": "#/components/schemas/ObjectIdentifier"
                     }
                 }
             },
@@ -1268,40 +1278,29 @@
                 }
             },
             "MeasureGroupHeader": {
-                "required": ["measureGroupHeader"],
+                "required": ["measureGroupHeaders"],
                 "type": "object",
                 "properties": {
-                    "measureGroupHeader": {
-                        "required": ["items"],
-                        "type": "object",
-                        "properties": {
-                            "items": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/MeasureHeaderItem"
-                                }
-                            }
+                    "measureGroupHeaders": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MeasureHeaderOut"
                         }
                     }
                 }
             },
-            "MeasureHeaderItem": {
-                "required": ["measureHeaderItem"],
+            "MeasureHeaderOut": {
+                "required": ["localIdentifier"],
+                "type": "object",
                 "properties": {
-                    "measureHeaderItem": {
-                        "required": ["localIdentifier"],
-                        "type": "object",
-                        "properties": {
-                            "localIdentifier": {
-                                "type": "string"
-                            },
-                            "format": {
-                                "type": "string"
-                            },
-                            "name": {
-                                "type": "string"
-                            }
-                        }
+                    "localIdentifier": {
+                        "type": "string"
+                    },
+                    "format": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
                     }
                 }
             },

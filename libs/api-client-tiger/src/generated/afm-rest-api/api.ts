@@ -24,7 +24,9 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 
 // utility function that adds support for nested objects in query
 const addFlattenedObjectTo = (object: any, target: any): void => {
-    const flattened = globalImportQs.parse(globalImportQs.stringify(object), { depth: 0 });
+    const flattened = globalImportQs.parse(globalImportQs.stringify(object, { allowDots: true }), {
+        depth: 0,
+    });
     Object.keys(flattened).forEach((key) => {
         target[key] = (flattened as any)[key];
     });
@@ -88,10 +90,10 @@ export interface AbsoluteDateFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof AbsoluteDateFilterBody
      */
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     /**
      *
      * @type {string}
@@ -138,10 +140,10 @@ export interface AbstractMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof AbstractMeasureValueFilter
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 /**
  *
@@ -151,10 +153,10 @@ export interface AbstractMeasureValueFilter {
 export interface AbstractMeasureValueFilterAllOf {
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof AbstractMeasureValueFilterAllOf
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 /**
  *
@@ -187,6 +189,19 @@ export interface AfmExecutionResponse {
      * @memberof AfmExecutionResponse
      */
     executionResponse: ExecutionResponse;
+}
+/**
+ * ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers.
+ * @export
+ * @interface AfmObjectIdentifier
+ */
+export interface AfmObjectIdentifier {
+    /**
+     *
+     * @type {ObjectIdentifier}
+     * @memberof AfmObjectIdentifier
+     */
+    identifier: ObjectIdentifier;
 }
 /**
  * Entity holding AFM and list of object types whose validity should be computed.
@@ -408,10 +423,10 @@ export interface AttributeItem {
     localIdentifier: string;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof AttributeItem
      */
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 /**
  * Header containing the information related to attributes.
@@ -446,10 +461,10 @@ export interface CommonAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof CommonAttributeFilter
      */
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 /**
  *
@@ -459,10 +474,10 @@ export interface CommonAttributeFilter {
 export interface CommonAttributeFilterAllOf {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof CommonAttributeFilterAllOf
      */
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 /**
  *
@@ -478,10 +493,10 @@ export interface CommonDateFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof CommonDateFilter
      */
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 /**
  *
@@ -491,10 +506,10 @@ export interface CommonDateFilter {
 export interface CommonDateFilterAllOf {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof CommonDateFilterAllOf
      */
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 /**
  *
@@ -523,10 +538,10 @@ export interface CommonMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof CommonMeasureValueFilter
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     /**
      *
      * @type {Identifier}
@@ -586,10 +601,10 @@ export interface ComparisonMeasureValueFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof ComparisonMeasureValueFilterBody
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     /**
      *
      * @type {Identifier}
@@ -966,7 +981,7 @@ export interface HeaderGroup {
  * Abstract identifier type
  * @export
  */
-export type Identifier = LocalIdentifier | ObjectIdentifier;
+export type Identifier = AfmObjectIdentifier | LocalIdentifier;
 /**
  *
  * @export
@@ -1096,59 +1111,33 @@ export interface MeasureExecutionResultHeader {
 export interface MeasureGroupHeader {
     /**
      *
-     * @type {MeasureGroupHeaderMeasureGroupHeader}
+     * @type {Array<MeasureHeaderOut>}
      * @memberof MeasureGroupHeader
      */
-    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
+    measureGroupHeaders: Array<MeasureHeaderOut>;
 }
 /**
  *
  * @export
- * @interface MeasureGroupHeaderMeasureGroupHeader
+ * @interface MeasureHeaderOut
  */
-export interface MeasureGroupHeaderMeasureGroupHeader {
-    /**
-     *
-     * @type {Array<MeasureHeaderItem>}
-     * @memberof MeasureGroupHeaderMeasureGroupHeader
-     */
-    items: Array<MeasureHeaderItem>;
-}
-/**
- *
- * @export
- * @interface MeasureHeaderItem
- */
-export interface MeasureHeaderItem {
-    /**
-     *
-     * @type {MeasureHeaderItemMeasureHeaderItem}
-     * @memberof MeasureHeaderItem
-     */
-    measureHeaderItem: MeasureHeaderItemMeasureHeaderItem;
-}
-/**
- *
- * @export
- * @interface MeasureHeaderItemMeasureHeaderItem
- */
-export interface MeasureHeaderItemMeasureHeaderItem {
+export interface MeasureHeaderOut {
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemMeasureHeaderItem
+     * @memberof MeasureHeaderOut
      */
     localIdentifier: string;
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemMeasureHeaderItem
+     * @memberof MeasureHeaderOut
      */
     format?: string;
     /**
      *
      * @type {string}
-     * @memberof MeasureHeaderItemMeasureHeaderItem
+     * @memberof MeasureHeaderOut
      */
     name?: string;
 }
@@ -1217,10 +1206,10 @@ export interface NegativeAttributeFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof NegativeAttributeFilterBody
      */
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     /**
      *
      * @type {AttributeFilterElements}
@@ -1249,27 +1238,14 @@ export interface NegativeAttributeFilterBodyAllOf {
 export interface ObjectIdentifier {
     /**
      *
-     * @type {ObjectIdentifierIdentifier}
-     * @memberof ObjectIdentifier
-     */
-    identifier: ObjectIdentifierIdentifier;
-}
-/**
- *
- * @export
- * @interface ObjectIdentifierIdentifier
- */
-export interface ObjectIdentifierIdentifier {
-    /**
-     *
      * @type {string}
-     * @memberof ObjectIdentifierIdentifier
+     * @memberof ObjectIdentifier
      */
     id: string;
     /**
      *
      * @type {string}
-     * @memberof ObjectIdentifierIdentifier
+     * @memberof ObjectIdentifier
      */
     type: string;
 }
@@ -1312,10 +1288,10 @@ export interface Paging {
 export interface PopDataset {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof PopDataset
      */
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     /**
      *
      * @type {number}
@@ -1363,10 +1339,10 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
 export interface PopDate {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof PopDate
      */
-    attribute: ObjectIdentifier;
+    attribute: AfmObjectIdentifier;
     /**
      *
      * @type {number}
@@ -1433,10 +1409,10 @@ export interface PositiveAttributeFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof PositiveAttributeFilterBody
      */
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     /**
      *
      * @type {AttributeFilterElements}
@@ -1484,10 +1460,10 @@ export interface RangeMeasureValueFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof RangeMeasureValueFilterBody
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     /**
      *
      * @type {Identifier}
@@ -1591,10 +1567,10 @@ export interface RankingFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {Array<ObjectIdentifier>}
+     * @type {Array<AfmObjectIdentifier>}
      * @memberof RankingFilterBody
      */
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     /**
      *
      * @type {Array<Identifier>}
@@ -1686,10 +1662,10 @@ export interface RelativeDateFilterBody {
     applyOnResult?: boolean;
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof RelativeDateFilterBody
      */
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     /**
      * Date granularity specifying particular date attribute in given dimension.
      * @type {string}
@@ -1833,10 +1809,10 @@ export interface SimpleMeasureDefinition {
 export interface SimpleMeasureDefinitionMeasure {
     /**
      *
-     * @type {ObjectIdentifier}
+     * @type {AfmObjectIdentifier}
      * @memberof SimpleMeasureDefinitionMeasure
      */
-    item: ObjectIdentifier;
+    item: AfmObjectIdentifier;
     /**
      * Definition of aggregation type of the measure.
      * @type {string}
@@ -2552,11 +2528,11 @@ export const ResultControllerApiAxiosParamCreator = function (configuration?: Co
             const localVarQueryParameter = {} as any;
 
             if (offset) {
-                localVarQueryParameter["offset"] = offset;
+                localVarQueryParameter["offset"] = offset.join(COLLECTION_FORMATS.csv);
             }
 
             if (limit) {
-                localVarQueryParameter["limit"] = limit;
+                localVarQueryParameter["limit"] = limit.join(COLLECTION_FORMATS.csv);
             }
 
             localVarUrlObj.query = { ...localVarUrlObj.query, ...localVarQueryParameter, ...options.query };
