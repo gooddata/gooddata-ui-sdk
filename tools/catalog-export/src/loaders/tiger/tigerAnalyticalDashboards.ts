@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClient, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import { MetadataUtilities } from "@gooddata/api-client-tiger";
 
 /**
@@ -19,7 +19,10 @@ export async function loadAnalyticalDashboards(
         client,
         client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
         { workspaceId },
-    ).then(MetadataUtilities.mergeEntitiesResults);
+        { headers: ValidateRelationsHeader },
+    )
+        .then(MetadataUtilities.mergeEntitiesResults)
+        .then(MetadataUtilities.filterValidEntities);
 
     return result.data.map((dashboard) => {
         return {

@@ -153,4 +153,16 @@ export class MetadataUtilities {
             ) as any,
         } as T;
     }
+
+    /**
+     * Given list of JSON API entities, return those which have not broken relations to other MD objects. This
+     * info is computed by backend when "X-GDC-VALIDATE-RELATIONS" is sent with the GET request. Note that backend
+     * checks the relations recursively.
+     *
+     * @param result - MetadataGetEntitiesResult
+     */
+    public static filterValidEntities<T extends MetadataGetEntitiesResult>(result: T): T {
+        result.data = (result.data as any[]).filter((entity) => entity.attributes?.areRelationsValid ?? true);
+        return result;
+    }
 }
