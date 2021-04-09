@@ -32,13 +32,26 @@ describe("transformResultDimensions", () => {
     const Total1 = newTotal("sum", "measureLocalId", "localAttr1");
     const Subtotal1 = newTotal("sum", "measureLocalId", "localAttr2");
     const Total2 = newTotal("max", "measureLocalId", "localAttr3");
-    const TotalDef = defWithDimensions(
-        emptyDef("test"),
-        newDimension(["localAttr1", "localAttr2"], [Total1, Subtotal1]),
-        newDimension([MeasureGroupIdentifier]),
-        newDimension(["localAttr3"], [Total2]),
-    );
+
     it("should fill in totals", () => {
+        const TotalDef = defWithDimensions(
+            emptyDef("test"),
+            newDimension(["localAttr1", "localAttr2"], [Total1, Subtotal1]),
+            newDimension([MeasureGroupIdentifier]),
+            newDimension(["localAttr3"], [Total2]),
+        );
+        expect(transformResultDimensions(mockMultipleDimensions, TotalDef)).toMatchSnapshot();
+    });
+
+    it("should fill in totals with multiple totals of the same type on one attribute (RAIL-3246)", () => {
+        // same attribute and type as Total2, different measure
+        const Total3 = newTotal("max", "measureLocalId2", "localAttr3");
+        const TotalDef = defWithDimensions(
+            emptyDef("test"),
+            newDimension(["localAttr1", "localAttr2"], [Total1, Subtotal1]),
+            newDimension([MeasureGroupIdentifier]),
+            newDimension(["localAttr3"], [Total2, Total3]),
+        );
         expect(transformResultDimensions(mockMultipleDimensions, TotalDef)).toMatchSnapshot();
     });
 });
