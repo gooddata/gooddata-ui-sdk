@@ -60,6 +60,8 @@
         "@gooddata/sdk-backend-spi": "^8.4.0-alpha.12",
         "@gooddata/sdk-model": "^8.4.0-alpha.12",
         "@gooddata/sdk-ui": "^8.4.0-alpha.12",
+        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.12",
+        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.12",
         "@gooddata/sdk-ui-vis-commons": "^8.4.0-alpha.12",
         "classnames": "^2.2.6",
         "custom-event": "^1.0.1",
@@ -68,8 +70,7 @@
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.6.0",
-        "tslib": "^2.0.0",
-        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.12"
+        "tslib": "^2.0.0"
     },
     "peerDependencies": {
         "react": "^16.10.0",

@@ -94,7 +94,10 @@
         width: 1em;
         height: 1em;
         margin-top: 0.2em;
-        background: white;
+        background: var(
+            --gd-chart-tooltipBackgroundColor,
+            var(--gd-palette-complementary-0, transparentize($default-gd-color-white, 0.05))
+        );
     }
 }
 
