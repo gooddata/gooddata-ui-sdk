@@ -31,6 +31,7 @@ import {
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
+    ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -71,6 +72,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             query: {
                 ...(usesOrderingByUpdated ? {} : { sort: orderBy }),
             },
+            headers: ValidateRelationsHeader,
         };
 
         const allInsights = await this.authCall((client) => {
@@ -81,6 +83,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 optionsToUse,
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
+                .then(MetadataUtilities.filterValidEntities)
                 .then((res) => {
                     if (options?.title) {
                         const lowercaseSearch = options.title.toLocaleLowerCase();
