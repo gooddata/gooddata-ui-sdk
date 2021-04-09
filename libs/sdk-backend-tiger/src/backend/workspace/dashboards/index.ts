@@ -5,6 +5,7 @@ import {
     JsonApiFilterContextInTypeEnum,
     jsonApiHeaders,
     MetadataUtilities,
+    ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboard,
@@ -48,7 +49,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 client,
                 client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
                 { workspaceId: this.workspace },
-            ).then(MetadataUtilities.mergeEntitiesResults);
+                { headers: ValidateRelationsHeader },
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then(MetadataUtilities.filterValidEntities);
         });
 
         return convertAnalyticalDashboardToListItems(result);

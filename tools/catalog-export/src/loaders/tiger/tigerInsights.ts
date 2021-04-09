@@ -1,7 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 
 import { ObjectMeta } from "../../base/types";
-import { ITigerClient, MetadataUtilities } from "@gooddata/api-client-tiger";
+import { ITigerClient, MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 
 /**
  * Load insights that are stored in workspace metadata so that their links can be included
@@ -15,7 +15,10 @@ export async function loadInsights(client: ITigerClient, workspaceId: string): P
         client,
         client.workspaceObjects.getAllEntitiesVisualizationObjects,
         { workspaceId },
-    ).then(MetadataUtilities.mergeEntitiesResults);
+        { headers: ValidateRelationsHeader },
+    )
+        .then(MetadataUtilities.mergeEntitiesResults)
+        .then(MetadataUtilities.filterValidEntities);
 
     return result.data.map((vis) => {
         return {
