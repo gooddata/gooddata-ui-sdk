@@ -40,11 +40,7 @@ describe("ThemeProvider", () => {
             </BackendProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-button-dropShadow: none;
-            }
-        `);
+        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
     });
 
     it("should load the theme and set the properties (backend and workspace is provided through props)", async () => {
@@ -54,11 +50,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-button-dropShadow: none;
-            }
-        `);
+        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
     });
 
     it("should not load the theme and use custom theme from prop instead", async () => {
@@ -73,11 +65,11 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-button-borderRadius: 15px;
-            }
-        `);
+        expect(
+            document
+                .getElementById("gdc-theme-properties")
+                .innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
+        ).toEqual(true);
     });
 
     it("should use theme modifier if provided after load", async () => {
@@ -97,11 +89,11 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-button-borderRadius: 15px;
-            }
-        `);
+        expect(
+            document
+                .getElementById("gdc-theme-properties")
+                .innerHTML.indexOf("--gd-button-borderRadius: 15px;") > -1,
+        ).toEqual(true);
     });
 
     it("should not load the theme and not set the properties if backend is missing", async () => {
@@ -131,11 +123,7 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-button-dropShadow: none;
-            }
-        `);
+        expect(document.getElementById("gdc-theme-properties").innerHTML.length > 0).toEqual(true);
 
         component.update();
         component.setProps({ workspace: undefined });
@@ -192,11 +180,11 @@ describe("ThemeProvider", () => {
             </ThemeProvider>,
         );
 
-        expect(document.getElementById("gdc-theme-properties").innerHTML).toEqual(`
-            :root {
-                --gd-modal-dropShadow: none;
-            }
-        `);
+        expect(
+            document
+                .getElementById("gdc-theme-properties")
+                .innerHTML.indexOf("--gd-modal-dropShadow: none;") > -1,
+        ).toEqual(true);
     });
 });
 
@@ -217,5 +205,47 @@ describe("isDarkTheme", () => {
         const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
 
         expect(isDarkTheme(theme)).toEqual(true);
+    });
+});
+
+describe("color-scheme css property", () => {
+    it("should be set to 'light' when the theme has no complementary palette", async () => {
+        await renderComponent(
+            <ThemeProvider theme={{}}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(
+            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: light;") > -1,
+        ).toEqual(true);
+    });
+
+    it("should be set to 'light' when the theme has a light-based complementary palette", async () => {
+        const theme: ITheme = { palette: { complementary: { c0: "#fff", c9: "#000" } } };
+
+        await renderComponent(
+            <ThemeProvider theme={theme}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(
+            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: light;") > -1,
+        ).toEqual(true);
+    });
+
+    it("should be set to 'dark' when the theme has a dark-based complementary palette", async () => {
+        const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
+
+        await renderComponent(
+            <ThemeProvider theme={theme}>
+                <div>Test</div>
+            </ThemeProvider>,
+        );
+
+        expect(
+            document.getElementById("gdc-theme-properties").innerHTML.indexOf("color-scheme: dark;") > -1,
+        ).toEqual(true);
     });
 });
