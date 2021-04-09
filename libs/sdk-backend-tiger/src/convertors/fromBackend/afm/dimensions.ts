@@ -21,6 +21,7 @@ import {
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 import groupBy from "lodash/groupBy";
+import uniqBy from "lodash/uniqBy";
 
 const DEFAULT_FORMAT = "#,#.##";
 
@@ -108,7 +109,7 @@ function getAttrTotals(def: IExecutionDefinition): AttrTotals {
     const attrTotals: AttrTotals[] = def.dimensions.map((dim) => {
         const totalsByAttrId = groupBy(dim.totals ?? [], (total) => total.attributeIdentifier);
         return mapValues(totalsByAttrId, (totals) =>
-            totals.map((total) => ({ totalHeaderItem: { name: total.type } })),
+            uniqBy(totals, (total) => total.type).map((total) => ({ totalHeaderItem: { name: total.type } })),
         );
     });
     return Object.assign({}, ...attrTotals);
