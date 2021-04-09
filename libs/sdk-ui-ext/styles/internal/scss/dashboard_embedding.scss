@@ -313,6 +313,11 @@
     .is-mobile & {
         display: block;
     }
+
+    &:hover:not(.disabled) {
+        color: var(--gd-palette-complementary-0, inherit);
+        background-color: var(--gd-palette-complementary-7, inherit);
+    }
 }
 
 .dash-item-action.dash-item-action-alert {
