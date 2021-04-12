@@ -1,10 +1,12 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
+import { SingleSelectListItemType } from "@gooddata/sdk-ui-kit";
+
 import translations from "../translations/en-US.json";
 
 export interface IDropdownItem {
     title?: string;
     value?: string | number | boolean;
-    type?: string;
+    type?: SingleSelectListItemType;
     icon?: string;
 }
 

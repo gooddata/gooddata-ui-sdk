@@ -72,6 +72,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                                                     this.onSelect(item);
                                                     closeDropdown();
                                                 }}
+                                                type={item.type}
                                             />
                                         )}
                                     />

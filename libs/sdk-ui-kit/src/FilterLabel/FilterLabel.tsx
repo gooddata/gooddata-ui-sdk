@@ -81,7 +81,7 @@ class WrappedFilterLabel extends React.PureComponent<
                 {this.props.title}
             </span>,
             this.isAllSelected() && !this.getIsDate() && !this.props.noData ? (
-                <span key="title-colon">:</span>
+                <span key="title-colon">: </span>
             ) : (
                 false
             ),

@@ -10,9 +10,15 @@ const BUBBLE_OFFSET_X = 16;
 /**
  * @internal
  */
+export type SingleSelectListItemType = "header" | "separator";
+
+/**
+ * @internal
+ */
 export interface ISingleSelectListItemProps {
     title?: string;
     icon?: string;
+    type?: SingleSelectListItemType;
 
     isSelected?: boolean;
 
@@ -38,7 +44,16 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
     public render(): JSX.Element {
-        const { icon, onClick, onMouseOver, onMouseOut } = this.props;
+        const { icon, onClick, onMouseOver, onMouseOut, type } = this.props;
+
+        if (type === "separator") {
+            return this.renderSeparatorItem();
+        }
+
+        if (type === "header") {
+            return this.renderHeaderItem();
+        }
+
         return (
             <div
                 className={this.getClassNames()}
@@ -102,5 +117,13 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         }
 
         return null;
+    };
+
+    private renderSeparatorItem = () => {
+        return <div className="gd-list-item gd-list-item-separator s-list-separator" />;
+    };
+
+    private renderHeaderItem = () => {
+        return <div className="gd-list-item gd-list-item-header s-list-header">{this.props.title}</div>;
     };
 }

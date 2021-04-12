@@ -218,9 +218,6 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 
 // @internal (undocumented)
-export function dateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
-
-// @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
@@ -2272,6 +2269,8 @@ export interface ISingleSelectListItemProps {
     onMouseOver?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    type?: SingleSelectListItemType;
 }
 
 // @internal (undocumented)
@@ -2674,6 +2673,9 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
 // @internal (undocumented)
+export type SingleSelectListItemType = "header" | "separator";
+
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -2694,6 +2696,9 @@ export enum SnapPoint {
     // (undocumented)
     TopRight = "tr"
 }
+
+// @internal (undocumented)
+export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export class Spinner extends PureComponent<ISpinnerProps> {
