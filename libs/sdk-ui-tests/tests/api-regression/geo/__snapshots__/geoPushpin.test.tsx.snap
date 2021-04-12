@@ -196,6 +196,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -395,6 +397,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -504,6 +508,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -646,6 +652,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -736,6 +744,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -859,6 +869,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1001,6 +1013,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1110,6 +1124,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1180,6 +1196,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1283,6 +1301,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1412,6 +1432,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1541,6 +1563,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1703,6 +1727,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -1865,6 +1891,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2076,6 +2104,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2271,6 +2301,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2433,6 +2465,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2575,6 +2609,8 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;
 
@@ -2750,5 +2786,7 @@ Object {
   "isLoading": true,
   "onDataTooLarge": [Function],
   "onNegativeValues": [Function],
+  "theme": Object {},
+  "themeIsLoading": undefined,
 }
 `;

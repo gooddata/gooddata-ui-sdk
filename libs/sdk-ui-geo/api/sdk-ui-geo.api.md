@@ -21,6 +21,7 @@ import { INullableFilter } from '@gooddata/sdk-model';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
 import { ISortItem } from '@gooddata/sdk-model';
+import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
@@ -31,10 +32,10 @@ import { WrappedComponentProps } from 'react-intl';
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
-export const CoreGeoChart: import("react").ComponentClass<import("..").ICoreGeoChartProps & import("react-intl").WrappedComponentProps<"intl">, any>;
+export const CoreGeoChart: React_2.FC<ICoreGeoChartProps & WrappedComponentProps>;
 
 // @public (undocumented)
-export const GeoPushpinChart: React_2.ComponentType<IGeoPushpinChartProps>;
+export const GeoPushpinChart: React_2.ComponentType<Pick<IGeoPushpinChartProps, "locale" | "color" | "size" | "location" | "onError" | "config" | "onDrill" | "drillableItems" | "afterRender" | "onCenterPositionChanged" | "onZoomChanged" | "exportTitle" | "ErrorComponent" | "LoadingComponent" | "onExportReady" | "onLoadingChanged" | "pushData" | "backend" | "workspace" | "segmentBy" | "filters" | "sortBy">>;
 
 // @internal (undocumented)
 export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
@@ -57,6 +58,8 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     onCenterPositionChanged?: (center: IGeoLngLat) => void;
     // (undocumented)
     onZoomChanged?: (zoom: number) => void;
+    // (undocumented)
+    theme?: ITheme;
 }
 
 // @public (undocumented)

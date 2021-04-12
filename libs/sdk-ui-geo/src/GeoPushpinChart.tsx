@@ -23,6 +23,7 @@ import {
     MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
+import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
     const { color, location, segmentBy, size, config } = props;
@@ -121,4 +122,4 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
 /**
  * @public
  */
-export const GeoPushpinChart = withContexts(GeoPushpinChartInner);
+export const GeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
