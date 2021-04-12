@@ -2,8 +2,7 @@
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { BarChartWithSingleMeasureViewByAndStackBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarious";
-import { IResponsiveSize } from "../_infra/responsiveScenarious";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
 
 const sizeVariants: Array<IResponsiveSize> = [
     { label: "without x axis, without y axis (very small container)", width: 100, height: 70 },
@@ -25,6 +24,7 @@ const scenarios = responsiveScenarios(
         },
     },
     sizeVariants,
+    false,
 );
 
 export default [...scenarios];

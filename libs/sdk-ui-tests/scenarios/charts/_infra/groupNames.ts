@@ -44,4 +44,9 @@ export const ScenarioGroupNames = {
      * Group for responsive customization scenarios
      */
     Responsive: ["customization", "responsive"],
+
+    /**
+     * Group for legend responsive scenarios
+     */
+    LegendResponsive: ["customization", "legend responsive"],
 };

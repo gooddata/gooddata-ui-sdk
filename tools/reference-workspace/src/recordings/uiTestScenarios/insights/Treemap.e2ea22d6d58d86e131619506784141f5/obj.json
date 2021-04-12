@@ -1,0 +1,60 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [],
+        "identifier": "Treemap.e2ea22d6d58d86e131619506784141f5",
+        "properties": {
+            "controls": { "legend": { "position": "right", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [
+            { "attributeSortItem": { "attributeIdentifier": "a_label.product.id.name", "direction": "asc" } },
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_aangOxLSeztu" } }]
+                }
+            }
+        ],
+        "title": "Treemap - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right",
+        "uri": "Treemap.e2ea22d6d58d86e131619506784141f5",
+        "visualizationUrl": "local:treemap"
+    }
+}

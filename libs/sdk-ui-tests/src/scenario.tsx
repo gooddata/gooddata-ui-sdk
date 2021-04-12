@@ -36,8 +36,14 @@ export type TestTypes = "api" | "visual";
  *
  * - "mock-no-insight" - indicates that the capture & mock handling tooling should not create insight for
  *   the tagged scenario.
+ *
+ * - "no-plug-viz-tests" - this tag will skip generate stories for Pluggable visualization (04 Stories For Pluggable Vis section)
  */
-export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta" | "mock-no-insight";
+export type SignificantTags =
+    | "vis-config-only"
+    | "mock-no-scenario-meta"
+    | "mock-no-insight"
+    | "no-plug-viz-tests";
 export type ScenarioTag = SignificantTags | string;
 
 export type WorkspaceType = "reference-workspace" | "live-examples-workspace" | "experimental-workspace";

@@ -456,6 +456,69 @@ Object {
 }
 `;
 
+exports[`DataAccess should correctly identify series and slices for: BarChart - themed with popup legend 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 1,
+    "attributes": 0,
+    "measures": 1,
+    "seriesNames": Array [
+      " > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 43,
+    "attributes": 1,
+    "sliceNames": Array [
+      "1000Bulbs.com",
+      "101 Financial",
+      "123 Exteriors",
+      "14 West",
+      "1-800 Postcards",
+      "1-800 We Answer",
+      "1-888-OhioComp",
+      "1 Source Consulting",
+      "1Source International",
+      "1st Choice Staffing & Consulting",
+      "1st in Video - Music World",
+      "2HB Software Designs",
+      "2 Wheel Bikes",
+      "352 Media Group",
+      "3balls.com",
+      "3dCart Shopping Cart Software",
+      "3Degrees",
+      "3E",
+      "49er Communications",
+      "4th Source",
+      "4Wall Entertainment",
+      "5LINX Enterprises",
+      "614 Media Group",
+      "6K Systems",
+      "720 Strategies",
+      "7-Eleven",
+      "7 Medical Systems",
+      "7 Simple Machines",
+      "90octane",
+      "919 Marketing",
+      "A10 Clinical Solutions",
+      "A10 Networks",
+      "A1 Pool Parts",
+      "A-1 Textiles",
+      "AAC Enterprises",
+      "Aaron Oil Company",
+      "Aaron's",
+      "Aaron's Sales and Lease",
+      "Aaron's Sales and Lease Ownership",
+      "Aaron's Sales & Lease Ownership",
+      "AArrow Advertising",
+      "Aasent Mortgage Corporation",
+      "Abacus 24-7",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess should correctly identify series and slices for: BarChart - two measures with two viewBy 1`] = `
 Object {
   "seriesDigest": Object {
@@ -1391,6 +1454,33 @@ Object {
     "allSlices": 0,
     "attributes": 0,
     "sliceNames": Array [],
+    "totals": 0,
+  },
+}
+`;
+
+exports[`DataAccess should correctly identify series and slices for: ColumnChart - single measure with one viewBy and one stackBy with multiple items 1`] = `
+Object {
+  "seriesDigest": Object {
+    "allSeries": 2,
+    "attributes": 1,
+    "measures": 1,
+    "seriesNames": Array [
+      "East Coast > Amount",
+      "West Coast > Amount",
+    ],
+  },
+  "slicesDigest": Object {
+    "allSlices": 6,
+    "attributes": 1,
+    "sliceNames": Array [
+      "CompuSci",
+      "Educationly",
+      "Explorer",
+      "Grammar Plus",
+      "PhoenixSoft",
+      "WonderKid",
+    ],
     "totals": 0,
   },
 }

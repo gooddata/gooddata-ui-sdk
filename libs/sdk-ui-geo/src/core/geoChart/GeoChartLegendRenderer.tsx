@@ -170,7 +170,7 @@ function renderPushpinColorLegend(props: IGeoChartLegendRendererProps, hasColorL
         <ColorLegend
             data={colorData}
             format={format}
-            isSmall={isSmall}
+            size={isSmall ? "medium" : "large"}
             numericSymbols={numericSymbols}
             position={position}
         />

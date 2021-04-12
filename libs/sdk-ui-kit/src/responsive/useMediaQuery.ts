@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { useResponsiveContext } from "./ResponsiveContext";
 import { useMediaQuery as useReactResponsiveMediaQuery } from "react-responsive";
 import invariant from "ts-invariant";
@@ -69,7 +69,13 @@ export const useMediaQuery = (mediaQueryName: keyof IMediaQueries): boolean => {
         upper: largeRange.upper,
     };
 
+    const smallAndMediumRange: IMediaQueryRange = {
+        lower: 0,
+        upper: breakpoints.sm,
+    };
+
     const mediaQueries: IMediaQueries = {
+        "<sm": getQueryMatching(smallAndMediumRange),
         ">=sm": getQueryMatchingOrGreater(smallRange),
         sm: getQueryMatching(smallRange),
         ">=md": getQueryMatchingOrGreater(mediumRange),

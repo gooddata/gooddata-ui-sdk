@@ -18,6 +18,7 @@ import { Rows } from "./icons/Rows";
 import { DragHandle } from "./icons/DragHandle";
 import { Interaction } from "./icons/Interaction";
 import { AttributeFilter } from "./icons/AttributeFilter";
+import { LegendMenu } from "./icons/LegendMenu";
 
 /**
  * @internal
@@ -42,4 +43,5 @@ export const Icon = {
     DragHandle,
     Interaction,
     AttributeFilter,
+    LegendMenu,
 };

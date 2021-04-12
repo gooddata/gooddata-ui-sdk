@@ -310,3 +310,7 @@ This might be caused by corrupted symlinks. Try running `rush link --force` to r
 ### `rush install` gives me "Error: Cannot find module '~/.rush/node-v10.16.3/rush-5.14.0/node_modules/@microsoft/rush-lib/lib/index'"
 
 Try to run the following sequence of commands `npm un -g @microsoft/rush pnpm && rm -rf ~/.rush && npm i -g @microsoft/rush pnpm` to fix the issue.
+
+### Conflict in pnpm-lock.yaml.
+
+Run `rush update --recheck` and it should fix conflicts.

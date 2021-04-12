@@ -1,0 +1,315 @@
+{
+    "count": [43, 1],
+    "data": [
+        ["18000"],
+        ["31200"],
+        ["10800"],
+        ["109941.82"],
+        [null],
+        ["7565.08"],
+        ["40000"],
+        ["68000"],
+        ["20000"],
+        ["13200"],
+        ["16871.89"],
+        [null],
+        ["53091.72"],
+        ["16571.47"],
+        ["443236.78"],
+        ["11062"],
+        ["140000"],
+        ["21793.85"],
+        ["21643.44"],
+        ["14000"],
+        ["12000"],
+        ["27200"],
+        [null],
+        ["75600"],
+        ["41675.46"],
+        ["200978.12"],
+        ["6000"],
+        ["21269.2"],
+        ["720"],
+        ["54600"],
+        ["3712.2"],
+        ["26000"],
+        ["10492"],
+        ["4000"],
+        ["32000"],
+        ["4600"],
+        ["0.4"],
+        ["2192.16"],
+        ["38060.5"],
+        ["26157.8"],
+        ["67680"],
+        ["12000"],
+        ["3641.2"]
+    ],
+    "headerItems": [
+        [
+            [
+                {
+                    "attributeHeaderItem": {
+                        "name": "1000Bulbs.com",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1426"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "101 Financial",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1427"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "123 Exteriors",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2872"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "14 West",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2873"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-800 Postcards",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1428"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-800 We Answer",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2874"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1-888-OhioComp",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2875"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1 Source Consulting",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2871"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1Source International",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1429"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1st Choice Staffing & Consulting",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2876"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "1st in Video - Music World",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1430"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2HB Software Designs",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1432"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "2 Wheel Bikes",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1431"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "352 Media Group",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1433"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "3balls.com",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1434"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "3dCart Shopping Cart Software",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1435"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "3Degrees",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2877"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "3E",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2878"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "49er Communications",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1436"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "4th Source",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1437"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "4Wall Entertainment",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2879"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "5LINX Enterprises",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2880"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "614 Media Group",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1438"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "6K Systems",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2881"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "720 Strategies",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1439"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "7-Eleven",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1440"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "7 Medical Systems",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=9"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "7 Simple Machines",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2882"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "90octane",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1441"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "919 Marketing",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=10"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A10 Clinical Solutions",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4513"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A10 Networks",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4514"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A1 Pool Parts",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2888"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "A-1 Textiles",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=13"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "AAC Enterprises",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4672"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aaron Oil Company",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=14"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aaron's",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=2889"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aaron's Sales and Lease",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=16"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aaron's Sales and Lease Ownership",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1446"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aaron's Sales & Lease Ownership",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=15"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "AArrow Advertising",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1447"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Aasent Mortgage Corporation",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=4515"
+                    }
+                },
+                {
+                    "attributeHeaderItem": {
+                        "name": "Abacus 24-7",
+                        "uri": "/gdc/md/referenceworkspace/obj/1057/elements?id=1448"
+                    }
+                }
+            ]
+        ],
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]]
+    ],
+    "offset": [0, 0],
+    "totalCount": [43, 1]
+}

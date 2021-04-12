@@ -4,9 +4,15 @@ import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
-import { ComboChartWithTwoMeasuresAndViewBy, ComboChartWithManyDataPoints } from "./base";
+import {
+    ComboChartWithTwoMeasuresAndViewBy,
+    ComboChartWithManyDataPoints,
+    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+} from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
 import { CustomizedScenario, UnboundVisProps } from "../../../src";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 export function dataPointCustomizerForComboCharts<T extends IComboChartProps>(
     baseName: string,
@@ -52,4 +58,14 @@ const dataPointScenarios = scenariosFor<IComboChartProps>("ComboChart", ComboCha
         dataPointCustomizerForComboCharts,
     );
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "ComboChart",
+    ScenarioGroupNames.LegendResponsive,
+    ComboChart,
+    ComboChartWithManyPrimaryAndSecondaryMeasuresAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, dataPointScenarios, ...legendResponziveScenarios];

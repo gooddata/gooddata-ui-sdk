@@ -32,6 +32,20 @@ export const AreaChartWithManyDataPoints = {
     viewBy: ReferenceLdm.Opportunity.Name,
 };
 
+export const AreaChartWithLotArithmeticMeasuresAndViewBy = {
+    measures: [
+        ReferenceLdm.Amount,
+        ReferenceLdm.Won,
+        ReferenceLdm.Probability,
+        ReferenceLdm.WinRate,
+        ReferenceLdm.SnapshotEOP,
+        ReferenceLdm.TimelineEOP,
+        ReferenceLdmExt.CalculatedLost,
+        ReferenceLdmExt.CalculatedWonLostRatio,
+    ],
+    viewBy: ReferenceLdm.CreatedQuarterYear,
+};
+
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.BucketConfigVariants)
     .addScenario("single measure", {

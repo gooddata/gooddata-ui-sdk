@@ -23,6 +23,9 @@ export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
 }
 
+// @internal (undocumented)
+export type ButtonsOrientationType = "upDown" | "leftRight";
+
 // @internal
 export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientHeight?: number): {
     height: number | undefined;
@@ -30,7 +33,7 @@ export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientH
 };
 
 // @internal (undocumented)
-export const ColorLegend: React_2.ComponentType<Pick<IColorLegendProps, "data" | "format" | "position" | "numericSymbols" | "isSmall">>;
+export const ColorLegend: React_2.ComponentType<Pick<IColorLegendProps, "data" | "title" | "format" | "size" | "position" | "numericSymbols">>;
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
@@ -161,13 +164,15 @@ export interface IColorLegendProps {
     // (undocumented)
     format?: string;
     // (undocumented)
-    isSmall?: boolean;
-    // (undocumented)
     numericSymbols: string[];
     // (undocumented)
     position: string;
     // (undocumented)
+    size?: IHeatmapLegendSize;
+    // (undocumented)
     theme?: ITheme;
+    // (undocumented)
+    title?: string;
 }
 
 // @public (undocumented)
@@ -239,14 +244,19 @@ export interface IHeatmapLegendProps {
     // (undocumented)
     format?: string;
     // (undocumented)
-    isSmall: boolean;
-    // (undocumented)
     numericSymbols: string[];
     // (undocumented)
     position: string;
     // (undocumented)
     series: IHeatmapLegendItem[];
+    // (undocumented)
+    size: IHeatmapLegendSize;
+    // (undocumented)
+    title?: string;
 }
+
+// @internal (undocumented)
+export type IHeatmapLegendSize = "large" | "medium" | "small";
 
 // @internal (undocumented)
 export interface ILegendOptions {
@@ -261,7 +271,7 @@ export interface ILegendOptions {
     // (undocumented)
     position: PositionType;
     // (undocumented)
-    responsive?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
     // (undocumented)
     seriesMapper?: (visibleSeries: any) => any;
     // (undocumented)
@@ -270,6 +280,13 @@ export interface ILegendOptions {
 
 // @internal (undocumented)
 export interface ILegendProps {
+    // (undocumented)
+    containerId?: string;
+    // (undocumented)
+    contentDimensions: {
+        width: number;
+        height: number;
+    };
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
@@ -281,13 +298,17 @@ export interface ILegendProps {
     // (undocumented)
     legendItemsEnabled?: any[];
     // (undocumented)
+    legendLabel?: string;
+    // (undocumented)
     locale?: string;
+    // (undocumented)
+    maximumRows?: number;
     // (undocumented)
     onItemClick(item: any): void;
     // (undocumented)
     position: string;
     // (undocumented)
-    responsive?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
     // (undocumented)
     series: any;
     // (undocumented)
@@ -300,6 +321,8 @@ export interface ILegendProps {
 
 // @internal (undocumented)
 export interface IPagingProps {
+    // (undocumented)
+    buttonsOrientation?: ButtonsOrientationType;
     // (undocumented)
     page: number;
     // (undocumented)
@@ -338,11 +361,17 @@ export function isCustomPalette(palette: IColorPalette): boolean;
 // @internal (undocumented)
 export interface IStaticLegendProps {
     // (undocumented)
+    buttonOrientation?: ButtonsOrientationType;
+    // (undocumented)
     containerHeight: number;
     // (undocumented)
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     // (undocumented)
+    label?: string;
+    // (undocumented)
     onItemClick?(item: IPushpinCategoryLegendItem): void;
+    // (undocumented)
+    paginationHeight?: number;
     // (undocumented)
     position: string;
     // (undocumented)
@@ -371,11 +400,13 @@ export class Legend extends React_2.PureComponent<ILegendProps> {
     // (undocumented)
     getSeries: () => any;
     // (undocumented)
-    onItemClick: (item: any) => void;
+    onItemClick: (item: IPushpinCategoryLegendItem) => void;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)
     renderFluid: () => React_2.ReactNode;
+    // (undocumented)
+    renderPopUpLegend: () => React_2.ReactNode;
     // (undocumented)
     renderStatic: () => React_2.ReactNode;
 }
@@ -415,6 +446,8 @@ export function shouldShowFluid(documentObj: Document): boolean;
 
 // @internal (undocumented)
 export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
+    // (undocumented)
+    static defaultProps: Partial<IStaticLegendProps>;
     // (undocumented)
     render(): React_2.ReactNode;
     // (undocumented)

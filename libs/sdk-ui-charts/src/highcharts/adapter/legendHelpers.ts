@@ -1,11 +1,14 @@
 // (C) 2007-2021 GoodData Corporation
 import head from "lodash/head";
 import isEmpty from "lodash/isEmpty";
+import { ContentRect } from "react-measure";
+import { PositionType, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 
-import { isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
+import { isHeatmap, isAreaChart, isOneOfTypes, isTreemap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities";
 import { ISeriesItem, IChartOptions } from "../typings/unsafe";
+import { BOTTOM, RIGHT, TOP } from "../typings/mess";
 
 export const RESPONSIVE_ITEM_MIN_WIDTH = 200;
 export const RESPONSIVE_VISIBLE_ROWS = 2;
@@ -16,208 +19,9 @@ export const SKIPPED_LABEL_TEXT = "...";
 export const UTF_NON_BREAKING_SPACE = "\u00A0";
 const STATIC_PAGING_HEIGHT = 44;
 
-export interface IHeatmapLegendBox {
-    class: string;
-    key: string;
-    style: {
-        backgroundColor: string;
-        border: string;
-    };
-}
-
-export interface IHeatmapLegendLabel {
-    class?: string;
-    key: string;
-    label: string;
-    style: object;
-}
-
-export interface IHeatmapLegendConfig {
-    boxes: IHeatmapLegendBox[];
-    classes: string[];
-    labels: IHeatmapLegendLabel[];
-    position: string;
-}
-
-function getEmptyBlock(style: any, index: number) {
-    return {
-        key: `empty-${index}`,
-        label: UTF_NON_BREAKING_SPACE,
-        style,
-    };
-}
-
-function getLabelStyle(width: number, textAlign: string) {
-    return { width, textAlign };
-}
-
-const ALEFT = "left";
-const ARIGHT = "right";
-const ACENTER = "center";
-const DOTS_WIDTH = 10;
-
-function getSkippedLabelBlock(index: number) {
-    return {
-        key: `dots-${index}`,
-        label: SKIPPED_LABEL_TEXT,
-        style: getLabelStyle(DOTS_WIDTH, ACENTER),
-    };
-}
-
-const verticalHeatmapMiddleLabelStyle = { height: 30, textAlign: ALEFT, lineHeight: "30px" };
-
-export const verticalHeatmapConfig = [
-    { type: "label", labelIndex: 0, style: { height: 15, textAlign: ALEFT, lineHeight: "11px" } },
-    { type: "label", labelIndex: 1, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 2, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 3, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 4, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 5, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 6, style: verticalHeatmapMiddleLabelStyle },
-    { type: "label", labelIndex: 7, style: { height: 15, textAlign: ALEFT, lineHeight: "20px" } },
-];
-
-const defaultHeatmapLegendLabelStyle = { width: 40, textAlign: ACENTER };
-
-export const heatmapLegendConfigMatrix = [
-    [
-        { type: "label", labelIndex: 0, style: { width: 175, textAlign: ALEFT } },
-        { type: "label", labelIndex: 7, style: { width: 175, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 145, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 145, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 95, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 95, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 55, textAlign: ALEFT } },
-        { type: "label", labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
-        { type: "label", labelIndex: 7, style: { width: 55, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "label", labelIndex: 2, style: { width: 90, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "space", style: { width: 40 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 5, style: { width: 90, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 45, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 30, textAlign: ALEFT } },
-        { type: "label", labelIndex: 1, style: defaultHeatmapLegendLabelStyle },
-        { type: "space", style: { width: 10 } },
-        { type: "label", labelIndex: 2, style: defaultHeatmapLegendLabelStyle },
-        { type: "space", style: { width: 10 } },
-        { type: "label", labelIndex: 3, style: defaultHeatmapLegendLabelStyle },
-        { type: "space", style: { width: 10 } },
-        { type: "label", labelIndex: 4, style: defaultHeatmapLegendLabelStyle },
-        { type: "space", style: { width: 10 } },
-        { type: "label", labelIndex: 5, style: defaultHeatmapLegendLabelStyle },
-        { type: "space", style: { width: 10 } },
-        { type: "label", labelIndex: 6, style: defaultHeatmapLegendLabelStyle },
-        { type: "label", labelIndex: 7, style: { width: 30, textAlign: ARIGHT } },
-    ],
-];
-
-const defaultHeatmapSmallLegendStyle = { width: 40, textAlign: ACENTER };
-
-export const heatmapSmallLegendConfigMatrix = [
-    [
-        { type: "label", labelIndex: 0, style: { width: 138, textAlign: ALEFT } },
-        { type: "label", labelIndex: 7, style: { width: 138, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 115, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "space", style: { width: 26 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 115, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 75, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "space", style: { width: 30 } },
-        { type: "dots" },
-        { type: "space", style: { width: 26 } },
-        { type: "dots" },
-        { type: "space", style: { width: 30 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 75, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 45, textAlign: ALEFT } },
-        { type: "label", labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "space", style: { width: 26 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
-        { type: "label", labelIndex: 7, style: { width: 45, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 35, textAlign: ALEFT } },
-        { type: "dots" },
-        { type: "label", labelIndex: 2, style: { width: 70, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "space", style: { width: 26 } },
-        { type: "dots" },
-        { type: "label", labelIndex: 5, style: { width: 70, textAlign: ACENTER } },
-        { type: "dots" },
-        { type: "label", labelIndex: 7, style: { width: 35, textAlign: ARIGHT } },
-    ],
-    [
-        { type: "label", labelIndex: 0, style: { width: 20, textAlign: ALEFT } },
-        { type: "label", labelIndex: 1, style: defaultHeatmapSmallLegendStyle },
-        { type: "label", labelIndex: 2, style: defaultHeatmapSmallLegendStyle },
-        { type: "label", labelIndex: 3, style: { width: 38, textAlign: ACENTER } },
-        { type: "label", labelIndex: 4, style: { width: 38, textAlign: ACENTER } },
-        { type: "label", labelIndex: 5, style: defaultHeatmapSmallLegendStyle },
-        { type: "label", labelIndex: 6, style: defaultHeatmapSmallLegendStyle },
-        { type: "label", labelIndex: 7, style: { width: 20, textAlign: ARIGHT } },
-    ],
-];
-
-export function buildHeatmapLabelsConfig(
-    labels: string[],
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
-): any {
-    return config.map((element: any, index: number) => {
-        switch (element.type) {
-            case "label":
-                return {
-                    label: labels[element.labelIndex],
-                    style: element.style,
-                    key: `${element.type}-${index}`,
-                };
-
-            case "space":
-                return getEmptyBlock(element.style, index);
-
-            case "dots":
-                return getSkippedLabelBlock(index);
-        }
-    });
-}
+const LEGEND_WIDTH_BREAKPOINT = 610;
+const LEGEND_HEIGHT_BREAKPOINT_SM = 194;
+const LEGEND_HEIGHT_BREAKPOINT_ML = 274;
 
 export function calculateFluidLegend(
     seriesCount: number,
@@ -414,4 +218,82 @@ export function isStackedChart(chartOptions: IChartOptions): boolean {
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;
     return !isAreaChartWithOneSerie && !isTreemap(type) && Boolean(stacking);
+}
+
+function getLegendDetailsForAutoResponsive(
+    contentRect: ContentRect,
+    legendOptions: ILegendOptions,
+    chartOptions: IChartOptions,
+): ILegendDetails {
+    const width = contentRect?.client?.width;
+    const height = contentRect?.client?.height;
+
+    if (!width || !height) {
+        return null;
+    }
+
+    const name = chartOptions?.legendLabel ? { name: chartOptions?.legendLabel } : {};
+
+    // Decision logic: https://gooddata.invisionapp.com/console/share/KJ2A59MOAQ/548340571
+    if (width < LEGEND_WIDTH_BREAKPOINT) {
+        const maxRowsForTop = height < LEGEND_HEIGHT_BREAKPOINT_ML ? 1 : 2;
+        return { ...name, position: TOP, renderPopUp: true, maxRows: maxRowsForTop };
+    } else {
+        const isLegendTopBottom = legendOptions.position === "top" || legendOptions.position === "bottom";
+
+        if (height < LEGEND_HEIGHT_BREAKPOINT_SM) {
+            return { ...name, position: RIGHT, renderPopUp: false };
+        } else {
+            const maxRowsForTopBottom = height < LEGEND_HEIGHT_BREAKPOINT_ML ? 1 : 2;
+            return {
+                ...name,
+                position: legendOptions.position,
+                renderPopUp: isLegendTopBottom,
+                maxRows: isLegendTopBottom ? maxRowsForTopBottom : undefined,
+            };
+        }
+    }
+}
+
+export interface ILegendDetails {
+    name?: string;
+    position: PositionType;
+    maxRows?: number;
+    renderPopUp?: boolean;
+}
+
+function getLegendDetailsForStandard(
+    legendOptions: ILegendOptions,
+    chartOptions: IChartOptions,
+    showFluidLegend: boolean,
+): ILegendDetails {
+    const { type } = chartOptions;
+    let pos = legendOptions.position;
+    if (isHeatmap(type)) {
+        const isSmall = Boolean(legendOptions.responsive && showFluidLegend);
+        if (isSmall) {
+            pos = legendOptions.position === TOP ? TOP : BOTTOM;
+        } else {
+            pos = legendOptions.position || RIGHT;
+        }
+    }
+
+    return {
+        position: pos,
+        renderPopUp: false,
+        name: null,
+    };
+}
+
+export function getLegendDetails(
+    contentRect: ContentRect,
+    legendOptions: ILegendOptions,
+    chartOptions: IChartOptions,
+    showFluidLegend: boolean,
+): ILegendDetails {
+    if (legendOptions.responsive !== "autoPositionWithPopup") {
+        return getLegendDetailsForStandard(legendOptions, chartOptions, showFluidLegend);
+    }
+
+    return getLegendDetailsForAutoResponsive(contentRect, legendOptions, chartOptions);
 }

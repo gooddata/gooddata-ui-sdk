@@ -1,4 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
+import { ResponsiveOptions } from "highcharts";
 import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../../highcharts/lib";
 
 const UPPER_LIMIT_RATIO = 35;
@@ -132,7 +133,7 @@ export const getCommonResponsiveConfig = (inverted: boolean = false): Highcharts
  * Special responsive config is applicable for Pie chart and Donut chart.
  * Pie chart config is implicitly called from Donut chart config, therefore these configs are same.
  */
-export const getPieResponsiveConfig = () => ({
+export const getPieResponsiveConfig = (): ResponsiveOptions => ({
     rules: [
         {
             condition: {
@@ -152,7 +153,7 @@ export const getPieResponsiveConfig = () => ({
                             visible: "auto",
                         },
                     },
-                },
+                } as any, // Modify highChart plotOption and added GD specific stuff
             },
         },
         {

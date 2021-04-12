@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
@@ -23,6 +23,11 @@ export type IBreakpointsConfig = {
  * @internal
  */
 export interface IMediaQueries {
+    /**
+     * Is screen classified as smaller than 'sm'?
+     */
+    "<sm": string;
+
     /**
      * Is screen classified as 'sm' or larger?
      */

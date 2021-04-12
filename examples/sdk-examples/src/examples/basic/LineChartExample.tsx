@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LineChart } from "@gooddata/sdk-ui-charts";
+import { LineChart, IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { Ldm, LdmExt } from "../../ldm";
 
@@ -13,7 +13,7 @@ const measures = [
     LdmExt.FranchiseFeesOngoingRoyalty,
 ];
 
-const chartConfig = { colorPalette: CUSTOM_COLOR_PALETTE };
+const chartConfig: IChartConfig = { colorPalette: CUSTOM_COLOR_PALETTE, legend: { position: "left" } };
 
 const style = { height: 300 };
 
