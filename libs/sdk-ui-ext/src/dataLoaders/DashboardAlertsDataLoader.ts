@@ -15,6 +15,9 @@ interface IDashboardAlertsDataLoader {
     getDashboardAlerts(backend: IAnalyticalBackend, ref: ObjRef): Promise<IWidgetAlert[]>;
 }
 
+// returned in case the backend does not support alerts
+const EMPTY_RESPONSE: IWidgetAlert[] = [];
+
 class DashboardAlertsDataLoader implements IDashboardAlertsDataLoader {
     private dashboardAlertsCache: LRUCache<string, Promise<IWidgetAlert[]>> = new LRUCache({
         max: DASHBOARD_CACHE_SIZE,
@@ -23,6 +26,11 @@ class DashboardAlertsDataLoader implements IDashboardAlertsDataLoader {
     constructor(protected readonly workspace: string) {}
 
     public getDashboardAlerts(backend: IAnalyticalBackend, ref: ObjRef): Promise<IWidgetAlert[]> {
+        // no need to load anything if the backend does not support setting the alerts in the first place
+        if (!backend.capabilities.supportsKpiWidget) {
+            return Promise.resolve(EMPTY_RESPONSE);
+        }
+
         const cacheKey = objRefToString(ref);
         let dashboardAlerts = this.dashboardAlertsCache.get(cacheKey);
 
