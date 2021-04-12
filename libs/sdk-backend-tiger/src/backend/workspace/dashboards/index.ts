@@ -18,11 +18,12 @@ import {
     isFilterContextDefinition,
     isTempFilterContext,
     ITempFilterContext,
+    IWidget,
     IWorkspaceDashboardsService,
     NotSupported,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IFilter, ObjRef } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -37,7 +38,8 @@ import {
     convertFilterContextToBackend,
 } from "../../../convertors/toBackend/AnalyticalDashboardConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
-import { objRefToIdentifier } from "../../../utils/api";
+import { objRefsToIdentifiers, objRefToIdentifier } from "../../../utils/api";
+import { resolveWidgetFilters } from "./widgetFilters";
 
 export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -224,11 +226,11 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public exportDashboardToPdf = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("exportDashboardToPdf is not supported");
     };
 
     public createScheduledMail = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("createScheduledMail is not supported");
     };
 
     public getScheduledMailsCountForDashboard = async () => {
@@ -242,7 +244,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public getDashboardWidgetAlertsForCurrentUser = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("getDashboardWidgetAlertsForCurrentUser is not supported");
     };
 
     public getWidgetAlertsCountForWidgets = async () => {
@@ -251,27 +253,29 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createWidgetAlert = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("createWidgetAlert is not supported");
     };
 
     public updateWidgetAlert = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("updateWidgetAlert is not supported");
     };
 
     public deleteWidgetAlert = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("deleteWidgetAlert is not supported");
     };
 
     public deleteWidgetAlerts = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("deleteWidgetAlerts is not supported");
     };
 
     public getWidgetReferencedObjects = async () => {
-        throw new NotSupported("Not supported");
+        throw new NotSupported("getWidgetReferencedObjects is not supported");
     };
 
-    public getResolvedFiltersForWidget = async () => {
-        throw new NotSupported("Not supported");
+    public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
+        return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
+            objRefsToIdentifiers(refs, this.authCall),
+        );
     };
 
     private createFilterContext = async (

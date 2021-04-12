@@ -6,14 +6,18 @@ import { idRef, ObjRef } from "@gooddata/sdk-model";
 import { dashboardAlertsDataLoaderFactory } from "../DashboardAlertsDataLoader";
 import { noopWorkspaceDashboardsService } from "./dataLoaders.mock";
 
-describe("DashboardAlertsDataLoader.test", () => {
+describe("DashboardAlertsDataLoader", () => {
     const workspace = "foo";
     const baseBackend = dummyBackendEmptyData();
 
     const getMockBackend = (
         getDashboardWidgetAlertsForCurrentUser: (ref: ObjRef) => Promise<IWidgetAlert[]>,
+        supportsKpiWidget = true, // we need to set this capability for this loader, otherwise it short-circuits
     ): IAnalyticalBackend => ({
         ...baseBackend,
+        capabilities: {
+            supportsKpiWidget,
+        },
         workspace: () => ({
             ...baseBackend.workspace(workspace),
             dashboards: () => ({
@@ -62,5 +66,21 @@ describe("DashboardAlertsDataLoader.test", () => {
         await loader.getDashboardAlerts(successBackend, ref);
 
         expect(getDashboardWidgetAlertsForCurrentUser).toHaveBeenCalledTimes(1);
+    });
+
+    it("should not call getDashboardAlerts when backend does not support it", async () => {
+        const loader = dashboardAlertsDataLoaderFactory.forWorkspace(workspace);
+        const getDashboardWidgetAlertsForCurrentUser = jest.fn(() => Promise.resolve([]));
+        const backend = getMockBackend(getDashboardWidgetAlertsForCurrentUser, false);
+
+        const ref = idRef("foo");
+
+        const first = loader.getDashboardAlerts(backend, ref);
+        const second = loader.getDashboardAlerts(backend, ref);
+
+        const [firstResult, secondResult] = await Promise.all([first, second]);
+
+        expect(secondResult).toBe(firstResult);
+        expect(getDashboardWidgetAlertsForCurrentUser).not.toHaveBeenCalled();
     });
 });
