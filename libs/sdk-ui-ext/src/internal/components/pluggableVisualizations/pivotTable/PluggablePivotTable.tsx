@@ -339,16 +339,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
                     {({ measureRef, contentRect }: any) => {
                         const clientHeight = contentRect.client.height;
 
-                        /*
-                         * For some reason (unknown to me), there was a big if; nil height meant that
-                         * the wrapper was to 100%; non-nil height ment fixed size header with the 328 magic
-                         * number.
-                         *
-                         * For a while, there were more differences between the two branches, however after
-                         * ONE-4322 the essential difference was reduced to just the wrapper size.
-                         */
                         const pivotWrapperStyle: React.CSSProperties = {
-                            height: isNil(height) ? "100%" : 328,
+                            height: isNil(height) ? "100%" : height,
                             textAlign: "left",
                             display: "flex",
                             flex: "1 1 auto",

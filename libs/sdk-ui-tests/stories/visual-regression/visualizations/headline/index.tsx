@@ -17,7 +17,7 @@ const backend = StorybookBackend();
 storiesOf(`${CustomStories}/Headline`, module)
     .add("responsive", () =>
         withScreenshot(
-            <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <ScreenshotReadyWrapper resolver={createElementCountResolver(2)}>
                 <div style={{ width: 250, border: "1px solid black" }}>
                     <Headline
                         backend={backend}
