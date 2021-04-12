@@ -85,6 +85,12 @@ export class DynamicSelect extends React.Component<IDynamicSelectProps, IDynamic
         }
     };
 
+    public blur = (): void => {
+        if (this.inputRef.current) {
+            this.inputRef.current.blur();
+        }
+    };
+
     public onInputValueChanged = (inputValue: string): void => {
         if (inputValue !== this.state.inputValue) {
             this.setState({ inputValue });
