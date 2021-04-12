@@ -6,6 +6,9 @@ import { RelativeRangePicker } from "../RelativeRangePicker/RelativeRangePicker"
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
 export interface IRelativeDateFilterFormProps {
+    /**
+     * @deprecated use availableGranularities in {@link IDateFilterOwnProps} instead
+     */
     availableGranularities: DateFilterGranularity[];
     selectedFilterOption: IUiRelativeDateFilterForm;
     onSelectedFilterOptionChange: (dateFilterOption: DateFilterOption) => void;
