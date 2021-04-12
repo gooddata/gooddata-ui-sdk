@@ -1,5 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
-import { isUriRef, ObjRef, Uri, isIdentifierRef } from "@gooddata/sdk-model";
+import { isUriRef, ObjRef, Uri, isIdentifierRef, Identifier } from "@gooddata/sdk-model";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../types";
 
@@ -21,7 +21,7 @@ export const objRefToUri = async (
 
 /**
  * Converts ObjRef instance to identifier. For IdentifierRef returns the identifier as is,
- * for UriRef calls the backend and gets the identifier.
+ * otherwise converts the UriRef to the identifier.
  * @param ref - ref to convert
  * @param authCall - call guard to perform API calls through
  *
@@ -30,7 +30,7 @@ export const objRefToUri = async (
 export const objRefToIdentifier = async (
     ref: ObjRef,
     _authCall: TigerAuthenticatedCallGuard,
-): Promise<Uri> => {
+): Promise<Identifier> => {
     if (isIdentifierRef(ref)) {
         return ref.identifier;
     }
@@ -45,4 +45,20 @@ export const objRefToIdentifier = async (
     }
 
     return matches[1];
+};
+
+/**
+ * Converts ObjRef instances to identifiers. For IdentifierRef returns the identifier as is,
+ * otherwise converts the UriRefs to the identifiers.
+ * @param refs - refs to convert
+ * @param authCall - call guard to perform API calls through
+ *
+ * @internal
+ */
+export const objRefsToIdentifiers = (
+    refs: ObjRef[],
+    authCall: TigerAuthenticatedCallGuard,
+): Promise<Identifier[]> => {
+    // there is no bulk api yet, so do it one by one
+    return Promise.all(refs.map((ref) => objRefToIdentifier(ref, authCall)));
 };
