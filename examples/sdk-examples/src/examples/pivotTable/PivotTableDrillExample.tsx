@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { HeaderPredicates, IDrillEvent } from "@gooddata/sdk-ui";
 import { attributeIdentifier, measureIdentifier, ITotal } from "@gooddata/sdk-model";
+import isNil from "lodash/isNil";
 
 import { LdmExt, Ldm } from "../../ldm";
 
@@ -84,7 +85,7 @@ export class PivotTableDrillExample extends Component<unknown, IPivotTableDrillE
                 ? drillEvent.drillContext.row[drillEvent.drillContext.columnIndex]
                 : undefined;
 
-        const drillValue = typeof drillColumn === "object" ? drillColumn.name : drillColumn;
+        const drillValue = !isNil(drillColumn) ? drillColumn.name : drillColumn;
 
         return (
             <h3>
