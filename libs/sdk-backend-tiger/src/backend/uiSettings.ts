@@ -54,6 +54,7 @@ export const DefaultUiSettings: ISettings = {
     enableNewNavigationForResponsiveUi: true,
     enableDataSection: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
+    ADCatalogGroupsExpanded: true,
 };
 
 /**
