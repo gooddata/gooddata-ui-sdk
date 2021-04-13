@@ -335,6 +335,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             selectedFilterOption,
             onSelectedFilterOptionChange,
             isMobile,
+            availableGranularities,
         } = this.props;
         return filterOptions.relativePreset ? (
             <RelativePresetFilterItems
@@ -343,6 +344,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 className={isMobile && ITEM_CLASS_MOBILE}
+                availableGranularities={availableGranularities}
             />
         ) : null;
     };
@@ -377,7 +379,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             );
         }
         if (route === "relativeForm") {
-            return (
+            return isEmpty(this.props.availableGranularities) ? null : (
                 <>
                     <DateFilterHeader changeRoute={this.changeRoute}>
                         <FormattedMessage id="filters.floatingRange" />
@@ -394,7 +396,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             <>
                 {this.renderAllTime()}
                 {this.renderAbsoluteForm()}
-                {this.renderRelativeForm()}
+                {!isEmpty(this.props.availableGranularities) && this.renderRelativeForm()}
                 {this.renderAbsolutePreset()}
                 {this.renderRelativePreset()}
             </>
