@@ -1189,6 +1189,7 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
+    ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAxisNameConfiguration?: boolean;
