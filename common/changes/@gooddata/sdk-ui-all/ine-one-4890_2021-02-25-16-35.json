@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "Date bucket items are never removed from request loadDateDataset (api-client-bear). If you need to remove bucket date items from the request, you have to filter them manually. ",
+            "comment": "Date bucket items no longer removed from request body in loadDateDataset (api-client-bear). If you need to remove bucket date items from the request, you have to filter them manually.",
             "type": "none"
         }
     ],
