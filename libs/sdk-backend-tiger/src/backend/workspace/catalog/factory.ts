@@ -18,7 +18,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
-import { MetadataUtilities } from "@gooddata/api-client-tiger";
+import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import invariant from "ts-invariant";
 
 export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
@@ -117,8 +117,10 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
                 {
                     workspaceId: this.workspace,
                 },
-                { query: { tags: tags.join(",") } },
-            ).then(MetadataUtilities.mergeEntitiesResults);
+                { query: { tags: tags.join(",") }, headers: ValidateRelationsHeader },
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then(MetadataUtilities.filterValidEntities);
         });
 
         return measures.data.map(convertMeasure);
