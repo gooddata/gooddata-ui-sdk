@@ -21,7 +21,7 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
             className={"item-headline-outer"}
             style={
                 isSmallCustomHeight()
-                    ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px` }
+                    ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px`, marginTop: 0 }
                     : undefined
             }
         >
