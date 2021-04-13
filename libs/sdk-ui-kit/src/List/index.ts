@@ -27,7 +27,12 @@ export {
 } from "./InvertableList";
 export { List, IListProps, ScrollCallback, IRenderItemProps } from "./List";
 export { MultiSelectList, IMultiSelectListProps, IMultiSelectRenderItemProps } from "./MultiSelectList";
-export { SingleSelectListItem, ISingleSelectListItemProps, ISingleSelectListItemState } from "./ListItem";
+export {
+    SingleSelectListItem,
+    ISingleSelectListItemProps,
+    ISingleSelectListItemState,
+    SingleSelectListItemType,
+} from "./ListItem";
 
 // components from goodstrap/lib root which have its new equivalent
 export { default as LegacyInvertableList, ILegacyInvertableListProps } from "./LegacyInvertableList";

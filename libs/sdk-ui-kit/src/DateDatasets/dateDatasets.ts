@@ -143,7 +143,7 @@ export function preselectDateDataset<T extends IDateDataset>(
 /**
  * @internal
  */
-export function dateDatasets<T extends IDateDataset>(
+export function sortDateDatasets<T extends IDateDataset>(
     dateDatasets: T[],
     recommendedDate: T = null,
     unrelatedDate: T = null,

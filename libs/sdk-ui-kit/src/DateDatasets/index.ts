@@ -9,7 +9,7 @@ export {
     preselectDateDataset,
     recommendedHeader,
     relatedHeader,
-    dateDatasets,
+    sortDateDatasets,
     transform2Dropdown,
     unrelatedHeader,
 } from "./dateDatasets";
