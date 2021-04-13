@@ -5,3 +5,5 @@ export const jsonApiHeaders = {
     Accept: JSON_API_HEADER_VALUE,
     "Content-Type": JSON_API_HEADER_VALUE,
 };
+
+export const ValidateRelationsHeader = { "X-GDC-VALIDATE-RELATIONS": "true" };

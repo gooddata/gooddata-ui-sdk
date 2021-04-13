@@ -6,6 +6,7 @@ import {
     JsonApiMetricOutList,
     ITigerClient,
     MetadataUtilities,
+    ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
 import { convertAttribute, createLabelMap } from "./tigerCommon";
 
@@ -60,9 +61,16 @@ function convertAttributes(attributes: JsonApiAttributeOutList): Attribute[] {
  */
 export async function loadCatalog(client: ITigerClient, workspaceId: string): Promise<Catalog> {
     const [metricsResult, factsResult, attributesResult] = await Promise.all([
-        MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesMetrics, {
-            workspaceId,
-        }).then(MetadataUtilities.mergeEntitiesResults),
+        MetadataUtilities.getAllPagesOf(
+            client,
+            client.workspaceObjects.getAllEntitiesMetrics,
+            {
+                workspaceId,
+            },
+            { headers: ValidateRelationsHeader },
+        )
+            .then(MetadataUtilities.mergeEntitiesResults)
+            .then(MetadataUtilities.filterValidEntities),
         MetadataUtilities.getAllPagesOf(client, client.workspaceObjects.getAllEntitiesFacts, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),

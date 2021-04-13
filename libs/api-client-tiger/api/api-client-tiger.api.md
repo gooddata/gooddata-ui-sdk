@@ -2751,6 +2751,7 @@ export interface MetadataRequestArgs {
 
 // @internal
 export class MetadataUtilities {
+    static filterValidEntities<T extends MetadataGetEntitiesResult>(result: T): T;
     static getAllPagesOf: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
     static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T;
 }
@@ -4334,6 +4335,11 @@ export interface UserModelControllerApiInterface {
         sort?: Array<string>;
     }, options?: any): AxiosPromise<JsonApiApiTokenOutDocument>;
 }
+
+// @public (undocumented)
+export const ValidateRelationsHeader: {
+    "X-GDC-VALIDATE-RELATIONS": string;
+};
 
 // @public
 export class ValidObjectsControllerApi extends LabelElementsBaseApi implements ValidObjectsControllerApiInterface {

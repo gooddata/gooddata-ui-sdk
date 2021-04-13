@@ -71,14 +71,15 @@
     // custom className from react-select rendered
     .gd-recipients__menu {
         padding: 0;
-        border: 1px solid $button-normal-border-color;
-        border-top: 0;
-        outline: 0;
-        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
+        border-width: 1px;
+        border-style: solid;
         border-radius: 0 0 3px 3px;
         border-color: $gd-palette-primary-base;
-        margin-top: -2px;
+        border-top: 0;
         border-top-color: $button-normal-border-color;
+        margin-top: -2px;
+        outline: 0;
+        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
         color: $gd-color-text;
         background-color: $gd-color-white;
 
