@@ -1,6 +1,18 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 
+/** With custom size layouting enable need to be aware of the widget size to update
+ *  its content accordingly
+ */
+const SMALL_CLIENT_HEIGHT = 140;
+const MEDIUM_CLIENT_HEIGHT = 160;
+const NORMAL_CLIENT_HEIGHT = 180;
+const LARGE_CLIENT_HEIGHT = 200;
+const LARGEST_CLIENT_HEIGHT = 220;
+
+const SMALL_CUSTOM_HEIGHT = 44;
+const NORMAL_CUSTOM_HEIGHT = 64;
+
 /**
  * @public
  */
@@ -12,7 +24,14 @@ export interface IErrorProps {
     className?: string;
     style?: object;
     width?: any;
+    /**
+     * Size of the error component.
+     */
     height?: any;
+    /**
+     * Size of the visualisation content when custom size layouting is enable.
+     */
+    clientHeight?: any;
 }
 
 /**
@@ -40,7 +59,14 @@ export class ErrorComponent extends React.Component<IErrorProps> {
     };
 
     public render(): React.ReactNode {
-        const { className, style, width, height, message, description, icon } = this.props;
+        const { className, style, width, height, message, description, icon, clientHeight } = this.props;
+
+        const customHeight =
+            clientHeight && clientHeight <= SMALL_CLIENT_HEIGHT
+                ? SMALL_CUSTOM_HEIGHT
+                : clientHeight < NORMAL_CLIENT_HEIGHT
+                ? NORMAL_CUSTOM_HEIGHT
+                : undefined;
 
         const wrapperStyle = {
             ...style,
@@ -58,20 +84,43 @@ export class ErrorComponent extends React.Component<IErrorProps> {
                         lineHeight: "normal",
                         color: "var(--gd-palette-complementary-6, #94a1ad)",
                         textAlign: "center",
+                        height: customHeight,
+                        width: "100%",
+                        overflow: "hidden",
                     }}
                 >
-                    {icon ? <div className={`info-label-icon ${icon}`} style={{ fontSize: "40px" }} /> : null}
+                    {icon ? (
+                        <div
+                            className={`info-label-icon ${icon}`}
+                            style={
+                                clientHeight && clientHeight < LARGEST_CLIENT_HEIGHT
+                                    ? undefined
+                                    : { fontSize: "40px" }
+                            }
+                        />
+                    ) : null}
 
                     <div
                         style={{
                             fontWeight: 400,
-                            fontSize: "20px",
+                            fontSize:
+                                clientHeight && clientHeight < MEDIUM_CLIENT_HEIGHT ? undefined : "20px",
                             textTransform: "uppercase",
                         }}
                     >
                         {message}
                     </div>
-                    <div style={{ margin: "3px 0" }}>{description}</div>
+                    <div
+                        style={{
+                            margin: "3px 0",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            whiteSpace:
+                                clientHeight && clientHeight < LARGE_CLIENT_HEIGHT ? "nowrap" : undefined,
+                        }}
+                    >
+                        {description}
+                    </div>
                 </div>
             </div>
         );

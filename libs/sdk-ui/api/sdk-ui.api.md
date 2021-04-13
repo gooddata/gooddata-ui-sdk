@@ -736,11 +736,11 @@ export interface IErrorDescriptors {
 export interface IErrorProps {
     // (undocumented)
     className?: string;
+    clientHeight?: any;
     // (undocumented)
     code?: string;
     // (undocumented)
     description?: string;
-    // (undocumented)
     height?: any;
     // (undocumented)
     icon?: string;

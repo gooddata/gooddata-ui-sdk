@@ -1,5 +1,5 @@
 // (C) 2020 GoodData Corporation
-import React, { useCallback, useMemo, useState, useRef, useEffect } from "react";
+import React, { useCallback, useMemo, useState, useRef, useEffect, CSSProperties } from "react";
 import flatMap from "lodash/flatMap";
 import isEqual from "lodash/isEqual";
 import merge from "lodash/merge";
@@ -43,6 +43,8 @@ import {
 } from "../../contexts";
 import { OnFiredDashboardViewDrillEvent } from "../../types";
 
+const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative" };
+
 interface IInsightRendererProps {
     insightWidget: IInsightWidget;
     insight: IInsight;
@@ -55,6 +57,7 @@ interface IInsightRendererProps {
     onError?: OnError;
     ErrorComponent: React.ComponentType<IErrorProps>;
     LoadingComponent: React.ComponentType<ILoadingProps>;
+    clientHeight?: number;
 }
 
 export const InsightRenderer: React.FC<IInsightRendererProps> = ({
@@ -69,6 +72,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     workspace,
     ErrorComponent,
     LoadingComponent,
+    clientHeight,
 }) => {
     const effectiveBackend = useBackend(backend);
     const effectiveWorkspace = useWorkspace(workspace);
@@ -217,34 +221,50 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
      * so that the items are not shown as active since nothing can happen on click without the onDrill provided
      */
     const drillableItemsToUse = onDrill ? drillableItems ?? implicitDrills : undefined;
+
+    const insightPoisitionStyle: CSSProperties = useMemo(() => {
+        return {
+            width: "100%",
+            height: "100%",
+            position: userWorkspaceSettings?.enableKDWidgetCustomHeight ? "absolute" : "relative",
+        };
+    }, [userWorkspaceSettings?.enableKDWidgetCustomHeight]);
+
     return (
-        <IntlWrapper locale={locale}>
-            {(status === "loading" || status === "pending" || isVisualizationLoading) && <LoadingComponent />}
-            {(error || visualizationError) && (
-                <InsightError
-                    error={error || visualizationError}
-                    ErrorComponent={ErrorComponent}
-                    height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
-                />
-            )}
-            {status === "success" && (
-                <InsightRendererImpl
-                    insight={insightWithAddedWidgetProperties}
-                    backend={effectiveBackend}
-                    workspace={effectiveWorkspace}
-                    drillableItems={drillableItemsToUse}
-                    onDrill={onDrill ? handleDrill : undefined}
-                    config={chartConfig}
-                    onLoadingChanged={handleLoadingChanged}
-                    locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
-                    settings={userWorkspaceSettings}
-                    colorPalette={colorPalette}
-                    onError={handleError}
-                    pushData={handlePushData}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                />
-            )}
-        </IntlWrapper>
+        <div style={insightStyle}>
+            <div style={insightPoisitionStyle}>
+                <IntlWrapper locale={locale}>
+                    {(status === "loading" || status === "pending" || isVisualizationLoading) && (
+                        <LoadingComponent />
+                    )}
+                    {(error || visualizationError) && (
+                        <InsightError
+                            error={error || visualizationError}
+                            ErrorComponent={ErrorComponent}
+                            clientHeight={userWorkspaceSettings?.enableKDWidgetCustomHeight && clientHeight}
+                            height={null} // make sure the error is aligned to the top (this is the behavior in gdc-dashboards)
+                        />
+                    )}
+                    {status === "success" && (
+                        <InsightRendererImpl
+                            insight={insightWithAddedWidgetProperties}
+                            backend={effectiveBackend}
+                            workspace={effectiveWorkspace}
+                            drillableItems={drillableItemsToUse}
+                            onDrill={onDrill ? handleDrill : undefined}
+                            config={chartConfig}
+                            onLoadingChanged={handleLoadingChanged}
+                            locale={dashboardViewConfig.locale ?? (userWorkspaceSettings.locale as ILocale)}
+                            settings={userWorkspaceSettings}
+                            colorPalette={colorPalette}
+                            onError={handleError}
+                            pushData={handlePushData}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                        />
+                    )}
+                </IntlWrapper>
+            </div>
+        </div>
     );
 };

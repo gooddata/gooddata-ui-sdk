@@ -157,7 +157,45 @@ describe("PluggableHeadline", () => {
                 .mockImplementation(() => fakeElement);
             const mockRenderFun = jest.fn();
 
-            const headline = createComponent({ ...defaultProps, renderFun: mockRenderFun });
+            const headline = createComponent({
+                ...defaultProps,
+                renderFun: mockRenderFun,
+                featureFlags: {
+                    enableKDWidgetCustomHeight: false,
+                },
+            });
+            const options: IVisProps = getTestOptions();
+
+            headline.update(
+                options,
+                testMocks.insightWithSingleMeasure,
+                emptyPropertiesMeta,
+                executionFactory,
+            );
+
+            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreHeadline);
+            expect(mockRenderFun).toHaveBeenCalledWith(
+                fakeElement,
+                document.querySelector(defaultProps.element),
+            );
+
+            reactCreateElementSpy.mockReset();
+        });
+
+        it("should render headline by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
+            const fakeElement: any = "fake element";
+            const reactCreateElementSpy = jest
+                .spyOn(React, "createElement")
+                .mockImplementation(() => fakeElement);
+            const mockRenderFun = jest.fn();
+
+            const headline = createComponent({
+                ...defaultProps,
+                renderFun: mockRenderFun,
+                featureFlags: {
+                    enableKDWidgetCustomHeight: true,
+                },
+            });
             const options: IVisProps = getTestOptions();
 
             headline.update(

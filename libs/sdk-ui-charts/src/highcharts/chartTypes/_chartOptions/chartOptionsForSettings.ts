@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { ISettings } from "@gooddata/sdk-backend-spi";
 import { IChartConfig } from "../../../interfaces";
@@ -7,7 +7,16 @@ import { IChartConfig } from "../../../interfaces";
  * @internal
  */
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig {
-    return settings && settings["disableKpiDashboardHeadlineUnderline"] === true
-        ? { ...config, disableDrillUnderline: true }
-        : config;
+    let updatedConfig = config;
+    if (settings) {
+        if (settings["disableKpiDashboardHeadlineUnderline"] === true) {
+            updatedConfig = { ...updatedConfig, disableDrillUnderline: true };
+        }
+
+        if (settings["enableKDWidgetCustomHeight"] === true) {
+            updatedConfig = { ...updatedConfig, enableCompactSize: true };
+        }
+    }
+
+    return updatedConfig;
 }

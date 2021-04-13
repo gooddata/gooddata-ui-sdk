@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import { ISeparators } from "@gooddata/numberjs";
 import { IColorPalette, Identifier } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
@@ -169,6 +169,14 @@ export interface IChartConfig {
      * When this option is enabled, we will prepare some configs for the 'chart' option to allow the chart can be zooming/panning.
      */
     zoomInsight?: boolean;
+
+    /**
+     * Enables more compact rendering of visualization in small containers.
+     *
+     * Note: this property might not be supported in all the visualizations.
+     *
+     */
+    enableCompactSize?: boolean;
 
     //
     //
