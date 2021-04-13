@@ -33,7 +33,7 @@ export interface IVisualizationProps {
     onLegendReady(): void;
     pushData?(data: any): void;
 }
-
+// TODO: REMOVE VISUALIZATION COMPONENT
 /**
  * @internal
  */

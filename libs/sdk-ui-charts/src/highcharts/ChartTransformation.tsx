@@ -25,6 +25,11 @@ import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import { validateData } from "./chartTypes/_chartOptions/chartLimits";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
+import Highcharts from "./lib";
+import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common";
+import isEqual from "lodash/isEqual";
+import isFunction from "lodash/isFunction";
+import omitBy from "lodash/omitBy";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
@@ -38,8 +43,9 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     theme?: ITheme;
     drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
-    width: number;
+    width?: number; // TODO: width should not be optional
     locale: string;
+    numericSymbols?: string[];
 
     dataView: IDataView;
 
@@ -74,12 +80,33 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
     private chartOptions: IChartOptions;
     private legendOptions: ILegendOptions;
 
+    constructor(props: IChartTransformationProps) {
+        super(props);
+
+        this.setNumericSymbols(this.props.numericSymbols);
+    }
+
     public UNSAFE_componentWillMount(): void {
         this.assignChartOptions(this.props);
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IChartTransformationProps): void {
+        this.setNumericSymbols(nextProps.numericSymbols);
         this.assignChartOptions(nextProps);
+    }
+
+    public shouldComponentUpdate(nextProps: IChartTransformationProps): boolean {
+        return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
+    }
+
+    public setNumericSymbols(numericSymbols: string[]): void {
+        if (numericSymbols && numericSymbols.length) {
+            Highcharts.setOptions({
+                lang: {
+                    numericSymbols,
+                },
+            });
+        }
     }
 
     public getRendererProps(): Omit<IHighChartsRendererProps, "legendRenderer" | "chartRenderer"> {
@@ -159,6 +186,14 @@ class ChartTransformationImpl extends React.Component<IChartTransformationProps,
     }
 
     public render(): React.ReactNode {
+        const visType = this.props.config.type;
+        console.log("visType", visType);
+        if (!isChartSupported(visType)) {
+            invariant(
+                false,
+                `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
+            );
+        }
         if (this.state.dataTooLarge || this.state.hasNegativeValue) {
             return null;
         }

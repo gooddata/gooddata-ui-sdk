@@ -126,8 +126,6 @@ export interface IBaseChartProps extends ICoreChartProps {
     theme?: ITheme;
     // (undocumented)
     type: ChartType;
-    // (undocumented)
-    visualizationComponent?: React_2.ComponentClass<any>;
 }
 
 // @public (undocumented)
@@ -249,6 +247,7 @@ export interface IComboChartProps extends IBucketChartProps, IComboChartBucketPr
 export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks {
     config?: IChartConfig;
     height?: number;
+    width?: number;
 }
 
 // @internal
