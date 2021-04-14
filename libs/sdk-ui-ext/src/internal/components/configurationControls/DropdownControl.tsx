@@ -73,6 +73,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
                                                     closeDropdown();
                                                 }}
                                                 type={item.type}
+                                                icon={item.icon}
                                             />
                                         )}
                                     />
