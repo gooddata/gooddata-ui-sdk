@@ -9,7 +9,6 @@ import cx from "classnames";
 import { IAlignPoint } from "../typings/positioning";
 import { ArrowDirections, ArrowOffsets } from "./typings";
 import { Overlay } from "../Overlay";
-import { propsEqual } from "../utils/immutable";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",
@@ -117,7 +116,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
     }
 
     shouldComponentUpdate(nextProps: IBubbleProps, nextState: IBubbleState): boolean {
-        const propsChanged = !propsEqual<IBubbleProps>(this.props, nextProps);
+        const propsChanged = !isEqual(this.props, nextProps);
         const alignmentChanged = !isEqual(this.state.optimalAlignPoints, nextState.optimalAlignPoints);
 
         return propsChanged || alignmentChanged;

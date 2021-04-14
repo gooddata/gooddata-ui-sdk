@@ -67,7 +67,6 @@
         "element-closest-polyfill": "^1.0.0",
         "fixed-data-table-2": "^0.8.21",
         "foundation-sites": "^5.5.3",
-        "immutable": "~4.0.0-rc.12",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
         "react-codemirror2": "^7.2.0",

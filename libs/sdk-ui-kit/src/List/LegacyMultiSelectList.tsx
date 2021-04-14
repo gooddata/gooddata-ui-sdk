@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
-import { isImmutable, fromJS } from "immutable";
 
 import { Button } from "../Button";
 import { LegacyList } from "./LegacyList";
@@ -114,12 +113,11 @@ export class LegacyMultiSelectList<T> extends Component<
             return "";
         }
         return selection
-            .map((selectionItem) => {
-                const item = isImmutable(selectionItem) ? selectionItem : fromJS(selectionItem);
-                if (item.has("available") && !item.get("available")) {
+            .map((item) => {
+                if (item.available !== undefined && !item.available) {
                     return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
                 }
-                return item.get("title") || `(${intl.formatMessage({ id: "empty_value" })})`;
+                return item.title || `(${intl.formatMessage({ id: "empty_value" })})`;
             })
             .join(", ");
     }
