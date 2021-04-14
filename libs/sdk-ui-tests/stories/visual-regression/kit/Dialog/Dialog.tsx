@@ -118,6 +118,7 @@ class DialogExamples extends PureComponent {
                 }}
                 headerText="About GoodData.CN community edition"
                 infoText="The community edition is meant for evaluation purposes only."
+                copyrightText="Copyright (c) 2021 GoodData Corporation"
                 closeButtonText="Close"
                 links={[
                     {

@@ -671,6 +671,8 @@ export interface ICommunityEditionDialogProps {
     // (undocumented)
     closeButtonText: string;
     // (undocumented)
+    copyrightText: string;
+    // (undocumented)
     headerText: string;
     // (undocumented)
     infoText: string;
