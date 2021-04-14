@@ -186,6 +186,59 @@ describe("ThemeProvider", () => {
                 .innerHTML.indexOf("--gd-modal-dropShadow: none;") > -1,
         ).toEqual(true);
     });
+
+    it("should use theme from props and contain complete complementary palette", async () => {
+        const theme: ITheme = { palette: { complementary: { c0: "#000", c9: "#fff" } } };
+
+        const expectedTheme: ITheme = {
+            palette: {
+                error: {
+                    base: "#e54d42",
+                },
+                primary: {
+                    base: "#14b2e2",
+                },
+                success: {
+                    base: "#00c18d",
+                },
+                warning: {
+                    base: "#fada23",
+                },
+                complementary: {
+                    c0: "#000",
+                    c1: "#1c1c1c",
+                    c2: "#383838",
+                    c3: "#555",
+                    c4: "#717171",
+                    c5: "#8d8d8d",
+                    c6: "#aaa",
+                    c7: "#c6c6c6",
+                    c8: "#e2e2e2",
+                    c9: "#fff",
+                },
+            },
+        };
+
+        const TestComponent: React.FC<IThemeContextProviderProps> = () => <div>Test component</div>;
+        const TestComponentWithTheme = withTheme(TestComponent);
+        const component = await renderComponent(
+            <ThemeProvider theme={theme}>
+                <TestComponentWithTheme />
+            </ThemeProvider>,
+        );
+
+        Object.values(expectedTheme.palette.complementary).forEach((color, index) => {
+            expect(
+                document
+                    .getElementById("gdc-theme-properties")
+                    .innerHTML.indexOf(`--gd-palette-complementary-${index}: ${color};`) > -1,
+            ).toEqual(true);
+        });
+        expect(component.find(TestComponent).props()).toEqual({
+            themeIsLoading: false,
+            theme: expectedTheme,
+        });
+    });
 });
 
 describe("isDarkTheme", () => {
