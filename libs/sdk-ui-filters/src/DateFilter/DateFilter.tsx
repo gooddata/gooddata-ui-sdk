@@ -11,7 +11,12 @@ import { canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
-import { DateFilterOption, IDateFilterOptionsByType } from "./interfaces";
+import {
+    DateFilterOption,
+    IDateFilterOptionsByType,
+    IUiAbsoluteDateFilterForm,
+    IUiRelativeDateFilterForm
+} from "./interfaces";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 
 const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
@@ -123,9 +128,27 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         };
     };
 
+    private static checkInitialFilterOption = (filterOption: DateFilterOption) => {
+        const {
+            type
+        } = filterOption;
+
+        if (type === "absoluteForm" && !((filterOption as IUiAbsoluteDateFilterForm).from && (filterOption as IUiAbsoluteDateFilterForm).to)) {
+            // eslint-disable-next-line no-console
+            console.warn("The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.");
+        }
+
+        if (type === "relativeForm" && !((filterOption as IUiRelativeDateFilterForm).from && (filterOption as IUiRelativeDateFilterForm).to)) {
+            // eslint-disable-next-line no-console
+            console.warn("The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.");
+        }
+    }
+
     constructor(props: IDateFilterProps) {
         super(props);
         this.state = DateFilter.getStateFromProps(props);
+
+        DateFilter.checkInitialFilterOption(props.selectedFilterOption);
 
         // eslint-disable-next-line no-console
         console.warn(
