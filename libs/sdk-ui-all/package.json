@@ -30,6 +30,7 @@
         "build": "concurrently \"npm run build-cjs\" \"npm run build-esm\" && npm run api-extractor",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
+        "prepack": "cp -f ../../NOTICE ./NOTICE",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "test": "jest --watch",
         "test-once": "jest --passWithNoTests",
