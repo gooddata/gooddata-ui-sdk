@@ -135,7 +135,7 @@ export class TigerBackend implements IAnalyticalBackend {
             const specificFunctions: TigerSpecificFunctions = {
                 isCommunityEdition: async () => {
                     try {
-                        return this.authApiCall(async (sdk) => {
+                        return await this.authApiCall(async (sdk) => {
                             const response = await sdk.organizationObjects.getAllEntitiesWorkspaces(
                                 { page: 0, size: 1 },
                                 { headers: jsonApiHeaders },
