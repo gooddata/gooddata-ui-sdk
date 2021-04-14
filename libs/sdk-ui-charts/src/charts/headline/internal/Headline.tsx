@@ -250,6 +250,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         const valueClickCallback = primaryItem.isDrillable ? this.handleClickOnPrimaryItem : null;
 
         if (config.enableCompactSize) {
+            if (!clientHeight) {
+                return null;
+            }
             const { height, fontSize } = calculateHeadlineHeightFontSize(secondaryItem, clientHeight);
             const heightStyles = { height: `${height}px`, lineHeight: `${height}px` };
 
