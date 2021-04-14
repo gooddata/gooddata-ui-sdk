@@ -110,8 +110,12 @@ export class DashboardLayoutBuilder<TWidget> implements IDashboardLayoutBuilder<
         const section = this.facade().sections().section(fromIndex)?.raw();
         invariant(section, `Cannot move the section - section at index ${fromIndex} does not exist!`);
 
+        const maxToIndex = Math.min(toIndex, this.facade().sections().count() - 1);
+
         this.removeSection(fromIndex);
-        this.addSection((r) => r.setSection(section), toIndex);
+        this.addSection((r) => {
+            return r.setSection(section);
+        }, maxToIndex);
         return this;
     }
 
