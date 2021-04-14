@@ -27,9 +27,6 @@ import { validateData } from "./chartTypes/_chartOptions/chartLimits";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import Highcharts from "./lib";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common";
-import isEqual from "lodash/isEqual";
-import isFunction from "lodash/isFunction";
-import omitBy from "lodash/omitBy";
 
 export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
     return <HighChartsRenderer {...props} />;
@@ -39,13 +36,11 @@ export function renderHighCharts(props: IHighChartsRendererProps): JSX.Element {
  * @internal
  */
 export interface IChartTransformationProps extends WrappedComponentProps {
-    config: IChartConfig;
-    theme?: ITheme;
-    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     height: number;
-    width?: number; // TODO: width should not be optional
+    width: number;
+    config: IChartConfig;
+    drillableItems: Array<IDrillableItem | IHeaderPredicate>;
     locale: string;
-    numericSymbols?: string[];
 
     dataView: IDataView;
 
@@ -53,153 +48,106 @@ export interface IChartTransformationProps extends WrappedComponentProps {
     onLegendReady: OnLegendReady;
 
     afterRender(): void;
-    pushData?(data: any): void;
-    renderer(arg: IHighChartsRendererProps): JSX.Element;
     onDataTooLarge(chartOptions: any): void;
     onNegativeValues(chartOptions: any): void;
+
+    numericSymbols?: string[];
+    theme?: ITheme;
+    pushData?(data: any): void;
+    renderer?(arg: IHighChartsRendererProps): JSX.Element;
 }
 
-export interface IChartTransformationState {
-    dataTooLarge: boolean;
-    hasNegativeValue: boolean;
-}
-
-class ChartTransformationImpl extends React.Component<IChartTransformationProps, IChartTransformationState> {
-    public static defaultProps = {
-        drillableItems: [] as IDrillableItem[],
-        renderer: renderHighCharts,
-        afterRender: noop,
-        onNegativeValues: null as any,
-        onDrill: (): boolean => true,
-        pushData: noop,
-        onLegendReady: noop,
-        height: undefined as number,
-        width: undefined as number,
+const ChartTransformationImpl = (props: IChartTransformationProps) => {
+    const {
+        config,
+        renderer = renderHighCharts,
+        dataView,
+        height,
+        width,
+        afterRender = noop,
+        onDrill = (): boolean => true,
+        onLegendReady = noop,
+        locale,
+        intl,
+        theme,
+        numericSymbols,
+        drillableItems = [],
+        onDataTooLarge,
+        onNegativeValues = null,
+        pushData = noop,
+    } = props;
+    const visType = config.type;
+    const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+    const chartOptions: IChartOptions = getChartOptions(dataView, config, drillablePredicates, theme);
+    const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions);
+    const validationResult = validateData(config.limits, chartOptions);
+    const drillConfig = { dataView, onDrill };
+    const hcOptions = getHighchartsOptions(
+        chartOptions,
+        drillConfig,
+        config,
+        dataView.definition,
+        intl,
+        theme,
+    );
+    const rendererProps = {
+        chartOptions,
+        hcOptions,
+        height,
+        width,
+        afterRender,
+        onLegendReady,
+        locale,
+        legend: legendOptions,
+        theme,
     };
 
-    private chartOptions: IChartOptions;
-    private legendOptions: ILegendOptions;
-
-    constructor(props: IChartTransformationProps) {
-        super(props);
-
-        this.setNumericSymbols(this.props.numericSymbols);
-    }
-
-    public UNSAFE_componentWillMount(): void {
-        this.assignChartOptions(this.props);
-    }
-
-    public UNSAFE_componentWillReceiveProps(nextProps: IChartTransformationProps): void {
-        this.setNumericSymbols(nextProps.numericSymbols);
-        this.assignChartOptions(nextProps);
-    }
-
-    public shouldComponentUpdate(nextProps: IChartTransformationProps): boolean {
-        return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
-    }
-
-    public setNumericSymbols(numericSymbols: string[]): void {
-        if (numericSymbols && numericSymbols.length) {
-            Highcharts.setOptions({
-                lang: {
-                    numericSymbols,
-                },
-            });
-        }
-    }
-
-    public getRendererProps(): Omit<IHighChartsRendererProps, "legendRenderer" | "chartRenderer"> {
-        const { chartOptions, legendOptions } = this;
-        const {
-            dataView,
-            height,
-            width,
-            afterRender,
-            onDrill,
-            onLegendReady,
-            locale,
-            config,
-            intl,
-            theme,
-        } = this.props;
-        const drillConfig = { dataView, onDrill };
-        const hcOptions = getHighchartsOptions(
-            chartOptions,
-            drillConfig,
-            config,
-            dataView.definition,
-            intl,
-            theme,
+    if (validationResult.dataTooLarge) {
+        // always force onDataTooLarge error handling
+        invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
+        onDataTooLarge(chartOptions);
+    } else if (validationResult.hasNegativeValue) {
+        // ignore hasNegativeValue if validation already fails on dataTooLarge
+        // force onNegativeValues error handling only for pie chart.
+        // hasNegativeValue can be true only for pie chart.
+        invariant(
+            onNegativeValues,
+            '"onNegativeValues" callback required for pie chart transformation is missing.',
         );
-
-        return {
-            chartOptions,
-            hcOptions,
-            height,
-            width,
-            afterRender,
-            onLegendReady,
-            locale,
-            legend: legendOptions,
-            theme,
-        };
+        onNegativeValues(chartOptions);
     }
 
-    public assignChartOptions(props: IChartTransformationProps): IChartOptions {
-        const { drillableItems, dataView, onDataTooLarge, onNegativeValues, pushData, config, theme } = props;
-        const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
+    pushData({
+        propertiesMeta: {
+            legend_enabled: legendOptions.toggleEnabled,
+        },
+        colors: {
+            colorAssignments: chartOptions.colorAssignments,
+            colorPalette: chartOptions.colorPalette,
+        },
+    });
 
-        this.chartOptions = getChartOptions(dataView, config, drillablePredicates, theme);
-        const validationResult = validateData(config.limits, this.chartOptions);
+    if (!isChartSupported(visType)) {
+        invariant(
+            false,
+            `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
+        );
+    }
 
-        if (validationResult.dataTooLarge) {
-            // always force onDataTooLarge error handling
-            invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
-            onDataTooLarge(this.chartOptions);
-        } else if (validationResult.hasNegativeValue) {
-            // ignore hasNegativeValue if validation already fails on dataTooLarge
-            // force onNegativeValues error handling only for pie chart.
-            // hasNegativeValue can be true only for pie chart.
-            invariant(
-                onNegativeValues,
-                '"onNegativeValues" callback required for pie chart transformation is missing.',
-            );
-            onNegativeValues(this.chartOptions);
-        }
-
-        this.legendOptions = buildLegendOptions(config.legend, this.chartOptions);
-
-        pushData({
-            propertiesMeta: {
-                legend_enabled: this.legendOptions.toggleEnabled,
-            },
-            colors: {
-                colorAssignments: this.chartOptions.colorAssignments,
-                colorPalette: this.chartOptions.colorPalette,
+    if (numericSymbols && numericSymbols.length) {
+        Highcharts.setOptions({
+            lang: {
+                numericSymbols,
             },
         });
-
-        this.setState(validationResult);
-
-        return this.chartOptions;
     }
 
-    public render(): React.ReactNode {
-        const visType = this.props.config.type;
-        console.log("visType", visType);
-        if (!isChartSupported(visType)) {
-            invariant(
-                false,
-                `Unknown visualization type: ${visType}. Supported visualization types: ${stringifyChartTypes()}`,
-            );
-        }
-        if (this.state.dataTooLarge || this.state.hasNegativeValue) {
-            return null;
-        }
-        return this.props.renderer({ ...this.getRendererProps(), chartRenderer, legendRenderer });
+    if (validationResult.dataTooLarge || validationResult.hasNegativeValue) {
+        return null;
     }
-}
+
+    return renderer({ ...rendererProps, chartRenderer, legendRenderer });
+};
 
 /**
  * @internal

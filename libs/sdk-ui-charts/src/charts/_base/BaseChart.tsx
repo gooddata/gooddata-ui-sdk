@@ -21,7 +21,7 @@ import {
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
-import { ChartTransformation, renderHighCharts } from "../../highcharts/ChartTransformation";
+import { ChartTransformation } from "../../highcharts";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
@@ -116,7 +116,6 @@ class StatelessBaseChart extends React.Component<Props> {
                                     onNegativeValues={onNegativeValues}
                                     onLegendReady={onLegendReady}
                                     pushData={pushData}
-                                    renderer={renderHighCharts}
                                     numericSymbols={translationProps.numericSymbols}
                                 />
                             );

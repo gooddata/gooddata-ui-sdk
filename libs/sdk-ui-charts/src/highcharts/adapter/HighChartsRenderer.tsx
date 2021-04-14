@@ -19,6 +19,8 @@ import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commo
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 import { ITheme } from "@gooddata/sdk-backend-spi";
+import isFunction from "lodash/isFunction";
+import omitBy from "lodash/omitBy";
 
 /**
  * @internal
@@ -112,6 +114,10 @@ export class HighChartsRenderer extends React.PureComponent<
     public shouldShowFluid(): boolean {
         const { documentObj } = this.props;
         return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
+    }
+
+    public shouldComponentUpdate(nextProps: IHighChartsRendererProps): boolean {
+        return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
     }
 
     public UNSAFE_componentWillMount(): void {
