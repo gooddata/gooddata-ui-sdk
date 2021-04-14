@@ -7,6 +7,7 @@ import {
     GridReadyEvent,
     SortChangedEvent,
 } from "@ag-grid-community/all-modules";
+import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { defTotals } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -37,13 +38,13 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
+import debounce from "lodash/debounce";
 import { invariant } from "ts-invariant";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
 import { ColumnResizingConfig, IMenuAggregationClickConfig, TableConfig } from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
-import debounce from "lodash/debounce";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -161,6 +162,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private readonly errorMap: IErrorDescriptors;
     private containerRef: HTMLDivElement | undefined;
     private readonly debouncedGridSizeChanged: (gridSizeChangedEvent: any) => void;
+    private pivotTableId: string;
 
     private internal: InternalTableState;
 
@@ -179,6 +181,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         this.errorMap = newErrorMapping(props.intl);
         this.internal = new InternalTableState();
         this.debouncedGridSizeChanged = debounce(this.onGridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
+        this.pivotTableId = uuidv4().replace(/-/g, "");
     }
 
     //
@@ -247,6 +250,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     public componentDidMount(): void {
+        this.alertParentWrapperMissingHeight();
         this.internal.initializer = this.initialize(this.props.execution);
     }
 
@@ -352,6 +356,24 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         );
     }
 
+    /**
+     * Checks DOM if height has been set on PivotTable parent wrapper. If height has not been set,
+     * PivotTable will not be rendered correctly. Therefore, we need to inform the user at least on the console
+     * on what is happening.
+     *
+     * @private
+     */
+    private alertParentWrapperMissingHeight(): void {
+        const parentWrapper = document.getElementById(this.pivotTableId)?.parentElement;
+        const parentHeight = parentWrapper?.offsetHeight ?? 0;
+        if (parentHeight < 20) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `The wrapper height of the pivot table has not been set or is suspiciously small. This might cause pivot table rendering issues. If so, please set an appropriate height for the wrapper. Use document.getElementById("${this.pivotTableId}") to find the PivotTable element in the DOM, which will help you to identify its wrapper.`,
+            );
+        }
+    }
+
     //
     // Render
     //
@@ -396,7 +418,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         if (!this.state.readyToRender) {
             return (
-                <div className="gd-table-component" style={style}>
+                <div className="gd-table-component" style={style} id={this.pivotTableId}>
                     {this.renderLoading()}
                 </div>
             );
@@ -423,7 +445,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
 
         return (
-            <div className="gd-table-component" style={style}>
+            <div className="gd-table-component" style={style} id={this.pivotTableId}>
                 <div
                     className="gd-table ag-theme-balham s-pivot-table"
                     style={style}
