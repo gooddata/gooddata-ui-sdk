@@ -1,8 +1,17 @@
 // (C) 2021 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
+import { getContrast, shade } from "polished";
 import { getComplementaryPalette } from "../complementaryPalette";
 
-const prepareComplementaryPalette = (theme: ITheme): ITheme => {
+/**
+ * Minimum contrast ratio n:1 recommended by W3C
+ * https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html
+ */
+const MIN_CONTRAST_RATIO = 3;
+
+const DEFAULT_BACKGROUND_COLOR = "#fff";
+
+export const prepareComplementaryPalette = (theme: ITheme): ITheme => {
     if (theme?.palette?.complementary) {
         return {
             ...theme,
@@ -38,7 +47,7 @@ export const prepareBaseColors = (theme: ITheme): ITheme => {
     return theme;
 };
 
-const stripComplementaryPalette = (theme: ITheme): ITheme => {
+export const stripComplementaryPalette = (theme: ITheme): ITheme => {
     const strippedTheme = {
         ...theme,
     };
@@ -50,20 +59,40 @@ const stripComplementaryPalette = (theme: ITheme): ITheme => {
     return strippedTheme;
 };
 
-export const prepareTheme = (theme: ITheme, enableComplementaryPalette = true): ITheme => {
-    if (!enableComplementaryPalette) {
-        return stripComplementaryPalette(theme);
+export const preparePrimaryColor = (theme: ITheme): ITheme => {
+    const primaryColor = theme?.palette?.primary?.base;
+
+    if (!theme?.palette?.complementary || !primaryColor) {
+        return theme;
     }
 
-    const themeWithComplementaryPalette = {
-        ...theme,
-        ...prepareComplementaryPalette(theme),
-    };
+    let contrastPrimaryColor = primaryColor;
+    while (getContrast(contrastPrimaryColor, DEFAULT_BACKGROUND_COLOR) < MIN_CONTRAST_RATIO) {
+        contrastPrimaryColor = shade(0.05, contrastPrimaryColor);
+    }
 
-    const themeWithBaseColors = {
-        ...themeWithComplementaryPalette,
-        ...prepareBaseColors(themeWithComplementaryPalette),
+    return {
+        ...theme,
+        palette: {
+            ...theme.palette,
+            primary: {
+                ...theme.palette.primary,
+                ...{ base: contrastPrimaryColor },
+            },
+        },
     };
+};
+
+export const prepareTheme = (theme: ITheme, enableComplementaryPalette = true): ITheme => {
+    if (!enableComplementaryPalette) {
+        const themeWithContrastPrimaryColor = preparePrimaryColor(theme);
+        const themeWithoutComplementaryPalette = stripComplementaryPalette(themeWithContrastPrimaryColor);
+
+        return themeWithoutComplementaryPalette;
+    }
+
+    const themeWithComplementaryPalette = prepareComplementaryPalette(theme);
+    const themeWithBaseColors = prepareBaseColors(themeWithComplementaryPalette);
 
     return themeWithBaseColors;
 };
