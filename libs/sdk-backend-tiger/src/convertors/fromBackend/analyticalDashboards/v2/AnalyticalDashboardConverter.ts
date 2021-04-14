@@ -31,10 +31,15 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undef
     });
 
     return widgetsPaths.reduce((layout, widgetPath, index) => {
-        return updateWith(layout, widgetPath, (widget) => ({
-            ...widget,
-            ref: idRef((widget.insight as IdentifierRef).identifier + "_widget-" + index),
-        }));
+        return updateWith(layout, widgetPath, (widget) => {
+            const temporaryWidgetId = (widget.insight as IdentifierRef).identifier + "_widget-" + index;
+            return {
+                ...widget,
+                ref: idRef(temporaryWidgetId),
+                uri: temporaryWidgetId,
+                identifier: temporaryWidgetId,
+            };
+        });
     }, layout);
 }
 
