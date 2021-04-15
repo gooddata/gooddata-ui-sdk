@@ -2655,6 +2655,20 @@ packages:
       supports-color: '*'
     resolution:
       integrity: sha512-SPZ8U8PBYK0n4srFjCLedk0jWU4QlxgEYLCXIBShJgOwPhTTQknkUlsEwaMIevvCU4iCQZhfMX+D8Pz5GZjFgA==
+  /@oclif/plugin-legacy/1.1.4:
+    dependencies:
+      '@heroku-cli/command': 8.4.1
+      '@oclif/color': 0.0.0
+      '@oclif/command': 1.8.0
+      ansi-escapes: 3.2.0
+      debug: 4.3.1
+      semver: 5.7.1
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-/oJGRcM7VaSGJ9Eodi/kl0avAKDlJvdYA8jmh4bhBHrCsaPqM61P7LUH2w2PUIccnM82mPPCp3PoUEM85PAIdw==
   /@oclif/plugin-legacy/1.2.0:
     dependencies:
       '@heroku-cli/command': 8.4.1
@@ -9957,7 +9971,7 @@ packages:
       node: '>= 6.0.0'
     resolution:
       integrity: sha512-br2hIJN0y0yO+EOxV9qn+i6zhRpZTWa+ECKSpjwtAHsG3dFp+cZkHoVm6QxC/9XypCILFBN0LRlOoVNWs/IUhQ==
-  /heroku/7.52.0:
+  /heroku/7.47.11:
     dependencies:
       '@heroku-cli/color': 1.1.14
       '@heroku-cli/command': 8.4.1
@@ -9991,7 +10005,7 @@ packages:
       '@oclif/errors': 1.2.2
       '@oclif/plugin-commands': 1.3.0
       '@oclif/plugin-help': 2.2.0
-      '@oclif/plugin-legacy': 1.2.0
+      '@oclif/plugin-legacy': 1.1.4
       '@oclif/plugin-not-found': 1.2.2
       '@oclif/plugin-plugins': 1.7.9
       '@oclif/plugin-update': 1.3.9
@@ -10011,7 +10025,7 @@ packages:
       node: '>=8.3.0'
     hasBin: true
     resolution:
-      integrity: sha512-PVegg/hF9N4j0jkp/MyFZYGWH7TV8Jypg90VCbSEHdRDMXazwTcnsQOvyxyhycv99x/j33oYCmYiMdFAmhy44A==
+      integrity: sha512-iqkZ5S/NeBHaB8jYVtaUiG6pn33d3Zdb7yjz07ykpHCgP8r0EuxOdYrIZVQxGwYfcG+vhh8bI1yW/Qek1dDs/A==
   /highcharts/8.2.2:
     dev: false
     resolution:
@@ -20682,7 +20696,7 @@ packages:
       file-loader: 6.2.0_webpack@4.46.0
       fork-ts-checker-webpack-plugin: 4.1.6
       formik: 0.11.11_react@16.14.0
-      heroku: 7.52.0
+      heroku: 7.47.11
       history: 4.10.1
       html-webpack-plugin: 4.5.2_webpack@4.46.0
       isomorphic-fetch: 2.2.1
@@ -20725,7 +20739,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-nRM45yoedHen6dEWq4Tv6aCDDBNdSQ3ZSgUN4RcGkSuo4OL1NbF4WhOef6Q2WEu+AxEZR9WwXxpLkd/hmUiIVQ==
+      integrity: sha512-/nyOuev6hFsGCE+hHa254Q0cRvpWDC8RK1BsrsW6wWEJxqWyF6UHQ1yLuGqFNLO/saY56QHNT4g/86plbC3lrQ==
       tarball: file:projects/sdk-examples.tgz
     version: 0.0.0
   file:projects/sdk-model.tgz_ts-node@8.10.2:
