@@ -1,17 +1,19 @@
 // (C) 2007-2021 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
-import { IChartOptions } from "../../typings/unsafe";
+import { IChartConfig } from "../../../interfaces";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
+import { HighchartsOptions } from "../../../highcharts/lib";
 
 export const LINE_WIDTH = 3;
 
 export function getLineConfiguration(
-    _config: IChartOptions,
+    config: IChartConfig,
     _definition: IExecutionDefinition,
     theme: ITheme,
-) {
-    return {
+): HighchartsOptions {
+    const lineConfiguration = {
         chart: {
             type: "line",
         },
@@ -53,4 +55,13 @@ export function getLineConfiguration(
             },
         ],
     };
+
+    if (config?.enableCompactSize) {
+        return {
+            ...lineConfiguration,
+            responsive: getCommonResponsiveConfig(),
+        };
+    }
+
+    return lineConfiguration;
 }

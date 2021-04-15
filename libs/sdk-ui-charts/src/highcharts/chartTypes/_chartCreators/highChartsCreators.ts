@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import merge from "lodash/merge";
 import invariant from "ts-invariant";
