@@ -623,10 +623,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "immutable",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "inquirer",
       "allowedCategories": [ "tools" ]
     },
