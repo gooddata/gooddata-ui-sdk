@@ -66,8 +66,12 @@ class RelativeRangePickerComponent extends React.Component<
         );
     }
 
+    private isTouchDevice = (): boolean | number => {
+        return "ontouchstart" in window || navigator.msMaxTouchPoints;
+    };
+
     private focusToField = (): void => {
-        const isTouchDevice = "ontouchstart" in window || navigator.msMaxTouchPoints;
+        const isTouchDevice = this.isTouchDevice();
         if (this.toFieldRef.current) {
             /**
              * Prevents hover style from persisting after switching to another field on
@@ -81,6 +85,17 @@ class RelativeRangePickerComponent extends React.Component<
         }
     };
 
+    private blurToField = (): void => {
+        const isTouchDevice = this.isTouchDevice();
+        if (this.toFieldRef.current) {
+            isTouchDevice
+                ? setTimeout(() => {
+                      this.toFieldRef.current.blur();
+                  }, 0)
+                : this.toFieldRef.current.blur();
+        }
+    };
+
     private handleFromChange = (from: number | undefined): void => {
         this.props.onSelectedFilterOptionChange({ ...this.props.selectedFilterOption, from });
         if (from !== undefined) {
@@ -90,6 +105,7 @@ class RelativeRangePickerComponent extends React.Component<
 
     private handleToChange = (to: number | undefined): void => {
         this.props.onSelectedFilterOptionChange({ ...this.props.selectedFilterOption, to });
+        this.blurToField();
     };
 }
 

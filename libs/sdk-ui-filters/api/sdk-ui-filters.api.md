@@ -40,6 +40,8 @@ export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
     constructor(props: IDateFilterProps);
     // (undocumented)
+    componentDidMount(): void;
+    // (undocumented)
     static defaultProps: Partial<IDateFilterProps>;
     // (undocumented)
     static getDerivedStateFromProps(nextProps: IDateFilterProps, prevState: IDateFilterState): IDateFilterState;

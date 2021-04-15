@@ -23,11 +23,24 @@ export const RelativePresetFilterItems: React.FC<{
     selectedFilterOption: DateFilterOption;
     className?: string;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
-}> = ({ dateFormat, filterOption, selectedFilterOption, onSelectedFilterOptionChange, className }) => {
+    availableGranularities: DateFilterGranularity[];
+}> = ({
+    dateFormat,
+    filterOption,
+    selectedFilterOption,
+    onSelectedFilterOptionChange,
+    className,
+    availableGranularities,
+}) => {
     const relativePresets = granularityOrder
-        .filter((granularity) =>
-            Boolean(filterOption && filterOption[granularity] && filterOption[granularity].length > 0),
-        )
+        .filter((granularity) => {
+            return Boolean(
+                filterOption &&
+                    filterOption[granularity] &&
+                    filterOption[granularity].length > 0 &&
+                    availableGranularities.indexOf(granularity) > -1,
+            );
+        })
         .map((granularity) => ({
             granularity,
             items: filterOption[granularity] as IRelativeDateFilterPreset[],
