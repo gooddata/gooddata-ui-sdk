@@ -2,6 +2,17 @@ dependencies:
   '@gooddata/frontend-npm-scripts': 1.2.0
   '@microsoft/api-documenter': 7.12.14
   '@microsoft/api-extractor': 7.8.1
+  '@oclif/command': 1.5.18
+  '@oclif/config': 1.13.2
+  '@oclif/errors': 1.2.2
+  '@oclif/plugin-commands': 1.3.0
+  '@oclif/plugin-help': 2.2.0
+  '@oclif/plugin-legacy': 1.1.4
+  '@oclif/plugin-not-found': 1.2.2
+  '@oclif/plugin-plugins': 1.7.9
+  '@oclif/plugin-update': 1.3.9
+  '@oclif/plugin-warn-if-update-available': 1.7.0
+  '@oclif/plugin-which': 1.0.3
   '@rush-temp/api-client-bear': file:projects/api-client-bear.tgz_ts-node@8.10.2
   '@rush-temp/api-client-tiger': file:projects/api-client-tiger.tgz_ts-node@8.10.2
   '@rush-temp/api-model-bear': file:projects/api-model-bear.tgz_ts-node@8.10.2
@@ -1573,7 +1584,7 @@ packages:
   /@heroku-cli/command/8.4.1:
     dependencies:
       '@heroku-cli/color': 1.1.14
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.2.2
       cli-ux: 4.9.3
       debug: 4.3.1
       fs-extra: 7.0.1
@@ -1613,7 +1624,7 @@ packages:
     dev: false
     resolution:
       integrity: sha1-Ytl57s/3LyYWd+x4nzfgTWFQNac=
-  /@heroku-cli/plugin-apps-v5/7.50.0:
+  /@heroku-cli/plugin-apps-v5/7.52.0:
     dependencies:
       '@heroku-cli/command': 8.4.1
       filesize: 4.2.1
@@ -1629,7 +1640,7 @@ packages:
       urijs: 1.19.2
     dev: false
     resolution:
-      integrity: sha512-YSheAAwJY1g44U6T1Et4rwdsM5jeuRukosiv5hMdr2IelcHDoZjYkf1hwPYLz2sHAHqhQOtO9QdQYvJRcWTNPA==
+      integrity: sha512-e0rh/Th+VvFLA/yVr0k2hvRpkxFfCrkSHv3crYQVLIO2x71noeZylWgp0F9gl8NC8V69M98kVsMAt+rxdn0dmw==
   /@heroku-cli/plugin-apps/7.47.13:
     dependencies:
       '@heroku-cli/color': 1.1.14
@@ -1647,7 +1658,7 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-9+OF3IvYbPqv8qyuhQaHRSjrVMUj+rP/U+/GItDjGUv1X3sS8TvkljTndxKlsZ5VYaznkXy5UQDwaIEEC4VSOA==
-  /@heroku-cli/plugin-auth/7.47.13:
+  /@heroku-cli/plugin-auth/7.52.0:
     dependencies:
       '@heroku-cli/color': 1.1.14
       '@heroku-cli/command': 8.4.1
@@ -1659,7 +1670,7 @@ packages:
     engines:
       node: '>=8.0.0'
     resolution:
-      integrity: sha512-nNtZaDxAetbNWz/kgwsLaSj+iQtzRIWJr66Z0REM6XyPhFPsf2Xj3U2f/PBeU2W266LIgRhnUWnkqnV3mMIepQ==
+      integrity: sha512-W4eI9G5E15S33sDbqBk4lUjzouR5rkari1tKBCiBot/v0l3Cwou+WV2XbXQTlJT6IlKFOgXWRGFG6bZvAK455Q==
   /@heroku-cli/plugin-autocomplete/7.47.13:
     dependencies:
       '@heroku-cli/command': 8.4.1
@@ -1694,7 +1705,7 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-hIfWtu55uDQXHEJoXe/v9sjFaLeCeHfw/Z+Z/b4evBfyzkNNIXsIBASG17enY/MmK227lQYm/vDrySghsh5TaQ==
-  /@heroku-cli/plugin-certs-v5/7.49.1:
+  /@heroku-cli/plugin-certs-v5/7.52.0:
     dependencies:
       date-fns: 1.30.1
       heroku-cli-util: 8.0.12
@@ -1703,7 +1714,7 @@ packages:
       psl: 1.8.0
     dev: false
     resolution:
-      integrity: sha512-mEeBJ8+76DJXaEOsUKjXx7nM5ON1jp2JPsNuwj9jboLLMn9T+qNzaMKxIO2FkO6DXBjM2oK4ZtKAKiE6ljqH3w==
+      integrity: sha512-SaEAbtoKRNZW9zJ5VPpMd4j47Z0PkLk/5xC6QY3IsMYU6WBem4jmkw2QmiRuv75y/CN7WjGuRHfU80/fr8lcxQ==
   /@heroku-cli/plugin-certs/7.47.13:
     dependencies:
       '@heroku-cli/command': 8.4.1
@@ -2477,8 +2488,8 @@ packages:
       integrity: sha512-KKd3W7eNwfNF061tr663oUNdt8EMnfuyf5Xv55SGWA1a0rjhWqS/32P7OeB7CbXcJUBdfVrPyR//1afaW12AWw==
   /@oclif/command/1.5.18:
     dependencies:
-      '@oclif/config': 1.17.0
-      '@oclif/errors': 1.3.4
+      '@oclif/config': 1.13.2
+      '@oclif/errors': 1.2.2
       '@oclif/parser': 3.8.5
       '@oclif/plugin-help': 2.2.0
       debug: 4.3.1
@@ -2584,7 +2595,7 @@ packages:
       integrity: sha512-Ups2dShK52xXa8w6iBWLgcjPJWjais6KPJQq3gQ/88AY6BXoTX+MIGFPrWQO1KLMiQfoTpcLnUwloN4brrVUHw==
   /@oclif/parser/3.8.5:
     dependencies:
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.2.2
       '@oclif/linewrap': 1.0.0
       chalk: 2.4.2
       tslib: 1.14.1
@@ -2595,8 +2606,8 @@ packages:
       integrity: sha512-yojzeEfmSxjjkAvMRj0KzspXlMjCfBzNRPkWw8ZwOSoNWoJn+OCS/m/S+yfV6BvAM4u2lTzX9Y5rCbrFIgkJLg==
   /@oclif/plugin-commands/1.3.0:
     dependencies:
-      '@oclif/command': 1.8.0
-      '@oclif/config': 1.17.0
+      '@oclif/command': 1.5.18
+      '@oclif/config': 1.13.2
       cli-ux: 5.5.1
       lodash: 4.17.21
     dev: false
@@ -2606,7 +2617,7 @@ packages:
       integrity: sha512-Qx9gJ7/aPBgo+Q/DHmGcWyxn2/0bjqmCwt/nO0lWuTZQIH3ZTqclTm68TMZLS4QnQyDGeeYK0GqZ5qJlrXD+SQ==
   /@oclif/plugin-help/2.2.0:
     dependencies:
-      '@oclif/command': 1.8.0
+      '@oclif/command': 1.5.18
       chalk: 2.4.2
       indent-string: 3.2.0
       lodash.template: 4.5.0
@@ -2655,6 +2666,20 @@ packages:
       supports-color: '*'
     resolution:
       integrity: sha512-SPZ8U8PBYK0n4srFjCLedk0jWU4QlxgEYLCXIBShJgOwPhTTQknkUlsEwaMIevvCU4iCQZhfMX+D8Pz5GZjFgA==
+  /@oclif/plugin-legacy/1.1.4:
+    dependencies:
+      '@heroku-cli/command': 8.4.1
+      '@oclif/color': 0.0.0
+      '@oclif/command': 1.5.18
+      ansi-escapes: 3.2.0
+      debug: 4.3.1
+      semver: 5.7.1
+      tslib: 1.14.1
+    dev: false
+    engines:
+      node: '>=8.0.0'
+    resolution:
+      integrity: sha512-/oJGRcM7VaSGJ9Eodi/kl0avAKDlJvdYA8jmh4bhBHrCsaPqM61P7LUH2w2PUIccnM82mPPCp3PoUEM85PAIdw==
   /@oclif/plugin-legacy/1.2.0:
     dependencies:
       '@heroku-cli/command': 8.4.1
@@ -2672,7 +2697,7 @@ packages:
   /@oclif/plugin-not-found/1.2.2:
     dependencies:
       '@oclif/color': 0.0.0
-      '@oclif/command': 1.8.0
+      '@oclif/command': 1.5.18
       cli-ux: 4.9.3
       fast-levenshtein: 2.0.6
       lodash: 4.17.21
@@ -2684,7 +2709,7 @@ packages:
   /@oclif/plugin-plugins/1.7.9:
     dependencies:
       '@oclif/color': 0.0.0
-      '@oclif/command': 1.8.0
+      '@oclif/command': 1.5.18
       chalk: 2.4.2
       cli-ux: 5.5.1
       debug: 4.3.1
@@ -2703,9 +2728,9 @@ packages:
   /@oclif/plugin-update/1.3.9:
     dependencies:
       '@oclif/color': 0.0.0
-      '@oclif/command': 1.8.0
-      '@oclif/config': 1.17.0
-      '@oclif/errors': 1.3.4
+      '@oclif/command': 1.5.18
+      '@oclif/config': 1.13.2
+      '@oclif/errors': 1.2.2
       '@types/semver': 5.5.0
       cli-ux: 4.9.3
       cross-spawn: 6.0.5
@@ -2724,9 +2749,9 @@ packages:
       integrity: sha512-rEMsKT7VlCNnfAF7gxHcY9FtQw+w3ZMvxzoRqafMRCz6+Lt94r3PRulBI4M7IkIQwE+dqW/GPUlkDj86Os9Njg==
   /@oclif/plugin-warn-if-update-available/1.7.0:
     dependencies:
-      '@oclif/command': 1.8.0
-      '@oclif/config': 1.17.0
-      '@oclif/errors': 1.3.4
+      '@oclif/command': 1.5.18
+      '@oclif/config': 1.13.2
+      '@oclif/errors': 1.2.2
       chalk: 2.4.2
       debug: 4.3.1
       fs-extra: 7.0.1
@@ -2740,8 +2765,8 @@ packages:
       integrity: sha512-Nwyz3BJ8RhsfQ+OmFSsJSPIfn5YJqMrCzPh72Zgo2jqIjKIBWD8N9vTTe4kZlpeUUn77SyXFfwlBQbNCL5OEuQ==
   /@oclif/plugin-which/1.0.3:
     dependencies:
-      '@oclif/command': 1.8.0
-      '@oclif/config': 1.17.0
+      '@oclif/command': 1.5.18
+      '@oclif/config': 1.13.2
       cli-ux: 4.9.3
       tslib: 1.14.1
     dev: false
@@ -6237,7 +6262,7 @@ packages:
       integrity: sha512-gnB85c3MGC7Nm9I/FkiasNBOKjOiO1RNuXXarQms37q4QMpWdlbBgD/VnOStA2faG1dpXMv31RFApjX1/QdgWQ==
   /cli-ux/4.9.3:
     dependencies:
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.2.2
       '@oclif/linewrap': 1.0.0
       '@oclif/screen': 1.0.4
       ansi-escapes: 3.2.0
@@ -6266,7 +6291,7 @@ packages:
   /cli-ux/5.5.1:
     dependencies:
       '@oclif/command': 1.8.0_supports-color@7.2.0
-      '@oclif/errors': 1.3.4
+      '@oclif/errors': 1.2.2
       '@oclif/linewrap': 1.0.0
       '@oclif/screen': 1.0.4
       ansi-escapes: 4.3.1
@@ -9975,18 +10000,18 @@ packages:
       node: '>= 6.0.0'
     resolution:
       integrity: sha512-br2hIJN0y0yO+EOxV9qn+i6zhRpZTWa+ECKSpjwtAHsG3dFp+cZkHoVm6QxC/9XypCILFBN0LRlOoVNWs/IUhQ==
-  /heroku/7.51.0:
+  /heroku/7.47.11:
     dependencies:
       '@heroku-cli/color': 1.1.14
       '@heroku-cli/command': 8.4.1
       '@heroku-cli/plugin-addons-v5': 7.49.1
       '@heroku-cli/plugin-apps': 7.47.13
-      '@heroku-cli/plugin-apps-v5': 7.50.0
-      '@heroku-cli/plugin-auth': 7.47.13
+      '@heroku-cli/plugin-apps-v5': 7.52.0
+      '@heroku-cli/plugin-auth': 7.52.0
       '@heroku-cli/plugin-autocomplete': 7.47.13
       '@heroku-cli/plugin-buildpacks': 7.47.13
       '@heroku-cli/plugin-certs': 7.47.13
-      '@heroku-cli/plugin-certs-v5': 7.49.1
+      '@heroku-cli/plugin-certs-v5': 7.52.0
       '@heroku-cli/plugin-ci': 7.47.13
       '@heroku-cli/plugin-ci-v5': 7.49.1
       '@heroku-cli/plugin-config': 7.47.13
@@ -10009,7 +10034,7 @@ packages:
       '@oclif/errors': 1.2.2
       '@oclif/plugin-commands': 1.3.0
       '@oclif/plugin-help': 2.2.0
-      '@oclif/plugin-legacy': 1.2.0
+      '@oclif/plugin-legacy': 1.1.4
       '@oclif/plugin-not-found': 1.2.2
       '@oclif/plugin-plugins': 1.7.9
       '@oclif/plugin-update': 1.3.9
@@ -10029,7 +10054,7 @@ packages:
       node: '>=8.3.0'
     hasBin: true
     resolution:
-      integrity: sha512-tUEzkzA/Nz9FvsIecVUHTjQVKI5rs+tMYF+N0BGKxOLrlxWt+f4sgEj54R5JDHmP858aUcD9cFFIhFiWCtIG8g==
+      integrity: sha512-iqkZ5S/NeBHaB8jYVtaUiG6pn33d3Zdb7yjz07ykpHCgP8r0EuxOdYrIZVQxGwYfcG+vhh8bI1yW/Qek1dDs/A==
   /highcharts/8.2.2:
     dev: false
     resolution:
@@ -20091,7 +20116,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-VnlgZLYVv9SaxXuuC7ae933F0uOyckcCm9FG4X+CD5ESsp85xvKadFKp8sYTjmNHpvrcJdSQwk2UHt4bhDOePg==
+      integrity: sha512-FQL0Y9noVzLJW9ihbTSYVgfZ3Vy1fiJXrxNWegcQ7YQMhjXAfSGXS/QrXt0QpkoJL0i29B8VjfQXQbqj1ThJqQ==
       tarball: file:projects/api-client-bear.tgz
     version: 0.0.0
   file:projects/api-client-tiger.tgz_ts-node@8.10.2:
@@ -20133,7 +20158,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-SXfFqibeimeKsdtO0/3Iu6/CNewAmBhmDzuqa3CYEx65Zk7SlrmxExA6rrKux6hUsAtQIhOqvI5UpG1I5+gGTA==
+      integrity: sha512-TAMiaDNyhvV9GOnmcJfzeGs9hEEyRI/wVQpIJvlvbCNXCKwD/s+GQy3xUOaeKcfwAob+j3EEVUw4oAPEn0bcDg==
       tarball: file:projects/api-client-tiger.tgz
     version: 0.0.0
   file:projects/api-model-bear.tgz_ts-node@8.10.2:
@@ -20247,7 +20272,7 @@ packages:
     dev: false
     name: '@rush-temp/catalog-export'
     resolution:
-      integrity: sha512-MiRhQrxk6QGHZa47wfBfVQnL7gmA8F5o/OWrcN4kCj/kVFykvHWXwAX0Yon0kkfM5pHy+QULwihLDhmM+dbuIQ==
+      integrity: sha512-QNAlRRI42A6dRjCIod6NMCCH9XksQADGcvbLiAKqiLp+DqM/c91FslZZ6xClObwwqNxOR7J1ymzNdXrg0TsaeA==
       tarball: file:projects/catalog-export.tgz
     version: 0.0.0
   file:projects/experimental-workspace.tgz_ts-node@8.10.2:
@@ -20279,7 +20304,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-hgLzIkuDvMY9tLNUI0c+5V9bEU/oQh+bsF+62OFmSmyeRQfS+heQj6KyKaCQkDshxH6g+wqHLdwSxe5xJPUung==
+      integrity: sha512-78VGK89XUzjPZjXa9qysRkbowXQFhzdWi+nkhziU+F7y7eZpx4+e9rTJJMrNEjQI9SfmmMqN3l/my4wvF63AFw==
       tarball: file:projects/experimental-workspace.tgz
     version: 0.0.0
   file:projects/live-examples-workspace.tgz_ts-node@8.10.2:
@@ -20310,7 +20335,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-mIthwCDrSNSFFfkSo1JqJaVebnXwWJq98MkHZpmWrfrH25HSWeSDgIQZ3PjujcghrBc2BOoTmXsLLnIrkaLgww==
+      integrity: sha512-xdrVVreW8Jxi7x7d/CEIBhXAAYevGv8vwTmGytYeJdIeXqPAxMJslbBpxsGE7aXu1drsESKFwmOQXpUnwHP/gQ==
       tarball: file:projects/live-examples-workspace.tgz
     version: 0.0.0
   file:projects/mock-handling.tgz:
@@ -20353,7 +20378,7 @@ packages:
     dev: false
     name: '@rush-temp/mock-handling'
     resolution:
-      integrity: sha512-b7+CRQwFebfdI8mQsJMymg581rcUXu1mhhfhfoUHnGY1dYdu1b4+3m6O9xZYF8iHERjyn0dSeDx4Hy8nQUi9xg==
+      integrity: sha512-2io3Y9RuPB2/PRu49gmB0fDTjFpVvyxcwBLOT7f2NHRuedSJm0ZfMkKk53oue/pZSBje+KFstbAV6QDJCwh5JA==
       tarball: file:projects/mock-handling.tgz
     version: 0.0.0
   file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2:
@@ -20383,7 +20408,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-rT+DcV32jpy3gd0hR49AGQoiRIx5ZI07ZWoZTO+IgLylhmwhSQigWT4em0/8JoJ2R//Axeiro8Uvk39+F3aRHA==
+      integrity: sha512-XMJnpE+v3qnEnqPY/3gF7G2dLy06yvp681oet8eLWc+DATWuqkiUEiaaPx43TR5/ZOkCFnjdmDmModONB3SSXg==
       tarball: file:projects/reference-workspace-mgmt.tgz
     version: 0.0.0
   file:projects/reference-workspace.tgz_ts-node@8.10.2:
@@ -20414,7 +20439,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-OhDwxb9c3jqMIp8TX1T12RcTFSzoFT6jPx0nP0ZfQBaxuvEPu6EJ4leE1r1W9DpkjbMpLXYwFEjcfP+rBs3MDw==
+      integrity: sha512-AAlHYi/1566zqwDw451pPg7kPPg/H78f9dEffJWhyuHr/IeDBtGKi/wmjl16JHEXUUs9toPJfIvxLOOGVH0KvQ==
       tarball: file:projects/reference-workspace.tgz
     version: 0.0.0
   file:projects/sdk-backend-base.tgz_ts-node@8.10.2:
@@ -20454,7 +20479,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-uBVwdClYTAPwOqSmErgFWHACklbqDDvxz1vgYHnanyxv/GNSRkPRNjyXjE6uQ9yTfplwNbcfnAbHkMGf8iInRg==
+      integrity: sha512-7LaPB2Jg9sya8yBTFjZjr1U37fqFkb6mwhTseyS6xjbQCN7ZVNfzUQUCrWNwB6nYEp5VEVhVG0Mmw9ImpAF1CA==
       tarball: file:projects/sdk-backend-base.tgz
     version: 0.0.0
   file:projects/sdk-backend-bear.tgz_ts-node@8.10.2:
@@ -20497,7 +20522,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-xG5J3G1COawbo/es0h34aqs1m7MJHW+PaK6aGZ2NLnMuzjBU0p3i7agYBA2Gonv2Qg/9pM8GwxTwxrQyfm73uA==
+      integrity: sha512-Sz0SiMu8VFB8Mq1hcvhDMrGEz/x8MbvgCHyT5k8oU+olR4T4lKMhLVj/NnRrRsuO3mL1z3i53CZbZ9MYW+tn5A==
       tarball: file:projects/sdk-backend-bear.tgz
     version: 0.0.0
   file:projects/sdk-backend-mockingbird.tgz_ts-node@8.10.2:
@@ -20532,7 +20557,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-llZbhkRug2ZaL4v2Uwb990uM+OwtUJLSEnDDo9uueP3aer9PCN3VvqbsCWhu/Co8cejiPi6Q4VTxw/gCqgY4+Q==
+      integrity: sha512-zltzaUsMX5GM0k4h6kNHlg3vAlS2tPbc2207h+wsZ9WvieS/Mlq/BFD2ctFYeKGJTY7zhdPVNXtwZsO2uLoVZw==
       tarball: file:projects/sdk-backend-mockingbird.tgz
     version: 0.0.0
   file:projects/sdk-backend-spi.tgz_ts-node@8.10.2:
@@ -20568,7 +20593,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-EG8bqt1vu4Fm7Oqiqaol5jJuLNhnywKmEeKEPg9OoEs0HSNLNhWxwtDCHm6dG4JwQL5D7Hls8X9lCu54ZpsNvA==
+      integrity: sha512-oejf+w/l9y/9AenzoPTZI/5aMTZEk5kbY+RESoufkrIhZOF2NCZz7FWNx074Zq12ps0viDxO1YWrQs7CCK4OjQ==
       tarball: file:projects/sdk-backend-spi.tgz
     version: 0.0.0
   file:projects/sdk-backend-tiger.tgz_ts-node@8.10.2:
@@ -20609,7 +20634,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Er4kskGQ6wbEi43GJ4HahU0Ha3uB4rHU+EGdh4H0+n3i78KWpMbK3StTSknFnlltlUUc509O0mGgxeBJUf4WxA==
+      integrity: sha512-FjJJC3nqN19KF0CJMizNXS6upR9+k5CzHYAk724r6IR0FE8m9XChtY0wYUAaFFSj8g/ntg5HkeAv0Pmwq0tF8Q==
       tarball: file:projects/sdk-backend-tiger.tgz
     version: 0.0.0
   file:projects/sdk-embedding.tgz_ts-node@8.10.2:
@@ -20642,7 +20667,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-8BuMUUzIeiGfaa4b8m8jkndXo+VgTFLjhxTtFVHorX7E9M+QE7ITEAfVPchlQsH1s0U1qHwLCj+AclNZe8q4bQ==
+      integrity: sha512-ItAsDbepJEzsYEMAHHYlTOJYTyxXjLYO5KH41a1PtRZjr8EMc3UUqk80IdeyWZ+MAvN1QMQmk42pjRixDwzLDQ==
       tarball: file:projects/sdk-embedding.tgz
     version: 0.0.0
   file:projects/sdk-examples.tgz_ts-node@8.10.2:
@@ -20700,7 +20725,7 @@ packages:
       file-loader: 6.2.0_webpack@4.46.0
       fork-ts-checker-webpack-plugin: 4.1.6
       formik: 0.11.11_react@16.14.0
-      heroku: 7.51.0
+      heroku: 7.47.11
       history: 4.10.1
       html-webpack-plugin: 4.5.2_webpack@4.46.0
       isomorphic-fetch: 2.2.1
@@ -20743,7 +20768,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-T4bZblF1AkJXNaMTZRbAzJxHiTx+Ta0aqdffkfK2UboncXU3zHFWa5KDWgA98F1cGe06dhsj9opwdxaxS34vdQ==
+      integrity: sha512-3+8SW8kvX5W5Y0PSfPmb4cERMDH9+cdna58mljpqbsisHYSxJTlKdMUjdGLJhcLbjvKSvsrW2cGbU9SUg3LOcQ==
       tarball: file:projects/sdk-examples.tgz
     version: 0.0.0
   file:projects/sdk-model.tgz_ts-node@8.10.2:
@@ -20899,7 +20924,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-8obvIr96XrwGEsp4+3zUVqQFLBIwACr7FoJnh4lBZfMUnvcxaMaNvUcPs0LpxbyjS1AsisSBkrckJRq1DDuOvQ==
+      integrity: sha512-B7Aep/TuEyjIFWzcaIWfAuDYgpjXzzwb/ziajKPuW42pS1p6UBkhaJsoRQ731heFdJ/akISbEP8tj96iCkGIhQ==
       tarball: file:projects/sdk-ui-all.tgz
     version: 0.0.0
   file:projects/sdk-ui-charts.tgz_ts-node@8.10.2:
@@ -20967,7 +20992,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-oSHLI68MaWsla6NnJZW0S0msYR0/eWKeuPnR0mAZ4pXGsAB6R2Q3cUMZRq/HeO7eE2uscsPPeb/j1TeSJUU7lw==
+      integrity: sha512-FI3DeI8rX65tvSuAfkNkVbLyQHZa6ETl3YSHxMfxTC/goV2ji7Ba/f52QUe+rcO2fnNC+gdUjtGgVPCuEq+I7g==
       tarball: file:projects/sdk-ui-charts.tgz
     version: 0.0.0
   file:projects/sdk-ui-ext.tgz_ts-node@8.10.2:
@@ -21045,7 +21070,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-vVqnlflWhjyfx6zC+FKNJOEoIqLfxYpchxBTg2kRgBgqiFXkQsF6FRc8lPW8gXK/g12j8+A87cyhDNApFMjrYA==
+      integrity: sha512-/Rjtv6BJNWJVfuHK/cQOFQXOseUYOY/GiZ3Ydj6JSONQ8qmIpPEqwA2E4mWDuHWz9z8UD9OYwQKe+XLbXDHOOw==
       tarball: file:projects/sdk-ui-ext.tgz
     version: 0.0.0
   file:projects/sdk-ui-filters.tgz_ts-node@8.10.2:
@@ -21118,7 +21143,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-uu3Q0R6gZWWzhuAuj4jH0ngJWs9dpwVKRItsCXLOrsYqWCx4fbhqg/30rTu38bCN0xLwBp142j01J88TzSJDFg==
+      integrity: sha512-MHURUZu9D8yzdqScEXV9XT/7Ud2qh53rF0EPu5UdfrrV6BtT+FPrz3pRNOBoO8SBQoDs4n2BtwC5S4dxOJ+muA==
       tarball: file:projects/sdk-ui-filters.tgz
     version: 0.0.0
   file:projects/sdk-ui-geo.tgz_ts-node@8.10.2:
@@ -21182,7 +21207,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-N91yUwwdnmAmImANIb/ZzhtesBGsPZ4+Z//dkNynpTJW6QgX8KZSNw4uguMyFj1umEMdI8c4w/57untC05yRyA==
+      integrity: sha512-v/1XVNCK4Gbe0UcyJM+9I6MZvRHzaATk5BotJ6a1WQ2skp9Q6fGmRnzDqPMlRXCYBI9g5LIXWpfqQlYTC7GECA==
       tarball: file:projects/sdk-ui-geo.tgz
     version: 0.0.0
   file:projects/sdk-ui-kit.tgz_ts-node@8.10.2:
@@ -21269,7 +21294,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Lqio5uVR/BDGuMknXxB5t1QtUvvXOAV9AU/ioepHHU/A01Ard/5etLzapu90J/vdLNaS9e0fwQi07NkfmK9Eog==
+      integrity: sha512-2wlKllYUMgfqN/Xhg+tSA7yad+EDYmEjNh0eRFUELoVaVDxJZhE5i7Yj+WbBBNfOpXvkyvJJBwACL7xsrHe69Q==
       tarball: file:projects/sdk-ui-kit.tgz
     version: 0.0.0
   file:projects/sdk-ui-pivot.tgz_ts-node@8.10.2:
@@ -21292,6 +21317,7 @@ packages:
       '@types/raf': 3.4.0
       '@types/react': 16.14.5
       '@types/react-dom': 16.9.12
+      '@types/uuid': 8.3.0
       '@typescript-eslint/eslint-plugin': 4.19.0_b06c2766d23a540385d3aac946cc0595
       '@typescript-eslint/parser': 4.19.0_eslint@7.22.0+typescript@4.0.2
       classnames: 2.2.6
@@ -21330,13 +21356,14 @@ packages:
       ts-jest: 26.5.4_jest@26.6.3+typescript@4.0.2
       tslib: 2.1.0
       typescript: 4.0.2
+      uuid: 8.3.2
     dev: false
     id: file:projects/sdk-ui-pivot.tgz
     name: '@rush-temp/sdk-ui-pivot'
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-/fj4oaUeOQnCo8mOIRCXpdqqaZRatMDml9NLnGy6lZqxXMDNq04YVDD+U/zHJGEavDCV3zFDFJUGRur7JkBs+Q==
+      integrity: sha512-ORqFDjJ/ltx1tZJYasMxS3IM57L8fzkqsHciSTxQFgPdzlxFtF8TZEi4pGODaWTJKOE/reNa40SAHVqjdkvWIw==
       tarball: file:projects/sdk-ui-pivot.tgz
     version: 0.0.0
   file:projects/sdk-ui-tests.tgz:
@@ -21410,7 +21437,7 @@ packages:
     dev: false
     name: '@rush-temp/sdk-ui-tests'
     resolution:
-      integrity: sha512-PYPEXvP/GY+na7DpVZXt+piS3ahZUlk+n5HMA6SdniNIvL3VNSXcrJ3CmyaPA9eKF0+ge1HZTiD0mig/MTYsaA==
+      integrity: sha512-b7HDrhMvRCEtlk/EAUHj+CuGfeyWleta9PUDUacrovKneeFyy/H9oVlBJwAZn8EyX6ZR2kYEgyDqEJYN65UeUA==
       tarball: file:projects/sdk-ui-tests.tgz
     version: 0.0.0
   file:projects/sdk-ui-theme-provider.tgz_ts-node@8.10.2:
@@ -21463,7 +21490,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-x0wukZ1CwSVB5S09uHTVNW94173ETswiGRhZg8UyUDmHEAI0+EhIYAj0Lt5zs7Y5Sjex18fTS9esep2j6zthMQ==
+      integrity: sha512-JWTkztvuvYA6jU1ZIwfwmwK+N9OnAt7QGYDq+yCR1RboKGDojRERhiNbp2Xw08zdAzC60+sR7daBV2g8mGR4gQ==
       tarball: file:projects/sdk-ui-theme-provider.tgz
     version: 0.0.0
   file:projects/sdk-ui-vis-commons.tgz_ts-node@8.10.2:
@@ -21522,7 +21549,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-b7K0A1kjduIzRWj4J85xBh6vGJH1mMwRHBIp0FQiEix6XcV/7PLBG62UQD+98rUq7XHOBR/tccPu5A/GTU53mw==
+      integrity: sha512-08PupkR7gZ8naSusI9TdtJFmTn/eB2Fg0+VrTN67IUmiZ+COSDPsHVpyEJqVKyXppMdQQbbwRRrMfvvXOaKi+g==
       tarball: file:projects/sdk-ui-vis-commons.tgz
     version: 0.0.0
   file:projects/sdk-ui.tgz_ts-node@8.10.2:
@@ -21583,7 +21610,7 @@ packages:
     peerDependencies:
       ts-node: '*'
     resolution:
-      integrity: sha512-Rb24FMqtlw9SMBGtosefwgp0znApDyL+SM+MqBzOOBly148m2xInSd4WskXG5HOzDjo3k86fCbyvtYdE2Bhftw==
+      integrity: sha512-vg0UBr3jFJsqyCqCgTKTGmZ+CPTICwAfb5ZwwVIKtVdz6LBSg6GtRDtEzSySZF4pLHCiD/CzocjAuVzt3/N5yA==
       tarball: file:projects/sdk-ui.tgz
     version: 0.0.0
   file:projects/util.tgz_ts-node@8.10.2:
@@ -21624,6 +21651,17 @@ specifiers:
   '@gooddata/frontend-npm-scripts': 1.2.0
   '@microsoft/api-documenter': ^7.12.13
   '@microsoft/api-extractor': 7.8.1
+  '@oclif/command': 1.5.18
+  '@oclif/config': 1.13.2
+  '@oclif/errors': 1.2.2
+  '@oclif/plugin-commands': ^1.2.2
+  '@oclif/plugin-help': 2.2.0
+  '@oclif/plugin-legacy': 1.1.4
+  '@oclif/plugin-not-found': 1.2.2
+  '@oclif/plugin-plugins': 1.7.9
+  '@oclif/plugin-update': 1.3.9
+  '@oclif/plugin-warn-if-update-available': 1.7.0
+  '@oclif/plugin-which': 1.0.3
   '@rush-temp/api-client-bear': file:./projects/api-client-bear.tgz
   '@rush-temp/api-client-tiger': file:./projects/api-client-tiger.tgz
   '@rush-temp/api-model-bear': file:./projects/api-model-bear.tgz
