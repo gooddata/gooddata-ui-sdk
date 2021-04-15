@@ -10,12 +10,12 @@ import findIndex from "lodash/findIndex";
 import debounce from "lodash/debounce";
 import noop from "lodash/noop";
 import "element-closest-polyfill";
+
 import { DEFAULT_ALIGN_POINTS, getOptimalAlignment } from "../utils/overlay";
 import { elementRegion, isFixedPosition } from "../utils/domUtilities";
 import { ENUM_KEY_CODE } from "../typings/utilities";
 import { IOverlayProps, IOverlayState } from "./typings";
 import { Alignment, OverlayPositionType, SameAsTargetPosition } from "../typings/overlay";
-import { propsEqual } from "../utils/immutable";
 
 const events = [
     { name: "click", handler: "closeOnOutsideClick", target: document },
@@ -124,7 +124,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     }
 
     public shouldComponentUpdate(nextProps: IOverlayProps<T>, nextState: IOverlayState): boolean {
-        const propsChanged = !propsEqual<IOverlayProps<T>>(this.props, nextProps);
+        const propsChanged = !isEqual(this.props, nextProps);
         const positionChanged = !isEqual(this.state.alignment, nextState.alignment);
 
         return propsChanged || positionChanged;
