@@ -1,6 +1,7 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual";
+import isNil from "lodash/isNil";
 import noop from "lodash/noop";
 import {
     isRelativeDateFilterForm,
@@ -125,14 +126,14 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     };
 
     private static checkInitialFilterOption = (filterOption: DateFilterOption) => {
-        if (isAbsoluteDateFilterForm(filterOption) && !(filterOption.from && filterOption.to)) {
+        if (isAbsoluteDateFilterForm(filterOption) && (isNil(filterOption.from) || isNil(filterOption.to))) {
             // eslint-disable-next-line no-console
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from absoluteForm filter option must be specified.",
             );
         }
 
-        if (isRelativeDateFilterForm(filterOption) && !(filterOption.from && filterOption.to)) {
+        if (isRelativeDateFilterForm(filterOption) && (isNil(filterOption.from) || isNil(filterOption.to))) {
             // eslint-disable-next-line no-console
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",
@@ -144,12 +145,14 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         super(props);
         this.state = DateFilter.getStateFromProps(props);
 
-        DateFilter.checkInitialFilterOption(props.selectedFilterOption);
-
         // eslint-disable-next-line no-console
         console.warn(
             "DateFilter component is still in beta. Component and its API may change in the future.",
         );
+    }
+
+    componentDidMount() {
+        DateFilter.checkInitialFilterOption(this.props.selectedFilterOption);
     }
 
     public render(): React.ReactNode {
