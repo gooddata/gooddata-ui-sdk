@@ -315,7 +315,7 @@ export class HighChartsRenderer extends React.PureComponent<
                         onClick={this.onZoomOutButtonClick}
                         style={{ display: "none" }}
                     >
-                        <Icon.Undo color={theme?.palette?.complementary?.c7} />
+                        <Icon.Undo width={20} height={20} color={theme?.palette?.complementary?.c7} />
                     </button>
                     <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
                         {chart.resetZoomButton?.tooltip}
