@@ -230,11 +230,6 @@
     border-radius: 50%;
     background-color: $button-grey-background;
 
-    svg {
-        width: 20px;
-        height: 20px;
-    }
-
     @media #{$xsmall-only}, #{$small-only} {
         top: -73px;
     }
