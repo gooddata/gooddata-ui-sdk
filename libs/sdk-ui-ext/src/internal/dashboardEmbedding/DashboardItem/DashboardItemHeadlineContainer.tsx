@@ -14,7 +14,7 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
     children,
     clientHeight,
 }) => {
-    const isSmallCustomHeight = () => clientHeight <= SMALL_WIDGET_HEIGHT;
+    const isSmallCustomHeight = () => clientHeight < SMALL_WIDGET_HEIGHT;
 
     return (
         <div
