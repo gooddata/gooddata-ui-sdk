@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "RelativeDateFilterForm availableGranularities deprecated, use availableGranularities in DateFilter instead. ",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "martin.plavek@gooddata.com"
+}
