@@ -1,11 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     convertNumberToPercent,
     getMinMaxInfo,
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { StackingValues } from "../../../constants/stacking";
 import { IChartOptions, ISeriesItem } from "../../../typings/unsafe";
 
 describe("getZeroAlignConfiguration", () => {
@@ -240,36 +240,33 @@ describe("getZeroAlignConfiguration", () => {
         ];
 
         describe("non-stacked chart", () => {
-            it.each([
+            it.each<[stacking: StackingValues, type: string]>([
                 [null, VisualizationTypes.LINE],
                 [null, VisualizationTypes.COLUMN],
-                [NORMAL_STACK, VisualizationTypes.LINE],
-            ])(
-                "should return min/max when stacking is % s and chart type is %s",
-                (stacking: string, type: string) => {
-                    const config = {
-                        yAxis: [{}, {}],
-                        series: SERIES,
-                    };
-                    const result = getMinMaxInfo(config, stacking, type);
-                    expect(result).toEqual([
-                        {
-                            id: 0,
-                            min: -500,
-                            max: 1000,
-                            isSetMin: false,
-                            isSetMax: false,
-                        },
-                        {
-                            id: 1,
-                            min: -500,
-                            max: 2400,
-                            isSetMin: false,
-                            isSetMax: false,
-                        },
-                    ]);
-                },
-            );
+                ["normal", VisualizationTypes.LINE],
+            ])("should return min/max when stacking is % s and chart type is %s", (stacking, type) => {
+                const config = {
+                    yAxis: [{}, {}],
+                    series: SERIES,
+                };
+                const result = getMinMaxInfo(config, stacking, type);
+                expect(result).toEqual([
+                    {
+                        id: 0,
+                        min: -500,
+                        max: 1000,
+                        isSetMin: false,
+                        isSetMax: false,
+                    },
+                    {
+                        id: 1,
+                        min: -500,
+                        max: 2400,
+                        isSetMin: false,
+                        isSetMax: false,
+                    },
+                ]);
+            });
         });
 
         describe("stacked chart", () => {
@@ -278,7 +275,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{}, {}],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, NORMAL_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "normal", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,
@@ -302,7 +299,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{ opposite: false }, { opposite: true }],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, PERCENT_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "percent", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,
@@ -326,7 +323,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{ min: -100, max: 300 }, { min: 200 }],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, NORMAL_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "normal", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,
@@ -350,7 +347,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{ min: 10, max: 80 }, { min: 200 }],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, NORMAL_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "normal", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,
@@ -390,36 +387,33 @@ describe("getZeroAlignConfiguration", () => {
                 },
             ];
 
-            it.each([
+            it.each<[_description: string, stacking: StackingValues | null, min: number, max: number]>([
                 ["non-stack chart", null, 0, 250],
-                ["normal stack chart in total", NORMAL_STACK, 0, 500],
-                ["percent stack chart in total", PERCENT_STACK, 0, 100],
-            ])(
-                "should return min/max with %s",
-                (_description: string, stacking: string | null, min: number, max: number) => {
-                    const config = {
-                        yAxis: [{}, {}],
-                        series: SERIES,
-                    };
-                    const result = getMinMaxInfo(config, stacking, VisualizationTypes.COLUMN);
-                    expect(result).toEqual([
-                        {
-                            id: 0,
-                            min: 0,
-                            max: 0,
-                            isSetMin: false,
-                            isSetMax: false,
-                        },
-                        {
-                            id: 1,
-                            min,
-                            max,
-                            isSetMin: false,
-                            isSetMax: false,
-                        },
-                    ]);
-                },
-            );
+                ["normal stack chart in total", "normal", 0, 500],
+                ["percent stack chart in total", "percent", 0, 100],
+            ])("should return min/max with %s", (_description, stacking, min, max) => {
+                const config = {
+                    yAxis: [{}, {}],
+                    series: SERIES,
+                };
+                const result = getMinMaxInfo(config, stacking, VisualizationTypes.COLUMN);
+                expect(result).toEqual([
+                    {
+                        id: 0,
+                        min: 0,
+                        max: 0,
+                        isSetMin: false,
+                        isSetMax: false,
+                    },
+                    {
+                        id: 1,
+                        min,
+                        max,
+                        isSetMin: false,
+                        isSetMax: false,
+                    },
+                ]);
+            });
 
             it("should return user-input min/max with non-stack chart", () => {
                 const config = {
@@ -450,7 +444,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{ min: 10, max: 100 }, { min: 100 }],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, NORMAL_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "normal", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,
@@ -474,7 +468,7 @@ describe("getZeroAlignConfiguration", () => {
                     yAxis: [{ min: 10, max: 80 }, { min: 20 }],
                     series: SERIES,
                 };
-                const result = getMinMaxInfo(config, PERCENT_STACK, VisualizationTypes.COLUMN);
+                const result = getMinMaxInfo(config, "percent", VisualizationTypes.COLUMN);
                 expect(result).toEqual([
                     {
                         id: 0,

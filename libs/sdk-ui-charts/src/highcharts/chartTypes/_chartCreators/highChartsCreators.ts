@@ -27,6 +27,7 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { IntlShape } from "react-intl";
 import { ITheme } from "@gooddata/sdk-backend-spi";
+import { HighchartsOptions } from "../../lib";
 
 const chartConfigurationMap = {
     [VisualizationTypes.LINE]: getLineConfiguration,
@@ -52,7 +53,7 @@ export function getHighchartsOptions(
     definition?: IExecutionDefinition,
     intl?: IntlShape,
     theme?: ITheme,
-): any {
+): HighchartsOptions {
     const getConfigurationByType = chartConfigurationMap[chartOptions.type];
     invariant(
         getConfigurationByType,

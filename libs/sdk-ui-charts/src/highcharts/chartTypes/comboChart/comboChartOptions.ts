@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import set from "lodash/set";
 import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
@@ -7,7 +7,7 @@ import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../_util/common";
-import { NORMAL_STACK } from "../../constants/stacking";
+import { StackingValues } from "../../constants/stacking";
 import { ISeriesItem } from "../../typings/unsafe";
 
 export const CHART_ORDER = {
@@ -75,11 +75,11 @@ export function getComboChartSeries(
 }
 
 function isAllSeriesOnLeftAxis(series: ISeriesItem[] = []): boolean {
-    return series.every((item: ISeriesItem) => item.yAxis === 0);
+    return series.every((item) => item.yAxis === 0);
 }
 
 function isSomeSeriesWithLineChart(series: ISeriesItem[] = []): boolean {
-    return series.some((item: ISeriesItem) => isLineChart(item.type));
+    return series.some((item) => isLineChart(item.type));
 }
 
 export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean {
@@ -92,8 +92,8 @@ export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean 
 export function getComboChartStackingConfig(
     config: IChartConfig,
     series: ISeriesItem[],
-    defaultStacking: string,
-): string {
+    defaultStacking: StackingValues,
+): StackingValues {
     const { stackMeasures } = config;
     const canStackInPercent = canComboChartBeStackedInPercent(series);
 
@@ -101,5 +101,5 @@ export function getComboChartStackingConfig(
         return defaultStacking;
     }
 
-    return stackMeasures ? NORMAL_STACK : null;
+    return stackMeasures ? "normal" : null;
 }

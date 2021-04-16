@@ -145,8 +145,10 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     if (validationResult.dataTooLarge || validationResult.hasNegativeValue) {
         return null;
     }
-
-    return renderer({ ...rendererProps, chartRenderer, legendRenderer });
+    const resetZoomButtonTooltip = intl
+        ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" })
+        : null;
+    return renderer({ ...rendererProps, chartRenderer, legendRenderer, resetZoomButtonTooltip });
 };
 
 /**

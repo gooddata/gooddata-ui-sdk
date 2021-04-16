@@ -74,7 +74,7 @@ export function getXAxes(
 
 function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
     const percentageFormat = getMeasureFormat(
-        measureGroupItems.find((measure: any) => {
+        measureGroupItems.find((measure: IMeasureDescriptor) => {
             return isMeasureFormatInPercent(getMeasureFormat(measure));
         }),
     );
@@ -85,8 +85,9 @@ function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
         : {};
 }
 
-function getMeasureFormat(measure: any) {
-    return get(measure, "format", "");
+function getMeasureFormat(measure: IMeasureDescriptor) {
+    return get(measure, "format", ""); // TODO INE this path is wrong, chec what will happen when fixed
+    // return measure.measureHeaderItem.format ?? "";
 }
 
 export function getYAxes(
@@ -232,7 +233,7 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
     return series.reduce((result, item, index) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
-            return includes(get(axis, "seriesIndices", []), index);
+            return includes(axis.seriesIndices ?? [], index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one

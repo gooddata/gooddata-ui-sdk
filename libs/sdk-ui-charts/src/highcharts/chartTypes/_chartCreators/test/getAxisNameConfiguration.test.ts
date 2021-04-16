@@ -1,14 +1,15 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { getAxisNameConfiguration } from "../getAxisNameConfiguration";
 import { IChartOptions } from "../../../typings/unsafe";
 import { ROTATE_NEGATIVE_90_DEGREES, ALIGN_LEFT, ALIGN_RIGHT } from "../../../constants/axisLabel";
+import { IAxisConfig } from "../../../../interfaces";
 
 describe("getAxisNameConfiguration", () => {
     it("should return highchart axis config", () => {
         const chartOptions: IChartOptions = {
-            xAxes: [{}, { opposite: true }],
+            xAxes: [{ label: "xAxes" }, { label: "xAxes2", opposite: true }],
             xAxisProps: {
                 name: {
                     position: "low",
@@ -18,7 +19,7 @@ describe("getAxisNameConfiguration", () => {
             secondary_xAxisProps: {
                 name: {},
             },
-            yAxes: [{}, { opposite: true }],
+            yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
             yAxisProps: {
                 name: {
                     position: "middle",
@@ -65,32 +66,32 @@ describe("getAxisNameConfiguration", () => {
             VisualizationTypes.COMBO,
             {
                 type: VisualizationTypes.COMBO,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
             },
         ],
         [
             VisualizationTypes.COMBO2,
             {
                 type: VisualizationTypes.COMBO2,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
             },
         ],
         [
             VisualizationTypes.COLUMN,
             {
                 type: VisualizationTypes.COLUMN,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
             },
         ],
         [
             VisualizationTypes.LINE,
             {
                 type: VisualizationTypes.LINE,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
             },
         ],
     ])(
@@ -118,41 +119,42 @@ describe("getAxisNameConfiguration", () => {
         },
     );
 
+    const axisPositionLow: IAxisConfig = { name: { position: "low" } };
     it.each([
         [
             VisualizationTypes.COMBO,
             {
                 type: VisualizationTypes.COMBO,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "low" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionLow,
             },
         ],
         [
             VisualizationTypes.COMBO2,
             {
                 type: VisualizationTypes.COMBO2,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "low" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionLow,
             },
         ],
         [
             VisualizationTypes.COLUMN,
             {
                 type: VisualizationTypes.COLUMN,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "low" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionLow,
             },
         ],
         [
             VisualizationTypes.LINE,
             {
                 type: VisualizationTypes.LINE,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "low" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionLow,
             },
         ],
     ])(
@@ -184,41 +186,42 @@ describe("getAxisNameConfiguration", () => {
         },
     );
 
+    const axisPositionHigh: IAxisConfig = { name: { position: "high" } };
     it.each([
         [
             VisualizationTypes.COMBO,
             {
                 type: VisualizationTypes.COMBO,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "high" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionHigh,
             },
         ],
         [
             VisualizationTypes.COMBO2,
             {
                 type: VisualizationTypes.COMBO2,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "high" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionHigh,
             },
         ],
         [
             VisualizationTypes.COLUMN,
             {
                 type: VisualizationTypes.COLUMN,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "high" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionHigh,
             },
         ],
         [
             VisualizationTypes.LINE,
             {
                 type: VisualizationTypes.LINE,
-                xAxes: [{}, { opposite: true }],
-                yAxes: [{}, { opposite: true }],
-                secondary_yAxisProps: { name: { position: "high" } },
+                xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+                yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
+                secondary_yAxisProps: axisPositionHigh,
             },
         ],
     ])(
@@ -253,8 +256,8 @@ describe("getAxisNameConfiguration", () => {
     it("should return highchart axis config for bar chart without rotated opposite Y axis label", () => {
         const chartOptions: IChartOptions = {
             type: VisualizationTypes.BAR,
-            xAxes: [{}, { opposite: true }],
-            yAxes: [{}, { opposite: true }],
+            xAxes: [{ label: "xAxes" }, { label: "xAxes", opposite: true }],
+            yAxes: [{ label: "yAxes" }, { label: "yAxes2", opposite: true }],
         };
 
         const axisNameConfig = getAxisNameConfiguration(chartOptions);

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
 import get from "lodash/get";
 import Highcharts from "../../lib";
@@ -14,6 +14,7 @@ import {
 import { isAreaChart, isOneOfTypes } from "../_util/common";
 import { IDataLabelsVisible } from "../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../constants/label";
+import { StackingValues } from "../../constants/stacking";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function isLabelOverlappingItsShape(point: any): boolean {
@@ -180,7 +181,7 @@ export function getShapeVisiblePart(shape: any, chart: any, wholeSize: number): 
     return wholeSize;
 }
 
-export function getLabelStyle(type: string, stacking: string): Highcharts.CSSObject {
+export function getLabelStyle(type: string, stacking: StackingValues): Highcharts.CSSObject {
     if (isAreaChart(type)) {
         return BLACK_LABEL;
     }

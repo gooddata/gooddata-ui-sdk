@@ -13,14 +13,13 @@ import { IChartConfig, OnLegendReady } from "../../interfaces";
 import { Chart, IChartProps } from "./Chart";
 import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts from "../lib";
+import Highcharts, { HighchartsOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 import { ITheme } from "@gooddata/sdk-backend-spi";
-import isFunction from "lodash/isFunction";
-import omitBy from "lodash/omitBy";
+import { IChartOptions } from "../typings/unsafe";
 
 /**
  * @internal
@@ -36,8 +35,8 @@ export interface IChartHTMLElement extends HTMLElement {
  * @internal
  */
 export interface IHighChartsRendererProps {
-    chartOptions: any;
-    hcOptions: any;
+    chartOptions: IChartOptions;
+    hcOptions: HighchartsOptions;
     documentObj?: Document;
     height: number;
     width: number;
@@ -48,6 +47,7 @@ export interface IHighChartsRendererProps {
     legendRenderer(legendProps: ILegendProps): any;
     chartRenderer(chartProps: IChartProps): any;
     afterRender(): void;
+    resetZoomButtonTooltip?: string;
 }
 
 export interface IHighChartsRendererState {
@@ -114,10 +114,6 @@ export class HighChartsRenderer extends React.PureComponent<
     public shouldShowFluid(): boolean {
         const { documentObj } = this.props;
         return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
-    }
-
-    public shouldComponentUpdate(nextProps: IHighChartsRendererProps): boolean {
-        return !isEqual(omitBy(this.props, isFunction), omitBy(nextProps, isFunction));
     }
 
     public UNSAFE_componentWillMount(): void {
@@ -307,6 +303,7 @@ export class HighChartsRenderer extends React.PureComponent<
         const {
             hcOptions: { chart },
             theme,
+            resetZoomButtonTooltip,
         } = this.props;
         if (chart && chart.zoomType) {
             return (
@@ -324,7 +321,7 @@ export class HighChartsRenderer extends React.PureComponent<
                         <Icon.Undo width={20} height={20} color={theme?.palette?.complementary?.c7} />
                     </button>
                     <Bubble alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}>
-                        {chart.resetZoomButton?.tooltip}
+                        {resetZoomButtonTooltip}
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -360,12 +357,12 @@ export class HighChartsRenderer extends React.PureComponent<
 
     private realignPieOrDonutChart() {
         const {
-            chartOptions: { type },
+            chartOptions: { type, verticalAlign },
         } = this.props;
         const { chartRef } = this;
 
         if (isPieOrDonutChart(type) && chartRef) {
-            alignChart(chartRef.getChart());
+            alignChart(chartRef.getChart(), verticalAlign);
         }
     }
 

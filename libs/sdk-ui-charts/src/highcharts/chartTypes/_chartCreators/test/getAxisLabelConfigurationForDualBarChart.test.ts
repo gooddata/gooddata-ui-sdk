@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { getAxisLabelConfigurationForDualBarChart } from "../getAxisLabelConfigurationForDualBarChart";
 import { IChartOptions } from "../../../typings/unsafe";
@@ -7,7 +7,7 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty axis label config on single bar chart", () => {
         const chartOptions: IChartOptions = {
             type: VisualizationTypes.BAR,
-            yAxes: [{}],
+            yAxes: [{ label: "" }],
         };
         const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
         expect(axisConfig).toEqual({});
@@ -16,7 +16,7 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty axis label config on not dual bar chart", () => {
         const chartOptions: IChartOptions = {
             type: VisualizationTypes.COLUMN,
-            yAxes: [{}, {}],
+            yAxes: [{ label: "" }, { label: "" }],
         };
         const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
         expect(axisConfig).toEqual({});
@@ -25,7 +25,7 @@ describe("getAxisLabelConfigurationForDualBarChart", () => {
     it("should return empty Y axis label config on not-90-rotation bar chart", () => {
         const chartOptions: IChartOptions = {
             type: VisualizationTypes.BAR,
-            yAxes: [{}, {}],
+            yAxes: [{ label: "" }, { label: "" }],
         };
         const axisConfig = getAxisLabelConfigurationForDualBarChart(chartOptions);
         expect(axisConfig).toEqual({ yAxis: [undefined, undefined] });

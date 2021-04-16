@@ -1,10 +1,11 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import partial from "lodash/partial";
 import merge from "lodash/merge";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import set from "lodash/set";
 import get from "lodash/get";
+import isArray from "lodash/isArray";
 import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
@@ -18,7 +19,6 @@ import { IDrillConfig } from "@gooddata/sdk-ui";
 import { canComboChartBeStackedInPercent } from "../comboChart/comboChartOptions";
 import { isPrimaryYAxis } from "./isPrimaryYAxis";
 import { supportedStackingAttributesChartTypes } from "../_chartOptions/chartCapabilities";
-import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
 import {
     IAxis,
     IChartOptions,
@@ -27,6 +27,8 @@ import {
     IStackMeasuresConfig,
     IYAxisConfig,
 } from "../../typings/unsafe";
+import { StackingValues } from "../../constants/stacking";
+import { HighchartsOptions, XAxisOptions } from "../../lib";
 
 /**
  * Set 'normal' stacking config to single series which will overwrite config in 'plotOptions.series'
@@ -37,7 +39,7 @@ function handleStackMeasure(stackMeasures: boolean, seriesItem: ISeriesItem): IS
     return stackMeasures
         ? {
               ...seriesItem,
-              stacking: NORMAL_STACK,
+              stacking: "normal",
               stack: seriesItem.yAxis,
           }
         : seriesItem;
@@ -52,17 +54,17 @@ function handleStackMeasuresToPercent(stackMeasuresToPercent: boolean, seriesIte
     return stackMeasuresToPercent
         ? {
               ...seriesItem,
-              stacking: PERCENT_STACK,
+              stacking: "percent",
               stack: seriesItem.yAxis,
           }
         : seriesItem;
 }
 
-function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem): string {
+function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem): StackingValues {
     const { yAxes, type } = chartOptions;
     const { stacking, yAxis } = seriesItem;
     const seriesChartType = seriesItem.type || type;
-    const defaultStackingValue = isComboChart(type) ? null : NORMAL_STACK;
+    const defaultStackingValue: StackingValues = isComboChart(type) ? null : "normal";
 
     return isPrimaryYAxis(yAxes[yAxis]) && !isLineChart(seriesChartType) ? stacking : defaultStackingValue;
 }
@@ -136,7 +138,7 @@ export function getSanitizedStackingForSeries(series: ISeriesItem[]): ISeriesIte
                     ...seriesItem,
                     stack: null as number,
                     // reset stackMeasuresToPercent in this case (stacking: PERCENT_STACK)
-                    stacking: seriesItem.stacking ? NORMAL_STACK : (null as string),
+                    stacking: seriesItem.stacking ? "normal" : null,
                 };
             } else {
                 return seriesItem;
@@ -175,12 +177,15 @@ function getSeriesConfiguration(
 
 export function getYAxisConfiguration(
     chartOptions: IChartOptions,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
+    config: HighchartsOptions,
     chartConfig: IChartConfig,
 ): IYAxisConfig {
     const type = getPrimaryChartType(chartOptions);
-    const { yAxis } = config;
+    let yAxis;
+    yAxis = config.yAxis;
+    if (!isArray(yAxis)) {
+        yAxis = [yAxis];
+    }
     const { stackMeasuresToPercent = false } = chartConfig;
 
     // only support column char
@@ -217,12 +222,12 @@ export function getYAxisConfiguration(
  */
 export function getStackMeasuresConfiguration(
     chartOptions: IChartOptions,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
+    config: HighchartsOptions,
     chartConfig: IChartConfig,
 ): IStackMeasuresConfig {
     const { stackMeasures = false, stackMeasuresToPercent = false } = chartConfig;
-    const canStackInPercent = canComboChartBeStackedInPercent(config.series);
+
+    const canStackInPercent = canComboChartBeStackedInPercent(chartOptions.data?.series ?? []);
 
     if (!stackMeasures && !stackMeasuresToPercent) {
         return {};
@@ -246,16 +251,13 @@ export function getStackMeasuresConfiguration(
  */
 export function getParentAttributeConfiguration(
     chartOptions: IChartOptions,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
+    config: HighchartsOptions,
 ): {
-    xAxis: {
-        drillConfig: IDrillConfig;
-    }[];
+    xAxis: XAxisOptions[];
 } {
     const { type } = chartOptions;
     const { xAxis } = config;
-    const xAxisItem = xAxis[0]; // expect only one X axis
+    const xAxisItem: XAxisOptions = xAxis[0]; // expect only one X axis
 
     // parent attribute in X axis
     const parentAttributeOptions = {};
@@ -293,14 +295,13 @@ export function setDrillConfigToXAxis(
  * @param _config
  * @param chartConfig
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getShowInPercentConfiguration(
-    chartOptions: IChartOptions,
-    config: any = {},
+    chartOptions: IChartOptions = {},
+    _config: HighchartsOptions = {},
     chartConfig: IChartConfig,
-) {
+): HighchartsOptions {
     const { stackMeasuresToPercent = false, primaryChartType } = chartConfig;
-    const canStackInPercent = canComboChartBeStackedInPercent(config.series);
+    const canStackInPercent = canComboChartBeStackedInPercent(chartOptions.data?.series);
 
     if (!canStackInPercent || !stackMeasuresToPercent || isLineChart(primaryChartType)) {
         return {};
@@ -332,20 +333,21 @@ export function getShowInPercentConfiguration(
  * @param config
  * @param chartConfig
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function convertMinMaxFromPercentToNumber(
     _chartOptions: IChartOptions,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
+    config: HighchartsOptions,
     chartConfig: IChartConfig,
-) {
+): HighchartsOptions {
     const { stackMeasuresToPercent = false } = chartConfig;
     if (!stackMeasuresToPercent) {
         return {};
     }
-
-    const { yAxis: yAxes = [] as any[] } = config;
-    const yAxis = yAxes.map((axis: any, _: number, axes: IAxis[]) => {
+    let yAxes;
+    yAxes = config.yAxis;
+    if (!isArray(yAxes)) {
+        yAxes = [yAxes];
+    }
+    const yAxis = yAxes.map((axis, _: number, axes) => {
         const { min, max } = axis;
         const newAxis = {};
 
@@ -371,11 +373,10 @@ export function convertMinMaxFromPercentToNumber(
 
 export default function getOptionalStackingConfiguration(
     chartOptions: IChartOptions,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    config: any,
+    config: HighchartsOptions,
     chartConfig: IChartConfig = {},
     drillConfig?: IDrillConfig,
-): any {
+): HighchartsOptions {
     const { type } = chartOptions;
     return includes(supportedStackingAttributesChartTypes, type)
         ? merge(

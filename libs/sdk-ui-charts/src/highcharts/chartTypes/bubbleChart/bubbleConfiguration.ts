@@ -3,12 +3,23 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
+import { HighchartsOptions, SeriesBubbleOptions } from "../../lib";
 
 export function getBubbleConfiguration(
     _config: IChartOptions,
     _definition: IExecutionDefinition,
     theme: ITheme,
-) {
+): HighchartsOptions {
+    const series: SeriesBubbleOptions[] = [
+        {
+            type: "bubble",
+            states: {
+                hover: {
+                    enabled: false,
+                },
+            },
+        },
+    ];
     return {
         chart: {
             type: "bubble",
@@ -31,9 +42,7 @@ export function getBubbleConfiguration(
                 },
                 states: {
                     hover: {
-                        marker: {
-                            enabled: false,
-                        },
+                        enabled: false,
                     },
                 },
                 dataLabels: {
@@ -47,13 +56,7 @@ export function getBubbleConfiguration(
                 startOnTick: true,
             },
         ],
-        series: {
-            states: {
-                hover: {
-                    enabled: false,
-                },
-            },
-        },
+        series,
         legend: {
             enabled: false,
         },

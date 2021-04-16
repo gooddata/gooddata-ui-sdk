@@ -32,7 +32,7 @@ import {
     showStackLabelInAxisRange,
 } from "../../../chartTypes/_chartCreators/dataLabelsHelpers";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { UnsafeInternals, IUnsafeDataLabels, IClientRect, IStackItem } from "../../../typings/unsafe";
+import { UnsafeInternals, IUnsafeDataLabels, IStackItem } from "../../../typings/unsafe";
 
 /*
  * Code in this file accesses Highchart properties that are not included in
@@ -135,8 +135,8 @@ export function areNeighborsOverlapping(neighbors: IUnsafeDataLabels[][]): boole
         const [firstLabel, nextLabel]: IUnsafeDataLabels[] = labelsPair || [];
 
         if (!isEmpty(firstLabel) && !isEmpty(nextLabel)) {
-            const firstClientRect: IClientRect = firstLabel.element.getBoundingClientRect();
-            const nextClientRect: IClientRect = nextLabel.element.getBoundingClientRect();
+            const firstClientRect = firstLabel.element.getBoundingClientRect();
+            const nextClientRect = nextLabel.element.getBoundingClientRect();
             if (firstClientRect && nextClientRect) {
                 const firstLabelRight = firstClientRect.right;
                 const nextLabelLeft = nextClientRect.left;
@@ -157,7 +157,7 @@ export function areLabelsOverlappingColumns(
             return false;
         }
 
-        const { x, y, width, height }: IClientRect = label.element.getBoundingClientRect();
+        const { x, y, width, height }: DOMRect = label.element.getBoundingClientRect();
         const labelAttr: IRectBySize = {
             x,
             y,
@@ -178,7 +178,7 @@ export function areLabelsOverlappingColumns(
                 return false;
             }
 
-            const { x, y, width, height }: IClientRect = point.graphic.element.getBoundingClientRect();
+            const { x, y, width, height }: DOMRect = point.graphic.element.getBoundingClientRect();
             const pointAttr: IRectBySize = {
                 x,
                 y,

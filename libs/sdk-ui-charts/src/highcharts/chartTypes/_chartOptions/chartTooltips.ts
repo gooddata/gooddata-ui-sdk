@@ -1,21 +1,16 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IChartConfig } from "../../../interfaces";
 import { colors2Object, numberFormat } from "@gooddata/numberjs";
-import { ICategory, IPointData } from "../../typings/unsafe";
+import { ICategory, IUnsafeHighchartsTooltipPoint, ITooltipFactory } from "../../typings/unsafe";
 import { customEscape, isCssMultiLineTruncationSupported, isOneOfTypes, isTreemap } from "../_util/common";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip";
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
 import cx from "classnames";
-import get from "lodash/get";
 import { IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
 
 const TOOLTIP_PADDING = 10;
-export type ITooltipFactory = (
-    point: IPointData,
-    maxTooltipContentWidth: number,
-    percentageValue?: number,
-) => string;
+
 const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number): string => {
     const maxItemWidth = maxTooltipContentWidth - TOOLTIP_PADDING * 2;
     const titleMaxWidth = maxItemWidth;
@@ -47,8 +42,8 @@ const renderTooltipHTML = (textData: string[][], maxTooltipContentWidth: number)
         .join("\n");
 };
 
-function isPointOnOppositeAxis(point: IPointData): boolean {
-    return get(point, ["series", "yAxis", "opposite"], false);
+function isPointOnOppositeAxis(point: IUnsafeHighchartsTooltipPoint): boolean {
+    return point.series?.yAxis.opposite ?? false;
 }
 
 export function buildTooltipFactory(
@@ -59,7 +54,11 @@ export function buildTooltipFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPointData, maxTooltipContentWidth: number, percentageValue?: number): string => {
+    return (
+        point: IUnsafeHighchartsTooltipPoint,
+        maxTooltipContentWidth: number,
+        percentageValue?: number,
+    ): string => {
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
         const formattedValue = getFormattedValueForTooltip(
             isDualChartWithRightAxis,
@@ -96,7 +95,11 @@ export function buildTooltipForTwoAttributesFactory(
 ): ITooltipFactory {
     const { separators, stackMeasuresToPercent = false } = config;
 
-    return (point: IPointData, maxTooltipContentWidth: number, percentageValue?: number): string => {
+    return (
+        point: IUnsafeHighchartsTooltipPoint,
+        maxTooltipContentWidth: number,
+        percentageValue?: number,
+    ): string => {
         const category: ICategory = point.category;
 
         const isDualChartWithRightAxis = isDualAxis && isPointOnOppositeAxis(point);
@@ -134,7 +137,7 @@ export function generateTooltipXYFn(
 ): ITooltipFactory {
     const { separators } = config;
 
-    return (point: IPointData, maxTooltipContentWidth: number): string => {
+    return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
         const textData = [];
         const name = point.name ? point.name : point.series.name;
 
@@ -168,10 +171,8 @@ export function generateTooltipXYFn(
 }
 
 export function generateTooltipHeatmapFn(
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    viewByAttribute: any,
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    stackByAttribute: any,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
 ): ITooltipFactory {
     const { separators } = config;
@@ -179,7 +180,7 @@ export function generateTooltipHeatmapFn(
         return colors2Object(val === null ? "-" : numberFormat(val, format, undefined, separators));
     };
 
-    return (point: IPointData, maxTooltipContentWidth: number): string => {
+    return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number): string => {
         const formattedValue = customEscape(
             formatValue(point.value, point.series.userOptions.dataLabels.formatGD).label,
         );
@@ -211,7 +212,7 @@ export function buildTooltipTreemapFactory(
 ): ITooltipFactory {
     const { separators } = config;
 
-    return (point: IPointData, maxTooltipContentWidth: number) => {
+    return (point: IUnsafeHighchartsTooltipPoint, maxTooltipContentWidth: number) => {
         // show tooltip for leaf node only
         if (!point.node || point.node.isLeaf === false) {
             return null;

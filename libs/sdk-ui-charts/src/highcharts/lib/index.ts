@@ -13,5 +13,11 @@ export type HighchartsOptions = Highcharts.Options;
 export type YAxisOptions = Highcharts.YAxisOptions;
 export type XAxisOptions = Highcharts.XAxisOptions;
 export type HighchartsResponsiveOptions = Highcharts.ResponsiveOptions;
+export type SeriesPieOptions = Highcharts.SeriesPieOptions;
+export type SeriesAreaOptions = Highcharts.SeriesAreaOptions;
+export type SeriesBubbleOptions = Highcharts.SeriesBubbleOptions;
+export type SeriesLineOptions = Highcharts.SeriesLineOptions;
+export type TooltipPositionerPointObject = Highcharts.TooltipPositionerPointObject;
+export type PointOptionsObject = Highcharts.PointOptionsObject;
 
 export default Highcharts;

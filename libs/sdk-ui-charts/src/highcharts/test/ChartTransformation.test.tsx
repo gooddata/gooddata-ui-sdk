@@ -318,14 +318,14 @@ describe("ChartTransformation", () => {
 
         it.each([[TOP], [MIDDLE], [BOTTOM]])("should props.verticalAlign be %s", (verticalAlign: string) => {
             const wrapper = render({ chart: { verticalAlign } });
-            const chartProps = wrapper.find(Chart).props();
-            expect(chartProps.config.chart.verticalAlign).toBe(verticalAlign);
+            const highChartsRendererProps = wrapper.find(HighChartsRenderer).props();
+            expect(highChartsRendererProps.chartOptions.verticalAlign).toBe(verticalAlign);
         });
 
         it("should props.verticalAlign be undefined", () => {
             const wrapper = render({});
-            const chartProps = wrapper.find(Chart).props();
-            expect(chartProps.config.chart.verticalAlign).toBe(undefined);
+            const highChartsRendererProps = wrapper.find(HighChartsRenderer).props();
+            expect(highChartsRendererProps.chartOptions.verticalAlign).toBe(undefined);
         });
     });
 
