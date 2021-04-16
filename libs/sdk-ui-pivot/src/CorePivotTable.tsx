@@ -936,15 +936,22 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     };
 
     /**
-     * All pushData calls done by the table must go through this guard. The guard exists to ensure a 'disconnect'
-     * between push data handling and the calling function processing. When the pushData is handled by the application,
-     * it MAY (and in our case it DOES) trigger processing that lands back in the table. This opens
-     * additional set of invariants to check / be prepared for in order to optimize the renders and re-renders.
+     * All pushData calls done by the table must go through this guard.
+     *
+     * TODO: The guard should ensure a 'disconnect' between push data handling and the calling function processing.
+     *  When the pushData is handled by the application, it MAY (and in our case it DOES) trigger processing that
+     *  lands back in the table. This opens additional set of invariants to check / be prepared for in order to
+     *  optimize the renders and re-renders.
      */
     private pushDataGuard = (data: IPushData): void => {
+        this.props.pushData?.(data);
+
+        /*
+         * TODO: Switch to this on in FET-715.
         setTimeout(() => {
             this.props.pushData?.(data);
         }, 0);
+         */
     };
 
     /**
