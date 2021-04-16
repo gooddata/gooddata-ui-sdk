@@ -443,7 +443,7 @@ export function dummyBackend(config?: DummyBackendConfig): IAnalyticalBackend;
 
 // @internal (undocumented)
 export type DummyBackendConfig = IAnalyticalBackendConfig & {
-    raiseNoDataExceptions: boolean;
+    raiseNoDataExceptions: false | "without-data-view" | "with-data-view";
 };
 
 // @internal

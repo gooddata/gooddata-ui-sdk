@@ -62,8 +62,11 @@ export type DummyBackendConfig = IAnalyticalBackendConfig & {
      * the returned data view.
      *
      * Throwing NoDataError is closer to how normal backends behave.
+     *
+     * If set to "without-data-view", it will throw NoDataErrors without a DataView.
+     * If set to "with-data-view", it will throw NoDataErrors with a DataView.
      */
-    raiseNoDataExceptions: boolean;
+    raiseNoDataExceptions: false | "without-data-view" | "with-data-view";
 };
 
 /**
@@ -71,7 +74,7 @@ export type DummyBackendConfig = IAnalyticalBackendConfig & {
  */
 export const defaultDummyBackendConfig: DummyBackendConfig = {
     hostname: "test",
-    raiseNoDataExceptions: true,
+    raiseNoDataExceptions: "without-data-view",
 };
 
 /**
@@ -267,14 +270,28 @@ function dummyExecutionResult(
         dimensions: [],
         readAll(): Promise<IDataView> {
             if (config.raiseNoDataExceptions) {
-                return Promise.reject(new NoDataError("Empty data view from dummy backend"));
+                return Promise.reject(
+                    new NoDataError(
+                        "Empty data view from dummy backend",
+                        config.raiseNoDataExceptions === "with-data-view"
+                            ? dummyDataView(definition, result, config)
+                            : undefined,
+                    ),
+                );
             }
 
             return Promise.resolve(dummyDataView(definition, result, config));
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             if (config.raiseNoDataExceptions) {
-                return Promise.reject(new NoDataError("Empty data view from dummy backend"));
+                return Promise.reject(
+                    new NoDataError(
+                        "Empty data view from dummy backend",
+                        config.raiseNoDataExceptions === "with-data-view"
+                            ? dummyDataView(definition, result, config)
+                            : undefined,
+                    ),
+                );
             }
 
             return Promise.resolve(dummyDataView(definition, result, config));

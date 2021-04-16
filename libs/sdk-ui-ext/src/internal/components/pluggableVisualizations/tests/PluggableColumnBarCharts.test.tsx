@@ -46,7 +46,7 @@ describe("PluggableColumnBarCharts", () => {
         return new PluggableColumnChart(props);
     }
 
-    const executionFactory = dummyBackend({ hostname: "test", raiseNoDataExceptions: true })
+    const executionFactory = dummyBackend({ hostname: "test", raiseNoDataExceptions: "without-data-view" })
         .workspace("PROJECTID")
         .execution();
 
