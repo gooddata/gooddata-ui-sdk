@@ -32,12 +32,14 @@ export function calculateHeadlineHeightFontSize(
     }
 
     if (!secondaryItem) {
-        height = clientHeight < HEIGHT.NORMAL ? clientHeight : HEIGHT.NORMAL;
         if (clientHeight <= HEIGHT.SMALLEST) {
+            height = HEIGHT.SMALLEST;
             fontSize = FONT_SIZE.SMALLEST;
         } else if (clientHeight <= HEIGHT.EXTRA_SMALL) {
+            height = HEIGHT.EXTRA_SMALL;
             fontSize = FONT_SIZE.SMALL;
         } else {
+            height = HEIGHT.NORMAL;
             fontSize = FONT_SIZE.LARGE;
         }
     } else {
