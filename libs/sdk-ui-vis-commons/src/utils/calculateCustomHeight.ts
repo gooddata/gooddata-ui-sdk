@@ -1,10 +1,16 @@
 // (C) 2021 GoodData Corporation
-import { IHeadlineDataItem } from "../../Headlines";
 
-// Obtained from substrabting the widget title and paddings/margins of visualization.
-export const MINIMUM_HEIGHT_FOR_PAGINATION = 174;
+//Obtained from substrabting the widget title and paddings/margins of visualization.
+const MINIMUM_HEIGHT_FOR_PAGINATION = 160;
 
-export enum HEIGHT {
+/**
+ * @internal
+ * If the headline is narrower than this, the compare section will be rendered
+ * vertically to save horizontal space.
+ */
+export const SMALL_COMPARE_SECTION_THRESHOLD = 160;
+
+enum HEIGHT {
     SMALLEST = 34,
     EXTRA_SMALL = 44,
     SMALL = 54,
@@ -13,17 +19,22 @@ export enum HEIGHT {
     LARGE = 104,
 }
 
-export enum FONT_SIZE {
+enum FONT_SIZE {
     SMALLEST = 30,
     SMALL = 36,
     MEDIUM = 46,
     LARGE = 50,
 }
 
+/**
+ * @internal
+ * Calculate widget height and font size for Kpi's and Headlines
+ * when enableCompactSize is set to true.
+ */
 export function calculateHeadlineHeightFontSize(
-    secondaryItem: IHeadlineDataItem,
+    secondaryItem?: boolean,
     clientHeight?: number,
-): { height: number; fontSize: number } {
+): { height: number | undefined; fontSize: number | undefined } {
     let height: number;
     let fontSize: number;
 
@@ -57,3 +68,16 @@ export function calculateHeadlineHeightFontSize(
 
     return { height, fontSize };
 }
+
+/**
+ * @internal
+ * Check if Kpi's and Headlines should display pagination according to widget height.
+ */
+export const shouldRenderPagination = (
+    enableCompactSize: boolean,
+    width: number,
+    height: number,
+): boolean => {
+    const paged = height <= MINIMUM_HEIGHT_FOR_PAGINATION;
+    return enableCompactSize && paged && width < SMALL_COMPARE_SECTION_THRESHOLD;
+};

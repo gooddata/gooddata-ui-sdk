@@ -67,8 +67,8 @@ export interface IDashboardItemWithKpiAlertProps {
      */
     suppressAlertTriggered?: boolean;
 
-    children: (params: { clientWidth: number }) => React.ReactNode;
-    renderHeadline: () => React.ReactNode;
+    children: (params: { clientWidth: number; clientHeight: number }) => React.ReactNode;
+    renderHeadline: (clientHeight: number) => React.ReactNode;
     renderAlertDialog: () => React.ReactNode;
 }
 
@@ -252,7 +252,6 @@ export class DashboardItemWithKpiAlert extends Component<
         const { kpiAlertResult } = this.props;
         const isNoData = isNoDataSdkError(this.props.alertExecutionError);
         const hasEvaluationResult = isNoData || kpiAlertResult?.measureResult !== undefined;
-
         const content = cx(this.props.contentClassName, {
             "is-alert-dialog": this.props.isAlertDialogOpen,
             "has-set-alert": !!this.props.alert,
@@ -263,12 +262,17 @@ export class DashboardItemWithKpiAlert extends Component<
             "is-alert-evaluating": this.props.isAlertExecutionLoading,
         });
 
-        const kpi = cx(this.props.kpiClassName, "s-dashboard-kpi-component", "widget-loaded", {
-            "kpi-with-pop": this.props.kpi.kpi.comparisonType !== "none",
-            "content-loading": this.props.isLoading,
-            "content-loaded": !this.props.isLoading,
-        });
-
+        const kpi = cx(
+            this.props.kpiClassName,
+            "s-dashboard-kpi-component",
+            "widget-loaded",
+            "visualization",
+            {
+                "kpi-with-pop": this.props.kpi.kpi.comparisonType !== "none",
+                "content-loading": this.props.isLoading,
+                "content-loaded": !this.props.isLoading,
+            },
+        );
         return {
             content,
             kpi,
@@ -284,12 +288,12 @@ export class DashboardItemWithKpiAlert extends Component<
                 visualizationClassName={classnames.kpi}
                 contentRef={this.node}
                 renderAfterContent={() => this.props.isAlertDialogOpen && this.props.renderAlertDialog()}
-                renderHeadline={() => (
+                renderHeadline={(clientHeight) => (
                     <>
                         {/* TODO: the alert box should be rendered using renderBeforeKpi prop, but Graphene selectors */}
                         {/* aren't ready for that, so we abuse the renderHeadline prop a little for now... */}
                         {this.renderAlertBox()}
-                        {this.props.renderHeadline()}
+                        {this.props.renderHeadline(clientHeight)}
                     </>
                 )}
             >

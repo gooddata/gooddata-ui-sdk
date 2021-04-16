@@ -16,6 +16,7 @@ interface IKpiRendererProps {
     isDrillable?: boolean;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardViewDrillEvent>;
     clientWidth: number;
+    enableCompactSize?: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     kpiResult,
     filters,
     separators,
+    enableCompactSize,
 }) => {
     const onPrimaryValueClick = useCallback(() => {
         if (!isDrillable || !onDrill) {
@@ -57,6 +59,7 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
             onKpiValueClick={isDrillable && onDrill && onPrimaryValueClick}
             filters={filters}
             separators={separators}
+            enableCompactSize={enableCompactSize}
         />
     );
 };

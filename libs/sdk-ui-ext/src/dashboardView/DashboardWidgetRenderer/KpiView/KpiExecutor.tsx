@@ -198,6 +198,8 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         (kpiWidget.drills.length > 0 ||
             isSomeHeaderPredicateMatched(predicates, kpiResult.measureDescriptor, result));
 
+    const enableCompactSize = userWorkspaceSettings.enableKDWidgetCustomHeight;
+
     return (
         <DashboardItemWithKpiAlert
             kpi={kpiWidget}
@@ -205,7 +207,9 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             filters={effectiveFilters}
             userWorkspaceSettings={userWorkspaceSettings}
             kpiResult={kpiResult}
-            renderHeadline={() => <DashboardItemHeadline title={kpiWidget.title} />}
+            renderHeadline={(clientHeight) => (
+                <DashboardItemHeadline title={kpiWidget.title} clientHeight={clientHeight} />
+            )}
             kpiAlertResult={kpiAlertResult}
             canSetAlert={canSetAlert}
             isReadOnlyMode={isReadOnly}
@@ -324,6 +328,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                         onDrill={onDrill && handleOnDrill}
                         clientWidth={clientWidth}
                         separators={separators}
+                        enableCompactSize={enableCompactSize}
                     />
                 );
             }}

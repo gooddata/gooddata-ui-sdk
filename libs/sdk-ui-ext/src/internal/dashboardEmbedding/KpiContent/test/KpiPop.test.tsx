@@ -36,7 +36,7 @@ describe("KpiPop's module functions", () => {
     const { wrapper } = renderKpiPop(requiredKpiPopProps);
 
     it("should return kpiPop section", () => {
-        expect(wrapper.find(".kpi-pop-section")).toHaveLength(1);
+        expect(wrapper.find(".headline-compare-section")).toHaveLength(1);
     });
 
     it("should return kpiPop previous period", () => {

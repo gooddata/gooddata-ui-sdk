@@ -6,7 +6,8 @@ interface IDashboardItemHeadlineContainerProps {
     clientHeight?: number;
 }
 
-const SMALL_WIDGET_HEIGHT = 120;
+const SMALLEST_WIDGET_HEIGHT = 120;
+const SMALL_WIDGET_HEIGHT = 140;
 const SMALL_HEIGHT = 38;
 const SMALL_LINE_HEIGHT = 36;
 
@@ -14,7 +15,7 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
     children,
     clientHeight,
 }) => {
-    const isSmallCustomHeight = () => clientHeight < SMALL_WIDGET_HEIGHT;
+    const isSmallCustomHeight = () => clientHeight < SMALLEST_WIDGET_HEIGHT;
     const customMargin = clientHeight <= SMALL_WIDGET_HEIGHT ? { marginTop: 0 } : undefined;
 
     const customStyle = isSmallCustomHeight()

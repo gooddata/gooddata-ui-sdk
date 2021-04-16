@@ -23,6 +23,12 @@ export class AttributeColorStrategy extends ColorStrategy {
     protected createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
 }
 
+// @internal
+export function calculateHeadlineHeightFontSize(secondaryItem?: boolean, clientHeight?: number): {
+    height: number | undefined;
+    fontSize: number | undefined;
+};
+
 // @internal (undocumented)
 export const ColorLegend: React_2.ComponentType<Pick<IColorLegendProps, "data" | "format" | "position" | "numericSymbols" | "isSmall">>;
 
@@ -117,6 +123,9 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
+export const HeadlinePagination: React_2.FC<IHeadlinePaginationProps>;
+
+// @internal (undocumented)
 export class HeatmapLegend extends React_2.PureComponent<IHeatmapLegendProps> {
     // (undocumented)
     render(): React_2.ReactNode;
@@ -200,6 +209,14 @@ export interface IGeoChartLegendData {
     colorData?: IColorLegendItem[];
     // (undocumented)
     sizeData?: number[];
+}
+
+// @internal (undocumented)
+export interface IHeadlinePaginationProps {
+    // (undocumented)
+    renderSecondaryItem: () => JSX.Element;
+    // (undocumented)
+    renderTertiaryItem: () => JSX.Element;
 }
 
 // @internal (undocumented)
@@ -387,8 +404,14 @@ export function parseRGBString(color: string): IRgbColorValue | null;
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
+// @internal
+export const shouldRenderPagination: (enableCompactSize: boolean, width: number, height: number) => boolean;
+
 // @internal (undocumented)
 export function shouldShowFluid(documentObj: Document): boolean;
+
+// @internal
+export const SMALL_COMPARE_SECTION_THRESHOLD = 160;
 
 // @internal (undocumented)
 export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
