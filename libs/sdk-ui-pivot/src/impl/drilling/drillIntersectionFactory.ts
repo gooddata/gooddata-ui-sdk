@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 import { getDrillIntersection, IDrillEventIntersectionElement, IMappingHeader } from "@gooddata/sdk-ui";
 import { TableDescriptor } from "../structure/tableDescriptor";
-import { AnyCol, isDataColLeaf, isSliceCol } from "../structure/tableDescriptorTypes";
+import { AnyCol, isSeriesCol, isSliceCol } from "../structure/tableDescriptorTypes";
 import { CellEvent } from "@ag-grid-community/all-modules";
 import invariant from "ts-invariant";
 import { createDataColLeafHeaders, createSliceColHeaders } from "./colDrillHeadersFactory";
@@ -23,9 +23,9 @@ export function createDrillIntersection(
     const col: AnyCol = tableDescriptor.getCol(cellEvent.colDef);
     const row = cellEvent.data as IGridRow;
 
-    invariant(isSliceCol(col) || isDataColLeaf(col));
+    invariant(isSliceCol(col) || isSeriesCol(col));
 
-    if (isDataColLeaf(col)) {
+    if (isSeriesCol(col)) {
         mappingHeaders.push(...createDataColLeafHeaders(col));
     }
 

@@ -22,7 +22,7 @@ import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 import { TableDescriptor } from "../tableDescriptor";
-import { isDataColGroup, isDataColLeaf, isDataColRootGroup, isSliceCol } from "../tableDescriptorTypes";
+import { isScopeCol, isSeriesCol, isRootCol, isSliceCol } from "../tableDescriptorTypes";
 import { IMenuAggregationClickConfig } from "../../privateTypes";
 
 /*
@@ -75,17 +75,17 @@ export default class AggregationsMenu extends React.Component<IAggregationsMenuP
 
         const col = tableDescriptor.getCol(colId);
 
-        if (isSliceCol(col) || isDataColRootGroup(col)) {
+        if (isSliceCol(col) || isRootCol(col)) {
             // aggregation menu should not appear on headers of the slicing columns or on the
             // very to header which describes table grouping
             return null;
         }
 
-        const measures = isDataColLeaf(col)
+        const measures = isSeriesCol(col)
             ? [col.seriesDescriptor.measureDescriptor]
             : tableDescriptor.getMeasures();
         const measureLocalIdentifiers = measures.map((m) => m.measureHeaderItem.localIdentifier);
-        const totalsForHeader = this.getColumnTotals(measureLocalIdentifiers, isDataColGroup(col));
+        const totalsForHeader = this.getColumnTotals(measureLocalIdentifiers, isScopeCol(col));
 
         return (
             <Menu

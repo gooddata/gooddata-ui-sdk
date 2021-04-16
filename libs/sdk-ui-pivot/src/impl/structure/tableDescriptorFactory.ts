@@ -10,32 +10,33 @@ import range from "lodash/range";
 import {
     AnyCol,
     DataCol,
-    DataColGroup,
-    DataColLeaf,
-    DataColRootGroup,
-    isDataColLeaf,
+    ScopeCol,
+    SeriesCol,
+    RootCol,
+    isSeriesCol,
     SliceCol,
     TableColDefs,
     TableCols,
+    LeafDataCol,
 } from "./tableDescriptorTypes";
 import { createColDefsFromTableDescriptor } from "./colDefFactory";
 
 type ColumnGroupLevel = {
-    pkToGroup: Record<string, DataColGroup>;
-    groups: DataColGroup[];
+    pkToGroup: Record<string, ScopeCol>;
+    groups: ScopeCol[];
 };
 
 type GroupingOperationResult = {
     groupingAttributes: IAttributeDescriptor[];
     rootColumns: DataCol[];
-    leafColumns: DataColLeaf[] | DataColGroup[];
+    leafColumns: SeriesCol[] | ScopeCol[];
     allColumns: DataCol[];
 };
 
-function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): DataColRootGroup {
+function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): RootCol {
     return {
-        type: "columnGroupRootDescriptor",
-        id: "groupingDescriptor",
+        type: "rootCol",
+        id: "root",
         fullIndexPathToHere: [0],
         children: [],
         groupingAttributes: scopingAttributes,
@@ -43,9 +44,9 @@ function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): Data
 }
 
 function colDescriptorAndHeaders(
-    col: DataColLeaf | DataColGroup,
+    col: LeafDataCol,
 ): { attributeHeaders: IResultAttributeHeader[]; attributeDescriptors: IAttributeDescriptor[] } {
-    if (isDataColLeaf(col)) {
+    if (isSeriesCol(col)) {
         invariant(col.seriesDescriptor.attributeHeaders);
         invariant(col.seriesDescriptor.attributeDescriptors);
 
@@ -75,7 +76,7 @@ function colDescriptorAndHeaders(
  *
  */
 function groupColumns(
-    bottomColumns: DataColLeaf[] | DataColGroup[],
+    bottomColumns: SeriesCol[] | ScopeCol[],
     scopingAttributes: IAttributeDescriptor[],
     limitLevels?: number,
 ): GroupingOperationResult {
@@ -115,7 +116,7 @@ function groupColumns(
             pathToGroup += attributeHeaders[level].attributeHeaderItem.uri;
 
             const groupLevel = columnGroupLevels[level];
-            let currentGroup: DataColGroup | undefined = groupLevel.pkToGroup[pathToGroup];
+            let currentGroup: ScopeCol | undefined = groupLevel.pkToGroup[pathToGroup];
 
             if (!currentGroup) {
                 const fullIndexPathToHere: number[] = parentGroup
@@ -123,7 +124,7 @@ function groupColumns(
                     : [groupLevel.groups.length];
 
                 currentGroup = {
-                    type: "columnGroupHeaderDescriptor",
+                    type: "scopeCol",
                     id: `g_${groupId++}`,
                     attributeDescriptor: attributeDescriptors![level],
                     header: attributeHeaders[level],
@@ -163,7 +164,7 @@ function groupColumns(
 
 /**
  * This function creates bottom-most column descriptors from column attributes. It essentially creates the bottom-most
- * {@link DataColGroup} which would normally host the measure columns.
+ * {@link ScopeCol} which would normally host the measure columns.
  *
  * @param dv
  */
@@ -185,10 +186,10 @@ function createColumnDescriptorsWhenNoMeasures(dv: DataViewFacade): GroupingOper
     // for each attribute descriptor, there must be one array in the headers.
     invariant(descriptors.length === headers.length);
 
-    const bottom: DataColGroup[] = [];
+    const bottom: ScopeCol[] = [];
     for (let colIdx = 0; colIdx < numberOfColumns; colIdx++) {
         bottom.push({
-            type: "columnGroupHeaderDescriptor",
+            type: "scopeCol",
             id: `cg_${colIdx}`,
             children: [],
             fullIndexPathToHere: [colIdx],
@@ -205,13 +206,13 @@ function createColumnDescriptorsWhenNoMeasures(dv: DataViewFacade): GroupingOper
 }
 
 function createColumnDescriptorsFromDataSeries(dv: DataViewFacade): GroupingOperationResult {
-    const leafColumns: DataColLeaf[] = dv
+    const leafColumns: SeriesCol[] = dv
         .data()
         .series()
         .toArray()
         .map((series, idx) => {
             return {
-                type: "leafColumnDescriptor",
+                type: "seriesCol",
                 id: `c_${idx}`,
                 index: idx,
                 seriesId: series.id,
@@ -242,7 +243,7 @@ function createRowDescriptors(dv: DataViewFacade): SliceCol[] {
         .descriptors.filter(isAttributeDescriptor)
         .map((attributeDescriptor, idx) => {
             return {
-                type: "rowHeaderDescriptor",
+                type: "sliceCol",
                 id: `r_${idx}`,
                 index: idx,
                 attributeDescriptor,
@@ -285,7 +286,7 @@ function createTableHeaders(dv: DataViewFacade): TableCols {
         rootDataCols: rootColumns,
         leafDataCols: leafColumns,
         idToDescriptor,
-        groupingAttributes,
+        scopingAttributes: groupingAttributes,
     };
 }
 

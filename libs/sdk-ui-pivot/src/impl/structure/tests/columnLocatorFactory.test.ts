@@ -6,7 +6,7 @@ import {
 } from "./table.fixture";
 import { TableDescriptor } from "../tableDescriptor";
 import { createColumnLocator } from "../colLocatorFactory";
-import { DataColGroup } from "../tableDescriptorTypes";
+import { ScopeCol } from "../tableDescriptorTypes";
 
 describe("createColumnLocator", () => {
     it("creates valid leaf column locator in table without column attributes", () => {
@@ -24,7 +24,7 @@ describe("createColumnLocator", () => {
     it("creates valid group column locator for top-level group in table with column attributes", () => {
         const t = TableDescriptor.for(SingleMeasureWithTwoRowAndTwoColumnAttributes);
 
-        const topLevelGroup = t.headers.rootDataCols[0].children[0] as DataColGroup;
+        const topLevelGroup = t.headers.rootDataCols[0].children[0] as ScopeCol;
 
         expect(createColumnLocator(topLevelGroup)).toMatchSnapshot();
     });
@@ -32,7 +32,7 @@ describe("createColumnLocator", () => {
     it("creates valid group column locator for second-level group in table with column attributes", () => {
         const t = TableDescriptor.for(SingleMeasureWithTwoRowAndTwoColumnAttributes);
 
-        const secondLevelGroup = t.headers.rootDataCols[0].children[0].children[0] as DataColGroup;
+        const secondLevelGroup = t.headers.rootDataCols[0].children[0].children[0] as ScopeCol;
 
         expect(createColumnLocator(secondLevelGroup)).toMatchSnapshot();
     });

@@ -40,7 +40,7 @@ Array [
         "type": "COLUMN_ATTRIBUTE_COLUMN",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Product",
   },
 ]
@@ -106,7 +106,7 @@ Array [
         "headerName": "West Coast",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Region",
   },
 ]
@@ -148,7 +148,7 @@ Array [
         "headerName": "West Coast",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Region",
   },
 ]
@@ -412,7 +412,7 @@ Array [
         "headerName": "Closed Lost",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Stage Name › Region",
   },
 ]
@@ -460,7 +460,7 @@ Array [
         "headerName": "West Coast",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Region",
   },
 ]
@@ -568,7 +568,7 @@ Array [
         "headerName": "Include",
       },
     ],
-    "groupId": "groupingDescriptor",
+    "groupId": "root",
     "headerName": "Forecast Category › Region",
   },
 ]

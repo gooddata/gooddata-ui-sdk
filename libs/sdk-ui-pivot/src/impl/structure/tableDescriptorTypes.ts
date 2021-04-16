@@ -3,7 +3,25 @@ import { IAttributeDescriptor, IResultAttributeHeader, ITotalDescriptor } from "
 import { DataSeriesDescriptor, DataSeriesId } from "@gooddata/sdk-ui";
 import { ColDef, ColGroupDef, Column } from "@ag-grid-community/all-modules";
 
-export const ColumnGroupingDescriptorId = "groupingDescriptor";
+export const ColumnGroupingDescriptorId = "root";
+
+/**
+ * Recognized col types. See the respective interfaces for addition information.
+ *
+ * @remarks see {@link SliceCol}
+ * @remarks see {@link SeriesCol}
+ * @remarks see {@link ScopeCol}
+ * @remarks see {@link RootCol}
+ */
+export type TableColType = "sliceCol" | "seriesCol" | "scopeCol" | "rootCol";
+
+/**
+ * Base interface for all col types.
+ */
+export interface TableCol {
+    readonly type: TableColType;
+    readonly id: string;
+}
 
 /**
  * Represents table column which displays data slice attribute element names. PivotTable interface also calls
@@ -19,11 +37,9 @@ export const ColumnGroupingDescriptorId = "groupingDescriptor";
  * There is one SliceCol - for row attribute A1. In this table, there will be one row for each
  * element of attribute A1.
  *
- * TODO: rename to attributeCol?
  */
-export type SliceCol = {
-    readonly type: "rowHeaderDescriptor";
-    readonly id: string;
+export interface SliceCol extends TableCol {
+    readonly type: "sliceCol";
 
     /**
      * Descriptor of attribute whose elements will be in this column.
@@ -50,14 +66,14 @@ export type SliceCol = {
      * Path of indexes to follow from root, through children in order to get to this node.
      */
     readonly fullIndexPathToHere: number[];
-};
+}
 
 export function isSliceCol(obj: unknown): obj is SliceCol {
-    return (obj as SliceCol)?.type === "rowHeaderDescriptor";
+    return (obj as SliceCol)?.type === "sliceCol";
 }
 
 /**
- * Represents most granular column under which computed measure data is rendered.
+ * Represents most granular column under which computed measure data for a single data series is shown.
  *
  * In other words, in a table that is defined as (Row: A1, Cols: A2, Measures: M1) and looking like:
  *
@@ -68,17 +84,14 @@ export function isSliceCol(obj: unknown): obj is SliceCol {
  * val1  | 1    | 3   |
  * val2  | 2    | 4   |
  *
- * There are as many leaf data cols as there are combinations of A2 attribute elements for which it is possible
+ * There are as many series cols as there are combinations of A2 attribute elements for which it is possible
  * to calculate metric M1.
  *
  * If you are familiar with the DataViewFacade's data access infrastructure, then the analogy is simple: there
- * is one leaf data col of each data series.
- *
- * TODO: Rename from Leaf to something indicating that there are measure values in this col
+ * is one series col of each data series.
  */
-export type DataColLeaf = {
-    readonly type: "leafColumnDescriptor";
-    readonly id: string;
+export interface SeriesCol extends TableCol {
+    readonly type: "seriesCol";
 
     /**
      * Path of indexes to follow from root, through children in order to get to this node.
@@ -86,7 +99,7 @@ export type DataColLeaf = {
     fullIndexPathToHere: number[];
 
     /**
-     * column index among all leaf columns
+     * Index among all series cols.
      */
     index: number;
 
@@ -94,16 +107,19 @@ export type DataColLeaf = {
 
     readonly seriesId: DataSeriesId;
     readonly seriesDescriptor: DataSeriesDescriptor;
-};
+}
 
-export function isDataColLeaf(obj: unknown): obj is DataColLeaf {
-    return (obj as DataColLeaf)?.type == "leafColumnDescriptor";
+export function isSeriesCol(obj: unknown): obj is SeriesCol {
+    return (obj as SeriesCol)?.type == "seriesCol";
 }
 
 /**
- * In a grouped table, this represents a column which groups multiple data leaf columns. The leaf cols are grouped
- * into into N trees. The number of trees depends on how many scoping attribute elements actually exist and for
- * how many of those a metric can be calculated.
+ * Tables with column attributes and measures is a table with scoped data series. Such table will have its data cols
+ * grouped into a tree hierarchy. The ScopeCol is composite in this tree hierarchy, whose children may be either additional
+ * scope cols or finally the series cols.
+ *
+ * The tree hierarchy will be as deep as there are column attributes and as wide as the number of the actual scoped
+ * data series.
  *
  * In other words, in a table that is defined as (Row: A1, Cols: A2, A3, Measures: M1, M2) and looking like:
  *
@@ -116,17 +132,13 @@ export function isDataColLeaf(obj: unknown): obj is DataColLeaf {
  * val1  | 1    | 3   | ....
  * val2  | 2    | 4   | ....
  *
- * There are as many data leaf columns as there are valid combinations of A1xA2 elements for which metric values M1 and
+ * There are as many series cols as there are valid combinations of A1xA2 elements for which metric values M1 and
  * M2 can be computed. These leaves are then grouped under as many trees as there are unique values of A1. In each
  * such tree there are there are further subtrees - one for each unique value of A2. And then in each subtree there
  * are the leaves - one for each measure.
- *
- * TODO: Rename to something indicating that the col represents values of scoping attribute and may hosting
- *  additional children cols
  */
-export type DataColGroup = {
-    readonly type: "columnGroupHeaderDescriptor";
-    readonly id: string;
+export interface ScopeCol extends TableCol {
+    readonly type: "scopeCol";
 
     readonly children: DataCol[];
 
@@ -156,65 +168,76 @@ export type DataColGroup = {
      * current group.
      */
     readonly headersToHere: IResultAttributeHeader[];
-};
+}
 
-export function isDataColGroup(obj: unknown): obj is DataColGroup {
-    return (obj as DataColGroup)?.type === "columnGroupHeaderDescriptor";
+export function isScopeCol(obj: unknown): obj is ScopeCol {
+    return (obj as ScopeCol)?.type === "scopeCol";
 }
 
 /**
- * Tests whether the provided col is a {@link DataColGroup} with no children - which implies that it is the bottom
+ * Tests whether the provided col is a {@link ScopeCol} with no children - which implies that it is the bottom
  * most group that is not linked to any measure columns, which in turn means the table is not defined with any measures.
  *
  * @param col - col to test
  */
-export function isEmptyDataColGroup(col: AnyCol): boolean {
-    return isDataColGroup(col) && col.children.length === 0;
+export function isEmptyScopeCol(col: AnyCol): boolean {
+    return isScopeCol(col) && col.children.length === 0;
 }
 
 /**
  * Appears in a table with grouped data columns. This is the root header that has all first-level
  * group headers as children.
  */
-export type DataColRootGroup = {
-    readonly type: "columnGroupRootDescriptor";
-    readonly id: "groupingDescriptor";
+export interface RootCol extends TableCol {
+    readonly type: "rootCol";
+    readonly id: "root";
 
     readonly children: DataCol[];
     readonly groupingAttributes: IAttributeDescriptor[];
     readonly fullIndexPathToHere: [0];
-};
+}
 
-export function isDataColRootGroup(obj: unknown): obj is DataColRootGroup {
-    return (obj as DataColRootGroup)?.type === "columnGroupRootDescriptor";
+export function isRootCol(obj: unknown): obj is RootCol {
+    return (obj as RootCol)?.type === "rootCol";
 }
 
 /**
- * Column Descriptor is modeled as a composite structure. Column groups may host additional column
- * groups or leaf column descriptor.
+ * Leaf data cols appear as leaf / bottom-most columns in the data part of the table. This is typically a series col,
+ * however in cases of table without measures it can also be a scope col.
  */
-export type DataCol = DataColLeaf | DataColGroup | DataColRootGroup;
+export type LeafDataCol = SeriesCol | ScopeCol;
+
+/**
+ * Data col is a composite structure describing the data part of the table.
+ */
+export type DataCol = RootCol | LeafDataCol;
+
+/**
+ * Any table col. May be either the col describing the table slicing or col describing the data part of the table.
+ */
 export type AnyCol = SliceCol | DataCol;
 
 /**
- * Descriptors of all table headers. The table headers are divided into two groups:
+ * Descriptors of all table columns. The table columns are divided into two groups:
  *
- * -  Row-column headers; these describe the columns that contain description of each row of data. They are
+ * -  Slice Columns; these describe the columns that contain description of each row of data. They are
  *    constructed from data slicing attributes.
  *
- * -  Column headers; these describe the columns that contain the actual data points. They are constructed from
+ * -  Data columns; these describe the columns that contain the actual data points. They are constructed from
  *    the data series identified in the result. A data series represents a stream of data points computed for particular
  *    measure. The data points can be sliced by some attributes and/or scoped by some attributes. Read more about
  *    that here: {@link IDataSeries}.
  *
- *    When the data series use scoping, the table headers should be nicely grouped by the scoping attribute
- *    element values and form a tree hierarchy. That is why the column headers are further listed as:
+ *    When the data series use scoping, the data cols are grouped by the scoping attribute
+ *    element values and form a tree hierarchy. The hierarchy always starts with a RootCol whose children
+ *    are all scope cols created from the first scoping attribute. These in turn have children that are scope
+ *    cols created from the second scoping attribute. This goes on until the last layer of scoping cols whose
+ *    children will be the actual SeriesCols.
  *
- *    -  Root Columns = column descriptors representing top-most group
- *    -  Leaf Columns = column descriptors representing the actual, fully scoped columns that contain the actual
- *       data points
+ *    Note 1: if the table does contain only scoping attributes but no measures, then the last layer of scoping
+ *    cols will have no children.
  *
- *    Note: if the data series are not scoped, then no grouping is needed and the root columns and leaf columns will
+ *    Note 2: if the data series are not scoped, then no grouping is needed and the root columns and leaf columns will
  *    contain the same values.
  *
  */
@@ -225,14 +248,15 @@ export type TableCols = {
     readonly sliceCols: SliceCol[];
 
     /**
-     * Root table headers.
+     * Root table cols.
      */
     readonly rootDataCols: DataCol[];
 
     /**
-     * Bottom-most
+     * Leaf data cols. These are either all series columns or in a corner case all scoping cols. This latter
+     * can happen when the table is constructed with scoping attributes but without measures.
      */
-    readonly leafDataCols: Array<DataColGroup | DataColLeaf>;
+    readonly leafDataCols: Array<LeafDataCol>;
 
     /**
      * Mapping between header ID to header descriptor (useful for lookups as ColDefs 'field' references this)
@@ -240,9 +264,9 @@ export type TableCols = {
     readonly idToDescriptor: Record<string, AnyCol>;
 
     /**
-     * All attributes used for grouping table columns.
+     * Descriptors for attributes that are used to construct the scoping cols.
      */
-    readonly groupingAttributes: IAttributeDescriptor[];
+    readonly scopingAttributes: IAttributeDescriptor[];
 };
 
 /**

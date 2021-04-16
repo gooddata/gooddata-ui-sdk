@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { AnyCol, isDataColLeaf } from "./tableDescriptorTypes";
+import { AnyCol, isSeriesCol } from "./tableDescriptorTypes";
 
 /**
  * Returns localId of measure whose values the provided column contains. For convenience, any type of column
@@ -8,7 +8,7 @@ import { AnyCol, isDataColLeaf } from "./tableDescriptorTypes";
  * @param col - column descriptor
  */
 export function colMeasureLocalId(col: AnyCol): string | undefined {
-    return isDataColLeaf(col)
+    return isSeriesCol(col)
         ? col.seriesDescriptor.measureDescriptor.measureHeaderItem.localIdentifier
         : undefined;
 }
