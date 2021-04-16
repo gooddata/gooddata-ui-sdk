@@ -1,7 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import toDate from "date-fns-tz/toDate";
 
-import { getDateTimeConfig } from "../InsightListItemDate";
+import { getDateTimeConfig, META_DATA_TIMEZONE } from "../InsightListItemDate";
 
 interface ITestOptions {
     now: Date;
@@ -9,32 +9,44 @@ interface ITestOptions {
     updatedYesterday: string;
     updatedThisYear: string;
     updatedLastYear: string;
+    timeZone: string;
 }
+
+const toZonedDate = (date: string, timeZone: string) => {
+    const metaDataDate = toDate(date, { timeZone: META_DATA_TIMEZONE });
+    return toDate(metaDataDate, { timeZone });
+};
 
 describe("InsightListItemDate", () => {
     describe("getDateTimeConfig today/yesterday/current year", () => {
         const shouldBehaveCorrectlyForDate = (options: ITestOptions) => {
-            const { now, updatedToday, updatedYesterday, updatedThisYear, updatedLastYear } = options;
+            const { now, timeZone } = options;
 
             it("should correctly format today's date", () => {
+                const { updatedToday } = options;
                 const config = getDateTimeConfig(updatedToday, { now });
                 expect(config).toMatchObject({
+                    date: toZonedDate(updatedToday, timeZone),
                     isToday: true,
                     isYesterday: false,
                 });
             });
 
             it("should correctly format yesterdays date", () => {
+                const { updatedYesterday } = options;
                 const config = getDateTimeConfig(updatedYesterday, { now });
                 expect(config).toMatchObject({
+                    date: toZonedDate(updatedYesterday, timeZone),
                     isToday: false,
                     isYesterday: true,
                 });
             });
 
             it("should correctly format date in this year", () => {
+                const { updatedThisYear } = options;
                 const config = getDateTimeConfig(updatedThisYear, { now });
                 expect(config).toMatchObject({
+                    date: toZonedDate(updatedThisYear, timeZone),
                     isToday: false,
                     isYesterday: false,
                     isCurrentYear: true,
@@ -42,8 +54,10 @@ describe("InsightListItemDate", () => {
             });
 
             it("should correctly format date in last year", () => {
+                const { updatedLastYear } = options;
                 const config = getDateTimeConfig(updatedLastYear, { now });
                 expect(config).toMatchObject({
+                    date: toZonedDate(updatedLastYear, timeZone),
                     isToday: false,
                     isYesterday: false,
                     isCurrentYear: false,
@@ -59,18 +73,21 @@ describe("InsightListItemDate", () => {
         };
 
         describe("Europe/Prague default timezone", () => {
-            const now = toDate("2016-03-20 15:00", { timeZone: "Europe/Prague" });
-            shouldBehaveCorrectlyForDate({ now, ...options });
+            const timeZone = "Europe/Prague";
+            const now = toDate("2016-03-20 15:00", { timeZone });
+            shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
 
         describe("America/Los_Angeles default timezone", () => {
-            const now = toDate("2016-03-20 07:00", { timeZone: "America/Los_Angeles" });
-            shouldBehaveCorrectlyForDate({ now, ...options });
+            const timeZone = "America/Los_Angeles";
+            const now = toDate("2016-03-20 07:00", { timeZone });
+            shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
 
         describe("Asia/Bangkok default timezone", () => {
-            const now = toDate("2016-03-20 20:00", { timeZone: "Asia/Bangkok" });
-            shouldBehaveCorrectlyForDate({ now, ...options });
+            const timeZone = "Asia/Bangkok";
+            const now = toDate("2016-03-20 20:00", { timeZone });
+            shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
     });
 });

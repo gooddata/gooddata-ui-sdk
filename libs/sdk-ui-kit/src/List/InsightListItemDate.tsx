@@ -1,8 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import utcToZonedTime from "date-fns-tz/utcToZonedTime";
+import toDate from "date-fns-tz/toDate";
 import subDays from "date-fns/subDays";
-import parseISO from "date-fns/parseISO";
 import isSameDay from "date-fns/isSameDay";
 import isSameYear from "date-fns/isSameYear";
 import { FormattedMessage, FormattedTime, FormattedDate } from "react-intl";
@@ -47,7 +46,7 @@ export const InsightListItemDate: React.FC<IInsightListItemDateProps> = ({ confi
     return <FormattedDate value={config.date} format="shortWithYear" />;
 };
 
-const META_TIMEZONE = "Europe/Prague";
+export const META_DATA_TIMEZONE = "Europe/Prague";
 
 /**
  * @internal
@@ -70,19 +69,17 @@ export function getDateTimeConfig(
     date: string,
     options: IDateTimeConfigOptions = {},
 ): IInsightListItemDateConfig {
-    const { dateTimezone = META_TIMEZONE, now = new Date() } = options;
+    const { dateTimezone = META_DATA_TIMEZONE, now = new Date() } = options;
 
-    const dateWithTimezoneInLocal = parseISO(date);
-    const dateWithTimezone = utcToZonedTime(dateWithTimezoneInLocal, dateTimezone);
-
+    const dateInLocalTimezone = toDate(date, { timeZone: dateTimezone });
     const yesterday = subDays(now, 1);
 
-    const isToday = isSameDay(dateWithTimezoneInLocal, now);
-    const isYesterday = isSameDay(dateWithTimezoneInLocal, yesterday);
-    const isCurrentYear = isSameYear(dateWithTimezoneInLocal, now);
+    const isToday = isSameDay(dateInLocalTimezone, now);
+    const isYesterday = isSameDay(dateInLocalTimezone, yesterday);
+    const isCurrentYear = isSameYear(dateInLocalTimezone, now);
 
     return {
-        date: dateWithTimezone,
+        date: dateInLocalTimezone,
         isToday,
         isYesterday,
         isCurrentYear,
