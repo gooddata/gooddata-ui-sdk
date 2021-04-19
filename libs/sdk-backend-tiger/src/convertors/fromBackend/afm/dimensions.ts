@@ -33,25 +33,21 @@ function transformDimension(
     attrTotals: AttrTotals,
 ): IDimensionDescriptor {
     return {
-        headers: dim.headers.map((header, headerIdx) => {
+        headers: dim.headers.map((header) => {
             const h = header;
 
             if (isAttributeHeader(h)) {
-                /*
-                 * Funny stuff #1: we have to set 'uri' to some made-up value resembling the URIs sent by bear. This
-                 *  is because pivot table relies on the format of URIs. Ideally we would refactor pivot table to
-                 *  not care about this however this aspect is like a couple of eggs that hold the pivot spaghetti
-                 *  together - cannot be easily untangled.
-                 */
                 const attrDescriptor: IAttributeDescriptor = {
                     attributeHeader: {
-                        uri: `/obj/${headerIdx}`,
+                        // TODO: TIGER-HACK: Tiger provides no uri
+                        uri: "",
                         identifier: h.attributeHeader.label.id,
                         ref: idRef(h.attributeHeader.label.id, "displayForm"),
                         formOf: {
                             identifier: h.attributeHeader.attribute.id,
                             name: h.attributeHeader.attributeName,
-                            uri: `/obj/${headerIdx}`,
+                            // TODO: TIGER-HACK: Tiger provides no uri
+                            uri: "",
                             ref: idRef(h.attributeHeader.attribute.id, "attribute"),
                         },
                         localIdentifier: h.attributeHeader.localIdentifier,
@@ -63,13 +59,13 @@ function transformDimension(
                 return attrDescriptor;
             } else {
                 /*
-                 * Funny stuff #2: tiger does not send name & format according to the contract (which is inspired
+                 * Funny stuff #1: tiger does not send name & format according to the contract (which is inspired
                  *  by bear behavior). The code must reconciliate as follows:
                  *
                  *  -  if name does not come from tiger, then default the name to localIdentifier
                  *  -  if format does not come from tiger, then default to a hardcoded format
                  *
-                 * Funny stuff #3: tiger does not send simple measure identifier. The code must reconciliate:
+                 * Funny stuff #2: tiger does not send simple measure identifier. The code must reconciliate:
                  *
                  * -   look up simple measure by local id from execution definition
                  */
@@ -78,7 +74,6 @@ function transformDimension(
                         items: h.measureGroupHeaders.map((m) => {
                             const ref = simpleMeasureRefs[m.localIdentifier];
                             const identifier = isIdentifierRef(ref) ? ref.identifier : undefined;
-                            const uri = ref ? `/obj/${headerIdx}` : undefined;
 
                             const newItem: IMeasureDescriptor = {
                                 measureHeaderItem: {
@@ -87,7 +82,6 @@ function transformDimension(
                                     format: m.format ?? DEFAULT_FORMAT,
                                     identifier,
                                     ref,
-                                    uri,
                                 },
                             };
 
