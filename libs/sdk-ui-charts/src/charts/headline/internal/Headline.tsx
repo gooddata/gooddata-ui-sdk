@@ -258,7 +258,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
 
             return (
                 <div
-                    className={this.getPrimaryItemClasses(primaryItem)}
+                    className={cx(this.getPrimaryItemClasses(primaryItem), {
+                        "headline-primary-item-resize": !!secondaryItem,
+                    })}
                     style={{
                         ...formattedItem.cssStyle,
                         ...heightStyles,

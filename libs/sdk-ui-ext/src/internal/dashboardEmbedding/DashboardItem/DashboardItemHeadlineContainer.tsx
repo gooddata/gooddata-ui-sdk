@@ -15,16 +15,14 @@ export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineCont
     clientHeight,
 }) => {
     const isSmallCustomHeight = () => clientHeight < SMALL_WIDGET_HEIGHT;
+    const customMargin = clientHeight <= SMALL_WIDGET_HEIGHT ? { marginTop: 0 } : undefined;
+
+    const customStyle = isSmallCustomHeight()
+        ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px` }
+        : undefined;
 
     return (
-        <div
-            className={"item-headline-outer"}
-            style={
-                isSmallCustomHeight()
-                    ? { height: `${SMALL_HEIGHT}px`, lineHeight: `${SMALL_LINE_HEIGHT}px`, marginTop: 0 }
-                    : undefined
-            }
-        >
+        <div className={"item-headline-outer"} style={{ ...customStyle, ...customMargin }}>
             <div className="item-headline" style={isSmallCustomHeight() ? { fontSize: "15px" } : undefined}>
                 {children}
             </div>
