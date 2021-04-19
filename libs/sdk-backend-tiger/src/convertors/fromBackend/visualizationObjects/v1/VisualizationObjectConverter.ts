@@ -2,11 +2,12 @@
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationObjectModelV1 } from "@gooddata/api-client-tiger";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
+import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris";
 
 export function convertVisualizationObject(
     visualizationObject: VisualizationObjectModelV1.IVisualizationObject,
 ): IInsightDefinition {
-    return {
+    const convertedInsight: IInsightDefinition = {
         insight: {
             ...visualizationObject.visualizationObject,
             buckets: cloneWithSanitizedIds(visualizationObject.visualizationObject.buckets) ?? [],
@@ -14,4 +15,8 @@ export function convertVisualizationObject(
             sorts: cloneWithSanitizedIds(visualizationObject.visualizationObject.sorts) ?? [],
         },
     };
+
+    const insight = fixInsightLegacyElementUris(convertedInsight);
+
+    return insight;
 }

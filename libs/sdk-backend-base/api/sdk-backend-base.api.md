@@ -687,7 +687,7 @@ export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModi
 export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
 
 // @alpha (undocumented)
-export const newInsightWidget: (measure: ObjRef, modifications: (builder: InsightWidgetBuilder) => InsightWidgetBuilder) => IInsightWidget;
+export const newInsightWidget: (insight: ObjRef, modifications: (builder: InsightWidgetBuilder) => InsightWidgetBuilder) => IInsightWidget;
 
 // @alpha (undocumented)
 export const newKpiWidget: (measure: ObjRef, modifications: (builder: KpiWidgetBuilder) => KpiWidgetBuilder) => IKpiWidget;

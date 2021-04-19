@@ -70,8 +70,8 @@ export class InsightWidgetBuilder extends WidgetBaseBuilder<IInsightWidget> impl
  * @alpha
  */
 export const newInsightWidget = (
-    measure: ObjRef,
+    insight: ObjRef,
     modifications: (builder: InsightWidgetBuilder) => InsightWidgetBuilder,
 ): IInsightWidget => {
-    return InsightWidgetBuilder.forNew(measure).modify(modifications).build();
+    return InsightWidgetBuilder.forNew(insight).modify(modifications).build();
 };
