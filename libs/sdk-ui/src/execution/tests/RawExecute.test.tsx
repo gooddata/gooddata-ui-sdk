@@ -110,7 +110,7 @@ describe("RawExecute", () => {
         expect(onLoadingFinish).toBeCalledTimes(1);
     });
 
-    it("should invoke onError when execution fails", async () => {
+    it("should invoke onError when execution fails with a NoDataError without a DataView", async () => {
         const child = makeChild();
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
@@ -125,7 +125,7 @@ describe("RawExecute", () => {
                 onLoadingFinish,
                 onLoadingStart,
             },
-            dummyBackend(),
+            dummyBackend({ raiseNoDataExceptions: "without-data-view" }),
         );
 
         await createDummyPromise({ delay: 100 });
@@ -133,6 +133,32 @@ describe("RawExecute", () => {
         expect(onError).toBeCalledTimes(1);
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
-        expect(onLoadingFinish).toBeCalledTimes(0);
+        expect(onLoadingFinish).not.toBeCalled();
+    });
+
+    it("should NOT invoke onError when execution fails with a NoDataError with a DataView", async () => {
+        const child = makeChild();
+        const onLoadingStart = jest.fn();
+        const onLoadingChanged = jest.fn();
+        const onLoadingFinish = jest.fn();
+        const onError = jest.fn();
+
+        renderDummyExecutor(
+            child,
+            {
+                onError,
+                onLoadingChanged,
+                onLoadingFinish,
+                onLoadingStart,
+            },
+            dummyBackend({ raiseNoDataExceptions: "with-data-view" }),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        expect(onError).not.toBeCalled();
+        expect(onLoadingStart).toBeCalledTimes(1);
+        expect(onLoadingChanged).toBeCalledTimes(2);
+        expect(onLoadingFinish).toBeCalledTimes(1);
     });
 });
