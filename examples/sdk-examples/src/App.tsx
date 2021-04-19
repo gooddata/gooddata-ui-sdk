@@ -109,6 +109,7 @@ export const App: React.FC = () => {
                                 align-items: stretch;
                                 overflow: hidden;
                                 padding: 20px 40px;
+                                height: 100%;
                             }
                         `}</style>
                         <Header
