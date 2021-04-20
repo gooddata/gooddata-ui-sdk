@@ -27,7 +27,7 @@ import {
     IStackMeasuresConfig,
     IYAxisConfig,
 } from "../../typings/unsafe";
-import { StackingValues } from "../../constants/stacking";
+import { StackingType } from "../../constants/stacking";
 import { HighchartsOptions, XAxisOptions } from "../../lib";
 
 /**
@@ -60,11 +60,11 @@ function handleStackMeasuresToPercent(stackMeasuresToPercent: boolean, seriesIte
         : seriesItem;
 }
 
-function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem): StackingValues {
+function getStackingValue(chartOptions: IChartOptions, seriesItem: ISeriesItem): StackingType {
     const { yAxes, type } = chartOptions;
     const { stacking, yAxis } = seriesItem;
     const seriesChartType = seriesItem.type || type;
-    const defaultStackingValue: StackingValues = isComboChart(type) ? null : "normal";
+    const defaultStackingValue: StackingType = isComboChart(type) ? null : "normal";
 
     return isPrimaryYAxis(yAxes[yAxis]) && !isLineChart(seriesChartType) ? stacking : defaultStackingValue;
 }
@@ -292,13 +292,13 @@ export function setDrillConfigToXAxis(
  * Format labels in Y axis from '0 - 100' to '0% - 100%'
  * Only applied when measure/series in Y axis more than one
  * @param chartOptions
- * @param _config
  * @param chartConfig
+ * @param [config]
  */
 export function getShowInPercentConfiguration(
     chartOptions: IChartOptions = {},
-    _config: HighchartsOptions = {},
     chartConfig: IChartConfig,
+    _config: HighchartsOptions = {},
 ): HighchartsOptions {
     const { stackMeasuresToPercent = false, primaryChartType } = chartConfig;
     const canStackInPercent = canComboChartBeStackedInPercent(chartOptions.data?.series);
@@ -384,7 +384,7 @@ export default function getOptionalStackingConfiguration(
               setDrillConfigToXAxis(drillConfig),
               getParentAttributeConfiguration(chartOptions, config),
               getStackMeasuresConfiguration(chartOptions, config, chartConfig),
-              getShowInPercentConfiguration(chartOptions, config, chartConfig),
+              getShowInPercentConfiguration(chartOptions, chartConfig, config),
               convertMinMaxFromPercentToNumber(chartOptions, config, chartConfig),
           )
         : {};

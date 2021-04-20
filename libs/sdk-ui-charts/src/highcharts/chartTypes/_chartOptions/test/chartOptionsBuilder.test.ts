@@ -21,7 +21,7 @@ import {
 import { IChartConfig } from "../../../../interfaces";
 import { emptyDef, IColorPaletteItem, idRef } from "@gooddata/sdk-model";
 import { customEscape } from "../../_util/common";
-import { StackingValues } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe";
 import { MeasureColorStrategy } from "../../_chartColoring/measure";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring";
@@ -2966,7 +2966,7 @@ describe("chartOptionsBuilder", () => {
                 ["normal", true],
             ])(
                 "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
-                (stackingValue: StackingValues, stackMeasures: boolean) => {
+                (stackingValue: StackingType, stackMeasures: boolean) => {
                     const chartOptions = generateChartOptions(
                         fixtures.comboWithTwoMeasuresAndViewByAttribute,
                         {
@@ -2986,7 +2986,7 @@ describe("chartOptionsBuilder", () => {
                 ["normal", { stackMeasures: true }],
             ])(
                 "should return %s when column+line chart is dual axis",
-                (stacking: StackingValues, stackingConfig: any) => {
+                (stacking: StackingType, stackingConfig: any) => {
                     const chartOptions = generateChartOptions(
                         fixtures.comboWithTwoMeasuresAndViewByAttribute,
                         {

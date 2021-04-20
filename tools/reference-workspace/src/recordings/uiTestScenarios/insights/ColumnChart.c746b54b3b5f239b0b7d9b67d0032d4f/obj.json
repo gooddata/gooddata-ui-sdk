@@ -1,0 +1,40 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [],
+        "identifier": "ColumnChart.c746b54b3b5f239b0b7d9b67d0032d4f",
+        "properties": { "controls": { "enableCompactSize": true, "legend": { "enabled": false } } },
+        "sorts": [],
+        "title": "ColumnChart - 120x354 - without y axis title",
+        "uri": "ColumnChart.c746b54b3b5f239b0b7d9b67d0032d4f",
+        "visualizationUrl": "local:column"
+    }
+}

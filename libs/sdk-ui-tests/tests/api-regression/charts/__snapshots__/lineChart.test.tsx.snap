@@ -1,5 +1,703 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`LineChart with 40x70 - without x axis, without y axis (very small container) should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 40x70 - without x axis, without y axis (very small container) should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with 60x354 - without y axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 60x354 - without y axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with 60x354 - without y axis labels, with y axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 60x354 - without y axis labels, with y axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with 140x354 - without y axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 140x354 - without y axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with 650x90 - without x axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 650x90 - without x axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`LineChart with 650x140 - without x axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "created.aci81lMifn6q",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_created.aci81lMifn6q",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "created.aci81lMifn6q",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_created.aci81lMifn6q",
+          },
+        },
+      ],
+      "localIdentifier": "trend",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_created.aci81lMifn6q",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`LineChart with 650x140 - without x axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "LineChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
 exports[`LineChart with Y axis min/max configuration should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

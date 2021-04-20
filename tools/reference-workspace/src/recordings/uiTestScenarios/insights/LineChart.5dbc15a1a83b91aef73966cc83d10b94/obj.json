@@ -1,0 +1,50 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "created.aci81lMifn6q", "type": "displayForm" },
+                            "localIdentifier": "a_created.aci81lMifn6q"
+                        }
+                    }
+                ],
+                "localIdentifier": "trend"
+            },
+            { "items": [], "localIdentifier": "segment" }
+        ],
+        "filters": [],
+        "identifier": "LineChart.5dbc15a1a83b91aef73966cc83d10b94",
+        "properties": { "controls": { "enableCompactSize": true, "legend": { "enabled": false } } },
+        "sorts": [],
+        "title": "LineChart - 650x140 - without x axis title",
+        "uri": "LineChart.5dbc15a1a83b91aef73966cc83d10b94",
+        "visualizationUrl": "local:line"
+    }
+}

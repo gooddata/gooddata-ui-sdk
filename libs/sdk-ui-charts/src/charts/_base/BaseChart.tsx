@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
-import { getValidColorPalette } from "../../highcharts";
+import { getValidColorPalette, ChartTransformation } from "../../highcharts";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import noop from "lodash/noop";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
@@ -21,7 +21,6 @@ import {
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
-import { ChartTransformation } from "../../highcharts";
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.

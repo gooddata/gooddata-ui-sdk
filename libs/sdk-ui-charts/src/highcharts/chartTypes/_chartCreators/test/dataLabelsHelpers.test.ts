@@ -13,7 +13,7 @@ import {
 import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { StackingValues } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {
@@ -356,7 +356,7 @@ describe("dataLabelsHelpers", () => {
             VisualizationTypes.COMBO2,
         ];
 
-        it.each<StackingValues>([null, "normal", "percent"])(
+        it.each<StackingType>([null, "normal", "percent"])(
             "should return black data label for area chart although stacking is %s",
             (stacking) => {
                 expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(BLACK_LABEL);

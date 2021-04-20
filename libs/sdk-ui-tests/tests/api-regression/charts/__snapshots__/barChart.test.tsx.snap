@@ -1,5 +1,610 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`BarChart with 100x70 - without x axis, without y axis (very small container) should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with 100x70 - without x axis, without y axis (very small container) should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with 120x354 - without y axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with 120x354 - without y axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with 165x354 - without y axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with 165x354 - without y axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with 650x90 - without x axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with 650x90 - without x axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`BarChart with 650x120 - without x axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`BarChart with 650x120 - without x axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "BarChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
 exports[`BarChart with X axis min/max configuration should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

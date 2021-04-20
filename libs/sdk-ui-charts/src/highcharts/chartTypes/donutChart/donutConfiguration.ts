@@ -4,8 +4,9 @@ import get from "lodash/get";
 import { getPieConfiguration } from "../pieChart/pieConfiguration";
 import { alignChart } from "../_chartCreators/helpers";
 import { IChartConfig } from "../../../interfaces";
+import { HighchartsOptions } from "../../../highcharts/lib";
 
-export function getDonutConfiguration(config: IChartConfig): ReturnType<typeof getPieConfiguration> {
+export function getDonutConfiguration(config: IChartConfig): HighchartsOptions {
     return merge({}, getPieConfiguration(config), {
         chart: {
             events: {

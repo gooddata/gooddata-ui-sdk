@@ -11,7 +11,7 @@ import {
 } from "../lib";
 import { IColorAssignment } from "@gooddata/sdk-ui";
 import { IColorPalette } from "@gooddata/sdk-model";
-import { StackingValues } from "../constants/stacking";
+import { StackingType } from "../constants/stacking";
 import { ChartAlignTypes, IAxisConfig, IGridConfig } from "../../interfaces";
 
 /*
@@ -97,7 +97,7 @@ export interface ISeriesItem {
     zIndex?: number;
     labelKey?: string;
     stack?: number;
-    stacking?: StackingValues;
+    stacking?: StackingType;
     dataLabels?: DataLabelsOptionsObject;
     dataLabelsGroup?: SVGAttributes;
 }
@@ -115,7 +115,7 @@ export type ITooltipFactory = (
 
 export interface IChartOptions {
     type?: string;
-    stacking?: StackingValues;
+    stacking?: StackingType;
     hasStackByAttribute?: boolean;
     hasViewByAttribute?: boolean;
     isViewByTwoAttributes?: boolean;

@@ -3,9 +3,10 @@ import get from "lodash/get";
 import { IChartConfig } from "../../../interfaces";
 import { HighchartsOptions, SeriesPieOptions } from "../../lib";
 import { alignChart } from "../_chartCreators/helpers";
+import { getPieResponsiveConfig } from "../_chartCreators/responsive";
 
 export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
-    return {
+    const pieConfiguration = {
         chart: {
             type: "pie",
             events: {
@@ -36,4 +37,13 @@ export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
             enabled: false,
         },
     };
+
+    if (config?.enableCompactSize) {
+        return {
+            ...pieConfiguration,
+            responsive: getPieResponsiveConfig(),
+        };
+    }
+
+    return pieConfiguration;
 }

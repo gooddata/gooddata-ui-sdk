@@ -8,6 +8,7 @@ import stacking from "./stacking";
 import drilling from "./drilling";
 import experimental from "./experimental";
 import theming from "./theming";
+import responsive from "./responsive";
 
 export default [
     base,
@@ -18,4 +19,5 @@ export default [
     stacking,
     experimental,
     theming,
+    ...responsive,
 ];

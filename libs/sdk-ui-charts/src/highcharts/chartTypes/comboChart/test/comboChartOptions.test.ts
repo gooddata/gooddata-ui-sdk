@@ -2,7 +2,7 @@
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { StackingValues } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 import { ISeriesItem } from "../../../typings/unsafe";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
@@ -69,7 +69,7 @@ describe("getComboChartStackingConfig", () => {
         [null, false],
     ])(
         "should return %s stack value when 'Stack Measures' config is %s",
-        (stackValue: StackingValues | null, stackMeasures: boolean) => {
+        (stackValue: StackingType | null, stackMeasures: boolean) => {
             expect(
                 getComboChartStackingConfig(
                     { stackMeasures },

@@ -1,0 +1,31 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            { "items": [], "localIdentifier": "secondary_measures" },
+            { "items": [], "localIdentifier": "tertiary_measures" },
+            { "items": [], "localIdentifier": "view" }
+        ],
+        "filters": [],
+        "identifier": "BulletChart.870587ad8613c200781c83d9ff94a2cb",
+        "properties": { "controls": { "enableCompactSize": true, "legend": { "enabled": false } } },
+        "sorts": [],
+        "title": "BulletChart - 650x120 - without x axis title",
+        "uri": "BulletChart.870587ad8613c200781c83d9ff94a2cb",
+        "visualizationUrl": "local:bullet"
+    }
+}

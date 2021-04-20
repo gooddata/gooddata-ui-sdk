@@ -1,5 +1,955 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ColumnChart with 40x60 - without x axis, without y axis (very small container) should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 40x60 - without x axis, without y axis (very small container) should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ColumnChart with 60x354 - without y axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 60x354 - without y axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ColumnChart with 60x354 - without y axis labels, with y axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 60x354 - without y axis labels, with y axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ColumnChart with 120x354 - without y axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 120x354 - without y axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ColumnChart with 650x90 - without x axis labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 650x90 - without x axis labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`ColumnChart with 650x120 - without x axis title should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "acugFHNJgsBy",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_acugFHNJgsBy",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Calculated 'Lost' measure",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_aangOxLSeztu",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "difference",
+              },
+            },
+            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+          },
+        },
+        Object {
+          "measure": Object {
+            "alias": "Ratio of Won and Lost",
+            "definition": Object {
+              "arithmeticMeasure": Object {
+                "measureIdentifiers": Array [
+                  "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "m_acugFHNJgsBy",
+                ],
+                "operator": "ratio",
+              },
+            },
+            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "acugFHNJgsBy",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_acugFHNJgsBy",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Calculated 'Lost' measure",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_aangOxLSeztu",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "difference",
+          },
+        },
+        "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      },
+    },
+    Object {
+      "measure": Object {
+        "alias": "Ratio of Won and Lost",
+        "definition": Object {
+          "arithmeticMeasure": Object {
+            "measureIdentifiers": Array [
+              "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+              "m_acugFHNJgsBy",
+            ],
+            "operator": "ratio",
+          },
+        },
+        "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ColumnChart with 650x120 - without x axis title should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+    "stackMeasures": undefined,
+    "stackMeasuresToPercent": undefined,
+  },
+  "exportTitle": "ColumnChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
 exports[`ColumnChart with Stack measures to 100% with and axis min/max should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

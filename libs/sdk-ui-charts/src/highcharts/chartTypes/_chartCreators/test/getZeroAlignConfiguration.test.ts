@@ -5,7 +5,7 @@ import {
     getZeroAlignConfiguration,
 } from "../getZeroAlignConfiguration";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { StackingValues } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 import { IChartOptions, ISeriesItem } from "../../../typings/unsafe";
 
 describe("getZeroAlignConfiguration", () => {
@@ -240,7 +240,7 @@ describe("getZeroAlignConfiguration", () => {
         ];
 
         describe("non-stacked chart", () => {
-            it.each<[stacking: StackingValues, type: string]>([
+            it.each<[stacking: StackingType, type: string]>([
                 [null, VisualizationTypes.LINE],
                 [null, VisualizationTypes.COLUMN],
                 ["normal", VisualizationTypes.LINE],
@@ -387,7 +387,7 @@ describe("getZeroAlignConfiguration", () => {
                 },
             ];
 
-            it.each<[_description: string, stacking: StackingValues | null, min: number, max: number]>([
+            it.each<[_description: string, stacking: StackingType | null, min: number, max: number]>([
                 ["non-stack chart", null, 0, 250],
                 ["normal stack chart in total", "normal", 0, 500],
                 ["percent stack chart in total", "percent", 0, 100],

@@ -17,7 +17,7 @@ import sum from "lodash/sum";
 import compact from "lodash/compact";
 
 import { isComboChart, isLineChart } from "../_util/common";
-import { StackingValues } from "../../constants/stacking";
+import { StackingType } from "../../constants/stacking";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
 
 export interface ICanon {
@@ -185,7 +185,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getMinMaxInfo(config: any, stacking: StackingValues, type: string): IMinMaxInfo[] {
+export function getMinMaxInfo(config: any, stacking: StackingType, type: string): IMinMaxInfo[] {
     const { series, yAxis } = config;
     const isStackedChart = !isNil(stacking);
 
@@ -310,7 +310,7 @@ export function convertNumberToPercent(yData: number[][]): number[][] {
  */
 function getDataMinMaxOnStackedChart(
     series: ISeriesItem[],
-    stacking: StackingValues,
+    stacking: StackingType,
     opposite: boolean,
 ): IMinMax {
     const yData = series.map(getYDataInSeries);

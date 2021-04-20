@@ -7,7 +7,7 @@ import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../_util/common";
-import { StackingValues } from "../../constants/stacking";
+import { StackingType } from "../../constants/stacking";
 import { ISeriesItem } from "../../typings/unsafe";
 
 export const CHART_ORDER = {
@@ -92,8 +92,8 @@ export function canComboChartBeStackedInPercent(series: ISeriesItem[]): boolean 
 export function getComboChartStackingConfig(
     config: IChartConfig,
     series: ISeriesItem[],
-    defaultStacking: StackingValues,
-): StackingValues {
+    defaultStacking: StackingType,
+): StackingType {
     const { stackMeasures } = config;
     const canStackInPercent = canComboChartBeStackedInPercent(series);
 

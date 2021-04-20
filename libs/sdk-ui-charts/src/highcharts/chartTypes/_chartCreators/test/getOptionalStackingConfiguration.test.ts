@@ -13,7 +13,7 @@ import getOptionalStackingConfiguration, {
 import { IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../../interfaces";
 import { BLACK_LABEL, WHITE_LABEL } from "../../../constants/label";
-import { StackingValues } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 import { IChartOptions, ISeriesItem, IStackMeasuresConfig } from "../../../typings/unsafe";
 
 describe("getOptionalStackingConfiguration", () => {
@@ -110,11 +110,11 @@ describe("getOptionalStackingConfiguration", () => {
         );
 
         it.each([
-            ["normal" as StackingValues, { stackMeasures: true }],
-            ["percent" as StackingValues, { stackMeasuresToPercent: true }],
+            ["normal" as StackingType, { stackMeasures: true }],
+            ["percent" as StackingType, { stackMeasuresToPercent: true }],
         ])(
             "should return series config with %s stacking",
-            (type: StackingValues, chartConfig: IChartConfig) => {
+            (type: StackingType, chartConfig: IChartConfig) => {
                 const chartOptions = { yAxes: [{ label: "" }] };
                 const config = { series: Array(2).fill({ yAxis: 0 }) };
 
@@ -348,12 +348,7 @@ describe("getOptionalStackingConfiguration", () => {
             };
 
             it.each<
-                [
-                    stackConfig: string,
-                    type: string,
-                    stackType: StackingValues,
-                    labelStyle: Highcharts.CSSObject,
-                ]
+                [stackConfig: string, type: string, stackType: StackingType, labelStyle: Highcharts.CSSObject]
             >([
                 ["stackMeasures", VisualizationTypes.COLUMN, "normal", WHITE_LABEL],
                 ["stackMeasures", VisualizationTypes.AREA, "normal", BLACK_LABEL],
@@ -435,7 +430,7 @@ describe("getOptionalStackingConfiguration", () => {
                 },
             );
 
-            it.each<[stackConfig: string, stackType: StackingValues]>([
+            it.each<[stackConfig: string, stackType: StackingType]>([
                 ["stackMeasures", "normal"],
                 ["stackMeasuresToPercent", "percent"],
             ])("should NOT apply %s on secondary y-axis", (stackConfig, stackType) => {
@@ -677,9 +672,9 @@ describe("getOptionalStackingConfiguration", () => {
             const result = getSanitizedStackingForSeries(series);
             expect(result).toEqual(series);
         });
-        it.each<[StackingValues]>([["percent"], ["normal"]])(
+        it.each<[StackingType]>([["percent"], ["normal"]])(
             "should return the sanitized series if secondary axis has %s stack",
-            (stacking: null | StackingValues) => {
+            (stacking: null | StackingType) => {
                 const series: ISeriesItem[] = [{ yAxis: 0 }, { yAxis: 1, stacking }];
                 const result = getSanitizedStackingForSeries(series);
                 expect(result).toEqual([
@@ -704,7 +699,7 @@ describe("getOptionalStackingConfiguration", () => {
             const chartConfig = {
                 stackMeasuresToPercent: false,
             };
-            const result = getShowInPercentConfiguration(undefined, undefined, chartConfig);
+            const result = getShowInPercentConfiguration(undefined, chartConfig, undefined);
             expect(result).toEqual({});
         });
 
@@ -718,7 +713,7 @@ describe("getOptionalStackingConfiguration", () => {
             const chartConfig = {
                 stackMeasuresToPercent: true,
             };
-            const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            const result: any = getShowInPercentConfiguration(chartOptions, chartConfig, undefined);
             expect(result.yAxis[0]).toHaveProperty("labels.formatter");
         });
 
@@ -732,7 +727,7 @@ describe("getOptionalStackingConfiguration", () => {
             const chartConfig = {
                 stackMeasuresToPercent: true,
             };
-            const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            const result: any = getShowInPercentConfiguration(chartOptions, chartConfig, undefined);
             expect(result.yAxis[0]).toHaveProperty("labels.formatter");
         });
 
@@ -751,7 +746,7 @@ describe("getOptionalStackingConfiguration", () => {
                 stackMeasuresToPercent: true,
             };
 
-            const result: any = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            const result: any = getShowInPercentConfiguration(chartOptions, chartConfig, undefined);
             expect(result.yAxis[0]).toHaveProperty("labels.formatter");
             expect(result.yAxis[1]).toEqual({});
         });
@@ -769,7 +764,7 @@ describe("getOptionalStackingConfiguration", () => {
                 primaryChartType: VisualizationTypes.LINE,
             };
 
-            const result = getShowInPercentConfiguration(chartOptions, undefined, chartConfig);
+            const result = getShowInPercentConfiguration(chartOptions, chartConfig, undefined);
             expect(result).toEqual({});
         });
     });

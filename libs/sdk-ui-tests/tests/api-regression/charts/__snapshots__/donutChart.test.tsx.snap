@@ -461,6 +461,202 @@ Object {
 }
 `;
 
+exports[`DonutChart with 200x200 - without data labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`DonutChart with 200x200 - without data labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "DonutChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`DonutChart with 300x250 - auto data labels should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "measureGroup",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`DonutChart with 300x250 - auto data labels should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "dataLabels": Object {
+      "visible": true,
+    },
+    "enableCompactSize": true,
+    "legend": Object {
+      "enabled": false,
+    },
+  },
+  "exportTitle": "DonutChart",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
 exports[`DonutChart with arithmetic measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [],

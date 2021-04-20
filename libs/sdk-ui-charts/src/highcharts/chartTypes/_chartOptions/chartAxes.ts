@@ -9,9 +9,9 @@ import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import isEmpty from "lodash/isEmpty";
 import compact from "lodash/compact";
 import range from "lodash/range";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import get from "lodash/get";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -72,9 +72,9 @@ export function getXAxes(
     ];
 }
 
-function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
+function getMeasureFormatKey(measureGroupItems: IMeasureInAxis[]) {
     const percentageFormat = getMeasureFormat(
-        measureGroupItems.find((measure: IMeasureDescriptor) => {
+        measureGroupItems.find((measure: IMeasureInAxis) => {
             return isMeasureFormatInPercent(getMeasureFormat(measure));
         }),
     );
@@ -85,9 +85,8 @@ function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
         : {};
 }
 
-function getMeasureFormat(measure: IMeasureDescriptor) {
-    return get(measure, "format", ""); // TODO INE this path is wrong, chec what will happen when fixed
-    // return measure.measureHeaderItem.format ?? "";
+function getMeasureFormat(measure: IMeasureInAxis) {
+    return get(measure, "format", "");
 }
 
 export function getYAxes(
@@ -188,9 +187,14 @@ export function getYAxes(
     return yAxes;
 }
 
+interface IMeasureInAxis {
+    name: string;
+    format: string;
+    index: number;
+}
 interface IMeasuresInAxes {
-    measuresInFirstAxis: any[];
-    measuresInSecondAxis: any[];
+    measuresInFirstAxis: IMeasureInAxis[];
+    measuresInSecondAxis: IMeasureInAxis[];
 }
 
 function assignMeasuresToAxes(

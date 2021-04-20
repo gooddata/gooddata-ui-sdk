@@ -21,7 +21,6 @@ import {
     supportedTooltipFollowPointerChartTypes,
 } from "../../_chartOptions/chartCapabilities";
 import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe";
-import { PointOptionsObject, SeriesLineOptions } from "../../../lib";
 
 function getData(dataValues: Partial<ISeriesDataItem>[]) {
     return {
@@ -73,8 +72,8 @@ describe("getCustomizedConfiguration", () => {
 
     it("should escape data items in series", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        const serie: SeriesLineOptions = result.series[0] as SeriesLineOptions;
-        const point: PointOptionsObject = serie.data[0] as PointOptionsObject;
+        const serie: any = result.series[0];
+        const point: any = serie.data[0];
         expect(point.name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
     });
 
@@ -803,8 +802,8 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should return number for not supported chart", () => {
-            const chartOptions = { type: VisualizationTypes.LINE, yAxes: [{ label: "" }] };
-            const configuration = getCustomizedConfiguration(chartOptions);
+            const newChartOptions = { type: VisualizationTypes.LINE, yAxes: [{ label: "" }] };
+            const configuration = getCustomizedConfiguration(newChartOptions);
             const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
             const dataLabelPoint = getDataLabelPoint();
             const dataLabel = formatter.call(dataLabelPoint);

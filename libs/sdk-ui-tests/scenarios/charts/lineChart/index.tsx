@@ -5,5 +5,6 @@ import axisCustomization from "./axisCustomization";
 import coloring from "./coloring";
 import customization from "./customization";
 import theming from "./theming";
+import responsive from "./responsive";
 
-export default [base, ...axisCustomization, ...coloring, ...customization, theming];
+export default [base, ...axisCustomization, ...coloring, ...customization, theming, ...responsive];

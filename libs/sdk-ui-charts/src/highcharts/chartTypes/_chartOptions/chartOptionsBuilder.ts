@@ -50,7 +50,7 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import without from "lodash/without";
-import { StackingValues } from "../../constants/stacking";
+import { StackingType } from "../../constants/stacking";
 import { IChartOptions, ITooltipFactory } from "../../typings/unsafe";
 import { getSeries } from "./chartSeries";
 import {
@@ -111,9 +111,9 @@ function getCategories(
 function getStackingConfig(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     options: IChartConfig,
-): StackingValues {
+): StackingType {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
-    const stackingValue: StackingValues = stackMeasuresToPercent ? "percent" : "normal";
+    const stackingValue: StackingType = stackMeasuresToPercent ? "percent" : "normal";
 
     const supportsStacking = !isOneOfTypes(type, unsupportedStackingTypes);
 

@@ -1,7 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
+import { IChartConfig } from "../../../interfaces";
+import { HighchartsOptions } from "../../../highcharts/lib";
 
 const BULLET_TEMPLATE = {
     chart: {
@@ -42,6 +45,16 @@ const BULLET_TEMPLATE = {
     ],
 };
 
-export function getBulletConfiguration(): typeof BULLET_TEMPLATE {
-    return cloneDeep(BULLET_TEMPLATE);
+export function getBulletConfiguration(config: IChartConfig): HighchartsOptions {
+    const bulletConfiguration = cloneDeep(BULLET_TEMPLATE);
+
+    if (config?.enableCompactSize) {
+        const reversed = true;
+        return {
+            ...bulletConfiguration,
+            responsive: getCommonResponsiveConfig(reversed),
+        };
+    }
+
+    return bulletConfiguration;
 }

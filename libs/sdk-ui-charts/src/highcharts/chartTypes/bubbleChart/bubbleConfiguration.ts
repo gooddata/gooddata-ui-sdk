@@ -40,11 +40,6 @@ export function getBubbleConfiguration(
                         },
                     },
                 },
-                states: {
-                    hover: {
-                        enabled: false,
-                    },
-                },
                 dataLabels: {
                     enabled: false, // TODO remove once FF for config panel is removed
                     allowOverlap: false,

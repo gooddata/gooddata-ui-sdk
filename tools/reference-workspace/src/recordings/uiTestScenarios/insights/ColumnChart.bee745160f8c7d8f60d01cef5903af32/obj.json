@@ -1,0 +1,77 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Ratio of Won and Lost",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": [
+                                        "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                                        "m_acugFHNJgsBy"
+                                    ],
+                                    "operator": "ratio"
+                                }
+                            },
+                            "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            { "items": [], "localIdentifier": "stack" }
+        ],
+        "filters": [],
+        "identifier": "ColumnChart.bee745160f8c7d8f60d01cef5903af32",
+        "properties": { "controls": { "enableCompactSize": true, "legend": { "enabled": false } } },
+        "sorts": [],
+        "title": "ColumnChart - 650x120 - without x axis title",
+        "uri": "ColumnChart.bee745160f8c7d8f60d01cef5903af32",
+        "visualizationUrl": "local:column"
+    }
+}
