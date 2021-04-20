@@ -847,9 +847,6 @@ function getHoverStyles({ type }: any, config: any) {
     let seriesMapFn = noop;
 
     switch (type) {
-        default:
-            throw new Error(`Undefined chart type "${type}".`);
-
         case VisualizationTypes.LINE:
         case VisualizationTypes.SCATTER:
         case VisualizationTypes.AREA:
@@ -914,6 +911,9 @@ function getHoverStyles({ type }: any, config: any) {
                 };
             };
             break;
+
+        default:
+            throw new Error(`Undefined chart type "${type}".`);
     }
     return {
         series: config.series.map((item: any) => seriesMapFn(item, config)),

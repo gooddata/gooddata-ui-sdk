@@ -67,7 +67,7 @@ export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
         const { scrollToSelected, dataSource } = this.props;
 
         if (scrollToSelected) {
-            [...Array(dataSource.rowsCount).keys()].some((row) => {
+            [...Array(dataSource.rowsCount).keys()].forEach((row) => {
                 const item = this.props.dataSource.getObjectAt(row);
                 if (item && item.selected) {
                     // Because list items start from 0 we need to add the +1 here
