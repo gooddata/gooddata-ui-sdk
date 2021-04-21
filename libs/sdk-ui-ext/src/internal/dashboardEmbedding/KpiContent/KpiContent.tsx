@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
+import Measure from "react-measure";
 import { GoodDataSdkError, isGoodDataSdkError, ErrorCodes, ISeparators } from "@gooddata/sdk-ui";
 import { isLegacyKpiWithComparison, IKpiWidget, IKpiWidgetDefinition } from "@gooddata/sdk-backend-spi";
 import { IFilter, isAbsoluteDateFilter, isAllTimeDateFilter, isDateFilter } from "@gooddata/sdk-model";
@@ -21,6 +22,7 @@ export interface IKpiContentProps {
     error?: GoodDataSdkError | undefined;
     errorHelp?: string;
     clientWidth: number;
+    enableCompactSize?: boolean;
 
     // Callbacks
     isKpiUnderlineHiddenWhenClickable?: boolean;
@@ -35,18 +37,17 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
         isKpiUnderlineHiddenWhenClickable: false,
     };
 
-    renderPeriodOverPeriod() {
+    renderPeriodOverPeriod(clientHeight?: number) {
         if (this.props.kpi.kpi.comparisonType === "none") {
             return false;
         }
 
-        const { kpiResult } = this.props;
+        const { kpiResult, enableCompactSize } = this.props;
         const isDateFilterNotRelevant = isDateFilterIrrelevant(this.props.kpi);
         const isDateFilterAbsolute = this.props.filters.some(isAbsoluteDateFilter);
         const isDateFilterAllTime = this.props.filters.every(
             (f) => !isDateFilter(f) || isAllTimeDateFilter(f),
         );
-
         const dateFilter = this.props.filters.find(isDateFilter); // for now we use the first date filter available for this
         const popLabel = getKpiPopLabel(dateFilter, this.props.kpi.kpi.comparisonType, this.props.intl);
         const popDisabled = isDateFilterAllTime || isDateFilterNotRelevant || isDateFilterAbsolute;
@@ -69,14 +70,17 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
                 separators={this.props.separators}
                 meaning={comparisonMeaning}
                 kpiWidth={this.props.clientWidth}
+                enableCompactSize={enableCompactSize}
+                clientHeight={clientHeight}
             />
         );
     }
 
-    renderValue() {
-        const { kpiResult, isKpiValueClickDisabled, onKpiValueClick } = this.props;
+    renderValue(clientHeight?: number) {
+        const { kpiResult, isKpiValueClickDisabled, onKpiValueClick, enableCompactSize, kpi } = this.props;
         const isSdkError = isGoodDataSdkError(this.props.error);
         const isNoData = isSdkError && this.props.error.message === ErrorCodes.NO_DATA;
+        const hasComparison = kpi.kpi.comparisonType !== "none";
 
         const kpiValue = (
             <KpiValue
@@ -87,6 +91,9 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
                 format={kpiResult?.measureFormat}
                 separators={this.props.separators}
                 disableKpiDrillUnderline={this.props.isKpiUnderlineHiddenWhenClickable}
+                enableCompactSize={enableCompactSize}
+                clientHeight={clientHeight}
+                hasComparison={hasComparison}
             />
         );
 
@@ -108,8 +115,20 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
     render(): React.ReactNode {
         return (
             <div className="gd-kpi-widget-content">
-                {this.renderValue()}
-                {this.renderPeriodOverPeriod()}
+                <div className="visualization-content">
+                    <Measure client>
+                        {({ measureRef, contentRect }) => {
+                            return (
+                                <div className="gd-visualization-content" ref={measureRef}>
+                                    <div className="headline">
+                                        {this.renderValue(contentRect.client?.height)}
+                                        {this.renderPeriodOverPeriod(contentRect.client?.height)}
+                                    </div>
+                                </div>
+                            );
+                        }}
+                    </Measure>
+                </div>
             </div>
         );
     }

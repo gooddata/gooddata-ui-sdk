@@ -137,6 +137,47 @@ $legend-paging-background: #eee;
             }
         }
 
+        .kpi-pop-section-item {
+            overflow: hidden;
+            width: 50%;
+            margin: 0;
+            padding: 0 15px;
+            white-space: nowrap;
+            color: var(--gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor, $gd-color-state-blank);
+
+            &:first-child {
+                padding-left: 0;
+                text-align: right;
+            }
+
+            &:last-child {
+                flex-shrink: 1;
+                padding-right: 0;
+                text-align: left;
+            }
+
+            > dt,
+            > dd {
+                display: block;
+                line-height: 14px;
+            }
+
+            > dt {
+                overflow: hidden;
+                height: 20px;
+                margin-bottom: 0.25em;
+                font-size: 17px;
+                font-weight: bold;
+                line-height: 20px;
+            }
+
+            > dd {
+                margin: 0;
+                padding: 0;
+                font-size: 12px;
+            }
+        }
+
         &.gd-small,
         &.gd-shortened-label {
             display: flex;
@@ -144,6 +185,34 @@ $legend-paging-background: #eee;
 
             .headline-compare-section-item {
                 width: 100%;
+            }
+
+            .kpi-pop-section-item {
+                width: 100%;
+                // stylelint-disable-next-line max-nesting-depth
+                &.kpi-pop-change {
+                    padding: 10px 0 0;
+                    text-align: center;
+                }
+                // stylelint-disable-next-line max-nesting-depth
+                &.kpi-pop-period {
+                    border-left: 0;
+                    border-bottom: 1px dashed
+                        var(
+                            --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+                            var(--gd-palette-complementary-3, transparentize($default-gd-color-disabled, 0.5))
+                        );
+                    padding: 0 0 10px;
+                    text-align: center;
+                }
+
+                // stylelint-disable-next-line max-nesting-depth
+                & > dd {
+                    display: block;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
             }
 
             .headline-tertiary-item {
@@ -181,6 +250,14 @@ $legend-paging-background: #eee;
 
         .headline-secondary-item {
             border-left: 0;
+        }
+
+        .kpi-pop-section-item {
+            padding: 0;
+
+            &:last-child {
+                text-align: center;
+            }
         }
     }
 

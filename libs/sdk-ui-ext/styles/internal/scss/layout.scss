@@ -17,6 +17,10 @@ $gd-dashboards-section-description-color: var(
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
+
+        .headline-primary-item-resize {
+            margin-top: -10px;
+        }
     }
 
     .dash-item {
@@ -57,10 +61,6 @@ $gd-dashboards-section-description-color: var(
     }
 
     .gd-visualization-content {
-        position: absolute;
-    }
-
-    .gd-kpi-widget-content {
         position: absolute;
         width: 100%;
         height: 100%;

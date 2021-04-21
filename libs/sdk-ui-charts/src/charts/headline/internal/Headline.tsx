@@ -7,13 +7,14 @@ import { HeadlineElementType } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "../Headlines";
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
-import {
-    MINIMUM_HEIGHT_FOR_PAGINATION,
-    calculateHeadlineHeightFontSize,
-} from "./utils/calculateCustomHeight";
 import { Identifier } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
-import { HeadlinePagination } from "./HeadlinePagination";
+import {
+    SMALL_COMPARE_SECTION_THRESHOLD,
+    HeadlinePagination,
+    calculateHeadlineHeightFontSize,
+    shouldRenderPagination,
+} from "@gooddata/sdk-ui-vis-commons";
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: Identifier;
@@ -33,10 +34,6 @@ export interface IHeadlineVisualizationProps {
     onAfterRender?: () => void;
     disableDrillUnderline?: boolean;
 }
-
-// If the headline is narrower than this, the compare section will be rendered
-// vertically to save horizontal space
-const SMALL_COMPARE_SECTION_THRESHOLD = 160;
 
 /**
  * The React component that renders the Headline visualisation.
@@ -195,9 +192,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
             return null;
         }
 
-        const paged = clientHeight <= MINIMUM_HEIGHT_FOR_PAGINATION;
+        const pagination = shouldRenderPagination(config.enableCompactSize, clientWidth, clientHeight);
 
-        if (config.enableCompactSize && paged && clientWidth < SMALL_COMPARE_SECTION_THRESHOLD) {
+        if (pagination) {
             return (
                 <div className="gd-flex-container headline-compare-section headline-paginated-compare-section">
                     <HeadlinePagination
@@ -253,7 +250,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
             if (!clientHeight) {
                 return null;
             }
-            const { height, fontSize } = calculateHeadlineHeightFontSize(secondaryItem, clientHeight);
+            const { height, fontSize } = calculateHeadlineHeightFontSize(!!secondaryItem, clientHeight);
             const heightStyles = { height: `${height}px`, lineHeight: `${height}px` };
 
             return (

@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 /*
  *
@@ -47,6 +47,8 @@ export { ColorLegend, IColorLegendProps } from "./legend/ColorLegend";
 
 export { IPagingProps, Paging } from "./legend/Paging";
 
+export { IHeadlinePaginationProps, HeadlinePagination } from "./compactSize/HeadlinePagination";
+
 export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers";
 
 export {
@@ -66,3 +68,9 @@ export {
 } from "./legend/types";
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";
+
+export {
+    SMALL_COMPARE_SECTION_THRESHOLD,
+    shouldRenderPagination,
+    calculateHeadlineHeightFontSize,
+} from "./utils/calculateCustomHeight";

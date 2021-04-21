@@ -1,13 +1,19 @@
 // (C) 2021 GoodData Corporation
 import React, { useState } from "react";
 
-import { HeadlinePaginationRenderer } from "./HeadlingePaginationRenderer";
+import { HeadlinePaginationRenderer } from "./HeadlinePaginationRenderer";
 
-interface IHeadlinePaginationProps {
+/**
+ * @internal
+ */
+export interface IHeadlinePaginationProps {
     renderSecondaryItem: () => JSX.Element;
     renderTertiaryItem: () => JSX.Element;
 }
 
+/**
+ * @internal
+ */
 export const HeadlinePagination: React.FC<IHeadlinePaginationProps> = ({
     renderSecondaryItem,
     renderTertiaryItem,

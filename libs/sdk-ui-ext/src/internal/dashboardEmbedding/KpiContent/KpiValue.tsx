@@ -6,10 +6,10 @@ import cx from "classnames";
 import { ResponsiveText, LoadingDots } from "@gooddata/sdk-ui-kit";
 import { ISeparators } from "@gooddata/sdk-ui";
 
+import { calculateHeadlineHeightFontSize } from "@gooddata/sdk-ui-vis-commons";
 import { HYPHEN, formatMetric, isValueUnhandledNull } from "./utils/format";
 
 const NO_DATA_PLACEHOLDER = HYPHEN;
-
 export interface IKpiValueProps {
     error?: Error | null;
     errorHelp?: string;
@@ -18,7 +18,12 @@ export interface IKpiValueProps {
     format?: string;
     isLoading?: boolean;
     disableKpiDrillUnderline?: boolean;
+    enableCompactSize?: boolean;
+    clientHeight?: number;
+    hasComparison?: boolean;
 }
+
+const SMALLEST_HEIGHT = 54;
 
 class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
     static defaultProps: Partial<IKpiValueProps & WrappedComponentProps> = {
@@ -28,14 +33,42 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
         disableKpiDrillUnderline: false,
     };
 
+    getKpiValueClassNames() {
+        return cx("kpi-value", {
+            "headline-primary-item-resize": this.props.enableCompactSize && !!this.props.hasComparison,
+            "is-smallest-height": this.props.enableCompactSize && this.props.clientHeight < SMALLEST_HEIGHT,
+            "is-error-value": !this.props.isLoading && !!this.props.error,
+            "is-empty-value": !this.props.isLoading && this.isValueUnhandledNull(),
+        });
+    }
+
+    getKpiCustomHeightStyles() {
+        if (this.props.enableCompactSize) {
+            const { height } = calculateHeadlineHeightFontSize(
+                this.props.hasComparison,
+                this.props.clientHeight,
+            );
+
+            const heightStyles = {
+                height: `${height}px`,
+                lineHeight: `${height}px`,
+            };
+
+            return heightStyles;
+        }
+
+        return undefined;
+    }
+
     render() {
+        if (this.props.enableCompactSize) {
+            if (!this.props.clientHeight) {
+                return null;
+            }
+        }
+
         return (
-            <TransitionGroup
-                className={cx("kpi-value", {
-                    "is-error-value": !this.props.isLoading && !!this.props.error,
-                    "is-empty-value": !this.props.isLoading && this.isValueUnhandledNull(),
-                })}
-            >
+            <TransitionGroup style={this.getKpiCustomHeightStyles()} className={this.getKpiValueClassNames()}>
                 <CSSTransition classNames="kpi-animation" timeout={300} title={this.getTitle()}>
                     {this.renderValue()}
                 </CSSTransition>
@@ -44,14 +77,33 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
     }
 
     renderValue() {
-        if (this.props.isLoading) {
+        const { isLoading, error, disableKpiDrillUnderline, enableCompactSize, clientHeight } = this.props;
+        if (isLoading) {
             return <LoadingDots className={"kpi-value-loading gd-loading-dots-centered"} />;
         }
 
-        const value = this.props.error ? this.formatMessage("error") : this.renderFormattedValue();
+        const value = error ? this.formatMessage("error") : this.renderFormattedValue();
         const valueClassNames = cx("kpi-value-value", "s-kpi-value", {
-            "kpi-link-style-underline": !this.props.disableKpiDrillUnderline,
+            "kpi-link-style-underline": !disableKpiDrillUnderline,
         });
+
+        if (enableCompactSize) {
+            // As clientHeight first render returns undefined, need to wait to have correct value
+            // so we can adjust fontSize and make the calculations accordingly.
+            if (!clientHeight) {
+                return <LoadingDots className={"kpi-value-loading gd-loading-dots-centered"} />;
+            }
+
+            const { fontSize } = calculateHeadlineHeightFontSize(this.props.hasComparison, clientHeight);
+
+            return (
+                <div style={{ fontSize: `${fontSize}px` }}>
+                    <ResponsiveText>
+                        <span className={valueClassNames}>{value}</span>
+                    </ResponsiveText>
+                </div>
+            );
+        }
 
         return (
             <ResponsiveText>
