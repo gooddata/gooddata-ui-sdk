@@ -55,6 +55,7 @@ export const DefaultUiSettings: ISettings = {
     enableDataSection: true,
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
     ADCatalogGroupsExpanded: true,
+    enableCustomColorPicker: true,
 };
 
 /**
