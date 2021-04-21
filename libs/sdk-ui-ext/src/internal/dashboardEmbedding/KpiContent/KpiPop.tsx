@@ -25,6 +25,7 @@ export interface IKpiPopProps {
     separators: ISeparators;
     kpiWidth: number;
     enableCompactSize?: boolean;
+    clientWidth?: number;
     clientHeight?: number;
 }
 
@@ -35,14 +36,16 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         isLoading: false,
         previousPeriodName: "",
         kpiWidth: 0,
+        clientWidth: 0,
+        clientHeight: 0,
     };
 
     kpiSectionItemNode = React.createRef<HTMLElement>();
 
     render() {
-        const { enableCompactSize, kpiWidth, clientHeight } = this.props;
+        const { enableCompactSize, clientHeight, clientWidth } = this.props;
 
-        const pagination = shouldRenderPagination(enableCompactSize, kpiWidth, clientHeight);
+        const pagination = shouldRenderPagination(enableCompactSize, clientWidth, clientHeight);
 
         if (pagination) {
             return (

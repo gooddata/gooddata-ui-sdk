@@ -37,7 +37,7 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
         isKpiUnderlineHiddenWhenClickable: false,
     };
 
-    renderPeriodOverPeriod(clientHeight?: number) {
+    renderPeriodOverPeriod(clientWidth?: number, clientHeight?: number) {
         if (this.props.kpi.kpi.comparisonType === "none") {
             return false;
         }
@@ -69,8 +69,9 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
                 error={!isNoData ? this.props.error : undefined}
                 separators={this.props.separators}
                 meaning={comparisonMeaning}
-                kpiWidth={this.props.clientWidth}
+                kpiWidth={this.props.clientWidth} // width of whole dash item
                 enableCompactSize={enableCompactSize}
+                clientWidth={clientWidth}
                 clientHeight={clientHeight}
             />
         );
@@ -122,7 +123,10 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
                                 <div className="gd-visualization-content" ref={measureRef}>
                                     <div className="headline">
                                         {this.renderValue(contentRect.client?.height)}
-                                        {this.renderPeriodOverPeriod(contentRect.client?.height)}
+                                        {this.renderPeriodOverPeriod(
+                                            contentRect.client?.width,
+                                            contentRect.client?.height,
+                                        )}
                                     </div>
                                 </div>
                             );
