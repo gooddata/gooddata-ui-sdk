@@ -3,6 +3,7 @@
 import { testBackend, testWorkspace } from "./backend";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
+
 const backend = testBackend();
 
 beforeAll(async () => {
@@ -12,6 +13,30 @@ beforeAll(async () => {
 describe("bear catalog", () => {
     it("should read catalog for reference workspace", async () => {
         const result = await backend.workspace(testWorkspace()).catalog().load();
+        expect(result).toMatchSnapshot();
+    });
+
+    it("should read catalog for reference workspace with additional date attributes", async () => {
+        const result = await backend
+            .workspace(testWorkspace())
+            .catalog()
+            .withOptions({
+                types: ["dateDataset"],
+                production: true,
+                includeDateGranularities: [
+                    "GDC.time.day_in_week",
+                    "GDC.time.day_in_month",
+                    "GDC.time.day_in_quarter",
+                    "GDC.time.day_in_year",
+                    "GDC.time.week_in_quarter",
+                    "GDC.time.week_in_year",
+                    "GDC.time.month_in_quarter",
+                    "GDC.time.month_in_year",
+                    "GDC.time.quarter_in_year",
+                ],
+            })
+            .load();
+
         expect(result).toMatchSnapshot();
     });
 

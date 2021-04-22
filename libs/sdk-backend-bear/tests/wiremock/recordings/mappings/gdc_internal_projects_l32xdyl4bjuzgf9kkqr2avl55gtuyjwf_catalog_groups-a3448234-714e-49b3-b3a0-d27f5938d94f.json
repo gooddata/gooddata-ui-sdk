@@ -1,5 +1,5 @@
 {
-    "id": "0865f38c-3b08-4eba-a0c8-83089851c946",
+    "id": "a3448234-714e-49b3-b3a0-d27f5938d94f",
     "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_groups",
     "request": {
         "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/groups",
@@ -18,18 +18,18 @@
         "status": 200,
         "body": "{\"catalogGroups\":[]}",
         "headers": {
-            "date": "Tue, 23 Feb 2021 15:27:30 GMT",
-            "server": "istio-envoy",
+            "date": "Thu, 22 Apr 2021 10:01:27 GMT",
+            "server": "undefined",
             "content-type": "application/json;charset=UTF-8",
-            "x-envoy-upstream-service-time": "22",
-            "X-GDC-REQUEST-TIME": "24",
-            "X-GDC-REQUEST": "oXXBNkFxaAqmjMvV",
+            "x-envoy-upstream-service-time": "23",
+            "X-GDC-REQUEST-TIME": "26",
+            "X-GDC-REQUEST": "x1QpNqDSifA8pYSL",
             "cache-control": "no-cache, no-store, must-revalidate",
             "vary": "origin,X-GDC-VERSION",
             "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
         }
     },
-    "uuid": "0865f38c-3b08-4eba-a0c8-83089851c946",
+    "uuid": "a3448234-714e-49b3-b3a0-d27f5938d94f",
     "persistent": true,
-    "insertionIndex": 17
+    "insertionIndex": 5
 }

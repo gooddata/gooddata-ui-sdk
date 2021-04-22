@@ -1,0 +1,35 @@
+{
+    "id": "86e9f169-76e1-43d4-bb26-df35523dcfcd",
+    "name": "gdc_account_profile_0c98381b24a59bc46ad5c020e6f1b2c7",
+    "request": {
+        "url": "/gdc/account/profile/0c98381b24a59bc46ad5c020e6f1b2c7",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"accountSetting\":{\"links\":{\"self\":\"/gdc/account/profile/0c98381b24a59bc46ad5c020e6f1b2c7\",\"projects\":\"/gdc/account/profile/0c98381b24a59bc46ad5c020e6f1b2c7/projects\",\"auditEvents\":\"/gdc/account/profile/0c98381b24a59bc46ad5c020e6f1b2c7/auditEvents\",\"domain\":\"/gdc/domains/default\"},\"firstName\":\"Petr\",\"lastName\":\"Dolejsi\",\"companyName\":\"GoodData\",\"position\":null,\"created\":\"2017-12-11 16:56:35\",\"updated\":\"2018-05-28 10:37:25\",\"country\":null,\"phoneNumber\":\"+420666666666\",\"authenticationModes\":[],\"login\":\"petr.dolejsi@gooddata.com\",\"timezone\":null,\"ssoProvider\":null,\"email\":\"petr.dolejsi@gooddata.com\",\"language\":\"en-US\",\"ipWhitelist\":null,\"effectiveIpWhitelist\":null}}",
+        "headers": {
+            "X-GDC-LOG-HEADER": "",
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Content-Type": "application/json;charset=utf-8",
+            "Date": "Thu, 22 Apr 2021 10:01:27 GMT",
+            "Server": "GoodData WebApp",
+            "X-GDC-REQUEST-TIME": "7",
+            "X-GDC-REQUEST": "xTbJqJadoO0W9lML",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "86e9f169-76e1-43d4-bb26-df35523dcfcd",
+    "persistent": true,
+    "insertionIndex": 4
+}

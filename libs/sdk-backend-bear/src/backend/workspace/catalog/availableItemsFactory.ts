@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalogWithAvailableItemsFactoryOptions,
@@ -160,7 +160,14 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     private loadAvailableDateDatasets = async (
         sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
     ): Promise<ICatalogDateDataset[]> => {
-        const { types, includeTags, excludeTags, dataset, production } = this.options;
+        const {
+            types,
+            includeTags,
+            excludeTags,
+            dataset,
+            production,
+            includeDateGranularities,
+        } = this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {
@@ -185,6 +192,7 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
                 includeObjectsWithTags: includeTagsIds.length ? includeTagsIds : undefined,
                 excludeObjectsWithTags: excludeTagsIds.length ? excludeTagsIds : undefined,
                 returnAllDateDataSets: shouldReturnAllDateDataSets,
+                includeDateGranularities,
             }),
         );
         return result.dateDataSets.map((dateDataSet) =>
