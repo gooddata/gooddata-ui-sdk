@@ -29,7 +29,7 @@ const requiredKpiPopProps: IKpiPopProps = {
         thousand: "'",
         decimal: ",",
     },
-    kpiWidth: 174,
+    clientWidth: 154,
 };
 
 describe("KpiPop's module functions", () => {

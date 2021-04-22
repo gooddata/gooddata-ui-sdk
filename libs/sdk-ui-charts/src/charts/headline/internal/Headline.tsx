@@ -10,10 +10,10 @@ import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItem
 import { Identifier } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
 import {
-    SMALL_COMPARE_SECTION_THRESHOLD,
     HeadlinePagination,
     calculateHeadlineHeightFontSize,
     shouldRenderPagination,
+    getHeadlineResponsiveClassName,
 } from "@gooddata/sdk-ui-vis-commons";
 
 export interface IHeadlineFiredDrillEventItemContext {
@@ -286,21 +286,8 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
     }
 
     private getCompareSectionClasses(clientWidth?: number): string {
-        const responsiveClassName = this.getResponsiveClassName(clientWidth);
+        const responsiveClassName = getHeadlineResponsiveClassName(clientWidth, this.isShortenedLabel());
         return cx("gd-flex-container", "headline-compare-section", responsiveClassName);
-    }
-
-    private getResponsiveClassName(sectionDOMWidth: number): string {
-        if (!sectionDOMWidth) {
-            return "";
-        }
-
-        const isShortened = this.isShortenedLabel();
-        if (sectionDOMWidth < SMALL_COMPARE_SECTION_THRESHOLD) {
-            return isShortened ? "gd-shortened-label" : "gd-small";
-        }
-
-        return isShortened ? "gd-medium" : "gd-large";
     }
 
     private isShortenedLabel(): boolean {

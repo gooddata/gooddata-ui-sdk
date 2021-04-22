@@ -21,7 +21,6 @@ export interface IKpiContentProps {
     kpiResult: IKpiResult | undefined;
     error?: GoodDataSdkError | undefined;
     errorHelp?: string;
-    clientWidth: number;
     enableCompactSize?: boolean;
 
     // Callbacks
@@ -69,7 +68,6 @@ class KpiContent extends Component<IKpiContentProps & WrappedComponentProps> {
                 error={!isNoData ? this.props.error : undefined}
                 separators={this.props.separators}
                 meaning={comparisonMeaning}
-                kpiWidth={this.props.clientWidth} // width of whole dash item
                 enableCompactSize={enableCompactSize}
                 clientWidth={clientWidth}
                 clientHeight={clientHeight}

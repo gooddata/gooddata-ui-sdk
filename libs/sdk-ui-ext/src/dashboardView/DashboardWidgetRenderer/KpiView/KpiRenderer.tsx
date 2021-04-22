@@ -15,7 +15,6 @@ interface IKpiRendererProps {
     disableDrillUnderline?: boolean;
     isDrillable?: boolean;
     onDrill?: (drillContext: IDrillEventContext) => ReturnType<OnFiredDashboardViewDrillEvent>;
-    clientWidth: number;
     enableCompactSize?: boolean;
 }
 
@@ -26,7 +25,6 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
     disableDrillUnderline,
     onDrill,
     isDrillable,
-    clientWidth,
     kpi,
     kpiResult,
     filters,
@@ -51,7 +49,6 @@ export const KpiRenderer: React.FC<IKpiRendererProps> = ({
 
     return (
         <KpiContent
-            clientWidth={clientWidth}
             isLoading={false}
             kpi={kpi}
             kpiResult={kpiResult}
