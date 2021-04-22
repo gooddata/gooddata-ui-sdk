@@ -1,6 +1,9 @@
 {
     "objects": {
-        "paging": { "count": 9, "offset": 0 },
+        "paging": {
+            "count": 9,
+            "offset": 0
+        },
         "items": [
             {
                 "metric": {
@@ -15,15 +18,24 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111",
-                                                    "position": { "column": 25, "line": 1 },
+                                                    "position": {
+                                                        "column": 25,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "function"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -32,24 +44,38 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009",
-                                                    "position": { "column": 116, "line": 1 },
+                                                    "position": {
+                                                        "column": 116,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 }
                                             ],
-                                            "position": { "column": 81, "line": 1 },
+                                            "position": {
+                                                "column": 81,
+                                                "line": 1
+                                            },
                                             "type": "all other"
                                         }
                                     ],
-                                    "position": { "column": 78, "line": 1 },
+                                    "position": {
+                                        "column": 78,
+                                        "line": 1
+                                    },
                                     "type": "by"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
@@ -79,15 +105,24 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
-                                                    "position": { "column": 25, "line": 1 },
+                                                    "position": {
+                                                        "column": 25,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "function"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -96,15 +131,24 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679",
-                                                    "position": { "column": 116, "line": 1 },
+                                                    "position": {
+                                                        "column": 116,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 }
                                             ],
-                                            "position": { "column": 81, "line": 1 },
+                                            "position": {
+                                                "column": 81,
+                                                "line": 1
+                                            },
                                             "type": "all other"
                                         }
                                     ],
-                                    "position": { "column": 78, "line": 1 },
+                                    "position": {
+                                        "column": 78,
+                                        "line": 1
+                                    },
                                     "type": "by"
                                 },
                                 {
@@ -113,29 +157,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
-                                                    "position": { "column": 173, "line": 1 },
+                                                    "position": {
+                                                        "column": 173,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266",
-                                                    "position": { "column": 228, "line": 1 },
+                                                    "position": {
+                                                        "column": 228,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 }
                                             ],
-                                            "position": { "column": 225, "line": 1 },
+                                            "position": {
+                                                "column": 225,
+                                                "line": 1
+                                            },
                                             "type": "<="
                                         }
                                     ],
-                                    "position": { "column": 167, "line": 1 },
+                                    "position": {
+                                        "column": 167,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]\n"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
@@ -165,20 +226,32 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066",
-                                                    "position": { "column": 27, "line": 1 },
+                                                    "position": {
+                                                        "column": 27,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060",
-                                                    "position": { "column": 80, "line": 1 },
+                                                    "position": {
+                                                        "column": 80,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "function"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -187,29 +260,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
-                                                    "position": { "column": 139, "line": 1 },
+                                                    "position": {
+                                                        "column": 139,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
-                                                    "position": { "column": 193, "line": 1 },
+                                                    "position": {
+                                                        "column": 193,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 }
                                             ],
-                                            "position": { "column": 191, "line": 1 },
+                                            "position": {
+                                                "column": 191,
+                                                "line": 1
+                                            },
                                             "type": "="
                                         }
                                     ],
-                                    "position": { "column": 133, "line": 1 },
+                                    "position": {
+                                        "column": 133,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
@@ -236,11 +326,17 @@
                                     "content": [
                                         {
                                             "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "metric object"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -249,29 +345,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
-                                                    "position": { "column": 79, "line": 1 },
+                                                    "position": {
+                                                        "column": 79,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495",
-                                                    "position": { "column": 131, "line": 1 },
+                                                    "position": {
+                                                        "column": 131,
+                                                        "line": 1
+                                                    },
                                                     "type": "attributeElement object"
                                                 }
                                             ],
-                                            "position": { "column": 130, "line": 1 },
+                                            "position": {
+                                                "column": 130,
+                                                "line": 1
+                                            },
                                             "type": "="
                                         }
                                     ],
-                                    "position": { "column": 73, "line": 1 },
+                                    "position": {
+                                        "column": 73,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
@@ -300,29 +413,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269",
-                                                    "position": { "column": 21, "line": 1 },
+                                                    "position": {
+                                                        "column": 21,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268",
-                                                    "position": { "column": 75, "line": 1 },
+                                                    "position": {
+                                                        "column": 75,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 }
                                             ],
-                                            "position": { "column": 73, "line": 1 },
+                                            "position": {
+                                                "column": 73,
+                                                "line": 1
+                                            },
                                             "type": "/"
                                         }
                                     ],
-                                    "position": { "column": 73, "line": 1 },
+                                    "position": {
+                                        "column": 73,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270",
@@ -352,15 +482,24 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102",
-                                                    "position": { "column": 25, "line": 1 },
+                                                    "position": {
+                                                        "column": 25,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "function"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -369,29 +508,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
-                                                    "position": { "column": 84, "line": 1 },
+                                                    "position": {
+                                                        "column": 84,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
-                                                    "position": { "column": 138, "line": 1 },
+                                                    "position": {
+                                                        "column": 138,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 }
                                             ],
-                                            "position": { "column": 136, "line": 1 },
+                                            "position": {
+                                                "column": 136,
+                                                "line": 1
+                                            },
                                             "type": "="
                                         }
                                     ],
-                                    "position": { "column": 78, "line": 1 },
+                                    "position": {
+                                        "column": 78,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
@@ -418,11 +574,17 @@
                                     "content": [
                                         {
                                             "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271",
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "metric object"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -431,29 +593,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100",
-                                                    "position": { "column": 79, "line": 1 },
+                                                    "position": {
+                                                        "column": 79,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495",
-                                                    "position": { "column": 131, "line": 1 },
+                                                    "position": {
+                                                        "column": 131,
+                                                        "line": 1
+                                                    },
                                                     "type": "attributeElement object"
                                                 }
                                             ],
-                                            "position": { "column": 130, "line": 1 },
+                                            "position": {
+                                                "column": 130,
+                                                "line": 1
+                                            },
                                             "type": "="
                                         }
                                     ],
-                                    "position": { "column": 73, "line": 1 },
+                                    "position": {
+                                        "column": 73,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272",
@@ -483,15 +662,24 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103",
-                                                    "position": { "column": 25, "line": 1 },
+                                                    "position": {
+                                                        "column": 25,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "function"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -500,29 +688,46 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105",
-                                                    "position": { "column": 84, "line": 1 },
+                                                    "position": {
+                                                        "column": 84,
+                                                        "line": 1
+                                                    },
                                                     "type": "fact object"
                                                 },
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267",
-                                                    "position": { "column": 138, "line": 1 },
+                                                    "position": {
+                                                        "column": 138,
+                                                        "line": 1
+                                                    },
                                                     "type": "metric object"
                                                 }
                                             ],
-                                            "position": { "column": 136, "line": 1 },
+                                            "position": {
+                                                "column": 136,
+                                                "line": 1
+                                            },
                                             "type": "="
                                         }
                                     ],
-                                    "position": { "column": 78, "line": 1 },
+                                    "position": {
+                                        "column": 78,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273",
@@ -555,31 +760,49 @@
                                                             "content": [
                                                                 {
                                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
-                                                                    "position": { "column": 31, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 31,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "attribute object"
                                                                 },
                                                                 {
                                                                     "value": "2018",
-                                                                    "position": { "column": 84, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 84,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "number"
                                                                 }
                                                             ],
-                                                            "position": { "column": 82, "line": 1 },
+                                                            "position": {
+                                                                "column": 82,
+                                                                "line": 1
+                                                            },
                                                             "type": "="
                                                         },
                                                         {
                                                             "content": [
                                                                 {
                                                                     "value": "123400",
-                                                                    "position": { "column": 95, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 95,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "number"
                                                                 }
                                                             ],
-                                                            "position": { "column": 94, "line": 1 },
+                                                            "position": {
+                                                                "column": 94,
+                                                                "line": 1
+                                                            },
                                                             "type": "neg"
                                                         }
                                                     ],
-                                                    "position": { "column": 26, "line": 1 },
+                                                    "position": {
+                                                        "column": 26,
+                                                        "line": 1
+                                                    },
                                                     "type": "when"
                                                 },
                                                 {
@@ -588,25 +811,40 @@
                                                             "content": [
                                                                 {
                                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
-                                                                    "position": { "column": 108, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 108,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "attribute object"
                                                                 },
                                                                 {
                                                                     "value": "2019",
-                                                                    "position": { "column": 161, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 161,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "number"
                                                                 }
                                                             ],
-                                                            "position": { "column": 159, "line": 1 },
+                                                            "position": {
+                                                                "column": 159,
+                                                                "line": 1
+                                                            },
                                                             "type": "="
                                                         },
                                                         {
                                                             "value": "36200",
-                                                            "position": { "column": 171, "line": 1 },
+                                                            "position": {
+                                                                "column": 171,
+                                                                "line": 1
+                                                            },
                                                             "type": "number"
                                                         }
                                                     ],
-                                                    "position": { "column": 103, "line": 1 },
+                                                    "position": {
+                                                        "column": 103,
+                                                        "line": 1
+                                                    },
                                                     "type": "when"
                                                 },
                                                 {
@@ -615,25 +853,40 @@
                                                             "content": [
                                                                 {
                                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
-                                                                    "position": { "column": 183, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 183,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "attribute object"
                                                                 },
                                                                 {
                                                                     "value": "2020",
-                                                                    "position": { "column": 236, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 236,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "number"
                                                                 }
                                                             ],
-                                                            "position": { "column": 234, "line": 1 },
+                                                            "position": {
+                                                                "column": 234,
+                                                                "line": 1
+                                                            },
                                                             "type": "="
                                                         },
                                                         {
                                                             "value": "54800",
-                                                            "position": { "column": 246, "line": 1 },
+                                                            "position": {
+                                                                "column": 246,
+                                                                "line": 1
+                                                            },
                                                             "type": "number"
                                                         }
                                                     ],
-                                                    "position": { "column": 178, "line": 1 },
+                                                    "position": {
+                                                        "column": 178,
+                                                        "line": 1
+                                                    },
                                                     "type": "when"
                                                 },
                                                 {
@@ -642,33 +895,54 @@
                                                             "content": [
                                                                 {
                                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
-                                                                    "position": { "column": 258, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 258,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "attribute object"
                                                                 },
                                                                 {
                                                                     "value": "2021",
-                                                                    "position": { "column": 311, "line": 1 },
+                                                                    "position": {
+                                                                        "column": 311,
+                                                                        "line": 1
+                                                                    },
                                                                     "type": "number"
                                                                 }
                                                             ],
-                                                            "position": { "column": 309, "line": 1 },
+                                                            "position": {
+                                                                "column": 309,
+                                                                "line": 1
+                                                            },
                                                             "type": "="
                                                         },
                                                         {
                                                             "value": "48100",
-                                                            "position": { "column": 321, "line": 1 },
+                                                            "position": {
+                                                                "column": 321,
+                                                                "line": 1
+                                                            },
                                                             "type": "number"
                                                         }
                                                     ],
-                                                    "position": { "column": 253, "line": 1 },
+                                                    "position": {
+                                                        "column": 253,
+                                                        "line": 1
+                                                    },
                                                     "type": "when"
                                                 }
                                             ],
-                                            "position": { "column": 21, "line": 1 },
+                                            "position": {
+                                                "column": 21,
+                                                "line": 1
+                                            },
                                             "type": "case"
                                         }
                                     ],
-                                    "position": { "column": 21, "line": 1 },
+                                    "position": {
+                                        "column": 21,
+                                        "line": 1
+                                    },
                                     "type": "expression"
                                 },
                                 {
@@ -677,34 +951,54 @@
                                             "content": [
                                                 {
                                                     "value": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992",
-                                                    "position": { "column": 337, "line": 1 },
+                                                    "position": {
+                                                        "column": 337,
+                                                        "line": 1
+                                                    },
                                                     "type": "attribute object"
                                                 },
                                                 {
                                                     "value": "2018",
-                                                    "position": { "column": 396, "line": 1 },
+                                                    "position": {
+                                                        "column": 396,
+                                                        "line": 1
+                                                    },
                                                     "type": "number"
                                                 },
                                                 {
                                                     "value": "2021",
-                                                    "position": { "column": 405, "line": 1 },
+                                                    "position": {
+                                                        "column": 405,
+                                                        "line": 1
+                                                    },
                                                     "type": "number"
                                                 }
                                             ],
-                                            "position": { "column": 388, "line": 1 },
+                                            "position": {
+                                                "column": 388,
+                                                "line": 1
+                                            },
                                             "type": "between"
                                         }
                                     ],
-                                    "position": { "column": 331, "line": 1 },
+                                    "position": {
+                                        "column": 331,
+                                        "line": 1
+                                    },
                                     "type": "where"
                                 }
                             ],
-                            "position": { "column": 14, "line": 1 },
+                            "position": {
+                                "column": 14,
+                                "line": 1
+                            },
                             "type": "metric"
                         },
                         "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021"
                     },
-                    "links": { "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274/explain2" },
+                    "links": {
+                        "explain2": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274/explain2"
+                    },
                     "meta": {
                         "author": "/gdc/account/profile/0a781ac660f78609f6100f0125ca5358",
                         "uri": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274",

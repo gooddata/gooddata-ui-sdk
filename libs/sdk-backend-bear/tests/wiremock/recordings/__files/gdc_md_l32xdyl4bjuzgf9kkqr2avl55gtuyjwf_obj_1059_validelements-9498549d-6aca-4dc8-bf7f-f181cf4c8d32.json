@@ -6,7 +6,11 @@
             "order": "asc",
             "attributeDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1059"
         },
-        "paging": { "count": 20, "total": "4844", "offset": "0" },
+        "paging": {
+            "count": 20,
+            "total": "4844",
+            "offset": "0"
+        },
         "items": [
             {
                 "element": {

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
 import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationObject";
 
@@ -132,5 +132,6 @@ export namespace GdcCatalog {
         returnAllDateDataSets?: boolean;
         returnAllRelatedDateDataSets?: boolean;
         attributesMap?: Record<string, unknown>;
+        includeDateGranularities?: string[];
     }
 }

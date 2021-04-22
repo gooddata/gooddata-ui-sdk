@@ -1660,6 +1660,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
 export interface IWorkspaceCatalogFactoryOptions {
     dataset?: ObjRef;
     excludeTags: ObjRef[];
+    includeDateGranularities?: string[];
     includeTags: ObjRef[];
     production?: boolean;
     types: CatalogItemType[];

@@ -1,6 +1,9 @@
 {
     "catalogItems": {
-        "paging": { "limit": 500, "offset": 0 },
+        "paging": {
+            "limit": 500,
+            "offset": 0
+        },
         "items": [
             {
                 "identifier": "abxgDICQav2J",
@@ -10,7 +13,9 @@
                 "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]\n",
                 "title": "_Snapshot [EOP]",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267"
+                }
             },
             {
                 "identifier": "abYgDBRagANw",
@@ -20,7 +25,9 @@
                 "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
                 "title": "_Timeline [EOP]",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266"
+                }
             },
             {
                 "identifier": "abQgDWx4gOUu",
@@ -30,7 +37,9 @@
                 "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
                 "title": "# Of Opportunities",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268"
+                }
             },
             {
                 "identifier": "aa4gLlQhcmLO",
@@ -40,7 +49,9 @@
                 "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
                 "title": "# Of Opportunities Won",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269"
+                }
             },
             {
                 "identifier": "attr.account.id",
@@ -70,7 +81,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Activity (Date)",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110"
+                }
             },
             {
                 "identifier": "attr.activity.activitytype",
@@ -89,7 +102,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Amount",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                }
             },
             {
                 "identifier": "aangOxLSeztu",
@@ -99,7 +114,9 @@
                 "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
                 "title": "Amount",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                }
             },
             {
                 "identifier": "fact.opportunitysnapshot.daystoclose",
@@ -107,7 +124,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Days to Close",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104"
+                }
             },
             {
                 "identifier": "attr.owner.department",
@@ -126,7 +145,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Duration",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107"
+                }
             },
             {
                 "identifier": "attr.opportunitysnapshot.forecastcategory",
@@ -200,7 +221,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Opp. Close (Date)",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106"
+                }
             },
             {
                 "identifier": "dt.opportunity.oppcreated",
@@ -208,7 +231,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Opp. Created (Date)",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109"
+                }
             },
             {
                 "identifier": "attr.opportunitysnapshot.id",
@@ -227,7 +252,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Opp. Snapshot (Date)",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                }
             },
             {
                 "identifier": "attr.opportunity.id",
@@ -257,7 +284,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Probability",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103"
+                }
             },
             {
                 "identifier": "abEgMnq5hyJQ",
@@ -267,7 +296,9 @@
                 "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
                 "title": "Probability",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273"
+                }
             },
             {
                 "identifier": "attr.product.id",
@@ -310,7 +341,9 @@
                 "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
                 "title": "Sample XIRR",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274"
+                }
             },
             {
                 "identifier": "attr.stagehistory.id",
@@ -362,7 +395,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Timeline (Date)",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111"
+                }
             },
             {
                 "identifier": "fact.stagehistory.velocity",
@@ -370,7 +405,9 @@
                 "production": true,
                 "type": "fact",
                 "title": "Velocity",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108"
+                }
             },
             {
                 "identifier": "abZgFKGPaGYM",
@@ -380,7 +417,9 @@
                 "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
                 "title": "Win Rate",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270"
+                }
             },
             {
                 "identifier": "acugFHNJgsBy",
@@ -390,7 +429,9 @@
                 "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
                 "title": "Won",
                 "type": "metric",
-                "links": { "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272" }
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                }
             }
         ]
     }
