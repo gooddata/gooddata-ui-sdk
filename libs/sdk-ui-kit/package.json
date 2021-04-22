@@ -30,7 +30,7 @@
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage styles/css *.log && jest --clearCache",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh && npm run api-extractor",
         "build-dev": "bash scripts/build.sh --dev",
