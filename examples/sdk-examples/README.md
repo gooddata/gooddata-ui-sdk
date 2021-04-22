@@ -5,8 +5,7 @@
 You can start the live examples locally in development mode using the `npm run examples` or `yarn examples` commands. This
 will start the Webpack dev server.
 
-The application in dev mode still works on top of a live project in GoodData platform - you will need to
-log in using your credentials for the official [live examples](https://gooddata-examples.herokuapp.com/registration).
+The application in dev mode works on top of a live project in GoodData platform running in a way that does not require authentication - no registration needed.
 
 ## Adding new examples
 
