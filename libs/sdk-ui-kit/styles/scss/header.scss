@@ -393,6 +393,9 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 }
 
 .gd-header-account {
+    position: relative;
+    box-sizing: border-box;
+    max-width: 146px;
     &:hover {
         background: rgba(255, 255, 255, 0.3);
     }
@@ -402,8 +405,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         content: "\e612";
         position: absolute;
         top: 0;
-        // stylelint-disable-next-line declaration-no-important
-        right: initial !important; // override goodstrap for now which sets this
+        right: 11px;
         margin-left: 11px;
         width: 12px;
         opacity: 0.5;
