@@ -1,8 +1,9 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 
-/** With custom size layouting enable need to be aware of the widget size to update
- *  its content accordingly
+/**
+ * With custom size layouting enable it needs to be aware of the widget size to update
+ * its content accordingly.
  */
 const SMALL_CLIENT_HEIGHT = 140;
 const MEDIUM_CLIENT_HEIGHT = 160;
@@ -12,6 +13,20 @@ const LARGEST_CLIENT_HEIGHT = 220;
 
 const SMALL_CUSTOM_HEIGHT = 44;
 const NORMAL_CUSTOM_HEIGHT = 64;
+
+const getCustomHeight = (clientHeight?: number) => {
+    if (clientHeight) {
+        if (clientHeight <= SMALL_CLIENT_HEIGHT) {
+            return SMALL_CUSTOM_HEIGHT;
+        } else if (clientHeight < NORMAL_CLIENT_HEIGHT) {
+            return NORMAL_CUSTOM_HEIGHT;
+        } else {
+            return undefined;
+        }
+    }
+
+    return undefined;
+};
 
 /**
  * @public
@@ -61,13 +76,7 @@ export class ErrorComponent extends React.Component<IErrorProps> {
     public render(): React.ReactNode {
         const { className, style, width, height, message, description, icon, clientHeight } = this.props;
 
-        const customHeight =
-            clientHeight && clientHeight <= SMALL_CLIENT_HEIGHT
-                ? SMALL_CUSTOM_HEIGHT
-                : clientHeight < NORMAL_CLIENT_HEIGHT
-                ? NORMAL_CUSTOM_HEIGHT
-                : undefined;
-
+        const customHeight = getCustomHeight(clientHeight);
         const wrapperStyle = {
             ...style,
             width,
