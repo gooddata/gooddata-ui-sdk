@@ -23,7 +23,7 @@ You can also view our [live examples](https://gdui-examples.herokuapp.com/login)
     cd gooddata-ui-sdk
     nvm install
     nvm use
-    npm i -g @microsoft/rush pnpm
+    npm i -g @microsoft/rush
     rush install
     ```
 
