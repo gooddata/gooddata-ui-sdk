@@ -14,6 +14,13 @@ const withIndex = (fn: any) => {
     return (...args: any) => fn(index++, ...args);
 };
 
+const CustomErrorComponent = ({ error }: { error: any }) => (
+    <ErrorComponent
+        message="There was an error getting your execution"
+        description={JSON.stringify(error, null, "  ")}
+    />
+);
+
 export const ExecuteAttributeValuesExample: React.FC = () => {
     const backend = useBackend();
     const execution = backend
@@ -23,21 +30,13 @@ export const ExecuteAttributeValuesExample: React.FC = () => {
 
     return (
         <div>
-            <RawExecute execution={execution}>
-                {({ error, isLoading, result }) => {
-                    if (error) {
-                        return (
-                            <ErrorComponent
-                                message="There was an error getting your execution"
-                                description={JSON.stringify(error, null, "  ")}
-                            />
-                        );
-                    }
-                    if (isLoading || !result) {
-                        return <LoadingComponent />;
-                    }
-
-                    const [[locationStateHeaders, locationNameHeaders]] = result.dataView.headerItems;
+            <RawExecute
+                execution={execution}
+                ErrorComponent={CustomErrorComponent}
+                LoadingComponent={LoadingComponent}
+            >
+                {({ result }) => {
+                    const [[locationStateHeaders, locationNameHeaders]] = result!.dataView.headerItems;
                     const locationStates = locationStateHeaders.map(getAttributeHeaderItemName);
                     const locations = locationNameHeaders.map(getAttributeHeaderItemName);
                     const locationsByState = groupBy(

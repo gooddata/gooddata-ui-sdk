@@ -9,6 +9,27 @@ interface IExecuteExampleState {
     willFail: boolean;
 }
 
+const CustomErrorComponent = ({ error }: { error: any }) => (
+    <div>
+        <div className="gd-message error">
+            <div className="gd-message-text">Oops, simulated error! Retry?</div>
+        </div>
+        <ErrorComponent
+            message="There was an error getting your execution"
+            description={JSON.stringify(error, null, 2)}
+        />
+    </div>
+);
+
+const CustomLoadingComponent = () => (
+    <div>
+        <div className="gd-message progress">
+            <div className="gd-message-text">Loading…</div>
+        </div>
+        <LoadingComponent />
+    </div>
+);
+
 export const ExecuteExample: React.FC = () => {
     const [{ willFail }, setState] = useState<IExecuteExampleState>({
         executionNumber: 0,
@@ -39,34 +60,14 @@ export const ExecuteExample: React.FC = () => {
 
     return (
         <div>
-            <Execute seriesBy={measureArray}>
-                {({ error, isLoading, result }) => {
-                    if (error) {
-                        return (
-                            <div>
-                                {retryButton}
-                                <div className="gd-message error">
-                                    <div className="gd-message-text">Oops, simulated error! Retry?</div>
-                                </div>
-                                <ErrorComponent
-                                    message="There was an error getting your execution"
-                                    description={JSON.stringify(error, null, 2)}
-                                />
-                            </div>
-                        );
-                    }
-                    if (isLoading || !result) {
-                        return (
-                            <div>
-                                <div className="gd-message progress">
-                                    <div className="gd-message-text">Loading…</div>
-                                </div>
-                                <LoadingComponent />
-                            </div>
-                        );
-                    }
-
-                    const measureSeries = result.data().series().firstForMeasure(measure);
+            {retryButton}
+            <Execute
+                seriesBy={measureArray}
+                ErrorComponent={CustomErrorComponent}
+                LoadingComponent={CustomLoadingComponent}
+            >
+                {({ result }) => {
+                    const measureSeries = result!.data().series().firstForMeasure(measure);
 
                     return (
                         <div>
@@ -83,9 +84,8 @@ export const ExecuteExample: React.FC = () => {
                                     }
                                 `}
                             </style>
-                            {retryButton}
                             <p className="kpi s-execute-kpi">
-                                {measureSeries.dataPoints()[0].formattedValue()}
+                                {measureSeries?.dataPoints()[0].formattedValue()}
                             </p>
                         </div>
                     );
