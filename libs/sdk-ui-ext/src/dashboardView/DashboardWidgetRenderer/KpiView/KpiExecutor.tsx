@@ -162,6 +162,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                 dataView: result.dataView,
                 drillContext,
                 drillDefinitions,
+                widgetRef: kpiWidget.ref,
             });
         },
         [onDrill, result],

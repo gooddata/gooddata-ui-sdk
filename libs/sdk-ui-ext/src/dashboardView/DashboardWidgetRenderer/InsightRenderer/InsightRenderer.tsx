@@ -41,7 +41,7 @@ import {
     useDashboardViewConfig,
     useUserWorkspaceSettings,
 } from "../../contexts";
-import { OnFiredDashboardViewDrillEvent } from "../../types";
+import { OnFiredDashboardViewDrillEvent, IDashboardDrillEvent } from "../../types";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative" };
 
@@ -167,9 +167,14 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
     }, [implicitDrillDefinitions]);
 
     const handleDrill = useCallback((event: IDrillEvent) => {
+        const enrichedEvent: IDashboardDrillEvent = {
+            ...event,
+            widgetRef: insightWidget.ref,
+        };
+
         // if there are drillable items, we do not want to return any drillDefinitions as the implicit drills are not even used
         if (drillableItems) {
-            return onDrill(event);
+            return onDrill(enrichedEvent);
         }
 
         const facade = DataViewFacade.for(event.dataView);
@@ -183,7 +188,7 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         });
 
         return onDrill({
-            ...event,
+            ...enrichedEvent,
             drillDefinitions: matchingImplicitDrillDefinitions.map((info) => info.drillDefinition),
         });
     }, []);

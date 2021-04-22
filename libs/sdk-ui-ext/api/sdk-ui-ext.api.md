@@ -99,8 +99,8 @@ export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 
 // @beta
 export interface IDashboardDrillEvent extends IDrillEvent {
-    // (undocumented)
     drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+    widgetRef?: ObjRef;
 }
 
 // @beta
