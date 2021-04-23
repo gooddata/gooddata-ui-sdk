@@ -34,5 +34,15 @@ function readPackage(packageJson, context) {
     packageJson.dependencies['typescript'] = TYPESCRIPT_VERSION;
   }
 
+  // bump node-forge dependency of heroku-exec-utils to a safer version to fix audit (heroku-exec-utils does not use any of the functions missing in node-forge 0.10.0)
+  if (packageJson.name === 'heroku-exec-util') {
+    packageJson.dependencies['node-forge'] = "0.10.0";
+  }
+
+  // bump urijs dependency of @heroku-cli/plugin-apps-v5 to a safer version (it is a patch upgrade, should be safe)
+  if (packageJson.name === '@heroku-cli/plugin-apps-v5') {
+    packageJson.dependencies['urijs'] = "1.19.6";
+  }
+
   return packageJson;
 }
