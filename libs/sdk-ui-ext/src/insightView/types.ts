@@ -1,7 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IFilter, IColorPalette, ObjRef } from "@gooddata/sdk-model";
+import { IFilter, IColorPalette, ObjRef, IInsight } from "@gooddata/sdk-model";
 
 import {
     ILocale,
@@ -14,6 +14,7 @@ import {
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
 import { IGeoConfig } from "@gooddata/sdk-ui-geo";
 import { IPivotTableConfig } from "@gooddata/sdk-ui-pivot";
+import { IInsightTitle } from "./InsightTitle";
 
 /**
  * @public
@@ -90,6 +91,19 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     executeByReference?: boolean;
 
     /**
+     * In case this property is boolean it indicates that the title component will be rendered if specified in
+     * components properties. In case the property is string, this string must not be empty and will be shown as insight
+     * title. In case the property is a function, it should be implemented to take the loaded insight object and return
+     * modified title in string representation.
+     */
+    showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
+
+    /**
+     * Called when the insight is loaded. This is to allow the embedding code to read the insight data.
+     */
+    onInsightLoaded?: (insight: IInsight) => void;
+
+    /**
      * Component to render if embedding fails.
      */
     ErrorComponent?: React.ComponentType<IErrorProps>;
@@ -98,4 +112,9 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
      * Component to render while the insight is loading.
      */
     LoadingComponent?: React.ComponentType<ILoadingProps>;
+
+    /**
+     * Component to render insight title.
+     */
+    TitleComponent?: React.ComponentType<IInsightTitle>;
 }

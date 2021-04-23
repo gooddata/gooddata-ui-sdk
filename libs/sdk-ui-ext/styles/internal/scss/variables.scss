@@ -55,3 +55,7 @@ $gd-dashboards-content-kpiWidget-dropShadow: var(
     $gd-dashboards-content-widget-dropShadow
 );
 $gd-kpi-primaryMeasureColor: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, $gd-color-link);
+
+// INSIGHT TITLE
+$insight-title-lineHeight: 21px;
+$insight-title-padding-vertical: 2px;

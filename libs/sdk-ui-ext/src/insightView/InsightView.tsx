@@ -5,7 +5,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IInsight, IColorPalette, idRef } from "@gooddata/sdk-model";
+import { IInsight, IColorPalette, idRef, insightTitle } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     ILocale,
@@ -20,6 +20,7 @@ import {
     OnError,
 } from "@gooddata/sdk-ui";
 import { IInsightViewProps } from "./types";
+import InsightTitle from "./InsightTitle";
 import { InsightRenderer } from "./InsightRenderer";
 import { InsightError } from "./InsightError";
 import {
@@ -33,6 +34,7 @@ interface IInsightViewState {
     isVisualizationLoading: boolean;
     error: GoodDataSdkError | undefined;
     insight: IInsight | undefined;
+    insightTitle: string | undefined;
     colorPalette: IColorPalette | undefined;
     settings: IUserWorkspaceSettings | undefined;
 }
@@ -43,6 +45,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         filters: [],
         drillableItems: [],
         LoadingComponent: DefaultLoading,
+        TitleComponent: InsightTitle,
         pushData: noop,
     };
 
@@ -51,6 +54,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         isVisualizationLoading: false,
         error: undefined,
         insight: undefined,
+        insightTitle: undefined,
         colorPalette: undefined,
         settings: undefined,
     };
@@ -163,8 +167,8 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         if (!insight || isEqual(insight, this.state.insight)) {
             return;
         }
-
-        this.setState({ insight });
+        this.props.onInsightLoaded?.(insight);
+        this.setState({ insight, insightTitle: this.resolveInsightTitle(insight) });
     };
 
     private componentDidMountInner = async () => {
@@ -216,8 +220,21 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         this.props.onError?.(error);
     };
 
+    private resolveInsightTitle = (insight: IInsight): string | undefined => {
+        switch (typeof this.props.showTitle) {
+            case "string":
+                return this.props.showTitle ? this.props.showTitle : undefined;
+            case "boolean":
+                return this.props.showTitle && insight ? insightTitle(insight) : undefined;
+            case "function":
+                return this.props.showTitle(insight);
+            default:
+                return undefined;
+        }
+    };
+
     public render(): React.ReactNode {
-        const { LoadingComponent } = this.props;
+        const { LoadingComponent, TitleComponent } = this.props;
         const { error, isDataLoading, isVisualizationLoading } = this.state;
 
         return (
@@ -225,6 +242,10 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                 {(isDataLoading || isVisualizationLoading) && <LoadingComponent />}
                 {error && !isDataLoading && (
                     <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
+                )}
+
+                {!isDataLoading && !isVisualizationLoading && this.state.insightTitle && (
+                    <TitleComponent title={this.state.insightTitle} />
                 )}
                 <InsightRenderer
                     {...this.props}

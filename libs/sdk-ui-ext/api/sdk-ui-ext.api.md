@@ -395,6 +395,12 @@ export interface IDrillDownDefinition {
 }
 
 // @public (undocumented)
+export interface IInsightTitle {
+    // (undocumented)
+    title: string;
+}
+
+// @public (undocumented)
 export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     backend?: IAnalyticalBackend;
     colorPalette?: IColorPalette;
@@ -406,6 +412,9 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     insight: ObjRef | string;
     LoadingComponent?: React_2.ComponentType<ILoadingProps>;
     locale?: ILocale;
+    onInsightLoaded?: (insight: IInsight) => void;
+    showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
+    TitleComponent?: React_2.ComponentType<IInsightTitle>;
     workspace?: string;
 }
 
