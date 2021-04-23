@@ -2,6 +2,7 @@
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { wrapDisplayName } from "./wrapDisplayName";
+import invariant from "ts-invariant";
 
 const BackendContext = React.createContext<IAnalyticalBackend | undefined>(undefined);
 BackendContext.displayName = "BackendContext";
@@ -30,6 +31,8 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
  * You can optionally set a backend override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
  *
+ * Note: For a better TypeScript experience without the hassle of undefined values, you can use the useBackendStrict hook.
+ *
  * @example
  * // instead of
  * const fromContext = useBackend();
@@ -43,6 +46,35 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
 export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | undefined => {
     const backendFromContext = React.useContext(BackendContext);
     return backend ?? backendFromContext;
+};
+
+/**
+ * Hook to get analytical backend instance provided to BackendProvider.
+ * You can optionally set a backend override that will be returned if defined.
+ * This makes the usage more ergonomic (see the following example).
+ *
+ * Note: If you do not provide an IAnalyticalBackend instance to BackendProvider or as a parameter for this hook,
+ * an invariant error is raised.
+ *
+ * @example
+ * // instead of
+ * const fromContext = useBackendStrict();
+ * const effectiveBackend = fromArguments ?? fromContext.
+ * // you can write
+ * const backend = useBackendStrict(fromArguments);
+ *
+ *
+ * @param backend - backend to use instead of context value. If undefined, the context value is used.
+ * @public
+ */
+export const useBackendStrict = (backend?: IAnalyticalBackend): IAnalyticalBackend => {
+    const backendFromContext = React.useContext(BackendContext);
+    const effectiveBackend = backend ?? backendFromContext;
+    invariant(
+        effectiveBackend,
+        "useBackendStrict: IAnalyticalBackend must be defined. Either pass it as a parameter or make sure there is a BackendProvider up the component tree.",
+    );
+    return effectiveBackend;
 };
 
 /**
