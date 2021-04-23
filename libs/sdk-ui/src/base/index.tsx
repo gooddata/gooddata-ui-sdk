@@ -53,10 +53,17 @@ export {
  */
 export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent";
 export { ErrorComponent, IErrorProps } from "./react/ErrorComponent";
-export { BackendProvider, useBackend, withBackend, IBackendProviderProps } from "./react/BackendContext";
+export {
+    BackendProvider,
+    useBackend,
+    useBackendStrict,
+    withBackend,
+    IBackendProviderProps,
+} from "./react/BackendContext";
 export {
     WorkspaceProvider,
     useWorkspace,
+    useWorkspaceStrict,
     withWorkspace,
     IWorkspaceProviderProps,
 } from "./react/WorkspaceContext";

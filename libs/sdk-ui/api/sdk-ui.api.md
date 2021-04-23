@@ -1276,6 +1276,9 @@ export function uriMatch(uri: string): IHeaderPredicate;
 // @public
 export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
 
+// @public
+export const useBackendStrict: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend;
+
 // @beta
 export function useCancelablePromise<TResult, TError = any>({ promise, onLoading, onPending, onCancel, onSuccess, onError, }: {
     promise: (() => Promise<TResult>) | undefined | null;
@@ -1356,6 +1359,9 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 
 // @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
+
+// @public
+export const useWorkspaceStrict: (workspace?: string | undefined) => string;
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;

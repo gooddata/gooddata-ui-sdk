@@ -1,6 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { wrapDisplayName } from "./wrapDisplayName";
+import invariant from "ts-invariant";
 
 const WorkspaceContext = React.createContext<string | undefined>(undefined);
 WorkspaceContext.displayName = "WorkspaceContext";
@@ -25,9 +26,11 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 };
 
 /**
- * Hook to get workspace instance provided to BackendProvider.
+ * Hook to get workspace instance provided to WorkspaceProvider.
  * You can optionally set a workspace override that will be returned if defined.
  * This makes the usage more ergonomic (see the following example).
+ *
+ * Note: For a better TypeScript experience without the hassle of undefined values, you can use the useWorkspaceStrict hook.
  *
  * @example
  * // instead of
@@ -42,6 +45,34 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
 export const useWorkspace = (workspace?: string): string | undefined => {
     const workspaceFromContext = React.useContext(WorkspaceContext);
     return workspace ?? workspaceFromContext;
+};
+
+/**
+ * Hook to get workspace instance provided to WorkspaceProvider.
+ * You can optionally set a workspace override that will be returned if defined.
+ * This makes the usage more ergonomic (see the following example).
+ *
+ * Note: Note: If you do not provide a workspace identifier to WorkspaceProvider or as a parameter for this hook,
+ * an invariant error is raised.
+ *
+ * @example
+ * // instead of
+ * const fromContext = useWorkspaceStrict();
+ * const effectiveWorkspace = fromArguments ?? fromContext.
+ * // you can write
+ * const workspace = useWorkspaceStrict(fromArguments);
+ *
+ * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
+ * @public
+ */
+export const useWorkspaceStrict = (workspace?: string): string => {
+    const workspaceFromContext = React.useContext(WorkspaceContext);
+    const effectiveWorkspace = workspace ?? workspaceFromContext;
+    invariant(
+        effectiveWorkspace,
+        "useWorkspaceStrict: workspace must be defined. Either pass it as a parameter or make sure there is a WorkspaceProvider up the component tree.",
+    );
+    return effectiveWorkspace;
 };
 
 /**
