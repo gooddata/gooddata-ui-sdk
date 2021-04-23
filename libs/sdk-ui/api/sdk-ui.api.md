@@ -5,6 +5,7 @@
 ```ts
 
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-backend-spi';
 import { DependencyList } from 'react';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -752,13 +753,26 @@ export interface IErrorProps {
     width?: any;
 }
 
+// @public
+export type IExecuteErrorComponent = ComponentType<IExecuteErrorComponentProps>;
+
+// @public
+export interface IExecuteErrorComponentProps {
+    error: GoodDataSdkError;
+}
+
+// @public
+export type IExecuteLoadingComponent = ComponentType;
+
 // @public (undocumented)
 export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     componentName?: string;
+    ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
     filters?: INullableFilter[];
+    LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     seriesBy: IAttributeOrMeasure[];
     slicesBy?: IAttribute[];
@@ -942,8 +956,10 @@ export interface IPushData {
 // @public (undocumented)
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
     exportTitle?: string;
+    LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     window?: DataViewWindow;
 }

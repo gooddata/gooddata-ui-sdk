@@ -6,6 +6,24 @@ import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-mode
 
 const style = { border: "1px black solid" };
 
+const CustomErrorComponent = ({ error }: { error: any }) => (
+    <div>
+        <ErrorComponent
+            message="There was an error getting your execution"
+            description={JSON.stringify(error, null, 2)}
+        />
+    </div>
+);
+
+const CustomLoadingComponent = () => (
+    <div>
+        <div className="gd-message progress">
+            <div className="gd-message-text">Loading…</div>
+        </div>
+        <LoadingComponent />
+    </div>
+);
+
 export const ExecuteWithSlicesExample: React.FC = () => {
     return (
         <div>
@@ -14,30 +32,11 @@ export const ExecuteWithSlicesExample: React.FC = () => {
                 slicesBy={[Ldm.LocationState, Ldm.LocationCity]}
                 sortBy={[newAttributeSort(Ldm.LocationState, "asc")]}
                 filters={[newPositiveAttributeFilter(Ldm.LocationState, ["Florida", "Texas"])]}
+                LoadingComponent={CustomLoadingComponent}
+                ErrorComponent={CustomErrorComponent}
             >
-                {({ error, isLoading, result }) => {
-                    if (error) {
-                        return (
-                            <div>
-                                <ErrorComponent
-                                    message="There was an error getting your execution"
-                                    description={JSON.stringify(error, null, 2)}
-                                />
-                            </div>
-                        );
-                    }
-                    if (isLoading || !result) {
-                        return (
-                            <div>
-                                <div className="gd-message progress">
-                                    <div className="gd-message-text">Loading…</div>
-                                </div>
-                                <LoadingComponent />
-                            </div>
-                        );
-                    }
-
-                    const slices = result.data().slices().toArray();
+                {({ result }) => {
+                    const slices = result!.data().slices().toArray();
 
                     return (
                         <table style={style}>

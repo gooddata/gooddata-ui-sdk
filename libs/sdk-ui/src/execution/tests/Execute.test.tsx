@@ -9,6 +9,8 @@ import { Execute, IExecuteProps } from "../Execute";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 import { createExecution } from "../createExecution";
+import { LoadingComponent } from "../../base/react/LoadingComponent";
+import { IExecuteErrorComponent } from "../interfaces";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
@@ -163,6 +165,56 @@ describe("Execute", () => {
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
         expect(onLoadingFinish).toBeCalledTimes(1);
+    });
+
+    it("should render LoadingComponent", async () => {
+        const child = makeChild();
+        const dummyExecutor = renderDummyExecutor(child, {
+            LoadingComponent,
+        });
+
+        expect(dummyExecutor.find(LoadingComponent)).toExist();
+    });
+
+    it("should render ErrorComponent, when execution fails", async () => {
+        const ErrorComponent: IExecuteErrorComponent = () => <div />;
+        const child = makeChild();
+        const dummyExecutor = renderDummyExecutor(
+            child,
+            {
+                ErrorComponent,
+            },
+            dummyBackend(),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        dummyExecutor.update();
+
+        expect(dummyExecutor.find(ErrorComponent)).toExist();
+    });
+
+    it("should not call children function without result, when both Loading & ErrorComponent are provided", async () => {
+        const ErrorComponent: IExecuteErrorComponent = () => <div />;
+        const child = makeChild();
+        renderDummyExecutor(child, {
+            LoadingComponent,
+            ErrorComponent,
+        });
+
+        expect(child).not.toHaveBeenCalledWith(
+            expect.objectContaining({
+                result: undefined,
+            }),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        expect(child).toHaveBeenCalledWith(
+            expect.objectContaining({
+                result: expect.any(DataViewFacade),
+            }),
+        );
     });
 });
 
