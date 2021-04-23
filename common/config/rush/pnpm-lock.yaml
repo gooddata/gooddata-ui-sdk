@@ -11370,7 +11370,7 @@ packages:
   /iterm2-version/4.2.0:
     dependencies:
       app-path: 3.2.0
-      plist: 3.0.1
+      plist: 3.0.2
     dev: false
     engines:
       node: '>=8'
@@ -14572,16 +14572,16 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
-  /plist/3.0.1:
+  /plist/3.0.2:
     dependencies:
       base64-js: 1.5.1
       xmlbuilder: 9.0.7
-      xmldom: 0.1.31
+      xmldom: 0.5.0
     dev: false
     engines:
       node: '>=6'
     resolution:
-      integrity: sha512-GpgvHHocGRyQm74b6FWEZZVRroHKE1I0/BTjAmySaohK+cUn+hZpbqXkc3KWgW3gQYkqcQej35FohcT0FRlkRQ==
+      integrity: sha512-MSrkwZBdQ6YapHy87/8hDU8MnIcyxBKjeF+McXnr5A9MtffPewTs7G3hlpodT5TacyfIyFTaJEhh3GGcmasTgQ==
   /pn/1.1.0:
     dev: false
     resolution:
@@ -19922,13 +19922,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==
-  /xmldom/0.1.31:
-    deprecated: Deprecated due to CVE-2021-21366 resolved in 0.5.0
+  /xmldom/0.5.0:
     dev: false
     engines:
-      node: '>=0.1'
+      node: '>=10.0.0'
     resolution:
-      integrity: sha512-yS2uJflVQs6n+CyjHoaBmVSqIDevTAWrzMmjG1Gc7h1qQ7uVozNhEPJAwZXWyGQ/Gafo3fCwrcaokezLPupVyQ==
+      integrity: sha512-Foaj5FXVzgn7xFzsKeNIde9g6aFBxTPi37iwsno8QvApmtg7KYrr+OPyRHcJF7dud2a5nGRBXK3n0dL62Gf7PA==
   /xtend/4.0.2:
     dev: false
     engines:
