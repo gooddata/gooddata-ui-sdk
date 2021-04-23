@@ -5711,7 +5711,7 @@ packages:
       move-concurrently: 1.0.1
       promise-inflight: 1.0.1
       rimraf: 2.7.1
-      ssri: 6.0.1
+      ssri: 6.0.2
       unique-filename: 1.1.1
       y18n: 4.0.1
     dev: false
@@ -17349,12 +17349,12 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-HXXqVUq7+pcKeLqqZj6mHFUMvXtOJt1uoUx09pFW6011inTMxqI8BA8PM95myrIyyKwdnzjdFjLiE6KBPVtJIg==
-  /ssri/6.0.1:
+  /ssri/6.0.2:
     dependencies:
       figgy-pudding: 3.5.2
     dev: false
     resolution:
-      integrity: sha512-3Wge10hNcT1Kur4PDFwEieXSCMCJs/7WvSACcrMYrNp+b8kDL1/0wJch5Ni2WrtwEa2IO8OsVfeKIciKCDx/QA==
+      integrity: sha512-cepbSq/neFK7xB6A50KHN0xHDotYzq58wWCa5LeWqnPrHG8GzfEjO/4O8kpmcGW+oaxkvhEJCWgbgNk4/ZV93Q==
   /ssri/8.0.1:
     dependencies:
       minipass: 3.1.3
