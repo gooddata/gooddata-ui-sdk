@@ -5,7 +5,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "importHelpers": true,
-        "lib": ["es6", "dom"],
+        "lib": ["es6", "dom", "ES2016.Array.Include"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,

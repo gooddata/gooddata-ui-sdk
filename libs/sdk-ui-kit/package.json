@@ -99,7 +99,6 @@
         "@types/jest": "^26.0.12",
         "@types/kefir": "^3.8.5",
         "@types/lodash": "^4.14.158",
-        "@types/node": "^12.12.26",
         "@types/raf": "^3.4.0",
         "@types/react-document-title": "^2.0.4",
         "@types/react-dom": "^16.9.3",
