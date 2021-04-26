@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import set from "lodash/set";
 import noop from "lodash/noop";
@@ -811,9 +811,9 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it.each([
-            ["should return number for single axis chart without 'Stack to 100%'", 1],
-            ["should return number for dual axis chart without 'Stack to 100%'", 2],
-        ])("%s", (_description: string, axisNumber: number) => {
+            ["single axis chart without 'Stack to 100%'", 1],
+            ["dual axis chart without 'Stack to 100%'", 2],
+        ])("should return number for %s", (_description: string, axisNumber: number) => {
             const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
             const configuration = getCustomizedConfiguration(chartOptions);
             const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
@@ -823,29 +823,22 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it.each([
-            ["should return percentage for left single axis chart with 'Stack to 100%'", false, 1, "55.55%"],
-            ["should return percentage for right single axis chart with 'Stack to 100%'", true, 1, "55.55%"],
-            [
-                "should return percentage for primary axis for dual chart with 'Stack to 100%'",
-                false,
-                2,
-                "55.55%",
-            ],
-            [
-                "should return number for secondary axis for dual chart with 'Stack to 100%'",
-                true,
-                2,
-                "1,000.00",
-            ],
-        ])("%s", (_description: string, opposite: boolean, axisNumber: number, expectation: string) => {
-            const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
-            const config = { stackMeasuresToPercent: true };
-            const configuration = getCustomizedConfiguration(chartOptions, config);
-            const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
-            const dataLabelPoint = getDataLabelPoint(opposite, axisNumber);
-            const dataLabel = formatter.call(dataLabelPoint);
-            expect(dataLabel).toBe(expectation);
-        });
+            ["percentage for left single axis chart with 'Stack to 100%'", false, 1, "55.55%"],
+            ["percentage for right single axis chart with 'Stack to 100%'", true, 1, "55.55%"],
+            ["percentage for primary axis for dual chart with 'Stack to 100%'", false, 2, "55.55%"],
+            ["number for secondary axis for dual chart with 'Stack to 100%'", true, 2, "1,000.00"],
+        ])(
+            "should return %s",
+            (_description: string, opposite: boolean, axisNumber: number, expectation: string) => {
+                const chartOptions = { type: VisualizationTypes.COLUMN, yAxes: Array(axisNumber).fill({}) };
+                const config = { stackMeasuresToPercent: true };
+                const configuration = getCustomizedConfiguration(chartOptions, config);
+                const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
+                const dataLabelPoint = getDataLabelPoint(opposite, axisNumber);
+                const dataLabel = formatter.call(dataLabelPoint);
+                expect(dataLabel).toBe(expectation);
+            },
+        );
 
         describe("percentage data label formatter", () => {
             it("should return null with empty configuration", () => {
