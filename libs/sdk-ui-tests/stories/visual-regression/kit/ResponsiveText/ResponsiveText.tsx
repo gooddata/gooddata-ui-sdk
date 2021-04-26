@@ -1,13 +1,17 @@
 // (C) 2019-2020 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 import { ResponsiveText } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "@storybook/react";
 import { UiKit } from "../../../_infra/storyGroups";
 import { wrapWithTheme } from "../../themeWrapper";
-import { withScreenshot } from "../../../_infra/backstopWrapper";
+import { withScreenshot, withMultipleScreenshots } from "../../../_infra/backstopWrapper";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./ResponsiveText.css";
+
+const shortText = "Short text fits the container 75% window width + default(max) from parent";
+const longText =
+    "Text that must fit the container that is set to be 75% wide of the window width and respect the default(max) font size from parent";
 
 const ResponsiveTextExamples: React.FC = () => {
     const widths = [300, 400, 500];
@@ -37,8 +41,59 @@ const ResponsiveTextExamples: React.FC = () => {
     );
 };
 
+const ResponsiveTextDynamicExamples: React.FC = () => {
+    const [className, setClassName] = useState("responsive-text-purple");
+
+    const [text, setText] = useState(shortText);
+
+    return (
+        <div className="screenshot-target">
+            <button
+                className="s-change-class"
+                onClick={() =>
+                    className === "responsive-text-purple"
+                        ? setClassName("responsive-text-small")
+                        : setClassName("responsive-text-purple")
+                }
+            >
+                Change Class
+            </button>
+            <button
+                className="s-change-text"
+                onClick={() => (text === shortText ? setText(longText) : setText(shortText))}
+            >
+                Change Text
+            </button>
+            <div className="responsive-text-wrapper responsive-text-relative-wrapper">
+                <ResponsiveText
+                    tagName="p"
+                    tagClassName={className}
+                    title="Some helpful text, for example, the same text that is displayed by the component for
+                            better readability in the case the text would be rendered too small."
+                    windowResizeRefreshDelay={10}
+                >
+                    {text}
+                </ResponsiveText>
+            </div>
+        </div>
+    );
+};
+
 storiesOf(`${UiKit}/ResponsiveText`, module).add("full-featured", () =>
     withScreenshot(<ResponsiveTextExamples />),
+);
+storiesOf(`${UiKit}/ResponsiveText`, module).add("dynamic", () =>
+    withMultipleScreenshots(<ResponsiveTextDynamicExamples />, {
+        default: {},
+        "tagClassName prop change": {
+            clickSelectors: [".s-change-class"],
+            postInteractionWait: 200,
+        },
+        "children prop change": {
+            clickSelectors: [".s-change-text"],
+            postInteractionWait: 200,
+        },
+    }),
 );
 storiesOf(`${UiKit}/ResponsiveText`, module).add("themed", () =>
     withScreenshot(wrapWithTheme(<ResponsiveTextExamples />)),

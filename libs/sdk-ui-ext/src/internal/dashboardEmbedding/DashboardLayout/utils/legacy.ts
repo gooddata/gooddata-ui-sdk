@@ -3,7 +3,6 @@ import { VisType } from "@gooddata/sdk-ui";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "../../../components/pluggableVisualizations/constants";
 import {
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH,
     DASHBOARD_LAYOUT_VIS_TYPE,
 } from "../../DashboardLayout/constants";
 
@@ -52,16 +51,3 @@ export function getGeoPushpinWidgetStyle(
 
     return null;
 }
-
-const RESPONSIVE_SMALL = "small";
-const RESPONSIVE_MEDIUM = "medium";
-const RESPONSIVE_LARGE = "large";
-const RESPONSIVE_SHORTENED_LABEL = "shortened-label";
-
-export const getResponsiveClassName = (sectionDOMWidth: number, isShorttened?: boolean): string => {
-    if (sectionDOMWidth < DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH) {
-        return isShorttened ? RESPONSIVE_SHORTENED_LABEL : RESPONSIVE_SMALL;
-    }
-
-    return isShorttened ? RESPONSIVE_MEDIUM : RESPONSIVE_LARGE;
-};

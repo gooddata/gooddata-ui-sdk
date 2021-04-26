@@ -17,3 +17,7 @@
 .responsive-text-purple {
     color: purple;
 }
+
+.responsive-text-small {
+    font-size: 20px;
+}

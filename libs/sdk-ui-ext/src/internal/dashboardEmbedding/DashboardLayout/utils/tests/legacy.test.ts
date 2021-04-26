@@ -1,24 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
 
-import {
-    calculateGeoPushpinWidgetHeight,
-    getGeoPushpinWidgetStyle,
-    getResponsiveClassName,
-    isFullWidthGeoPushpin,
-} from "../legacy";
+import { calculateGeoPushpinWidgetHeight, getGeoPushpinWidgetStyle, isFullWidthGeoPushpin } from "../legacy";
 
 describe("legacy", () => {
-    describe("getResponsiveClassName", () => {
-        it.each([
-            ["small", 170, false],
-            ["shortened-label", 170, true],
-            ["medium", 200, true],
-            ["large", 200, false],
-        ])("should return className is %s", (expected: string, width: number, isShortened: boolean) => {
-            expect(getResponsiveClassName(width, isShortened)).toEqual(expected);
-        });
-    });
-
     describe("calculateGeoPushpinWidgetHeight", () => {
         const visualizationItemWidth = 1000;
         it("should return height, maxHeight value", () => {

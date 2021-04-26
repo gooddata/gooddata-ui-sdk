@@ -69,8 +69,5 @@ export {
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems";
 
-export {
-    SMALL_COMPARE_SECTION_THRESHOLD,
-    shouldRenderPagination,
-    calculateHeadlineHeightFontSize,
-} from "./utils/calculateCustomHeight";
+export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight";
+export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName";

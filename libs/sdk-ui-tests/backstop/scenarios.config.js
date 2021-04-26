@@ -46,6 +46,16 @@ const ScenarioConfig = [
     },
     {
         /*
+         * Tests for Headline dont require high threshold
+         */
+        idRegex: /(02).*Headline.*/g,
+        config: {
+            readySelector: ".screenshot-ready-wrapper-done",
+            misMatchThreshold: 0.01,
+        },
+    },
+    {
+        /*
          * Tests for visualization stories - either created automatically for test scenarios or created manually
          */
         idRegex: /(01|02).*/g,

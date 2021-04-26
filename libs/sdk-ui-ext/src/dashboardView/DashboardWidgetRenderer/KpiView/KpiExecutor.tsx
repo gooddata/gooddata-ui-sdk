@@ -315,7 +315,7 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
             alertDeletingStatus={alertDeletingStatus}
             alertSavingStatus={alertSavingStatus}
         >
-            {({ clientWidth }) => {
+            {() => {
                 if (status === "error" && !isNoDataSdkError(error)) {
                     return <ErrorComponent message={(error as Error).message} />;
                 }
@@ -327,7 +327,6 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
                         disableDrillUnderline={disableDrillUnderline}
                         isDrillable={isDrillable}
                         onDrill={onDrill && handleOnDrill}
-                        clientWidth={clientWidth}
                         separators={separators}
                         enableCompactSize={enableCompactSize}
                     />

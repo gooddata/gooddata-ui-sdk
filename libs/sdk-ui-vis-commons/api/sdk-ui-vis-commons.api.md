@@ -108,6 +108,9 @@ export function getColorMappingPredicate(testValue: string): IHeaderPredicate;
 export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 
 // @internal
+export const getHeadlineResponsiveClassName: (width: number, isShorttened?: boolean | undefined) => string;
+
+// @internal
 export function getLighterColor(color: string, percent: number): string;
 
 // @internal (undocumented)
@@ -409,9 +412,6 @@ export const shouldRenderPagination: (enableCompactSize: boolean, width: number,
 
 // @internal (undocumented)
 export function shouldShowFluid(documentObj: Document): boolean;
-
-// @internal
-export const SMALL_COMPARE_SECTION_THRESHOLD = 160;
 
 // @internal (undocumented)
 export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {

@@ -7,8 +7,11 @@ import { ISeparators } from "@gooddata/sdk-ui";
 
 import { formatMetric, HYPHEN, isValueUnhandledNull } from "./utils/format";
 import { getErrorPopInfo, getPopInfo, IPopInfo } from "./utils/pop";
-import { getResponsiveClassName } from "../DashboardLayout/utils/legacy";
-import { HeadlinePagination, shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
+import {
+    HeadlinePagination,
+    shouldRenderPagination,
+    getHeadlineResponsiveClassName,
+} from "@gooddata/sdk-ui-vis-commons";
 
 const LOADING_PLACEHOLDER = "…";
 const NO_DATA_PLACEHOLDER = HYPHEN;
@@ -23,8 +26,8 @@ export interface IKpiPopProps {
     isLoading?: boolean;
     previousPeriodName?: string;
     separators: ISeparators;
-    kpiWidth: number;
     enableCompactSize?: boolean;
+    clientWidth?: number;
     clientHeight?: number;
 }
 
@@ -34,15 +37,16 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         disabled: false,
         isLoading: false,
         previousPeriodName: "",
-        kpiWidth: 0,
+        clientWidth: 0,
+        clientHeight: 0,
     };
 
     kpiSectionItemNode = React.createRef<HTMLElement>();
 
     render() {
-        const { enableCompactSize, kpiWidth, clientHeight } = this.props;
+        const { enableCompactSize, clientHeight, clientWidth } = this.props;
 
-        const pagination = shouldRenderPagination(enableCompactSize, kpiWidth, clientHeight);
+        const pagination = shouldRenderPagination(enableCompactSize, clientWidth, clientHeight);
 
         if (pagination) {
             return (
@@ -144,12 +148,13 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
     }
 
     getKpiSectionClassName() {
-        const { kpiWidth } = this.props;
+        const { clientWidth } = this.props;
         const kpiSectionItemNode = this.kpiSectionItemNode.current;
         const className = "gd-flex-container headline-compare-section";
+        const responsiveClassName = getHeadlineResponsiveClassName(clientWidth);
 
-        if (kpiSectionItemNode && getResponsiveClassName(kpiWidth)) {
-            return `${className} gd-${getResponsiveClassName(kpiWidth)}`;
+        if (kpiSectionItemNode && responsiveClassName) {
+            return `${className} ${responsiveClassName}`;
         }
 
         return className;
