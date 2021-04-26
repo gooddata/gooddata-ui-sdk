@@ -1,0 +1,45 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "DonutChart.66d49827d9c965e383996c2aabbab07d",
+        "properties": {
+            "controls": {
+                "dataLabels": { "visible": true },
+                "enableCompactSize": true,
+                "legend": { "enabled": false }
+            }
+        },
+        "sorts": [],
+        "title": "DonutChart - 300x250 - auto data labels",
+        "uri": "DonutChart.66d49827d9c965e383996c2aabbab07d",
+        "visualizationUrl": "local:donut"
+    }
+}

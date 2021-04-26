@@ -50,15 +50,14 @@ import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import without from "lodash/without";
-import { NORMAL_STACK, PERCENT_STACK } from "../../constants/stacking";
-import { IChartOptions, IPointData } from "../../typings/unsafe";
+import { StackingType } from "../../constants/stacking";
+import { IChartOptions, ITooltipFactory } from "../../typings/unsafe";
 import { getSeries } from "./chartSeries";
 import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
     generateTooltipXYFn,
     getTooltipFactory,
-    ITooltipFactory,
 } from "./chartTooltips";
 import { getDrillableSeries } from "./chartDrilling";
 import { assignYAxes, getXAxes, getYAxes } from "./chartAxes";
@@ -112,9 +111,9 @@ function getCategories(
 function getStackingConfig(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     options: IChartConfig,
-): string {
+): StackingType {
     const { type, stackMeasures, stackMeasuresToPercent } = options;
-    const stackingValue = stackMeasuresToPercent ? PERCENT_STACK : NORMAL_STACK;
+    const stackingValue: StackingType = stackMeasuresToPercent ? "percent" : "normal";
 
     const supportsStacking = !isOneOfTypes(type, unsupportedStackingTypes);
 
@@ -320,7 +319,7 @@ export function getChartOptions(
         }`,
     );
 
-    const { type } = config;
+    const { type, chart } = config;
     const {
         viewByAttribute,
         viewByParentAttribute,
@@ -374,19 +373,19 @@ export function getChartOptions(
         const dataPoints = series[0].data;
         const indexSortOrder: number[] = [];
         const sortedDataPoints = dataPoints
-            .sort((pointDataA: IPointData, pointDataB: IPointData) => {
+            .sort((pointDataA, pointDataB) => {
                 if (pointDataA.y === pointDataB.y) {
                     return 0;
                 }
                 return pointDataB.y - pointDataA.y;
             })
-            .map((dataPoint: IPointData, dataPointIndex: number) => {
+            .map((dataPoint, dataPointIndex: number) => {
                 // Legend index equals original dataPoint index
                 indexSortOrder.push(dataPoint.legendIndex);
                 return {
                     // after sorting, colors need to be reassigned in original order and legendIndex needs to be reset
                     ...dataPoint,
-                    color: get(dataPoints[dataPointIndex], "color"),
+                    color: dataPoints[dataPointIndex].color,
                     legendIndex: dataPointIndex,
                 };
             });
@@ -536,7 +535,7 @@ export function getChartOptions(
             xAxes,
             data: {
                 series,
-                categories: [""],
+                categories: [[""]],
             },
             actions: {
                 tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
@@ -563,7 +562,7 @@ export function getChartOptions(
         isDualAxis,
     );
 
-    const chartOptions = {
+    const chartOptions: IChartOptions = {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
@@ -589,6 +588,7 @@ export function getChartOptions(
         colorPalette,
         isViewByTwoAttributes,
         forceDisableDrillOnAxes: chartConfig.forceDisableDrillOnAxes,
+        verticalAlign: chart?.verticalAlign,
     };
 
     return chartOptions;

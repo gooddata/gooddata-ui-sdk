@@ -3,7 +3,6 @@ import { Chart, IChartProps } from "./adapter/Chart";
 import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation";
 export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer";
 export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
-export { Visualization, IVisualizationProps } from "./Visualization";
 
 /*
  * TODO: none of the stuff below this comment should be exported from highcharts. it should either be hidden

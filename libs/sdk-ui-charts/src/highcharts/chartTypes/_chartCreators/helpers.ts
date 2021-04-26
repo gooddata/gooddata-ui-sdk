@@ -406,7 +406,7 @@ export function pointInRange(pointValue: number, axisRange: IAxisRange): boolean
     return axisRange.minAxisValue <= pointValue && pointValue <= axisRange.maxAxisValue;
 }
 
-export function alignChart(chart: Highcharts.Chart): void {
+export function alignChart(chart: Highcharts.Chart, verticalAlign: ChartAlignTypes = "middle"): void {
     const { container } = chart;
     if (!container) {
         return;
@@ -416,7 +416,6 @@ export function alignChart(chart: Highcharts.Chart): void {
     const margin: number = chartHeight - chartWidth;
 
     const isVerticalRectContainer: boolean = margin > 0;
-    const verticalAlign: ChartAlignTypes = get(chart, "userOptions.chart.verticalAlign", MIDDLE);
 
     const isAlignedToTop = verticalAlign === TOP;
     const isAlignedToBottom = verticalAlign === BOTTOM;

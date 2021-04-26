@@ -1,38 +1,49 @@
-// (C) 2007-2020 GoodData Corporation
-import cloneDeep from "lodash/cloneDeep";
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
+import { IChartConfig } from "../../../interfaces";
+import { HighchartsOptions, SeriesPieOptions } from "../../lib";
 import { alignChart } from "../_chartCreators/helpers";
+import { getPieResponsiveConfig } from "../_chartCreators/responsive";
 
-const PIE_TEMPLATE = {
-    chart: {
-        type: "pie",
-        events: {
-            load() {
-                this.series[0].update({
-                    dataLabels: {
-                        distance: -(get(this, "series.0.points.0.shapeArgs.r", 30) / 3),
-                    },
-                });
-
-                alignChart(this);
+export function getPieConfiguration(config: IChartConfig): HighchartsOptions {
+    const pieConfiguration = {
+        chart: {
+            type: "pie",
+            events: {
+                load() {
+                    const distance = -(get(this, "series.0.points.0.shapeArgs.r", 30) / 3);
+                    const options: SeriesPieOptions = {
+                        type: "pie",
+                        dataLabels: {
+                            distance,
+                        },
+                    };
+                    this.series[0].update(options);
+                    alignChart(this, config.chart?.verticalAlign);
+                },
             },
         },
-    },
-    plotOptions: {
-        pie: {
-            size: "100%",
-            allowPointSelect: false,
-            dataLabels: {
-                enabled: false,
+        plotOptions: {
+            pie: {
+                size: "100%",
+                allowPointSelect: false,
+                dataLabels: {
+                    enabled: false,
+                },
+                showInLegend: true,
             },
-            showInLegend: true,
         },
-    },
-    legend: {
-        enabled: false,
-    },
-};
+        legend: {
+            enabled: false,
+        },
+    };
 
-export function getPieConfiguration(): typeof PIE_TEMPLATE {
-    return cloneDeep(PIE_TEMPLATE);
+    if (config?.enableCompactSize) {
+        return {
+            ...pieConfiguration,
+            responsive: getPieResponsiveConfig(),
+        };
+    }
+
+    return pieConfiguration;
 }

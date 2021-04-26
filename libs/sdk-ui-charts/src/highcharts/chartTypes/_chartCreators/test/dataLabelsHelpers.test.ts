@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import set from "lodash/set";
 import {
     getDataLabelAttributes,
@@ -13,7 +13,7 @@ import {
 import { IRectBySize, IAxisRange, IAxisRangeForAxes } from "../helpers";
 import { BLACK_LABEL, WHITE_LABEL, whiteDataLabelTypes } from "../../../constants/label";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 
 describe("dataLabelsHelpers", () => {
     describe("getDataLabelAttributes", () => {
@@ -356,7 +356,7 @@ describe("dataLabelsHelpers", () => {
             VisualizationTypes.COMBO2,
         ];
 
-        it.each([null, NORMAL_STACK, PERCENT_STACK])(
+        it.each<StackingType>([null, "normal", "percent"])(
             "should return black data label for area chart although stacking is %s",
             (stacking) => {
                 expect(getLabelStyle(VisualizationTypes.AREA, stacking)).toEqual(BLACK_LABEL);

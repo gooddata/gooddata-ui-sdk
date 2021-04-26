@@ -3,6 +3,7 @@ import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { IChartOptions } from "../../typings/unsafe";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
+import { HighchartsOptions, SeriesAreaOptions } from "../../lib";
 
 const LINE_WIDTH = 3;
 
@@ -10,7 +11,25 @@ export function getAreaConfiguration(
     _config: IChartOptions,
     _definition: IExecutionDefinition,
     theme: ITheme,
-) {
+): HighchartsOptions {
+    const series: SeriesAreaOptions = {
+        type: "area",
+        marker: {
+            symbol: "circle",
+            radius: 4.5,
+            lineColor:
+                theme?.chart?.backgroundColor ??
+                theme?.palette?.complementary?.c0 ??
+                styleVariables.gdColorBackground,
+        },
+        lineWidth: LINE_WIDTH,
+        fillOpacity: 0.6,
+        states: {
+            hover: {
+                lineWidth: LINE_WIDTH + 1,
+            },
+        },
+    };
     return {
         chart: {
             type: "area",
@@ -19,23 +38,7 @@ export function getAreaConfiguration(
             area: {
                 lineWidth: LINE_WIDTH,
             },
-            series: {
-                marker: {
-                    symbol: "circle",
-                    radius: 4.5,
-                    lineColor:
-                        theme?.chart?.backgroundColor ??
-                        theme?.palette?.complementary?.c0 ??
-                        styleVariables.gdColorBackground,
-                },
-                lineWidth: LINE_WIDTH,
-                fillOpacity: 0.6,
-                states: {
-                    hover: {
-                        lineWidth: LINE_WIDTH + 1,
-                    },
-                },
-            },
+            series,
             column: {
                 dataLabels: {},
             },

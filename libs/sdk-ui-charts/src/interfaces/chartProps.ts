@@ -18,6 +18,11 @@ export interface ICommonChartProps extends IVisualizationProps, IChartCallbacks 
      * Set height of the chart (in pixels).
      */
     height?: number;
+
+    /**
+     * Set width of the chart (in pixels).
+     */
+    width?: number;
 }
 
 /**

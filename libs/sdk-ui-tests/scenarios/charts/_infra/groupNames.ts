@@ -39,4 +39,9 @@ export const ScenarioGroupNames = {
      * Group for theming customization scenarios
      */
     Theming: ["customization", "theme"],
+
+    /**
+     * Group for responsive customization scenarios
+     */
+    Responsive: ["customization", "responsive"],
 };

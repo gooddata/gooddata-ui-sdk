@@ -1,8 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { colors2Object, INumberObject, ISeparators, numberFormat } from "@gooddata/numberjs";
 import { customEscape, percentFormatter } from "../_util/common";
 import isNil from "lodash/isNil";
-import { IPointData } from "../../typings/unsafe";
+import { IUnsafeHighchartsTooltipPoint } from "../../typings/unsafe";
 
 export function formatValueForTooltip(
     val: string | number,
@@ -16,7 +16,7 @@ export function formatValueForTooltip(
 export function getFormattedValueForTooltip(
     isDualChartWithRightAxis: boolean,
     stackMeasuresToPercent: boolean,
-    point: IPointData,
+    point: IUnsafeHighchartsTooltipPoint,
     separators?: ISeparators,
     percentageValue?: number,
 ): string {

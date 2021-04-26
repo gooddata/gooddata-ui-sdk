@@ -1,8 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import get from "lodash/get";
 import set from "lodash/set";
 import noop from "lodash/noop";
-import { IntlShape } from "react-intl";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import {
     escapeCategories,
@@ -23,7 +22,7 @@ import {
 } from "../../_chartOptions/chartCapabilities";
 import { IChartOptions, IPointData, ISeriesDataItem } from "../../../typings/unsafe";
 
-function getData(dataValues: ISeriesDataItem[]) {
+function getData(dataValues: Partial<ISeriesDataItem>[]) {
     return {
         series: [
             {
@@ -35,26 +34,27 @@ function getData(dataValues: ISeriesDataItem[]) {
     };
 }
 
-function getChartZoomConfig(chartConfig: any, intl?: IntlShape): void {
+function getChartZoomConfig(chartConfig: any): void {
     return {
         ...chartConfig,
         animation: true,
         zoomType: "x",
         panKey: "shift",
-        panning: true,
+        panning: {
+            enabled: true,
+        },
         resetZoomButton: {
             theme: {
                 display: "none",
             },
-            tooltip: intl.formatMessage({ id: "visualization.tooltip.resetZoom" }),
         },
     };
 }
 
-const chartOptions = {
+const chartOptions: IChartOptions = {
     type: VisualizationTypes.LINE,
-    yAxes: [{ title: "atitle" }],
-    xAxes: [{ title: "xtitle" }],
+    yAxes: [{ label: "atitle" }],
+    xAxes: [{ label: "xtitle" }],
     data: getData([
         {
             name: "<b>bbb</b>",
@@ -72,7 +72,9 @@ describe("getCustomizedConfiguration", () => {
 
     it("should escape data items in series", () => {
         const result = getCustomizedConfiguration(chartOptions);
-        expect(result.series[0].data[0].name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
+        const serie: any = result.series[0];
+        const point: any = serie.data[0];
+        expect(point.name).toEqual("&lt;b&gt;bbb&lt;/b&gt;");
     });
 
     it('should handle "%" format on axis and use label formatter', () => {
@@ -149,8 +151,8 @@ describe("getCustomizedConfiguration", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 yAxisProps: {
-                    min: 20,
-                    max: 30,
+                    min: "20",
+                    max: "30",
                     labelsEnabled: false,
                     visible: false,
                 },
@@ -166,8 +168,7 @@ describe("getCustomizedConfiguration", () => {
                 },
                 title: {
                     ...result.yAxis[0].title,
-                    enabled: false,
-                    text: "",
+                    text: null,
                 },
             };
             expect(result.yAxis[0]).toEqual(expectedResult);
@@ -187,8 +188,7 @@ describe("getCustomizedConfiguration", () => {
                 ...result.xAxis[0],
                 title: {
                     ...result.xAxis[0].title,
-                    enabled: false,
-                    text: "",
+                    text: null,
                 },
                 labels: {
                     ...result.xAxis[0].labels,
@@ -225,7 +225,7 @@ describe("getCustomizedConfiguration", () => {
                     ...chartOptions,
                     data: {
                         ...chartOptions.data,
-                        categories: ["column 1", "column 2", "column 3"],
+                        categories: [["column 1"], ["column 2"], ["column 3"]],
                     },
                 },
                 {
@@ -238,7 +238,7 @@ describe("getCustomizedConfiguration", () => {
                 ...result.xAxis[0],
                 minRange: 2,
             };
-            const chartResult = getChartZoomConfig(result.chart, intl);
+            const chartResult = getChartZoomConfig(result.chart);
 
             expect(result.xAxis[0]).toEqual(expectedResult);
             expect(result.chart).toEqual(chartResult);
@@ -251,7 +251,7 @@ describe("getCustomizedConfiguration", () => {
                     ...chartOptions,
                     data: {
                         ...chartOptions.data,
-                        categories: ["column 1", "column 2"],
+                        categories: [["column 1", "column 2"]],
                     },
                 },
                 {
@@ -264,7 +264,7 @@ describe("getCustomizedConfiguration", () => {
                 ...result.xAxis[0],
                 minRange: undefined,
             };
-            const chartResult = getChartZoomConfig(result.chart, intl);
+            const chartResult = getChartZoomConfig(result.chart);
 
             expect(result.xAxis[0]).toEqual(expectedResult);
             expect(result.chart).toEqual(chartResult);
@@ -365,7 +365,7 @@ describe("getCustomizedConfiguration", () => {
                 ...chartOptions,
                 data: {
                     ...chartOptions.data,
-                    categories: ["c1", "c2"],
+                    categories: [["c1", "c2"]],
                 },
                 type: VisualizationTypes.HEATMAP,
             });
@@ -422,8 +422,8 @@ describe("getCustomizedConfiguration", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
                 xAxisProps: {
-                    min: 20,
-                    max: 30,
+                    min: "20",
+                    max: "30",
                 },
             });
 
@@ -657,11 +657,11 @@ describe("getCustomizedConfiguration", () => {
             (chartType: string) => {
                 const result = getCustomizedConfiguration({
                     ...chartOptions,
-                    actions: { tooltip: true },
+                    actions: { tooltip: () => "" },
                     data: getData([{ y: 100 }, { y: 101 }]),
                     type: chartType,
                     yAxisProps: {
-                        max: 50,
+                        max: "50",
                     },
                 });
 
@@ -674,11 +674,11 @@ describe("getCustomizedConfiguration", () => {
             (chartType: string) => {
                 const result = getCustomizedConfiguration({
                     ...chartOptions,
-                    actions: { tooltip: true },
+                    actions: { tooltip: () => "" },
                     data: getData([{ y: 0 }, { y: 1 }]),
                     type: chartType,
                     yAxisProps: {
-                        max: 50,
+                        max: "50",
                     },
                 });
 
@@ -689,11 +689,11 @@ describe("getCustomizedConfiguration", () => {
         it("should follow pointer for pie chart should be false by default", () => {
             const result = getCustomizedConfiguration({
                 ...chartOptions,
-                actions: { tooltip: true },
+                actions: { tooltip: () => "" },
                 data: getData([{ y: 100 }, { y: 101 }]),
                 type: VisualizationTypes.PIE,
                 yAxisProps: {
-                    max: 50,
+                    max: "50",
                 },
             });
 
@@ -802,8 +802,8 @@ describe("getCustomizedConfiguration", () => {
         });
 
         it("should return number for not supported chart", () => {
-            const chartOptions = { type: VisualizationTypes.LINE, yAxes: [{}] };
-            const configuration = getCustomizedConfiguration(chartOptions);
+            const newChartOptions = { type: VisualizationTypes.LINE, yAxes: [{ label: "" }] };
+            const configuration = getCustomizedConfiguration(newChartOptions);
             const formatter = get(configuration, "plotOptions.bar.dataLabels.formatter", noop);
             const dataLabelPoint = getDataLabelPoint();
             const dataLabel = formatter.call(dataLabelPoint);

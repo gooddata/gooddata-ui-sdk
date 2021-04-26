@@ -7,5 +7,15 @@ import customization from "./customization";
 import drilling from "./drilling";
 import stacking from "./stacking";
 import theming from "./theming";
+import responsive from "./responsive";
 
-export default [base, ...axisCustomization, ...coloring, ...customization, drilling, stacking, theming];
+export default [
+    base,
+    ...axisCustomization,
+    ...coloring,
+    ...customization,
+    drilling,
+    stacking,
+    theming,
+    ...responsive,
+];

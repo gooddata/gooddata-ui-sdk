@@ -1,8 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
+import { StackingType } from "../../../constants/stacking";
 import { ISeriesItem } from "../../../typings/unsafe";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings";
 
@@ -59,17 +59,17 @@ describe("getComboChartStackingConfig", () => {
                         type: LINE,
                     },
                 ],
-                PERCENT_STACK,
+                "percent",
             ),
-        ).toBe(PERCENT_STACK);
+        ).toBe("percent");
     });
 
     it.each([
-        [NORMAL_STACK, true],
+        ["normal", true],
         [null, false],
     ])(
         "should return %s stack value when 'Stack Measures' config is %s",
-        (stackValue: string | null, stackMeasures: boolean) => {
+        (stackValue: StackingType | null, stackMeasures: boolean) => {
             expect(
                 getComboChartStackingConfig(
                     { stackMeasures },

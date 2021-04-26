@@ -1,7 +1,9 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-
+import { HighchartsOptions } from "../../../highcharts/lib";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
+import { IChartConfig } from "../../../interfaces";
+import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
 
 const BAR_TEMPLATE = {
     chart: {
@@ -32,6 +34,16 @@ const BAR_TEMPLATE = {
     ],
 };
 
-export function getBarConfiguration(): typeof BAR_TEMPLATE {
-    return cloneDeep(BAR_TEMPLATE);
+export function getBarConfiguration(config: IChartConfig): HighchartsOptions {
+    const barConfiguration = cloneDeep(BAR_TEMPLATE);
+
+    if (config?.enableCompactSize) {
+        const reversed = true;
+        return {
+            ...barConfiguration,
+            responsive: getCommonResponsiveConfig(reversed),
+        };
+    }
+
+    return barConfiguration;
 }

@@ -13,6 +13,7 @@ import { Legend } from "@gooddata/sdk-ui-vis-commons";
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess";
+import { IChartConfig } from "../../../interfaces";
 
 function createComponent(customProps: any = {}, zoomable = false) {
     const chartOptions = {
@@ -34,22 +35,12 @@ function createComponent(customProps: any = {}, zoomable = false) {
         dataView,
         onDrill: (f: any) => f,
     };
+    const zoomableChartConfig: IChartConfig = {
+        zoomInsight: zoomable,
+    };
     const chartProps = {
         chartOptions,
-        hcOptions: getHighchartsOptions(
-            chartOptions,
-            drillConfig,
-            zoomable
-                ? {
-                      chart: {
-                          zoomType: "x",
-                          resetZoomButton: {
-                              tooltip: "Reset zoom",
-                          },
-                      },
-                  }
-                : undefined,
-        ),
+        hcOptions: getHighchartsOptions(chartOptions, drillConfig, zoomableChartConfig),
         legend: {
             enabled: false,
             items: [

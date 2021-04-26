@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common";
@@ -14,7 +14,6 @@ import {
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper";
 import { IPointData, ISeriesDataItem } from "../../typings/unsafe";
-import get from "lodash/get";
 import without from "lodash/without";
 
 function getViewBy(viewByAttribute: IUnwrappedAttributeHeadersWithItems, viewByIndex: number) {
@@ -83,9 +82,9 @@ export function getDrillableSeries(
 
                 const isStackedTreemap = isTreemap(type) && !!stackByAttribute;
                 if (isScatterPlot(type)) {
-                    measureHeaders = get(measureGroup, "items", []).slice(0, 2);
+                    measureHeaders = (measureGroup.items ?? []).slice(0, 2);
                 } else if (isBubbleChart(type)) {
-                    measureHeaders = get(measureGroup, "items", []).slice(0, 3);
+                    measureHeaders = (measureGroup.items ?? []).slice(0, 3);
                 } else if (isStackedTreemap) {
                     if (pointData.id !== undefined) {
                         // not leaf -> can't be drillable

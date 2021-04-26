@@ -1,7 +1,7 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces";
-import { Visualization, getValidColorPalette } from "../../highcharts";
+import { getValidColorPalette, ChartTransformation } from "../../highcharts";
 import { fixEmptyHeaderItems } from "@gooddata/sdk-ui-vis-commons";
 import noop from "lodash/noop";
 import { defaultCoreChartProps } from "../_commons/defaultProps";
@@ -29,7 +29,6 @@ import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
  */
 export interface IBaseChartProps extends ICoreChartProps {
     type: ChartType;
-    visualizationComponent?: React.ComponentClass<any>; // for testing
     onLegendReady?: OnLegendReady;
     theme?: ITheme;
 }
@@ -42,7 +41,6 @@ class StatelessBaseChart extends React.Component<Props> {
         onDataTooLarge: noop,
         onLegendReady: noop,
         config: {},
-        visualizationComponent: Visualization,
     };
 
     private readonly errorMap: IErrorDescriptors;
@@ -71,13 +69,14 @@ class StatelessBaseChart extends React.Component<Props> {
             return LoadingComponent ? <LoadingComponent /> : null;
         }
 
-        return this.renderVisualization();
+        return this.renderChartTransformation();
     }
 
-    public renderVisualization(): JSX.Element {
+    private renderChartTransformation(): JSX.Element {
         const {
             afterRender,
             height,
+            width,
             locale,
             config,
             type,
@@ -85,6 +84,10 @@ class StatelessBaseChart extends React.Component<Props> {
             onDataTooLarge,
             pushData,
             theme,
+            drillableItems,
+            onDrill,
+            onNegativeValues,
+            onLegendReady,
         } = this.props;
         const colorPalette = getValidColorPalette(config);
         const fullConfig = { ...config, type, colorPalette };
@@ -99,19 +102,20 @@ class StatelessBaseChart extends React.Component<Props> {
                             fixEmptyHeaderItems(dataView, translationProps.emptyHeaderString);
 
                             return (
-                                <this.props.visualizationComponent
+                                <ChartTransformation
+                                    height={height}
+                                    width={width}
+                                    config={sanitizedConfig}
+                                    drillableItems={drillableItems}
                                     locale={locale}
                                     dataView={dataView}
-                                    height={height}
-                                    config={sanitizedConfig}
-                                    numericSymbols={translationProps.numericSymbols}
-                                    drillableItems={this.props.drillableItems}
                                     afterRender={afterRender}
+                                    onDrill={onDrill}
                                     onDataTooLarge={onDataTooLarge}
-                                    onNegativeValues={this.props.onNegativeValues}
-                                    onDrill={this.props.onDrill}
-                                    onLegendReady={this.props.onLegendReady}
+                                    onNegativeValues={onNegativeValues}
+                                    onLegendReady={onLegendReady}
                                     pushData={pushData}
+                                    numericSymbols={translationProps.numericSymbols}
                                 />
                             );
                         }}

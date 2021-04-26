@@ -11,7 +11,13 @@ import {
     insightMeasures,
 } from "@gooddata/sdk-model";
 import { BucketNames, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { BaseChart, ColorUtils, IAxisConfig, IChartConfig } from "@gooddata/sdk-ui-charts";
+import {
+    BaseChart,
+    ColorUtils,
+    IAxisConfig,
+    IChartConfig,
+    updateConfigWithSettings,
+} from "@gooddata/sdk-ui-charts";
 import React from "react";
 import { render } from "react-dom";
 
@@ -251,7 +257,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}
-                config={fullConfig}
+                config={updateConfigWithSettings(fullConfig, this.featureFlags)}
                 LoadingComponent={null}
                 ErrorComponent={null}
                 theme={theme}

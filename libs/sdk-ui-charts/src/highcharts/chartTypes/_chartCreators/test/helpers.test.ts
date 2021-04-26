@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     shouldFollowPointer,
     shouldFollowPointerForDualAxes,
@@ -247,8 +247,8 @@ describe("helpers", () => {
     describe("shouldFollowPointer", () => {
         const nonStackedChartOptions = {
             type: VisualizationTypes.COLUMN,
-            yAxes: [{ title: "atitle" }],
-            xAxes: [{ title: "xtitle" }],
+            yAxes: [{ label: "atitle" }],
+            xAxes: [{ label: "xtitle" }],
             data: {
                 series: [
                     {
@@ -277,8 +277,8 @@ describe("helpers", () => {
         const stackedChartOptions = {
             type: VisualizationTypes.COLUMN,
             hasStackByAttribute: true,
-            yAxes: [{ title: "atitle" }],
-            xAxes: [{ title: "xtitle" }],
+            yAxes: [{ label: "atitle" }],
+            xAxes: [{ label: "xtitle" }],
             data: {
                 series: [
                     {
@@ -537,8 +537,8 @@ describe("helpers", () => {
     describe("shouldFollowPointerForAxes", () => {
         const dualAxesChartOptions = {
             type: VisualizationTypes.COLUMN,
-            yAxes: [{ title: "atitle" }, { title: "btitle" }],
-            xAxes: [{ title: "xtitle" }],
+            yAxes: [{ label: "atitle" }, { label: "btitle" }],
+            xAxes: [{ label: "xtitle" }],
             data: {
                 series: [
                     {
@@ -587,7 +587,7 @@ describe("helpers", () => {
         it("should return false when there is one Y axis", () => {
             const chartOptions = {
                 ...dualAxesChartOptions,
-                yAxes: [{ title: "atitle" }],
+                yAxes: [{ label: "atitle" }],
             };
             const result = shouldFollowPointerForDualAxes(chartOptions);
             expect(result).toBeFalsy();
@@ -859,7 +859,7 @@ describe("helpers", () => {
                     },
                 };
 
-                alignChart(chart);
+                alignChart(chart, verticalAlign);
 
                 expect(chart.update).toBeCalledWith(
                     {
@@ -883,7 +883,7 @@ describe("helpers", () => {
                 ...getCommonChartOptionsMock(300, 200),
             };
 
-            alignChart(chart);
+            alignChart(chart, "middle");
 
             expect(chart.update).toBeCalledWith(
                 {
@@ -913,7 +913,7 @@ describe("helpers", () => {
                     },
                 };
 
-                alignChart(chart);
+                alignChart(chart, verticalAlign);
 
                 expect(chart.update).toBeCalledWith(
                     {

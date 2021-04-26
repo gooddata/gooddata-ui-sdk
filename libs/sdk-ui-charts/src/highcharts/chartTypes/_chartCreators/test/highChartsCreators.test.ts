@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { getHighchartsOptions } from "../highChartsCreators";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
@@ -201,7 +201,7 @@ describe("highChartCreators", () => {
     describe("Render event configuration", () => {
         const getConfig = (type: string) => getHighchartsOptions({ ...chartOptions, type }, drillConfig);
 
-        it("should dual axis charts be registered render event", () => {
+        it("encountered a declaration exception", () => {
             supportedDualAxesChartTypes.forEach((type: string) => {
                 const config = getConfig(type);
                 expect(config.chart.events.render).toBeTruthy();

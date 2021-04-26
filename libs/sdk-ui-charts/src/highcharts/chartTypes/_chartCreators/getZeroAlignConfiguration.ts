@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 /**
  * Calculate new min/max to make Y axes aligned, and insert them to Highcharts config
  *
@@ -17,7 +17,7 @@ import sum from "lodash/sum";
 import compact from "lodash/compact";
 
 import { isComboChart, isLineChart } from "../_util/common";
-import { PERCENT_STACK } from "../../constants/stacking";
+import { StackingType } from "../../constants/stacking";
 import { IChartOptions, IHighChartAxis, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe";
 
 export interface ICanon {
@@ -185,7 +185,7 @@ export function getMinMax(axisIndex: number, min: number, max: number, minmax: I
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getMinMaxInfo(config: any, stacking: string, type: string): IMinMaxInfo[] {
+export function getMinMaxInfo(config: any, stacking: StackingType, type: string): IMinMaxInfo[] {
     const { series, yAxis } = config;
     const isStackedChart = !isNil(stacking);
 
@@ -308,10 +308,14 @@ export function convertNumberToPercent(yData: number[][]): number[][] {
  * @param stacking
  * @param opposite
  */
-function getDataMinMaxOnStackedChart(series: ISeriesItem[], stacking: string, opposite: boolean): IMinMax {
+function getDataMinMaxOnStackedChart(
+    series: ISeriesItem[],
+    stacking: StackingType,
+    opposite: boolean,
+): IMinMax {
     const yData = series.map(getYDataInSeries);
     const stackedYData = getStackedYData(yData);
-    if (stacking === PERCENT_STACK && !opposite) {
+    if (stacking === "percent" && !opposite) {
         const percentData = convertNumberToPercent(stackedYData);
         return getStackedDataMinMax(percentData);
     }

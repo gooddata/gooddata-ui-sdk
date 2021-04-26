@@ -3,8 +3,7 @@ import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import React from "react";
 import { initChartPlugins } from "./chartPlugins";
-import { IChartConfig } from "../../interfaces";
-import Highcharts from "../lib";
+import Highcharts, { HighchartsOptions } from "../lib";
 
 import HighchartsMore from "highcharts/highcharts-more";
 import drillmodule from "highcharts/modules/drilldown";
@@ -27,7 +26,7 @@ initChartPlugins(Highcharts);
  * @internal
  */
 export interface IChartProps {
-    config: IChartConfig;
+    config: HighchartsOptions;
     domProps: any;
     callback(): void;
 }
@@ -80,7 +79,7 @@ export class Chart extends React.Component<IChartProps> {
         return this.chart;
     }
 
-    public createChart(config: IChartConfig): void {
+    public createChart(config: HighchartsOptions): void {
         const chartConfig = config.chart;
         this.chart = new Highcharts.Chart(
             {

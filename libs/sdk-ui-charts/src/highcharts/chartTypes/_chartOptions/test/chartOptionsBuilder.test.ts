@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import range from "lodash/range";
 import set from "lodash/set";
 import isNil from "lodash/isNil";
@@ -19,10 +19,10 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 
 import { IChartConfig } from "../../../../interfaces";
-import { emptyDef, IColorPaletteItem } from "@gooddata/sdk-model";
+import { emptyDef, IColorPaletteItem, idRef } from "@gooddata/sdk-model";
 import { customEscape } from "../../_util/common";
-import { NORMAL_STACK, PERCENT_STACK } from "../../../constants/stacking";
-import { IChartOptions, IPointData } from "../../../typings/unsafe";
+import { StackingType } from "../../../constants/stacking";
+import { IChartOptions, IUnsafeHighchartsTooltipPoint } from "../../../typings/unsafe";
 import { MeasureColorStrategy } from "../../_chartColoring/measure";
 import { HeatmapColorStrategy } from "../../heatmap/heatmapColoring";
 import { TreemapColorStrategy } from "../../treemap/treemapColoring";
@@ -39,6 +39,7 @@ import {
     generateTooltipXYFn,
 } from "../chartTooltips";
 import { getDrillableSeries } from "../chartDrilling";
+import { IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess";
 
 const FIRST_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[0]);
 const SECOND_DEFAULT_COLOR_ITEM_AS_STRING = getRgbString(DefaultColorPalette[1]);
@@ -176,7 +177,9 @@ describe("chartOptionsBuilder", () => {
                     const chartOptions = generateChartOptions(
                         fixtures.barChartWith3MetricsAndViewByAttribute,
                     );
-                    chartOptions.data.categories = range(DEFAULT_CATEGORIES_LIMIT + 1);
+                    chartOptions.data.categories = range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
+                        category.toString(),
+                    ]);
 
                     const validationResult = validateData(undefined, chartOptions);
 
@@ -206,7 +209,9 @@ describe("chartOptionsBuilder", () => {
                     const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
                         type: "pie",
                     });
-                    chartOptions.data.categories = range(PIE_CHART_LIMIT + 1);
+                    chartOptions.data.categories = range(PIE_CHART_LIMIT + 1).map((category) => [
+                        category.toString(),
+                    ]);
                     const validationResult = validateData(undefined, chartOptions);
 
                     expect(validationResult).toEqual({
@@ -2332,7 +2337,7 @@ describe("chartOptionsBuilder", () => {
         const dv = fixtures.bubbleChartWith3MetricsAndAttribute;
         const { measureGroup, stackByAttribute } = getMVS(dv);
 
-        const point: IPointData = {
+        const point: IUnsafeHighchartsTooltipPoint = {
             value: 300,
             name: "point name",
             x: 10,
@@ -2438,7 +2443,7 @@ describe("chartOptionsBuilder", () => {
     });
 
     describe("buildTooltipTreemapFactory", () => {
-        const point: IPointData = {
+        const point: IUnsafeHighchartsTooltipPoint = {
             category: {
                 name: "category",
             },
@@ -2636,7 +2641,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct tooltip function", () => {
                 const { viewByAttribute } = getMVS(dataSet);
-                const pointData = {
+                const pointData: IUnsafeHighchartsTooltipPoint = {
                     y: 1,
                     format: "# ###",
                     name: "point",
@@ -2647,8 +2652,11 @@ describe("chartOptionsBuilder", () => {
                         name: "series",
                     },
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
+                const tooltip = chartOptions.actions.tooltip(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -2670,7 +2678,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct tooltip function", () => {
                 const { viewByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
-                const pointData = {
+                const pointData: IUnsafeHighchartsTooltipPoint = {
                     y: 1,
                     format: "# ###",
                     name: "point",
@@ -2681,8 +2689,11 @@ describe("chartOptionsBuilder", () => {
                         name: "series",
                     },
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
+                const tooltip = chartOptions.actions.tooltip(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -2712,7 +2723,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct tooltip function", () => {
                 const { viewByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
-                const pointData = {
+                const pointData: IUnsafeHighchartsTooltipPoint = {
                     node: {
                         isLeaf: true,
                     },
@@ -2728,14 +2739,26 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
 
-                let expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
+                let expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
 
-                const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
+                const pieChartTooltip = pieChartOptions.actions.tooltip(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(pieChartTooltip).toBe(expectedTooltip);
 
-                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(pointData, undefined);
+                expectedTooltip = buildTooltipTreemapFactory(viewByAttribute, null)(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
 
-                const treemapTooltip = treemapOptions.actions.tooltip(pointData);
+                const treemapTooltip = treemapOptions.actions.tooltip(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(treemapTooltip).toBe(expectedTooltip);
             });
         });
@@ -2762,7 +2785,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should assign correct tooltip function", () => {
-                const pointData = {
+                const pointData: IUnsafeHighchartsTooltipPoint = {
                     node: {
                         isLeaf: true,
                     },
@@ -2778,12 +2801,24 @@ describe("chartOptionsBuilder", () => {
                     value: 2,
                 };
 
-                const expectedPieChartTooltip = buildTooltipFactory(null, "pie")(pointData, undefined);
-                const pieChartTooltip = pieChartOptions.actions.tooltip(pointData);
+                const expectedPieChartTooltip = buildTooltipFactory(null, "pie")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
+                const pieChartTooltip = pieChartOptions.actions.tooltip(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(pieChartTooltip).toBe(expectedPieChartTooltip);
 
-                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(pointData, undefined);
-                const treemapTooltip = treemapOptions.actions.tooltip(pointData);
+                const expectedTreemapTooltip = buildTooltipTreemapFactory(null, null)(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
+                const treemapTooltip = treemapOptions.actions.tooltip(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(treemapTooltip).toBe(expectedTreemapTooltip);
             });
         });
@@ -2819,7 +2854,7 @@ describe("chartOptionsBuilder", () => {
 
             it("should assign correct tooltip function for pop measure", () => {
                 const { viewByAttribute } = getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
-                const pointData = {
+                const pointData: IUnsafeHighchartsTooltipPoint = {
                     y: 1,
                     format: "# ###",
                     name: "point",
@@ -2830,8 +2865,11 @@ describe("chartOptionsBuilder", () => {
                         name: "series",
                     },
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
+                const tooltip = chartOptions.actions.tooltip(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(tooltip).toBe(expectedTooltip);
             });
 
@@ -2848,8 +2886,11 @@ describe("chartOptionsBuilder", () => {
                         name: "series",
                     },
                 };
-                const tooltip = chartOptions.actions.tooltip(pointData);
-                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(pointData, undefined);
+                const tooltip = chartOptions.actions.tooltip(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
+                const expectedTooltip = buildTooltipFactory(viewByAttribute, "column")(
+                    pointData,
+                    DEFAULT_TOOLTIP_CONTENT_WIDTH,
+                );
                 expect(tooltip).toBe(expectedTooltip);
             });
         });
@@ -2922,10 +2963,10 @@ describe("chartOptionsBuilder", () => {
 
             it.each([
                 [null, false],
-                [NORMAL_STACK, true],
+                ["normal", true],
             ])(
                 "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
-                (stackingValue: string, stackMeasures: boolean) => {
+                (stackingValue: StackingType, stackMeasures: boolean) => {
                     const chartOptions = generateChartOptions(
                         fixtures.comboWithTwoMeasuresAndViewByAttribute,
                         {
@@ -2941,11 +2982,11 @@ describe("chartOptionsBuilder", () => {
             );
 
             it.each([
-                [PERCENT_STACK, { stackMeasuresToPercent: true }],
-                [NORMAL_STACK, { stackMeasures: true }],
+                ["percent", { stackMeasuresToPercent: true }],
+                ["normal", { stackMeasures: true }],
             ])(
                 "should return %s when column+line chart is dual axis",
-                (stacking: any, stackingConfig: any) => {
+                (stacking: StackingType, stackingConfig: any) => {
                     const chartOptions = generateChartOptions(
                         fixtures.comboWithTwoMeasuresAndViewByAttribute,
                         {
@@ -3097,14 +3138,48 @@ describe("chartOptionsBuilder", () => {
 
         describe("Heatmap configuration", () => {
             describe("generateTooltipHeatmapFn", () => {
-                const viewBy = {
-                    formOf: { name: "viewAttr" },
-                    items: [{ attributeHeaderItem: { name: "viewHeader" } }],
+                const viewBy: IUnwrappedAttributeHeadersWithItems = {
+                    uri: "",
+                    identifier: "",
+                    localIdentifier: "",
+                    ref: idRef(""),
+                    name: "viewBy",
+                    formOf: {
+                        ref: idRef(""),
+                        uri: "",
+                        identifier: "",
+                        name: "viewAttr",
+                    },
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                uri: "",
+                                name: "viewHeader",
+                            },
+                        },
+                    ],
                 };
 
-                const stackBy = {
-                    formOf: { name: "stackAttr" },
-                    items: [{ attributeHeaderItem: { name: "stackHeader" } }],
+                const stackBy: IUnwrappedAttributeHeadersWithItems = {
+                    uri: "",
+                    identifier: "",
+                    localIdentifier: "",
+                    ref: idRef(""),
+                    name: "stackBy",
+                    formOf: {
+                        ref: idRef(""),
+                        uri: "",
+                        identifier: "",
+                        name: "stackAttr",
+                    },
+                    items: [
+                        {
+                            attributeHeaderItem: {
+                                uri: "",
+                                name: "stackHeader",
+                            },
+                        },
+                    ],
                 };
 
                 const point = {
@@ -3457,7 +3532,7 @@ describe("chartOptionsBuilder", () => {
         });
 
         describe("optional stacking", () => {
-            const pointDataForTwoAttributes = {
+            const pointDataForTwoAttributes: IUnsafeHighchartsTooltipPoint = {
                 y: 1,
                 format: "# ###",
                 name: "point",
@@ -3465,6 +3540,8 @@ describe("chartOptionsBuilder", () => {
                     name: "category",
                     parent: {
                         name: "parent category",
+                        leaves: 3,
+                        categories: [],
                     },
                 },
                 series: {

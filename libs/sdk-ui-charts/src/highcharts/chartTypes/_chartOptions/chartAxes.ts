@@ -9,9 +9,9 @@ import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import isEmpty from "lodash/isEmpty";
 import compact from "lodash/compact";
 import range from "lodash/range";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
+import get from "lodash/get";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -72,9 +72,9 @@ export function getXAxes(
     ];
 }
 
-function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
+function getMeasureFormatKey(measureGroupItems: IMeasureInAxis[]) {
     const percentageFormat = getMeasureFormat(
-        measureGroupItems.find((measure: any) => {
+        measureGroupItems.find((measure: IMeasureInAxis) => {
             return isMeasureFormatInPercent(getMeasureFormat(measure));
         }),
     );
@@ -85,7 +85,7 @@ function getMeasureFormatKey(measureGroupItems: IMeasureDescriptor[]) {
         : {};
 }
 
-function getMeasureFormat(measure: any) {
+function getMeasureFormat(measure: IMeasureInAxis) {
     return get(measure, "format", "");
 }
 
@@ -187,9 +187,14 @@ export function getYAxes(
     return yAxes;
 }
 
+interface IMeasureInAxis {
+    name: string;
+    format: string;
+    index: number;
+}
 interface IMeasuresInAxes {
-    measuresInFirstAxis: any[];
-    measuresInSecondAxis: any[];
+    measuresInFirstAxis: IMeasureInAxis[];
+    measuresInSecondAxis: IMeasureInAxis[];
 }
 
 function assignMeasuresToAxes(
@@ -232,7 +237,7 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
     return series.reduce((result, item, index) => {
         const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
-            return includes(get(axis, "seriesIndices", []), index);
+            return includes(axis.seriesIndices ?? [], index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series
         // then 'yAxis' in other series should follow the first one
