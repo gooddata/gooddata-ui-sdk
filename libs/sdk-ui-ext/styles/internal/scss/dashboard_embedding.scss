@@ -126,7 +126,7 @@
     flex: 1 1 auto;
     flex-direction: column;
     justify-content: flex-start;
-    width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
+    max-width: 99.999%; /* 100% has issue in IE (wrong kpi width) */
 }
 
 .dash-item-content {
@@ -230,11 +230,6 @@
     border-radius: 50%;
     background-color: $button-grey-background;
 
-    svg {
-        width: 20px;
-        height: 20px;
-    }
-
     @media #{$xsmall-only}, #{$small-only} {
         top: -73px;
     }
@@ -312,6 +307,11 @@
 
     .is-mobile & {
         display: block;
+    }
+
+    &:hover:not(.disabled) {
+        color: var(--gd-palette-complementary-0, inherit);
+        background-color: var(--gd-palette-complementary-7, inherit);
     }
 }
 

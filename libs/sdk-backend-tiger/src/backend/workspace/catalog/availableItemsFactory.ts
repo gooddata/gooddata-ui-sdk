@@ -29,7 +29,7 @@ import { TigerWorkspaceCatalogWithAvailableItems } from "./catalogWithAvailableI
 import { TigerAuthenticatedCallGuard } from "../../../types";
 import { convertMeasure } from "../../../convertors/toBackend/afm/MeasureConverter";
 import { convertAttribute } from "../../../convertors/toBackend/afm/AttributeConverter";
-import { jsonApiIdToObjRef, isJsonApiId } from "../../../convertors/fromBackend/ObjRefConverter";
+import { jsonApiIdToObjRef } from "../../../convertors/fromBackend/ObjRefConverter";
 import { InvariantError } from "ts-invariant";
 import { convertAfmFilters } from "../../../convertors/toBackend/afm/AfmFiltersConverter";
 
@@ -159,34 +159,13 @@ export class TigerWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCat
             }),
         );
 
-        const availableObjRefs: ObjRef[] = convertResponseToObjRefs(availableItemsResponse.data.items);
+        const availableObjRefs: ObjRef[] = availableItemsResponse.data.items.map(jsonApiIdToObjRef);
         const availableItems = filterAvailableItems(availableObjRefs, this.items);
 
         return new TigerWorkspaceCatalogWithAvailableItems(this.groups, this.items, availableItems);
     }
 }
 
-export function convertResponseToObjRefs(availableItemIds: any[]): ObjRef[] {
-    if (availableItemIds.length === 0) {
-        return [];
-    }
-
-    if (isJsonApiId(availableItemIds[0])) {
-        // Forward-compatibility branch. This will be hit once tiger changes land. Tiger sends { id: string, type: string }
-
-        return availableItemIds.map(jsonApiIdToObjRef);
-    } else if (typeof availableItemIds[0] === "string") {
-        // Old branch; ids come as string `type/id`
-
-        return availableItemIds.map((idString: string) => {
-            const [type, id] = idString.split("/");
-
-            return jsonApiIdToObjRef({ id, type });
-        });
-    }
-
-    throw new InvariantError("tiger sent unexpected type of available item identifier");
-}
 /**
  * @internal
  */

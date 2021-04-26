@@ -5,6 +5,7 @@
 ```ts
 
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
+import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-backend-spi';
 import { DependencyList } from 'react';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -736,11 +737,11 @@ export interface IErrorDescriptors {
 export interface IErrorProps {
     // (undocumented)
     className?: string;
+    clientHeight?: any;
     // (undocumented)
     code?: string;
     // (undocumented)
     description?: string;
-    // (undocumented)
     height?: any;
     // (undocumented)
     icon?: string;
@@ -752,13 +753,26 @@ export interface IErrorProps {
     width?: any;
 }
 
+// @public
+export type IExecuteErrorComponent = ComponentType<IExecuteErrorComponentProps>;
+
+// @public
+export interface IExecuteErrorComponentProps {
+    error: GoodDataSdkError;
+}
+
+// @public
+export type IExecuteLoadingComponent = ComponentType;
+
 // @public (undocumented)
 export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     backend?: IAnalyticalBackend;
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
     componentName?: string;
+    ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
     filters?: INullableFilter[];
+    LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     seriesBy: IAttributeOrMeasure[];
     slicesBy?: IAttribute[];
@@ -942,8 +956,10 @@ export interface IPushData {
 // @public (undocumented)
 export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
     children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    ErrorComponent?: IExecuteErrorComponent;
     execution: IPreparedExecution;
     exportTitle?: string;
+    LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
     window?: DataViewWindow;
 }
@@ -1260,6 +1276,9 @@ export function uriMatch(uri: string): IHeaderPredicate;
 // @public
 export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
 
+// @public
+export const useBackendStrict: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend;
+
 // @beta
 export function useCancelablePromise<TResult, TError = any>({ promise, onLoading, onPending, onCancel, onSuccess, onError, }: {
     promise: (() => Promise<TResult>) | undefined | null;
@@ -1340,6 +1359,9 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 
 // @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
+
+// @public
+export const useWorkspaceStrict: (workspace?: string | undefined) => string;
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;

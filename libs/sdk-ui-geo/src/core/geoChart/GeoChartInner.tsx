@@ -32,6 +32,7 @@ import {
 } from "@gooddata/sdk-ui-vis-commons";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common";
 import { IColorPalette } from "@gooddata/sdk-model";
+import { ITheme } from "@gooddata/sdk-backend-spi";
 
 export { IGeoChartRendererProps, IGeoChartLegendRendererProps };
 
@@ -63,6 +64,7 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     onCenterPositionChanged?: (center: IGeoLngLat) => void;
     onZoomChanged?: (zoom: number) => void;
     geoChartOptions?: IGeoChartInnerOptions;
+    theme?: ITheme;
 }
 
 /**

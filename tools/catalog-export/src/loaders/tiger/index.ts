@@ -9,7 +9,7 @@ import {
 } from "../../base/types";
 import ora from "ora";
 import { logError, logInfo, logWarn } from "../../cli/loggers";
-import { WorkspaceChoices, promptWorkspaceId, promptUsername } from "../../cli/prompts";
+import { WorkspaceChoices, promptWorkspaceId } from "../../cli/prompts";
 import { ITigerClient, jsonApiHeaders } from "@gooddata/api-client-tiger";
 import { tigerLoad } from "./tigerLoad";
 import { createTigerClient } from "./tigerClient";
@@ -65,7 +65,7 @@ function getTigerApiToken(): string | undefined {
  * @param hostname - hostname to use
  * @param usernameFromConfig - username that may have been provided in a config or CLI
  */
-async function getTigerClient(hostname: string, usernameFromConfig: string | null): Promise<ITigerClient> {
+async function getTigerClient(hostname: string): Promise<ITigerClient> {
     const token = getTigerApiToken();
     const hasToken = token !== undefined;
     let askedForLogin: boolean = false;
@@ -84,21 +84,24 @@ async function getTigerClient(hostname: string, usernameFromConfig: string | nul
                 logError(`You do not have the ${TigerApiTokenVariable} environment variable set.`);
             }
 
-            if (!usernameFromConfig) {
-                logInfo(
-                    "I'm now going to ask you for your Tiger userId and then open your default browser at location " +
-                        "where you can obtain a fresh API token.",
-                );
-            }
-
-            const userId = usernameFromConfig || (await promptUsername("Tiger userId"));
-            const tokenUrl = `${hostname}/api/users/${userId}/apiTokens`;
-            await open(tokenUrl, { wait: false });
+            logInfo("To obtain a token value, follow these steps:");
 
             logInfo(
-                `You should now see your default browser open at either ${tokenUrl} or at ` +
-                    `your Tiger installation's login page. Once you obtain the token, please set the ${TigerApiTokenVariable} environment variable and try again.`,
+                "1. You should now see your default browser open at either your Tiger installation's home page " +
+                    "or login page (if so, please log in).",
             );
+
+            logInfo(
+                "2. Once you are on your Tiger installation's home page, please " +
+                    "follow the guide at https://docs-dev.anywhere.gooddata.com/docs/administration/auth/user-token/#generate-the-api-token " +
+                    "to create a new token (using the Developer Tools way).",
+            );
+
+            logInfo(
+                `3. Once you have the token value, please set the ${TigerApiTokenVariable} environment variable and try again.`,
+            );
+
+            await open(hostname, { wait: false });
 
             askedForLogin = true;
             throw new CatalogExportError("API token not set or no longer valid.", 1);
@@ -160,9 +163,9 @@ async function lookupWorkspaceId(client: ITigerClient, workspaceName: string): P
 export async function loadWorkspaceMetadataFromTiger(
     config: CatalogExportConfig,
 ): Promise<WorkspaceMetadata> {
-    const { hostname, username } = config;
+    const { hostname } = config;
 
-    const client = await getTigerClient(hostname!, username);
+    const client = await getTigerClient(hostname!);
 
     let workspaceId = getConfiguredWorkspaceId(config, true);
     const workspaceName = getConfiguredWorkspaceName(config, true);

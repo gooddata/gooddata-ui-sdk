@@ -1,7 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { ITheme } from "@gooddata/sdk-backend-spi";
+import { getContrast } from "polished";
 
-import { prepareBaseColors, prepareTheme } from "./../prepareTheme";
+import {
+    prepareBaseColors,
+    prepareComplementaryPalette,
+    preparePrimaryColor,
+    prepareTheme,
+    stripComplementaryPalette,
+} from "./../prepareTheme";
 
 describe("prepareTheme", () => {
     it("should prepare the theme", () => {
@@ -14,22 +21,21 @@ describe("prepareTheme", () => {
 
         expect(prepareTheme(theme)).toMatchSnapshot();
     });
+});
 
-    it("should return theme without complementary palette", () => {
-        const theme: ITheme = {
-            palette: {
-                complementary: { c0: "#fff", c9: "#000" },
-            },
-            chart: {
-                backgroundColor: "#fff",
-            },
-        };
+describe("prepareComplementaryPalette", () => {
+    it.each([[{ c0: "#fff", c9: "#000" }], [{ c0: "#fff", c6: "#14b2e2", c9: "#000" }]])(
+        "should complete the complementary palette with missing shades",
+        (complementaryPalette) => {
+            const theme: ITheme = {
+                palette: {
+                    complementary: complementaryPalette,
+                },
+            };
 
-        const strippedTheme = prepareTheme(theme, false);
-
-        expect(strippedTheme.palette.complementary).toEqual(undefined);
-        expect(strippedTheme.chart).toEqual(undefined);
-    });
+            expect(prepareComplementaryPalette(theme)).toMatchSnapshot();
+        },
+    );
 });
 
 describe("prepareBaseColors", () => {
@@ -53,4 +59,44 @@ describe("prepareBaseColors", () => {
 
         expect(prepareBaseColors(theme)).toEqual(expectedTheme);
     });
+});
+
+describe("stripComplementaryPalette", () => {
+    it("should return theme without complementary palette, chart and pivot table properties", () => {
+        const theme: ITheme = {
+            palette: {
+                complementary: { c0: "#fff", c9: "#000" },
+            },
+            chart: {
+                backgroundColor: "#fff",
+            },
+            table: {
+                backgroundColor: "#fff",
+            },
+        };
+
+        const strippedTheme = stripComplementaryPalette(theme);
+
+        expect(strippedTheme.palette.complementary).toEqual(undefined);
+        expect(strippedTheme.chart).toEqual(undefined);
+        expect(strippedTheme.table).toEqual(undefined);
+    });
+});
+
+describe("preparePrimaryColor", () => {
+    it.each([["#f00"], ["#0f0"], ["#00f"], ["#ccc"], ["#fff"], ["#000"]])(
+        "should return theme with contrast primary color",
+        (primaryColor) => {
+            const theme: ITheme = {
+                palette: {
+                    primary: { base: primaryColor },
+                    complementary: { c0: "#fff", c9: "#000" },
+                },
+            };
+
+            const strippedTheme = preparePrimaryColor(theme);
+
+            expect(getContrast(strippedTheme.palette.primary.base, "#fff") > 3).toEqual(true);
+        },
+    );
 });

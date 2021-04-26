@@ -1,6 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import debounce from "lodash/debounce";
 import get from "lodash/get";
+import cloneDeep from "lodash/cloneDeep";
 import CustomEvent from "custom-event";
 import invariant from "ts-invariant";
 import {
@@ -204,7 +205,7 @@ const tickLabelClickDebounce = debounce(
             return {
                 x: point.x,
                 y: point.y,
-                intersection: point.drillIntersection,
+                intersection: cloneDeep(point.drillIntersection),
                 ...customProps,
             };
         });

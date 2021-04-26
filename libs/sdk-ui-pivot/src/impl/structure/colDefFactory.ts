@@ -13,7 +13,7 @@ import {
     SliceCol,
     TableColDefs,
     TableCols,
-    DataColGroup,
+    ScopeCol,
 } from "./tableDescriptorTypes";
 import { ISortItem, sortDirection } from "@gooddata/sdk-model";
 import { attributeSortMatcher, measureSortMatcher } from "./colSortItemMatching";
@@ -51,7 +51,7 @@ function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
     }
 }
 
-function createColumnGroupColDef(col: DataColGroup, state: TransformState): ColDef | ColGroupDef {
+function createColumnGroupColDef(col: ScopeCol, state: TransformState): ColDef | ColGroupDef {
     const children = createColumnHeadersFromDescriptors(col.children, state);
 
     if (children.length === 0) {
@@ -86,7 +86,7 @@ function createColumnHeadersFromDescriptors(
 
     for (const col of cols) {
         switch (col.type) {
-            case "columnGroupRootDescriptor": {
+            case "rootCol": {
                 const colDef: ColGroupDef = {
                     groupId: ColumnGroupingDescriptorId,
                     children: createColumnHeadersFromDescriptors(col.children, state),
@@ -100,12 +100,12 @@ function createColumnHeadersFromDescriptors(
 
                 break;
             }
-            case "columnGroupHeaderDescriptor": {
+            case "scopeCol": {
                 colDefs.push(createColumnGroupColDef(col, state));
 
                 break;
             }
-            case "leafColumnDescriptor": {
+            case "seriesCol": {
                 const sort = state.initialSorts.find((s) => measureSortMatcher(col, s));
                 const sortProp = sort ? { sort: sortDirection(sort) } : {};
                 const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};

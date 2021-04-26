@@ -11,10 +11,8 @@
         "esModuleInterop": true,
         "importHelpers": true,
         "strict": true,
-        "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "strictNullChecks": true,
         "outDir": "dist",
         "sourceMap": true,
         "suppressImplicitAnyIndexErrors": true,
@@ -23,7 +21,10 @@
             "@gooddata/sdk-ui": ["sdk-ui/src"],
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"]
+            "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"],
+            "@gooddata/sdk-ui-kit": ["@gooddata/sdk-ui-kit/src"],
+            "@gooddata/sdk-ui-theme-provider": ["@gooddata/sdk-ui-theme-provider/src"],
+            "@gooddata/sdk-ui-vis-commons": ["@gooddata/sdk-ui-vis-commons/src"]
         }
     },
     "compileOnSave": false,

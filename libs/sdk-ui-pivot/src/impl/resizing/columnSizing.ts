@@ -37,12 +37,13 @@ import isEmpty from "lodash/isEmpty";
 import {
     agColId,
     AnyCol,
-    DataColGroup,
-    DataColLeaf,
-    isDataColGroup,
-    isDataColLeaf,
+    ScopeCol,
+    SeriesCol,
+    isScopeCol,
+    isSeriesCol,
     isSliceCol,
     SliceCol,
+    LeafDataCol,
 } from "../structure/tableDescriptorTypes";
 import { createColumnLocator } from "../structure/colLocatorFactory";
 import { colMeasureLocalId } from "../structure/colAccessors";
@@ -105,7 +106,7 @@ export class ResizedColumnsStore {
             return this.getWeakMeasureColumMapItem(weakColumnWidth);
         }
 
-        if (isDataColLeaf(col) && this.isAllMeasureColumWidthUsed()) {
+        if (isSeriesCol(col) && this.isAllMeasureColumWidthUsed()) {
             return this.getAllMeasureColumMapItem();
         }
     };
@@ -233,7 +234,7 @@ export class ResizedColumnsStore {
         }
 
         if (
-            isDataColLeaf(col) &&
+            isSeriesCol(col) &&
             (this.isAllMeasureColumWidthUsed() || this.getMatchedWeakMeasuresColumnWidth(col))
         ) {
             // TODO INE: consider creating weakItem with width: "auto" when alt+DC over allMeasure
@@ -290,7 +291,7 @@ export class ResizedColumnsStore {
     };
 
     public getMatchedWeakMeasuresColumnWidth = (col: AnyCol): IWeakMeasureColumnWidthItem | undefined => {
-        if (!isDataColLeaf(col)) {
+        if (!isSeriesCol(col)) {
             return;
         }
 
@@ -465,7 +466,7 @@ function getAttributeColumnWidthItemFieldAndWidth(
 function getMeasureColumnWidthItemFieldAndWidth(
     tableDescriptor: TableDescriptor,
     columnWidthItem: IMeasureColumnWidthItem,
-): [DataColLeaf | DataColGroup, ColumnWidth] | undefined {
+): [LeafDataCol, ColumnWidth] | undefined {
     const col = tableDescriptor.matchMeasureWidthItem(columnWidthItem);
 
     if (!col) {
@@ -489,14 +490,14 @@ function getSizeItemByColId(col: AnyCol, width: ColumnWidth): ColumnWidthItem {
         } else {
             throw new InvariantError(`width value for attributeColumnWidthItem has to be number ${col.id}`);
         }
-    } else if (isDataColGroup(col)) {
+    } else if (isScopeCol(col)) {
         return {
             measureColumnWidthItem: {
                 width,
                 locators: createColumnLocator(col),
             },
         };
-    } else if (isDataColLeaf(col)) {
+    } else if (isSeriesCol(col)) {
         return {
             measureColumnWidthItem: {
                 width,
@@ -552,7 +553,7 @@ export function updateColumnDefinitionsWithWidths(
     const sliceCols = tableDescriptor.zippedSliceCols;
     const leaves = tableDescriptor.zippedLeaves;
 
-    const allSizableCols: Array<[SliceCol | DataColLeaf | DataColGroup, ColDef]> = [];
+    const allSizableCols: Array<[SliceCol | SeriesCol | ScopeCol, ColDef]> = [];
     allSizableCols.push(...sliceCols);
     allSizableCols.push(...leaves);
 
@@ -722,7 +723,7 @@ export function getMaxWidthCached(
     return maxWidth === undefined || width > maxWidth ? width : undefined;
 }
 
-function valueFormatter(text: string, col: DataColLeaf, separators: any) {
+function valueFormatter(text: string, col: SeriesCol, separators: any) {
     return text !== undefined
         ? getMeasureCellFormattedValue(text, col.seriesDescriptor.measureFormat(), separators)
         : null;
@@ -739,7 +740,7 @@ function collectWidths(
 
         if (col && context) {
             const text = row[col.id];
-            const formattedText = isDataColLeaf(col) && valueFormatter(text, col, config.separators);
+            const formattedText = isSeriesCol(col) && valueFormatter(text, col, config.separators);
             const textForCalculation = formattedText || text;
             const maxWidth = col.id ? maxWidths.get(col.id) : undefined;
             let possibleMaxWidth;

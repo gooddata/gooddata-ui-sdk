@@ -1,0 +1,43 @@
+{
+    "id": "3d53c337-26cc-452a-8135-cc57588f7b7e",
+    "name": "gdc_internal_projects_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_catalog_query",
+    "request": {
+        "url": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"catalogQueryRequest\":{\"bucketItems\":[{\"expression\":\"SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])\"},{\"expression\":\"SELECT (SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102])) FOR PREVIOUS ([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/497])\"}],\"types\":[\"attribute\",\"metric\",\"fact\"]}}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 303,
+        "body": "{\"uri\":\"/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=36add9e3f6c60b52ec6f25d9399fc6aa&q=eAFNzTkOAjAMRNG7pKaItyzcJnZsiYIGhQpxd0wF0349zauscx43fR4v1%2BJRp2zShSChDFtMiLQR%0AuwRn%2FY72KJdy92SWhlvgmGNjFwN3D1NEiGCwpsDwZ2LZSYG1rjaC8qyCi05jHD1iaQbvP%2FH%2BAAXp%0AK40%3D%0A\"}",
+        "headers": {
+            "date": "Thu, 22 Apr 2021 10:01:31 GMT",
+            "server": "undefined",
+            "location": "/gdc/internal/projects/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/catalog/query?c=36add9e3f6c60b52ec6f25d9399fc6aa&q=eAFNzTkOAjAMRNG7pKaItyzcJnZsiYIGhQpxd0wF0349zauscx43fR4v1%2BJRp2zShSChDFtMiLQR%0AuwRn%2FY72KJdy92SWhlvgmGNjFwN3D1NEiGCwpsDwZ2LZSYG1rjaC8qyCi05jHD1iaQbvP%2FH%2BAAXp%0AK40%3D%0A",
+            "content-type": "application/json;charset=UTF-8",
+            "x-envoy-upstream-service-time": "106",
+            "X-GDC-REQUEST-TIME": "107",
+            "X-GDC-REQUEST": "IGQrTliHcZmpDT10",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "3d53c337-26cc-452a-8135-cc57588f7b7e",
+    "persistent": true,
+    "insertionIndex": 15
+}

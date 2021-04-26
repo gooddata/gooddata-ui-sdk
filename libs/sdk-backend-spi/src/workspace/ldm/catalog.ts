@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IAttributeOrMeasure, IInsightDefinition, ObjRef } from "@gooddata/sdk-model";
 import {
     CatalogItem,
@@ -46,6 +46,13 @@ export interface IWorkspaceCatalogFactoryOptions {
      * Default: undefined
      */
     production?: boolean;
+
+    /**
+     * Optional list of additional date dataset granularities that must be added by backend to the
+     * ones returned by default.
+     * Default: undefined
+     */
+    includeDateGranularities?: string[];
 }
 
 /**

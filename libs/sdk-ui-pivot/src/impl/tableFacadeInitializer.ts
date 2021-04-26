@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { TableConfig } from "./privateTypes";
+import { TableConfigAccessors, TableDataCallbacks, TableLegacyCallbacks } from "./privateTypes";
 import {
     IDataView,
     IExecutionResult,
@@ -27,7 +27,7 @@ export class TableFacadeInitializer {
 
     constructor(
         private readonly execution: IPreparedExecution,
-        private readonly config: TableConfig,
+        private readonly tableMethods: TableDataCallbacks & TableLegacyCallbacks & TableConfigAccessors,
         private readonly props: Readonly<ICorePivotTableProps>,
     ) {}
 
@@ -42,8 +42,17 @@ export class TableFacadeInitializer {
     };
 
     /**
+     * Tests whether the other execution is the same as the one used by the initializer.
+     *
+     * @param other - other execution to test
+     */
+    public isSameExecution(other: IPreparedExecution): boolean {
+        return this.execution.fingerprint() === other.fingerprint();
+    }
+
+    /**
      * Drives initialization of the table facade. The initialization will emit all the essential
-     * loading, error, onExportReady and pushData events using the callback functions specified in the {@link TableConfig}.
+     * loading, error, onExportReady and pushData events using the callback functions specified in the {@link TableDataCallbacks}.
      *
      * If the initialization was abandoned at the right time, the result is 'undefined'. Otherwise the result
      * contains pointer to the initializer instance and the table facade itself.
@@ -53,9 +62,9 @@ export class TableFacadeInitializer {
      * initializer.
      */
     public initialize = (): Promise<InitializerResult | undefined> => {
-        const { execution, config } = this;
+        const { execution, tableMethods } = this;
 
-        config.onLoadingChanged({ isLoading: true });
+        tableMethods.onLoadingChanged({ isLoading: true });
 
         return execution
             .execute()
@@ -73,11 +82,11 @@ export class TableFacadeInitializer {
 
                         const table: TableFacade = this.createTableFacade(result, dataView);
 
-                        config.onLoadingChanged({ isLoading: false });
-                        config.onExportReady(table.createExportFunction(this.props.exportTitle));
+                        tableMethods.onLoadingChanged({ isLoading: false });
+                        tableMethods.onExportReady(table.createExportFunction(this.props.exportTitle));
 
                         const availableDrillTargets = table.getAvailableDrillTargets();
-                        config.pushData({ dataView, availableDrillTargets });
+                        tableMethods.pushData({ dataView, availableDrillTargets });
 
                         return {
                             initializer: this,
@@ -109,11 +118,11 @@ export class TableFacadeInitializer {
                                 DataViewFacade.for(error.dataView),
                             );
 
-                            config.pushData({ availableDrillTargets });
-                            config.onLoadingChanged({ isLoading: false });
+                            tableMethods.pushData({ availableDrillTargets });
+                            tableMethods.onLoadingChanged({ isLoading: false });
                         }
 
-                        config.onError(convertError(error), this.execution);
+                        tableMethods.onError(convertError(error), this.execution);
                     });
             })
             .catch((error) => {
@@ -121,11 +130,11 @@ export class TableFacadeInitializer {
                     return undefined;
                 }
 
-                config.onError(convertError(error), this.execution);
+                tableMethods.onError(convertError(error), this.execution);
             });
     };
 
     private createTableFacade = (result: IExecutionResult, dataView: IDataView): TableFacade => {
-        return new TableFacade(result, dataView, this.config, this.props);
+        return new TableFacade(result, dataView, this.tableMethods, this.props);
     };
 }

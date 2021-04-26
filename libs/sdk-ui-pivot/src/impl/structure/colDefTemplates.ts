@@ -7,7 +7,7 @@ import { AVAILABLE_TOTALS } from "../base/constants";
 import { getMeasureCellFormattedValue, getMeasureCellStyle } from "../cell/cellUtils";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isDataColLeaf } from "./tableDescriptorTypes";
+import { isSeriesCol } from "./tableDescriptorTypes";
 import { cellClassFactory } from "../cell/cellClass";
 import { createCellRenderer } from "../cell/cellRenderer";
 
@@ -60,7 +60,7 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
         valueFormatter: (params: ValueFormatterParams) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 
-            invariant(isDataColLeaf(colDesc));
+            invariant(isSeriesCol(colDesc));
 
             return params.value !== undefined
                 ? getMeasureCellFormattedValue(
@@ -73,7 +73,7 @@ export function measureColumnTemplate(table: TableFacade, props: Readonly<ICoreP
         cellStyle: (params) => {
             const colDesc = table.tableDescriptor.getCol(params.colDef);
 
-            invariant(isDataColLeaf(colDesc));
+            invariant(isSeriesCol(colDesc));
 
             return params.value !== undefined
                 ? getMeasureCellStyle(

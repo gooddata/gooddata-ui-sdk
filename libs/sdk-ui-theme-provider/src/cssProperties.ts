@@ -168,6 +168,7 @@ export function setCssProperties(theme: ITheme, isDarkTheme: boolean): void {
         document.createTextNode(`
             :root {
                 ${cssProperties.map(({ key, value }) => `${key}: ${value};`).join("")}
+                color-scheme: ${isDarkTheme ? "dark" : "light"};
             }
         `),
     );

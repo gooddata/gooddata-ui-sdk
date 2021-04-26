@@ -1189,6 +1189,7 @@ export interface ISeparators {
 export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
+    ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAxisNameConfiguration?: boolean;
@@ -1659,6 +1660,7 @@ export interface IWorkspaceCatalogFactoryMethods<TFactory, TOptions> {
 export interface IWorkspaceCatalogFactoryOptions {
     dataset?: ObjRef;
     excludeTags: ObjRef[];
+    includeDateGranularities?: string[];
     includeTags: ObjRef[];
     production?: boolean;
     types: CatalogItemType[];

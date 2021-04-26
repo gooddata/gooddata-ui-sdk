@@ -243,6 +243,8 @@ export interface IDashboardLayoutSectionBuilder<TWidget = DashboardWidget> {
      * - This operation is non-invasive, it cannot replace an existing item.
      *   This means that if there is already an existing item at the target index,
      *   this and all subsequent items will be moved after the added item.
+     * - If the target index is greater than the total number of items,
+     *   it will be reduced and the item will be moved to the end.
      *
      * @param fromIndex - the index of the item to move
      * @param toIndex - the target index where the item will be moved
@@ -399,6 +401,8 @@ export interface IDashboardLayoutBuilder<TWidget = DashboardWidget> {
      * - This operation is non-invasive, it cannot replace an existing section.
      *   This means that if there is already an existing section at the target index,
      *   this and all subsequent sections will be moved after the added section.
+     * - If the target index is greater than the total number of sections,
+     *   it will be reduced and the section will be moved to the end.
      *
      * @param fromIndex - the index of the section to move
      * @param toIndex - the target index where the section will be moved

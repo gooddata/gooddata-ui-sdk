@@ -26,9 +26,12 @@ const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterPro
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
     return (
         <a className={mergedClassNames} href={href} onClick={onClick}>
-            <span className="icon-home">
-                <Icon name="Home" color={theme?.palette?.complementary?.c7} />
-            </span>
+            <Icon.Home
+                className="icon-home"
+                width={20}
+                height={20}
+                color={theme?.palette?.complementary?.c7}
+            />
             {children}
         </a>
     );

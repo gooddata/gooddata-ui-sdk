@@ -14,7 +14,7 @@ export { AnalyticalDashboardModelV2 } from "./gd-tiger-model/AnalyticalDashboard
 
 export {
     isAttributeHeader,
-    isObjectIdentifier,
+    isAfmObjectIdentifier,
     isResultAttributeHeader,
     isVisualizationObjectsItem,
     isFilterContextData,
@@ -27,7 +27,7 @@ export * from "./generated/afm-rest-api/api";
 export * from "./generated/metadata-json-api/api";
 export * from "./client";
 
-export { jsonApiHeaders, JSON_API_HEADER_VALUE } from "./constants";
+export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants";
 
 export {
     MetadataUtilities,

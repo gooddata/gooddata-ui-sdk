@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "8.4.0-alpha.8",
+    "version": "8.4.0-alpha.34",
     "description": "GoodData SDK - UI Building Components",
     "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-kit",
     "author": "GoodData Corporation",
@@ -30,7 +30,7 @@
         "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
-        "clean": "rm -rf ci dist esm coverage *.log && jest --clearCache",
+        "clean": "rm -rf ci dist esm coverage styles/css *.log && jest --clearCache",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh && npm run api-extractor",
         "build-dev": "bash scripts/build.sh --dev",
@@ -56,10 +56,10 @@
     "dependencies": {
         "@gooddata/goodstrap": "^70.2.2",
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.8",
-        "@gooddata/sdk-ui": "^8.4.0-alpha.8",
-        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.8",
-        "@gooddata/util": "^8.4.0-alpha.8",
+        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.34",
+        "@gooddata/sdk-ui": "^8.4.0-alpha.34",
+        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.34",
+        "@gooddata/util": "^8.4.0-alpha.34",
         "classnames": "^2.2.6",
         "codemirror": "^5.54.0",
         "date-fns": "^2.8.1",
@@ -67,7 +67,6 @@
         "element-closest-polyfill": "^1.0.0",
         "fixed-data-table-2": "^0.8.21",
         "foundation-sites": "^5.5.3",
-        "immutable": "~4.0.0-rc.12",
         "lodash": "^4.17.19",
         "moment": "^2.24.0",
         "react-codemirror2": "^7.2.0",

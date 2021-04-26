@@ -2,24 +2,22 @@
 import React from "react";
 import includes from "lodash/includes";
 import { mount, ReactWrapper } from "enzyme";
-import { fromJS } from "immutable";
 
 import LegacyMultiSelectList, { ILegacyMultiSelectListProps } from "../LegacyMultiSelectList";
 import { withIntl } from "@gooddata/sdk-ui";
 import { customMessages } from "./customDictionary";
 
 describe("LegacyMultiSelectList", () => {
-    const firstItem: any = fromJS({
+    const firstItem: any = {
         title: "First item",
-    });
-
-    const secondItem: any = fromJS({
+    };
+    const secondItem: any = {
         title: "Second item",
-    });
-    const maskedItem: any = fromJS({
+    };
+    const maskedItem: any = {
         title: null,
         available: false,
-    });
+    };
     const items: any[] = [firstItem, secondItem];
 
     function renderList(customProps: Partial<ILegacyMultiSelectListProps<any>> = {}) {
@@ -204,7 +202,7 @@ describe("LegacyMultiSelectList", () => {
                 });
                 expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
                 expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-                    `Attribute is ${firstItem.get("title")}`,
+                    `Attribute is ${firstItem.title}`,
                 );
             });
 
@@ -219,7 +217,7 @@ describe("LegacyMultiSelectList", () => {
                 });
                 expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
                 expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-                    `Attribute is All except ${firstItem.get("title")}`,
+                    `Attribute is All except ${firstItem.title}`,
                 );
             });
 
@@ -234,7 +232,7 @@ describe("LegacyMultiSelectList", () => {
                 });
                 expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
                 expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-                    `Attribute is All except ${firstItem.get("title")}, ${secondItem.get("title")} (2)`,
+                    `Attribute is All except ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
 
@@ -249,7 +247,7 @@ describe("LegacyMultiSelectList", () => {
                 });
                 expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
                 expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-                    `Attribute is ${firstItem.get("title")}, ${secondItem.get("title")} (2)`,
+                    `Attribute is ${firstItem.title}, ${secondItem.title} (2)`,
                 );
             });
 
@@ -264,7 +262,7 @@ describe("LegacyMultiSelectList", () => {
                 });
                 expect(wrapper.find(".s-list-status-bar")).toHaveLength(1);
                 expect(wrapper.find(".s-list-status-bar").text().replace(/\xA0/g, " ")).toBe(
-                    `Attribute is ${firstItem.get("title")}, N/A (2)`,
+                    `Attribute is ${firstItem.title}, N/A (2)`,
                 );
             });
         });

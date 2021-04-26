@@ -154,6 +154,8 @@ export namespace GdcCatalog {
         // (undocumented)
         includeAvailableDateAttributes?: boolean;
         // (undocumented)
+        includeDateGranularities?: string[];
+        // (undocumented)
         includeObjectsWithTags?: string[];
         // (undocumented)
         includeUnavailableDateDataSetsCount?: boolean;

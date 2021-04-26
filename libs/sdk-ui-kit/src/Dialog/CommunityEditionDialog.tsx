@@ -11,6 +11,7 @@ export interface ICommunityEditionDialogProps {
     onClose: () => void;
     headerText: string;
     infoText: string;
+    copyrightText: string;
     links: { text: string; uri: string }[];
     closeButtonText: string;
 }
@@ -21,6 +22,7 @@ export interface ICommunityEditionDialogProps {
 export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
     headerText,
     infoText,
+    copyrightText,
     links,
     onClose,
     closeButtonText,
@@ -28,7 +30,10 @@ export const CommunityEditionDialog: React.FC<ICommunityEditionDialogProps> = ({
     return (
         <Dialog onClose={onClose} displayCloseButton className="gd-community-dialog">
             <h3 className="gd-community-dialog-header">{headerText}</h3>
-            <Message type="progress">{infoText}</Message>
+            <Message type="progress" className="gd-community-dialog-info">
+                {infoText}
+            </Message>
+            <div className="gd-community-dialog-copyright">{copyrightText}</div>
             {links.length > 0 ? (
                 <ul className="gd-community-dialog-links">
                     {links.map((link) => (

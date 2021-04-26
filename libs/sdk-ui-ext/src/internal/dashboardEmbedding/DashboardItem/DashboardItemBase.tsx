@@ -12,7 +12,7 @@ export interface IDashboardItemBaseProps {
     /**
      * Render prop for the item headline.
      */
-    renderHeadline?: () => React.ReactNode;
+    renderHeadline?: (clientHeight: number) => React.ReactNode;
     /**
      * Render prop for content rendered inside the main content before the visualization container.
      */
@@ -62,7 +62,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                     <DashboardItemContent className={contentClassName} ref={contentRef}>
                         {renderBeforeVisualization()}
                         <div className={visualizationClassName}>
-                            {renderHeadline()}
+                            {renderHeadline(clientHeight)}
                             {children({ clientWidth, clientHeight })}
                         </div>
                         {renderAfterVisualization()}

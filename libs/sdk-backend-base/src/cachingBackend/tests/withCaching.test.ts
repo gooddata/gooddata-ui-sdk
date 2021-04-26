@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import { IAnalyticalBackend, IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { CacheControl, withCaching } from "../index";
@@ -40,8 +40,19 @@ describe("withCaching", () => {
 
         const first = await doExecution(backend, [ReferenceLdm.Won]);
         const second = await doExecution(backend, [ReferenceLdm.Won]);
+        const firstData = await first.readAll();
+        const secondData = await second.readAll();
 
-        expect(await second.readAll()).toBe(await first.readAll());
+        expect((firstData as any).decorated).toBe((secondData as any).decorated);
+    });
+
+    it("maintains the caching decorator", async () => {
+        const backend = withCachingForTests();
+
+        const result = await doExecution(backend, [ReferenceLdm.Won]);
+        const dataView = await result.readAll();
+
+        expect(dataView.result).toBe(result);
     });
 
     it("caches insight executions calls with different buckets with the same measures and sanitizes the definition", async () => {
@@ -71,18 +82,6 @@ describe("withCaching", () => {
         expect(secondAll.definition).not.toEqual(firstAll.definition);
         expect(firstAll.definition).toBe(first.definition);
         expect(secondAll.definition).toBe(second.definition);
-    });
-
-    it("caches insight executions calls with same buckets with the same measures and returns the same object", async () => {
-        const backend = withCachingForTests();
-
-        const buckets = [newBucket("measures", ReferenceLdm.Won, ReferenceLdm.WinRate)];
-        const result = await doInsightExecution(backend, buckets);
-
-        const first = await result.readWindow([0, 0], [1, 1]);
-        const second = await result.readWindow([0, 0], [1, 1]);
-
-        expect(second).toBe(first);
     });
 
     it("keeps the cached data views' methods intact", async () => {
@@ -123,7 +122,7 @@ describe("withCaching", () => {
         const first = await result.readWindow([0, 0], [1, 1]);
         const second = await result.readWindow([0, 0], [1, 1]);
 
-        expect(second).toBe(first);
+        expect((second as any).decorated).toBe((first as any).decorated);
     });
 
     it("evicts when readWindow limit hit", async () => {

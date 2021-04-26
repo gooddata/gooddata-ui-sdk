@@ -7,7 +7,7 @@ import { CustomLoading } from "./components/CustomLoading";
 import { Header } from "./components/Header";
 import { Menu } from "./components/Menu";
 import { useAuth, AuthStatus } from "./context/auth";
-import { routes, sideNavigationRoutes, topNavigationRoutes, userRoutes } from "./constants/routes";
+import { routes, sideNavigationRoutes, userRoutes } from "./constants/routes";
 import { workspace } from "./constants/fixtures";
 import { history } from "./history";
 
@@ -52,7 +52,7 @@ export const App: React.FC = () => {
                                 flex-direction: column;
                                 justify-content: flex-start;
                                 align-items: center;
-                                padding-top: 64px;
+                                padding-top: 124px;
                             }
 
                             :global(h1),
@@ -107,12 +107,11 @@ export const App: React.FC = () => {
                                 flex-direction: column;
                                 justify-content: flex-start;
                                 align-items: stretch;
-                                width: 100%;
+                                overflow: hidden;
                                 padding: 20px 40px;
                             }
                         `}</style>
                         <Header
-                            topNavigationRoutes={topNavigationRoutes}
                             routes={routes}
                             isUserLoggedIn={authStatus === AuthStatus.AUTHORIZED}
                             logoutAction={logout}

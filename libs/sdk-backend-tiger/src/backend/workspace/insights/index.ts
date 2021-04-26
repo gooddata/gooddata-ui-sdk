@@ -28,10 +28,10 @@ import {
     jsonApiHeaders,
     MetadataUtilities,
     MetadataGetEntitiesOptions,
-    JsonApiAnalyticalDashboardOutWithLinks,
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     JsonApiVisualizationObjectInTypeEnum,
+    ValidateRelationsHeader,
 } from "@gooddata/api-client-tiger";
 import {
     insightFromInsightDefinition,
@@ -72,6 +72,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             query: {
                 ...(usesOrderingByUpdated ? {} : { sort: orderBy }),
             },
+            headers: ValidateRelationsHeader,
         };
 
         const allInsights = await this.authCall((client) => {
@@ -82,6 +83,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 optionsToUse,
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
+                .then(MetadataUtilities.filterValidEntities)
                 .then((res) => {
                     if (options?.title) {
                         const lowercaseSearch = options.title.toLocaleLowerCase();
@@ -220,22 +222,23 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
-        const apiResult = await this.authCall((client) =>
-            client.workspaceObjects.getEntityVisualizationObjects(
+        const dashboards = await this.authCall((client) =>
+            MetadataUtilities.getAllPagesOf(
+                client,
+                client.workspaceObjects.getAllEntitiesAnalyticalDashboards,
                 {
-                    objectId: id,
                     workspaceId: this.workspace,
-                },
-                {
-                    headers: jsonApiHeaders,
-                    params: {
-                        include: "analyticalDashboards",
+                    include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them
+                    predicate: {
+                        visualizationObjects: {
+                            id, // return only dashboards that have a link to the given id in their visualizationObjects
+                        },
                     },
                 },
-            ),
+            )
+                .then(MetadataUtilities.mergeEntitiesResults)
+                .then((result) => result.data ?? []),
         );
-
-        const dashboards = (apiResult.data.included ?? []) as JsonApiAnalyticalDashboardOutWithLinks[];
 
         return Promise.resolve({
             analyticalDashboards: dashboards.map(convertAnalyticalDashboardWithLinks),

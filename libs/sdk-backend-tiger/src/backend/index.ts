@@ -135,7 +135,7 @@ export class TigerBackend implements IAnalyticalBackend {
             const specificFunctions: TigerSpecificFunctions = {
                 isCommunityEdition: async () => {
                     try {
-                        return this.authApiCall(async (sdk) => {
+                        return await this.authApiCall(async (sdk) => {
                             const response = await sdk.organizationObjects.getAllEntitiesWorkspaces(
                                 { page: 0, size: 1 },
                                 { headers: jsonApiHeaders },
@@ -329,9 +329,14 @@ function interceptBackendErrorsToConsole(client: AxiosInstance): AxiosInstance {
     client.interceptors.response.use(identity, (error) => {
         const response: AxiosResponse = error.response;
 
-        // If the response is an object (JSON parsed by axios) and there is a problem, then log error
+        // If there is no response object (for example for blocked requests), print the whole error.
+        if (!response) {
+            // eslint-disable-next-line no-console
+            console.error("Tiger backend threw an error:", error);
+        }
+        // Else if the response is an object (JSON parsed by axios) and there is a problem, then log error
         // into console for easier diagnostics.
-        if (inRange(response.status, 400, 600) && typeof response.data === "object") {
+        else if (inRange(response.status, 400, 600) && typeof response.data === "object") {
             // Title is redundant (Bad Request)
             const details = omit(response.data, ["title"]);
             // eslint-disable-next-line no-console

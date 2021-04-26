@@ -118,8 +118,10 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
         const itemFacade = this.facade().item(fromIndex);
         invariant(itemFacade, `Cannot move the item - item at index ${fromIndex} does not exist!`);
 
+        const maxToIndex = Math.min(toIndex, this.facade().items().count() - 1);
+
         this.removeItem(fromIndex);
-        this.addItem(itemFacade.sizeForScreen("xl")!, (c) => c.setItem(itemFacade.raw()), toIndex);
+        this.addItem(itemFacade.sizeForScreen("xl")!, (c) => c.setItem(itemFacade.raw()), maxToIndex);
         return this;
     }
 

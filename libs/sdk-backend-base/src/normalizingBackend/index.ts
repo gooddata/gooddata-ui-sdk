@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 
 import {
     IAnalyticalBackend,
@@ -12,6 +12,8 @@ import {
     DataValue,
     IResultHeader,
     NotSupported,
+    isNoDataError,
+    NoDataError,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution";
@@ -127,17 +129,43 @@ class DenormalizingExecutionResult implements IExecutionResult {
     public readAll = (): Promise<IDataView> => {
         const promisedDataView = this.normalizedResult.readAll();
 
-        return promisedDataView.then((dataView) => {
-            return new DenormalizedDataView(this, dataView, this.denormalizer);
-        });
+        return promisedDataView
+            .then((dataView) => {
+                return new DenormalizedDataView(this, dataView, this.denormalizer);
+            })
+            .catch((error) => {
+                // make sure that errors with dataViews are repackaged with the dataView denormalized as well
+                // otherwise the dataViews will not make sense to the caller
+                if (isNoDataError(error) && error.dataView) {
+                    throw new NoDataError(
+                        error.message,
+                        new DenormalizedDataView(this, error.dataView, this.denormalizer),
+                    );
+                }
+
+                throw error;
+            });
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         const promisedDataView = this.normalizedResult.readWindow(offset, size);
 
-        return promisedDataView.then((dataView) => {
-            return new DenormalizedDataView(this, dataView, this.denormalizer);
-        });
+        return promisedDataView
+            .then((dataView) => {
+                return new DenormalizedDataView(this, dataView, this.denormalizer);
+            })
+            .catch((error) => {
+                // make sure that errors with dataViews are repackaged with the dataView denormalized as well
+                // otherwise the dataViews will not make sense to the caller
+                if (isNoDataError(error) && error.dataView) {
+                    throw new NoDataError(
+                        error.message,
+                        new DenormalizedDataView(this, error.dataView, this.denormalizer),
+                    );
+                }
+
+                throw error;
+            });
     };
 
     public equals = (other: IExecutionResult): boolean => {

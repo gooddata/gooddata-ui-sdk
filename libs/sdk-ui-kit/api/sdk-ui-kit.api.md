@@ -218,9 +218,6 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 export const CustomizableCheckmark: React_2.FC<ICustomizableCheckmarkProps>;
 
 // @internal (undocumented)
-export function dateDatasets(dateDatasets: IDateDataset[], recommendedDate?: IDateDataset, unrelatedDate?: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
-
-// @internal (undocumented)
 export const DateDatasetsListItem: React_2.FC<IDateDatasetsListItemProps>;
 
 // @internal (undocumented)
@@ -452,7 +449,7 @@ export type GetPositionedSelfRegion = {
 };
 
 // @internal (undocumented)
-export function getRecommendedDateDataset(items: IDateDataset[]): IDateDataset;
+export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T;
 
 // @internal
 export function guidFor(obj: any): string;
@@ -674,6 +671,8 @@ export interface ICommunityEditionDialogProps {
     // (undocumented)
     closeButtonText: string;
     // (undocumented)
+    copyrightText: string;
+    // (undocumented)
     headerText: string;
     // (undocumented)
     infoText: string;
@@ -687,7 +686,25 @@ export interface ICommunityEditionDialogProps {
 }
 
 // @internal (undocumented)
-export const Icon: React_2.FC<IIconProps>;
+export const Icon: {
+    Refresh: import("react").FC<import("./typings").IIconProps>;
+    DrillDown: import("react").FC<import("./typings").IIconProps>;
+    DrillToDashboard: import("react").FC<import("./typings").IIconProps>;
+    DrillToInsight: import("react").FC<import("./typings").IIconProps>;
+    Date: import("react").FC<import("./typings").IIconProps>;
+    Explore: import("react").FC<import("./typings").IIconProps>;
+    Logout: import("react").FC<import("./typings").IIconProps>;
+    Pdf: import("react").FC<import("./typings").IIconProps>;
+    ExternalLink: import("react").FC<import("./typings").IIconProps>;
+    Hyperlink: import("react").FC<import("./typings").IIconProps>;
+    Undo: import("react").FC<import("./typings").IIconProps>;
+    Home: import("react").FC<import("./typings").IIconProps>;
+    BurgerMenu: import("react").FC<import("./typings").IIconProps>;
+    Rows: import("react").FC<import("./icons/Rows").IRowsIconProps>;
+    DragHandle: import("react").FC<import("./typings").IIconProps>;
+    Interaction: import("react").FC<import("./typings").IIconProps>;
+    AttributeFilter: import("react").FC<import("./typings").IIconProps>;
+};
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -710,9 +727,6 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     warning?: string | React.ReactElement;
 }
-
-// @internal (undocumented)
-export type IconName = "Refresh" | "DrillDown" | "DrillToInsight" | "DrillToDashboard" | "Date" | "Explore" | "Logout" | "Pdf" | "ExternalLink" | "Hyperlink" | "Undo" | "Home" | "BurgerMenu" | "Rows" | "DragHandle" | "Interaction" | "AttributeFilter";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1246,8 +1260,6 @@ export interface IIconProps {
     };
     // (undocumented)
     height?: number;
-    // (undocumented)
-    name: IconName;
     // (undocumented)
     width?: number;
 }
@@ -2259,6 +2271,8 @@ export interface ISingleSelectListItemProps {
     onMouseOver?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    type?: SingleSelectListItemType;
 }
 
 // @internal (undocumented)
@@ -2576,7 +2590,7 @@ export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
-export function preselectDateDataset(dateDatasets: IDateDataset[], recommendedDate: IDateDataset): Array<IDateDataset | IDateDatasetHeader>;
+export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export enum PresetType {
@@ -2661,6 +2675,9 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
 // @internal (undocumented)
+export type SingleSelectListItemType = "header" | "separator";
+
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -2681,6 +2698,9 @@ export enum SnapPoint {
     // (undocumented)
     TopRight = "tr"
 }
+
+// @internal (undocumented)
+export function sortDateDatasets<T extends IDateDataset>(dateDatasets: T[], recommendedDate?: T, unrelatedDate?: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export class Spinner extends PureComponent<ISpinnerProps> {
@@ -2718,7 +2738,7 @@ export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
 }
 
 // @internal (undocumented)
-export function transform2Dropdown(dateDatasets: IDateDataset[]): Array<IDateDataset | IDateDatasetHeader>;
+export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;

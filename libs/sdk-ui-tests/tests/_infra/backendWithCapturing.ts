@@ -45,25 +45,28 @@ export function backendWithCapturing(
         dataRequestResolver = resolve;
     });
 
-    let backend = withEventing(dummyBackend({ hostname: "test", raiseNoDataExceptions: true }), {
-        beforeExecute: (def) => {
-            interactions.triggeredExecution = def;
-        },
-        failedResultReadAll: (_) => {
-            interactions.dataViewRequests.allData = true;
+    let backend = withEventing(
+        dummyBackend({ hostname: "test", raiseNoDataExceptions: "without-data-view" }),
+        {
+            beforeExecute: (def) => {
+                interactions.triggeredExecution = def;
+            },
+            failedResultReadAll: (_) => {
+                interactions.dataViewRequests.allData = true;
 
-            dataRequestResolver(interactions);
-        },
-        failedResultReadWindow: (offset: number[], size: number[]) => {
-            if (!interactions.dataViewRequests.windows) {
-                interactions.dataViewRequests.windows = [];
-            }
+                dataRequestResolver(interactions);
+            },
+            failedResultReadWindow: (offset: number[], size: number[]) => {
+                if (!interactions.dataViewRequests.windows) {
+                    interactions.dataViewRequests.windows = [];
+                }
 
-            interactions.dataViewRequests.windows.push({ offset, size });
+                interactions.dataViewRequests.windows.push({ offset, size });
 
-            dataRequestResolver(interactions);
+                dataRequestResolver(interactions);
+            },
         },
-    });
+    );
 
     if (normalize) {
         backend = withNormalization(backend, {

@@ -1,5 +1,5 @@
 // (C) 2021 GoodData Corporation
-import { AnyCol, isDataColLeaf, isSliceCol } from "./tableDescriptorTypes";
+import { AnyCol, isSeriesCol, isSliceCol } from "./tableDescriptorTypes";
 import { invariant, InvariantError } from "ts-invariant";
 import {
     IAttributeLocatorItem,
@@ -67,7 +67,7 @@ export function createSortItemForCol(
         return isAttributeAreaSort(matchingOriginalSortItem)
             ? newAttributeAreaSort(attributeLocalId, direction)
             : newAttributeSort(attributeLocalId, direction);
-    } else if (isDataColLeaf(col)) {
+    } else if (isSeriesCol(col)) {
         const locators: ILocatorItem[] = [];
         if (col.seriesDescriptor.attributeDescriptors && col.seriesDescriptor.attributeHeaders) {
             const descriptorAndHeaders = zip(

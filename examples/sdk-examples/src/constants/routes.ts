@@ -280,8 +280,6 @@ export const backendInfoRoutes = [
 
 export const userRoutes = [{ path: "/login", title: "Login", Component: Login }];
 
-export const topNavigationRoutes = [{ path: "/", title: "Examples Gallery", Component: BasicComponents }];
-
 export const routes = [
     ...sideNavigationRoutes,
     ...insightViewUseCasesRoutes,

@@ -8,6 +8,7 @@ import { ISeparators } from "@gooddata/sdk-ui";
 import { formatMetric, HYPHEN, isValueUnhandledNull } from "./utils/format";
 import { getErrorPopInfo, getPopInfo, IPopInfo } from "./utils/pop";
 import { getResponsiveClassName } from "../DashboardLayout/utils/legacy";
+import { HeadlinePagination, shouldRenderPagination } from "@gooddata/sdk-ui-vis-commons";
 
 const LOADING_PLACEHOLDER = "…";
 const NO_DATA_PLACEHOLDER = HYPHEN;
@@ -23,6 +24,8 @@ export interface IKpiPopProps {
     previousPeriodName?: string;
     separators: ISeparators;
     kpiWidth: number;
+    enableCompactSize?: boolean;
+    clientHeight?: number;
 }
 
 class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
@@ -37,6 +40,21 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
     kpiSectionItemNode = React.createRef<HTMLElement>();
 
     render() {
+        const { enableCompactSize, kpiWidth, clientHeight } = this.props;
+
+        const pagination = shouldRenderPagination(enableCompactSize, kpiWidth, clientHeight);
+
+        if (pagination) {
+            return (
+                <div className="gd-flex-container headline-compare-section headline-paginated-compare-section">
+                    <HeadlinePagination
+                        renderSecondaryItem={this.renderPreviousPeriod}
+                        renderTertiaryItem={this.renderPercentage}
+                    />
+                </div>
+            );
+        }
+
         return (
             <div className={this.getKpiSectionClassName()}>
                 {this.renderPercentage()}
@@ -45,7 +63,7 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         );
     }
 
-    renderPercentage() {
+    renderPercentage = () => {
         const popInfo =
             this.props.disabled || !!this.props.error
                 ? getErrorPopInfo()
@@ -57,16 +75,18 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         const tooltip = this.props.isLoading ? "" : popInfo.percentage;
 
         return (
-            <dl className="gd-flex-item kpi-pop-section-item kpi-pop-change">
-                <ResponsiveText title={tooltip} tagClassName={`is-kpi-${popInfo.meaning}`} tagName="dt">
-                    {this.renderPercentageValue(popInfo)}
-                </ResponsiveText>
+            <dl className="gd-flex-item kpi-pop-section-item kpi-pop-change headline-compare-section-item headline-tertiary-item">
+                <div className="headline-value-wrapper s-headline-value-wrapper">
+                    <ResponsiveText title={tooltip} tagClassName={`is-kpi-${popInfo.meaning}`} tagName="dt">
+                        {this.renderPercentageValue(popInfo)}
+                    </ResponsiveText>
+                </div>
                 <dd>
                     <FormattedHTMLMessage id="kpiPop.change" />
                 </dd>
             </dl>
         );
-    }
+    };
 
     renderPercentageValue(popInfo: IPopInfo) {
         return this.props.isLoading ? (
@@ -79,21 +99,25 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
         );
     }
 
-    renderPreviousPeriod() {
+    renderPreviousPeriod = () => {
         return (
             <dl
-                className="gd-flex-item kpi-pop-section-item kpi-pop-period"
+                className="gd-flex-item kpi-pop-section-item kpi-pop-period headline-compare-section-item headline-secondary-item"
                 title={this.renderFormattedValue()}
             >
                 <ResponsiveText tagName="dt">{this.renderPreviousPeriodValue()}</ResponsiveText>
                 {this.renderPreviousPeriodName()}
             </dl>
         );
-    }
+    };
 
     renderPreviousPeriodName() {
         return this.props.previousPeriodName ? (
-            <dd ref={this.kpiSectionItemNode} title={this.props.previousPeriodName}>
+            <dd
+                className="headline-title-wrapper"
+                ref={this.kpiSectionItemNode}
+                title={this.props.previousPeriodName}
+            >
                 {this.props.previousPeriodName}
             </dd>
         ) : (
@@ -122,10 +146,10 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
     getKpiSectionClassName() {
         const { kpiWidth } = this.props;
         const kpiSectionItemNode = this.kpiSectionItemNode.current;
-        const className = "gd-flex-container kpi-pop-section";
+        const className = "gd-flex-container headline-compare-section";
 
         if (kpiSectionItemNode && getResponsiveClassName(kpiWidth)) {
-            return `${className} kpi-pop-section-${getResponsiveClassName(kpiWidth)}`;
+            return `${className} gd-${getResponsiveClassName(kpiWidth)}`;
         }
 
         return className;

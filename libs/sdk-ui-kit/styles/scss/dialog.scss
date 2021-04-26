@@ -209,6 +209,15 @@
     margin-bottom: 1em; // override goodstrap
 }
 
+.gd-community-dialog-info::after {
+    // stylelint-disable-next-line declaration-no-important
+    content: none !important; // override goodstrap
+}
+
+.gd-community-dialog-copyright {
+    margin-top: 1em; // override goodstrap
+}
+
 .gd-community-dialog-links {
     padding: 0;
     list-style: none;
@@ -220,6 +229,7 @@
 
         a {
             color: $default-gd-color-link;
+            text-decoration: underline;
         }
     }
 }

@@ -1,6 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import partial from "lodash/partial";
-import cloneDeep from "lodash/cloneDeep";
 import Highcharts from "../../lib";
 import { styleVariables } from "./styles/variables";
 import { tickLabelClick } from "./drilldownEventing";
@@ -13,7 +12,8 @@ export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick):
     const ddPoints: IHighchartsPointObject[] = []; // drilldown points
 
     for (let i = startAt; i < startAt + leaves; i++) {
-        ddPoints.push(...cloneDeep(axis.getDDPoints(i)));
+        const currentDDPoints = axis.getDDPoints(i);
+        ddPoints.push(...currentDDPoints);
     }
 
     // replace y value by target value for bullet chart target

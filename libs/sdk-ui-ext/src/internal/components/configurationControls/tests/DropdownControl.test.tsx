@@ -5,6 +5,7 @@ import noop from "lodash/noop";
 import { Dropdown } from "@gooddata/sdk-ui-kit";
 import DropdownControl, { IDropdownControlProps } from "../DropdownControl";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider";
+import { IDropdownItem } from "../../../interfaces/Dropdown";
 
 describe("DropdownControl", () => {
     const defaultProps = {
@@ -39,5 +40,38 @@ describe("DropdownControl", () => {
         const wrapper = createComponent({ disabled: true });
 
         expect(wrapper.find("button").hasClass("disabled")).toBeTruthy();
+    });
+
+    describe("rendered list items", () => {
+        const iconItems: IDropdownItem[] = [
+            {
+                title: "My item",
+                value: "42",
+                icon: "s-icon",
+            },
+        ];
+
+        const separatorItems: IDropdownItem[] = [
+            {
+                type: "separator",
+            },
+        ];
+
+        const headerItems: IDropdownItem[] = [
+            {
+                type: "header",
+            },
+        ];
+
+        it.each([
+            ["item with icon", iconItems, ".s-icon"],
+            ["separator item", separatorItems, ".s-list-separator"],
+            ["header item", headerItems, ".s-list-header"],
+        ])("should render %s", (_testType, items: IDropdownItem[], expectedSelector: string) => {
+            const wrapper = createComponent({ items });
+
+            wrapper.find("button").simulate("click");
+            expect(wrapper.find(expectedSelector).length).toBe(1);
+        });
     });
 });

@@ -25,11 +25,16 @@
 }
 
 .viz-react-highchart-wrap {
+    // stylelint-disable-next-line declaration-no-important
+    overflow: hidden !important; // overrides inline style which comes from I dont know where
     height: 100%;
     min-width: 0; // Hack for FF, so flexbox can shrink
 }
 
 .highcharts-container {
+    // Without position: static, there is a sizing issue in Safari (in DashboardView)
+    // stylelint-disable-next-line declaration-no-important
+    position: static !important;
     // If the outer container have scroll bar, the chart can be showed by scrolling.
     // stylelint-disable-next-line declaration-no-important
     overflow: visible !important;

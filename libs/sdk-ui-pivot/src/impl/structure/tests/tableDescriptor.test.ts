@@ -8,7 +8,7 @@ import {
     TwoMeasures,
 } from "./table.fixture";
 import { TableDescriptor } from "../tableDescriptor";
-import { DataColGroup, DataColLeaf } from "../tableDescriptorTypes";
+import { ScopeCol, SeriesCol } from "../tableDescriptorTypes";
 import { newWidthForAttributeColumn } from "../../../columnWidths";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 
@@ -44,20 +44,20 @@ describe("TableDescriptor", () => {
 
     describe("hasGroupedDataCols", () => {
         it("should be true for table with column attributes", () => {
-            expect(TableDescriptor.for(SingleMeasureWithColumnAttribute).hasGroupedDataCols()).toBeTruthy();
+            expect(TableDescriptor.for(SingleMeasureWithColumnAttribute).hasScopingCols()).toBeTruthy();
         });
 
         it("should be false for table without column attributes", () => {
-            expect(TableDescriptor.for(SingleAttribute).hasGroupedDataCols()).toBeFalsy();
-            expect(TableDescriptor.for(TwoMeasures).hasGroupedDataCols()).toBeFalsy();
-            expect(TableDescriptor.for(SingleMeasureWithRowAttribute).hasGroupedDataCols()).toBeFalsy();
+            expect(TableDescriptor.for(SingleAttribute).hasScopingCols()).toBeFalsy();
+            expect(TableDescriptor.for(TwoMeasures).hasScopingCols()).toBeFalsy();
+            expect(TableDescriptor.for(SingleMeasureWithRowAttribute).hasScopingCols()).toBeFalsy();
         });
     });
 
     describe("getAbsoluteLeafColIndex", () => {
         it("should return correct indexes in table with just measures", () => {
             const table = TableDescriptor.for(TwoMeasures);
-            const [firstCol, secondCol]: DataColLeaf[] = table.headers.leafDataCols as any;
+            const [firstCol, secondCol]: SeriesCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(secondCol)).toEqual(1);
@@ -65,7 +65,7 @@ describe("TableDescriptor", () => {
 
         it("should return correct indexes in table with measure and row", () => {
             const table = TableDescriptor.for(SingleMeasureWithRowAttribute);
-            const [firstCol]: DataColLeaf[] = table.headers.leafDataCols as any;
+            const [firstCol]: SeriesCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(table.headers.sliceCols[0])).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(firstCol.index + 1);
@@ -73,7 +73,7 @@ describe("TableDescriptor", () => {
 
         it("should return correct indexes in table with just columns", () => {
             const table = TableDescriptor.for(SingleColumn);
-            const [firstCol, secondCol]: DataColGroup[] = table.headers.leafDataCols as any;
+            const [firstCol, secondCol]: ScopeCol[] = table.headers.leafDataCols as any;
 
             expect(table.getAbsoluteLeafColIndex(firstCol)).toEqual(0);
             expect(table.getAbsoluteLeafColIndex(secondCol)).toEqual(1);

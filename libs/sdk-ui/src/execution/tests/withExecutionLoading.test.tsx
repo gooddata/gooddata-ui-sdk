@@ -102,24 +102,38 @@ describe("withExecution", () => {
         expect(onLoadingFinish).toBeCalledTimes(1);
     });
 
-    it("should invoke onError", async () => {
+    it("should invoke onError for NoDataErrors without a DataView", async () => {
         const onError = jest.fn();
 
-        /*
-         * this test uses dummy backend in the default config which raises NO_DATA errors.
-         */
         renderEnhancedComponent(
             {
                 events: {
                     onError,
                 },
             },
-            dummyBackend(),
+            dummyBackend({ raiseNoDataExceptions: "without-data-view" }),
         );
 
         await createDummyPromise({ delay: 150 });
 
         expect(onError).toBeCalledTimes(1);
+    });
+
+    it("should NOT invoke onError for NoDataErrors with a DataView", async () => {
+        const onError = jest.fn();
+
+        renderEnhancedComponent(
+            {
+                events: {
+                    onError,
+                },
+            },
+            dummyBackend({ raiseNoDataExceptions: "with-data-view" }),
+        );
+
+        await createDummyPromise({ delay: 150 });
+
+        expect(onError).not.toBeCalled();
     });
 
     it("should do readAll when no window specified", async () => {

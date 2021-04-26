@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import React from "react";
 import ReactDom from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
@@ -93,7 +93,36 @@ describe("PluggableXirr", () => {
                 .mockImplementation(() => fakeElement);
             const mockRenderFun = jest.fn();
 
-            const xirr = createComponent({ ...defaultProps, renderFun: mockRenderFun });
+            const xirr = createComponent({
+                ...defaultProps,
+                renderFun: mockRenderFun,
+                featureFlags: { enableKDWidgetCustomHeight: false },
+            });
+            const options: IVisProps = getTestOptions();
+
+            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
+
+            expect(reactCreateElementSpy.mock.calls[0][0]).toBe(CoreXirr);
+            expect(mockRenderFun).toHaveBeenCalledWith(
+                fakeElement,
+                document.querySelector(defaultProps.element),
+            );
+
+            reactCreateElementSpy.mockReset();
+        });
+
+        it("should render XIRR by react to given element passing down properties when FF enableKDWidgetCustomHeight is set to true", () => {
+            const fakeElement: any = "fake element";
+            const reactCreateElementSpy = jest
+                .spyOn(React, "createElement")
+                .mockImplementation(() => fakeElement);
+            const mockRenderFun = jest.fn();
+
+            const xirr = createComponent({
+                ...defaultProps,
+                renderFun: mockRenderFun,
+                featureFlags: { enableKDWidgetCustomHeight: true },
+            });
             const options: IVisProps = getTestOptions();
 
             xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);

@@ -1,6 +1,17 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Mar 2021 10:47:16 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Apr 2021 11:56:54 GMT and should not be manually modified.
+
+## 8.3.0
+Wed, 14 Apr 2021 11:56:54 GMT
+
+### Updates
+
+- DateFilter now hides options with visible: false.
+- DateFilter now respects name property in AbsoluteForm, RelativeForm and AllTime options.
+- Highcharts dependency upgraded from version 7.1.1 to 8.2.2
+- Date bucket items no longer removed from request body in loadDateDataset (api-client-bear). If you need to remove bucket date items from the request, you have to filter them manually.
+- GoodData.CN compatibility - this version is the first version fully compatible with GoodData.CN backend
 
 ## 8.2.0
 Thu, 11 Mar 2021 10:47:16 GMT

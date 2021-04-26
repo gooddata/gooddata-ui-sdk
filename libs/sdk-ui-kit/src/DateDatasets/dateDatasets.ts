@@ -12,22 +12,22 @@ export const isDateDatasetHeader = (obj: unknown): obj is IDateDatasetHeader => 
     return obj && (obj as IDateDatasetHeader).type === "header";
 };
 
-function hasSameRelevance(dateDatasets: ReadonlyArray<IDateDataset | IDateDatasetHeader>) {
+function hasSameRelevance<T extends IDateDataset>(dateDatasets: ReadonlyArray<T | IDateDatasetHeader>) {
     const relevanceCount = Object.keys(groupBy(dateDatasets, "relevance")).length;
     return relevanceCount === 1;
 }
 
-const relevanceComparator = (a: IDateDataset, b: IDateDataset) => b.relevance - a.relevance; // descending sort
+const relevanceComparator = <T extends IDateDataset>(a: T, b: T) => b.relevance - a.relevance; // descending sort
 
-const titleComparator = (a: IDateDataset, b: IDateDataset) => {
+const titleComparator = <T extends IDateDataset>(a: T, b: T) => {
     return a.title.localeCompare(b.title);
 };
 
-function sortByTitle(dateDatasets: IDateDataset[]) {
+function sortByTitle<T extends IDateDataset>(dateDatasets: T[]) {
     return dateDatasets.slice().sort(titleComparator);
 }
 
-function sortByRelevanceAndTitle(dateDatasets: IDateDataset[]) {
+function sortByRelevanceAndTitle<T extends IDateDataset>(dateDatasets: T[]) {
     return dateDatasets.slice().sort((a, b) => {
         if (a.relevance === b.relevance) {
             return titleComparator(a, b);
@@ -70,9 +70,9 @@ export const unrelatedHeader: IDateDatasetHeader = {
     type: "header",
 };
 
-function addUnrelatedDateDataset(
-    dateDatasets: ReadonlyArray<IDateDataset | IDateDatasetHeader>,
-    unrelatedDateDataset: IDateDataset,
+function addUnrelatedDateDataset<T extends IDateDataset>(
+    dateDatasets: ReadonlyArray<T | IDateDatasetHeader>,
+    unrelatedDateDataset: T,
 ) {
     if (hasSameRelevance(dateDatasets)) {
         return [unrelatedHeader, unrelatedDateDataset, relatedHeader, ...dateDatasets];
@@ -84,7 +84,7 @@ function addUnrelatedDateDataset(
 /**
  * @internal
  */
-export function getRecommendedDateDataset(items: IDateDataset[]): IDateDataset {
+export function getRecommendedDateDataset<T extends IDateDataset>(items: T[]): T {
     if (hasSameRelevance(items)) {
         return null;
     }
@@ -95,7 +95,7 @@ export function getRecommendedDateDataset(items: IDateDataset[]): IDateDataset {
 /**
  * @internal
  */
-export function transform2Dropdown(dateDatasets: IDateDataset[]): Array<IDateDataset | IDateDatasetHeader> {
+export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader> {
     if (!dateDatasets.length) {
         return [];
     }
@@ -117,20 +117,20 @@ export function transform2Dropdown(dateDatasets: IDateDataset[]): Array<IDateDat
     return sortByTitle(items);
 }
 
-function getRecommendedItems(
-    recommendedDate: IDateDataset,
-    others: IDateDataset[],
-): Array<IDateDataset | IDateDatasetHeader> {
+function getRecommendedItems<T extends IDateDataset>(
+    recommendedDate: T,
+    others: T[],
+): Array<T | IDateDatasetHeader> {
     return [recommendedHeader, recommendedDate, otherHeader, ...sortByTitle(others)];
 }
 
 /**
  * @internal
  */
-export function preselectDateDataset(
-    dateDatasets: IDateDataset[],
-    recommendedDate: IDateDataset,
-): Array<IDateDataset | IDateDatasetHeader> {
+export function preselectDateDataset<T extends IDateDataset>(
+    dateDatasets: T[],
+    recommendedDate: T,
+): Array<T | IDateDatasetHeader> {
     const others = dateDatasets.filter((d) => d.id !== recommendedDate.id);
 
     if (others.length > 0) {
@@ -143,11 +143,11 @@ export function preselectDateDataset(
 /**
  * @internal
  */
-export function dateDatasets(
-    dateDatasets: IDateDataset[],
-    recommendedDate: IDateDataset = null,
-    unrelatedDate: IDateDataset = null,
-): Array<IDateDataset | IDateDatasetHeader> {
+export function sortDateDatasets<T extends IDateDataset>(
+    dateDatasets: T[],
+    recommendedDate: T = null,
+    unrelatedDate: T = null,
+): Array<T | IDateDatasetHeader> {
     let items = recommendedDate
         ? preselectDateDataset(dateDatasets, recommendedDate)
         : transform2Dropdown(dateDatasets);

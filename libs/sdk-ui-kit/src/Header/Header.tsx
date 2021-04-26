@@ -298,9 +298,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     this.props.onMenuItemClick(logoutMenuItem, e);
                 }}
             >
-                <span className="icon-logout">
-                    <Icon name="Logout" color={this.props.theme?.palette?.complementary?.c0} />
-                </span>
+                <Icon.Logout className="icon-logout" color={this.props.theme?.palette?.complementary?.c0} />
                 <span className="gd-button-text">
                     <FormattedMessage id="gs.header.logout" />
                 </span>

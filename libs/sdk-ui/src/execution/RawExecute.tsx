@@ -4,6 +4,7 @@ import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { withExecution } from "./withExecution";
 import { WithLoadingResult, IWithLoadingEvents, DataViewWindow } from "./withExecutionLoading";
 import isEqual from "lodash/isEqual";
+import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
 
 /**
  * @public
@@ -48,12 +49,39 @@ export interface IRawExecuteProps extends IWithLoadingEvents<IRawExecuteProps> {
      * @param executionResult - execution result, indicating state and/or results
      */
     children: (executionResult: WithLoadingResult) => React.ReactElement | null;
+
+    /**
+     * Optionally provide component for rendering of the loading state.
+     *
+     * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
+     * will be called only with a successful result.
+     */
+    LoadingComponent?: IExecuteLoadingComponent;
+
+    /**
+     * Optionally provide component for rendering of the error state.
+     * Note: When you provide both LoadingComponent and ErrorComponent, the children function with the execution result
+     * will be called only with a successful result.
+     */
+    ErrorComponent?: IExecuteErrorComponent;
 }
 
 type Props = IRawExecuteProps & WithLoadingResult;
 
 const CoreExecutor: React.FC<Props> = (props: Props) => {
-    const { children, error, isLoading, reload, result } = props;
+    const { children, error, isLoading, reload, result, LoadingComponent, ErrorComponent } = props;
+
+    if (ErrorComponent && error) {
+        return <ErrorComponent error={error} />;
+    }
+
+    if (LoadingComponent && isLoading) {
+        return <LoadingComponent />;
+    }
+
+    if (LoadingComponent && ErrorComponent && !result) {
+        return null;
+    }
 
     return children({
         error,

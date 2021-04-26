@@ -215,7 +215,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { dimensions = { height: undefined }, custom = {}, locale } = options;
+        const { dimensions = { height: undefined }, custom = {}, locale, theme } = options;
         const { height } = dimensions;
         const { geoPushpinElement, intl } = this;
 
@@ -293,6 +293,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             onLoadingChanged: this.onLoadingChanged,
             LoadingComponent: null as any,
             ErrorComponent: null as any,
+            theme,
         };
 
         this.renderFun(<CoreGeoChart {...geoPushpinProps} />, document.querySelector(geoPushpinElement));

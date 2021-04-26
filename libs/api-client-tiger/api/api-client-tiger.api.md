@@ -23,7 +23,7 @@ export interface AbsoluteDateFilter {
 // @public
 export interface AbsoluteDateFilterBody {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     from: string;
     to: string;
 }
@@ -37,12 +37,12 @@ export interface AbsoluteDateFilterBodyAllOf {
 // @public
 export interface AbstractMeasureValueFilter {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 
 // @public
 export interface AbstractMeasureValueFilterAllOf {
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
 }
 
 // @public
@@ -112,6 +112,11 @@ export interface AfmExecution {
 // @public
 export interface AfmExecutionResponse {
     executionResponse: ExecutionResponse;
+}
+
+// @public
+export interface AfmObjectIdentifier {
+    identifier: ObjectIdentifier;
 }
 
 // @public
@@ -277,7 +282,7 @@ export enum AttributeHeaderAttributeHeaderGranularityEnum {
 
 // @public
 export interface AttributeItem {
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     localIdentifier: string;
 }
 
@@ -290,23 +295,23 @@ export interface AttributeResultHeader {
 // @public
 export interface CommonAttributeFilter {
     applyOnResult?: boolean;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonAttributeFilterAllOf {
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonDateFilter {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 
 // @public
 export interface CommonDateFilterAllOf {
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
 }
 
 // @public
@@ -317,7 +322,7 @@ export interface CommonFilter {
 // @public
 export interface CommonMeasureValueFilter {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measure: Identifier;
     treatNullValuesAs?: number;
 }
@@ -336,7 +341,7 @@ export interface ComparisonMeasureValueFilter {
 // @public
 export interface ComparisonMeasureValueFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measure: Identifier;
     operator: ComparisonMeasureValueFilterBodyOperatorEnum;
     treatNullValuesAs?: number;
@@ -397,7 +402,7 @@ export enum DatasetReferenceIdentifierTypeEnum {
 export class DataSourceActionsControllerApi extends MetadataBaseApi implements DataSourceActionsControllerApiInterface {
     generateLogicalModel(params: {
         dataSourceId: string;
-        scanRequest: ScanRequest;
+        generateLdmRequest: GenerateLdmRequest;
     }, options?: any): AxiosPromise<DeclarativeModel>;
     registerUploadNotification(params: {
         dataSourceId: string;
@@ -408,7 +413,7 @@ export class DataSourceActionsControllerApi extends MetadataBaseApi implements D
 export const DataSourceActionsControllerApiAxiosParamCreator: (configuration?: MetadataConfiguration | undefined) => {
     generateLogicalModel(params: {
         dataSourceId: string;
-        scanRequest: ScanRequest;
+        generateLdmRequest: GenerateLdmRequest;
     }, options?: any): MetadataRequestArgs;
     registerUploadNotification(params: {
         dataSourceId: string;
@@ -419,7 +424,7 @@ export const DataSourceActionsControllerApiAxiosParamCreator: (configuration?: M
 export const DataSourceActionsControllerApiFactory: (configuration?: MetadataConfiguration | undefined, basePath?: string | undefined, axios?: AxiosInstance | undefined) => {
     generateLogicalModel(params: {
         dataSourceId: string;
-        scanRequest: ScanRequest;
+        generateLdmRequest: GenerateLdmRequest;
     }, options?: any): AxiosPromise<DeclarativeModel>;
     registerUploadNotification(params: {
         dataSourceId: string;
@@ -430,7 +435,7 @@ export const DataSourceActionsControllerApiFactory: (configuration?: MetadataCon
 export const DataSourceActionsControllerApiFp: (configuration?: MetadataConfiguration | undefined) => {
     generateLogicalModel(params: {
         dataSourceId: string;
-        scanRequest: ScanRequest;
+        generateLdmRequest: GenerateLdmRequest;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<DeclarativeModel>;
     registerUploadNotification(params: {
         dataSourceId: string;
@@ -441,7 +446,7 @@ export const DataSourceActionsControllerApiFp: (configuration?: MetadataConfigur
 export interface DataSourceActionsControllerApiInterface {
     generateLogicalModel(params: {
         dataSourceId: string;
-        scanRequest: ScanRequest;
+        generateLdmRequest: GenerateLdmRequest;
     }, options?: any): AxiosPromise<DeclarativeModel>;
     registerUploadNotification(params: {
         dataSourceId: string;
@@ -1187,6 +1192,21 @@ export type FilterDefinition = AttributeFilter | DateFilter | InlineFilterDefini
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
 // @public
+export interface GenerateLdmRequest {
+    dateGranularities?: string;
+    denormPrefix?: string;
+    factPrefix?: string;
+    grainPrefix?: string;
+    grainReferencePrefix?: string;
+    primaryLabelPrefix?: string;
+    referencePrefix?: string;
+    secondaryLabelPrefix?: string;
+    separator: string;
+    tablePrefix?: string;
+    viewPrefix?: string;
+}
+
+// @public
 export interface GrainIdentifier {
     id: string;
     type: GrainIdentifierTypeEnum;
@@ -1221,7 +1241,7 @@ export interface HeaderGroup {
 }
 
 // @public
-export type Identifier = LocalIdentifier | ObjectIdentifier;
+export type Identifier = AfmObjectIdentifier | LocalIdentifier;
 
 // @public
 export interface IncludedDimensionProps {
@@ -1257,13 +1277,13 @@ export interface InlineMeasureDefinitionInline {
 }
 
 // @public (undocumented)
+export const isAfmObjectIdentifier: (value: unknown) => value is AfmObjectIdentifier;
+
+// @public (undocumented)
 export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader;
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
-
-// @public (undocumented)
-export const isObjectIdentifier: (value: unknown) => value is ObjectIdentifier;
 
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
@@ -1332,19 +1352,20 @@ export interface JsonApiAnalyticalDashboardOut {
 // @public
 export interface JsonApiAnalyticalDashboardOutDocument {
     data: JsonApiAnalyticalDashboardOut;
-    included?: Array<JsonApiVisualizationObjectOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>;
+    included?: Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>;
     links?: ObjectLinks;
 }
 
 // @public
 export interface JsonApiAnalyticalDashboardOutList {
     data: Array<JsonApiAnalyticalDashboardOutWithLinks>;
-    included?: Array<JsonApiVisualizationObjectOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>;
+    included?: Array<JsonApiVisualizationObjectOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks | JsonApiFilterContextOutWithLinks>;
     links?: ListLinks;
 }
 
 // @public
 export interface JsonApiAnalyticalDashboardOutRelationships {
+    analyticalDashboards?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     datasets?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     filterContexts?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     labels?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
@@ -2006,14 +2027,14 @@ export interface JsonApiLinkage {
 
 // @public
 export interface JsonApiMetricIn {
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
     id: string;
     type: JsonApiMetricInTypeEnum;
 }
 
 // @public
 export interface JsonApiMetricInAttributes {
-    content?: JsonApiMetricInAttributesContent;
+    content: JsonApiMetricInAttributesContent;
     description?: string;
     tags?: Array<string>;
     title?: string;
@@ -2038,7 +2059,7 @@ export enum JsonApiMetricInTypeEnum {
 
 // @public
 export interface JsonApiMetricOut {
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
     id: string;
     relationships?: JsonApiMetricOutRelationships;
     type: JsonApiMetricOutTypeEnum;
@@ -2074,7 +2095,7 @@ export enum JsonApiMetricOutTypeEnum {
 
 // @public
 export interface JsonApiMetricOutWithLinks {
-    attributes?: JsonApiMetricInAttributes;
+    attributes: JsonApiMetricInAttributes;
     id: string;
     links?: ObjectLinks;
     relationships?: JsonApiMetricOutRelationships;
@@ -2325,20 +2346,19 @@ export interface JsonApiVisualizationObjectOut {
 // @public
 export interface JsonApiVisualizationObjectOutDocument {
     data: JsonApiVisualizationObjectOut;
-    included?: Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiDatasetOutWithLinks>;
+    included?: Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>;
     links?: ObjectLinks;
 }
 
 // @public
 export interface JsonApiVisualizationObjectOutList {
     data: Array<JsonApiVisualizationObjectOutWithLinks>;
-    included?: Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiAnalyticalDashboardOutWithLinks | JsonApiDatasetOutWithLinks>;
+    included?: Array<JsonApiFactOutWithLinks | JsonApiAttributeOutWithLinks | JsonApiLabelOutWithLinks | JsonApiMetricOutWithLinks | JsonApiDatasetOutWithLinks>;
     links?: ListLinks;
 }
 
 // @public
 export interface JsonApiVisualizationObjectOutRelationships {
-    analyticalDashboards?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     attributes?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     datasets?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
     facts?: JsonApiAnalyticalDashboardOutRelationshipsVisualizationObjects;
@@ -2636,21 +2656,11 @@ export interface MeasureExecutionResultHeader {
 
 // @public
 export interface MeasureGroupHeader {
-    measureGroupHeader: MeasureGroupHeaderMeasureGroupHeader;
+    measureGroupHeaders: Array<MeasureHeaderOut>;
 }
 
 // @public
-export interface MeasureGroupHeaderMeasureGroupHeader {
-    items: Array<MeasureHeaderItem>;
-}
-
-// @public
-export interface MeasureHeaderItem {
-    measureHeaderItem: MeasureHeaderItemMeasureHeaderItem;
-}
-
-// @public
-export interface MeasureHeaderItemMeasureHeaderItem {
+export interface MeasureHeaderOut {
     format?: string;
     localIdentifier: string;
     name?: string;
@@ -2741,6 +2751,7 @@ export interface MetadataRequestArgs {
 
 // @internal
 export class MetadataUtilities {
+    static filterValidEntities<T extends MetadataGetEntitiesResult>(result: T): T;
     static getAllPagesOf: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
     static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T;
 }
@@ -2753,7 +2764,7 @@ export interface NegativeAttributeFilter {
 // @public
 export interface NegativeAttributeFilterBody {
     applyOnResult?: boolean;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
     notIn: AttributeFilterElements;
 }
 
@@ -2769,11 +2780,6 @@ export function newAxios(baseUrl?: string, headers?: {
 
 // @public
 export interface ObjectIdentifier {
-    identifier: ObjectIdentifierIdentifier;
-}
-
-// @public
-export interface ObjectIdentifierIdentifier {
     id: string;
     type: string;
 }
@@ -3738,7 +3744,7 @@ export interface Paging {
 
 // @public
 export interface PopDataset {
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     periodsAgo: number;
 }
 
@@ -3755,7 +3761,7 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
 
 // @public
 export interface PopDate {
-    attribute: ObjectIdentifier;
+    attribute: AfmObjectIdentifier;
     periodsAgo: number;
 }
 
@@ -3779,7 +3785,7 @@ export interface PositiveAttributeFilter {
 export interface PositiveAttributeFilterBody {
     applyOnResult?: boolean;
     in: AttributeFilterElements;
-    label: ObjectIdentifier;
+    label: AfmObjectIdentifier;
 }
 
 // @public
@@ -3795,7 +3801,7 @@ export interface RangeMeasureValueFilter {
 // @public
 export interface RangeMeasureValueFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     from: number;
     measure: Identifier;
     operator: RangeMeasureValueFilterBodyOperatorEnum;
@@ -3834,7 +3840,7 @@ export interface RankingFilter {
 // @public
 export interface RankingFilterBody {
     applyOnResult?: boolean;
-    dimensionality?: Array<ObjectIdentifier>;
+    dimensionality?: Array<AfmObjectIdentifier>;
     measures: Array<Identifier>;
     operator: RankingFilterBodyOperatorEnum;
     value: number;
@@ -3883,7 +3889,7 @@ export interface RelativeDateFilter {
 // @public
 export interface RelativeDateFilterBody {
     applyOnResult?: boolean;
-    dataset: ObjectIdentifier;
+    dataset: AfmObjectIdentifier;
     from: number;
     granularity: RelativeDateFilterBodyGranularityEnum;
     to: number;
@@ -4029,22 +4035,6 @@ export interface ResultSpec {
 }
 
 // @public
-export interface ScanRequest {
-    dateGranularities?: string;
-    datePrefix?: string;
-    denormPrefix?: string;
-    factPrefix?: string;
-    grainPrefix?: string;
-    grainReferencePrefix?: string;
-    primaryLabelPrefix?: string;
-    referencePrefix?: string;
-    secondaryLabelPrefix?: string;
-    separator: string;
-    tablePrefix?: string;
-    viewPrefix?: string;
-}
-
-// @public
 export function setAxiosAuthorizationToken(axios: AxiosInstance, token: string | undefined): void;
 
 // @public
@@ -4060,7 +4050,7 @@ export interface SimpleMeasureDefinitionMeasure {
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     computeRatio?: boolean;
     filters?: Array<FilterDefinitionForSimpleMeasure>;
-    item: ObjectIdentifier;
+    item: AfmObjectIdentifier;
 }
 
 // @public
@@ -4346,6 +4336,11 @@ export interface UserModelControllerApiInterface {
     }, options?: any): AxiosPromise<JsonApiApiTokenOutDocument>;
 }
 
+// @public (undocumented)
+export const ValidateRelationsHeader: {
+    "X-GDC-VALIDATE-RELATIONS": string;
+};
+
 // @public
 export class ValidObjectsControllerApi extends LabelElementsBaseApi implements ValidObjectsControllerApiInterface {
     computeValidObjects(params: {
@@ -4393,7 +4388,7 @@ export namespace VisualizationObjectModelV1 {
         // (undocumented)
         alias?: string;
         // (undocumented)
-        displayForm: ObjectIdentifier;
+        displayForm: AfmObjectIdentifier;
         // (undocumented)
         localIdentifier: Identifier;
     }
@@ -4492,7 +4487,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     createEntityFilterContexts(params: {
@@ -4519,7 +4514,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     createEntityWorkspaceDataFilters(params: {
@@ -4576,7 +4571,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
         page?: number;
         size?: number;
         sort?: Array<string>;
@@ -4653,7 +4648,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         page?: number;
         size?: number;
         sort?: Array<string>;
@@ -4687,7 +4682,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     getEntityAttributes(params: {
@@ -4750,7 +4745,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     getEntityWorkspaceDataFilters(params: {
@@ -4778,7 +4773,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     updateEntityFilterContexts(params: {
@@ -4808,7 +4803,7 @@ export class WorkspaceObjectControllerApi extends MetadataBaseApi implements Wor
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     updateEntityWorkspaceDataFilters(params: {
@@ -4830,7 +4825,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     createEntityFilterContexts(params: {
         workspaceId: string;
@@ -4854,7 +4849,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     createEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -4904,7 +4899,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -4974,7 +4969,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -5005,7 +5000,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     getEntityAttributes(params: {
         workspaceId: string;
@@ -5061,7 +5056,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     getEntityWorkspaceDataFilterSettings(params: {
         workspaceId: string;
@@ -5086,7 +5081,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     updateEntityFilterContexts(params: {
         workspaceId: string;
@@ -5113,7 +5108,7 @@ export const WorkspaceObjectControllerApiAxiosParamCreator: (configuration?: Met
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): MetadataRequestArgs;
     updateEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -5134,7 +5129,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     createEntityFilterContexts(params: {
         workspaceId: string;
@@ -5158,7 +5153,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     createEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -5208,7 +5203,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -5278,7 +5273,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -5309,7 +5304,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     getEntityAttributes(params: {
         workspaceId: string;
@@ -5365,7 +5360,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     getEntityWorkspaceDataFilterSettings(params: {
         workspaceId: string;
@@ -5390,7 +5385,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     updateEntityFilterContexts(params: {
         workspaceId: string;
@@ -5417,7 +5412,7 @@ export const WorkspaceObjectControllerApiFactory: (configuration?: MetadataConfi
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     updateEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -5438,7 +5433,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     createEntityFilterContexts(params: {
         workspaceId: string;
@@ -5462,7 +5457,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     createEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -5512,7 +5507,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -5582,7 +5577,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
         page?: number | undefined;
         size?: number | undefined;
         sort?: string[] | undefined;
@@ -5613,7 +5608,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     getEntityAttributes(params: {
         workspaceId: string;
@@ -5669,7 +5664,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     getEntityWorkspaceDataFilterSettings(params: {
         workspaceId: string;
@@ -5694,7 +5689,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
+        include?: ("visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     updateEntityFilterContexts(params: {
         workspaceId: string;
@@ -5721,7 +5716,7 @@ export const WorkspaceObjectControllerApiFp: (configuration?: MetadataConfigurat
         predicate?: {
             [key: string]: object;
         } | undefined;
-        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts" | "analyticalDashboards")[] | undefined;
+        include?: ("attributes" | "labels" | "metrics" | "datasets" | "facts")[] | undefined;
     }, options?: any): (axios?: AxiosInstance | undefined, basePath?: string | undefined) => AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     updateEntityWorkspaceDataFilters(params: {
         workspaceId: string;
@@ -5743,7 +5738,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     createEntityFilterContexts(params: {
@@ -5770,7 +5765,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     createEntityWorkspaceDataFilters(params: {
@@ -5827,7 +5822,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
         page?: number;
         size?: number;
         sort?: Array<string>;
@@ -5904,7 +5899,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
         page?: number;
         size?: number;
         sort?: Array<string>;
@@ -5938,7 +5933,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     getEntityAttributes(params: {
@@ -6001,7 +5996,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     getEntityWorkspaceDataFilters(params: {
@@ -6029,7 +6024,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"visualizationObjects" | "labels" | "metrics" | "datasets" | "filterContexts">;
+        include?: Array<"visualizationObjects" | "analyticalDashboards" | "labels" | "metrics" | "datasets" | "filterContexts">;
     }, options?: any): AxiosPromise<JsonApiAnalyticalDashboardOutDocument>;
     // (undocumented)
     updateEntityFilterContexts(params: {
@@ -6059,7 +6054,7 @@ export interface WorkspaceObjectControllerApiInterface {
         predicate?: {
             [key: string]: object;
         };
-        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "analyticalDashboards" | "datasets">;
+        include?: Array<"facts" | "attributes" | "labels" | "metrics" | "datasets">;
     }, options?: any): AxiosPromise<JsonApiVisualizationObjectOutDocument>;
     // (undocumented)
     updateEntityWorkspaceDataFilters(params: {

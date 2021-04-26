@@ -60,6 +60,11 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
 
     /**
+     * Indicates whether the catalog groups in analytical designer are expanded by default.
+     */
+    ADCatalogGroupsExpanded?: boolean;
+
+    /**
      * Indicates whether data point visibility configuration is available in AD
      */
     enableHidingOfDataPoints?: boolean;

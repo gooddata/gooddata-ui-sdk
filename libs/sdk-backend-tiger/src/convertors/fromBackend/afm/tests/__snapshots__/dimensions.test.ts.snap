@@ -13,7 +13,7 @@ Array [
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
-            "uri": "/obj/0",
+            "uri": "",
           },
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr1",
@@ -29,7 +29,7 @@ Array [
               },
             },
           ],
-          "uri": "/obj/0",
+          "uri": "",
         },
       },
       Object {
@@ -41,7 +41,7 @@ Array [
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
-            "uri": "/obj/1",
+            "uri": "",
           },
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr2",
@@ -57,7 +57,7 @@ Array [
               },
             },
           ],
-          "uri": "/obj/1",
+          "uri": "",
         },
       },
     ],
@@ -74,7 +74,6 @@ Array [
                 "localIdentifier": "measureLocalId",
                 "name": "measureLocalId",
                 "ref": undefined,
-                "uri": undefined,
               },
             },
           ],
@@ -93,7 +92,7 @@ Array [
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
-            "uri": "/obj/0",
+            "uri": "",
           },
           "identifier": "event_date.quarter.label",
           "localIdentifier": "localAttr3",
@@ -109,7 +108,123 @@ Array [
               },
             },
           ],
-          "uri": "/obj/0",
+          "uri": "",
+        },
+      },
+    ],
+  },
+]
+`;
+
+exports[`transformResultDimensions should fill in totals with multiple totals of the same type on one attribute (RAIL-3246) 1`] = `
+Array [
+  Object {
+    "headers": Array [
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": Object {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "identifier": "event_date.quarter.label",
+          "localIdentifier": "localAttr1",
+          "name": "event_date - Quarter/Year",
+          "ref": Object {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": Array [
+            Object {
+              "totalHeaderItem": Object {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": Object {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "identifier": "event_date.quarter.label",
+          "localIdentifier": "localAttr2",
+          "name": "event_date - Quarter/Year",
+          "ref": Object {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": Array [
+            Object {
+              "totalHeaderItem": Object {
+                "name": "sum",
+              },
+            },
+          ],
+          "uri": "",
+        },
+      },
+    ],
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "measureGroupHeader": Object {
+          "items": Array [
+            Object {
+              "measureHeaderItem": Object {
+                "format": "#,##0.00",
+                "identifier": undefined,
+                "localIdentifier": "measureLocalId",
+                "name": "measureLocalId",
+                "ref": undefined,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+  Object {
+    "headers": Array [
+      Object {
+        "attributeHeader": Object {
+          "formOf": Object {
+            "identifier": "event_date.quarter",
+            "name": "event_date - Quarter/Year",
+            "ref": Object {
+              "identifier": "event_date.quarter",
+              "type": "attribute",
+            },
+            "uri": "",
+          },
+          "identifier": "event_date.quarter.label",
+          "localIdentifier": "localAttr3",
+          "name": "event_date - Quarter/Year",
+          "ref": Object {
+            "identifier": "event_date.quarter.label",
+            "type": "displayForm",
+          },
+          "totalItems": Array [
+            Object {
+              "totalHeaderItem": Object {
+                "name": "max",
+              },
+            },
+          ],
+          "uri": "",
         },
       },
     ],
@@ -131,7 +246,6 @@ Array [
                 "localIdentifier": "measureLocalId",
                 "name": "measureLocalId",
                 "ref": undefined,
-                "uri": undefined,
               },
             },
           ],
@@ -150,7 +264,7 @@ Array [
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
-            "uri": "/obj/0",
+            "uri": "",
           },
           "identifier": "event_date.quarter.label",
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
@@ -160,7 +274,7 @@ Array [
             "type": "displayForm",
           },
           "totalItems": Array [],
-          "uri": "/obj/0",
+          "uri": "",
         },
       },
     ],
@@ -185,7 +299,6 @@ Array [
                   "identifier": "measureIdentifier",
                   "type": "measure",
                 },
-                "uri": "/obj/0",
               },
             },
           ],
@@ -204,7 +317,7 @@ Array [
               "identifier": "event_date.quarter",
               "type": "attribute",
             },
-            "uri": "/obj/0",
+            "uri": "",
           },
           "identifier": "event_date.quarter.label",
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
@@ -214,7 +327,7 @@ Array [
             "type": "displayForm",
           },
           "totalItems": Array [],
-          "uri": "/obj/0",
+          "uri": "",
         },
       },
     ],

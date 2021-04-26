@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Button, ExportDialog } from "@gooddata/sdk-ui-kit";
-import { ThemeProvider, useTheme, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
+import { ThemeProvider, useThemeIsLoading } from "@gooddata/sdk-ui-theme-provider";
 import { newPositiveAttributeFilter } from "@gooddata/sdk-model";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -27,7 +27,6 @@ export const ThemeProviderExample: React.FC = () => {
 };
 
 const ThemedComponentsExample: React.FC = () => {
-    const theme = useTheme();
     const themeIsLoading = useThemeIsLoading();
     const [showExportDialog, setShowExportDialog] = useState(false);
     return (
@@ -36,7 +35,7 @@ const ThemedComponentsExample: React.FC = () => {
                 <div>...</div>
             ) : (
                 <div>
-                    <pre>{JSON.stringify(theme, null, "  ")}</pre>
+                    <pre>{JSON.stringify(customTheme, null, "  ")}</pre>
                     <br />
                     Button
                     <br />

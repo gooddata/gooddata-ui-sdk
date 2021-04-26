@@ -1,0 +1,438 @@
+{
+    "catalogItems": {
+        "paging": {
+            "limit": 500,
+            "offset": 0
+        },
+        "items": [
+            {
+                "identifier": "abxgDICQav2J",
+                "production": true,
+                "format": "#,##0.00",
+                "summary": "",
+                "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/679] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] <= [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266]\n",
+                "title": "_Snapshot [EOP]",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267"
+                }
+            },
+            {
+                "identifier": "abYgDBRagANw",
+                "production": true,
+                "format": "#,##0.00",
+                "summary": "",
+                "expression": "SELECT MAX([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111]) BY ALL IN ALL OTHER DIMENSIONS EXCEPT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1009]",
+                "title": "_Timeline [EOP]",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1266"
+                }
+            },
+            {
+                "identifier": "abQgDWx4gOUu",
+                "production": true,
+                "format": "#,##0.00",
+                "summary": "",
+                "expression": "SELECT COUNT([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066], [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+                "title": "# Of Opportunities",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268"
+                }
+            },
+            {
+                "identifier": "aa4gLlQhcmLO",
+                "production": true,
+                "format": "#,##0.00",
+                "summary": "",
+                "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+                "title": "# Of Opportunities Won",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269"
+                }
+            },
+            {
+                "identifier": "attr.account.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Account",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1058",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1057"
+                }
+            },
+            {
+                "identifier": "attr.activity.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Activity",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1071",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1070"
+                }
+            },
+            {
+                "identifier": "dt.activity.activity",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Activity (Date)",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1110"
+                }
+            },
+            {
+                "identifier": "attr.activity.activitytype",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Activity Type",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1082",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1081"
+                }
+            },
+            {
+                "identifier": "fact.opportunitysnapshot.amount",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Amount",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102"
+                }
+            },
+            {
+                "identifier": "aangOxLSeztu",
+                "production": true,
+                "format": "$#,##0.00",
+                "summary": "",
+                "expression": "SELECT SUM([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1102]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+                "title": "Amount",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271"
+                }
+            },
+            {
+                "identifier": "fact.opportunitysnapshot.daystoclose",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Days to Close",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1104"
+                }
+            },
+            {
+                "identifier": "attr.owner.department",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Department",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1089",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1088"
+                }
+            },
+            {
+                "identifier": "fact.stagehistory.duration",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Duration",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1107"
+                }
+            },
+            {
+                "identifier": "attr.opportunitysnapshot.forecastcategory",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Forecast Category",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1063",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1062"
+                }
+            },
+            {
+                "identifier": "attr.stage.isactive",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Is Active?",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1099",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1098"
+                }
+            },
+            {
+                "identifier": "attr.activity.isclosed",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Is Closed?",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1074",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1073"
+                }
+            },
+            {
+                "identifier": "attr.stage.isclosed",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Is Closed?",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1095",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1094"
+                }
+            },
+            {
+                "identifier": "attr.activity.istask",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Is Task?",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1076",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1075"
+                }
+            },
+            {
+                "identifier": "attr.stage.iswon",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Is Won?",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1097",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1096"
+                }
+            },
+            {
+                "identifier": "dt.opportunitysnapshot.closedate",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Opp. Close (Date)",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1106"
+                }
+            },
+            {
+                "identifier": "dt.opportunity.oppcreated",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Opp. Created (Date)",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1109"
+                }
+            },
+            {
+                "identifier": "attr.opportunitysnapshot.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Opp. Snapshot",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1061",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1060"
+                }
+            },
+            {
+                "identifier": "dt.opportunitysnapshot.snapshotdate",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Opp. Snapshot (Date)",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105"
+                }
+            },
+            {
+                "identifier": "attr.opportunity.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Opportunity",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1067",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1066"
+                }
+            },
+            {
+                "identifier": "attr.activity.priority",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Priority",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1080",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1079"
+                }
+            },
+            {
+                "identifier": "fact.opportunitysnapshot.probability",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Probability",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103"
+                }
+            },
+            {
+                "identifier": "abEgMnq5hyJQ",
+                "production": true,
+                "format": "#,##0.0%",
+                "summary": "",
+                "expression": "SELECT AVG([/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1103]) WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1105] = [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1267]",
+                "title": "Probability",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1273"
+                }
+            },
+            {
+                "identifier": "attr.product.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Product",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1055",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1054"
+                }
+            },
+            {
+                "identifier": "attr.owner.region",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Region",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1087",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1086"
+                }
+            },
+            {
+                "identifier": "attr.owner.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Sales Rep",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1084",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1083"
+                }
+            },
+            {
+                "identifier": "aadpHDMBecIy",
+                "production": true,
+                "format": "#,##0.00",
+                "summary": "",
+                "expression": "SELECT CASE WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2018 THEN -123400, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2019 THEN 36200, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2020 THEN 54800, WHEN [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] = 2021 THEN 48100 END WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/992] BETWEEN 2018 AND 2021",
+                "title": "Sample XIRR",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1274"
+                }
+            },
+            {
+                "identifier": "attr.stagehistory.id",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Stage History",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1065",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1064"
+                }
+            },
+            {
+                "identifier": "attr.stage.name",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Stage Name",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1092",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1091"
+                }
+            },
+            {
+                "identifier": "attr.activity.status",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Status",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1078",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1077"
+                }
+            },
+            {
+                "identifier": "attr.stage.status",
+                "summary": "",
+                "production": true,
+                "type": "attribute",
+                "title": "Status",
+                "links": {
+                    "defaultDisplayForm": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1101",
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100"
+                }
+            },
+            {
+                "identifier": "dt.timeline.timeline",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Timeline (Date)",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1111"
+                }
+            },
+            {
+                "identifier": "fact.stagehistory.velocity",
+                "summary": "",
+                "production": true,
+                "type": "fact",
+                "title": "Velocity",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1108"
+                }
+            },
+            {
+                "identifier": "abZgFKGPaGYM",
+                "production": true,
+                "format": "#,##0.0%",
+                "summary": "",
+                "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1269] / [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1268]",
+                "title": "Win Rate",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1270"
+                }
+            },
+            {
+                "identifier": "acugFHNJgsBy",
+                "production": true,
+                "format": "$#,##0.00",
+                "summary": "",
+                "expression": "SELECT [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1271] WHERE [/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100]=[/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1100/elements?id=460495]",
+                "title": "Won",
+                "type": "metric",
+                "links": {
+                    "self": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/obj/1272"
+                }
+            }
+        ]
+    }
+}

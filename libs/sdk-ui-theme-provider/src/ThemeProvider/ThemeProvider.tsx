@@ -101,6 +101,7 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({
         // no need to load anything if the themeParam is present
         if (themeParam) {
             const preparedTheme = prepareTheme(themeParam, enableComplementaryPalette);
+            setTheme(preparedTheme);
             setCssProperties(preparedTheme, isDarkTheme(preparedTheme));
             return;
         }

@@ -13,12 +13,14 @@ import {
     IFilterContext,
     LayoutPath,
     walkLayout,
+    IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
 
 import { IdentifierRef, idRef, ObjectType } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith";
 import { cloneWithSanitizedIds } from "../../IdSanitization";
 import { isInheritedObject } from "../../utils";
+import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undefined) {
     if (!layout) {
@@ -31,10 +33,20 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<DashboardWidget> | undef
     });
 
     return widgetsPaths.reduce((layout, widgetPath, index) => {
-        return updateWith(layout, widgetPath, (widget) => ({
-            ...widget,
-            ref: idRef((widget.insight as IdentifierRef).identifier + "_widget-" + index),
-        }));
+        return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
+            const temporaryWidgetId = (widget.insight as IdentifierRef).identifier + "_widget-" + index;
+
+            const convertedWidget: IInsightWidget = {
+                ...widget,
+                ref: idRef(temporaryWidgetId),
+                uri: temporaryWidgetId,
+                identifier: temporaryWidgetId,
+            };
+
+            const insightWidget = fixWidgetLegacyElementUris(convertedWidget);
+
+            return insightWidget;
+        });
     }, layout);
 }
 

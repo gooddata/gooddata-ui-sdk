@@ -9,6 +9,12 @@ import { IFormattedHeadlineDataItem, IHeadlineData, IHeadlineDataItem } from "..
 import { formatItemValue, formatPercentageValue } from "./utils/HeadlineDataItemUtils";
 import { Identifier } from "@gooddata/sdk-model";
 import noop from "lodash/noop";
+import {
+    SMALL_COMPARE_SECTION_THRESHOLD,
+    HeadlinePagination,
+    calculateHeadlineHeightFontSize,
+    shouldRenderPagination,
+} from "@gooddata/sdk-ui-vis-commons";
 
 export interface IHeadlineFiredDrillEventItemContext {
     localIdentifier: Identifier;
@@ -28,10 +34,6 @@ export interface IHeadlineVisualizationProps {
     onAfterRender?: () => void;
     disableDrillUnderline?: boolean;
 }
-
-// If the headline is narrower than this, the compare section will be rendered
-// vertically to save horizontal space
-const SMALL_COMPARE_SECTION_THRESHOLD = 160;
 
 /**
  * The React component that renders the Headline visualisation.
@@ -60,8 +62,8 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 {({ measureRef, contentRect }) => {
                     return (
                         <div className="headline" ref={measureRef}>
-                            {this.renderPrimaryItem()}
-                            {this.renderCompareItems(contentRect.client?.width)}
+                            {this.renderPrimaryItem(contentRect.client?.height)}
+                            {this.renderCompareItems(contentRect.client?.width, contentRect.client?.height)}
                         </div>
                     );
                 }}
@@ -132,7 +134,7 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         this.fireDrillEvent(secondaryItem, "secondaryValue", event.target);
     };
 
-    private renderTertiaryItem() {
+    private renderTertiaryItem = () => {
         const {
             data: { tertiaryItem },
         } = this.props;
@@ -146,9 +148,9 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 </div>
             </div>
         );
-    }
+    };
 
-    private renderSecondaryItem() {
+    private renderSecondaryItem = () => {
         const {
             data: { secondaryItem },
             config,
@@ -178,15 +180,29 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
                 </div>
             </div>
         );
-    }
+    };
 
-    private renderCompareItems(clientWidth?: number) {
+    private renderCompareItems(clientWidth?: number, clientHeight?: number) {
         const {
             data: { secondaryItem },
+            config,
         } = this.props;
 
         if (!secondaryItem) {
             return null;
+        }
+
+        const pagination = shouldRenderPagination(config.enableCompactSize, clientWidth, clientHeight);
+
+        if (pagination) {
+            return (
+                <div className="gd-flex-container headline-compare-section headline-paginated-compare-section">
+                    <HeadlinePagination
+                        renderSecondaryItem={this.renderSecondaryItem}
+                        renderTertiaryItem={this.renderTertiaryItem}
+                    />
+                </div>
+            );
         }
 
         return (
@@ -221,14 +237,42 @@ export default class Headline extends React.Component<IHeadlineVisualizationProp
         );
     }
 
-    private renderPrimaryItem() {
+    private renderPrimaryItem(clientHeight?: number) {
         const {
-            data: { primaryItem },
+            data: { primaryItem, secondaryItem },
             config,
         } = this.props;
-        const formattedItem = formatItemValue(primaryItem, config);
 
+        const formattedItem = formatItemValue(primaryItem, config);
         const valueClickCallback = primaryItem.isDrillable ? this.handleClickOnPrimaryItem : null;
+
+        if (config.enableCompactSize) {
+            if (!clientHeight) {
+                return null;
+            }
+            const { height, fontSize } = calculateHeadlineHeightFontSize(!!secondaryItem, clientHeight);
+            const heightStyles = { height: `${height}px`, lineHeight: `${height}px` };
+
+            return (
+                <div
+                    className={cx(this.getPrimaryItemClasses(primaryItem), {
+                        "headline-primary-item-resize": !!secondaryItem,
+                    })}
+                    style={{
+                        ...formattedItem.cssStyle,
+                        ...heightStyles,
+                    }}
+                >
+                    <div style={{ fontSize: `${fontSize}px` }}>
+                        <ResponsiveText>
+                            <div className="headline-value-wrapper" onClick={valueClickCallback}>
+                                {this.renderHeadlineItem(primaryItem, formattedItem)}
+                            </div>
+                        </ResponsiveText>
+                    </div>
+                </div>
+            );
+        }
 
         return (
             <div className={this.getPrimaryItemClasses(primaryItem)} style={formattedItem.cssStyle}>

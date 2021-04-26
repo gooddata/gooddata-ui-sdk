@@ -42,18 +42,52 @@ import {
     updateStickyRowContentClassesAndData,
     updateStickyRowPosition,
 } from "./stickyRowHandler";
-import { ColumnResizingConfig, TableConfig, StickyRowConfig } from "./privateTypes";
+import {
+    ColumnResizingConfig,
+    StickyRowConfig,
+    TableDataCallbacks,
+    TableConfigAccessors,
+    OnExecutionTransformed,
+} from "./privateTypes";
 import { ICorePivotTableProps } from "../publicTypes";
 
 const HEADER_CELL_BORDER = 1;
 const COLUMN_RESIZE_TIMEOUT = 300;
 
+/**
+ * This class is a collection of higher-level operations with the table. On top of that the facade keeps track
+ * of the state of the data rendered by the table (currentResult, visibleData etc).
+ *
+ * The facade uses different other sub-modules to get the job done. Most notable are:
+ *
+ * -  table descriptor
+ * -  ag-grid data source
+ * -  column resizing store & functions related to it
+ * -  sticky row handler and the related ag-grid API Wrapper
+ *
+ * TODO: This class requires further refactoring. The state maintained by the table is problematic. It needs
+ *  to belong to something else. The data related stuff should likely go into the data source and for the
+ *  resizing we need some additional higher-level component on top of the resized column store & friends.
+ */
 export class TableFacade {
     private readonly intl: IntlShape;
 
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
 
+    /**
+     * When user changes sorts or totals by interacting with the table, the current execution result will
+     * be transformed to include these new properties. The transformation creates a new prepared execution
+     * which the data source will drive to obtain the new data.
+     *
+     * This field is set as soon as the new transformed execution gets created and will live until either
+     * the execution fails or a first page of the data is sent to ag-grid to render.
+     *
+     * In all other cases this field be undefined.
+     *
+     * @private
+     */
+    private transformedExecution: IPreparedExecution | undefined;
     private currentResult: IExecutionResult;
     private visibleData: DataViewFacade;
     private currentFingerprint: string;
@@ -85,11 +119,12 @@ export class TableFacade {
     private destroyed: boolean = false;
 
     private onPageLoadedCallback: ((dv: DataViewFacade, newResult: boolean) => void) | undefined;
+    private onExecutionTransformedCallback: OnExecutionTransformed | undefined;
 
     constructor(
         result: IExecutionResult,
         dataView: IDataView,
-        config: TableConfig,
+        tableMethods: TableDataCallbacks & TableConfigAccessors,
         props: Readonly<ICorePivotTableProps>,
     ) {
         this.intl = props.intl;
@@ -106,8 +141,9 @@ export class TableFacade {
         this.resizedColumnsStore = new ResizedColumnsStore(this.tableDescriptor);
         this.numberOfColumnResizedCalls = 0;
 
-        this.agGridDataSource = this.createDataSource(config);
-        this.updateColumnWidths(config.getResizingConfig());
+        this.agGridDataSource = this.createDataSource(tableMethods);
+        this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
+        this.updateColumnWidths(tableMethods.getResizingConfig());
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -156,6 +192,15 @@ export class TableFacade {
         return this.gridApi !== undefined;
     };
 
+    /**
+     * Tests whether the table's data source is currently undergoing transformation & data loading. This will
+     * be return true when for instance sorts or totals change and the table's data source drives new execution
+     * with the updated sorts or totals.
+     */
+    public isTransforming = (): boolean => {
+        return this.transformedExecution !== undefined;
+    };
+
     public clearFittedColumns = (): void => {
         this.growToFittedColumns = {};
     };
@@ -189,15 +234,19 @@ export class TableFacade {
         );
     };
 
-    private createDataSource = (options: TableConfig): AgGridDatasource => {
-        this.onPageLoadedCallback = options.onPageLoaded;
+    private createDataSource = (
+        tableMethods: TableDataCallbacks & TableConfigAccessors,
+    ): AgGridDatasource => {
+        this.onPageLoadedCallback = tableMethods.onPageLoaded;
 
         const dataSource = createAgGridDatasource(
             {
                 tableDescriptor: this.tableDescriptor,
-                getGroupRows: options.getGroupRows,
-                getColumnTotals: options.getColumnTotals,
+                getGroupRows: tableMethods.getGroupRows,
+                getColumnTotals: tableMethods.getColumnTotals,
                 onPageLoaded: this.onPageLoaded,
+                onExecutionTransformed: this.onExecutionTransformed,
+                onTransformedExecutionFailed: this.onTransformedExecutionFailed,
                 dataViewTransform: (dataView) => {
                     this.fixEmptyHeaders(dataView);
                     return dataView;
@@ -211,8 +260,20 @@ export class TableFacade {
         return dataSource;
     };
 
+    private onExecutionTransformed = (newExecution: IPreparedExecution): void => {
+        // eslint-disable-next-line no-console
+        console.debug("onExecutionTransformed", newExecution.definition);
+        this.transformedExecution = newExecution;
+        this.onExecutionTransformedCallback?.(newExecution);
+    };
+
+    private onTransformedExecutionFailed = (): void => {
+        this.transformedExecution = undefined;
+    };
+
     private onPageLoaded = (dv: DataViewFacade): void => {
         const oldResult = this.currentResult;
+        this.transformedExecution = undefined;
         this.currentResult = dv.result();
         this.visibleData = dv;
         this.currentFingerprint = defFingerprint(this.currentResult.definition);
@@ -582,16 +643,45 @@ export class TableFacade {
     };
 
     /**
-     * Tests whether the other prepared execution's definition matches the definition
-     * that was used to obtain the current execution result with which the table operates.
+     * Tests whether the provided prepared execution matches the execution that is used to obtain data for this
+     * table facade.
      *
-     * Note that during table lifecycle, changes such adding sorts and totals WILL lead
-     * to modification of the execution definition and in return modification of
+     * This is slightly trickier as it needs to accommodate for situations where the underlying execution
+     * is being transformed to include new server side sorts / totals. If that operation is in progress, then
+     * the transformedExecution will be defined. The code should only compare against this 'soon to be next'
+     * execution. This is essential to 'sink' any unneeded full reinits that may happen in some contexts (such as AD)
+     * which also listen to sort/total changes and prepare execution for the table from outside. Since
+     * the transformation is already in progress, there is no point to reacting to these external stimuli.
+     *
+     * If the transformation is not happening, then the table is showing data for an existing execution result - in that
+     * case the matching goes against the definition backing that result.
      *
      * @param other
      */
-    public isMatchingCurrentResult(other: IPreparedExecution): boolean {
-        return this.currentFingerprint === other.fingerprint();
+    public isMatchingExecution(other: IPreparedExecution): boolean {
+        if (this.transformedExecution) {
+            const matchingTransformed = this.transformedExecution.fingerprint() === other.fingerprint();
+
+            if (!matchingTransformed) {
+                // eslint-disable-next-line no-console
+                console.debug(
+                    "transformed execution does not match",
+                    this.transformedExecution.definition,
+                    other.definition,
+                );
+            }
+
+            return matchingTransformed;
+        }
+
+        const matchingCurrentlyRendered = this.currentFingerprint === other.fingerprint();
+
+        if (!matchingCurrentlyRendered) {
+            // eslint-disable-next-line no-console
+            console.debug("current result does not match", this.currentResult.definition, other.definition);
+        }
+
+        return matchingCurrentlyRendered;
     }
 
     public getTotalBodyHeight = (): number => {
@@ -644,6 +734,10 @@ export class TableFacade {
         updateStickyRowPosition(gridApi);
     };
 
+    /**
+     * Initializes a single empty pinned top row in ag-grid. This is where table code can push sticky row data
+     * as user keeps scrolling the table.
+     */
     public initializeStickyRow = (): void => {
         const gridApi = this.gridApiGuard();
 
@@ -652,6 +746,14 @@ export class TableFacade {
         }
 
         initializeStickyRow(gridApi);
+    };
+
+    /**
+     * Clears the pinned top row in ag-grid.
+     */
+    public clearStickyRow = (): void => {
+        //
+        this.initializeStickyRow();
     };
 
     public stickyRowExists = (): boolean => {

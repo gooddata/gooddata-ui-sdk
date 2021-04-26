@@ -52,12 +52,19 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 }
 
 /**
- * A {@link @gooddata/sdk-ui#IDrillEvent} with added field that contains info about all the drilling interactions set in KPI dashboards
- * that are relevant to the given drill event (including drill downs).
+ * A {@link @gooddata/sdk-ui#IDrillEvent} with added information about the drill event specific to the DashboardView context.
  * @beta
  */
 export interface IDashboardDrillEvent extends IDrillEvent {
+    /**
+     * All the drilling interactions set in KPI dashboards that are relevant to the given drill event (including drill downs).
+     */
     drillDefinitions?: Array<DrillDefinition | IDrillDownDefinition>;
+
+    /**
+     * Reference to the widget that triggered the drill event.
+     */
+    widgetRef?: ObjRef;
 }
 
 /**

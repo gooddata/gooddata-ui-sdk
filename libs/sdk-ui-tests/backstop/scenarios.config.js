@@ -55,6 +55,18 @@ const ScenarioConfig = [
     },
     {
         /*
+         * Tests for pluggable pivot table.
+         *
+         * For these we want want to have increased mismatch threshold as tables can be large which can make bugs
+         * related to first (sticky) row slip through.
+         */
+        idRegex: /04.*Pivot.*/g,
+        config: {
+            misMatchThreshold: 0.01,
+        },
+    },
+    {
+        /*
          * Tests for pluggable visualizations. All backstop config is provided on per-story basis.
          */
         idRegex: /04.*/g,
@@ -85,6 +97,16 @@ const ScenarioConfig = [
         idRegex: /(12).*/g,
         config: {
             readySelector: ".screenshot-target",
+        },
+    },
+    {
+        /*
+         * Tests for UI KIT Icon components
+         */
+        idRegex: /(12).*Icon.*/g,
+        config: {
+            readySelector: ".screenshot-target",
+            misMatchThreshold: 0.01,
         },
     },
 ];

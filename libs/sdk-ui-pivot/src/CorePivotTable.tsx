@@ -7,6 +7,7 @@ import {
     GridReadyEvent,
     SortChangedEvent,
 } from "@ag-grid-community/all-modules";
+import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { defTotals } from "@gooddata/sdk-model";
 import { AgGridReact } from "@ag-grid-community/react";
@@ -23,6 +24,7 @@ import {
     IErrorDescriptors,
     ILoadingState,
     IntlWrapper,
+    IPushData,
     LoadingComponent,
     newErrorMapping,
 } from "@gooddata/sdk-ui";
@@ -37,13 +39,18 @@ import cloneDeep from "lodash/cloneDeep";
 import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
+import debounce from "lodash/debounce";
 import { invariant } from "ts-invariant";
 import { isHeaderResizer, isManualResizing, scrollBarExists } from "./impl/base/agUtils";
-import { ColumnResizingConfig, IMenuAggregationClickConfig, TableConfig } from "./impl/privateTypes";
+import {
+    ColumnResizingConfig,
+    IMenuAggregationClickConfig,
+    TableAgGridCallbacks,
+    TableMethods,
+} from "./impl/privateTypes";
 import { createGridOptions } from "./impl/gridOptions";
 import { TableFacadeInitializer } from "./impl/tableFacadeInitializer";
 import { ICorePivotTableState, InternalTableState } from "./tableState";
-import debounce from "lodash/debounce";
 
 const DEFAULT_COLUMN_WIDTH = 200;
 const WATCHING_TABLE_RENDERED_INTERVAL = 500;
@@ -115,6 +122,21 @@ const AGGRID_ON_RESIZE_TIMEOUT = 300;
  * Finally there is the sticky row handling which contains some nasty code & at times works with ag-grid internals
  * to get the job done.
  *
+ * Control flow
+ * ------------
+ *
+ * To maintain some kind of sanity in this complex component there are two general rules:
+ *
+ * 1.  TableMethods or its subtypes are the only way how pivot table component passes down its essential functions
+ *     to sub-components.
+ *
+ * 2.  All table functionality and features MUST be orchestrated from the pivot table component itself.
+ *     The facade or other subcomponents merely _do the work_ but they do not make 'high level decisions' of
+ *     what the table should be doing.
+ *
+ * These rules are in place to try and get to 'top-down' control flow.
+ *
+ *
  * Known flaws
  * -----------
  *
@@ -160,9 +182,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
     private readonly errorMap: IErrorDescriptors;
     private containerRef: HTMLDivElement | undefined;
-    private readonly debouncedGridSizeChanged: (gridSizeChangedEvent: any) => void;
+    private pivotTableId: string;
 
     private internal: InternalTableState;
+    private boundAgGridCallbacks: TableAgGridCallbacks;
 
     constructor(props: ICorePivotTableProps) {
         super(props);
@@ -178,7 +201,8 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         this.errorMap = newErrorMapping(props.intl);
         this.internal = new InternalTableState();
-        this.debouncedGridSizeChanged = debounce(this.onGridSizeChanged, AGGRID_ON_RESIZE_TIMEOUT);
+        this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
+        this.pivotTableId = uuidv4().replace(/-/g, "");
     }
 
     //
@@ -202,7 +226,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     private initialize = (execution: IPreparedExecution): TableFacadeInitializer => {
         this.internal.abandonInitialization();
 
-        const initializer = new TableFacadeInitializer(execution, this.getTableConfig(), this.props);
+        const initializer = new TableFacadeInitializer(execution, this.getTableMethods(), this.props);
 
         initializer.initialize().then((result) => {
             if (!result || this.internal.initializer !== result.initializer) {
@@ -241,12 +265,14 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             () => {
                 this.internal.destroy();
                 this.internal = new InternalTableState();
+                this.boundAgGridCallbacks = this.createBoundAgGridCallbacks();
                 this.internal.initializer = this.initialize(execution);
             },
         );
     };
 
     public componentDidMount(): void {
+        this.alertParentWrapperMissingHeight();
         this.internal.initializer = this.initialize(this.props.execution);
     }
 
@@ -271,6 +297,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
              * Note: compared to v7 version of the table, this only happens if someone actually changes the
              * execution-related props of the table. This branch will not hit any other time.
              */
+            // eslint-disable-next-line no-console
+            console.debug(
+                "triggering reinit",
+                this.props.execution.definition,
+                prevProps.execution.definition,
+            );
             this.reinitialize(this.props.execution);
         } else {
             /*
@@ -322,18 +354,42 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const drillingIsSame = isEqual(prevProps.drillableItems, this.props.drillableItems);
 
         if (!drillingIsSame) {
+            // eslint-disable-next-line no-console
+            console.debug("drilling is different", prevProps.drillableItems, this.props.drillableItems);
+
             return true;
         }
 
-        const prepExecutionSame = this.props.execution.fingerprint() === prevProps.execution.fingerprint();
-
         if (!this.internal.table) {
-            // table is not yet initialized. do reinit in case the execution being initialized (one in prevProps) is
-            // different from the new execution.
-            return !prepExecutionSame;
+            // Table is not yet fully initialized. See if the initialization is in progress. If so, see if
+            // the init is for same execution or not. Otherwise fall back to compare props vs props.
+            if (this.internal.initializer) {
+                const initializeForSameExec = this.internal.initializer.isSameExecution(this.props.execution);
+
+                if (!initializeForSameExec) {
+                    // eslint-disable-next-line no-console
+                    console.debug(
+                        "initializer for different execution",
+                        this.props.execution,
+                        prevProps.execution,
+                    );
+                }
+
+                return !initializeForSameExec;
+            } else {
+                const prepExecutionSame =
+                    this.props.execution.fingerprint() === prevProps.execution.fingerprint();
+
+                if (!prepExecutionSame) {
+                    // eslint-disable-next-line no-console
+                    console.debug("have to reinit table", this.props.execution, prevProps.execution);
+                }
+
+                return !prepExecutionSame;
+            }
         }
 
-        return !prepExecutionSame && !this.internal.table.isMatchingCurrentResult(this.props.execution);
+        return !this.internal.table.isMatchingExecution(this.props.execution);
     }
 
     /**
@@ -350,6 +406,24 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return propsRequiringAgGridRerender.some(
             (propKey) => !isEqual(get(props, propKey), get(prevProps, propKey)),
         );
+    }
+
+    /**
+     * Checks DOM if height has been set on PivotTable parent wrapper. If height has not been set,
+     * PivotTable will not be rendered correctly. Therefore, we need to inform the user at least on the console
+     * on what is happening.
+     *
+     * @private
+     */
+    private alertParentWrapperMissingHeight(): void {
+        const parentWrapper = document.getElementById(this.pivotTableId)?.parentElement;
+        const parentHeight = parentWrapper?.offsetHeight ?? 0;
+        if (parentHeight < 20) {
+            // eslint-disable-next-line no-console
+            console.warn(
+                `The wrapper height of the pivot table has not been set or is suspiciously small. This might cause pivot table rendering issues. If so, please set an appropriate height for the wrapper. Use document.getElementById("${this.pivotTableId}") to find the PivotTable element in the DOM, which will help you to identify its wrapper.`,
+            );
+        }
     }
 
     //
@@ -396,7 +470,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         if (!this.state.readyToRender) {
             return (
-                <div className="gd-table-component" style={style}>
+                <div className="gd-table-component" style={style} id={this.pivotTableId}>
                     {this.renderLoading()}
                 </div>
             );
@@ -409,7 +483,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         if (!this.internal.gridOptions) {
             this.internal.gridOptions = createGridOptions(
                 this.internal.table,
-                this.getTableConfig(),
+                this.getTableMethods(),
                 this.props,
             );
         }
@@ -423,7 +497,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             (this.isColumnAutoresizeEnabled() || this.isGrowToFitEnabled()) && !this.state.resized;
 
         return (
-            <div className="gd-table-component" style={style}>
+            <div className="gd-table-component" style={style} id={this.pivotTableId}>
                 <div
                     className="gd-table ag-theme-balham s-pivot-table"
                     style={style}
@@ -548,7 +622,10 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const sortItems = this.internal.table.createSortItems(event.columnApi.getAllColumns());
 
-        this.props.pushData!({
+        // eslint-disable-next-line no-console
+        console.debug("onSortChanged", sortItems);
+
+        this.pushDataGuard({
             properties: {
                 sortItems,
             },
@@ -582,13 +659,34 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             this.props.onExportReady?.(this.internal.table.createExportFunction(this.props.exportTitle));
         }
 
+        this.updateStickyRow();
         this.updateDesiredHeight();
+    };
+
+    /**
+     * This will be called when user changes sorts or adds totals. This means complete re-execution with
+     * new sorts or totals. Loading indicators will be shown instead of all rendered rows thanks to the
+     * LoadingRenderer used in all cells of the left-most column.
+     *
+     * The table must take care to remove the sticky (top-pinned) row - it is treated differently by
+     * ag-grid and will be literally sticking there on its own with the loading indicators.
+     *
+     * Once transformation finishes - indicated by call to onPageLoaded, table can re-instance the sticky row.
+     *
+     * @param _newExecution - the new execution which is being run and will be used to populate the table
+     */
+    private onExecutionTransformed = (_newExecution: IPreparedExecution): void => {
+        if (!this.internal.table) {
+            return;
+        }
+
+        this.internal.table.clearStickyRow();
     };
 
     private onMenuAggregationClick = (menuAggregationClickConfig: IMenuAggregationClickConfig) => {
         const newColumnTotals = getUpdatedColumnTotals(this.getColumnTotals(), menuAggregationClickConfig);
 
-        this.props.pushData!({
+        this.pushDataGuard({
             properties: {
                 totals: newColumnTotals,
             },
@@ -837,7 +935,81 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         return props.config?.columnSizing?.defaultWidth ?? "unset";
     };
 
-    private getTableConfig = (): TableConfig => {
+    /**
+     * All pushData calls done by the table must go through this guard.
+     *
+     * TODO: The guard should ensure a 'disconnect' between push data handling and the calling function processing.
+     *  When the pushData is handled by the application, it MAY (and in our case it DOES) trigger processing that
+     *  lands back in the table. This opens additional set of invariants to check / be prepared for in order to
+     *  optimize the renders and re-renders.
+     */
+    private pushDataGuard = (data: IPushData): void => {
+        this.props.pushData?.(data);
+
+        /*
+         * TODO: Switch to this on in FET-715.
+        setTimeout(() => {
+            this.props.pushData?.(data);
+        }, 0);
+         */
+    };
+
+    /**
+     * Wraps the provided callback function with a guard that checks whether the current table state is the same
+     * as the state snapshotted at the time of callback creation. If the state differs, the wrapped function WILL NOT
+     * be called.
+     *
+     * @param callback - function to wrap with state guard
+     */
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    private stateBoundCallback = <T extends Function>(callback: T): T => {
+        const forInternalState = this.internal;
+        const guarded: T = (((...args: any) => {
+            if (this.internal !== forInternalState) {
+                return;
+            }
+            return callback(...args);
+        }) as unknown) as T;
+
+        return guarded;
+    };
+
+    /**
+     * All callback functions that the table passes to ag-grid must be bound to the current internal state of the table. The
+     * callback functions MUST be noop if the internal state at the time of call is different from the internal state
+     * at the time of creation.
+     *
+     * This is essential to prevent errors stemming for racy behavior triggered by ag-grid. ag-grid often triggers
+     * event callbacks using setTimeout(). It can happen, that once the event is actually processed the ag-grid table
+     * which caused it is unmounted. Doing anything with the unmounted table's gridApi leads to errors.
+     *
+     * Without this, table may trigger ag-grid errors such as this:
+     *
+     * https://github.com/ag-grid/ag-grid/issues/3457
+     *
+     * or this:
+     *
+     * https://github.com/ag-grid/ag-grid/issues/3334
+     */
+    private createBoundAgGridCallbacks = (): TableAgGridCallbacks => {
+        const debouncedGridSizeChanged = debounce(
+            this.stateBoundCallback(this.onGridSizeChanged),
+            AGGRID_ON_RESIZE_TIMEOUT,
+        );
+
+        return {
+            onGridReady: this.stateBoundCallback(this.onGridReady),
+            onFirstDataRendered: this.stateBoundCallback(this.onFirstDataRendered),
+            onBodyScroll: this.stateBoundCallback(this.onBodyScroll),
+            onModelUpdated: this.stateBoundCallback(this.onModelUpdated),
+            onGridColumnsChanged: this.stateBoundCallback(this.onGridColumnsChanged),
+            onGridColumnResized: this.stateBoundCallback(this.onGridColumnResized),
+            onSortChanged: this.stateBoundCallback(this.onSortChanged),
+            onGridSizeChanged: debouncedGridSizeChanged,
+        };
+    };
+
+    private getTableMethods = (): TableMethods => {
         return {
             hasColumnWidths: this.hasColumnWidths(),
 
@@ -845,24 +1017,17 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             getMenuConfig: this.getMenuConfig,
             getGroupRows: this.getGroupRows,
             getColumnTotals: this.getColumnTotals,
-
             getResizingConfig: this.getResizingConfig,
-
-            onGridReady: this.onGridReady,
-            onFirstDataRendered: this.onFirstDataRendered,
-            onBodyScroll: this.onBodyScroll,
-            onModelUpdated: this.onModelUpdated,
-            onGridColumnsChanged: this.onGridColumnsChanged,
-            onGridColumnResized: this.onGridColumnResized,
-            onSortChanged: this.onSortChanged,
-            onGridSizeChanged: this.debouncedGridSizeChanged,
 
             onLoadingChanged: this.onLoadingChanged,
             onError: this.onError,
             onExportReady: this.props.onExportReady ?? noop,
-            pushData: this.props.pushData ?? noop,
+            pushData: this.pushDataGuard,
             onPageLoaded: this.onPageLoaded,
+            onExecutionTransformed: this.onExecutionTransformed,
             onMenuAggregationClick: this.onMenuAggregationClick,
+
+            ...this.boundAgGridCallbacks,
         };
     };
 

@@ -29,7 +29,6 @@ import {
 import { DecoratedWorkspaceCatalogFactory } from "../decoratedBackend/catalog";
 import stringify from "json-stable-stringify";
 import identity from "lodash/identity";
-import isEqual from "lodash/isEqual";
 import invariant from "ts-invariant";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -139,14 +138,6 @@ class DefinitionSanitizingExecutionResult extends DecoratedExecutionResult {
     };
 
     private withSanitizedDefinition = (original: IDataView): IDataView => {
-        // if definitions are already correct, return the original object to preserve referential equality where possible
-        if (
-            isEqual(original.definition, this.definition) &&
-            isEqual(original.result.definition, this.definition)
-        ) {
-            return original;
-        }
-
         return new DefinitionSanitizingDataView(original, this);
     };
 }

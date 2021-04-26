@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import { LocalIdentifier, ObjectIdentifier } from "@gooddata/api-client-tiger";
+import { AfmObjectIdentifier, LocalIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
     attributeDisplayFormRef,
@@ -40,7 +40,7 @@ export function toTigerType(
     return objectTypeToTigerIdType[value];
 }
 
-export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): ObjectIdentifier {
+export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): AfmObjectIdentifier {
     if (isUriRef(ref)) {
         throw new NotSupported(`Tiger backend does not allow referencing objects by URI.`);
     }
@@ -56,21 +56,21 @@ export function toObjQualifier(ref: ObjRef, defaultValue?: TigerAfmType): Object
 /**
  * @internal
  */
-export function toFactQualifier(ref: ObjRef): ObjectIdentifier {
+export function toFactQualifier(ref: ObjRef): AfmObjectIdentifier {
     return toObjQualifier(ref, "fact");
 }
 
 /**
  * @internal
  */
-export function toLabelQualifier(ref: ObjRef): ObjectIdentifier {
+export function toLabelQualifier(ref: ObjRef): AfmObjectIdentifier {
     return toObjQualifier(ref, "label");
 }
 
 /**
  * @internal
  */
-export function toDateDataSetQualifier(ref: ObjRef): ObjectIdentifier {
+export function toDateDataSetQualifier(ref: ObjRef): AfmObjectIdentifier {
     return toObjQualifier(ref, "dataset");
 }
 
@@ -86,7 +86,9 @@ export function toLocalIdentifier(localIdentifier: string): LocalIdentifier {
 /**
  * @internal
  */
-export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope): LocalIdentifier | ObjectIdentifier {
+export function toMeasureValueFilterMeasureQualifier(
+    ref: ObjRefInScope,
+): LocalIdentifier | AfmObjectIdentifier {
     if (isLocalIdRef(ref)) {
         return toLocalIdentifier(ref.localIdentifier);
     } else if (isIdentifierRef(ref)) {
@@ -109,7 +111,7 @@ export function toMeasureValueFilterMeasureQualifier(ref: ObjRefInScope): LocalI
 export function toRankingFilterDimensionalityIdentifier(
     ref: ObjRefInScope,
     afmAttributes: IAttribute[],
-): ObjectIdentifier {
+): AfmObjectIdentifier {
     if (isObjRef(ref)) {
         return toObjQualifier(ref);
     } else {

@@ -1,0 +1,35 @@
+{
+    "id": "2efe3e49-668f-4a82-b8c7-81ca27566c6a",
+    "name": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query",
+    "request": {
+        "url": "/gdc/md/l32xdyl4bjuzgf9kkqr2avl55gtuyjwf/objects/query?category=metric&limit=50",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json; charset=utf-8"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "bodyFileName": "gdc_md_l32xdyl4bjuzgf9kkqr2avl55gtuyjwf_objects_query-2efe3e49-668f-4a82-b8c7-81ca27566c6a.json",
+        "headers": {
+            "date": "Thu, 22 Apr 2021 10:01:28 GMT",
+            "server": "undefined",
+            "content-type": "application/json;charset=UTF-8",
+            "x-envoy-upstream-service-time": "36",
+            "X-GDC-REQUEST-TIME": "39",
+            "X-GDC-REQUEST": "tOjFMjZeFFoggYQO",
+            "cache-control": "no-cache, no-store, must-revalidate",
+            "vary": "origin,X-GDC-VERSION",
+            "Strict-Transport-Security": "max-age=10886400; includeSubDomains; preload;"
+        }
+    },
+    "uuid": "2efe3e49-668f-4a82-b8c7-81ca27566c6a",
+    "persistent": true,
+    "insertionIndex": 8
+}

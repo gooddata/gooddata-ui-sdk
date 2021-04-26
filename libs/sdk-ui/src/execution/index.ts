@@ -13,3 +13,4 @@ export { Execute, IExecuteProps } from "./Execute";
 export { useDataExport, UseDataExportCallbacks, UseDataExportState } from "./useDataExport";
 export { useDataView, UseDataViewCallbacks, UseDataViewState } from "./useDataView";
 export { useExecution, IUseExecutionConfig } from "./useExecution";
+export { IExecuteErrorComponent, IExecuteErrorComponentProps, IExecuteLoadingComponent } from "./interfaces";

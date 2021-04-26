@@ -1,5 +1,10 @@
 // (C) 2007-2021 GoodData Corporation
-import { ICustomGridOptions, TableConfig } from "./privateTypes";
+import {
+    ICustomGridOptions,
+    TableAgGridCallbacks,
+    TableConfigAccessors,
+    TableMenuCallbacks,
+} from "./privateTypes";
 import { ICommonHeaderParams } from "./structure/headers/HeaderCell";
 import { cellClassFactory } from "./cell/cellClass";
 import ColumnHeader from "./structure/headers/ColumnHeader";
@@ -19,13 +24,13 @@ import {
     measureColumnTemplate,
     rowAttributeTemplate,
 } from "./structure/colDefTemplates";
-import { RowLoadingElement } from "./data/RowLoadingElement";
 import { TableFacade } from "./tableFacade";
 import { ICorePivotTableProps } from "../publicTypes";
+import { createLoadingRenderer } from "./data/loadingRenderer";
 
 export function createGridOptions(
     table: TableFacade,
-    config: TableConfig,
+    tableMethods: TableAgGridCallbacks & TableConfigAccessors & TableMenuCallbacks,
     props: Readonly<ICorePivotTableProps>,
 ): ICustomGridOptions {
     const { colDefs } = table.tableDescriptor;
@@ -51,10 +56,10 @@ export function createGridOptions(
     const effectivePageSize = Math.min(pageSize!, totalRowCount + extraTotalsBuffer);
 
     const commonHeaderComponentParams: ICommonHeaderParams = {
-        onMenuAggregationClick: config.onMenuAggregationClick,
+        onMenuAggregationClick: tableMethods.onMenuAggregationClick,
         getTableDescriptor: () => table.tableDescriptor,
-        getExecutionDefinition: config.getExecutionDefinition,
-        getColumnTotals: config.getColumnTotals,
+        getExecutionDefinition: tableMethods.getExecutionDefinition,
+        getColumnTotals: tableMethods.getColumnTotals,
         intl: props.intl,
     };
 
@@ -66,7 +71,7 @@ export function createGridOptions(
             cellClass: cellClassFactory(table, props),
             headerComponentFramework: ColumnHeader as any,
             headerComponentParams: {
-                menu: config.getMenuConfig,
+                menu: tableMethods.getMenuConfig,
                 enableSorting: true,
                 ...commonHeaderComponentParams,
             },
@@ -79,20 +84,20 @@ export function createGridOptions(
             children: [],
             headerGroupComponentFramework: ColumnGroupHeader as any,
             headerGroupComponentParams: {
-                menu: config.getMenuConfig,
+                menu: tableMethods.getMenuConfig,
                 ...commonHeaderComponentParams,
             },
         },
         onCellClicked: onCellClickedFactory(table, props),
-        onSortChanged: config.onSortChanged,
-        onColumnResized: config.onGridColumnResized,
-        onGridColumnsChanged: config.onGridColumnsChanged,
-        onModelUpdated: config.onModelUpdated,
+        onSortChanged: tableMethods.onSortChanged,
+        onColumnResized: tableMethods.onGridColumnResized,
+        onGridColumnsChanged: tableMethods.onGridColumnsChanged,
+        onModelUpdated: tableMethods.onModelUpdated,
 
         // Basic options
         suppressMovableColumns: true,
         suppressCellSelection: true,
-        suppressAutoSize: config.hasColumnWidths,
+        suppressAutoSize: tableMethods.hasColumnWidths,
         enableFilter: false,
 
         // infinite scrolling model
@@ -103,10 +108,10 @@ export function createGridOptions(
         maxConcurrentDatasourceRequests: 1,
         infiniteInitialRowCount: effectivePageSize,
         maxBlocksInCache: 10,
-        onGridReady: config.onGridReady,
-        onFirstDataRendered: config.onFirstDataRendered,
-        onBodyScroll: config.onBodyScroll,
-        onGridSizeChanged: config.onGridSizeChanged,
+        onGridReady: tableMethods.onGridReady,
+        onFirstDataRendered: tableMethods.onFirstDataRendered,
+        onBodyScroll: tableMethods.onBodyScroll,
+        onGridSizeChanged: tableMethods.onGridSizeChanged,
 
         // Column types
         columnTypes: {
@@ -118,7 +123,7 @@ export function createGridOptions(
         // Custom renderers
         frameworkComponents: {
             // any is needed here because of incompatible types with AgGridReact types
-            loadingRenderer: RowLoadingElement as any, // loading indicator
+            loadingRenderer: createLoadingRenderer(table, props), // loading indicator
         },
 
         // Custom CSS classes

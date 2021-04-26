@@ -7,7 +7,8 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
 @import "~mapbox-gl/dist/mapbox-gl";
 
-$boder-color-circle-legend: #acaeae;
+$border-color-circle-legend: var(--gd-palette-complementary-6, #acaeae);
+$gd-color-link: var(--gd-palette-complementary-7, #6d7680);
 
 $insight-small-only: "only screen and (max-width: 480px)";
 $footer-border: #e2e8ed;
@@ -152,7 +153,7 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
         span:first-child {
             box-sizing: content-box;
             display: inline-block;
-            border: 1px solid $boder-color-circle-legend;
+            border: 1px solid $border-color-circle-legend;
             border-radius: 50%;
         }
 
@@ -163,7 +164,7 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
         }
 
         &::after {
-            color: $boder-color-circle-legend;
+            color: $border-color-circle-legend;
             font-family: $gd-font-primary;
         }
 

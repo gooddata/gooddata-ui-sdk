@@ -15,25 +15,24 @@ const slicesBy = [LdmExt.monthDate];
 
 const colors = ["rgb(20,178,226)", "rgb(0,193,141)", "rgb(229,77,66)"];
 
+const CustomErrorComponent = ({ error }: { error: any }) => (
+    <ErrorComponent
+        message="There was an error getting your execution"
+        description={JSON.stringify(error, null, 2)}
+    />
+);
+
 export const ExecuteWithCustomVisualizationExample: React.FC = () => {
     return (
-        <Execute seriesBy={seriesBy} slicesBy={slicesBy}>
-            {({ isLoading, error, result }) => {
-                if (isLoading) {
-                    return <LoadingComponent />;
-                }
-
-                if (error) {
-                    return (
-                        <ErrorComponent
-                            message="There was an error getting your execution"
-                            description={JSON.stringify(error, null, 2)}
-                        />
-                    );
-                }
-
-                const series = result?.data().series().toArray();
-                const slices = result?.data().slices().toArray();
+        <Execute
+            seriesBy={seriesBy}
+            slicesBy={slicesBy}
+            LoadingComponent={LoadingComponent}
+            ErrorComponent={CustomErrorComponent}
+        >
+            {({ result }) => {
+                const series = result!.data().series().toArray();
+                const slices = result!.data().slices().toArray();
 
                 const bars = series?.map((value, index) => {
                     return (

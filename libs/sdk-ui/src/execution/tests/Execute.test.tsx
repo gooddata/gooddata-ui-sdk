@@ -9,6 +9,8 @@ import { Execute, IExecuteProps } from "../Execute";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
 import { createExecution } from "../createExecution";
+import { LoadingComponent } from "../../base/react/LoadingComponent";
+import { IExecuteErrorComponent } from "../interfaces";
 
 const DummyBackendEmptyData = dummyBackendEmptyData();
 const makeChild = () => jest.fn((_) => <div />);
@@ -113,7 +115,7 @@ describe("Execute", () => {
         expect(onLoadingFinish).toBeCalledTimes(1);
     });
 
-    it("should invoke onError when execution fails", async () => {
+    it("should invoke onError when execution fails with a NoDataError without a DataView", async () => {
         const child = makeChild();
         const onLoadingStart = jest.fn();
         const onLoadingChanged = jest.fn();
@@ -128,7 +130,7 @@ describe("Execute", () => {
                 onLoadingFinish,
                 onLoadingStart,
             },
-            dummyBackend(),
+            dummyBackend({ raiseNoDataExceptions: "without-data-view" }),
         );
 
         await createDummyPromise({ delay: 100 });
@@ -136,7 +138,83 @@ describe("Execute", () => {
         expect(onError).toBeCalledTimes(1);
         expect(onLoadingStart).toBeCalledTimes(1);
         expect(onLoadingChanged).toBeCalledTimes(2);
-        expect(onLoadingFinish).toBeCalledTimes(0);
+        expect(onLoadingFinish).not.toBeCalled();
+    });
+
+    it("should NOT invoke onError when execution fails with a NoDataError with a DataView", async () => {
+        const child = makeChild();
+        const onLoadingStart = jest.fn();
+        const onLoadingChanged = jest.fn();
+        const onLoadingFinish = jest.fn();
+        const onError = jest.fn();
+
+        renderDummyExecutor(
+            child,
+            {
+                onError,
+                onLoadingChanged,
+                onLoadingFinish,
+                onLoadingStart,
+            },
+            dummyBackend({ raiseNoDataExceptions: "with-data-view" }),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        expect(onError).not.toBeCalled();
+        expect(onLoadingStart).toBeCalledTimes(1);
+        expect(onLoadingChanged).toBeCalledTimes(2);
+        expect(onLoadingFinish).toBeCalledTimes(1);
+    });
+
+    it("should render LoadingComponent", async () => {
+        const child = makeChild();
+        const dummyExecutor = renderDummyExecutor(child, {
+            LoadingComponent,
+        });
+
+        expect(dummyExecutor.find(LoadingComponent)).toExist();
+    });
+
+    it("should render ErrorComponent, when execution fails", async () => {
+        const ErrorComponent: IExecuteErrorComponent = () => <div />;
+        const child = makeChild();
+        const dummyExecutor = renderDummyExecutor(
+            child,
+            {
+                ErrorComponent,
+            },
+            dummyBackend(),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        dummyExecutor.update();
+
+        expect(dummyExecutor.find(ErrorComponent)).toExist();
+    });
+
+    it("should not call children function without result, when both Loading & ErrorComponent are provided", async () => {
+        const ErrorComponent: IExecuteErrorComponent = () => <div />;
+        const child = makeChild();
+        renderDummyExecutor(child, {
+            LoadingComponent,
+            ErrorComponent,
+        });
+
+        expect(child).not.toHaveBeenCalledWith(
+            expect.objectContaining({
+                result: undefined,
+            }),
+        );
+
+        await createDummyPromise({ delay: 100 });
+
+        expect(child).toHaveBeenCalledWith(
+            expect.objectContaining({
+                result: expect.any(DataViewFacade),
+            }),
+        );
     });
 });
 

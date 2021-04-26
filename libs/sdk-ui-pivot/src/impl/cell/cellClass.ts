@@ -6,7 +6,7 @@ import { IGridRow } from "../data/resultTypes";
 import isEmpty from "lodash/isEmpty";
 import cx from "classnames";
 import { invariant } from "ts-invariant";
-import { isDataColLeaf, isDataColRootGroup } from "../structure/tableDescriptorTypes";
+import { isSeriesCol, isRootCol } from "../structure/tableDescriptorTypes";
 import { convertDrillableItemsToPredicates } from "@gooddata/sdk-ui";
 import { ROW_SUBTOTAL, ROW_TOTAL, MEASURE_COLUMN } from "../base/constants";
 import { isCellDrillable } from "../drilling/cellDrillabilityPredicate";
@@ -42,7 +42,7 @@ export function cellClassFactory(
         const colDef = cellClassParams.colDef;
         const col = table.tableDescriptor.getCol(colDef);
 
-        invariant(!isDataColRootGroup(col));
+        invariant(!isRootCol(col));
 
         const drillablePredicates = convertDrillableItemsToPredicates(props.drillableItems!);
         const isRowTotal = row.type === ROW_TOTAL;
@@ -55,7 +55,7 @@ export function cellClassFactory(
         }
 
         const colIndex = table.tableDescriptor.getAbsoluteLeafColIndex(col);
-        const measureIndex = isDataColLeaf(col) ? last(col.fullIndexPathToHere) : undefined;
+        const measureIndex = isSeriesCol(col) ? last(col.fullIndexPathToHere) : undefined;
         const isPinnedRow = cellClassParams.node.isRowPinned();
         const hiddenCell = !isPinnedRow && table.getGroupingProvider().isRepeatedValue(col.id, rowIndex);
         const rowSeparator = !hiddenCell && table.getGroupingProvider().isGroupBoundary(rowIndex);
