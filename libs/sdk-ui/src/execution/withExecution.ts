@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { IPreparedExecution, isNoDataError } from "@gooddata/sdk-backend-spi";
 import {
     withExecutionLoading,
@@ -21,7 +21,10 @@ export interface IWithExecution<T> {
     /**
      * Specify execution that the HOC will drive.
      */
-    execution: IPreparedExecution | ((props: T) => IPreparedExecution);
+    execution:
+        | IPreparedExecution
+        | ((props: T) => IPreparedExecution)
+        | ((props: T) => Promise<IPreparedExecution>);
 
     /**
      * Specify export title that will be used unless the export function caller sends their own custom title.
@@ -75,7 +78,7 @@ export function withExecution<T>(
     return (WrappedComponent: React.ComponentType<T & WithLoadingResult>) => {
         const withLoadingParams = {
             promiseFactory: async (props: T, window?: DataViewWindow) => {
-                const _execution = typeof execution === "function" ? execution(props) : execution;
+                const _execution = typeof execution === "function" ? await execution(props) : execution;
                 const executionResult = await _execution.execute();
                 try {
                     const dataView = !window

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LoadingComponent, ErrorComponent, useExecution, useDataView } from "@gooddata/sdk-ui";
+import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { ResponsiveContainer, BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
 
 import * as LdmExt from "../../ldm/ext";
@@ -16,11 +16,7 @@ const slicesBy = [LdmExt.monthDate];
 const colors = ["rgb(20,178,226)", "rgb(0,193,141)", "rgb(229,77,66)"];
 
 export const UseDataViewWithCustomVisualizationExample: React.FC = () => {
-    const execution = useExecution({
-        seriesBy,
-        slicesBy,
-    });
-    const { result, error, status } = useDataView({ execution }, [execution?.fingerprint()]);
+    const { result, error, status } = useExecutionDataView({ execution: { seriesBy, slicesBy } });
     const series = result?.data().series().toArray();
     const slices = result?.data().slices().toArray();
 

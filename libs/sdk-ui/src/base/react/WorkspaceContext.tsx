@@ -63,14 +63,15 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * const workspace = useWorkspaceStrict(fromArguments);
  *
  * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
+ * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).
  * @public
  */
-export const useWorkspaceStrict = (workspace?: string): string => {
+export const useWorkspaceStrict = (workspace?: string, context = "useWorkspaceStrict"): string => {
     const workspaceFromContext = React.useContext(WorkspaceContext);
     const effectiveWorkspace = workspace ?? workspaceFromContext;
     invariant(
         effectiveWorkspace,
-        "useWorkspaceStrict: workspace must be defined. Either pass it as a parameter or make sure there is a WorkspaceProvider up the component tree.",
+        `${context}: workspace must be defined. Either pass it as a parameter or make sure there is a WorkspaceProvider up the component tree.`,
     );
     return effectiveWorkspace;
 };

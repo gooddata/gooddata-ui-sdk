@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { ErrorComponent, LoadingComponent, useDataView, useExecution } from "@gooddata/sdk-ui";
+import { ErrorComponent, LoadingComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { Ldm } from "../../ldm";
 import { newAttributeSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
 const style = { border: "1px black solid" };
@@ -11,13 +11,9 @@ const sortBy = [newAttributeSort(Ldm.LocationState, "asc")];
 const filters = [newPositiveAttributeFilter(Ldm.LocationState, ["Florida", "Texas"])];
 
 export const UseDataViewWithSlicesExample: React.FC = () => {
-    const execution = useExecution({
-        seriesBy,
-        slicesBy,
-        sortBy,
-        filters,
+    const { result, error, status } = useExecutionDataView({
+        execution: { seriesBy, slicesBy, sortBy, filters },
     });
-    const { result, error, status } = useDataView({ execution }, [execution?.fingerprint()]);
     const slices = result?.data().slices().toArray();
 
     return (
