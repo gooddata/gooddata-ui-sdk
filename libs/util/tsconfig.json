@@ -18,5 +18,5 @@
         "baseUrl": ".."
     },
     "compileOnSave": false,
-    "exclude": ["node_modules", "dist", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "dist", "**/__mocks__/**/*"]
 }

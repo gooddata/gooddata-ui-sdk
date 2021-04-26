@@ -20,5 +20,5 @@
             "@gooddata/api-model-bear": ["api-model-bear/src"]
         }
     },
-    "exclude": ["node_modules", "dist"]
+    "exclude": ["**/node_modules", "dist"]
 }
