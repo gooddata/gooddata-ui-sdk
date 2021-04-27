@@ -2,4 +2,4 @@
 
 export { InsightView } from "./InsightView";
 export { IInsightViewProps } from "./types";
-export { IInsightTitle } from "./InsightTitle";
+export { IInsightTitleProps } from "./InsightTitle";

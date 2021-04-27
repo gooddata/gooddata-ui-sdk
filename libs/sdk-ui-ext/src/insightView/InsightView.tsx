@@ -34,7 +34,6 @@ interface IInsightViewState {
     isVisualizationLoading: boolean;
     error: GoodDataSdkError | undefined;
     insight: IInsight | undefined;
-    insightTitle: string | undefined;
     colorPalette: IColorPalette | undefined;
     settings: IUserWorkspaceSettings | undefined;
 }
@@ -54,7 +53,6 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         isVisualizationLoading: false,
         error: undefined,
         insight: undefined,
-        insightTitle: undefined,
         colorPalette: undefined,
         settings: undefined,
     };
@@ -168,7 +166,7 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
             return;
         }
         this.props.onInsightLoaded?.(insight);
-        this.setState({ insight, insightTitle: this.resolveInsightTitle(insight) });
+        this.setState({ insight });
     };
 
     private componentDidMountInner = async () => {
@@ -239,8 +237,8 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
 
         return (
             <div className="insight-view-container">
-                {!isDataLoading && this.state.insightTitle && (
-                    <TitleComponent title={this.state.insightTitle} />
+                {!isDataLoading && this.state.insight && (
+                    <TitleComponent title={this.resolveInsightTitle(this.state.insight)} />
                 )}
                 {(isDataLoading || isVisualizationLoading) && (
                     <div className="insight-view-loader">

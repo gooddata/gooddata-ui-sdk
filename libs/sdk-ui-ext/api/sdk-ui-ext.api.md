@@ -395,7 +395,7 @@ export interface IDrillDownDefinition {
 }
 
 // @public (undocumented)
-export interface IInsightTitle {
+export interface IInsightTitleProps {
     // (undocumented)
     title: string;
 }
@@ -414,7 +414,7 @@ export interface IInsightViewProps extends Partial<IVisualizationCallbacks> {
     locale?: ILocale;
     onInsightLoaded?: (insight: IInsight) => void;
     showTitle?: boolean | string | ((insight: IInsight) => string | undefined);
-    TitleComponent?: React_2.ComponentType<IInsightTitle>;
+    TitleComponent?: React_2.ComponentType<IInsightTitleProps>;
     workspace?: string;
 }
 
