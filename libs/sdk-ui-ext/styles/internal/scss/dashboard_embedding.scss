@@ -337,15 +337,14 @@
 }
 
 .insight-view-loader {
-    background-color: #0d77e4;
-    height: 100%;
     flex: 0 1 auto;
+    height: 100%;
 }
 
 .insight-view-container {
     display: flex;
-    height: 100%;
     flex-direction: column;
+    height: 100%;
 }
 
 .insight-title-outer {
