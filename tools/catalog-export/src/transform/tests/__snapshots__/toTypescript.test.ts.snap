@@ -333,9 +333,7 @@ export const TimelineDate = { /**
     * Display Form ID: timeline.date.eddmmyyyy
     */
     DdMmYyyy_1: newAttribute('timeline.date.eddmmyyyy') };
-/**
- * Available Date Data Sets
- */
+/** Available Date Data Sets */
 export const DateDatasets = { /** 
     * Date Data Set Title: Date (Timeline)  
     * Date Data Set ID: timeline.dataset.dt
