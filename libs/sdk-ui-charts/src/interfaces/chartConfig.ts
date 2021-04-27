@@ -373,6 +373,8 @@ export interface IAxisConfig {
 export interface ITooltipConfig {
     /**
      * Indicates if tooltip is shown.
+     *
+     * @default defaults to true, meaning the tooltip is shown
      */
     enabled?: boolean;
 }
