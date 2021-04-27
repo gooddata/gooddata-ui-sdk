@@ -211,10 +211,6 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@types/classnames",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "@types/codemirror",
       "allowedCategories": [ "production" ]
     },
@@ -725,10 +721,6 @@
     {
       "name": "prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "prompt",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "prop-types",
