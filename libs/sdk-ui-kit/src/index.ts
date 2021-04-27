@@ -38,3 +38,4 @@ export * from "./FlexDimensions";
 export * from "./DateDatasets";
 export * from "./ColorPicker";
 export * from "./FilterLabel";
+export * from "./Menu";

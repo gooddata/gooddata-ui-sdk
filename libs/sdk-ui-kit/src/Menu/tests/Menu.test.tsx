@@ -1,13 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import Menu from "../Menu";
-import SubMenu from "../SubMenu";
 
-// Enzyme object unmount method needs to be called explicitely after each test
+import { Menu } from "../Menu";
+import { SubMenu } from "../SubMenu";
+
+// Enzyme object unmount method needs to be called explicitly after each test
 // because top level Menu mounts its content to document.body with React Portals.
 // If we forget about this it will leave stray elements in .body which might
-// cause trouble, especially with snaphots tests that snapshot document.body.
+// cause trouble, especially with snapshots tests that snapshot document.body.
 
 const Toggler = () => <button>toggler</button>;
 

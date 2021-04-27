@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
+
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "./MenuSharedTypes";
-import MenuOpener from "./menuOpener/MenuOpener";
+import { MenuOpener } from "./menuOpener/MenuOpener";
 
 export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     opened: boolean;
@@ -14,7 +15,7 @@ export interface IControlledMenuProps extends Partial<IMenuPositionConfig> {
     children: React.ReactNode;
 }
 
-export default class ControlledMenu extends React.Component<IControlledMenuProps> {
+export class ControlledMenu extends React.Component<IControlledMenuProps> {
     public componentDidMount(): void {
         if (this.props.closeOnScroll) {
             this.addScrollListeners();

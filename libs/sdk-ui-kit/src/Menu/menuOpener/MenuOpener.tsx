@@ -1,8 +1,10 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
+
 import { OpenAction, IMenuPositionConfig, OnOpenedChange } from "../MenuSharedTypes";
-import MenuOpenedByClick from "./MenuOpenedByClick";
-import MenuOpenedByHover from "./MenuOpenedByHover";
+
+import { MenuOpenedByClick } from "./MenuOpenedByClick";
+import { MenuOpenedByHover } from "./MenuOpenedByHover";
 
 export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     topLevelMenu: boolean;
@@ -15,7 +17,7 @@ export interface IMenuOpenerProps extends Partial<IMenuPositionConfig> {
     children: React.ReactNode;
 }
 
-export default class MenuOpener extends React.Component<IMenuOpenerProps> {
+export class MenuOpener extends React.Component<IMenuOpenerProps> {
     public static defaultProps: Partial<IMenuOpenerProps> = {
         openAction: "hover",
 

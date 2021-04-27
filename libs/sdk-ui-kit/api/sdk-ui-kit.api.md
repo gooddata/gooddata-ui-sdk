@@ -1753,6 +1753,49 @@ export interface IMediaQueries {
     xxl: string;
 }
 
+// @internal (undocumented)
+export interface IMenuPositionConfig {
+    // (undocumented)
+    alignment: MenuAlignment;
+    // (undocumented)
+    offset: number;
+    // (undocumented)
+    spacing: number;
+}
+
+// @internal (undocumented)
+export interface IMenuProps extends ISubMenuProps {
+    // (undocumented)
+    children: ((props: {
+        closeMenu: () => void;
+    }) => React_2.ReactNode) | React_2.ReactNode;
+    // (undocumented)
+    closeOnScroll?: boolean;
+    // (undocumented)
+    portalTarget?: Element;
+    // (undocumented)
+    togglerWrapperClassName?: string;
+}
+
+// @internal (undocumented)
+export interface IMenuStateConfig {
+    // (undocumented)
+    defaultOpened?: boolean;
+    // (undocumented)
+    onOpenedChange?: OnOpenedChange;
+    // (undocumented)
+    opened?: boolean;
+}
+
+// @internal (undocumented)
+export interface IMenuStateProps extends IMenuStateConfig {
+    // (undocumented)
+    children: (props: {
+        opened: boolean;
+        onOpenedChange: OnOpenedChange;
+    }) => React_2.ReactNode;
+}
+
 // @public (undocumented)
 export interface IMessage {
     // (undocumented)
@@ -2101,6 +2144,14 @@ export interface IOffset {
 }
 
 // @internal (undocumented)
+export interface IOnOpenedChangeParams {
+    // (undocumented)
+    opened: boolean;
+    // (undocumented)
+    source: "TOGGLER_BUTTON_CLICK" | "OUTSIDE_CLICK" | "SCROLL" | "CLOSE_MENU_RENDER_PROP" | "HOVER_TIMEOUT";
+}
+
+// @internal (undocumented)
 export interface IOptimalAlignment {
     // (undocumented)
     alignment: Alignment;
@@ -2295,6 +2346,16 @@ export interface ISnapPoints {
 export interface ISpinnerProps {
     // (undocumented)
     className?: string;
+}
+
+// @internal (undocumented)
+export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    openAction?: OpenAction;
+    // (undocumented)
+    toggler: React_2.ReactNode;
 }
 
 // @internal (undocumented)
@@ -2531,6 +2592,20 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 }
 
 // @internal (undocumented)
+export const Menu: React_2.FC<IMenuProps>;
+
+// @internal (undocumented)
+export type MenuAlignment =
+    ["bottom", "right"]
+    | ["bottom", "left"]
+    | ["top", "right"]
+    | ["top", "left"]
+    | ["right", "top"]
+    | ["right", "bottom"]
+    | ["left", "top"]
+    | ["left", "bottom"];
+
+// @internal (undocumented)
 export const Message: React_2.FC<IMessageProps>;
 
 // @internal (undocumented)
@@ -2553,13 +2628,21 @@ export const NoData: React_2.FC<INoDataProps>;
 export function normalizeTime(time: Date): Date;
 
 // @internal (undocumented)
+export type OnOpenedChange = (params: IOnOpenedChangeParams) => void;
+
+// @internal (undocumented)
+export type OpenAction = "click" | "hover";
+
+// @internal (undocumented)
 export const otherHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
 export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
     constructor(props: IOverlayProps<T>);
+
     // (undocumented)
     align: () => void;
+
     // (undocumented)
     closeOnEscape(e: React_2.KeyboardEvent): void;
     // (undocumented)
@@ -2710,11 +2793,16 @@ export class Spinner extends PureComponent<ISpinnerProps> {
     static defaultProps: {
         className: string;
     };
+
     // (undocumented)
     generateSpinnerTicks(): ReactNode[];
+
     // (undocumented)
     render(): ReactNode;
 }
+
+// @internal (undocumented)
+export const SubMenu: React_2.FC<ISubMenuProps>;
 
 // @internal (undocumented)
 export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
@@ -2722,6 +2810,7 @@ export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 // @internal (undocumented)
 export class Tabs extends Component<ITabsProps, ITabsState> {
     constructor(props: ITabsProps);
+
     // (undocumented)
     static defaultProps: {
         className: string;

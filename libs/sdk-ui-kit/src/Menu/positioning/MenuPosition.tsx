@@ -1,8 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import PositionedMenuContent from "./PositionedMenuContent";
+import { PositionedMenuContent } from "./PositionedMenuContent";
 import { IMenuPositionConfig } from "../MenuSharedTypes";
-import RenderChildrenInPortal from "../utils/RenderChildrenInPortal";
+import { RenderChildrenInPortal } from "../utils/RenderChildrenInPortal";
 
 export interface IMenuPositionProps extends IMenuPositionConfig {
     opened: boolean;
@@ -38,7 +38,7 @@ const PortalIfTopLevelMenu = ({
         <React.Fragment>{children}</React.Fragment>
     );
 
-export default class MenuPosition extends React.Component<IMenuPositionProps, IMenuPositionState> {
+export class MenuPosition extends React.Component<IMenuPositionProps, IMenuPositionState> {
     public static defaultProps = {
         contentWrapper: React.Fragment,
     };

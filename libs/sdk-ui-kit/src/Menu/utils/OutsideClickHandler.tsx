@@ -6,7 +6,7 @@ export interface IOutsideClickHandlerProps {
     useCapture?: boolean;
 }
 
-export default class OutsideClickHandler extends React.Component<IOutsideClickHandlerProps> {
+export class OutsideClickHandler extends React.Component<IOutsideClickHandlerProps> {
     public static defaultProps = {
         // Set to true by default so that a `stopPropagation` in the
         // children will not prevent all outside click handlers from firing
