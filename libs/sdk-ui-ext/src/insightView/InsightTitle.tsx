@@ -2,14 +2,14 @@
 import React from "react";
 import Truncate from "react-truncate";
 /**
- * @Public
+ * @public
  */
 export interface IInsightTitleProps {
     title: string;
 }
 
 /**
- * @Public
+ * @public
  */
 const InsightTitle: React.FC<IInsightTitleProps> = ({ title }) => {
     return (
