@@ -191,6 +191,13 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
 
         const needsNewColorPalette = this.props.workspace !== prevProps.workspace;
 
+        if (this.props.workspace !== prevProps.workspace) {
+            // if workspace changed, clear the insight as it is definitely wrong
+            // this prevents wrong renders with mismatching insight and workspace
+            // (as workspace changes immediately, but insight change is async)
+            this.setState({ insight: undefined });
+        }
+
         if (needsNewSetup || needsNewColorPalette) {
             this.startDataLoading();
             await Promise.all(
