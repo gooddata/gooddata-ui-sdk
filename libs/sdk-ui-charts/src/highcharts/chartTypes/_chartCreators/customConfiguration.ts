@@ -518,6 +518,7 @@ function getTooltipConfiguration(
                   outside: true,
                   positioner: partial(getTooltipPositionInViewPort, chartType, stacking),
                   formatter: partial(formatTooltip, tooltipAction, intl),
+                  enabled: _chartConfig.tooltip?.enabled !== undefined ? _chartConfig.tooltip.enabled : true,
                   ...followPointer,
               },
           }
