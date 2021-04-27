@@ -238,14 +238,17 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         const { error, isDataLoading, isVisualizationLoading } = this.state;
 
         return (
-            <>
-                {(isDataLoading || isVisualizationLoading) && <LoadingComponent />}
+            <div className="insight-view-container">
+                {!isDataLoading && this.state.insightTitle && (
+                    <TitleComponent title={this.state.insightTitle} />
+                )}
+                {(isDataLoading || isVisualizationLoading) && (
+                    <div className="insight-view-loader">
+                        <LoadingComponent />
+                    </div>
+                )}
                 {error && !isDataLoading && (
                     <InsightError error={error} ErrorComponent={this.props.ErrorComponent} />
-                )}
-
-                {!isDataLoading && !isVisualizationLoading && this.state.insightTitle && (
-                    <TitleComponent title={this.state.insightTitle} />
                 )}
                 <InsightRenderer
                     {...this.props}
@@ -255,8 +258,9 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
                     settings={this.state.settings}
                     onLoadingChanged={this.handleLoadingChanged}
                     onError={this.handleError}
+                    isVisualisationLoading={isVisualizationLoading || isDataLoading}
                 />
-            </>
+            </div>
         );
     }
 }

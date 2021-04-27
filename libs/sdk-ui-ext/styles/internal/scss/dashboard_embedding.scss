@@ -336,8 +336,16 @@
     }
 }
 
-.insight-view {
-    //display: flex;
+.insight-view-loader {
+    background-color: #0d77e4;
+    height: 100%;
+    flex: 0 1 auto;
+}
+
+.insight-view-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 }
 
 .insight-title-outer {
