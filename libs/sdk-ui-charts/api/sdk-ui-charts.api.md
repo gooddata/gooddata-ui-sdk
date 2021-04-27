@@ -195,6 +195,8 @@ export interface IChartConfig {
     stackMeasures?: boolean;
     stackMeasuresToPercent?: boolean;
     // @internal (undocumented)
+    tooltip?: ITooltipConfig;
+    // @internal (undocumented)
     type?: VisType;
     xaxis?: IAxisConfig;
     xFormat?: string;
@@ -426,6 +428,11 @@ export const isScatterPlot: import("lodash/fp").LodashIsEqual1x1;
 
 // @internal (undocumented)
 export const isTreemap: import("lodash/fp").LodashIsEqual1x1;
+
+// @public
+export interface ITooltipConfig {
+    enabled?: boolean;
+}
 
 // @public (undocumented)
 export interface ITreemapBucketProps {

@@ -204,6 +204,11 @@ export interface IChartConfig {
      * @internal
      */
     type?: VisType;
+
+    /**
+     * @internal
+     */
+    tooltip?: ITooltipConfig;
 }
 
 /**
@@ -358,4 +363,18 @@ export interface IAxisConfig {
      * Customize whether and how the axis name should appear.
      */
     name?: IAxisNameConfig;
+}
+
+/**
+ * Tooltip customization
+ *
+ * @public
+ */
+export interface ITooltipConfig {
+    /**
+     * Indicates if tooltip is shown.
+     *
+     * @defaultValue defaults to true, meaning the tooltip is shown
+     */
+    enabled?: boolean;
 }

@@ -14,6 +14,7 @@ export {
     AxisNamePosition,
     IDataPointsConfig,
     IGridConfig,
+    ITooltipConfig,
 } from "./chartConfig";
 
 export {
