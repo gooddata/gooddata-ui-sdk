@@ -5,7 +5,7 @@
         "module": "commonjs",
         "moduleResolution": "node",
         "importHelpers": true,
-        "lib": ["es6", "dom"],
+        "lib": ["es6", "ES2016.Array.Include"],
         "declaration": true,
         "declarationMap": true,
         "sourceMap": true,
@@ -17,5 +17,5 @@
         "noImplicitReturns": true,
         "removeComments": false
     },
-    "exclude": ["node_modules", "dist"]
+    "exclude": ["**/node_modules", "dist", "esm"]
 }

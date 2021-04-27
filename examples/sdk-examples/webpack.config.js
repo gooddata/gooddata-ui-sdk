@@ -9,6 +9,7 @@ const webpack = require("webpack");
 const StatsPlugin = require("stats-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -22,17 +23,6 @@ const backendShortcuts = {
     developer: "https://developer.na.gooddata.com",
     public: "https://live-examples-proxy.herokuapp.com",
 };
-
-function SimplestProgressPlugin() {
-    let lastPercent = -10;
-    return new webpack.ProgressPlugin((percent) => {
-        const percentInt = Math.ceil(percent * 100);
-        if (percentInt >= lastPercent + 5) {
-            lastPercent = percentInt;
-            process.stdout.write(`${percentInt}% `);
-        }
-    });
-}
 
 module.exports = async (env, argv) => {
     const backendParam = (env && env.backend) || "public";
@@ -98,7 +88,6 @@ module.exports = async (env, argv) => {
             BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),
             BUILD_TYPE: JSON.stringify(backendParam),
         }),
-        new SimplestProgressPlugin(),
         new Dotenv({
             silent: true,
             systemvars: true,
@@ -112,7 +101,10 @@ module.exports = async (env, argv) => {
         plugins.push(new CompressionPlugin(), new StatsPlugin("stats.json"));
     }
 
-    return {
+    // flip the `disable` flag to false if you want to diagnose webpack perf
+    const smp = new SpeedMeasurePlugin({ disable: true });
+
+    return smp.wrap({
         entry: ["./src/index.tsx"],
         plugins,
         output: {
@@ -138,11 +130,15 @@ module.exports = async (env, argv) => {
         module: {
             rules: [
                 {
-                    test: /\.s?[a|c]ss$/,
+                    test: /\.css$/,
+                    loaders: ["style-loader", "css-loader"],
+                },
+                {
+                    test: /\.s[ac]ss$/,
                     loaders: ["style-loader", "css-loader", "sass-loader"],
                 },
                 {
-                    test: /\.[j|t]sx?$/,
+                    test: /\.[jt]sx?$/,
                     exclude: /node_modules|update-dependencies/,
                     loaders: ["babel-loader"],
                 },
@@ -185,5 +181,5 @@ module.exports = async (env, argv) => {
             proxy,
         },
         stats: "errors-only",
-    };
+    });
 };

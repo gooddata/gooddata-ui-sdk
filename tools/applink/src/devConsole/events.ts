@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import { SourceDescriptor, TargetDescriptor } from "../base/types";
 
@@ -426,7 +426,7 @@ export class EventBus {
         }
 
         if (this.queue.length > 0) {
-            setTimeout(this.processEvent);
+            setTimeout(this.processEvent, 0);
         }
     };
 
@@ -437,11 +437,11 @@ export class EventBus {
     public post = (event: DcEvent): void => {
         this.queue.push(event);
 
-        setTimeout(this.processEvent);
+        setTimeout(this.processEvent, 0);
     };
 }
 
 /**
- * Single instance of the event bus. All comonents should would register and/or post to this bus.
+ * Single instance of the event bus. All components should would register and/or post to this bus.
  */
 export const GlobalEventBus = new EventBus();

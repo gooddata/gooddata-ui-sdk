@@ -32,5 +32,5 @@
         }
     },
     "compileOnSave": false,
-    "exclude": ["node_modules", "dist", "**/__mocks__/**/*"]
+    "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
 }

@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 declare module "*/package.json" {
     export const name: string;
     export const version: string;
@@ -12,8 +12,4 @@ declare module "*.svg" {
 declare module "*.json" {
     const value: any;
     export default value;
-}
-
-declare module "custom-event" {
-    export = CustomEvent;
 }

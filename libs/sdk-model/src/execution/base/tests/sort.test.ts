@@ -1,8 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
 import {
-    IAttributeSortItem,
-    IMeasureSortItem,
+    ISortItem,
     newAttributeAreaSort,
     newAttributeLocator,
     newAttributeSort,
@@ -12,29 +11,24 @@ import {
 import { Account, Won } from "../../../../__mocks__/model";
 import { InvariantError } from "ts-invariant";
 
-const AttributeSort: IAttributeSortItem = newAttributeSort(Account.Default, "asc");
-const MeasureSort1: IMeasureSortItem = newMeasureSort(Won, "asc");
-const MeasureSort2: IMeasureSortItem = newMeasureSort(Won, "asc", [
-    newAttributeLocator(Account.Default, "value"),
-]);
+const AttributeSort = newAttributeSort(Account.Default, "asc");
+const MeasureSort1 = newMeasureSort(Won, "asc");
+const MeasureSort2 = newMeasureSort(Won, "asc", [newAttributeLocator(Account.Default, "value")]);
 
 describe("sortEntityIds", () => {
-    const Scenarios: Array<[string, any]> = [
-        ["get local ids from attribute sort", AttributeSort],
-        ["get local ids from measure sort with just measure locator", MeasureSort1],
-        ["get local ids from measure sort with measure locator and attribute locators", MeasureSort2],
+    const Scenarios: Array<[string, ISortItem]> = [
+        ["attribute sort", AttributeSort],
+        ["measure sort with just measure locator", MeasureSort1],
+        ["measure sort with measure locator and attribute locators", MeasureSort2],
     ];
 
-    it.each(Scenarios)("should %s", (_desc, input) => {
+    it.each(Scenarios)("should get local ids from %s", (_desc, input) => {
         expect(sortEntityIds(input)).toMatchSnapshot();
     });
 
-    const InvalidScenarios: Array<[string, any]> = [
-        ["get empty result if input undefined", undefined],
-        ["get empty result if input null", null],
-    ];
+    const InvalidScenarios: any[] = [undefined, null];
 
-    it.each(InvalidScenarios)("should %s", (_desc, input) => {
+    it.each(InvalidScenarios)("should get empty result if input %s", (input) => {
         expect(() => sortEntityIds(input)).toThrow();
     });
 });
