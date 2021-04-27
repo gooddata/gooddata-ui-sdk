@@ -40,6 +40,7 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     colorPalette: IColorPalette | undefined;
     onError?: (error: GoodDataSdkError | undefined) => void;
     theme?: ITheme;
+    isVisualisationLoading?: boolean;
 }
 
 const getElementId = () => `gd-vis-${uuidv4()}`;
@@ -222,7 +223,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
                 className="visualization-uri-root"
                 id={this.elementId}
                 ref={this.containerRef}
-                style={visualizationUriRootStyle}
+                style={this.props.isVisualisationLoading ? null : visualizationUriRootStyle}
             />
         );
     }

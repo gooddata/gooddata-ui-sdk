@@ -1,4 +1,5 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 export { InsightView } from "./InsightView";
 export { IInsightViewProps } from "./types";
+export { IInsightTitleProps } from "./InsightTitle";

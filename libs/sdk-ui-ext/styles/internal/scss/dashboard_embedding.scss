@@ -335,3 +335,43 @@
         display: block;
     }
 }
+
+.insight-view-loader {
+    flex: 0 1 auto;
+    height: 100%;
+}
+
+.insight-view-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.insight-title-outer {
+    position: relative;
+    z-index: 1;
+    height: ($insight-title-lineHeight + $insight-title-padding-vertical) * 2 + 2; // relate SD-956: please update HEADLINE_OUTER_HEIGHT in widgetHeightUtil.ts when height is changed
+    margin-top: 10px;
+    line-height: ($insight-title-lineHeight + $insight-title-padding-vertical) * 2;
+
+    @media #{$xsmall-only}, #{$small-only} {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .visualization & {
+        margin-bottom: 10px;
+    }
+}
+
+.insight-title {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-height: ($insight-title-lineHeight + $insight-title-padding-vertical) * 2;
+    font-size: 17px;
+    line-height: $insight-title-lineHeight;
+    vertical-align: middle;
+    text-align: $gd-dashboards-content-widget-title-textAlign;
+    color: $gd-dashboards-content-widget-title-color;
+}
