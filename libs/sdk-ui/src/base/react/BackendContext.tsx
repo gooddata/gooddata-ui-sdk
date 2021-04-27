@@ -65,14 +65,18 @@ export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | u
  *
  *
  * @param backend - backend to use instead of context value. If undefined, the context value is used.
+ * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).
  * @public
  */
-export const useBackendStrict = (backend?: IAnalyticalBackend): IAnalyticalBackend => {
+export const useBackendStrict = (
+    backend?: IAnalyticalBackend,
+    context = "useBackendStrict",
+): IAnalyticalBackend => {
     const backendFromContext = React.useContext(BackendContext);
     const effectiveBackend = backend ?? backendFromContext;
     invariant(
         effectiveBackend,
-        "useBackendStrict: IAnalyticalBackend must be defined. Either pass it as a parameter or make sure there is a BackendProvider up the component tree.",
+        `${context}: IAnalyticalBackend must be defined. Either pass it as a parameter or make sure there is a BackendProvider up the component tree.`,
     );
     return effectiveBackend;
 };

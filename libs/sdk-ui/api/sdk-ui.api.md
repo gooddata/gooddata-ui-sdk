@@ -16,6 +16,7 @@ import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDataView } from '@gooddata/sdk-backend-spi';
+import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-backend-spi';
 import { IDimensionItemDescriptor } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
@@ -40,6 +41,7 @@ import { ISeparators as ISeparators_2 } from '@gooddata/numberjs';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-backend-spi';
+import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -323,6 +325,9 @@ export class ErrorComponent extends React_2.Component<IErrorProps> {
 
 // @public
 export const Execute: React_2.ComponentType<IExecuteProps>;
+
+// @beta
+export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
 
 // @internal
 export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
@@ -761,6 +766,24 @@ export interface IExecuteErrorComponentProps {
     error: GoodDataSdkError;
 }
 
+// @beta (undocumented)
+export interface IExecuteInsightProps extends IWithLoadingEvents<IExecuteInsightProps> {
+    backend?: IAnalyticalBackend;
+    children: (executionResult: WithLoadingResult) => React_2.ReactElement | null;
+    componentName?: string;
+    dateFormat?: string | ((def: IExecutionDefinition, props: IExecuteInsightProps) => string);
+    dimensions?: IDimension[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => IDimension[]);
+    ErrorComponent?: IExecuteErrorComponent;
+    exportTitle?: string;
+    filters?: INullableFilter[];
+    insight: ObjRef;
+    LoadingComponent?: IExecuteLoadingComponent;
+    loadOnMount?: boolean;
+    sorts?: ISortItem[] | ((def: IExecutionDefinition, props: IExecuteInsightProps) => ISortItem[]);
+    window?: DataViewWindow;
+    workspace?: string;
+}
+
 // @public
 export type IExecuteLoadingComponent = ComponentType;
 
@@ -780,6 +803,16 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     totals?: ITotal[];
     window?: DataViewWindow;
     workspace?: string;
+}
+
+// @beta (undocumented)
+export interface IExecutionConfiguration {
+    componentName?: string;
+    filters?: INullableFilter[];
+    seriesBy: IAttributeOrMeasure[];
+    slicesBy?: IAttribute[];
+    sortBy?: ISortItem[];
+    totals?: ITotal[];
 }
 
 // @alpha
@@ -1101,6 +1134,26 @@ export interface IUseExecutionConfig {
     workspace?: string;
 }
 
+// @beta (undocumented)
+export interface IUseExecutionDataViewConfig {
+    backend?: IAnalyticalBackend;
+    execution?: IPreparedExecution | IExecutionConfiguration;
+    window?: DataViewWindow;
+    workspace?: string;
+}
+
+// @beta (undocumented)
+export interface IUseInsightDataViewConfig {
+    backend?: IAnalyticalBackend;
+    dateFormat?: string | ((def: IExecutionDefinition) => string);
+    dimensions?: IDimension[] | ((def: IExecutionDefinition) => IDimension[]);
+    filters?: INullableFilter[];
+    insight?: ObjRef;
+    sorts?: ISortItem[] | ((def: IExecutionDefinition) => ISortItem[]);
+    window?: DataViewWindow;
+    workspace?: string;
+}
+
 // @public (undocumented)
 export interface IUsePagedResourceResult<TItem> extends IUsePagedResourceState<TItem> {
     // (undocumented)
@@ -1139,7 +1192,7 @@ export interface IVisualizationProps {
 // @internal
 export interface IWithExecution<T> {
     events?: IWithLoadingEvents<T> | ((props: T) => IWithLoadingEvents<T>);
-    execution: IPreparedExecution | ((props: T) => IPreparedExecution);
+    execution: IPreparedExecution | ((props: T) => IPreparedExecution) | ((props: T) => Promise<IPreparedExecution>);
     exportTitle: string | ((props: T) => string);
     loadOnMount?: boolean | ((props: T) => boolean);
     shouldRefetch?: (prevProps: T, nextProps: T) => boolean;
@@ -1240,6 +1293,14 @@ export class ProtectedReportSdkError extends GoodDataSdkError {
 // @public
 export const RawExecute: React_2.ComponentClass<IRawExecuteProps, any>;
 
+// @beta
+export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
+
+// @beta
+export function resolveUseCancelablePromisesStatus(cancelablePromisesStates: UseCancelablePromiseState<unknown, unknown>[], options?: {
+    strategy?: "serial" | "parallel";
+}): UseCancelablePromiseStatus;
+
 // @public (undocumented)
 export type SdkErrorType = keyof typeof ErrorCodes;
 
@@ -1277,7 +1338,7 @@ export function uriMatch(uri: string): IHeaderPredicate;
 export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
 
 // @public
-export const useBackendStrict: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend;
+export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
 
 // @beta
 export function useCancelablePromise<TResult, TError = any>({ promise, onLoading, onPending, onCancel, onSuccess, onError, }: {
@@ -1354,6 +1415,12 @@ export type UseDataViewState = UseCancelablePromiseState<DataViewFacade, GoodDat
 // @beta
 export function useExecution(config: IUseExecutionConfig): IPreparedExecution;
 
+// @beta
+export function useExecutionDataView(config: IUseExecutionDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
+// @beta
+export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;
 
@@ -1361,7 +1428,7 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
 
 // @public
-export const useWorkspaceStrict: (workspace?: string | undefined) => string;
+export const useWorkspaceStrict: (workspace?: string | undefined, context?: string) => string;
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;

@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React from "react";
-import { LoadingComponent, ErrorComponent, useDataView } from "@gooddata/sdk-ui";
+import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import toPairs from "lodash/toPairs";
 import groupBy from "lodash/groupBy";
 
@@ -20,7 +20,7 @@ export const UseDataViewAttributeValuesExample: React.FC = () => {
         .workspace(workspace)
         .execution()
         .forItems([Ldm.LocationState, Ldm.LocationName.Default]);
-    const { result, error, status } = useDataView({ execution }, [execution?.fingerprint()]);
+    const { result, error, status } = useExecutionDataView({ execution });
 
     let renderAttributeValues: React.ReactNode = null;
     if (result) {

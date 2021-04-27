@@ -1,6 +1,6 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState } from "react";
-import { LoadingComponent, ErrorComponent, useDataView, useExecution } from "@gooddata/sdk-ui";
+import { LoadingComponent, ErrorComponent, useExecutionDataView } from "@gooddata/sdk-ui";
 import { newMeasure } from "@gooddata/sdk-model";
 import { LdmExt } from "../../ldm";
 
@@ -27,10 +27,7 @@ export const UseDataViewExample: React.FC = () => {
 
     const measure = newMeasure(willFail ? "thisDoesNotExits" : LdmExt.totalSalesIdentifier);
     const seriesBy = [measure];
-    const execution = useExecution({
-        seriesBy,
-    });
-    const { result, error, status } = useDataView({ execution }, [execution?.fingerprint()]);
+    const { result, error, status } = useExecutionDataView({ execution: { seriesBy } });
 
     const measureSeries = result?.data().series().firstForMeasure(measure);
 
