@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-import get from "lodash/get";
 import { IRegion } from "../../typings/domUtilities";
 import { region, removeFromDom } from "../domUtilities";
 
@@ -17,8 +16,8 @@ describe("region", () => {
             offsetWidth: config.width,
             getBoundingClientRect() {
                 return {
-                    top: config.top + get(parentItemRegion, "top", 0),
-                    left: config.left + get(parentItemRegion, "left", 0),
+                    top: config.top + (parentItemRegion?.top ?? 0),
+                    left: config.left + (parentItemRegion?.left ?? 0),
                 };
             },
         } as HTMLElement;

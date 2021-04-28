@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import identity from "lodash/identity";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
@@ -28,17 +27,17 @@ function mergeConfigs(config: CatalogExportConfig, prevConfig = DEFAULT_CONFIG):
     };
 }
 
-function retrieveConfigFromObject(obj: object): CatalogExportConfig {
+function retrieveConfigFromObject(obj: Record<string, any>): CatalogExportConfig {
     return {
-        hostname: get(obj, "hostname", null),
-        projectId: get(obj, "projectId", null),
-        projectName: get(obj, "projectName", null),
-        workspaceId: get(obj, "workspaceId", null),
-        workspaceName: get(obj, "workspaceName", null),
-        username: get(obj, "username", null),
-        password: get(obj, "password", null),
-        output: get(obj, "output", null),
-        backend: get(obj, "backend", "bear"),
+        hostname: obj?.hostname ?? null,
+        projectId: obj?.projectId ?? null,
+        projectName: obj?.projectName ?? null,
+        workspaceId: obj?.workspaceId ?? null,
+        workspaceName: obj?.workspaceName ?? null,
+        username: obj?.username ?? null,
+        password: obj?.password ?? null,
+        output: obj?.output ?? null,
+        backend: obj?.backend ?? "bear",
     };
 }
 

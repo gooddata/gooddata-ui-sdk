@@ -1,7 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import get from "lodash/get";
 import throttle from "lodash/throttle";
 import noop from "lodash/noop";
 import invariant from "ts-invariant";
@@ -271,8 +270,8 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         };
         const { geoData, colorStrategy, categoryItems } = geoChartOptions;
         const { segment } = geoData;
-        const colorFormat = get(geoData, "color.format");
-        const sizeFormat = get(geoData, "size.format");
+        const colorFormat = geoData.color?.format;
+        const sizeFormat = geoData.size?.format;
         const propsFromData = {
             format: colorFormat || sizeFormat,
             geoData,
@@ -310,7 +309,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         invariant(dataView, "invalid state - trying to render geo chart but there is no data to visualize");
 
         const { geoData, colorStrategy, categoryItems } = geoChartOptions;
-        const segmentIndex: number = get(geoChartOptions, "geoData.segment.index");
+        const segmentIndex = geoChartOptions.geoData.segment?.index;
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);
         const drillConfig: IDrillConfig = { dataView, onDrill };
 

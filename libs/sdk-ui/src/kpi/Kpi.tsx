@@ -7,7 +7,6 @@ import { IRawExecuteProps, IWithLoadingEvents, RawExecute } from "../execution";
 import { FormattedNumber } from "./FormattedNumber";
 import { KpiError } from "./KpiError";
 import { injectIntl, WrappedComponentProps } from "react-intl";
-import get from "lodash/get";
 import isNil from "lodash/isNil";
 import {
     DataViewFacade,
@@ -91,7 +90,7 @@ const CoreKpi: React.FC<IKpiProps & WrappedComponentProps> = (props) => {
 
 const getMeasureData = (result: DataViewFacade) => {
     const data = result.rawData().data();
-    const measure = get(data, [0, 0]);
+    const measure = data?.[0]?.[0];
 
     if (isNil(measure)) {
         return "";
@@ -102,7 +101,7 @@ const getMeasureData = (result: DataViewFacade) => {
 
 const getMeasureFormat = (result: DataViewFacade) => {
     const headerItems = result.meta().measureDescriptors();
-    const format = get(headerItems, [0, "measureHeaderItem", "format"]);
+    const format = headerItems?.[0]?.measureHeaderItem?.format;
 
     return format;
 };

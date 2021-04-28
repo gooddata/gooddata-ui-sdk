@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-import get from "lodash/get";
 import { IAvailableLegends, IGeoData, IGeoLngLat } from "../../../../GeoChart";
 import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import {
@@ -62,11 +61,11 @@ export function getGeoData(dv: DataViewFacade): IGeoData {
     const geoData: IGeoData = getBucketItemNameAndDataIndex(dv);
     const attributeHeaderItems = getGeoAttributeHeaderItems(dv, geoData);
 
-    const locationIndex: number = get(geoData, `${BucketNames.LOCATION}.index`);
-    const segmentIndex: number = get(geoData, `${BucketNames.SEGMENT}.index`);
-    const tooltipTextIndex: number = get(geoData, `${BucketNames.TOOLTIP_TEXT}.index`);
-    const sizeIndex: number = get(geoData, `${BucketNames.SIZE}.index`);
-    const colorIndex: number = get(geoData, `${BucketNames.COLOR}.index`);
+    const locationIndex = geoData.location?.index;
+    const segmentIndex = geoData?.segment?.index;
+    const tooltipTextIndex = geoData?.tooltipText?.index;
+    const sizeIndex = geoData?.size?.index;
+    const colorIndex = geoData?.color?.index;
 
     if (locationIndex !== undefined) {
         const locationData: string[] = getAttributeData(attributeHeaderItems, locationIndex);

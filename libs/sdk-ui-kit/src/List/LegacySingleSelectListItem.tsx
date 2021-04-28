@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
-import get from "lodash/get";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
@@ -126,7 +125,7 @@ export class LegacySingleSelectListItem extends Component<
     }
 
     public render(): JSX.Element {
-        const icon = get(this.props, "source.icon");
+        const icon = this.props.source?.icon;
         return (
             <div
                 className={this.getClassNames()}

@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
@@ -65,7 +64,7 @@ export function renderLegend(props: ILegendProps): JSX.Element {
 
 function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
     set(axis, "title.style", {
-        ...get(axis, "title.style", {}),
+        ...(axis?.title?.style ?? {}),
         textOverflow: "ellipsis",
         overflow: "hidden",
     });
@@ -147,8 +146,8 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IHighChartsRendererProps): void {
-        const thisLegendItems = get(this.props, "legend.items", []);
-        const nextLegendItems = get(nextProps, "legend.items", []);
+        const thisLegendItems = this.props.legend?.items ?? [];
+        const nextLegendItems = nextProps.legend?.items ?? [];
         const hasLegendChanged = !isEqual(thisLegendItems, nextLegendItems);
         if (hasLegendChanged) {
             this.resetLegendState(nextProps);
@@ -197,7 +196,7 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     public resetLegendState(props: IHighChartsRendererProps): void {
-        const legendItemsCount = get(props, "legend.items.length", 0);
+        const legendItemsCount = props.legend?.items?.length ?? 0;
         this.setState({
             legendItemsEnabled: new Array(legendItemsCount).fill(true),
         });
@@ -233,7 +232,9 @@ export class HighChartsRenderer extends React.PureComponent<
             VisualizationTypes.TREEMAP,
         ];
         const itemsPath = isOneOfTypes(config.chart.type, firstSeriesTypes) ? "series[0].data" : "series";
-        const items: any[] = get(config, itemsPath) as any[];
+        const items: any[] = isOneOfTypes(config.chart.type, firstSeriesTypes)
+            ? config.series?.[0]?.data
+            : config.series;
         set(
             config,
             itemsPath,

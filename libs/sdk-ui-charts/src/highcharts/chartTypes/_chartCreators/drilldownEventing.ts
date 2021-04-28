@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import debounce from "lodash/debounce";
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import CustomEvent from "custom-event";
 import invariant from "ts-invariant";
@@ -59,7 +58,7 @@ function fireEvent(onDrill: OnFiredDrillEvent, data: any, target: EventTarget) {
 }
 
 const getElementChartType = (chartType: ChartType, point: IHighchartsPointObject): ChartType => {
-    return get(point, "series.type", chartType);
+    return (point?.series?.type as ChartType) ?? chartType;
 };
 
 const getDrillPointCustomProps = (
@@ -67,11 +66,11 @@ const getDrillPointCustomProps = (
     chartType: ChartType,
 ): Partial<IDrillPoint> => {
     if (isComboChart(chartType)) {
-        return { type: get(point, "series.type") };
+        return { type: point?.series?.type as ChartType };
     }
 
     if (isBulletChart(chartType)) {
-        return { type: get(point, "series.userOptions.bulletChartMeasureType") };
+        return { type: (point?.series?.userOptions as any)?.bulletChartMeasureType };
     }
 
     return {};
@@ -199,7 +198,7 @@ const tickLabelClickDebounce = debounce(
         const sanitizedPoints = sanitizeContextPoints(chartType, points);
         const contextPoints: IDrillPoint[] = sanitizedPoints.map((point: IHighchartsPointObject) => {
             const customProps = isBulletChart(chartType)
-                ? { type: get(point, "series.userOptions.bulletChartMeasureType") }
+                ? { type: (point?.series?.userOptions as any)?.bulletChartMeasureType }
                 : {};
 
             return {

@@ -1,5 +1,4 @@
 // (C) 2020 GoodData Corporation
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isFinite from "lodash/isFinite";
 import escape from "lodash/escape";
@@ -139,7 +138,7 @@ export const handlePushpinMouseEnter = (
     chart.getCanvas().style.cursor = "pointer";
 
     const coordinates = feature.geometry.coordinates.slice();
-    const tooltipStroke = get(parsedProps, "color.background", DEFAULT_PUSHPIN_COLOR_VALUE);
+    const tooltipStroke = parsedProps?.color?.background ?? DEFAULT_PUSHPIN_COLOR_VALUE;
     const isFullScreenTooltip = isTooltipShownInFullScreen();
     const chartWidth: number = chart.getCanvas().clientWidth;
     const maxTooltipContentWidth: number = getTooltipContentWidth(

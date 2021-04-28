@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import map from "lodash/map";
 import zip from "lodash/zip";
 import values from "lodash/values";
@@ -166,7 +165,7 @@ export function areLabelsOverlappingColumns(
         };
 
         return visiblePoints.some((point: UnsafeInternals) => {
-            const seriesType: string = get(point, "series.options.type");
+            const seriesType: string = point?.series?.options?.type;
             if (
                 isEmpty(point) ||
                 isEmpty(point.graphic) ||

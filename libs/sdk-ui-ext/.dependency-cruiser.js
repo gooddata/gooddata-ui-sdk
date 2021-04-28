@@ -2,7 +2,8 @@ const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
 const options = {
     forbidden: [
-        ...depCruiser.DefaultRules,
+        // sdk-ui-ext relies on string based paths heavily, refactoring is not feasible now (especially because of supportedProperties spec)
+        ...depCruiser.DefaultRules.filter((rule) => rule.name !== "not-to-lodash-get"),
         ...depCruiser.DefaultSdkRules,
         depCruiser.isolatedSubmodule("internal", "src/internal"),
         depCruiser.moduleWithDependencies("insightView", "src/insightView", [

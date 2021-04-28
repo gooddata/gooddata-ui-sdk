@@ -25,7 +25,6 @@ import {
     MeasureAggregation,
 } from "@gooddata/sdk-model";
 import compact from "lodash/compact";
-import get from "lodash/get";
 import { InvariantError } from "ts-invariant";
 import {
     toDateDataSetQualifier,
@@ -198,7 +197,7 @@ function getFormat(measure: IMeasure): string | undefined {
     const {
         measure: { definition },
     } = measure;
-    const measureFormat = get(measure.measure, "format");
+    const measureFormat = measure.measure.format;
 
     if (isArithmeticMeasureDefinition(definition)) {
         if (definition.arithmeticMeasure.operator === "change") {

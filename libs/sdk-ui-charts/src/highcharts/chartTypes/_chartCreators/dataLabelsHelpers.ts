@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import flatMap from "lodash/flatMap";
-import get from "lodash/get";
 import Highcharts from "../../lib";
 
 import {
@@ -30,11 +29,11 @@ export function isLabelOverlappingItsShape(point: any): boolean {
 }
 
 export const getDataLabelsGdcVisible = (chart: Highcharts.Chart): boolean | string =>
-    get(chart, "options.plotOptions.gdcOptions.dataLabels.visible", "auto");
+    (chart?.options?.plotOptions as any)?.gdcOptions?.dataLabels?.visible ?? "auto";
 
 const isLabelsStackedFromYAxis = (chart: Highcharts.Chart): boolean =>
-    get(chart, "userOptions.yAxis.0.stackLabels.enabled", false) ||
-    get(chart, "userOptions.yAxis.1.stackLabels.enabled", false);
+    (chart?.userOptions?.yAxis?.[0]?.stackLabels?.enabled ?? false) ||
+    (chart?.userOptions?.yAxis?.[1]?.stackLabels?.enabled ?? false);
 
 export const areLabelsStacked = (chart: Highcharts.Chart): boolean =>
     isLabelsStackedFromYAxis(chart) && isStacked(chart);
@@ -47,7 +46,7 @@ export const hasShape = (point: any): boolean => !!point.shapeArgs;
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const hasLabelInside = (point: any): boolean => {
-    const verticalAlign = get(point, "dataLabel.alignOptions.verticalAlign", "");
+    const verticalAlign = point?.dataLabel?.alignOptions?.verticalAlign ?? "";
     return verticalAlign === "middle";
 };
 
@@ -95,9 +94,9 @@ export function showDataLabelInAxisRange(
     value: number,
     axisRangeForAxes: IAxisRangeForAxes,
 ): void {
-    const isSecondAxis = get(point, "series.yAxis.opposite", false);
+    const isSecondAxis = point?.series?.yAxis?.opposite ?? false;
     const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
-    const isInsideAxisRange: boolean = pointInRange(value, axisRange);
+    const isInsideAxisRange = pointInRange(value, axisRange);
     if (!isInsideAxisRange) {
         hideDataLabel(point);
     }
@@ -105,7 +104,7 @@ export function showDataLabelInAxisRange(
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function showStackLabelInAxisRange(point: any, axisRangeForAxes: IAxisRangeForAxes): void {
-    const isSecondAxis = get(point, "series.yAxis.opposite", false);
+    const isSecondAxis = point.series?.yAxis?.opposite ?? false;
     const axisRange: IAxisRange = axisRangeForAxes[isSecondAxis ? "second" : "first"];
     const end = point.stackY || point.total;
     const start = end - point.y;
@@ -124,8 +123,8 @@ export const showAllLabels = ({ series }: { series: Highcharts.Series[] }): void
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getDataLabelAttributes(point: any): IRectBySize {
-    const dataLabel = get(point, "dataLabel", null);
-    const parentGroup = get(point, "dataLabel.parentGroup", null);
+    const dataLabel = point?.dataLabel ?? null;
+    const parentGroup = point?.dataLabel?.parentGroup ?? null;
 
     const labelSafeOffset = -100; // labels outside axis range have typically -9999, hide them
     const labelVisible = dataLabel && dataLabel.x > labelSafeOffset && dataLabel.y > labelSafeOffset;

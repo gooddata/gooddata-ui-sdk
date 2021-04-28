@@ -10,7 +10,6 @@ import {
     UnexpectedResponseError,
     isAnalyticalBackendError,
 } from "@gooddata/sdk-backend-spi";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import * as HttpStatusCodes from "http-status-codes";
 
@@ -18,7 +17,7 @@ export function isApiResponseError(error: unknown): error is ApiResponseError {
     return (error as ApiResponseError).response !== undefined;
 }
 
-function getJSONFromText(data: string): object | null {
+function getJSONFromText(data: string): any | null {
     try {
         return JSON.parse(data);
     } catch (e) {
@@ -33,7 +32,7 @@ function isComplainingAboutAuthorization(error: ApiResponseError): boolean {
         return false;
     }
 
-    const message = get(getJSONFromText(error.responseBody), "error.message", "");
+    const message = getJSONFromText(error.responseBody)?.error?.message ?? "";
 
     return includes(message, "Attempt to execute protected report unsafely");
 }

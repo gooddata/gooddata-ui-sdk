@@ -46,7 +46,6 @@ import {
     unsupportedStackingTypes,
 } from "./chartCapabilities";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isUndefined from "lodash/isUndefined";
 import without from "lodash/without";
@@ -141,7 +140,7 @@ export function getHeatmapDataClasses(
     colorStrategy: IColorStrategy,
 ): Highcharts.ColorAxisDataClassesOptions[] {
     const values: number[] = without(
-        get(series, "0.data", []).map((item: any) => item.value),
+        (series[0]?.data ?? []).map((item: any) => item.value),
         null,
         undefined,
         NaN,
@@ -337,7 +336,7 @@ export function getChartOptions(
         theme,
     );
 
-    const gridEnabled = get(config, "grid.enabled", true);
+    const gridEnabled = config?.grid?.enabled ?? true;
     const stacking = getStackingConfig(stackByAttribute, config);
     const measureGroup = findMeasureGroupInDimensions(dimensions);
     const xAxes = getXAxes(dv, config, measureGroup, viewByAttribute);

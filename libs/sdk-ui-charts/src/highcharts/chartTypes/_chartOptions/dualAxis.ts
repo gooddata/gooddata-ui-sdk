@@ -1,13 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces";
-import { BucketNames, VisType, DataViewFacade } from "@gooddata/sdk-ui";
+import { BucketNames, DataViewFacade } from "@gooddata/sdk-ui";
 import { isComboChart } from "../_util/common";
-import get from "lodash/get";
 
 export function setMeasuresToSecondaryAxis(config: IChartConfig = {}, dv: DataViewFacade): IChartConfig {
-    const isDualAxis: boolean = get(config, "dualAxis", true);
-    const type: VisType = get(config, "type");
+    const isDualAxis = config.dualAxis ?? true;
+    const type = config.type;
     const { secondary_yaxis: secondaryYAxis, ...remainConfig } = config;
     const secondaryMeasuresIds = dv.def().bucketMeasures(BucketNames.SECONDARY_MEASURES).map(measureLocalId);
 

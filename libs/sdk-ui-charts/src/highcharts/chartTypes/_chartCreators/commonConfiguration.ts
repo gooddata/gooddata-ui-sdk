@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import invoke from "lodash/invoke";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
@@ -103,8 +102,8 @@ function getThemedConfiguration(theme: ITheme): any {
                                 // Close opened tooltip on previous clicked chart
                                 // (click between multiple charts on dashboards)
                                 const currentChart = this.series.chart;
-                                const currentId = get(currentChart, "container.id");
-                                const prevId = get(previousChart, "container.id");
+                                const currentId = currentChart?.container?.id;
+                                const prevId = previousChart?.container?.id;
                                 const previousChartDisconnected = isEmpty(previousChart);
                                 if (previousChart && !previousChartDisconnected && prevId !== currentId) {
                                     // Remove line chart point bubble

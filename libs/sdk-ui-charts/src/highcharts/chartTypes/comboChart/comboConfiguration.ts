@@ -5,7 +5,6 @@ import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../_util/common";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import { bucketIsEmpty, bucketsFind, IExecutionDefinition } from "@gooddata/sdk-model";
-import get from "lodash/get";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
 
@@ -13,8 +12,8 @@ const { COLUMN, LINE } = VisualizationTypes;
 
 function getDefaultComboTypes(config?: IChartConfig): IChartConfig {
     return {
-        primaryChartType: get(config, "primaryChartType", COLUMN),
-        secondaryChartType: get(config, "secondaryChartType", LINE),
+        primaryChartType: config?.primaryChartType ?? COLUMN,
+        secondaryChartType: config?.secondaryChartType ?? LINE,
     };
 }
 export function getDefaultChartType(config?: IChartConfig): "line" | "column" | "area" {

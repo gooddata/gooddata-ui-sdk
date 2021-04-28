@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import { IChartConfig } from "../../../../interfaces";
 import { getComboConfiguration, getDefaultChartType } from "../comboConfiguration";
 import { VisualizationTypes, BucketNames } from "@gooddata/sdk-ui";
@@ -117,13 +116,13 @@ describe("Combo Configuration", () => {
         const {
             plotOptions: { series: series },
         } = getComboConfiguration(config, getDefinition(BucketNames.SECONDARY_MEASURES));
-        expect(get(series, "states.inactive.opacity")).not.toBe(1);
+        expect(series?.states?.inactive?.opacity).not.toBe(1);
     });
 
     it("should not disable saturation other series for default combo", () => {
         const {
             plotOptions: { series: series },
         } = getComboConfiguration({}, getDefinition(BucketNames.MEASURES));
-        expect(get(series, "states.inactive.opacity")).not.toBe(1);
+        expect(series?.states?.inactive?.opacity).not.toBe(1);
     });
 });

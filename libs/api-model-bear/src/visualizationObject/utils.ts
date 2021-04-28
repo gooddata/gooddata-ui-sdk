@@ -1,33 +1,28 @@
 // (C) 2007-2019 GoodData Corporation
-import get from "lodash/get";
 import { GdcVisualizationObject } from "./GdcVisualizationObject";
 import IVisualizationObjectContent = GdcVisualizationObject.IVisualizationObjectContent;
 import IBucket = GdcVisualizationObject.IBucket;
 import BucketItem = GdcVisualizationObject.BucketItem;
 import IVisualizationAttributeContent = GdcVisualizationObject.IVisualizationAttributeContent;
 import IMeasureContent = GdcVisualizationObject.IMeasureContent;
-import IMeasureDefinitionType = GdcVisualizationObject.IMeasureDefinitionType;
+import IMeasureDefinition = GdcVisualizationObject.IMeasureDefinition;
 import Filter = GdcVisualizationObject.Filter;
 import AttributeFilter = GdcVisualizationObject.AttributeFilter;
 import isAttribute = GdcVisualizationObject.isAttribute;
 import isMeasure = GdcVisualizationObject.isMeasure;
 import isAttributeFilter = GdcVisualizationObject.isAttributeFilter;
 
-function getBuckets(mdObj: IVisualizationObjectContent): IBucket[] {
-    return get(mdObj, "buckets", []);
-}
-
 function getAttributesInBucket(bucket: IBucket): IVisualizationAttributeContent[] {
-    return get(bucket, "items").reduce((list: IVisualizationAttributeContent[], bucketItem: BucketItem) => {
+    return bucket.items.reduce((list: IVisualizationAttributeContent[], bucketItem: BucketItem) => {
         if (isAttribute(bucketItem)) {
-            list.push(get(bucketItem, "visualizationAttribute"));
+            list.push(bucketItem.visualizationAttribute);
         }
         return list;
     }, []);
 }
 
 function getAttributes(mdObject: IVisualizationObjectContent): IVisualizationAttributeContent[] {
-    const buckets = getBuckets(mdObject);
+    const buckets = mdObject.buckets;
     return buckets.reduce(
         (categoriesList: IVisualizationAttributeContent[], bucket: IBucket) =>
             categoriesList.concat(getAttributesInBucket(bucket)),
@@ -36,20 +31,22 @@ function getAttributes(mdObject: IVisualizationObjectContent): IVisualizationAtt
 }
 
 function getMeasuresInBucket(bucket: IBucket): IMeasureContent[] {
-    return get(bucket, "items").reduce((list: IMeasureContent[], bucketItem: BucketItem) => {
+    return bucket.items.reduce((list: IMeasureContent[], bucketItem: BucketItem) => {
         if (isMeasure(bucketItem)) {
-            list.push(get(bucketItem, "measure"));
+            list.push(bucketItem.measure);
         }
         return list;
     }, []);
 }
 
-function getDefinition(measure: IMeasureContent): IMeasureDefinitionType {
-    return get(measure, ["definition", "measureDefinition"], {});
+function getDefinition(measure: IMeasureContent): IMeasureDefinition["measureDefinition"] | undefined {
+    return GdcVisualizationObject.isMeasureDefinition(measure.definition)
+        ? measure.definition.measureDefinition
+        : undefined;
 }
 
 function getMeasures(mdObject: IVisualizationObjectContent): IMeasureContent[] {
-    const buckets = getBuckets(mdObject);
+    const buckets = mdObject.buckets;
     return buckets.reduce(
         (measuresList: IMeasureContent[], bucket: IBucket) =>
             measuresList.concat(getMeasuresInBucket(bucket)),
@@ -58,7 +55,7 @@ function getMeasures(mdObject: IVisualizationObjectContent): IMeasureContent[] {
 }
 
 function getMeasureFilters(measure: IMeasureContent): Filter[] {
-    return get(getDefinition(measure), "filters", []);
+    return getDefinition(measure)?.filters ?? [];
 }
 
 function getMeasureAttributeFilters(measure: IMeasureContent): AttributeFilter[] {
@@ -73,19 +70,19 @@ function getAttributeFilters(mdObject: IVisualizationObjectContent): AttributeFi
     );
 }
 
-function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string[] {
-    return (
-        get(measureFilter, ["positiveAttributeFilter", "displayForm", "uri"]) ||
-        get(measureFilter, ["negativeAttributeFilter", "displayForm", "uri"])
-    );
+function getAttributeFilterDisplayForm(measureFilter: AttributeFilter): string {
+    return GdcVisualizationObject.isPositiveAttributeFilter(measureFilter)
+        ? (measureFilter.positiveAttributeFilter.displayForm as GdcVisualizationObject.IObjUriQualifier).uri
+        : (measureFilter.negativeAttributeFilter.displayForm as GdcVisualizationObject.IObjUriQualifier).uri;
 }
 
 /**
  * @public
  */
 export function getAttributesDisplayForms(mdObject: IVisualizationObjectContent): string[] {
-    const attributesDfs = getAttributes(mdObject).map((attribute: IVisualizationAttributeContent) =>
-        get(attribute, ["displayForm", "uri"]),
+    const attributesDfs = getAttributes(mdObject).map(
+        (attribute: IVisualizationAttributeContent) =>
+            (attribute.displayForm as GdcVisualizationObject.IObjUriQualifier).uri,
     );
     const attrMeasureFilters = getAttributeFilters(mdObject);
     const attrMeasureFiltersDfs = attrMeasureFilters.map(getAttributeFilterDisplayForm);

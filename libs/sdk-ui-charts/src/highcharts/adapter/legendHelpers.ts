@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import head from "lodash/head";
 import isEmpty from "lodash/isEmpty";
 
@@ -321,7 +320,7 @@ function separateLegendItems(series: any[]) {
 }
 
 export function groupSeriesItemsByType(series: ISeriesItem[]): { [key: string]: ISeriesItem[] } {
-    const primaryType = get(head(series), "type");
+    const primaryType = head(series)?.type;
 
     return series.reduce(
         (result: { [key: string]: ISeriesItem[] }, item: ISeriesItem) => {
@@ -410,7 +409,7 @@ export function transformToDualAxesSeries(series: any[], chartType: string): any
 }
 
 export function isStackedChart(chartOptions: IChartOptions): boolean {
-    const seriesLength = get(chartOptions, "data.series.length");
+    const seriesLength = chartOptions?.data?.series?.length;
     const { type, stacking, hasStackByAttribute } = chartOptions;
     const hasMoreThanOneSeries = seriesLength > 1;
     const isAreaChartWithOneSerie = isAreaChart(type) && !hasMoreThanOneSeries && !hasStackByAttribute;

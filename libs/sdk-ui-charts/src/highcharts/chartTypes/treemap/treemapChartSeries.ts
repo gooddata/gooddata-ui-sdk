@@ -9,7 +9,6 @@ import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { getLighterColor, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import { parseValue, unwrap } from "../_util/common";
 import isEqual from "lodash/isEqual";
-import get from "lodash/get";
 import { IPointData } from "../../typings/unsafe";
 
 function getColorStep(valuesCount: number): number {
@@ -87,7 +86,7 @@ export function getTreemapStackedSeriesDataWithViewBy(
             lastRoot = currentRoot;
             uncoloredLeafs = [];
             // create parent for pasted leafs
-            const lastRootName: string = get(lastRoot, "name");
+            const lastRootName = lastRoot?.name;
             roots.push(getRootPoint(lastRootName, rootId, format, colorStrategy));
         }
         // create leafs which will be colored at the end of group

@@ -1,6 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
 import React, { useState, useEffect } from "react";
-import get from "lodash/get";
 import { ExportDialog, IExportDialogData } from "@gooddata/sdk-ui-kit";
 import { IExtendedExportConfig, IExportFunction } from "@gooddata/sdk-ui";
 import { IFilter } from "@gooddata/sdk-model";
@@ -95,7 +94,7 @@ export const ExampleWithExport: React.FC<IExampleWithExportProps> = ({ children,
             } catch (error) {
                 let errorMessage = error.message;
                 if (error.responseBody) {
-                    errorMessage = get(JSON.parse(error.responseBody), "error.message");
+                    errorMessage = JSON.parse(error.responseBody)?.error?.message;
                 }
                 throw errorMessage;
             }

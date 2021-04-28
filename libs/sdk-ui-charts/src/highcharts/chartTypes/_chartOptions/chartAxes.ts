@@ -11,7 +11,6 @@ import compact from "lodash/compact";
 import range from "lodash/range";
 import includes from "lodash/includes";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
-import get from "lodash/get";
 
 function preprocessMeasureGroupItems(
     measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
@@ -86,7 +85,7 @@ function getMeasureFormatKey(measureGroupItems: IMeasureInAxis[]) {
 }
 
 function getMeasureFormat(measure: IMeasureInAxis) {
-    return get(measure, "format", "");
+    return measure?.format ?? "";
 }
 
 export function getYAxes(

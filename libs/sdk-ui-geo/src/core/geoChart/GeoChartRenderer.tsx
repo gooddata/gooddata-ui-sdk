@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import mapboxgl from "mapbox-gl";
@@ -196,7 +195,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
 
     private isViewportFrozen = (): boolean => {
         const { config } = this.props;
-        return get(config, "viewport.frozen", false);
+        return config?.viewport?.frozen ?? false;
     };
 
     private createMapControls() {
@@ -467,7 +466,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         } = features[0];
 
         // Disable drilling in edit/export mode
-        if (get(viewport, "frozen", false)) {
+        if (viewport?.frozen) {
             return;
         }
 

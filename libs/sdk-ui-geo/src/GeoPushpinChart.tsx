@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import React from "react";
 import omit from "lodash/omit";
-import get from "lodash/get";
 import { CoreGeoChart } from "./core/CoreGeoChart";
 
 import {
@@ -45,7 +44,7 @@ const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
             items: segmentBy ? [segmentBy] : [],
         },
     ];
-    const tooltipText = get(config, BucketNames.TOOLTIP_TEXT);
+    const tooltipText = config?.[BucketNames.TOOLTIP_TEXT];
     if (tooltipText) {
         buckets.push({
             localIdentifier: BucketNames.TOOLTIP_TEXT,

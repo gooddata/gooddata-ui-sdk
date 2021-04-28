@@ -2,7 +2,6 @@
 import React from "react";
 import { mount } from "enzyme";
 import noop from "lodash/noop";
-import get from "lodash/get";
 
 import { ChartTransformation } from "../ChartTransformation";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer";
@@ -355,7 +354,7 @@ describe("ChartTransformation", () => {
             };
             const wrapper = createComponent(chartConfig);
             const chartConfigProps = wrapper.find(Chart).prop("config");
-            const label = get(chartConfigProps, "yAxis.1.labels");
+            const label = chartConfigProps?.yAxis?.[1]?.labels;
 
             expect(label.align).toBe("left");
             expect(label.y).toBe(undefined);
@@ -374,11 +373,11 @@ describe("ChartTransformation", () => {
             const wrapper = createComponent(chartConfig);
             const chartConfigProps = wrapper.find(Chart).prop("config");
 
-            const labels = get(chartConfigProps, "yAxis.0.labels");
+            const labels = chartConfigProps?.yAxis?.[0]?.labels;
             expect(labels.align).toBe("right");
             expect(labels.y).toBe(8);
 
-            const secondaryLabels = get(chartConfigProps, "yAxis.1.labels");
+            const secondaryLabels = chartConfigProps?.yAxis?.[1]?.labels;
             expect(secondaryLabels.align).toBe("left");
             expect(secondaryLabels.y).toBe(undefined);
         });
@@ -393,7 +392,7 @@ describe("ChartTransformation", () => {
             };
             const wrapper = createComponent(chartConfig);
             const chartConfigProps = wrapper.find(Chart).prop("config");
-            const label = get(chartConfigProps, "yAxis.1.labels");
+            const label = chartConfigProps?.yAxis?.[1]?.labels;
 
             expect(label.align).toBe(undefined);
             expect(label.y).toBe(undefined);

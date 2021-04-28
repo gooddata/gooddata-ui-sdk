@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import flatten from "lodash/flatten";
-import get from "lodash/get";
 import pick from "lodash/pick";
 import map from "lodash/map";
 import zip from "lodash/zip";
@@ -71,14 +70,14 @@ export const isStacked = (chart: Highcharts.Chart): boolean => {
     const chartType = getChartType(chart);
 
     if (
-        get(chart, `userOptions.plotOptions.${chartType}.stacking`, false) &&
+        chart.userOptions?.plotOptions?.[chartType]?.stacking &&
         chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
     ) {
         return true;
     }
 
     if (
-        get(chart, "userOptions.plotOptions.series.stacking", false) &&
+        chart.userOptions?.plotOptions?.series?.stacking &&
         chart.axes.some((axis: any) => !isEmpty(axis?.stacking?.stacks))
     ) {
         return true;
@@ -170,26 +169,24 @@ function getExtremeOnAxis(min: number, max: number) {
 }
 
 export function shouldFollowPointerForDualAxes(chartOptions: IChartOptions): boolean {
-    const yAxes = get(chartOptions, "yAxes", []);
+    const yAxes = chartOptions?.yAxes ?? [];
     if (yAxes.length <= 1) {
         return false;
     }
 
     const hasMinMaxValue = [
-        "yAxisProps.min",
-        "yAxisProps.max",
-        "secondary_yAxisProps.min",
-        "secondary_yAxisProps.max",
-    ].reduce((result, key: string) => {
-        const value = get(chartOptions, key, undefined);
-        return isEmpty(value) ? result : value;
-    }, undefined);
+        chartOptions?.yAxisProps?.min,
+        chartOptions?.yAxisProps?.max,
+        chartOptions?.secondary_yAxisProps?.min,
+        chartOptions?.secondary_yAxisProps?.max,
+    ].some((item) => !isEmpty(item));
+
     return yAxes.length > 1 && hasMinMaxValue;
 }
 
-function isMinMaxLimitData(chartOptions: any, key: string) {
-    const yMin = parseFloat(get(chartOptions, `${key}.min`, ""));
-    const yMax = parseFloat(get(chartOptions, `${key}.max`, ""));
+function isMinMaxLimitData(chartOptions: IChartOptions, key: "yAxisProps" | "secondary_yAxisProps") {
+    const yMin = parseFloat(chartOptions?.[key]?.min ?? "");
+    const yMax = parseFloat(chartOptions?.[key]?.max ?? "");
     if (isNaN(yMin) && isNaN(yMax)) {
         return false;
     }
@@ -236,8 +233,8 @@ function getNonStackedMinValue(series: ISeriesItem[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-function getDataExtremeDataValues(chartOptions: any) {
-    const series = get(chartOptions, "data.series");
+function getDataExtremeDataValues(chartOptions: IChartOptions) {
+    const series = chartOptions?.data?.series;
 
     const maxDataValue = chartOptions.hasStackByAttribute
         ? getStackedMaxValue(series)
@@ -312,9 +309,12 @@ function getMinFromPositiveNegativeStacks(data: number[]): number {
     }, Number.MAX_SAFE_INTEGER);
 }
 
-export function shouldStartOnTick(chartOptions: IChartOptions, axisPropsKey = "yAxisProps"): boolean {
-    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
-    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
+export function shouldStartOnTick(
+    chartOptions: IChartOptions,
+    axisPropsKey: "yAxisProps" | "secondary_yAxisProps" = "yAxisProps",
+): boolean {
+    const min = parseFloat(chartOptions?.[axisPropsKey]?.min ?? "");
+    const max = parseFloat(chartOptions?.[axisPropsKey]?.max ?? "");
 
     if (isNaN(min) && isNaN(max)) {
         return true;
@@ -324,7 +324,7 @@ export function shouldStartOnTick(chartOptions: IChartOptions, axisPropsKey = "y
         return min > max;
     }
 
-    const series = get(chartOptions, "data.series");
+    const series = chartOptions?.data?.series;
     const minDataValue = chartOptions.hasStackByAttribute
         ? getStackedMinValue(series)
         : getNonStackedMinValue(series);
@@ -336,9 +336,12 @@ export function shouldStartOnTick(chartOptions: IChartOptions, axisPropsKey = "y
 
     return false;
 }
-export function shouldEndOnTick(chartOptions: IChartOptions, axisPropsKey = "yAxisProps"): boolean {
-    const min = parseFloat(get(chartOptions, `${axisPropsKey}.min`, ""));
-    const max = parseFloat(get(chartOptions, `${axisPropsKey}.max`, ""));
+export function shouldEndOnTick(
+    chartOptions: IChartOptions,
+    axisPropsKey: "yAxisProps" | "secondary_yAxisProps" = "yAxisProps",
+): boolean {
+    const min = parseFloat(chartOptions?.[axisPropsKey]?.min ?? "");
+    const max = parseFloat(chartOptions?.[axisPropsKey]?.max ?? "");
 
     if (isNaN(min) && isNaN(max)) {
         return true;
@@ -348,7 +351,7 @@ export function shouldEndOnTick(chartOptions: IChartOptions, axisPropsKey = "yAx
         return min > max;
     }
 
-    const series = get(chartOptions, "data.series");
+    const series = chartOptions?.data?.series;
     const maxDataValue = chartOptions.hasStackByAttribute
         ? getStackedMaxValue(series)
         : getNonStackedMaxValue(series);
@@ -362,15 +365,15 @@ export function shouldEndOnTick(chartOptions: IChartOptions, axisPropsKey = "yAx
 }
 
 export function shouldXAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
-    const min = parseFloat(get(chartOptions, "xAxisProps.min", ""));
+    const min = parseFloat(chartOptions?.xAxisProps?.min ?? "");
 
     return isNaN(min) ? true : false;
 }
 
 export function shouldYAxisStartOnTickOnBubbleScatter(chartOptions: IChartOptions): boolean {
-    const min = parseFloat(get(chartOptions, "yAxisProps.min", ""));
+    const min = parseFloat(chartOptions?.yAxisProps?.min ?? "");
 
-    const series = get(chartOptions, "data.series");
+    const series = chartOptions?.data?.series;
     const maxDataValue = getNonStackedMaxValue(series);
 
     return isNaN(min) || min > maxDataValue ? true : false;

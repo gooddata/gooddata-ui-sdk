@@ -39,33 +39,37 @@ describe("RowLoadingElement", () => {
         expect(wrapper.html()).toEqual('<span class="s-value s-loading-done">3.14</span>');
     });
 
-    describe("'LoadingComponent' color property", async () => {
-        const LoadingRenderer = await createTestRenderer();
+    describe("'LoadingComponent' color property", () => {
         const props: ICellRendererParams = {
             node: {},
             value: 123,
             valueFormatted: noop,
         } as any;
 
-        const mountWithTheme = (theme: ITheme) =>
+        const mountWithTheme = (
+            theme: ITheme,
+            LoadingRenderer: (params: ICellRendererParams) => JSX.Element,
+        ) =>
             mount(
                 <ThemeProvider theme={theme}>
                     <LoadingRenderer {...props} />
                 </ThemeProvider>,
             );
 
-        it("should set the color specificaly defined in theme", () => {
+        it("should set the color specifically defined in theme", async () => {
+            const LoadingRenderer = await createTestRenderer();
             const theme: ITheme = {
                 table: {
                     loadingIconColor: "#f00",
                 },
             };
 
-            const wrapper = mountWithTheme(theme);
+            const wrapper = mountWithTheme(theme, LoadingRenderer);
             expect(wrapper.find(LoadingComponent).props().color).toEqual("#f00");
         });
 
-        it("should set the color from the complementary palette defined in theme", () => {
+        it("should set the color from the complementary palette defined in theme", async () => {
+            const LoadingRenderer = await createTestRenderer();
             const theme: ITheme = {
                 palette: {
                     complementary: {
@@ -76,7 +80,7 @@ describe("RowLoadingElement", () => {
                 },
             };
 
-            const wrapper = mountWithTheme(theme);
+            const wrapper = mountWithTheme(theme, LoadingRenderer);
             expect(wrapper.find(LoadingComponent).props().color).toEqual("#0f0");
         });
     });
