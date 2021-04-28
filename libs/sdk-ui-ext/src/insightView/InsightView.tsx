@@ -191,6 +191,13 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
 
         const needsNewColorPalette = this.props.workspace !== prevProps.workspace;
 
+        if (this.props.workspace !== prevProps.workspace) {
+            // if workspace changed, clear the insight as it is definitely wrong
+            // this prevents wrong renders with mismatching insight and workspace
+            // (as workspace changes immediately, but insight change is async)
+            this.setState({ insight: undefined });
+        }
+
         if (needsNewSetup || needsNewColorPalette) {
             this.startDataLoading();
             await Promise.all(
@@ -218,14 +225,16 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         this.props.onError?.(error);
     };
 
-    private resolveInsightTitle = (insight: IInsight): string | undefined => {
+    private resolveInsightTitle = (insight: IInsight | undefined): string | undefined => {
         switch (typeof this.props.showTitle) {
             case "string":
-                return this.props.showTitle ? this.props.showTitle : undefined;
+                return this.props.showTitle;
             case "boolean":
-                return this.props.showTitle && insight ? insightTitle(insight) : undefined;
+                return !this.state.isDataLoading && this.props.showTitle && insight
+                    ? insightTitle(insight)
+                    : undefined;
             case "function":
-                return this.props.showTitle(insight);
+                return !this.state.isDataLoading && insight && this.props.showTitle(insight);
             default:
                 return undefined;
         }
@@ -235,11 +244,11 @@ class InsightViewCore extends React.Component<IInsightViewProps & WrappedCompone
         const { LoadingComponent, TitleComponent } = this.props;
         const { error, isDataLoading, isVisualizationLoading } = this.state;
 
+        const resolvedTitle = this.resolveInsightTitle(this.state.insight);
+
         return (
             <div className="insight-view-container">
-                {!isDataLoading && this.state.insight && (
-                    <TitleComponent title={this.resolveInsightTitle(this.state.insight)} />
-                )}
+                {resolvedTitle && <TitleComponent title={resolvedTitle} />}
                 {(isDataLoading || isVisualizationLoading) && (
                     <div className="insight-view-loader">
                         <LoadingComponent />

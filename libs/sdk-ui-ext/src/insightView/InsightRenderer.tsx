@@ -82,6 +82,11 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             return;
         }
 
+        // if there is no insight, bail early
+        if (!this.props.insight) {
+            return;
+        }
+
         const { config = {} } = this.props;
         const { responsiveUiDateFormat } = this.props.settings ?? {};
 
@@ -111,6 +116,7 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
     };
 
     private setupVisualization = async () => {
+        // if there is no insight, bail early
         if (!this.props.insight) {
             return;
         }
