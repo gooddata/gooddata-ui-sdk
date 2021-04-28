@@ -98,11 +98,6 @@ export interface IBackendCapabilities {
     supportsHyperlinkAttributeLabels?: boolean;
 
     /**
-     * Indicates whether the backend support create, update and delete measure API.
-     */
-    supportMeasureEditing?: boolean;
-
-    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;

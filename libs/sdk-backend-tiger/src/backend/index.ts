@@ -59,7 +59,6 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsElementsQueryParentFiltering: false,
     supportsKpiWidget: false,
     supportsHyperlinkAttributeLabels: false,
-    supportMeasureEditing: true,
 };
 
 /**

@@ -1,25 +1,26 @@
 // (C) 2019-2020 GoodData Corporation
+import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
+import {
+    IMeasureExpressionToken,
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    IWorkspaceMeasuresService,
+} from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
 import flow from "lodash/flow";
 import map from "lodash/fp/map";
-import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
-import {
-    IWorkspaceMeasuresService,
-    IMeasureExpressionToken,
-    IMeasureMetadataObjectDefinition,
-    IMeasureMetadataObject,
-    NotImplemented,
-} from "@gooddata/sdk-backend-spi";
-import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
-import { ObjRef } from "@gooddata/sdk-model";
-import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
-import { BearAuthenticatedCallGuard } from "../../../types/auth";
+import uniq from "lodash/fp/uniq";
 import {
     convertMetadataObject,
     SupportedMetadataObject,
     SupportedWrappedMetadataObject,
 } from "../../../convertors/fromBackend/MetaConverter";
+import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
+import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
+import { BearAuthenticatedCallGuard } from "../../../types/auth";
 import { objRefToUri } from "../../../utils/api";
+import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
 
 export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: BearAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -136,15 +137,25 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
         return expressionTokensWithDetails;
     }
 
-    createMeasure(_: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
-        throw new NotImplemented("backend does not support supportMeasureEditing capability");
+    async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
+        const mdObject = await this.authCall((sdk) =>
+            sdk.md.createObject(this.workspace, { metric: convertMetricToBackend(measure) }),
+        );
+
+        return convertMetricFromBackend(mdObject.metric);
     }
 
-    deleteMeasure(_: ObjRef): Promise<void> {
-        throw new NotImplemented("backend does not support supportMeasureEditing capability");
+    async deleteMeasure(ref: ObjRef): Promise<void> {
+        const uri = await objRefToUri(ref, this.workspace, this.authCall);
+        await this.authCall((sdk) => sdk.md.deleteObject(uri));
     }
 
-    updateMeasure(_: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
-        throw new NotImplemented("backend does not support supportMeasureEditing capability");
+    async updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        const objectId = measure.uri.split("/").slice(-1)[0];
+        const mdObject = await this.authCall((sdk) => {
+            return sdk.md.updateObject(this.workspace, objectId, { metric: convertMetricToBackend(measure) });
+        });
+
+        return convertMetricFromBackend(mdObject.metric);
     }
 }
