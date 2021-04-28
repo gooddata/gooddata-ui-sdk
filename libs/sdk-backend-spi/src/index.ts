@@ -344,6 +344,8 @@ export {
     isFactMetadataObject,
     IMeasureMetadataObject,
     isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
     IMetadataObject,
     isMetadataObject,
     MetadataObject,

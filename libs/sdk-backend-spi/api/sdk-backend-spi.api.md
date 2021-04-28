@@ -284,6 +284,7 @@ export interface IBackendCapabilities {
     canSortData?: boolean;
     canTransformExistingResult?: boolean;
     maxDimensions?: number;
+    supportMeasureEditing?: boolean;
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
@@ -929,6 +930,9 @@ export interface IMeasureMetadataObject extends IMetadataObject {
     type: "measure";
 }
 
+// @public
+export type IMeasureMetadataObjectDefinition = Omit<IMeasureMetadataObject, "ref" | "id" | "uri">;
+
 // @public (undocumented)
 export interface IMetadataObject {
     deprecated: boolean;
@@ -1253,6 +1257,9 @@ export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDesc
 
 // @public
 export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+
+// @public
+export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObject;
 
 // @public (undocumented)
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
@@ -1755,7 +1762,13 @@ export interface IWorkspaceInsightsService {
 
 // @public
 export interface IWorkspaceMeasuresService {
+    // (undocumented)
+    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    // (undocumented)
+    deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    // (undocumented)
+    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
 // @public

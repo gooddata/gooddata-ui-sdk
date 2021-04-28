@@ -3,7 +3,13 @@ import flow from "lodash/flow";
 import map from "lodash/fp/map";
 import uniq from "lodash/fp/uniq";
 import replace from "lodash/fp/replace";
-import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspaceMeasuresService,
+    IMeasureExpressionToken,
+    IMeasureMetadataObjectDefinition,
+    IMeasureMetadataObject,
+    NotImplemented,
+} from "@gooddata/sdk-backend-spi";
 import { GdcMetadata, GdcMetadataObject } from "@gooddata/api-model-bear";
 import { ObjRef } from "@gooddata/sdk-model";
 import { getTokenValuesOfType, tokenizeExpression } from "./measureExpressionTokens";
@@ -128,5 +134,17 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
         );
 
         return expressionTokensWithDetails;
+    }
+
+    createMeasure(_: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
+        throw new NotImplemented("backend does not support supportMeasureEditing capability");
+    }
+
+    deleteMeasure(_: ObjRef): Promise<void> {
+        throw new NotImplemented("backend does not support supportMeasureEditing capability");
+    }
+
+    updateMeasure(_: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        throw new NotImplemented("backend does not support supportMeasureEditing capability");
     }
 }

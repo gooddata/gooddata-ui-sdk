@@ -1,6 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import { ObjRef } from "@gooddata/sdk-model";
 import { IMeasureExpressionToken } from "../fromModel/ldm/measure";
+import { IMeasureMetadataObject } from "../fromModel/ldm/metadata";
+import { IMeasureMetadataObjectDefinition } from "../fromModel/ldm/metadata";
 
 /**
  * Service for querying additional measures data.
@@ -15,4 +17,10 @@ export interface IWorkspaceMeasuresService {
      * @returns promise of measure expression tokens
      */
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+
+    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+
+    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
+
+    deleteMeasure(measureRef: ObjRef): Promise<void>;
 }

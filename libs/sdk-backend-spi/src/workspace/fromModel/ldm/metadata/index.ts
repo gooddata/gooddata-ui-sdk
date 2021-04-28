@@ -1,16 +1,20 @@
 // (C) 2019-2021 GoodData Corporation
-import { IMetadataObject, isMetadataObject } from "./types";
-
 import { IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute";
 import {
     IAttributeDisplayFormMetadataObject,
     isAttributeDisplayFormMetadataObject,
 } from "./attributeDisplayForm";
-import { IFactMetadataObject, isFactMetadataObject } from "./fact";
-import { IMeasureMetadataObject, isMeasureMetadataObject } from "./measure";
-import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
-import { IVariableMetadataObject, isVariableMetadataObject } from "./variable";
 import { IDashboardMetadataObject, isDashboardMetadataObject } from "./dashboard";
+import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
+import { IFactMetadataObject, isFactMetadataObject } from "./fact";
+import {
+    IMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObject,
+    isMeasureMetadataObjectDefinition,
+} from "./measure";
+import { IMetadataObject, isMetadataObject } from "./types";
+import { isVariableMetadataObject, IVariableMetadataObject } from "./variable";
 
 export {
     IMetadataObject,
@@ -23,6 +27,8 @@ export {
     isFactMetadataObject,
     IMeasureMetadataObject,
     isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
     IDataSetMetadataObject,
     isDataSetMetadataObject,
     IVariableMetadataObject,

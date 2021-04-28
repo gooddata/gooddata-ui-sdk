@@ -21,6 +21,26 @@ export interface IMeasureMetadataObject extends IMetadataObject {
 }
 
 /**
+ * Measure metadata object definition
+ *
+ * @public
+ */
+export interface IMeasureMetadataObjectDefinition
+    extends Partial<Omit<IMetadataObject, "ref" | "id" | "uri">> {
+    type: "measure";
+
+    /**
+     * Measure MAQL expression
+     */
+    expression: string;
+
+    /**
+     * Measure formatting
+     */
+    format?: string;
+}
+
+/**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.
  *
  * @param obj - object to test
@@ -28,4 +48,14 @@ export interface IMeasureMetadataObject extends IMetadataObject {
  */
 export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject {
     return isMetadataObject(obj) && obj.type === "measure";
+}
+
+/**
+ * Tests whether the provided object is of type {@link IMeasureMetadataObjectDefinition}.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObject {
+    return (obj as IMetadataObject).type === "measure" && (obj as IMetadataObject).ref === undefined;
 }
