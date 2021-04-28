@@ -926,12 +926,18 @@ export interface IMeasureGroupDescriptor {
 export interface IMeasureMetadataObject extends IMetadataObject {
     expression: string;
     format: string;
+    isLocked?: boolean;
     // (undocumented)
     type: "measure";
 }
 
 // @public
-export type IMeasureMetadataObjectDefinition = Omit<IMeasureMetadataObject, "ref" | "id" | "uri">;
+export interface IMeasureMetadataObjectDefinition extends Partial<Omit<IMetadataObject, "ref" | "id" | "uri">> {
+    expression: string;
+    format?: string;
+    // (undocumented)
+    type: "measure";
+}
 
 // @public (undocumented)
 export interface IMetadataObject {

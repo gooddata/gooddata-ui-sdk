@@ -18,6 +18,11 @@ export interface IMeasureMetadataObject extends IMetadataObject {
      * Measure formatting
      */
     format: string;
+
+    /**
+     * Measure is locked for editing
+     */
+    isLocked?: boolean;
 }
 
 /**
