@@ -26,6 +26,8 @@ Object {
     },
   ],
   "colorLegendValue": "rgb(20,178,226)",
+  "containerId": Any<String>,
+  "contentRect": undefined,
   "format": "#,##0.00",
   "geoData": Object {
     "color": Object {
@@ -163,10 +165,13 @@ Object {
     },
   },
   "height": 600,
+  "isFluidLegend": false,
   "locale": undefined,
+  "maxRows": undefined,
+  "name": undefined,
   "onItemClick": [Function],
   "position": "top",
-  "responsive": false,
-  "showFluidLegend": true,
+  "renderPopUp": false,
+  "responsive": undefined,
 }
 `;

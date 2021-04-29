@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { IHeatmapLegendSize, IHeatmapLegendItem, IColorLegendItem } from "./types";
+import { IColorLegendSize, IHeatmapLegendItem, IColorLegendItem } from "./types";
 import { ColorLegend } from "./ColorLegend";
 
 /**
@@ -8,7 +8,7 @@ import { ColorLegend } from "./ColorLegend";
  */
 export interface IHeatmapLegendProps {
     series: IHeatmapLegendItem[];
-    size: IHeatmapLegendSize;
+    size: IColorLegendSize;
     format?: string;
     numericSymbols: string[];
     position: string;

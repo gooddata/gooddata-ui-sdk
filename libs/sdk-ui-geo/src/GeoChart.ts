@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 import {
     IAttribute,
     IAttributeOrMeasure,
@@ -158,8 +158,9 @@ export interface IGeoLegendConfig {
     /**
      * Turns on responsive behavior. Legend items will be rendered horizontally on
      * screens smaller than 767px.
+     * For the popup legend must be a flag set to `autoPositionWithPopup`
      */
-    responsive?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
 }
 
 /**
