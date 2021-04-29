@@ -716,8 +716,8 @@
         "limit": 32
     },
     "filters.floatingRange.option.day.offset.history": {
-        "value": "{n, plural, =1 {yesterday} other {# days ago}}",
-        "comment": "In '{n, plural, =1 {YESTERDAY} other {# DAYS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {yesterday} other {# days ago}}",
+        "comment": "In '{n, plural, one {YESTERDAY} other {# DAYS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.day.offset.today": {
@@ -726,13 +726,13 @@
         "limit": 0
     },
     "filters.floatingRange.option.day.offset.future": {
-        "value": "{n, plural, =1 {tomorrow} other {# days ahead}}",
-        "comment": "In '{n, plural, =1 {TOMORROW} other {# DAYS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {tomorrow} other {# days ahead}}",
+        "comment": "In '{n, plural, one {TOMORROW} other {# DAYS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.history": {
-        "value": "{n, plural, =1 {last week} other {# weeks ago}}",
-        "comment": "In '{n, plural, =1 {LAST WEEK} other {# WEEKS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {last week} other {# weeks ago}}",
+        "comment": "In '{n, plural, one {LAST WEEK} other {# WEEKS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.today": {
@@ -741,13 +741,13 @@
         "limit": 0
     },
     "filters.floatingRange.option.week.offset.future": {
-        "value": "{n, plural, =1 {next week} other {# weeks ahead}}",
-        "comment": "In '{n, plural, =1 {NEXT WEEK} other {# WEEKS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {next week} other {# weeks ahead}}",
+        "comment": "In '{n, plural, one {NEXT WEEK} other {# WEEKS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.history": {
-        "value": "{n, plural, =1 {last month} other {# months ago}}",
-        "comment": "In '{n, plural, =1 {LAST MONTH} other {# MONTHS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {last month} other {# months ago}}",
+        "comment": "In '{n, plural, one {LAST MONTH} other {# MONTHS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.today": {
@@ -756,13 +756,13 @@
         "limit": 0
     },
     "filters.floatingRange.option.month.offset.future": {
-        "value": "{n, plural, =1 {next month} other {# months ahead}}",
-        "comment": "In '{n, plural, =1 {NEXT MONTH} other {# MONTHS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {next month} other {# months ahead}}",
+        "comment": "In '{n, plural, one {NEXT MONTH} other {# MONTHS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.history": {
-        "value": "{n, plural, =1 {last quarter} other {# quarters ago}}",
-        "comment": "In '{n, plural, =1 {LAST QUARTER} other {# QUARTERS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {last quarter} other {# quarters ago}}",
+        "comment": "In '{n, plural, one {LAST QUARTER} other {# QUARTERS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.today": {
@@ -771,13 +771,13 @@
         "limit": 0
     },
     "filters.floatingRange.option.quarter.offset.future": {
-        "value": "{n, plural, =1 {next quarter} other {# quarters ahead}}",
-        "comment": "In '{n, plural, =1 {NEXT QUARTER} other {# QUARTERS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {next quarter} other {# quarters ahead}}",
+        "comment": "In '{n, plural, one {NEXT QUARTER} other {# QUARTERS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.history": {
-        "value": "{n, plural, =1 {last year} other {# years ago}}",
-        "comment": "In '{n, plural, =1 {LAST YEAR} other {# YEARS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {last year} other {# years ago}}",
+        "comment": "In '{n, plural, one {LAST YEAR} other {# YEARS AGO}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.today": {
@@ -786,8 +786,8 @@
         "limit": 0
     },
     "filters.floatingRange.option.year.offset.future": {
-        "value": "{n, plural, =1 {next year} other {# years ahead}}",
-        "comment": "In '{n, plural, =1 {NEXT YEAR} other {# YEARS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
+        "value": "{n, plural, one {next year} other {# years ahead}}",
+        "comment": "In '{n, plural, one {NEXT YEAR} other {# YEARS AHEAD}}' translate only uppercase words. Do not translate the numeric placeholder '#'. Add missing plural forms if your language has any: ask if you need any help.",
         "limit": 0
     },
     "filters.allTime.title": {
