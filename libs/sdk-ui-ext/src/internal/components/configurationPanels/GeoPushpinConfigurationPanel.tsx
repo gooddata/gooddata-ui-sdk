@@ -2,7 +2,6 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import get from "lodash/get";
 import { bucketIsEmpty, IInsightDefinition, insightBucket, insightHasMeasures } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -24,9 +23,7 @@ import ColorsSection from "../configurationControls/colors/ColorsSection";
 
 export default class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
     protected getControlProperties(): { groupNearbyPoints: boolean } {
-        const { props } = this;
-        const groupNearbyPoints = get(props, "properties.controls.points.groupNearbyPoints", true);
-
+        const groupNearbyPoints = this.props.properties?.controls?.points?.groupNearbyPoints ?? true;
         return {
             groupNearbyPoints,
         };

@@ -169,15 +169,7 @@ const DefaultRules = [
         from: {},
         to: { path: "lodash/lodash.js", dependencyTypes: ["npm"] },
     },
-    {
-        name: "not-to-lodash-get",
-        comment:
-            "This module depends on the lodash/get function. Please use the ?. and ?? operators instead." +
-            "This helps with keeping the type information sane and makes refactors easier (less magic strings)",
-        severity: "error",
-        from: {},
-        to: { path: "lodash/get.js", dependencyTypes: ["npm"] },
-    },
+    noLodashGet(),
     {
         name: "not-to-whole-date-fns",
         comment:
@@ -345,10 +337,30 @@ function moduleWithDependencies(module, dir, deps) {
     };
 }
 
+/**
+ * Creates dep cruiser rule which will ensure that code in particular package will not import lodash/get.
+ * Optionally, you can specify exceptions where the lodash/get will be allowed (if there is no workaround there).
+ * @param {RegExp|String|RegExp[]|String[]} exceptions exceptions where importing the lodash/get will be allowed
+ * @returns
+ */
+function noLodashGet(exceptions) {
+    const from = exceptions ? { pathNot: exceptions } : {};
+    return {
+        name: "not-to-lodash-get",
+        comment:
+            "This module depends on the lodash/get function. Please use the ?. and ?? operators instead." +
+            "This helps with keeping the type information sane and makes refactors easier (less magic strings)",
+        severity: "error",
+        from,
+        to: { path: "lodash/get.js", dependencyTypes: ["npm"] },
+    };
+}
+
 module.exports = {
     DefaultRules,
     DefaultOptions,
     DefaultSdkRules,
     isolatedSubmodule,
     moduleWithDependencies,
+    noLodashGet,
 };

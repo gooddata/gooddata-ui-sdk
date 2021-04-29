@@ -1,6 +1,5 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
-import get from "lodash/get";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import DropdownControl from "./DropdownControl";
@@ -16,7 +15,7 @@ export interface IPushpinViewportControl {
 }
 
 function getPushpinProperty(props: IPushpinViewportControl & WrappedComponentProps): IGeoConfigViewport {
-    return get(props, "properties.controls.viewport", { area: "auto" });
+    return props.properties?.controls?.viewport ?? { area: "auto" };
 }
 
 function PushpinViewportControl(props: IPushpinViewportControl & WrappedComponentProps): React.ReactElement {

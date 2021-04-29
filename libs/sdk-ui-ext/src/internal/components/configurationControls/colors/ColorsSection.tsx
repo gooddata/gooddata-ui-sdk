@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import set from "lodash/set";
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import { IColor } from "@gooddata/sdk-model";
@@ -108,7 +107,7 @@ class ColorsSection extends React.Component<IColorsSectionProps & WrappedCompone
 
     private isDefaultColorMapping() {
         const { properties } = this.props;
-        const colorMapping = get(properties, "controls.colorMapping", []);
+        const colorMapping = properties?.controls?.colorMapping ?? [];
         return !colorMapping || colorMapping.length === 0;
     }
 

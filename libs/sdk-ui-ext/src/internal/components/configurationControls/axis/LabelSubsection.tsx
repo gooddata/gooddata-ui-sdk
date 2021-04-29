@@ -2,7 +2,6 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
-import get from "lodash/get";
 import { AxisType } from "../../../interfaces/AxisType";
 import LabelRotationControl from "./LabelRotationControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
@@ -42,12 +41,11 @@ class LabelSubsection extends React.PureComponent<ILabelSubsection & WrappedComp
     }
 
     private getControlProperties(): IVisualizationProperties {
-        const axisVisible = get(this.props, `properties.controls.${this.props.axis}.visible`, true);
-        const axisLabelsEnabled = get(
-            this.props,
-            `properties.controls.${this.props.axis}.labelsEnabled`,
-            true,
-        );
+        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+
+        const axisVisible = axisProperties?.visible ?? true;
+        const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
+
         return {
             axisVisible,
             axisLabelsEnabled,

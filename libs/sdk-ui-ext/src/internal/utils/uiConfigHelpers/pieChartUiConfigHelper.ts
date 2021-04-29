@@ -1,17 +1,11 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import {
-    IExtendedReferencePoint,
-    IBucketOfFun,
-    IUiConfig,
-    IBucketUiConfig,
-} from "../../interfaces/Visualization";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 
 import { UICONFIG, SUPPORTED, OPEN_AS_REPORT } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -26,19 +20,19 @@ import pieViewIcon from "../../assets/pie/bucket-title-view.svg";
 import { hasColorMapping } from "../propertiesHelper";
 
 function setPieChartBucketWarningMessages(referencePoint: IExtendedReferencePoint, intl?: IntlShape) {
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
-    const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
+    const buckets = referencePoint?.buckets;
+    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
-    forEach(buckets, (bucket: IBucketOfFun) => {
-        const localIdentifier: string = get(bucket, "localIdentifier", "");
-        const bucketUiConfig: IBucketUiConfig = get(updatedUiConfig, [BUCKETS, localIdentifier]);
+    forEach(buckets, (bucket) => {
+        const localIdentifier = bucket?.localIdentifier ?? "";
+        const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
 
         // skip disabled buckets
-        if (!get(bucketUiConfig, "enabled", false)) {
+        if (!bucketUiConfig?.enabled) {
             return;
         }
 
-        if (!get(bucketUiConfig, "canAddItems")) {
+        if (!bucketUiConfig?.canAddItems) {
             let warningMessageId;
             if (bucket.localIdentifier === BucketNames.VIEW) {
                 warningMessageId = "dashboard.bucket.category_category_by_warning";
@@ -60,7 +54,7 @@ export function setPieChartUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets = referencePointConfigured?.buckets ?? [];
 
     const measuresCanAddItems = !hasMoreThanOneCategory(buckets);
     const viewCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);

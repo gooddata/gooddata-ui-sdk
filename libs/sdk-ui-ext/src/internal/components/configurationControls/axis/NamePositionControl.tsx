@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import get from "lodash/get";
 
 import DropdownControl from "../DropdownControl";
 import { getTranslatedDropdownItems } from "../../../utils/translations";
@@ -39,12 +38,11 @@ class NamePositionControl extends React.PureComponent<IConfigItemSubsection & Wr
     }
 
     private getControlProperties(): IVisualizationProperties {
-        const { axis } = this.props;
-        const controlsAxis = get(this.props, `properties.controls.${axis}`, {});
+        const axisProperties = this.props.properties?.controls?.[this.props.axis];
 
-        const axisVisible = get(controlsAxis, "visible", true);
-        const axisNameVisible = get(controlsAxis, "name.visible", true);
-        const namePosition = get(controlsAxis, "name.position", "auto");
+        const axisVisible = axisProperties?.visible ?? true;
+        const axisNameVisible = axisProperties?.name?.visible ?? true;
+        const namePosition = axisProperties?.name?.position ?? "auto";
 
         return {
             axisVisible,

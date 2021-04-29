@@ -1,20 +1,14 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import forEach from "lodash/forEach";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    IExtendedReferencePoint,
-    IBucketOfFun,
-    IUiConfig,
-    IBucketUiConfig,
-} from "../../interfaces/Visualization";
+import { IExtendedReferencePoint, IBucketOfFun, IUiConfig } from "../../interfaces/Visualization";
 
 import { UICONFIG, RECOMMENDATIONS, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
-import { BUCKETS, FILTERS } from "../../constants/bucket";
+import { BUCKETS } from "../../constants/bucket";
 
 import {
     comparisonAndTrendingRecommendationEnabled,
@@ -42,19 +36,19 @@ function setBaseChartBucketWarningMessages(
     referencePoint: IExtendedReferencePoint,
     intl?: IntlShape,
 ): IUiConfig {
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
-    const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
+    const buckets = referencePoint?.buckets ?? [];
+    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
     forEach(buckets, (bucket: IBucketOfFun) => {
-        const localIdentifier: string = get(bucket, "localIdentifier", "");
-        const bucketUiConfig: IBucketUiConfig = get(updatedUiConfig, [BUCKETS, localIdentifier]);
+        const localIdentifier = bucket?.localIdentifier ?? "";
+        const bucketUiConfig = updatedUiConfig?.buckets?.[localIdentifier];
 
         // skip disabled buckets
-        if (!get(bucketUiConfig, "enabled", false)) {
+        if (!bucketUiConfig?.enabled) {
             return;
         }
 
-        if (!get(bucketUiConfig, "canAddItems")) {
+        if (!bucketUiConfig?.canAddItems) {
             let warningMessageId;
             if (bucket.localIdentifier === BucketNames.MEASURES) {
                 warningMessageId = "dashboard.bucket.metric_stack_by_warning";
@@ -78,7 +72,7 @@ export function setBaseChartUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets = referencePointConfigured?.buckets ?? [];
 
     const measuresCanAddItems = hasNoMeasures(buckets) || hasNoStacks(buckets);
     const stackCanAddItems = !hasMoreThanOneMasterMeasure(buckets, BucketNames.MEASURES);
@@ -113,17 +107,17 @@ export function setBaseChartUiConfig(
     set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.MEASURES, "icon"],
-        get(iconsMap, [visualizationType, BucketNames.MEASURES]),
+        iconsMap[visualizationType]?.[BucketNames.MEASURES],
     );
     set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.VIEW, "icon"],
-        get(iconsMap, [visualizationType, BucketNames.VIEW]),
+        iconsMap[visualizationType]?.[BucketNames.VIEW],
     );
     set(
         referencePointConfigured,
         [UICONFIG, BUCKETS, BucketNames.STACK, "icon"],
-        get(iconsMap, [visualizationType, BucketNames.STACK]),
+        iconsMap[visualizationType]?.[BucketNames.STACK],
     );
 
     set(
@@ -142,8 +136,8 @@ export function setBaseChartUiConfigRecommendations(
 ): IExtendedReferencePoint {
     if (visualizationType === VisualizationTypes.COLUMN) {
         const newReferencePoint = cloneDeep(referencePoint);
-        const buckets = get(newReferencePoint, BUCKETS);
-        const filters = get(newReferencePoint, FILTERS);
+        const buckets = newReferencePoint?.buckets;
+        const filters = newReferencePoint?.filters;
 
         const percentEnabled = percentRecommendationEnabled(buckets, filters);
         const comparisonAndTrending = comparisonAndTrendingRecommendationEnabled(buckets);

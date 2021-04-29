@@ -29,7 +29,6 @@ import { setComboChartUiConfigDeprecated } from "../../../utils/uiConfigHelpers/
 import UnsupportedConfigurationPanel from "../../configurationPanels/UnsupportedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import without from "lodash/without";
 
@@ -49,7 +48,7 @@ export class PluggableComboChartDeprecated extends PluggableBaseChart {
             uiConfig: cloneDeep(COMBO_CHART_UICONFIG_DEPRECATED),
         };
 
-        const buckets = get(clonedReferencePoint, BUCKETS, []);
+        const buckets = clonedReferencePoint?.buckets ?? [];
 
         const attributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.TREND,

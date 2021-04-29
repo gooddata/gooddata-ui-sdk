@@ -48,7 +48,6 @@ import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChar
 
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import {
     addIntersectionFiltersToInsight,
@@ -204,7 +203,7 @@ export class PluggableAreaChart extends PluggableBaseChart {
     }
 
     private getBucketItems(referencePoint: IReferencePoint) {
-        const buckets = get(referencePoint, BUCKETS, []);
+        const buckets = referencePoint?.buckets ?? [];
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
         const mainDateItem = getMainDateItem(dateItems);

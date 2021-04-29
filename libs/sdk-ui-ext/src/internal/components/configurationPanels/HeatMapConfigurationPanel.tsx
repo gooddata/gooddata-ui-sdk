@@ -2,7 +2,6 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import get from "lodash/get";
 import cx from "classnames";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 
@@ -128,8 +127,9 @@ export default class HeatMapConfigurationPanel extends ConfigurationPanelContent
     }
 
     private getControlProperties() {
-        const xAxisVisible = get(this.props, "properties.controls.xaxis.visible", true);
-        const yAxisVisible = get(this.props, "properties.controls.yaxis.visible", true);
+        const propertiesControls = this.props.properties?.controls;
+        const xAxisVisible = propertiesControls?.xaxis?.visible ?? true;
+        const yAxisVisible = propertiesControls?.yaxis?.visible ?? true;
         return {
             xAxisVisible,
             yAxisVisible,

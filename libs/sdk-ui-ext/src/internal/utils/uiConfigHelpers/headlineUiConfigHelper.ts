@@ -1,11 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IBucketOfFun, IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
+import { IUiConfig, IReferencePoint } from "../../interfaces/Visualization";
 import { DEFAULT_HEADLINE_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 
@@ -24,7 +23,7 @@ export function getDefaultHeadlineUiConfig(): IUiConfig {
 export function getHeadlineUiConfig(referencePoint: IReferencePoint, intl: IntlShape): IUiConfig {
     let uiConfig = getDefaultHeadlineUiConfig();
 
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
+    const buckets = referencePoint?.buckets ?? [];
     const viewCanAddPrimaryItems = hasNoMeasures(buckets);
     const viewCanAddSecondaryItems = hasNoSecondaryMeasures(buckets);
 

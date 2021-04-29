@@ -38,7 +38,6 @@ import {
     IRankingFilter,
 } from "../interfaces/Visualization";
 import { ATTRIBUTE, BUCKETS, DATE, METRIC, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
-import { UICONFIG } from "../constants/uiConfig";
 import { getTranslation } from "./translations";
 import {
     bucketItems,
@@ -276,7 +275,7 @@ export function getDateFilter(filtersBucket: IFilters): IDateFilter {
         return null;
     }
     const dateFiltersInclEmpty = flatMap(filtersBucket.items, (filterItem) => {
-        const filters = get<IFiltersBucketItem, "filters", IBucketFilter[]>(filterItem, "filters", []);
+        const filters = filterItem.filters ?? [];
         return filters.find(isDateFilter);
     });
     const dateFilters = compact(dateFiltersInclEmpty);
@@ -329,13 +328,13 @@ export function setBucketTitles(
     visualizationType: string,
     intl?: IntlShape,
 ): IUiConfig {
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS);
-    const updatedUiConfig: IUiConfig = cloneDeep(get(referencePoint, UICONFIG));
+    const buckets = referencePoint?.buckets;
+    const updatedUiConfig = cloneDeep(referencePoint?.uiConfig);
 
-    forEach(buckets, (bucket: IBucketOfFun) => {
-        const localIdentifier: string = get(bucket, "localIdentifier", "");
+    forEach(buckets, (bucket) => {
+        const localIdentifier = bucket.localIdentifier ?? "";
         // skip disabled buckets
-        if (!get(updatedUiConfig, [BUCKETS, localIdentifier, "enabled"], false)) {
+        if (!(updatedUiConfig?.buckets?.[localIdentifier]?.enabled ?? false)) {
             return;
         }
 
@@ -366,11 +365,7 @@ export function getItemsCount(buckets: IBucketOfFun[], localIdentifier: string):
 }
 
 export function getBucketItems(buckets: IBucketOfFun[], localIdentifier: string): IBucketItem[] {
-    return get(
-        buckets.find((bucket) => bucket.localIdentifier === localIdentifier),
-        "items",
-        [],
-    );
+    return buckets.find((bucket) => bucket.localIdentifier === localIdentifier)?.items ?? [];
 }
 
 // return bucket items matching localIdentifiers from any bucket
@@ -408,7 +403,7 @@ export function getBucketItemsByType(
 
 export function getPreferredBucketItems(buckets: IBucketOfFun[], preference: string[], type: string[]): any {
     const bucket = getPreferredBucket(buckets, preference, type);
-    return get(bucket, "items", []);
+    return bucket?.items ?? [];
 }
 
 function getPreferredBucket(buckets: IBucketOfFun[], preference: string[], type: string[]): IBucketOfFun {
@@ -419,7 +414,7 @@ function getPreferredBucket(buckets: IBucketOfFun[], preference: string[], type:
 
         return buckets.find((bucket: IBucketOfFun) => {
             const preferenceMatch = bucket.localIdentifier === preference;
-            const typeMatch = every(get(bucket, "items", []), (item) => type.indexOf(item.type) !== -1);
+            const typeMatch = every(bucket?.items ?? [], (item) => type.indexOf(item.type) !== -1);
 
             return preferenceMatch && typeMatch;
         });
@@ -462,12 +457,12 @@ export function removeDuplicateBucketItems(buckets: IBucketOfFun[]): IBucketOfFu
 
 export function getTotalsFromBucket(buckets: IBucketOfFun[], bucketName: string): ITotal[] {
     const selectedBucket = buckets.find((bucket) => bucket.localIdentifier === bucketName);
-    return get(selectedBucket, "totals", []);
+    return selectedBucket?.totals ?? [];
 }
 
 function getUniqueAttributes(buckets: IBucketOfFun[]): IBucketItem[] {
     const attributes = getAllItemsByType(buckets, [ATTRIBUTE, DATE]);
-    return uniqBy(attributes, (attribute) => get(attribute, "attribute"));
+    return uniqBy(attributes, (attribute) => attribute?.attribute);
 }
 
 export function getMeasuresFromMdObject(insight: IInsightDefinition): IMeasure[] {
@@ -508,6 +503,7 @@ export function getMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
         return [...acc, ...prefBucketItems];
     }, []);
 
+    // TODO this is super suspicious, the array will never have "items" property...
     // if not found in prefered bucket use all available measure items
     if (isEmpty(get(preferredMeasures, "items", []))) {
         return getMeasures(buckets);
@@ -529,7 +525,7 @@ export function getBucketItemsWithExcludeByType(
 export function getStackItems(buckets: IBucketOfFun[], itemTypes: string[] = [ATTRIBUTE]): IBucketItem[] {
     const preferredStacks = getPreferredBucket(buckets, [BucketNames.STACK, BucketNames.SEGMENT], itemTypes);
 
-    return get(preferredStacks, "items", []);
+    return preferredStacks?.items ?? [];
 }
 
 export function getAttributeItems(buckets: IBucketOfFun[]): IBucketItem[] {
@@ -561,19 +557,17 @@ function getAllMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [METRIC]);
 }
 
-// get all attributes from buckets, but items from prefered buckets are first
+// get all attributes from buckets, but items from preferred buckets are first
 export function getAllAttributeItemsWithPreference(
     buckets: IBucketOfFun[],
     preference: string[],
 ): IBucketItem[] {
     const preferredAttributes = preference.reduce((acc, pref) => {
         const prefBucket = getPreferredBucket(buckets, [pref], [ATTRIBUTE, DATE]);
-        return [...acc, ...get(prefBucket, "items", [])];
+        return [...acc, ...(prefBucket?.items ?? [])];
     }, []);
-    const allBucketNames: string[] = buckets.map((bucket) => get(bucket, "localIdentifier"));
-    const otherBucketNames: string[] = allBucketNames.filter(
-        (bucketName) => !includes(preference, bucketName),
-    );
+    const allBucketNames = buckets.map((bucket) => bucket?.localIdentifier);
+    const otherBucketNames = allBucketNames.filter((bucketName) => !includes(preference, bucketName));
     const allOtherAttributes = otherBucketNames.reduce(
         (attributes, bucketName) =>
             attributes.concat(getBucketItemsByType(buckets, bucketName, [ATTRIBUTE, DATE])),
@@ -607,7 +601,7 @@ function applyItemsLimit(bucket: IBucketOfFun, itemsLimit: number): IBucketOfFun
 }
 
 function applyUiConfigOnBucket(bucket: IBucketOfFun, bucketUiConfig: IBucketUiConfig): IBucketOfFun {
-    return applyItemsLimit(bucket, get(bucketUiConfig, "itemsLimit"));
+    return applyItemsLimit(bucket, bucketUiConfig?.itemsLimit);
 }
 
 export function applyUiConfig(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
@@ -625,11 +619,11 @@ export function hasBucket(buckets: IBucketOfFun[], localIdentifier: string): boo
 }
 
 export function findBucket(buckets: IBucketOfFun[], localIdentifier: string): IBucketOfFun {
-    return buckets.find((bucket: IBucketOfFun) => get(bucket, "localIdentifier") === localIdentifier);
+    return buckets.find((bucket) => bucket?.localIdentifier === localIdentifier);
 }
 
 export function getBucketsByNames(buckets: IBucketOfFun[], names: string[]): IBucketOfFun[] {
-    return buckets.filter((bucket: IBucketOfFun) => includes(names, get(bucket, "localIdentifier")));
+    return buckets.filter((bucket) => includes(names, bucket?.localIdentifier));
 }
 
 export function getFirstMasterWithDerived(measureItems: IBucketItem[]): IBucketItem[] {
@@ -885,7 +879,7 @@ function pruneBucketMeasureItems(
 }
 
 function isShowOnSecondaryAxis(item: IBucketItem): boolean {
-    return get(item, SHOW_ON_SECONDARY_AXIS, false);
+    return item?.showOnSecondaryAxis ?? false;
 }
 
 export function setMeasuresShowOnSecondaryAxis(items: IBucketItem[], value: boolean): IBucketItem[] {
@@ -904,7 +898,7 @@ export function getAllMeasuresShowOnSecondaryAxis(buckets: IBucketOfFun[]): IBuc
 }
 
 export function getItemsLocalIdentifiers(items: IBucketItem[]): string[] {
-    return items.map((item: IBucketItem) => get(item, "localIdentifier", ""));
+    return items.map((item) => item?.localIdentifier ?? "");
 }
 
 export interface IMeasureBucketItemsLimit {

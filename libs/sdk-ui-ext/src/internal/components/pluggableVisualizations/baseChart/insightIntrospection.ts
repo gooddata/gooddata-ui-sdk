@@ -3,7 +3,6 @@ import { bucketItems, IInsightDefinition, insightBucket } from "@gooddata/sdk-mo
 import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import get from "lodash/get";
 
 export function countBucketItems(
     insight: IInsightDefinition,
@@ -47,8 +46,8 @@ export function countItemsOnAxes(
     const totalMeasureItemCount = measureItemCount + secondaryMeasureItemCount;
 
     const secondaryMeasureCountInConfig = (isBarFamilyChartType
-        ? get(controls, "secondary_xaxis.measures", [])
-        : get(controls, "secondary_yaxis.measures", [])
+        ? controls?.secondary_xaxis?.measures ?? []
+        : controls?.secondary_yaxis?.measures ?? []
     ).length;
 
     if (isBarFamilyChartType) {

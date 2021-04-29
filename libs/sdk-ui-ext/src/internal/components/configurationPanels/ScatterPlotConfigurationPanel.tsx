@@ -18,7 +18,6 @@ import {
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble";
 import { insightHasAttributes } from "@gooddata/sdk-model";
-import get from "lodash/get";
 import NameSubsection from "../configurationControls/axis/NameSubsection";
 import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIntrospection";
 
@@ -169,10 +168,11 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
     }
 
     private getControlProperties() {
-        const xAxisVisible = get(this.props, "properties.controls.xaxis.visible", true);
-        const yAxisVisible = get(this.props, "properties.controls.yaxis.visible", true);
+        const propertiesControls = this.props.properties?.controls;
 
-        const gridEnabled = get(this.props, "properties.controls.grid.enabled", true);
+        const xAxisVisible = propertiesControls?.xaxis?.visible ?? true;
+        const yAxisVisible = propertiesControls?.yaxis?.visible ?? true;
+        const gridEnabled = propertiesControls?.grid?.enabled ?? true;
 
         return {
             xAxisVisible,

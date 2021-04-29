@@ -1,7 +1,6 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
-import get from "lodash/get";
 import { IntlShape } from "react-intl";
 
 import { isLineChart } from "@gooddata/sdk-ui-charts";
@@ -23,10 +22,6 @@ import columnViewIcon from "../../assets/column/bucket-title-view.svg";
 import lineViewIcon from "../../assets/combo/bucket-title-view-line-line.svg";
 import areaViewIcon from "../../assets/area/bucket-title-view.svg";
 
-import {
-    PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
-    PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
-} from "../../constants/properties";
 import { UICONFIG } from "../../constants/uiConfig";
 
 const { COLUMN, LINE, AREA } = VisualizationTypes;
@@ -62,23 +57,23 @@ export function setComboChartUiConfig(
     visualizationType: ChartType,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const measureBuckets: IBucketOfFun[] = getBucketsByNames(get(referencePointConfigured, BUCKETS), [
+    const measureBuckets = getBucketsByNames(referencePointConfigured?.buckets, [
         BucketNames.MEASURES,
         BucketNames.SECONDARY_MEASURES,
     ]);
     const chartTypes = [
-        get(referencePointConfigured, PROPERTY_CONTROLS_PRIMARY_CHART_TYPE, COLUMN),
-        get(referencePointConfigured, PROPERTY_CONTROLS_SECONDARY_CHART_TYPE, LINE),
+        referencePointConfigured?.properties?.controls?.primaryChartType ?? COLUMN,
+        referencePointConfigured?.properties?.controls?.secondaryChartType ?? LINE,
     ];
 
     const updatedUiConfig: IUiConfig = setBucketTitles(referencePointConfigured, visualizationType, intl);
 
-    const isDualAxis = get(referencePointConfigured, "properties.controls.dualAxis", true);
+    const isDualAxis = referencePointConfigured?.properties?.controls?.dualAxis ?? true;
     setCanStackInPercent(updatedUiConfig, chartTypes[1], isDualAxis);
 
     measureBuckets.forEach((bucket: IBucketOfFun, index: number) => {
         const type = chartTypes[index];
-        const localIdentifier: string = get(bucket, "localIdentifier", "");
+        const localIdentifier = bucket?.localIdentifier ?? "";
         const subtitle = getTranslation(`dashboard.bucket.combo.subtitle.${type}`, intl);
 
         set(updatedUiConfig, [BUCKETS, localIdentifier, "subtitle"], subtitle);

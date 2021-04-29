@@ -4,7 +4,6 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
 import cloneDeep from "lodash/cloneDeep";
 import noop from "lodash/noop";
-import get from "lodash/get";
 import set from "lodash/set";
 
 import DisabledBubbleMessage from "../DisabledBubbleMessage";
@@ -51,7 +50,7 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
         this.toggleCollapsed = this.toggleCollapsed.bind(this);
         this.toggleValue = this.toggleValue.bind(this);
 
-        const collapsed = get(props, `propertiesMeta.${this.props.id}.collapsed`, true);
+        const collapsed = props.propertiesMeta?.[props.id]?.collapsed ?? true;
 
         this.state = {
             collapsed,
@@ -59,7 +58,8 @@ export class ConfigSection extends React.Component<IConfigSectionProps, IConfigS
     }
 
     public UNSAFE_componentWillReceiveProps(nextProps: IConfigSectionOwnProps & WrappedComponentProps): void {
-        const collapsed = get(nextProps, `propertiesMeta.${this.props.id}.collapsed`, true);
+        // TODO: should the indexer be "nextProps.id"? Leaving as-is for now to be safe.
+        const collapsed = nextProps.propertiesMeta?.[this.props.id]?.collapsed ?? true;
         this.setState({ collapsed });
     }
 

@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../tests/mocks/referencePointMocks";
 import { setComboChartUiConfigDeprecated } from "../comboChartUiConfigHelperDeprecated";
@@ -20,9 +19,9 @@ describe("comboChartUiConfigHelper", () => {
                 intl,
                 VisualizationTypes.COMBO,
             );
-            const primaryMeasureBucket = get(referencePoint, "uiConfig.buckets.measures");
-            const secondaryMeasureBucket = get(referencePoint, "uiConfig.buckets.secondary_measures");
-            const viewBucket = get(referencePoint, "uiConfig.buckets.view");
+            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
+            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
+            const viewBucket = referencePoint?.uiConfig?.buckets?.view;
 
             expect(primaryMeasureBucket.title).toEqual("Measures");
             expect(secondaryMeasureBucket.title).toEqual("Measures");
@@ -35,8 +34,8 @@ describe("comboChartUiConfigHelper", () => {
                 intl,
                 VisualizationTypes.COMBO,
             );
-            const primaryMeasureBucket = get(referencePoint, "uiConfig.buckets.measures");
-            const secondaryMeasureBucket = get(referencePoint, "uiConfig.buckets.secondary_measures");
+            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
+            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
 
             expect(primaryMeasureBucket.icon).toBeDefined();
             expect(secondaryMeasureBucket.icon).toBeDefined();

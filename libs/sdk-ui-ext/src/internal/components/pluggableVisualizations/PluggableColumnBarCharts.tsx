@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import get from "lodash/get";
 import set from "lodash/set";
 import {
     bucketIsEmpty,
@@ -18,10 +17,9 @@ import {
 } from "@gooddata/sdk-ui";
 import { AXIS } from "../../constants/axis";
 import { BUCKETS } from "../../constants/bucket";
-import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT, UICONFIG, UICONFIG_AXIS } from "../../constants/uiConfig";
+import { MAX_CATEGORIES_COUNT, MAX_STACKS_COUNT } from "../../constants/uiConfig";
 import { drillDownFromAttributeLocalId } from "../../utils/ImplicitDrillDownHelper";
 import {
-    IBucketOfFun,
     IDrillDownContext,
     IExtendedReferencePoint,
     IImplicitDrillDown,
@@ -64,7 +62,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         return super.getExtendedReferencePoint(referencePoint).then((ext: IExtendedReferencePoint) => {
             let newExt = setSecondaryMeasures(ext, this.secondaryAxis);
 
-            this.axis = get(newExt, UICONFIG_AXIS, AXIS.PRIMARY);
+            this.axis = newExt?.uiConfig?.axis ?? AXIS.PRIMARY;
 
             // filter out unnecessary stacking props for some specific cases such as one measure or empty stackBy
             this.supportedPropertiesList = removeImmutableOptionalStackingProperties(
@@ -115,15 +113,12 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucketOfFun[] = get(extendedReferencePoint, BUCKETS, []);
+        const buckets = extendedReferencePoint?.buckets ?? [];
         const measures = getFilteredMeasuresForStackedCharts(buckets);
         const dateItems = getDateItems(buckets);
         const mainDateItem = getMainDateItem(dateItems);
-        const categoriesCount: number = get(
-            extendedReferencePoint,
-            [UICONFIG, BUCKETS, BucketNames.VIEW, "itemsLimit"],
-            MAX_CATEGORIES_COUNT,
-        );
+        const categoriesCount =
+            extendedReferencePoint.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
         const allAttributesWithoutStacks = getAllCategoriesAttributeItems(buckets);
         const allAttributesWithoutStacksWithDatesHandled = removeDivergentDateItems(
             allAttributesWithoutStacks,

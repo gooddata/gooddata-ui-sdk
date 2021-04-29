@@ -1,6 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
 import every from "lodash/every";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
@@ -152,9 +151,9 @@ export function createSorts(
 }
 
 export function getBucketItemIdentifiers(referencePoint: IExtendedReferencePoint): string[] {
-    const buckets: IBucketOfFun[] = get(referencePoint, "buckets", []);
+    const buckets = referencePoint?.buckets ?? [];
     return buckets.reduce((localIdentifiers: string[], bucket: IBucketOfFun): string[] => {
-        const items: IBucketItem[] = get(bucket, "items", []);
+        const items = bucket?.items ?? [];
         return localIdentifiers.concat(items.map((item: IBucketItem): string => item.localIdentifier));
     }, []);
 }
@@ -209,7 +208,7 @@ export function removeInvalidSort(
 
 export function setSortItems(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const buckets = referencePoint.buckets;
-    const sortItems = get(referencePoint, ["properties", "sortItems"], []);
+    const sortItems = referencePoint?.properties?.sortItems ?? [];
 
     if (sortItems.length > 0) {
         return referencePoint;

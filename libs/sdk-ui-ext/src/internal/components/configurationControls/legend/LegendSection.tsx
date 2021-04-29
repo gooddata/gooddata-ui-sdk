@@ -3,7 +3,6 @@ import React from "react";
 import ConfigSection from "../ConfigSection";
 import LegendPositionControl from "./LegendPositionControl";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
-import get from "lodash/get";
 
 export interface ILegendSection {
     controlsDisabled: boolean;
@@ -16,9 +15,9 @@ class LegendSection extends React.PureComponent<ILegendSection> {
     public render(): React.ReactNode {
         const { controlsDisabled, properties, pushData } = this.props;
 
-        const legendEnabled = get(this.props, "properties.controls.legend.enabled", true);
-        const legendPosition = get(this.props, "properties.controls.legend.position", "auto");
-        const legendToggleDisabledByVisualization = !get(this.props, "propertiesMeta.legend_enabled", true);
+        const legendEnabled = this.props.properties?.controls?.legend?.enabled ?? true;
+        const legendPosition = this.props.properties?.controls?.legend?.position ?? "auto";
+        const legendToggleDisabledByVisualization = !(this.props.propertiesMeta?.legend_enabled ?? true);
 
         const toggleDisabled = controlsDisabled || legendToggleDisabledByVisualization;
         const legendPositionControlDisabled = !legendEnabled || toggleDisabled;

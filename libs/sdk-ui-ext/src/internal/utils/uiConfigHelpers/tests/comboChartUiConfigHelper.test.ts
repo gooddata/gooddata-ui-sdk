@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import { DefaultLocale, VisualizationTypes } from "@gooddata/sdk-ui";
 import * as referencePointMock from "../../../tests/mocks/referencePointMocks";
 import { setComboChartUiConfig } from "../comboChartUiConfigHelper";
@@ -17,9 +16,9 @@ describe("comboChartUiConfigHelper", () => {
 
         it("should set bucket titles", () => {
             const referencePoint = setComboChartUiConfig(refPointMock, intl, VisualizationTypes.COMBO);
-            const primaryMeasureBucket = get(referencePoint, "uiConfig.buckets.measures");
-            const secondaryMeasureBucket = get(referencePoint, "uiConfig.buckets.secondary_measures");
-            const viewBucket = get(referencePoint, "uiConfig.buckets.view");
+            const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
+            const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
+            const viewBucket = referencePoint?.uiConfig?.buckets?.view;
 
             expect(primaryMeasureBucket.title).toEqual("Measures");
             expect(secondaryMeasureBucket.title).toEqual("Measures");
@@ -43,8 +42,8 @@ describe("comboChartUiConfigHelper", () => {
                     },
                 };
                 const referencePoint = setComboChartUiConfig(refPoint, intl, VisualizationTypes.COMBO);
-                const primaryMeasureBucket = get(referencePoint, "uiConfig.buckets.measures");
-                const secondaryMeasureBucket = get(referencePoint, "uiConfig.buckets.secondary_measures");
+                const primaryMeasureBucket = referencePoint?.uiConfig?.buckets?.measures;
+                const secondaryMeasureBucket = referencePoint?.uiConfig?.buckets?.secondary_measures;
 
                 expect(primaryMeasureBucket.icon).toBeDefined();
                 expect(secondaryMeasureBucket.icon).toBeDefined();
@@ -70,7 +69,7 @@ describe("comboChartUiConfigHelper", () => {
                     },
                 };
                 const referencePoint = setComboChartUiConfig(refPoint, intl, VisualizationTypes.COMBO);
-                const canStackInPercent = get(referencePoint, "uiConfig.optionalStacking.canStackInPercent");
+                const canStackInPercent = referencePoint?.uiConfig?.optionalStacking?.canStackInPercent;
                 expect(canStackInPercent).toBe(expectation);
             },
         );

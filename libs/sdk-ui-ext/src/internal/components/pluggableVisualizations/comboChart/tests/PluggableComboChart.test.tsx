@@ -1,9 +1,7 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import merge from "lodash/merge";
-import { PROPERTY_CONTROLS } from "../../../../constants/properties";
 import { PluggableComboChart } from "../PluggableComboChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import {
@@ -13,7 +11,7 @@ import {
     IUiConfig,
 } from "../../../../interfaces/Visualization";
 import { AXIS } from "../../../../constants/axis";
-import { UICONFIG_AXIS, COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
+import { COMBO_CHART_UICONFIG } from "../../../../constants/uiConfig";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../../constants/supportedProperties";
 import { VisualizationTypes, OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -205,7 +203,7 @@ describe("PluggableComboChart", () => {
             async (_desc: string, refPoint: IReferencePoint, expectedMeasures: string[]) => {
                 const chart = createComponent(defaultProps);
                 const extendedReferencePoint = await chart.getExtendedReferencePoint(refPoint);
-                const measures = get(extendedReferencePoint, "properties.controls.secondary_yaxis.measures");
+                const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis?.measures;
 
                 expect(measures).toEqual(expectedMeasures);
             },
@@ -225,10 +223,13 @@ describe("PluggableComboChart", () => {
                 const chart = createComponent(mockProps);
 
                 const ext = await chart.getExtendedReferencePoint(refPoint);
-                const axisType = get(ext, UICONFIG_AXIS, AXIS.PRIMARY);
+                const axisType = ext?.uiConfig?.axis ?? AXIS.PRIMARY;
 
                 expect(axisType).toEqual(axis);
-                expect(get(chart, "supportedPropertiesList")).toEqual(COMBO_CHART_SUPPORTED_PROPERTIES[axis]);
+                // TODO avoid testing protected property
+                expect((chart as any).supportedPropertiesList).toEqual(
+                    COMBO_CHART_SUPPORTED_PROPERTIES[axis],
+                );
             },
         );
     });
@@ -348,7 +349,7 @@ describe("PluggableComboChart", () => {
 
                 return Promise.all(refPoints).then((extRefPoints: IExtendedReferencePoint[]) => {
                     for (const extRefPoint of extRefPoints) {
-                        const axisType = get(extRefPoint, UICONFIG_AXIS, AXIS.PRIMARY);
+                        const axisType = extRefPoint?.uiConfig?.axis ?? AXIS.PRIMARY;
                         expect(axisType).toEqual(axis);
                         expect(comboChart.getSupportedPropertiesList()).toEqual(
                             COMBO_CHART_SUPPORTED_PROPERTIES[axis],
@@ -475,7 +476,7 @@ describe("PluggableComboChart", () => {
         it("should return default chart type", async () => {
             const refPointMock = referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
-            const controls = get(extRefPoint, PROPERTY_CONTROLS, {});
+            const controls = extRefPoint?.properties?.controls ?? {};
 
             expect(controls.primaryChartType).toBe("column");
             expect(controls.secondaryChartType).toBe("line");
@@ -503,7 +504,7 @@ describe("PluggableComboChart", () => {
                 },
             );
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
-            const controls = get(extRefPoint, PROPERTY_CONTROLS, {});
+            const controls = extRefPoint?.properties?.controls ?? {};
 
             expect(controls.primaryChartType).toBe("line");
             expect(controls.secondaryChartType).toBe("column");
@@ -523,7 +524,7 @@ describe("PluggableComboChart", () => {
                 },
             );
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
-            const controls = get(extRefPoint, PROPERTY_CONTROLS, {});
+            const controls = extRefPoint?.properties?.controls ?? {};
 
             expect(controls.primaryChartType).toBe("line");
             expect(controls.secondaryChartType).toBe("area");

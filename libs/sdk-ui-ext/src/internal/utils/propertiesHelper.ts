@@ -14,8 +14,7 @@ import {
     getMeasureItems,
     getAllMeasuresShowOnSecondaryAxis,
 } from "./bucketHelper";
-import { BUCKETS, SHOW_ON_SECONDARY_AXIS } from "../constants/bucket";
-import { PROPERTY_CONTROLS, PROPERTY_CONTROLS_DUAL_AXIS } from "../constants/properties";
+import { PROPERTY_CONTROLS } from "../constants/properties";
 import { UICONFIG_AXIS } from "../constants/uiConfig";
 import { AxisType, IAxisNameProperties } from "../interfaces/AxisType";
 import { OPTIONAL_STACKING_PROPERTIES } from "../constants/supportedProperties";
@@ -37,7 +36,7 @@ export function getSupportedPropertiesControls(
 }
 
 export function hasColorMapping(properties: IVisualizationProperties): boolean {
-    return !!get(properties, ["controls", "colorMapping"]);
+    return !!properties?.controls?.colorMapping;
 }
 
 export function setSecondaryMeasures(
@@ -50,8 +49,8 @@ export function setSecondaryMeasures(
 
     const newReferencePoint = cloneDeep(referencePoint);
     const path = `${PROPERTY_CONTROLS}.${axisName}`;
-    const secondaryAxisProperties = get(newReferencePoint, path);
-    const buckets = get(newReferencePoint, BUCKETS, []);
+    const secondaryAxisProperties = newReferencePoint?.properties?.controls?.[axisName];
+    const buckets = newReferencePoint?.buckets ?? [];
     const allMeasures = getMeasureItems(buckets);
     const secondaryMeasures = getAllMeasuresShowOnSecondaryAxis(buckets);
 
@@ -112,7 +111,7 @@ export function getReferencePointWithSupportedProperties(
             },
         };
     }
-    const buckets = get(referencePoint, BUCKETS, []);
+    const buckets = referencePoint?.buckets ?? [];
     const stackCount = getItemsCount(buckets, BucketNames.STACK);
     const stackMeasuresToPercent = Boolean(supportedControlsProperties.stackMeasuresToPercent);
 
@@ -130,11 +129,11 @@ export function getReferencePointWithSupportedProperties(
 }
 
 export function isStackingMeasure(properties: IVisualizationProperties): boolean {
-    return get(properties, ["controls", "stackMeasures"], false);
+    return properties?.controls?.stackMeasures ?? false;
 }
 
 export function isStackingToPercent(properties: IVisualizationProperties): boolean {
-    return get(properties, ["controls", "stackMeasuresToPercent"], false);
+    return properties?.controls?.stackMeasuresToPercent ?? false;
 }
 
 export function isDualAxisOrSomeSecondaryAxisMeasure(
@@ -142,8 +141,8 @@ export function isDualAxisOrSomeSecondaryAxisMeasure(
     secondaryMeasures: IBucketItem[],
 ): boolean {
     return (
-        get(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, true) ||
-        secondaryMeasures.some((item) => get(item, SHOW_ON_SECONDARY_AXIS))
+        (extReferencePoint?.properties?.controls?.dualAxis ?? true) ||
+        secondaryMeasures.some((item) => item?.showOnSecondaryAxis)
     );
 }
 
@@ -151,7 +150,7 @@ export function removeImmutableOptionalStackingProperties(
     referencePoint: IExtendedReferencePoint,
     supportedPropertiesList: string[],
 ): string[] {
-    const buckets = get(referencePoint, BUCKETS, []);
+    const buckets = referencePoint?.buckets ?? [];
     let immutableProperties: string[] = [];
 
     if (getItemsCount(buckets, BucketNames.MEASURES) <= 1) {
@@ -189,7 +188,7 @@ export function getHighchartsAxisNameConfiguration(
 ): IVisualizationProperties {
     const axisProperties: IVisualizationProperties = AXIS_TYPES.reduce(
         (result: IVisualizationProperties, axis: string) => {
-            const axisNameConfig: IAxisNameProperties = get(controlProperties, `${axis}.name`);
+            const axisNameConfig: IAxisNameProperties = controlProperties?.[axis]?.name;
 
             if (isEmpty(axisNameConfig)) {
                 return result;
@@ -241,5 +240,5 @@ export function getDataPointsConfiguration(
 export function getColumnWidthsFromProperties(
     visualizationProperties: IVisualizationProperties,
 ): ColumnWidthItem[] | undefined {
-    return get(visualizationProperties, "controls.columnWidths");
+    return visualizationProperties?.controls?.columnWidths;
 }

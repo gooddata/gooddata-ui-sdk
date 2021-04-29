@@ -1,16 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames } from "@gooddata/sdk-ui";
-import {
-    IExtendedReferencePoint,
-    IBucketOfFun,
-    IUiConfig,
-    IBucketUiConfig,
-} from "../../interfaces/Visualization";
+import { IExtendedReferencePoint, IBucketOfFun, IUiConfig } from "../../interfaces/Visualization";
 
 import { UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
@@ -46,14 +40,14 @@ function setAreaChartBucketWarningMessages(
     messageConfig: { [bucketName: string]: string },
     intl?: IntlShape,
 ): IUiConfig {
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
-    const updatedUiConfig: IUiConfig = get(referencePoint, UICONFIG);
+    const buckets = referencePoint?.buckets ?? [];
+    const updatedUiConfig = referencePoint?.uiConfig;
 
     return buckets.reduce((uiConfig: IUiConfig, bucket: IBucketOfFun) => {
-        const localIdentifier: string = get(bucket, "localIdentifier", "");
-        const bucketUiConfig: IBucketUiConfig = get(uiConfig, [BUCKETS, localIdentifier]);
-        const isEnabled: boolean = get(bucketUiConfig, "enabled", false);
-        const canAddItem: boolean = get(bucketUiConfig, "canAddItems");
+        const localIdentifier = bucket?.localIdentifier ?? "";
+        const bucketUiConfig = uiConfig?.buckets?.[localIdentifier];
+        const isEnabled = bucketUiConfig?.enabled ?? false;
+        const canAddItem = bucketUiConfig?.canAddItems;
 
         // skip disabled buckets
         if (canAddItem || !isEnabled) {
@@ -73,7 +67,7 @@ export function setAreaChartUiConfig(
     visualizationType: string,
 ): IExtendedReferencePoint {
     const referencePointConfigured = cloneDeep(referencePoint);
-    const buckets: IBucketOfFun[] = get(referencePointConfigured, BUCKETS, []);
+    const buckets = referencePointConfigured?.buckets ?? [];
     const categoriesCount = getItemsCount(buckets, BucketNames.VIEW);
     const measuresCount = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
     const isStackEmpty = hasNoStacks(buckets);

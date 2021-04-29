@@ -7,7 +7,6 @@ import {
 } from "../drillDownUtil";
 import cloneDeep from "lodash/cloneDeep";
 import flatMap from "lodash/flatMap";
-import get from "lodash/get";
 import isNil from "lodash/isNil";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
@@ -178,11 +177,8 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             },
         ]);
 
-        const originalSortItems: ISortItem[] = get(newReferencePoint.properties, "sortItems", []);
-        const originalColumnWidths: ColumnWidthItem[] = get(
-            newReferencePoint.properties,
-            "controls.columnWidths",
-        );
+        const originalSortItems: ISortItem[] = newReferencePoint.properties?.sortItems ?? [];
+        const originalColumnWidths: ColumnWidthItem[] = newReferencePoint.properties?.controls?.columnWidths;
 
         const columnWidths = adaptReferencePointWidthItemsToPivotTable(
             originalColumnWidths,
