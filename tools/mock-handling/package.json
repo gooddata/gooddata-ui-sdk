@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK Mock data capture and management tool",
-    "repository": "\"https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/mock-handling\",",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/mock-handling"
+    },
     "license": "MIT",
     "main": "dist/interface.js",
     "typings": "dist/interface.d.ts",

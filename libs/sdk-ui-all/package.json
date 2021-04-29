@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK - All-In-One",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-all",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-all"
+    },
     "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",
     "module": "esm/index.js",

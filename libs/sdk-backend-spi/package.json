@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData Backend SPI abstraction interfaces",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-spi",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-backend-spi"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",

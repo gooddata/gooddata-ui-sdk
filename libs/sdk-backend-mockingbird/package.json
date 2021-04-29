@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "Mock GoodData Backend SPI implementation",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-mockingbird",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-backend-mockingbird"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",

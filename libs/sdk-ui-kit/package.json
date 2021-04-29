@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-ui-kit",
     "version": "8.4.0-alpha.37",
     "description": "GoodData SDK - UI Building Components",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-kit",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-kit"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "main": "dist/index.js",

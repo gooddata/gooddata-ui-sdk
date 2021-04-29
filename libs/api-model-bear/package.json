@@ -2,6 +2,11 @@
     "name": "@gooddata/api-model-bear",
     "version": "8.4.0-alpha.37",
     "description": "TypeScript definition files for GoodData platform",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/api-model-bear"
+    },
     "main": "dist/index.js",
     "module": "esm/index.js",
     "browser": "dist/index.js",
@@ -39,7 +44,6 @@
     "config": {
         "eslint": "-c .eslintrc.js --ext ts src/"
     },
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-model-bear",
     "keywords": [
         "typescript",
         "gooddata",

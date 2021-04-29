@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK Catalog Export tooling",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/catalog-export",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/catalog-export"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

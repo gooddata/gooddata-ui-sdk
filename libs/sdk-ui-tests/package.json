@@ -3,7 +3,11 @@
     "version": "8.2.0-alpha.7",
     "description": "GoodData React components test project",
     "main": "dist/index.js",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-tests",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-tests"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "files": [

@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-ui-theme-provider",
     "version": "8.4.0-alpha.37",
     "description": "GoodData SDK - Theme provider",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-theme-provider",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-theme-provider"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "main": "dist/index.js",

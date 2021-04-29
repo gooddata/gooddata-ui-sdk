@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK - Reference Workspace for tests",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/reference-workspace",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/reference-workspace"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK - Experimental workspace for features in dev",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/experimental-workspace",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/experimental-workspace"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

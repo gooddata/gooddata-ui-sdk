@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-ui-vis-commons",
     "version": "8.4.0-alpha.37",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-vis-commons",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-vis-commons"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "main": "dist/index.js",

@@ -3,7 +3,11 @@
     "version": "1.0.0",
     "author": "GoodData",
     "description": "GoodData SDK Application Linking Tool",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/applink",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/applink"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
