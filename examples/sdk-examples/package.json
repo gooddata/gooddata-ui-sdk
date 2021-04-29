@@ -3,7 +3,11 @@
     "version": "1.0.0-alpha.0",
     "description": "GoodData.UI SDK - Examples",
     "private": true,
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-examples",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "examples/sdk-examples"
+    },
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
     "files": [

@@ -3,7 +3,11 @@
     "version": "1.0.0",
     "author": "GoodData",
     "description": "GoodData SDK TypeScript skeleton",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-skel-ts"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",

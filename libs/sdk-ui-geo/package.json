@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-ui-geo",
     "version": "8.4.0-alpha.37",
     "description": "GoodData.UI SDK - Geo Charts",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-geo",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-geo"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "main": "dist/index.js",

@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-ui-charts",
     "version": "8.4.0-alpha.37",
     "description": "GoodData.UI SDK - Charts",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-ui-charts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-charts"
+    },
     "author": "GoodData Corporation",
     "license": "LicenseRef-LICENSE",
     "main": "dist/index.js",

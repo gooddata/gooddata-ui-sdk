@@ -3,6 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "API Client for the GoodData platform",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/api-client-bear"
+    },
     "license": "MIT",
     "main": "dist/gooddata-node.js",
     "module": "esm/gooddata-browser.js",
@@ -43,7 +48,6 @@
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/api-client-bear",
     "dependencies": {
         "@gooddata/api-model-bear": "^8.4.0-alpha.37",
         "fetch-cookie": "^0.7.0",

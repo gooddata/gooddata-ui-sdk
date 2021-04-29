@@ -2,7 +2,11 @@
     "name": "@gooddata/sdk-skel-tsx",
     "version": "1.0.0",
     "description": "GoodData SDK TypeScript & React skeleton",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-skel-tsx",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-skel-tsx"
+    },
     "author": "GoodData Corporation",
     "license": "MIT",
     "main": "dist/index.js",

@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for the Tiger platform",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/libs/sdk-backend-tiger",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-backend-tiger"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",

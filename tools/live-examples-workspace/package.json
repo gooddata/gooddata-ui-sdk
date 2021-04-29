@@ -3,7 +3,11 @@
     "version": "8.4.0-alpha.37",
     "author": "GoodData",
     "description": "GoodData SDK - Live examples workspace for tests",
-    "repository": "https://github.com/gooddata/gooddata-ui-sdk/tree/master/tools/live-examples-workspace",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/live-examples-workspace"
+    },
     "license": "MIT",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",

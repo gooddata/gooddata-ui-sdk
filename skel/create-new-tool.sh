@@ -43,6 +43,13 @@ done;
 newlib_package="${newtool_dir}/package.json"
 
 echo "Setting name in ${newlib_package} to ${newtool_name}"
+
+# First, update repository field in package.json to use correct directory
+sedexp="s/libs\/${skeleton}/tools\/${skeleton}/g"
+sed "${sedexp}" ${newlib_package} >${newlib_package}.new
+mv ${newlib_package}.new ${newlib_package}
+
+# And then perform the renaming
 sedexp="s/${skeleton}/${newtool_name}/g"
 sed "${sedexp}" ${newlib_package} >${newlib_package}.new
 mv ${newlib_package}.new ${newlib_package}
