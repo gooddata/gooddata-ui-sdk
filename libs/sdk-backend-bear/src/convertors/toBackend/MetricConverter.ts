@@ -1,3 +1,5 @@
+// (C) 2021 GoodData Corporation
+
 import { GdcMetadata } from "@gooddata/api-model-bear";
 import {
     IMeasureMetadataObject,

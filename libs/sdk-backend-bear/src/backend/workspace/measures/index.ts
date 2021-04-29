@@ -152,10 +152,10 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
 
     async updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         const objectId = measure.uri.split("/").slice(-1)[0];
-        const mdObject = await this.authCall((sdk) => {
+        await this.authCall((sdk) => {
             return sdk.md.updateObject(this.workspace, objectId, { metric: convertMetricToBackend(measure) });
         });
 
-        return convertMetricFromBackend(mdObject.metric);
+        return measure;
     }
 }

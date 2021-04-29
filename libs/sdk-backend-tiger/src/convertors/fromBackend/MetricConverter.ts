@@ -1,3 +1,5 @@
+// (C) 2021 GoodData Corporation
+
 import { JsonApiMetricOutDocument } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { IMeasureMetadataObject } from "@gooddata/sdk-backend-spi";
