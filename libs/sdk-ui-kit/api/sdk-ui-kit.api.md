@@ -687,6 +687,7 @@ export interface ICommunityEditionDialogProps {
 
 // @internal (undocumented)
 export const Icon: {
+    Book: import("react").FC<import("./typings").IIconProps>;
     Refresh: import("react").FC<import("./typings").IIconProps>;
     DrillDown: import("react").FC<import("./typings").IIconProps>;
     DrillToDashboard: import("react").FC<import("./typings").IIconProps>;
@@ -694,6 +695,7 @@ export const Icon: {
     Date: import("react").FC<import("./typings").IIconProps>;
     Explore: import("react").FC<import("./typings").IIconProps>;
     Logout: import("react").FC<import("./typings").IIconProps>;
+    Lock: import("react").FC<import("./typings").IIconProps>;
     Pdf: import("react").FC<import("./typings").IIconProps>;
     ExternalLink: import("react").FC<import("./typings").IIconProps>;
     Hyperlink: import("react").FC<import("./typings").IIconProps>;

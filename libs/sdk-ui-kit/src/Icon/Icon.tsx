@@ -1,4 +1,6 @@
 // (C) 2021 GoodData Corporation
+import { Book } from "./icons/Book";
+import { Lock } from "./icons/Lock";
 import { Refresh } from "./icons/Refresh";
 import { DrillDown } from "./icons/DrillDown";
 import { DrillToDashboard } from "./icons/DrillToDashboard";
@@ -21,6 +23,7 @@ import { AttributeFilter } from "./icons/AttributeFilter";
  * @internal
  */
 export const Icon = {
+    Book,
     Refresh,
     DrillDown,
     DrillToDashboard,
@@ -28,6 +31,7 @@ export const Icon = {
     Date,
     Explore,
     Logout,
+    Lock,
     Pdf,
     ExternalLink,
     Hyperlink,
