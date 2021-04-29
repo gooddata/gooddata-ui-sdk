@@ -286,7 +286,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                             <FormattedMessage id="filters.floatingRange" />
                         )}
                         {!isMobile && (
-                            <ListItemTooltip>
+                            <ListItemTooltip bubbleAlignPoints={[{ align: "cr cl" }]}>
                                 <FormattedMessage id="filters.floatingRange.tooltip" />
                             </ListItemTooltip>
                         )}
