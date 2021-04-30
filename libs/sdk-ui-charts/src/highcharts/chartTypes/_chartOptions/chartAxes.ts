@@ -8,6 +8,7 @@ import { isBarChart, isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, unwr
 import { supportedDualAxesChartTypes } from "./chartCapabilities";
 import isEmpty from "lodash/isEmpty";
 import compact from "lodash/compact";
+import findIndex from "lodash/findIndex";
 import range from "lodash/range";
 import includes from "lodash/includes";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
@@ -235,7 +236,7 @@ function createYAxisItem(measuresInAxis: any[], opposite = false) {
 
 export function assignYAxes(series: ISeriesItem[], yAxes: IAxis[]): ISeriesItem[] {
     return series.reduce((result, item, index) => {
-        const yAxisIndex = yAxes.findIndex((axis: IAxis) => {
+        const yAxisIndex = findIndex(yAxes, (axis: IAxis) => {
             return includes(axis.seriesIndices ?? [], index);
         });
         // for case viewBy and stackBy have one attribute, and one measure is sliced to multiple series

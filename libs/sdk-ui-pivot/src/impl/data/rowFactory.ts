@@ -15,9 +15,10 @@ import { TableDescriptor } from "../structure/tableDescriptor";
 import { IAgGridPage, IGridRow, IGridTotalsRow } from "./resultTypes";
 import { getSubtotalStyles } from "./dataSourceUtils";
 import fill from "lodash/fill";
+import findIndex from "lodash/findIndex";
 
 function getSubtotalLabelCellIndex(resultHeaderItems: IResultHeader[][], rowIndex: number): number {
-    return resultHeaderItems.findIndex((headerItem) => isResultTotalHeader(headerItem[rowIndex]));
+    return findIndex(resultHeaderItems, (headerItem) => isResultTotalHeader(headerItem[rowIndex]));
 }
 
 function getMinimalRowData(dv: DataViewFacade): DataValue[][] {

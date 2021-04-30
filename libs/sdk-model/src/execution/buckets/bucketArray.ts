@@ -23,6 +23,7 @@ import { ITotal } from "../base/totals";
 import flatMap from "lodash/flatMap";
 import invariant from "ts-invariant";
 import identity from "lodash/identity";
+import findIndex from "lodash/findIndex";
 
 /**
  * Gets all attributes matching the provided predicate from a list of buckets.
@@ -123,7 +124,7 @@ export function bucketsFindAttribute(
     };
 
     for (const bucket of buckets) {
-        const idx = bucket.items.findIndex(typeAgnosticPredicate);
+        const idx = findIndex(bucket.items, typeAgnosticPredicate);
 
         if (idx >= 0) {
             const item = bucket.items[idx];
@@ -164,7 +165,7 @@ export function bucketsFindMeasure(
     };
 
     for (const bucket of buckets) {
-        const idx = bucket.items.findIndex(typeAgnosticPredicate);
+        const idx = findIndex(bucket.items, typeAgnosticPredicate);
 
         if (idx >= 0) {
             const item = bucket.items[idx];

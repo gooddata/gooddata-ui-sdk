@@ -2,6 +2,7 @@
 import { ITotal, TotalType } from "@gooddata/sdk-model";
 
 import { AVAILABLE_TOTALS } from "../../base/constants";
+import findIndex from "lodash/findIndex";
 import intersection from "lodash/intersection";
 import isEqual from "lodash/isEqual";
 import sortBy from "lodash/sortBy";
@@ -114,7 +115,7 @@ export function getUpdatedColumnTotals(
         : excludeTotals(columnTotals, columnTotalsChanged);
 
     return sortBy(updatedColumnTotals, (total) =>
-        AVAILABLE_TOTALS.findIndex((rankedItem: string) => rankedItem === total.type),
+        findIndex(AVAILABLE_TOTALS, (rankedItem) => rankedItem === total.type),
     );
 }
 

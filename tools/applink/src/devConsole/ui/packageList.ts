@@ -24,6 +24,7 @@ import {
     findDependingPackages,
     naiveFilterDependencyGraph,
 } from "../../base/dependencyGraph";
+import findIndex from "lodash/findIndex";
 import flatten from "lodash/flatten";
 import intersection from "lodash/intersection";
 import { ColorCodes } from "./colors";
@@ -308,7 +309,7 @@ export class PackageList extends AppPanel implements IEventListener {
         const filteredBuildOrder =
             this.buildOrder?.filter((g) => intersection(g, dependents).length > 0) ?? [];
         const selectedItemPosition =
-            filteredBuildOrder.findIndex((pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
+            findIndex(filteredBuildOrder, (pkgs) => pkgs.includes(selectedItem.packageName)) ?? -1;
 
         this.listItems.forEach((item, idx) => {
             item.selected = false;
@@ -318,7 +319,7 @@ export class PackageList extends AppPanel implements IEventListener {
                 item.selected = true;
             } else if (dependents.includes(item.packageName)) {
                 const itemDistance =
-                    filteredBuildOrder.findIndex((pkgs) => pkgs.includes(item.packageName)) ?? -1;
+                    findIndex(filteredBuildOrder, (pkgs) => pkgs.includes(item.packageName)) ?? -1;
 
                 item.highlightLevel = itemDistance - selectedItemPosition - 1;
             }

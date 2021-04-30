@@ -9,6 +9,7 @@ import {
     measureMasterIdentifier,
     bucketMeasures,
 } from "@gooddata/sdk-model";
+import findIndex from "lodash/findIndex";
 
 /**
  * Methods to work with execution definition.
@@ -188,7 +189,7 @@ class ExecutionDefinitonMethods implements IExecutionDefinitionMethods {
     }
 
     public measureIndex(localId: string): number {
-        return this.definition.measures.findIndex(idMatchMeasure(localId));
+        return findIndex(this.definition.measures, idMatchMeasure(localId));
     }
 
     public masterMeasureForDerived(localId: string): IMeasure | undefined {

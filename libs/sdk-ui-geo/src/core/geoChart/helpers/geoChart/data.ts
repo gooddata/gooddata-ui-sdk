@@ -27,6 +27,7 @@ import {
     resultHeaderName,
 } from "@gooddata/sdk-backend-spi";
 import { IPushpinCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
+import findIndex from "lodash/findIndex";
 
 interface IBucketItemInfo {
     uri?: Identifier;
@@ -145,7 +146,8 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoData {
             if (!bucketItemInfo) {
                 return;
             }
-            const index = attributeDescriptors.findIndex(
+            const index = findIndex(
+                attributeDescriptors,
                 (desc: IAttributeDescriptor): boolean =>
                     desc.attributeHeader.localIdentifier === bucketItemInfo.localIdentifier &&
                     (desc.attributeHeader.uri === bucketItemInfo.uri ||
@@ -167,7 +169,8 @@ function getBucketItemNameAndDataIndex(dv: DataViewFacade): IGeoData {
         if (!bucketItemInfo) {
             return;
         }
-        const index = measureDescriptors.findIndex(
+        const index = findIndex(
+            measureDescriptors,
             (desc: IMeasureDescriptor): boolean =>
                 desc.measureHeaderItem.localIdentifier === bucketItemInfo.localIdentifier &&
                 (desc.measureHeaderItem.uri === bucketItemInfo.uri ||

@@ -10,6 +10,7 @@ import {
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
 import invariant from "ts-invariant";
+import findIndex from "lodash/findIndex";
 
 function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): boolean {
     const { attributeDescriptors, attributeHeaders } = col.seriesDescriptor;
@@ -19,7 +20,8 @@ function attributeLocatorMatch(col: SeriesCol, locator: IAttributeLocatorItem): 
         return false;
     }
 
-    const attributeIdx = attributeDescriptors.findIndex(
+    const attributeIdx = findIndex(
+        attributeDescriptors,
         (d) => d.attributeHeader.localIdentifier === attributeIdentifier,
     );
 

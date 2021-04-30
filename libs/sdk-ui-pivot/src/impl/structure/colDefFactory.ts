@@ -1,5 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
+import findIndex from "lodash/findIndex";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
@@ -31,7 +32,7 @@ function getSortProp(
     initialSorts: ISortItem[],
     predicate: (sortItem: ISortItem) => boolean,
 ): Partial<ColDef> {
-    const sortIndex = initialSorts.findIndex((s) => predicate(s));
+    const sortIndex = findIndex(initialSorts, (s) => predicate(s));
     const sort = initialSorts[sortIndex];
 
     return sort

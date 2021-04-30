@@ -24,6 +24,7 @@ import { ISortItem } from "@gooddata/sdk-model";
 import { createSortIndicators, SortIndicator } from "./tableDescriptorSorting";
 import { createSortItemForCol } from "./colSortItemFactory";
 import keyBy from "lodash/keyBy";
+import findIndex from "lodash/findIndex";
 
 /**
  * Table Descriptor is the entry point to all table structure data and metadata. It contains exhaustive information
@@ -246,7 +247,7 @@ export class TableDescriptor {
             // a col that is not a leaf
             invariant(isEmptyScopeCol(col));
 
-            return this.sliceColCount() + this.headers.leafDataCols.findIndex((leaf) => leaf.id === col.id);
+            return this.sliceColCount() + findIndex(this.headers.leafDataCols, (leaf) => leaf.id === col.id);
         }
 
         return this.sliceColCount() + col.index;
@@ -317,7 +318,7 @@ export class TableDescriptor {
             return allSliceCols;
         }
 
-        const colAt = allSliceCols.findIndex((slice) => slice.id === col.id);
+        const colAt = findIndex(allSliceCols, (slice) => slice.id === col.id);
 
         // if this happens, then caller has mismatch of descriptor and cols
         invariant(colAt > -1);
