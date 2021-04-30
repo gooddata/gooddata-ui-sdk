@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IDataView,
     IDimensionDescriptor,
@@ -9,6 +9,7 @@ import {
     IPreparedExecution,
     IResultHeader,
     DataValue,
+    IResultWarning,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -184,6 +185,7 @@ export abstract class DecoratedDataView implements IDataView {
     public totals?: DataValue[][][];
     public definition: IExecutionDefinition;
     public result: IExecutionResult;
+    public warnings?: IResultWarning[];
 
     constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
         this.result = result ?? decorated.result;
@@ -195,6 +197,7 @@ export abstract class DecoratedDataView implements IDataView {
         this.offset = decorated.offset;
         this.totalCount = decorated.totalCount;
         this.totals = decorated.totals;
+        this.warnings = decorated.warnings;
     }
 
     public equals(other: IDataView): boolean {
