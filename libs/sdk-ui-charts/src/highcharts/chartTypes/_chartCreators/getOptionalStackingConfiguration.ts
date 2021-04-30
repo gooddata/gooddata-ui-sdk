@@ -4,9 +4,8 @@ import merge from "lodash/merge";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import set from "lodash/set";
-import get from "lodash/get";
 import isArray from "lodash/isArray";
-import { IChartConfig, IDataLabelsVisible } from "../../../interfaces";
+import { IChartConfig } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig } from "./dataLabelsHelpers";
 import {
     getPrimaryChartType,
@@ -194,7 +193,7 @@ export function getYAxisConfiguration(
         return {};
     }
 
-    const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
+    const labelsVisible = chartConfig.dataLabels?.visible;
     const { enabled: dataLabelEnabled } = getLabelsVisibilityConfig(labelsVisible);
 
     // enable by default or follow dataLabels.visible config

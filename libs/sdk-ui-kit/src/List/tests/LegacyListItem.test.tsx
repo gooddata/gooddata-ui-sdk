@@ -1,12 +1,11 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import get from "lodash/get";
 import { LegacyListItem } from "../LegacyListItem";
 
 describe("LegacyListItem", () => {
     const dummyListItemRenderer = (props: any) => {
-        const title = get(props, "source.title", "");
+        const title = props?.source?.title ?? "";
         return <div>{title}</div>;
     };
 

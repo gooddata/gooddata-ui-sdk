@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import range from "lodash/range";
-import get from "lodash/get";
 import head from "lodash/head";
 import last from "lodash/last";
 import inRange from "lodash/inRange";
@@ -422,19 +421,19 @@ function getColorLegendLabels(
     format: string | undefined,
     numericSymbols: string[],
 ): string[] {
-    const min = get(head(series), "range.from", 0);
-    const max = get(last(series), "range.to", 0);
+    const min = head(series)?.range?.from ?? 0;
+    const max = last(series)?.range?.to ?? 0;
     const diff = max - min;
 
     return range(series.length + 1).map((index) => {
         let value: number;
 
         if (index === 0) {
-            value = get(series, "0.range.from", 0);
+            value = series[0]?.range?.from ?? 0;
         } else if (index === series.length) {
-            value = get(series, `${index - 1}.range.to`, 0);
+            value = series[index - 1]?.range?.to ?? 0;
         } else {
-            value = get(series, `${index}.range.from`, 0);
+            value = series[index]?.range?.from ?? 0;
         }
 
         return formatLegendLabel(value, format, diff, numericSymbols);

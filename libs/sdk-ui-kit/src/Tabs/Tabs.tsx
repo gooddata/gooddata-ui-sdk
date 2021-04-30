@@ -2,7 +2,6 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
-import get from "lodash/get";
 import { stringUtils } from "@gooddata/util";
 
 /**
@@ -44,12 +43,12 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
         super(props);
 
         this.state = {
-            selectedTabId: props.selectedTabId || get(props, ["tabs", 0, "id"]),
+            selectedTabId: props.selectedTabId || props.tabs?.[0]?.id,
         };
     }
 
     private selectTab(tab: ITab): void {
-        const selectedTabId = get(tab, "id");
+        const selectedTabId = tab?.id;
         const noChange = selectedTabId === this.state.selectedTabId;
 
         if (noChange) {

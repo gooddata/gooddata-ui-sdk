@@ -36,7 +36,6 @@ import { IScrollPosition } from "./impl/stickyRowHandler";
 import { DefaultColumnWidth, ICorePivotTableProps, IMenu } from "./publicTypes";
 import { ColumnWidthItem } from "./columnWidths";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
 import debounce from "lodash/debounce";
@@ -402,9 +401,11 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
      * @private
      */
     private shouldRefreshHeader(props: ICorePivotTableProps, prevProps: ICorePivotTableProps): boolean {
-        const propsRequiringAgGridRerender = [["config", "menu"]];
+        const propsRequiringAgGridRerender: Array<(props: ICorePivotTableProps) => any> = [
+            (props) => props?.config?.menu,
+        ];
         return propsRequiringAgGridRerender.some(
-            (propKey) => !isEqual(get(props, propKey), get(prevProps, propKey)),
+            (propGetter) => !isEqual(propGetter(props), propGetter(prevProps)),
         );
     }
 

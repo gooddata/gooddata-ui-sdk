@@ -2,7 +2,6 @@
 import noop from "lodash/noop";
 import isString from "lodash/isString";
 import set from "lodash/set";
-import get from "lodash/get";
 import merge from "lodash/merge";
 import map from "lodash/map";
 import partial from "lodash/partial";
@@ -17,7 +16,7 @@ import cx from "classnames";
 
 import { styleVariables } from "./styles/variables";
 import { IDrillConfig, ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IChartConfig, IDataLabelsVisible, IDataPointsVisible } from "../../../interfaces";
+import { IChartConfig } from "../../../interfaces";
 import { formatAsPercent, getLabelStyle, getLabelsVisibilityConfig, isInPercent } from "./dataLabelsHelpers";
 import { HOVER_BRIGHTNESS, MINIMUM_HC_SAFE_BRIGHTNESS } from "./commonConfiguration";
 import { getLighterColor } from "@gooddata/sdk-ui-vis-commons";
@@ -96,7 +95,7 @@ function getTitleConfiguration(chartOptions: IChartOptions): HighchartsOptions {
             axis
                 ? {
                       title: {
-                          text: escapeAngleBrackets(get(axis, "label", "")),
+                          text: escapeAngleBrackets(axis?.label ?? ""),
                       },
                   }
                 : {},
@@ -107,7 +106,7 @@ function getTitleConfiguration(chartOptions: IChartOptions): HighchartsOptions {
             axis
                 ? {
                       title: {
-                          text: escapeAngleBrackets(get(axis, "label", "")),
+                          text: escapeAngleBrackets(axis?.label ?? ""),
                       },
                   }
                 : {},
@@ -126,12 +125,12 @@ export function formatOverlappingForParentAttribute(category: any): string {
         return formatOverlapping.call(this);
     }
 
-    const categoriesCount = get(this, "axis.categoriesTree", []).length;
+    const categoriesCount = (this.axis?.categoriesTree ?? []).length;
     if (categoriesCount === 1) {
         // Let the width be auto to make sure "this.value" is displayed on screen
         return `<div style="overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
     }
-    const chartHeight = get(this, "axis.chart.chartHeight", 1);
+    const chartHeight = this.axis?.chart?.chartHeight ?? 1;
     const width = Math.floor(chartHeight / categoriesCount);
     const pixelOffset = 40; // parent attribute should have more space than its children
 
@@ -141,12 +140,12 @@ export function formatOverlappingForParentAttribute(category: any): string {
 }
 
 export function formatOverlapping(): string {
-    const categoriesCount = get(this, "axis.categories", []).length;
+    const categoriesCount = (this.axis?.categories ?? []).length;
     if (categoriesCount === 1) {
         // Let the width be auto to make sure "this.value" is displayed on screen
         return `<div align="center" style="overflow: hidden; text-overflow: ellipsis">${this.value}</div>`;
     }
-    const chartHeight = get(this, "chart.chartHeight", 1);
+    const chartHeight = this.chart?.chartHeight ?? 1;
     const width = Math.floor(chartHeight / categoriesCount);
     const pixelOffset = 20;
 
@@ -160,7 +159,7 @@ export function formatOverlapping(): string {
 }
 
 function hideOverlappedLabels(chartOptions: IChartOptions): HighchartsOptions {
-    const rotation = Number(get(chartOptions, "xAxisProps.rotation", "0"));
+    const rotation = Number(chartOptions?.xAxisProps?.rotation ?? "0");
 
     // rotate labels for charts that are horizontal (bar, bullet)
     const isInvertedChart = isInvertedChartType(chartOptions.type);
@@ -407,13 +406,13 @@ function formatLabel(value: any, format: any, config: IChartConfig = {}) {
 }
 
 function labelFormatter(config?: IChartConfig) {
-    return formatLabel(this.y, get(this, "point.format"), config);
+    return formatLabel(this.y, this.point?.format, config);
 }
 
 export function percentageDataLabelFormatter(config?: IChartConfig): string {
     // suppose that chart has one Y axis by default
-    const isSingleAxis = get(this, "series.chart.yAxis.length", 1) === 1;
-    const isPrimaryAxis = !get(this, "series.yAxis.opposite", false);
+    const isSingleAxis = (this.series?.chart?.yAxis?.length ?? 1) === 1;
+    const isPrimaryAxis = !(this.series?.yAxis?.opposite ?? false);
 
     // only format data labels to percentage for
     //  * left or right axis on single axis chart, or
@@ -430,30 +429,22 @@ function labelFormatterHeatmap(options: any) {
 }
 
 function level1LabelsFormatter(config?: IChartConfig) {
-    return `${get(this, "point.name")} (${formatLabel(
-        get(this, "point.node.val"),
-        get(this, "point.format"),
-        config,
-    )})`;
+    return `${this.point?.name} (${formatLabel(this.point?.node?.val, this.point?.format, config)})`;
 }
 function level2LabelsFormatter(config?: IChartConfig) {
-    return `${get(this, "point.name")} (${formatLabel(
-        get(this, "point.value"),
-        get(this, "point.format"),
-        config,
-    )})`;
+    return `${this.point?.name} (${formatLabel(this.point?.value, this.point?.format, config)})`;
 }
 
 function labelFormatterBubble(config?: IChartConfig) {
-    const value = get(this, "point.z");
+    const value = this.point?.z;
     if (isNil(value) || isNaN(value)) {
         return null;
     }
 
-    const xAxisMin = get(this, "series.xAxis.min");
-    const xAxisMax = get(this, "series.xAxis.max");
-    const yAxisMin = get(this, "series.yAxis.min");
-    const yAxisMax = get(this, "series.yAxis.max");
+    const xAxisMin = this.series?.xAxis?.min;
+    const xAxisMax = this.series?.xAxis?.max;
+    const yAxisMin = this.series?.yAxis?.min;
+    const yAxisMax = this.series?.yAxis?.max;
 
     if (
         (!isNil(xAxisMax) && this.x > xAxisMax) ||
@@ -463,12 +454,12 @@ function labelFormatterBubble(config?: IChartConfig) {
     ) {
         return null;
     } else {
-        return formatLabel(value, get(this, "point.format"), config);
+        return formatLabel(value, this.point?.format, config);
     }
 }
 
 function labelFormatterScatter() {
-    const name = get(this, "point.name");
+    const name = this.point?.name;
     if (name) {
         return escapeAngleBrackets(name);
     }
@@ -488,9 +479,7 @@ function stackLabelFormatter(config?: IChartConfig) {
     // without negative values or with non-zero total for positive
     const showStackLabel =
         this.isNegative || hasOnlyPositiveValues(this.axis.series, this.x) || this.total !== 0;
-    return showStackLabel
-        ? formatLabel(this.total, get(this, "axis.userOptions.defaultFormat"), config)
-        : null;
+    return showStackLabel ? formatLabel(this.total, this.axis?.userOptions?.defaultFormat, config) : null;
 }
 
 function getTooltipConfiguration(
@@ -587,14 +576,14 @@ function getTreemapLabelsConfiguration(
 function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
     const { stacking, yAxes = [], type } = chartOptions;
 
-    const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
+    const labelsVisible = chartConfig?.dataLabels?.visible;
 
     const labelsConfig = getLabelsVisibilityConfig(labelsVisible);
 
     const style = getLabelStyle(type, stacking);
 
     const yAxis = yAxes.map((axis: any) => ({
-        defaultFormat: get(axis, "format"),
+        defaultFormat: axis?.format,
     }));
 
     const series: ISeriesItem[] = chartOptions.data?.series ?? [];
@@ -680,7 +669,7 @@ function getLabelsConfiguration(chartOptions: IChartOptions, _config: any, chart
 }
 
 function getDataPointsConfiguration(_chartOptions: IChartOptions, _config: any, chartConfig?: IChartConfig) {
-    const dataPointsVisible: IDataPointsVisible = get(chartConfig, "dataPoints.visible", true);
+    const dataPointsVisible = chartConfig?.dataPoints?.visible ?? true;
     const dataPointsConfig = {
         marker: {
             enabled: dataPointsVisible === "auto" ? undefined : dataPointsVisible,
@@ -704,7 +693,7 @@ function getStackingConfiguration(
     let labelsConfig = {};
 
     if (isColumnChart(type)) {
-        const labelsVisible: IDataLabelsVisible = get(chartConfig, "dataLabels.visible");
+        const labelsVisible = chartConfig?.dataLabels?.visible;
         labelsConfig = getLabelsVisibilityConfig(labelsVisible);
     }
 
@@ -779,7 +768,7 @@ function getHeatmapDataConfiguration(chartOptions: IChartOptions): HighchartsOpt
             },
         ],
         colorAxis: {
-            dataClasses: get(chartOptions, "colorAxis.dataClasses", []),
+            dataClasses: chartOptions?.colorAxis?.dataClasses ?? [],
         },
     };
 }
@@ -845,7 +834,7 @@ function barSeriesMapFn(seriesOrig: any) {
 }
 
 function getHeatMapHoverColor(config: any) {
-    const dataClasses = get(config, ["colorAxis", "dataClasses"], null);
+    const dataClasses = config?.colorAxis?.dataClasses ?? null;
     let resultColor = "rgb(210,210,210)";
 
     if (dataClasses) {
@@ -910,7 +899,7 @@ function getHoverStyles({ type }: any, config: any) {
                     ...series,
                     data: series.data.map((dataItemOrig: any) => {
                         const dataItem = cloneDeep(dataItemOrig);
-                        const drilldown = get(dataItem, "drilldown");
+                        const drilldown = dataItem?.drilldown;
 
                         set(
                             dataItem,
@@ -975,9 +964,9 @@ export function areAxisLabelsEnabled(
     const { type } = chartOptions;
     const categories = isHeatmap(type) ? data.categories : escapeCategories(data.categories);
 
-    const visible = get(chartOptions, `${axisPropsName}.visible`, true);
+    const visible = chartOptions?.[axisPropsName]?.visible ?? true;
 
-    const labelsEnabled = get(chartOptions, `${axisPropsName}.labelsEnabled`, true);
+    const labelsEnabled = chartOptions?.[axisPropsName]?.labelsEnabled ?? true;
 
     const categoriesFlag = shouldCheckForEmptyCategories ? !isEmpty(compact(categories)) : true;
 
@@ -987,8 +976,8 @@ export function areAxisLabelsEnabled(
 }
 
 function shouldExpandYAxis(chartOptions: IChartOptions) {
-    const min = get(chartOptions, "xAxisProps.min", "");
-    const max = get(chartOptions, "xAxisProps.max", "");
+    const min = chartOptions?.xAxisProps?.min ?? "";
+    const max = chartOptions?.xAxisProps?.max ?? "";
     return min === "" && max === "" ? {} : { getExtremesFromAll: true };
 }
 
@@ -1016,7 +1005,10 @@ function getXAxisTickConfiguration(chartOptions: IChartOptions) {
     return {};
 }
 
-function getYAxisTickConfiguration(chartOptions: IChartOptions, axisPropsKey: string) {
+function getYAxisTickConfiguration(
+    chartOptions: IChartOptions,
+    axisPropsKey: "yAxisProps" | "secondary_yAxisProps",
+) {
     const { type, yAxes } = chartOptions;
     if (isBubbleChart(type) || isScatterPlot(type)) {
         return {
@@ -1051,22 +1043,22 @@ const getYAxisConfiguration = (
                 };
             }
 
-            const opposite = get(axis, "opposite", false);
-            const axisType: string = axis.opposite ? "secondary" : "primary";
-            const className: string = cx(`s-highcharts-${axisType}-yaxis`, {
+            const opposite = axis.opposite ?? false;
+            const axisType = opposite ? "secondary" : "primary";
+            const className = cx(`s-highcharts-${axisType}-yaxis`, {
                 "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
             });
             const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
 
             // For bar chart take x axis options
-            const min = get(chartOptions, `${axisPropsKey}.min`, "");
-            const max = get(chartOptions, `${axisPropsKey}.max`, "");
-            const visible = get(chartOptions, `${axisPropsKey}.visible`, true);
+            const min = chartOptions?.[axisPropsKey]?.min ?? "";
+            const max = chartOptions?.[axisPropsKey]?.max ?? "";
+            const visible = chartOptions?.[axisPropsKey]?.visible ?? true;
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
 
-            const rotation = get(chartOptions, `${axisPropsKey}.rotation`, "auto");
+            const rotation = chartOptions?.[axisPropsKey]?.rotation ?? "auto";
             const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
 
             const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
@@ -1125,22 +1117,22 @@ const getXAxisConfiguration = (
                 };
             }
 
-            const opposite = get(axis, "opposite", false);
+            const opposite = axis.opposite ?? false;
             const axisPropsKey = opposite ? "secondary_xAxisProps" : "xAxisProps";
             const className: string = cx({
                 "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
             });
 
-            const min = get(chartOptions, axisPropsKey.concat(".min"), "");
-            const max = get(chartOptions, axisPropsKey.concat(".max"), "");
+            const min = chartOptions[axisPropsKey]?.min ?? "";
+            const max = chartOptions[axisPropsKey]?.max ?? "";
 
             const maxProp = max ? { max: Number(max) } : {};
             const minProp = min ? { min: Number(min) } : {};
 
-            const isViewByTwoAttributes = get(chartOptions, "isViewByTwoAttributes", false);
+            const isViewByTwoAttributes = chartOptions.isViewByTwoAttributes ?? false;
             const isInvertedChart = isInvertedChartType(chartOptions.type);
-            const visible = get(chartOptions, axisPropsKey.concat(".visible"), true);
-            const rotation = get(chartOptions, axisPropsKey.concat(".rotation"), "auto");
+            const visible = chartOptions[axisPropsKey]?.visible ?? true;
+            const rotation = chartOptions[axisPropsKey]?.rotation ?? "auto";
             const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
 
             const shouldCheckForEmptyCategories = isScatterPlot(type) || isBubbleChart(type) ? false : true;
@@ -1153,7 +1145,7 @@ const getXAxisConfiguration = (
             const tickConfiguration = getXAxisTickConfiguration(chartOptions);
             // for minimum zoom level value
             const minRange =
-                get(chartConfig, "zoomInsight", false) && get(chartOptions, "data.categories", []).length > 2
+                (chartConfig?.zoomInsight ?? false) && (chartOptions?.data?.categories ?? []).length > 2
                     ? MIN_RANGE
                     : undefined;
 

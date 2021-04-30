@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import get from "lodash/get";
 import { getDDPointsInParentTick, setupDrilldown } from "../setupDrilldownToParentAttribute";
 import { styleVariables } from "../styles/variables";
 import { IHighchartsPointObject } from "../isGroupHighchartsDrillEvent";
@@ -84,7 +83,7 @@ describe("setupDrilldown", () => {
 
         setupDrilldown(highchartObject, "column");
 
-        const label = get(highchartObject, "xAxis.0.categoriesTree.0.tick.label", null);
+        const label = highchartObject.xAxis[0].categoriesTree[0].tick.label;
         expect(label.hasClass("highcharts-drilldown-axis-label")).toBeTruthy();
         expect(label.hasEvent("click")).toBeTruthy();
         expect(label.getCss()).toEqual({
@@ -124,7 +123,7 @@ describe("setupDrilldown", () => {
 
         setupDrilldown(highchartObject, "column");
 
-        const label = get(highchartObject, "xAxis.0.categoriesTree.0.tick.label", null);
+        const label = highchartObject.xAxis[0].categoriesTree[0].tick.label;
         expect(label.hasClass("highcharts-drilldown-axis-label")).toBeFalsy();
         expect(label.hasEvent("click")).toBeFalsy();
         expect(label.getCss()).toEqual({ cursor: "default" });

@@ -1,9 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
 import set from "lodash/set";
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import { IMeasureGroupDescriptor, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
-import { IBucket, IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { IBucket, IAttributeOrMeasure, isMeasure, measureLocalId } from "@gooddata/sdk-model";
 import { BucketNames, DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../../interfaces";
 import { isLineChart } from "../_util/common";
@@ -29,7 +28,7 @@ const DEFAULT_COMBO_CHART_TYPES = [VisualizationTypes.COLUMN, VisualizationTypes
 
 function getMeasureIndices(bucketItems: IAttributeOrMeasure[], measureGroupIdentifiers: string[]): number[] {
     return bucketItems.reduce((result: number[], item: IAttributeOrMeasure) => {
-        const localIdentifier = get(item, ["measure", "localIdentifier"], "");
+        const localIdentifier = isMeasure(item) ? measureLocalId(item) : "";
 
         if (localIdentifier) {
             const metricIndex = measureGroupIdentifiers.indexOf(localIdentifier);
@@ -49,8 +48,8 @@ export function getComboChartSeries(
     const updatedSeries = cloneDeep(series);
     const measureBuckets = {};
     const types = [config.primaryChartType, config.secondaryChartType];
-    const measureGroupIdentifiers = measureGroup.items.map((item: IMeasureDescriptor) =>
-        get(item, ["measureHeaderItem", "localIdentifier"], ""),
+    const measureGroupIdentifiers = measureGroup.items.map(
+        (item: IMeasureDescriptor) => item?.measureHeaderItem?.localIdentifier ?? "",
     );
 
     dv.def()

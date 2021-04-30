@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import get from "lodash/get";
 import identity from "lodash/identity";
 import pick from "lodash/pick";
 import pickBy from "lodash/pickBy";
@@ -26,15 +25,15 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     };
 }
 
-function retrieveConfigFromObject(obj: object): DataRecorderConfig {
+function retrieveConfigFromObject(obj: Record<string, any>): DataRecorderConfig {
     return {
-        hostname: get(obj, "hostname", null),
-        projectId: get(obj, "projectId", null),
-        username: get(obj, "username", null),
-        password: get(obj, "password", null),
-        recordingDir: get(obj, "recordingDir", null),
-        backend: get(obj, "backend", null),
-        replaceProjectId: get(obj, "replaceProjectId", null),
+        hostname: obj?.hostname ?? null,
+        projectId: obj?.projectId ?? null,
+        username: obj?.username ?? null,
+        password: obj?.password ?? null,
+        recordingDir: obj?.recordingDir ?? null,
+        backend: obj?.backend ?? null,
+        replaceProjectId: obj?.replaceProjectId ?? null,
     };
 }
 

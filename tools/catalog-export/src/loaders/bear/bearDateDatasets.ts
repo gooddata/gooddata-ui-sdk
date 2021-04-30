@@ -1,7 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import gooddata from "@gooddata/api-client-bear";
 import { GdcDataSets } from "@gooddata/api-model-bear";
-import get from "lodash/get";
 import { Attribute, DateDataSet, DisplayForm } from "../../base/types";
 
 /**
@@ -20,7 +19,7 @@ export async function loadDateDataSets(workspaceId: string): Promise<DateDataSet
     });
 
     dataSets
-        .filter((ds) => get(ds, "dataSet.content.urn", "").endsWith(":date"))
+        .filter((ds) => ds.dataSet.content.urn?.endsWith(":date"))
         .forEach((ds) => {
             const newDs: DateDataSet = {
                 dateDataSet: {

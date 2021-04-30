@@ -13,7 +13,6 @@ import { defaultDimensions } from "../_commons/dimensions";
 import { IBucketChartProps, IChartConfig } from "../../interfaces";
 import { IChartDefinition } from "../_commons/chartDefinition";
 import { CoreComboChart } from "./CoreComboChart";
-import get from "lodash/get";
 import isArray from "lodash/isArray";
 import { withChart } from "../_base/withChart";
 import { sanitizeConfig } from "../_commons/sanitizeStacking";
@@ -27,7 +26,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
     bucketPropsKeys: ["primaryMeasures", "secondaryMeasures", "viewBy", "filters", "sortBy"],
     propTransformation: (props) => {
         const { primaryMeasures = [], secondaryMeasures = [] } = props;
-        const isDualAxis = get(props, "config.dualAxis", true);
+        const isDualAxis = props.config?.dualAxis ?? true;
         const computeRatioRule =
             !isDualAxis && primaryMeasures.length + secondaryMeasures.length > 1
                 ? ComputeRatioRule.NEVER
@@ -69,7 +68,7 @@ const comboChartDefinition: IChartDefinition<IComboChartBucketProps, IComboChart
 
 function getConfiguration(props: IComboChartProps): IChartConfig {
     const { primaryMeasures, secondaryMeasures, config } = props;
-    const isDualAxis = get(props, "config.dualAxis", true);
+    const isDualAxis = props.config?.dualAxis ?? true;
     const measuresOnPrimaryAxis = isDualAxis ? primaryMeasures : [...primaryMeasures, ...secondaryMeasures];
 
     return sanitizeConfig(measuresOnPrimaryAxis, config);

@@ -1,8 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import pick from "lodash/pick";
 import set from "lodash/set";
-import get from "lodash/get";
-import Highcharts from "../lib";
 import {
     isAreaChart,
     isBubbleChart,
@@ -26,17 +24,13 @@ import {
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
-    const dataClasses: Highcharts.ColorAxisDataClassesOptions[] = get(
-        chartOptions,
-        "colorAxis.dataClasses",
-        [],
-    );
+    const dataClasses = chartOptions?.colorAxis?.dataClasses ?? [];
 
     return isHeatmap(type) && dataClasses.length > 1;
 }
 
 export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
-    const seriesLength = get(chartOptions, "data.series.length");
+    const seriesLength = chartOptions?.data?.series?.length;
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
     const hasMoreThanOneSeries = seriesLength > 1;
@@ -74,11 +68,7 @@ export function getLegendItems(chartOptions: IChartOptions): LegendOptionsItemTy
     ];
 
     if (isHeatmap(type)) {
-        const dataClasses: Highcharts.ColorAxisDataClassesOptions[] = get(
-            chartOptions,
-            "colorAxis.dataClasses",
-            [],
-        );
+        const dataClasses = chartOptions?.colorAxis?.dataClasses ?? [];
         return dataClasses.map((dataClass, index) => {
             const { from, to } = dataClass;
             const color: string = dataClass.color as string; // wa are not using Gradient
@@ -158,7 +148,7 @@ export default function buildLegendOptions(
         ...baseConfig,
         enabled: baseConfig.enabled && isLegendEnabled,
         toggleEnabled: isLegendEnabled,
-        format: get(chartOptions, "title.format", ""),
+        format: chartOptions?.title?.format ?? "",
         items: getLegendItems(chartOptions),
         enableBorderRadius: createItemBorderRadiusPredicate(chartOptions.type),
         seriesMapper: createSeriesMapper(chartOptions.type),

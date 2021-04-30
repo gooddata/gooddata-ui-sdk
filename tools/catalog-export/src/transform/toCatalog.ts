@@ -4,7 +4,6 @@ import { createUniqueName } from "./titles";
 import cloneDeep from "lodash/cloneDeep";
 import findKey from "lodash/findKey";
 import forOwn from "lodash/forOwn";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 /*
@@ -193,13 +192,13 @@ function mergeData(
 
     mergePaths.forEach((path) => {
         set(result, path, {});
-        const newItems = get(newCatalog, path);
-        const existingItems = get(existingCatalog, path);
+        const newItems = newCatalog?.[path];
+        const existingItems = existingCatalog?.[path];
 
         forOwn(newItems, (newItem, newItemKey) => {
             const existingTitle = findKey(existingItems, (item) => item.identifier === newItem.identifier);
             const resolvedTitle = existingTitle ? existingTitle : newItemKey;
-            const nonConflictingTitle = createUniqueName(resolvedTitle, get(result, path));
+            const nonConflictingTitle = createUniqueName(resolvedTitle, result?.[path]);
 
             if (resolvedTitle !== nonConflictingTitle) {
                 console.warn("resolving duplicate key", resolvedTitle, "into", nonConflictingTitle); // eslint-disable-line no-console

@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import get from "lodash/get";
 import { GdcMessageEventListener, IGdcMessageEventListenerConfig, IGdcMessageEvent } from "../iframe/common";
 
 /**
@@ -37,9 +36,9 @@ let config: IGdcMessageEventListenerConfig = {
 const receiveListener = (listener: GdcMessageEventListener): GdcMessageEventListener => (
     event: IGdcMessageEvent<string, string, any>,
 ) => {
-    return get(event, "data.gdc.product") === config.product &&
+    return event?.data?.gdc?.product === config.product &&
         // check for valid incoming command
-        config.validReceivedPostEvents.includes(get(event, "data.gdc.event.name"))
+        config.validReceivedPostEvents.includes(event?.data?.gdc?.event?.name)
         ? listener(event)
         : false;
 };

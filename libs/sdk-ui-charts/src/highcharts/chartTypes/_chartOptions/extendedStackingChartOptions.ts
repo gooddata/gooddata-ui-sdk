@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import get from "lodash/get";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess";
 import { IResultAttributeHeader } from "@gooddata/sdk-backend-spi";
 
@@ -38,9 +37,9 @@ export function getCategoriesForTwoAttributes(
             parentAttr: IResultAttributeHeader,
             index: number,
         ) => {
-            const uri: string = get(parentAttr, "attributeHeaderItem.uri", "");
-            const name: string = get(parentAttr, "attributeHeaderItem.name", "");
-            const value: string = get(children[index], "attributeHeaderItem.name", "");
+            const uri = parentAttr?.attributeHeaderItem?.uri ?? "";
+            const name = parentAttr?.attributeHeaderItem?.name ?? "";
+            const value = children[index]?.attributeHeaderItem?.name ?? "";
 
             const existingEntry = result[uri];
             const childCategories = existingEntry && existingEntry.categories ? existingEntry.categories : [];

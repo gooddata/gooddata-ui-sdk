@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import merge from "lodash/merge";
 import invariant from "ts-invariant";
 import { VisualizationTypes, IDrillConfig } from "@gooddata/sdk-ui";
@@ -75,12 +74,12 @@ export function isDataOfReasonableSize(
 ): boolean {
     let result = true;
 
-    const seriesLimit = get(limits, "series");
+    const seriesLimit = limits?.series;
     if (seriesLimit !== undefined) {
         result = result && chartData.series.length <= seriesLimit;
     }
 
-    const categoriesLimit = get(limits, "categories");
+    const categoriesLimit = limits?.categories;
     if (categoriesLimit !== undefined) {
         if (isViewByTwoAttributes) {
             const categoriesLength = chartData.categories.reduce((result: number, category: any) => {
@@ -92,7 +91,7 @@ export function isDataOfReasonableSize(
         }
     }
 
-    const dataPointsLimit = get(limits, "dataPoints");
+    const dataPointsLimit = limits?.dataPoints;
     if (dataPointsLimit !== undefined) {
         result = result && chartData.series.every((serie: any) => serie.data.length <= dataPointsLimit);
     }

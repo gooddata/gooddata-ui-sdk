@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
-import get from "lodash/get";
 import cx from "classnames";
 
 import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton";
@@ -118,8 +117,8 @@ export const CoreHeaderWorkspacePicker: React.FC<IHeaderWorkspacePickerProps> = 
                         />
                     )}
                     renderItem={({ item }) => {
-                        const title = get(item, "title");
-                        const isDemo = get(item, "isDemo");
+                        const title = item?.title;
+                        const isDemo = item?.isDemo;
                         const isSelected = selectedWorkspace && item && selectedWorkspace.id === item.id;
                         return (
                             <HeaderWorkspacePickerItem

@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isNumber from "lodash/isNumber";
 import { DataValue, IDataView, IMeasureDescriptor } from "@gooddata/sdk-backend-spi";
@@ -45,14 +44,14 @@ function createHeadlineDataItem(executionDataItem: IHeadlineExecutionData): IHea
 }
 
 function createTertiaryItem(executionData: IHeadlineExecutionData[], intl: IntlShape): IHeadlineDataItem {
-    const secondaryHeaderItem = get(executionData, [1, "measureHeaderItem"]);
+    const secondaryHeaderItem = executionData?.[1]?.measureHeaderItem;
     if (!secondaryHeaderItem) {
         return null;
     }
 
-    const primaryValueString = get(executionData, [0, "value"]);
+    const primaryValueString = executionData?.[0]?.value;
     const primaryValue = primaryValueString !== null ? Number(primaryValueString) : null;
-    const secondaryValueString = get(executionData, [1, "value"]);
+    const secondaryValueString = executionData?.[1]?.value;
     const secondaryValue = secondaryValueString !== null ? Number(secondaryValueString) : null;
 
     const tertiaryTitle = intl.formatMessage({ id: "visualizations.headline.tertiary.title" });

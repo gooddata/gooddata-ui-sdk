@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import { XAxisTitleOptions, YAxisTitleOptions } from "highcharts";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -11,7 +10,7 @@ import { ROTATE_NEGATIVE_90_DEGREES, ALIGN_LEFT, ALIGN_RIGHT } from "../../const
 type HighchartsAxisTitle = XAxisTitleOptions | YAxisTitleOptions;
 
 const axisNameConfigGetter = (chartOptions: IChartOptions) => (axisNamePrefix: string) =>
-    get(chartOptions, `${axisNamePrefix}Axes`, []).map((axis: IAxis) => {
+    (chartOptions?.[`${axisNamePrefix}Axes`] ?? []).map((axis: IAxis) => {
         if (!axis) {
             return {};
         }
@@ -27,11 +26,9 @@ function getHighchartsAxisTitleConfiguration(
     axisNamePrefix: string,
 ): HighchartsAxisTitle {
     const isYAxis = axisNamePrefix === "y";
-    const opposite = get(axis, "opposite", false);
-    const axisPropsKey = opposite
-        ? `secondary_${axisNamePrefix}AxisProps.name`
-        : `${axisNamePrefix}AxisProps.name`;
-    const axisNameConfig: IAxisNameConfig = get(chartOptions, axisPropsKey, {});
+    const opposite = axis?.opposite ?? false;
+    const axisPropsKey = opposite ? `secondary_${axisNamePrefix}AxisProps` : `${axisNamePrefix}AxisProps`;
+    const axisNameConfig: IAxisNameConfig = chartOptions?.[axisPropsKey]?.name ?? {};
     const title: HighchartsAxisTitle = {};
 
     if (axisNameConfig.position) {

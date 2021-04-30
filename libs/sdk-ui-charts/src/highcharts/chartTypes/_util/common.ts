@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import clone from "lodash/clone";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
 import setWith from "lodash/setWith";
@@ -143,10 +142,10 @@ export function formatLegendLabel(
 }
 
 export const getPrimaryChartType = (chartOptions: IChartOptions): string => {
-    const series = get(chartOptions, "data.series", []);
+    const series = chartOptions?.data?.series ?? [];
     const targetSeries = series.find((item: ISeriesItem) => item.yAxis === 0);
 
-    return get(targetSeries, "type", chartOptions.type);
+    return targetSeries?.type ?? chartOptions.type;
 };
 
 export const unwrap = (wrappedObject: unknown): any => {

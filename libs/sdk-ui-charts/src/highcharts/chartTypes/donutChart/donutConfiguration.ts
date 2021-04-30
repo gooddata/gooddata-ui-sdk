@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import merge from "lodash/merge";
-import get from "lodash/get";
 import { getPieConfiguration } from "../pieChart/pieConfiguration";
 import { alignChart } from "../_chartCreators/helpers";
 import { IChartConfig } from "../../../interfaces";
@@ -13,7 +12,7 @@ export function getDonutConfiguration(config: IChartConfig): HighchartsOptions {
                 load() {
                     this.series[0].update({
                         dataLabels: {
-                            distance: -(get(this, "series.0.points.0.shapeArgs.r", 40) * 0.25),
+                            distance: -((this.series[0].points?.[0]?.shapeArgs?.r ?? 40) * 0.25),
                         },
                     });
 
