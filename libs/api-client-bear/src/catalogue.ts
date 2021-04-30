@@ -1,5 +1,4 @@
 // (C) 2007-2021 GoodData Corporation
-import get from "lodash/get";
 import find from "lodash/find";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
@@ -41,20 +40,20 @@ const LOAD_DATE_DATASET_DEFAULTS = {
  * </ul>
  * @returns {Object} "requiredDataSets" object hash.
  */
-const getRequiredDataSets = (options: any) => {
-    if (get(options, "returnAllRelatedDateDataSets")) {
+const getRequiredDataSets = (options: GdcCatalog.ILoadDateDataSetsParams = {}) => {
+    if (options.returnAllRelatedDateDataSets) {
         return {};
     }
 
-    if (get(options, "returnAllDateDataSets")) {
+    if (options.returnAllDateDataSets) {
         return { requiredDataSets: { type: "ALL" } };
     }
 
-    if (get(options, "dataSetIdentifier")) {
+    if (options.dataSetIdentifier) {
         return {
             requiredDataSets: {
                 type: "CUSTOM",
-                customIdentifiers: [get(options, "dataSetIdentifier")],
+                customIdentifiers: [options.dataSetIdentifier],
             },
         };
     }
@@ -77,7 +76,7 @@ const buildItemDescriptionObjects = ({ columns, definitions }: IColumnsAndDefini
             definitions,
             ({ metricDefinition }) => metricDefinition.identifier === column,
         );
-        const maql = get(definition, "metricDefinition.expression");
+        const maql = definition?.metricDefinition?.expression;
         if (maql) {
             return { expression: maql };
         }
@@ -198,7 +197,7 @@ export class CatalogueModule {
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    public loadItems(projectId: string, options = {}) {
+    public loadItems(projectId: string, options: any = {}) {
         const request = omit(
             {
                 ...REQUEST_DEFAULTS,
@@ -208,9 +207,9 @@ export class CatalogueModule {
             ["dataSetIdentifier", "returnAllDateDataSets", "attributesMap"],
         );
 
-        const mdObj = get(cloneDeep(options), "bucketItems");
-        const attributesMap = get(options, "attributesMap");
-        const hasBuckets = get(mdObj, "buckets") !== undefined;
+        const mdObj = cloneDeep(options)?.bucketItems;
+        const attributesMap = options?.attributesMap;
+        const hasBuckets = mdObj?.buckets !== undefined;
         if (hasBuckets) {
             return this.loadItemDescriptions(projectId, mdObj, attributesMap).then((bucketItems: any) =>
                 this.loadCatalog(projectId, { ...request, bucketItems }),
@@ -229,7 +228,7 @@ export class CatalogueModule {
     }> {
         const mdObj = cloneDeep(options).bucketItems;
         const bucketItems = mdObj
-            ? await this.loadItemDescriptions(projectId, mdObj, get(options, "attributesMap")!)
+            ? await this.loadItemDescriptions(projectId, mdObj, options.attributesMap!)
             : undefined;
 
         const omittedOptions = [

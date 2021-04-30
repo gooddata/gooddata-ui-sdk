@@ -1,5 +1,4 @@
 // (C) 2007-2020 GoodData Corporation
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import isNil from "lodash/isNil";
 import isObject from "lodash/isObject";
@@ -29,15 +28,10 @@ export const omitEmpty = omitBy((val) => {
  *
  */
 
-/**
- * Create getter function for accessing nested objects
- *
- * @param {String} path Target path to nested object
- * @method getIn
- * @private
- */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const getIn = (path: string) => (object: any) => get(object, path);
+export const getQueryEntries = (obj: any): any => {
+    return obj?.query?.entries;
+};
 
 export interface IPollingOptions {
     attempts?: number;
@@ -174,11 +168,11 @@ export function getAllPagesByOffsetLimit(
     return new Promise((resolve: any, reject: any) => {
         xhr.get(`${uri}?offset=${offset}&limit=${PAGE_LIMIT}`)
             .then((r: any) => r.getData())
-            .then((dataObjects: any[]) => {
-                const projects = get(dataObjects, itemKey);
+            .then((dataObjects: any) => {
+                const projects = dataObjects?.[itemKey];
                 const data = pagesData.concat(projects.items);
 
-                const totalCount = get(projects, "paging.totalCount", 0);
+                const totalCount = projects?.paging?.totalCount ?? 0;
                 const nextPage = offset + PAGE_LIMIT;
                 if (nextPage > totalCount) {
                     resolve(data);

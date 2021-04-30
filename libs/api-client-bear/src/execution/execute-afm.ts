@@ -2,7 +2,6 @@
 import invariant from "ts-invariant";
 import qs from "qs";
 import range from "lodash/range";
-import get from "lodash/get";
 import { GdcExecution, GdcExecuteAFM } from "@gooddata/api-model-bear";
 
 import { XhrModule, ApiResponseError } from "../xhr";
@@ -57,7 +56,7 @@ export class ExecuteAfmModule {
         projectId: string,
         execution: GdcExecuteAFM.IExecution,
     ): Promise<GdcExecution.IExecutionResponses> {
-        validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
+        validateNumOfDimensions(execution.execution.resultSpec?.dimensions?.length ?? 0);
         return this.getExecutionResponse(projectId, execution).then(
             (executionResponse: GdcExecution.IExecutionResponse) => {
                 return this.getExecutionResult(executionResponse.links.executionResult)
@@ -85,7 +84,7 @@ export class ExecuteAfmModule {
         projectId: string,
         execution: GdcExecuteAFM.IExecution,
     ): Promise<GdcExecution.IExecutionResponse> {
-        validateNumOfDimensions(get(execution, "execution.resultSpec.dimensions").length);
+        validateNumOfDimensions(execution.execution.resultSpec?.dimensions?.length ?? 0);
         return this.xhr
             .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
             .then((apiResponse) => apiResponse.getData())
@@ -399,12 +398,12 @@ export function mergePage(
 
     // update page count
     if (paging.offset.length === 1) {
-        result.paging.count = [get(result, "headerItems[0][0]", []).length];
+        result.paging.count = [result?.headerItems?.[0]?.[0]?.length ?? 0];
     }
     if (paging.offset.length === 2) {
         result.paging.count = [
-            get(result, "headerItems[0][0]", []).length,
-            get(result, "headerItems[1][0]", []).length,
+            result?.headerItems?.[0]?.[0]?.length ?? 0,
+            result?.headerItems?.[1]?.[0]?.length ?? 0,
         ];
     }
 

@@ -2,7 +2,6 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import * as fixtures from "./catalogue.fixtures";
 import { CatalogueModule } from "../catalogue";
@@ -61,12 +60,11 @@ describe("Catalogue", () => {
                 .then(() => {
                     expect(getRequestBody()).toEqual(fixtures.requestForMeasureWithFilterAndCategory);
 
-                    const attributeDF = get(
-                        options,
-                        "bucketItems.buckets.1.items.0.visualizationAttribute.displayForm.uri",
-                    );
-                    expect(get(getRequestBody(), "catalogRequest.bucketItems.0")).toBe(
-                        get(options, ["attributesMap", attributeDF, "attribute", "meta", "uri"]),
+                    const attributeDF = (options.bucketItems.buckets[1].items[0] as any)
+                        .visualizationAttribute.displayForm.uri;
+
+                    expect(getRequestBody().catalogRequest.bucketItems[0]).toBe(
+                        options.attributesMap[attributeDF]!.attribute.meta.uri,
                     );
                 });
         });
@@ -89,12 +87,11 @@ describe("Catalogue", () => {
                 .then(() => {
                     expect(getRequestBody()).toEqual(fixtures.requestForMeasureWithShowInPercent);
 
-                    const attributeDF = get(
-                        options,
-                        "bucketItems.buckets.1.items.0.visualizationAttribute.displayForm.uri",
-                    );
-                    expect(get(getRequestBody(), "catalogRequest.bucketItems[0]")).toBe(
-                        get(options, ["attributesMap", attributeDF, "attribute", "meta", "uri"]),
+                    const attributeDF = (options.bucketItems.buckets[1].items[0] as any)
+                        .visualizationAttribute.displayForm.uri;
+
+                    expect(getRequestBody().catalogRequest.bucketItems[0]).toBe(
+                        options.attributesMap[attributeDF]!.attribute.meta.uri,
                     );
                 });
         });
