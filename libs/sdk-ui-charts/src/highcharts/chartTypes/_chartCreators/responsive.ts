@@ -43,12 +43,14 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     callback: function () {
                         const heightRatio = Math.round(getRatio(this.chartHeight, this.plotHeight));
                         const widthRatio = Math.round(getRatio(this.chartWidth, this.plotWidth));
-                        // eslint-disable-next-line no-console
-                        console.warn("container is very small and chart might not be render correctly");
-                        return (
+                        const isZeroRatio =
                             (heightRatio === 0 && widthRatio < BOTTOM_LIMIT_WIDTH_RATIO) ||
-                            (widthRatio === 0 && heightRatio < BOTTOM_LIMIT_HEIGHT_RATIO)
-                        );
+                            (widthRatio === 0 && heightRatio < BOTTOM_LIMIT_HEIGHT_RATIO);
+                        if (isZeroRatio) {
+                            // eslint-disable-next-line no-console
+                            console.warn("container is very small and chart might not be render correctly");
+                        }
+                        return isZeroRatio;
                     },
                 },
                 chartOptions: {

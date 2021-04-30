@@ -20,6 +20,9 @@ import {
 } from "./adapter/HighChartsRenderer";
 import buildLegendOptions from "./adapter/legendBuilder";
 import noop from "lodash/noop";
+import isEqual from "lodash/isEqual";
+import isFunction from "lodash/isFunction";
+import omitBy from "lodash/omitBy";
 import { IChartOptions } from "./typings/unsafe";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
@@ -154,4 +157,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
 /**
  * @internal
  */
-export const ChartTransformation = injectIntl(withTheme(ChartTransformationImpl));
+const ChartTransformationWithInjectedProps = injectIntl(withTheme(ChartTransformationImpl));
+export const ChartTransformation = React.memo(ChartTransformationWithInjectedProps, (props, nextProps) => {
+    return isEqual(omitBy(props, isFunction), omitBy(nextProps, isFunction));
+});
