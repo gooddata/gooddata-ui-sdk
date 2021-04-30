@@ -19,7 +19,7 @@ import {
     getAttributeItemsWithoutStacks,
     getItemsCount,
     getItemsFromBuckets,
-    getMeasures,
+    getAllMeasures,
     getPreferredBucketItems,
     isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
@@ -110,7 +110,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             newExtendedReferencePoint.buckets,
             NUMBER_MEASURES_IN_BUCKETS_LIMIT,
         );
-        const allMeasures: IBucketItem[] = getMeasures(buckets);
+        const allMeasures: IBucketItem[] = getAllMeasures(buckets);
         const primaryMeasures: IBucketItem[] = getPreferredBucketItems(
             buckets,
             [BucketNames.MEASURES, BucketNames.SIZE],

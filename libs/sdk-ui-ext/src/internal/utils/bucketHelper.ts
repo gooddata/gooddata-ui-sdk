@@ -1,6 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 import set from "lodash/set";
-import get from "lodash/get";
 import uniq from "lodash/uniq";
 import uniqBy from "lodash/uniqBy";
 import negate from "lodash/negate";
@@ -401,7 +400,11 @@ export function getBucketItemsByType(
     return itemsOfType;
 }
 
-export function getPreferredBucketItems(buckets: IBucketOfFun[], preference: string[], type: string[]): any {
+export function getPreferredBucketItems(
+    buckets: IBucketOfFun[],
+    preference: string[],
+    type: string[],
+): IBucketItem[] {
     const bucket = getPreferredBucket(buckets, preference, type);
     return bucket?.items ?? [];
 }
@@ -473,12 +476,12 @@ export function getMeasuresFromMdObject(insight: IInsightDefinition): IMeasure[]
     return bucketsMeasures(insightBuckets(insight), isSimpleMeasure);
 }
 
-export function getMeasures(buckets: IBucketOfFun[]): IBucketItem[] {
+export function getAllMeasures(buckets: IBucketOfFun[]): IBucketItem[] {
     return getAllItemsByType(buckets, [METRIC]);
 }
 
 export function getFirstValidMeasure(buckets: IBucketOfFun[]): IBucketItem {
-    const measures = getMeasures(buckets);
+    const measures = getAllMeasures(buckets);
     const validMeasures = measures.filter(isValidMeasure);
     return validMeasures[0] || null;
 }
@@ -498,17 +501,17 @@ export function getFirstAttribute(buckets: IBucketOfFun[]): IBucketItem {
 
 export function getMeasureItems(buckets: IBucketOfFun[]): IBucketItem[] {
     const preference = [BucketNames.MEASURES, BucketNames.SECONDARY_MEASURES, BucketNames.TERTIARY_MEASURES];
-    const preferredMeasures = preference.reduce((acc, pref) => {
+    const preferredMeasures = preference.reduce((acc: IBucketItem[], pref) => {
         const prefBucketItems = getPreferredBucketItems(buckets, [pref], [METRIC]);
         return [...acc, ...prefBucketItems];
     }, []);
 
-    // TODO this is super suspicious, the array will never have "items" property...
-    // if not found in prefered bucket use all available measure items
-    if (isEmpty(get(preferredMeasures, "items", []))) {
-        return getMeasures(buckets);
+    // if no preferred items are found, return all available items
+    if (isEmpty(preferredMeasures)) {
+        return getAllMeasures(buckets);
     }
-    return get(preferredMeasures, "items", []);
+
+    return preferredMeasures;
 }
 
 export function getBucketItemsWithExcludeByType(
@@ -730,7 +733,7 @@ export function limitNumberOfMeasuresInBuckets(
     measuresLimitCount: number,
     tryToSelectDerivedWithMaster: boolean = false,
 ): IBucketOfFun[] {
-    const allMeasures = getMeasureItems(buckets);
+    const allMeasures = getAllMeasures(buckets);
 
     let selectedMeasuresLocalIdentifiers: string[] = [];
 

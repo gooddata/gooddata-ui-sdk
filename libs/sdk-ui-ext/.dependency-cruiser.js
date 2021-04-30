@@ -7,8 +7,6 @@ const options = {
         depCruiser.noLodashGet([
             // used for the supported properties, part of the PlugVis API
             "src/internal/utils/propertiesHelper.ts",
-            // TODO remove this once the suspicious code in the file is resolved
-            "src/internal/utils/bucketHelper.ts",
         ]),
 
         ...depCruiser.DefaultSdkRules,

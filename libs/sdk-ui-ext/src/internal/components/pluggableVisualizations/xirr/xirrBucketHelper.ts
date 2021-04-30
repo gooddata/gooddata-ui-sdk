@@ -5,7 +5,7 @@ import {
     getDateItems,
     findBucket,
     limitNumberOfMeasuresInBuckets,
-    getMeasures,
+    getAllMeasures,
 } from "../../../utils/bucketHelper";
 
 export const getXirrBuckets = ({ buckets }: Readonly<IReferencePoint>): IBucketOfFun[] => {
@@ -14,7 +14,7 @@ export const getXirrBuckets = ({ buckets }: Readonly<IReferencePoint>): IBucketO
     const currentMeasureBucket = findBucket(limitedMeasureBuckets, BucketNames.MEASURES);
     const currentAttributeBucket = findBucket(buckets, BucketNames.ATTRIBUTE);
 
-    const measureItem = getMeasures(limitedMeasureBuckets)[0];
+    const measureItem = getAllMeasures(limitedMeasureBuckets)[0];
     const dateAttributeItem = getDateItems(buckets)[0];
 
     return [

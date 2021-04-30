@@ -10,7 +10,7 @@ import { configureOverTimeComparison, configurePercent } from "../../../utils/bu
 
 import {
     getAllAttributeItems,
-    getMeasures,
+    getAllMeasures,
     getPreferredBucketItems,
     limitNumberOfMeasuresInBuckets,
     removeAllArithmeticMeasuresFromDerived,
@@ -59,7 +59,7 @@ export class PluggableBubbleChart extends PluggableBaseChart {
             [BucketNames.TERTIARY_MEASURES],
             [METRIC],
         );
-        const allMeasures = getMeasures(buckets);
+        const allMeasures = getAllMeasures(buckets);
 
         // skip first to reserve first items to be picked later
         const secondaryAndTertiaryItems = [
