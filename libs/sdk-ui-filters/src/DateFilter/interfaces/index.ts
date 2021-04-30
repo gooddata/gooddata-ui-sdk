@@ -31,6 +31,10 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     to?: DateString;
 }
 
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IUiRelativeDateFilterForm}.
+ * @beta
+ */
 export const isUiRelativeDateFilterForm = (obj: unknown): obj is IUiRelativeDateFilterForm => {
     return !isEmpty(obj) && (obj as IUiRelativeDateFilterForm).type === "relativeForm";
 };
