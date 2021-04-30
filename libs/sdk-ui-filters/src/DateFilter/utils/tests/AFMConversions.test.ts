@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     IAllTimeDateFilterOption,
     IAbsoluteDateFilterPreset,
@@ -39,7 +39,6 @@ const relativeDateFilterFormValue: IUiRelativeDateFilterForm = {
     type: "relativeForm",
     from: 1,
     to: 2,
-    availableGranularities: ["GDC.time.date"],
 };
 const relativeDateFilterPresetValue: IRelativeDateFilterPreset = {
     localIdentifier: "baz",

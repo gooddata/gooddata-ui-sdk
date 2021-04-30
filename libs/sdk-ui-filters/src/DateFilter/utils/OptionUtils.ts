@@ -1,17 +1,21 @@
 // (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
-import { DateFilterOption, DateFilterRelativeOptionGroup, IDateFilterOptionsByType } from "../interfaces";
+import {
+    DateFilterOption,
+    DateFilterRelativeOptionGroup,
+    IDateFilterOptionsByType,
+    isUiRelativeDateFilterForm,
+} from "../interfaces";
 import {
     DateFilterGranularity,
     IAbsoluteDateFilterPreset,
     IDateFilterOption,
     IRelativeDateFilterPreset,
-    isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-backend-spi";
 
 export function getDateFilterOptionGranularity(dateFilterOption: DateFilterOption): DateFilterGranularity {
-    return isRelativeDateFilterForm(dateFilterOption) || isRelativeDateFilterPreset(dateFilterOption)
+    return isUiRelativeDateFilterForm(dateFilterOption) || isRelativeDateFilterPreset(dateFilterOption)
         ? dateFilterOption.granularity
         : undefined;
 }

@@ -335,7 +335,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             selectedFilterOption,
             onSelectedFilterOptionChange,
             isMobile,
-            availableGranularities,
         } = this.props;
         return filterOptions.relativePreset ? (
             <RelativePresetFilterItems
@@ -344,7 +343,6 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 className={isMobile && ITEM_CLASS_MOBILE}
-                availableGranularities={availableGranularities}
             />
         ) : null;
     };

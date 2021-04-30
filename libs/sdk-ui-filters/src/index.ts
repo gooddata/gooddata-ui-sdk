@@ -23,6 +23,7 @@ export {
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
     filterVisibleDateFilterOptions,
+    isUiRelativeDateFilterForm,
 } from "./DateFilter";
 export {
     MeasureValueFilter,

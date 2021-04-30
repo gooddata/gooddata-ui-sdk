@@ -130,7 +130,6 @@ describe("getDateFilterTitleUsingTranslator", () => {
                 granularity,
                 from,
                 to,
-                availableGranularities: [granularity],
                 name: "",
                 visible: true,
             };

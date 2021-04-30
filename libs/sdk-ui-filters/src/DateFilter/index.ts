@@ -62,6 +62,7 @@ export {
     isRelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+    isUiRelativeDateFilterForm,
 } from "./interfaces";
 
 export { defaultDateFilterOptions } from "./constants/config";

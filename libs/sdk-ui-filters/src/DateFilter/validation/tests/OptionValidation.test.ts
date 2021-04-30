@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { validateFilterOption } from "../OptionValidation";
 import {
     IExtendedDateFilterErrors,
@@ -116,7 +116,6 @@ describe("validateFilterOption", () => {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity: "GDC.time.date",
-                availableGranularities: ["GDC.time.date"],
                 name: "",
                 visible: true,
             };
@@ -132,7 +131,6 @@ describe("validateFilterOption", () => {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity: "GDC.time.date",
-                availableGranularities: ["GDC.time.date"],
                 name: "",
                 visible: true,
             };
@@ -147,7 +145,6 @@ describe("validateFilterOption", () => {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity: "GDC.time.date",
-                availableGranularities: ["GDC.time.date"],
                 name: "",
                 visible: true,
             };
@@ -164,7 +161,6 @@ describe("validateFilterOption", () => {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity: "GDC.time.date",
-                availableGranularities: ["GDC.time.date"],
                 name: "",
                 visible: true,
             };
@@ -182,7 +178,6 @@ describe("validateFilterOption", () => {
                 localIdentifier: "RELATIVE_FORM",
                 type: "relativeForm",
                 granularity: "GDC.time.date",
-                availableGranularities: ["GDC.time.date"],
                 name: "",
                 visible: false,
             };

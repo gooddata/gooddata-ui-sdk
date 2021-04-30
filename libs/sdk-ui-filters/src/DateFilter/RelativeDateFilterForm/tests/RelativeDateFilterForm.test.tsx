@@ -21,7 +21,6 @@ const relativeFormOption: IRelativeDateFilterFormProps["selectedFilterOption"] =
     type: "relativeForm",
     localIdentifier: "relativeForm",
     granularity: availableGranularities[0],
-    availableGranularities,
     name: "",
     visible: true,
 };
@@ -70,7 +69,6 @@ describe("RelativeDateFilterForm", () => {
             granularity: "GDC.time.year",
             localIdentifier: "relativeForm",
             type: "relativeForm",
-            availableGranularities,
             name: "",
             visible: true,
         });
@@ -85,7 +83,6 @@ describe("RelativeDateFilterForm", () => {
             localIdentifier: "relativeForm",
             type: "relativeForm",
             from: -3,
-            availableGranularities,
             name: "",
             visible: true,
         });
@@ -100,7 +97,6 @@ describe("RelativeDateFilterForm", () => {
             localIdentifier: "relativeForm",
             type: "relativeForm",
             to: 2,
-            availableGranularities,
             name: "",
             visible: true,
         });
