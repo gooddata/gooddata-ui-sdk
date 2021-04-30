@@ -190,7 +190,8 @@ for the stories.
 
 BackstopJS executes in a container - thus guaranteeing same output on any workstation and on CI . You can
 (and should) run BackstopJS tests locally. Make sure you have Docker installed; if on OS X also make sure your
-Docker installation has RAM limit set to at least 4 GiB (Settings > Advanced).
+Docker installation has RAM limit set to at least 4 GiB (Settings > Advanced) and make all CPUs available to Docker
+for optimal performance.
 
 Tests can be triggered as follows:
 
@@ -203,12 +204,66 @@ Tests can be triggered as follows:
 
 Additional BackstopJS modes are also available:
 
--   `npm run backstop-approve` - after failed test run, approve the differences and overwrite reference screenshots
+-   `npm run backstop-approve` - after failed test run, approve the differences and add or overwrite reference screenshots
+
+    This is the typical followup step after you add new screenshots
+
 -   `npm run backstop-reference` - build storybook and take reference screenshots for all stories
+
+#### Fine-grained execution
+
+We have a great number of visual regression tests. Running them all on some weaker workstations may be prohibitively
+long - especially if you are adding just a couple of tests. Luckily backstopjs allows for filtered test execution.
+
+To do filtered backstopjs execution in this project, you can follow these steps:
+
+1.  Make sure you have run `rush build -t sdk-ui-tests`
+2.  Make sure you have run `npm run backstop-prepare`
+3.  Navigate to the `backstop` subdirectory
+4.  Run `./run-backstop.sh test --filter="<regex>"` where regex is regular expression to filter tests by.
+
+    Backstop will filter based on the scenario label. The scenarios are automatically created for the storybook
+    stories. The scenario label is contatenation of story kind and the story name: `${storyKind} - ${storyName}`
+
+    Note: one of the results of `backstop-prepare` command is the `backstop/stories.json` file that contains a dump
+    of all stories to screenshot. You can find the storyKind and storyName there.
+
+5.  If you are adding new scenarios and screenshots, your filtered test run will fail because there are not yet any
+    reference screenshots for your new scenarios. Backstop will report that there are test run screenshots, but the
+    reference screenshots do not exist.
+
+    Once you run the `npm run backstop-approve` the test screenshots will be added as the new reference screenshots.
 
 > Note: all backstop-\* commands run build, story extraction and then the appropriate backstop command. You can
 > achieve more flexible workflows using the elementary `build-storybook` and `story-extractor` scripts combined
 > with the [run-backstop.sh](backstop/run-backstop.sh) script.
+>
+> For instance if you run `backstop-prepare` this builds the storybook and extracts stories together with their
+> backstop-specific configuration. If you are debugging some custom stories and changing their backstop configuration
+> only, you do not have to do lenghty builds and can run just the `story-extractor` and then run the backstop tests.
+
+#### Inspecting production storybook build
+
+Backstop tests run against the production build of the storybook that is done by running the `backstop-prepare`
+script. If you run into unexpected test errors or suspect the test fails due to some flaky-ness it is good to do
+manual verification of the story in the production build.
+
+You can use the `npm run storybook-serve` command to launch Docker container with NGINX that will serve the production
+build of storybook. All the important config and setup will be the same as during the test run.
+
+#### Backstop funny stuff
+
+When you are adding new screenshots and backstop fails because it is (naturally) missing the reference screenshots,
+you should go to backstop report and inspect the failed tests. The 'TEST' screenshot should contain the picture
+captured during test.
+
+It has happened before that for some reason, backstop report will show the 'TEST' screenshot empty, while the actual
+picture for that scenario is not empty and is valid.
+
+If you run into this then run `npm run backstop-approve` which will copy the newly added screenshots to reference. You can then
+check out the new screenshots in the `backstop/reference` directory.
+
+#### Test parallelization
 
 It is possible to override default Backstop concurrency settings using environment variables:
 

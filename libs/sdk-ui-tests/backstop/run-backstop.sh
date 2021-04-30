@@ -57,6 +57,10 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
 
     echo "nginx with storybook is up"
 
+    echo "Cleaning up the backstop output directory."
+
+    rm -rf "${BACKSTOP_DIR}/output"
+
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
     {
@@ -65,8 +69,8 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
             --env BACKSTOP_COMPARE_LIMIT \
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
-            --volume ${BACKSTOP_DIR}:/src:Z backstopjs/backstopjs:5.1.0 \
-            --config=/src/backstop.config.js "$@"
+            --volume ${BACKSTOP_DIR}:/src:Z,consistent \
+            backstopjs/backstopjs:5.1.0 --config=/src/backstop.config.js "$@"
 
         echo "BackstopJS finished. Killing nginx container ${NGINX_CONTAINER}"
     }
