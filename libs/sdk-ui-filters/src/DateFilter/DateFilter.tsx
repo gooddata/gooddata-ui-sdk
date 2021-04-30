@@ -4,7 +4,6 @@ import isEqual from "lodash/isEqual";
 import isNil from "lodash/isNil";
 import noop from "lodash/noop";
 import {
-    isRelativeDateFilterForm,
     DateFilterGranularity,
     DashboardDateFilterConfigMode,
     isAbsoluteDateFilterForm,
@@ -13,12 +12,12 @@ import { canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
-import { DateFilterOption, IDateFilterOptionsByType } from "./interfaces";
+import { DateFilterOption, IDateFilterOptionsByType, isUiRelativeDateFilterForm } from "./interfaces";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 
 const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
     if (
-        isRelativeDateFilterForm(selectedFilterOption) &&
+        isUiRelativeDateFilterForm(selectedFilterOption) &&
         selectedFilterOption.from > selectedFilterOption.to
     ) {
         return {
@@ -133,7 +132,10 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             );
         }
 
-        if (isRelativeDateFilterForm(filterOption) && (isNil(filterOption.from) || isNil(filterOption.to))) {
+        if (
+            isUiRelativeDateFilterForm(filterOption) &&
+            (isNil(filterOption.from) || isNil(filterOption.to))
+        ) {
             // eslint-disable-next-line no-console
             console.warn(
                 "The default filter option is not valid. Values 'from' and 'to' from relativeForm filter option must be specified.",

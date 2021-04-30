@@ -334,7 +334,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 }
 
 // @beta
-export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
+export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     from?: RelativeGranularityOffset;
     granularity?: DateFilterGranularity;
     to?: RelativeGranularityOffset;

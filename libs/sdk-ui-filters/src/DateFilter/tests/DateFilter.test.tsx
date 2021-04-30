@@ -661,7 +661,6 @@ describe("normalizeSelectedFilterOption", () => {
         granularity: "GDC.time.date",
         localIdentifier: "RELATIVE_FORM",
         type: "relativeForm",
-        availableGranularities: ["GDC.time.date"],
         name: "",
         visible: true,
     };
@@ -672,7 +671,6 @@ describe("normalizeSelectedFilterOption", () => {
         granularity: "GDC.time.date",
         localIdentifier: "RELATIVE_FORM",
         type: "relativeForm",
-        availableGranularities: ["GDC.time.date"],
         name: "",
         visible: true,
     };

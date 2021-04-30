@@ -7,7 +7,7 @@ const dateFrom = new Date();
 dateFrom.setMonth(dateFrom.getMonth() - 1);
 
 const availableGranularities: DateFilterGranularity[] = [
-    "GDC.time.date",
+    // "GDC.time.date",
     "GDC.time.month",
     "GDC.time.quarter",
     "GDC.time.year",
@@ -54,7 +54,6 @@ const defaultDateFilterOptions: IDateFilterOptionsByType = {
         to: undefined,
         name: "",
         visible: true,
-        availableGranularities,
     },
     relativePreset: {
         "GDC.time.date": [

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IAbsoluteDateFilterForm,
     IAbsoluteDateFilterPreset,
@@ -14,6 +14,7 @@ import {
     DateString,
     RelativeGranularityOffset,
 } from "@gooddata/sdk-backend-spi";
+import isEmpty from "lodash/isEmpty";
 
 /**
  * Represents the global absolute date filter, which may contain selected values
@@ -30,11 +31,15 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     to?: DateString;
 }
 
+export const isUiRelativeDateFilterForm = (obj: unknown): obj is IUiRelativeDateFilterForm => {
+    return !isEmpty(obj) && (obj as IUiRelativeDateFilterForm).type === "relativeForm";
+};
+
 /**
  * Represents the global relative date filter, which may contain selected granularity and values
  * @beta
  */
-export interface IUiRelativeDateFilterForm extends IRelativeDateFilterForm {
+export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     /**
      * Selected global relative date filter granularity
      */

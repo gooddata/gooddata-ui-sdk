@@ -54,7 +54,6 @@ const defaultDateFilterOptions: IDateFilterOptionsByType = {
         to: undefined,
         name: "",
         visible: true,
-        availableGranularities,
     },
     relativePreset: {
         "GDC.time.date": [
