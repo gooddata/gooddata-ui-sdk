@@ -328,6 +328,9 @@ export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFi
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
 
 // @beta
+export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDateFilterForm;
+
+// @beta
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     from?: DateString;
     to?: DateString;
