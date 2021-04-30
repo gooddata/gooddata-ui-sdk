@@ -1,4 +1,5 @@
 // (C) 2019-2020 GoodData Corporation
+// eslint-disable-next-line no-restricted-imports -- unfortunately, the get syntax is used heavily here for the supported properties
 import get from "lodash/get";
 import has from "lodash/has";
 import set from "lodash/set";
