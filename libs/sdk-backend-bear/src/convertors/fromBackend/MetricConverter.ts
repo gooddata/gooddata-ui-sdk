@@ -18,7 +18,7 @@ export function convertMetricFromBackend(metric: IMetric): IMeasureMetadataObjec
             .title(meta.title)
             .description(meta.summary || "")
             .expression(content.expression)
-            .format(content.format || "##,#")
+            .format(content.format || "#,#.##")
             .deprecated(meta.deprecated === "1")
             .isLocked(Boolean(meta.locked))
             .production(Boolean(meta.isProduction))

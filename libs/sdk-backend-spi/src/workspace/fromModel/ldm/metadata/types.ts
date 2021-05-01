@@ -1,17 +1,12 @@
 // (C) 2019-2020 GoodData Corporation
 
-import { ObjRef, ObjectType } from "@gooddata/sdk-model";
+import { ObjectType, ObjRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
 
 /**
- * @public
+ * @internal
  */
-export interface IMetadataObject {
-    /**
-     * Type of metadata object
-     */
-    type: ObjectType;
-
+export interface IMetadataObjectIdentity {
     /**
      * Metadata object reference
      */
@@ -30,6 +25,16 @@ export interface IMetadataObject {
      * So until we add cache, keep both id and uri exposed on metadata objects
      */
     uri: string;
+}
+
+/**
+ * @internal
+ */
+export interface IMetadataObjectBase {
+    /**
+     * Type of metadata object
+     */
+    type: ObjectType;
 
     /**
      * Title
@@ -59,6 +64,11 @@ export interface IMetadataObject {
      */
     unlisted: boolean;
 }
+
+/**
+ * @public
+ */
+export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {}
 
 /**
  * @public

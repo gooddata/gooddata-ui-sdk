@@ -21,7 +21,7 @@ export interface IWorkspaceMeasuresService {
     /**
      * Create and save measure for the provided measure definition
      *
-     * @param measure
+     * @param measure - measure definition
      * @returns promise of created measure
      */
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;

@@ -19,6 +19,7 @@ export function convertMetricToBackend(
             }),
             title: measure.title || "",
             summary: measure.description,
+            locked: measure.isLocked,
         },
         content: {
             expression: measure.expression,

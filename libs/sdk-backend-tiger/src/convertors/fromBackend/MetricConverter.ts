@@ -17,6 +17,6 @@ export function convertMetricFromBackend(data: JsonApiMetricOutDocument): IMeasu
             .isLocked(isInheritedObject(id))
             .description(attributes?.description || "")
             .expression(attributes.content.maql)
-            .format(attributes.content.format || "##,#"),
+            .format(attributes.content.format || ""),
     );
 }

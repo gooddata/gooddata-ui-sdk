@@ -9,15 +9,18 @@ import { IDataSetMetadataObject, isDataSetMetadataObject } from "./dataSet";
 import { IFactMetadataObject, isFactMetadataObject } from "./fact";
 import {
     IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObject,
     isMeasureMetadataObjectDefinition,
 } from "./measure";
-import { IMetadataObject, isMetadataObject } from "./types";
+import { IMetadataObject, IMetadataObjectBase, IMetadataObjectIdentity, isMetadataObject } from "./types";
 import { isVariableMetadataObject, IVariableMetadataObject } from "./variable";
 
 export {
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     isMetadataObject,
     IAttributeMetadataObject,
     isAttributeMetadataObject,
@@ -26,6 +29,7 @@ export {
     IFactMetadataObject,
     isFactMetadataObject,
     IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
     isMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
     isMeasureMetadataObjectDefinition,
