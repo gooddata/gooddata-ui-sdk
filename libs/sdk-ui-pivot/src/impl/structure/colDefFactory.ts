@@ -1,5 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
 import { ColDef, ColGroupDef } from "@ag-grid-community/all-modules";
+import findIndex from "lodash/findIndex";
 import {
     COLUMN_ATTRIBUTE_COLUMN,
     COLUMN_GROUPING_DELIMITER,
@@ -27,13 +28,28 @@ type TransformState = {
     allColDefs: Array<ColDef | ColGroupDef>;
 };
 
+function getSortProp(
+    initialSorts: ISortItem[],
+    predicate: (sortItem: ISortItem) => boolean,
+): Partial<ColDef> {
+    const sortIndex = findIndex(initialSorts, (s) => predicate(s));
+    const sort = initialSorts[sortIndex];
+
+    return sort
+        ? {
+              sort: sortDirection(sort),
+              // use sortedAt to make sure the order of sorts is the same as the order of columns
+              sortedAt: sortIndex,
+          }
+        : {};
+}
+
 function createAndAddSliceColDefs(rows: SliceCol[], state: TransformState) {
     for (const row of rows) {
-        const sort = state.initialSorts.find((s) => attributeSortMatcher(row, s));
-        const sortProp = sort ? { sort: sortDirection(sort) } : {};
+        const sortProp = getSortProp(state.initialSorts, (s) => attributeSortMatcher(row, s));
         const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
 
-        const colDef = {
+        const colDef: ColDef = {
             type: ROW_ATTRIBUTE_COLUMN,
             colId: row.id,
             field: row.id,
@@ -106,9 +122,9 @@ function createColumnHeadersFromDescriptors(
                 break;
             }
             case "seriesCol": {
-                const sort = state.initialSorts.find((s) => measureSortMatcher(col, s));
-                const sortProp = sort ? { sort: sortDirection(sort) } : {};
+                const sortProp = getSortProp(state.initialSorts, (s) => measureSortMatcher(col, s));
                 const cellRendererProp = !state.cellRendererPlaced ? { cellRenderer: "loadingRenderer" } : {};
+
                 const colDef: ColDef = {
                     type: MEASURE_COLUMN,
                     colId: col.id,

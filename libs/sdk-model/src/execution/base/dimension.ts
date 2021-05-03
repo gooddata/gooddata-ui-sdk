@@ -4,6 +4,7 @@ import invariant from "ts-invariant";
 import { Identifier } from "../../objRef/index";
 import { isTotal, ITotal } from "./totals";
 import isEmpty from "lodash/isEmpty";
+import findIndex from "lodash/findIndex";
 import { attributeLocalId, IAttribute, isAttribute } from "../attribute";
 
 /**
@@ -195,7 +196,7 @@ export function dimensionsFindItem(dims: IDimension[], localId: string): ItemInD
 
     for (let dimIdx = 0; dimIdx < dims.length; dimIdx++) {
         const dim = dims[dimIdx];
-        const itemIdx = dim.itemIdentifiers.findIndex((i) => i === localId);
+        const itemIdx = findIndex(dim.itemIdentifiers, (i) => i === localId);
 
         if (itemIdx >= 0) {
             result.push({ dim, dimIdx, itemIdx });

@@ -27,6 +27,7 @@ import {
     isPreviousPeriodMeasure,
     sortMeasureLocators,
 } from "@gooddata/sdk-model";
+import findIndex from "lodash/findIndex";
 
 /**
  * Methods to access result metadata - dimension descriptors and result headers.
@@ -274,7 +275,8 @@ class ResultMetaMethods implements IResultMetaMethods {
         }
 
         const attributeId = attributeLocatorIdentifier(locator);
-        const attributeIdx = this.dimensionItemDescriptors(this._measureGroupHeaderIdx).findIndex(
+        const attributeIdx = findIndex(
+            this.dimensionItemDescriptors(this._measureGroupHeaderIdx),
             (descriptor) => {
                 return (
                     isAttributeDescriptor(descriptor) &&

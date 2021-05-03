@@ -3,6 +3,7 @@ import range from "lodash/range";
 import set from "lodash/set";
 import isNil from "lodash/isNil";
 import cloneDeep from "lodash/cloneDeep";
+import findIndex from "lodash/findIndex";
 import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFacade } from "@gooddata/sdk-ui";
 import Highcharts from "../../../lib";
 import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper";
@@ -1537,7 +1538,7 @@ describe("chartOptionsBuilder", () => {
             const { measureGroup } = getMVS(dv);
             const heatmapSeries = getHeatmapSeries(dv, measureGroup);
             const heatmapDataPoints = heatmapSeries[0].data;
-            const firstEmptyCellIndex = heatmapDataPoints.findIndex((point) => isNil(point.value));
+            const firstEmptyCellIndex = findIndex(heatmapDataPoints, (point) => isNil(point.value));
 
             it("should return only one series", () => {
                 expect(heatmapSeries.length).toBe(1);

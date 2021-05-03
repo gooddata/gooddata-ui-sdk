@@ -15,6 +15,7 @@ import {
     SortDirection,
 } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty";
+import findIndex from "lodash/findIndex";
 
 type SortKey = SortKeyAttribute | SortKeyValue;
 
@@ -103,7 +104,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
         return dims;
     }
 
-    const nonMeasureDimIdx = dims.findIndex((dim) => !dim.itemIdentifiers.includes(MeasureGroupIdentifier));
+    const nonMeasureDimIdx = findIndex(dims, (dim) => !dim.itemIdentifiers.includes(MeasureGroupIdentifier));
     const measureDim = dims.find((dim) => dim.itemIdentifiers.includes(MeasureGroupIdentifier));
     const sorting: SortKey[][] = dims.map((_) => []);
 
@@ -118,7 +119,7 @@ function dimensionsWithSorts(dims: Dimension[], sorts: ISortItem[]): Dimension[]
                 },
             };
 
-            const dimIdx = dims.findIndex((dim) => dim.itemIdentifiers.includes(attributeIdentifier));
+            const dimIdx = findIndex(dims, (dim) => dim.itemIdentifiers.includes(attributeIdentifier));
 
             if (dimIdx < 0) {
                 // eslint-disable-next-line no-console

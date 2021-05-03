@@ -15,6 +15,7 @@ import invariant from "ts-invariant";
 import { modifySimpleMeasure } from "../measure/factory";
 import isArray from "lodash/isArray";
 import identity from "lodash/identity";
+import findIndex from "lodash/findIndex";
 
 /**
  * Type representing bucket items - which can be either measure or an attribute.
@@ -188,7 +189,7 @@ export function bucketAttributeIndex(
         return isAttribute(obj) && predicate(obj);
     };
 
-    return bucket.items.findIndex(compositeGuard);
+    return findIndex(bucket.items, compositeGuard);
 }
 
 /**
@@ -260,7 +261,7 @@ export function bucketMeasureIndex(bucket: IBucket, idOrFun: string | MeasurePre
         return isMeasure(obj) && predicate(obj);
     };
 
-    return bucket.items.findIndex(compositeGuard);
+    return findIndex(bucket.items, compositeGuard);
 }
 
 /**

@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 import React, { useReducer } from "react";
 import noop from "lodash/noop";
+import findIndex from "lodash/findIndex";
 import { IWidgetAlert } from "@gooddata/sdk-backend-spi";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
@@ -56,7 +57,7 @@ function reducer(state: IAlertsState, action: AlertAction): IAlertsState {
                 alerts: state.alerts?.filter((alert) => alert !== action.payload),
             };
         case "update": {
-            const index = state.alerts?.findIndex((alert) => areObjRefsEqual(alert.ref, action.payload.ref));
+            const index = findIndex(state.alerts, (alert) => areObjRefsEqual(alert.ref, action.payload.ref));
             return {
                 ...state,
                 alerts: [...state.alerts.slice(0, index), action.payload, ...state.alerts.slice(index + 1)],

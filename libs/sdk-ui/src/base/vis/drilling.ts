@@ -6,6 +6,7 @@ import {
     isTotalDescriptor,
 } from "@gooddata/sdk-backend-spi";
 import CustomEventPolyfill from "custom-event";
+import findIndex from "lodash/findIndex";
 import { identifierMatch, uriMatch } from "../headerMatching/HeaderPredicateFactory";
 import {
     IDrillableItem,
@@ -57,7 +58,8 @@ export function getIntersectionPartAfter(
     intersection: IDrillEventIntersectionElement[],
     localIdentifier: string,
 ): IDrillEventIntersectionElement[] {
-    const index = intersection.findIndex(
+    const index = findIndex(
+        intersection,
         (item: IDrillEventIntersectionElement) =>
             isDrillIntersectionAttributeItem(item.header) &&
             item.header.attributeHeader.localIdentifier === localIdentifier,
