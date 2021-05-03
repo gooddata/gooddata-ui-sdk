@@ -1,9 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import toDate from "date-fns-tz/toDate";
-import subDays from "date-fns/subDays";
-import isSameDay from "date-fns/isSameDay";
-import isSameYear from "date-fns/isSameYear";
+import moment from "moment-timezone";
 import { FormattedMessage, FormattedTime, FormattedDate } from "react-intl";
 
 /**
@@ -47,6 +44,14 @@ export const InsightListItemDate: React.FC<IInsightListItemDateProps> = ({ confi
 };
 
 export const META_DATA_TIMEZONE = "Europe/Prague";
+const FORMAT_DATE = "YYYY-MM-DD";
+const FORMAT_YEAR = "YYYY";
+
+/**
+ * @internal
+ */
+const sameFormatted = (firstDate: moment.Moment, secondDate: moment.Moment, format: string) =>
+    firstDate.format(format) === secondDate.format(format);
 
 /**
  * @internal
@@ -71,15 +76,19 @@ export function getDateTimeConfig(
 ): IInsightListItemDateConfig {
     const { dateTimezone = META_DATA_TIMEZONE, now = new Date() } = options;
 
-    const dateInLocalTimezone = toDate(date, { timeZone: dateTimezone });
-    const yesterday = subDays(now, 1);
+    const dateWithTimezone = moment.tz(date, dateTimezone);
+    const dateWithTimezoneInLocal = dateWithTimezone.clone().local();
 
-    const isToday = isSameDay(dateInLocalTimezone, now);
-    const isYesterday = isSameDay(dateInLocalTimezone, yesterday);
-    const isCurrentYear = isSameYear(dateInLocalTimezone, now);
+    const NOW = moment(now);
+    const TODAY = moment(now);
+    const YESTERDAY = moment(now).subtract(1, "days");
+
+    const isToday = sameFormatted(dateWithTimezoneInLocal, TODAY, FORMAT_DATE);
+    const isYesterday = sameFormatted(dateWithTimezoneInLocal, YESTERDAY, FORMAT_DATE);
+    const isCurrentYear = sameFormatted(dateWithTimezoneInLocal, NOW, FORMAT_YEAR);
 
     return {
-        date: dateInLocalTimezone,
+        date: dateWithTimezone.toDate(),
         isToday,
         isYesterday,
         isCurrentYear,
