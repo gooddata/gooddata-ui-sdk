@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import get from "lodash/get";
 
 import DropdownControl from "../DropdownControl";
 import { getTranslatedDropdownItems } from "../../../utils/translations";
@@ -37,13 +36,11 @@ class LabelRotationControl extends React.PureComponent<ILabelRotationControl & W
     }
 
     private getControlProperties(): IVisualizationProperties {
-        const axisVisible = get(this.props, `properties.controls.${this.props.axis}.visible`, true);
-        const axisLabelsEnabled = get(
-            this.props,
-            `properties.controls.${this.props.axis}.labelsEnabled`,
-            true,
-        );
-        const axisRotation = get(this.props, `properties.controls.${this.props.axis}.rotation`, "auto");
+        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+
+        const axisVisible = axisProperties?.visible ?? true;
+        const axisLabelsEnabled = axisProperties?.labelsEnabled ?? true;
+        const axisRotation = axisProperties?.rotation ?? "auto";
 
         return {
             axisVisible,

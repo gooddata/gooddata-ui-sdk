@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
-import get from "lodash/get";
 
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
@@ -30,7 +29,7 @@ class MinMaxControl extends React.Component<
     IMinMaxControlState
 > {
     public static getDerivedStateFromProps(props: IMinMaxControlProps & WrappedComponentProps) {
-        if (get(props, ["propertiesMeta", "undoApplied"], false)) {
+        if (props.propertiesMeta?.undoApplied) {
             return defaultMinMaxControlState;
         }
 
@@ -48,9 +47,11 @@ class MinMaxControl extends React.Component<
 
     private renderMinMaxSection() {
         const { properties, basePath, isDisabled } = this.props;
-        const axisScaleMin = get(this.props, `properties.controls.${basePath}.min`, "");
-        const axisScaleMax = get(this.props, `properties.controls.${basePath}.max`, "");
-        const axisVisible = get(this.props, `properties.controls.${basePath}.visible`, true);
+
+        const basePathPropertiesControls = properties?.controls?.[basePath];
+        const axisScaleMin = basePathPropertiesControls?.min ?? "";
+        const axisScaleMax = basePathPropertiesControls?.max ?? "";
+        const axisVisible = basePathPropertiesControls?.visible ?? true;
 
         return (
             <ConfigSubsection title="properties.axis.scale">
@@ -61,9 +62,7 @@ class MinMaxControl extends React.Component<
                     type="number"
                     hasWarning={this.minScaleHasWarning()}
                     value={
-                        this.minScaleHasIncorrectValue()
-                            ? get(this.state, "minScale.incorrectValue")
-                            : axisScaleMin
+                        this.minScaleHasIncorrectValue() ? this.state.minScale?.incorrectValue : axisScaleMin
                     }
                     disabled={isDisabled || !axisVisible}
                     properties={properties}
@@ -78,9 +77,7 @@ class MinMaxControl extends React.Component<
                     type="number"
                     hasWarning={this.maxScaleHasWarning()}
                     value={
-                        this.maxScaleHasIncorrectValue()
-                            ? get(this.state, "maxScale.incorrectValue")
-                            : axisScaleMax
+                        this.maxScaleHasIncorrectValue() ? this.state.maxScale?.incorrectValue : axisScaleMax
                     }
                     disabled={isDisabled || !axisVisible}
                     properties={properties}
@@ -112,23 +109,23 @@ class MinMaxControl extends React.Component<
     };
 
     private minScaleHasIncorrectValue() {
-        return get(this.state, "minScale.incorrectValue", "") !== "";
+        return (this.state.minScale?.incorrectValue ?? "") !== "";
     }
 
     private maxScaleHasIncorrectValue() {
-        return get(this.state, "maxScale.incorrectValue", "") !== "";
+        return (this.state.maxScale?.incorrectValue ?? "") !== "";
     }
 
     private minScaleHasWarning() {
-        return get(this.state, "minScale.hasWarning", false);
+        return this.state.minScale?.hasWarning ?? false;
     }
 
     private maxScaleHasWarning() {
-        return get(this.state, "maxScale.hasWarning", false);
+        return this.state.maxScale?.hasWarning ?? false;
     }
 
     private renderMinErrorMessage() {
-        const minScaleWarningMessage = get(this.state, "minScale.warningMessage", "");
+        const minScaleWarningMessage = this.state.minScale?.warningMessage ?? "";
         if (!this.minScaleHasWarning() || minScaleWarningMessage === "") {
             return false;
         }
@@ -141,7 +138,7 @@ class MinMaxControl extends React.Component<
     }
 
     private renderMaxErrorMessage() {
-        const maxScaleWarningMessage = get(this.state, "maxScale.warningMessage", "");
+        const maxScaleWarningMessage = this.state.maxScale?.warningMessage ?? "";
         if (!this.maxScaleHasWarning() || maxScaleWarningMessage === "") {
             return false;
         }

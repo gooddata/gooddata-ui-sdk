@@ -1,7 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
-import get from "lodash/get";
 import range from "lodash/range";
 import cloneDeep from "lodash/cloneDeep";
 
@@ -30,7 +29,7 @@ function missingMetricDefinition(
     metricDefinition: IMetricDefinition,
     closestMetricDefinition: IMetricDefinition,
 ) {
-    const title = get(metricDefinition, "title");
+    const title = metricDefinition.title;
 
     fail(
         `Metric definition (${title}) was not found:
@@ -51,7 +50,7 @@ function getClosestMatch(candidates: any[], getDistance: (candidate: any) => num
 
     const closestMatch = first(sortBy(table, (row) => row.distance));
 
-    return get(closestMatch, "candidate");
+    return closestMatch?.candidate;
 }
 
 function getClosestColumn(column: string, candidates: any[]) {
@@ -70,7 +69,7 @@ function getClosestMetricDefinition(definition: IMetricDefinition, candidates: I
 }
 
 function expectColumns(expected: string[], reportDefinition: IReportDefinition) {
-    const actualColumns = get(reportDefinition, "columns");
+    const actualColumns = reportDefinition.columns;
 
     expected.forEach((expectedColumn: any) => {
         if (!includes(actualColumns, expectedColumn)) {
@@ -82,10 +81,9 @@ function expectColumns(expected: string[], reportDefinition: IReportDefinition) 
 }
 
 function expectMetricDefinition(expected: IMetricDefinition, reportDefinition: IReportDefinition) {
-    const actualMetricDefinitions: IMetricDefinition[] = get(
-        reportDefinition,
-        "definitions",
-    ).map((definition: any) => get(definition, "metricDefinition"));
+    const actualMetricDefinitions: IMetricDefinition[] = reportDefinition.definitions.map(
+        (definition) => definition.metricDefinition as any,
+    );
 
     const defFound = find(actualMetricDefinitions, expected);
 
@@ -367,7 +365,10 @@ describe("execution", () => {
                         )
                         .then(() => {
                             const request = fetchMock.lastCall(matcher)[1] as RequestInit;
-                            expect(get(request.headers, "X-GDC-REQUEST", "")).toEqual("foo");
+                            expect(
+                                // type cast to narrow the type down to the one we know is used in this context
+                                (request.headers as Record<string, string>)?.["X-GDC-REQUEST"] ?? "",
+                            ).toEqual("foo");
                         });
                 });
             });

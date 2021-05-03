@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 import { PluggableBarChart } from "../PluggableBarChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -121,8 +120,8 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_xaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_xaxis.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toBeUndefined();
             expect(axis).toBeUndefined();
         });
@@ -134,8 +133,8 @@ describe("PluggableBarChart", () => {
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_xaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_xaxis.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);
         });

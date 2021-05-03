@@ -1,5 +1,4 @@
 // (C) 2019 GoodData Corporation
-import get from "lodash/get";
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import ConfigSubsection from "../../configurationControls/ConfigSubsection";
@@ -35,13 +34,10 @@ class NameSubsection extends React.PureComponent<IConfigItemSubsection & Wrapped
     }
 
     private getControlProperties(): IVisualizationProperties {
-        const controlsAxis: IVisualizationProperties = get(
-            this.props,
-            `properties.controls.${this.props.axis}`,
-            {},
-        );
-        const axisVisible: boolean = get(controlsAxis, "visible", true);
-        const axisNameVisible: boolean = get(controlsAxis, "name.visible", true);
+        const axisProperties = this.props.properties?.controls?.[this.props.axis];
+
+        const axisVisible = axisProperties?.visible ?? true;
+        const axisNameVisible = axisProperties?.name?.visible ?? true;
 
         return {
             axisVisible,

@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
@@ -66,7 +65,7 @@ export class PluggableTreemap extends PluggableBaseChart {
         newReferencePoint = removeAllArithmeticMeasuresFromDerived(newReferencePoint);
         newReferencePoint = removeAllDerivedMeasures(newReferencePoint);
 
-        const buckets = get(clonedReferencePoint, BUCKETS, []);
+        const buckets = clonedReferencePoint?.buckets ?? [];
 
         let measures = getMeasureItems(buckets);
 

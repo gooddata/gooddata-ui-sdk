@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import { PluggableHeatmap } from "../PluggableHeatmap";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import * as uiConfigMocks from "../../../../tests/mocks/uiConfigMocks";
@@ -137,9 +136,9 @@ describe("PluggableHeatmap", () => {
             ],
         };
 
-        const extendedReferencePoint = heatmap.getExtendedReferencePoint(referencePoint);
+        const extendedReferencePoint = await heatmap.getExtendedReferencePoint(referencePoint);
 
-        expect(get(extendedReferencePoint, "buckets.0.items.0.0.showInPercent")).toBeFalsy();
+        expect(extendedReferencePoint.buckets?.[0]?.items?.[0]?.[0]?.showInPercent).toBeFalsy();
     });
 
     describe("Arithmetic measures", () => {

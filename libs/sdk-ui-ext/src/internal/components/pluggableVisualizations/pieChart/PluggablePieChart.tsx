@@ -38,7 +38,6 @@ import { setPieChartUiConfig } from "../../../utils/uiConfigHelpers/pieChartUiCo
 import PieChartConfigurationPanel from "../../configurationPanels/PieChartConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 
@@ -60,7 +59,7 @@ export class PluggablePieChart extends PluggableBaseChart {
         newReferencePoint = removeAllArithmeticMeasuresFromDerived(newReferencePoint);
         newReferencePoint = removeAllDerivedMeasures(newReferencePoint);
 
-        const buckets = get(clonedReferencePoint, BUCKETS, []);
+        const buckets = clonedReferencePoint?.buckets ?? [];
         const attributes = getAttributeItems(buckets);
 
         if (attributes.length) {

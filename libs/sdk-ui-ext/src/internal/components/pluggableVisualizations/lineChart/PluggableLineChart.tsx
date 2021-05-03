@@ -6,7 +6,7 @@ import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
 import { BUCKETS } from "../../../constants/bucket";
 import { LINE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_LINE_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
+import { DEFAULT_LINE_UICONFIG } from "../../../constants/uiConfig";
 import {
     IBucketItem,
     IDrillDownContext,
@@ -38,7 +38,6 @@ import { setLineChartUiConfig } from "../../../utils/uiConfigHelpers/lineChartUi
 import LineChartBasedConfigurationPanel from "../../configurationPanels/LineChartBasedConfigurationPanel";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import {
@@ -69,7 +68,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             uiConfig: cloneDeep(DEFAULT_LINE_UICONFIG),
         };
 
-        const buckets = get(clonedReferencePoint, BUCKETS, []);
+        const buckets = clonedReferencePoint?.buckets ?? [];
         const measures = getMeasureItems(buckets);
         const masterMeasures = filterOutDerivedMeasures(measures);
         let attributes: IBucketItem[] = [];
@@ -95,7 +94,7 @@ export class PluggableLineChart extends PluggableBaseChart {
             if (
                 masterMeasures.length <= 1 &&
                 allAttributes.length > 1 &&
-                !isDateBucketItem(get(allAttributes, "1"))
+                !isDateBucketItem(allAttributes?.[1])
             ) {
                 stacks = allAttributes.slice(1, 2);
             }
@@ -120,7 +119,7 @@ export class PluggableLineChart extends PluggableBaseChart {
 
         newReferencePoint = setSecondaryMeasures(newReferencePoint, AXIS_NAME.SECONDARY_Y);
 
-        this.axis = get(newReferencePoint, UICONFIG_AXIS, AXIS.PRIMARY);
+        this.axis = newReferencePoint?.uiConfig?.axis ?? AXIS.PRIMARY;
         this.supportedPropertiesList = this.getSupportedPropertiesList();
 
         newReferencePoint = setLineChartUiConfig(newReferencePoint, this.intl, this.type);

@@ -2,7 +2,6 @@
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 
-import get from "lodash/get";
 import { IVisualizationProperties } from "../../interfaces/Visualization";
 import ConfigSubsection from "./ConfigSubsection";
 import DropdownControl from "./DropdownControl";
@@ -16,7 +15,7 @@ export interface IPushpinSizeControl {
 }
 
 function getPushpinProperty(props: IPushpinSizeControl & WrappedComponentProps) {
-    const { minSize = "default", maxSize = "default" } = get(props, "properties.controls.points", {});
+    const { minSize = "default", maxSize = "default" } = props.properties?.controls?.points ?? {};
     return {
         minSize,
         maxSize,

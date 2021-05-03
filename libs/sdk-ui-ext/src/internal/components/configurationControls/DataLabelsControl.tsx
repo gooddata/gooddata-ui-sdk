@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
-import get from "lodash/get";
 import DropdownControl from "./DropdownControl";
 
 import { dataLabelsDropdownItems } from "../../constants/dropdowns";
@@ -23,7 +22,7 @@ class DataLabelsControl extends React.Component<IDataLabelsControlProps & Wrappe
     };
     public render() {
         const { pushData, properties, intl, isDisabled, showDisabledMessage, defaultValue } = this.props;
-        const dataLabels = get(properties, "controls.dataLabels.visible", defaultValue);
+        const dataLabels = properties?.controls?.dataLabels?.visible ?? defaultValue;
 
         return (
             <div className="s-data-labels-config">

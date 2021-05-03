@@ -97,7 +97,7 @@ export const requestForMeasureTypeFactWithFilter = {
     },
 };
 
-const attributesMapForMeasureWithFilterAndCategory = {
+const attributesMapForMeasureWithFilterAndCategory: Record<string, any> = {
     "/gdc/md/FoodMartDemo/obj/124": {
         attribute: {
             content: {},
@@ -354,7 +354,7 @@ export const requestForMeasureWithNotInFilterAndCategoryShowInPercent = {
     },
 };
 
-const attributesMapForMeasureWithShowInPercent = {
+const attributesMapForMeasureWithShowInPercent: Record<string, any> = {
     "/gdc/md/FoodMartDemo/obj/124": {
         attribute: {
             content: {},

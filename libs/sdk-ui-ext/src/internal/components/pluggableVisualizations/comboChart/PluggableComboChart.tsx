@@ -2,7 +2,6 @@
 import React from "react";
 import { render } from "react-dom";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import without from "lodash/without";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -10,17 +9,11 @@ import { isAreaChart, isLineChart } from "@gooddata/sdk-ui-charts";
 import { AXIS, AXIS_NAME } from "../../../constants/axis";
 
 import { BUCKETS, METRIC } from "../../../constants/bucket";
-import {
-    PROPERTY_CONTROLS,
-    PROPERTY_CONTROLS_DUAL_AXIS,
-    PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
-    PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
-} from "../../../constants/properties";
+import { PROPERTY_CONTROLS_DUAL_AXIS } from "../../../constants/properties";
 import { COMBO_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { COMBO_CHART_UICONFIG, UICONFIG_AXIS } from "../../../constants/uiConfig";
+import { COMBO_CHART_UICONFIG } from "../../../constants/uiConfig";
 import {
     IBucketItem,
-    IBucketOfFun,
     IExtendedReferencePoint,
     IReferencePoint,
     IUiConfig,
@@ -62,16 +55,12 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.type = VisualizationTypes.COMBO;
         this.axis = AXIS.DUAL;
         this.secondaryAxis = AXIS_NAME.SECONDARY_Y;
-        this.primaryChartType = get(
-            props.visualizationProperties,
-            "controls.primaryChartType",
-            VisualizationTypes.COLUMN,
-        );
-        this.secondaryChartType = get(
-            props.visualizationProperties,
-            "controls.secondaryChartType",
-            VisualizationTypes.COLUMN,
-        );
+
+        const propertiesControls = props.visualizationProperties?.controls;
+
+        this.primaryChartType = propertiesControls?.primaryChartType ?? VisualizationTypes.COLUMN;
+        this.secondaryChartType = propertiesControls?.secondaryChartType ?? VisualizationTypes.COLUMN;
+
         this.supportedPropertiesList = this.getSupportedPropertiesList();
         this.defaultControlsProperties = {
             stackMeasures: this.isStackMeasuresByDefault(),
@@ -97,8 +86,8 @@ export class PluggableComboChart extends PluggableBaseChart {
     public getExtendedReferencePoint(referencePoint: IReferencePoint): Promise<IExtendedReferencePoint> {
         const clonedReferencePoint = cloneDeep(referencePoint);
         const properties = this.configureChartTypes(clonedReferencePoint);
-        this.primaryChartType = get(properties, "controls.primaryChartType", VisualizationTypes.COLUMN);
-        this.secondaryChartType = get(properties, "controls.secondaryChartType", VisualizationTypes.COLUMN);
+        this.primaryChartType = properties?.controls?.primaryChartType ?? VisualizationTypes.COLUMN;
+        this.secondaryChartType = properties?.controls?.secondaryChartType ?? VisualizationTypes.COLUMN;
 
         let newReferencePoint: IExtendedReferencePoint = {
             ...clonedReferencePoint,
@@ -113,7 +102,7 @@ export class PluggableComboChart extends PluggableBaseChart {
         this.configureBuckets(newReferencePoint);
         newReferencePoint = setSecondaryMeasures(newReferencePoint, this.secondaryAxis);
 
-        this.axis = get(newReferencePoint, UICONFIG_AXIS, AXIS.PRIMARY);
+        this.axis = newReferencePoint?.uiConfig?.axis ?? AXIS.PRIMARY;
 
         this.supportedPropertiesList = this.getSupportedPropertiesList();
 
@@ -138,8 +127,8 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     protected configureBuckets(extReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucketOfFun[] = get(extReferencePoint, BUCKETS, []);
-        const attributes: IBucketItem[] = getAllAttributeItemsWithPreference(buckets, [
+        const buckets = extReferencePoint?.buckets ?? [];
+        const attributes = getAllAttributeItemsWithPreference(buckets, [
             BucketNames.TREND,
             BucketNames.VIEW,
         ]).slice(0, 1);
@@ -169,16 +158,10 @@ export class PluggableComboChart extends PluggableBaseChart {
 
         set(extReferencePoint, PROPERTY_CONTROLS_DUAL_AXIS, isDualAxisEnabled);
 
-        const primaryChartType = get(
-            extReferencePoint,
-            PROPERTY_CONTROLS_PRIMARY_CHART_TYPE,
-            VisualizationTypes.COLUMN,
-        );
-        const secondaryChartType = get(
-            extReferencePoint,
-            PROPERTY_CONTROLS_SECONDARY_CHART_TYPE,
-            VisualizationTypes.LINE,
-        );
+        const primaryChartType =
+            extReferencePoint?.properties?.controls?.primaryChartType ?? VisualizationTypes.COLUMN;
+        const secondaryChartType =
+            extReferencePoint?.properties?.controls?.secondaryChartType ?? VisualizationTypes.LINE;
 
         set(extReferencePoint, BUCKETS, [
             {
@@ -199,18 +182,14 @@ export class PluggableComboChart extends PluggableBaseChart {
     }
 
     private configureChartTypes(referencePoint: IReferencePoint): IVisualizationProperties {
-        const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
-        const controls = get(referencePoint, PROPERTY_CONTROLS, {});
-        const primaryChartType = get(
-            findBucket(buckets, BucketNames.MEASURES),
-            "chartType",
-            controls.primaryChartType || VisualizationTypes.COLUMN,
-        );
-        const secondaryChartType = get(
-            findBucket(buckets, BucketNames.SECONDARY_MEASURES),
-            "chartType",
-            controls.secondaryChartType || VisualizationTypes.LINE,
-        );
+        const buckets = referencePoint?.buckets ?? [];
+        const controls = referencePoint?.properties?.controls ?? {};
+        const primaryChartType =
+            findBucket(buckets, BucketNames.MEASURES)?.chartType ??
+            (controls.primaryChartType || VisualizationTypes.COLUMN);
+        const secondaryChartType =
+            findBucket(buckets, BucketNames.SECONDARY_MEASURES)?.chartType ??
+            (controls.secondaryChartType || VisualizationTypes.LINE);
 
         if (primaryChartType || secondaryChartType) {
             return {
@@ -231,7 +210,7 @@ export class PluggableComboChart extends PluggableBaseChart {
             return false;
         }
 
-        const buckets: IBucketOfFun[] = get(extReferencePoint, BUCKETS, []);
+        const buckets = extReferencePoint?.buckets ?? [];
         const primaryMasterMeasures: number = getMasterMeasuresCount(buckets, BucketNames.MEASURES);
         const secondaryMasterMeasures: number = getMasterMeasuresCount(
             buckets,

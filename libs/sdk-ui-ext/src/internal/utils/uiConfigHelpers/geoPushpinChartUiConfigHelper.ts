@@ -2,7 +2,6 @@
 import { IntlShape } from "react-intl";
 import cloneDeep from "lodash/cloneDeep";
 import set from "lodash/set";
-import get from "lodash/get";
 
 import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG, OPEN_AS_REPORT, SUPPORTED } from "../../constants/uiConfig";
@@ -39,11 +38,11 @@ export function setGeoPushpinUiConfig(
 
     // only apply related bucket uiConfig
     set(referencePointConfigured, [UICONFIG, BUCKETS], {
-        [BucketNames.LOCATION]: get(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.LOCATION]),
-        [BucketNames.SIZE]: get(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SIZE]),
-        [BucketNames.COLOR]: get(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.COLOR]),
-        [BucketNames.SEGMENT]: get(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT]),
-        ["filters"]: get(referencePointConfigured, [UICONFIG, BUCKETS, "filters"]),
+        [BucketNames.LOCATION]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.LOCATION],
+        [BucketNames.SIZE]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.SIZE],
+        [BucketNames.COLOR]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.COLOR],
+        [BucketNames.SEGMENT]: referencePointConfigured?.uiConfig?.buckets?.[BucketNames.SEGMENT],
+        filters: referencePointConfigured?.uiConfig?.buckets?.filters,
     });
 
     return referencePointConfigured;

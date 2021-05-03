@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import { IBucketOfFun, IFilters } from "../../../../interfaces/Visualization";
 import { PluggableLineChart } from "../PluggableLineChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
@@ -481,8 +480,8 @@ describe("PluggableLineChart", () => {
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_yaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toBeUndefined();
             expect(axis).toBeUndefined();
         });
@@ -494,8 +493,8 @@ describe("PluggableLineChart", () => {
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_yaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);
         });
@@ -510,21 +509,26 @@ describe("PluggableLineChart", () => {
             await chart.getExtendedReferencePoint(
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY],
             );
 
             await chart.getExtendedReferencePoint(
                 referencePointMocks.measuresOnSecondaryAxisAndAttributeReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
             );
 
             await chart.getExtendedReferencePoint(
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(LINE_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL]);
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
+                LINE_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
+            );
         });
     });
 

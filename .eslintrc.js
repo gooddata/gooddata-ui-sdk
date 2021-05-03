@@ -22,5 +22,11 @@ module.exports = {
         "@typescript-eslint/no-inferrable-types": "off",
         "@typescript-eslint/no-non-null-assertion": "off",
         "import/order": "off",
+        "no-restricted-imports": [
+            "error",
+            {
+                paths: [{ name: "lodash/get", message: "Please use the ?. and ?? operators instead." }],
+            },
+        ],
     },
 };

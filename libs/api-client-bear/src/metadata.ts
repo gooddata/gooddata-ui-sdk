@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 import isPlainObject from "lodash/isPlainObject";
-import get from "lodash/get";
 import chunk from "lodash/chunk";
 import flatten from "lodash/flatten";
 import pick from "lodash/pick";
@@ -11,7 +10,7 @@ import {
     GdcMetadataObject,
     GdcProjectDashboard,
 } from "@gooddata/api-model-bear";
-import { getIn, handlePolling, queryString } from "./util";
+import { getQueryEntries, handlePolling, queryString } from "./util";
 import { ApiResponse, ApiResponseError, XhrModule } from "./xhr";
 import {
     IGetObjectsByQueryOptions,
@@ -35,7 +34,7 @@ export class MetadataModule {
     constructor(private xhr: XhrModule) {}
 
     /**
-     * Get default display form value of provided atrribute element uri
+     * Get default display form value of provided attribute element uri
      * @param attributeElementUri string
      */
     public async getAttributeElementDefaultDisplayFormValue(
@@ -139,7 +138,7 @@ export class MetadataModule {
                     return r.getData();
                 })
                 .then((result: any) =>
-                    get(result, ["objects", "items"]).map((item: any) => {
+                    result.objects.items.map((item: any) => {
                         if (item.visualizationObject) {
                             return {
                                 visualizationObject: item.visualizationObject,
@@ -388,7 +387,7 @@ export class MetadataModule {
             .then((apiResponse: ApiResponse) =>
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
@@ -404,7 +403,7 @@ export class MetadataModule {
             .then((apiResponse: ApiResponse) =>
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
@@ -421,7 +420,7 @@ export class MetadataModule {
             .then((apiResponse: ApiResponse) =>
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
@@ -441,7 +440,7 @@ export class MetadataModule {
             return this.xhr
                 .get(`/gdc/md/${pId}/query/folders${typeURL}`)
                 .then((r) => r.getData())
-                .then(getIn("query.entries"));
+                .then(getQueryEntries);
         };
 
         switch (type) {
@@ -474,7 +473,7 @@ export class MetadataModule {
             .then((apiResponse: ApiResponse) =>
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
@@ -490,7 +489,7 @@ export class MetadataModule {
             .then((apiResponse: ApiResponse) =>
                 apiResponse.response.ok ? apiResponse.getData() : apiResponse.response,
             )
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
@@ -883,7 +882,7 @@ export class MetadataModule {
                     ],
                 },
             })
-            .then((r: ApiResponse) => (r.response.ok ? get(r.getData(), "elementLabelUri") : r.response));
+            .then((r: ApiResponse) => (r.response.ok ? r.getData()?.elementLabelUri : r.response));
     }
 
     /**

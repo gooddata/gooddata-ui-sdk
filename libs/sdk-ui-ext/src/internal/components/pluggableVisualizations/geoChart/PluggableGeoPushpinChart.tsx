@@ -19,7 +19,7 @@ import {
     getAttributeItemsWithoutStacks,
     getItemsCount,
     getItemsFromBuckets,
-    getMeasures,
+    getAllMeasures,
     getPreferredBucketItems,
     isDateBucketItem,
     limitNumberOfMeasuresInBuckets,
@@ -52,7 +52,6 @@ import {
 } from "@gooddata/sdk-model";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import { CoreGeoChart, getGeoChartDimensions, IGeoConfig } from "@gooddata/sdk-ui-geo";
-import get from "lodash/get";
 import set from "lodash/set";
 import isEmpty from "lodash/isEmpty";
 import includes from "lodash/includes";
@@ -111,7 +110,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             newExtendedReferencePoint.buckets,
             NUMBER_MEASURES_IN_BUCKETS_LIMIT,
         );
-        const allMeasures: IBucketItem[] = getMeasures(buckets);
+        const allMeasures: IBucketItem[] = getAllMeasures(buckets);
         const primaryMeasures: IBucketItem[] = getPreferredBucketItems(
             buckets,
             [BucketNames.MEASURES, BucketNames.SIZE],
@@ -374,7 +373,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     private updateSupportedProperties(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
-        const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
+        const buckets = referencePoint?.buckets ?? [];
         const locationItem = this.getLocationItems(buckets)[0];
         if (!locationItem) {
             return referencePoint;

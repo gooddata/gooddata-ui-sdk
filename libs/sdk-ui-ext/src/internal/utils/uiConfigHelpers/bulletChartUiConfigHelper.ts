@@ -1,10 +1,8 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import { IntlShape } from "react-intl";
-import { IExtendedReferencePoint, IBucketOfFun } from "../../interfaces/Visualization";
+import { IExtendedReferencePoint } from "../../interfaces/Visualization";
 import { UICONFIG } from "../../constants/uiConfig";
-import { BUCKETS } from "../../constants/bucket";
 import { setBucketTitles, getItemsCount } from "./../bucketHelper";
 import { getTranslation } from "../translations";
 
@@ -23,7 +21,7 @@ export function getBulletChartUiConfig(
 
     referencePointConfigured[UICONFIG] = setBucketTitles(referencePointConfigured, visualizationType, intl);
 
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
+    const buckets = referencePoint?.buckets ?? [];
 
     const primaryMeasuresCount = getItemsCount(buckets, BucketNames.MEASURES);
     const secondaryMeasuresCount = getItemsCount(buckets, BucketNames.SECONDARY_MEASURES);

@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import { PluggableColumnChart } from "../PluggableColumnChart";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks";
 import { AXIS } from "../../../../constants/axis";
@@ -109,8 +108,8 @@ describe("PluggableColumnChart", () => {
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_yaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toBeUndefined();
             expect(axis).toBeUndefined();
         });
@@ -122,8 +121,8 @@ describe("PluggableColumnChart", () => {
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
 
-            const measures = get(extendedReferencePoint, "properties.controls.secondary_yaxis.measures");
-            const axis = get(extendedReferencePoint, "uiConfig.axis");
+            const measures = extendedReferencePoint?.properties?.controls?.secondary_yaxis?.measures;
+            const axis = extendedReferencePoint?.uiConfig?.axis;
             expect(measures).toEqual(["m3", "m4"]);
             expect(axis).toEqual(AXIS.DUAL);
         });

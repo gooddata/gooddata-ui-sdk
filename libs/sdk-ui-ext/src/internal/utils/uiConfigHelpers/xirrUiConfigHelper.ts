@@ -1,11 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import set from "lodash/set";
 import { IntlShape } from "react-intl";
 
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
-import { IReferencePoint, IUiConfig, ICustomError, IBucketOfFun } from "../../interfaces/Visualization";
+import { IReferencePoint, IUiConfig, ICustomError } from "../../interfaces/Visualization";
 import { DEFAULT_XIRR_UICONFIG } from "../../constants/uiConfig";
 import { BUCKETS } from "../../constants/bucket";
 import { hasNoMeasures, hasNoAttribute } from "../bucketRules";
@@ -40,7 +39,7 @@ export const getXirrUiConfig = (referencePoint: IReferencePoint, intl: IntlShape
         intl,
     );
 
-    const buckets: IBucketOfFun[] = get(referencePoint, BUCKETS, []);
+    const buckets = referencePoint?.buckets ?? [];
 
     const canAddMeasures = hasNoMeasures(buckets);
     const canAddAttribute = hasNoAttribute(buckets);

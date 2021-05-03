@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
 import uniqBy from "lodash/uniqBy";
@@ -69,7 +68,7 @@ function mergeColorMappingToProperties(properties: IVisualizationProperties, id:
         },
     ];
 
-    const previousColorMapping = get(properties, ["controls", "colorMapping"]) || [];
+    const previousColorMapping = properties?.controls?.colorMapping ?? [];
 
     const mergedMapping = compact(uniqBy([...colorMapping, ...previousColorMapping], "id"));
     const newProperties = cloneDeep(properties);

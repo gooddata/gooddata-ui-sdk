@@ -2,30 +2,11 @@
 import "isomorphic-fetch";
 import fetchMock from "fetch-mock";
 import { mockPollingRequestWithStatus } from "./utils/polling";
-import { getIn, handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
+import { handleHeadPolling, IPollingOptions, queryString, parseSettingItemValue } from "../util";
 import { ApiResponse, XhrModule } from "../xhr";
 import { GdcExport } from "@gooddata/api-model-bear";
 
 describe("util", () => {
-    const testObj = {
-        a: 1,
-        b: { c: { d: 2 } },
-    };
-
-    describe("getIn", () => {
-        it("should return partially applied get", () => {
-            expect(getIn("b.c.d")(testObj)).toBe(2);
-        });
-
-        it("should work as resolve function of promise", () => {
-            return Promise.resolve(testObj)
-                .then(getIn("b.c"))
-                .then((result) => {
-                    expect(result).toEqual({ d: 2 });
-                });
-        });
-    });
-
     describe("queryString", () => {
         it("should handle undefined", () => {
             expect(queryString(undefined)).toBe("");

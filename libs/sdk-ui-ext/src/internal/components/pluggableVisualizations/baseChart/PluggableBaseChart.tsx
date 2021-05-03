@@ -24,7 +24,7 @@ import { render } from "react-dom";
 import { BUCKETS } from "../../../constants/bucket";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties";
 import { BASE_CHART_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties";
-import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT, UICONFIG } from "../../../constants/uiConfig";
+import { DEFAULT_BASE_CHART_UICONFIG, MAX_CATEGORIES_COUNT } from "../../../constants/uiConfig";
 import { AxisType } from "../../../interfaces/AxisType";
 import { IColorConfiguration } from "../../../interfaces/Colors";
 import {
@@ -75,7 +75,6 @@ import { isOpenAsReportSupportedByVisualization } from "../../../utils/visualiza
 import BaseChartConfigurationPanel from "../../configurationPanels/BaseChartConfigurationPanel";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization";
 import cloneDeep from "lodash/cloneDeep";
-import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
 import set from "lodash/set";
 import tail from "lodash/tail";
@@ -162,12 +161,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): void {
-        const buckets: IBucketOfFun[] = get(extendedReferencePoint, BUCKETS, []);
-        const categoriesCount: number = get(
-            extendedReferencePoint,
-            [UICONFIG, BUCKETS, BucketNames.VIEW, "itemsLimit"],
-            MAX_CATEGORIES_COUNT,
-        );
+        const buckets = extendedReferencePoint?.buckets ?? [];
+        const categoriesCount =
+            extendedReferencePoint?.uiConfig?.buckets?.[BucketNames.VIEW]?.itemsLimit ?? MAX_CATEGORIES_COUNT;
+
         set(extendedReferencePoint, BUCKETS, [
             {
                 localIdentifier: BucketNames.MEASURES,
@@ -359,7 +356,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         supportedControls: IVisualizationProperties,
     ): IChartConfig {
         const { config = {}, customVisualizationConfig = {} } = options;
-        const colorMapping: IColorMappingItem[] = get(supportedControls, "colorMapping");
+        const colorMapping: IColorMappingItem[] = supportedControls?.colorMapping;
 
         const validColorMapping =
             colorMapping &&
@@ -393,7 +390,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     }
 
     private getSupportedControls(insight: IInsightDefinition, options: IVisProps) {
-        let supportedControls = cloneDeep(get(this.visualizationProperties, "controls", {}));
+        let supportedControls = cloneDeep(this.visualizationProperties?.controls ?? {});
         const defaultControls = getSupportedPropertiesControls(
             this.defaultControlsProperties,
             this.supportedPropertiesList,
@@ -433,7 +430,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         options: IVisProps,
     ) {
-        const legendPosition = get(controlProperties, "legend.position", "auto");
+        const legendPosition = controlProperties?.legend?.position ?? "auto";
 
         if (this.environment === DASHBOARDS_ENVIRONMENT) {
             const width = options.dimensions?.width;
@@ -460,8 +457,8 @@ function canSortStackTotalValue(
     insight: IInsightDefinition,
     supportedControls: IVisualizationProperties,
 ): boolean {
-    const stackMeasures = get(supportedControls, "stackMeasures", false);
-    const secondaryAxis: IAxisConfig = get(supportedControls, "secondary_yaxis", { measures: [] });
+    const stackMeasures = supportedControls?.stackMeasures ?? false;
+    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;

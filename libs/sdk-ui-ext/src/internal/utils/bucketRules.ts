@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import some from "lodash/some";
 import every from "lodash/every";
 import isEmpty from "lodash/isEmpty";
@@ -13,6 +12,7 @@ import {
     IBucketOfFun,
     IReferencePoint,
     IFilters,
+    IDateFilter,
 } from "../interfaces/Visualization";
 
 import {
@@ -28,7 +28,7 @@ import {
     isRankingFilter,
 } from "./bucketHelper";
 
-import { FILTERS, GRANULARITY, ALL_TIME, ATTRIBUTE, BUCKETS, METRIC } from "../constants/bucket";
+import { FILTERS, GRANULARITY, ALL_TIME, METRIC } from "../constants/bucket";
 
 export function hasOneMeasure(buckets: IBucketOfFun[]): boolean {
     return getItemsCount(buckets, BucketNames.MEASURES) === 1;
@@ -110,9 +110,9 @@ function hasDateInCategories(buckets: IBucketOfFun[]): boolean {
 
 export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
     if (filters) {
-        return some(filters.items, (item: IFiltersBucketItem) => {
-            const interval = get(item, [FILTERS, 0, "interval"], null);
-            return interval && get(interval, "name") !== ALL_TIME;
+        return some(filters.items, (item) => {
+            const interval = (item?.filters?.[0] as IDateFilter)?.interval ?? null;
+            return interval && interval.name !== ALL_TIME;
         });
     }
 
@@ -121,7 +121,7 @@ export function hasGlobalDateFilterIgnoreAllTime(filters: IFilters): boolean {
 
 export function hasGlobalDateFilter(filters: IFilters): boolean {
     if (filters) {
-        return some(filters.items, (item: IFiltersBucketItem) => get(item, [FILTERS, 0, "interval"], null));
+        return some(filters.items, (item) => (item?.filters?.[0] as IDateFilter)?.interval);
     }
 
     return false;
@@ -137,15 +137,15 @@ export function hasUsedDate(buckets: IBucketOfFun[], filters: IFilters): boolean
 
 function hasNoWeekGranularity(buckets: IBucketOfFun[]): boolean {
     if (hasDateInCategories(buckets)) {
-        return every(getAllAttributeItems(buckets), (item) => get(item, "granularity") !== GRANULARITY.week);
+        return every(getAllAttributeItems(buckets), (item) => item?.granularity !== GRANULARITY.week);
     }
 
-    return every(getBucketItems(buckets, FILTERS), (item) => get(item, "granularity") !== GRANULARITY.week);
+    return every(getBucketItems(buckets, FILTERS), (item) => item?.granularity !== GRANULARITY.week);
 }
 
 function hasNoMeasureDateFilter(buckets: IBucketOfFun[]): boolean {
     return !some(getMeasureItems(buckets), (item: IBucketItem) => {
-        const filters = get(item, FILTERS);
+        const filters = item?.filters;
         return filters && some(filters, isDateBucketItem);
     });
 }
@@ -159,7 +159,7 @@ export function hasOneCategory(buckets: IBucketOfFun[]): boolean {
 }
 
 function isShowPercentageUnselected(buckets: IBucketOfFun[]): boolean {
-    return !get(getBucketItems(buckets, BucketNames.MEASURES), [0, "showInPercent"], false);
+    return !getBucketItems(buckets, BucketNames.MEASURES)?.[0]?.showInPercent;
 }
 
 export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
@@ -168,7 +168,7 @@ export function noDerivedMeasurePresent(buckets: IBucketOfFun[]): boolean {
 }
 
 function hasFirstDate(buckets: IBucketOfFun[]): boolean {
-    const firstAttributeItem = get(getAllAttributeItems(buckets), 0);
+    const firstAttributeItem = getAllAttributeItems(buckets)?.[0];
     return firstAttributeItem && isDateBucketItem(firstAttributeItem);
 }
 
@@ -177,12 +177,12 @@ function hasNotFirstDate(buckets: IBucketOfFun[]): boolean {
 }
 
 export function hasNonAllTimeFilter(filters: IFilters): boolean {
-    const filterBucketItems: IFiltersBucketItem[] = get(filters, "items", []);
+    const filterBucketItems = filters?.items ?? [];
     const dateFilter = filterBucketItems.find((filter: IFiltersBucketItem) => {
-        return get(filter, ATTRIBUTE) === "attr.datedataset";
+        return filter?.attribute === "attr.datedataset";
     });
 
-    const filterInterval = get(dateFilter, [FILTERS, 0, "interval", "interval"], []);
+    const filterInterval = (dateFilter?.filters?.[0] as IDateFilter)?.interval?.interval ?? [];
     return !isEmpty(filterInterval);
 }
 
@@ -230,8 +230,8 @@ export function overTimeComparisonRecommendationEnabled(
     const rules = weekFiltersEnabled ? baseRules : [...baseRules, hasNoWeekGranularity];
 
     return (
-        allRulesMet(rules, get(referencePoint, BUCKETS, [])) &&
-        hasGlobalDateFilterIgnoreAllTime(get(referencePoint, FILTERS))
+        allRulesMet(rules, referencePoint?.buckets ?? []) &&
+        hasGlobalDateFilterIgnoreAllTime(referencePoint?.filters)
     );
 }
 

@@ -1,7 +1,6 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import get from "lodash/get";
 import includes from "lodash/includes";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -84,15 +83,15 @@ export default class BaseChartConfigurationPanel extends ConfigurationPanelConte
 
     protected getControlProperties(): { gridEnabled: boolean; axes: IAxisProperties[] } {
         const props = this.props;
-        const gridEnabled = get(props, "properties.controls.grid.enabled", true);
+        const gridEnabled = props.properties?.controls?.grid?.enabled ?? true;
         const axisType = includes(DUAL_AXES_SUPPORTED_CHARTS, props.type)
-            ? get(props, "axis") || AXIS.PRIMARY
+            ? props.axis ?? AXIS.PRIMARY
             : AXIS.PRIMARY;
         const configurations = this.getAxesConfiguration(axisType);
         const axes: IAxisProperties[] = configurations.map((axis: any) => {
             return {
                 ...axis,
-                visible: get(props, `properties.controls.${axis.name}.visible`, true),
+                visible: props.properties?.controls?.[axis.name]?.visible ?? true,
             };
         });
 

@@ -1,6 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
 import set from "lodash/set";
-import get from "lodash/get";
 
 /**
  * Config module holds SDK configuration variables
@@ -54,6 +53,7 @@ export interface IOriginPackage {
 export interface IConfigStorage {
     domain?: string;
     originPackage?: IOriginPackage;
+    xhrSettings?: { headers?: Record<string, string> };
 }
 
 /**
@@ -122,7 +122,7 @@ export class ConfigModule {
         set(this.configStorage, ["xhrSettings", "headers", key], value);
     }
 
-    public getRequestHeader(key: string): string {
-        return get(this.configStorage, ["xhrSettings", "headers", key]);
+    public getRequestHeader(key: string): string | undefined {
+        return this.configStorage?.xhrSettings?.headers?.[key];
     }
 }

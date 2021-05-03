@@ -1,5 +1,4 @@
 // (C) 2019-2020 GoodData Corporation
-import get from "lodash/get";
 import set from "lodash/set";
 import { WrappedComponentProps } from "react-intl";
 import { getTranslation } from "./translations";
@@ -32,9 +31,9 @@ export function maxInputValidateAndPushData(
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
-    const maxValue = get(data, `properties.controls.${basePath}.max`);
-    const incorrectMinValue = get(state, "minScale.incorrectValue", "");
-    const correctMinValue = get(props, `properties.controls.${basePath}.min`, "");
+    const maxValue = data?.properties?.controls?.[basePath]?.max;
+    const incorrectMinValue = state?.minScale?.incorrectValue ?? "";
+    const correctMinValue = props?.properties?.controls?.[basePath]?.min ?? "";
 
     const incorrectMinInvalid = isValueMinusOrEmpty(incorrectMinValue);
     const minNumberValue = incorrectMinInvalid
@@ -90,9 +89,9 @@ export function minInputValidateAndPushData(
     defaultState: IMinMaxControlState,
 ): void {
     const { basePath } = props;
-    const minValue = get(data, `properties.controls.${basePath}.min`);
-    const incorrectMaxValue = get(state, "maxScale.incorrectValue", "");
-    const correctMaxValue = get(props, `properties.controls.${basePath}.max`, "");
+    const minValue = data?.properties?.controls?.[basePath]?.min;
+    const incorrectMaxValue = state?.maxScale?.incorrectValue ?? "";
+    const correctMaxValue = props?.properties?.controls?.[basePath]?.max ?? "";
 
     const incorrectMaxInvalid = isValueMinusOrEmpty(incorrectMaxValue);
     const maxNumberValue = incorrectMaxInvalid

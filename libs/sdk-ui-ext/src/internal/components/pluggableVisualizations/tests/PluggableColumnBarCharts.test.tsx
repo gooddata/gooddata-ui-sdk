@@ -1,6 +1,5 @@
 // (C) 2019 GoodData Corporation
 import noop from "lodash/noop";
-import get from "lodash/get";
 import cloneDeep from "lodash/cloneDeep";
 import * as referencePointMocks from "../../../tests/mocks/referencePointMocks";
 import { IBucketOfFun, IFilters, IVisProps, IVisConstruct } from "../../../interfaces/Visualization";
@@ -233,7 +232,8 @@ describe("PluggableColumnBarCharts", () => {
             await chart.getExtendedReferencePoint(
                 referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY].filter(
                     (props: string) => props !== OPTIONAL_STACKING_PROPERTIES[0],
                 ),
@@ -242,14 +242,16 @@ describe("PluggableColumnBarCharts", () => {
             await chart.getExtendedReferencePoint(
                 referencePointMocks.measuresOnSecondaryAxisAndAttributeReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
             );
 
             await chart.getExtendedReferencePoint(
                 referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
             );
-            expect(get(chart, "supportedPropertiesList")).toEqual(
+            // TODO avoid testing protected property
+            expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
             );
         });

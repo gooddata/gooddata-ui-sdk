@@ -1,5 +1,5 @@
 // (C) 2007-2020 GoodData Corporation
-import { getIn, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue } from "./util";
+import { getQueryEntries, handlePolling, getAllPagesByOffsetLimit, parseSettingItemValue } from "./util";
 import { ITimezone, IColor, IColorPalette, IFeatureFlags } from "./interfaces";
 import { IStyleSettingsResponse, IFeatureFlagsResponse } from "./apiResponsesInterfaces";
 import { XhrModule, ApiResponse, ApiError } from "./xhr";
@@ -135,7 +135,7 @@ export class ProjectModule {
         return this.xhr
             .get(`/gdc/md/${projectId}/query/datasets`)
             .then((r) => r.getData())
-            .then(getIn("query.entries"));
+            .then(getQueryEntries);
     }
 
     /**
