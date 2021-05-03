@@ -69,6 +69,12 @@ const IconTest: React.FC = () => {
             <IconWrapper name="Interaction">
                 <Icon.Interaction color="#00f" />
             </IconWrapper>
+            <IconWrapper name="Book">
+                <Icon.Book color="#f00" />
+            </IconWrapper>
+            <IconWrapper name="Lock">
+                <Icon.Lock color="#0f0" />
+            </IconWrapper>
             <IconWrapper name="Rows">
                 <Icon.Rows colorPalette={{ odd: "#f00", even: "#0f0" }} />
             </IconWrapper>
