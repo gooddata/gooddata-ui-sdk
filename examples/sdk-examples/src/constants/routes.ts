@@ -50,6 +50,7 @@ import DashboardViewWithMergedFilters from "../examples/dashboardEmbedding/Dashb
 import DashboardViewWithDrilling from "../examples/dashboardEmbedding/DashboardViewWithDrilling";
 import DashboardExport from "../examples/dashboardEmbedding/DashboardExport";
 import DashboardViewAdvancedCustomizations from "../examples/dashboardEmbedding/DashboardViewAdvancedCustomizations";
+import { Placeholders } from "../examples/placeholders";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -68,6 +69,7 @@ export const advancedUseCasesRoutes = [
         Component: LoadingAndError,
     },
     { path: "/advanced/chart-configuration", title: "Chart Configuration", Component: ChartConfiguration },
+    { path: "/advanced/placeholders", title: "Placeholders", Component: Placeholders },
 ];
 
 export const internationalDateFormatUseCasesRoutes = [

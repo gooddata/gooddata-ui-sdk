@@ -8,12 +8,18 @@ import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeGroupPlaceholder } from '@gooddata/sdk-ui';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAttributePlaceholder } from '@gooddata/sdk-ui';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
+import { IFilterGroupPlaceholder } from '@gooddata/sdk-ui';
+import { IFilterPlaceholder } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureGroupPlaceholder } from '@gooddata/sdk-ui';
+import { IMeasurePlaceholder } from '@gooddata/sdk-ui';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
@@ -32,7 +38,7 @@ export const AreaChart: import("react").ComponentType<IAreaChartProps>;
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
-export const BarChart: import("react").ComponentType<IBarChartProps>;
+export const BarChart: (props: IBarChartProps) => JSX.Element;
 
 // @internal
 export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
@@ -107,11 +113,11 @@ export interface IAxisNameConfig {
 
 // @public (undocumented)
 export interface IBarChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
+    filters?: IFilterGroupPlaceholder | Array<INullableFilter | IFilterPlaceholder | IFilterGroupPlaceholder>;
+    measures: IMeasureGroupPlaceholder | Array<IMeasurePlaceholder | IMeasureGroupPlaceholder | IAttributeOrMeasure>;
     sortBy?: ISortItem[];
-    stackBy?: IAttribute;
-    viewBy?: IAttribute | IAttribute[];
+    stackBy?: IAttribute | IAttributePlaceholder;
+    viewBy?: IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>;
 }
 
 // @public (undocumented)

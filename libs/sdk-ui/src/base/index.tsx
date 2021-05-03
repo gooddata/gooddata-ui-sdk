@@ -67,6 +67,51 @@ export {
     withWorkspace,
     IWorkspaceProviderProps,
 } from "./react/WorkspaceContext";
+export {
+    FiltersProvider,
+    IFiltersProviderProps,
+    useFilterPlaceholder,
+    useFilterPlaceholderGroup,
+    useResolveFilterPlaceholders,
+} from "./react/placeholders/FiltersContext";
+export {
+    MeasuresProvider,
+    IMeasuresProviderProps,
+    useMeasurePlaceholder,
+    useMeasurePlaceholderGroup,
+    useResolveMeasurePlaceholders,
+} from "./react/placeholders/MeasuresContext";
+export {
+    AttributesProvider,
+    IAttributesProviderProps,
+    useAttributePlaceholder,
+    useAttributeGroupPlaceholder,
+    useResolveAttributePlaceholders,
+} from "./react/placeholders/AttributesContext";
+export { PlaceholdersProvider, IPlaceholdersProviderProps } from "./react/placeholders/PlaceholdersContext";
+export {
+    IAttributeGroupPlaceholder,
+    IAttributePlaceholder,
+    IFilterGroupPlaceholder,
+    IFilterPlaceholder,
+    IMeasureGroupPlaceholder,
+    IMeasurePlaceholder,
+    IPlaceholder,
+    IPlaceholderType,
+    UndefinedPlaceholderHandling,
+    isAttributeGroupPlaceholder,
+    isAttributePlaceholder,
+    isFilterGroupPlaceholder,
+    isFilterPlaceholder,
+    isMeasureGroupPlaceholder,
+    isMeasurePlaceholder,
+    newAttributeGroupPlaceholder,
+    newAttributePlaceholder,
+    newFilterGroupPlaceholder,
+    newFilterPlaceholder,
+    newMeasureGroupPlaceholder,
+    newMeasurePlaceholder,
+} from "./react/placeholders/interfaces";
 export { usePagedResource, IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource";
 export {
     UseCancelablePromiseStatus,
