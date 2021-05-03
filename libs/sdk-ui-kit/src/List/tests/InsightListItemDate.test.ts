@@ -1,5 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
-import toDate from "date-fns-tz/toDate";
+import moment from "moment-timezone";
 
 import { getDateTimeConfig, META_DATA_TIMEZONE } from "../InsightListItemDate";
 
@@ -13,8 +13,8 @@ interface ITestOptions {
 }
 
 const toZonedDate = (date: string, timeZone: string) => {
-    const metaDataDate = toDate(date, { timeZone: META_DATA_TIMEZONE });
-    return toDate(metaDataDate, { timeZone });
+    const dateWithTimezone = moment.tz(date, META_DATA_TIMEZONE);
+    return moment.tz(dateWithTimezone, timeZone).toDate();
 };
 
 describe("InsightListItemDate", () => {
@@ -74,19 +74,19 @@ describe("InsightListItemDate", () => {
 
         describe("Europe/Prague default timezone", () => {
             const timeZone = "Europe/Prague";
-            const now = toDate("2016-03-20 15:00", { timeZone });
+            const now = moment.tz("2016-03-20 15:00", timeZone).toDate();
             shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
 
         describe("America/Los_Angeles default timezone", () => {
             const timeZone = "America/Los_Angeles";
-            const now = toDate("2016-03-20 07:00", { timeZone });
+            const now = moment.tz("2016-03-20 07:00", timeZone).toDate();
             shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
 
         describe("Asia/Bangkok default timezone", () => {
             const timeZone = "Asia/Bangkok";
-            const now = toDate("2016-03-20 20:00", { timeZone });
+            const now = moment.tz("2016-03-20 20:00", timeZone).toDate();
             shouldBehaveCorrectlyForDate({ now, timeZone, ...options });
         });
     });
