@@ -98,6 +98,11 @@ export interface IBackendCapabilities {
     supportsHyperlinkAttributeLabels?: boolean;
 
     /**
+     * Indicates whether backend supports returning of the valid elements (values) for generic date attributes (Day of Week, Month of Year, etc.).
+     */
+    supportsGenericDateAttributeElements?: boolean;
+
+    /**
      * Catchall for additional capabilities
      */
     [key: string]: undefined | boolean | number | string;
