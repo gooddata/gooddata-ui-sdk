@@ -15,7 +15,10 @@
     "typings": "esm/index.d.ts",
     "sideEffects": [
         "*.css",
-        "*.svg"
+        "*.svg",
+        "*.ttf",
+        "*.woff",
+        "*.eot"
     ],
     "files": [
         "dist/**/*.js",
