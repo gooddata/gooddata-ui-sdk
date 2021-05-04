@@ -1,5 +1,9 @@
 // (C) 2019-2021 GoodData Corporation
-import { IWorkspaceMeasuresService, IMeasureExpressionToken } from "@gooddata/sdk-backend-spi";
+import {
+    IWorkspaceMeasuresService,
+    IMeasureExpressionToken,
+    IMeasureMetadataObject,
+} from "@gooddata/sdk-backend-spi";
 import {
     JsonApiAttributeOut,
     JsonApiFactOut,
@@ -7,10 +11,16 @@ import {
     JsonApiMetricOut,
     JsonApiMetricOutDocument,
     jsonApiHeaders,
+    JsonApiMetricInTypeEnum,
 } from "@gooddata/api-client-tiger";
+import { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-backend-spi";
 import { ObjRef, idRef, isIdentifierRef } from "@gooddata/sdk-model";
+import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter";
+import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter";
 import { TigerAuthenticatedCallGuard } from "../../../types";
+import { objRefToIdentifier } from "../../../utils/api";
 import { tokenizeExpression, IExpressionToken } from "./measureExpressionTokens";
+import { v4 as uuidv4 } from "uuid";
 
 export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -79,5 +89,64 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
             value,
             ref: idRef(identifier),
         };
+    }
+
+    async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
+        const metricAttributes = convertMetricToBackend(measure);
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.createEntityMetrics(
+                {
+                    workspaceId: this.workspace,
+                    jsonApiMetricInDocument: {
+                        data: {
+                            id: uuidv4(),
+                            type: JsonApiMetricInTypeEnum.Metric,
+                            attributes: metricAttributes,
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertMetricFromBackend(result.data);
+    }
+
+    async updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        const objectId = await objRefToIdentifier(measure.ref, this.authCall);
+        const metricAttributes = convertMetricToBackend(measure);
+        const result = await this.authCall((client) => {
+            return client.workspaceObjects.updateEntityMetrics(
+                {
+                    objectId,
+                    workspaceId: this.workspace,
+                    jsonApiMetricInDocument: {
+                        data: {
+                            id: objectId,
+                            type: JsonApiMetricInTypeEnum.Metric,
+                            attributes: metricAttributes,
+                        },
+                    },
+                },
+                {
+                    headers: jsonApiHeaders,
+                },
+            );
+        });
+
+        return convertMetricFromBackend(result.data);
+    }
+
+    async deleteMeasure(measureRef: ObjRef): Promise<void> {
+        const objectId = await objRefToIdentifier(measureRef, this.authCall);
+
+        await this.authCall((client) => {
+            return client.workspaceObjects.deleteEntityMetrics({
+                objectId,
+                workspaceId: this.workspace,
+            });
+        });
     }
 }

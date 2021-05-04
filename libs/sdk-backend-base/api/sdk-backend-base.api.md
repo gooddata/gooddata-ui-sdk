@@ -633,6 +633,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     expression(maql: string): this;
     // (undocumented)
     format(format: string): this;
+    // (undocumented)
+    isLocked(isLocked: boolean): this;
 }
 
 // @beta

@@ -23,6 +23,11 @@ export class MeasureMetadataObjectBuilder<
         this.item.format = format;
         return this;
     }
+
+    public isLocked(isLocked: boolean): this {
+        this.item.isLocked = isLocked;
+        return this;
+    }
 }
 
 /**
