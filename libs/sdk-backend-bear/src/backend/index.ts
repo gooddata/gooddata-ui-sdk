@@ -61,6 +61,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsElementsQueryParentFiltering: true,
     supportsKpiWidget: true,
     supportsHyperlinkAttributeLabels: true,
+    supportsGenericDateAttributeElements: true,
 };
 
 /**
