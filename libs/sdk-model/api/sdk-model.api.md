@@ -1296,6 +1296,4 @@ export type VisualizationProperties = {
 };
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

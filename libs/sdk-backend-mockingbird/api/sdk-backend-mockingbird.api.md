@@ -170,6 +170,5 @@ export type VisClassesRecording = {
     items: IVisualizationClass[];
 };
 
-// (No @packageDocumentation comment for this package)
 
 ```

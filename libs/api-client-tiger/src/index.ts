@@ -1,4 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
+/**
+ * Not available
+ * @packageDocumentation
+ */
 import { tigerClientFactory, ITigerClient } from "./client";
 import {
     axios as defaultAxios,

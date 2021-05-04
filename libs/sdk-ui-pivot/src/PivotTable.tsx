@@ -135,7 +135,7 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
 }
 
 /**
- * Update link to documentation [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/next/pivot_table_component.html)
+ * [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  *
  * @public

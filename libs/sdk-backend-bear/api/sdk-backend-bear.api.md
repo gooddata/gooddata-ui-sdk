@@ -87,6 +87,4 @@ export class FixedLoginAndPasswordAuthProvider extends BearAuthProviderBase impl
     }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

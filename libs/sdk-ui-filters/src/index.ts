@@ -1,5 +1,8 @@
 // (C) 2019-2021 GoodData Corporation
-
+/**
+ * Available
+ * @packageDocumentation
+ */
 export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
 export { IAttributeElementsChildren } from "./AttributeElements/types";
 export { AttributeFilter, IAttributeFilterProps } from "./AttributeFilter/AttributeFilter";

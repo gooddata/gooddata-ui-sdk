@@ -433,6 +433,4 @@ export class StaticLegend extends React_2.PureComponent<IStaticLegendProps> {
 export const SupportedLegendPositions: PositionType[];
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

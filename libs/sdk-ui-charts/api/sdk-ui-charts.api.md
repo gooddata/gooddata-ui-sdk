@@ -494,6 +494,4 @@ export const withJsxExport: <T extends object>(Component: React_2.ComponentType<
 export const Xirr: React_2.ComponentType<IXirrProps>;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

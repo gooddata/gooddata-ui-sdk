@@ -1,5 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
-
+// (C) 2019-2021 GoodData Corporation
+/**
+ * Not available
+ * @packageDocumentation
+ */
 import { dummyBackend, dummyBackendEmptyData, dummyDataView } from "@gooddata/sdk-backend-base";
 export { dummyBackend, dummyBackendEmptyData, dummyDataView };
 

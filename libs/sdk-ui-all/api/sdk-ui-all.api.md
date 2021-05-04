@@ -14,6 +14,4 @@ export * from "@gooddata/sdk-ui-filters";
 export * from "@gooddata/sdk-ui-geo";
 export * from "@gooddata/sdk-ui-pivot";
 
-// (No @packageDocumentation comment for this package)
-
 ```

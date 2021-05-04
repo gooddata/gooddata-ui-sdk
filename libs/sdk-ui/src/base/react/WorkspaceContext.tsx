@@ -33,11 +33,13 @@ export const WorkspaceProvider: React.FC<IWorkspaceProviderProps> = ({ children,
  * Note: For a better TypeScript experience without the hassle of undefined values, you can use the useWorkspaceStrict hook.
  *
  * @example
+ * ```
  * // instead of
  * const fromContext = useWorkspace();
  * const effectiveWorkspace = fromArguments ?? fromContext.
  * // you can write
  * const workspace = useWorkspace(fromArguments);
+ *```
  *
  * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
  * @public
@@ -56,11 +58,13 @@ export const useWorkspace = (workspace?: string): string | undefined => {
  * an invariant error is raised.
  *
  * @example
+ * ```
  * // instead of
  * const fromContext = useWorkspaceStrict();
  * const effectiveWorkspace = fromArguments ?? fromContext.
  * // you can write
  * const workspace = useWorkspaceStrict(fromArguments);
+ * ```
  *
  * @param workspace - workspace to use instead of context value. If undefined, the context value is used.
  * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).
