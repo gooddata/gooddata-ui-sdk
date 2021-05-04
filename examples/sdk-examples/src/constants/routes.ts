@@ -31,6 +31,8 @@ import { InternationalDatePickerExample } from "../examples/internationalDateFor
 
 import { ThemedComponents } from "../examples/theming";
 
+import { ChartResponsiveness } from "../examples/chartResponsiveness";
+
 // import { MeasureValueFilter } from "../examples/hidden/measureValueFilter";
 // import { MeasureValueFilterComponent } from "../examples/hidden/measureValueFilterComponent";
 import { OnDrillHandling } from "../examples/hidden/onDrillHandling";
@@ -260,6 +262,7 @@ export const sideNavigationRoutes: RouteDefinition[] = [
         Component: InternationalDateFormatUseCasesRoutes,
     },
     { path: "/theming", title: "Custom Theming", Component: ThemedComponents },
+    { path: "/chart-responsiveness", title: "Chart Responsiveness", Component: ChartResponsiveness },
 ];
 
 export const hiddenPaths = [
