@@ -61,6 +61,4 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

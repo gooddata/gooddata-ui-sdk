@@ -1,4 +1,8 @@
 // (C) 2007-2021 GoodData Corporation
+/**
+ * Available
+ * @packageDocumentation
+ */
 export * from "./interfaces";
 export * from "./charts";
 export {

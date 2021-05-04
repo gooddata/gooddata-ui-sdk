@@ -49,11 +49,13 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
  * This makes the usage more ergonomic (see the following example).
  *
  * @example
+ * ```
  * // instead of
  * const fromContext = useTheme();
  * const effectiveTheme = fromArguments ?? fromContext.
  * // you can write
  * const theme = useTheme(fromArguments);
+ * ```
  *
  * @param theme - theme to use instead of context value. If undefined, the context value is used.
  * @public

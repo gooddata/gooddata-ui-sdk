@@ -1518,6 +1518,4 @@ export const wrapDisplayName: (hocName: string, BaseComponent?: import("react").
 export type XirrType = "xirr";
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

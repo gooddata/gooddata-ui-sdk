@@ -1979,6 +1979,4 @@ export function widgetUri(widget: IWidget): string;
 export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject" | "canRefreshData";
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

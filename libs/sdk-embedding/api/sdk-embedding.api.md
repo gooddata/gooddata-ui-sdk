@@ -707,6 +707,4 @@ export interface ISimpleDrillableItemsCommandBody {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

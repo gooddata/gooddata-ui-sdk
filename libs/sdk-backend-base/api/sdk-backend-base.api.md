@@ -813,6 +813,4 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

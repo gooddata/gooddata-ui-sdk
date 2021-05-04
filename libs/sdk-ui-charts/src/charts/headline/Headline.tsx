@@ -38,7 +38,7 @@ export interface IHeadlineBucketProps {
 export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps {}
 
 /**
- * [Headline](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/headline_component.html)
+ * [Headline](https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html)
  * Headline shows a single number or compares two numbers. You can display both measures and attributes.
  *
  * Headlines have two sections: Measure (primary) and Measure (secondary).

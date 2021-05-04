@@ -1,4 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
+/**
+ * Available
+ * @packageDocumentation
+ */
 import "./polyfills";
 // new exports
 

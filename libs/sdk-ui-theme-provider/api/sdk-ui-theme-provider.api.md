@@ -48,6 +48,4 @@ export function withTheme<T extends {
 }>(Component: React_2.ComponentType<T>): React_2.ComponentType<Omit<T, "theme" | "themeIsLoading">>;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

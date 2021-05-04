@@ -88,7 +88,7 @@ export interface ITreemapBucketProps {
 export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {}
 
 /**
- * [Treemap](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/treemap_component.html)
+ * [Treemap](https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html)
  *
  * Treemap chart presents your data hierarchically as nested rectangles.
  * Treemaps are useful for comparing proportions within the hierarchy.

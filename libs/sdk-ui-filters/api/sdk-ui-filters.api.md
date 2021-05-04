@@ -380,6 +380,4 @@ export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDate
 export type WarningMessage = string | IWarningMessage;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

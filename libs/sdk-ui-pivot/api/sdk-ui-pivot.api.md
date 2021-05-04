@@ -203,6 +203,4 @@ export const PivotTable: React_2.ComponentType<IPivotTableProps>;
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

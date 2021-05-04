@@ -2847,6 +2847,4 @@ export const useResponsiveContext: () => IResponsiveConfig;
 export const WorkspacePickerHomeFooter: React_2.ComponentType<Pick<IWorkspacePickerHomeFooterProps, "className" | "onClick" | "href">>;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

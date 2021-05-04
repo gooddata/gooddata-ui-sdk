@@ -272,6 +272,4 @@ export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" |
 export type ZoomChangedCallback = (zoom: number) => void;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

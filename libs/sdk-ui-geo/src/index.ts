@@ -1,7 +1,8 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 
-/*
- *
+/**
+ * Available
+ * @packageDocumentation
  */
 
 export {
