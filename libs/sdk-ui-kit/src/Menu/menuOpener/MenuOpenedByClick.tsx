@@ -1,10 +1,12 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
-import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
-import OutsideClickHandler from "../utils/OutsideClickHandler";
-import MenuPosition from "../positioning/MenuPosition";
 
-const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
+import { OutsideClickHandler } from "../utils/OutsideClickHandler";
+import { MenuPosition } from "../positioning/MenuPosition";
+
+import { IMenuOpenedBySharedProps } from "./MenuOpenedBySharedProps";
+
+export const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
     const outsideClick = () => props.onOpenedChange({ opened: false, source: "OUTSIDE_CLICK" });
     const togglerWrapperClick = () =>
         props.onOpenedChange({ opened: !props.opened, source: "TOGGLER_BUTTON_CLICK" });
@@ -44,5 +46,3 @@ const MenuOpenedByClick = (props: IMenuOpenedBySharedProps): JSX.Element => {
         </MenuPosition>
     );
 };
-
-export default MenuOpenedByClick;

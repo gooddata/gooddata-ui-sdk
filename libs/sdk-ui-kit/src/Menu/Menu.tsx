@@ -1,12 +1,14 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import isFunction from "lodash/isFunction";
+
 import { ISubMenuProps } from "./SubMenu";
-import MenuState from "./MenuState";
-import ControlledMenu from "./ControlledMenu";
+import { MenuState } from "./MenuState";
+import { ControlledMenu } from "./ControlledMenu";
 
-import "../../styles/css/menu.css";
-
+/**
+ * @internal
+ */
 export interface IMenuProps extends ISubMenuProps {
     closeOnScroll?: boolean;
     portalTarget?: Element;
@@ -14,7 +16,10 @@ export interface IMenuProps extends ISubMenuProps {
     children: ((props: { closeMenu: () => void }) => React.ReactNode) | React.ReactNode;
 }
 
-const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
+/**
+ * @internal
+ */
+export const Menu: React.FC<IMenuProps> = (props: IMenuProps) => (
     <MenuState
         opened={props.opened}
         defaultOpened={props.defaultOpened}
@@ -46,10 +51,9 @@ const Menu: React.SFC<IMenuProps> = (props: IMenuProps) => (
         )}
     </MenuState>
 );
+
 Menu.defaultProps = {
     openAction: "click",
     alignment: ["bottom", "right"],
     closeOnScroll: false,
 };
-
-export default Menu;

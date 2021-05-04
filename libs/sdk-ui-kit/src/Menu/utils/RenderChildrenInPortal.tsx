@@ -7,14 +7,13 @@ export interface IRenderChildrenInPortalProps {
     children: React.ReactNode;
 }
 
-export default class RenderChildrenInPortal extends React.Component<IRenderChildrenInPortalProps> {
+export class RenderChildrenInPortal extends React.Component<IRenderChildrenInPortalProps> {
     private portalContentWrapperEl: HTMLElement;
 
     private constructor(props: IRenderChildrenInPortalProps) {
         super(props);
 
-        const wrapperEl = document.createElement("div");
-        this.portalContentWrapperEl = wrapperEl;
+        this.portalContentWrapperEl = document.createElement("div");
     }
 
     public UNSAFE_componentWillMount(): void {

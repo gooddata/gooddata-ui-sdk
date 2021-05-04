@@ -516,9 +516,14 @@ $subtotal-odd-background-color: var(
             text-overflow: ellipsis;
         }
     }
+}
 
-    .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {
-        color: $is-focused-color;
-        background: $is-focused-background;
+.gd-menuPosition-wrapper:hover {
+    .gd-list-item.gd-menu-item.is-submenu {
+        background-color: $is-focused-background;
+    }
+
+    .gd-list-item.gd-menu-item.is-submenu.is-selected {
+        background-color: $gd-palette-primary-dimmed;
     }
 }

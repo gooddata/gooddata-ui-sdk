@@ -1,7 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
-import RenderChildrenInPortal from "../RenderChildrenInPortal";
+
+import { RenderChildrenInPortal } from "../RenderChildrenInPortal";
 
 describe("RenderChildrenInPortal", () => {
     it("should render children in targetElement", () => {

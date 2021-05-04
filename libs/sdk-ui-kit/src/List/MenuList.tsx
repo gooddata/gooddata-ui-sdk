@@ -14,13 +14,21 @@ export interface IItemsWrapperProps {
 /**
  * @internal
  */
-export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({ smallItemsSpacing, children, ...restProps }) => (
+export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
+    smallItemsSpacing,
+    className,
+    children,
+    style,
+}) => (
     <div
-        className={classnames({
-            "gd-menu-wrapper": true,
-            "gd-menu-wrapper-small-spacing": smallItemsSpacing,
-        })}
-        {...restProps}
+        className={classnames(
+            {
+                "gd-menu-wrapper": true,
+                "gd-menu-wrapper-small-spacing": smallItemsSpacing,
+            },
+            className,
+        )}
+        style={style}
     >
         {children}
     </div>
@@ -63,19 +71,32 @@ export interface IItemProps {
     style?: React.CSSProperties;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
+
 /**
  * @internal
  */
-export const Item: React.FC<IItemProps> = ({ checked, subMenu, disabled, children, ...restProps }) => (
+export const Item: React.FC<IItemProps> = ({
+    checked,
+    subMenu,
+    disabled,
+    className,
+    children,
+    style,
+    onClick,
+}) => (
     <div
-        className={classnames({
-            "gd-list-item": true,
-            "gd-menu-item": true,
-            "is-checked": checked,
-            "is-submenu": subMenu,
-            "is-disabled": disabled,
-        })}
-        {...restProps}
+        className={classnames(
+            {
+                "gd-list-item": true,
+                "gd-menu-item": true,
+                "is-checked": checked,
+                "is-submenu": subMenu,
+                "is-disabled": disabled,
+            },
+            className,
+        )}
+        style={style}
+        onClick={onClick}
     >
         {children}
     </div>
