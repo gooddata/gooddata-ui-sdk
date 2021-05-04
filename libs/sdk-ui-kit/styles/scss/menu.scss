@@ -2,8 +2,8 @@
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
 @import "~@gooddata/sdk-ui/styles/scss/settings";
-@import "~@gooddata/goodstrap/lib/core/styles/IndigoFont";
 
+@import "./indigoFont";
 @import "./list";
 
 .gd-menuOpenner {

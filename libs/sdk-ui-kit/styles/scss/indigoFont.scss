@@ -1,0 +1,403 @@
+// (C) 2007-2021 GoodData Corporation
+$base_path: "~@gooddata/sdk-ui-kit/styles";
+
+// stylelint-disable function-url-quotes
+
+@font-face {
+    font-family: "Indigo";
+    src: url($base_path + "/fonts/Indigo-v2.eot");
+    src: url($base_path + "/fonts/Indigo-v2.eot?#iefix") format("embedded-opentype"),
+        url($base_path + "/fonts/Indigo-v2.woff") format("woff"),
+        url($base_path + "/fonts/Indigo-v2.ttf") format("truetype"),
+        url($base_path + "/fonts/Indigo-v2.svg#Indigo-v2") format("svg");
+    font-weight: normal;
+    font-style: normal;
+}
+
+// stylelint-enable function-url-quotes
+
+[class^="icon-"]::before,
+[class*=" icon-"]::before,
+[class^="icon-"].icon-right::after,
+[class*=" icon-"].icon-right::after {
+    font-family: "Indigo", sans-serif;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+
+    /* Better Font Rendering looks better in Chrome, corresponds to Sketch mockups */
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-transform: none;
+}
+
+[class^="icon-"].icon-right::before,
+[class*=" icon-"].icon-right::before {
+    content: "";
+    display: none;
+}
+
+.icon-trend-down::before,
+.icon-trend-down.icon-right::after {
+    content: "\e600";
+}
+
+.icon-trend-up::before,
+.icon-trend-up.icon-right::after {
+    content: "\e601";
+}
+
+.icon-user::before,
+.icon-user.icon-right::after {
+    content: "\e602";
+}
+
+.icon-ghost::before,
+.icon-ghost.icon-right::after {
+    content: "\e603";
+}
+
+.icon-redo::before,
+.icon-redo.icon-right::after {
+    content: "\e604";
+}
+
+.icon-undo::before,
+.icon-undo.icon-right::after {
+    content: "\e605";
+}
+
+.icon-pause::before,
+.icon-pause.icon-right::after {
+    content: "\e606";
+}
+
+.icon-users::before,
+.icon-users.icon-right::after {
+    content: "\e607";
+}
+
+.icon-cloud-rain::before,
+.icon-cloud-rain.icon-right::after {
+    content: "\e608";
+}
+
+.icon-calendar::before,
+.icon-calendar.icon-right::after {
+    content: "\e609";
+}
+
+.icon-circle-exclamation::before,
+.icon-circle-exclamation.icon-right::after {
+    content: "\e60a";
+}
+
+.icon-circle-question::before,
+.icon-circle-question.icon-right::after {
+    content: "\e60b";
+}
+
+.icon-dropright::before,
+.icon-dropright.icon-right::after {
+    content: "\e60c";
+}
+
+.icon-dropdown::before,
+.icon-dropdown.icon-right::after {
+    content: "\e60d";
+}
+
+.icon-question::before,
+.icon-question.icon-right::after {
+    content: "\e60e";
+}
+
+.icon-number::before,
+.icon-number.icon-right::after {
+    content: "\e60f";
+}
+
+.icon-navigateleft::before,
+.icon-navigateleft.icon-right::after {
+    content: "\e610";
+}
+
+.icon-navigateright::before,
+.icon-navigateright.icon-right::after {
+    content: "\e611";
+}
+
+.icon-navigatedown::before,
+.icon-navigatedown.icon-right::after {
+    content: "\e612";
+}
+
+.icon-navigateup::before,
+.icon-navigateup.icon-right::after {
+    content: "\e613";
+}
+
+.icon-pencil::before,
+.icon-pencil.icon-right::after {
+    content: "\e614";
+}
+
+.icon-magic::before,
+.icon-magic.icon-right::after {
+    content: "\e615";
+}
+
+.icon-cloud-upload::before,
+.icon-cloud-upload.icon-right::after {
+    content: "\e616";
+}
+
+.icon-lock::before,
+.icon-lock.icon-right::after {
+    content: "\e617";
+}
+
+.icon-unlock::before,
+.icon-unlock.icon-right::after {
+    content: "\e618";
+}
+
+.icon-settings::before,
+.icon-settings.icon-right::after {
+    content: "\e619";
+}
+
+.icon-trash::before,
+.icon-trash.icon-right::after {
+    content: "\e61a";
+}
+
+.icon-at-sign::before,
+.icon-at-sign.icon-right::after {
+    content: "\e61b";
+}
+
+.icon-envelope::before,
+.icon-envelope.icon-right::after {
+    content: "\e61c";
+}
+
+.icon-visible::before,
+.icon-visible.icon-right::after {
+    content: "\e61d";
+}
+
+.icon-invisible::before,
+.icon-invisible.icon-right::after {
+    content: "\e61e";
+}
+
+.icon-save::before,
+.icon-save.icon-right::after {
+    content: "\e61f";
+}
+
+.icon-printer::before,
+.icon-printer.icon-right::after {
+    content: "\e620";
+}
+
+.icon-file::before,
+.icon-file.icon-right::after {
+    content: "\e621";
+}
+
+.icon-folder::before,
+.icon-folder.icon-right::after {
+    content: "\e622";
+}
+
+.icon-enter::before,
+.icon-enter.icon-right::after {
+    content: "\e623";
+}
+
+.icon-earth::before,
+.icon-earth.icon-right::after {
+    content: "\e624";
+}
+
+.icon-bell::before,
+.icon-bell.icon-right::after {
+    content: "\e625";
+}
+
+.icon-horn::before,
+.icon-horn.icon-right::after {
+    content: "\e626";
+}
+
+.icon-sync::before,
+.icon-sync.icon-right::after {
+    content: "\e627";
+}
+
+.icon-clock::before,
+.icon-clock.icon-right::after {
+    content: "\e628";
+}
+
+.icon-timer::before,
+.icon-timer.icon-right::after {
+    content: "\e629";
+}
+
+.icon-download::before,
+.icon-download.icon-right::after {
+    content: "\e62a";
+}
+
+.icon-magnifier::before,
+.icon-magnifier.icon-right::after {
+    content: "\e62b";
+}
+
+.icon-checkmark::before,
+.icon-checkmark.icon-right::after {
+    content: "\e62c";
+}
+
+.icon-cross::before,
+.icon-cross.icon-right::after {
+    content: "\e62d";
+}
+
+.icon-chevron-up::before,
+.icon-chevron-up.icon-right::after {
+    content: "\e62e";
+}
+
+.icon-chevron-down::before,
+.icon-chevron-down.icon-right::after {
+    content: "\e62f";
+}
+
+.icon-chevron-left::before,
+.icon-chevron-left.icon-right::after {
+    content: "\e630";
+}
+
+.icon-chevron-right::before,
+.icon-chevron-right.icon-right::after {
+    content: "\e631";
+}
+
+.icon-arrow-up::before,
+.icon-arrow-up.icon-right::after {
+    content: "\e632";
+}
+
+.icon-arrow-down::before,
+.icon-arrow-down.icon-right::after {
+    content: "\e633";
+}
+
+.icon-arrow-left::before,
+.icon-arrow-left.icon-right::after {
+    content: "\e634";
+}
+
+.icon-arrow-right::before,
+.icon-arrow-right.icon-right::after {
+    content: "\e635";
+}
+
+.icon-tab::before,
+.icon-tab.icon-right::after {
+    content: "\e636";
+}
+
+.icon-warning::before,
+.icon-warning.icon-right::after {
+    content: "\e637";
+}
+
+.icon-circle-checkmark::before,
+.icon-circle-checkmark.icon-right::after {
+    content: "\e638";
+}
+
+.icon-circle-cross::before,
+.icon-circle-cross.icon-right::after {
+    content: "\e639";
+}
+
+.icon-circle-plus::before,
+.icon-circle-plus.icon-right::after {
+    content: "\e63a";
+}
+
+.icon-circle-minus::before,
+.icon-circle-minus.icon-right::after {
+    content: "\e63b";
+}
+
+.icon-filter::before,
+.icon-filter.icon-right::after {
+    content: "\e63c";
+}
+
+.icon-sharp::before,
+.icon-sharp.icon-right::after {
+    content: "\e63d";
+}
+
+.icon-money::before,
+.icon-money.icon-right::after {
+    content: "\e63e";
+}
+
+.icon-percent::before,
+.icon-percent.icon-right::after {
+    content: "\e63f";
+}
+
+.icon-plus::before,
+.icon-plus.icon-right::after {
+    content: "\e640";
+}
+
+.icon-A::before,
+.icon-A.icon-right::after {
+    content: "\e641";
+}
+
+.icon-copyright::before,
+.icon-copyright.icon-right::after {
+    content: "\e642";
+}
+
+// icon aliases
+.icon-add {
+    @extend .icon-plus;
+}
+
+.icon-search {
+    @extend .icon-magnifier;
+}
+
+.icon-clear {
+    @extend .icon-cross;
+}
+
+.icon-config {
+    @extend .icon-settings;
+}
+
+.icon-uploadcloud {
+    @extend .icon-cloud-upload;
+}
+
+.icon-upload {
+    @extend .icon-cloud-upload;
+}
+
+.icon-rain {
+    @extend .icon-cloud-rain;
+}
