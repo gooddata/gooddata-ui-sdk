@@ -88,7 +88,7 @@
     },
     {
       "name": "@gooddata/goodstrap",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/live-examples-workspace",

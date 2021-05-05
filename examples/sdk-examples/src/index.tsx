@@ -3,7 +3,6 @@ import "babel-polyfill";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import "@gooddata/goodstrap/lib/styles.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import "@gooddata/sdk-ui-filters/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
