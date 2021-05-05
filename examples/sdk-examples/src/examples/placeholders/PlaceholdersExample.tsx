@@ -6,11 +6,8 @@ import {
     newMeasurePlaceholder,
     newMeasureGroupPlaceholder,
     newAttributePlaceholder,
-    useAttributePlaceholder,
-    useMeasurePlaceholderGroup,
     newAttributeGroupPlaceholder,
-    useAttributeGroupPlaceholder,
-    useMeasurePlaceholder,
+    usePlaceholders,
 } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { Ldm, LdmExt } from "../../ldm";
@@ -24,16 +21,14 @@ import {
 } from "@gooddata/sdk-model";
 
 const primaryMeasure = LdmExt.AvgDailyTotalSales;
-const primaryMeasurePlaceholder = newMeasurePlaceholder("primary");
-const stackByAttributePlaceholder = newAttributePlaceholder("stackBy");
-const viewByAttributesPlaceholder = newAttributeGroupPlaceholder("viewBy", []);
-const measuresPlaceholder = newMeasureGroupPlaceholder("measures", []);
+const primaryMeasurePlaceholder = newMeasurePlaceholder(undefined, "primaryMeasure");
+const stackByAttributePlaceholder = newAttributePlaceholder();
+const viewByAttributesPlaceholder = newAttributeGroupPlaceholder();
+const measuresPlaceholder = newMeasureGroupPlaceholder();
 
 const stackByAttributes = [Ldm.LocationState, Ldm.LocationCity, Ldm.LocationOwnership];
 const StackByAttributeSelect: React.FC = () => {
-    const [activeStackByAttribute, setStackByAttribute] = useAttributePlaceholder(
-        stackByAttributePlaceholder,
-    );
+    const [activeStackByAttribute, setStackByAttribute] = stackByAttributePlaceholder.use();
 
     return (
         <div>
@@ -52,9 +47,7 @@ const StackByAttributeSelect: React.FC = () => {
 
 const viewByAttributes = [Ldm.LocationState, Ldm.LocationCity, Ldm.LocationOwnership];
 const ViewByAttributeSelect: React.FC = () => {
-    const [activeViewByAttributes, setViewByAttributes] = useAttributeGroupPlaceholder(
-        viewByAttributesPlaceholder,
-    );
+    const [activeViewByAttributes, setViewByAttributes] = viewByAttributesPlaceholder.use();
 
     return (
         <div>
@@ -74,7 +67,7 @@ const ViewByAttributeSelect: React.FC = () => {
 
 const measures = [LdmExt.FranchiseFees, LdmExt.TotalCosts, LdmExt.TotalSales1];
 const MeasuresSelect: React.FC = () => {
-    const [activeMeasures, setMeasures] = useMeasurePlaceholderGroup(measuresPlaceholder);
+    const [activeMeasures, setMeasures] = measuresPlaceholder.use();
 
     return (
         <div>
@@ -101,11 +94,28 @@ const MeasuresSelect: React.FC = () => {
 };
 
 const PrimaryMeasureToggle: React.FC = () => {
-    const [activePrimaryMeasure, setPrimaryMeasure] = useMeasurePlaceholder(primaryMeasurePlaceholder);
+    const [activePrimaryMeasure, setPrimaryMeasure] = primaryMeasurePlaceholder.use();
 
     return (
         <button onClick={() => setPrimaryMeasure((m) => (m ? undefined : primaryMeasure))}>
             {activePrimaryMeasure ? "Disable primary measure" : "Enable primary measure"}
+        </button>
+    );
+};
+
+const AtomicPreset: React.FC = () => {
+    const [, setPlaceholders] = usePlaceholders([
+        primaryMeasurePlaceholder,
+        measuresPlaceholder,
+        viewByAttributesPlaceholder,
+        stackByAttributePlaceholder,
+    ]);
+
+    return (
+        <button
+            onClick={() => setPlaceholders([primaryMeasure, measures, viewByAttributes, Ldm.LocationState])}
+        >
+            Select preset
         </button>
     );
 };
@@ -125,8 +135,9 @@ const PlaceholderBarChart: React.FC = () => {
 
 const PlaceholdersExample: React.FC = () => {
     return (
-        <PlaceholdersProvider undefinedPlaceholderHandling="warning">
+        <PlaceholdersProvider undefinedPlaceholderHandling="warning" debug>
             <PrimaryMeasureToggle />
+            <AtomicPreset />
             <MeasuresSelect />
             <ViewByAttributeSelect />
             <StackByAttributeSelect />

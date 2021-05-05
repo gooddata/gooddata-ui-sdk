@@ -17,9 +17,7 @@ import {
     IAttributeGroupPlaceholder,
     IFilterPlaceholder,
     IFilterGroupPlaceholder,
-    useResolveMeasurePlaceholders,
-    useResolveAttributePlaceholders,
-    useResolveFilterPlaceholders,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
@@ -128,18 +126,14 @@ const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
  * @public
  */
 export const BarChart = (props: IBarChartProps) => {
-    const resolvedMeasures = useResolveMeasurePlaceholders(props.measures);
-    const resolvedViewBy = useResolveAttributePlaceholders(props.viewBy);
-    const resolvedStackBy = useResolveAttributePlaceholders(props.stackBy);
-    const resolvedFilters = useResolveFilterPlaceholders(props.filters);
+    const [measures, viewBy, stackBy, filters] = useResolveValuesWithPlaceholders([
+        props.measures,
+        props.viewBy,
+        props.stackBy,
+        props.filters,
+    ]);
 
     return (
-        <WrappedBarChart
-            {...props}
-            measures={resolvedMeasures}
-            stackBy={resolvedStackBy}
-            viewBy={resolvedViewBy}
-            filters={resolvedFilters}
-        />
+        <WrappedBarChart {...props} measures={measures} viewBy={viewBy} stackBy={stackBy} filters={filters} />
     );
 };

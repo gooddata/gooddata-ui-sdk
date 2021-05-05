@@ -68,27 +68,20 @@ export {
     IWorkspaceProviderProps,
 } from "./react/WorkspaceContext";
 export {
-    FiltersProvider,
-    IFiltersProviderProps,
-    useFilterPlaceholder,
-    useFilterPlaceholderGroup,
-    useResolveFilterPlaceholders,
-} from "./react/placeholders/FiltersContext";
-export {
-    MeasuresProvider,
-    IMeasuresProviderProps,
-    useMeasurePlaceholder,
-    useMeasurePlaceholderGroup,
-    useResolveMeasurePlaceholders,
-} from "./react/placeholders/MeasuresContext";
-export {
-    AttributesProvider,
-    IAttributesProviderProps,
-    useAttributePlaceholder,
-    useAttributeGroupPlaceholder,
-    useResolveAttributePlaceholders,
-} from "./react/placeholders/AttributesContext";
-export { PlaceholdersProvider, IPlaceholdersProviderProps } from "./react/placeholders/PlaceholdersContext";
+    PlaceholdersProvider,
+    IPlaceholdersProviderProps,
+    usePlaceholder,
+    useResolveValueWithPlaceholders,
+    useResolveValuesWithPlaceholders,
+    newMeasurePlaceholder,
+    newAttributeGroupPlaceholder,
+    newAttributePlaceholder,
+    newFilterGroupPlaceholder,
+    newFilterPlaceholder,
+    newMeasureGroupPlaceholder,
+    newComputedPlaceholder,
+    usePlaceholders,
+} from "./react/placeholders/PlaceholdersContext";
 export {
     IAttributeGroupPlaceholder,
     IAttributePlaceholder,
@@ -105,12 +98,23 @@ export {
     isFilterPlaceholder,
     isMeasureGroupPlaceholder,
     isMeasurePlaceholder,
-    newAttributeGroupPlaceholder,
-    newAttributePlaceholder,
-    newFilterGroupPlaceholder,
-    newFilterPlaceholder,
-    newMeasureGroupPlaceholder,
-    newMeasurePlaceholder,
+    IComputedPlaceholder,
+    IGroupPlaceholder,
+    IPlaceholderBase,
+    ISinglePlaceholder,
+    ValueWithPlaceholders,
+    isComputedPlaceholder,
+    isGroupPlaceholder,
+    isPlaceholder,
+    ValueWithPlaceholdersReturnType,
+    PlaceholderReturnType,
+    PlaceholdersReturnTypes,
+    IPlaceholderWithHook,
+    IUsePlaceholder,
+    IPlaceholderValue,
+    ValuesWithPlaceholdersReturnTypes,
+    Flatten,
+    PlaceholderComputation,
 } from "./react/placeholders/interfaces";
 export { usePagedResource, IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource";
 export {

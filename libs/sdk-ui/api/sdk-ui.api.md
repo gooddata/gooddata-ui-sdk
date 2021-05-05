@@ -44,6 +44,7 @@ import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WrappedComponentProps } from 'react-intl';
 
 // @internal
@@ -54,9 +55,6 @@ export class ArithmeticMeasureTitleFactory {
 
 // @public
 export function attributeItemNameMatch(name: string): IHeaderPredicate;
-
-// @public (undocumented)
-export const AttributesProvider: React_2.FC<IAttributesProviderProps>;
 
 // @public
 export const BackendProvider: React_2.FC<IBackendProviderProps>;
@@ -336,11 +334,11 @@ export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
 // @internal
 export function fillMissingTitles<T extends IInsightDefinition>(insight: T, locale: ILocale, maxArithmeticMeasureTitleLength?: number): T;
 
-// @public (undocumented)
-export const FiltersProvider: React_2.FC<IFiltersProviderProps>;
-
 // @internal
 export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
+
+// @public (undocumented)
+export type Flatten<T> = T extends Array<infer I> ? I : T;
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -422,29 +420,27 @@ export interface IArithmeticMeasureTitleProps {
 }
 
 // @public (undocumented)
-export interface IAttributeGroupPlaceholder extends IPlaceholder {
+export interface IAttributeGroupPlaceholder extends IPlaceholderBase {
     // (undocumented)
-    attributes: Array<IAttribute | IAttributePlaceholder>;
+    defaultValue: Array<IAttribute | IAttributePlaceholder>;
     // (undocumented)
     id: string;
     // (undocumented)
     type: "IAttributeGroupPlaceholder";
+    // (undocumented)
+    value?: Array<IAttribute | IAttributePlaceholder>;
 }
 
 // @public (undocumented)
-export interface IAttributePlaceholder extends IPlaceholder {
+export interface IAttributePlaceholder extends IPlaceholderBase {
     // (undocumented)
-    attribute?: IAttribute;
+    defaultValue?: IAttribute;
     // (undocumented)
     id: string;
     // (undocumented)
     type: "IAttributePlaceholder";
-}
-
-// @public (undocumented)
-export interface IAttributesProviderProps {
     // (undocumented)
-    undefinedPlaceholderHandling?: UndefinedPlaceholderHandling;
+    value?: IAttribute;
 }
 
 // @public @deprecated (undocumented)
@@ -536,6 +532,16 @@ export interface IColorsData {
     colorAssignments: IColorAssignment[];
     // (undocumented)
     colorPalette: IColorPalette;
+}
+
+// @public
+export interface IComputedPlaceholder<TPlaceholders extends IPlaceholder[], TReturn extends IPlaceholder, TComputation extends PlaceholderComputation<TPlaceholders, TReturn>> {
+    // (undocumented)
+    computedPlaceholder: TComputation;
+    // (undocumented)
+    placeholders: IPlaceholder[];
+    // (undocumented)
+    type: "IComputedPlaceholder";
 }
 
 // @public
@@ -879,33 +885,34 @@ export interface IExtendedExportConfig extends IExportConfig {
 }
 
 // @public (undocumented)
-export interface IFilterGroupPlaceholder extends IPlaceholder {
+export interface IFilterGroupPlaceholder extends IPlaceholderBase {
     // (undocumented)
-    filters: Array<IFilter | IFilterPlaceholder>;
+    defaultValue: Array<IFilter | IFilterPlaceholder>;
     // (undocumented)
     id: string;
     // (undocumented)
     type: "IFilterGroupPlaceholder";
+    // (undocumented)
+    value?: Array<IFilter | IFilterPlaceholder>;
 }
 
 // @public (undocumented)
-export interface IFilterPlaceholder extends IPlaceholder {
+export interface IFilterPlaceholder extends IPlaceholderBase {
     // (undocumented)
-    filter?: IFilter;
+    defaultValue?: IFilter;
     // (undocumented)
     id: string;
     // (undocumented)
     type: "IFilterPlaceholder";
-}
-
-// @public (undocumented)
-export interface IFiltersProviderProps {
     // (undocumented)
-    undefinedPlaceholderHandling?: UndefinedPlaceholderHandling;
+    value?: IFilter;
 }
 
 // @internal
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T;
+
+// @public (undocumented)
+export type IGroupPlaceholder = IFilterGroupPlaceholder | IAttributeGroupPlaceholder | IMeasureGroupPlaceholder;
 
 // @public (undocumented)
 export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;
@@ -1003,29 +1010,27 @@ export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" 
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor;
 
 // @public (undocumented)
-export interface IMeasureGroupPlaceholder extends IPlaceholder {
+export interface IMeasureGroupPlaceholder extends IPlaceholderBase {
+    // (undocumented)
+    defaultValue: Array<IAttributeOrMeasure | IMeasurePlaceholder>;
     // (undocumented)
     id: string;
-    // (undocumented)
-    measures: Array<IAttributeOrMeasure | IMeasurePlaceholder>;
     // (undocumented)
     type: "IMeasureGroupPlaceholder";
+    // (undocumented)
+    value?: Array<IAttributeOrMeasure | IMeasurePlaceholder>;
 }
 
 // @public (undocumented)
-export interface IMeasurePlaceholder extends IPlaceholder {
+export interface IMeasurePlaceholder extends IPlaceholderBase {
+    // (undocumented)
+    defaultValue?: IAttributeOrMeasure;
     // (undocumented)
     id: string;
     // (undocumented)
-    measure?: IAttributeOrMeasure;
-    // (undocumented)
     type: "IMeasurePlaceholder";
-}
-
-// @public (undocumented)
-export interface IMeasuresProviderProps {
     // (undocumented)
-    undefinedPlaceholderHandling?: UndefinedPlaceholderHandling;
+    value?: IAttributeOrMeasure;
 }
 
 // @internal
@@ -1052,21 +1057,40 @@ export class IntlWrapper extends React_2.PureComponent<IIntlWrapperProps> {
 }
 
 // @public (undocumented)
-export interface IPlaceholder {
+export type IPlaceholder = ISinglePlaceholder | IGroupPlaceholder;
+
+// @public (undocumented)
+export interface IPlaceholderBase {
+    // (undocumented)
+    defaultValue?: IPlaceholderValue | Array<IPlaceholderValue | IPlaceholder>;
     // (undocumented)
     id: string;
     // (undocumented)
     type: IPlaceholderType;
+    // (undocumented)
+    value?: IPlaceholderValue | Array<IPlaceholderValue | IPlaceholder>;
 }
 
 // @public (undocumented)
 export interface IPlaceholdersProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    debug?: boolean;
     // (undocumented)
     undefinedPlaceholderHandling?: UndefinedPlaceholderHandling;
 }
 
 // @public (undocumented)
 export type IPlaceholderType = "IAttributePlaceholder" | "IAttributeGroupPlaceholder" | "IMeasurePlaceholder" | "IMeasureGroupPlaceholder" | "IFilterPlaceholder" | "IFilterGroupPlaceholder";
+
+// @public (undocumented)
+export type IPlaceholderValue = IAttribute | IMeasure | IFilter;
+
+// @public (undocumented)
+export type IPlaceholderWithHook<TPlaceholder extends IPlaceholder> = TPlaceholder & {
+    use: IUsePlaceholder<TPlaceholder>;
+};
 
 // @internal
 export interface IPushData {
@@ -1155,6 +1179,9 @@ export const isCancelError: (obj: unknown) => obj is CancelError;
 // @public
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError;
 
+// @public (undocumented)
+export function isComputedPlaceholder<TPlaceholders extends IPlaceholder[], TReturn extends IPlaceholder, TComputation extends PlaceholderComputation<TPlaceholders, TReturn>>(obj: unknown): obj is IComputedPlaceholder<TPlaceholders, TReturn, TComputation>;
+
 // @public
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError;
 
@@ -1188,7 +1215,13 @@ export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError;
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 
 // @public (undocumented)
+export function isGroupPlaceholder(obj: unknown): obj is IGroupPlaceholder;
+
+// @public (undocumented)
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
+
+// @public (undocumented)
+export type ISinglePlaceholder = IFilterPlaceholder | IAttributePlaceholder | IMeasurePlaceholder;
 
 // @public (undocumented)
 export function isMeasureGroupPlaceholder(obj: unknown): obj is IMeasureGroupPlaceholder;
@@ -1204,6 +1237,9 @@ export function isNoDataSdkError(obj: unknown): obj is NoDataSdkError;
 
 // @public
 export function isNotFound(obj: unknown): obj is NotFoundSdkError;
+
+// @public (undocumented)
+export function isPlaceholder(obj: unknown): obj is IPlaceholder;
 
 // @public
 export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
@@ -1288,6 +1324,12 @@ export interface IUsePagedResourceState<TItem> {
     totalItemsCount: number | undefined;
 }
 
+// @public (undocumented)
+export type IUsePlaceholder<TPlaceholder extends IPlaceholder> = () => [
+    value: PlaceholderReturnType<TPlaceholder> | undefined,
+    setPlaceholder: (valueOrUpdateCallback: PlaceholderReturnType<TPlaceholder> | ((currentValue: PlaceholderReturnType<TPlaceholder> | undefined) => PlaceholderReturnType<TPlaceholder> | undefined) | undefined) => void
+];
+
 // @public
 export interface IVisualizationCallbacks {
     // @internal (undocumented)
@@ -1360,9 +1402,6 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
 // @internal
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
 
-// @public (undocumented)
-export const MeasuresProvider: React_2.FC<IMeasuresProviderProps>;
-
 // @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
@@ -1374,25 +1413,28 @@ export class NegativeValuesSdkError extends GoodDataSdkError {
 }
 
 // @public (undocumented)
-export function newAttributeGroupPlaceholder(id: string, defaultAttributes?: Array<IAttribute | IAttributePlaceholder>): IAttributeGroupPlaceholder;
+export function newAttributeGroupPlaceholder(defaultAttributes?: Array<IAttribute | IAttributePlaceholder>, id?: string): IPlaceholderWithHook<IAttributeGroupPlaceholder>;
 
 // @public (undocumented)
-export function newAttributePlaceholder(id: string, defaultAttribute?: IAttribute): IAttributePlaceholder;
+export function newAttributePlaceholder(defaultAttribute?: IAttribute, id?: string): IPlaceholderWithHook<IAttributePlaceholder>;
+
+// @public (undocumented)
+export function newComputedPlaceholder<TPlaceholders extends IPlaceholder[], TReturn extends IPlaceholder, TComputation extends PlaceholderComputation<TPlaceholders, TReturn>>(placeholders: [...placeholders: TPlaceholders], computedPlaceholder: TComputation): IComputedPlaceholder<TPlaceholders, TReturn, TComputation>;
 
 // @public
 export function newErrorMapping(intl: IntlShape): IErrorDescriptors;
 
 // @public (undocumented)
-export function newFilterGroupPlaceholder(id: string, defaultFilters?: IFilter[]): IFilterGroupPlaceholder;
+export function newFilterGroupPlaceholder(defaultFilters?: IFilter[], id?: string): IPlaceholderWithHook<IFilterGroupPlaceholder>;
 
 // @public (undocumented)
-export function newFilterPlaceholder(id: string, defaultFilter?: IFilter): IFilterPlaceholder;
+export function newFilterPlaceholder(defaultFilter?: IFilter, id?: string): IPlaceholderWithHook<IFilterPlaceholder>;
 
 // @public (undocumented)
-export function newMeasureGroupPlaceholder(id: string, defaultMeasures?: Array<IAttributeOrMeasure | IMeasurePlaceholder>): IMeasureGroupPlaceholder;
+export function newMeasureGroupPlaceholder(defaultMeasures?: Array<IAttributeOrMeasure | IMeasurePlaceholder>, id?: string): IPlaceholderWithHook<IMeasureGroupPlaceholder>;
 
 // @public (undocumented)
-export function newMeasurePlaceholder(id: string, defaultMeasure?: IAttributeOrMeasure): IMeasurePlaceholder;
+export function newMeasurePlaceholder(defaultMeasure?: IAttributeOrMeasure, id?: string): IPlaceholderWithHook<IMeasurePlaceholder>;
 
 // @public
 export class NoDataSdkError extends GoodDataSdkError {
@@ -1427,7 +1469,18 @@ export const OverTimeComparisonTypes: {
 };
 
 // @public (undocumented)
-export const PlaceholdersProvider: React_2.FC<IPlaceholdersProviderProps>;
+export type PlaceholderComputation<TPlaceholders extends IPlaceholder[], TReturn extends IPlaceholder> = (resolvedPlaceholderValues: [...placeholderReturnTypes: PlaceholdersReturnTypes<TPlaceholders>]) => TReturn;
+
+// @public
+export type PlaceholderReturnType<TPlaceholder extends any> = TPlaceholder extends IFilterPlaceholder ? IFilter | undefined : TPlaceholder extends IFilterGroupPlaceholder ? IFilter[] : TPlaceholder extends IAttributePlaceholder ? IAttribute | undefined : TPlaceholder extends IAttributeGroupPlaceholder ? IAttribute[] : TPlaceholder extends IMeasurePlaceholder ? IAttributeOrMeasure | undefined : TPlaceholder extends IMeasureGroupPlaceholder ? IAttributeOrMeasure[] : never;
+
+// @public (undocumented)
+export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
+
+// @public
+export type PlaceholdersReturnTypes<Tuple extends [...IPlaceholder[]]> = {
+    [Index in keyof Tuple]: PlaceholderReturnType<Tuple[Index]>;
+};
 
 // @public
 export class ProtectedReportSdkError extends GoodDataSdkError {
@@ -1480,18 +1533,6 @@ export class UnexpectedSdkError extends GoodDataSdkError {
 
 // @public
 export function uriMatch(uri: string): IHeaderPredicate;
-
-// @public (undocumented)
-export function useAttributeGroupPlaceholder(groupPlaceholder: IAttributeGroupPlaceholder): [
-    attributes: IAttribute[],
-    setAttributePlaceholderGroup: (valueOrUpdateCallback: Array<IAttribute | IAttributePlaceholder> | ((attributes: Array<IAttribute | IAttributePlaceholder>) => Array<IAttribute | IAttributePlaceholder>)) => void
-];
-
-// @public (undocumented)
-export function useAttributePlaceholder(placeholder: IAttributePlaceholder): [
-    attribute: IAttribute | undefined,
-    setAttributePlaceholder: (valueOrUpdateCallback: IAttribute | ((attrOrMeasure: IAttribute | undefined) => IAttribute | undefined) | undefined) => void
-];
 
 // @public
 export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
@@ -1577,98 +1618,29 @@ export function useExecution(config: IUseExecutionConfig): IPreparedExecution;
 // @beta
 export function useExecutionDataView(config: IUseExecutionDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
-// @public (undocumented)
-export function useFilterPlaceholder(placeholder: IFilterPlaceholder): [
-    filter: IFilter | undefined,
-    setFilterPlaceholder: (valueOrUpdateCallback: IFilter | ((attrOrMeasure: IFilter | undefined) => IFilter | undefined) | undefined) => void
-];
-
-// @public (undocumented)
-export function useFilterPlaceholderGroup(placeholderGroup: IFilterGroupPlaceholder): [
-    filters: IFilter[],
-    setFilterGroupPlaceholder: (valueOrUpdateCallback: Array<IFilter | IFilterPlaceholder> | ((attrOrMeasure: Array<IFilter | IFilterPlaceholder>) => Array<IFilter | IFilterPlaceholder>)) => void
-];
-
 // @beta
 export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: React.DependencyList): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
-
-// @public (undocumented)
-export function useMeasurePlaceholder(placeholder: IMeasurePlaceholder): [
-    measure: IAttributeOrMeasure | undefined,
-    setMeasurePlaceholder: (valueOrUpdateCallback: IAttributeOrMeasure | ((attrOrMeasure: IAttributeOrMeasure | undefined) => IAttributeOrMeasure | undefined) | undefined) => void
-];
-
-// @public (undocumented)
-export function useMeasurePlaceholderGroup(placeholderGroup: IMeasureGroupPlaceholder): [
-    measures: IAttributeOrMeasure[],
-    setMeasurePlaceholderGroup: (valueOrUpdateCallback: Array<IAttributeOrMeasure | IMeasurePlaceholder> | ((attrOrMeasure: Array<IAttributeOrMeasure | IMeasurePlaceholder>) => Array<IAttributeOrMeasure | IMeasurePlaceholder>)) => void
-];
 
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;
 
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: undefined): undefined;
+// @public
+export function usePlaceholder<TPlaceholder extends IPlaceholder>(placeholder: TPlaceholder): [
+    returnValue: PlaceholderReturnType<TPlaceholder> | undefined,
+    setPlaceholderValue: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderReturnType<TPlaceholder> | undefined>) => void
+];
 
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: IAttribute): IAttribute;
+// @public
+export function usePlaceholders<TPlaceholder extends IPlaceholder, TPlaceholders extends TPlaceholder[]>(placeholders: [...TPlaceholders]): [
+    returnValues: PlaceholdersReturnTypes<TPlaceholders>,
+    setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersReturnTypes<TPlaceholders>>) => void
+];
 
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: IAttributePlaceholder): IAttribute | undefined;
+// @public
+export function useResolveValuesWithPlaceholders<TValue extends ValueWithPlaceholders, TValues extends TValue[]>(values: [...TValues] | undefined): undefined | ValuesWithPlaceholdersReturnTypes<TValues>;
 
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: IAttribute | IAttributePlaceholder): IAttribute | undefined;
-
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: IAttributeGroupPlaceholder): Array<IAttribute>;
-
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: IAttributeGroupPlaceholder | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>): Array<IAttribute>;
-
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>): Array<IAttribute>;
-
-// @public (undocumented)
-export function useResolveAttributePlaceholders(values: undefined | IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>): Array<IAttribute> | IAttribute | undefined;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: undefined): undefined;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: IFilter): IFilter;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: IFilterPlaceholder): IFilter | undefined;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: IFilter | IFilterPlaceholder): IFilter | undefined;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: IFilterGroupPlaceholder): Array<IFilter>;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: IFilterGroupPlaceholder | Array<IFilter | IFilterPlaceholder | IFilterGroupPlaceholder>): Array<IFilter>;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: Array<IFilter | IFilterPlaceholder | IFilterGroupPlaceholder>): Array<IFilter>;
-
-// @public (undocumented)
-export function useResolveFilterPlaceholders(values: Array<IFilter | IFilterPlaceholder | IFilterGroupPlaceholder> | IFilter | IFilterPlaceholder | IFilterGroupPlaceholder | undefined): Array<IFilter> | IFilter | undefined;
-
-// @public (undocumented)
-export function useResolveMeasurePlaceholders(values: undefined): undefined;
-
-// @public (undocumented)
-export function useResolveMeasurePlaceholders(values: IAttributeOrMeasure): IAttributeOrMeasure;
-
-// @public (undocumented)
-export function useResolveMeasurePlaceholders(values: IMeasurePlaceholder): IAttributeOrMeasure | undefined;
-
-// @public (undocumented)
-export function useResolveMeasurePlaceholders(values: IAttributeOrMeasure | IMeasurePlaceholder): IAttributeOrMeasure | undefined;
-
-// @public (undocumented)
-export function useResolveMeasurePlaceholders(values: IMeasureGroupPlaceholder | Array<IAttributeOrMeasure | IMeasurePlaceholder | IMeasureGroupPlaceholder>): Array<IAttributeOrMeasure>;
+// @public
+export function useResolveValueWithPlaceholders<TValue extends ValueWithPlaceholders>(value: TValue | undefined): undefined | ValueWithPlaceholdersReturnType<TValue>;
 
 // @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
@@ -1678,6 +1650,17 @@ export const useWorkspaceStrict: (workspace?: string | undefined, context?: stri
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
+
+// @public
+export type ValuesWithPlaceholdersReturnTypes<Tuple extends [...ValueWithPlaceholders[]]> = {
+    [Index in keyof Tuple]: ValueWithPlaceholdersReturnType<Tuple[Index]>;
+};
+
+// @public
+export type ValueWithPlaceholders = IPlaceholderValue | IPlaceholder | Array<IPlaceholderValue | IPlaceholder>;
+
+// @public
+export type ValueWithPlaceholdersReturnType<TValue extends any> = TValue extends IPlaceholderValue | undefined ? TValue : TValue extends IPlaceholder ? PlaceholderReturnType<TValue> : TValue extends Array<any> ? Array<Flatten<ValueWithPlaceholdersReturnType<Flatten<TValue>>>> : unknown;
 
 // @public (undocumented)
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";
