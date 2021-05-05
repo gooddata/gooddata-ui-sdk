@@ -41,30 +41,38 @@ export const ResponsiveText: React.FC<IResponsiveTextProps> = ({
         const currentStyle = windowInstance.getComputedStyle(containerRef.current, null);
         const currentFontSize = parseFloat(currentStyle.fontSize);
 
-        if (!fontSize && isNumber(currentFontSize)) {
+        if (isNumber(currentFontSize)) {
             const { scrollWidth } = containerRef.current;
             const width = containerRef.current.getBoundingClientRect().width;
 
-            const ratio = width / scrollWidth;
+            const ratio = Math.round(width) / scrollWidth;
             const size = Math.floor(currentFontSize * ratio);
             setFontSize(size);
         }
     };
 
     useLayoutEffect(() => {
-        adjustFontSize();
-
         const handleWindowResize = debounce(() => {
             // reset font size so that we can read the default fontSize in adjustFontSize later
             setFontSize(null);
-            // then adjust the font again
-            adjustFontSize();
         }, windowResizeRefreshDelay);
 
         windowInstance.addEventListener("resize", handleWindowResize);
 
         return () => windowInstance.removeEventListener("resize", handleWindowResize);
     }, [windowResizeRefreshDelay]);
+
+    useLayoutEffect(() => {
+        // reset font size so that we can read the default fontSize in adjustFontSize later
+        setFontSize(null);
+    }, [children, tagClassName]);
+
+    useLayoutEffect(() => {
+        if (!fontSize) {
+            // then adjust the font again
+            adjustFontSize();
+        }
+    }, [fontSize]);
 
     return (
         <Tag
