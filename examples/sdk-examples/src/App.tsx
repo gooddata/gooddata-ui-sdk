@@ -24,6 +24,48 @@ export const App: React.FC = () => {
                 <Router history={history}>
                     <div className="mainWrapper">
                         <style jsx>{`
+                            // globals from goodstrap
+                            :global(html),
+                            :global(body) {
+                                margin: 0;
+                                padding: 0;
+                                line-height: 1.4rem;
+                                color: var(--gd-palette-complementary-8, #464e56);
+                                font-size: 14px;
+                                font-weight: 400;
+                                font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+                                font-weight: 400;
+                            }
+
+                            :global(button),
+                            :global(input),
+                            :global(optgroup),
+                            :global(select),
+                            :global(textarea) {
+                                outline: 0;
+                                font: inherit;
+                                color: inherit;
+                            }
+
+                            :global(a) {
+                                color: #14b2e2;
+                                text-decoration: none;
+                            }
+                            :global(a:hover),
+                            :global(a:focus),
+                            :global(a:active) {
+                                color: var(--gd-palette-complementary-8, #464e56);
+                                text-decoration: underline;
+                            }
+                            :global(a.link-dimmed) {
+                                color: var(--gd-palette-complementary-7, #6d7680);
+                                text-decoration: underline;
+                            }
+                            :global(a.link-dimmed:hover) {
+                                color: #000;
+                            }
+                            // end globals from goodstrap
+
                             :global(html),
                             :global(body),
                             :global(.root) {
