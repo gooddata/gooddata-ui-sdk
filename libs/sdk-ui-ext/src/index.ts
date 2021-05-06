@@ -1,6 +1,5 @@
 // (C) 2007-2021 GoodData Corporation
 /**
- * Not available
  * @packageDocumentation
  */
 

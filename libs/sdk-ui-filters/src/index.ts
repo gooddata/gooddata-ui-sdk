@@ -1,6 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 /**
- * Available
  * @packageDocumentation
  */
 export { AttributeElements, IAttributeElementsProps } from "./AttributeElements/AttributeElements";
