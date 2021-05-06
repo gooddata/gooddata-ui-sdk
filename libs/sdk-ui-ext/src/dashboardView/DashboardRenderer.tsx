@@ -51,6 +51,8 @@ import {
     DashboardLayoutItemModifications,
     getDashboardLayoutItemHeight,
     getDashboardLayoutItemHeightForRatioAndScreen,
+    DashboardLayoutItemsSelector,
+    validateDashboardLayoutWidgetSize,
 } from "../internal";
 import {
     DashboardWidgetRenderer,
@@ -80,7 +82,7 @@ interface IDashboardRendererProps {
 }
 
 /**
- * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs.
+ * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
  */
 const polluteWidgetRefsWithBothIdAndUri = (
     getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
@@ -105,6 +107,43 @@ const polluteWidgetRefsWithBothIdAndUri = (
 
         return updatedContent;
     });
+
+const validateItemsSize = (
+    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+    enableKDWidgetCustomHeight: boolean,
+): DashboardLayoutItemModifications => (item) => {
+    const widget = item.facade().widget();
+    if (isInsightWidget(widget)) {
+        const insight = getInsightByRef(widget.insight);
+        const currentWidth = item.facade().size().xl.gridWidth;
+        const currentHeight = item.facade().size().xl.gridHeight;
+        const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
+            currentWidth,
+            currentHeight,
+            insight,
+            { enableKDWidgetCustomHeight },
+        );
+        let validatedItem = item;
+        if (currentWidth !== validWidth) {
+            validatedItem = validatedItem.size({
+                xl: {
+                    ...validatedItem.facade().size().xl,
+                    gridWidth: validWidth,
+                },
+            });
+        }
+        if (currentHeight !== validHeight) {
+            validatedItem = validatedItem.size({
+                xl: {
+                    ...validatedItem.facade().size().xl,
+                    gridHeight: validHeight,
+                },
+            });
+        }
+
+        return validatedItem;
+    }
+};
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardLayout,
@@ -139,18 +178,25 @@ export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(functio
     const getWidgetAlert = (widgetRef: ObjRef) =>
         alerts?.find((alert) => areObjRefsEqual(alert.widget, widgetRef));
 
+    const selectAllItemsWithInsights: DashboardLayoutItemsSelector = (items) =>
+        items.filter((item) => item.isInsightWidgetItem());
+
+    const commonLayoutBuilder = DashboardLayoutBuilder.for(dashboardLayout).modifySections((section) =>
+        section
+            .modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef))
+            .modifyItems(
+                validateItemsSize(getInsightByRef, userWorkspaceSettings.enableKDWidgetCustomHeight),
+                selectAllItemsWithInsights,
+            ),
+    );
+
     const transformedLayout = transformLayout
-        ? transformLayout(
-              DashboardLayoutBuilder.for(dashboardLayout).modifySections((section) =>
-                  section.modifyItems(polluteWidgetRefsWithBothIdAndUri(getInsightByRef)),
-              ),
-              {
-                  getWidgetAlert,
-                  getInsight: getInsightByRef,
-                  filters,
-              },
-          ).build()
-        : dashboardLayout;
+        ? transformLayout(commonLayoutBuilder, {
+              getWidgetAlert,
+              getInsight: getInsightByRef,
+              filters,
+          }).build()
+        : commonLayoutBuilder.build();
 
     return (
         <DashboardLayout

@@ -3,6 +3,7 @@ import flatten from "lodash/flatten";
 import round from "lodash/round";
 import isNil from "lodash/isNil";
 import isEqual from "lodash/isEqual";
+import clamp from "lodash/clamp";
 import {
     IDashboardLayoutSizeByScreenSize,
     isDashboardLayout,
@@ -577,5 +578,27 @@ function removeGridHeightFromItemSize<TWidget>(item: IDashboardLayoutItem<TWidge
                 ...rest,
             },
         },
+    };
+}
+
+export function validateDashboardLayoutWidgetSize(
+    currentWidth: number,
+    currentHeight: number | undefined,
+    insight: IInsightDefinition,
+    settings: ISettings,
+): {
+    validWidth: number;
+    validHeight: number;
+} {
+    const minWidth = getDashboardLayoutWidgetMinGridWidth(settings, "insight", insight);
+    const maxWidth = fluidLayoutDescriptor.gridColumnsCount;
+    const minHeight = getDashboardLayoutWidgetMinGridHeight(settings, "insight", insight);
+    const maxHeight = getDashboardLayoutWidgetMaxGridHeight(settings, "insight", insight);
+    const validWidth = currentWidth !== undefined ? clamp(currentWidth, minWidth, maxWidth) : currentWidth;
+    const validHeight =
+        currentHeight !== undefined ? clamp(currentHeight, minHeight, maxHeight) : currentHeight;
+    return {
+        validWidth,
+        validHeight,
     };
 }
