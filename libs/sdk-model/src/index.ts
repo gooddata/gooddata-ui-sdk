@@ -1,6 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 /**
- * Available
  * @packageDocumentation
  */
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities";

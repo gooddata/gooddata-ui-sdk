@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Please input documentation version (ex. 8.3.0 or 'Next' for prerelease documentation):"
+echo "Please input documentation version (ex. 8.4.0 or 'Next' for prerelease documentation):"
 read VERSION
 echo "Start creating docs v${VERSION}"
 
@@ -33,18 +33,14 @@ fi
 
 cp ${ROOT_DIR}/libs/*/temp/*.api.json "${APIDOC_INPUT_DIR}"
 
-echo "Starting api-documenter. Generated files will be stored in apidocs/docs. Generator outputs routed to apidocs/build-docs.log and apidocs/build-docs.err."
-
-"${API_DOCUMENTER_BIN}" markdown --input-folder "${APIDOC_INPUT_DIR}" --output-folder ${APIDOC_DIR_DOCS} 1>"${BUILD_OUT}" 2>"${BUILD_ERR}"
-
-echo "Starting docs sanitization"
-for filename in $APIDOC_DIR_DOCS/*; do
+echo "Starting docs input sanitization"
+for filename in $APIDOC_INPUT_DIR/*; do
      FILE="${filename}"
      FILE_NAME="${filename##*/}"
      FILE_NAME_WITHOUT_EXTENSION=${FILE_NAME%.*}
      IFS='.' read -ra FILE_NAME_ARRAY <<< "$FILE_NAME_WITHOUT_EXTENSION"
      LIB=${FILE_NAME_ARRAY[0]}
-     LIBS_TO_BE_REMOVED=("sdk-ui-kit" "sdk-backend-base" "sdk-backend-bear" "sdk-backend-tiger" "api-model-bear" "api-client-tiger" "api-client-bear" "sdk-backend-mockingbird" "sdk-embedding")
+     LIBS_TO_BE_REMOVED=("sdk-ui-kit" "sdk-backend-base" "sdk-backend-bear" "sdk-backend-tiger" "api-model-bear" "api-client-tiger" "api-client-bear" "sdk-backend-mockingbird" "sdk-embedding" "sdk-ui-ext" "sdk-ui-all")
 
     if [[ " ${LIBS_TO_BE_REMOVED[@]} " =~ " ${LIB} " ]]
     then
@@ -52,6 +48,10 @@ for filename in $APIDOC_DIR_DOCS/*; do
     fi
 done
 echo "Sanitization done"
+
+echo "Starting api-documenter. Generated files will be stored in apidocs/docs. Generator outputs routed to apidocs/build-docs.log and apidocs/build-docs.err."
+
+"${API_DOCUMENTER_BIN}" markdown --input-folder "${APIDOC_INPUT_DIR}" --output-folder ${APIDOC_DIR_DOCS} 1>"${BUILD_OUT}" 2>"${BUILD_ERR}"
 
 echo "Starting to add front matter to markdown files and data to sidebars.json"
 for filename in $APIDOC_DIR_DOCS/*; do

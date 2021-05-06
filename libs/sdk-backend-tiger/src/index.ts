@@ -1,6 +1,5 @@
 // (C) 2019-2021 GoodData Corporation
 /**
- * Not available
  * @packageDocumentation
  */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
