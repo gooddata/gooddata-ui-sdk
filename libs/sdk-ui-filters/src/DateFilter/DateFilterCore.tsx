@@ -112,6 +112,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             alignPoints={[
                                 { align: "bl tl" },
                                 { align: "tr tl" },
+                                { align: "br tr", offset: { x: -11 } },
                                 { align: "tr tl", offset: { x: 0, y: -100 } },
                                 { align: "tr tl", offset: { x: 0, y: -50 } },
                             ]}
