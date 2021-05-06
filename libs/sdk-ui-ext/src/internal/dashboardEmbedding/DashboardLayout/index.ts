@@ -48,6 +48,7 @@ export {
     getDashboardLayoutItemHeight,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
+    validateDashboardLayoutWidgetSize,
 } from "./utils/sizing";
 export { DashboardLayoutBuilder } from "./builder/layout";
 export { DashboardLayoutFacade } from "./facade/layout";
