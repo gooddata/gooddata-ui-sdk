@@ -5,9 +5,10 @@ import set from "lodash/set";
 import defaults from "lodash/defaults";
 import merge from "lodash/merge";
 import result from "lodash/result";
-import { name as pkgName, version as pkgVersion } from "../package.json";
+import pkgInfo from "../package.json";
 import { stringify } from "./utils/queryString";
 
+const { name: pkgName, version: pkgVersion } = pkgInfo;
 /**
  * Ajax wrapper around GDC authentication mechanisms, SST and TT token handling and polling.
  * Interface is the same as original jQuery.ajax.
