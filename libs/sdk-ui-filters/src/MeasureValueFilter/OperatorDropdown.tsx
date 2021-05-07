@@ -68,8 +68,8 @@ export class OperatorDropdown extends React.PureComponent<IOperatorDropdownProps
                 className={buttonClasses}
                 value={title}
                 onClick={this.handleOperatorDropdownButtonClick}
-                iconLeft={`icon-${getOperatorIcon(operator)}`}
-                iconRight={opened ? "icon-navigateup" : "icon-navigatedown"}
+                iconLeft={`gd-icon-${getOperatorIcon(operator)}`}
+                iconRight={opened ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                 disabled={isDisabled}
             />
         );

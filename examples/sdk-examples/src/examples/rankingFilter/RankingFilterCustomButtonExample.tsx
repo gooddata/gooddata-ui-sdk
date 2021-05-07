@@ -58,9 +58,9 @@ const DropdownButton = ({ isActive, onClick }: IRankingFilterDropdownButton) => 
         "gd-button-small",
         "gd-button-positive",
         "button-dropdown",
-        "icon-right",
+        "gd-icon-right",
         "custom-button",
-        { "icon-navigateup": isActive, "icon-navigatedown": !isActive },
+        { "gd-icon-navigateup": isActive, "gd-icon-navigatedown": !isActive },
     );
 
     return (

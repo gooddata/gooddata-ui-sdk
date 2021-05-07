@@ -46,7 +46,7 @@ export interface IErrorDescriptors {
  */
 export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
     const tooLargeDescriptor: IErrorDescriptors["any"] = {
-        icon: "icon-cloud-rain",
+        icon: "gd-icon-cloud-rain",
         message: intl.formatMessage({ id: "visualization.ErrorMessageDataTooLarge" }),
         description: intl.formatMessage({ id: "visualization.ErrorDescriptionDataTooLarge" }),
     };
@@ -68,7 +68,7 @@ export function newErrorMapping(intl: IntlShape): IErrorDescriptors {
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionUnauthorized" }),
         },
         [ErrorCodes.NO_DATA]: {
-            icon: "icon-filter",
+            icon: "gd-icon-filter",
             message: intl.formatMessage({ id: "visualization.ErrorMessageNoData" }),
             description: intl.formatMessage({ id: "visualization.ErrorDescriptionNoData" }),
         },

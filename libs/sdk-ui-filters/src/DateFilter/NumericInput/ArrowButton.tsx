@@ -7,8 +7,8 @@ import { unless } from "./utils";
 type ArrowDirection = "increment" | "decrement";
 
 const iconClassNames: { [AD in ArrowDirection]: string } = {
-    decrement: "icon-chevron-down",
-    increment: "icon-chevron-up",
+    decrement: "gd-icon-chevron-down",
+    increment: "gd-icon-chevron-up",
 };
 
 export const ArrowButton: React.FC<{

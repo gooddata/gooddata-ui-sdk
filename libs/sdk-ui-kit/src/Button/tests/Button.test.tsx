@@ -86,10 +86,10 @@ describe("ReactButton", () => {
         it("should render icon in button", () => {
             const wrapper = renderButton({
                 value: "text value",
-                iconLeft: "icon-class",
+                iconLeft: "gd-icon-class",
             });
 
-            expect(wrapper.find(".icon-class")).toHaveLength(1);
+            expect(wrapper.find(".gd-icon-class")).toHaveLength(1);
         });
     });
 });

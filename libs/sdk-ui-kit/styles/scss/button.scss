@@ -53,7 +53,7 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     color: $gd-color-text-light;
 
-    &[class*="icon-"],
+    &[class*="gd-icon-"],
     .gd-button-icon {
         color: $gd-color-text-light;
 
@@ -159,12 +159,12 @@
 /* Button links
    ========================================================================== */
 
-.gd-button-link[class*="icon-"] {
+.gd-button-link[class*="gd-icon-"] {
     position: relative;
     padding-left: 32px;
 }
 
-.gd-button-link[class*="icon-"].icon-right {
+.gd-button-link[class*="gd-icon-"].gd-icon-right {
     padding-left: 11px;
     padding-right: 30px;
 
@@ -289,7 +289,7 @@
     }
 }
 
-.gd-button-link.gd-button-icon-only[class*="icon-"] {
+.gd-button-link.gd-button-icon-only[class*="gd-icon-"] {
     width: 31px;
     height: 29px;
     line-height: 27px;
@@ -385,7 +385,7 @@
     line-height: 25px;
     font-size: 12px;
 
-    &[class*="icon-"] {
+    &[class*="gd-icon-"] {
         padding-left: 32px;
 
         &::before,
@@ -574,7 +574,7 @@
 
     // refactor needed
     // stylelint-disable-next-line no-duplicate-selectors
-    &.gd-button-icon-only[class*="icon-"] {
+    &.gd-button-icon-only[class*="gd-icon-"] {
         &::before,
         &::after {
             right: 0;

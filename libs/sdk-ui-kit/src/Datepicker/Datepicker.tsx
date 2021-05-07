@@ -306,7 +306,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
                     format={dateFormat}
                     placeholder={this.props.placeholder}
                 />
-                <span className="gd-datepicker-icon icon-calendar" />
+                <span className="gd-datepicker-icon gd-icon-calendar" />
             </div>
         );
     }

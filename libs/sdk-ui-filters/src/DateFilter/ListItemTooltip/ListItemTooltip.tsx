@@ -15,7 +15,7 @@ export const ListItemTooltip: React.FC<IListItemTooltipProps> = ({
 }) => (
     <span className={cx("gd-list-item-tooltip", className)} {...restProps}>
         <BubbleHoverTrigger>
-            <span className="icon-circle-question gd-list-item-tooltip-icon" />
+            <span className="gd-icon-circle-question gd-list-item-tooltip-icon" />
             <Bubble alignPoints={bubbleAlignPoints}>{children}</Bubble>
         </BubbleHoverTrigger>
     </span>

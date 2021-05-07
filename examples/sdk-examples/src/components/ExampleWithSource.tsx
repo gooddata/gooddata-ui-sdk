@@ -16,7 +16,7 @@ const SourceSection: React.FC<ISourceSectionProps> = ({ source, sourceJS }) => {
     const [hidden, setState] = useState(true);
     const [viewJS, setViewJS] = useState(true);
     const switchLang = (switchToJS: boolean) => setViewJS(switchToJS);
-    const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
+    const iconClassName = hidden ? "gd-icon-navigatedown" : "gd-icon-navigateup";
 
     return (
         <div className="source">

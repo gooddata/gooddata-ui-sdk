@@ -46,7 +46,7 @@ export default class DropdownItem extends React.Component<
                         {template.name}
                     </span>
                     <div
-                        className="gd-format-template-help icon-circle-question s-measure-format-template-help-toggle-icon"
+                        className="gd-format-template-help gd-icon-circle-question s-measure-format-template-help-toggle-icon"
                         onMouseEnter={this.toggleHelp}
                         onMouseLeave={this.toggleHelp}
                     />

@@ -29,7 +29,7 @@ export const MeasureDropdownItem: React.FC<IMeasureDropdownItemProps> = ({
             "is-selected": isSelected,
         },
         "gd-button-link",
-        "icon-measure",
+        "gd-icon-measure",
         `s-rf-measure-${stringUtils.simplifyText(title)}`,
     );
 

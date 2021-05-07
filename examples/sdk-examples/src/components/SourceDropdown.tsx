@@ -27,7 +27,7 @@ export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourc
         const { hidden, viewJS } = this.state;
         const { sourceJS, source } = this.props;
 
-        const iconClassName = hidden ? "icon-navigatedown" : "icon-navigateup";
+        const iconClassName = hidden ? "gd-icon-navigatedown" : "gd-icon-navigateup";
 
         return (
             <div className="example-with-source">
@@ -42,7 +42,7 @@ export class SourceDropdown extends React.Component<ISourceDropdownProps, ISourc
                 `}</style>
                 <div className="source">
                     <button
-                        className={`gd-button gd-button-secondary button-dropdown icon-right ${iconClassName}`}
+                        className={`gd-button gd-button-secondary button-dropdown gd-icon-right ${iconClassName}`}
                         onClick={this.toggle}
                     >
                         source code

@@ -51,7 +51,7 @@ function renderPagingButton(
     const classes = cx(
         "gd-button-link",
         "gd-button-icon-only",
-        `icon-chevron-${getbuttonIcoStyle(type, buttonsOrientation)}`,
+        `gd-icon-chevron-${getbuttonIcoStyle(type, buttonsOrientation)}`,
         "paging-button",
     );
 

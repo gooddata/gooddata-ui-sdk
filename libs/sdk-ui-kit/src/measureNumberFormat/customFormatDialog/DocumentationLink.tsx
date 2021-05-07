@@ -16,7 +16,7 @@ const DocumentationLink = ({ url }: IDocumentationLinkProps) => (
             rel="noreferrer noopener"
             href={url}
         >
-            <div className="icon-circle-question gd-measure-format-button-icon-left" />
+            <div className="gd-icon-circle-question gd-measure-format-button-icon-left" />
             <span>
                 <FormattedMessage id="measureNumberCustomFormatDialog.howToFormat" />
             </span>

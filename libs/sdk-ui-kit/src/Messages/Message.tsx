@@ -30,7 +30,7 @@ export const Message: React.FC<IMessageProps> = ({
                 {children}
                 {onClose && (
                     <div className="gd-message-dismiss-container">
-                        <a className="gd-message-dismiss icon-cross" onClick={onClose} />
+                        <a className="gd-message-dismiss gd-icon-cross" onClick={onClose} />
                     </div>
                 )}
             </div>

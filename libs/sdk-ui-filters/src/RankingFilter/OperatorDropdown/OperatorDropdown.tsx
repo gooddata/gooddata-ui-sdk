@@ -43,10 +43,10 @@ const OperatorDropdownComponent: React.FC<OperatorDropdownComponentProps> = ({
         "gd-button-secondary",
         "gd-button-small",
         "button-dropdown",
-        "icon-right",
+        "gd-icon-right",
         {
-            "icon-navigateup": isOpen,
-            "icon-navigatedown": !isOpen,
+            "gd-icon-navigateup": isOpen,
+            "gd-icon-navigatedown": !isOpen,
         },
         "gd-rf-operator-dropdown-button",
         "s-rf-operator-dropdown-button",
