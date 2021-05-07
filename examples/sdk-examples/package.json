@@ -122,7 +122,7 @@
         "recharts": "^1.8.5",
         "ts-invariant": "^0.7.3",
         "tslib": "^2.0.0",
-        "yup": "^0.24.1"
+        "yup": "^0.32.9"
     },
     "config": {
         "eslint": "-c .eslintrc.js --ext ts,tsx src/ test/"
