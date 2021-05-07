@@ -6,6 +6,8 @@ import { legendCustomizer } from "../_infra/legendVariants";
 import { PieChartWithSingleMeasureAndViewBy, PieChartWithTwoMeasures } from "./base";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<IPieChartProps>("PieChart", PieChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -30,4 +32,14 @@ const chartAlignmentScenarios = scenariosFor<IPieChartProps>("PieChart", PieChar
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("vertical alignment", PieChartWithSingleMeasureAndViewBy, chartAlignmentVariants);
 
-export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "PieChart",
+    ScenarioGroupNames.LegendResponsive,
+    PieChart,
+    PieChartWithSingleMeasureAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios, ...legendResponziveScenarios];

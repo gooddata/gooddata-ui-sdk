@@ -7,8 +7,8 @@ import {
     IHeatmapLegendLabel as IColorLegendLabel,
     getColorLegendConfiguration,
 } from "./helpers";
-import { TOP } from "./PositionTypes";
-import { IColorLegendItem } from "./types";
+import { TOP, BOTTOM } from "./PositionTypes";
+import { IColorLegendItem, IHeatmapLegendSize } from "./types";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -19,9 +19,10 @@ export interface IColorLegendProps {
     data: IColorLegendItem[];
     numericSymbols: string[];
     position: string;
-    isSmall?: boolean;
+    size?: IHeatmapLegendSize;
     format?: string;
     theme?: ITheme;
+    title?: string;
 }
 
 interface IColorLabelsProps {
@@ -30,6 +31,12 @@ interface IColorLabelsProps {
 
 interface IColorBoxesProps {
     boxes: IColorLegendBox[];
+}
+
+interface ILegendBoxesProps {
+    renderLabelsFirst: boolean;
+    boxes: IColorLegendBox[];
+    labels: IColorLegendLabel[];
 }
 
 export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
@@ -65,11 +72,33 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
     );
 }
 
+function LegendBoxes({ renderLabelsFirst, boxes, labels }: ILegendBoxesProps): JSX.Element {
+    return (
+        <>
+            {renderLabelsFirst && <ColorLabels labels={labels} />}
+            <ColorBoxes boxes={boxes} />
+            {!renderLabelsFirst && <ColorLabels labels={labels} />}
+        </>
+    );
+}
+
+function LegendWithTitle(props: { title: string; position: string; children: React.ReactNode }): JSX.Element {
+    const { title, position, children } = props;
+    const isHorizontal = position === TOP || position === BOTTOM;
+    const classes = cx("heatmap-legend-with-title", { horizontal: isHorizontal });
+    return (
+        <div className={classes}>
+            <div className="heatmap-legend-title">{`${title}:`}</div>
+            <div className="heatmap-legend-boxes">{children}</div>
+        </div>
+    );
+}
+
 /**
  * @internal
  */
 export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
-    const { data, format, numericSymbols, isSmall = false, position, theme } = colorLegendProps;
+    const { title, data, format, numericSymbols, size = "large", position, theme } = colorLegendProps;
     if (!data.length) {
         return null;
     }
@@ -78,7 +107,7 @@ export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
         data,
         format,
         numericSymbols,
-        isSmall,
+        size,
         position,
         theme,
     );
@@ -88,9 +117,13 @@ export const ColorLegend = withTheme((colorLegendProps: IColorLegendProps) => {
 
     return (
         <div className={classes}>
-            {renderLabelsFirst && <ColorLabels labels={labels} />}
-            <ColorBoxes boxes={boxes} />
-            {!renderLabelsFirst && <ColorLabels labels={labels} />}
+            {title ? (
+                <LegendWithTitle title={title} position={position}>
+                    <LegendBoxes renderLabelsFirst={renderLabelsFirst} boxes={boxes} labels={labels} />
+                </LegendWithTitle>
+            ) : (
+                <LegendBoxes renderLabelsFirst={renderLabelsFirst} boxes={boxes} labels={labels} />
+            )}
         </div>
     );
 });

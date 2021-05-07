@@ -706,6 +706,7 @@ export const Icon: {
     DragHandle: import("react").FC<import("./typings").IIconProps>;
     Interaction: import("react").FC<import("./typings").IIconProps>;
     AttributeFilter: import("react").FC<import("./typings").IIconProps>;
+    LegendMenu: import("react").FC<import("./typings").IIconProps>;
 };
 
 // @internal (undocumented)
@@ -1739,6 +1740,7 @@ export interface IMeasureNumberFormatOwnProps {
 export interface IMediaQueries {
     "!mobileDevice": string;
     "<desktop": string;
+    "<sm": string;
     ">=lg": string;
     ">=md": string;
     ">=sm": string;

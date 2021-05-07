@@ -2,8 +2,7 @@
 import { ColumnChart } from "@gooddata/sdk-ui-charts";
 import { ColumnChartWithArithmeticMeasuresAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarious";
-import { IResponsiveSize } from "../_infra/responsiveScenarious";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 
 const sizeVariantsSimple: Array<IResponsiveSize> = [
@@ -21,6 +20,7 @@ const simpleScenarios = responsiveScenarios(
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsSimple,
+    false,
 );
 
 const sizeVariantsComplex: Array<IResponsiveSize> = [
@@ -39,6 +39,7 @@ const complexCcenarios = responsiveScenarios(
         config: { enableCompactSize: true, legend: { enabled: false } },
     },
     sizeVariantsComplex,
+    false,
 );
 
 export default [...complexCcenarios, ...simpleScenarios];

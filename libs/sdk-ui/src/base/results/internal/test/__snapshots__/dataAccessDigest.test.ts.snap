@@ -153,6 +153,15 @@ Object {
 }
 `;
 
+exports[`createDataAccessDigest should find slices and series for: BarChart - themed with popup legend 1`] = `
+Object {
+  "seriesCount": 1,
+  "seriesIdx": 1,
+  "slicesCount": 43,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest should find slices and series for: BarChart - two measures with two viewBy 1`] = `
 Object {
   "seriesCount": 2,
@@ -402,6 +411,15 @@ Object {
   "seriesIdx": 0,
   "slicesCount": 0,
   "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest should find slices and series for: ColumnChart - single measure with one viewBy and one stackBy with multiple items 1`] = `
+Object {
+  "seriesCount": 2,
+  "seriesIdx": 1,
+  "slicesCount": 6,
+  "slicesIdx": 0,
 }
 `;
 

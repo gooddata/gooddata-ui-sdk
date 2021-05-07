@@ -5,6 +5,7 @@ import { mount } from "enzyme";
 import { withIntl } from "@gooddata/sdk-ui";
 import { ILegendProps, Legend } from "../Legend";
 import { HeatmapLegend } from "../HeatmapLegend";
+import { PopUpLegend } from "../PopUpLegend/PopUpLegend";
 
 describe("Legend", () => {
     const series = [
@@ -33,6 +34,7 @@ describe("Legend", () => {
             onItemClick: noop,
             validateOverHeight: noop,
             position: "top",
+            contentDimensions: { width: 440, height: 440 },
             ...userProps,
         };
 
@@ -59,5 +61,11 @@ describe("Legend", () => {
     it("should render heat map legend when type is heatmap", () => {
         const wrapper = createComponent({ heatmapLegend: true });
         expect(wrapper.find(HeatmapLegend).length).toEqual(1);
+    });
+
+    it("should render pop up legend when is set `autoPositionWithPopup`", () => {
+        const responsiveWithPopup = "autoPositionWithPopup";
+        const wrapper = createComponent({ responsive: responsiveWithPopup, maximumRows: 1 });
+        expect(wrapper.find(PopUpLegend).length).toEqual(1);
     });
 });

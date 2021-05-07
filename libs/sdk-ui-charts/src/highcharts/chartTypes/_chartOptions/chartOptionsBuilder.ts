@@ -474,6 +474,7 @@ export function getChartOptions(
             type,
             stacking: null,
             legendLayout: "horizontal",
+            legendLabel: unwrap(measureGroup?.items[0])?.name,
             title: {
                 x: viewByAttribute ? viewByAttribute.name : "",
                 y: stackByAttribute ? stackByAttribute.name : "",
@@ -561,12 +562,17 @@ export function getChartOptions(
         isDualAxis,
     );
 
+    const legendLabel =
+        isOneOfTypes(type, sortedByMeasureTypes) && viewByAttribute
+            ? viewByAttribute?.name
+            : stackByAttribute?.name;
     const chartOptions: IChartOptions = {
         type,
         stacking,
         hasStackByAttribute: Boolean(stackByAttribute),
         hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || "horizontal",
+        legendLabel,
         xAxes,
         yAxes,
         data: {

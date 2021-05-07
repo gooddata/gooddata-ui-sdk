@@ -5,8 +5,8 @@ import last from "lodash/last";
 import inRange from "lodash/inRange";
 import isEqual from "lodash/isEqual";
 import { numberFormat } from "@gooddata/numberjs";
-import { IColorLegendItem } from "./types";
-import { LEFT, RIGHT, TOP, BOTTOM } from "./PositionTypes";
+import { IColorLegendItem, IHeatmapLegendSize } from "./types";
+import { LEFT, RIGHT } from "./PositionTypes";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { parseRGBString } from "../coloring/color";
 
@@ -17,7 +17,7 @@ export const LEGEND_PADDING = 12;
 export const ITEM_HEIGHT = 20;
 export const SKIPPED_LABEL_TEXT = "...";
 export const UTF_NON_BREAKING_SPACE = "\u00A0";
-const STATIC_PAGING_HEIGHT = 44;
+export const STATIC_PAGING_HEIGHT = 44;
 
 export interface IColorLegendBox {
     class: string | null;
@@ -215,6 +215,35 @@ const defaultHeatmapSmallLegendStyle = { width: 40, textAlign: ACENTER };
 
 export const heatmapSmallLegendConfigMatrix: IColorLabelConfigItem[][] = [
     [
+        { type: "label", labelIndex: 0, style: { width: 63, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 63, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 63, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 63, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 63, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 63, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 63, textAlign: ALEFT } },
+        { type: "label", labelIndex: 7, style: { width: 63, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 33, textAlign: ALEFT } },
+        { type: "label", labelIndex: 3, style: { width: 42, textAlign: ACENTER } },
+        { type: "label", labelIndex: 7, style: { width: 51, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 33, textAlign: ALEFT } },
+        { type: "label", labelIndex: 3, style: { width: 42, textAlign: ACENTER } },
+        { type: "label", labelIndex: 7, style: { width: 51, textAlign: ARIGHT } },
+    ],
+];
+
+export const heatmapMediumLegendConfigMatrix: IColorLabelConfigItem[][] = [
+    [
         { type: "label", labelIndex: 0, style: { width: 138, textAlign: ALEFT } },
         { type: "label", labelIndex: 7, style: { width: 138, textAlign: ARIGHT } },
     ],
@@ -291,19 +320,26 @@ export function buildColorLabelsConfig(labels: string[], config: any[]): any[] {
         .filter((value: any) => value !== null);
 }
 
-const LABEL_LENGTH_THRESHOLDS = [5, 8, 10, 15, 18];
-const SMALL_LABEL_LENGTH_THRESHOLDS = [4, 7, 9, 13, 15];
+const LABEL_THRESHOLDS = {
+    large: [5, 8, 10, 15, 18],
+    medium: [4, 7, 9, 13, 15],
+    small: [2, 5, 8, 10, 12],
+};
 
-function getColorLegendLabelsConfiguration(legendLabels: string[], isSmall: boolean, isVertical: boolean) {
+function getColorLegendLabelsConfiguration(
+    legendLabels: string[],
+    size: IHeatmapLegendSize,
+    isVertical: boolean,
+) {
     const numberOfLabels = legendLabels.length;
     const firstLabelLength = head(legendLabels)?.length ?? 0;
     const lastLabelLength = last(legendLabels)?.length ?? 0;
     const maxLabelLength = firstLabelLength > lastLabelLength ? firstLabelLength : lastLabelLength;
-    const labelLengths = isSmall ? SMALL_LABEL_LENGTH_THRESHOLDS : LABEL_LENGTH_THRESHOLDS;
+    const labelLengths = LABEL_THRESHOLDS[size];
 
     const shorteningConfig = isVertical
         ? verticalHeatmapConfig
-        : getHorizontalShorteningLabelConfig(labelLengths, maxLabelLength, isSmall, numberOfLabels);
+        : getHorizontalShorteningLabelConfig(labelLengths, maxLabelLength, size, numberOfLabels);
 
     return buildColorLabelsConfig(legendLabels, shorteningConfig);
 }
@@ -311,13 +347,18 @@ function getColorLegendLabelsConfiguration(legendLabels: string[], isSmall: bool
 function getHorizontalShorteningLabelConfig(
     labelLengths: number[],
     maxLabelLength: number,
-    isSmall: boolean,
+    size: IHeatmapLegendSize,
     numberOfLabels: number,
 ): IColorLabelConfigItem[] {
     const shorteningLevel = getColorLabelShorteningLevel(labelLengths, maxLabelLength);
-    if (isSmall) {
+    if (size === "small") {
         return heatmapSmallLegendConfigMatrix[shorteningLevel];
     }
+
+    if (size === "medium") {
+        return heatmapMediumLegendConfigMatrix[shorteningLevel];
+    }
+
     if (numberOfLabels === 8) {
         return heatmapLegendConfigMatrix[shorteningLevel];
     }
@@ -384,14 +425,22 @@ export function calculateFluidLegend(
     };
 }
 
-function getStaticVisibleItemsCount(containerHeight: number, withPaging: boolean = false) {
-    const pagingHeight = withPaging ? STATIC_PAGING_HEIGHT : 0;
-    return Math.floor((containerHeight - pagingHeight) / ITEM_HEIGHT);
+function getStaticVisibleItemsCount(
+    containerHeight: number,
+    columnsNumber: number,
+    withPaging: boolean,
+    paginationHeight: number,
+) {
+    const pagingHeight = withPaging ? paginationHeight : 0;
+    const height = containerHeight - pagingHeight;
+    return Math.floor(height / ITEM_HEIGHT) * columnsNumber;
 }
 
 export function calculateStaticLegend(
     seriesCount: number,
     containerHeight: number,
+    columnsNumber: number = 1,
+    paginationHeight: number = STATIC_PAGING_HEIGHT,
 ): {
     hasPaging: boolean;
     visibleItemsCount: number;
@@ -403,7 +452,12 @@ export function calculateStaticLegend(
         };
     }
 
-    const visibleItemsCount = getStaticVisibleItemsCount(containerHeight);
+    const visibleItemsCount = getStaticVisibleItemsCount(
+        containerHeight,
+        columnsNumber,
+        false,
+        paginationHeight,
+    );
     if (visibleItemsCount >= seriesCount) {
         return {
             hasPaging: false,
@@ -412,7 +466,7 @@ export function calculateStaticLegend(
     }
     return {
         hasPaging: true,
-        visibleItemsCount: getStaticVisibleItemsCount(containerHeight, true),
+        visibleItemsCount: getStaticVisibleItemsCount(containerHeight, columnsNumber, true, paginationHeight),
     };
 }
 
@@ -469,34 +523,23 @@ export function getColorLegendConfiguration(
     series: IColorLegendItem[],
     format: string | undefined,
     numericSymbols: string[],
-    isSmall: boolean,
-    position: string | null,
+    size: IHeatmapLegendSize,
+    position: string,
     theme?: ITheme,
 ): IColorLegendConfig {
     const legendLabels = getColorLegendLabels(series, format, numericSymbols);
-    let finalPosition;
 
-    if (isSmall) {
-        finalPosition = position === TOP ? TOP : BOTTOM;
-    } else {
-        finalPosition = position || RIGHT;
-    }
+    const classes = ["viz-legend", "color-legend", `position-${position}`, size];
 
-    const classes = ["viz-legend", "color-legend", `position-${finalPosition}`];
-
-    if (isSmall) {
-        classes.push("small");
-    }
-
-    const isVertical = finalPosition === LEFT || finalPosition === RIGHT;
-    const finalLabels = getColorLegendLabelsConfiguration(legendLabels, isSmall, isVertical);
+    const isVertical = position === LEFT || position === RIGHT;
+    const finalLabels = getColorLegendLabelsConfiguration(legendLabels, size, isVertical);
     const boxes = getColorBoxes(series, theme);
 
     return {
         classes,
         labels: finalLabels,
         boxes,
-        position: finalPosition,
+        position,
     };
 }
 

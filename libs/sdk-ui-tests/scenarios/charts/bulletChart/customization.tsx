@@ -5,6 +5,8 @@ import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { BulletChartWithAllMeasuresAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -18,4 +20,14 @@ const dataLabelScenarios = scenariosFor<IBulletChartProps>("BulletChart", Bullet
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", BulletChartWithAllMeasuresAndViewBy, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "BulletChart",
+    ScenarioGroupNames.LegendResponsive,
+    BulletChart,
+    BulletChartWithAllMeasuresAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, ...legendResponziveScenarios];

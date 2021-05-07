@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     ITEM_HEIGHT,
     LEGEND_PADDING,
@@ -9,6 +9,7 @@ import {
     getColorLegendConfiguration,
     buildColorLabelsConfig,
     heatmapLegendConfigMatrix,
+    heatmapMediumLegendConfigMatrix,
     heatmapSmallLegendConfigMatrix,
     verticalHeatmapConfig,
 } from "../helpers";
@@ -116,7 +117,7 @@ describe("helpers", () => {
             { key: "label-11", label: "60", style: { textAlign: "center", width: 40 } },
             { key: "label-12", label: "70", style: { textAlign: "right", width: 30 } },
         ];
-        const labelsSmall = [
+        const labelsMedium = [
             { key: "label-0", label: "0", style: { textAlign: "left", width: 20 } },
             { key: "label-1", label: "10", style: { textAlign: "center", width: 40 } },
             { key: "label-2", label: "20", style: { textAlign: "center", width: 40 } },
@@ -142,12 +143,13 @@ describe("helpers", () => {
 
         it("should prepare legend config without shortening when everything fits", () => {
             const expectedResult = {
-                classes: ["viz-legend", "color-legend", "position-top"],
+                classes: ["viz-legend", "color-legend", "position-top", "large"],
                 labels,
                 boxes,
                 position: "top",
             };
-            const result = getColorLegendConfiguration(series, format, numericSymbols, false, "top");
+
+            const result = getColorLegendConfiguration(series, format, numericSymbols, "large", "top");
 
             expect(result).toEqual(expectedResult);
         });
@@ -164,36 +166,101 @@ describe("helpers", () => {
                 { key: "label-7", label: "70", style: { textAlign: "left", height: 15, lineHeight: "20px" } },
             ];
             const expectedResult = {
-                classes: ["viz-legend", "color-legend", "position-right"],
+                classes: ["viz-legend", "color-legend", "position-right", "medium"],
                 labels: expectedLabels,
                 boxes,
                 position: "right",
             };
-            const result = getColorLegendConfiguration(series, format, numericSymbols, false, null);
+            const result = getColorLegendConfiguration(series, format, numericSymbols, "medium", "right");
+
+            expect(result).toEqual(expectedResult);
+        });
+
+        it("should prepare medium legend config without shortening when everything fits", () => {
+            const expectedResult = {
+                classes: ["viz-legend", "color-legend", "position-top", "medium"],
+                labels: labelsMedium,
+                boxes,
+                position: "top",
+            };
+            const result = getColorLegendConfiguration(series, format, numericSymbols, "medium", "top");
 
             expect(result).toEqual(expectedResult);
         });
 
         it("should prepare small legend config without shortening when everything fits", () => {
+            const expectedBoxes = [
+                {
+                    class: null,
+                    key: "item-0",
+                    style: { backgroundColor: "rgb(255,255,255)", border: "1px solid #ccc" },
+                },
+                { class: null, key: "item-1", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-2", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: "middle", key: "item-3", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-4", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-5", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-6", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+            ];
+            const expectedLabels = [
+                { label: "0", style: { width: 33, textAlign: "left" }, key: "label-0" },
+                { label: "30", style: { width: 42, textAlign: "center" }, key: "label-1" },
+                { label: "70", style: { width: 51, textAlign: "right" }, key: "label-2" },
+            ];
             const expectedResult = {
                 classes: ["viz-legend", "color-legend", "position-top", "small"],
-                labels: labelsSmall,
-                boxes,
+                labels: expectedLabels,
+                boxes: expectedBoxes,
                 position: "top",
             };
-            const result = getColorLegendConfiguration(series, format, numericSymbols, true, "top");
+            const result = getColorLegendConfiguration(series, format, numericSymbols, "small", "top");
 
             expect(result).toEqual(expectedResult);
         });
 
-        it("should prepare small legend config with bottom position, without shortening when everything fits", () => {
+        it("should prepare small legend config without shortening when shortening is needed", () => {
+            const expectedBoxes = [
+                {
+                    class: null,
+                    key: "item-0",
+                    style: { backgroundColor: "rgb(255,255,255)", border: "1px solid #ccc" },
+                },
+                { class: null, key: "item-1", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-2", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: "middle", key: "item-3", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-4", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-5", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+                { class: null, key: "item-6", style: { backgroundColor: "rgb(0,0,0)", border: "none" } },
+            ];
+            const expectedLabels = [
+                { label: "99999", style: { width: 63, textAlign: "left" }, key: "label-0" },
+                { label: "100007", style: { width: 63, textAlign: "right" }, key: "label-1" },
+            ];
             const expectedResult = {
-                classes: ["viz-legend", "color-legend", "position-bottom", "small"],
-                labels: labelsSmall,
+                classes: ["viz-legend", "color-legend", "position-top", "small"],
+                labels: expectedLabels,
+                boxes: expectedBoxes,
+                position: "top",
+            };
+            const result = getColorLegendConfiguration(
+                seriesForShortening,
+                format,
+                numericSymbols,
+                "small",
+                "top",
+            );
+
+            expect(result).toEqual(expectedResult);
+        });
+
+        it("should prepare medium legend config with bottom position, without shortening when everything fits", () => {
+            const expectedResult = {
+                classes: ["viz-legend", "color-legend", "position-bottom", "medium"],
+                labels: labelsMedium,
                 boxes,
                 position: "bottom",
             };
-            const result = getColorLegendConfiguration(series, format, numericSymbols, true, "right");
+            const result = getColorLegendConfiguration(series, format, numericSymbols, "medium", "bottom");
 
             expect(result).toEqual(expectedResult);
         });
@@ -211,7 +278,7 @@ describe("helpers", () => {
                 { key: "label-8", label: "100007", style: { textAlign: "right", width: 45 } },
             ];
             const expectedResult = {
-                classes: ["viz-legend", "color-legend", "position-top"],
+                classes: ["viz-legend", "color-legend", "position-top", "large"],
                 labels: expectedLabels,
                 boxes,
                 position: "top",
@@ -220,14 +287,14 @@ describe("helpers", () => {
                 seriesForShortening,
                 format,
                 numericSymbols,
-                false,
+                "large",
                 "top",
             );
 
             expect(result).toEqual(expectedResult);
         });
 
-        it("should prepare small legend config with shortening", () => {
+        it("should prepare medium legend config with shortening", () => {
             const expectedLabels = [
                 { key: "label-0", label: "99999", style: { textAlign: "left", width: 35 } },
                 { key: "dots-1", label: "...", style: { textAlign: "center", width: 10 } },
@@ -240,7 +307,7 @@ describe("helpers", () => {
                 { key: "label-8", label: "100007", style: { textAlign: "right", width: 35 } },
             ];
             const expectedResult = {
-                classes: ["viz-legend", "color-legend", "position-top", "small"],
+                classes: ["viz-legend", "color-legend", "position-top", "medium"],
                 labels: expectedLabels,
                 boxes,
                 position: "top",
@@ -249,7 +316,7 @@ describe("helpers", () => {
                 seriesForShortening,
                 format,
                 numericSymbols,
-                true,
+                "medium",
                 "top",
             );
 
@@ -257,10 +324,10 @@ describe("helpers", () => {
         });
 
         it("should sum widths to 350", () => {
-            const labels = ["0", "1", "2", "3", "4", "5", "6", "7"];
+            const labelsMock = ["0", "1", "2", "3", "4", "5", "6", "7"];
 
             heatmapLegendConfigMatrix.forEach((config: any) => {
-                const elementsConfig = buildColorLabelsConfig(labels, config);
+                const elementsConfig = buildColorLabelsConfig(labelsMock, config);
 
                 const width = elementsConfig.reduce((sum: number, item: any) => {
                     return sum + item.style.width;
@@ -270,11 +337,11 @@ describe("helpers", () => {
             });
         });
 
-        it("should sum widths to 276 in small legend", () => {
-            const labels = ["0", "1", "2", "3", "4", "5", "6", "7"];
+        it("should sum widths to 276 in medium legend", () => {
+            const labelsMock = ["0", "1", "2", "3", "4", "5", "6", "7"];
 
-            heatmapSmallLegendConfigMatrix.forEach((config: any) => {
-                const elementsConfig = buildColorLabelsConfig(labels, config);
+            heatmapMediumLegendConfigMatrix.forEach((config: any) => {
+                const elementsConfig = buildColorLabelsConfig(labelsMock, config);
 
                 const width = elementsConfig.reduce((sum: number, item: any) => {
                     return sum + item.style.width;
@@ -284,10 +351,24 @@ describe("helpers", () => {
             });
         });
 
-        it("should sum heights to 210 in vertical legend", () => {
-            const labels = ["0", "1", "2", "3", "4", "5", "6", "7"];
+        it("should sum widths to 126 in small legend", () => {
+            const labelsMock = ["0", "1", "2", "3", "4", "5", "6", "7"];
 
-            const elementsConfig = buildColorLabelsConfig(labels, verticalHeatmapConfig);
+            heatmapSmallLegendConfigMatrix.forEach((config: any) => {
+                const elementsConfig = buildColorLabelsConfig(labelsMock, config);
+
+                const width = elementsConfig.reduce((sum: number, item: any) => {
+                    return sum + item.style.width;
+                }, 0);
+
+                expect(width).toEqual(126);
+            });
+        });
+
+        it("should sum heights to 210 in vertical legend", () => {
+            const labelsMock = ["0", "1", "2", "3", "4", "5", "6", "7"];
+
+            const elementsConfig = buildColorLabelsConfig(labelsMock, verticalHeatmapConfig);
 
             const width = elementsConfig.reduce((sum: number, item: any) => {
                 return sum + item.style.height;

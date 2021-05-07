@@ -1,0 +1,113 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Min Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "min",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_e9c321cf_fact.opportunitysnapshot.amount_min"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Median Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "median",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_899a31be_fact.opportunitysnapshot.amount_median"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Max Amount",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "max",
+                                    "item": {
+                                        "identifier": "fact.opportunitysnapshot.amount",
+                                        "type": "fact"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_5c640258_fact.opportunitysnapshot.amount_max"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "ComboChart.cc351132894ed1cf76b8f4be0e1384cc",
+        "properties": {
+            "controls": { "legend": { "position": "left", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "ComboChart - 260x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on left",
+        "uri": "ComboChart.cc351132894ed1cf76b8f4be0e1384cc",
+        "visualizationUrl": "local:combo2"
+    }
+}

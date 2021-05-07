@@ -2,8 +2,7 @@
 import { PieChart } from "@gooddata/sdk-ui-charts";
 import { PieChartWithSingleMeasureAndViewBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarious";
-import { IResponsiveSize } from "../_infra/responsiveScenarious";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
 
 const sizeVariants: Array<IResponsiveSize> = [
     { label: "auto data labels", width: 300, height: 250 },
@@ -25,6 +24,7 @@ const scenarios = responsiveScenarios(
         },
     },
     sizeVariants,
+    false,
 );
 
 export default [...scenarios];
