@@ -7,9 +7,9 @@
 export function groupedCategories(HC) {
     "use strict";
     /**
-     * Grouped Categories v1.1.6 (2020-06-19)
+     * Grouped Categories v1.1.7 (2021-03-03)
      *
-     * (c) 2012-2020 Black Label
+     * (c) 2012-2021 Black Label
      *
      * License: Creative Commons Attribution (CC)
      */
@@ -373,17 +373,26 @@ export function groupedCategories(HC) {
 
         // set label text - but applied after formatter #46
         if (tick.label) {
-            tick.label.attr(
-                "text",
-                tick.axis.labelFormatter.call({
-                    axis: axis,
-                    chart: axis.chart,
-                    isFirst: tick.isFirst,
-                    isLast: tick.isLast,
-                    value: category.name,
-                    pos: tick.pos,
-                }),
-            );
+            /* GoodData change - wrap the ticks.label.attr call in this if and provide the else branch */
+            if (tick.axis.labelFormatter) {
+                tick.label.attr(
+                    "text",
+                    tick.axis.labelFormatter.call({
+                        axis: axis,
+                        chart: axis.chart,
+                        isFirst: tick.isFirst,
+                        isLast: tick.isLast,
+                        value: category.name,
+                        pos: tick.pos,
+                    }),
+                );
+            } else {
+                // if there is no formatter available, use the category.name directly
+                tick.label.attr("text", category.name);
+            }
+            /* GoodData change - commented out the following 2 lines #1 */
+            // update with new text length, since textSetter removes the size caches when text changes. #137
+            // tick.label.textPxLength = tick.label.getBBox().width;
         }
 
         /* GoodData change - added following lines #1 */
@@ -435,11 +444,12 @@ export function groupedCategories(HC) {
                 // #63: style is passed in CSS and not as an attribute
                 delete mergedAttrs.style;
 
-                label = chart.renderer
-                    .text(name, 0, 0, useHTML)
-                    .attr(mergedAttrs)
-                    .css(mergedCSS)
-                    .add(axis.labelGroup);
+                label = chart.renderer.text(name, 0, 0, useHTML).attr(mergedAttrs).add(axis.labelGroup);
+
+                // css should only be set for non styledMode configuration. #167
+                if (label && !chart.styledMode) {
+                    label.css(mergedCSS);
+                }
 
                 // tick properties
                 tick.startAt = this.pos;
