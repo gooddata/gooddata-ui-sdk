@@ -148,4 +148,39 @@ storiesOf(`${FilterStories}/DateFilter`, module)
                 },
             },
         );
+    })
+    .add("Date filter aligned to the right", () => {
+        return withMultipleScreenshots(
+            <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
+                <DateFilter
+                    excludeCurrentPeriod={false}
+                    selectedFilterOption={defaultDateFilterOptions.allTime}
+                    filterOptions={filterOptions}
+                    availableGranularities={[
+                        "GDC.time.date",
+                        "GDC.time.month",
+                        "GDC.time.quarter",
+                        "GDC.time.year",
+                    ]}
+                    isEditMode={false}
+                    dateFilterMode="active"
+                    onApply={action("applyClick")}
+                    onCancel={action("cancelClick")}
+                    onOpen={action("onOpen")}
+                    onClose={action("onClose")}
+                />
+            </div>,
+            {
+                closed: {},
+                opened: { clickSelector: ".s-date-filter-button", postInteractionWait: 200 },
+                "absolute-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-absolute-form"],
+                    postInteractionWait: 200,
+                },
+                "relative-form": {
+                    clickSelectors: [".s-date-filter-button", ".s-relative-form"],
+                    postInteractionWait: 200,
+                },
+            },
+        );
     });
