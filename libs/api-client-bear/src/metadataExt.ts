@@ -137,9 +137,8 @@ export class MetadataModuleExt {
     ): Promise<string> {
         const objectsFromDashboard = await this.getObjectsFromDashboard(projectId, dashboardUri);
         const dashboardDetails = await this.metadataModule.getObjectDetails(dashboardUri);
-        const {
-            analyticalDashboard,
-        }: { analyticalDashboard: GdcDashboard.IAnalyticalDashboard } = dashboardDetails;
+        const { analyticalDashboard }: { analyticalDashboard: GdcDashboard.IAnalyticalDashboard } =
+            dashboardDetails;
         const allCreatedObjUris: string[] = [];
         const visWidgetUris: string[] = [];
         try {

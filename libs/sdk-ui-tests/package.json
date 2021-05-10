@@ -140,7 +140,7 @@
         "eslint-plugin-react": "^7.20.5",
         "eslint": "^7.5.0",
         "mapbox-gl": "^1.13.1",
-        "prettier": "~2.2.1",
+        "prettier": "~2.3.0",
         "react-dom": "^16.10.0",
         "react": "^16.10.0",
         "sass-loader": "^10.1.1",

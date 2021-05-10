@@ -13,7 +13,7 @@ import { MeasureMetadataObjectBuilder, newMeasureMetadataObject } from "../metad
  * @beta
  */
 export class CatalogMeasureBuilder<
-    T extends ICatalogMeasure = ICatalogMeasure
+    T extends ICatalogMeasure = ICatalogMeasure,
 > extends GroupableCatalogItemBuilder<T> {
     public measure(
         measureOrRef: IMeasureMetadataObject | ObjRef,

@@ -39,9 +39,8 @@ const objectTypeToObjectCategory = (type: InsightReferenceTypes): GdcMetadata.Ob
 };
 
 const objectTypesWithLinkToDataset: InsightReferenceTypes[] = ["fact", "attribute"];
-const objectCategoriesWithLinkToDataset: GdcMetadata.ObjectCategory[] = objectTypesWithLinkToDataset.map(
-    objectTypeToObjectCategory,
-);
+const objectCategoriesWithLinkToDataset: GdcMetadata.ObjectCategory[] =
+    objectTypesWithLinkToDataset.map(objectTypeToObjectCategory);
 
 type BulkUsedByResponse = { useMany: { [idx: number]: { entries: GdcMetadata.IObjectXrefEntry[] } } };
 

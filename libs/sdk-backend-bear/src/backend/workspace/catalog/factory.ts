@@ -36,16 +36,16 @@ import IDateDataSetAttribute = GdcDateDataSets.IDateDataSetAttribute;
 
 type BearDisplayFormOrAttribute = GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedAttribute;
 
-const bearCatalogItemToCatalogItem = (displayForms: IDisplayFormByKey, attributes: IAttributeByKey) => (
-    item: GdcCatalog.CatalogItem,
-): CatalogItem => {
-    if (GdcCatalog.isCatalogAttribute(item)) {
-        return convertAttribute(item, displayForms, attributes);
-    } else if (GdcCatalog.isCatalogMetric(item)) {
-        return convertMeasure(item);
-    }
-    return convertFact(item);
-};
+const bearCatalogItemToCatalogItem =
+    (displayForms: IDisplayFormByKey, attributes: IAttributeByKey) =>
+    (item: GdcCatalog.CatalogItem): CatalogItem => {
+        if (GdcCatalog.isCatalogAttribute(item)) {
+            return convertAttribute(item, displayForms, attributes);
+        } else if (GdcCatalog.isCatalogMetric(item)) {
+            return convertMeasure(item);
+        }
+        return convertFact(item);
+    };
 
 const createLookups = (
     displayFormsAndAttributes: BearDisplayFormOrAttribute[],

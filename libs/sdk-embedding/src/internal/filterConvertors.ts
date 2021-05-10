@@ -173,9 +173,10 @@ export function isValidFiltersFormat(filters: unknown[], shouldValidateDataSet: 
     );
 }
 
-export function getObjectUriIdentifier(
-    obj: EmbeddedGdc.ObjQualifier | undefined,
-): { uri?: string; identifier?: string } {
+export function getObjectUriIdentifier(obj: EmbeddedGdc.ObjQualifier | undefined): {
+    uri?: string;
+    identifier?: string;
+} {
     if (!obj) {
         return {};
     }

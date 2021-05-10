@@ -16,7 +16,7 @@ const NON_CORE_PROPS: Array<keyof IBucketChartProps> = ["backend", "workspace"];
  */
 export interface IChartDefinition<
     TBucketProps extends object,
-    TProps extends TBucketProps & IBucketChartProps
+    TProps extends TBucketProps & IBucketChartProps,
 > {
     chartName: string;
     /**
@@ -46,29 +46,30 @@ export interface IChartDefinition<
     onBeforePropsConversion?: (props: TProps) => void;
 }
 
-export const getCoreChartProps = <
-    TBucketProps extends object,
-    TProps extends TBucketProps & IBucketChartProps
->(
-    chart: IChartDefinition<TBucketProps, TProps>,
-) => (props: TProps): ICoreChartProps => {
-    const propsToUse = chart.propTransformation ? chart.propTransformation(props) : props;
+export const getCoreChartProps =
+    <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
+        chart: IChartDefinition<TBucketProps, TProps>,
+    ) =>
+    (props: TProps): ICoreChartProps => {
+        const propsToUse = chart.propTransformation ? chart.propTransformation(props) : props;
 
-    if (chart.onBeforePropsConversion) {
-        chart.onBeforePropsConversion(propsToUse);
-    }
+        if (chart.onBeforePropsConversion) {
+            chart.onBeforePropsConversion(propsToUse);
+        }
 
-    const buckets = chart.bucketsFactory(propsToUse);
-    const execution = chart.executionFactory(propsToUse, buckets);
-    const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
-    const propOverrides = chart.propOverridesFactory ? chart.propOverridesFactory(propsToUse, buckets) : {};
-    const exportTitle = propsToUse.exportTitle || chart.chartName;
-    const coreChartProps = {
-        ...nonBucketProps,
-        ...propOverrides,
-        execution,
-        exportTitle,
+        const buckets = chart.bucketsFactory(propsToUse);
+        const execution = chart.executionFactory(propsToUse, buckets);
+        const nonBucketProps = omit(propsToUse, chart.bucketPropsKeys);
+        const propOverrides = chart.propOverridesFactory
+            ? chart.propOverridesFactory(propsToUse, buckets)
+            : {};
+        const exportTitle = propsToUse.exportTitle || chart.chartName;
+        const coreChartProps = {
+            ...nonBucketProps,
+            ...propOverrides,
+            execution,
+            exportTitle,
+        };
+
+        return omit(coreChartProps, NON_CORE_PROPS);
     };
-
-    return omit(coreChartProps, NON_CORE_PROPS);
-};

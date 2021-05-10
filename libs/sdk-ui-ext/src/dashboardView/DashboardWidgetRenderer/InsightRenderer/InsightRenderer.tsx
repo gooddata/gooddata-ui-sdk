@@ -104,7 +104,11 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
         [filters, filterContext, insightWidget],
     );
 
-    const { error, result: insightWithFilters, status } = useCancelablePromise(
+    const {
+        error,
+        result: insightWithFilters,
+        status,
+    } = useCancelablePromise(
         {
             promise: async () => {
                 const resolvedFilters = await effectiveBackend

@@ -65,9 +65,7 @@ function getStackConfiguration(config: IChartConfig = {}): IChartConfig {
     };
 }
 
-export function getBucketsProps(
-    props: IAreaChartBucketProps,
-): {
+export function getBucketsProps(props: IAreaChartBucketProps): {
     measures: IAttributeOrMeasure[];
     viewBy: IAttribute[];
     stackBy: IAttribute[];

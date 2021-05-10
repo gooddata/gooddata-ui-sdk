@@ -25,9 +25,9 @@ function getLabelOptions(index: number, aligns: Highcharts.AlignValue[]): Highch
     };
 }
 
-export function getAxisLabelConfigurationForDualBarChart(
-    chartOptions: IChartOptions,
-): { yAxis?: XAxisOptions[] } {
+export function getAxisLabelConfigurationForDualBarChart(chartOptions: IChartOptions): {
+    yAxis?: XAxisOptions[];
+} {
     const { type, yAxes = [] } = chartOptions;
     const isBar: boolean = isBarChart(type);
     const isDualAxis: boolean = yAxes.length === 2;

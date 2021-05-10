@@ -89,13 +89,13 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                                             itemRenderer={itemRenderer}
                                             gridRowRenderer={gridRowRenderer}
                                             widgetRenderer={(renderProps) => {
-                                                const isResizedByLayoutSizingStrategy = resizedItemPositions.some(
-                                                    (position) =>
+                                                const isResizedByLayoutSizingStrategy =
+                                                    resizedItemPositions.some((position) =>
                                                         isEqual(position, [
                                                             renderProps.item.section().index(),
                                                             renderProps.item.index(),
                                                         ]),
-                                                );
+                                                    );
 
                                                 return widgetRenderer ? (
                                                     widgetRenderer({

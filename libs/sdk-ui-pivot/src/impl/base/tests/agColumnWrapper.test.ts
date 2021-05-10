@@ -26,8 +26,8 @@ describe("agColumnWrapper", () => {
     describe("setColumnMaxWidth", () => {
         it("should set internal property maxWidth of column and column.getColDef().maxWidth", async () => {
             const maxWidth = 500;
-            const columnDef1 = { maxWidth: (undefined as unknown) as number };
-            const columnDef2 = { maxWidth: (undefined as unknown) as number };
+            const columnDef1 = { maxWidth: undefined as unknown as number };
+            const columnDef2 = { maxWidth: undefined as unknown as number };
 
             const columnsMaps = {
                 colId1: getFakeColumn(columnDef1),
@@ -47,8 +47,8 @@ describe("agColumnWrapper", () => {
     describe("setColumnMaxWidthIf", () => {
         it("should set internal property maxWidth of column and column.getColDef().maxWidth when condition is true", async () => {
             const maxWidth = 500;
-            const columnDef1 = { maxWidth: (undefined as unknown) as number };
-            const columnDef2 = { maxWidth: (undefined as unknown) as number };
+            const columnDef1 = { maxWidth: undefined as unknown as number };
+            const columnDef2 = { maxWidth: undefined as unknown as number };
 
             const columnsMaps = {
                 colId1: getFakeColumn(columnDef1),
@@ -66,8 +66,8 @@ describe("agColumnWrapper", () => {
 
         it("should not set internal property maxWidth of column and column.getColDef().maxWidth when condition is false", async () => {
             const maxWidth = 500;
-            const columnDef1 = { maxWidth: (undefined as unknown) as number };
-            const columnDef2 = { maxWidth: (undefined as unknown) as number };
+            const columnDef1 = { maxWidth: undefined as unknown as number };
+            const columnDef2 = { maxWidth: undefined as unknown as number };
 
             const columnsMaps = {
                 colId1: getFakeColumn(columnDef1),

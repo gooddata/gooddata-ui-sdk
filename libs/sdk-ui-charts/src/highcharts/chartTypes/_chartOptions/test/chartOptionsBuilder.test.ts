@@ -1551,9 +1551,8 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should first empty point have gray border", () => {
-                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
-                    firstEmptyCellIndex
-                ];
+                const { borderColor, borderWidth, pointPadding, color } =
+                    heatmapDataPoints[firstEmptyCellIndex];
                 expect(borderColor).toEqual(GRAY);
                 expect(borderWidth).toBe(1);
                 expect(pointPadding).toBe(undefined);
@@ -1561,9 +1560,8 @@ describe("chartOptionsBuilder", () => {
             });
 
             it("should second empty point have stripes inside", () => {
-                const { borderColor, borderWidth, pointPadding, color } = heatmapDataPoints[
-                    firstEmptyCellIndex + 1
-                ];
+                const { borderColor, borderWidth, pointPadding, color } =
+                    heatmapDataPoints[firstEmptyCellIndex + 1];
                 expect(borderColor).toBe(undefined);
                 expect(borderWidth).toBe(0);
                 expect(pointPadding).toBe(2);
@@ -3345,7 +3343,7 @@ describe("chartOptionsBuilder", () => {
                     it("should return empty array when there are no values in series", () => {
                         const series = [{ data: [{ value: null as any }] }];
                         const expectedDataClasses: Highcharts.ColorAxisDataClassesOptions[] = [];
-                        const dataClasses = getHeatmapDataClasses(series, ({} as any) as IColorStrategy);
+                        const dataClasses = getHeatmapDataClasses(series, {} as any as IColorStrategy);
 
                         expect(dataClasses).toEqual(expectedDataClasses);
                     });

@@ -58,9 +58,7 @@ const screenshotProps = {
     },
 };
 
-storiesOf(
-    `${StoriesForEndToEndTests}/Pivot Table`,
-    module,
-).add("complex table with multiple columns and with height change", () =>
-    withMultipleScreenshots(<PivotTableHeight />, screenshotProps),
+storiesOf(`${StoriesForEndToEndTests}/Pivot Table`, module).add(
+    "complex table with multiple columns and with height change",
+    () => withMultipleScreenshots(<PivotTableHeight />, screenshotProps),
 );

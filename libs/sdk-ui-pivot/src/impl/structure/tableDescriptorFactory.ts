@@ -43,9 +43,10 @@ function createDataColRootGroup(scopingAttributes: IAttributeDescriptor[]): Root
     };
 }
 
-function colDescriptorAndHeaders(
-    col: LeafDataCol,
-): { attributeHeaders: IResultAttributeHeader[]; attributeDescriptors: IAttributeDescriptor[] } {
+function colDescriptorAndHeaders(col: LeafDataCol): {
+    attributeHeaders: IResultAttributeHeader[];
+    attributeDescriptors: IAttributeDescriptor[];
+} {
     if (isSeriesCol(col)) {
         invariant(col.seriesDescriptor.attributeHeaders);
         invariant(col.seriesDescriptor.attributeDescriptors);

@@ -4364,7 +4364,8 @@ export const Insights = {
         TwoMeasuresWithViewBy: i_ColumnChart_03f9eeefe8cbe771aef07c10551fb420,
         SingleMeasure: i_ColumnChart_08e4e6e427792d7c3626512d4c38e4cc,
         ViewByDateAndPoPMeasure: i_ColumnChart_09fb9884ed202b18cfb1a46f2e6e700d,
-        SingleMeasureWithOneViewByAndOneStackByWithMultipleItems: i_ColumnChart_3e0f5869b74a5798bc34280f774cb14a,
+        SingleMeasureWithOneViewByAndOneStackByWithMultipleItems:
+            i_ColumnChart_3e0f5869b74a5798bc34280f774cb14a,
         SingleRatioMeasureWithViewBy: i_ColumnChart_457b8e5227317c1f629c84ab2b012fd2,
         ArithmeticMeasures: i_ColumnChart_4dae9618d5e6146ba96491d97ed0a05d,
         Themed: i_ColumnChart_664abe005b55b0467cc05cdaac3791a6,
@@ -4374,13 +4375,15 @@ export const Insights = {
         TwoMeasuresWithViewBySortedByAttribute: i_ColumnChart_a2c07d4f9f7836c47c5816d7538cb6bf,
         SingleMeasureWithTwoViewByAndStack: i_ColumnChart_a7183c68b307ff28fed7c1bfc399ac8f,
         TwoMeasuresWithTwoViewBy: i_ColumnChart_bad6dc958b4e0e96571ad5a7fea2ed4b,
-        SingleMeasureWithViewByAndStackByFilteredToSingleStack: i_ColumnChart_c4a32be205530af99a48dd45197fd5e5,
+        SingleMeasureWithViewByAndStackByFilteredToSingleStack:
+            i_ColumnChart_c4a32be205530af99a48dd45197fd5e5,
         TwoMeasuresWithViewBySortedByMeasure: i_ColumnChart_cd123c4fd374f3c0fa3841fff19d6dad,
         DenseChartWithTwoViewBy: i_ColumnChart_da2f10a3af96a2912f8db54115c386c2,
     },
     ComboChart: {
         OnePrimaryMeasure: i_ComboChart_25021c550c2449812b428b2252cf75fb,
-        OnePrimaryAndSecondaryMeasureWithViewBySortedBySecondaryMeasure: i_ComboChart_2d62dbd040a7baeb541a17abd294e25b,
+        OnePrimaryAndSecondaryMeasureWithViewBySortedBySecondaryMeasure:
+            i_ComboChart_2d62dbd040a7baeb541a17abd294e25b,
         OnePrimaryAndSecondaryMeasureNoViewBy: i_ComboChart_51a519c3617b3daec03eabbba948b3d3,
         ArithmeticMeasures: i_ComboChart_5f37ca2fb2ee5ce7db5cd0baa57a9e1b,
         OnePrimaryAndSecondaryMeasureWithViewBySortedByAttr: i_ComboChart_64135239f9f66d250e14579ef50513f4,
@@ -4390,7 +4393,8 @@ export const Insights = {
         MultipleMeasuresAndNoViewBy: i_ComboChart_ce55fc5c7ffeb85429dec261cc16bb33,
         OnePrimaryMeasureWithViewBy: i_ComboChart_df878e754e2f98b69abf19357625af21,
         TwoSecondaryMeasureWithViewBy: i_ComboChart_e3e36d99546cb5cc0e2ac5c6c9a50c33,
-        OnePrimaryAndSecondaryMeasureWithViewBySortedByPrimaryMeasure: i_ComboChart_eeaf82dd751072f09dc8f7236c805f68,
+        OnePrimaryAndSecondaryMeasureWithViewBySortedByPrimaryMeasure:
+            i_ComboChart_eeaf82dd751072f09dc8f7236c805f68,
         OnePrimaryAndSecondaryMeasureWithViewBy: i_ComboChart_fe937fb758bda8638fc31fbfd10ba5ed,
     },
     DonutChart: {

@@ -106,10 +106,18 @@ export const ScheduledMailDialog: React.FC<ScheduledMailDialogProps> = (props) =
         onError,
         isVisible,
     } = props;
-    const { result: currentUser, status: currentUserStatus, error: currentUserError } = useCurrentUser({
+    const {
+        result: currentUser,
+        status: currentUserStatus,
+        error: currentUserError,
+    } = useCurrentUser({
         backend,
     });
-    const { result: dashboard, status: dashboardStatus, error: dashboardError } = useDashboard({
+    const {
+        result: dashboard,
+        status: dashboardStatus,
+        error: dashboardError,
+    } = useDashboard({
         backend,
         workspace,
         dashboard: dashboardRef,

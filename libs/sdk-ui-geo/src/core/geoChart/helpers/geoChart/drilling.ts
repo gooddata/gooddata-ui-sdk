@@ -30,14 +30,10 @@ function getDrillIntersectionForGeoChart(
         geoData,
     );
 
-    const {
-        attributeHeader: locationAttributeHeader,
-        attributeHeaderItem: locationAttributeHeaderItem,
-    } = getAttributeHeader(locationAttribute, locationIndex);
-    const {
-        attributeHeader: segmentByAttributeHeader,
-        attributeHeaderItem: segmentByAttributeHeaderItem,
-    } = getAttributeHeader(segmentByAttribute, locationIndex);
+    const { attributeHeader: locationAttributeHeader, attributeHeaderItem: locationAttributeHeaderItem } =
+        getAttributeHeader(locationAttribute, locationIndex);
+    const { attributeHeader: segmentByAttributeHeader, attributeHeaderItem: segmentByAttributeHeaderItem } =
+        getAttributeHeader(segmentByAttribute, locationIndex);
     const {
         attributeHeader: tooltipTextAttributeHeader,
         attributeHeaderItem: tooltipTextAttributeHeaderItem,

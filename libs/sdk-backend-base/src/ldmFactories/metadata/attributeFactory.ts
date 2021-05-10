@@ -12,7 +12,7 @@ import { ObjRef } from "@gooddata/sdk-model";
  * @beta
  */
 export class AttributeMetadataObjectBuilder<
-    T extends IAttributeMetadataObject = IAttributeMetadataObject
+    T extends IAttributeMetadataObject = IAttributeMetadataObject,
 > extends MetadataObjectBuilder<T> {
     public drillDownStep(ref: ObjRef | undefined): this {
         if (ref) {

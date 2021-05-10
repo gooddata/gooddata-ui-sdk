@@ -57,7 +57,7 @@ describe("isOverlappingWidth", () => {
             },
         ];
         expect(
-            autohideColumnLabels.isOverlappingWidth((visiblePointsWithShape as any) as Highcharts.Point[]),
+            autohideColumnLabels.isOverlappingWidth(visiblePointsWithShape as any as Highcharts.Point[]),
         ).toEqual(true);
     });
 
@@ -120,7 +120,7 @@ describe("getLabelOrDataLabelForPoints", () => {
         "should return label/dataLabel of data points",
         (visiblePoints: Highcharts.Point[], expected: IUnsafeDataLabels[]) => {
             const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(
-                (visiblePoints as any) as Highcharts.Point[],
+                visiblePoints as any as Highcharts.Point[],
             );
             expect(labels).toEqual(expected);
         },

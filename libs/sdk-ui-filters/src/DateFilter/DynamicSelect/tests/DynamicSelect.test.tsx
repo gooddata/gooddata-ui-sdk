@@ -12,24 +12,21 @@ import { IMessageTranslator } from "../../utils/Translations/Translators";
 import { DynamicSelectItem } from "../types";
 import { DateFilterGranularity } from "@gooddata/sdk-backend-spi";
 
-const optionTranslator = (
-    lastOneString: string,
-    thisString: string,
-    nextOneString: string,
-    plural: string,
-) => ({ offset }: { offset: number }) => {
-    if (offset === -1) {
-        return lastOneString;
-    }
-    if (offset === 0) {
-        return thisString;
-    }
-    if (offset === 1) {
-        return nextOneString;
-    }
+const optionTranslator =
+    (lastOneString: string, thisString: string, nextOneString: string, plural: string) =>
+    ({ offset }: { offset: number }) => {
+        if (offset === -1) {
+            return lastOneString;
+        }
+        if (offset === 0) {
+            return thisString;
+        }
+        if (offset === 1) {
+            return nextOneString;
+        }
 
-    return `${Math.abs(offset)} ${plural} ${offset > 0 ? "ahead" : "ago"}`;
-};
+        return `${Math.abs(offset)} ${plural} ${offset > 0 ? "ahead" : "ago"}`;
+    };
 
 const translations = {
     "filters.floatingRange.option.day": optionTranslator("yesterday", "today", "tomorrow", "days"),

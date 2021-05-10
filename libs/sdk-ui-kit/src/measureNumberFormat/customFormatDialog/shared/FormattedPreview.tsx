@@ -42,9 +42,11 @@ export const FormattedPreview: React.FC<IFormattedPreviewProps> = ({
         return <Label value={label} className={customClassName} />;
     }
 
-    const { label, color = "", backgroundColor = "" } = colors2Object(
-        numberFormat(preview, format, undefined, separators),
-    );
+    const {
+        label,
+        color = "",
+        backgroundColor = "",
+    } = colors2Object(numberFormat(preview, format, undefined, separators));
 
     const style = { color, backgroundColor };
 

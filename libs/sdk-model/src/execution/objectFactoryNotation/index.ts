@@ -62,9 +62,11 @@ type Converter<T> = (input: T) => string;
 
 // dot suffix handling e. g. ".localIdentifier(...)"
 // is curried explicitly to allow easier composition in cases where more than one dot suffix is supported
-const addStringBuilderSegment = (identifier: string, helperName = identifier) => (objToConvert: any) => (
-    value: string,
-) => (objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value);
+const addStringBuilderSegment =
+    (identifier: string, helperName = identifier) =>
+    (objToConvert: any) =>
+    (value: string) =>
+        objToConvert[identifier] ? `${value}.${helperName}("${objToConvert[identifier]}")` : value;
 
 const addAggregation = addStringBuilderSegment("aggregation");
 const addAlias = addStringBuilderSegment("alias");
@@ -72,11 +74,15 @@ const addFormat = addStringBuilderSegment("format");
 const addLocalId = addStringBuilderSegment("localIdentifier", "localId");
 const addTitle = addStringBuilderSegment("title");
 
-const addFilters = ({ filters }: { filters?: IFilter[] }) => (value: string) =>
-    filters ? `${value}.filters(${filters.map(factoryNotationFor).join(ARRAY_JOINER)})` : value;
+const addFilters =
+    ({ filters }: { filters?: IFilter[] }) =>
+    (value: string) =>
+        filters ? `${value}.filters(${filters.map(factoryNotationFor).join(ARRAY_JOINER)})` : value;
 
-const addRatio = ({ computeRatio }: { computeRatio?: boolean }) => (value: string) =>
-    computeRatio ? `${value}.ratio()` : value;
+const addRatio =
+    ({ computeRatio }: { computeRatio?: boolean }) =>
+    (value: string) =>
+        computeRatio ? `${value}.ratio()` : value;
 
 const getBuilder = <T>(defaultBuilder: string, builderSegmentHandlers: Array<Converter<T>>) => {
     const builder = flow(builderSegmentHandlers)(defaultBuilder);

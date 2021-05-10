@@ -63,20 +63,20 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return result.data.map(workspaceConverter);
     };
 
-    private searchWorkspaceDescriptors = (search?: string) => (
-        results: IWorkspaceDescriptor[],
-    ): IWorkspaceDescriptor[] => {
-        if (search) {
-            const lowercaseSearch = search.toLocaleLowerCase();
+    private searchWorkspaceDescriptors =
+        (search?: string) =>
+        (results: IWorkspaceDescriptor[]): IWorkspaceDescriptor[] => {
+            if (search) {
+                const lowercaseSearch = search.toLocaleLowerCase();
 
-            return results.filter((workspace) => {
-                const { title } = workspace;
+                return results.filter((workspace) => {
+                    const { title } = workspace;
 
-                return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
-            });
-        }
-        return results;
-    };
+                    return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
+                });
+            }
+            return results;
+        };
 
     private descriptorToAnalyticalWorkspace = (descriptor: IWorkspaceDescriptor): IAnalyticalWorkspace =>
         new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
@@ -108,7 +108,8 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
 
 class WorkspacesInMemoryPaging
     extends InMemoryPaging<IAnalyticalWorkspace>
-    implements IWorkspacesQueryResult {
+    implements IWorkspacesQueryResult
+{
     constructor(
         all: IAnalyticalWorkspace[],
         limit = 50,

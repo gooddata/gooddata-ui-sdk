@@ -28,15 +28,14 @@ import {
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
 import { isInheritedObject } from "./utils";
 
-const commonGroupableCatalogItemModifications = <
-    TItem extends IGroupableCatalogItemBase,
-    T extends IGroupableCatalogItemBuilder<TItem>
->(
-    item: MetadataObjectFromApi,
-) => (builder: T) => {
-    const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
-    return builder.groups(tags);
-};
+const commonGroupableCatalogItemModifications =
+    <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
+        item: MetadataObjectFromApi,
+    ) =>
+    (builder: T) => {
+        const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
+        return builder.groups(tags);
+    };
 
 export const convertAttribute = (
     attribute: JsonApiAttributeOutWithLinks,

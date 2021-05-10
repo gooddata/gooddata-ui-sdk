@@ -24,12 +24,14 @@ function withChartDefinition<TBucketProps extends object, TProps extends TBucket
  * Common hoc for shared logic between all charts, injects contexts and transforms incoming props to BaseChart props according to chart definition
  * @internal
  */
-export const withChart = <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
-    chartDefinition: IChartDefinition<TBucketProps, TProps>,
-) => (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> =>
-    compose(
-        wrapDisplayName("withChart"),
-        withTheme,
-        withContexts,
-        withChartDefinition(chartDefinition),
-    )(Chart);
+export const withChart =
+    <TBucketProps extends object, TProps extends TBucketProps & IBucketChartProps>(
+        chartDefinition: IChartDefinition<TBucketProps, TProps>,
+    ) =>
+    (Chart: React.ComponentType<ICoreChartProps>): React.ComponentType<TProps> =>
+        compose(
+            wrapDisplayName("withChart"),
+            withTheme,
+            withContexts,
+            withChartDefinition(chartDefinition),
+        )(Chart);

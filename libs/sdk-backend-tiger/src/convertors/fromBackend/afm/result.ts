@@ -82,34 +82,32 @@ function transformHeaderItems(
     return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
         return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
             const granularity = getGranularity(dimensions[dimensionIndex].headers[headerGroupIndex]);
-            return headerGroup.headers.map(
-                (header): IResultHeader => {
-                    if (isResultAttributeHeader(header)) {
-                        return {
-                            attributeHeaderItem: {
-                                uri: header.attributeHeader.primaryLabelValue,
-                                name: granularity
-                                    ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
-                                    : header.attributeHeader.labelValue,
-                            },
-                        };
-                    }
-
-                    /*
-                     * Funny stuff #1 - Tiger sends just the measure index in the measure headers. This is the index of the
-                     * measure descriptor within the measure group. The code looks up the measure descriptor so that
-                     * it can then fill in the `name` to the one in the descriptor
-                     */
-                    const measureIndex = header.measureHeader.measureIndex;
-
+            return headerGroup.headers.map((header): IResultHeader => {
+                if (isResultAttributeHeader(header)) {
                     return {
-                        measureHeaderItem: {
-                            name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
-                            order: measureIndex,
+                        attributeHeaderItem: {
+                            uri: header.attributeHeader.primaryLabelValue,
+                            name: granularity
+                                ? dateValueFormatter(header.attributeHeader.labelValue, granularity)
+                                : header.attributeHeader.labelValue,
                         },
                     };
-                },
-            );
+                }
+
+                /*
+                 * Funny stuff #1 - Tiger sends just the measure index in the measure headers. This is the index of the
+                 * measure descriptor within the measure group. The code looks up the measure descriptor so that
+                 * it can then fill in the `name` to the one in the descriptor
+                 */
+                const measureIndex = header.measureHeader.measureIndex;
+
+                return {
+                    measureHeaderItem: {
+                        name: measureDescriptors[measureIndex]?.measureHeaderItem.name,
+                        order: measureIndex,
+                    },
+                };
+            });
         });
     });
 }
@@ -121,7 +119,7 @@ export function transformExecutionResult(
 ): TransformerResult {
     return {
         // in API is data typed as Array<object>
-        data: (result.data as unknown) as Data,
+        data: result.data as unknown as Data,
         headerItems: transformHeaderItems(dimensions, dateFormatter, result.dimensionHeaders),
         offset: result.paging.offset,
         count: result.paging.count,

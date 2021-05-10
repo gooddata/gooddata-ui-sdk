@@ -960,8 +960,9 @@ describe("applyUiConfig", () => {
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 0;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 0;
 
-        const expectedBuckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint)
-            .buckets;
+        const expectedBuckets = cloneDeep(
+            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+        ).buckets;
         expectedBuckets[0].items = [];
         expectedBuckets[1].items = [];
 
@@ -980,8 +981,9 @@ describe("applyUiConfig", () => {
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 1;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 1;
 
-        const expectedBuckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint)
-            .buckets;
+        const expectedBuckets = cloneDeep(
+            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+        ).buckets;
         expectedBuckets[0].items = expectedBuckets[0].items.slice(0, 1);
         expectedBuckets[1].items = expectedBuckets[1].items.slice(0, 1);
 
@@ -1017,8 +1019,9 @@ describe("applyUiConfig", () => {
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = undefined;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = undefined;
 
-        const expectedBuckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint)
-            .buckets;
+        const expectedBuckets = cloneDeep(
+            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+        ).buckets;
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,

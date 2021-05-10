@@ -196,12 +196,8 @@ describe("getCategoriesForTwoAttributes", () => {
 
 describe("getDrillableSeriesWithParentAttribute", () => {
     const dv = recordedDataFacade(ReferenceRecordings.Scenarios.BarChart.TwoMeasuresWithTwoViewBy);
-    const {
-        measureGroup,
-        viewByAttribute,
-        viewByParentAttribute,
-        stackByAttribute,
-    } = getMVSForViewByTwoAttributes(dv);
+    const { measureGroup, viewByAttribute, viewByParentAttribute, stackByAttribute } =
+        getMVSForViewByTwoAttributes(dv);
     const type = "column";
     const metricColorStrategy = new MeasureColorStrategy(
         DefaultColorPalette,

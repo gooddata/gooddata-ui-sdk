@@ -1035,69 +1035,63 @@ const getYAxisConfiguration = (
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
     const yAxes = chartOptions.yAxes || [];
-    return yAxes.map(
-        (axis: any): YAxisOptions => {
-            if (!axis) {
-                return {
-                    visible: false,
-                };
-            }
-
-            const opposite = axis.opposite ?? false;
-            const axisType = opposite ? "secondary" : "primary";
-            const className = cx(`s-highcharts-${axisType}-yaxis`, {
-                "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
-            });
-            const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
-
-            // For bar chart take x axis options
-            const min = chartOptions?.[axisPropsKey]?.min ?? "";
-            const max = chartOptions?.[axisPropsKey]?.max ?? "";
-            const visible = chartOptions?.[axisPropsKey]?.visible ?? true;
-
-            const maxProp = max ? { max: Number(max) } : {};
-            const minProp = min ? { min: Number(min) } : {};
-
-            const rotation = chartOptions?.[axisPropsKey]?.rotation ?? "auto";
-            const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
-
-            const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
-            const labelsEnabled = areAxisLabelsEnabled(
-                chartOptions,
-                axisPropsKey,
-                shouldCheckForEmptyCategories,
-            );
-
-            const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
-
-            const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
-
+    return yAxes.map((axis: any): YAxisOptions => {
+        if (!axis) {
             return {
-                ...getAxisLineConfiguration(type, visible),
-                labels: {
-                    ...labelsEnabled,
-                    style: {
-                        color: axisValueColor,
-                        font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
-                    },
-                    ...rotationProp,
-                },
-                title: {
-                    ...titleTextProp,
-                    margin: 15,
-                    style: {
-                        color: axisLabelColor,
-                        font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
-                    },
-                },
-                opposite,
-                className,
-                ...maxProp,
-                ...minProp,
-                ...tickConfiguration,
+                visible: false,
             };
-        },
-    );
+        }
+
+        const opposite = axis.opposite ?? false;
+        const axisType = opposite ? "secondary" : "primary";
+        const className = cx(`s-highcharts-${axisType}-yaxis`, {
+            "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
+        });
+        const axisPropsKey = opposite ? "secondary_yAxisProps" : "yAxisProps";
+
+        // For bar chart take x axis options
+        const min = chartOptions?.[axisPropsKey]?.min ?? "";
+        const max = chartOptions?.[axisPropsKey]?.max ?? "";
+        const visible = chartOptions?.[axisPropsKey]?.visible ?? true;
+
+        const maxProp = max ? { max: Number(max) } : {};
+        const minProp = min ? { min: Number(min) } : {};
+
+        const rotation = chartOptions?.[axisPropsKey]?.rotation ?? "auto";
+        const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
+
+        const shouldCheckForEmptyCategories = isHeatmap(type) ? true : false;
+        const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
+
+        const tickConfiguration = getYAxisTickConfiguration(chartOptions, axisPropsKey);
+
+        const titleTextProp = visible ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
+
+        return {
+            ...getAxisLineConfiguration(type, visible),
+            labels: {
+                ...labelsEnabled,
+                style: {
+                    color: axisValueColor,
+                    font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
+                },
+                ...rotationProp,
+            },
+            title: {
+                ...titleTextProp,
+                margin: 15,
+                style: {
+                    color: axisLabelColor,
+                    font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                },
+            },
+            opposite,
+            className,
+            ...maxProp,
+            ...minProp,
+            ...tickConfiguration,
+        };
+    });
 };
 
 const getXAxisConfiguration = (
@@ -1109,89 +1103,83 @@ const getXAxisConfiguration = (
     const { forceDisableDrillOnAxes = false } = chartOptions;
     const type = chartOptions.type as ChartType;
     const xAxes = chartOptions.xAxes || [];
-    return xAxes.map(
-        (axis: any): XAxisOptions => {
-            if (!axis) {
-                return {
-                    visible: false,
-                };
-            }
-
-            const opposite = axis.opposite ?? false;
-            const axisPropsKey = opposite ? "secondary_xAxisProps" : "xAxisProps";
-            const className: string = cx({
-                "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
-            });
-
-            const min = chartOptions[axisPropsKey]?.min ?? "";
-            const max = chartOptions[axisPropsKey]?.max ?? "";
-
-            const maxProp = max ? { max: Number(max) } : {};
-            const minProp = min ? { min: Number(min) } : {};
-
-            const isViewByTwoAttributes = chartOptions.isViewByTwoAttributes ?? false;
-            const isInvertedChart = isInvertedChartType(chartOptions.type);
-            const visible = chartOptions[axisPropsKey]?.visible ?? true;
-            const rotation = chartOptions[axisPropsKey]?.rotation ?? "auto";
-            const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
-
-            const shouldCheckForEmptyCategories = isScatterPlot(type) || isBubbleChart(type) ? false : true;
-            const labelsEnabled = areAxisLabelsEnabled(
-                chartOptions,
-                axisPropsKey,
-                shouldCheckForEmptyCategories,
-            );
-
-            const tickConfiguration = getXAxisTickConfiguration(chartOptions);
-            // for minimum zoom level value
-            const minRange =
-                (chartConfig?.zoomInsight ?? false) && (chartOptions?.data?.categories ?? []).length > 2
-                    ? MIN_RANGE
-                    : undefined;
-
-            const titleTextProp = visible && !isViewByTwoAttributes ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
-
-            // for bar chart take y axis options
+    return xAxes.map((axis: any): XAxisOptions => {
+        if (!axis) {
             return {
-                ...getAxisLineConfiguration(type, visible),
-
-                // hide ticks on x axis
-                minorTickLength: 0,
-                tickLength: 0,
-
-                // padding of maximum value
-                maxPadding: 0.05,
-                minRange,
-
-                labels: {
-                    ...labelsEnabled,
-                    style: {
-                        color: axisValueColor,
-                        font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
-                    },
-                    autoRotation: [-90],
-                    ...rotationProp,
-                    // Due to a bug in Highcharts & grouped-categories the autoRotation is working only with useHtml
-                    // See: https://github.com/blacklabel/grouped_categories/issues/137
-                    useHTML: !isInvertedChart && isViewByTwoAttributes,
-                },
-                title: {
-                    // should disable X axis title when 'View By 2 attributes'
-                    ...titleTextProp,
-                    margin: 10,
-                    style: {
-                        textOverflow: "ellipsis",
-                        color: axisLabelColor,
-                        font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
-                    },
-                },
-                className,
-                ...maxProp,
-                ...minProp,
-                ...tickConfiguration,
+                visible: false,
             };
-        },
-    );
+        }
+
+        const opposite = axis.opposite ?? false;
+        const axisPropsKey = opposite ? "secondary_xAxisProps" : "xAxisProps";
+        const className: string = cx({
+            "gd-axis-label-drilling-disabled": forceDisableDrillOnAxes,
+        });
+
+        const min = chartOptions[axisPropsKey]?.min ?? "";
+        const max = chartOptions[axisPropsKey]?.max ?? "";
+
+        const maxProp = max ? { max: Number(max) } : {};
+        const minProp = min ? { min: Number(min) } : {};
+
+        const isViewByTwoAttributes = chartOptions.isViewByTwoAttributes ?? false;
+        const isInvertedChart = isInvertedChartType(chartOptions.type);
+        const visible = chartOptions[axisPropsKey]?.visible ?? true;
+        const rotation = chartOptions[axisPropsKey]?.rotation ?? "auto";
+        const rotationProp = rotation !== "auto" ? { rotation: -Number(rotation) } : {};
+
+        const shouldCheckForEmptyCategories = isScatterPlot(type) || isBubbleChart(type) ? false : true;
+        const labelsEnabled = areAxisLabelsEnabled(chartOptions, axisPropsKey, shouldCheckForEmptyCategories);
+
+        const tickConfiguration = getXAxisTickConfiguration(chartOptions);
+        // for minimum zoom level value
+        const minRange =
+            (chartConfig?.zoomInsight ?? false) && (chartOptions?.data?.categories ?? []).length > 2
+                ? MIN_RANGE
+                : undefined;
+
+        const titleTextProp = visible && !isViewByTwoAttributes ? {} : { text: null }; // new way how to hide title instead of deprecated 'enabled'
+
+        // for bar chart take y axis options
+        return {
+            ...getAxisLineConfiguration(type, visible),
+
+            // hide ticks on x axis
+            minorTickLength: 0,
+            tickLength: 0,
+
+            // padding of maximum value
+            maxPadding: 0.05,
+            minRange,
+
+            labels: {
+                ...labelsEnabled,
+                style: {
+                    color: axisValueColor,
+                    font: '12px Avenir, "Helvetica Neue", Arial, sans-serif',
+                },
+                autoRotation: [-90],
+                ...rotationProp,
+                // Due to a bug in Highcharts & grouped-categories the autoRotation is working only with useHtml
+                // See: https://github.com/blacklabel/grouped_categories/issues/137
+                useHTML: !isInvertedChart && isViewByTwoAttributes,
+            },
+            title: {
+                // should disable X axis title when 'View By 2 attributes'
+                ...titleTextProp,
+                margin: 10,
+                style: {
+                    textOverflow: "ellipsis",
+                    color: axisLabelColor,
+                    font: '14px Avenir, "Helvetica Neue", Arial, sans-serif',
+                },
+            },
+            className,
+            ...maxProp,
+            ...minProp,
+            ...tickConfiguration,
+        };
+    });
 };
 
 function getAxesConfiguration(

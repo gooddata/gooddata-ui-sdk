@@ -21,12 +21,10 @@ export interface IHeatmapLegendProps {
 export class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
     public render(): React.ReactNode {
         const { title, series, format, numericSymbols, size, position } = this.props;
-        const data = series.map(
-            (item: IHeatmapLegendItem): IColorLegendItem => {
-                const { range, color } = item;
-                return { range, color };
-            },
-        );
+        const data = series.map((item: IHeatmapLegendItem): IColorLegendItem => {
+            const { range, color } = item;
+            return { range, color };
+        });
 
         return (
             <ColorLegend

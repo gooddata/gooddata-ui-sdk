@@ -177,11 +177,9 @@ function findDerivedTypesReferencedByArithmeticMeasure(
             }
             if (isArithmeticBucketItem(operand)) {
                 visitedMeasures.add(operandIdentifier);
-                findDerivedTypesReferencedByArithmeticMeasure(
-                    operand,
-                    allMeasures,
-                    visitedMeasures,
-                ).forEach((type: OverTimeComparisonType) => types.add(type));
+                findDerivedTypesReferencedByArithmeticMeasure(operand, allMeasures, visitedMeasures).forEach(
+                    (type: OverTimeComparisonType) => types.add(type),
+                );
             } else if (isDerivedBucketItem(operand) && !types.has(operand.overTimeComparisonType)) {
                 types.add(operand.overTimeComparisonType);
             }
@@ -865,20 +863,17 @@ function pruneBucketMeasureItems(
     buckets: IBucketOfFun[],
     measureLocalIdentifiersToBeKept: string[],
 ): IBucketOfFun[] {
-    return buckets.map(
-        (bucket: IBucketOfFun): IBucketOfFun => {
-            const prunedItems = bucket.items.filter(
-                (item: IBucketItem) =>
-                    measureLocalIdentifiersToBeKept.indexOf(item.localIdentifier) > -1 ||
-                    item.type !== METRIC,
-            );
+    return buckets.map((bucket: IBucketOfFun): IBucketOfFun => {
+        const prunedItems = bucket.items.filter(
+            (item: IBucketItem) =>
+                measureLocalIdentifiersToBeKept.indexOf(item.localIdentifier) > -1 || item.type !== METRIC,
+        );
 
-            return {
-                ...bucket,
-                items: prunedItems,
-            };
-        },
-    );
+        return {
+            ...bucket,
+            items: prunedItems,
+        };
+    });
 }
 
 function isShowOnSecondaryAxis(item: IBucketItem): boolean {

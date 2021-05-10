@@ -22,12 +22,8 @@ export function generateHeaderMenuItemsGroups(
         return [];
     }
 
-    const {
-        enableCsvUploader,
-        enableDataSection,
-        analyticalDesigner,
-        enableAnalyticalDashboards,
-    } = featureFlags;
+    const { enableCsvUploader, enableDataSection, analyticalDesigner, enableAnalyticalDashboards } =
+        featureFlags;
 
     const {
         canCreateAnalyticalDashboard,

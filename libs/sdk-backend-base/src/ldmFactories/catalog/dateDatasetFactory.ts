@@ -26,7 +26,7 @@ import { DataSetMetadataObjectBuilder, newDataSetMetadataObject } from "../metad
  * @beta
  */
 export class CatalogDateAttributeBuilder<
-    T extends ICatalogDateAttribute = ICatalogDateAttribute
+    T extends ICatalogDateAttribute = ICatalogDateAttribute,
 > extends Builder<T> {
     public granularity(granularity: DateAttributeGranularity): this {
         this.item.granularity = granularity;
@@ -79,7 +79,7 @@ export const newCatalogDateAttribute = (
  * @beta
  */
 export class CatalogDateDatasetBuilder<
-    T extends ICatalogDateDataset = ICatalogDateDataset
+    T extends ICatalogDateDataset = ICatalogDateDataset,
 > extends Builder<T> {
     public relevance(relevance: number): this {
         this.item.relevance = relevance;

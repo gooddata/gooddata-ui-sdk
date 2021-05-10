@@ -131,15 +131,8 @@ export default class GeoPushpinConfigurationPanel extends ConfigurationPanelCont
     }
 
     protected renderColorSection(): React.ReactNode {
-        const {
-            properties,
-            propertiesMeta,
-            pushData,
-            colors,
-            featureFlags,
-            references,
-            isLoading,
-        } = this.props;
+        const { properties, propertiesMeta, pushData, colors, featureFlags, references, isLoading } =
+            this.props;
 
         const controlsDisabled = this.isControlDisabled();
 

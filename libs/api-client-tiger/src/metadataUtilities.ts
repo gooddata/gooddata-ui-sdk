@@ -77,10 +77,8 @@ export type MetadataGetEntitiesResult =
  *
  * @internal
  */
-export type MetadataGetEntitiesFn<
-    T extends MetadataGetEntitiesResult,
-    P extends MetadataGetEntitiesParams
-> = (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
+export type MetadataGetEntitiesFn<T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams> =
+    (params: P, options: MetadataGetEntitiesOptions) => AxiosPromise<T>;
 
 /**
  * Tiger metadata utility functions
@@ -105,7 +103,7 @@ export class MetadataUtilities {
      */
     public static getAllPagesOf = async <
         T extends MetadataGetEntitiesResult,
-        P extends MetadataGetEntitiesParams
+        P extends MetadataGetEntitiesParams,
     >(
         client: ITigerClient,
         entitiesGet: MetadataGetEntitiesFn<T, P>,

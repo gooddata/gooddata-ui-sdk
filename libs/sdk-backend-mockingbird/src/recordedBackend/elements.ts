@@ -41,9 +41,8 @@ class RecordedElements implements IElementsQuery {
             return Promise.reject(new NotImplemented("Identifying displayForm by uri is not supported yet"));
         }
 
-        const recording = this.recordings.metadata.displayForms[
-            "df_" + identifierToRecording(this.ref.identifier)
-        ];
+        const recording =
+            this.recordings.metadata.displayForms["df_" + identifierToRecording(this.ref.identifier)];
 
         if (!recording) {
             return Promise.reject(

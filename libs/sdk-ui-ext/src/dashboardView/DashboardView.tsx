@@ -55,13 +55,21 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
 }) => {
     const dashboardRef = typeof dashboard === "string" ? idRef(dashboard, "analyticalDashboard") : dashboard;
 
-    const { error: dashboardError, result: dashboardData, status: dashboardStatus } = useDashboard({
+    const {
+        error: dashboardError,
+        result: dashboardData,
+        status: dashboardStatus,
+    } = useDashboard({
         dashboard: dashboardRef,
         backend,
         workspace,
     });
 
-    const { error: alertsError, result: alertsData, status: alertsStatus } = useDashboardAlerts({
+    const {
+        error: alertsError,
+        result: alertsData,
+        status: alertsStatus,
+    } = useDashboardAlerts({
         dashboard: dashboardRef,
         backend,
         workspace,
@@ -76,7 +84,11 @@ export const DashboardView: React.FC<IDashboardViewProps> = ({
         workspace,
     });
 
-    const { error: colorPaletteError, result: colorPalette, status: colorPaletteStatus } = useColorPalette({
+    const {
+        error: colorPaletteError,
+        result: colorPalette,
+        status: colorPaletteStatus,
+    } = useColorPalette({
         backend,
         workspace,
     });

@@ -77,29 +77,25 @@ describe("generateHeaderHelpMenuItems", () => {
         expect(items).toEqual([
             {
                 className: "s-university",
-                href:
-                    "https://university.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_university",
+                href: "https://university.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_university",
                 key: "gs.header.university",
                 target: "_blank",
             },
             {
                 className: "s-community",
-                href:
-                    "https://community.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_community",
+                href: "https://community.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_community",
                 key: "gs.header.community",
                 target: "_blank",
             },
             {
                 className: "s-support-portal",
-                href:
-                    "https://test.gooddata.com/support?utm_medium=platform&utm_source=product&utm_content=main_menu_help_support",
+                href: "https://test.gooddata.com/support?utm_medium=platform&utm_source=product&utm_content=main_menu_help_support",
                 key: "gs.header.visitSupportPortal",
                 target: "_blank",
             },
             {
                 className: "s-submit-ticket",
-                href:
-                    "https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387#sessionID=TestSessionId&projectID=TestWorkspaceId&email=test%40gooddata.com&url=http%3A%2F%2Flocalhost%2F&utm_medium=platform&utm_source=product&utm_content=main_menu_help_ticket",
+                href: "https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387#sessionID=TestSessionId&projectID=TestWorkspaceId&email=test%40gooddata.com&url=http%3A%2F%2Flocalhost%2F&utm_medium=platform&utm_source=product&utm_content=main_menu_help_ticket",
                 key: "gs.header.submitTicket",
                 target: "_blank",
             },
@@ -147,29 +143,25 @@ describe("generateHeaderHelpMenuItems", () => {
         expect(items).toEqual([
             {
                 className: "s-university",
-                href:
-                    "https://university.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_university",
+                href: "https://university.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_university",
                 key: "gs.header.university",
                 target: "_blank",
             },
             {
                 className: "s-community",
-                href:
-                    "https://community.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_community",
+                href: "https://community.gooddata.com?utm_medium=platform&utm_source=product&utm_content=main_menu_help_community",
                 key: "gs.header.community",
                 target: "_blank",
             },
             {
                 className: "s-support-portal",
-                href:
-                    "https://test.gooddata.com/support?utm_medium=platform&utm_source=product&utm_content=main_menu_help_support",
+                href: "https://test.gooddata.com/support?utm_medium=platform&utm_source=product&utm_content=main_menu_help_support",
                 key: "gs.header.visitSupportPortal",
                 target: "_blank",
             },
             {
                 className: "s-submit-ticket",
-                href:
-                    "https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387#sessionID=TestSessionId&projectID=TestWorkspaceId&email=test%40gooddata.com&url=http%3A%2F%2Flocalhost%2F&utm_medium=platform&utm_source=product&utm_content=main_menu_help_ticket",
+                href: "https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387#sessionID=TestSessionId&projectID=TestWorkspaceId&email=test%40gooddata.com&url=http%3A%2F%2Flocalhost%2F&utm_medium=platform&utm_source=product&utm_content=main_menu_help_ticket",
                 key: "gs.header.submitTicket",
                 target: "_blank",
             },

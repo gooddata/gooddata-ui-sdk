@@ -33,13 +33,10 @@ export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insi
         // and their titles should be left intact.
         return insight;
     }
-    return insightModifyItems(
-        insight,
-        (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
-            if (isSimpleMeasure(bucketItem) && !isAdhocMeasure(bucketItem)) {
-                return modifyMeasure(bucketItem as IMeasure, (m) => m.noTitle());
-            }
-            return bucketItem;
-        },
-    );
+    return insightModifyItems(insight, (bucketItem: IAttributeOrMeasure): IAttributeOrMeasure => {
+        if (isSimpleMeasure(bucketItem) && !isAdhocMeasure(bucketItem)) {
+            return modifyMeasure(bucketItem as IMeasure, (m) => m.noTitle());
+        }
+        return bucketItem;
+    });
 }

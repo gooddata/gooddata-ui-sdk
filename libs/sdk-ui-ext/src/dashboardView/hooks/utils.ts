@@ -16,7 +16,5 @@ export const backendInvariant: (
     contextName: string,
 ) => asserts item = ambientInvariantFactory("backend", "BackendProvider");
 
-export const workspaceInvariant: (
-    item: string | undefined | null,
-    contextName: string,
-) => asserts item = ambientInvariantFactory("workspace", "WorkspaceProvider");
+export const workspaceInvariant: (item: string | undefined | null, contextName: string) => asserts item =
+    ambientInvariantFactory("workspace", "WorkspaceProvider");
