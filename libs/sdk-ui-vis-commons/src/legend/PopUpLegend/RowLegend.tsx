@@ -13,7 +13,7 @@ const useCheckOverflow = (): [boolean, number, (element: HTMLDivElement | null) 
     const [numOfUsedRow, setNumOfUsedRow] = useState(1);
 
     const getNumberOfRows = (clientHeight: number) => {
-        return (clientHeight - LEGEND_TOP_BOTTOM_PADDING) / LEGEND_ROW_HEIGHT;
+        return Math.ceil((clientHeight - LEGEND_TOP_BOTTOM_PADDING) / LEGEND_ROW_HEIGHT);
     };
 
     const checkOverFlow = (element: HTMLDivElement | null) => {

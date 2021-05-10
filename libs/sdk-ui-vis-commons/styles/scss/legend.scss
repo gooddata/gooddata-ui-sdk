@@ -175,6 +175,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         &.position-row {
             align-items: normal;
             margin-left: 0;
+            overflow-x: hidden;
 
             .series {
                 flex-flow: row wrap;
