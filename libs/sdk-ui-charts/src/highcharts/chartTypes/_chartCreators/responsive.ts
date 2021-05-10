@@ -139,8 +139,8 @@ export const getPieResponsiveConfig = (): ResponsiveOptions => ({
             condition: {
                 callback: function () {
                     return (
-                        (this.plotWidth > PIE_BOTTOM_LIMIT_WIDTH_PX &&
-                            this.plotWidth < PIE_UPPER_LIMIT_WIDTH_PX) ||
+                        (this.chartWidth > PIE_BOTTOM_LIMIT_WIDTH_PX &&
+                            this.chartWidth < PIE_UPPER_LIMIT_WIDTH_PX) ||
                         (this.chartHeight > PIE_BOTTOM_LIMIT_HEIGHT_PX &&
                             this.chartHeight < PIE_UPPER_LIMIT_HEIGHT_PX)
                     );
@@ -160,7 +160,7 @@ export const getPieResponsiveConfig = (): ResponsiveOptions => ({
             condition: {
                 callback: function () {
                     return (
-                        this.plotWidth < PIE_BOTTOM_LIMIT_WIDTH_PX ||
+                        this.chartWidth < PIE_BOTTOM_LIMIT_WIDTH_PX ||
                         this.chartHeight < PIE_BOTTOM_LIMIT_HEIGHT_PX
                     );
                 },
