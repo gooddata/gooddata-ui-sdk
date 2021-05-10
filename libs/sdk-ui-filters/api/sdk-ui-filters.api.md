@@ -27,7 +27,7 @@ import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
 
-// @beta
+// @public
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
 // @public
@@ -36,7 +36,7 @@ export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 // @public
 export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
 
-// @beta (undocumented)
+// @public
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
     constructor(props: IDateFilterProps);
     // (undocumented)
@@ -71,18 +71,18 @@ export const DateFilterHelpers: {
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 
-// @beta
+// @public
 export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
-// @beta
+// @public
 export type DateFilterRelativeOptionGroup = {
     [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
 };
 
-// @beta (undocumented)
+// @public
 export const defaultDateFilterOptions: IDateFilterOptionsByType;
 
-// @beta
+// @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
 // @beta (undocumented)
@@ -144,7 +144,7 @@ export interface ICustomGranularitySelection {
     warningMessage: string;
 }
 
-// @beta (undocumented)
+// @public
 export interface IDateFilterCallbackProps {
     // (undocumented)
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
@@ -156,7 +156,7 @@ export interface IDateFilterCallbackProps {
     onOpen?: () => void;
 }
 
-// @beta
+// @public
 export interface IDateFilterOptionsByType {
     absoluteForm?: IUiAbsoluteDateFilterForm;
     absolutePreset?: IAbsoluteDateFilterPreset[];
@@ -165,7 +165,7 @@ export interface IDateFilterOptionsByType {
     relativePreset?: DateFilterRelativeOptionGroup;
 }
 
-// @beta (undocumented)
+// @public
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     availableGranularities: DateFilterGranularity[];
@@ -183,11 +183,11 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     locale?: string;
 }
 
-// @beta (undocumented)
+// @public
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {
 }
 
-// @beta (undocumented)
+// @public
 export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     // (undocumented)
     initExcludeCurrentPeriod: boolean;
@@ -197,7 +197,7 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     isExcludeCurrentPeriodEnabled: boolean;
 }
 
-// @beta (undocumented)
+// @public
 export interface IDateFilterStatePropsIntersection {
     // (undocumented)
     excludeCurrentPeriod: boolean;
@@ -205,7 +205,7 @@ export interface IDateFilterStatePropsIntersection {
     selectedFilterOption: DateFilterOption;
 }
 
-// @beta
+// @public
 export interface IExtendedDateFilterErrors {
     absoluteForm?: {
         from?: string;
@@ -321,22 +321,22 @@ export interface IRankingFilterProps {
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
 }
 
-// @beta
+// @public
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
-// @beta
+// @public
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
 
-// @beta
+// @public
 export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDateFilterForm;
 
-// @beta
+// @public
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     from?: DateString;
     to?: DateString;
 }
 
-// @beta
+// @public
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     from?: RelativeGranularityOffset;
     granularity?: DateFilterGranularity;
@@ -373,7 +373,7 @@ export const RankingFilter: React_2.FC<IRankingFilterProps>;
 // @beta (undocumented)
 export const RankingFilterDropdown: React_2.FC<IRankingFilterDropdownProps>;
 
-// @beta
+// @public
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 // @beta (undocumented)

@@ -3,7 +3,7 @@ import { granularityIntlCodes } from "./constants/i18n";
 import { defaultDateFilterOptions } from "./constants/config";
 import { validateFilterOption } from "./validation/OptionValidation";
 import { mapOptionToAfm } from "./utils/AFMConversions";
-import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
+import { applyExcludeCurrentPeriod, canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 import { filterVisibleDateFilterOptions } from "./utils/OptionUtils";
 import {
     getDateFilterTitle,

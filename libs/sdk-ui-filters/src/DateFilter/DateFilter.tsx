@@ -8,29 +8,18 @@ import {
     DashboardDateFilterConfigMode,
     isAbsoluteDateFilterForm,
 } from "@gooddata/sdk-backend-spi";
-import { canExcludeCurrentPeriod } from "./utils/PeriodExlusion";
+import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 
 import { DateFilterCore } from "./DateFilterCore";
 import { validateFilterOption } from "./validation/OptionValidation";
 import { DateFilterOption, IDateFilterOptionsByType, isUiRelativeDateFilterForm } from "./interfaces";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
-
-const normalizeSelectedFilterOption = (selectedFilterOption: DateFilterOption): DateFilterOption => {
-    if (
-        isUiRelativeDateFilterForm(selectedFilterOption) &&
-        selectedFilterOption.from > selectedFilterOption.to
-    ) {
-        return {
-            ...selectedFilterOption,
-            from: selectedFilterOption.to,
-            to: selectedFilterOption.from,
-        };
-    }
-    return selectedFilterOption;
-};
+import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization";
 
 /**
- * @beta
+ * Props of the {@link DateFilter} component that are reflected in the state.
+ *
+ * @public
  */
 export interface IDateFilterStatePropsIntersection {
     excludeCurrentPeriod: boolean;
@@ -38,7 +27,9 @@ export interface IDateFilterStatePropsIntersection {
 }
 
 /**
- * @beta
+ * Props of the {@link DateFilter} component.
+ *
+ * @public
  */
 export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
@@ -51,7 +42,9 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
 }
 
 /**
- * @beta
+ * Callback props of the {@link DateFilter} component.
+ *
+ * @public
  */
 export interface IDateFilterCallbackProps {
     onApply: (dateFilterOption: DateFilterOption, excludeCurrentPeriod: boolean) => void;
@@ -61,12 +54,16 @@ export interface IDateFilterCallbackProps {
 }
 
 /**
- * @beta
+ * All the props of the {@link DateFilter} component.
+ *
+ * @public
  */
 export interface IDateFilterProps extends IDateFilterOwnProps, IDateFilterCallbackProps {}
 
 /**
- * @beta
+ * State of the {@link DateFilter} component.
+ *
+ * @public
  */
 export interface IDateFilterState extends IDateFilterStatePropsIntersection {
     initExcludeCurrentPeriod: boolean;
@@ -75,7 +72,9 @@ export interface IDateFilterState extends IDateFilterStatePropsIntersection {
 }
 
 /**
- * @beta
+ * {@link https://sdk.gooddata.com/gooddata-ui/docs/date_filter_component.html | DateFilter} is a component for configuring a date filter value.
+ *
+ * @public
  */
 export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilterState> {
     public static defaultProps: Partial<IDateFilterProps> = {
@@ -146,14 +145,9 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     constructor(props: IDateFilterProps) {
         super(props);
         this.state = DateFilter.getStateFromProps(props);
-
-        // eslint-disable-next-line no-console
-        console.warn(
-            "DateFilter component is still in beta. Component and its API may change in the future.",
-        );
     }
 
-    componentDidMount() {
+    public componentDidMount(): void {
         DateFilter.checkInitialFilterOption(this.props.selectedFilterOption);
     }
 
@@ -227,7 +221,3 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
         );
     };
 }
-
-export const testAPI = {
-    normalizeSelectedFilterOption,
-};
