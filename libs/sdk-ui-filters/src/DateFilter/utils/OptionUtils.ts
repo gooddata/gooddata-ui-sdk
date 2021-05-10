@@ -60,7 +60,7 @@ function removeEmptyKeysFromDateFilterOptions(
  * Returns dateFilterOptions with only items that have visible set to true.
  *
  * @param dateFilterOptions - options to filter
- * @beta
+ * @public
  */
 export function filterVisibleDateFilterOptions(
     dateFilterOptions: IDateFilterOptionsByType,

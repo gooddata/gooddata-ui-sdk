@@ -18,7 +18,7 @@ import isEmpty from "lodash/isEmpty";
 
 /**
  * Represents the global absolute date filter, which may contain selected values
- * @beta
+ * @public
  */
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
     /**
@@ -33,7 +33,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IUiRelativeDateFilterForm}.
- * @beta
+ * @public
  */
 export const isUiRelativeDateFilterForm = (obj: unknown): obj is IUiRelativeDateFilterForm => {
     return !isEmpty(obj) && (obj as IUiRelativeDateFilterForm).type === "relativeForm";
@@ -41,7 +41,7 @@ export const isUiRelativeDateFilterForm = (obj: unknown): obj is IUiRelativeDate
 
 /**
  * Represents the global relative date filter, which may contain selected granularity and values
- * @beta
+ * @public
  */
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     /**
@@ -60,39 +60,39 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
 
 /**
  * Represents a absolute date filter option in the date filter dropdown
- * @beta
+ * @public
  */
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link AbsoluteDateFilterOption}.
- * @beta
+ * @public
  */
 export const isAbsoluteDateFilterOption = (obj: unknown): obj is AbsoluteDateFilterOption =>
     isAbsoluteDateFilterForm(obj) || isAbsoluteDateFilterPreset(obj);
 
 /**
  * Represents a relative date filter option in the date filter dropdown
- * @beta
+ * @public
  */
 export type RelativeDateFilterOption = IUiRelativeDateFilterForm | IRelativeDateFilterPreset;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link RelativeDateFilterOption}.
- * @beta
+ * @public
  */
 export const isRelativeDateFilterOption = (obj: unknown): obj is RelativeDateFilterOption =>
     isRelativeDateFilterForm(obj) || isRelativeDateFilterPreset(obj);
 
 /**
  * Represents any option in the date filter dropdown
- * @beta
+ * @public
  */
 export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 /**
  * Relative date filter options grouped by their granularity
- * @beta
+ * @public
  */
 export type DateFilterRelativeOptionGroup = {
     [key in DateFilterGranularity]?: Array<IRelativeDateFilterPresetOfGranularity<key>>;
@@ -100,7 +100,7 @@ export type DateFilterRelativeOptionGroup = {
 
 /**
  * All date filter options grouped by their type
- * @beta
+ * @public
  */
 export interface IDateFilterOptionsByType {
     /**
@@ -127,7 +127,7 @@ export interface IDateFilterOptionsByType {
 
 /**
  * Extended date filter errors
- * @beta
+ * @public
  */
 export interface IExtendedDateFilterErrors {
     /**
