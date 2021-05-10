@@ -5,8 +5,8 @@ import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { HeatmapWithMeasureRowsAndColumns } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
-import { responsiveScenarios } from "../_infra/responsiveScenarios";
-import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
+import { responsiveScenarios, IResponsiveSize } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -14,12 +14,17 @@ const legendScenarios = scenariosFor<IHeatmapProps>("Heatmap", Heatmap)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("legend position", HeatmapWithMeasureRowsAndColumns, legendCustomizer);
 
+const heatmapLegendResponsiveSizeVariants: Array<IResponsiveSize> = [
+    { label: "Force position TOP, minimised variant", width: 180, height: 400 },
+    { label: "Position respects configuration, standard variant", width: 620, height: 400 },
+];
+
 const legendResponziveScenarios = responsiveScenarios(
     "Heatmap",
     ScenarioGroupNames.LegendResponsive,
     Heatmap,
     HeatmapWithMeasureRowsAndColumns,
-    legendResponsiveSizeVariants,
+    heatmapLegendResponsiveSizeVariants,
     false,
     legendResponsiveVariants,
 );
