@@ -7,6 +7,8 @@ import {
     newMeasureGroupPlaceholder,
     newAttributePlaceholder,
     newAttributeGroupPlaceholder,
+    newFilterPlaceholder,
+    newComputedPlaceholder,
     usePlaceholders,
 } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
@@ -18,13 +20,30 @@ import {
     attributeAlias,
     measureTitle,
     measureIdentifier,
+    modifySimpleMeasure,
+    IMeasureFilter,
+    newAbsoluteDateFilter,
+    modifyMeasure,
 } from "@gooddata/sdk-model";
 
-const primaryMeasure = LdmExt.AvgDailyTotalSales;
-const primaryMeasurePlaceholder = newMeasurePlaceholder(undefined, "primaryMeasure");
+const primaryMeasure = modifyMeasure(Ldm.$TotalSales, (m) => m.localId("primaryMeasure"));
+const primaryMeasurePlaceholder = newMeasurePlaceholder(primaryMeasure);
+const filterPlaceholder = newFilterPlaceholder<IMeasureFilter>(
+    newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-09-01"),
+);
 const stackByAttributePlaceholder = newAttributePlaceholder();
 const viewByAttributesPlaceholder = newAttributeGroupPlaceholder();
 const measuresPlaceholder = newMeasureGroupPlaceholder();
+
+const computedMeasurePlaceholder = newComputedPlaceholder(
+    [primaryMeasurePlaceholder, filterPlaceholder],
+    ([pm, filter]) => {
+        if (!pm) {
+            return;
+        }
+        return modifySimpleMeasure(pm, (m) => m.filters(filter).localId("derivedMeasure"));
+    },
+);
 
 const stackByAttributes = [Ldm.LocationState, Ldm.LocationCity, Ldm.LocationOwnership];
 const StackByAttributeSelect: React.FC = () => {
@@ -97,7 +116,13 @@ const PrimaryMeasureToggle: React.FC = () => {
     const [activePrimaryMeasure, setPrimaryMeasure] = primaryMeasurePlaceholder.use();
 
     return (
-        <button onClick={() => setPrimaryMeasure((m) => (m ? undefined : primaryMeasure))}>
+        <button
+            onClick={() =>
+                setPrimaryMeasure((m) => {
+                    return m ? undefined : primaryMeasure;
+                })
+            }
+        >
             {activePrimaryMeasure ? "Disable primary measure" : "Enable primary measure"}
         </button>
     );
@@ -125,7 +150,7 @@ const PlaceholderBarChart: React.FC = () => {
     return (
         <div style={style}>
             <BarChart
-                measures={[primaryMeasurePlaceholder, measuresPlaceholder]}
+                measures={[computedMeasurePlaceholder, primaryMeasurePlaceholder]}
                 stackBy={stackByAttributePlaceholder}
                 viewBy={viewByAttributesPlaceholder}
             />
@@ -135,7 +160,7 @@ const PlaceholderBarChart: React.FC = () => {
 
 const PlaceholdersExample: React.FC = () => {
     return (
-        <PlaceholdersProvider undefinedPlaceholderHandling="warning" debug>
+        <PlaceholdersProvider>
             <PrimaryMeasureToggle />
             <AtomicPreset />
             <MeasuresSelect />

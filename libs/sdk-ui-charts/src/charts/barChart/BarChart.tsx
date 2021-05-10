@@ -18,6 +18,7 @@ import {
     IFilterPlaceholder,
     IFilterGroupPlaceholder,
     useResolveValuesWithPlaceholders,
+    IComputedPlaceholder,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
@@ -78,7 +79,16 @@ export interface IBarChartBucketProps {
      */
     measures:
         | IMeasureGroupPlaceholder
-        | Array<IMeasurePlaceholder | IMeasureGroupPlaceholder | IAttributeOrMeasure>;
+        | IAttributeGroupPlaceholder
+        | IComputedPlaceholder<any, any>
+        | Array<
+              | IAttributeOrMeasure
+              | IMeasurePlaceholder
+              | IAttributePlaceholder
+              | IMeasureGroupPlaceholder
+              | IAttributeGroupPlaceholder
+              | IComputedPlaceholder<any, any>
+          >;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the Y axis.

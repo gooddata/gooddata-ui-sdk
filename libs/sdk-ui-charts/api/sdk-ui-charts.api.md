@@ -13,6 +13,7 @@ import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAttributePlaceholder } from '@gooddata/sdk-ui';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
+import { IComputedPlaceholder } from '@gooddata/sdk-ui';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterGroupPlaceholder } from '@gooddata/sdk-ui';
@@ -114,7 +115,7 @@ export interface IAxisNameConfig {
 // @public (undocumented)
 export interface IBarChartBucketProps {
     filters?: IFilterGroupPlaceholder | Array<INullableFilter | IFilterPlaceholder | IFilterGroupPlaceholder>;
-    measures: IMeasureGroupPlaceholder | Array<IMeasurePlaceholder | IMeasureGroupPlaceholder | IAttributeOrMeasure>;
+    measures: IMeasureGroupPlaceholder | IAttributeGroupPlaceholder | IComputedPlaceholder<any, any> | Array<IAttributeOrMeasure | IMeasurePlaceholder | IAttributePlaceholder | IMeasureGroupPlaceholder | IAttributeGroupPlaceholder | IComputedPlaceholder<any, any>>;
     sortBy?: ISortItem[];
     stackBy?: IAttribute | IAttributePlaceholder;
     viewBy?: IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>;
