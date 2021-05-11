@@ -526,11 +526,13 @@ export function getChartOptions(
             measures.push(null);
         }
 
+        const legendLabel = stackByAttribute?.formOf?.name;
         return {
             type,
             stacking,
             hasViewByAttribute: Boolean(stackByAttribute),
             legendLayout: "horizontal",
+            legendLabel,
             yAxes,
             xAxes,
             data: {
