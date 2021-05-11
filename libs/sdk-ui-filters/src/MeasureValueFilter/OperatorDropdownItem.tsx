@@ -42,7 +42,7 @@ export class OperatorDropdownItem extends React.PureComponent<IOperatorDropdownI
 
         return (
             <div className={className} onClick={this.handleOnClick}>
-                <div className={`icon-${getOperatorIcon(operator)}`} title={title} />
+                <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
                 <span title={title}>{capitalize(title)}</span>
                 {bubbleText && this.renderBubble(bubbleText)}
             </div>

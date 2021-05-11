@@ -20,8 +20,8 @@ export const RankingFilterButton: React.FC<IRankingFilterButtonProps> = ({
         "gd-button-secondary",
         "gd-button-small",
         "button-dropdown",
-        "icon-right",
-        { "icon-navigateup": isActive, "icon-navigatedown": !isActive },
+        "gd-icon-right",
+        { "gd-icon-navigateup": isActive, "gd-icon-navigatedown": !isActive },
         "s-rf-dropdown-button",
         className,
     );

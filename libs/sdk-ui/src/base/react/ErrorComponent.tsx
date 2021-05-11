@@ -57,7 +57,7 @@ export interface IErrorProps {
  */
 export class ErrorComponent extends React.Component<IErrorProps> {
     public static defaultProps: Partial<IErrorProps> = {
-        icon: "icon-warning",
+        icon: "gd-icon-warning",
         className: "Error s-error",
         width: undefined,
         height: "100%",

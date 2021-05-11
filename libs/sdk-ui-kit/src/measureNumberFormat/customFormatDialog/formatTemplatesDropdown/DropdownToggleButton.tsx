@@ -19,7 +19,7 @@ const DropdownToggleButton = ({ toggleDropdown, isOpened }: IDropdownToggleButto
         <div
             className={cx(
                 "gd-measure-format-button-icon-right",
-                isOpened ? "icon-navigateup" : "icon-navigatedown",
+                isOpened ? "gd-icon-navigateup" : "gd-icon-navigatedown",
             )}
         />
     </div>

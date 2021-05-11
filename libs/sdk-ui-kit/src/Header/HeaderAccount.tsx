@@ -93,7 +93,7 @@ class WrappedHeaderAccount extends PureComponent<
     render(): ReactNode {
         return (
             <div className={this.getClassNames()} onClick={this.toggleAccountMenuHandler}>
-                <span className="gd-header-account-icon icon-user" />
+                <span className="gd-header-account-icon gd-icon-user" />
                 <span className="gd-header-account-user">{this.props.userName}</span>
 
                 {this.renderAccountMenu()}

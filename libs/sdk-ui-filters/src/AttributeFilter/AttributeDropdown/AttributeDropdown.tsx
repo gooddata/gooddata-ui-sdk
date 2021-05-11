@@ -27,7 +27,7 @@ const LIMIT = MAX_SELECTION_SIZE + 50;
 
 const DefaultFilterLoading = injectIntl(({ intl }) => {
     return (
-        <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
+        <button className="gd-button gd-button-secondary gd-button-small gd-icon-right gd-icon disabled s-button-loading">
             {intl.formatMessage({ id: "gs.filter.loading" })}
         </button>
     );

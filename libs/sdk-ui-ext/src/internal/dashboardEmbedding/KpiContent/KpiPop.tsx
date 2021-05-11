@@ -97,7 +97,7 @@ class KpiPop extends PureComponent<IKpiPopProps & WrappedComponentProps> {
             false
         ) : (
             <>
-                <span className={cx(`icon-trend-${popInfo.trend}`, "kpi-trend-icon")} />
+                <span className={cx(`gd-icon-trend-${popInfo.trend}`, "gd-kpi-trend-icon")} />
                 {popInfo.percentage}
             </>
         );

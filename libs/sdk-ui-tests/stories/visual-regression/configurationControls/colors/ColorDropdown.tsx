@@ -23,7 +23,7 @@ const german = "de-DE";
 const defaultScenarios = {
     closed: {},
     opened: {
-        clickSelector: ".icon-navigatedown",
+        clickSelector: ".gd-icon-navigatedown",
         postInteractionWait: 200,
     },
 };

@@ -191,7 +191,7 @@ export class DashboardItemWithKpiAlert extends Component<
             "dash-item-action",
             "dash-item-action-alert",
             "s-dash-item-action-alert",
-            "icon-bell",
+            "gd-icon-bell",
             {
                 "alert-set": this.state.isKpiAlertAfterSaving,
                 "alert-deleted": this.state.isKpiAlertAfterDeleting,

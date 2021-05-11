@@ -136,7 +136,7 @@ export class InputPure extends React.PureComponent<InputPureProps> {
     }
 
     renderSearch(isSearch: boolean): React.ReactNode {
-        return isSearch ? <span className="gd-input-icon icon-search" /> : false;
+        return isSearch ? <span className="gd-input-icon gd-icon-search" /> : false;
     }
 
     renderClearIcon(clearOnEsc: boolean): React.ReactNode {
@@ -144,7 +144,7 @@ export class InputPure extends React.PureComponent<InputPureProps> {
             // react events use delegation and don't bubble, click on clear needs to be kept local
             // to avoid handling by overlay close handler and others
             <NativeListener onClick={this.onClear}>
-                <span className="gd-input-icon-clear icon-clear s-input-clear" />
+                <span className="gd-input-icon-clear gd-icon-clear s-input-clear" />
             </NativeListener>
         ) : (
             false

@@ -55,7 +55,7 @@ storiesOf(`${CustomStories}/BarChart`, module).add("responsive popup legend", ()
                 postInteractionWait: 300,
             },
             paginatorClick: {
-                clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"],
+                clickSelectors: [".s-legend-popup-icon", 200, ".gd-icon-chevron-right"],
                 postInteractionWait: 300,
             },
         },

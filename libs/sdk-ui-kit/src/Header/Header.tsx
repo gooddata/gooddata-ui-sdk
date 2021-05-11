@@ -195,10 +195,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private getHelpMenu = () => [
-        [this.getHelpMenuLink("icon-header-help-back"), ...this.props.helpMenuItems],
+        [this.getHelpMenuLink("gd-icon-header-help-back"), ...this.props.helpMenuItems],
     ];
 
-    private getHelpMenuLink = (icon = "icon-header-help") => ({
+    private getHelpMenuLink = (icon = "gd-icon-header-help") => ({
         key: "gs.header.help",
         className: `s-menu-help ${icon}`,
         href: this.state.responsiveMode && this.props.helpMenuItems ? undefined : this.props.documentationUrl,
@@ -278,7 +278,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 <div className="gd-header-menu-vertical-footer">
                     {!!badges && <div className="gd-header-vertical-badges">{badges}</div>}
                     <div className="gd-header-menu-vertical-bottom-item">
-                        <span className="gd-header-username icon-user">{this.props.userName}</span>
+                        <span className="gd-header-username gd-icon-user">{this.props.userName}</span>
                     </div>
                     <div>{this.renderLogoutButton()}</div>
                 </div>
@@ -298,7 +298,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                     this.props.onMenuItemClick(logoutMenuItem, e);
                 }}
             >
-                <Icon.Logout className="icon-logout" color={this.props.theme?.palette?.complementary?.c0} />
+                <Icon.Logout
+                    className="gd-icon-logout"
+                    color={this.props.theme?.palette?.complementary?.c0}
+                />
                 <span className="gd-button-text">
                     <FormattedMessage id="gs.header.logout" />
                 </span>

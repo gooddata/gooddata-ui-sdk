@@ -32,7 +32,7 @@ export class ExtendedPreview extends React.Component<IExtendedPreviewProps, IExt
                     })}
                     onClick={this.openExtendedPreview}
                 >
-                    <div className="icon-navigateright gd-measure-format-button-icon-left" />
+                    <div className="gd-icon-navigateright gd-measure-format-button-icon-left" />
                     <span>
                         <FormattedMessage id="measureNumberCustomFormatDialog.extendedPreview.button" />
                     </span>

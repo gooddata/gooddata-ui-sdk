@@ -115,7 +115,7 @@ const testCases: [
         { openOnInit: true },
         { ...searchProps, items: testItems, searchFieldSize: "small" },
     ],
-    ["With button icon", undefined, undefined, undefined, { iconLeft: "icon-magic" }],
+    ["With button icon", undefined, undefined, undefined, { iconLeft: "gd-icon-magic" }],
 ];
 
 const DropdownExamples: React.FC = () => {

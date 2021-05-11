@@ -28,7 +28,7 @@ export const SelectButton = <V extends {}>({
         )}
     >
         <span className="gd-button-text">{itemToString(selectedItem)}</span>
-        <span className={cx("gd-button-icon", isOpen ? "icon-navigateup" : "icon-navigatedown")} />
+        <span className={cx("gd-button-icon", isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown")} />
     </button>
 );
 SelectButton.defaultProps = {

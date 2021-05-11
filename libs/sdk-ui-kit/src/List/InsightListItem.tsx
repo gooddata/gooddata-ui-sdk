@@ -107,7 +107,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
 
     private renderLock = () => {
         if (this.props.isLocked) {
-            return <i className="icon-lock" />;
+            return <i className="gd-icon-lock" />;
         }
 
         return false;
@@ -135,7 +135,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                 <div className="gd-visualizations-list-item-actions">
                     <Button
                         className="gd-button-link gd-button-icon-only gd-button-small
-                        icon-cross gd-visualizations-list-item-action-delete s-delete-item"
+                        gd-icon-cross gd-visualizations-list-item-action-delete s-delete-item"
                         onClick={this.handleClickDelete}
                     />
                 </div>

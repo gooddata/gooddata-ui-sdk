@@ -217,7 +217,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                             {state.name}&nbsp;
                             <button
                                 onClick={onStateClear}
-                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-employee-heading-clear-state"
+                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-employee-heading-clear-state"
                             />
                         </span>
                     )}
@@ -226,7 +226,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                             {location.name}&nbsp;
                             <button
                                 onClick={onLocationClear}
-                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-employee-heading-clear-location"
+                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-employee-heading-clear-location"
                             />
                         </span>
                     )}
@@ -249,7 +249,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                             {state.name}&nbsp;
                             <button
                                 onClick={onStateClear}
-                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-sales-heading-clear-state"
+                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-sales-heading-clear-state"
                             />
                         </span>
                     )}
@@ -258,7 +258,7 @@ export const DrillWithExternalDataExample: React.FC = () => {
                             {location.name}&nbsp;
                             <button
                                 onClick={onLocationClear}
-                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only icon-cross s-sales-heading-clear-location"
+                                className="gd-button gd-button-primary gd-button-small gd-button-icon-only gd-icon-cross s-sales-heading-clear-location"
                             />
                         </span>
                     )}

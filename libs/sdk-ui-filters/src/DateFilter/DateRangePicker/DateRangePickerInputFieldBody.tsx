@@ -30,7 +30,7 @@ export class DateRangePickerInputFieldBody extends React.Component<
         const { className } = this.props;
         return (
             <div className={cx("gd-date-range-picker-input-wrapper", className)}>
-                <span className="gd-date-range-picker-input-icon icon-calendar" />
+                <span className="gd-date-range-picker-input-icon gd-icon-calendar" />
                 <input
                     {...this.props}
                     ref={this.inputRef}

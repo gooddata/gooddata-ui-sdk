@@ -28,7 +28,7 @@ describe("Paging", () => {
     it("should call showNextPage", async () => {
         const showNextPage = jest.fn();
         const pagingComponent = render({ showNextPage });
-        pagingComponent.find("button.icon-chevron-down").simulate("click");
+        pagingComponent.find("button.gd-icon-chevron-down").simulate("click");
         expect(showNextPage).toHaveBeenCalledTimes(1);
     });
 });

@@ -38,7 +38,7 @@ export const AttributeDropdownBody: React.FC<IAttributeDropdownBodyProps> = ({
                     return (
                         <AttributeItem
                             key={objRefToString(ref)}
-                            iconClass={type === "DATE" ? "icon-date" : "icon-attribute"}
+                            iconClass={type === "DATE" ? "gd-icon-date" : "gd-icon-attribute"}
                             item={item}
                             isSelected={areObjRefsEqual(ref, selectedItemRef)}
                             onSelect={onSelect}

@@ -15,7 +15,7 @@ export const DateFilterHeader: React.FC<{
             }}
             {...otherProps}
         >
-            <span className="icon-navigateleft" />
+            <span className="gd-icon-navigateleft" />
             &emsp;{children}
         </button>
     );

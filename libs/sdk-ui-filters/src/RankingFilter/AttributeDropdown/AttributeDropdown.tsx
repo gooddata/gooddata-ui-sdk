@@ -12,7 +12,7 @@ const getItemTitle = (selectedItem: IAttributeDropdownItem, intl: IntlShape): st
 
 const getItemIcon = (selectedItem: IAttributeDropdownItem): string => {
     if (selectedItem) {
-        return selectedItem.type === "DATE" ? "icon-date" : "icon-attribute";
+        return selectedItem.type === "DATE" ? "gd-icon-date" : "gd-icon-attribute";
     } else {
         return null;
     }
@@ -55,10 +55,10 @@ const AttributeDropdownComponent: React.FC<AttributeDropdownProps> = ({
         "gd-button-secondary",
         "gd-button-small",
         "button-dropdown",
-        "icon-right",
+        "gd-icon-right",
         {
-            "icon-navigateup": isOpen,
-            "icon-navigatedown": !isOpen,
+            "gd-icon-navigateup": isOpen,
+            "gd-icon-navigatedown": !isOpen,
         },
         "gd-rf-attribute-dropdown-button",
         "s-rf-attribute-dropdown-button",
