@@ -564,8 +564,8 @@ export function getChartOptions(
 
     const legendLabel =
         isOneOfTypes(type, sortedByMeasureTypes) && viewByAttribute
-            ? viewByAttribute?.name
-            : stackByAttribute?.name;
+            ? viewByAttribute?.formOf?.name
+            : stackByAttribute?.formOf?.name;
     const chartOptions: IChartOptions = {
         type,
         stacking,
