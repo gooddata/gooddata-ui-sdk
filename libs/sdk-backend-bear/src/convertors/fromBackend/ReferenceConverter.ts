@@ -50,19 +50,19 @@ export type ReferenceConverter = (
     idGenerator?: IdGenerator,
 ) => IConversionData;
 
-const createConverter = (conversionFunction: ConversionFunction): ReferenceConverter => (
-    conversionData,
-    idGenerator = defaultIdGenerator,
-) => {
-    return conversionFunction(conversionData, idGenerator);
-};
+const createConverter =
+    (conversionFunction: ConversionFunction): ReferenceConverter =>
+    (conversionData, idGenerator = defaultIdGenerator) => {
+        return conversionFunction(conversionData, idGenerator);
+    };
 
 /*
  * Conversion from References to URIs
  */
-const convertReferenceToUri = (references: GdcVisualizationObject.IReferenceItems): StringTransformation => (
-    value,
-) => getReferenceValue(value, references) || value;
+const convertReferenceToUri =
+    (references: GdcVisualizationObject.IReferenceItems): StringTransformation =>
+    (value) =>
+        getReferenceValue(value, references) || value;
 
 /**
  * Converts URIs to reference based values

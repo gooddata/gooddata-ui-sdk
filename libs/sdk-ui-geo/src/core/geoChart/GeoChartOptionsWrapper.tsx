@@ -49,9 +49,12 @@ export class GeoChartOptionsWrapper extends React.Component<IGeoChartInnerProps>
                 : this.props.LoadingComponent ?? DefaultLoadingComponent;
 
         if (error) {
-            const errorProps = this.errorMap[
-                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
-            ];
+            const errorProps =
+                this.errorMap[
+                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
+                        ? error
+                        : ErrorCodes.UNKNOWN_ERROR
+                ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 
@@ -140,19 +143,17 @@ export function createCategoryLegendItems(
     emptyHeaderString: string,
 ): IPushpinCategoryLegendItem[] {
     const colorAssignment: IColorAssignment[] = colorStrategy.getColorAssignment();
-    return colorAssignment.map(
-        (item: IColorAssignment, legendIndex: number): IPushpinCategoryLegendItem => {
-            const { name, uri } = isResultAttributeHeader(item.headerItem)
-                ? item.headerItem.attributeHeaderItem
-                : { name: emptyHeaderString, uri: emptyHeaderString };
-            const color: string = colorStrategy.getColorByIndex(legendIndex);
-            return {
-                uri,
-                name,
-                color,
-                legendIndex,
-                isVisible: true,
-            };
-        },
-    );
+    return colorAssignment.map((item: IColorAssignment, legendIndex: number): IPushpinCategoryLegendItem => {
+        const { name, uri } = isResultAttributeHeader(item.headerItem)
+            ? item.headerItem.attributeHeaderItem
+            : { name: emptyHeaderString, uri: emptyHeaderString };
+        const color: string = colorStrategy.getColorByIndex(legendIndex);
+        return {
+            uri,
+            name,
+            color,
+            legendIndex,
+            isVisible: true,
+        };
+    });
 }

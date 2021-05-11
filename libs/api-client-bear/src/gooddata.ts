@@ -83,4 +83,7 @@ export class SDK {
  * @method setCustomDomain
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const factory = (fetchMethod: typeof fetch) => (config: any = {}) => new SDK(fetchMethod, config);
+export const factory =
+    (fetchMethod: typeof fetch) =>
+    (config: any = {}) =>
+        new SDK(fetchMethod, config);

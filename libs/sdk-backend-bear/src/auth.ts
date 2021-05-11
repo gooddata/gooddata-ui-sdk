@@ -53,7 +53,8 @@ export abstract class BearAuthProviderBase implements IAuthenticationProvider {
  */
 export class FixedLoginAndPasswordAuthProvider
     extends BearAuthProviderBase
-    implements IAuthenticationProvider {
+    implements IAuthenticationProvider
+{
     constructor(private readonly username: string, private readonly password: string) {
         super();
     }

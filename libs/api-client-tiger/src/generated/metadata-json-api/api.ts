@@ -5068,7 +5068,8 @@ export interface DataSourceActionsControllerApiInterface {
  */
 export class DataSourceActionsControllerApi
     extends BaseAPI
-    implements DataSourceActionsControllerApiInterface {
+    implements DataSourceActionsControllerApiInterface
+{
     /**
      * Generate LDM from PDM stored in data source.
      * @summary Generate LDM from PDM
@@ -5442,7 +5443,8 @@ export interface DataSourceEntitiesControllerApiInterface {
  */
 export class DataSourceEntitiesControllerApi
     extends BaseAPI
-    implements DataSourceEntitiesControllerApiInterface {
+    implements DataSourceEntitiesControllerApiInterface
+{
     /**
      *
      * @param {string} dataSourceId
@@ -7025,7 +7027,8 @@ export interface DeclarativeLayoutControllerApiInterface {
  */
 export class DeclarativeLayoutControllerApi
     extends BaseAPI
-    implements DeclarativeLayoutControllerApiInterface {
+    implements DeclarativeLayoutControllerApiInterface
+{
     /**
      * Retrieve current analytics model of the workspace.
      * @summary Get analytics model
@@ -10578,7 +10581,8 @@ export interface OrganizationModelControllerApiInterface {
  */
 export class OrganizationModelControllerApi
     extends BaseAPI
-    implements OrganizationModelControllerApiInterface {
+    implements OrganizationModelControllerApiInterface
+{
     /**
      *
      * @param {JsonApiDataSourceInDocument} jsonApiDataSourceInDocument
@@ -13941,9 +13945,10 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
                     "Required parameter objectId was null or undefined when calling getEntityWorkspaceDataFilterSettings.",
                 );
             }
-            const localVarPath = `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
-                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
+            const localVarPath =
+                `/api/entities/workspaces/{workspaceId}/workspaceDataFilterSettings/{objectId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"objectId"}}`, encodeURIComponent(String(objectId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -14069,13 +14074,8 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             },
             options: any = {},
         ): RequestArgs {
-            const {
-                workspaceId,
-                objectId,
-                jsonApiAnalyticalDashboardInDocument,
-                predicate,
-                include,
-            } = params;
+            const { workspaceId, objectId, jsonApiAnalyticalDashboardInDocument, predicate, include } =
+                params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -14336,13 +14336,8 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             },
             options: any = {},
         ): RequestArgs {
-            const {
-                workspaceId,
-                objectId,
-                jsonApiVisualizationObjectInDocument,
-                predicate,
-                include,
-            } = params;
+            const { workspaceId, objectId, jsonApiVisualizationObjectInDocument, predicate, include } =
+                params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(
@@ -14433,13 +14428,8 @@ export const WorkspaceObjectControllerApiAxiosParamCreator = function (configura
             },
             options: any = {},
         ): RequestArgs {
-            const {
-                workspaceId,
-                objectId,
-                jsonApiWorkspaceDataFilterInDocument,
-                predicate,
-                include,
-            } = params;
+            const { workspaceId, objectId, jsonApiWorkspaceDataFilterInDocument, predicate, include } =
+                params;
             // verify required parameter 'workspaceId' is not null or undefined
             if (workspaceId === null || workspaceId === undefined) {
                 throw new RequiredError(

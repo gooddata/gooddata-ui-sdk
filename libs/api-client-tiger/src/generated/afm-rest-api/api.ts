@@ -2211,10 +2211,11 @@ export const ElementsControllerApiAxiosParamCreator = function (configuration?: 
                     "Required parameter label was null or undefined when calling computeLabelElements.",
                 );
             }
-            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/collectLabelElements`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -2515,9 +2516,10 @@ export const ResultControllerApiAxiosParamCreator = function (configuration?: Co
                     "Required parameter resultId was null or undefined when calling retrieveResult.",
                 );
             }
-            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
-                .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
-                .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {
@@ -2720,10 +2722,11 @@ export const ValidObjectsControllerApiAxiosParamCreator = function (configuratio
                     "Required parameter afmValidObjectsQuery was null or undefined when calling computeValidObjects.",
                 );
             }
-            const localVarPath = `/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
+            const localVarPath =
+                `/api/actions/workspaces/{workspaceId}/execution/afm/computeValidObjects`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
             const localVarUrlObj = globalImportUrl.parse(localVarPath, true);
             let baseOptions;
             if (configuration) {

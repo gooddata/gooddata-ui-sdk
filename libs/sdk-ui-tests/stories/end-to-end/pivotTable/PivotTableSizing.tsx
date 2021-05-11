@@ -36,7 +36,7 @@ class PivotTableSizing extends Component {
     }
 }
 
-storiesOf(
-    `${StoriesForEndToEndTests}/Pivot Table`,
-    module,
-).add("complex table with multiple columns and with sizing", () => <PivotTableSizing />);
+storiesOf(`${StoriesForEndToEndTests}/Pivot Table`, module).add(
+    "complex table with multiple columns and with sizing",
+    () => <PivotTableSizing />,
+);

@@ -64,16 +64,8 @@ export default abstract class ConfigurationPanelContent extends React.PureCompon
     }
 
     protected renderColorSection(): React.ReactNode {
-        const {
-            properties,
-            propertiesMeta,
-            pushData,
-            colors,
-            featureFlags,
-            references,
-            insight,
-            isLoading,
-        } = this.props;
+        const { properties, propertiesMeta, pushData, colors, featureFlags, references, insight, isLoading } =
+            this.props;
 
         const controlsDisabled = this.isControlDisabled();
         const hasMeasures = getMeasuresFromMdObject(insight).length > 0;

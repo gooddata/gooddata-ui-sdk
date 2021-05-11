@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class VariableMetadataObjectBuilder<
-    T extends IVariableMetadataObject = IVariableMetadataObject
+    T extends IVariableMetadataObject = IVariableMetadataObject,
 > extends MetadataObjectBuilder<T> {}
 
 /**

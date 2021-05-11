@@ -22,7 +22,8 @@ export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBas
  */
 export class GroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase>
     extends Builder<T>
-    implements IGroupableCatalogItemBuilder<T> {
+    implements IGroupableCatalogItemBuilder<T>
+{
     public groups(tagRefs: ObjRef[]): this {
         this.item.groups = tagRefs;
         return this;

@@ -139,7 +139,11 @@ const KpiExecutorCore: React.FC<IKpiExecutorProps & WrappedComponentProps> = ({
         workspace,
     });
 
-    const { error: alertError, result: alertResult, status: alertStatus } = useDataView(
+    const {
+        error: alertError,
+        result: alertResult,
+        status: alertStatus,
+    } = useDataView(
         {
             execution: alert && !isAlertBroken ? alertExecution : null, // no need to execute broken alerts, the data is not shown anyway
             onError,

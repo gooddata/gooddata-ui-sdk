@@ -57,13 +57,8 @@ class DropdownBodyWrapped extends React.PureComponent<IDropdownBodyProps, IDropd
     }
 
     public render() {
-        const {
-            onCancel,
-            warningMessage,
-            displayTreatNullAsZeroOption,
-            enableOperatorSelection,
-            intl,
-        } = this.props;
+        const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection, intl } =
+            this.props;
         const { operator, enabledTreatNullValuesAsZero } = this.state;
 
         return (

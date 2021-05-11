@@ -245,9 +245,8 @@ describe("Overlay utils", () => {
         it("should align overlay to given node top-left both", () => {
             const align = "tl tl";
 
-            const { boundaryRegion, targetRegion, selfRegion, alignPoints } = generateOverlayWithCustomAlign(
-                align,
-            );
+            const { boundaryRegion, targetRegion, selfRegion, alignPoints } =
+                generateOverlayWithCustomAlign(align);
             const optimalAlignment = getOptimalAlignmentForRegion({
                 boundaryRegion,
                 targetRegion,
@@ -261,9 +260,8 @@ describe("Overlay utils", () => {
         it("should align overlay top left to given node center-center", () => {
             const align = "cc tl";
 
-            const { boundaryRegion, targetRegion, selfRegion, alignPoints } = generateOverlayWithCustomAlign(
-                align,
-            );
+            const { boundaryRegion, targetRegion, selfRegion, alignPoints } =
+                generateOverlayWithCustomAlign(align);
             const optimalAlignment = getOptimalAlignmentForRegion({
                 boundaryRegion,
                 targetRegion,
@@ -277,9 +275,8 @@ describe("Overlay utils", () => {
         it("should align overlay center-center to given node bottom right", () => {
             const align = "br cc";
 
-            const { boundaryRegion, targetRegion, selfRegion, alignPoints } = generateOverlayWithCustomAlign(
-                align,
-            );
+            const { boundaryRegion, targetRegion, selfRegion, alignPoints } =
+                generateOverlayWithCustomAlign(align);
             const optimalAlignment = getOptimalAlignmentForRegion({
                 boundaryRegion,
                 targetRegion,
@@ -293,9 +290,8 @@ describe("Overlay utils", () => {
         it("should align overlay bottom-left to given node bottom-right", () => {
             const align = "br bl";
 
-            const { boundaryRegion, targetRegion, selfRegion, alignPoints } = generateOverlayWithCustomAlign(
-                align,
-            );
+            const { boundaryRegion, targetRegion, selfRegion, alignPoints } =
+                generateOverlayWithCustomAlign(align);
             const optimalAlignment = getOptimalAlignmentForRegion({
                 boundaryRegion,
                 targetRegion,

@@ -35,6 +35,7 @@ class UserWorkspacePermissionsDataLoader implements IUserWorkspacePermissionsDat
 /**
  * @internal
  */
-export const userWorkspacePermissionsDataLoaderFactory = dataLoaderAbstractFactory<IUserWorkspacePermissionsDataLoader>(
-    (workspace) => new UserWorkspacePermissionsDataLoader(workspace),
-);
+export const userWorkspacePermissionsDataLoaderFactory =
+    dataLoaderAbstractFactory<IUserWorkspacePermissionsDataLoader>(
+        (workspace) => new UserWorkspacePermissionsDataLoader(workspace),
+    );

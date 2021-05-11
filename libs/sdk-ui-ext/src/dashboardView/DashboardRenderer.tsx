@@ -84,66 +84,68 @@ interface IDashboardRendererProps {
 /**
  * Ensure that areObjRefsEqual() and other predicates will be working with uncontrolled user ref inputs in custom layout transformation and/or custom widget/item renderers
  */
-const polluteWidgetRefsWithBothIdAndUri = (
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-): DashboardLayoutItemModifications => (item) =>
-    item.widget((c) => {
-        const updatedContent = { ...c };
-        if (isWidget(updatedContent)) {
-            updatedContent.ref = {
-                ...updatedContent.ref,
-                uri: widgetUri(updatedContent),
-                identifier: widgetId(updatedContent),
-            };
-        }
-        if (isInsightWidget(updatedContent)) {
-            const insight = getInsightByRef(updatedContent.insight);
-            updatedContent.insight = {
-                ...updatedContent.insight,
-                uri: insightUri(insight),
-                identifier: insightId(insight),
-            };
-        }
+const polluteWidgetRefsWithBothIdAndUri =
+    (getInsightByRef: (insightRef: ObjRef) => IInsight | undefined): DashboardLayoutItemModifications =>
+    (item) =>
+        item.widget((c) => {
+            const updatedContent = { ...c };
+            if (isWidget(updatedContent)) {
+                updatedContent.ref = {
+                    ...updatedContent.ref,
+                    uri: widgetUri(updatedContent),
+                    identifier: widgetId(updatedContent),
+                };
+            }
+            if (isInsightWidget(updatedContent)) {
+                const insight = getInsightByRef(updatedContent.insight);
+                updatedContent.insight = {
+                    ...updatedContent.insight,
+                    uri: insightUri(insight),
+                    identifier: insightId(insight),
+                };
+            }
 
-        return updatedContent;
-    });
+            return updatedContent;
+        });
 
-const validateItemsSize = (
-    getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
-    enableKDWidgetCustomHeight: boolean,
-): DashboardLayoutItemModifications => (item) => {
-    const widget = item.facade().widget();
-    if (isInsightWidget(widget)) {
-        const insight = getInsightByRef(widget.insight);
-        const currentWidth = item.facade().size().xl.gridWidth;
-        const currentHeight = item.facade().size().xl.gridHeight;
-        const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
-            currentWidth,
-            currentHeight,
-            insight,
-            { enableKDWidgetCustomHeight },
-        );
-        let validatedItem = item;
-        if (currentWidth !== validWidth) {
-            validatedItem = validatedItem.size({
-                xl: {
-                    ...validatedItem.facade().size().xl,
-                    gridWidth: validWidth,
-                },
-            });
-        }
-        if (currentHeight !== validHeight) {
-            validatedItem = validatedItem.size({
-                xl: {
-                    ...validatedItem.facade().size().xl,
-                    gridHeight: validHeight,
-                },
-            });
-        }
+const validateItemsSize =
+    (
+        getInsightByRef: (insightRef: ObjRef) => IInsight | undefined,
+        enableKDWidgetCustomHeight: boolean,
+    ): DashboardLayoutItemModifications =>
+    (item) => {
+        const widget = item.facade().widget();
+        if (isInsightWidget(widget)) {
+            const insight = getInsightByRef(widget.insight);
+            const currentWidth = item.facade().size().xl.gridWidth;
+            const currentHeight = item.facade().size().xl.gridHeight;
+            const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
+                currentWidth,
+                currentHeight,
+                insight,
+                { enableKDWidgetCustomHeight },
+            );
+            let validatedItem = item;
+            if (currentWidth !== validWidth) {
+                validatedItem = validatedItem.size({
+                    xl: {
+                        ...validatedItem.facade().size().xl,
+                        gridWidth: validWidth,
+                    },
+                });
+            }
+            if (currentHeight !== validHeight) {
+                validatedItem = validatedItem.size({
+                    xl: {
+                        ...validatedItem.facade().size().xl,
+                        gridHeight: validHeight,
+                    },
+                });
+            }
 
-        return validatedItem;
-    }
-};
+            return validatedItem;
+        }
+    };
 
 export const DashboardRenderer: React.FC<IDashboardRendererProps> = memo(function DashboardRenderer({
     dashboardLayout,

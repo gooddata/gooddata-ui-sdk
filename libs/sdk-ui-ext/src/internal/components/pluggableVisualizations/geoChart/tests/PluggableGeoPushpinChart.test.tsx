@@ -33,9 +33,8 @@ describe("PluggableGeoPushpinChart", () => {
     describe("getExtendedReferencePoint", () => {
         const geoPushpin = createComponent();
         const sourceReferencePoint = referencePointMocks.simpleGeoPushpinReferencePoint;
-        const extendedReferencePointPromise: Promise<IExtendedReferencePoint> = geoPushpin.getExtendedReferencePoint(
-            sourceReferencePoint,
-        );
+        const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
+            geoPushpin.getExtendedReferencePoint(sourceReferencePoint);
 
         it("should return a new reference point with geoPushpin adapted buckets", () => {
             return extendedReferencePointPromise.then((extendedReferencePoint) => {

@@ -714,9 +714,8 @@ export class PivotTableDrillingExample extends React.Component<unknown, IPivotTa
                 <div className="presets">
                     Group rows:{" "}
                     {Object.keys(groupRowsPresets).map((presetItemKey) => {
-                        const { key, label } = groupRowsPresets[
-                            presetItemKey as keyof typeof groupRowsPresets
-                        ];
+                        const { key, label } =
+                            groupRowsPresets[presetItemKey as keyof typeof groupRowsPresets];
                         return (
                             <ElementWithParam
                                 key={key}

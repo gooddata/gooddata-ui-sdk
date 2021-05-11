@@ -48,8 +48,8 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
     public getVisualizationClasses = async (
         options: IGetVisualizationClassesOptions = {},
     ): Promise<IVisualizationClass[]> => {
-        const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] = await this.authCall(
-            (sdk) => {
+        const visualizationClassesResult: GdcVisualizationClass.IVisualizationClassWrapped[] =
+            await this.authCall((sdk) => {
                 const queryOptions: IGetObjectsByQueryOptions = {
                     category: "visualizationClass",
                 };
@@ -59,8 +59,7 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
                 }
 
                 return sdk.md.getObjectsByQuery(this.workspace, queryOptions);
-            },
-        );
+            });
 
         const visClassOrderingIndex = (visClass: GdcVisualizationClass.IVisualizationClassWrapped) =>
             visClass.visualizationClass.content.orderIndex ?? 0;
@@ -118,9 +117,8 @@ export class BearWorkspaceInsights implements IWorkspaceInsightsService {
         );
 
         // get also deprecated visClasses in case some insights use them
-        const visualizationClassUrlByVisualizationClassUri = await this.getVisualizationClassesByVisualizationClassUri(
-            { includeDeprecated: true },
-        );
+        const visualizationClassUrlByVisualizationClassUri =
+            await this.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
 
         const insights = visualizations.map((visualization) =>
             convertVisualization(

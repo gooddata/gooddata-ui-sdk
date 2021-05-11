@@ -555,7 +555,7 @@ export function getLayoutWithoutGridHeights<TWidget>(
             section.modifyItems((itemBuilder, itemFacade) => {
                 const widget = itemFacade.widget();
                 if (isDashboardLayout(widget)) {
-                    const updatedLayout = (getLayoutWithoutGridHeights(widget) as unknown) as TWidget;
+                    const updatedLayout = getLayoutWithoutGridHeights(widget) as unknown as TWidget;
                     return itemBuilder.widget(updatedLayout);
                 }
 

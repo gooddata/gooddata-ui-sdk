@@ -73,20 +73,18 @@ function addVisualizationPropertiesSortItems(
 }
 
 function fixSortItems(sortItems: ISortItem[] = []) {
-    return sortItems.map(
-        (s): ISortItem => {
-            if (isMeasureSort(s)) {
-                return {
-                    measureSortItem: {
-                        ...s.measureSortItem,
-                        locators: s.measureSortItem.locators.map(fixLocatorItem),
-                    },
-                };
-            }
+    return sortItems.map((s): ISortItem => {
+        if (isMeasureSort(s)) {
+            return {
+                measureSortItem: {
+                    ...s.measureSortItem,
+                    locators: s.measureSortItem.locators.map(fixLocatorItem),
+                },
+            };
+        }
 
-            return s;
-        },
-    );
+        return s;
+    });
 }
 
 function fixLocatorItem(locator: ILocatorItem): ILocatorItem {

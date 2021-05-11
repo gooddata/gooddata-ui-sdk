@@ -45,56 +45,54 @@ export async function sanitizeFilterContext<T extends IFilterContextDefinition>(
 
     const refUriPairs = zip(refs, convertedRefs) as [ObjRef, string][];
 
-    const sanitizedFilters = filters.map(
-        (filter): FilterContextItem => {
-            const originalRef = getDashboardFilterRef(filter);
-            if (!originalRef) {
-                return filter;
-            }
+    const sanitizedFilters = filters.map((filter): FilterContextItem => {
+        const originalRef = getDashboardFilterRef(filter);
+        if (!originalRef) {
+            return filter;
+        }
 
-            // we can use referential comparison here, the objects are the same
-            const refMatch = refUriPairs.find(([ref]) => ref === originalRef);
+        // we can use referential comparison here, the objects are the same
+        const refMatch = refUriPairs.find(([ref]) => ref === originalRef);
 
-            // this indicates a serious fault in the logic
-            invariant(refMatch);
+        // this indicates a serious fault in the logic
+        invariant(refMatch);
 
-            const sanitizedRef = uriRef(refMatch[1]);
+        const sanitizedRef = uriRef(refMatch[1]);
 
-            if (isDashboardAttributeFilter(filter)) {
-                const sanitizedFilterElementsBy = filter.attributeFilter.filterElementsBy?.map(
-                    (item): IDashboardAttributeFilterParent => ({
-                        ...item,
-                        over: {
-                            ...item.over,
-                            attributes: item.over.attributes.map((attrRef) => {
-                                // we can use referential comparison here, the objects are the same
-                                const attrMatch = refUriPairs.find(([ref]) => ref === attrRef);
+        if (isDashboardAttributeFilter(filter)) {
+            const sanitizedFilterElementsBy = filter.attributeFilter.filterElementsBy?.map(
+                (item): IDashboardAttributeFilterParent => ({
+                    ...item,
+                    over: {
+                        ...item.over,
+                        attributes: item.over.attributes.map((attrRef) => {
+                            // we can use referential comparison here, the objects are the same
+                            const attrMatch = refUriPairs.find(([ref]) => ref === attrRef);
 
-                                // this indicates a serious fault in the logic
-                                invariant(attrMatch);
-                                return uriRef(attrMatch[1]);
-                            }),
-                        },
-                    }),
-                );
-
-                return {
-                    attributeFilter: {
-                        ...filter.attributeFilter,
-                        displayForm: sanitizedRef,
-                        filterElementsBy: sanitizedFilterElementsBy,
+                            // this indicates a serious fault in the logic
+                            invariant(attrMatch);
+                            return uriRef(attrMatch[1]);
+                        }),
                     },
-                };
-            } else {
-                return {
-                    dateFilter: {
-                        ...filter.dateFilter,
-                        dataSet: sanitizedRef,
-                    },
-                };
-            }
-        },
-    );
+                }),
+            );
+
+            return {
+                attributeFilter: {
+                    ...filter.attributeFilter,
+                    displayForm: sanitizedRef,
+                    filterElementsBy: sanitizedFilterElementsBy,
+                },
+            };
+        } else {
+            return {
+                dateFilter: {
+                    ...filter.dateFilter,
+                    dataSet: sanitizedRef,
+                },
+            };
+        }
+    });
 
     return {
         ...filterContext,

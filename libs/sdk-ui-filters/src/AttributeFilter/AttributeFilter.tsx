@@ -241,14 +241,8 @@ class AttributeFilterCore extends React.PureComponent<IAttributeFilterProps, IAt
     };
 
     public render() {
-        const {
-            locale,
-            workspace,
-            backend,
-            FilterError,
-            titleWithSelection,
-            fullscreenOnMobile,
-        } = this.props;
+        const { locale, workspace, backend, FilterError, titleWithSelection, fullscreenOnMobile } =
+            this.props;
         const { error, isLoading } = this.state;
         const { isInverted, selectedItems } = this.getInitialDropdownSelection();
 

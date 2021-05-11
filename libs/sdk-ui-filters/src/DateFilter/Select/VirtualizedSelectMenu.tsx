@@ -79,10 +79,12 @@ const itemHeightByTypeMap: { [key in SelectItemTypes]: number } = {
     separator: 1,
 };
 
-const getItemHeight = <V extends unknown>(items: Array<ISelectItem<V>>) => (index: number): number => {
-    const itemType = items[index].type;
-    return itemHeightByTypeMap[itemType];
-};
+const getItemHeight =
+    <V extends unknown>(items: Array<ISelectItem<V>>) =>
+    (index: number): number => {
+        const itemType = items[index].type;
+        return itemHeightByTypeMap[itemType];
+    };
 
 export const getMedianIndex = (array: any[]): number => Math.floor(array.length / 2);
 

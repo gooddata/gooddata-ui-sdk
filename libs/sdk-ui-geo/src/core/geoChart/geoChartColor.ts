@@ -94,15 +94,13 @@ export function getPushpinColors(
     const segmentNames: string[] = [...segmentValues];
     const colorPaletteMapping: ColorPaletteMapping = getColorPaletteMapping(colorStrategy);
     if (!colorValues.length) {
-        return segmentNames.map(
-            (name: string): IPushpinColor => {
-                const palette = colorPaletteMapping[name];
-                return {
-                    border: DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
-                    background: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
-                };
-            },
-        );
+        return segmentNames.map((name: string): IPushpinColor => {
+            const palette = colorPaletteMapping[name];
+            return {
+                border: DEFAULT_PUSHPIN_BORDER_COLOR_VALUE,
+                background: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
+            };
+        });
     }
 
     const colorsWithoutNull = colorValues.filter((value) => value !== null && isFinite(value)) as number[];
@@ -117,19 +115,17 @@ export function getPushpinColors(
         ];
     }
 
-    return colorValues.map(
-        (color: number | null, index: number): IPushpinColor => {
-            const value = color !== null && isFinite(color) ? color : min;
-            const colorIndex = getColorIndexInPalette(value!, min!, max!);
-            const segmentItemName = segmentNames[index] || DEFAULT_SEGMENT_ITEM;
-            const palette = colorPaletteMapping[segmentItemName];
+    return colorValues.map((color: number | null, index: number): IPushpinColor => {
+        const value = color !== null && isFinite(color) ? color : min;
+        const colorIndex = getColorIndexInPalette(value!, min!, max!);
+        const segmentItemName = segmentNames[index] || DEFAULT_SEGMENT_ITEM;
+        const palette = colorPaletteMapping[segmentItemName];
 
-            return {
-                border: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
-                background: palette[colorIndex],
-            };
-        },
-    );
+        return {
+            border: palette[DEFAULT_COLOR_INDEX_IN_PALETTE],
+            background: palette[colorIndex],
+        };
+    });
 }
 
 export function generateLegendColorData(colorSeries: number[], colorString: string): IColorLegendItem[] {
@@ -145,19 +141,17 @@ export function generateLegendColorData(colorSeries: number[], colorString: stri
         return [];
     }
 
-    return range(0, DEFAULT_PUSHPIN_COLOR_SCALE).map(
-        (index: number): IColorLegendItem => {
-            const from = min + offset * index;
-            const isLastItem = index === DEFAULT_PUSHPIN_COLOR_SCALE - 1;
-            const to = isLastItem ? max : from + offset;
-            const range = {
-                from,
-                to,
-            };
-            return {
-                range,
-                color: colorPalette[index],
-            };
-        },
-    );
+    return range(0, DEFAULT_PUSHPIN_COLOR_SCALE).map((index: number): IColorLegendItem => {
+        const from = min + offset * index;
+        const isLastItem = index === DEFAULT_PUSHPIN_COLOR_SCALE - 1;
+        const to = isLastItem ? max : from + offset;
+        const range = {
+            from,
+            to,
+        };
+        return {
+            range,
+            color: colorPalette[index],
+        };
+    });
 }

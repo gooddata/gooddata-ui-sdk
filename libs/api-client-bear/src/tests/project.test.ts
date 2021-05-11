@@ -495,8 +495,7 @@ describe("project", () => {
                             value: "false",
                             source: "catalog",
                             links: {
-                                self:
-                                    "/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivotGrouping",
+                                self: "/gdc/projects/kytra720hke4d84e8ozohoz7uycn53mi/config/enablePivotGrouping",
                             },
                         },
                     },

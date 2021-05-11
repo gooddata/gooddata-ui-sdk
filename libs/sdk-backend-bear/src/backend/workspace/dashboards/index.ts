@@ -97,17 +97,13 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             ? await objRefToUri(exportFilterContextRef, this.workspace, this.authCall)
             : undefined;
 
-        const [
-            bearDashboard,
-            bearDependencies,
-            bearExportFilterContext,
-            bearVisualizationClasses,
-        ] = await Promise.all([
-            this.getBearDashboard(dashboardRef),
-            this.getBearDashboardDependencies(dashboardRef),
-            this.getBearExportFilterContext(exportFilterContextRef),
-            this.getBearVisualizationClasses(),
-        ] as const);
+        const [bearDashboard, bearDependencies, bearExportFilterContext, bearVisualizationClasses] =
+            await Promise.all([
+                this.getBearDashboard(dashboardRef),
+                this.getBearDashboardDependencies(dashboardRef),
+                this.getBearExportFilterContext(exportFilterContextRef),
+                this.getBearVisualizationClasses(),
+            ] as const);
 
         if (bearExportFilterContext) {
             bearDashboard.analyticalDashboard.content.filterContext = exportFilterContextUri;
@@ -262,14 +258,12 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
                 nearest: true,
             }),
         );
-        const convertedResult = result.map(
-            (entry): IWidgetAlertCount => {
-                return {
-                    ref: uriRef(entry.uri),
-                    alertCount: entry.entries.length,
-                };
-            },
-        );
+        const convertedResult = result.map((entry): IWidgetAlertCount => {
+            return {
+                ref: uriRef(entry.uri),
+                alertCount: entry.entries.length,
+            };
+        });
         return convertedResult;
     };
 
@@ -712,9 +706,8 @@ export class BearWorkspaceDashboards implements IWorkspaceDashboardsService {
             "visualizationObject",
         ])) as GdcVisualizationObject.IVisualization[];
 
-        const visualizationClassUrlByVisualizationClassUri = await this.insights.getVisualizationClassesByVisualizationClassUri(
-            { includeDeprecated: true },
-        );
+        const visualizationClassUrlByVisualizationClassUri =
+            await this.insights.getVisualizationClassesByVisualizationClassUri({ includeDeprecated: true });
 
         const insights = dependencies.map((visualization: GdcVisualizationObject.IVisualization) =>
             convertVisualization(

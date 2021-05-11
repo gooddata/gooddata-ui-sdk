@@ -83,5 +83,5 @@ export const getFakeColumn = (colDef: any): Column => {
         drillItems: columnDefinition.drillItems,
     };
 
-    return (fakeColumn as unknown) as Column;
+    return fakeColumn as unknown as Column;
 };

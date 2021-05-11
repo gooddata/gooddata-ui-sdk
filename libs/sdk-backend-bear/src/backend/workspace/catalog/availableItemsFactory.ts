@@ -160,14 +160,8 @@ export class BearWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCata
     private loadAvailableDateDatasets = async (
         sanitizedVisualizationObject: GdcVisualizationObject.IVisualizationObject,
     ): Promise<ICatalogDateDataset[]> => {
-        const {
-            types,
-            includeTags,
-            excludeTags,
-            dataset,
-            production,
-            includeDateGranularities,
-        } = this.options;
+        const { types, includeTags, excludeTags, dataset, production, includeDateGranularities } =
+            this.options;
 
         const includeDateDatasets = types.includes("dateDataset");
         if (!includeDateDatasets) {

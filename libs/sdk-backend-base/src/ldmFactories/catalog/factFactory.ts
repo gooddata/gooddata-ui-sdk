@@ -13,7 +13,7 @@ import { FactMetadataObjectBuilder, newFactMetadataObject } from "../metadata/fa
  * @beta
  */
 export class CatalogFactBuilder<
-    T extends ICatalogFact = ICatalogFact
+    T extends ICatalogFact = ICatalogFact,
 > extends GroupableCatalogItemBuilder<T> {
     public fact(
         factOrRef: IFactMetadataObject | ObjRef,

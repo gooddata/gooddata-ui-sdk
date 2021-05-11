@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class MeasureMetadataObjectBuilder<
-    T extends IMeasureMetadataObject = IMeasureMetadataObject
+    T extends IMeasureMetadataObject = IMeasureMetadataObject,
 > extends MetadataObjectBuilder<T> {
     public expression(maql: string): this {
         this.item.expression = maql;

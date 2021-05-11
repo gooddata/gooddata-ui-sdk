@@ -43,16 +43,14 @@ export function ColorLabels(colorLabelProps: IColorLabelsProps): JSX.Element {
     const { labels } = colorLabelProps;
     return (
         <div className="labels">
-            {labels.map(
-                (item: IColorLegendLabel): JSX.Element => {
-                    const { key, label, style } = item;
-                    return (
-                        <span key={key} style={style}>
-                            {label}
-                        </span>
-                    );
-                },
-            )}
+            {labels.map((item: IColorLegendLabel): JSX.Element => {
+                const { key, label, style } = item;
+                return (
+                    <span key={key} style={style}>
+                        {label}
+                    </span>
+                );
+            })}
         </div>
     );
 }
@@ -61,13 +59,11 @@ export function ColorBoxes(colorBoxProps: IColorBoxesProps): JSX.Element {
     const { boxes } = colorBoxProps;
     return (
         <div className="boxes">
-            {boxes.map(
-                (box: IColorLegendBox): JSX.Element => {
-                    const classes = cx("box", box.class);
-                    const { key, style } = box;
-                    return <span className={classes} key={key} style={style} />;
-                },
-            )}
+            {boxes.map((box: IColorLegendBox): JSX.Element => {
+                const classes = cx("box", box.class);
+                const { key, style } = box;
+                return <span className={classes} key={key} style={style} />;
+            })}
         </div>
     );
 }

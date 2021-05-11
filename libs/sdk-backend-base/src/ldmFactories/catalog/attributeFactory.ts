@@ -23,7 +23,7 @@ import {
  * @beta
  */
 export class CatalogAttributeBuilder<
-    T extends ICatalogAttribute = ICatalogAttribute
+    T extends ICatalogAttribute = ICatalogAttribute,
 > extends GroupableCatalogItemBuilder<T> {
     public attribute(
         attributeOrRef: IAttributeMetadataObject | ObjRef,

@@ -277,9 +277,7 @@ export function getParentAttributeConfiguration(
     return { xAxis: [xAxisItem] };
 }
 
-export function setDrillConfigToXAxis(
-    drillConfig: IDrillConfig,
-): {
+export function setDrillConfigToXAxis(drillConfig: IDrillConfig): {
     xAxis: {
         drillConfig: IDrillConfig;
     }[];

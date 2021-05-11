@@ -100,39 +100,37 @@ export class BearWorkspaceMeasures implements IWorkspaceMeasuresService {
             {},
         );
 
-        const expressionTokensWithDetails = expressionTokens.map(
-            (token): IMeasureExpressionToken => {
-                if (token.type === "element_uri") {
-                    const element = attributeElementsByUri[token.value];
-                    return {
-                        type: "attributeElement",
-                        ...(element
-                            ? {
-                                  value: element.title,
-                              }
-                            : {
-                                  value: "",
-                                  deleted: true,
-                              }),
-                    };
-                } else if (token.type === "uri" || token.type === "identifier") {
-                    const meta =
-                        token.type === "uri"
-                            ? convertMetadataObject(objectsByUri[token.value])
-                            : convertMetadataObject(objectsByIdentifier[token.value]);
-                    return {
-                        type: meta.type,
-                        value: meta.title,
-                        ref: meta.ref,
-                    };
-                }
-
+        const expressionTokensWithDetails = expressionTokens.map((token): IMeasureExpressionToken => {
+            if (token.type === "element_uri") {
+                const element = attributeElementsByUri[token.value];
                 return {
-                    type: "text",
-                    value: token.value,
+                    type: "attributeElement",
+                    ...(element
+                        ? {
+                              value: element.title,
+                          }
+                        : {
+                              value: "",
+                              deleted: true,
+                          }),
                 };
-            },
-        );
+            } else if (token.type === "uri" || token.type === "identifier") {
+                const meta =
+                    token.type === "uri"
+                        ? convertMetadataObject(objectsByUri[token.value])
+                        : convertMetadataObject(objectsByIdentifier[token.value]);
+                return {
+                    type: meta.type,
+                    value: meta.title,
+                    ref: meta.ref,
+                };
+            }
+
+            return {
+                type: "text",
+                value: token.value,
+            };
+        });
 
         return expressionTokensWithDetails;
     }

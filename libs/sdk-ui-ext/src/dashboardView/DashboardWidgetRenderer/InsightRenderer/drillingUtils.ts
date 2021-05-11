@@ -21,14 +21,12 @@ function widgetDrillToDrillPredicates(drill: DrillDefinition): IHeaderPredicate[
 }
 
 function insightWidgetImplicitDrills(insightWidgetDrills: DrillDefinition[]): IImplicitDrillWithPredicates[] {
-    return insightWidgetDrills.map(
-        (drill): IImplicitDrillWithPredicates => {
-            return {
-                drillDefinition: drill,
-                predicates: widgetDrillToDrillPredicates(drill),
-            };
-        },
-    );
+    return insightWidgetDrills.map((drill): IImplicitDrillWithPredicates => {
+        return {
+            drillDefinition: drill,
+            predicates: widgetDrillToDrillPredicates(drill),
+        };
+    });
 }
 
 function insightDrillDownImplicitDrills(
@@ -41,25 +39,23 @@ function insightDrillDownImplicitDrills(
         );
     });
 
-    return drillsWitDrillDown.map(
-        (drill): IImplicitDrillWithPredicates => {
-            const matchingCatalogAttribute = attributesWithDrillDown.find((attr) =>
-                areObjRefsEqual(attr.attribute.ref, drill.attribute.attributeHeader.formOf.ref),
-            );
+    return drillsWitDrillDown.map((drill): IImplicitDrillWithPredicates => {
+        const matchingCatalogAttribute = attributesWithDrillDown.find((attr) =>
+            areObjRefsEqual(attr.attribute.ref, drill.attribute.attributeHeader.formOf.ref),
+        );
 
-            return {
-                drillDefinition: {
-                    type: "drillDown",
-                    target: matchingCatalogAttribute.attribute.drillDownStep!,
-                },
-                predicates: [
-                    // add drillable items for both types of objRefs that the header can be
-                    HeaderPredicates.identifierMatch(drill.attribute.attributeHeader.identifier),
-                    HeaderPredicates.uriMatch(drill.attribute.attributeHeader.uri),
-                ],
-            };
-        },
-    );
+        return {
+            drillDefinition: {
+                type: "drillDown",
+                target: matchingCatalogAttribute.attribute.drillDownStep!,
+            },
+            predicates: [
+                // add drillable items for both types of objRefs that the header can be
+                HeaderPredicates.identifierMatch(drill.attribute.attributeHeader.identifier),
+                HeaderPredicates.uriMatch(drill.attribute.attributeHeader.uri),
+            ],
+        };
+    });
 }
 
 /**

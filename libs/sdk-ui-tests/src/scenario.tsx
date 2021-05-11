@@ -236,11 +236,11 @@ export class ScenarioBuilder<T extends VisProps> {
             // typescript won't let this fly without explicit casts; it is safe in this circumstance. see
             // UnboundChartProps.. whatever subtype, we always omit just backend and workspace that are
             // filled in during this factory call
-            return ({
+            return {
                 ...props,
                 backend,
                 workspace,
-            } as any) as T;
+            } as any as T;
         };
 
         return {

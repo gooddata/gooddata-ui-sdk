@@ -47,15 +47,8 @@ export class CustomFormatDialog extends React.PureComponent<
     };
 
     public render(): React.ReactNode {
-        const {
-            anchorEl,
-            positioning,
-            onCancel,
-            separators,
-            templates,
-            documentationLink,
-            intl,
-        } = this.props;
+        const { anchorEl, positioning, onCancel, separators, templates, documentationLink, intl } =
+            this.props;
         const { format } = this.state;
 
         return (
