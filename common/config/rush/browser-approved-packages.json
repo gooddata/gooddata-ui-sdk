@@ -891,6 +891,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "svgo",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "testcafe",
       "allowedCategories": [ "examples", "production" ]
     },

@@ -12,10 +12,14 @@ _clean() {
 
 _common-build() {
     mkdir -p dist
-    cp -rf src/assets dist
+    # first copy everything in the assets (in case there are non-SVG files)
+    cp -rf src/assets dist/
+    # then use svgo to optimize all the SVGs there
+    svgo -rqf src/assets dist/assets
 
     mkdir -p esm
-    cp -rf src/assets esm
+    # copy optimized assets from dist, no need to run the optimization again
+    cp -rf dist/assets esm
 
     _build_styles
 }
