@@ -923,6 +923,10 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "tsd",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "tslib",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

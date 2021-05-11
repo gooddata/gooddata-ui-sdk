@@ -1,42 +1,30 @@
 // (C) 2019-2021 GoodData Corporation
 import isArray from "lodash/isArray";
-import flatMap from "lodash/flatMap";
 import {
     IPlaceholder,
-    ISinglePlaceholder,
-    IComputedPlaceholder,
-    IGroupPlaceholder,
-    PlaceholderResolvedValue,
-    PlaceholdersResolvedValues,
     PlaceholderValue,
-    isSinglePlaceholder,
-    isGroupPlaceholder,
-    isComputedPlaceholder,
     isPlaceholder,
+    isAnyPlaceholder,
+    PlaceholderResolvedValue,
+    IComposedPlaceholder,
+    PlaceholdersResolvedValues,
+    isComposedPlaceholder,
 } from "./base";
 import { PlaceholdersState } from "./context";
-import invariant from "ts-invariant";
 
 /**
+ * Set placeholder value to the context.
  * @internal
  */
-export function setPlaceholder<T extends IPlaceholder>(
+export function setPlaceholder<T extends IPlaceholder<any>>(
     placeholder: T,
     value: PlaceholderValue<T> | undefined,
     state: PlaceholdersState,
 ): PlaceholdersState {
-    if (isGroupPlaceholder(placeholder)) {
-        return {
-            ...state,
-            groupPlaceholders: {
-                ...state.groupPlaceholders,
-                [placeholder.id]: {
-                    ...placeholder,
-                    value,
-                },
-            },
-        };
-    } else if (isSinglePlaceholder(placeholder)) {
+    if (placeholder.validate) {
+        placeholder.validate(value);
+    }
+    if (isPlaceholder(placeholder)) {
         return {
             ...state,
             placeholders: {
@@ -49,126 +37,79 @@ export function setPlaceholder<T extends IPlaceholder>(
         };
     }
 
-    invariant(
-        !isComputedPlaceholder(placeholder),
-        "Cannot set value of the computed placeholder - computed placeholders are read-only.",
-    );
-
     return state;
 }
 
 /**
+ * Resolve placeholder value from the context, or fallback to default value.
  * @internal
  */
-export function resolveSinglePlaceholderValue<T extends ISinglePlaceholder<any>>(
+export function resolvePlaceholderValue<T extends IPlaceholder<any>>(
     placeholder: T,
     state: PlaceholdersState,
 ): PlaceholderValue<T> | undefined {
     const placeholderValue = state.placeholders[placeholder.id]?.value ?? placeholder.defaultValue;
-    return placeholderValue;
-}
-
-/**
- * @internal
- */
-export function resolveGroupPlaceholderValue<T extends IGroupPlaceholder<any>>(
-    placeholder: T,
-    state: PlaceholdersState,
-): PlaceholderValue<T> | undefined {
-    const placeholderValue = state.groupPlaceholders[placeholder.id]?.value ?? placeholder.defaultValue;
-    return placeholderValue;
-}
-
-/**
- * @internal
- */
-export function resolveFullGroupPlaceholderValue<T extends IGroupPlaceholder<any>>(
-    placeholder: T,
-    state: PlaceholdersState,
-): PlaceholderResolvedValue<T> | undefined {
-    const placeholderValue = state.groupPlaceholders[placeholder.id]?.value ?? placeholder.defaultValue;
-    if (!placeholderValue) {
-        return placeholderValue;
+    if (placeholder.validate) {
+        placeholder.validate(placeholderValue);
     }
-
-    return flatMap(placeholderValue, (v) =>
-        isPlaceholder(v) ? resolveFullPlaceholderValue(v, state) : [v],
-    ) as PlaceholderResolvedValue<T>;
+    return placeholderValue;
 }
 
 /**
- *
+ * Resolve composed placeholder value with provided resolution context.
  * @internal
  */
-export function resolveComputedPlaceholderValue<TReturn, TPlaceholders extends IPlaceholder[]>(
-    placeholder: IComputedPlaceholder<TReturn, TPlaceholders>,
+export function resolveComposedPlaceholderValue<TReturn, TValue extends any[], TContext>(
+    placeholder: IComposedPlaceholder<TReturn, TValue, TContext>,
     state: PlaceholdersState,
+    resolutionContext?: TContext,
 ): TReturn | undefined {
     const values = placeholder.placeholders.map((p) =>
-        resolveFullPlaceholderValue(p, state),
-    ) as PlaceholdersResolvedValues<TPlaceholders>;
-    const result = placeholder.computeValue(values);
+        resolveValueWithPlaceholders(p, state, resolutionContext),
+    ) as PlaceholdersResolvedValues<TValue>;
+    const result = placeholder.computeValue(values, resolutionContext!);
     return result;
 }
 
 /**
- *
- * @internal
- */
-export function resolvePlaceholderValue<T extends IPlaceholder>(
-    placeholder: T,
-    state: PlaceholdersState,
-): PlaceholderValue<T> | undefined {
-    if (isSinglePlaceholder(placeholder)) {
-        return resolveSinglePlaceholderValue(placeholder, state);
-    } else if (isGroupPlaceholder(placeholder)) {
-        return resolveGroupPlaceholderValue(placeholder, state);
-    } else if (isComputedPlaceholder(placeholder)) {
-        return resolveComputedPlaceholderValue<any, any>(placeholder, state);
-    }
-}
-
-/**
- *
- * @internal
- */
-export function resolveFullPlaceholderValue<T extends IPlaceholder>(
-    placeholder: T,
-    state: PlaceholdersState,
-): PlaceholderResolvedValue<T> | undefined {
-    if (isSinglePlaceholder(placeholder)) {
-        return resolveSinglePlaceholderValue(placeholder, state);
-    } else if (isGroupPlaceholder(placeholder)) {
-        return resolveFullGroupPlaceholderValue(placeholder, state);
-    } else if (isComputedPlaceholder(placeholder)) {
-        return resolveComputedPlaceholderValue<any, any>(placeholder, state);
-    }
-}
-
-/**
  * Resolve value(s) that can possibly contain also placeholder(s) to actual value(s).
+ * Arrays with nested placeholders that are holding arrays are flattened.
+ * You can specify custom resolution context for the composed placeholders.
  *
- * @param values - any value(s) that can possibly contain placeholder(s)
- * @param state - current placeholders state
- * @returns value with all placeholders resolved
+ * This is method you want to use to replace placeholders in any value with actual placeholder values.
+ * It does not support object traversing as most of the visualizations interfaces
+ * are consuming only arrays or single values.
+ *
  * @internal
  */
-export function resolveValueWithPlaceholders<T>(
+export function resolveValueWithPlaceholders<T, C>(
     value: T,
     state: PlaceholdersState,
-): T | PlaceholderResolvedValue<T> | PlaceholderResolvedValue<T>[] | undefined {
+    resolutionContext?: C,
+): PlaceholderResolvedValue<T> {
     if (isPlaceholder(value)) {
-        return resolveFullPlaceholderValue(value, state);
+        return resolvePlaceholderValue(value, state) as PlaceholderResolvedValue<T>;
+    } else if (isComposedPlaceholder(value)) {
+        return resolveComposedPlaceholderValue(
+            value,
+            state,
+            resolutionContext,
+        ) as PlaceholderResolvedValue<T>;
     } else if (isArray(value)) {
         return value.reduce((acc, v) => {
-            const resolvedValue = resolveValueWithPlaceholders(v, state);
-            if (isGroupPlaceholder(v)) {
-                return [...acc, ...resolvedValue];
+            const resolvedValue = resolveValueWithPlaceholders(v, state, resolutionContext);
+            if (isAnyPlaceholder(v)) {
+                // Omit placeholder values that are not set
+                if (!resolvedValue) {
+                    return acc;
+                } else if (isArray(resolvedValue)) {
+                    return [...acc, ...resolvedValue.filter((v) => typeof v !== "undefined")];
+                }
             }
 
             return [...acc, resolvedValue];
         }, []);
     }
 
-    return value;
+    return value as PlaceholderResolvedValue<T>;
 }

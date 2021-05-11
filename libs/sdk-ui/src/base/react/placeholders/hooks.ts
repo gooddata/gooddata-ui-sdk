@@ -3,40 +3,35 @@ import { useCallback } from "react";
 import { ValueOrUpdateCallback } from "@gooddata/sdk-backend-base";
 import {
     IPlaceholder,
+    IComposedPlaceholder,
     PlaceholderValue,
+    PlaceholdersValues,
     PlaceholderResolvedValue,
     PlaceholdersResolvedValues,
-    AnyValueWithPlaceholdersResolvedValue,
-    AnyValuesWithPlaceholdersResolvedValues,
-    PlaceholdersValues,
 } from "./base";
 import { usePlaceholdersContext, PlaceholdersState } from "./context";
 import {
-    resolveFullPlaceholderValue,
-    resolvePlaceholderValue,
-    resolveValueWithPlaceholders,
     setPlaceholder,
+    resolvePlaceholderValue,
+    resolveComposedPlaceholderValue,
+    resolveValueWithPlaceholders,
 } from "./resolve";
 
 /**
  * React hook to obtain/set placeholder value.
- * See {@link IPlaceholder} to read more details about placeholders.
- *
- * @public
+ * See {@link IPlaceholder}.
+ * @beta
  */
-export function usePlaceholder<T extends IPlaceholder>(
+export function usePlaceholder<T extends IPlaceholder<any>>(
     placeholder: T,
 ): [
-    returnValue: PlaceholderResolvedValue<T>,
+    returnValue: PlaceholderValue<T> | undefined,
     setPlaceholderValue: (
         valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>,
     ) => void,
 ] {
     const { state, updateState } = usePlaceholdersContext();
-    const resolvedPlaceholderValue = resolveFullPlaceholderValue(
-        placeholder,
-        state,
-    ) as PlaceholderResolvedValue<T>;
+    const resolvedPlaceholderValue = resolvePlaceholderValue(placeholder, state);
 
     const setPlaceholderValue = useCallback(
         (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => {
@@ -63,22 +58,22 @@ export function usePlaceholder<T extends IPlaceholder>(
 }
 
 /**
- * React hook to obtain/set multiple placeholder values at once - for atomic changes.
- * See {@link IPlaceholder} to read more details about placeholders.
- *
- * @public
+ * React hook to obtain/set multiple placeholder values at once.
+ * This is useful to perform placeholders atomic change.
+ * See {@link IPlaceholder}.
+ * @beta
  */
-export function usePlaceholders<T extends IPlaceholder[]>(
+export function usePlaceholders<T extends IPlaceholder<any>[]>(
     placeholders: [...T],
 ): [
-    returnValues: PlaceholdersResolvedValues<T>,
+    returnValues: PlaceholdersValues<T>,
     setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void,
 ] {
     const { state, updateState } = usePlaceholdersContext();
 
     const resolvedPlaceholderValues = placeholders.map((placeholder) =>
-        resolveFullPlaceholderValue(placeholder, state),
-    ) as PlaceholdersResolvedValues<T>;
+        resolvePlaceholderValue(placeholder, state),
+    ) as PlaceholdersValues<T>;
 
     const setPlaceholderValues = useCallback(
         (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => {
@@ -106,25 +101,54 @@ export function usePlaceholders<T extends IPlaceholder[]>(
 }
 
 /**
- * React hook that resolves any value(s) that can possibly contain also placeholder(s) to actual value(s).
+ * React hook to obtain composed placeholder value.
+ * Optionally provide custom context for the composed placeholders resolution.
+ * See {@link IComposedPlaceholder}.
  *
- * @public
+ * @beta
  */
-export function useResolveValueWithPlaceholders<T>(value: T): AnyValueWithPlaceholdersResolvedValue<T> {
+export function useComposedPlaceholder<
+    TContext,
+    TPlaceholder extends IComposedPlaceholder<any, any, TContext>
+>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder> {
     const { state } = usePlaceholdersContext();
-    const resolvedValue = resolveValueWithPlaceholders<T>(value, state);
-    return resolvedValue as AnyValueWithPlaceholdersResolvedValue<T>;
+    const resolvedPlaceholderValue = resolveComposedPlaceholderValue(
+        placeholder,
+        state,
+        resolutionContext,
+    ) as PlaceholderResolvedValue<TPlaceholder>;
+
+    return resolvedPlaceholderValue;
+}
+
+/**
+ * React hook that resolves any value(s) that can possibly contain also placeholder(s) to actual value(s).
+ * Optionally provide custom context for the composed placeholders resolution.
+ *
+ * @beta
+ */
+export function useResolveValueWithPlaceholders<T, C>(
+    value: T,
+    resolutionContext?: C,
+): PlaceholderResolvedValue<T> {
+    const { state } = usePlaceholdersContext();
+    const resolvedValue = resolveValueWithPlaceholders(value, state, resolutionContext);
+    return resolvedValue;
 }
 
 /**
  * React hook that resolves multiple value(s) that can possibly contain also placeholder(s) to actual value(s).
+ * Optionally provide custom context for the composed placeholders resolution.
  *
- * @public
+ * @beta
  */
-export function useResolveValuesWithPlaceholders<T extends any[]>(
+export function useResolveValuesWithPlaceholders<T extends any[], C>(
     values: [...T],
-): AnyValuesWithPlaceholdersResolvedValues<T> {
+    resolutionContext?: C,
+): PlaceholdersResolvedValues<T> {
     const { state } = usePlaceholdersContext();
-    const resolvedValues = values?.map((value) => resolveValueWithPlaceholders(value, state));
-    return resolvedValues as AnyValuesWithPlaceholdersResolvedValues<T>;
+    const resolvedValues = values?.map((value) =>
+        resolveValueWithPlaceholders(value, state, resolutionContext),
+    );
+    return resolvedValues as PlaceholdersResolvedValues<T>;
 }

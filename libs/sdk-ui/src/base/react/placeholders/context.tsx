@@ -1,14 +1,13 @@
 // (C) 2019 GoodData Corporation
 import React, { createContext, useContext, useDebugValue, useState } from "react";
 import noop from "lodash/noop";
-import { ISinglePlaceholder, IGroupPlaceholder } from "./base";
+import { IPlaceholder } from "./base";
 
 /**
  * @internal
  */
 export type PlaceholdersState = {
-    placeholders: Record<string, ISinglePlaceholder<any>>;
-    groupPlaceholders: Record<string, IGroupPlaceholder<any>>;
+    placeholders: Record<string, IPlaceholder<any>>;
 };
 
 /**
@@ -25,7 +24,6 @@ interface IPlaceholdersContextState {
 const PlaceholdersContext = createContext<IPlaceholdersContextState>({
     state: {
         placeholders: {},
-        groupPlaceholders: {},
     },
     updateState: noop,
 });
@@ -37,20 +35,29 @@ PlaceholdersContext.displayName = "PlaceholdersContext";
 export const usePlaceholdersContext = (): IPlaceholdersContextState => useContext(PlaceholdersContext);
 
 /**
- * @public
+ * @beta
  */
 export interface IPlaceholdersProviderProps {
     children: React.ReactNode;
+    initialValues?: [placeholder: IPlaceholder<any>, initialValue: any][];
 }
 
 /**
- * @public
+ * @beta
  */
 export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element {
-    const { children } = props;
+    const { children, initialValues } = props;
+    const initialPlaceholdersState =
+        initialValues?.reduce((acc, [placeholder, value]) => {
+            acc[placeholder.id] = {
+                ...placeholder,
+                value,
+            };
+            return acc;
+        }, {}) ?? {};
+
     const [state, updateState] = useState<PlaceholdersState>({
-        placeholders: {},
-        groupPlaceholders: {},
+        placeholders: initialPlaceholdersState,
     });
     useDebugValue(state);
 

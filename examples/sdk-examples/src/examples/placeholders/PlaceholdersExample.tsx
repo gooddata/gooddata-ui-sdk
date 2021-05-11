@@ -3,16 +3,15 @@ import React from "react";
 import Select from "react-select";
 import {
     PlaceholdersProvider,
-    newMeasurePlaceholder,
-    newMeasureGroupPlaceholder,
-    newAttributePlaceholder,
-    newAttributeGroupPlaceholder,
-    newFilterPlaceholder,
-    newComputedPlaceholder,
+    newPlaceholder,
+    newComposedPlaceholder,
     usePlaceholders,
+    usePlaceholder,
+    useResolveValueWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { Ldm, LdmExt } from "../../ldm";
+import isEmpty from "lodash/isEmpty";
 import {
     attributeIdentifier,
     isAttribute,
@@ -21,25 +20,27 @@ import {
     measureTitle,
     measureIdentifier,
     modifySimpleMeasure,
-    IMeasureFilter,
     newAbsoluteDateFilter,
     modifyMeasure,
+    IAttribute,
+    IMeasure,
+    IMeasureDefinition,
 } from "@gooddata/sdk-model";
 
 const primaryMeasure = modifyMeasure(Ldm.$TotalSales, (m) => m.localId("primaryMeasure"));
-const primaryMeasurePlaceholder = newMeasurePlaceholder(primaryMeasure);
-const filterPlaceholder = newFilterPlaceholder<IMeasureFilter>(
+const primaryMeasurePlaceholder = newPlaceholder<IMeasure<IMeasureDefinition>>();
+const filterPlaceholder = newPlaceholder(
     newAbsoluteDateFilter(Ldm.DateDatasets.Date.ref, "2017-01-01", "2017-09-01"),
 );
-const stackByAttributePlaceholder = newAttributePlaceholder();
-const viewByAttributesPlaceholder = newAttributeGroupPlaceholder();
-const measuresPlaceholder = newMeasureGroupPlaceholder();
+const stackByAttributePlaceholder = newPlaceholder<IAttribute>();
+const viewByAttributesPlaceholder = newPlaceholder<IAttribute[]>([]);
+const measuresPlaceholder = newPlaceholder<IMeasure[]>([]);
 
-const computedMeasurePlaceholder = newComputedPlaceholder(
+const computedMeasurePlaceholder = newComposedPlaceholder(
     [primaryMeasurePlaceholder, filterPlaceholder],
-    ([pm, filter]) => {
+    ([pm, filter]): IMeasure => {
         if (!pm) {
-            return;
+            return (undefined as unknown) as IMeasure;
         }
         return modifySimpleMeasure(pm, (m) => m.filters(filter).localId("derivedMeasure"));
     },
@@ -47,7 +48,7 @@ const computedMeasurePlaceholder = newComputedPlaceholder(
 
 const stackByAttributes = [Ldm.LocationState, Ldm.LocationCity, Ldm.LocationOwnership];
 const StackByAttributeSelect: React.FC = () => {
-    const [activeStackByAttribute, setStackByAttribute] = stackByAttributePlaceholder.use();
+    const [activeStackByAttribute, setStackByAttribute] = usePlaceholder(stackByAttributePlaceholder);
 
     return (
         <div>
@@ -66,7 +67,7 @@ const StackByAttributeSelect: React.FC = () => {
 
 const viewByAttributes = [Ldm.LocationState, Ldm.LocationCity, Ldm.LocationOwnership];
 const ViewByAttributeSelect: React.FC = () => {
-    const [activeViewByAttributes, setViewByAttributes] = viewByAttributesPlaceholder.use();
+    const [activeViewByAttributes, setViewByAttributes] = usePlaceholder(viewByAttributesPlaceholder);
 
     return (
         <div>
@@ -84,9 +85,9 @@ const ViewByAttributeSelect: React.FC = () => {
     );
 };
 
-const measures = [LdmExt.FranchiseFees, LdmExt.TotalCosts, LdmExt.TotalSales1];
+const measures = [LdmExt.FranchiseFees, LdmExt.TotalCosts, LdmExt.FranchisedSales];
 const MeasuresSelect: React.FC = () => {
-    const [activeMeasures, setMeasures] = measuresPlaceholder.use();
+    const [activeMeasures, setMeasures] = usePlaceholder(measuresPlaceholder);
 
     return (
         <div>
@@ -106,14 +107,14 @@ const MeasuresSelect: React.FC = () => {
                 }
                 isMulti
                 isClearable
-                value={activeMeasures ?? []}
+                value={activeMeasures}
             />
         </div>
     );
 };
 
 const PrimaryMeasureToggle: React.FC = () => {
-    const [activePrimaryMeasure, setPrimaryMeasure] = primaryMeasurePlaceholder.use();
+    const [activePrimaryMeasure, setPrimaryMeasure] = usePlaceholder(primaryMeasurePlaceholder);
 
     return (
         <button
@@ -147,13 +148,20 @@ const AtomicPreset: React.FC = () => {
 
 const style = { height: 600 };
 const PlaceholderBarChart: React.FC = () => {
+    const measures = [primaryMeasurePlaceholder, measuresPlaceholder, computedMeasurePlaceholder];
+    const resolvedMeasures = useResolveValueWithPlaceholders(measures);
+
     return (
         <div style={style}>
-            <BarChart
-                measures={[computedMeasurePlaceholder, primaryMeasurePlaceholder]}
-                stackBy={stackByAttributePlaceholder}
-                viewBy={viewByAttributesPlaceholder}
-            />
+            {isEmpty(resolvedMeasures) ? (
+                <h2>Select at least one measure to display the chart</h2>
+            ) : (
+                <BarChart
+                    measures={measures}
+                    stackBy={stackByAttributePlaceholder}
+                    viewBy={[viewByAttributesPlaceholder]}
+                />
+            )}
         </div>
     );
 };

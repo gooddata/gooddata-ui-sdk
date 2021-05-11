@@ -4,23 +4,17 @@
 
 ```ts
 
+import { AnyMeasure } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeGroupPlaceholder } from '@gooddata/sdk-ui';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
-import { IAttributePlaceholder } from '@gooddata/sdk-ui';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
-import { IComputedPlaceholder } from '@gooddata/sdk-ui';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IFilterGroupPlaceholder } from '@gooddata/sdk-ui';
-import { IFilterPlaceholder } from '@gooddata/sdk-ui';
 import { IMeasure } from '@gooddata/sdk-model';
-import { IMeasureGroupPlaceholder } from '@gooddata/sdk-ui';
-import { IMeasurePlaceholder } from '@gooddata/sdk-ui';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
@@ -30,6 +24,8 @@ import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { ValueOrPlaceholder } from '@gooddata/sdk-ui';
+import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 
 // @public
@@ -114,11 +110,11 @@ export interface IAxisNameConfig {
 
 // @public (undocumented)
 export interface IBarChartBucketProps {
-    filters?: IFilterGroupPlaceholder | Array<INullableFilter | IFilterPlaceholder | IFilterGroupPlaceholder>;
-    measures: IMeasureGroupPlaceholder | IAttributeGroupPlaceholder | IComputedPlaceholder<any, any> | Array<IAttributeOrMeasure | IMeasurePlaceholder | IAttributePlaceholder | IMeasureGroupPlaceholder | IAttributeGroupPlaceholder | IComputedPlaceholder<any, any>>;
-    sortBy?: ISortItem[];
-    stackBy?: IAttribute | IAttributePlaceholder;
-    viewBy?: IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)

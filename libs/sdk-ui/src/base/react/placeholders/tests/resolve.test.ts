@@ -2,171 +2,142 @@
 
 import {
     resolveValueWithPlaceholders,
-    resolveSinglePlaceholderValue,
+    resolvePlaceholderValue,
     setPlaceholder,
-    resolveGroupPlaceholderValue,
-    resolveFullGroupPlaceholderValue,
-    resolveComputedPlaceholderValue,
+    resolveComposedPlaceholderValue,
 } from "../resolve";
-import {
-    newAttributePlaceholder,
-    newFilterPlaceholder,
-    newMeasurePlaceholder,
-    newSortPlaceholder,
-    newMeasureGroupPlaceholder,
-    newAttributeGroupPlaceholder,
-    newFilterGroupPlaceholder,
-    newSortGroupPlaceholder,
-    newComputedPlaceholder,
-    newGroupPlaceholder,
-} from "../factory";
-import {
-    newMeasure,
-    newAttribute,
-    newPositiveAttributeFilter,
-    newAttributeSort,
-    modifySimpleMeasure,
-} from "@gooddata/sdk-model";
+import { newPlaceholder, newComposedPlaceholder } from "../factory";
+import { newMeasure, newAttribute, newPositiveAttributeFilter, newAttributeSort } from "@gooddata/sdk-model";
 import { PlaceholdersState } from "../context";
-export const emptyState: PlaceholdersState = { placeholders: {}, groupPlaceholders: {} };
+import flow from "lodash/flow";
 
-export const testMeasure = newMeasure("test-measure");
-export const testAttribute = newAttribute("test-attribute");
-export const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
-export const testSort = newAttributeSort(testAttribute, "asc");
+export const emptyState: PlaceholdersState = { placeholders: {} };
 
-export const measurePlaceholder = newMeasurePlaceholder(testMeasure);
-export const attributePlaceholder = newAttributePlaceholder(testAttribute);
-export const filterPlaceholder = newFilterPlaceholder(testFilter);
-export const sortPlaceholder = newSortPlaceholder(testSort);
-
-export const measureGroupPlaceholder = newMeasureGroupPlaceholder([testMeasure, measurePlaceholder]);
-export const attributeGroupPlaceholder = newAttributeGroupPlaceholder([testAttribute, attributePlaceholder]);
-export const filterGroupPlaceholder = newFilterGroupPlaceholder([testFilter, filterPlaceholder]);
-export const sortGroupPlaceholder = newSortGroupPlaceholder([testSort, sortPlaceholder]);
-
-export const computedPlaceholder = newComputedPlaceholder(
-    [measurePlaceholder, filterPlaceholder],
-    ([measure, filter]) => {
-        return modifySimpleMeasure(measure, (m) => m.filters(filter));
-    },
-);
-
-export const computedPlaceholderResult = modifySimpleMeasure(testMeasure, (m) => m.filters(testFilter));
-
-// TODO:
-// - Test validations
-
-describe("resolveSinglePlaceholderValue", () => {
+describe("resolvePlaceholderValue", () => {
     it("should resolve default value", () => {
-        expect(resolveSinglePlaceholderValue(measurePlaceholder, emptyState)).toBe(testMeasure);
+        const testMeasure = newMeasure("test-measure");
+        const placeholder = newPlaceholder(testMeasure);
+        expect(resolvePlaceholderValue(placeholder, emptyState)).toEqual(testMeasure);
     });
 
     it("should resolve active value", () => {
+        const testMeasure = newMeasure("test-measure");
+        const placeholder = newPlaceholder(testMeasure);
         const updatedMeasure = newMeasure("updated-measure");
-        const stateWithUpdatedMeasure = setPlaceholder(measurePlaceholder, updatedMeasure, emptyState);
-        expect(resolveSinglePlaceholderValue(measurePlaceholder, stateWithUpdatedMeasure)).toBe(
-            updatedMeasure,
-        );
+        const updatedState = setPlaceholder(placeholder, updatedMeasure, emptyState);
+        expect(resolvePlaceholderValue(placeholder, updatedState)).toEqual(updatedMeasure);
     });
 
     it("should fallback to default value, when active value is not defined", () => {
-        const stateWithUpdatedMeasure = setPlaceholder(measurePlaceholder, undefined, emptyState);
-        expect(resolveSinglePlaceholderValue(measurePlaceholder, stateWithUpdatedMeasure)).toBe(testMeasure);
+        const testMeasure = newMeasure("test-measure");
+        const placeholder = newPlaceholder(testMeasure);
+        const updatedState = setPlaceholder(placeholder, undefined, emptyState);
+        expect(resolvePlaceholderValue(placeholder, updatedState)).toEqual(testMeasure);
     });
 });
 
-describe("resolveGroupPlaceholderValue", () => {
-    it("should resolve default value", () => {
-        const defaultValue = [testMeasure, measurePlaceholder];
-        const groupPlaceholder = newMeasureGroupPlaceholder(defaultValue);
-        expect(resolveGroupPlaceholderValue(groupPlaceholder, emptyState)).toBe(defaultValue);
-    });
+describe("resolveComposedPlaceholderValue", () => {
+    it("should be resolved as tuple of resolved placeholder values by default", () => {
+        const testMeasure1 = newMeasure("test-measure1");
+        const testMeasure2 = newMeasure("test-measure2");
+        const placeholder1 = newPlaceholder(testMeasure1);
+        const placeholder2 = newPlaceholder(testMeasure2);
+        const composedPlaceholder = newComposedPlaceholder([placeholder1, placeholder2]);
 
-    it("should resolve active value", () => {
-        const defaultValue = [testMeasure, measurePlaceholder];
-        const groupPlaceholder = newMeasureGroupPlaceholder(defaultValue);
-        const activeValue = [newMeasure("updated-measure")];
-        const updatedState = setPlaceholder(groupPlaceholder, activeValue, emptyState);
-        expect(resolveGroupPlaceholderValue(groupPlaceholder, updatedState)).toBe(activeValue);
-    });
-
-    it("should fallback to default value, when active value is not defined", () => {
-        const defaultValue = [testMeasure, measurePlaceholder];
-        const groupPlaceholder = newMeasureGroupPlaceholder(defaultValue);
-        const stateWithUpdatedMeasure = setPlaceholder(groupPlaceholder, undefined, emptyState);
-        expect(resolveGroupPlaceholderValue(groupPlaceholder, stateWithUpdatedMeasure)).toBe(defaultValue);
-    });
-});
-
-describe("resolveFullGroupPlaceholderValue", () => {
-    it("should resolve nested single placeholder", () => {
-        const defaultValue = [measurePlaceholder];
-        const groupPlaceholder = newMeasureGroupPlaceholder(defaultValue);
-        expect(resolveFullGroupPlaceholderValue(groupPlaceholder, emptyState)).toEqual([testMeasure]);
-    });
-
-    it("should resolve nested group placeholder and flatten the resolved value", () => {
-        const defaultValue = [measureGroupPlaceholder];
-        const groupPlaceholder = newGroupPlaceholder(defaultValue);
-        expect(resolveFullGroupPlaceholderValue(groupPlaceholder, emptyState)).toEqual([
-            testMeasure,
-            testMeasure,
+        expect(resolveComposedPlaceholderValue(composedPlaceholder, emptyState)).toEqual([
+            testMeasure1,
+            testMeasure2,
         ]);
     });
 
-    it("should resolve mixed nested placeholders and flatten the resolved value", () => {
-        const defaultValue = [measurePlaceholder, measureGroupPlaceholder];
-        const groupPlaceholder = newGroupPlaceholder(defaultValue);
-        expect(resolveFullGroupPlaceholderValue(groupPlaceholder, emptyState)).toEqual([
-            testMeasure,
-            testMeasure,
-            testMeasure,
+    it("should be resolved to active placeholder values", () => {
+        const placeholder1 = newPlaceholder();
+        const placeholder2 = newPlaceholder();
+
+        const composedPlaceholder = newComposedPlaceholder([placeholder1, placeholder2]);
+
+        const testMeasure1 = newMeasure("test-measure1");
+        const testMeasure2 = newMeasure("test-measure2");
+
+        const updatedState = flow(
+            (s) => setPlaceholder(placeholder1, testMeasure1, s),
+            (s) => setPlaceholder(placeholder2, testMeasure2, s),
+        )(emptyState);
+
+        expect(resolveComposedPlaceholderValue(composedPlaceholder, updatedState)).toEqual([
+            testMeasure1,
+            testMeasure2,
         ]);
     });
 
-    it("should keep other values in the group untouched", () => {
-        const defaultValue = [undefined, null, {}, [], testMeasure, testAttribute, testFilter, testSort];
-        const groupPlaceholder = newGroupPlaceholder(defaultValue);
-        expect(resolveFullGroupPlaceholderValue(groupPlaceholder, emptyState)).toEqual(defaultValue);
-    });
-});
+    it("should perform computation", () => {
+        const testMeasure1 = newMeasure("test-measure1");
+        const testMeasure2 = newMeasure("test-measure2");
+        const placeholder1 = newPlaceholder(testMeasure1);
+        const placeholder2 = newPlaceholder([testMeasure2]);
 
-describe("resolveComputedPlaceholderValue", () => {
-    it("should resolve value", () => {
-        const placeholder = newComputedPlaceholder(
-            [measurePlaceholder, filterPlaceholder],
-            ([measure, filter]) => {
-                return modifySimpleMeasure(measure, (m) => m.filters(filter));
+        const composedPlaceholder = newComposedPlaceholder(
+            [placeholder1, placeholder2],
+            ([measure, measures]) => {
+                return [...measures, measure];
             },
         );
 
-        expect(resolveComputedPlaceholderValue(placeholder, emptyState)).toEqual(computedPlaceholderResult);
+        expect(resolveComposedPlaceholderValue(composedPlaceholder, emptyState)).toEqual([
+            testMeasure2,
+            testMeasure1,
+        ]);
     });
 
-    it("should resolve active value", () => {
-        const measurePlaceholder = newMeasurePlaceholder(testMeasure);
-        const filterPlaceholder = newFilterPlaceholder(testFilter);
-        const updatedMeasure = newMeasure("updated-measure");
-        const updatedFilter = newPositiveAttributeFilter("updated-attribute", { values: ["Updated"] });
-        const placeholder = newComputedPlaceholder(
-            [measurePlaceholder, filterPlaceholder],
-            ([measure, filter]) => {
-                return modifySimpleMeasure(measure, (m) => m.filters(filter));
+    it("should propagate resolution context to composed placeholder", () => {
+        const commonMeasure = newMeasure("common-measure");
+        const commonMeasures = newPlaceholder([commonMeasure]);
+        const performanceMeasure = newMeasure("performance-measure");
+        const performanceMeasures = newPlaceholder([performanceMeasure]);
+
+        interface IResolutionContext {
+            includeCommonMeasures?: boolean;
+            includePerformanceMeasures?: boolean;
+        }
+
+        const composedPlaceholder = newComposedPlaceholder(
+            [commonMeasures, performanceMeasures],
+            (
+                [commonMeasures, performanceMeasures],
+                { includeCommonMeasures, includePerformanceMeasures }: IResolutionContext = {},
+            ) => {
+                const includedMeasures = [];
+
+                if (includeCommonMeasures) {
+                    includedMeasures.push(...commonMeasures);
+                }
+                if (includePerformanceMeasures) {
+                    includedMeasures.push(...performanceMeasures);
+                }
+
+                return includedMeasures;
             },
         );
-        const expectedResolvedValue = modifySimpleMeasure(updatedMeasure, (m) => m.filters(updatedFilter));
 
-        let updatedState = setPlaceholder(measurePlaceholder, updatedMeasure, emptyState);
-        updatedState = setPlaceholder(filterPlaceholder, updatedFilter, updatedState);
-
-        expect(resolveComputedPlaceholderValue(placeholder, updatedState)).toEqual(expectedResolvedValue);
+        expect(resolveComposedPlaceholderValue(composedPlaceholder, emptyState)).toEqual([]);
+        expect(
+            resolveComposedPlaceholderValue(composedPlaceholder, emptyState, { includeCommonMeasures: true }),
+        ).toEqual([commonMeasure]);
+        expect(
+            resolveComposedPlaceholderValue(composedPlaceholder, emptyState, {
+                includePerformanceMeasures: true,
+            }),
+        ).toEqual([performanceMeasure]);
     });
 });
 
 describe("resolveValueWithPlaceholders", () => {
     describe("should not touch value that is not placeholder", () => {
         type Scenario = [scenarioName: string, value: any];
+        const testMeasure = newMeasure("test-measure1");
+        const testAttribute = newAttribute("test-attribute");
+        const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
+        const testSort = newAttributeSort(testAttribute, "asc");
 
         const scenarios: Scenario[] = [
             ["null", null],
@@ -184,9 +155,16 @@ describe("resolveValueWithPlaceholders", () => {
         });
     });
 
-    // should remove resolved empty placeholder values
-    describe("should resolve default single placeholder value", () => {
+    describe("should resolve placeholder holding single value", () => {
         type Scenario = [scenarioName: string, value: any, resolvedValue: any];
+        const testMeasure = newMeasure("test-measure1");
+        const testAttribute = newAttribute("test-attribute");
+        const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
+        const testSort = newAttributeSort(testAttribute, "asc");
+        const measurePlaceholder = newPlaceholder(testMeasure);
+        const attributePlaceholder = newPlaceholder(testAttribute);
+        const filterPlaceholder = newPlaceholder(testFilter);
+        const sortPlaceholder = newPlaceholder(testSort);
 
         const scenarios: Scenario[] = [
             ["measurePlaceholder", measurePlaceholder, testMeasure],
@@ -200,14 +178,22 @@ describe("resolveValueWithPlaceholders", () => {
         });
     });
 
-    describe("should resolve default group placeholder value", () => {
+    describe("should resolve placeholder holding multiple values", () => {
         type Scenario = [scenarioName: string, value: any, resolvedValue: any];
+        const testMeasure = newMeasure("test-measure1");
+        const testAttribute = newAttribute("test-attribute");
+        const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
+        const testSort = newAttributeSort(testAttribute, "asc");
+        const measuresPlaceholder = newPlaceholder([testMeasure]);
+        const attributesPlaceholder = newPlaceholder([testAttribute]);
+        const filtersPlaceholder = newPlaceholder([testFilter]);
+        const sortsPlaceholder = newPlaceholder([testSort]);
 
         const scenarios: Scenario[] = [
-            ["measureGroupPlaceholder", measureGroupPlaceholder, [testMeasure, testMeasure]],
-            ["attributeGroupPlaceholder", attributeGroupPlaceholder, [testAttribute, testAttribute]],
-            ["filterGroupPlaceholder", filterGroupPlaceholder, [testFilter, testFilter]],
-            ["sortGroupPlaceholder", sortGroupPlaceholder, [testSort, testSort]],
+            ["measuresPlaceholder", measuresPlaceholder, [testMeasure]],
+            ["attributesPlaceholder", attributesPlaceholder, [testAttribute]],
+            ["filtersPlaceholder", filtersPlaceholder, [testFilter]],
+            ["sortsPlaceholder", sortsPlaceholder, [testSort]],
         ];
 
         it.each(scenarios)("%s", (_, value, expectedValue) => {
@@ -215,24 +201,27 @@ describe("resolveValueWithPlaceholders", () => {
         });
     });
 
-    describe("should resolve computed placeholder value", () => {
-        type Scenario = [scenarioName: string, value: any];
-
-        const scenarios: Scenario[] = [["computedPlaceholder", computedPlaceholder]];
-
-        it.each(scenarios)("%s", (_, value) => {
-            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual(computedPlaceholderResult);
-        });
-    });
-
     describe("should resolve array with placeholders", () => {
-        it("should keep values that are not placeholders untouched", () => {
-            const value = [undefined, null, {}, [], testMeasure, testAttribute, testFilter, testSort];
+        it("should not touch values that are not placeholder", () => {
+            const testMeasure = newMeasure("test-measure1");
+            const testAttribute = newAttribute("test-attribute");
+            const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
+            const testSort = newAttributeSort(testAttribute, "asc");
 
-            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual(value);
+            const values = [null, undefined, {}, [], testMeasure, testAttribute, testFilter, testSort];
+
+            expect(resolveValueWithPlaceholders(values, emptyState)).toEqual(values);
         });
 
-        it("should resolve array with single placeholders", () => {
+        it("should resolve array placeholders holding single value", () => {
+            const testMeasure = newMeasure("test-measure1");
+            const testAttribute = newAttribute("test-attribute");
+            const testFilter = newPositiveAttributeFilter("test-attribute", { values: ["Test"] });
+            const testSort = newAttributeSort(testAttribute, "asc");
+            const measurePlaceholder = newPlaceholder(testMeasure);
+            const attributePlaceholder = newPlaceholder(testAttribute);
+            const filterPlaceholder = newPlaceholder(testFilter);
+            const sortPlaceholder = newPlaceholder(testSort);
             const value = [measurePlaceholder, attributePlaceholder, filterPlaceholder, sortPlaceholder];
 
             expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([
@@ -243,30 +232,54 @@ describe("resolveValueWithPlaceholders", () => {
             ]);
         });
 
-        it("should resolve array with group placeholders and flatten their resolved values", () => {
-            const value = [measureGroupPlaceholder, attributeGroupPlaceholder];
+        it("should resolve array with placeholders holding array values and flatten their result", () => {
+            const testMeasure = newMeasure("test-measure1");
+            const testAttribute = newAttribute("test-attribute");
+            const measuresPlaceholder = newPlaceholder([testMeasure]);
+            const attributesPlaceholder = newPlaceholder([testAttribute]);
 
-            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([
-                testMeasure,
-                testMeasure,
-                testAttribute,
-                testAttribute,
-            ]);
+            const value = [measuresPlaceholder, attributesPlaceholder];
+
+            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([testMeasure, testAttribute]);
         });
 
-        it("should resolve array with computed placeholders", () => {
-            const value = [computedPlaceholder];
-            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([computedPlaceholderResult]);
+        it("should resolve array with composed placeholders", () => {
+            const testMeasure1 = newMeasure("test-measure1");
+            const testMeasure2 = newMeasure("test-measure2");
+            const placeholder1 = newPlaceholder(testMeasure1);
+            const placeholder2 = newPlaceholder(testMeasure2);
+            const composedPlaceholder = newComposedPlaceholder([placeholder1, placeholder2]);
+
+            const value = [composedPlaceholder];
+            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([testMeasure1, testMeasure2]);
         });
 
         it("should resolve array with mixed placeholders", () => {
-            const value = [measurePlaceholder, attributeGroupPlaceholder, computedPlaceholder];
+            const testMeasure = newMeasure("test-measure");
+            const testAttribute = newAttribute("test-attribute");
+            const measurePlaceholder = newPlaceholder(testMeasure);
+            const attributesPlaceholder = newPlaceholder([testAttribute]);
+            const composedPlaceholder = newComposedPlaceholder(
+                [measurePlaceholder, attributesPlaceholder],
+                ([measure, attributes]) => [measure, ...attributes],
+            );
+
+            const value = [measurePlaceholder, attributesPlaceholder, composedPlaceholder];
             expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([
                 testMeasure,
                 testAttribute,
+                testMeasure,
                 testAttribute,
-                computedPlaceholderResult,
             ]);
+        });
+
+        it("should omit undefined values from placeholders, but keep other undefined values", () => {
+            const measurePlaceholder = newPlaceholder();
+            const attributePlaceholder = newPlaceholder();
+            const composedPlaceholder = newComposedPlaceholder([measurePlaceholder, attributePlaceholder]);
+
+            const value = [undefined, measurePlaceholder, attributePlaceholder, composedPlaceholder];
+            expect(resolveValueWithPlaceholders(value, emptyState)).toEqual([undefined]);
         });
     });
 });

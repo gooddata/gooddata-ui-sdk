@@ -23,9 +23,9 @@ import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
-import { IFilter } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureDefinitionType } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-backend-spi';
 import { IMeasureGroupDescriptor } from '@gooddata/sdk-backend-spi';
 import { IntlShape } from 'react-intl';
@@ -47,19 +47,26 @@ import { default as React_2 } from 'react';
 import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WrappedComponentProps } from 'react-intl';
 
-// @public
-export type AnyValuesWithPlaceholdersResolvedValues<Tuple extends any[]> = {
-    [Index in keyof Tuple]: AnyValueWithPlaceholdersResolvedValue<Tuple[Index]>;
-};
+// @beta
+export type AnyArrayOf<T> = T[] | ArrayOf<T>;
 
-// @public
-export type AnyValueWithPlaceholdersResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : PlaceholderResolvedValue<T>;
+// @beta
+export type AnyMeasure = IMeasure | MeasureOf<IMeasureDefinitionType>;
+
+// @beta
+export type AnyPlaceholder<T = any> = IPlaceholder<T> | IComposedPlaceholder<T, any, any>;
+
+// @beta
+export type AnyPlaceholderOf<T> = AnyPlaceholder<T> | PlaceholderOf<T>;
 
 // @internal
 export class ArithmeticMeasureTitleFactory {
     constructor(locale: ILocale);
     getTitle(arithmeticMeasureProps: IArithmeticMeasureTitleProps, measureTitleProps: IMeasureTitleProps[]): string | null;
     }
+
+// @beta
+export type ArrayOf<T> = T extends any ? T[] : never;
 
 // @public
 export function attributeItemNameMatch(name: string): IHeaderPredicate;
@@ -163,6 +170,9 @@ export function composedFromIdentifier(identifier: string): IHeaderPredicate;
 
 // @public
 export function composedFromUri(uri: string): IHeaderPredicate;
+
+// @beta
+export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
 // @internal (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: Array<IDrillableItem | IHeaderPredicate>): IHeaderPredicate[];
@@ -345,7 +355,7 @@ export function fillMissingTitles<T extends IInsightDefinition>(insight: T, loca
 // @internal
 export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
 
-// @public
+// @beta
 export type Flatten<T> = T extends Array<infer A> ? A : T;
 
 // @public
@@ -426,15 +436,6 @@ export interface IArithmeticMeasureTitleProps {
     // (undocumented)
     operator: string;
 }
-
-// @public
-export type IAttributeGroupPlaceholder<T extends IAttributeOrPlaceholder[] = IAttributeOrPlaceholder[]> = IGroupPlaceholder<T>;
-
-// @public (undocumented)
-export type IAttributeOrPlaceholder = IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder<any>;
-
-// @public
-export type IAttributePlaceholder = ISinglePlaceholder<IAttribute>;
 
 // @public @deprecated (undocumented)
 export interface IAttrItem {
@@ -527,23 +528,16 @@ export interface IColorsData {
     colorPalette: IColorPalette;
 }
 
-// @public
-export interface IComputedPlaceholder<TReturn = any, TPlaceholders extends IPlaceholder[] = IPlaceholder[]> {
+// @beta
+export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
     // (undocumented)
-    computeValue: (values: PlaceholdersResolvedValues<TPlaceholders>) => TReturn;
+    computeValue: (values: PlaceholdersResolvedValues<TValue>, resolutionContext: TContext) => TReturn;
     // (undocumented)
-    placeholders: TPlaceholders;
+    placeholders: TValue;
     // (undocumented)
-    type: "IComputedPlaceholder";
+    type: "IComposedPlaceholder";
     // (undocumented)
-    use: IUsePlaceholderHook<IComputedPlaceholder<TReturn, TPlaceholders>>;
-    // (undocumented)
-    validate?: (value: PlaceholdersResolvedValues<TPlaceholders>) => void;
-}
-
-// @public (undocumented)
-export interface IComputedPlaceholderOptions<T extends any[]> {
-    validate?: (values?: PlaceholdersResolvedValues<T>) => void;
+    use: IUseComposedPlaceholderHook<IComposedPlaceholder<TReturn, TValue, TContext>>;
 }
 
 // @public
@@ -886,39 +880,8 @@ export interface IExtendedExportConfig extends IExportConfig {
     includeFilterContext?: boolean;
 }
 
-// @public
-export type IFilterGroupPlaceholder<T extends IFilterOrPlaceholder[] = IFilterOrPlaceholder[]> = IGroupPlaceholder<T>;
-
-// @public (undocumented)
-export type IFilterOrPlaceholder = IFilter | IFilterPlaceholder<any> | IFilterGroupPlaceholder<any>;
-
-// @public
-export type IFilterPlaceholder<T extends IFilter = IFilter> = ISinglePlaceholder<T>;
-
 // @internal
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T;
-
-// @public
-export interface IGroupPlaceholder<T extends any[]> {
-    // (undocumented)
-    defaultValue?: T;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    type: "IGroupPlaceholder";
-    // (undocumented)
-    use: IUsePlaceholderHook<IGroupPlaceholder<T>>;
-    // (undocumented)
-    validate?: (value?: [...T]) => void;
-    // (undocumented)
-    value?: T;
-}
-
-// @public (undocumented)
-export interface IGroupPlaceholderOptions<T extends any[]> {
-    id?: string;
-    validate?: (values?: [...T]) => void;
-}
 
 // @public (undocumented)
 export type IHeaderPredicate = (header: IMappingHeader, context: IHeaderPredicateContext) => boolean;
@@ -1015,15 +978,6 @@ export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" 
 // @public
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor;
 
-// @public
-export type IMeasureGroupPlaceholder<T extends IMeasureOrPlaceholder[] = IMeasureOrPlaceholder[]> = IGroupPlaceholder<T>;
-
-// @public (undocumented)
-export type IMeasureOrPlaceholder = IMeasure<any> | IMeasurePlaceholder | IMeasureGroupPlaceholder<any>;
-
-// @public
-export type IMeasurePlaceholder<T extends IMeasure = IMeasure<any>> = ISinglePlaceholder<T>;
-
 // @internal
 export interface IMeasureTitleProps {
     // (undocumented)
@@ -1047,13 +1001,28 @@ export class IntlWrapper extends React_2.PureComponent<IIntlWrapperProps> {
     render(): React_2.ReactNode;
 }
 
-// @public
-export type IPlaceholder = ISinglePlaceholder<any> | IGroupPlaceholder<any> | IComputedPlaceholder<any, any>;
+// @beta
+export type IPlaceholder<T> = {
+    type: "IPlaceholder";
+    id: string;
+    defaultValue?: T;
+    value?: T;
+    validate?: (value: T) => void;
+    use: IUsePlaceholderHook<IPlaceholder<T>>;
+};
 
-// @public (undocumented)
+// @beta
+export interface IPlaceholderOptions<T> {
+    id?: string;
+    validate?: (value?: T) => void;
+}
+
+// @beta (undocumented)
 export interface IPlaceholdersProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
+    // (undocumented)
+    initialValues?: [placeholder: IPlaceholder<any>, initialValue: any][];
 }
 
 // @internal
@@ -1128,6 +1097,9 @@ export interface IResultMetaMethods {
     measureGroupDescriptor(): IMeasureGroupDescriptor | undefined;
 }
 
+// @beta
+export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T>;
+
 // @public
 export function isBadRequest(obj: unknown): obj is BadRequestSdkError;
 
@@ -1137,8 +1109,8 @@ export const isCancelError: (obj: unknown) => obj is CancelError;
 // @public
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError;
 
-// @public
-export function isComputedPlaceholder<TReturn, TPlaceholders extends IPlaceholder[] = IPlaceholder[]>(obj: unknown): obj is IComputedPlaceholder<TReturn, TPlaceholders>;
+// @beta
+export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(obj: unknown): obj is IComposedPlaceholder<TReturn, TValue, TContext>;
 
 // @public
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError;
@@ -1166,27 +1138,8 @@ export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError;
 // @public
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
 
-// @public
-export function isGroupPlaceholder<T extends any[]>(obj: unknown): obj is IGroupPlaceholder<T>;
-
 // @public (undocumented)
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
-
-// @public
-export type ISinglePlaceholder<T> = {
-    type: "ISinglePlaceholder";
-    id: string;
-    defaultValue?: T;
-    value?: T;
-    validate?: (value?: T) => void;
-    use: IUsePlaceholderHook<ISinglePlaceholder<T>>;
-};
-
-// @public (undocumented)
-export interface ISinglePlaceholderOptions<T> {
-    id?: string;
-    validate?: (value?: T) => void;
-}
 
 // @public
 export function isNegativeValues(obj: unknown): obj is NegativeValuesSdkError;
@@ -1197,23 +1150,11 @@ export function isNoDataSdkError(obj: unknown): obj is NoDataSdkError;
 // @public
 export function isNotFound(obj: unknown): obj is NotFoundSdkError;
 
-// @public
-export type ISortGroupPlaceholder<T extends ISortOrPlaceholder[] = ISortOrPlaceholder[]> = IGroupPlaceholder<T>;
-
-// @public (undocumented)
-export type ISortOrPlaceholder = ISortItem | ISortPlaceholder<any> | ISortGroupPlaceholder<any>;
-
-// @public
-export type ISortPlaceholder<T extends ISortItem = ISortItem> = ISinglePlaceholder<T>;
-
-// @public
-export function isPlaceholder(obj: unknown): obj is IPlaceholder;
+// @beta
+export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T>;
 
 // @public
 export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
-
-// @public
-export function isSinglePlaceholder<T>(obj: unknown): obj is ISinglePlaceholder<T>;
 
 // @internal (undocumented)
 export function isSomeHeaderPredicateMatched(drillablePredicates: IHeaderPredicate[], header: IMappingHeader, dv: DataViewFacade): boolean;
@@ -1248,6 +1189,9 @@ export interface ITranslationsProviderOwnProps {
 
 // @internal (undocumented)
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
+
+// @beta
+export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
 
 // @beta (undocumented)
 export interface IUseExecutionConfig {
@@ -1295,9 +1239,9 @@ export interface IUsePagedResourceState<TItem> {
     totalItemsCount: number | undefined;
 }
 
-// @public
-export type IUsePlaceholderHook<T extends IPlaceholder> = () => [
-    value: PlaceholderResolvedValue<T> | undefined,
+// @beta
+export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
+    value: PlaceholderValue<T> | undefined,
     setPlaceholder: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
@@ -1373,6 +1317,9 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
 // @internal
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
 
+// @beta
+export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
+
 // @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
@@ -1383,41 +1330,14 @@ export class NegativeValuesSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
-// @public
-export function newAttributeGroupPlaceholder<T extends IAttributeOrPlaceholder[]>(defaultAttributes?: T, options?: IGroupPlaceholderOptions<T>): IAttributeGroupPlaceholder<T>;
-
-// @public
-export function newAttributePlaceholder(defaultAttribute?: IAttribute, options?: ISinglePlaceholderOptions<IAttribute>): IAttributePlaceholder;
-
-// @public
-export function newComputedPlaceholder<TReturn, TPlaceholders extends IPlaceholder[]>(placeholders: [...TPlaceholders], computeValue: (resolvedValues: PlaceholdersResolvedValues<TPlaceholders>) => TReturn, options?: IComputedPlaceholderOptions<TPlaceholders>): IComputedPlaceholder<TReturn, TPlaceholders>;
+// @beta
+export function newComposedPlaceholder<TValue extends any[], TReturn = PlaceholdersResolvedValues<TValue>, TContext = UnionToIntersection<ComposedPlaceholderResolutionContext<Flatten<TValue>>>>(placeholders: [...TValue], computeValue?: (values: PlaceholdersResolvedValues<TValue>, resolutionContext: TContext) => TReturn): IComposedPlaceholder<TReturn, TValue, TContext>;
 
 // @public
 export function newErrorMapping(intl: IntlShape): IErrorDescriptors;
 
-// @public
-export function newFilterGroupPlaceholder<T extends IFilterOrPlaceholder[]>(defaultFilters?: T, options?: IGroupPlaceholderOptions<T>): IFilterGroupPlaceholder<T>;
-
-// @public
-export function newFilterPlaceholder<T extends IFilter>(defaultFilter?: T, options?: ISinglePlaceholderOptions<T>): IFilterPlaceholder<T>;
-
-// @public
-export function newGroupPlaceholder<T extends any[]>(defaultValue?: T, options?: IGroupPlaceholderOptions<T>): IGroupPlaceholder<T>;
-
-// @public
-export function newMeasureGroupPlaceholder<T extends IMeasureOrPlaceholder[]>(defaultMeasures?: T, options?: IGroupPlaceholderOptions<T>): IMeasureGroupPlaceholder<T>;
-
-// @public
-export function newMeasurePlaceholder<T extends IMeasure>(defaultMeasure?: T, options?: ISinglePlaceholderOptions<T>): IMeasurePlaceholder<T>;
-
-// @public
-export function newSinglePlaceholder<T>(defaultValue?: T, options?: ISinglePlaceholderOptions<T>): ISinglePlaceholder<T>;
-
-// @public
-export function newSortGroupPlaceholder<T extends ISortOrPlaceholder[]>(defaultSorts?: T, options?: IGroupPlaceholderOptions<T>): ISortGroupPlaceholder<T>;
-
-// @public
-export function newSortPlaceholder<T extends ISortItem>(defaultSort?: T, options?: ISinglePlaceholderOptions<T>): ISortPlaceholder<T>;
+// @beta
+export function newPlaceholder<T>(defaultValue?: T, options?: IPlaceholderOptions<T>): IPlaceholder<T>;
 
 // @public
 export class NoDataSdkError extends GoodDataSdkError {
@@ -1451,24 +1371,27 @@ export const OverTimeComparisonTypes: {
     NOTHING: "nothing";
 };
 
-// @public
-export type PlaceholderResolvedValue<T> = T extends ISinglePlaceholder<infer A> ? A : T extends IGroupPlaceholder<infer B> ? Flatten<PlaceholderResolvedValue<Flatten<B>>>[] : T extends IComputedPlaceholder<infer C, any> ? C : T;
+// @beta
+export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
 
-// @public (undocumented)
+// @beta
+export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
+
+// @beta (undocumented)
 export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
 
-// @public
+// @beta
 export type PlaceholdersResolvedValues<Tuple extends any[]> = {
     [Index in keyof Tuple]: PlaceholderResolvedValue<Tuple[Index]>;
 };
 
-// @public
+// @beta
 export type PlaceholdersValues<Tuple extends [...any[]]> = {
     [Index in keyof Tuple]: PlaceholderValue<Tuple[Index]>;
 };
 
-// @public
-export type PlaceholderValue<T> = T extends ISinglePlaceholder<infer A> ? A : T extends IGroupPlaceholder<infer B> ? B : T extends IComputedPlaceholder<infer C> ? C : T;
+// @beta
+export type PlaceholderValue<T> = T extends IPlaceholder<infer A> ? A : T extends IComposedPlaceholder<infer B, any, any> ? B : T;
 
 // @public
 export class ProtectedReportSdkError extends GoodDataSdkError {
@@ -1515,6 +1438,9 @@ export class UnauthorizedSdkError extends GoodDataSdkError {
 export class UnexpectedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @beta
+export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (x: infer R) => any ? R : never;
 
 // @public
 export function uriMatch(uri: string): IHeaderPredicate;
@@ -1574,6 +1500,9 @@ export type UseCancelablePromiseSuccessState<TResult> = {
 };
 
 // @beta
+export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
+
+// @beta
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {
     execution: IPreparedExecution | undefined | null;
     exportConfig?: IExportConfig;
@@ -1609,23 +1538,23 @@ export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: Rea
 // @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;
 
-// @public
-export function usePlaceholder<T extends IPlaceholder>(placeholder: T): [
-    returnValue: PlaceholderResolvedValue<T>,
+// @beta
+export function usePlaceholder<T extends IPlaceholder<any>>(placeholder: T): [
+    returnValue: PlaceholderValue<T> | undefined,
     setPlaceholderValue: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
-// @public
-export function usePlaceholders<T extends IPlaceholder[]>(placeholders: [...T]): [
-    returnValues: PlaceholdersResolvedValues<T>,
+// @beta
+export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [
+    returnValues: PlaceholdersValues<T>,
     setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void
 ];
 
-// @public
-export function useResolveValuesWithPlaceholders<T extends any[]>(values: [...T]): AnyValuesWithPlaceholdersResolvedValues<T>;
+// @beta
+export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;
 
-// @public
-export function useResolveValueWithPlaceholders<T>(value: T): AnyValueWithPlaceholdersResolvedValue<T>;
+// @beta
+export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContext?: C): PlaceholderResolvedValue<T>;
 
 // @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
@@ -1635,6 +1564,12 @@ export const useWorkspaceStrict: (workspace?: string | undefined, context?: stri
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
+
+// @beta
+export type ValueOrPlaceholder<T> = T | AnyPlaceholderOf<T>;
+
+// @beta
+export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrPlaceholder<T> | AnyPlaceholderOf<AnyArrayOf<T>>>;
 
 // @public (undocumented)
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";

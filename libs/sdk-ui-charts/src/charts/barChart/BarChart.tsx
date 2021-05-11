@@ -11,14 +11,10 @@ import {
 } from "@gooddata/sdk-model";
 import {
     BucketNames,
-    IMeasurePlaceholder,
-    IMeasureGroupPlaceholder,
-    IAttributePlaceholder,
-    IAttributeGroupPlaceholder,
-    IFilterPlaceholder,
-    IFilterGroupPlaceholder,
+    ValuesOrPlaceholders,
+    ValueOrPlaceholder,
+    AnyMeasure,
     useResolveValuesWithPlaceholders,
-    IComputedPlaceholder,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
@@ -53,7 +49,7 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
             .workspace(workspace)
             .execution()
             .forBuckets(buckets, props.filters as IFilter[])
-            .withSorting(...props.sortBy)
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(stackedChartDimensions);
     },
     propOverridesFactory: (props, buckets) => {
@@ -77,18 +73,7 @@ export interface IBarChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures:
-        | IMeasureGroupPlaceholder
-        | IAttributeGroupPlaceholder
-        | IComputedPlaceholder<any, any>
-        | Array<
-              | IAttributeOrMeasure
-              | IMeasurePlaceholder
-              | IAttributePlaceholder
-              | IMeasureGroupPlaceholder
-              | IAttributeGroupPlaceholder
-              | IComputedPlaceholder<any, any>
-          >;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the Y axis.
@@ -97,26 +82,22 @@ export interface IBarChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a bar indicating the respective slice's value.
      */
-    viewBy?:
-        | IAttribute
-        | IAttributePlaceholder
-        | IAttributeGroupPlaceholder
-        | Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally specify attribute to stack the bars by.
      */
-    stackBy?: IAttribute | IAttributePlaceholder;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilterGroupPlaceholder | Array<INullableFilter | IFilterPlaceholder | IFilterGroupPlaceholder>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
 }
 
 /**
@@ -136,14 +117,22 @@ const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
  * @public
  */
 export const BarChart = (props: IBarChartProps) => {
-    const [measures, viewBy, stackBy, filters] = useResolveValuesWithPlaceholders([
+    const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders([
         props.measures,
         props.viewBy,
         props.stackBy,
         props.filters,
+        props.sortBy,
     ]);
 
     return (
-        <WrappedBarChart {...props} measures={measures} viewBy={viewBy} stackBy={stackBy} filters={filters} />
+        <WrappedBarChart
+            {...props}
+            measures={measures}
+            viewBy={viewBy}
+            stackBy={stackBy}
+            filters={filters}
+            sortBy={sortBy}
+        />
     );
 };

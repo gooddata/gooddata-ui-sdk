@@ -21,7 +21,7 @@ const Root = () =>  (
 ###### 2/ Create your first placeholder
 
 ```
-const primaryMeasurePlaceholder = newMeasurePlaceholder();
+const primaryMeasurePlaceholder = newPlaceholder<IMeasure>();
 ```
 
 ###### 3/ Use your first placeholder
@@ -45,55 +45,39 @@ const PrimaryMeasureSelect = () => {
                     ? measureIdentifier(primaryMeasure)
                     : "No primary measure"
             }
-            <button onClick={() => setPlaceholder(Md.Revenue)}>Revenue</button>
+            <button onClick={() => setPrimaryMeasure(Md.Revenue)}>Revenue</button>
         </>
     );
 };
 ```
 
-### Single placeholders
+### Common placeholders
 
-Single placeholders are placeholders that may hold 1 value - typically attribute, measure, filter or sort. By default, each placeholder has usePlaceholder hook attached to it for the convenience. Each placeholder can also have default value and validation attached to it.
+Common placeholders may hold one or multiple values (attributes/measures/filters/sorts...). Note that you should not set other placeholders as the placeholder value - to combine multiple placeholders, use composed placeholder instead. You can create common placeholder by calling `newPlaceholder` method from `@gooddata/sdk-ui`.
 
-Available single placeholder factories in `@gooddata/sdk-ui` are:
-
--   `newMeasurePlaceholder`
--   `newAttributePlaceholder`
--   `newFilterPlaceholder`
--   `newSortPlaceholder`
-
-###### Create single placeholder
+###### Create common placeholder
 
 ```
-// Create single placeholder simply by calling the factory function.
-const measurePlaceholder = newMeasurePlaceholder();
+// Create common placeholder that may hold single measure.
+const measurePlaceholder = newPlaceholder<IMeasure>();
+
+// Create common placeholder that may hold array of attributes.
+const attributesPlaceholder = newPlaceholder<IAttribute[]>();
 ```
 
-###### Set default value of the single placeholder
+###### Set default value of the common placeholder
 
 ```
-// Set default value of the placeholder as first argument.
-const measurePlaceholder = newMeasurePlaceholder(Md.Revenue);
+// Create common placeholder with default value.
+// Note that in this case, type of the placeholder is derived from the default value,
+// so you don't have to explicitly provide it.
+const measurePlaceholder = newPlaceholder(Md.Revenue);
+
+// In this case, you have to provide the typing as [] would be infered as never[].
+const measuresPlaceholder = newPlaceholder<IMeasure[]>([]);
 ```
 
-###### Set validation and other options of the single placeholder
-
-```
-// Set custom validation or id of the placeholder.
-const measurePlaceholder = newMeasurePlaceholder(Md.Revenue, {
-
-    // For the debugging, it can be useful to speficy readable id.
-    id: "primaryMeasure",
-
-    // Specify custom validation of the placeholder value.
-    validate: (measure) => {
-        // assert something
-    },
-
-});
-```
-
-###### Provide single placeholder to the visualization
+###### Provide common placeholder to the visualization
 
 ```
 // You can provide placeholder instead of the concrete value to any visualization.
@@ -101,9 +85,31 @@ const measurePlaceholder = newMeasurePlaceholder(Md.Revenue, {
 <BarChart
     measures={[measurePlaceholder]}
 />
+
+// You can provide also placeholders that may hold array of values - it will be flattened.
+<BarChart
+    measures={[measuresPlaceholder]}
+/>
 ```
 
-###### Get or set single placeholder value
+###### Set validation and other options of the common placeholder
+
+```
+// Set custom validation or id of the placeholder.
+const measurePlaceholder = newPlaceholder(Md.Revenue, {
+
+    // For the debugging, it can be useful to speficy readable id.
+    id: "primaryMeasure",
+
+    // Specify validation of the placeholder value.
+    validate: (measure) => {
+        // assert something
+    },
+
+});
+```
+
+###### Get or set common placeholder value
 
 ```
 const MeasureSelect = () => {
@@ -131,98 +137,28 @@ const MeasureSelect = () => {
 };
 ```
 
-### Group placeholders
+### Composed placeholders
 
-Group placeholders are placeholders that may hold multiple values - typically attributes, measures, filters or sorts. Group placeholders can be also composed of other placeholders. By default, each group placeholder has usePlaceholder hook attached to it for the convenience. Each group placeholder can also have default value and validation attached to it.
+Composed placeholders are placeholders with a value derived from other placeholders and or your custom resolution context. You can create composed placeholder by calling `newComposedPlaceholder` method from `@gooddata/sdk-ui`.
 
-Available group placeholder factories in `@gooddata/sdk-ui` are:
+ <!-- By default, each computed placeholder has usePlaceholder hook attached to it for the convenience. -->
 
--   `newMeasureGroupPlaceholder`
--   `newAttributeGroupPlaceholder`
--   `newFilterGroupPlaceholder`
--   `newSortGroupPlaceholder`
-
-###### Create group placeholder
+###### Create composed placeholder
 
 ```
-// Create group placeholder simply by calling the factory function.
-const measuresPlaceholder = newMeasureGroupPlaceholder();
+// By default, composed placeholder value
+// is resolved as a tuple of resolved input placeholder values.
+// In this case it will be [IMeasure, IMeasure]
+const combinedMeasuresPlaceholder = newComposedPlaceholder(
+    [primaryMeasurePlaceholder, secondaryMeasurePlaceholder]
+);
 ```
 
-###### Set default value of the group placeholder
+###### Create composed placeholder with computed measure
 
 ```
-// Set default value of the placeholder as first argument.
-const measuresPlaceholder = newMeasureGroupPlaceholder([Md.Revenue]);
-```
-
-###### Set validation and other options of the group placeholder
-
-```
-// Set custom validation or id of the placeholder.
-const measuresPlaceholder = newMeasureGroupPlaceholder([Md.Revenue], {
-
-    // For the debugging, it can be useful to speficy readable id.
-    id: "commmonMeasures",
-
-    // Specify custom validation of the placeholder value.
-    validate: (measures) => {
-        // assert something
-    },
-
-});
-```
-
-###### Provide group placeholder to the visualization
-
-```
-// You can provide group placeholder instead of the concrete values to any visualization.
-// Placeholder will be replaced by its set value or the default value.
-<BarChart
-    measures={measuresPlaceholder}
-/>
-```
-
-###### Get or set group placeholder value
-
-```
-const MeasuresSelect = () => {
-    // Usage of the placeholder is very similar to useState hook
-    const [
-        // measures is active value of the placeholder
-        measures,
-        // setMeasures is callback to update the placeholder value
-        setMeasures
-    ] = measurePlaceholder.use();
-
-
-    return (
-        <>
-            <button
-                onClick={() => {
-                    // Set active group placeholder values
-                    setMeasures([Md.Revenue, Md.Costs]);
-                }}
-            >
-                Revenue
-            </button>
-        </>
-    );
-};
-```
-
-### Computed placeholders
-
-Computed placeholder is a placeholder with a value derived from other placeholders. By default, each computed placeholder has usePlaceholder hook attached to it for the convenience. Each computed placeholder can also have default value and validation attached to it.
-
-There is only one computed placeholder factory in `@gooddata/sdk-ui`:
-
--   `newComputedPlaceholder`
-
-###### Create computed placeholder
-
-```
-const computedMeasurePlaceholder = newComputedPlaceholder(
+// You can also perform some computation with the values of input
+const computedMeasurePlaceholder = newComposedPlaceholder(
     // Provide placeholders to compute the result
     [primaryMeasurePlaceholder, filtersPlaceholder],
     // Provide function to calculate the result from the current placeholder values
@@ -237,45 +173,52 @@ const computedMeasurePlaceholder = newComputedPlaceholder(
 );
 ```
 
-###### Set validation for the computed placeholder
+###### Create composed placeholder that accepts custom resolution context
+
+Note that when you have composed placeholders composed from other composed placeholders, custom resolution context is shared among all of these placeholders..
 
 ```
-// Set custom validation or id of the placeholder.
-const computedMeasurePlaceholder = newComputedPlaceholder(
-    [primaryMeasurePlaceholder, filtersPlaceholder],
-    computeResult,
-    {
-        validate: ([primaryMeasure, filtersPlaceholder]) => {
-            // Validate input of the computed placeholder
-        };
-    }
+const arithmeticMeasurePlaceholder = newComposedPlaceholder(
+    [primaryMeasurePlaceholder],
+    // Second argument offer a way to provide custom context for the resolution
+    ([primaryMeasure], { operator }) => {
+        if (!primaryMeasure) {
+            return;
+        }
+
+        // Create arithmetic measure from the input
+        return newArithmeticMeasure([primaryMeasure], operator);
+    },
 );
+
+// Then you can call the hook like this.
+const arithmeticMeasure = arithmeticMeasurePlaceholder.use({ operator: "sum" });
+
+// Or like this.
+const arithmeticMeasure = useComputedPlaceholder(arithmeticMeasurePlaceholder, { operator: "sum" });
 ```
 
-###### Provide computed placeholder to the visualization
+###### Provide composed placeholder to the visualization
 
 ```
-// You can provide placeholder instead of the concrete value to any visualization.
-// Placeholder will be replaced by its computed value
+// You can provide composed placeholder instead of the concrete value to any visualization.
+// Placeholder will be replaced by its computed value.
 <BarChart
-    measures={[computedMeasurePlaceholder]}
+    measures={[arithmeticMeasurePlaceholder]}
+    // Provide custom context for the composed placeholders resolution
+    placeholdersResolutionContext={{ operator: "sum" }}
 />
 ```
 
-###### Get computed placeholder value
+###### Get composed placeholder value
 
 ```
 const MeasureSelect = () => {
-    const [
-        // measure is active value of the placeholder
-        measure,
-    ] = computedMeasurePlaceholder.use();
+    const measure = arithmeticMeasurePlaceholder.use({ operator: "sum" });
 
-    return (
-        <>
-            ...
-        </>
-    );
+    // Usage with useComposedPlaceholder hook.
+    const arithmeticMeasure = useComposedPlaceholder(arithmeticMeasurePlaceholder, { operator });
+    ...
 };
 ```
 
@@ -283,32 +226,160 @@ const MeasureSelect = () => {
 
 ###### Default hook attached to each placeholder
 
+```
+// By default, each placeholder has usePlaceholder hook attached to it for the convenience
+const measurePlaceholder = newPlaceholder<IMeasure>();
+
+// Also, each composed placeholder has useComposedPlaceholder hook attached to it for the convenience
+const composedPlaceholder = newComposedPlaceholder([measurePlaceholder]);
+
+const Component = () => {
+    // With common placeholder
+
+    // This expression
+    const [measure, setMeasure] = measurePlaceholder.use();
+
+    // And this expression are equal
+    const [measure, setMeasure] = usePlaceholder(measurePlaceholder);
+
+    // With composed placeholder
+
+    // This expression
+    const result = composedPlaceholder.use();
+
+    // And this expression are equal
+    const result = useComposedPlaceholder(composedPlaceholder);
+
+    ...
+};
+```
+
 ###### usePlaceholder
+
+```
+const measurePlaceholder = newPlaceholder<IMeasure>();
+
+const Component = () => {
+    // usePlaceholder hook is very similar to useState hook
+    const [
+        // measure is active or default value of the placeholder
+        measure,
+        // setMeasure is callback to update the placeholder value
+        setMeasure
+    ] = usePlaceholder(measurePlaceholder);
+
+    // You can update the placeholder by providing the value
+    setMeasure(Md.Revenue)
+
+    // Or you can update the placeholder by providing update callback
+    setMeasure((activeMeasure) => {
+        // Update the placeholder value according to the active value
+        const updatedMeasure = ...;
+
+        return updatedMeasure;
+    });
+};
+```
 
 ###### usePlaceholders
 
-###### useResolvePlaceholderValue
+```
+const measurePlaceholder = newPlaceholder<IMeasure>();
+const attributePlaceholder = newPlaceholder<IAttribute>();
 
-###### useResolvePlaceholdersValues
+const Component = () => {
+    const [
+        [activeMeasure, activeAttribute],
+        setMeasureAndAttribute
+    ] = usePlaceholders([measurePlaceholder, attributePlaceholder]);
 
-### Validations
+    // You can update multiple placeholders at once by providing the values.
+    // Order of the values is same as input placeholders in usePlaceholders hook
+    setMeasureAndAttribute([Md.Revenue, Md.Location]);
 
-###### Default validations
+    // Or you can update mutiple placeholders at once by providing update callback
+    setMeasureAndAttribute(([activeMeasure, activeAttribute]) => {
+        // Update placeholders values according to the active values
+        const updatedMeasure = ...;
+        const updatedAttribute = ...;
 
-###### Custom validations
+        // You have to keep the same order of values as placeholders
+        return [updatedMeasure, updatedAttribute];
+    });
+};
+```
 
-### Typings
+###### useComposedPlaceholder
 
-###### Default typings
+```
+const measuresPlaceholder = newPlaceholder([Md.Revenue, Md.Costs]);
 
-###### Narrowing placehodler types
+const selectedMeasurePlaceholder = newComposedPlaceholder(
+    [measuresPlaceholder],
+    // measures is resolved value of measures placeholder.
+    // Second argument is custom resolution context
+    // wich you may provide at the time you are calling it.
+    ([measures], { measureIndex }: { measureIndex: number }) => {
+        return measures[measureIndex];
+    }
+);
 
-### Initial values
+const Component = () => {
+    // Get composed placeholder value. In this case it's resolved as Md.Revenue.
+    const measure = selectedMeasurePlaceholder.use({ measureIndex: 0 });
 
-###### Set initial values
+    // In this case it's resolved as Md.Costs
+    const measure = selectedMeasurePlaceholder.use({ measureIndex: 1 });
 
-### Custom placeholders
+    // Usage with useComposedPlaceholder hook
+    const measure = useComposedPlaceholder(selectedMeasurePlaceholder, { measureIndex: 0 });
+};
+```
 
-###### Create custom placeholder
+###### useResolveValueWithPlaceholders
 
-### Recommendations
+```
+const measurePlaceholder = newPlaceholder(Md.Revenue);
+const measuresPlaceholder = newPlaceholder([Md.Costs]);
+
+const Component = () => {
+    // Get resolved placeholder value. In this case it's resolved as Md.Revenue.
+    const measure = useResolveValueWithPlaceholders(measurePlaceholder);
+
+    // In this case it's resolved as [Md.Costs]
+    const measures = useResolveValueWithPlaceholders(measuresPlaceholder);
+
+    // Resolution is working even for arrays with placeholders mixed with other values.
+    // Placeholders holding arrays are flattened.
+    // In this case it's resolved as [Md.Sales, Md.Revenue, Md.Costs]
+    const measures = useResolveValueWithPlaceholders([Md.Sales, measurePlaceholder, measuresPlaceholder]);
+};
+```
+
+###### useResolveValuesWithPlaceholders
+
+```
+const measurePlaceholder = newPlaceholder(Md.Revenue);
+const measuresPlaceholder = newPlaceholder([Md.Costs]);
+
+const Component = () => {
+    // Get resolved value of multiple placeholders at once.
+    // In this case it's resolved as [Md.Revenue, [Md.Costs]].
+    const [measure, measures] = useResolveValuesWithPlaceholders([measurePlaceholder, measuresPlaceholder]);
+
+};
+```
+
+### Initial placeholder values
+
+```
+// Set initial values by providing pairs of placeholders with their initial values
+const Root = () =>  (
+    <PlaceholdersProvider initialValues={[
+        [measurePlaceholder, Md.Revenue],
+        [attributePlaceholder, Md.State],
+    ]}>
+        <App />
+    </PlaceholdersProvider>
+);
+```

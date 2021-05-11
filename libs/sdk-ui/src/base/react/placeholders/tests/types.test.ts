@@ -1,66 +1,89 @@
 // (C) 2019-2021 GoodData Corporation
-import { IMeasure, IAttribute, IFilter, ISortItem } from "@gooddata/sdk-model";
+import { expectType } from "tsd";
 import {
-    IAttributeGroupPlaceholder,
-    IAttributePlaceholder,
-    IFilterGroupPlaceholder,
-    IFilterPlaceholder,
-    IMeasureGroupPlaceholder,
-    IMeasurePlaceholder,
-    ISortGroupPlaceholder,
-    ISortPlaceholder,
-} from "../factory";
-import { PlaceholderResolvedValue, PlaceholderValue } from "../base";
+    IAttribute,
+    IMeasure,
+    IArithmeticMeasureDefinition,
+    IPoPMeasureDefinition,
+    newArithmeticMeasure,
+    newPopMeasure,
+} from "@gooddata/sdk-model";
+import { newComposedPlaceholder, newPlaceholder } from "../factory";
+import { resolveValueWithPlaceholders } from "../resolve";
+import { PlaceholdersState } from "../context";
 
-export const expectType = <Type>(_: Type): void => void 0;
-export const type = <Type>(): Type => void 0 as any;
+const emptyState: PlaceholdersState = {
+    placeholders: {},
+};
 
-// Should return raw single placeholders value
-expectType<PlaceholderValue<IMeasurePlaceholder>>(type<IMeasure>());
-expectType<PlaceholderValue<IAttributePlaceholder>>(type<IAttribute>());
-expectType<PlaceholderValue<IFilterPlaceholder>>(type<IFilter>());
-expectType<PlaceholderValue<ISortPlaceholder>>(type<ISortItem>());
+describe("Measure placeholders inference", () => {
+    it("inference should work for placeholder holding single value", () => {
+        const placeholder = newPlaceholder<IMeasure>();
+        const resolved = resolveValueWithPlaceholders(placeholder, emptyState);
+        expectType<IMeasure>(resolved);
+    });
 
-// Should return raw group placeholders value
-expectType<PlaceholderValue<IMeasureGroupPlaceholder>>(
-    type<Array<IMeasure | IMeasurePlaceholder | IMeasureGroupPlaceholder>>(),
-);
-expectType<PlaceholderValue<IAttributeGroupPlaceholder>>(
-    type<Array<IAttribute | IAttributePlaceholder | IAttributeGroupPlaceholder>>(),
-);
-expectType<PlaceholderValue<IFilterGroupPlaceholder>>(
-    type<Array<IFilter | IFilterPlaceholder | IFilterGroupPlaceholder>>(),
-);
-expectType<PlaceholderValue<ISortGroupPlaceholder>>(
-    type<Array<ISortItem | ISortPlaceholder | ISortGroupPlaceholder>>(),
-);
+    it("inference should work for placeholder holding multiple values", () => {
+        const placeholder = newPlaceholder<IMeasure[]>();
+        const resolved = resolveValueWithPlaceholders(placeholder, emptyState);
+        expectType<IMeasure[]>(resolved);
+    });
 
-// Should return resolved value for single placeholders
-expectType<PlaceholderResolvedValue<IAttributePlaceholder>>(type<IAttribute>());
-expectType<PlaceholderResolvedValue<IMeasurePlaceholder>>(type<IMeasure>());
-expectType<PlaceholderResolvedValue<IFilterPlaceholder>>(type<IFilter>());
-expectType<PlaceholderResolvedValue<ISortPlaceholder>>(type<ISortItem>());
+    it("inference should work for placeholder with narrowed type", () => {
+        const measure = newArithmeticMeasure(["measure"], "sum");
+        const placeholder = newPlaceholder(measure);
+        const resolved = resolveValueWithPlaceholders(placeholder, emptyState);
 
-// Should return resolved value for group placeholders
-expectType<PlaceholderResolvedValue<IMeasureGroupPlaceholder<IMeasure[]>>>(type<IMeasure[]>());
-expectType<PlaceholderResolvedValue<IMeasureGroupPlaceholder<IMeasurePlaceholder[]>>>(type<IMeasure[]>());
-expectType<PlaceholderResolvedValue<IMeasureGroupPlaceholder<IMeasureGroupPlaceholder<IMeasure[]>[]>>>(
-    type<IMeasure[]>(),
-);
-expectType<PlaceholderResolvedValue<IAttributeGroupPlaceholder<IAttribute[]>>>(type<IAttribute[]>());
-expectType<PlaceholderResolvedValue<IAttributeGroupPlaceholder<IAttributePlaceholder[]>>>(
-    type<IAttribute[]>(),
-);
-expectType<PlaceholderResolvedValue<IAttributeGroupPlaceholder<IAttributeGroupPlaceholder<IAttribute[]>[]>>>(
-    type<IAttribute[]>(),
-);
-expectType<PlaceholderResolvedValue<IFilterGroupPlaceholder<IFilter[]>>>(type<IFilter[]>());
-expectType<PlaceholderResolvedValue<IFilterGroupPlaceholder<IFilterPlaceholder[]>>>(type<IFilter[]>());
-expectType<PlaceholderResolvedValue<IFilterGroupPlaceholder<IFilterGroupPlaceholder<IFilter[]>[]>>>(
-    type<IFilter[]>(),
-);
-expectType<PlaceholderResolvedValue<ISortGroupPlaceholder<ISortItem[]>>>(type<ISortItem[]>());
-expectType<PlaceholderResolvedValue<ISortGroupPlaceholder<ISortPlaceholder[]>>>(type<ISortItem[]>());
-expectType<PlaceholderResolvedValue<ISortGroupPlaceholder<ISortGroupPlaceholder<ISortItem[]>[]>>>(
-    type<ISortItem[]>(),
-);
+        expectType<IMeasure<IArithmeticMeasureDefinition>>(resolved);
+    });
+
+    it("inference should work for array with placeholder holding single value", () => {
+        const placeholder = newPlaceholder<IMeasure>();
+        const resolved = resolveValueWithPlaceholders([placeholder], emptyState);
+
+        expectType<IMeasure[]>(resolved);
+    });
+
+    it("inference should work for array with common placeholder holding multiple values", () => {
+        const placeholder = newPlaceholder<IMeasure[]>();
+        const resolved = resolveValueWithPlaceholders([placeholder], emptyState);
+
+        expectType<IMeasure[]>(resolved);
+    });
+
+    it("inference should work for array with placeholder with narrowed type", () => {
+        const measure = newPopMeasure("measure", "attr");
+        const placeholder = newPlaceholder(measure);
+        const resolved = resolveValueWithPlaceholders([placeholder], emptyState);
+
+        expectType<IMeasure<IPoPMeasureDefinition>[]>(resolved);
+    });
+
+    it("inference should work for array with mixed placeholder types", () => {
+        const measure1 = newPopMeasure("measure", "attr");
+        const measure2 = newArithmeticMeasure(["measure"], "sum");
+        const placeholder1 = newPlaceholder(measure1);
+        const placeholder2 = newPlaceholder([measure2]);
+        const resolved = resolveValueWithPlaceholders([placeholder1, placeholder2], emptyState);
+
+        expectType<(IMeasure<IArithmeticMeasureDefinition> | IMeasure<IPoPMeasureDefinition>)[]>(resolved);
+    });
+
+    it("inference should work for composed placeholder", () => {
+        const placeholder1 = newPlaceholder<IMeasure>();
+        const placeholder2 = newPlaceholder<IAttribute>();
+        const placeholder3 = newComposedPlaceholder([placeholder1, placeholder2]);
+        const resolved = resolveValueWithPlaceholders(placeholder3, emptyState);
+        expectType<(IMeasure | IAttribute)[]>(resolved);
+    });
+
+    it("inference should work for composed placeholder with computation", () => {
+        const placeholder1 = newPlaceholder<IMeasure>();
+        const placeholder2 = newPlaceholder<IAttribute[]>();
+        const placeholder3 = newComposedPlaceholder([placeholder1, placeholder2], ([measure, attributes]) => {
+            return [measure, attributes];
+        });
+        const resolved = resolveValueWithPlaceholders(placeholder3, emptyState);
+        expectType<(IMeasure | IAttribute[])[]>(resolved);
+    });
+});
