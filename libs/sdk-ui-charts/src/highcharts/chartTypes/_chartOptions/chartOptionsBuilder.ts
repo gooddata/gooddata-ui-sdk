@@ -526,11 +526,13 @@ export function getChartOptions(
             measures.push(null);
         }
 
+        const legendLabel = stackByAttribute?.formOf?.name;
         return {
             type,
             stacking,
             hasViewByAttribute: Boolean(stackByAttribute),
             legendLayout: "horizontal",
+            legendLabel,
             yAxes,
             xAxes,
             data: {
@@ -563,9 +565,10 @@ export function getChartOptions(
     );
 
     const legendLabel =
-        isOneOfTypes(type, sortedByMeasureTypes) && viewByAttribute
-            ? viewByAttribute?.name
-            : stackByAttribute?.name;
+        isOneOfTypes(type, multiMeasuresAlternatingTypes) && viewByAttribute
+            ? viewByAttribute?.formOf?.name
+            : stackByAttribute?.formOf?.name;
+
     const chartOptions: IChartOptions = {
         type,
         stacking,
