@@ -25,3 +25,9 @@ function is_current_version_prerelease {
 
   echo "$retval"
 }
+
+function get_release_commit_hash {
+  version=$1
+
+  echo $(git log --grep "^Release $version\$" | sed 's/commit //g' | head -1)
+}
