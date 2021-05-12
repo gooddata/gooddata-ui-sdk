@@ -16,13 +16,18 @@ interface ILegendDialogContent {
 const LegendDialogContent: React.FC<ILegendDialogContent> = (props) => {
     const { title, onCloseDialog, children } = props;
 
+    const onClose = (e: React.MouseEvent) => {
+        e.preventDefault();
+        onCloseDialog();
+    };
+
     return (
         <div className="legend-popup-dialog legend-popup-dialog-content">
             <div className="legend-header">
                 <div className="legend-header-title">{title}</div>
                 <div
-                    className="s-legend-close legend-close gd-button-link gd-button-icon-only icon-cross"
-                    onClick={onCloseDialog}
+                    className="s-legend-close legend-close gd-button-link gd-button-icon-only gd-icon-cross"
+                    onClick={onClose}
                 />
             </div>
             <div className="legend-content">{children}</div>
