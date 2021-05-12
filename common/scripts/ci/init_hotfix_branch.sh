@@ -43,17 +43,20 @@ if [ -z $existing_branch ]; then
   commit_hash=$(get_release_commit_hash $VERSION_TO_HOTFIX)
 
   echo "Checking out the release commit $commit_hash"
-  git checkout $commit_hash
+  # git checkout $commit_hash
+  echo checkout $commit_hash
 
   echo "Creating the first hotfix branch for $VERSION_TO_HOTFIX"
-  git checkout -b $branch_base_name
+  # git checkout -b $branch_base_name
+  echo checkout -b $branch_base_name
 
   echo "Running the rush version bump"
   prerelease_id=$(echo "$VERSION_TO_HOTFIX" | sed 's/[0-9]*\.[0-9]*\.[0-9]*-\(.*\)/\1/').fix
-  ${_RUSH} version --bump --override-bump prerelease --override-prerelease-id $prerelease_id
+  # ${_RUSH} version --bump --override-bump prerelease --override-prerelease-id $prerelease_id
+  echo $prerelease_id
 
   echo "Commiting the results"
-  git commit -a -m "Initialize prerelease fix version" -m "- $VERSION_TO_HOTFIX.fix.0" -m "JIRA: $JIRA_TICKET"
+  # git commit -a -m "Initialize prerelease fix version" -m "- $VERSION_TO_HOTFIX.fix.0" -m "JIRA: $JIRA_TICKET"
 
   # set variables for the CI to push the branch to origin
   TARGET_BRANCH=$branch_base_name
@@ -62,18 +65,20 @@ else
   existing_fix_number=$(echo $existing_branch | sed 's/.*fix-\([0-9]*\)$/\1/')
 
   echo "Checking out the latest existing hotfix branch $existing_branch"
-  git checkout $existing_branch
+  # git checkout $existing_branch
+  echo checkout $existing_branch
 
   echo "Creating the next hotfix branch for $VERSION_TO_HOTFIX"
   new_fix_number=$(($existing_fix_number + 1))
   branch_name=$branch_base_name-$new_fix_number
-  git checkout -b $branch_name
+  # git checkout -b $branch_name
+  echo checkout -b $branch_name
 
   echo "Running the rush version bump"
-  ${_RUSH} version --bump --override-bump prerelease
+  # ${_RUSH} version --bump --override-bump prerelease
 
   echo "Commiting the results"
-  git commit -a -m "Initialize prerelease fix version" -m "- $VERSION_TO_HOTFIX.fix.$new_fix_number" -m "JIRA: $JIRA_TICKET"
+  # git commit -a -m "Initialize prerelease fix version" -m "- $VERSION_TO_HOTFIX.fix.$new_fix_number" -m "JIRA: $JIRA_TICKET"
 
   # set variables for the CI to push the branch to origin
   TARGET_BRANCH=$branch_name
