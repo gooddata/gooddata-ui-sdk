@@ -18,6 +18,9 @@ import { InsightViewTreemapByIdentifierExample } from "./InsightViewTreemapByIde
 import { InsightViewHeatmapByIdentifierExample } from "./InsightViewHeatmapByIdentifierExample";
 import { InsightViewGeoPushpinByIdentifierExample } from "./InsightViewGeoPushpinByIdentifierExample";
 import { InsightViewBulletByIdentifierExample } from "./InsightViewBulletByIdentifierExample";
+import { InsightViewWithTitle } from "./InsightViewWithTitleExample";
+import { InsightViewWithCustomTitle } from "./InsightViewWithCustomTitleExample";
+import { InsightViewWithGeneratedTitleExample } from "./InsightViewWithGeneratedTitleExample";
 
 import InsightViewColumnChartByIdentifierExampleSRC from "!raw-loader!./InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRC from "!raw-loader!./InsightViewComboChartByIdentifierExample";
@@ -34,6 +37,9 @@ import InsightViewTreemapByIdentifierExampleSRC from "!raw-loader!./InsightViewT
 import InsightViewHeatmapByIdentifierExampleSRC from "!raw-loader!./InsightViewHeatmapByIdentifierExample";
 import InsightViewGeoPushpinByIdentifierExampleSRC from "!raw-loader!./InsightViewGeoPushpinByIdentifierExample";
 import InsightViewBulletByIdentifierExampleSRC from "!raw-loader!./InsightViewBulletByIdentifierExample";
+import InsightViewWithTitleSRC from "!raw-loader!./InsightViewWithTitleExample";
+import InsightViewWithCustomTitleSRC from "!raw-loader!./InsightViewWithCustomTitleExample";
+import InsightViewWithGeneratedTitleExampleSRC from "!raw-loader!./InsightViewWithCustomTitleExample";
 
 import InsightViewColumnChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewColumnChartByIdentifierExample";
 import InsightViewComboChartByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewComboChartByIdentifierExample";
@@ -50,6 +56,10 @@ import InsightViewTreemapByIdentifierExampleSRCJS from "!raw-loader!../../../exa
 import InsightViewHeatmapByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewHeatmapByIdentifierExample";
 import InsightViewGeoPushpinByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewGeoPushpinByIdentifierExample";
 import InsightViewBulletByIdentifierExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewBulletByIdentifierExample";
+import InsightViewWithTitleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewWithTitleExample";
+import InsightViewWithCustomTitleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewWithCustomTitleExample";
+import InsightViewWithGeneratedTitleExampleSRCJS from "!raw-loader!../../../examplesJS/insightView/InsightViewWithGeneratedTitleExample";
+
 import { InsightViewPivotTableByIdentifierExample } from "./InsightViewPivotTableByIdentifierExample";
 
 export const InsightView = (): JSX.Element => (
@@ -191,6 +201,33 @@ export const InsightView = (): JSX.Element => (
             for={InsightViewGeoPushpinByIdentifierExample}
             source={InsightViewGeoPushpinByIdentifierExampleSRC}
             sourceJS={InsightViewGeoPushpinByIdentifierExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2 id="combo">Insight view with title</h2>
+        <ExampleWithSource
+            for={InsightViewWithTitle}
+            source={InsightViewWithTitleSRC}
+            sourceJS={InsightViewWithTitleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2 id="combo">Insight view with custom title</h2>
+        <ExampleWithSource
+            for={InsightViewWithCustomTitle}
+            source={InsightViewWithCustomTitleSRC}
+            sourceJS={InsightViewWithCustomTitleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2 id="combo">Insight view with generated title</h2>
+        <ExampleWithSource
+            for={InsightViewWithGeneratedTitleExample}
+            source={InsightViewWithGeneratedTitleExampleSRC}
+            sourceJS={InsightViewWithGeneratedTitleExampleSRCJS}
         />
     </div>
 );
