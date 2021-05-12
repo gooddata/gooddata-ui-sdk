@@ -496,7 +496,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
 .legend-popup-dialog-content {
     position: relative;
-    z-index: 1001;
+    z-index: 5002;
     min-height: 148px;
     border: 1px solid var(--gd-palette-complementary-3, transparentize($dialog-border, 0.5));
     border-radius: 5px;
