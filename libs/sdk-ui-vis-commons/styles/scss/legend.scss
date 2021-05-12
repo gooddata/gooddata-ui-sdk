@@ -214,7 +214,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
             }
 
             .series-item {
-                margin-left: 15px;
+                margin-left: 0;
                 width: 118px;
             }
 
@@ -481,10 +481,10 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
         margin: 0 15px;
         .legend-header-title {
             font-family: $gd-font-primary;
-            height: 40px;
-            line-height: 45px;
-            color: $gd-color-state-blank;
-            font-size: 14px;
+            height: 100%;
+            line-height: 40px;
+            color: $gd-color-label;
+            font-size: 12px;
         }
     }
     .legend-content {
@@ -529,10 +529,31 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
     .legend-close[class*="gd-icon-"] {
         position: absolute;
-        top: 7px;
-        right: 8px;
+        top: 0;
+        right: 15px;
+        width: 12px;
+        height: 40px;
+        line-height: 40px;
         color: $gd-color-label;
         cursor: pointer;
+
+        &::before {
+            font-size: 12px;
+            width: 12px;
+        }
+
+        &:active {
+            &::before {
+                color: $button-action-hover-bg;
+            }
+        }
+
+        &:focus,
+        &:hover {
+            &::before {
+                color: $button-action-color;
+            }
+        }
     }
 }
 
