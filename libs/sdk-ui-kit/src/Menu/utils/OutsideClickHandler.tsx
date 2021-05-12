@@ -3,6 +3,7 @@ import React, { createRef } from "react";
 
 export interface IOutsideClickHandlerProps {
     onOutsideClick: (e: MouseEvent) => void;
+    toggler: HTMLDivElement;
     useCapture?: boolean;
 }
 
@@ -43,7 +44,9 @@ export class OutsideClickHandler extends React.Component<IOutsideClickHandlerPro
             return;
         }
 
-        if (this.wrapperElRef.current.contains(e.target as HTMLElement)) {
+        const target = e.target as HTMLElement;
+
+        if (this.wrapperElRef.current.contains(target) || this.props.toggler?.contains(target)) {
             return;
         }
 
@@ -53,10 +56,10 @@ export class OutsideClickHandler extends React.Component<IOutsideClickHandlerPro
     };
 
     private addListeners = () => {
-        document.addEventListener("click", this.handleClick, this.props.useCapture);
+        document.addEventListener("mousedown", this.handleClick, this.props.useCapture);
     };
 
     private removeListeners = () => {
-        document.removeEventListener("click", this.handleClick, this.props.useCapture);
+        document.removeEventListener("mousedown", this.handleClick, this.props.useCapture);
     };
 }

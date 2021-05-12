@@ -70,8 +70,10 @@ describe("Menu toggling", () => {
         );
 
         expect(isContentRenderedInBody()).toBeFalsy();
+        wrapper.find(Toggler).simulate("mousedown");
         wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeTruthy();
+        wrapper.find(Toggler).simulate("mousedown");
         wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeFalsy();
 
@@ -89,9 +91,10 @@ describe("Menu toggling", () => {
         );
 
         expect(isContentRenderedInBody()).toBeFalsy();
+        wrapper.find(Toggler).simulate("mousedown");
         wrapper.find(Toggler).simulate("click");
         expect(isContentRenderedInBody()).toBeTruthy();
-        outsideElement.click();
+        outsideElement.dispatchEvent(new MouseEvent("mousedown"));
         expect(isContentRenderedInBody()).toBeFalsy();
 
         outsideElement.remove();
