@@ -1,6 +1,7 @@
 // (C) 2007-2021 GoodData Corporation
 import React, { useState } from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 import { LegendLabelItem } from "../LegendLabelItem";
 import { LegendList } from "../LegendList";
 import { IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "../types";
@@ -30,11 +31,12 @@ const useCheckOverflow = (): [boolean, number, (element: HTMLDivElement | null) 
 
 export interface IRowLegendIcoButton {
     isVisible: boolean;
+    isActive: boolean;
     onIconClick: () => void;
 }
 
 export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
-    const { isVisible, onIconClick } = props;
+    const { isVisible, isActive, onIconClick } = props;
 
     if (!isVisible) {
         return null;
@@ -45,9 +47,12 @@ export const RowLegendIcoButton: React.FC<IRowLegendIcoButton> = (props) => {
         onIconClick();
     };
 
+    const iconClasses = cx("legend-popup-icon s-legend-popup-icon", {
+        "legend-popup-icon-active": isActive,
+    });
     return (
         <div className="legend-popup-button">
-            <div onClick={handleOnClick} className="legend-popup-icon s-legend-popup-icon">
+            <div onClick={handleOnClick} className={iconClasses}>
                 <Icon.LegendMenu />
             </div>
         </div>
@@ -61,6 +66,7 @@ export interface IRowLegendProps {
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onDialogIconClick: () => void;
     onLegendItemClick: (item: IPushpinCategoryLegendItem) => void;
+    isActive?: boolean;
 }
 
 export const RowLegend: React.FC<IRowLegendProps> = (props) => {
@@ -71,6 +77,7 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
         enableBorderRadius,
         onDialogIconClick,
         onLegendItemClick,
+        isActive = false,
     } = props;
     const [isOverflow, numOfUsedRow, checkOverFlow] = useCheckOverflow();
 
@@ -98,7 +105,7 @@ export const RowLegend: React.FC<IRowLegendProps> = (props) => {
                     />
                 </div>
             </div>
-            <RowLegendIcoButton isVisible={isOverflow} onIconClick={onDialogIconClick} />
+            <RowLegendIcoButton isActive={isActive} isVisible={isOverflow} onIconClick={onDialogIconClick} />
         </div>
     );
 };

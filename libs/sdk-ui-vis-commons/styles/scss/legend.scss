@@ -416,7 +416,8 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     background-color: $is-focused-background;
     cursor: pointer;
 
-    &:hover {
+    &:hover,
+    &.legend-popup-icon-active {
         background-color: $gd-color-state-blank;
 
         // stylelint-disable-next-line selector-max-id

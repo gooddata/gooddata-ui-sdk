@@ -39,6 +39,7 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
                 }}
                 onLegendItemClick={onLegendItemClick}
                 enableBorderRadius={enableBorderRadius}
+                isActive={isDialogOpen}
             />
 
             <LegendDialog
