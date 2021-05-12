@@ -74,6 +74,7 @@ export class TableFacade {
 
     public readonly tableDescriptor: TableDescriptor;
     private readonly resizedColumnsStore: ResizedColumnsStore;
+    private readonly originalExecutionFingerpring: string;
 
     /**
      * When user changes sorts or totals by interacting with the table, the current execution result will
@@ -144,6 +145,7 @@ export class TableFacade {
         this.agGridDataSource = this.createDataSource(tableMethods);
         this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
+        this.originalExecutionFingerpring = result.transform().fingerprint();
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
@@ -659,6 +661,12 @@ export class TableFacade {
      * @param other
      */
     public isMatchingExecution(other: IPreparedExecution): boolean {
+        if (this.originalExecutionFingerpring === other.fingerprint()) {
+            return true;
+        } else {
+            // eslint-disable-next-line no-console
+            console.debug("Original execution fingerprint does not match.");
+        }
         if (this.transformedExecution) {
             const matchingTransformed = this.transformedExecution.fingerprint() === other.fingerprint();
 
