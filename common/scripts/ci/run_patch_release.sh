@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# This script bumps from prerelease to real minor, creates release, makes commit, tags, updates changelogs.
+# This script bumps from prerelease to real patch, creates release, makes commit, tags, updates changelogs.
 #
 # See docs/releases.md for more information how rush version bump behaves
 #
@@ -15,7 +15,7 @@ version=$(get_current_version)
 is_prerelease=$(is_current_version_prerelease)
 
 if [ ! $is_prerelease -eq 0 ]; then
-  echo "You are attempting a bump to a minor version. However the current version (${version}) is not a pre-release."
+  echo "You are attempting a bump to a patch version. However the current version (${version}) is not a pre-release."
   echo "Normally, each release actually creates a new version and then establishes the new pre-release (alpha.0)."
   echo
   echo "It is likely something went wrong during the previous release job or that the scripts or Rush version bumps are "
@@ -30,9 +30,9 @@ ${_RUSH} install
 ${_RUSH} build
 
 #
-# First bump to the next minor
+# First bump to the next patch
 #
-${_RUSH} version --bump --override-bump minor
+${_RUSH} version --bump --override-bump patch
 bump_rc=$?
 
 if [ $bump_rc -ne 0 ]; then
@@ -42,7 +42,7 @@ if [ $bump_rc -ne 0 ]; then
 fi
 
 #
-# Perform release; this will create commits & tags with the minor release in it.
+# Perform release; this will create commits & tags with the patch release in it.
 #
 export TAG_VERSION=TRUE
 export TAG_NPM="latest"
@@ -50,5 +50,5 @@ ${DIR}/do_publish.sh
 publish_rc=$?
 
 if [ $publish_rc -ne 0 ]; then
-  echo "Publishing minor version failed. Please investigate the impact of this catastrophe and correct manually. Good luck."
+  echo "Publishing patch version failed. Please investigate the impact of this catastrophe and correct manually. Good luck."
 fi
