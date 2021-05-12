@@ -1213,6 +1213,7 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableApproxCount?: boolean;
     enableAxisNameConfiguration?: boolean;
     enableBulletChart?: boolean;
     enableCustomColorPicker?: boolean;

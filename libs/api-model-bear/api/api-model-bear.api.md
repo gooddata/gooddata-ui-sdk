@@ -2777,7 +2777,7 @@ export namespace GdcVisualizationObject {
         visualizationObject: IVisualizationObject;
     }
     // (undocumented)
-    export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+    export type MeasureAggregation = "sum" | "count" | "approximate_count" | "avg" | "min" | "max" | "median" | "runsum";
     // (undocumented)
     export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
     // (undocumented)

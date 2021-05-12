@@ -4056,6 +4056,8 @@ export interface SimpleMeasureDefinitionMeasure {
 // @public
 export enum SimpleMeasureDefinitionMeasureAggregationEnum {
     // (undocumented)
+    APPROXIMATE_COUNT = "APPROXIMATE_COUNT",
+    // (undocumented)
     AVG = "AVG",
     // (undocumented)
     COUNT = "COUNT",
