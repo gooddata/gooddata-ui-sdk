@@ -949,7 +949,7 @@ export type LocalIdRef = {
 export function localIdRef(localIdentifier: Identifier): LocalIdRef;
 
 // @public
-export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+export type MeasureAggregation = "sum" | "count" | "approximate_count" | "avg" | "min" | "max" | "median" | "runsum";
 
 // @public
 export function measureAggregation(measure: IMeasure): MeasureAggregation | undefined;

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import {
     IArithmeticMeasureDefinition,
     IMeasure,
@@ -10,6 +10,7 @@ import {
     isMeasureDefinition,
     isPoPMeasureDefinition,
     isPreviousPeriodMeasureDefinition,
+    MeasureAggregation,
 } from "@gooddata/sdk-model";
 import { GdcExecuteAFM } from "@gooddata/api-model-bear";
 import { convertMeasureFilter } from "./FilterConverter";
@@ -62,7 +63,7 @@ function convertSimpleMeasureDefinition(
         : [];
     const filtersProp = filters.length ? { filters } : {};
 
-    const aggregation = measureDefinition.aggregation;
+    const aggregation = convertAggregation(measureDefinition.aggregation);
     const aggregationProp = aggregation ? { aggregation } : {};
 
     const computeRatio = measureDefinition.computeRatio;
@@ -76,6 +77,16 @@ function convertSimpleMeasureDefinition(
             ...computeRatioProp,
         },
     };
+}
+
+function convertAggregation(
+    aggregation?: MeasureAggregation,
+): GdcExecuteAFM.SimpleMeasureAggregation | undefined {
+    if (aggregation === "approximate_count") {
+        // Bear doesn't support approximate_count so transparently fallback to exact count.
+        return "count";
+    }
+    return aggregation;
 }
 
 function convertPopMeasureDefinition(definition: IPoPMeasureDefinition): GdcExecuteAFM.IPopMeasureDefinition {

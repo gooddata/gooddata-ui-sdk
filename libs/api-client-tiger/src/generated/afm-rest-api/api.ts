@@ -1840,6 +1840,7 @@ export interface SimpleMeasureDefinitionMeasure {
 export enum SimpleMeasureDefinitionMeasureAggregationEnum {
     SUM = "SUM",
     COUNT = "COUNT",
+    APPROXIMATE_COUNT = "APPROXIMATE_COUNT",
     AVG = "AVG",
     MIN = "MIN",
     MAX = "MAX",

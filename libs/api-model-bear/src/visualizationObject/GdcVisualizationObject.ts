@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import { GdcMetadata } from "../meta/GdcMetadata";
 import isEmpty from "lodash/isEmpty";
 
@@ -8,7 +8,15 @@ import isEmpty from "lodash/isEmpty";
 export namespace GdcVisualizationObject {
     export type SortDirection = "asc" | "desc";
     export type Identifier = string;
-    export type MeasureAggregation = "sum" | "count" | "avg" | "min" | "max" | "median" | "runsum";
+    export type MeasureAggregation =
+        | "sum"
+        | "count"
+        | "approximate_count"
+        | "avg"
+        | "min"
+        | "max"
+        | "median"
+        | "runsum";
     export type TotalType = "sum" | "avg" | "max" | "min" | "nat" | "med";
     export type VisualizationType =
         | "table"
