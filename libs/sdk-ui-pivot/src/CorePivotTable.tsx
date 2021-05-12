@@ -6,6 +6,7 @@ import {
     ColumnResizedEvent,
     GridReadyEvent,
     SortChangedEvent,
+    PinnedRowDataChangedEvent,
 } from "@ag-grid-community/all-modules";
 import { v4 as uuidv4 } from "uuid";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
@@ -633,6 +634,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         });
     };
 
+    private onPinnedRowDataChanged = async (event: PinnedRowDataChangedEvent) => {
+        if (event?.api.getPinnedBottomRowCount() > 0) {
+            await this.autoresizeColumns(true);
+        }
+    };
+
     private onBodyScroll = (event: BodyScrollEvent) => {
         const scrollPosition: IScrollPosition = {
             top: Math.max(event.top, 0),
@@ -745,7 +752,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
 
         const didResize = await this.internal.table?.autoresizeColumns(this.getResizingConfig(), force);
 
-        if (didResize) {
+        if (didResize && !this.state.resized) {
             this.setState({
                 resized: true,
             });
@@ -1007,6 +1014,7 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
             onGridColumnResized: this.stateBoundCallback(this.onGridColumnResized),
             onSortChanged: this.stateBoundCallback(this.onSortChanged),
             onGridSizeChanged: debouncedGridSizeChanged,
+            onPinnedRowDataChanged: this.stateBoundCallback(this.onPinnedRowDataChanged),
         };
     };
 

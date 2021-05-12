@@ -93,6 +93,7 @@ export function createGridOptions(
         onColumnResized: tableMethods.onGridColumnResized,
         onGridColumnsChanged: tableMethods.onGridColumnsChanged,
         onModelUpdated: tableMethods.onModelUpdated,
+        onPinnedRowDataChanged: tableMethods.onPinnedRowDataChanged,
 
         // Basic options
         suppressMovableColumns: true,
