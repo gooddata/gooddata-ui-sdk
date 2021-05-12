@@ -6,6 +6,7 @@ import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
 import { HighchartsOptions } from "../../../highcharts/lib";
 
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
+import { getAxesCounts } from "../_util/common";
 
 export function getColumnConfiguration(
     config: IChartConfig,
@@ -50,9 +51,10 @@ export function getColumnConfiguration(
     };
 
     if (config?.enableCompactSize) {
+        const [xAxesCount, yAxesCount] = getAxesCounts(config);
         return {
             ...columnConfiguration,
-            responsive: getCommonResponsiveConfig(),
+            responsive: getCommonResponsiveConfig(false, xAxesCount, yAxesCount),
         };
     }
 
