@@ -457,9 +457,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
         const { desiredHeight, error } = this.state;
 
         if (error) {
-            const errorProps = this.errorMap[
-                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
-            ];
+            const errorProps =
+                this.errorMap[
+                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
+                        ? error
+                        : ErrorCodes.UNKNOWN_ERROR
+                ];
 
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
@@ -972,12 +975,12 @@ export class CorePivotTableAgImpl extends React.Component<ICorePivotTableProps, 
     // eslint-disable-next-line @typescript-eslint/ban-types
     private stateBoundCallback = <T extends Function>(callback: T): T => {
         const forInternalState = this.internal;
-        const guarded: T = (((...args: any) => {
+        const guarded: T = ((...args: any) => {
             if (this.internal !== forInternalState) {
                 return;
             }
             return callback(...args);
-        }) as unknown) as T;
+        }) as unknown as T;
 
         return guarded;
     };

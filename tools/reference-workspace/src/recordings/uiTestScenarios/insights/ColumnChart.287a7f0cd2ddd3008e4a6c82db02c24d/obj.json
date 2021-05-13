@@ -1,0 +1,52 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.owner.region", "type": "displayForm" },
+                            "localIdentifier": "a_label.owner.region"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "stack"
+            }
+        ],
+        "filters": [],
+        "identifier": "ColumnChart.287a7f0cd2ddd3008e4a6c82db02c24d",
+        "properties": {
+            "controls": { "legend": { "position": "top", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "ColumnChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top",
+        "uri": "ColumnChart.287a7f0cd2ddd3008e4a6c82db02c24d",
+        "visualizationUrl": "local:column"
+    }
+}

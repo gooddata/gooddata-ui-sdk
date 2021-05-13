@@ -9,13 +9,20 @@ import { FluidLegend } from "./FluidLegend";
 import { StaticLegend, IStaticLegendProps } from "./StaticLegend";
 import { HeatmapLegend } from "./HeatmapLegend";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import { ItemBorderRadiusPredicate } from "./types";
+import { IColorLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
+import { PopUpLegend } from "./PopUpLegend/PopUpLegend";
+import { TOP, BOTTOM } from "./PositionTypes";
+import { ButtonsOrientationType } from "./Paging";
+
+const HEATMAP_LEGEND_WIDTH_BREAKPOINT = 460;
 
 /**
  * @internal
  */
 export interface ILegendProps {
-    responsive?: boolean;
+    legendLabel?: string;
+    maximumRows?: number;
+    responsive?: boolean | "autoPositionWithPopup";
     legendItemsEnabled?: any[];
     height?: number;
     position: string;
@@ -28,6 +35,8 @@ export interface ILegendProps {
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     onItemClick(item: any): void;
     validateOverHeight(legendClient: Rect): void;
+    contentDimensions: { width: number; height: number };
+    containerId?: string;
 }
 
 /**
@@ -43,8 +52,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
         enableBorderRadius: false,
     };
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    public onItemClick = (item: any): void => {
+    public onItemClick = (item: IPushpinCategoryLegendItem): void => {
         this.props.onItemClick(item);
     };
 
@@ -64,6 +72,21 @@ export class Legend extends React.PureComponent<ILegendProps> {
         }
 
         return seriesWithVisibility;
+    };
+
+    public renderPopUpLegend = (): React.ReactNode => {
+        const { legendLabel, maximumRows, enableBorderRadius, containerId = "" } = this.props;
+
+        return (
+            <PopUpLegend
+                containerId={containerId}
+                series={this.getSeries()}
+                maxRows={maximumRows}
+                name={legendLabel}
+                enableBorderRadius={enableBorderRadius}
+                onLegendItemClick={this.onItemClick}
+            />
+        );
     };
 
     public renderFluid = (): React.ReactNode => {
@@ -92,9 +115,12 @@ export class Legend extends React.PureComponent<ILegendProps> {
     };
 
     public renderStatic = (): React.ReactNode => {
-        const { position, height, enableBorderRadius } = this.props;
+        const { position, height, enableBorderRadius, responsive, legendLabel: label } = this.props;
 
         const classNames = cx("viz-static-legend-wrap", `position-${position}`);
+
+        const buttonOrientation: ButtonsOrientationType =
+            responsive === "autoPositionWithPopup" ? "leftRight" : "upDown";
 
         const props: IStaticLegendProps = {
             containerHeight: 0,
@@ -102,6 +128,8 @@ export class Legend extends React.PureComponent<ILegendProps> {
             onItemClick: this.onItemClick,
             position,
             enableBorderRadius,
+            buttonOrientation,
+            label,
         };
 
         return (
@@ -128,14 +156,17 @@ export class Legend extends React.PureComponent<ILegendProps> {
     };
 
     public render(): React.ReactNode {
-        const { responsive, showFluidLegend, heatmapLegend } = this.props;
-
-        const isFluidLegend = Boolean(responsive && showFluidLegend);
+        const { contentDimensions, responsive, heatmapLegend, showFluidLegend, maximumRows } = this.props;
 
         if (heatmapLegend) {
-            return this.renderHeatmapLegend();
+            return this.renderHeatmapLegend(contentDimensions);
         }
 
+        if (responsive === "autoPositionWithPopup" && maximumRows) {
+            return this.renderPopUpLegend();
+        }
+
+        const isFluidLegend = responsive === true && showFluidLegend;
         if (isFluidLegend) {
             return this.renderFluid();
         }
@@ -143,20 +174,34 @@ export class Legend extends React.PureComponent<ILegendProps> {
         return this.renderStatic();
     }
 
-    private renderHeatmapLegend = (): React.ReactNode => {
-        const { locale, format, responsive, position } = this.props;
+    private renderHeatmapLegend = (contentDimensions: { width: number; height: number }): React.ReactNode => {
+        const { locale, format, responsive, position, legendLabel } = this.props;
         const { showFluidLegend } = this.props;
         const series = this.getSeries();
-        const isSmall = Boolean(responsive && showFluidLegend);
+        const isFluidResponsive = Boolean(responsive === true && showFluidLegend);
+        const isPopupResponsive =
+            (position === TOP || position === BOTTOM) &&
+            responsive === "autoPositionWithPopup" &&
+            contentDimensions.width &&
+            contentDimensions.width < HEATMAP_LEGEND_WIDTH_BREAKPOINT;
+
+        let size: IColorLegendSize = "large";
+        if (isFluidResponsive) {
+            size = "medium";
+        }
+        if (isPopupResponsive) {
+            size = "small";
+        }
 
         return (
             <IntlWrapper locale={locale}>
                 <IntlTranslationsProvider>
                     {(props: ITranslationsComponentProps) => (
                         <HeatmapLegend
+                            title={legendLabel}
                             series={series}
                             format={format}
-                            isSmall={isSmall}
+                            size={size}
                             numericSymbols={props.numericSymbols}
                             position={position}
                         />

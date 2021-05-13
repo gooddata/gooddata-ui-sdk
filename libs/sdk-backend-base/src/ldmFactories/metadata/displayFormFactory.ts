@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class AttributeDisplayFormMetadataObjectBuilder<
-    T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject
+    T extends IAttributeDisplayFormMetadataObject = IAttributeDisplayFormMetadataObject,
 > extends MetadataObjectBuilder<T> {
     public attribute(ref: ObjRef): this {
         this.item.attribute = ref;

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "8.4.0-alpha.40",
+    "version": "8.4.0-alpha.57",
     "author": "GoodData",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
@@ -40,8 +40,8 @@
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run prettier-write && npm run build"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.40",
-        "@gooddata/sdk-model": "^8.4.0-alpha.40",
+        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.57",
+        "@gooddata/sdk-model": "^8.4.0-alpha.57",
         "lodash": "^4.17.19",
         "tslib": "^2.0.0"
     },
@@ -61,7 +61,7 @@
         "eslint-plugin-prettier": "^3.1.4",
         "jest": "^26.4.2",
         "jest-junit": "^3.0.0",
-        "prettier": "~2.2.1",
+        "prettier": "~2.3.0",
         "ts-jest": "^26.3.0",
         "typescript": "4.0.2"
     }

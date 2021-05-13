@@ -1,5 +1,7 @@
-// (C) 2007-2020 GoodData Corporation
-
+// (C) 2007-2021 GoodData Corporation
+/**
+ * @packageDocumentation
+ */
 export { GdcExecuteAFM } from "./executeAfm/GdcExecuteAFM";
 export { GdcExecution } from "./executeAfm/GdcExecution";
 export { GdcExport } from "./export/GdcExport";

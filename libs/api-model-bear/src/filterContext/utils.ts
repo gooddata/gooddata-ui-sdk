@@ -45,15 +45,13 @@ function sanitizeAttributeFilter(
 export function sanitizeFiltersForExport(
     filters: GdcFilterContext.FilterContextItem[],
 ): GdcFilterContext.FilterContextItem[] {
-    return filters.map(
-        (filter: GdcFilterContext.FilterContextItem): GdcFilterContext.FilterContextItem => {
-            if (isDateFilter(filter)) {
-                return sanitizeDateFilter(filter);
-            }
-            if (isAttributeFilter(filter)) {
-                return sanitizeAttributeFilter(filter);
-            }
-            return filter;
-        },
-    );
+    return filters.map((filter: GdcFilterContext.FilterContextItem): GdcFilterContext.FilterContextItem => {
+        if (isDateFilter(filter)) {
+            return sanitizeDateFilter(filter);
+        }
+        if (isAttributeFilter(filter)) {
+            return sanitizeAttributeFilter(filter);
+        }
+        return filter;
+    });
 }

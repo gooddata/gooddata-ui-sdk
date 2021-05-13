@@ -301,6 +301,23 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): Chart
     return defaultChartedAttributeDiscovery(dv);
 }
 
+function getLegendLabel(
+    type: string,
+    viewByAttribute: IUnwrappedAttributeHeadersWithItems,
+    stackByAttribute: IUnwrappedAttributeHeadersWithItems,
+) {
+    let legendLabel;
+    if (isTreemap(type)) {
+        legendLabel = viewByAttribute?.formOf?.name;
+    } else if (isOneOfTypes(type, sortedByMeasureTypes) && viewByAttribute) {
+        legendLabel = viewByAttribute?.formOf?.name;
+    } else {
+        legendLabel = stackByAttribute?.formOf?.name;
+    }
+
+    return legendLabel;
+}
+
 export function getChartOptions(
     dataView: IDataView,
     chartConfig: IChartConfig,
@@ -474,6 +491,7 @@ export function getChartOptions(
             type,
             stacking: null,
             legendLayout: "horizontal",
+            legendLabel: unwrap(measureGroup?.items[0])?.name,
             title: {
                 x: viewByAttribute ? viewByAttribute.name : "",
                 y: stackByAttribute ? stackByAttribute.name : "",
@@ -530,6 +548,7 @@ export function getChartOptions(
             stacking,
             hasViewByAttribute: Boolean(stackByAttribute),
             legendLayout: "horizontal",
+            legendLabel: getLegendLabel(type, viewByAttribute, stackByAttribute),
             yAxes,
             xAxes,
             data: {
@@ -567,6 +586,7 @@ export function getChartOptions(
         hasStackByAttribute: Boolean(stackByAttribute),
         hasViewByAttribute: Boolean(viewByAttribute),
         legendLayout: config.legendLayout || "horizontal",
+        legendLabel: getLegendLabel(type, viewByAttribute, stackByAttribute),
         xAxes,
         yAxes,
         data: {

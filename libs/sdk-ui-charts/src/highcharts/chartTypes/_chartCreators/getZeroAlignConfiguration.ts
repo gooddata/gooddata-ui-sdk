@@ -189,26 +189,24 @@ export function getMinMaxInfo(config: any, stacking: StackingType, type: string)
     const { series, yAxis } = config;
     const isStackedChart = !isNil(stacking);
 
-    return yAxis.map(
-        (axis: IHighChartAxis, axisIndex: number): IMinMaxInfo => {
-            const isLineChartOnAxis = isLineChartType(series, axisIndex, type);
-            const seriesOnAxis = getSeriesOnAxis(series, axisIndex);
-            const { min, max, opposite } = axis;
+    return yAxis.map((axis: IHighChartAxis, axisIndex: number): IMinMaxInfo => {
+        const isLineChartOnAxis = isLineChartType(series, axisIndex, type);
+        const seriesOnAxis = getSeriesOnAxis(series, axisIndex);
+        const { min, max, opposite } = axis;
 
-            const { min: dataMin, max: dataMax } =
-                isStackedChart && !isLineChartOnAxis
-                    ? getDataMinMaxOnStackedChart(seriesOnAxis, stacking, opposite)
-                    : getDataMinMax(seriesOnAxis, isLineChartOnAxis);
+        const { min: dataMin, max: dataMax } =
+            isStackedChart && !isLineChartOnAxis
+                ? getDataMinMaxOnStackedChart(seriesOnAxis, stacking, opposite)
+                : getDataMinMax(seriesOnAxis, isLineChartOnAxis);
 
-            return {
-                id: axisIndex,
-                min: isNil(min) ? dataMin : min,
-                max: isNil(max) ? dataMax : max,
-                isSetMin: min !== undefined,
-                isSetMax: max !== undefined,
-            };
-        },
-    );
+        return {
+            id: axisIndex,
+            min: isNil(min) ? dataMin : min,
+            max: isNil(max) ? dataMax : max,
+            isSetMin: min !== undefined,
+            isSetMax: max !== undefined,
+        };
+    });
 }
 
 /**

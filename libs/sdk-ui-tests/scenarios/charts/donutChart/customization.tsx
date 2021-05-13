@@ -6,6 +6,8 @@ import { legendCustomizer } from "../_infra/legendVariants";
 import { DonutChartWithSingleMeasureAndViewBy, DonutChartWithTwoMeasures } from "./base";
 import { chartAlignmentVariants } from "../_infra/chartAlignmentVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<IDonutChartProps>("DonutChart", DonutChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -30,4 +32,14 @@ const chartAlignmentScenarios = scenariosFor<IDonutChartProps>("DonutChart", Don
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("vertical alignment", DonutChartWithSingleMeasureAndViewBy, chartAlignmentVariants);
 
-export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "DonutChart",
+    ScenarioGroupNames.LegendResponsive,
+    DonutChart,
+    DonutChartWithSingleMeasureAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, chartAlignmentScenarios, ...legendResponziveScenarios];

@@ -102,33 +102,28 @@ class BulletChartColorStrategy extends ColorStrategy {
         measureGroup: IMeasureGroupDescriptor["measureGroupHeader"],
         occupiedMeasureBucketsLocalIdentifiers: Identifier[],
     ): IColorAssignment[] {
-        return measureGroup.items.map(
-            (headerItem: IMeasureDescriptor, index: number): IColorAssignment => {
-                const color: IColor =
-                    (isPrimarySeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
-                        type: "guid",
-                        value: colorPalette[0].guid,
-                    }) ||
-                    (isTargetSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
-                        type: "rgb",
-                        value: getLighterColorFromRGB(
-                            colorPalette[0].fill,
-                            isDarkTheme(this.theme) ? 0.5 : -0.3,
-                        ),
-                    }) ||
-                    (isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
-                        type: "rgb",
-                        value: this.theme?.palette?.complementary
-                            ? parseRGBString(normalizeColorToRGB(this.theme?.palette?.complementary?.c2))
-                            : DEFAULT_BULLET_GRAY_COLOR,
-                    });
+        return measureGroup.items.map((headerItem: IMeasureDescriptor, index: number): IColorAssignment => {
+            const color: IColor =
+                (isPrimarySeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
+                    type: "guid",
+                    value: colorPalette[0].guid,
+                }) ||
+                (isTargetSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
+                    type: "rgb",
+                    value: getLighterColorFromRGB(colorPalette[0].fill, isDarkTheme(this.theme) ? 0.5 : -0.3),
+                }) ||
+                (isComparativeSeries(index, occupiedMeasureBucketsLocalIdentifiers) && {
+                    type: "rgb",
+                    value: this.theme?.palette?.complementary
+                        ? parseRGBString(normalizeColorToRGB(this.theme?.palette?.complementary?.c2))
+                        : DEFAULT_BULLET_GRAY_COLOR,
+                });
 
-                return {
-                    headerItem,
-                    color,
-                };
-            },
-        );
+            return {
+                headerItem,
+                color,
+            };
+        });
     }
 }
 

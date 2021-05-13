@@ -426,8 +426,8 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     margin-right: 6px;
 }
 
-.icon-header-help,
-.icon-header-help-back {
+.gd-icon-header-help,
+.gd-icon-header-help-back {
     &::before {
         vertical-align: bottom;
         opacity: 0.8;
@@ -435,13 +435,13 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     }
 }
 
-.icon-header-help {
+.gd-icon-header-help {
     &::before {
         content: "\e60b";
     }
 }
 
-.icon-header-help-back {
+.gd-icon-header-help-back {
     font-size: 16px;
     text-transform: uppercase;
 
@@ -543,7 +543,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     text-align: center;
     background-color: $gd-color-state-blank;
 
-    .icon-logout {
+    .gd-icon-logout {
         position: relative;
         top: 1px;
         margin-right: 5px;
@@ -634,7 +634,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             text-decoration: underline;
         }
 
-        .icon-home {
+        .gd-icon-home {
             position: absolute;
             margin-left: -30px;
         }
@@ -645,7 +645,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
     display: flex;
     flex: 1 0 auto;
 
-    @mixin icon-state {
+    @mixin gd-icon-state {
         &.disabled {
             color: $gd-color-disabled;
         }
@@ -660,11 +660,11 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             z-index: 100;
             box-shadow: 0 0 0 1px $gd-color-highlight;
 
-            @include icon-state;
+            @include gd-icon-state;
         }
     }
 
-    .icon-sources {
+    .gd-icon-sources {
         border-bottom-right-radius: 0;
         border-top-right-radius: 0;
 
@@ -684,13 +684,13 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             top: 11px;
             margin-top: 1px;
 
-            @include icon-state;
+            @include gd-icon-state;
         }
 
         @include hover-effect;
     }
 
-    .icon-model {
+    .gd-icon-model {
         border-radius: 0;
 
         &.is-normal::before {
@@ -701,13 +701,13 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
             top: 11px;
             margin-top: 1px;
 
-            @include icon-state;
+            @include gd-icon-state;
         }
 
         @include hover-effect;
     }
 
-    .icon-cloud-upload {
+    .gd-icon-cloud-upload {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
 
@@ -717,7 +717,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
                 color: $gd-color-disabled;
             }
 
-            @include icon-state;
+            @include gd-icon-state;
         }
 
         @include hover-effect;
@@ -734,7 +734,7 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
         font-size: 16px;
     }
 
-    .gd-button-primary[class*="icon-"] {
+    .gd-button-primary[class*="gd-icon-"] {
         height: 27px;
         padding-left: 11px;
         padding-right: 11px;
@@ -791,13 +791,13 @@ $button-normal-active-shadow: transparentize($button-normal-active-border-color,
 }
 
 button.gd-button-primary {
-    &.icon-cloud-upload.s-load.gd-button,
-    &.icon-sources.s-sources.gd-button {
+    &.gd-icon-cloud-upload.s-load.gd-button,
+    &.gd-icon-sources.s-sources.gd-button {
         > span {
             margin-left: 23px;
         }
     }
-    &.icon-model.s-model.gd-button {
+    &.gd-icon-model.s-model.gd-button {
         > span {
             margin-left: 22px;
         }

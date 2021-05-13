@@ -33,15 +33,15 @@ let config: IGdcMessageEventListenerConfig = {
     validReceivedPostEvents: [],
 };
 
-const receiveListener = (listener: GdcMessageEventListener): GdcMessageEventListener => (
-    event: IGdcMessageEvent<string, string, any>,
-) => {
-    return event?.data?.gdc?.product === config.product &&
-        // check for valid incoming command
-        config.validReceivedPostEvents.includes(event?.data?.gdc?.event?.name)
-        ? listener(event)
-        : false;
-};
+const receiveListener =
+    (listener: GdcMessageEventListener): GdcMessageEventListener =>
+    (event: IGdcMessageEvent<string, string, any>) => {
+        return event?.data?.gdc?.product === config.product &&
+            // check for valid incoming command
+            config.validReceivedPostEvents.includes(event?.data?.gdc?.event?.name)
+            ? listener(event)
+            : false;
+    };
 
 //
 //

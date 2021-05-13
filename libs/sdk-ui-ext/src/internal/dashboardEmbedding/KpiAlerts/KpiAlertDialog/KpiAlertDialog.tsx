@@ -195,7 +195,7 @@ export class KpiAlertDialog extends Component<
     renderDialogBox(): React.ReactNode {
         return (
             <div className="kpi-alert-dialog">
-                <div className="action-close icon-cross" onClick={this.onCloseClick} />
+                <div className="action-close gd-icon-cross" onClick={this.onCloseClick} />
                 {this.renderDialogContent()}
             </div>
         );

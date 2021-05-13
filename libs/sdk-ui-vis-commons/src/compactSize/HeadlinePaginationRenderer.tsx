@@ -17,12 +17,12 @@ export const HeadlinePaginationRenderer: React.FC<IHeadlinePaginationProps> = ({
     return (
         <div className="headline-pagination">
             <button
-                className={`${commonClassNames} first-item icon-chevron-left`}
+                className={`${commonClassNames} first-item gd-icon-chevron-left`}
                 onClick={showPrevItem}
                 disabled={item === 1}
             />
             <button
-                className={`${commonClassNames} second-item icon-chevron-right`}
+                className={`${commonClassNames} second-item gd-icon-chevron-right`}
                 onClick={showNextItem}
                 disabled={item === 2}
             />

@@ -36,8 +36,14 @@ export type TestTypes = "api" | "visual";
  *
  * - "mock-no-insight" - indicates that the capture & mock handling tooling should not create insight for
  *   the tagged scenario.
+ *
+ * - "no-plug-viz-tests" - this tag will skip generate stories for Pluggable visualization (04 Stories For Pluggable Vis section)
  */
-export type SignificantTags = "vis-config-only" | "mock-no-scenario-meta" | "mock-no-insight";
+export type SignificantTags =
+    | "vis-config-only"
+    | "mock-no-scenario-meta"
+    | "mock-no-insight"
+    | "no-plug-viz-tests";
 export type ScenarioTag = SignificantTags | string;
 
 export type WorkspaceType = "reference-workspace" | "live-examples-workspace" | "experimental-workspace";
@@ -230,11 +236,11 @@ export class ScenarioBuilder<T extends VisProps> {
             // typescript won't let this fly without explicit casts; it is safe in this circumstance. see
             // UnboundChartProps.. whatever subtype, we always omit just backend and workspace that are
             // filled in during this factory call
-            return ({
+            return {
                 ...props,
                 backend,
                 workspace,
-            } as any) as T;
+            } as any as T;
         };
 
         return {

@@ -3,9 +3,15 @@ import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src";
 import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { dataPointCustomizer } from "../_infra/dataPointVariants";
-import { AreaChartWithTwoMeasuresAndViewBy, AreaChartWithManyDataPoints } from "./base";
+import {
+    AreaChartWithTwoMeasuresAndViewBy,
+    AreaChartWithManyDataPoints,
+    AreaChartWithLotArithmeticMeasuresAndViewBy,
+} from "./base";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -28,4 +34,14 @@ const dataPointScenarios = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .addScenarios("data points - sparse chart", AreaChartWithTwoMeasuresAndViewBy, dataPointCustomizer)
     .addScenarios("data points - dense chart", AreaChartWithManyDataPoints, dataPointCustomizer);
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "AreaChart",
+    ScenarioGroupNames.LegendResponsive,
+    AreaChart,
+    AreaChartWithLotArithmeticMeasuresAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, dataPointScenarios, ...legendResponziveScenarios];

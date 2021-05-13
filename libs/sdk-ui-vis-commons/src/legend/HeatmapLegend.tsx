@@ -1,6 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
-import { IHeatmapLegendItem, IColorLegendItem } from "./types";
+import { IColorLegendSize, IHeatmapLegendItem, IColorLegendItem } from "./types";
 import { ColorLegend } from "./ColorLegend";
 
 /**
@@ -8,10 +8,11 @@ import { ColorLegend } from "./ColorLegend";
  */
 export interface IHeatmapLegendProps {
     series: IHeatmapLegendItem[];
-    isSmall: boolean;
+    size: IColorLegendSize;
     format?: string;
     numericSymbols: string[];
     position: string;
+    title?: string;
 }
 
 /**
@@ -19,21 +20,20 @@ export interface IHeatmapLegendProps {
  */
 export class HeatmapLegend extends React.PureComponent<IHeatmapLegendProps> {
     public render(): React.ReactNode {
-        const { series, format, numericSymbols, isSmall, position } = this.props;
-        const data = series.map(
-            (item: IHeatmapLegendItem): IColorLegendItem => {
-                const { range, color } = item;
-                return { range, color };
-            },
-        );
+        const { title, series, format, numericSymbols, size, position } = this.props;
+        const data = series.map((item: IHeatmapLegendItem): IColorLegendItem => {
+            const { range, color } = item;
+            return { range, color };
+        });
 
         return (
             <ColorLegend
                 data={data}
                 format={format}
-                isSmall={isSmall}
+                size={size}
                 numericSymbols={numericSymbols}
                 position={position}
+                title={title}
             />
         );
     }

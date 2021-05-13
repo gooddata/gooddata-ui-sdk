@@ -1,4 +1,6 @@
 // (C) 2007-2021 GoodData Corporation
+import range from "lodash/range";
+import cloneDeep from "lodash/cloneDeep";
 import { HighchartsResponsiveOptions, XAxisOptions, YAxisOptions } from "../../../highcharts/lib";
 
 const UPPER_LIMIT_RATIO = 35;
@@ -29,7 +31,16 @@ const yAxisTitleDisabledOption: YAxisOptions = {
         text: undefined,
     },
 };
-const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOptions => {
+
+function forMultipleAxes<T>(count: number, options: T): Array<T> {
+    return range(count).map(() => cloneDeep(options));
+}
+
+const getResponsiveConfigOptions = (
+    inverted: boolean,
+    xAxesCount: number,
+    yAxesCount: number,
+): HighchartsResponsiveOptions => {
     const axisKeyX = inverted ? "yAxis" : "xAxis";
     const axisKeyY = inverted ? "xAxis" : "yAxis";
 
@@ -54,12 +65,8 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     },
                 },
                 chartOptions: {
-                    [axisKeyX]: {
-                        ...xAxisLabelsDisabledOption,
-                    },
-                    [axisKeyY]: {
-                        ...yAxisLabelsDisabledOption,
-                    },
+                    [axisKeyX]: forMultipleAxes(xAxesCount, xAxisLabelsDisabledOption),
+                    [axisKeyY]: forMultipleAxes(yAxesCount, yAxisLabelsDisabledOption),
                 },
             },
             {
@@ -70,9 +77,7 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     },
                 },
                 chartOptions: {
-                    [axisKeyX]: {
-                        ...xAxisLabelsDisabledOption,
-                    },
+                    [axisKeyX]: forMultipleAxes(xAxesCount, xAxisLabelsDisabledOption),
                 },
             },
             {
@@ -83,9 +88,7 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     },
                 },
                 chartOptions: {
-                    [axisKeyX]: {
-                        ...xAxisTitleDisabledOption,
-                    },
+                    [axisKeyX]: forMultipleAxes(xAxesCount, xAxisTitleDisabledOption),
                 },
             },
             {
@@ -96,9 +99,7 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     },
                 },
                 chartOptions: {
-                    [axisKeyY]: {
-                        ...yAxisLabelsDisabledOption,
-                    },
+                    [axisKeyY]: forMultipleAxes(yAxesCount, yAxisLabelsDisabledOption),
                 },
             },
             {
@@ -109,9 +110,7 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
                     },
                 },
                 chartOptions: {
-                    [axisKeyY]: {
-                        ...yAxisTitleDisabledOption,
-                    },
+                    [axisKeyY]: forMultipleAxes(yAxesCount, yAxisTitleDisabledOption),
                 },
             },
         ],
@@ -124,22 +123,26 @@ const getResponsiveConfigOptions = (inverted: boolean): HighchartsResponsiveOpti
  * therefore is possible to use the boolean parameter "inverted" to get inverted config.
  * @param {boolean} [inverted]
  */
-export const getCommonResponsiveConfig = (inverted: boolean = false): HighchartsResponsiveOptions => {
-    return getResponsiveConfigOptions(inverted);
+export const getCommonResponsiveConfig = (
+    inverted: boolean = false,
+    xAxesCount: number = 1,
+    yAxesCount: number = 1,
+): HighchartsResponsiveOptions => {
+    return getResponsiveConfigOptions(inverted, xAxesCount, yAxesCount);
 };
 
 /**
  * Special responsive config is applicable for Pie chart and Donut chart.
  * Pie chart config is implicitly called from Donut chart config, therefore these configs are same.
  */
-export const getPieResponsiveConfig = () => ({
+export const getPieResponsiveConfig = (): HighchartsResponsiveOptions => ({
     rules: [
         {
             condition: {
                 callback: function () {
                     return (
-                        (this.plotWidth > PIE_BOTTOM_LIMIT_WIDTH_PX &&
-                            this.plotWidth < PIE_UPPER_LIMIT_WIDTH_PX) ||
+                        (this.chartWidth > PIE_BOTTOM_LIMIT_WIDTH_PX &&
+                            this.chartWidth < PIE_UPPER_LIMIT_WIDTH_PX) ||
                         (this.chartHeight > PIE_BOTTOM_LIMIT_HEIGHT_PX &&
                             this.chartHeight < PIE_UPPER_LIMIT_HEIGHT_PX)
                     );
@@ -152,14 +155,14 @@ export const getPieResponsiveConfig = () => ({
                             visible: "auto",
                         },
                     },
-                },
+                } as any, // Modify highChart plotOption and added GD specific stuff
             },
         },
         {
             condition: {
                 callback: function () {
                     return (
-                        this.plotWidth < PIE_BOTTOM_LIMIT_WIDTH_PX ||
+                        this.chartWidth < PIE_BOTTOM_LIMIT_WIDTH_PX ||
                         this.chartHeight < PIE_BOTTOM_LIMIT_HEIGHT_PX
                     );
                 },

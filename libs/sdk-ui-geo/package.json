@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "8.4.0-alpha.40",
+    "version": "8.4.0-alpha.57",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -61,12 +61,12 @@
     "dependencies": {
         "@gooddata/goodstrap": "^70.2.2",
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.40",
-        "@gooddata/sdk-model": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-vis-commons": "^8.4.0-alpha.40",
+        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.57",
+        "@gooddata/sdk-model": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-vis-commons": "^8.4.0-alpha.57",
         "classnames": "^2.3.1",
         "custom-event": "^1.0.1",
         "lodash": "^4.17.19",
@@ -74,7 +74,8 @@
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.7.3",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "uuid": "^8.3.2"
     },
     "peerDependencies": {
         "react": "^16.10.0",
@@ -82,8 +83,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/live-examples-workspace": "^8.4.0-alpha.40",
-        "@gooddata/sdk-backend-mockingbird": "^8.4.0-alpha.40",
+        "@gooddata/live-examples-workspace": "^8.4.0-alpha.57",
+        "@gooddata/sdk-backend-mockingbird": "^8.4.0-alpha.57",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.3.8",
@@ -92,6 +93,7 @@
         "@types/jest": "^26.0.12",
         "@types/lodash": "^4.14.158",
         "@types/mapbox-gl": "^1.9.1",
+        "@types/uuid": "^8.3.0",
         "@types/react-dom": "^16.9.3",
         "@types/react-measure": "2.0.5",
         "@types/react": "^16.9.11",
@@ -114,7 +116,7 @@
         "jest": "^26.4.2",
         "node-sass-magic-importer": "^5.3.2",
         "node-sass": "^4.13.0",
-        "prettier": "~2.2.1",
+        "prettier": "~2.3.0",
         "raf": "^3.4.1",
         "react-dom": "^16.10.0",
         "react": "^16.10.0",

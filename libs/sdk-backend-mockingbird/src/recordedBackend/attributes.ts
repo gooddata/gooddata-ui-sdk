@@ -36,9 +36,8 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
             );
         }
 
-        const recording = this.recordings.metadata.displayForms[
-            "df_" + identifierToRecording(ref.identifier)
-        ];
+        const recording =
+            this.recordings.metadata.displayForms["df_" + identifierToRecording(ref.identifier)];
 
         if (!recording) {
             return Promise.reject(

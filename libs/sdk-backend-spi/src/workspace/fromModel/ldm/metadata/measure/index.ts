@@ -1,12 +1,10 @@
 // (C) 2019-2020 GoodData Corporation
-import { IMetadataObject, isMetadataObject } from "../types";
+import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types";
 
 /**
- * Measure metadata object
- *
- * @public
+ * @internal
  */
-export interface IMeasureMetadataObject extends IMetadataObject {
+export interface IMeasureMetadataObjectBase {
     type: "measure";
 
     /**
@@ -16,9 +14,29 @@ export interface IMeasureMetadataObject extends IMetadataObject {
 
     /**
      * Measure formatting
+     * Prefer set format value, if the format is empty string backend implementation-dependent default will be used.
      */
     format: string;
+
+    /**
+     * Measure is locked for editing
+     */
+    isLocked?: boolean;
 }
+
+/**
+ * Measure metadata object
+ *
+ * @public
+ */
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+
+/**
+ * Measure metadata object definition
+ *
+ * @public
+ */
+export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
 
 /**
  * Tests whether the provided object is of type {@link IMeasureMetadataObject}.
@@ -28,4 +46,14 @@ export interface IMeasureMetadataObject extends IMetadataObject {
  */
 export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject {
     return isMetadataObject(obj) && obj.type === "measure";
+}
+
+/**
+ * Tests whether the provided object is of type {@link IMeasureMetadataObjectDefinition}.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition {
+    return (obj as IMetadataObject).type === "measure" && (obj as IMetadataObject).ref === undefined;
 }

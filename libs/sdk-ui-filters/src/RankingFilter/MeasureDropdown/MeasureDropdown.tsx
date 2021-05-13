@@ -37,10 +37,10 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
         "gd-button-secondary",
         "gd-button-small",
         "button-dropdown",
-        "icon-right",
+        "gd-icon-right",
         {
-            "icon-navigateup": isOpen,
-            "icon-navigatedown": !isOpen,
+            "gd-icon-navigateup": isOpen,
+            "gd-icon-navigatedown": !isOpen,
         },
         "gd-rf-measure-dropdown-button",
         "s-rf-measure-dropdown-button",
@@ -55,7 +55,7 @@ export const MeasureDropdown: React.FC<IMeasureDropdownProps> = ({
                 className={buttonClassNames}
                 value={title}
                 onClick={onButtonClick}
-                iconLeft="icon-measure"
+                iconLeft="gd-icon-measure"
             />
             {isOpen && (
                 <MeasureDropdownBody

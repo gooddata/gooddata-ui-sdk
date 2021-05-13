@@ -37,6 +37,7 @@ class UserWorkspaceSettingsDataLoader implements IUserWorkspaceSettingsDataLoade
 /**
  * @internal
  */
-export const userWorkspaceSettingsDataLoaderFactory = dataLoaderAbstractFactory<IUserWorkspaceSettingsDataLoader>(
-    (workspace) => new UserWorkspaceSettingsDataLoader(workspace),
-);
+export const userWorkspaceSettingsDataLoaderFactory =
+    dataLoaderAbstractFactory<IUserWorkspaceSettingsDataLoader>(
+        (workspace) => new UserWorkspaceSettingsDataLoader(workspace),
+    );

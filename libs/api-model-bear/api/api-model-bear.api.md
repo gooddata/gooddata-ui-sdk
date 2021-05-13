@@ -2804,6 +2804,4 @@ export type Timestamp = string;
 export type Uri = string;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

@@ -74,7 +74,11 @@ export function useDashboardWidgetExecution({
     backendInvariant(effectiveBackend, "useDashboardWidgetExecution");
     workspaceInvariant(effectiveWorkspace, "useDashboardWidgetExecution");
 
-    const { result: dashboardResult, status: dashboardStatus, error: dashboardError } = useDashboard({
+    const {
+        result: dashboardResult,
+        status: dashboardStatus,
+        error: dashboardError,
+    } = useDashboard({
         dashboard,
         backend: effectiveBackend,
         workspace: effectiveWorkspace,
@@ -126,8 +130,11 @@ export function useDashboardWidgetExecution({
         workspace: effectiveWorkspace,
     });
 
-    const { result: executionResult, status: executionStatus, error: executionError } =
-        widget?.type === "kpi" ? kpiExecution : insightExecution;
+    const {
+        result: executionResult,
+        status: executionStatus,
+        error: executionError,
+    } = widget?.type === "kpi" ? kpiExecution : insightExecution;
 
     const statuses = [dashboardStatus, dashboardLayoutStatus, executionStatus];
     const error = dashboardError ?? dashboardLayoutError ?? executionError;

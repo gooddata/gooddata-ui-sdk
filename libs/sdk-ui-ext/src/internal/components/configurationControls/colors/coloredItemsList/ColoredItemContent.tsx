@@ -22,7 +22,7 @@ export default class ColoredItemContent extends React.PureComponent<IColoredItem
     private getIconStyle() {
         const { r, g, b } = this.props.color;
         const iconStyle =
-            this.props.position === IconPosition.Right ? "icon-navigateright" : "icon-navigatedown";
+            this.props.position === IconPosition.Right ? "gd-icon-navigateright" : "gd-icon-navigatedown";
         const iconSelector = `s-color-${r}-${g}-${b}`;
         return `gd-color-config-item-sample ${iconStyle} ${iconSelector}`;
     }

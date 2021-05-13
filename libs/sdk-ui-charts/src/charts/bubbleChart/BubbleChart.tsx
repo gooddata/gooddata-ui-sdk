@@ -80,7 +80,7 @@ export interface IBubbleChartBucketProps {
 export interface IBubbleChartProps extends IBucketChartProps, IBubbleChartBucketProps {}
 
 /**
- * [BubbleChart](http://sdk.gooddata.com/gdc-ui-sdk-doc/)
+ * [BubbleChart](https://sdk.gooddata.com/gooddata-ui/docs/bubble_chart_component.html)
  *
  * Bubble chart shows data as bubbles using Cartesian coordinates. Bubble charts typically have three measures, one
  * for the X-axis, one for the Y-axis, and one that determines the size of each bubble. The data is sliced by an

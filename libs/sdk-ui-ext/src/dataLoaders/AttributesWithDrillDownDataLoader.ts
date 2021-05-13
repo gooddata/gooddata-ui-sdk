@@ -47,6 +47,7 @@ class AttributesWithDrillDownDataLoader implements IAttributesWithDrillDownDataL
 /**
  * @internal
  */
-export const attributesWithDrillDownDataLoaderFactory = dataLoaderAbstractFactory<IAttributesWithDrillDownDataLoader>(
-    (workspace) => new AttributesWithDrillDownDataLoader(workspace),
-);
+export const attributesWithDrillDownDataLoaderFactory =
+    dataLoaderAbstractFactory<IAttributesWithDrillDownDataLoader>(
+        (workspace) => new AttributesWithDrillDownDataLoader(workspace),
+    );

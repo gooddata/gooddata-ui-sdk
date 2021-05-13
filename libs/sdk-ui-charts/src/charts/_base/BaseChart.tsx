@@ -58,9 +58,12 @@ class StatelessBaseChart extends React.Component<Props> {
         const LoadingComponent = this.props.LoadingComponent as React.ComponentType<ILoadingProps>;
 
         if (error) {
-            const errorProps = this.errorMap[
-                Object.prototype.hasOwnProperty.call(this.errorMap, error) ? error : ErrorCodes.UNKNOWN_ERROR
-            ];
+            const errorProps =
+                this.errorMap[
+                    Object.prototype.hasOwnProperty.call(this.errorMap, error)
+                        ? error
+                        : ErrorCodes.UNKNOWN_ERROR
+                ];
             return ErrorComponent ? <ErrorComponent code={error} {...errorProps} /> : null;
         }
 

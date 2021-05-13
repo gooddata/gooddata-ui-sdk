@@ -38,17 +38,14 @@ export type MetadataObjectFromApi =
     | JsonApiDatasetOutWithLinks
     | JsonApiAnalyticalDashboardOutWithLinks;
 
-export const commonMetadataObjectModifications = <
-    TItem extends MetadataObjectFromApi,
-    T extends IMetadataObjectBuilder
->(
-    item: TItem,
-) => (builder: T): T =>
-    builder
-        .id(item.id)
-        .uri(item.links!.self)
-        .title(item.attributes?.title || "")
-        .description(item.attributes?.description || "");
+export const commonMetadataObjectModifications =
+    <TItem extends MetadataObjectFromApi, T extends IMetadataObjectBuilder>(item: TItem) =>
+    (builder: T): T =>
+        builder
+            .id(item.id)
+            .uri(item.links!.self)
+            .title(item.attributes?.title || "")
+            .description(item.attributes?.description || "");
 
 function createLabelMap(
     included: JsonApiAttributeOutDocument["included"] | undefined,

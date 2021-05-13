@@ -1,0 +1,71 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "abZgFKGPaGYM", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_abZgFKGPaGYM"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "abEgMnq5hyJQ", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_abEgMnq5hyJQ"
+                        }
+                    }
+                ],
+                "localIdentifier": "tertiary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BubbleChart.4f993a25d6fb3da6ee04d073040fc553",
+        "properties": {
+            "controls": { "legend": { "position": "right", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "BubbleChart - 180x300 - Force position TOP, max 2 rows, Gradient legend minimized - legend on right",
+        "uri": "BubbleChart.4f993a25d6fb3da6ee04d073040fc553",
+        "visualizationUrl": "local:bubble"
+    }
+}

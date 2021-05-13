@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class FactMetadataObjectBuilder<
-    T extends IFactMetadataObject = IFactMetadataObject
+    T extends IFactMetadataObject = IFactMetadataObject,
 > extends MetadataObjectBuilder<T> {}
 
 /**

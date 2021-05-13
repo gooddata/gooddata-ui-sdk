@@ -83,7 +83,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
                     <OperatorDropdown selectedValue={operator} onSelect={setOperator} />
                     <ValueDropdown selectedValue={value} onSelect={setValue} />
                     <BubbleHoverTrigger showDelay={0} hideDelay={0}>
-                        <span className="icon-circle-question gd-rf-value-tooltip-icon s-rf-value-tooltip-icon" />
+                        <span className="gd-icon-circle-question gd-rf-value-tooltip-icon s-rf-value-tooltip-icon" />
                         <Bubble
                             className={`bubble-primary gd-rf-tooltip-bubble s-rf-value-tooltip`}
                             alignPoints={[{ align: "cr cl" }, { align: "cl cr" }]}

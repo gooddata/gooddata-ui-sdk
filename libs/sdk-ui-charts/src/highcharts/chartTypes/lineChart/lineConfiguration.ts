@@ -5,6 +5,7 @@ import { ITheme } from "@gooddata/sdk-backend-spi";
 import { styleVariables } from "../_chartCreators/styles/variables";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
 import { HighchartsOptions } from "../../../highcharts/lib";
+import { getAxesCounts } from "../_util/common";
 
 export const LINE_WIDTH = 3;
 
@@ -57,9 +58,10 @@ export function getLineConfiguration(
     };
 
     if (config?.enableCompactSize) {
+        const [xAxesCount, yAxesCount] = getAxesCounts(config);
         return {
             ...lineConfiguration,
-            responsive: getCommonResponsiveConfig(),
+            responsive: getCommonResponsiveConfig(false, xAxesCount, yAxesCount),
         };
     }
 

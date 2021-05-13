@@ -1,5 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-
+/**
+ * @packageDocumentation
+ */
 export {
     IAnalyticalBackend,
     IAnalyticalBackendConfig,
@@ -343,8 +345,13 @@ export {
     IFactMetadataObject,
     isFactMetadataObject,
     IMeasureMetadataObject,
+    IMeasureMetadataObjectBase,
     isMeasureMetadataObject,
+    IMeasureMetadataObjectDefinition,
+    isMeasureMetadataObjectDefinition,
     IMetadataObject,
+    IMetadataObjectBase,
+    IMetadataObjectIdentity,
     isMetadataObject,
     MetadataObject,
     metadataObjectId,

@@ -633,6 +633,8 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     expression(maql: string): this;
     // (undocumented)
     format(format: string): this;
+    // (undocumented)
+    isLocked(isLocked: boolean): this;
 }
 
 // @beta
@@ -810,7 +812,5 @@ export function withNormalization(realBackend: IAnalyticalBackend, config?: Norm
 // @alpha (undocumented)
 export type WorkspaceCatalogWrapper = (catalog: IWorkspaceCatalog) => IWorkspaceCatalog;
 
-
-// (No @packageDocumentation comment for this package)
 
 ```

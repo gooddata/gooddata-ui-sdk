@@ -14,11 +14,15 @@ _clean() {
 
 _common-build() {
     mkdir -p dist/internal
+    # first copy everything in the assets (in case there are non-SVG files)
     cp -rf src/internal/assets dist/internal/
+    # then use svgo to optimize all the SVGs there
+    svgo -rqf src/internal/assets dist/internal/assets
     cp -rf src/internal/translations dist/internal/
 
     mkdir -p esm/internal
-    cp -rf src/internal/assets esm/internal/
+    # copy optimized assets from dist, no need to run the optimization again
+    cp -rf dist/internal/assets esm/internal/
     cp -rf src/internal/translations esm/internal/
 
     _build_styles

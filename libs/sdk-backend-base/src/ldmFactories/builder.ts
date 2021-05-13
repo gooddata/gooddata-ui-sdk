@@ -106,7 +106,7 @@ export const resolveValueOrUpdateCallback = <TValue>(
 export function builderFactory<
     TItem,
     TBuilder extends Builder<TItem>,
-    TBuilderConstructor extends BuilderConstructor<TBuilder, TItem>
+    TBuilderConstructor extends BuilderConstructor<TBuilder, TItem>,
 >(
     Builder: TBuilderConstructor,
     defaultItem: Partial<TItem>,

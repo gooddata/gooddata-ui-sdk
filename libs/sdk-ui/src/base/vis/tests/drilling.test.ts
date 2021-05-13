@@ -14,7 +14,7 @@ describe("fireDrillEvent", () => {
             dispatchEvent: eventHandler,
         };
 
-        fireDrillEvent(drillFunction, eventData as IDrillEvent, (target as any) as EventTarget);
+        fireDrillEvent(drillFunction, eventData as IDrillEvent, target as any as EventTarget);
 
         expect(eventHandler).toHaveBeenCalledTimes(1);
         expect(eventHandler).toHaveBeenCalledWith(
@@ -40,7 +40,7 @@ describe("fireDrillEvent", () => {
         };
         const drillEventFunction = jest.fn(() => true);
 
-        fireDrillEvent(drillEventFunction, eventData as IDrillEvent, (target as any) as EventTarget);
+        fireDrillEvent(drillEventFunction, eventData as IDrillEvent, target as any as EventTarget);
 
         expect(drillEventFunction).toHaveBeenCalledTimes(1);
         expect(eventHandler).toHaveBeenCalledTimes(1);
@@ -68,7 +68,7 @@ describe("fireDrillEvent", () => {
 
         const drillEventFunction = jest.fn(() => false);
 
-        fireDrillEvent(drillEventFunction, eventData as IDrillEvent, (target as any) as EventTarget);
+        fireDrillEvent(drillEventFunction, eventData as IDrillEvent, target as any as EventTarget);
 
         expect(eventHandler).toHaveBeenCalledTimes(0);
         expect(drillEventFunction).toHaveBeenCalledTimes(1);

@@ -9,7 +9,7 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { MediaQueries } from "../constants";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody";
-import { applyExcludeCurrentPeriod } from "./utils/PeriodExlusion";
+import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion";
 import { formatAbsoluteDate } from "./utils/Translations/DateFilterTitle";
 import { DEFAULT_DATE_FORMAT } from "./constants/Platform";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils";
@@ -112,6 +112,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             alignPoints={[
                                 { align: "bl tl" },
                                 { align: "tr tl" },
+                                { align: "br tr", offset: { x: -11 } },
                                 { align: "tr tl", offset: { x: 0, y: -100 } },
                                 { align: "tr tl", offset: { x: 0, y: -50 } },
                             ]}

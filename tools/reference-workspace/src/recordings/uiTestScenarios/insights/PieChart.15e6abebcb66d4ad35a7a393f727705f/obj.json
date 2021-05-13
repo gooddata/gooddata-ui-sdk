@@ -1,0 +1,41 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "PieChart.15e6abebcb66d4ad35a7a393f727705f",
+        "properties": {
+            "controls": { "legend": { "position": "right", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "PieChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on right",
+        "uri": "PieChart.15e6abebcb66d4ad35a7a393f727705f",
+        "visualizationUrl": "local:pie"
+    }
+}

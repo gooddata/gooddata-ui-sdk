@@ -85,7 +85,7 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {}
 
 /**
- * [Heatmap](http://sdk.gooddata.com/gdc-ui-sdk-doc/docs/next/heatmap_component.html)
+ * [Heatmap](https://sdk.gooddata.com/gooddata-ui/docs/heatmap_component.html)
  *
  * Heatmap represents data as a matrix where individual values are represented as colors.
  * Heatmaps can help you discover trends and understand complex datasets.

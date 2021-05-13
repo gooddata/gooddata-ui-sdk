@@ -26,16 +26,16 @@ import {
     IGroupableCatalogItemBase,
 } from "@gooddata/sdk-backend-spi";
 import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./MetadataConverter";
+import { isInheritedObject } from "./utils";
 
-const commonGroupableCatalogItemModifications = <
-    TItem extends IGroupableCatalogItemBase,
-    T extends IGroupableCatalogItemBuilder<TItem>
->(
-    item: MetadataObjectFromApi,
-) => (builder: T) => {
-    const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
-    return builder.groups(tags);
-};
+const commonGroupableCatalogItemModifications =
+    <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
+        item: MetadataObjectFromApi,
+    ) =>
+    (builder: T) => {
+        const tags = (item.attributes?.tags || []).map((tag) => idRef(tag, "tag"));
+        return builder.groups(tags);
+    };
 
 export const convertAttribute = (
     attribute: JsonApiAttributeOutWithLinks,
@@ -71,12 +71,16 @@ export const convertAttribute = (
 };
 
 export const convertMeasure = (measure: JsonApiMetricOutWithLinks): ICatalogMeasure => {
-    const maql = measure.attributes?.content?.maql;
+    const { maql = "", format = "" } = measure.attributes?.content || {};
 
     return newCatalogMeasure((catalogM) =>
         catalogM
             .measure(idRef(measure.id, "measure"), (m) =>
-                m.modify(commonMetadataObjectModifications(measure)).expression(maql || ""),
+                m
+                    .modify(commonMetadataObjectModifications(measure))
+                    .expression(maql)
+                    .format(format)
+                    .isLocked(isInheritedObject(measure.id)),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
     );

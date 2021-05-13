@@ -236,8 +236,7 @@ describe("execution", () => {
                                         offset: 0,
                                         count: 1,
                                         total: 2,
-                                        next:
-                                            "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/2343434", // tslint:disable-line:max-line-length
+                                        next: "/gdc/internal/projects/myFakeProjectId/experimental/executions/extendedResults/2343434", // tslint:disable-line:max-line-length
                                     },
                                     values: [[{ id: "1", name: "a" }, "2"]],
                                 },
@@ -559,8 +558,7 @@ describe("execution", () => {
                                                 ],
                                             },
                                         },
-                                        title:
-                                            "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                        title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
                                         format: "#,##0",
                                     },
                                 },
@@ -791,8 +789,7 @@ describe("execution", () => {
                                     "[" +
                                     mdEndpoint +
                                     "/969/elements?id=961046])",
-                                title:
-                                    "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
                                 format: "#,##0",
                             },
                             execConfig,
@@ -802,7 +799,8 @@ describe("execution", () => {
 
             it("handles empty filters", () => {
                 const mdObjWithoutFilters = cloneDeep(mdObj);
-                mdObjWithoutFilters.buckets[0].items[0].measure.definition.measureDefinition.filters[0].positiveAttributeFilter.in = []; // tslint:disable-line:max-line-length
+                mdObjWithoutFilters.buckets[0].items[0].measure.definition.measureDefinition.filters[0].positiveAttributeFilter.in =
+                    []; // tslint:disable-line:max-line-length
                 return createExecution()
                     .mdToExecutionDefinitionsAndColumns(
                         "qamfsd9cw85e53mcqs74k8a0mwbf5gc2",
@@ -862,8 +860,7 @@ describe("execution", () => {
                                     "/969/elements?id=961044],[" +
                                     mdEndpoint +
                                     "/969/elements?id=961046])", // tslint:disable-line:max-line-length
-                                title:
-                                    "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
+                                title: "# of Opportunities (Account: 1 Source Consulting, 1-800 Postcards, 1-800 We Answer, 1-888-OhioComp, 14 West)", // tslint:disable-line:max-line-length
                                 format: "#,##0",
                             },
                             execConfig,

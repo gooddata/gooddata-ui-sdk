@@ -88,7 +88,7 @@
     },
     {
       "name": "@gooddata/goodstrap",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@gooddata/live-examples-workspace",
@@ -491,10 +491,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "date-fns-tz",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "dependency-cruiser",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -685,6 +681,10 @@
     {
       "name": "moment",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "moment-timezone",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "node-fetch",
@@ -889,6 +889,10 @@
     {
       "name": "supertest",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "svgo",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "testcafe",

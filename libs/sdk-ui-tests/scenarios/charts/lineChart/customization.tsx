@@ -8,8 +8,11 @@ import {
     LineChartTwoMeasuresWithTrendyBy,
     LineChartWithArithmeticMeasuresAndViewBy,
     LineChartWithManyDataPoints,
+    LineChartWithLotArithmeticMeasuresAndViewBy,
 } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -30,4 +33,14 @@ const dataPointScenarios = scenariosFor<ILineChartProps>("LineChart", LineChart)
     .addScenarios("data points - sparse chart", LineChartWithArithmeticMeasuresAndViewBy, dataPointCustomizer)
     .addScenarios("data points - dense chart", LineChartWithManyDataPoints, dataPointCustomizer);
 
-export default [legendScenarios, dataLabelScenarios, dataPointScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "LineChart",
+    ScenarioGroupNames.LegendResponsive,
+    LineChart,
+    LineChartWithLotArithmeticMeasuresAndViewBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, dataPointScenarios, ...legendResponziveScenarios];

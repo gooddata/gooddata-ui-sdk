@@ -333,7 +333,7 @@ export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 export interface ILegendConfig {
     enabled?: boolean;
     position?: PositionType;
-    responsive?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
 }
 
 // @public (undocumented)
@@ -493,7 +493,5 @@ export const withJsxExport: <T extends object>(Component: React_2.ComponentType<
 // @beta
 export const Xirr: React_2.ComponentType<IXirrProps>;
 
-
-// (No @packageDocumentation comment for this package)
 
 ```

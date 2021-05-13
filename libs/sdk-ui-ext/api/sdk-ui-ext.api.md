@@ -492,6 +492,4 @@ export function useDashboardPdfExporter({ backend, workspace, onError, onCancel,
 export function useDashboardWidgetExecution({ dashboard, widget: widgetRef, filters, backend, workspace, }: IUseDashboardWidgetExecutionConfig): UseCancelablePromiseState<IPreparedExecution, GoodDataSdkError>;
 
 
-// (No @packageDocumentation comment for this package)
-
 ```

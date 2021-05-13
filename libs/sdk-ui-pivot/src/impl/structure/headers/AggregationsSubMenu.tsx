@@ -1,5 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
-import { Header, Icon, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import { Header, Icon, Item, ItemsWrapper, SubMenu } from "@gooddata/sdk-ui-kit";
 import {
     attributeDescriptorLocalId,
     attributeDescriptorName,
@@ -11,7 +11,6 @@ import cx from "classnames";
 import React from "react";
 import { IntlShape } from "react-intl";
 
-import SubMenu from "../../../menu/SubMenu";
 import menuHelper from "./aggregationsMenuHelper";
 import { IColumnTotal } from "./aggregationsMenuTypes";
 import { IMenuAggregationClickConfig } from "../../privateTypes";

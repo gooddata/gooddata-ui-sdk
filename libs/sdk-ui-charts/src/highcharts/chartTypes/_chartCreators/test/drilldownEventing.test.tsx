@@ -101,7 +101,7 @@ describe("Drilldown Eventing", () => {
         chartClick(
             drillConfig,
             pointClickEventDataWithNullPoints,
-            (target as any) as EventTarget,
+            target as any as EventTarget,
             VisualizationTypes.LINE,
         );
 
@@ -115,7 +115,7 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: () => true };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
+        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 
@@ -174,7 +174,7 @@ describe("Drilldown Eventing", () => {
         chartClick(
             drillConfig,
             pointClickEventData,
-            (target as any) as EventTarget,
+            target as any as EventTarget,
             VisualizationTypes.TREEMAP,
         );
 
@@ -187,7 +187,7 @@ describe("Drilldown Eventing", () => {
         chartClick(
             drillConfig,
             pointClickEventData,
-            (target as any) as EventTarget,
+            target as any as EventTarget,
             VisualizationTypes.HEATMAP,
         );
 
@@ -203,8 +203,7 @@ describe("Drilldown Eventing", () => {
             {
                 header: {
                     attributeHeaderItem: {
-                        uri:
-                            "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281/elements?id=1deea80aa5a54d1bbbc2e2de63989eef",
+                        uri: "/gdc/md/dfnkvzqa683mz1c29ijdkydrsodm8wjw/obj/1281/elements?id=1deea80aa5a54d1bbbc2e2de63989eef",
                         name: "Best Case",
                     },
                     attributeHeader: {
@@ -295,7 +294,7 @@ describe("Drilldown Eventing", () => {
         chartClick(
             drillConfig,
             pointClickWithEmptyEventData,
-            (target as any) as EventTarget,
+            target as any as EventTarget,
             VisualizationTypes.HEATMAP,
         );
 
@@ -337,7 +336,7 @@ describe("Drilldown Eventing", () => {
         chartClick(
             drillConfig,
             pointClickWitZEventData,
-            (target as any) as EventTarget,
+            target as any as EventTarget,
             VisualizationTypes.BUBBLE,
         );
 
@@ -396,7 +395,7 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: jest.fn() };
         const target = { dispatchEvent: () => true };
 
-        chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
+        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 
@@ -407,7 +406,7 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: jest.fn() };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
+        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 
@@ -419,7 +418,7 @@ describe("Drilldown Eventing", () => {
         const drillConfig = { dataView, onDrill: jest.fn().mockReturnValue(false) };
         const target = { dispatchEvent: jest.fn() };
 
-        chartClick(drillConfig, pointClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
+        chartClick(drillConfig, pointClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 
@@ -447,11 +446,11 @@ describe("Drilldown Eventing", () => {
                 },
             ],
         };
-        const labelClickEventData = ({
+        const labelClickEventData = {
             points: [clickedPoint],
-        } as any) as Highcharts.DrilldownEventObject;
+        } as any as Highcharts.DrilldownEventObject;
 
-        chartClick(drillConfig, labelClickEventData, (target as any) as EventTarget, VisualizationTypes.LINE);
+        chartClick(drillConfig, labelClickEventData, target as any as EventTarget, VisualizationTypes.LINE);
 
         jest.runAllTimers();
 

@@ -263,6 +263,18 @@ picture for that scenario is not empty and is valid.
 If you run into this then run `npm run backstop-approve` which will copy the newly added screenshots to reference. You can then
 check out the new screenshots in the `backstop/reference` directory.
 
+#### Visual regression hints
+
+-   After every change call `npm run backstop-prepare` even when you see changes in your running storybook.
+-   If you need call screening just for some stories use --filter where regex is applied to name of stories that you can see in running storybook. Example: `npm run backstop-prepare ./backstop/run-backstop.sh test --filter=".*legend responsive.*`
+-   If you use `withMultipleScreenshots` always use `ScreenshotReadyWrapper`
+-   scenarios: BackstopConfig - Scenarios in one story are running form scratch they are not starting where previous ended.
+-   Be aware of method overloading `clickSelector: ".s-legend-popup-icon"` - do just one action, vs `clickSelectors: [".s-legend-popup-icon", 200, ".icon-chevron-right"]` do multiple actions/click
+    between click selectors you can define timeout as number
+-   Each test run create directory in `output/test` with screens and logs.
+-   `npm run backstop-approve` 100% works when in `output/test` directory is just one subdirectory (Delete it before you do final run than approve works well)
+-   Each story name should be unique, this is essential since story name for storybook means its id. Its hard to debug and warning about it could be hidden in multiple logs
+
 #### Test parallelization
 
 It is possible to override default Backstop concurrency settings using environment variables:

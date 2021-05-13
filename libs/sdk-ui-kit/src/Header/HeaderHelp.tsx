@@ -37,7 +37,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
 
     const classNames = cx({
         "gd-header-help": true,
-        "icon-header-help": true,
+        "gd-icon-header-help": true,
         "is-open": isOpen && !helpRedirectUrl,
         "anchor-tag-header-help": !isEmpty(helpRedirectUrl),
         [className]: !!className,

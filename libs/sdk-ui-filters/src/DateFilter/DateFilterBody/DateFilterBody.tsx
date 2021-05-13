@@ -132,9 +132,8 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     )}
                     <div
                         className={cx("gd-extended-date-filter-body-wrapper", {
-                            "gd-extended-date-filter-body-wrapper-wide": isRelativeDateFilterForm(
-                                selectedFilterOption,
-                            ),
+                            "gd-extended-date-filter-body-wrapper-wide":
+                                isRelativeDateFilterForm(selectedFilterOption),
                         })}
                         style={wrapperStyle}
                     >
@@ -310,13 +309,8 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
     };
 
     private renderAbsolutePreset = () => {
-        const {
-            dateFormat,
-            filterOptions,
-            selectedFilterOption,
-            onSelectedFilterOptionChange,
-            isMobile,
-        } = this.props;
+        const { dateFormat, filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } =
+            this.props;
         return filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (
             <AbsolutePresetFilterItems
                 dateFormat={dateFormat}
@@ -329,13 +323,8 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
     };
 
     private renderRelativePreset = () => {
-        const {
-            dateFormat,
-            filterOptions,
-            selectedFilterOption,
-            onSelectedFilterOptionChange,
-            isMobile,
-        } = this.props;
+        const { dateFormat, filterOptions, selectedFilterOption, onSelectedFilterOptionChange, isMobile } =
+            this.props;
         return filterOptions.relativePreset ? (
             <RelativePresetFilterItems
                 dateFormat={dateFormat}

@@ -85,7 +85,9 @@ describe("GeoChartInner", () => {
         expect(legendRenderer).toHaveBeenCalledTimes(1);
 
         const legendProps = legendRenderer.mock.calls[0][0];
-        expect(legendProps).toMatchSnapshot();
+        expect(legendProps).toMatchSnapshot({
+            containerId: expect.any(String),
+        });
     });
 
     it("should return enabledLegendItems with length equal categories length", () => {
@@ -113,7 +115,7 @@ describe("GeoChartInner", () => {
             documentObj?: any;
             height?: number;
             position?: PositionType;
-            responsive?: boolean;
+            responsive?: boolean | "autoPositionWithPopup";
         }
 
         const getCustomComponentProps = (props: ICustomComponentProps): Partial<IGeoChartInnerProps> => {
@@ -196,6 +198,12 @@ describe("GeoChartInner", () => {
 
             const wrapper = renderComponent(customProps);
             expect(wrapper.state("showFluidLegend")).toBeFalsy();
+        });
+
+        it("should not set responsive-legend if responsive is autoPositionWithPopup", () => {
+            const customProps = getCustomComponentProps({ responsive: "autoPositionWithPopup" });
+            const wrapper = renderComponent(customProps);
+            expect(wrapper.hasClass("responsive-legend")).toBe(false);
         });
     });
 });

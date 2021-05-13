@@ -6,9 +6,7 @@ import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 describe("getPropsForArea", () => {
-    function getPropsForArea(
-        props: IAreaChartProps,
-    ): {
+    function getPropsForArea(props: IAreaChartProps): {
         measures: IAttributeOrMeasure[];
         viewBy: IAttribute[];
         stackBy: IAttribute[];

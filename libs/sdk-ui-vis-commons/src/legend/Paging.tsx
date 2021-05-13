@@ -6,27 +6,72 @@ import cx from "classnames";
 /**
  * @internal
  */
+export type ButtonsOrientationType = "upDown" | "leftRight";
+
+/**
+ * @internal
+ */
 export interface IPagingProps {
     page: number;
     pagesCount: number;
     showNextPage(): void;
     showPrevPage(): void;
+    buttonsOrientation?: ButtonsOrientationType;
 }
 
-function renderPagingButton(type: string, handler: () => void, disabled: boolean) {
-    const classes = cx("gd-button-link", "gd-button-icon-only", `icon-chevron-${type}`, "paging-button");
-    return <button className={classes} onClick={handler} disabled={disabled} />;
+export type PagingButtonType = "prev" | "next";
+
+function getbuttonIcoStyle(
+    type: PagingButtonType,
+    buttonsOrientation: ButtonsOrientationType,
+): "up" | "down" | "left" | "right" | undefined {
+    if (type === "prev") {
+        if (buttonsOrientation === "upDown") {
+            return "up";
+        }
+        return "left";
+    }
+
+    if (type === "next") {
+        if (buttonsOrientation === "upDown") {
+            return "down";
+        }
+        return "right";
+    }
+
+    return undefined;
+}
+
+function renderPagingButton(
+    type: PagingButtonType,
+    buttonsOrientation: ButtonsOrientationType,
+    handler: () => void,
+    disabled: boolean,
+) {
+    const classes = cx(
+        "gd-button-link",
+        "gd-button-icon-only",
+        `gd-icon-chevron-${getbuttonIcoStyle(type, buttonsOrientation)}`,
+        "paging-button",
+    );
+
+    const onClick = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        handler();
+    };
+
+    return <button className={classes} onClick={onClick} disabled={disabled} />;
 }
 
 /**
  * @internal
  */
 export const Paging = (props: IPagingProps): React.ReactElement => {
-    const { page, pagesCount, showNextPage, showPrevPage } = props;
+    const { page, pagesCount, buttonsOrientation = "upDown", showNextPage, showPrevPage } = props;
 
     return (
         <div className="paging">
-            {renderPagingButton("up", showPrevPage, page === 1)}
+            {renderPagingButton("prev", buttonsOrientation, showPrevPage, page === 1)}
             <FormattedMessage
                 id="visualizations.of"
                 tagName="span"
@@ -35,7 +80,7 @@ export const Paging = (props: IPagingProps): React.ReactElement => {
                     pagesCount,
                 }}
             />
-            {renderPagingButton("down", showNextPage, page === pagesCount)}
+            {renderPagingButton("next", buttonsOrientation, showNextPage, page === pagesCount)}
         </div>
     );
 };

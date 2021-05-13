@@ -31,17 +31,17 @@ const types = [
     {
         title: "Activate weapons",
         className: "gd-button-link",
-        iconLeft: "icon-cloud-upload",
+        iconLeft: "gd-icon-cloud-upload",
     },
     {
         title: "Deploy process",
         className: "gd-button-link-dimmed",
-        iconLeft: "icon-cloud-upload",
+        iconLeft: "gd-icon-cloud-upload",
     },
     {
         title: "",
         className: "gd-button-link gd-button-icon-only",
-        iconLeft: "icon-save",
+        iconLeft: "gd-icon-save",
     },
     {
         title: "Save",
@@ -54,20 +54,20 @@ const types = [
     {
         title: "New Schedule",
         className: "gd-button-action",
-        iconLeft: "icon-timer",
+        iconLeft: "gd-icon-timer",
     },
     {
         title: "New Schedule",
-        className: "gd-button-action icon-timer",
+        className: "gd-button-action gd-icon-timer",
     },
     {
         title: "Add Report",
         className: "gd-button-primary",
-        iconLeft: "icon-add",
+        iconLeft: "gd-icon-add",
     },
     {
         title: "Add Report",
-        className: "gd-button-primary icon-add",
+        className: "gd-button-primary gd-icon-add",
     },
     {
         title: "Create Report",
@@ -88,65 +88,65 @@ const types = [
     {
         title: "Add Tab",
         className: "gd-button-secondary gd-button-small",
-        iconRight: "icon-add",
+        iconRight: "gd-icon-add",
     },
     {
         title: "Add Tab",
-        className: "gd-button-secondary gd-button-small icon-add icon-right",
+        className: "gd-button-secondary gd-button-small gd-icon-add gd-icon-right",
     },
     {
         title: "Add Tab",
         className: "gd-button-secondary gd-button-small",
-        iconLeft: "icon-add",
+        iconLeft: "gd-icon-add",
     },
     {
         title: "Add Tab",
-        className: "gd-button-secondary gd-button-small icon-add",
+        className: "gd-button-secondary gd-button-small gd-icon-add",
     },
     {
         title: "",
-        className: "gd-button-primary gd-button-icon-only icon-add",
-    },
-    {
-        title: "",
-        className: "gd-button-primary",
-        iconLeft: "icon-add",
-    },
-    {
-        title: "",
-        className: "gd-button-primary gd-button-icon-only icon-config",
+        className: "gd-button-primary gd-button-icon-only gd-icon-add",
     },
     {
         title: "",
         className: "gd-button-primary",
-        iconLeft: "icon-config",
+        iconLeft: "gd-icon-add",
     },
     {
         title: "",
-        className: "gd-button-primary gd-button-icon-only icon-printer",
-    },
-    {
-        title: "",
-        className: "gd-button-primary",
-        iconLeft: "icon-printer",
-    },
-    {
-        title: "",
-        className: "gd-button-primary gd-button-icon-only icon-pencil",
+        className: "gd-button-primary gd-button-icon-only gd-icon-config",
     },
     {
         title: "",
         className: "gd-button-primary",
-        iconLeft: "icon-pencil",
+        iconLeft: "gd-icon-config",
     },
     {
         title: "",
-        className: "gd-button-primary gd-button-icon-only icon-cross",
+        className: "gd-button-primary gd-button-icon-only gd-icon-printer",
     },
     {
         title: "",
         className: "gd-button-primary",
-        iconLeft: "icon-cross",
+        iconLeft: "gd-icon-printer",
+    },
+    {
+        title: "",
+        className: "gd-button-primary gd-button-icon-only gd-icon-pencil",
+    },
+    {
+        title: "",
+        className: "gd-button-primary",
+        iconLeft: "gd-icon-pencil",
+    },
+    {
+        title: "",
+        className: "gd-button-primary gd-button-icon-only gd-icon-cross",
+    },
+    {
+        title: "",
+        className: "gd-button-primary",
+        iconLeft: "gd-icon-cross",
     },
 ];
 
@@ -288,16 +288,16 @@ const getGroupButtons = () => (
 
 const getIcons = () => {
     return icons.map((item) => {
-        return <Button key={uniqueId("button-")} value={item} className={`gd-button-link icon-${item}`} />;
+        return <Button key={uniqueId("button-")} value={item} className={`gd-button-link gd-icon-${item}`} />;
     });
 };
 
 const ButtonTest: React.FC = () => (
     <div className="library-component screenshot-target">
-        <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
+        <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
         <h4>Links</h4>
         Use <code>a</code> as a tagName.
-        <Button className="gd-button-link icon-uploadcloud" value="Deploy process" tagName="a" />
+        <Button className="gd-button-link gd-icon-uploadcloud" value="Deploy process" tagName="a" />
         <h4>Buttons</h4>
         <table className="example-table">
             <tbody>

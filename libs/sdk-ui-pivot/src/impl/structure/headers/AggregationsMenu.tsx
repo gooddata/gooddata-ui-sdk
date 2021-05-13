@@ -12,12 +12,19 @@ import {
     measureValueFilterCondition,
     isRankingFilter,
 } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Header, Icon, Item, ItemsWrapper } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    Header,
+    Icon,
+    Item,
+    ItemsWrapper,
+    Menu,
+    IOnOpenedChangeParams,
+} from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
-import Menu from "../../../menu/Menu";
-import { IOnOpenedChangeParams } from "../../../menu/MenuSharedTypes";
 import menuHelper from "./aggregationsMenuHelper";
 import AggregationsSubMenu from "./AggregationsSubMenu";
 import { IColumnTotal } from "./aggregationsMenuTypes";

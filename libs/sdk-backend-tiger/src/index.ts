@@ -1,5 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-
+/**
+ * @packageDocumentation
+ */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { TigerBackend } from "./backend";
 import { withNormalization } from "@gooddata/sdk-backend-base";

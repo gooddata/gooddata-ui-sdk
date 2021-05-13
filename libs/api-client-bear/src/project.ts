@@ -151,11 +151,9 @@ export class ProjectModule {
     public getColorPalette(projectId: string) {
         return this.xhr
             .get(`/gdc/projects/${projectId}/styleSettings`)
-            .then(
-                (apiResponse: ApiResponse): IStyleSettingsResponse => {
-                    return apiResponse.getData();
-                },
-            )
+            .then((apiResponse: ApiResponse): IStyleSettingsResponse => {
+                return apiResponse.getData();
+            })
             .then((result: IStyleSettingsResponse) => {
                 if (!result) {
                     return DEFAULT_PALETTE;
@@ -190,11 +188,9 @@ export class ProjectModule {
     public getColorPaletteWithGuids(projectId: string): Promise<IColorPalette | undefined> {
         return this.xhr
             .get(`/gdc/projects/${projectId}/styleSettings`)
-            .then(
-                (apiResponse: ApiResponse): IStyleSettingsResponse => {
-                    return apiResponse.getData();
-                },
-            )
+            .then((apiResponse: ApiResponse): IStyleSettingsResponse => {
+                return apiResponse.getData();
+            })
             .then((result: IStyleSettingsResponse) => {
                 if (result && result.styleSettings) {
                     return result.styleSettings.chartPalette;

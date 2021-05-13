@@ -24,8 +24,10 @@ describe("bear elements", () => {
     });
 
     it("should load attribute elements for existing display form with a parent filter", async () => {
-        const wonAttributeElement = (ReferenceRecordings.Recordings.metadata.displayForms
-            .df_label_stage_status.elements as IAttributeElement[]).find((el) => el.title === "Won");
+        const wonAttributeElement = (
+            ReferenceRecordings.Recordings.metadata.displayForms.df_label_stage_status
+                .elements as IAttributeElement[]
+        ).find((el) => el.title === "Won");
 
         const result = await backend
             .workspace(testWorkspace())

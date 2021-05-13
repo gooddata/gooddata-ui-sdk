@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class DataSetMetadataObjectBuilder<
-    T extends IDataSetMetadataObject = IDataSetMetadataObject
+    T extends IDataSetMetadataObject = IDataSetMetadataObject,
 > extends MetadataObjectBuilder<T> {}
 
 /**

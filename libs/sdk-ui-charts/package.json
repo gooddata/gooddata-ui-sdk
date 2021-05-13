@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-charts",
-    "version": "8.4.0-alpha.40",
+    "version": "8.4.0-alpha.57",
     "description": "GoodData.UI SDK - Charts",
     "repository": {
         "type": "git",
@@ -60,13 +60,13 @@
     },
     "dependencies": {
         "@gooddata/numberjs": "^3.2.5",
-        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.40",
-        "@gooddata/sdk-model": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.40",
-        "@gooddata/sdk-ui-vis-commons": "^8.4.0-alpha.40",
-        "@gooddata/util": "^8.4.0-alpha.40",
+        "@gooddata/sdk-backend-spi": "^8.4.0-alpha.57",
+        "@gooddata/sdk-model": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-kit": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-theme-provider": "^8.4.0-alpha.57",
+        "@gooddata/sdk-ui-vis-commons": "^8.4.0-alpha.57",
+        "@gooddata/util": "^8.4.0-alpha.57",
         "classnames": "^2.3.1",
         "custom-event": "^1.0.1",
         "date-fns": "^2.8.1",
@@ -77,7 +77,8 @@
         "react-intl": "^3.6.0",
         "react-measure": "^2.3.0",
         "ts-invariant": "^0.7.3",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "uuid": "^8.3.2"
     },
     "peerDependencies": {
         "react": "^16.10.0",
@@ -85,8 +86,8 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^2.1.0",
-        "@gooddata/reference-workspace": "^8.4.0-alpha.40",
-        "@gooddata/sdk-backend-mockingbird": "^8.4.0-alpha.40",
+        "@gooddata/reference-workspace": "^8.4.0-alpha.57",
+        "@gooddata/sdk-backend-mockingbird": "^8.4.0-alpha.57",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.12.13",
         "@microsoft/api-extractor": "^7.3.8",
@@ -99,6 +100,7 @@
         "@types/react": "^16.9.11",
         "@types/react-dom": "^16.9.3",
         "@types/react-measure": "2.0.5",
+        "@types/uuid": "^8.3.0",
         "@typescript-eslint/eslint-plugin": "^4.14.2",
         "@typescript-eslint/parser": "^4.14.2",
         "concurrently": "^6.0.2",
@@ -120,7 +122,7 @@
         "jest-junit": "^3.0.0",
         "node-sass": "^4.13.0",
         "node-sass-magic-importer": "^5.3.2",
-        "prettier": "~2.2.1",
+        "prettier": "~2.3.0",
         "raf": "^3.4.1",
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",

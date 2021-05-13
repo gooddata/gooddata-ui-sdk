@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { ITranslatedDropdownItem } from "../interfaces/Dropdown";
 
 export const pushpinSizeDropdownItems: ITranslatedDropdownItem[] = [
@@ -35,10 +35,10 @@ export const rotationDropdownItems: ITranslatedDropdownItem[] = [
 export const legendPositionDropdownItems: ITranslatedDropdownItem[] = [
     { title: "properties.auto_default", value: "auto" },
     { type: "separator" },
-    { title: "properties.legend.position.up", value: "top", icon: "dropdown-icon-legend-top" },
-    { title: "properties.legend.position.down", value: "bottom", icon: "dropdown-icon-legend-bottom" },
-    { title: "properties.legend.position.right", value: "right", icon: "dropdown-icon-legend-right" },
-    { title: "properties.legend.position.left", value: "left", icon: "dropdown-icon-legend-left" },
+    { title: "properties.legend.position.up", value: "top", icon: "gd-dropdown-icon-legend-top" },
+    { title: "properties.legend.position.down", value: "bottom", icon: "gd-dropdown-icon-legend-bottom" },
+    { title: "properties.legend.position.right", value: "right", icon: "gd-dropdown-icon-legend-right" },
+    { title: "properties.legend.position.left", value: "left", icon: "gd-dropdown-icon-legend-left" },
 ];
 
 export const dataLabelsDropdownItems: ITranslatedDropdownItem[] = [
@@ -61,17 +61,17 @@ export const xAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     {
         title: "properties.axis.name.position.left",
         value: "left",
-        icon: "dropdown-icon-axis-name-position-left",
+        icon: "gd-dropdown-icon-axis-name-position-left",
     },
     {
         title: "properties.axis.name.position.center",
         value: "center",
-        icon: "dropdown-icon-axis-name-position-center",
+        icon: "gd-dropdown-icon-axis-name-position-center",
     },
     {
         title: "properties.axis.name.position.right",
         value: "right",
-        icon: "dropdown-icon-axis-name-position-right",
+        icon: "gd-dropdown-icon-axis-name-position-right",
     },
 ];
 
@@ -81,16 +81,16 @@ export const yAxisPositionDropdownItems: ITranslatedDropdownItem[] = [
     {
         title: "properties.axis.name.position.top",
         value: "top",
-        icon: "dropdown-icon-axis-name-position-top",
+        icon: "gd-dropdown-icon-axis-name-position-top",
     },
     {
         title: "properties.axis.name.position.middle",
         value: "middle",
-        icon: "dropdown-icon-axis-name-position-middle",
+        icon: "gd-dropdown-icon-axis-name-position-middle",
     },
     {
         title: "properties.axis.name.position.bottom",
         value: "bottom",
-        icon: "dropdown-icon-axis-name-position-bottom",
+        icon: "gd-dropdown-icon-axis-name-position-bottom",
     },
 ];

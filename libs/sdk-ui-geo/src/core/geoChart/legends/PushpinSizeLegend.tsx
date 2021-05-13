@@ -1,5 +1,6 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { calculateAverage } from "../helpers/geoChart/common";
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
@@ -7,47 +8,47 @@ export interface IPushpinSizeLegendProps {
     format: string;
     numericSymbols: string[];
     sizes: Array<number | null>;
-    measureName: string;
+    measureName?: string;
+    isSmall: boolean;
 }
 
 export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.Element | null {
-    const { sizes = [], format, numericSymbols = [], measureName } = props;
-    const sizeData: number[] = sizes.filter(
-        (value) => value !== null && isFinite && !isNaN(value),
-    ) as number[];
+    const { sizes = [], format, numericSymbols = [], measureName, isSmall } = props;
+    const sizeData = getSizeData(sizes);
 
     if (!sizeData.length) {
         return null;
     }
 
-    const min = Math.min(...sizeData);
-    const max = Math.max(...sizeData);
+    const min = getMin(sizeData);
+    const max = getMax(sizeData);
 
     if (min === max) {
         return null;
     }
 
-    const averageValue: number = calculateAverage(sizeData);
     const diff: number = max - min;
+    const classNamesContainer = cx("pushpin-size-legend s-pushpin-size-legend", {
+        "is-small-container": isSmall,
+    });
+    const classNamesCircles = cx("pushpin-size-legend-circle-list", { "is-small-circles": isSmall });
 
     return (
-        <div className="pushpin-size-legend s-pushpin-size-legend">
-            <div className="metric-name" title={measureName}>
-                {measureName}:
-            </div>
-            <div className="pushpin-size-legend-circle-list">
+        <div className={classNamesContainer}>
+            {measureName && (
+                <div className="metric-name" title={measureName}>
+                    {measureName}:
+                </div>
+            )}
+            <div className={classNamesCircles}>
                 <div className="pushpin-size-legend-circle circle-min-value">
                     <span className="circle-min-icon" />
                     <span className="circle-value">
                         {formatLegendLabel(min, format, diff, numericSymbols)}
                     </span>
                 </div>
-                <div className="pushpin-size-legend-circle">
-                    <span className="circle-average-icon" />
-                    <span className="circle-value">
-                        {formatLegendLabel(averageValue, format, diff, numericSymbols)}
-                    </span>
-                </div>
+                {!isSmall && renderMiddleCircle(props)}
+                {!measureName && <div className="circle-separator" />}
                 <div className="pushpin-size-legend-circle circle-max-value">
                     <span className="circle-max-icon" />
                     <span className="circle-value">
@@ -57,4 +58,34 @@ export default function PushpinSizeLegend(props: IPushpinSizeLegendProps): JSX.E
             </div>
         </div>
     );
+}
+
+function renderMiddleCircle(props: IPushpinSizeLegendProps) {
+    const { sizes = [], format, numericSymbols = [], measureName } = props;
+    const sizeData = getSizeData(sizes);
+    const diff = getMax(sizeData) - getMin(sizeData);
+
+    return (
+        <React.Fragment>
+            {!measureName && <div className="circle-separator" />}
+            <div className="pushpin-size-legend-circle circle-average-value">
+                <span className="circle-average-icon" />
+                <span className="circle-value">
+                    {formatLegendLabel(calculateAverage(sizeData), format, diff, numericSymbols)}
+                </span>
+            </div>
+        </React.Fragment>
+    );
+}
+
+function getSizeData(sizes: Array<number | null>): number[] {
+    return sizes.filter((value) => value !== null && isFinite && !isNaN(value)) as number[];
+}
+
+function getMin(sizeData: number[]) {
+    return Math.min(...sizeData);
+}
+
+function getMax(sizeData: number[]) {
+    return Math.max(...sizeData);
 }

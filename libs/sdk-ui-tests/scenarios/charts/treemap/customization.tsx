@@ -5,6 +5,8 @@ import { dataLabelCustomizer } from "../_infra/dataLabelVariants";
 import { legendCustomizer } from "../_infra/legendVariants";
 import { TreemapWithMeasureViewByAndSegmentBy } from "./base";
 import { ScenarioGroupNames } from "../_infra/groupNames";
+import { responsiveScenarios } from "../_infra/responsiveScenarios";
+import { legendResponsiveVariants, legendResponsiveSizeVariants } from "../_infra/legendResponsiveVariants";
 
 const legendScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withGroupNames(ScenarioGroupNames.ConfigurationCustomization)
@@ -18,4 +20,14 @@ const dataLabelScenarios = scenariosFor<ITreemapProps>("Treemap", Treemap)
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
     .addScenarios("data labels", TreemapWithMeasureViewByAndSegmentBy, dataLabelCustomizer);
 
-export default [legendScenarios, dataLabelScenarios];
+const legendResponziveScenarios = responsiveScenarios(
+    "Treemap",
+    ScenarioGroupNames.LegendResponsive,
+    Treemap,
+    TreemapWithMeasureViewByAndSegmentBy,
+    legendResponsiveSizeVariants,
+    false,
+    legendResponsiveVariants,
+);
+
+export default [legendScenarios, dataLabelScenarios, ...legendResponziveScenarios];

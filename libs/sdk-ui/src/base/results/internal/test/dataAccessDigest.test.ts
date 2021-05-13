@@ -17,9 +17,9 @@ function digestSnapshot(digest: DataAccessDigest) {
 }
 
 describe("createDataAccessDigest", () => {
-    const Scenarios: Array<[string, IDataView]> = recordedDataViews(
-        ReferenceRecordings.Recordings,
-    ).map((dv) => [dv.name, dv.dataView]);
+    const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(
+        (dv) => [dv.name, dv.dataView],
+    );
 
     it.each(Scenarios)("should find slices and series for: %s", (_desc, dataView) => {
         const digest = createDataAccessDigest(dataView);

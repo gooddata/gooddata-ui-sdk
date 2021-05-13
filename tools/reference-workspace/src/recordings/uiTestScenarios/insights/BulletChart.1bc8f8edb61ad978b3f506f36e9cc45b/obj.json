@@ -1,0 +1,73 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "acugFHNJgsBy", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_acugFHNJgsBy"
+                        }
+                    }
+                ],
+                "localIdentifier": "measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "aangOxLSeztu", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_aangOxLSeztu"
+                        }
+                    }
+                ],
+                "localIdentifier": "secondary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Calculated 'Lost' measure",
+                            "definition": {
+                                "arithmeticMeasure": {
+                                    "measureIdentifiers": ["m_aangOxLSeztu", "m_acugFHNJgsBy"],
+                                    "operator": "difference"
+                                }
+                            },
+                            "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933"
+                        }
+                    }
+                ],
+                "localIdentifier": "tertiary_measures"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "label.product.id.name", "type": "displayForm" },
+                            "localIdentifier": "a_label.product.id.name"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "BulletChart.1bc8f8edb61ad978b3f506f36e9cc45b",
+        "properties": {
+            "controls": { "legend": { "position": "top", "responsive": "autoPositionWithPopup" } }
+        },
+        "sorts": [],
+        "title": "BulletChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend on top",
+        "uri": "BulletChart.1bc8f8edb61ad978b3f506f36e9cc45b",
+        "visualizationUrl": "local:bullet"
+    }
+}

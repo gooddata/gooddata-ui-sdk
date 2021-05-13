@@ -29,8 +29,8 @@ const DropdownButton = ({ isActive, measureTitle, onClick }: IMeasureValueFilter
         "gd-button",
         "gd-button-secondary",
         "button-dropdown",
-        "icon-right",
-        { "icon-navigateup": isActive, "icon-navigatedown": !isActive },
+        "gd-icon-right",
+        { "gd-icon-navigateup": isActive, "gd-icon-navigatedown": !isActive },
     );
 
     return (

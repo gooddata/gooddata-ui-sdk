@@ -51,9 +51,10 @@ export class MetadataModule {
             throw new Error("Attribute of the provided element has no default display form!");
         }
         const defaultDisplayFormUri = defaultDisplayForm.meta.uri;
-        const defaultDisplayFormElementValue = await this.xhr.getParsed<GdcMetadata.IWrappedAttributeElements>(
-            `${defaultDisplayFormUri}/elements?id=${elementId}`,
-        );
+        const defaultDisplayFormElementValue =
+            await this.xhr.getParsed<GdcMetadata.IWrappedAttributeElements>(
+                `${defaultDisplayFormUri}/elements?id=${elementId}`,
+            );
 
         const firstElement = defaultDisplayFormElementValue.attributeElements.elements[0];
         return firstElement;
@@ -83,7 +84,7 @@ export class MetadataModule {
      * @param identifier string
      */
     public async getObjectByIdentifier<
-        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
+        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
     >(projectId: string, identifier: string): Promise<T> {
         const uri = await this.getObjectUri(projectId, identifier);
         return this.xhr.getParsed<T>(uri);
@@ -95,7 +96,7 @@ export class MetadataModule {
      * @param identifiers string[]
      */
     public async getObjectsByIdentifiers<
-        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject
+        T extends GdcMetadataObject.WrappedObject = GdcMetadataObject.WrappedObject,
     >(projectId: string, identifiers: string[]): Promise<T[]> {
         const uriIdentifierPairs = await this.getUrisFromIdentifiers(projectId, identifiers);
         const uris = uriIdentifierPairs.map((pair) => pair.uri);

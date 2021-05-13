@@ -1,5 +1,7 @@
 // (C) 2019-2021 GoodData Corporation
-
+/**
+ * @packageDocumentation
+ */
 export { dummyBackend, dummyBackendEmptyData, dummyDataView, DummyBackendConfig } from "./dummyBackend";
 
 export {

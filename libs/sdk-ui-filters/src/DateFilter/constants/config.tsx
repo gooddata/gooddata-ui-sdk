@@ -5,7 +5,9 @@ import { platformDateFormat } from "../constants/Platform";
 import { IDateFilterOptionsByType } from "../interfaces";
 
 /**
- * @beta
+ * The default set of date filter options.
+ *
+ * @public
  */
 export const defaultDateFilterOptions: IDateFilterOptionsByType = {
     allTime: {

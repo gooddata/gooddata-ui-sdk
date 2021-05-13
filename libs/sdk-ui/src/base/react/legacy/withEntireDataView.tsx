@@ -273,9 +273,8 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                      * we still want to push availableDrillTargets
                      */
                     if (isUnexpectedResponseError(err) && pushData) {
-                        const availableDrillTargets = this.getAvailableDrillTargetsFromExecutionResult(
-                            executionResult,
-                        );
+                        const availableDrillTargets =
+                            this.getAvailableDrillTargetsFromExecutionResult(executionResult);
 
                         pushData({ availableDrillTargets });
                     }

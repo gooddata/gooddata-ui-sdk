@@ -27,7 +27,7 @@ const LIMIT = MAX_SELECTION_SIZE + 50;
 
 const DefaultFilterLoading = injectIntl(({ intl }) => {
     return (
-        <button className="gd-button gd-button-secondary gd-button-small icon-right icon disabled s-button-loading">
+        <button className="gd-button gd-button-secondary gd-button-small gd-icon-right gd-icon disabled s-button-loading">
             {intl.formatMessage({ id: "gs.filter.loading" })}
         </button>
     );
@@ -397,15 +397,8 @@ export class AttributeDropdownCore extends React.PureComponent<
     }
 
     private renderDropdownBody() {
-        const {
-            selectedItems,
-            isInverted,
-            error,
-            isLoading,
-            validElements,
-            searchString,
-            totalCount,
-        } = this.state;
+        const { selectedItems, isInverted, error, isLoading, validElements, searchString, totalCount } =
+            this.state;
 
         const shouldDisableApplyButton = error || isLoading || (validElements && !validElements.items.length);
         const hasTriedToLoadData = validElements && validElements.items;

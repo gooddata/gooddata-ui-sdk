@@ -74,7 +74,8 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
  */
 export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject>
     extends Builder<T>
-    implements IMetadataObjectBuilder {
+    implements IMetadataObjectBuilder
+{
     public title(title: string): this {
         this.item.title = title;
         return this;

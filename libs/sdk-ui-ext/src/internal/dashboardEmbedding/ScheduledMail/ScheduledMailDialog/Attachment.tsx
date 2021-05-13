@@ -26,7 +26,7 @@ const RenderAttachment = (props: IAttachmentProps) => {
     return (
         <div className={classNames}>
             <label className="gd-label">{label}</label>
-            <span className="icon-pdf">
+            <span className="gd-icon-pdf">
                 <Icon.Pdf width={11} height={14} color={theme?.palette?.complementary?.c8} />
             </span>
             <span className="s-attachment-name">{`${nameOfAttachment} ${textFilters}`}</span>

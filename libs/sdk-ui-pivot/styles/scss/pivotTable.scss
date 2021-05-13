@@ -260,7 +260,8 @@ $subtotal-odd-background-color: var(
             }
 
             .ag-row {
-                background-color: transparent;
+                // stylelint-disable-next-line declaration-no-important
+                background-color: transparent !important; // TODO: remove !important after IE11 deprecation
 
                 // stylelint-disable-next-line max-nesting-depth
                 .ag-cell {
@@ -271,7 +272,8 @@ $subtotal-odd-background-color: var(
                     &.gd-hidden-sticky-column {
                         color: transparent;
                         border-top-color: transparent;
-                        background-color: transparent;
+                        // stylelint-disable-next-line declaration-no-important
+                        background-color: transparent !important; // TODO: remove !important after IE11 deprecation
                     }
 
                     // stylelint-disable-next-line max-nesting-depth
@@ -516,9 +518,14 @@ $subtotal-odd-background-color: var(
             text-overflow: ellipsis;
         }
     }
+}
 
-    .gd-menuPosition-wrapper:hover .gd-list-item.gd-menu-item.is-submenu {
-        color: $is-focused-color;
-        background: $is-focused-background;
+.gd-menuPosition-wrapper:hover {
+    .gd-list-item.gd-menu-item.is-submenu {
+        background-color: $is-focused-background;
+    }
+
+    .gd-list-item.gd-menu-item.is-submenu.is-selected {
+        background-color: $gd-palette-primary-dimmed;
     }
 }

@@ -88,8 +88,7 @@ describe("report", () => {
                 const finishedTask = {
                     status: BAD_REQUEST_STATUS,
                     // tslint:disable-next-line:max-line-length
-                    body:
-                        '{"error":{"message":"During export we\'ve detected user error: Export to required format is not allowed for data flagged as restricted."}}',
+                    body: '{"error":{"message":"During export we\'ve detected user error: Export to required format is not allowed for data flagged as restricted."}}',
                 };
                 const runningTask = { status: ACCEPTED_REQUEST_STATUS, uri: createdReport };
 

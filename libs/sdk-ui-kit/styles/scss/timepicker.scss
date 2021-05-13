@@ -11,17 +11,17 @@
         width: 100%;
     }
 
-    .icon-timer,
-    .button-dropdown .icon-timer,
-    .button-dropdown:focus .icon-timer,
-    .button-dropdown:hover .icon-timer,
-    .button-dropdown.is-active .icon-timer {
+    .gd-icon-timer,
+    .button-dropdown .gd-icon-timer,
+    .button-dropdown:focus .gd-icon-timer,
+    .button-dropdown:hover .gd-icon-timer,
+    .button-dropdown.is-active .gd-icon-timer {
         color: $gd-palette-primary-base;
     }
 }
 
 .gd-mobile-dropdown-header {
-    .button-dropdown.is-active .gd-button-icon.icon-timer {
+    .button-dropdown.is-active .gd-button-icon.gd-icon-timer {
         color: $gd-palette-primary-base;
     }
 }

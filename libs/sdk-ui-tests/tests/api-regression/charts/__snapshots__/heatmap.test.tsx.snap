@@ -1,5 +1,1265 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - auto legend should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "auto",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend at bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend at bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "bottom",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on left should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "left",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on right should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "right",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 180x400 - Force position TOP, minimised variant - legend on top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "top",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - auto legend should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - auto legend should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "auto",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend at bottom should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend at bottom should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "bottom",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on left should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on left should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "left",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on right should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on right should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "right",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on top should create expected execution definition 1`] = `
+Object {
+  "attributes": Array [
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.product.id.name",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.product.id.name",
+      },
+    },
+    Object {
+      "attribute": Object {
+        "displayForm": Object {
+          "identifier": "label.owner.region",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_label.owner.region",
+      },
+    },
+  ],
+  "buckets": Array [
+    Object {
+      "items": Array [
+        Object {
+          "measure": Object {
+            "definition": Object {
+              "measureDefinition": Object {
+                "item": Object {
+                  "identifier": "aangOxLSeztu",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_aangOxLSeztu",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.product.id.name",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.product.id.name",
+          },
+        },
+      ],
+      "localIdentifier": "view",
+    },
+    Object {
+      "items": Array [
+        Object {
+          "attribute": Object {
+            "displayForm": Object {
+              "identifier": "label.owner.region",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_label.owner.region",
+          },
+        },
+      ],
+      "localIdentifier": "stack",
+    },
+  ],
+  "dimensions": Array [
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.product.id.name",
+      ],
+    },
+    Object {
+      "itemIdentifiers": Array [
+        "a_label.owner.region",
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": Array [],
+  "measures": Array [
+    Object {
+      "measure": Object {
+        "definition": Object {
+          "measureDefinition": Object {
+            "item": Object {
+              "identifier": "aangOxLSeztu",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_aangOxLSeztu",
+      },
+    },
+  ],
+  "postProcessing": Object {},
+  "sortBy": Array [
+    Object {
+      "attributeSortItem": Object {
+        "attributeIdentifier": "a_label.product.id.name",
+        "direction": "desc",
+      },
+    },
+  ],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`Heatmap with 620x400 - Position respects configuration, standard variant - legend on top should create expected props for core chart 1`] = `
+Object {
+  "config": Object {
+    "legend": Object {
+      "position": "top",
+      "responsive": "autoPositionWithPopup",
+    },
+  },
+  "exportTitle": "Heatmap",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+}
+`;
+
 exports[`Heatmap with assign color to measures should create expected execution definition 1`] = `
 Object {
   "attributes": Array [

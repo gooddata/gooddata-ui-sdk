@@ -14,8 +14,8 @@ interface IIconWrapperProps {
 
 const IconWrapper: React.FC<IIconWrapperProps> = ({ name, children }) => {
     return (
-        <div className="icon-wrapper">
-            <div className="icon-name">{`${name}: `}</div>
+        <div className="gd-icon-wrapper">
+            <div className="gd-icon-name">{`${name}: `}</div>
             {children}
         </div>
     );

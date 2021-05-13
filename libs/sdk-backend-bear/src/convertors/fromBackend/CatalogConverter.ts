@@ -52,30 +52,30 @@ const bearGroupableCatalogItemToTagRefs = (item: { groups?: string[] }): ObjRef[
     return groups.map((tagId) => idRef(tagId));
 };
 
-const commonMetadataModifications = <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) => (
-    builder: T,
-) => {
-    return builder
-        .id(item.identifier!)
-        .uri(item.uri!)
-        .title(item.title)
-        .description(item.summary ?? "")
-        .production(item.isProduction === 1)
-        .unlisted(item.unlisted === 1)
-        .deprecated(item.deprecated === "1");
-};
+const commonMetadataModifications =
+    <T extends IMetadataObjectBuilder>(item: GdcMetadata.IObjectMeta) =>
+    (builder: T) => {
+        return builder
+            .id(item.identifier!)
+            .uri(item.uri!)
+            .title(item.title)
+            .description(item.summary ?? "")
+            .production(item.isProduction === 1)
+            .unlisted(item.unlisted === 1)
+            .deprecated(item.deprecated === "1");
+    };
 
-const commonCatalogItemModifications = <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) => (
-    builder: T,
-) =>
-    builder
-        .id(item.identifier)
-        .uri(item.links.self)
-        .title(item.title)
-        .description(item.summary)
-        .production(item.production)
-        .unlisted(false)
-        .deprecated(false);
+const commonCatalogItemModifications =
+    <T extends IMetadataObjectBuilder>(item: GdcCatalog.CatalogItem) =>
+    (builder: T) =>
+        builder
+            .id(item.identifier)
+            .uri(item.links.self)
+            .title(item.title)
+            .description(item.summary)
+            .production(item.production)
+            .unlisted(false)
+            .deprecated(false);
 
 const convertDisplayForm = (
     df: GdcMetadata.IAttributeDisplayForm,

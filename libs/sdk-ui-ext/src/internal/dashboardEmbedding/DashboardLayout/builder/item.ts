@@ -30,7 +30,8 @@ import identity from "lodash/identity";
  * @alpha
  */
 export class DashboardLayoutItemBuilder<TWidget>
-    implements IDashboardLayoutItemBuilder<TWidget | DashboardWidget> {
+    implements IDashboardLayoutItemBuilder<TWidget | DashboardWidget>
+{
     protected constructor(
         protected setSection: (
             valueOrUpdateCallback: ValueOrUpdateCallback<IDashboardLayoutSection<TWidget>>,
@@ -106,7 +107,7 @@ export class DashboardLayoutItemBuilder<TWidget>
         insight: ObjRef,
         create: (builder: InsightWidgetBuilder) => InsightWidgetBuilder = identity,
     ): this {
-        this.widget((create(InsightWidgetBuilder.forNew(insight)).build() as unknown) as TWidget);
+        this.widget(create(InsightWidgetBuilder.forNew(insight)).build() as unknown as TWidget);
         return this;
     }
 
@@ -116,7 +117,7 @@ export class DashboardLayoutItemBuilder<TWidget>
             isInsightWidgetDefinition(content) || isInsightWidget(content),
             "Content of the item is not a kpi widget!",
         );
-        this.widget((modify(InsightWidgetBuilder.for(content)).build() as unknown) as TWidget);
+        this.widget(modify(InsightWidgetBuilder.for(content)).build() as unknown as TWidget);
         return this;
     }
 
@@ -124,7 +125,7 @@ export class DashboardLayoutItemBuilder<TWidget>
         measure: ObjRef,
         create: (builder: KpiWidgetBuilder) => KpiWidgetBuilder = identity,
     ): this {
-        this.widget((create(KpiWidgetBuilder.forNew(measure)).build() as unknown) as TWidget);
+        this.widget(create(KpiWidgetBuilder.forNew(measure)).build() as unknown as TWidget);
         return this;
     }
 
@@ -134,7 +135,7 @@ export class DashboardLayoutItemBuilder<TWidget>
             isKpiWidgetDefinition(content) || isKpiWidget(content),
             "Content of the item is not a kpi widget!",
         );
-        this.widget((modify(KpiWidgetBuilder.for(content)).build() as unknown) as TWidget);
+        this.widget(modify(KpiWidgetBuilder.for(content)).build() as unknown as TWidget);
         return this;
     }
 }

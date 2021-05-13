@@ -1,5 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
-
+/**
+ * @packageDocumentation
+ */
 export {
     IThemeProviderProps,
     ThemeProvider,

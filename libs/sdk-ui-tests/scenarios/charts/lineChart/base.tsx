@@ -20,6 +20,19 @@ export const LineChartWithArithmeticMeasuresAndViewBy = {
     trendBy: ReferenceLdm.CreatedQuarterYear,
 };
 
+export const LineChartWithLotArithmeticMeasuresAndViewBy = {
+    measures: [
+        ReferenceLdm.Amount,
+        ReferenceLdm.Won,
+        ReferenceLdm.Probability,
+        ReferenceLdm.WinRate,
+        ReferenceLdm.SnapshotEOP,
+        ReferenceLdmExt.CalculatedLost,
+        ReferenceLdmExt.CalculatedWonLostRatio,
+    ],
+    trendBy: ReferenceLdm.CreatedQuarterYear,
+};
+
 export const LineChartWithManyDataPoints = {
     measures: [ReferenceLdm.Amount],
     filters: [newMeasureValueFilter(ReferenceLdm.Amount, "GREATER_THAN", 100000)],

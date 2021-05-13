@@ -4,9 +4,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { isBarChart, isScatterPlot, isBubbleChart, isBulletChart } from "@gooddata/sdk-ui-charts";
 import { IVisualizationProperties } from "../../../interfaces/Visualization";
 
-export function countBucketItems(
-    insight: IInsightDefinition,
-): {
+export function countBucketItems(insight: IInsightDefinition): {
     viewByItemCount: number;
     measureItemCount: number;
     secondaryMeasureItemCount: number;
@@ -45,9 +43,10 @@ export function countItemsOnAxes(
     const { viewByItemCount, measureItemCount, secondaryMeasureItemCount } = countBucketItems(insight);
     const totalMeasureItemCount = measureItemCount + secondaryMeasureItemCount;
 
-    const secondaryMeasureCountInConfig = (isBarFamilyChartType
-        ? controls?.secondary_xaxis?.measures ?? []
-        : controls?.secondary_yaxis?.measures ?? []
+    const secondaryMeasureCountInConfig = (
+        isBarFamilyChartType
+            ? controls?.secondary_xaxis?.measures ?? []
+            : controls?.secondary_yaxis?.measures ?? []
     ).length;
 
     if (isBarFamilyChartType) {

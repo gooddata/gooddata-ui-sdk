@@ -69,10 +69,10 @@ export const RecShortcuts = {
     LocationOnlySmall: trimmedScenario(ExamplesRecordings.Scenarios.GeoPushpinChart.LocationOnly, [10]),
     LocationAndSize: createShortcut(ExamplesRecordings.Scenarios.GeoPushpinChart.LocationAndSize),
     LocationAndColor: createShortcut(ExamplesRecordings.Scenarios.GeoPushpinChart.LocationAndColor),
-    LocationAndColor_Small: trimmedScenario(ExamplesRecordings.Scenarios.GeoPushpinChart.LocationAndColor, [
-        -1,
-        10,
-    ]),
+    LocationAndColor_Small: trimmedScenario(
+        ExamplesRecordings.Scenarios.GeoPushpinChart.LocationAndColor,
+        [-1, 10],
+    ),
     LocationSizeAndTooltip: createShortcut(
         ExamplesRecordings.Scenarios.GeoPushpinChart.LocationAndSizeWithTooltip,
     ),

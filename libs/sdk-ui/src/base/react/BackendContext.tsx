@@ -34,11 +34,13 @@ export const BackendProvider: React.FC<IBackendProviderProps> = ({ children, bac
  * Note: For a better TypeScript experience without the hassle of undefined values, you can use the useBackendStrict hook.
  *
  * @example
+ * ```
  * // instead of
  * const fromContext = useBackend();
  * const effectiveBackend = fromArguments ?? fromContext.
  * // you can write
  * const backend = useBackend(fromArguments);
+ *```
  *
  * @param backend - backend to use instead of context value. If undefined, the context value is used.
  * @public
@@ -57,12 +59,13 @@ export const useBackend = (backend?: IAnalyticalBackend): IAnalyticalBackend | u
  * an invariant error is raised.
  *
  * @example
+ * ```
  * // instead of
  * const fromContext = useBackendStrict();
  * const effectiveBackend = fromArguments ?? fromContext.
  * // you can write
  * const backend = useBackendStrict(fromArguments);
- *
+ *```
  *
  * @param backend - backend to use instead of context value. If undefined, the context value is used.
  * @param context - optionally provide context to improve error message in raised invariant (e.g. parent hook name).

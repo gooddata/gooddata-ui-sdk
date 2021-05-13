@@ -851,9 +851,12 @@ function getTableFont(containerRef: HTMLDivElement, className: string, defaultFo
     return isEmpty(font) ? `${fontWeight} ${fontSize} ${fontFamily}` : font;
 }
 
-function getTableFonts(
-    containerRef: HTMLDivElement,
-): { headerFont: string; rowFont: string; subtotalFont: string; totalFont: string } {
+function getTableFonts(containerRef: HTMLDivElement): {
+    headerFont: string;
+    rowFont: string;
+    subtotalFont: string;
+    totalFont: string;
+} {
     /**
      * All fonts are gotten from first element with given class. Once we will have font different for each cell/header/row this will not work
      */

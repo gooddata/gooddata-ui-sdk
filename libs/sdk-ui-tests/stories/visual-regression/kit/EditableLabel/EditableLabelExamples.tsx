@@ -36,7 +36,7 @@ class EditableLabelExamples extends PureComponent<unknown, IEditableLabelExample
                     className="s-my-editable-label"
                 >
                     {this.state.text}
-                    <i className="icon-pencil" style={{ marginLeft: 5 }} />
+                    <i className="gd-icon-pencil" style={{ marginLeft: 5 }} />
                 </EditableLabel>
             </div>
         );

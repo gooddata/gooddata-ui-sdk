@@ -145,7 +145,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                             value={formatTime(time.h, time.m)}
                             isOpen={isOpen}
                             onClick={openDropdown}
-                            iconLeft="icon-timer"
+                            iconLeft="gd-icon-timer"
                         />
                     )}
                     renderBody={({ closeDropdown, isMobile }) => (

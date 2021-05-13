@@ -44,16 +44,20 @@ const CustomTable: React.FC<CustomWidgetProps & { title: string }> = ({
     ErrorComponent,
     LoadingComponent,
 }) => {
-    const { result: execution, status: executionStatus, error: executionError } = useDashboardWidgetExecution(
-        {
-            dashboard: dashboardRef,
-            widget: widgetRef,
-            filters,
-        },
-    );
-    const { result: dataView, status: dataViewStatus, error: dataViewError } = useDataView({ execution }, [
-        execution?.fingerprint(),
-    ]);
+    const {
+        result: execution,
+        status: executionStatus,
+        error: executionError,
+    } = useDashboardWidgetExecution({
+        dashboard: dashboardRef,
+        widget: widgetRef,
+        filters,
+    });
+    const {
+        result: dataView,
+        status: dataViewStatus,
+        error: dataViewError,
+    } = useDataView({ execution }, [execution?.fingerprint()]);
 
     const error = executionError ?? dataViewError;
     const statuses = [executionStatus, dataViewStatus];
@@ -157,16 +161,20 @@ const customKpiValueStyle: React.CSSProperties = {
 };
 
 const CustomKpi: React.FC<CustomWidgetProps> = ({ widgetRef, filters, ErrorComponent, LoadingComponent }) => {
-    const { result: execution, status: executionStatus, error: executionError } = useDashboardWidgetExecution(
-        {
-            dashboard: dashboardRef,
-            widget: widgetRef,
-            filters,
-        },
-    );
-    const { result: dataView, status: dataViewStatus, error: dataViewError } = useDataView({ execution }, [
-        execution?.fingerprint(),
-    ]);
+    const {
+        result: execution,
+        status: executionStatus,
+        error: executionError,
+    } = useDashboardWidgetExecution({
+        dashboard: dashboardRef,
+        widget: widgetRef,
+        filters,
+    });
+    const {
+        result: dataView,
+        status: dataViewStatus,
+        error: dataViewError,
+    } = useDataView({ execution }, [execution?.fingerprint()]);
 
     const error = executionError ?? dataViewError;
     const statuses = [executionStatus, dataViewStatus];

@@ -1,9 +1,10 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { BucketNames, DataViewFacade, IColorAssignment } from "@gooddata/sdk-ui";
 import { IGeoData, IGeoPointsConfig } from "../../../../GeoChart";
 import { bucketIsEmpty, bucketsFind, IBucket } from "@gooddata/sdk-model";
 import { DataValue, IResultHeader } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
+import { getResponsiveInfo } from "./responsive";
 
 export function getGeoAttributeHeaderItems(dv: DataViewFacade, geoData: IGeoData): IResultHeader[][] {
     const { color, size } = geoData;
@@ -50,6 +51,7 @@ export function isClusteringAllowed(geoData: IGeoData, groupNearbyPoints: boolea
 
     return Boolean(groupNearbyPoints && location && !(color || segment || size));
 }
+
 export function isPointsConfigChanged(
     prevPointsConfig: IGeoPointsConfig | undefined,
     pointsConfig: IGeoPointsConfig | undefined,
@@ -100,8 +102,11 @@ export function dataValueAsFloat(value: DataValue): number {
     return parsedNumber;
 }
 
-export function isFluidLegendEnabled(responsive: boolean, showFluidLegend: boolean): boolean {
-    return responsive && showFluidLegend;
+export function isFluidLegendEnabled(
+    responsive: boolean | "autoPositionWithPopup",
+    showFluidLegend: boolean,
+): boolean {
+    return getResponsiveInfo(responsive) === true && showFluidLegend;
 }
 
 export function isColorAssignmentItemChanged(

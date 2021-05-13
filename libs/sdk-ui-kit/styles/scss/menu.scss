@@ -1,0 +1,20 @@
+// (C) 2007-2019 GoodData Corporation
+$gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
+
+@import "~@gooddata/sdk-ui/styles/scss/settings";
+
+@import "./indigoFont";
+@import "./list";
+
+.gd-menuOpenner {
+    position: relative;
+    z-index: 1;
+}
+
+.gd-menuPosition-wrapper {
+    position: relative;
+}
+
+.gd-menuOpenedByClick-togglerWrapped {
+    display: inline-block;
+}

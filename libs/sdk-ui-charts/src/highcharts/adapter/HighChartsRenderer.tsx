@@ -1,6 +1,8 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
+import { ContentRect } from "react-measure";
 import cloneDeep from "lodash/cloneDeep";
+import { v4 } from "uuid";
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
 import noop from "lodash/noop";
@@ -14,7 +16,14 @@ import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
-import { ILegendProps, Legend, ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
+import {
+    ILegendProps,
+    Legend,
+    ILegendOptions,
+    PositionType,
+    getLegendDetails,
+    ILegendDetailOptions,
+} from "@gooddata/sdk-ui-vis-commons";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 import { ITheme } from "@gooddata/sdk-backend-spi";
@@ -27,6 +36,7 @@ export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
     getChart(): Highcharts.Chart;
+
     getHighchartRef(): HTMLElement;
 }
 
@@ -47,11 +57,19 @@ export interface IHighChartsRendererProps {
     chartRenderer(chartProps: IChartProps): any;
     afterRender(): void;
     resetZoomButtonTooltip?: string;
+    contentRect?: ContentRect;
 }
 
 export interface IHighChartsRendererState {
     legendItemsEnabled: boolean[];
     showFluidLegend: boolean;
+}
+
+export interface ILegendDetails {
+    name?: string;
+    position: PositionType;
+    maxRows?: number;
+    renderPopUp?: boolean;
 }
 
 export function renderChart(props: IChartProps): JSX.Element {
@@ -90,6 +108,7 @@ export class HighChartsRenderer extends React.PureComponent<
 
     private highchartsRendererRef = React.createRef<HTMLDivElement>(); // whole component = legend + chart
     private chartRef: IChartHTMLElement;
+    private containerId: string = `visualization-${v4()}`;
 
     constructor(props: IHighChartsRendererProps) {
         super(props);
@@ -111,8 +130,11 @@ export class HighChartsRenderer extends React.PureComponent<
     private throttledOnWindowResize = throttle(this.onWindowResize, 100);
 
     public shouldShowFluid(): boolean {
-        const { documentObj } = this.props;
-        return documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD;
+        const { documentObj, legend } = this.props;
+        return (
+            documentObj.documentElement.clientWidth < FLUID_LEGEND_THRESHOLD &&
+            legend?.responsive !== "autoPositionWithPopup"
+        );
     }
 
     public UNSAFE_componentWillMount(): void {
@@ -175,10 +197,8 @@ export class HighChartsRenderer extends React.PureComponent<
         this.chartRef = chartRef;
     };
 
-    public getFlexDirection(): React.CSSProperties["flexDirection"] {
-        const { legend } = this.props;
-
-        if (legend.position === TOP || legend.position === BOTTOM) {
+    public getFlexDirection(position: string): React.CSSProperties["flexDirection"] {
+        if (position === TOP || position === BOTTOM) {
             return "column";
         }
 
@@ -251,7 +271,11 @@ export class HighChartsRenderer extends React.PureComponent<
         return config;
     }
 
-    public renderLegend(): React.ReactNode {
+    public renderLegend(
+        legendDetails: ILegendDetails,
+        contentRect: ContentRect,
+        containerId: string,
+    ): React.ReactNode {
         const { chartOptions, legend, height, legendRenderer, locale } = this.props;
         const { items, format } = legend;
         const { showFluidLegend } = this.state;
@@ -266,7 +290,6 @@ export class HighChartsRenderer extends React.PureComponent<
         }
 
         const legendProps: ILegendProps = {
-            position: legend.position,
             responsive: legend.responsive,
             enableBorderRadius: legend.enableBorderRadius,
             seriesMapper: legend.seriesMapper,
@@ -275,10 +298,15 @@ export class HighChartsRenderer extends React.PureComponent<
             legendItemsEnabled: this.state.legendItemsEnabled,
             heatmapLegend: isHeatmap(type),
             height,
+            legendLabel: legendDetails?.name,
+            maximumRows: legendDetails?.maxRows,
+            position: legendDetails.position,
             format,
             locale,
             showFluidLegend,
             validateOverHeight: () => {},
+            contentDimensions: contentRect?.client,
+            containerId,
         };
 
         return legendRenderer(legendProps);
@@ -330,30 +358,46 @@ export class HighChartsRenderer extends React.PureComponent<
         return null;
     }
 
-    public render(): React.ReactNode {
-        const { legend } = this.props;
-        const { showFluidLegend } = this.state;
+    private renderVisualization() {
+        const { legend, chartOptions, contentRect } = this.props;
+        const legendDetailOptions: ILegendDetailOptions = {
+            showFluidLegend: this.state.showFluidLegend,
+            contentRect,
+            isHeatmap: isHeatmap(chartOptions.type),
+            legendLabel: chartOptions.legendLabel,
+        };
+        const legendDetails = getLegendDetails(legend.position, legend.responsive, legendDetailOptions);
+        if (!legendDetails) {
+            return null;
+        }
 
         const classes = cx(
             "viz-line-family-chart-wrap",
             "s-viz-line-family-chart-wrap",
-            legend.responsive ? "responsive-legend" : "non-responsive-legend",
+            legend.responsive === true ? "responsive-legend" : "non-responsive-legend",
             {
-                [`flex-direction-${this.getFlexDirection()}`]: true,
-                "legend-position-bottom": this.isBottomLegend(legend),
+                [`flex-direction-${this.getFlexDirection(legendDetails.position)}`]: true,
+                "legend-position-bottom": legendDetails.position === BOTTOM,
             },
+            this.containerId,
         );
 
+        const legendPosition = legendDetails.position;
         const isLegendRenderedFirst: boolean =
-            legend.position === TOP || legend.position === LEFT || showFluidLegend;
+            legendPosition === TOP || legendPosition === LEFT || this.state.showFluidLegend;
+
         return (
             <div className={classes} ref={this.highchartsRendererRef}>
                 {this.renderZoomOutButton()}
-                {isLegendRenderedFirst && this.renderLegend()}
+                {isLegendRenderedFirst && this.renderLegend(legendDetails, contentRect, this.containerId)}
                 {this.renderHighcharts()}
-                {!isLegendRenderedFirst && this.renderLegend()}
+                {!isLegendRenderedFirst && this.renderLegend(legendDetails, contentRect, this.containerId)}
             </div>
         );
+    }
+
+    public render(): React.ReactNode {
+        return this.renderVisualization();
     }
 
     private realignPieOrDonutChart() {
@@ -365,9 +409,5 @@ export class HighChartsRenderer extends React.PureComponent<
         if (isPieOrDonutChart(type) && chartRef) {
             alignChart(chartRef.getChart(), verticalAlign);
         }
-    }
-
-    private isBottomLegend(legend: ILegendOptions): boolean {
-        return legend.position === BOTTOM;
     }
 }

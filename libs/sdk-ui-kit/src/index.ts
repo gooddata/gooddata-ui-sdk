@@ -1,5 +1,7 @@
 // (C) 2020-2021 GoodData Corporation
-
+/**
+ * @packageDocumentation
+ */
 export * from "./typings/utilities";
 export * from "./typings/positioning";
 export * from "./typings/domUtilities";
@@ -38,3 +40,4 @@ export * from "./FlexDimensions";
 export * from "./DateDatasets";
 export * from "./ColorPicker";
 export * from "./FilterLabel";
+export * from "./Menu";

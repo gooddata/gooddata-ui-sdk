@@ -1,0 +1,40 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": {
+                            "identifier": "attr.account.id",
+                            "name": "Account",
+                            "uri": "/gdc/md/referenceworkspace/obj/1057"
+                        },
+                        "identifier": "label.account.id.name",
+                        "localIdentifier": "a_label.account.id.name",
+                        "name": "Name",
+                        "uri": "/gdc/md/referenceworkspace/obj/1058"
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "aangOxLSeztu",
+                                    "localIdentifier": "m_aangOxLSeztu",
+                                    "name": "Amount",
+                                    "uri": "/gdc/md/referenceworkspace/obj/1271"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

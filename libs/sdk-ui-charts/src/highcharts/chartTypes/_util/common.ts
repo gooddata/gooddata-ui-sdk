@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import clone from "lodash/clone";
 import includes from "lodash/includes";
 import isNil from "lodash/isNil";
@@ -9,6 +9,7 @@ import isEqual from "lodash/fp/isEqual";
 import unescape from "lodash/unescape";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import { IChartOptions, ISeriesItem } from "../../typings/unsafe";
+import { IChartConfig } from "../../../interfaces";
 
 export function parseValue(value: string): number | null {
     const parsedValue = parseFloat(value);
@@ -161,3 +162,9 @@ export const isCssMultiLineTruncationSupported = (): boolean => {
     return "webkitLineClamp" in document.body.style;
 };
 export const customEscape = (str: string): string => str && escape(unescape(str));
+
+export const getAxesCounts = (config: IChartConfig): [number, number] => {
+    const hasSecondaryXAxis = config.secondary_xaxis && config.secondary_xaxis?.measures?.length !== 0;
+    const hasSecondaryYAxis = config.secondary_yaxis && config.secondary_yaxis?.measures?.length !== 0;
+    return [hasSecondaryXAxis ? 2 : 1, hasSecondaryYAxis ? 2 : 1];
+};

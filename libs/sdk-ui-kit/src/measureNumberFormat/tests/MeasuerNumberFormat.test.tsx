@@ -21,20 +21,22 @@ import { IFormatTemplate, IToggleButtonProps } from "../typings";
     };
 });
 
-// eslint-disable-next-line react/display-name
-const getButtonComponent = (): React.FC<IToggleButtonProps> => ({ isOpened, text, toggleDropdown }) => {
-    return (
-        <div
-            className={cx("toggle-button", {
-                opened: isOpened,
-                closed: !isOpened,
-            })}
-            onClick={toggleDropdown}
-        >
-            {text}
-        </div>
-    );
-};
+const getButtonComponent =
+    (): React.FC<IToggleButtonProps> =>
+    // eslint-disable-next-line react/display-name
+    ({ isOpened, text, toggleDropdown }) => {
+        return (
+            <div
+                className={cx("toggle-button", {
+                    opened: isOpened,
+                    closed: !isOpened,
+                })}
+                onClick={toggleDropdown}
+            >
+                {text}
+            </div>
+        );
+    };
 
 const presets = [
     {
@@ -236,9 +238,8 @@ describe("Measure number format", () => {
                 templateHelpIcon.simulate("mouseenter");
                 expect(component.isTemplatePreviewBubbleOpen(templateName)).toEqual(true);
 
-                const templatePreviewFormattedValues = component.getTemplatePreviewBubbleFormattedValues(
-                    templateName,
-                );
+                const templatePreviewFormattedValues =
+                    component.getTemplatePreviewBubbleFormattedValues(templateName);
                 const expectedTemplatePreviewFormattedValues = [
                     "€ -1 234 567,9",
                     "€ -1 234,6",

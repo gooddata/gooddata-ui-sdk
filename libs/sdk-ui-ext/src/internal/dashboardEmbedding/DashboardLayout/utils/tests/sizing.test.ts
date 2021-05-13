@@ -15,6 +15,7 @@ import {
     getLayoutWithoutGridHeights,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
+    validateDashboardLayoutWidgetSize,
 } from "../sizing";
 import { ALL_SCREENS } from "../..";
 import {
@@ -346,5 +347,39 @@ describe("sizing", () => {
             const actual = getDashboardLayoutItemMaxGridWidth(layoutFacade.section(1).item(1), "xl");
             expect(actual).toEqual(8);
         });
+    });
+
+    describe("validateDashboardLayoutWidgetSize", () => {
+        const settings = {
+            enableKDWidgetCustomHeight: true,
+        };
+        it.each([
+            ["Headline with too big height", DASHBOARD_LAYOUT_VIS_TYPE.headline, 2, 80, 2, 40],
+            ["Column Chart with too low width", DASHBOARD_LAYOUT_VIS_TYPE.column, 2, 14, 4, 14],
+            ["Table with too low height", DASHBOARD_LAYOUT_VIS_TYPE.table, 3, 10, 3, 12],
+            [
+                "Geochart with too big width and undefined height",
+                DASHBOARD_LAYOUT_VIS_TYPE.pushpin,
+                14,
+                undefined,
+                12,
+                undefined,
+            ],
+        ])(
+            "should get valid width and height for %s",
+            (_name, visType, currentWidth, currentHeight, validWidth, validHeight) => {
+                expect(
+                    validateDashboardLayoutWidgetSize(
+                        currentWidth,
+                        currentHeight,
+                        newInsightDefinition(`local:${visType}`),
+                        settings,
+                    ),
+                ).toEqual({
+                    validWidth,
+                    validHeight,
+                });
+            },
+        );
     });
 });

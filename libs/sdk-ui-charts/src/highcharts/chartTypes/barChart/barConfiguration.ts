@@ -4,6 +4,7 @@ import { HighchartsOptions } from "../../../highcharts/lib";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration";
 import { IChartConfig } from "../../../interfaces";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive";
+import { getAxesCounts } from "../_util/common";
 
 const BAR_TEMPLATE = {
     chart: {
@@ -39,9 +40,10 @@ export function getBarConfiguration(config: IChartConfig): HighchartsOptions {
 
     if (config?.enableCompactSize) {
         const reversed = true;
+        const [xAxesCount, yAxesCount] = getAxesCounts(config);
         return {
             ...barConfiguration,
-            responsive: getCommonResponsiveConfig(reversed),
+            responsive: getCommonResponsiveConfig(reversed, xAxesCount, yAxesCount),
         };
     }
 

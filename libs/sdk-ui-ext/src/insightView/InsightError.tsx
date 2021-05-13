@@ -24,10 +24,10 @@ const InsightErrorCore: React.FC<IInsightErrorProps & WrappedComponentProps> = (
     clientHeight,
 }) => {
     const errorMapping = useMemo<IErrorDescriptors>(() => newErrorMapping(intl), [intl]);
-    const errorProps = useMemo(() => errorMapping[error.getMessage()] ?? { message: error.message }, [
-        errorMapping,
-        error,
-    ]);
+    const errorProps = useMemo(
+        () => errorMapping[error.getMessage()] ?? { message: error.message },
+        [errorMapping, error],
+    );
 
     return <ErrorComponent {...errorProps} height={height} clientHeight={clientHeight} />;
 };

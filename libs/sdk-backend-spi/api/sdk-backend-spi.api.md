@@ -287,6 +287,7 @@ export interface IBackendCapabilities {
     supportsCsvUploader?: boolean;
     supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
+    supportsGenericDateAttributeElements?: boolean;
     supportsHyperlinkAttributeLabels?: boolean;
     supportsKpiWidget?: boolean;
     supportsObjectUris?: boolean;
@@ -922,23 +923,38 @@ export interface IMeasureGroupDescriptor {
 }
 
 // @public
-export interface IMeasureMetadataObject extends IMetadataObject {
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase;
+
+// @internal (undocumented)
+export interface IMeasureMetadataObjectBase {
     expression: string;
     format: string;
+    isLocked?: boolean;
     // (undocumented)
     type: "measure";
 }
 
+// @public
+export type IMeasureMetadataObjectDefinition = Partial<IMetadataObjectBase> & IMeasureMetadataObjectBase;
+
 // @public (undocumented)
-export interface IMetadataObject {
+export interface IMetadataObject extends IMetadataObjectBase, IMetadataObjectIdentity {
+}
+
+// @internal (undocumented)
+export interface IMetadataObjectBase {
     deprecated: boolean;
     description: string;
-    id: string;
     production: boolean;
-    ref: ObjRef;
     title: string;
     type: ObjectType;
     unlisted: boolean;
+}
+
+// @internal (undocumented)
+export interface IMetadataObjectIdentity {
+    id: string;
+    ref: ObjRef;
     uri: string;
 }
 
@@ -1253,6 +1269,9 @@ export function isMeasureGroupDescriptor(obj: unknown): obj is IMeasureGroupDesc
 
 // @public
 export function isMeasureMetadataObject(obj: unknown): obj is IMeasureMetadataObject;
+
+// @public
+export function isMeasureMetadataObjectDefinition(obj: unknown): obj is IMeasureMetadataObjectDefinition;
 
 // @public (undocumented)
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
@@ -1755,7 +1774,10 @@ export interface IWorkspaceInsightsService {
 
 // @public
 export interface IWorkspaceMeasuresService {
+    createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
+    deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
+    updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
 }
 
 // @public
@@ -1957,7 +1979,5 @@ export function widgetUri(widget: IWidget): string;
 // @public
 export type WorkspacePermission = "canInitData" | "canUploadNonProductionCSV" | "canExecuteRaw" | "canExportReport" | "canAccessWorkbench" | "canCreateReport" | "canCreateVisualization" | "canCreateAnalyticalDashboard" | "canManageMetric" | "canManageReport" | "canManageAnalyticalDashboard" | "canManageProject" | "canCreateScheduledMail" | "canListUsersInProject" | "canManageDomain" | "canInviteUserToProject" | "canRefreshData";
 
-
-// (No @packageDocumentation comment for this package)
 
 ```

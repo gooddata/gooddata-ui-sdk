@@ -1,7 +1,7 @@
 // (C) 2019 GoodData Corporation
 import React from "react";
 import { withFormik, FormikProps } from "formik";
-import Yup from "yup";
+import * as Yup from "yup";
 import { CustomLoading } from "../CustomLoading";
 import { CustomError } from "../CustomError";
 import { AuthStatus } from "../../context/auth";

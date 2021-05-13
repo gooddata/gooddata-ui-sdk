@@ -103,9 +103,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     protected configureBuckets(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
-        const newExtendedReferencePoint: IExtendedReferencePoint = this.sanitizeMeasures(
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint: IExtendedReferencePoint =
+            this.sanitizeMeasures(extendedReferencePoint);
         const buckets: IBucketOfFun[] = limitNumberOfMeasuresInBuckets(
             newExtendedReferencePoint.buckets,
             NUMBER_MEASURES_IN_BUCKETS_LIMIT,
@@ -121,14 +120,16 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR],
             [METRIC],
         );
-        const sizeMeasures: IBucketItem[] = (primaryMeasures.length > 0
-            ? primaryMeasures
-            : allMeasures.filter((measure: IBucketItem): boolean => !includes(secondaryMeasures, measure))
+        const sizeMeasures: IBucketItem[] = (
+            primaryMeasures.length > 0
+                ? primaryMeasures
+                : allMeasures.filter((measure: IBucketItem): boolean => !includes(secondaryMeasures, measure))
         ).slice(0, this.getPreferredBucketItemLimit(BucketNames.SIZE));
 
-        const colorMeasures: IBucketItem[] = (secondaryMeasures.length > 0
-            ? secondaryMeasures
-            : allMeasures.filter((measure: IBucketItem): boolean => !includes(sizeMeasures, measure))
+        const colorMeasures: IBucketItem[] = (
+            secondaryMeasures.length > 0
+                ? secondaryMeasures
+                : allMeasures.filter((measure: IBucketItem): boolean => !includes(sizeMeasures, measure))
         ).slice(0, this.getPreferredBucketItemLimit(BucketNames.COLOR));
 
         set(newExtendedReferencePoint, BUCKETS, [
@@ -186,6 +187,9 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         const centerProp = center ? { center } : {};
         const legendProp = legend ? { legend } : {};
         const { isInEditMode, isExportMode } = config;
+        if (this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags["enableKDWidgetCustomHeight"]) {
+            set(supportedControls, "legend.responsive", "autoPositionWithPopup");
+        }
         const viewportProp = {
             viewport: {
                 ...viewport,
@@ -322,9 +326,8 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     };
 
     private sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
-        const newExtendedReferencePoint: IExtendedReferencePoint = removeAllArithmeticMeasuresFromDerived(
-            extendedReferencePoint,
-        );
+        const newExtendedReferencePoint: IExtendedReferencePoint =
+            removeAllArithmeticMeasuresFromDerived(extendedReferencePoint);
         return removeAllDerivedMeasures(newExtendedReferencePoint);
     }
 

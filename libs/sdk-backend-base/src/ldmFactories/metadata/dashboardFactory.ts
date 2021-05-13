@@ -12,7 +12,7 @@ import { builderFactory, BuilderModifications } from "../builder";
  * @beta
  */
 export class DashboardMetadataObjectBuilder<
-    T extends IDashboardMetadataObject = IDashboardMetadataObject
+    T extends IDashboardMetadataObject = IDashboardMetadataObject,
 > extends MetadataObjectBuilder<T> {}
 
 /**

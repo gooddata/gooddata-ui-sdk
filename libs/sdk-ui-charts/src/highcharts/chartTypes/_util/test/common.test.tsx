@@ -8,6 +8,7 @@ import {
     getPrimaryChartType,
     unwrap,
     percentFormatter,
+    getAxesCounts,
 } from "../common";
 
 describe("Common utils", () => {
@@ -146,6 +147,32 @@ describe("Common utils", () => {
             ["", null],
         ])('should return "%s" when input is %s', (formattedValue: string, value: number) => {
             expect(percentFormatter(value)).toEqual(formattedValue);
+        });
+    });
+
+    describe("getAxesCounts", () => {
+        it("should return both axes as singles for empty secondary config", () => {
+            expect(getAxesCounts({})).toEqual([1, 1]);
+        });
+
+        it("should return dual x axes", () => {
+            expect(
+                getAxesCounts({
+                    secondary_xaxis: {
+                        measures: ["m1"],
+                    },
+                }),
+            ).toEqual([2, 1]);
+        });
+
+        it("should return dual y axes", () => {
+            expect(
+                getAxesCounts({
+                    secondary_yaxis: {
+                        measures: ["m1"],
+                    },
+                }),
+            ).toEqual([1, 2]);
         });
     });
 });

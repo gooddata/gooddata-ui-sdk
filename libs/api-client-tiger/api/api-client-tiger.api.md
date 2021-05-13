@@ -6069,6 +6069,4 @@ export interface WorkspaceObjectControllerApiInterface {
 }
 
 
-// (No @packageDocumentation comment for this package)
-
 ```
