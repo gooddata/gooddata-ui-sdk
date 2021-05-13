@@ -9,6 +9,9 @@ import {
     NotAuthenticatedHandler,
 } from "@gooddata/sdk-backend-spi";
 import { ITigerClient, setAxiosAuthorizationToken } from "@gooddata/api-client-tiger";
+import { AxiosError } from "axios";
+import HttpStatusCodes from "http-status-codes";
+
 import { convertApiError } from "./utils/errorHandling";
 
 type TigerUserProfile = {
@@ -33,6 +36,11 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
         try {
             await client.axios.post("/logout");
         } catch (error) {
+            if ((error as AxiosError).response?.status === HttpStatusCodes.METHOD_NOT_ALLOWED) {
+                // this means we are on tiger >= 1.1 -> we must redirect to the /logout resource instead of POSTing to it
+                return window.location.assign("/logout");
+            }
+
             // eslint-disable-next-line no-console
             console.debug("Error during logout", error);
 
