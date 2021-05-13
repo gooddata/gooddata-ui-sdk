@@ -49,7 +49,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
         if (!enableCustomHeight) {
             return DASHBOARD_LAYOUT_DEFAULT_KPI_HEIGHT;
         }
-        return hasSecondaryMeasure(insight) ? 9 : 6;
+        return hasSecondaryMeasure(insight) ? 10 : 6;
     }
 
     private getMaxHeight(_insight: IInsightDefinition, enableCustomHeight: boolean): number {
