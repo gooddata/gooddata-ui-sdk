@@ -15,8 +15,8 @@ enum HEIGHT {
     EXTRA_SMALL = 44,
     SMALL = 54,
     NORMAL = 64,
-    MEDIUM = 84,
-    LARGE = 104,
+    MEDIUM = 94,
+    LARGE = 114,
 }
 
 enum FONT_SIZE {

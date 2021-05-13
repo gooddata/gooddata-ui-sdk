@@ -493,7 +493,7 @@ const getKpiSizeInfo = (settings: ISettings, kpi?: MensurableWidgetContent): IVi
               }
             : {
                   default: 11,
-                  min: 9,
+                  min: 10,
                   max: 40,
               },
     };

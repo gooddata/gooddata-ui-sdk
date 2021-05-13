@@ -486,7 +486,7 @@ exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true sho
 
 exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for insight widget xirr 1`] = `6`;
 
-exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for kpi with pop widget 1`] = `9`;
+exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for kpi with pop widget 1`] = `10`;
 
 exports[`sizing getDashboardLayoutWidgetMinGridHeight with customHeight true should get min height for kpi without pop widget 1`] = `6`;
 

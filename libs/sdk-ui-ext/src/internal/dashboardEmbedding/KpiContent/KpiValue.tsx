@@ -35,7 +35,6 @@ class KpiValue extends PureComponent<IKpiValueProps & WrappedComponentProps> {
 
     getKpiValueClassNames() {
         return cx("kpi-value", {
-            "headline-primary-item-resize": this.props.enableCompactSize && !!this.props.hasComparison,
             "is-smallest-height": this.props.enableCompactSize && this.props.clientHeight < SMALLEST_HEIGHT,
             "is-error-value": !this.props.isLoading && !!this.props.error,
             "is-empty-value": !this.props.isLoading && this.isValueUnhandledNull(),
