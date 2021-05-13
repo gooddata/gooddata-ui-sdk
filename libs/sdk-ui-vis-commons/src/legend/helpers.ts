@@ -5,7 +5,7 @@ import last from "lodash/last";
 import inRange from "lodash/inRange";
 import isEqual from "lodash/isEqual";
 import { numberFormat } from "@gooddata/numberjs";
-import { IColorLegendItem, IHeatmapLegendSize } from "./types";
+import { IColorLegendItem, IColorLegendSize } from "./types";
 import { LEFT, RIGHT } from "./PositionTypes";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { parseRGBString } from "../coloring/color";
@@ -242,6 +242,35 @@ export const heatmapSmallLegendConfigMatrix: IColorLabelConfigItem[][] = [
     ],
 ];
 
+export const colorSmallLegendConfigMatrix: IColorLabelConfigItem[][] = [
+    [
+        { type: "label", labelIndex: 0, style: { width: 54, textAlign: ALEFT } },
+        { type: "label", labelIndex: 6, style: { width: 54, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 54, textAlign: ALEFT } },
+        { type: "label", labelIndex: 6, style: { width: 54, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 54, textAlign: ALEFT } },
+        { type: "label", labelIndex: 6, style: { width: 54, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 54, textAlign: ALEFT } },
+        { type: "label", labelIndex: 6, style: { width: 54, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 24, textAlign: ALEFT } },
+        { type: "label", labelIndex: 4, style: { width: 32, textAlign: ACENTER } },
+        { type: "label", labelIndex: 6, style: { width: 52, textAlign: ARIGHT } },
+    ],
+    [
+        { type: "label", labelIndex: 0, style: { width: 24, textAlign: ALEFT } },
+        { type: "label", labelIndex: 4, style: { width: 32, textAlign: ACENTER } },
+        { type: "label", labelIndex: 6, style: { width: 52, textAlign: ARIGHT } },
+    ],
+];
+
 export const heatmapMediumLegendConfigMatrix: IColorLabelConfigItem[][] = [
     [
         { type: "label", labelIndex: 0, style: { width: 138, textAlign: ALEFT } },
@@ -328,7 +357,7 @@ const LABEL_THRESHOLDS = {
 
 function getColorLegendLabelsConfiguration(
     legendLabels: string[],
-    size: IHeatmapLegendSize,
+    size: IColorLegendSize,
     isVertical: boolean,
 ) {
     const numberOfLabels = legendLabels.length;
@@ -347,11 +376,17 @@ function getColorLegendLabelsConfiguration(
 function getHorizontalShorteningLabelConfig(
     labelLengths: number[],
     maxLabelLength: number,
-    size: IHeatmapLegendSize,
+    size: IColorLegendSize,
     numberOfLabels: number,
 ): IColorLabelConfigItem[] {
     const shorteningLevel = getColorLabelShorteningLevel(labelLengths, maxLabelLength);
     if (size === "small") {
+        /**
+         * Geo chart color legend has only 7 labels
+         */
+        if (numberOfLabels == 7) {
+            return colorSmallLegendConfigMatrix[shorteningLevel];
+        }
         return heatmapSmallLegendConfigMatrix[shorteningLevel];
     }
 
@@ -523,7 +558,7 @@ export function getColorLegendConfiguration(
     series: IColorLegendItem[],
     format: string | undefined,
     numericSymbols: string[],
-    size: IHeatmapLegendSize,
+    size: IColorLegendSize,
     position: string,
     theme?: ITheme,
 ): IColorLegendConfig {

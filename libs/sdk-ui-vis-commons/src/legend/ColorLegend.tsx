@@ -8,7 +8,7 @@ import {
     getColorLegendConfiguration,
 } from "./helpers";
 import { TOP, BOTTOM } from "./PositionTypes";
-import { IColorLegendItem, IHeatmapLegendSize } from "./types";
+import { IColorLegendItem, IColorLegendSize } from "./types";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -19,7 +19,7 @@ export interface IColorLegendProps {
     data: IColorLegendItem[];
     numericSymbols: string[];
     position: string;
-    size?: IHeatmapLegendSize;
+    size?: IColorLegendSize;
     format?: string;
     theme?: ITheme;
     title?: string;

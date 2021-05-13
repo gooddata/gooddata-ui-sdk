@@ -2,6 +2,7 @@
 import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
+import isNil from "lodash/isNil";
 import { LegendList } from "./LegendList";
 import { ButtonsOrientationType, Paging } from "./Paging";
 import { BOTTOM, TOP } from "./PositionTypes";
@@ -22,6 +23,7 @@ export interface IStaticLegendProps {
     buttonOrientation?: ButtonsOrientationType;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
     paginationHeight?: number;
+    customComponent?: JSX.Element | null;
 }
 
 /**
@@ -45,11 +47,9 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
         this.setState({ page: this.state.page - 1 });
     };
 
-    public renderPaging = (visibleItemsCount: number): React.ReactNode => {
+    public renderPaging = (pagesCount: number): React.ReactNode => {
         const { page } = this.state;
         const { buttonOrientation } = this.props;
-
-        const pagesCount = Math.ceil(this.props.series.length / visibleItemsCount);
 
         return (
             <Paging
@@ -72,6 +72,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
             shouldFillAvailableSpace = true,
             label,
             paginationHeight,
+            customComponent,
         } = this.props;
         const { page } = this.state;
 
@@ -105,15 +106,29 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
             columnNum,
             paginationHeight,
         );
-        const start = (page - 1) * visibleItemsCount;
-        const end = Math.min(visibleItemsCount * page, series.length);
-
-        const pagedSeries = series.slice(start, end);
 
         const heightOfAvailableSpace = (visibleItemsCount / columnNum) * ITEM_HEIGHT;
         const heightOfVisibleItems = Math.min(visibleItemsCount / columnNum, seriesCount) * ITEM_HEIGHT;
         const seriesHeight =
             (shouldFillAvailableSpace ? heightOfAvailableSpace : heightOfVisibleItems) + labelHeight;
+        const shouldDisplayCustomComponent = page === 1 && this.hasCustomComponent();
+        const pagesCount = this.getPagesCount(series.length, visibleItemsCount);
+
+        if (shouldDisplayCustomComponent) {
+            return (
+                <div className={classNames}>
+                    <div className="series" style={{ height: seriesHeight }}>
+                        {labelComponent}
+                        {customComponent}
+                    </div>
+                    {hasPaging && this.renderPaging(pagesCount)}
+                </div>
+            );
+        }
+
+        const start = this.getPagedSeriesStart(page, visibleItemsCount);
+        const end = this.getPagedSeriesEnd(page, visibleItemsCount, series.length);
+        const pagedSeries = series.slice(start, end);
         const visibleItemsFitOneColumn = shouldItemsFitOneColumn(
             visibleItemsCount,
             columnNum,
@@ -134,9 +149,29 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
                         onItemClick={onItemClick}
                     />
                 </div>
-                {hasPaging && this.renderPaging(visibleItemsCount)}
+                {hasPaging && this.renderPaging(pagesCount)}
             </div>
         );
+    }
+
+    private getPagesCount(seriesLength: number, visibleItemsCount: number) {
+        const defaultPagesCount = Math.ceil(seriesLength / visibleItemsCount);
+        return this.hasCustomComponent() ? defaultPagesCount + 1 : defaultPagesCount;
+    }
+
+    private getPagedSeriesStart(page: number, visibleItemsCount: number) {
+        /**
+         * used "2" because the custom component is rendered on the very first page
+         */
+        return this.hasCustomComponent() ? (page - 2) * visibleItemsCount : (page - 1) * visibleItemsCount;
+    }
+
+    private getPagedSeriesEnd(page: number, visibleItemsCount: number, seriesLength: number) {
+        return Math.min(visibleItemsCount * page, seriesLength);
+    }
+
+    private hasCustomComponent() {
+        return !isNil(this.props.customComponent);
     }
 }
 

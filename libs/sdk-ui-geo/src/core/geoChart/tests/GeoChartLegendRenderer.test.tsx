@@ -78,6 +78,7 @@ function getLegendProps(legendFlags: ILegendFlags): IGeoChartLegendRendererProps
         colorLegendValue: DEFAULT_COLORS[0],
         height,
         position,
+        containerId: "id",
     };
 }
 
@@ -137,6 +138,7 @@ describe("GeoChartLegendRenderer", () => {
                 },
             ],
             position: LegendPosition.TOP,
+            containerId: "id",
         };
         const wrapper = createComponent(props);
         const sizeLegend = wrapper.find(PushpinSizeLegend);
@@ -160,7 +162,8 @@ describe("GeoChartLegendRenderer", () => {
             const wrapper = createComponent({
                 ...props,
                 responsive,
-                showFluidLegend: true,
+                isFluidLegend: responsive,
+                containerId: "id",
             });
             expect(await wrapper.find(`.${classname}`)).toHaveLength(1);
         },

@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ContentRect } from 'react-measure';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
@@ -90,13 +91,23 @@ export interface IGeoChartLegendRendererProps {
     // (undocumented)
     colorLegendValue: string;
     // (undocumented)
+    containerId?: string;
+    // (undocumented)
+    contentRect?: ContentRect;
+    // (undocumented)
     format?: string;
     // (undocumented)
     geoData?: IGeoData;
     // (undocumented)
     height?: number;
     // (undocumented)
+    isFluidLegend?: boolean;
+    // (undocumented)
     locale?: string;
+    // (undocumented)
+    maxRows?: number;
+    // (undocumented)
+    name?: string;
     // (undocumented)
     numericSymbols?: string[];
     // (undocumented)
@@ -104,9 +115,9 @@ export interface IGeoChartLegendRendererProps {
     // (undocumented)
     position?: PositionType;
     // (undocumented)
-    responsive?: boolean;
+    renderPopUp?: boolean;
     // (undocumented)
-    showFluidLegend?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
 }
 
 // @internal (undocumented)
@@ -202,7 +213,7 @@ export interface IGeoDataItem {
 export interface IGeoLegendConfig {
     enabled?: boolean;
     position?: PositionType;
-    responsive?: boolean;
+    responsive?: boolean | "autoPositionWithPopup";
 }
 
 // @public (undocumented)

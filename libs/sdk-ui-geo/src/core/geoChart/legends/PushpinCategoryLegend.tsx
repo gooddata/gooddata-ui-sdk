@@ -1,31 +1,42 @@
 // (C) 2020 GoodData Corporation
 import React from "react";
+import noop from "lodash/noop";
 import { ContentRect } from "react-measure";
 import {
-    FluidLegend,
-    IPushpinCategoryLegendItem,
-    LegendPosition,
+    PopUpLegend,
     StaticLegend,
+    LegendPosition,
+    IPushpinCategoryLegendItem,
+    FluidLegend,
+    PositionType,
 } from "@gooddata/sdk-ui-vis-commons";
 
 export const HEIGHT_OF_SIZE_LEGEND = 161;
 
 export interface IPushpinCategoryLegendProps {
-    categoryItems?: IPushpinCategoryLegendItem[];
-    contentRect: ContentRect;
-    format?: string;
+    containerId: string;
     hasSizeLegend: boolean;
+    contentRect: ContentRect;
+    categoryItems?: IPushpinCategoryLegendItem[];
+    format?: string;
     height?: number;
     locale?: string;
-    position?: string;
-    responsive?: boolean;
-    showFluidLegend?: boolean;
+    position?: PositionType;
+    responsive?: boolean | "autoPositionWithPopup";
+    customComponent?: JSX.Element | null;
+    maxRows?: number;
+    name?: string;
+    renderPopUp?: boolean;
+    isFluidLegend?: boolean;
     onItemClick?(item: IPushpinCategoryLegendItem): void;
 }
 
 export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps): JSX.Element {
-    const { contentRect, hasSizeLegend, responsive, showFluidLegend } = props;
-    const isFluidLegend = Boolean(responsive && showFluidLegend);
+    const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp } = props;
+
+    if (renderPopUp) {
+        return <React.Fragment>{renderPopUpLegend(props)}</React.Fragment>;
+    }
 
     return (
         <div className="s-geo-category-legend">
@@ -83,4 +94,19 @@ function renderStaticCategoryLegend(
     const usedHeight = (height || measuredHeight) - (hasSizeAndLeftRightPosition ? HEIGHT_OF_SIZE_LEGEND : 0);
 
     return <StaticLegend {...legendProps} containerHeight={usedHeight} />;
+}
+
+function renderPopUpLegend(props: IPushpinCategoryLegendProps): React.ReactNode {
+    const { containerId, categoryItems = [], onItemClick = noop, name, maxRows, customComponent } = props;
+
+    return (
+        <PopUpLegend
+            series={categoryItems}
+            onLegendItemClick={onItemClick}
+            maxRows={maxRows}
+            name={name}
+            containerId={containerId}
+            customComponent={customComponent}
+        />
+    );
 }

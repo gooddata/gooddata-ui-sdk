@@ -16,12 +16,18 @@ import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
-import { ILegendProps, Legend, ILegendOptions, PositionType } from "@gooddata/sdk-ui-vis-commons";
+import {
+    ILegendProps,
+    Legend,
+    ILegendOptions,
+    PositionType,
+    getLegendDetails,
+    ILegendDetailOptions,
+} from "@gooddata/sdk-ui-vis-commons";
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 import { IChartOptions } from "../typings/unsafe";
-import { getLegendDetails } from "./legendHelpers";
 
 /**
  * @internal
@@ -30,6 +36,7 @@ export const FLUID_LEGEND_THRESHOLD = 768;
 
 export interface IChartHTMLElement extends HTMLElement {
     getChart(): Highcharts.Chart;
+
     getHighchartRef(): HTMLElement;
 }
 
@@ -353,7 +360,13 @@ export class HighChartsRenderer extends React.PureComponent<
 
     private renderVisualization() {
         const { legend, chartOptions, contentRect } = this.props;
-        const legendDetails = getLegendDetails(contentRect, legend, chartOptions, this.state.showFluidLegend);
+        const legendDetailOptions: ILegendDetailOptions = {
+            showFluidLegend: this.state.showFluidLegend,
+            contentRect,
+            isHeatmap: isHeatmap(chartOptions.type),
+            legendLabel: chartOptions.legendLabel,
+        };
+        const legendDetails = getLegendDetails(legend.position, legend.responsive, legendDetailOptions);
         if (!legendDetails) {
             return null;
         }

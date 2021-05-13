@@ -4,6 +4,8 @@ import cx from "classnames";
 import throttle from "lodash/throttle";
 import noop from "lodash/noop";
 import invariant from "ts-invariant";
+import { ContentRect } from "react-measure";
+import { v4 } from "uuid";
 
 import { WrappedComponentProps } from "react-intl";
 import Measure, { MeasuredComponentProps } from "react-measure";
@@ -22,7 +24,10 @@ import {
     IDataVisualizationProps,
 } from "@gooddata/sdk-ui";
 import {
+    getLegendDetails as getCommonVisLegendDetails,
     IColorStrategy,
+    ILegendDetailOptions,
+    ILegendDetails,
     IPushpinCategoryLegendItem,
     LegendPosition,
     PositionType,
@@ -30,6 +35,7 @@ import {
     SupportedLegendPositions,
 } from "@gooddata/sdk-ui-vis-commons";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common";
+import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { ITheme } from "@gooddata/sdk-backend-spi";
 
@@ -76,6 +82,7 @@ export interface IGeoChartInnerState {
     showFluidLegend: boolean;
     colorAssignmentItem: IColorAssignment[];
 }
+
 /**
  * @internal
  */
@@ -118,6 +125,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     }
 
     private readonly throttledOnWindowResize: ReturnType<typeof throttle>;
+    private readonly containerId = `geo-${v4()}`;
 
     public constructor(props: IGeoChartInnerProps) {
         super(props);
@@ -147,8 +155,9 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     }
 
     public render(): React.ReactElement {
-        const { height } = this.props;
-        if (height !== undefined) {
+        const { height, config } = this.props;
+
+        if (height !== undefined && !isAutoPositionWithPopup(config?.legend?.responsive)) {
             return this.renderVisualizationContent(undefined, height);
         }
 
@@ -159,6 +168,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
                     return this.renderVisualizationContent(
                         measureRef,
                         (contentRectClient && contentRectClient.height) ?? 0,
+                        contentRect,
                     );
                 }}
             </Measure>
@@ -168,15 +178,17 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     private renderVisualizationContent(
         measureRef: MeasuredComponentProps["measureRef"] | undefined,
         height: number,
+        contentRect?: ContentRect,
     ): React.ReactElement {
         const { geoChartOptions: geoChartOptionsProp } = this.props;
         const geoChartOptions = this.syncWithLegendItemStates(geoChartOptionsProp);
-        const position = this.getLegendPosition();
+        const legendDetails = this.getLegendDetails(this.getLegendPosition(), contentRect);
+        const position = legendDetails ? legendDetails.position : LegendPosition.TOP;
         const classes = this.getContainerClassName(position);
         const isLegendRenderedFirst: boolean =
             position === LegendPosition.TOP ||
             (position === LegendPosition.LEFT && !this.state.showFluidLegend);
-        const legendComponent = this.renderLegend(height, position, geoChartOptions);
+        const legendComponent = this.renderLegend(height, position, geoChartOptions, contentRect);
 
         return (
             <div className={classes} ref={measureRef}>
@@ -209,27 +221,39 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
     }
 
     private getContainerClassName(position: PositionType): string {
-        const responsive = this.props.config?.legend?.responsive ?? false;
+        const responsive = getResponsiveInfo(this.props?.config?.legend?.responsive) === true;
 
         const flexDirection = this.getFlexDirection(position);
-        return cx("viz-line-family-chart-wrap", "gd-geo-component", "s-gd-geo-component", {
-            "responsive-legend": responsive,
-            "non-responsive-legend": !responsive,
-            [`flex-direction-${flexDirection}`]: true,
-            "legend-position-bottom": position === LegendPosition.BOTTOM,
-        });
+        return cx(
+            "viz-line-family-chart-wrap",
+            "gd-geo-component",
+            "s-gd-geo-component",
+            {
+                "responsive-legend": responsive,
+                "non-responsive-legend": !responsive,
+                [`flex-direction-${flexDirection}`]: true,
+                "legend-position-bottom": position === LegendPosition.BOTTOM,
+            },
+            this.containerId,
+        );
     }
 
     private getFlexDirection(position: PositionType): string {
-        const responsive = this.props.config?.legend?.responsive ?? false;
-        const { showFluidLegend } = this.state;
-        const isFluidLegend = isFluidLegendEnabled(responsive, showFluidLegend);
+        const isFluidLegend = this.isFluidLegend();
 
         if (position === LegendPosition.TOP || position === LegendPosition.BOTTOM || isFluidLegend) {
             return "column";
         }
 
         return "row";
+    }
+
+    private isFluidLegend(): boolean {
+        const { showFluidLegend } = this.state;
+        const responsive = getResponsiveInfo(this.props?.config?.legend?.responsive);
+        return isAutoPositionWithPopup(responsive)
+            ? false
+            : isFluidLegendEnabled(responsive, showFluidLegend);
     }
 
     private onLegendItemClick = (item: IPushpinCategoryLegendItem): void => {
@@ -251,23 +275,34 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         return isSupportedLegend ? position : LegendPosition.TOP;
     }
 
+    private getLegendDetails(position: PositionType, contentRect?: ContentRect): ILegendDetails | null {
+        const { geoChartOptions: geoChartOptionsProp, config } = this.props;
+        const geoChartOptions = this.syncWithLegendItemStates(geoChartOptionsProp);
+        const { geoData } = geoChartOptions;
+        const legendLabel = geoData?.size?.name;
+        const isFluidLegend = this.isFluidLegend();
+        const legendDetailOptions: ILegendDetailOptions = {
+            showFluidLegend: isFluidLegend,
+            contentRect,
+            legendLabel,
+        };
+        return getCommonVisLegendDetails(
+            position,
+            getResponsiveInfo(config?.legend?.responsive),
+            legendDetailOptions,
+        );
+    }
+
     private getLegendProps(
         height: number,
         position: PositionType,
         geoChartOptions: IGeoChartInnerOptions,
+        contentRect?: ContentRect,
     ): IGeoChartLegendRendererProps {
-        const responsive = this.props.config?.legend?.responsive ?? false;
+        const responsive = this.props.config?.legend?.responsive;
         const { locale } = this.props;
-        const { enabledLegendItems, showFluidLegend } = this.state;
-
-        const legendProps = {
-            height,
-            locale,
-            position,
-            responsive,
-            showFluidLegend,
-            onItemClick: this.onLegendItemClick,
-        };
+        const { enabledLegendItems } = this.state;
+        const isFluidLegend = this.isFluidLegend();
         const { geoData, colorStrategy, categoryItems } = geoChartOptions;
         const { segment } = geoData;
         const colorFormat = geoData.color?.format;
@@ -277,6 +312,26 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             geoData,
         };
         const colorLegendValue: string = colorStrategy.getColorByIndex(0);
+        const legendDetails = this.getLegendDetails(position, contentRect);
+        let legendProps: Partial<IGeoChartLegendRendererProps> = {
+            height,
+            locale,
+            position,
+            responsive,
+            isFluidLegend,
+            onItemClick: this.onLegendItemClick,
+            contentRect,
+            containerId: this.containerId,
+        };
+
+        if (legendDetails) {
+            legendProps = {
+                ...legendProps,
+                maxRows: legendDetails.maxRows,
+                name: legendDetails.name,
+                renderPopUp: legendDetails.renderPopUp,
+            };
+        }
 
         if (segment && enabledLegendItems.length) {
             return {
@@ -355,6 +410,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         height: number,
         position: PositionType,
         geoChartOptions: IGeoChartInnerOptions,
+        contentRect?: ContentRect,
     ) => {
         const enabled = this.props.config?.legend?.enabled ?? true;
         const { legendRenderer = renderLegend } = this.props;
@@ -367,6 +423,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
             height,
             position,
             geoChartOptions,
+            contentRect,
         );
         return legendRenderer(legendProps);
     };

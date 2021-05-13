@@ -36,6 +36,12 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
             margin-left: 30px;
         }
 
+        .is-small-container {
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 5px;
+        }
+
         .pushpin-size-legend-circle {
             display: inline-block;
 
@@ -47,6 +53,11 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
                 margin-top: -6px;
                 vertical-align: middle;
             }
+        }
+
+        .is-small-circles {
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -140,13 +151,14 @@ $font-stack-roman: "Avenir", "Helvetica Neue", arial, sans-serif;
 
     .metric-name {
         overflow: hidden;
-        font-size: 14px;
+        font-size: 12px;
         line-height: 30px;
         white-space: nowrap;
         color: $gd-color-link;
         margin-right: 6px;
         text-overflow: ellipsis;
         max-width: 250px;
+        min-width: 50px;
     }
 
     .pushpin-size-legend-circle {

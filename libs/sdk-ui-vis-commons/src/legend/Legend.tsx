@@ -9,7 +9,7 @@ import { FluidLegend } from "./FluidLegend";
 import { StaticLegend, IStaticLegendProps } from "./StaticLegend";
 import { HeatmapLegend } from "./HeatmapLegend";
 import { IntlWrapper, IntlTranslationsProvider, ITranslationsComponentProps } from "@gooddata/sdk-ui";
-import { IHeatmapLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
+import { IColorLegendSize, IPushpinCategoryLegendItem, ItemBorderRadiusPredicate } from "./types";
 import { PopUpLegend } from "./PopUpLegend/PopUpLegend";
 import { TOP, BOTTOM } from "./PositionTypes";
 import { ButtonsOrientationType } from "./Paging";
@@ -185,7 +185,7 @@ export class Legend extends React.PureComponent<ILegendProps> {
             contentDimensions.width &&
             contentDimensions.width < HEATMAP_LEGEND_WIDTH_BREAKPOINT;
 
-        let size: IHeatmapLegendSize = "large";
+        let size: IColorLegendSize = "large";
         if (isFluidResponsive) {
             size = "medium";
         }

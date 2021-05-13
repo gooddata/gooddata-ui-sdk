@@ -2,7 +2,7 @@
 import React from "react";
 import { mount, ReactWrapper } from "enzyme";
 import { HeatmapLegend, IHeatmapLegendProps } from "../HeatmapLegend";
-import { IHeatmapLegendItem, IHeatmapLegendSize } from "../types";
+import { IHeatmapLegendItem, IColorLegendSize } from "../types";
 
 describe("HeatmapLegend", () => {
     function renderLegend(props: IHeatmapLegendProps): ReactWrapper {
@@ -29,7 +29,7 @@ describe("HeatmapLegend", () => {
         },
     ];
 
-    const legendSizes: [IHeatmapLegendSize, IHeatmapLegendItem[], string[], string][] = [
+    const legendSizes: [IColorLegendSize, IHeatmapLegendItem[], string[], string][] = [
         ["small", defaultSeries, defaultNumericSymbols, "top"],
         ["medium", defaultSeries, defaultNumericSymbols, "top"],
         ["large", defaultSeries, defaultNumericSymbols, "top"],
@@ -38,7 +38,7 @@ describe("HeatmapLegend", () => {
     it.each(legendSizes)(
         "should render legend when size is %s",
         (
-            size: IHeatmapLegendSize,
+            size: IColorLegendSize,
             series: IHeatmapLegendItem[],
             numericSymbols: string[],
             position: string,

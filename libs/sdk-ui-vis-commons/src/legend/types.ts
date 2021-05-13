@@ -112,4 +112,4 @@ export type ItemBorderRadiusPredicate = (item: any) => boolean;
 /**
  * @internal
  */
-export type IHeatmapLegendSize = "large" | "medium" | "small";
+export type IColorLegendSize = "large" | "medium" | "small";

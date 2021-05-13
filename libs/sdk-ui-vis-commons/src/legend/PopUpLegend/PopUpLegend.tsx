@@ -10,6 +10,9 @@ import { RowLegend } from "./RowLegend";
 
 const PAGINATION_HEIGHT = 34;
 
+/**
+ * @internal
+ */
 export interface IPopUpLegendProps {
     series: IPushpinCategoryLegendItem[];
     onLegendItemClick: (item: IPushpinCategoryLegendItem) => void;
@@ -17,10 +20,16 @@ export interface IPopUpLegendProps {
     maxRows?: number;
     enableBorderRadius?: boolean | ItemBorderRadiusPredicate;
     containerId: string;
+
+    customComponent?: JSX.Element | null;
 }
 
+/**
+ * @internal
+ */
 export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
-    const { name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId } = props;
+    const { name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId, customComponent } =
+        props;
     const intl = useIntl();
     const [isDialogOpen, setDialogOpen] = useState(false);
 
@@ -57,6 +66,7 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
                     shouldFillAvailableSpace={false}
                     enableBorderRadius={enableBorderRadius}
                     paginationHeight={PAGINATION_HEIGHT}
+                    customComponent={customComponent}
                 />
             </LegendDialog>
         </div>

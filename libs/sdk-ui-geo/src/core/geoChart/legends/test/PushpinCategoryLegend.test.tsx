@@ -3,7 +3,8 @@ import React from "react";
 import { ContentRect } from "react-measure";
 import { mount, ReactWrapper } from "enzyme";
 import PushpinCategoryLegend, { IPushpinCategoryLegendProps } from "../PushpinCategoryLegend";
-import { StaticLegend, FluidLegend } from "@gooddata/sdk-ui-vis-commons";
+import { StaticLegend, FluidLegend, PositionType, PopUpLegend } from "@gooddata/sdk-ui-vis-commons";
+import { withIntl } from "@gooddata/sdk-ui";
 
 const segmentData = [
     {
@@ -24,16 +25,19 @@ const segmentData = [
 
 function createComponent(customProps: Partial<IPushpinCategoryLegendProps> = {}): ReactWrapper {
     const contentRect: ContentRect = { client: { width: 800, height: 300, top: 0, left: 0 } };
+    const position: PositionType = "left";
     const legendProps = {
         categoryItems: segmentData,
         contentRect,
         hasSizeLegend: false,
-        position: "left",
+        position,
         responsive: false,
         showFluidLegend: false,
+        containerId: "id",
         ...customProps,
     };
-    return mount(<PushpinCategoryLegend {...legendProps} />);
+    const Wrapped = withIntl(PushpinCategoryLegend);
+    return mount(<Wrapped {...legendProps} />);
 }
 
 describe("PushpinCategoryLegend", () => {
@@ -47,10 +51,20 @@ describe("PushpinCategoryLegend", () => {
     it("should render FluidLegend component", () => {
         const wrapper = createComponent({
             responsive: true,
-            showFluidLegend: true,
+            isFluidLegend: true,
         });
         const fluidLegend = wrapper.find(FluidLegend);
         expect(fluidLegend.find(".series .series-name").first().prop("style")).toEqual({});
         expect(fluidLegend.find(".series .series-name").last().prop("style")).toEqual({ color: "#CCCCCC" });
+    });
+
+    it("should render PopUp legend component if renderPopUp is true", () => {
+        const wrapper = createComponent({ renderPopUp: true });
+        expect(wrapper.find(PopUpLegend).exists()).toBe(true);
+    });
+
+    it("should not render PopUp legend component if renderPopUp is false", () => {
+        const wrapper = createComponent({ renderPopUp: false });
+        expect(wrapper.find(PopUpLegend).exists()).toBe(false);
     });
 });
