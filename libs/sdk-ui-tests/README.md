@@ -263,6 +263,17 @@ picture for that scenario is not empty and is valid.
 If you run into this then run `npm run backstop-approve` which will copy the newly added screenshots to reference. You can then
 check out the new screenshots in the `backstop/reference` directory.
 
+#### Debugging backstop failures
+
+When Backstop scenario specifies what to wait for, click, type or hover, then these instructions are executed
+by the [clickAndHoverHelper.js](backstop/backstop_data/engine_scripts/puppet/clickAndHoverHelper.js) scripts.
+
+This script gets the puppeteer page + the scenario config and then uses puppeteer API to get the job done. More
+complicated scenarios, flaky scenarios or scenarios testing flaky components may run into errors at this point.
+
+You can turn on extra debug messages using `export BACKSTOP_DEBUG=1`. This will emit additional logs that can hint
+on where exactly the error occurs.
+
 #### Visual regression hints
 
 -   After every change call `npm run backstop-prepare` even when you see changes in your running storybook.

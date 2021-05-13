@@ -1,43 +1,102 @@
+/* eslint-disable no-console,header/header */
+
+const debug = process.env.BACKSTOP_DEBUG;
+
+async function withVisibleSelector(page, scenario, selector, fun) {
+    if (debug) {
+        console.log("DEBUG >", scenario.label, "| Waiting for selector to be visible", selector);
+    }
+
+    await page.waitForSelector(selector, { visible: true });
+
+    try {
+        await fun();
+    } catch (e) {
+        if (e.message.indexOf("not visible") === -1) {
+            throw e;
+        }
+
+        console.warn(
+            "FLAKYNESS >",
+            scenario.label,
+            "| seems to use some fishy React components. Elements may be momentarily flashing in and out of visibility.",
+        );
+
+        await page.waitForSelector(selector, { visible: true, timeout: 50 });
+        await fun();
+    }
+}
+
 module.exports = async (page, scenario) => {
-    const hoverSelector = scenario.hoverSelectors || scenario.hoverSelector;
-    const clickSelector = scenario.clickSelectors || scenario.clickSelector;
-    const keyPressSelector = scenario.keyPressSelectors || scenario.keyPressSelector;
+    const hoverSelectors = scenario.hoverSelectors || scenario.hoverSelector;
+    const clickSelectors = scenario.clickSelectors || scenario.clickSelector;
+    const keyPressSelectors = scenario.keyPressSelectors || scenario.keyPressSelector;
     const scrollToSelector = scenario.scrollToSelector;
     const postInteractionWait = scenario.postInteractionWait; // selector [str] | ms [int]
 
-    if (keyPressSelector) {
-        for (const keyPressSelectorItem of [].concat(keyPressSelector)) {
-            await page.waitForTimeout(keyPressSelectorItem.selector);
-            await page.type(keyPressSelectorItem.selector, keyPressSelectorItem.keyPress);
+    if (keyPressSelectors) {
+        for (const keyPressSelector of [].concat(keyPressSelectors)) {
+            await page.waitForTimeout(keyPressSelector.selector);
+            await page.type(keyPressSelector.selector, keyPressSelector.keyPress);
         }
     }
 
-    if (hoverSelector) {
-        for (const hoverSelectorIndex of [].concat(hoverSelector)) {
-            await page.waitForTimeout(hoverSelectorIndex);
+    if (hoverSelectors) {
+        for (const hoverSelector of [].concat(hoverSelectors)) {
+            if (typeof hoverSelector === "string") {
+                await withVisibleSelector(page, scenario, hoverSelector, () => {
+                    return page.hover(hoverSelector);
+                });
+            } else {
+                if (debug) {
+                    console.log("DEBUG >", scenario.label, "| Waiting for ", hoverSelector, "millis");
+                }
 
-            if (typeof hoverSelectorIndex === "string") {
-                await page.hover(hoverSelectorIndex);
+                await page.waitForTimeout(hoverSelector);
             }
         }
     }
 
-    if (clickSelector) {
-        for (const clickSelectorIndex of [].concat(clickSelector)) {
-            await page.waitForTimeout(clickSelectorIndex);
+    if (clickSelectors) {
+        for (const clickSelector of [].concat(clickSelectors)) {
+            if (typeof clickSelector === "string") {
+                await withVisibleSelector(page, scenario, clickSelector, () => {
+                    return page.click(clickSelector);
+                });
+            } else {
+                if (debug) {
+                    console.log("DEBUG >", scenario.label, "| Waiting for ", clickSelector, "millis");
+                }
 
-            if (typeof clickSelectorIndex === "string") {
-                await page.click(clickSelectorIndex);
+                await page.waitForTimeout(clickSelector);
             }
         }
     }
 
     if (postInteractionWait) {
-        await page.waitForTimeout(postInteractionWait);
+        if (typeof postInteractionWait === "string") {
+            if (debug) {
+                console.log(
+                    "DEBUG >",
+                    scenario.label,
+                    "| Waiting for selector to be visible ",
+                    postInteractionWait,
+                );
+            }
+
+            await page.waitForSelector(postInteractionWait, { visible: true });
+        } else {
+            if (debug) {
+                console.log("DEBUG >", scenario.label, "| Waiting for ", postInteractionWait, "millis");
+            }
+
+            await page.waitForTimeout(postInteractionWait);
+        }
     }
 
     if (scrollToSelector) {
-        await page.waitForTimeout(scrollToSelector);
+        await page.waitForSelector(scrollToSelector);
+
         await page.evaluate((scrollToSelector) => {
             document.querySelector(scrollToSelector).scrollIntoView();
         }, scrollToSelector);

@@ -57,12 +57,19 @@ docker network create "${BACKSTOP_NET}" || { echo "Network creation failed" && e
 
     echo "nginx with storybook is up"
 
+    if [ $1 == "test" ]; then
+      echo "Deleting outputs of previous test run in ${BACKSTOP_DIR}/output"
+
+      rm -rf ${BACKSTOP_DIR}/output
+    fi
+
     echo "Starting BackstopJS in dir ${BACKSTOP_DIR} with params: $@"
 
     {
         docker run --rm \
             --env BACKSTOP_CAPTURE_LIMIT \
             --env BACKSTOP_COMPARE_LIMIT \
+            --env BACKSTOP_DEBUG \
             --user $UID:$GID \
             --net ${BACKSTOP_NET} --net-alias backstop \
             --volume ${BACKSTOP_DIR}:/src:Z,consistent \
