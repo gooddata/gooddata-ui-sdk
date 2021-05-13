@@ -399,7 +399,15 @@ export function groupedCategories(HC) {
             );
 
             // update with new text length, since textSetter removes the size caches when text changes. #137
-            tick.label.textPxLength = tick.label.getBBox().width;
+            /* GoodData change - added following lines #1 */
+            if (axis.isGrouped) {
+                if (axis.options.labels.useHTML) {
+                    tick.label.textPxLength = tick.label.htmlGetBBox().width;
+                } else {
+                    tick.label.textPxLength = tick.label.getBBox().width;
+                }
+            }
+            /* end of GoodData change #1 */
         }
 
         // create elements for parent categories
