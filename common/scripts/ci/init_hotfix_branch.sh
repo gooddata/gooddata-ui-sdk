@@ -58,6 +58,14 @@ if [ -z $existing_branch ]; then
   # set variables for the CI to push the branch to origin
   TARGET_BRANCH=$branch_base_name
   branching_rc=0
+
+  if [ ! -z "$SLACK_VARS_FILE" ]; then
+    echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
+
+    echo "LIBRARY_NAME=gooddata-ui-sdk" >$SLACK_VARS_FILE
+    echo "TARGET_BRANCH=$TARGET_BRANCH" >>$SLACK_VARS_FILE
+    echo "MESSAGE=just created *gooddata-ui-sdk* hotfix branch *$TARGET_BRANCH*" >>$SLACK_VARS_FILE
+  fi
 else
   existing_fix_number=$(echo $existing_branch | sed 's/.*fix-\([0-9]*\)$/\1/')
 
@@ -78,4 +86,12 @@ else
   # set variables for the CI to push the branch to origin
   TARGET_BRANCH=$branch_name
   branching_rc=0
+
+  if [ ! -z "$SLACK_VARS_FILE" ]; then
+    echo "Slack integration seems available. Going to write $SLACK_VARS_FILE with params"
+
+    echo "LIBRARY_NAME=gooddata-ui-sdk" >$SLACK_VARS_FILE
+    echo "TARGET_BRANCH=$TARGET_BRANCH" >>$SLACK_VARS_FILE
+    echo "MESSAGE=just created *gooddata-ui-sdk* hotfix branch *$TARGET_BRANCH*" >>$SLACK_VARS_FILE
+  fi
 fi
