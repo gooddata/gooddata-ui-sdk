@@ -145,7 +145,7 @@ export class TableFacade {
         this.agGridDataSource = this.createDataSource(tableMethods);
         this.onExecutionTransformedCallback = tableMethods.onExecutionTransformed;
         this.updateColumnWidths(tableMethods.getResizingConfig());
-        this.originalExecutionFingerpring = result.transform().fingerprint();
+        this.originalExecutionFingerpring = props.execution.fingerprint();
     }
 
     public finishInitialization = (gridApi: GridApi, columnApi: ColumnApi): void => {
