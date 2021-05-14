@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "GoodData.CN compatibility - this version is the first version fully compatible with GoodData.CN backend",
+            "comment": "Fixed logout flow on Tiger >=1.1",
             "type": "none"
         }
     ],
