@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2021 GoodData Corporation
 import values from "lodash/fp/values";
 import first from "lodash/first";
 import flow from "lodash/flow";
@@ -13,6 +13,7 @@ import { GdcVisualizationObject } from "../visualizationObject/GdcVisualizationO
 import { GdcVisualizationClass } from "../visualizationObject/GdcVisualizationClass";
 import { GdcKpi } from "../kpi/GdcKpi";
 import { GdcDataSets } from "../dataSets/GdcDataSets";
+import { GdcReport } from "../report/GdcReport";
 
 /**
  * @public
@@ -37,7 +38,9 @@ export namespace GdcMetadataObject {
         | GdcVisualizationWidget.IVisualizationWidget
         | GdcVisualizationObject.IVisualizationObject
         | GdcVisualizationClass.IVisualizationClass
-        | GdcDataSets.IDataSet;
+        | GdcDataSets.IDataSet
+        | GdcReport.IReport
+        | GdcReport.IReportDefinition;
 
     export type WrappedObject =
         | GdcMetadata.IWrappedAttribute
@@ -58,7 +61,9 @@ export namespace GdcMetadataObject {
         | GdcVisualizationWidget.IWrappedVisualizationWidget
         | GdcVisualizationObject.IVisualization
         | GdcVisualizationClass.IVisualizationClassWrapped
-        | GdcDataSets.IWrappedDataSet;
+        | GdcDataSets.IWrappedDataSet
+        | GdcReport.IWrappedReport
+        | GdcReport.IWrappedReportDefinition;
 
     export function unwrapMetadataObject(object: WrappedObject): IObject {
         const unwrappedObject: IObject = flow(values, first)(object);
