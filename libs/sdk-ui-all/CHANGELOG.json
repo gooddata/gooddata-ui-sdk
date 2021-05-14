@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "8.3.1",
+      "tag": "@gooddata/sdk-ui-all_v8.3.1",
+      "date": "Fri, 14 May 2021 12:00:31 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Fixed logout flow on Tiger >=1.1"
+          }
+        ]
+      }
+    },
+    {
       "version": "8.3.0",
       "tag": "@gooddata/sdk-ui-all_v8.3.0",
       "date": "Wed, 14 Apr 2021 11:56:54 GMT",
