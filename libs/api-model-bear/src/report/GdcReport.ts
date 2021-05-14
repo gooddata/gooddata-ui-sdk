@@ -4,6 +4,9 @@ import { GdcMetadata } from "../meta/GdcMetadata";
 import IObjectMeta = GdcMetadata.IObjectMeta;
 import { Uri } from "../aliases";
 
+/**
+ * @public
+ */
 export namespace GdcReport {
     export interface IReportContent {
         domains: Uri[];

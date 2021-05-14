@@ -1742,11 +1742,11 @@ export namespace GdcMetadata {
 // @public (undocumented)
 export namespace GdcMetadataObject {
     // (undocumented)
-    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet;
+    export type IObject = GdcMetadata.IAttribute | GdcMetadata.IMetric | GdcMetadata.IFact | GdcMetadata.IAttributeDisplayForm | GdcMetadata.IKpiAlert | GdcMetadata.IDataSet | GdcMetadata.IPrompt | GdcMetadata.ITheme | GdcDashboard.IAnalyticalDashboard | GdcFilterContext.IFilterContext | GdcFilterContext.ITempFilterContext | GdcKpi.IKPI | GdcScheduledMail.IScheduledMail | GdcProjectDashboard.IProjectDashboard | GdcExtendedDateFilters.IDateFilterConfig | GdcVisualizationWidget.IVisualizationWidget | GdcVisualizationObject.IVisualizationObject | GdcVisualizationClass.IVisualizationClass | GdcDataSets.IDataSet | GdcReport.IReport | GdcReport.IReportDefinition;
     // (undocumented)
     export function unwrapMetadataObject(object: WrappedObject): IObject;
     // (undocumented)
-    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet;
+    export type WrappedObject = GdcMetadata.IWrappedAttribute | GdcMetadata.IWrappedMetric | GdcMetadata.IWrappedFact | GdcMetadata.IWrappedAttributeDisplayForm | GdcMetadata.IWrappedKpiAlert | GdcMetadata.IWrappedDataSet | GdcMetadata.IWrappedPrompt | GdcMetadata.IWrappedTheme | GdcDashboard.IWrappedAnalyticalDashboard | GdcFilterContext.IWrappedFilterContext | GdcFilterContext.IWrappedTempFilterContext | GdcKpi.IWrappedKPI | GdcScheduledMail.IWrappedScheduledMail | GdcProjectDashboard.IWrappedProjectDashboard | GdcExtendedDateFilters.IWrappedDateFilterConfig | GdcVisualizationWidget.IWrappedVisualizationWidget | GdcVisualizationObject.IVisualization | GdcVisualizationClass.IVisualizationClassWrapped | GdcDataSets.IWrappedDataSet | GdcReport.IWrappedReport | GdcReport.IWrappedReportDefinition;
 }
 
 // @public
@@ -1829,6 +1829,106 @@ export namespace GdcProjectDashboard {
         // (undocumented)
         projectDashboard: IProjectDashboard;
     }
+}
+
+// @public (undocumented)
+export namespace GdcReport {
+    // (undocumented)
+    export interface IGridContent {
+        // (undocumented)
+        columns: string[];
+        // (undocumented)
+        columnWidths: any[];
+        // (undocumented)
+        metrics: IGridContentMetrics[];
+        // (undocumented)
+        rows: IGridContentRow[];
+        // (undocumented)
+        sort: IGridContent;
+    }
+    // (undocumented)
+    export interface IGridContentMetrics {
+        // (undocumented)
+        alias: string;
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
+    export interface IGridContentRow {
+        // (undocumented)
+        attribute: IGridContentRowAttribute;
+    }
+    // (undocumented)
+    export interface IGridContentRowAttribute {
+        // (undocumented)
+        alias: string;
+        // (undocumented)
+        totals: any[][];
+        // (undocumented)
+        uri: Uri;
+    }
+    // (undocumented)
+    export interface IReport {
+        // (undocumented)
+        content: IReportContent;
+        // (undocumented)
+        meta: IObjectMeta;
+    }
+    // (undocumented)
+    export interface IReportContent {
+        // (undocumented)
+        definitions: Uri[];
+        // (undocumented)
+        domains: Uri[];
+    }
+    // (undocumented)
+    export interface IReportDefinition {
+        // (undocumented)
+        content: IReportDefinitionContent;
+        // (undocumented)
+        links?: IReportDefinitionLinks;
+        // (undocumented)
+        meta: IObjectMeta;
+    }
+    // (undocumented)
+    export interface IReportDefinitionContent {
+        // (undocumented)
+        chart?: any;
+        // (undocumented)
+        filters: IReportFilter[];
+        // (undocumented)
+        format: ReportFormat;
+        // (undocumented)
+        grid: IGridContent;
+        // (undocumented)
+        oneNumber?: any;
+        // (undocumented)
+        sortedLookups?: any;
+    }
+    // (undocumented)
+    export interface IReportDefinitionLinks {
+        // (undocumented)
+        explain2?: string;
+    }
+    // (undocumented)
+    export interface IReportFilter {
+        // (undocumented)
+        expression: any;
+        // (undocumented)
+        tree?: any;
+    }
+    // (undocumented)
+    export interface IWrappedReport {
+        // (undocumented)
+        report: IReport;
+    }
+    // (undocumented)
+    export interface IWrappedReportDefinition {
+        // (undocumented)
+        reportDefinition: IReportDefinition;
+    }
+    // (undocumented)
+    export type ReportFormat = "grid" | "chart" | "oneNumber";
 }
 
 // @public (undocumented)
