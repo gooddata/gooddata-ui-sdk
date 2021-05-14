@@ -24,6 +24,7 @@ export { GdcMetadataObject } from "./meta/GdcMetadataObject";
 export { GdcScheduledMail } from "./scheduledMail/GdcScheduledMail";
 export { GdcProjectDashboard } from "./projectDashboard/GdcProjectDashboard";
 export { GdcPaging } from "./base/GdcPaging";
+export { GdcReport } from "./report/GdcReport";
 export {
     BooleanAsString,
     DateString,
