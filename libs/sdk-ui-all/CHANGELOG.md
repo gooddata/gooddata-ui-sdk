@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Wed, 14 Apr 2021 11:56:54 GMT and should not be manually modified.
+This log was last generated on Fri, 14 May 2021 12:00:31 GMT and should not be manually modified.
+
+## 8.3.1
+Fri, 14 May 2021 12:00:31 GMT
+
+### Updates
+
+- Fixed logout flow on Tiger >=1.1
 
 ## 8.3.0
 Wed, 14 Apr 2021 11:56:54 GMT
