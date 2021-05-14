@@ -12,6 +12,7 @@ import {
     GridOptions,
     GridReadyEvent,
     SortChangedEvent,
+    PinnedRowDataChangedEvent,
 } from "@ag-grid-community/all-modules";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
@@ -71,6 +72,7 @@ export type TableAgGridCallbacks = {
     onGridColumnResized: (columnEvent: ColumnResizedEvent) => Promise<void>;
     onSortChanged: (event: SortChangedEvent) => void;
     onGridSizeChanged: (event: any) => void;
+    onPinnedRowDataChanged: (event: PinnedRowDataChangedEvent) => void;
 };
 
 /**
