@@ -6,6 +6,7 @@ import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreHeadline } from "./CoreHeadline";
 import omit from "lodash/omit";
+import invariant from "ts-invariant";
 
 //
 // Public interface
@@ -49,11 +50,7 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
 export const Headline = withContexts(RenderHeadline);
 
 export function RenderHeadline(props: IHeadlineProps): JSX.Element {
-    if (!props.primaryMeasure) {
-        // eslint-disable-next-line no-console
-        console.error("The property primaryMeasure must be specified.");
-        return null;
-    }
+    invariant(props.primaryMeasure, "The property primaryMeasure must be specified.");
     return <CoreHeadline {...toCoreHeadlineProps(props)} />;
 }
 
