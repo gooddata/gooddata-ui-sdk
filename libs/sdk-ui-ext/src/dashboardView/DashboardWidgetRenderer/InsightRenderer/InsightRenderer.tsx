@@ -10,7 +10,7 @@ import {
     ITempFilterContext,
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
-import { IInsight, insightProperties, insightSetProperties } from "@gooddata/sdk-model";
+import { IInsight, insightProperties, insightSetProperties, isDateFilter } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IAvailableDrillTargetAttribute,
@@ -33,7 +33,7 @@ import {
 import { InsightRenderer as InsightRendererImpl } from "../../../insightView/InsightRenderer";
 import { InsightError } from "../../../insightView/InsightError";
 import { getImplicitDrillsWithPredicates } from "./drillingUtils";
-import { addImplicitAllTimeFilter } from "./utils";
+import { addImplicitAllTimeFilter, isDateFilterIgnoredForInsight } from "./utils";
 import { filterContextItemsToFiltersForWidget, filterContextToFiltersForWidget } from "../../converters";
 import {
     useAttributesWithDrillDown,
@@ -116,7 +116,13 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
                     .dashboards()
                     .getResolvedFiltersForWidget(insightWidget, inputFilters);
 
-                const resolvedWithImplicitAllTime = addImplicitAllTimeFilter(insightWidget, resolvedFilters);
+                let resolvedWithImplicitAllTime = addImplicitAllTimeFilter(insightWidget, resolvedFilters);
+
+                if (isDateFilterIgnoredForInsight(insight)) {
+                    resolvedWithImplicitAllTime = resolvedWithImplicitAllTime.filter(
+                        (filter) => !isDateFilter(filter),
+                    );
+                }
 
                 return effectiveBackend
                     .workspace(effectiveWorkspace)
