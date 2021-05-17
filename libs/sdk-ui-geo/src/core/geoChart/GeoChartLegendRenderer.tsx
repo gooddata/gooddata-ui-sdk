@@ -187,7 +187,7 @@ function renderPushpinColorLegend(
     const colorData = generateLegendColorData(dataWithoutNull, colorLegendValue);
     const width = contentRect?.client?.width;
     const size = getPushpinColorLegendSize(width, isFluidLegend, responsive);
-    const title = getPushpinColorLegendTitle(geoData?.size?.name, width, responsive);
+    const title = getPushpinColorLegendTitle(geoData?.color?.name, width, responsive);
 
     return (
         <ColorLegend
