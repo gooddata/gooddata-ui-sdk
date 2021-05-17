@@ -260,7 +260,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
             &.no-width {
                 // stylelint-disable-next-line max-nesting-depth
                 .series-item {
-                    margin-left: 15px;
+                    margin-left: 0;
                     width: 100%;
                 }
             }
