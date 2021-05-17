@@ -279,7 +279,7 @@ export class GeoChartInner extends React.PureComponent<IGeoChartInnerProps, IGeo
         const { geoChartOptions: geoChartOptionsProp, config } = this.props;
         const geoChartOptions = this.syncWithLegendItemStates(geoChartOptionsProp);
         const { geoData } = geoChartOptions;
-        const legendLabel = geoData?.size?.name;
+        const legendLabel = geoData?.segment?.name;
         const isFluidLegend = this.isFluidLegend();
         const legendDetailOptions: ILegendDetailOptions = {
             showFluidLegend: isFluidLegend,
