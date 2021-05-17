@@ -49,6 +49,11 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
 export const Headline = withContexts(RenderHeadline);
 
 export function RenderHeadline(props: IHeadlineProps): JSX.Element {
+    if (!props.primaryMeasure) {
+        // eslint-disable-next-line no-console
+        console.error("The property primaryMeasure must be specified.");
+        return null;
+    }
     return <CoreHeadline {...toCoreHeadlineProps(props)} />;
 }
 
