@@ -126,8 +126,12 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
             );
         }
 
-        const start = this.getPagedSeriesStart(page, visibleItemsCount);
-        const end = this.getPagedSeriesEnd(page, visibleItemsCount, series.length);
+        const [start, end] = getPagingValues(
+            page,
+            visibleItemsCount,
+            series.length,
+            this.hasCustomComponent(),
+        );
         const pagedSeries = series.slice(start, end);
         const visibleItemsFitOneColumn = shouldItemsFitOneColumn(
             visibleItemsCount,
@@ -159,21 +163,23 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
         return this.hasCustomComponent() ? defaultPagesCount + 1 : defaultPagesCount;
     }
 
-    private getPagedSeriesStart(page: number, visibleItemsCount: number) {
-        /**
-         * used "2" because the custom component is rendered on the very first page
-         */
-        return this.hasCustomComponent() ? (page - 2) * visibleItemsCount : (page - 1) * visibleItemsCount;
-    }
-
-    private getPagedSeriesEnd(page: number, visibleItemsCount: number, seriesLength: number) {
-        return Math.min(visibleItemsCount * page, seriesLength);
-    }
-
     private hasCustomComponent() {
         return !isNil(this.props.customComponent);
     }
 }
+
+export const getPagingValues = (
+    page: number,
+    visibleItemsCount: number,
+    seriesLength: number,
+    hasCustomComponent: boolean,
+) => {
+    const start = hasCustomComponent ? (page - 2) * visibleItemsCount : (page - 1) * visibleItemsCount;
+    const end = hasCustomComponent
+        ? Math.min(visibleItemsCount * (page - 1), seriesLength)
+        : Math.min(visibleItemsCount * page, seriesLength);
+    return [start, end];
+};
 
 const shouldItemsFitOneColumn = (visibleItemsCount: number, columnNum: number, pagedSeriesLength: number) =>
     visibleItemsCount / columnNum >= pagedSeriesLength;
