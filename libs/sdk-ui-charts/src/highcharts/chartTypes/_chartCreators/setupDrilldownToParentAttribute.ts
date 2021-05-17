@@ -12,8 +12,8 @@ export function getDDPointsInParentTick(axis: any, tick: IHighchartsParentTick):
     const ddPoints: IHighchartsPointObject[] = []; // drilldown points
 
     for (let i = startAt; i < startAt + leaves; i++) {
-        const currentDDPoints = axis.getDDPoints(i);
-        ddPoints.push(...currentDDPoints);
+        const currentDDPoints: IHighchartsPointObject[] = axis.getDDPoints(i);
+        ddPoints.push(...currentDDPoints.filter((point) => !!point));
     }
 
     // replace y value by target value for bullet chart target
