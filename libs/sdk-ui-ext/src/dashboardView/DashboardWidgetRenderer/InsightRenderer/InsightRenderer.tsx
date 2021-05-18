@@ -10,7 +10,13 @@ import {
     ITempFilterContext,
     IInsightWidget,
 } from "@gooddata/sdk-backend-spi";
-import { IInsight, insightProperties, insightSetProperties, isDateFilter } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    insightProperties,
+    insightSetProperties,
+    isDateFilter,
+    insightVisualizationUrl,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IAvailableDrillTargetAttribute,
@@ -237,17 +243,20 @@ export const InsightRenderer: React.FC<IInsightRendererProps> = ({
      */
     const drillableItemsToUse = onDrill ? drillableItems ?? implicitDrills : undefined;
 
-    const insightPoisitionStyle: CSSProperties = useMemo(() => {
+    const insightPositionStyle: CSSProperties = useMemo(() => {
         return {
             width: "100%",
             height: "100%",
-            position: userWorkspaceSettings?.enableKDWidgetCustomHeight ? "absolute" : "relative",
+            position:
+                // Headline violates the layout contract.
+                // It should fit parent height and adapt to it as other visualizations.
+                // Now, it works differently for the Headline - parent container adapts to Headline size.
+                insight && insightVisualizationUrl(insight).includes("headline") ? "relative" : "absolute",
         };
-    }, [userWorkspaceSettings?.enableKDWidgetCustomHeight]);
-
+    }, [insight]);
     return (
         <div style={insightStyle}>
-            <div style={insightPoisitionStyle}>
+            <div style={insightPositionStyle}>
                 <IntlWrapper locale={locale}>
                     {(status === "loading" || status === "pending" || isVisualizationLoading) && (
                         <LoadingComponent />
