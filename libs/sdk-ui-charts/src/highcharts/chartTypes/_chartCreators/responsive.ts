@@ -52,8 +52,19 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const heightRatio = Math.round(getRatio(this.chartHeight, this.plotHeight));
-                        const widthRatio = Math.round(getRatio(this.chartWidth, this.plotWidth));
+                        // first rule needs to store original plot size to use it for rules in every other re-evaluation (eg. after zoom)
+                        if ((this as any).originalPlotWidth === undefined) {
+                            (this as any).originalPlotWidth = this.plotWidth;
+                        }
+                        if ((this as any).originalPlotHeight === undefined) {
+                            (this as any).originalPlotHeight = this.plotHeight;
+                        }
+                        const heightRatio = Math.round(
+                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                        );
+                        const widthRatio = Math.round(
+                            getRatio(this.chartWidth, (this as any).originalPlotWidth),
+                        );
                         const isZeroRatio =
                             (heightRatio === 0 && widthRatio < BOTTOM_LIMIT_WIDTH_RATIO) ||
                             (widthRatio === 0 && heightRatio < BOTTOM_LIMIT_HEIGHT_RATIO);
@@ -72,8 +83,12 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartHeight, this.plotHeight));
-                        return ratio < BOTTOM_LIMIT_HEIGHT_RATIO;
+                        const ratio = Math.round(
+                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                        );
+                        const result = ratio < BOTTOM_LIMIT_HEIGHT_RATIO;
+                        result && console.log("ratio < BOTTOM_LIMIT_HEIGHT_RATIO");
+                        return result;
                     },
                 },
                 chartOptions: {
@@ -83,8 +98,13 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartHeight, this.plotHeight));
-                        return ratio > BOTTOM_LIMIT_HEIGHT_RATIO && ratio < UPPER_LIMIT_RATIO;
+                        const ratio = Math.round(
+                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                        );
+                        const result = ratio > BOTTOM_LIMIT_HEIGHT_RATIO && ratio < UPPER_LIMIT_RATIO;
+                        result &&
+                            console.log("ratio > BOTTOM_LIMIT_HEIGHT_RATIO && ratio < UPPER_LIMIT_RATIO");
+                        return result;
                     },
                 },
                 chartOptions: {
@@ -94,8 +114,10 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartWidth, this.plotWidth));
-                        return ratio < BOTTOM_LIMIT_WIDTH_RATIO;
+                        const ratio = Math.round(getRatio(this.chartWidth, (this as any).originalPlotWidth));
+                        const result = ratio < BOTTOM_LIMIT_WIDTH_RATIO;
+                        result && console.log("ratio < BOTTOM_LIMIT_WIDTH_RATIO");
+                        return result;
                     },
                 },
                 chartOptions: {
@@ -105,8 +127,11 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartWidth, this.plotWidth));
-                        return ratio > BOTTOM_LIMIT_WIDTH_RATIO && ratio < UPPER_LIMIT_RATIO;
+                        const ratio = Math.round(getRatio(this.chartWidth, (this as any).originalPlotWidth));
+                        const result = ratio > BOTTOM_LIMIT_WIDTH_RATIO && ratio < UPPER_LIMIT_RATIO;
+                        result &&
+                            console.log("ratio > BOTTOM_LIMIT_WIDTH_RATIO && ratio < UPPER_LIMIT_RATIO");
+                        return result;
                     },
                 },
                 chartOptions: {
