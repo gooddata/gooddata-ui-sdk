@@ -24,6 +24,8 @@ export interface IPushpinCategoryLegendProps {
     position?: PositionType;
     responsive?: boolean | "autoPositionWithPopup";
     customComponent?: JSX.Element | null;
+    customComponentName?: string;
+    sizeLegendName?: string;
     maxRows?: number;
     name?: string;
     renderPopUp?: boolean;
@@ -35,7 +37,7 @@ export default function PushpinCategoryLegend(props: IPushpinCategoryLegendProps
     const { contentRect, hasSizeLegend, isFluidLegend, renderPopUp } = props;
 
     if (renderPopUp) {
-        return <React.Fragment>{renderPopUpLegend(props)}</React.Fragment>;
+        return <GeoPopUpLegend {...props} />;
     }
 
     return (
@@ -96,8 +98,16 @@ function renderStaticCategoryLegend(
     return <StaticLegend {...legendProps} containerHeight={usedHeight} />;
 }
 
-function renderPopUpLegend(props: IPushpinCategoryLegendProps): React.ReactNode {
-    const { containerId, categoryItems = [], onItemClick = noop, name, maxRows, customComponent } = props;
+function GeoPopUpLegend(props: IPushpinCategoryLegendProps): JSX.Element {
+    const {
+        containerId,
+        categoryItems = [],
+        onItemClick = noop,
+        name,
+        maxRows,
+        customComponent,
+        customComponentName,
+    } = props;
 
     return (
         <PopUpLegend
@@ -107,6 +117,7 @@ function renderPopUpLegend(props: IPushpinCategoryLegendProps): React.ReactNode 
             name={name}
             containerId={containerId}
             customComponent={customComponent}
+            customComponentName={customComponentName}
         />
     );
 }

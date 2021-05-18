@@ -22,20 +22,34 @@ export interface IPopUpLegendProps {
     containerId: string;
 
     customComponent?: JSX.Element | null;
+    customComponentName?: string;
 }
 
 /**
  * @internal
  */
 export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
-    const { name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId, customComponent } =
-        props;
+    const {
+        name,
+        maxRows,
+        enableBorderRadius,
+        series,
+        onLegendItemClick,
+        containerId,
+        customComponent,
+        customComponentName,
+    } = props;
     const intl = useIntl();
     const [isDialogOpen, setDialogOpen] = useState(false);
+    const [page, setPage] = useState(1);
 
-    const dialogTitle = name || intl.formatMessage({ id: "properties.legend.title" });
+    const dialogTitle =
+        (page === 1 && customComponentName) || name || intl.formatMessage({ id: "properties.legend.title" });
 
-    const onCloseDialog = () => setDialogOpen(false);
+    const onCloseDialog = () => {
+        setDialogOpen(false);
+        setPage(1);
+    };
 
     return (
         <div>
@@ -67,6 +81,7 @@ export const PopUpLegend: React.FC<IPopUpLegendProps> = (props) => {
                     enableBorderRadius={enableBorderRadius}
                     paginationHeight={PAGINATION_HEIGHT}
                     customComponent={customComponent}
+                    onPageChanged={setPage}
                 />
             </LegendDialog>
         </div>
