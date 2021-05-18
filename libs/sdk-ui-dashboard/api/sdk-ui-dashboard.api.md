@@ -4,19 +4,8 @@
 
 ```ts
 
-import { default as React_2 } from 'react';
-
-// @public (undocumented)
-export interface ISdkComponentProps {
-    // (undocumented)
-    message: string;
-}
-
-// @public (undocumented)
-export class SdkComponent extends React_2.Component<ISdkComponentProps> {
-    // (undocumented)
-    render(): React_2.ReactNode;
-}
+// @internal (undocumented)
+export const empty = true;
 
 
 // (No @packageDocumentation comment for this package)

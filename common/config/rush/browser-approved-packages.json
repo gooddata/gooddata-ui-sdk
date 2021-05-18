@@ -187,6 +187,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@reduxjs/toolkit",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/addon-actions",
       "allowedCategories": [ "production" ]
     },
@@ -829,6 +833,14 @@
     {
       "name": "recharts",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "redux-saga",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "redux-thunk",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "rimraf",
