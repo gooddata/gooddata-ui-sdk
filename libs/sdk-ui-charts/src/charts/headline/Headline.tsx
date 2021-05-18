@@ -1,8 +1,16 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { IBucket, IMeasure, INullableFilter, newBucket } from "@gooddata/sdk-model";
-import React from "react";
-import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    Subtract,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreHeadline } from "./CoreHeadline";
 import omit from "lodash/omit";
@@ -19,24 +27,31 @@ export interface IHeadlineBucketProps {
     /**
      * Specify the measure whose value will be shown as the headline.
      */
-    primaryMeasure: IMeasure;
+    primaryMeasure: ValueOrPlaceholder<AnyMeasure>;
 
     /**
      * Optionally specify secondary measure whose value will be shown for comparison with the primary measure.
      * The change in percent between the two values will also be calculated and displayed.
      */
-    secondaryMeasure?: IMeasure;
+    secondaryMeasure?: ValueOrPlaceholder<AnyMeasure>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps {}
+
+const WrappedHeadline = withContexts(RenderHeadline);
 
 /**
  * [Headline](https://sdk.gooddata.com/gooddata-ui/docs/headline_component.html)
@@ -47,7 +62,14 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
  *
  * @public
  */
-export const Headline = withContexts(RenderHeadline);
+export const Headline = (props: IHeadlineProps) => {
+    const [primaryMeasure, secondaryMeasure, filters] = useResolveValuesWithPlaceholders(
+        [props.primaryMeasure, props.secondaryMeasure, props.filters],
+        props.placeholdersResolutionContext,
+    );
+
+    return <WrappedHeadline {...props} {...{ primaryMeasure, secondaryMeasure, filters }} />;
+};
 
 export function RenderHeadline(props: IHeadlineProps): JSX.Element {
     invariant(props.primaryMeasure, "The property primaryMeasure must be specified.");
@@ -62,7 +84,9 @@ type IIrrelevantHeadlineProps = IHeadlineBucketProps & IBucketChartProps;
 type IHeadlineNonBucketProps = Subtract<IHeadlineProps, IIrrelevantHeadlineProps>;
 
 export function toCoreHeadlineProps(props: IHeadlineProps): ICoreChartProps {
-    const buckets = [newBucket(BucketNames.MEASURES, props.primaryMeasure, props.secondaryMeasure)];
+    const buckets = [
+        newBucket(BucketNames.MEASURES, props.primaryMeasure as IMeasure, props.secondaryMeasure as IMeasure),
+    ];
 
     const newProps: IHeadlineNonBucketProps = omit<IHeadlineProps, keyof IIrrelevantHeadlineProps>(props, [
         "primaryMeasure",
@@ -85,6 +109,6 @@ function createExecution(buckets: IBucket[], props: IHeadlineProps): IPreparedEx
         .withTelemetry("Headline", props)
         .workspace(workspace)
         .execution()
-        .forBuckets(buckets, props.filters)
+        .forBuckets(buckets, props.filters as INullableFilter[])
         .withDimensions({ itemIdentifiers: ["measureGroup"] });
 }

@@ -50,6 +50,9 @@ import DashboardViewWithMergedFilters from "../examples/dashboardEmbedding/Dashb
 import DashboardViewWithDrilling from "../examples/dashboardEmbedding/DashboardViewWithDrilling";
 import DashboardExport from "../examples/dashboardEmbedding/DashboardExport";
 import DashboardViewAdvancedCustomizations from "../examples/dashboardEmbedding/DashboardViewAdvancedCustomizations";
+import SingleValuePlaceholders from "../examples/placeholders/SingleValuePlaceholder";
+import MultiValuePlaceholders from "../examples/placeholders/MultiValuePlaceholder";
+import ComposedPlaceholder from "../examples/placeholders/ComposedPlaceholder";
 
 // import PivotTableDynamic from "./PivotTableDynamic";
 // import MultipleDomains from "./MultipleDomains";
@@ -156,6 +159,24 @@ export const measureValueFilterUseCasesRoutes = [
     },
 ];
 
+export const placeholdersUseCasesRoutes = [
+    {
+        path: "/placeholders/single-value",
+        title: "Single Value Placeholder",
+        Component: SingleValuePlaceholders,
+    },
+    {
+        path: "/placeholders/multi-value",
+        title: "Multi-Value Placeholder",
+        Component: MultiValuePlaceholders,
+    },
+    {
+        path: "/placeholders/composed",
+        title: "Composed Placeholder",
+        Component: ComposedPlaceholder,
+    },
+];
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const InsightViewUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: insightViewUseCasesRoutes });
@@ -175,6 +196,10 @@ const DrillingUseCasesRoutes = (props: any): JSX.Element =>
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const MeasureValueFilterUseCasesRoutes = (props: any): JSX.Element =>
     WithSubRoutes({ ...props, subRoutes: measureValueFilterUseCasesRoutes });
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const PlaceholdersUseCasesRoutes = (props: any): JSX.Element =>
+    WithSubRoutes({ ...props, subRoutes: placeholdersUseCasesRoutes });
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const InternationalDateFormatUseCasesRoutes = (props: any): JSX.Element =>
@@ -263,6 +288,13 @@ export const sideNavigationRoutes: RouteDefinition[] = [
     },
     { path: "/theming", title: "Custom Theming", Component: ThemedComponents },
     { path: "/chart-responsiveness", title: "Chart Responsiveness", Component: ChartResponsiveness },
+    {
+        path: "/placeholders",
+        pathMatch: "full",
+        redirectTo: placeholdersUseCasesRoutes[0].path,
+        title: "Placeholders",
+        Component: PlaceholdersUseCasesRoutes,
+    },
 ];
 
 export const hiddenPaths = [
@@ -290,6 +322,7 @@ export const routes = [
     ...advancedUseCasesRoutes,
     ...drillingUseCasesRoutes,
     ...measureValueFilterUseCasesRoutes,
+    ...placeholdersUseCasesRoutes,
     ...hiddenPaths,
     ...backendInfoRoutes,
     ...internationalDateFormatUseCasesRoutes,

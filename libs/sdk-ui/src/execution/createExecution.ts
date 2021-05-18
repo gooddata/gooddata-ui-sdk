@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import {
     attributeLocalId,
     DimensionItem,
@@ -20,7 +20,7 @@ import invariant from "ts-invariant";
 /**
  * @internal
  */
-type CreateExecutionOptions = {
+export type CreateExecutionOptions = {
     /**
      * Backend to execute against.
      *

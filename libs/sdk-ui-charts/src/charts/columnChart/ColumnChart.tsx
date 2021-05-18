@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import React from "react";
 import {
     IAttributeOrMeasure,
     applyRatioRule,
@@ -8,7 +9,13 @@ import {
     ISortItem,
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { CoreColumnChart } from "./CoreColumnChart";
@@ -24,13 +31,13 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
     chartName: "ColumnChart",
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
-        const measures = applyRatioRule(props.measures);
+        const measures = applyRatioRule(props.measures as IAttributeOrMeasure[]);
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit); // could be one or two attributes
 
         return [
             newBucket(BucketNames.MEASURES, ...measures),
-            newBucket(BucketNames.VIEW, ...viewBy),
-            newBucket(BucketNames.STACK, props.stackBy),
+            newBucket(BucketNames.VIEW, ...(viewBy as IAttribute[])),
+            newBucket(BucketNames.STACK, props.stackBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -40,8 +47,8 @@ const columnChartDefinition: IChartDefinition<IColumnChartBucketProps, IColumnCh
             .withTelemetry("ColumnChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as IFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(stackedChartDimensions);
     },
     propOverridesFactory: (props, buckets) => {
@@ -65,7 +72,7 @@ export interface IColumnChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the X axis.
@@ -74,28 +81,35 @@ export interface IColumnChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a column indicating the respective slice's value.
      */
-    viewBy?: IAttribute | IAttribute[];
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally specify attribute to stack the bars by.
      */
-    stackBy?: IAttribute;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: IFilter[];
+    filters?: ValuesOrPlaceholders<IFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucketProps {}
+
+const WrappedColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
 
 /**
  * [ColumnChart](http://sdk.gooddata.com/gooddata-ui/docs/column_chart_component.html)
@@ -105,4 +119,22 @@ export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucket
  *
  * @public
  */
-export const ColumnChart = withChart(columnChartDefinition)(CoreColumnChart);
+export const ColumnChart = (props: IColumnChartProps) => {
+    const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedColumnChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                stackBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

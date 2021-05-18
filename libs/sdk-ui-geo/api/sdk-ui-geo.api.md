@@ -4,10 +4,10 @@
 
 ```ts
 
+import { AnyMeasure } from '@gooddata/sdk-ui';
 import { ContentRect } from 'react-measure';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorStrategy } from '@gooddata/sdk-ui-vis-commons';
@@ -27,6 +27,8 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import { default as React_2 } from 'react';
+import { ValueOrPlaceholder } from '@gooddata/sdk-ui';
+import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
@@ -36,7 +38,7 @@ export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 export const CoreGeoChart: React_2.FC<ICoreGeoChartProps & WrappedComponentProps>;
 
 // @public (undocumented)
-export const GeoPushpinChart: React_2.ComponentType<Pick<IGeoPushpinChartProps, "locale" | "color" | "size" | "location" | "onError" | "config" | "onDrill" | "drillableItems" | "afterRender" | "onCenterPositionChanged" | "onZoomChanged" | "exportTitle" | "ErrorComponent" | "LoadingComponent" | "onExportReady" | "onLoadingChanged" | "pushData" | "backend" | "workspace" | "segmentBy" | "filters" | "sortBy">>;
+export const GeoPushpinChart: (props: IGeoPushpinChartProps) => JSX.Element;
 
 // @internal (undocumented)
 export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[];
@@ -252,21 +254,22 @@ export interface IGeoPointsConfig {
 export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizationCallbacks {
     backend?: IAnalyticalBackend;
     // (undocumented)
-    color?: IAttributeOrMeasure;
+    color?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
     // (undocumented)
     config?: IGeoConfig;
     // (undocumented)
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
     // (undocumented)
-    location: IAttribute;
+    location: ValueOrPlaceholder<IAttribute>;
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
+    placeholdersResolutionContext?: any;
     // (undocumented)
-    segmentBy?: IAttribute;
+    segmentBy?: ValueOrPlaceholder<IAttribute>;
     // (undocumented)
-    size?: IAttributeOrMeasure;
+    size?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
     // (undocumented)
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
     workspace?: string;
 }
 

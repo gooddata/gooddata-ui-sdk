@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
 import { CoreFunnelChart } from "./CoreFunnelChart";
@@ -16,8 +23,8 @@ const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelCh
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
         return [
-            newBucket(BucketNames.MEASURES, ...props.measures),
-            newBucket(BucketNames.VIEW, props.viewBy),
+            newBucket(BucketNames.MEASURES, ...(props.measures as IAttributeOrMeasure[])),
+            newBucket(BucketNames.VIEW, props.viewBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -27,7 +34,7 @@ const funnelChartDefinition: IChartDefinition<IFunnelChartBucketProps, IFunnelCh
             .withTelemetry("FunnelChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
+            .forBuckets(buckets, props.filters as INullableFilter[])
             .withDimensions(roundChartDimensions);
     },
 };
@@ -48,29 +55,36 @@ export interface IFunnelChartBucketProps {
      *
      * If you specify multiple measures, then those calculate measure values will be charted into a funnel.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify attribute that will be used to slice the single measure into multiple pieces that
      * will be charted into a funnel.
      */
-    viewBy?: IAttribute;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IFunnelChartProps extends IBucketChartProps, IFunnelChartBucketProps {}
+
+const WrappedFunnelChart = withChart(funnelChartDefinition)(CoreFunnelChart);
 
 /**
  * A funnel chart displays values as progressively decreasing proportions.
@@ -83,4 +97,21 @@ export interface IFunnelChartProps extends IBucketChartProps, IFunnelChartBucket
  *
  * @public
  */
-export const FunnelChart = withChart(funnelChartDefinition)(CoreFunnelChart);
+export const FunnelChart = (props: IFunnelChartProps) => {
+    const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedFunnelChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

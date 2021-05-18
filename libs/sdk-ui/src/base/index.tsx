@@ -67,6 +67,40 @@ export {
     withWorkspace,
     IWorkspaceProviderProps,
 } from "./react/WorkspaceContext";
+export { IPlaceholdersProviderProps, PlaceholdersProvider } from "./react/placeholders/context";
+export {
+    AnyPlaceholder,
+    IPlaceholder,
+    IComposedPlaceholder,
+    isAnyPlaceholder,
+    isPlaceholder,
+    isComposedPlaceholder,
+    Flatten,
+    IUsePlaceholderHook,
+    PlaceholderValue,
+    PlaceholdersValues,
+    PlaceholderResolvedValue,
+    PlaceholdersResolvedValues,
+    AnyPlaceholderOf,
+    AnyArrayOf,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+    ArrayOf,
+    PlaceholderOf,
+    MeasureOf,
+    AnyMeasure,
+    ComposedPlaceholderResolutionContext,
+    IUseComposedPlaceholderHook,
+    UnionToIntersection,
+} from "./react/placeholders/base";
+export { IPlaceholderOptions, newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory";
+export {
+    usePlaceholder,
+    usePlaceholders,
+    useComposedPlaceholder,
+    useResolveValueWithPlaceholders,
+    useResolveValuesWithPlaceholders,
+} from "./react/placeholders/hooks";
 export { usePagedResource, IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource";
 export {
     UseCancelablePromiseStatus,

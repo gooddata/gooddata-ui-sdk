@@ -7,9 +7,14 @@ import {
     bucketIsEmpty,
     bucketsFind,
     bucketTotals,
+    IAttribute,
+    IAttributeOrMeasure,
     IBucket,
     IDimension,
     IExecutionDefinition,
+    INullableFilter,
+    ISortItem,
+    ITotal,
     MeasureGroupIdentifier,
     newBucket,
 } from "@gooddata/sdk-model";
@@ -28,6 +33,7 @@ import {
     Subtract,
     BucketNames,
     IntlWrapper,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IBackendCapabilities, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import invariant from "ts-invariant";
@@ -45,19 +51,19 @@ function prepareExecution(props: IPivotTableProps): IPreparedExecution {
     return backend!
         .workspace(workspace!)
         .execution()
-        .forBuckets(getBuckets(props), filters)
+        .forBuckets(getBuckets(props), filters as INullableFilter[])
         .withDimensions(pivotDimensions)
-        .withSorting(...sortBy);
+        .withSorting(...(sortBy as ISortItem[]));
 }
 
 function getBuckets(props: IPivotTableBucketProps): IBucket[] {
     const { measures = [], rows = [], columns = [], totals = [] } = props;
 
     return [
-        newBucket(BucketNames.MEASURES, ...measures),
+        newBucket(BucketNames.MEASURES, ...(measures as IAttributeOrMeasure[])),
         // ATTRIBUTE for backwards compatibility with Table component. Actually ROWS
-        newBucket(BucketNames.ATTRIBUTE, ...rows, ...totals),
-        newBucket(BucketNames.COLUMNS, ...columns),
+        newBucket(BucketNames.ATTRIBUTE, ...(rows as IAttribute[]), ...(totals as ITotal[])),
+        newBucket(BucketNames.COLUMNS, ...(columns as IAttribute[])),
     ];
 }
 
@@ -134,13 +140,22 @@ class RenderPivotTable extends React.Component<IPivotTableProps> {
     }
 }
 
+const WrappedPivotTable = withContexts(RenderPivotTable);
+
 /**
  * [PivotTable](https://sdk.gooddata.com/gooddata-ui/docs/pivot_table_component.html)
  * is a component with bucket props measures, rows, columns, totals, sortBy, filters
  *
  * @public
  */
-export const PivotTable = withContexts(RenderPivotTable);
+export const PivotTable = (props: IPivotTableProps) => {
+    const [measures, columns, rows, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.columns, props.rows, props.totals, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return <WrappedPivotTable {...props} {...{ measures, columns, rows, totals, filters, sortBy }} />;
+};
 
 /**
  * Given analytical backend capabilities and the desired aggregations menu config, this function will correct the menu

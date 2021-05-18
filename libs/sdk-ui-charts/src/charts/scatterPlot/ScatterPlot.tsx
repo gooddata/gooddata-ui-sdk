@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+    useResolveValuesWithPlaceholders,
+} from "@gooddata/sdk-ui";
 import { pointyChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
 import { CoreScatterPlot } from "./CoreScatterPlot";
@@ -16,9 +23,9 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
     bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
     bucketsFactory: (props) => {
         return [
-            newBucket(BucketNames.MEASURES, props.xAxisMeasure),
-            newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure),
-            newBucket(BucketNames.ATTRIBUTE, props.attribute),
+            newBucket(BucketNames.MEASURES, props.xAxisMeasure as IMeasure),
+            newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure as IMeasure),
+            newBucket(BucketNames.ATTRIBUTE, props.attribute as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -28,8 +35,8 @@ const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterP
             .withTelemetry("ScatterPlot", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(pointyChartDimensions);
     },
 };
@@ -45,33 +52,40 @@ export interface IScatterPlotBucketProps {
     /**
      * Optionally specify measure which will be used to position data points on the X axis.
      */
-    xAxisMeasure?: IMeasure;
+    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
 
     /**
      * Optionally specify measure which will be used to position data points on the Y axis.
      */
-    yAxisMeasure?: IMeasure;
+    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
 
     /**
      * Optionally specify attribute whose values will be used to create data points.
      */
-    attribute?: IAttribute;
+    attribute?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucketProps {}
+
+const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
 
 /**
  * [ScatterPlot](http://sdk.gooddata.com/gooddata-ui/docs/scatter_plot_component.html)
@@ -84,4 +98,22 @@ export interface IScatterPlotProps extends IBucketChartProps, IScatterPlotBucket
  *
  * @public
  */
-export const ScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
+export const ScatterPlot = (props: IScatterPlotProps) => {
+    const [xAxisMeasure, yAxisMeasure, attribute, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.xAxisMeasure, props.yAxisMeasure, props.attribute, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedScatterPlot
+            {...props}
+            {...{
+                xAxisMeasure,
+                yAxisMeasure,
+                attribute,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

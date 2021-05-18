@@ -9,6 +9,7 @@ import {
     IntlWrapper,
     ITranslationsComponentProps,
     withContexts,
+    useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IGeoPushpinChartProps } from "./GeoChart";
 import {
@@ -16,9 +17,13 @@ import {
     bucketsAttributes,
     bucketsMeasures,
     disableComputeRatio,
+    IAttribute,
+    IAttributeOrMeasure,
     IBucket,
     IDimension,
     IExecutionDefinition,
+    INullableFilter,
+    ISortItem,
     MeasureGroupIdentifier,
     newDimension,
 } from "@gooddata/sdk-model";
@@ -29,19 +34,19 @@ const getBuckets = (props: IGeoPushpinChartProps): IBucket[] => {
     const buckets: IBucket[] = [
         {
             localIdentifier: BucketNames.SIZE,
-            items: size ? [disableComputeRatio(size)] : [],
+            items: size ? [disableComputeRatio(size as IAttributeOrMeasure)] : [],
         },
         {
             localIdentifier: BucketNames.COLOR,
-            items: color ? [disableComputeRatio(color)] : [],
+            items: color ? [disableComputeRatio(color as IAttributeOrMeasure)] : [],
         },
         {
             localIdentifier: BucketNames.LOCATION,
-            items: location ? [location] : [],
+            items: location ? [location as IAttribute] : [],
         },
         {
             localIdentifier: BucketNames.SEGMENT,
-            items: segmentBy ? [segmentBy] : [],
+            items: segmentBy ? [segmentBy as IAttribute] : [],
         },
     ];
     const tooltipText = config?.[BucketNames.TOOLTIP_TEXT];
@@ -96,8 +101,8 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
         .withTelemetry("GeoPushpinChart", props)
         .workspace(workspace!)
         .execution()
-        .forBuckets(buckets, filters)
-        .withSorting(...(sortBy || []))
+        .forBuckets(buckets, filters as INullableFilter[])
+        .withSorting(...((sortBy as ISortItem[]) || []))
         .withDimensions(getGeoChartDimensions);
 
     return (
@@ -118,7 +123,16 @@ function GeoPushpinChartInner(props: IGeoPushpinChartProps): JSX.Element {
     );
 }
 
+const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
+
 /**
  * @public
  */
-export const GeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
+export const GeoPushpinChart = (props: IGeoPushpinChartProps) => {
+    const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.location, props.size, props.color, props.segmentBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return <WrappedGeoPushpinChart {...props} {...{ location, size, color, segmentBy, filters, sortBy }} />;
+};

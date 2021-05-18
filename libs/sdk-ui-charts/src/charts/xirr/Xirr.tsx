@@ -11,10 +11,18 @@ import {
     newBucket,
     newDimension,
 } from "@gooddata/sdk-model";
-import { BucketNames, Subtract, withContexts } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    Subtract,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+    withContexts,
+} from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces";
 import { CoreXirr } from "./CoreXirr";
 import omit from "lodash/omit";
+import { useResolveValuesWithPlaceholders } from "@gooddata/sdk-ui";
 
 //
 // Public interface
@@ -28,21 +36,28 @@ export interface IXirrBucketProps {
      * The measure to calculate the Internal Rate of Return for.
      * For the result to make sense, the measure should start with a negative value at some point in time (the investment) followed by other values (the returns).
      */
-    measure: IMeasure;
+    measure: ValueOrPlaceholder<AnyMeasure>;
     /**
      * The date dimension to use for the computation. This allows you to set the granularity (day, month, etc.) for the IRR calculation.
      */
-    attribute?: IAttribute;
+    attribute?: ValueOrPlaceholder<IAttribute>;
     /**
      * Optionally specify filters to apply on the data to compute with.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @beta
  */
 export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {}
+
+const WrappedXirr = withContexts(RenderXirr);
 
 /**
  * Xirr computes the [Internal Rate of Return](https://en.wikipedia.org/wiki/Internal_rate_of_return) from the given measure and date dimension.
@@ -51,7 +66,14 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {}
  *
  * @beta
  */
-export const Xirr = withContexts(RenderXirr);
+export const Xirr = (props: IXirrProps) => {
+    const [measure, attribute, filters] = useResolveValuesWithPlaceholders(
+        [props.measure, props.attribute, props.filters],
+        props.placeholdersResolutionContext,
+    );
+
+    return <WrappedXirr {...props} {...{ measure, attribute, filters }} />;
+};
 
 export function RenderXirr(props: IXirrProps): JSX.Element {
     return <CoreXirr {...toCoreXirrProps(props)} />;
@@ -66,8 +88,8 @@ type IXirrNonBucketProps = Subtract<IXirrProps, IIrrelevantXirrProps>;
 
 export function toCoreXirrProps(props: IXirrProps): ICoreChartProps {
     const buckets = [
-        newBucket(BucketNames.MEASURES, props.measure),
-        newBucket(BucketNames.ATTRIBUTE, props.attribute),
+        newBucket(BucketNames.MEASURES, props.measure as IMeasure),
+        newBucket(BucketNames.ATTRIBUTE, props.attribute as IAttribute),
     ];
 
     const newProps: IXirrNonBucketProps = omit<IXirrProps, keyof IIrrelevantXirrProps>(props, [
@@ -91,7 +113,7 @@ function createExecution(buckets: IBucket[], props: IXirrProps): IPreparedExecut
         .withTelemetry("Xirr", props)
         .workspace(workspace)
         .execution()
-        .forBuckets(buckets, props.filters)
+        .forBuckets(buckets, props.filters as INullableFilter[])
         .withDimensions(
             newDimension([
                 "measureGroup",

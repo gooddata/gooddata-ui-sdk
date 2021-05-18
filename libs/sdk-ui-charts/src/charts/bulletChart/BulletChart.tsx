@@ -1,4 +1,5 @@
 // (C) 2019 GoodData Corporation
+import React from "react";
 import {
     disableComputeRatio,
     IAttribute,
@@ -7,7 +8,13 @@ import {
     ISortItem,
     newBucket,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
 import { CoreBulletChart } from "./CoreBulletChart";
@@ -29,10 +36,12 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
          */
         return {
             ...props,
-            primaryMeasure: disableComputeRatio(props.primaryMeasure),
-            targetMeasure: props.targetMeasure ? disableComputeRatio(props.targetMeasure) : undefined,
+            primaryMeasure: disableComputeRatio(props.primaryMeasure as IAttributeOrMeasure),
+            targetMeasure: props.targetMeasure
+                ? disableComputeRatio(props.targetMeasure as IAttributeOrMeasure)
+                : undefined,
             comparativeMeasure: props.comparativeMeasure
-                ? disableComputeRatio(props.comparativeMeasure)
+                ? disableComputeRatio(props.comparativeMeasure as IAttributeOrMeasure)
                 : undefined,
         };
     },
@@ -40,10 +49,10 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
         return [
-            newBucket(BucketNames.MEASURES, props.primaryMeasure),
-            newBucket(BucketNames.SECONDARY_MEASURES, props.targetMeasure),
-            newBucket(BucketNames.TERTIARY_MEASURES, props.comparativeMeasure),
-            newBucket(BucketNames.VIEW, ...viewBy),
+            newBucket(BucketNames.MEASURES, props.primaryMeasure as IAttributeOrMeasure),
+            newBucket(BucketNames.SECONDARY_MEASURES, props.targetMeasure as IAttributeOrMeasure),
+            newBucket(BucketNames.TERTIARY_MEASURES, props.comparativeMeasure as IAttributeOrMeasure),
+            newBucket(BucketNames.VIEW, ...(viewBy as IAttribute[])),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -53,14 +62,18 @@ const bulletChartDefinition: IChartDefinition<IBulletChartBucketProps, IBulletCh
             .withTelemetry("BulletChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(stackedChartDimensions);
     },
     propOverridesFactory: (props, _buckets) => {
         return {
             config: sanitizeConfig(
-                [props.primaryMeasure, props.targetMeasure, props.comparativeMeasure],
+                [
+                    props.primaryMeasure as IAttributeOrMeasure,
+                    props.targetMeasure as IAttributeOrMeasure,
+                    props.comparativeMeasure as IAttributeOrMeasure,
+                ],
                 props.config,
             ),
         };
@@ -78,18 +91,18 @@ export interface IBulletChartBucketProps {
     /**
      * Specify primary measure. This will be charted as the primary bar.
      */
-    primaryMeasure: IAttributeOrMeasure;
+    primaryMeasure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify measure which contains the target/goal value. The value will be charted as the thick
      * line to reach.
      */
-    targetMeasure?: IAttributeOrMeasure;
+    targetMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify measure to use for comparison. This will be charted as the secondary bar.
      */
-    comparativeMeasure?: IAttributeOrMeasure;
+    comparativeMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify one or two attributes to use for slicing the measures.
@@ -98,23 +111,30 @@ export interface IBulletChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute, there will be a bullet.
      */
-    viewBy?: IAttribute | IAttribute[];
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChartProps {}
+
+const WrappedBulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
 
 /**
  * [BulletChart](http://sdk.gooddata.com/gooddata-ui/docs/bullet_chart_component.html)
@@ -124,4 +144,31 @@ export interface IBulletChartProps extends IBulletChartBucketProps, IBucketChart
  *
  * @public
  */
-export const BulletChart = withChart(bulletChartDefinition)(CoreBulletChart);
+export const BulletChart = (props: IBulletChartProps) => {
+    const [primaryMeasure, targetMeasure, comparativeMeasure, viewBy, filters, sortBy] =
+        useResolveValuesWithPlaceholders(
+            [
+                props.primaryMeasure,
+                props.targetMeasure,
+                props.comparativeMeasure,
+                props.viewBy,
+                props.filters,
+                props.sortBy,
+            ],
+            props.placeholdersResolutionContext,
+        );
+
+    return (
+        <WrappedBulletChart
+            {...props}
+            {...{
+                primaryMeasure,
+                targetMeasure,
+                comparativeMeasure,
+                viewBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

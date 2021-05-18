@@ -1,4 +1,5 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import {
     bucketAttribute,
     bucketsFind,
@@ -12,7 +13,13 @@ import {
     newBucket,
     newMeasureSort,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { treemapDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
 import { CoreTreemap } from "./CoreTreemap";
@@ -28,9 +35,9 @@ const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = 
     bucketPropsKeys: ["measures", "viewBy", "segmentBy", "filters"],
     bucketsFactory: (props) => {
         return [
-            newBucket(BucketNames.MEASURES, ...props.measures),
-            newBucket(BucketNames.VIEW, props.viewBy),
-            newBucket(BucketNames.SEGMENT, props.segmentBy),
+            newBucket(BucketNames.MEASURES, ...(props.measures as IAttributeOrMeasure[])),
+            newBucket(BucketNames.VIEW, props.viewBy as IAttribute),
+            newBucket(BucketNames.SEGMENT, props.segmentBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -41,7 +48,7 @@ const treemapDefinition: IChartDefinition<ITreemapBucketProps, ITreemapProps> = 
             .withTelemetry("Treemap", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
+            .forBuckets(buckets, props.filters as INullableFilter[])
             .withSorting(...sortBy)
             .withDimensions(treemapDimensions);
     },
@@ -58,7 +65,7 @@ export interface ITreemapBucketProps {
     /**
      * Specify one or more measures whose values will be used to create the treemap rectangles.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify an attribute whose values will be used to slice the measure. Treemap will chart one
@@ -67,25 +74,32 @@ export interface ITreemapBucketProps {
      *
      * Note: treemap only supports viewBy only when `measures` contains a single measure.
      */
-    viewBy?: IAttribute;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify an attribute, whose values will be used to segment the rectangles created for
      * the measures or the combination of measure and viewBy attribute values. Segmenting essentially adds
      * another level into the hierarchy.
      */
-    segmentBy?: IAttribute;
+    segmentBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {}
+
+const WrappedTreemap = withChart(treemapDefinition)(CoreTreemap);
 
 /**
  * [Treemap](https://sdk.gooddata.com/gooddata-ui/docs/treemap_component.html)
@@ -95,7 +109,24 @@ export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {}
  *
  * @public
  */
-export const Treemap = withChart(treemapDefinition)(CoreTreemap);
+export const Treemap = (props: ITreemapProps) => {
+    const [measures, viewBy, segmentBy, filters] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.segmentBy, props.filters],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedTreemap
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                segmentBy,
+                filters,
+            }}
+        />
+    );
+};
 
 function getDefaultTreemapSort(buckets: IBucket[]): ISortItem[] {
     const viewBucket = bucketsFind(buckets, BucketNames.VIEW);
