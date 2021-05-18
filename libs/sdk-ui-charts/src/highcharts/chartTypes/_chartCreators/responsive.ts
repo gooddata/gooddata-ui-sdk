@@ -53,17 +53,29 @@ const getResponsiveConfigOptions = (
                 condition: {
                     callback: function () {
                         // first rule needs to store original plot size to use it for rules in every other re-evaluation (eg. after zoom)
-                        if ((this as any).originalPlotWidth === undefined) {
-                            (this as any).originalPlotWidth = this.plotWidth;
+                        if (this.userOptions?.plotOptions?.series?.custom?.initialPlotWidth === undefined) {
+                            this.userOptions.plotOptions.series.custom = {
+                                ...this.userOptions?.plotOptions?.series?.custom,
+                                initialPlotWidth: this.plotWidth,
+                            };
                         }
-                        if ((this as any).originalPlotHeight === undefined) {
-                            (this as any).originalPlotHeight = this.plotHeight;
+                        if (this.userOptions?.plotOptions?.series?.custom?.initialPlotHeight === undefined) {
+                            this.userOptions.plotOptions.series.custom = {
+                                ...this.userOptions?.plotOptions?.series?.custom,
+                                initialPlotHeight: this.plotHeight,
+                            };
                         }
                         const heightRatio = Math.round(
-                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                            getRatio(
+                                this.chartHeight,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotHeight,
+                            ),
                         );
                         const widthRatio = Math.round(
-                            getRatio(this.chartWidth, (this as any).originalPlotWidth),
+                            getRatio(
+                                this.chartWidth,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotWidth,
+                            ),
                         );
                         const isZeroRatio =
                             (heightRatio === 0 && widthRatio < BOTTOM_LIMIT_WIDTH_RATIO) ||
@@ -84,10 +96,12 @@ const getResponsiveConfigOptions = (
                 condition: {
                     callback: function () {
                         const ratio = Math.round(
-                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                            getRatio(
+                                this.chartHeight,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotHeight,
+                            ),
                         );
                         const result = ratio < BOTTOM_LIMIT_HEIGHT_RATIO;
-                        result && console.log("ratio < BOTTOM_LIMIT_HEIGHT_RATIO");
                         return result;
                     },
                 },
@@ -99,11 +113,12 @@ const getResponsiveConfigOptions = (
                 condition: {
                     callback: function () {
                         const ratio = Math.round(
-                            getRatio(this.chartHeight, (this as any).originalPlotHeight),
+                            getRatio(
+                                this.chartHeight,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotHeight,
+                            ),
                         );
                         const result = ratio > BOTTOM_LIMIT_HEIGHT_RATIO && ratio < UPPER_LIMIT_RATIO;
-                        result &&
-                            console.log("ratio > BOTTOM_LIMIT_HEIGHT_RATIO && ratio < UPPER_LIMIT_RATIO");
                         return result;
                     },
                 },
@@ -114,9 +129,13 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartWidth, (this as any).originalPlotWidth));
+                        const ratio = Math.round(
+                            getRatio(
+                                this.chartWidth,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotWidth,
+                            ),
+                        );
                         const result = ratio < BOTTOM_LIMIT_WIDTH_RATIO;
-                        result && console.log("ratio < BOTTOM_LIMIT_WIDTH_RATIO");
                         return result;
                     },
                 },
@@ -127,10 +146,13 @@ const getResponsiveConfigOptions = (
             {
                 condition: {
                     callback: function () {
-                        const ratio = Math.round(getRatio(this.chartWidth, (this as any).originalPlotWidth));
+                        const ratio = Math.round(
+                            getRatio(
+                                this.chartWidth,
+                                this.userOptions?.plotOptions?.series?.custom?.initialPlotWidth,
+                            ),
+                        );
                         const result = ratio > BOTTOM_LIMIT_WIDTH_RATIO && ratio < UPPER_LIMIT_RATIO;
-                        result &&
-                            console.log("ratio > BOTTOM_LIMIT_WIDTH_RATIO && ratio < UPPER_LIMIT_RATIO");
                         return result;
                     },
                 },
