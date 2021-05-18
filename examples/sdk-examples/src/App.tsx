@@ -82,6 +82,11 @@ export const App: React.FC = () => {
                                 box-sizing: border-box;
                             }
 
+                            :global(hr.separator-inner) {
+                                border: 0;
+                                margin: 5px 0;
+                            }
+
                             :global(hr.separator) {
                                 border: 1px solid #eee;
                                 border-width: 1px 0 0 0;
