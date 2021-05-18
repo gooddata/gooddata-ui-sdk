@@ -56,6 +56,7 @@ export const DefaultUiSettings: ISettings = {
     ADMeasureValueFilterNullAsZeroOption: "EnabledCheckedByDefault",
     ADCatalogGroupsExpanded: true,
     enableCustomColorPicker: true,
+    enableAdAdditionalDateAttributes: true,
 };
 
 /**
