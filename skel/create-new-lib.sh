@@ -38,6 +38,17 @@ for item in `ls -A ${skeleton} | grep -Ev "node_modules|dist"`; do
 done;
 
 #
+# Update api-extractor file to match library name
+#
+newlib_api_original="${newlib_dir}/api/${skeleton}.api.md"
+newlib_api="${newlib_dir}/api/${newlib_name}.api.md"
+
+echo "Setting name in ${newlib_api} to ${newlib_name}"
+sedexp="s/${skeleton}/${newlib_name}/g"
+sed "${sedexp}" ${newlib_api_original} >${newlib_api}
+rm "${newlib_api_original}"
+
+#
 # Update package.json to match library name
 #
 newlib_package="${newlib_dir}/package.json"
