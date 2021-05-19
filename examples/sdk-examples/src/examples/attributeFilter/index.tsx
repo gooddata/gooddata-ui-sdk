@@ -7,14 +7,17 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
 import AttributeElementsExample from "./AttributeElementsExample";
 import AttributeFilterExample from "./AttributeFilterExample";
+import AttributeFilterButtonExample from "./AttributeFilterButtonExample";
 
 import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
 import AttributeElementsExampleSRC from "./AttributeElementsExample?raw";
 import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
+import AttributeFilterButtonExampleSRC from "./AttributeFilterButtonExample?raw";
 
 import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
 import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
 import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
+import AttributeFilterButtonExampleSRCJS from "./AttributeFilterButtonExample?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>
@@ -70,6 +73,16 @@ export const AttributeFilter = (): JSX.Element => (
             for={AttributeElementsExample}
             source={AttributeElementsExampleSRC}
             sourceJS={AttributeElementsExampleSRCJS}
+        />
+
+        <hr className="separator" />
+
+        <h2>AttributeFilterButton Component</h2>
+
+        <ExampleWithSource
+            for={AttributeFilterButtonExample}
+            source={AttributeFilterButtonExampleSRC}
+            sourceJS={AttributeFilterButtonExampleSRCJS}
         />
     </div>
 );

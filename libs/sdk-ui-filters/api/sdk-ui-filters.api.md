@@ -26,6 +26,7 @@ import { ObjRefInScope } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { RelativeGranularityOffset } from '@gooddata/sdk-backend-spi';
+import { WrappedComponentProps } from 'react-intl';
 
 // @public
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
@@ -35,6 +36,9 @@ export const AttributeElements: React_2.ComponentType<IAttributeElementsProps>;
 
 // @public
 export const AttributeFilter: React_2.ComponentType<IAttributeFilterProps>;
+
+// @public (undocumented)
+export const AttributeFilterButton: React_2.FC<IAttributeFilterButtonOwnProps>;
 
 // @public
 export class DateFilter extends React_2.PureComponent<IDateFilterProps, IDateFilterState> {
@@ -116,6 +120,21 @@ export interface IAttributeElementsProps {
     options?: IElementsQueryOptions;
     workspace?: string;
 }
+
+// @public (undocumented)
+export interface IAttributeFilterButtonOwnProps {
+    backend?: IAnalyticalBackend;
+    filter?: IAttributeFilter;
+    // @deprecated
+    identifier?: string;
+    onApply: (filter: IAttributeFilter, isInverted: boolean) => void;
+    onError?: (error: any) => void;
+    title?: string;
+    workspace?: string;
+}
+
+// @public (undocumented)
+export type IAttributeFilterButtonProps = IAttributeFilterButtonOwnProps & WrappedComponentProps;
 
 // @public (undocumented)
 export interface IAttributeFilterProps {

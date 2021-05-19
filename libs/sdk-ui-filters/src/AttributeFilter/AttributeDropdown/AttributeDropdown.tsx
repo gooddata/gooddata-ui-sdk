@@ -13,15 +13,16 @@ import noop from "lodash/noop";
 import { AttributeDropdownBody } from "./AttributeDropdownBody";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdownList";
 import { mergeElementQueryResults } from "./mergeElementQueryResults";
-import {
-    IElementQueryResultWithEmptyItems,
-    EmptyListItem,
-    AttributeListItem,
-    isNonEmptyListItem,
-} from "./types";
+import { IElementQueryResultWithEmptyItems, AttributeListItem, isNonEmptyListItem } from "./types";
 
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
+import {
+    getAllTitleIntl,
+    getElements,
+    getElementTotalCount,
+    updateSelectedOptionsWithData,
+} from "../utils/AttributeFilterUtils";
 
 const LIMIT = MAX_SELECTION_SIZE + 50;
 
@@ -103,7 +104,7 @@ export class AttributeDropdownCore extends React.PureComponent<
     constructor(props: IAttributeDropdownProps) {
         super(props);
 
-        const selectedItems = this.updateSelectedItemsWithData(props.selectedItems || [], []);
+        const selectedItems = updateSelectedOptionsWithData(props.selectedItems || [], []);
         const isInverted = props.isInverted ?? false;
 
         this.state = {
@@ -143,65 +144,25 @@ export class AttributeDropdownCore extends React.PureComponent<
                     offset: 0,
                     limit: LIMIT,
                 },
-                () => this.getElements(),
+                () =>
+                    getElements(
+                        this.state.validElements,
+                        this.state.offset,
+                        this.state.limit,
+                        this.loadElements,
+                    ),
             );
         }
     }
 
     public getElementTotalCount = async (): Promise<void> => {
         const { workspace, displayForm } = this.props;
-        const elements = await this.getBackend()
-            .workspace(workspace)
-            .attributes()
-            .elements()
-            .forDisplayForm(displayForm)
-            .withOptions({
-                ...(this.state.searchString ? { filter: this.state.searchString } : {}),
-            })
-            .query();
-        this.setState({ totalCount: elements.totalCount });
-    };
 
-    public getElements = async (): Promise<void> => {
-        const { offset, limit, validElements } = this.state;
-
-        const currentElements = validElements ? validElements.items : [];
-
-        const isQueryOutOfBounds = offset + limit > currentElements.length;
-        const isMissingDataInWindow = currentElements
-            .slice(offset, offset + limit)
-            .some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
-
-        const hasAllData =
-            validElements &&
-            currentElements.length === validElements.totalCount &&
-            !currentElements.some((e: IAttributeElement | EmptyListItem) => (e as EmptyListItem).empty);
-
-        const needsLoading = !hasAllData && (isQueryOutOfBounds || isMissingDataInWindow);
-
-        if (needsLoading) {
-            this.loadElements(offset, limit);
-        }
-    };
-
-    private updateSelectedItemsWithData = (
-        selection: Array<Partial<IAttributeElement>>,
-        items: AttributeListItem[],
-    ): Array<IAttributeElement> => {
-        const nonEmptyItems = items.filter(isNonEmptyListItem);
-        const createFullItem = (item: Partial<IAttributeElement>): IAttributeElement => ({
-            uri: item.uri ? item.uri : "",
-            title: item.title ? item.title : "",
-        });
-
-        return selection.map((selectedItem) => {
-            const foundItem = nonEmptyItems.find(
-                (item) =>
-                    (selectedItem.uri && item.uri === selectedItem.uri) ||
-                    (selectedItem.title && item.title === selectedItem.title),
-            );
-            return foundItem || createFullItem(selectedItem);
-        });
+        getElementTotalCount(workspace, this.getBackend(), displayForm, this.state.searchString).then(
+            (result) => {
+                this.setState({ totalCount: result });
+            },
+        );
     };
 
     private onSearch = debounce((query: string) => {
@@ -235,8 +196,8 @@ export class AttributeDropdownCore extends React.PureComponent<
 
             // make sure that selected items have both title and uri, otherwise selection in InvertableList won't work
             // TODO we could maybe use the InvertableList's getItemKey and just use title or uri for example
-            const updatedSelectedItems = this.updateSelectedItemsWithData(this.state.selectedItems, items);
-            const updatedPrevSelectedItems = this.updateSelectedItemsWithData(
+            const updatedSelectedItems = updateSelectedOptionsWithData(this.state.selectedItems, items);
+            const updatedPrevSelectedItems = updateSelectedOptionsWithData(
                 this.state.prevSelectedItems,
                 items,
             );
@@ -254,24 +215,6 @@ export class AttributeDropdownCore extends React.PureComponent<
         });
     };
 
-    private truncateTitle = (title: string, length?: number, ending?: string) => {
-        const titleLength = length ? length : 35;
-        const endingStr = ending ? ending : "...";
-
-        if (title.length > titleLength) {
-            return title.slice(0, titleLength) + endingStr;
-        }
-
-        return title;
-    };
-
-    private getAllTitleIntl = (isInverted: boolean, empty: boolean, equal: boolean) => {
-        if ((isInverted && empty) || (!isInverted && equal)) {
-            return this.props.intl.formatMessage({ id: "attrf.all" });
-        }
-        return this.props.intl.formatMessage({ id: "attrf.all_except" });
-    };
-
     private getTitle = () => {
         const { isInverted, selectedItems, totalCount } = this.state;
         const { title, displayForm, titleWithSelection } = this.props;
@@ -279,7 +222,7 @@ export class AttributeDropdownCore extends React.PureComponent<
         if (totalCount && titleWithSelection && displayForm) {
             const empty = isEmpty(selectedItems);
             const equal = isEqual(totalCount, selectedItems.length);
-            const getAllPartIntl = this.getAllTitleIntl(isInverted, empty, equal);
+            const getAllPartIntl = getAllTitleIntl(this.props.intl, isInverted, empty, equal);
 
             if (empty) {
                 return isInverted ? `${title}: ${getAllPartIntl}` : title;
@@ -293,7 +236,7 @@ export class AttributeDropdownCore extends React.PureComponent<
                 ? `${title}: ${getAllPartIntl} ${itemTitlesToString}`
                 : `${title}: ${itemTitlesToString}`;
 
-            return `${this.truncateTitle(fullTitle)} (${selectedItems.length})`;
+            return `${stringUtils.shortenText(fullTitle, { maxLength: 35 })} (${selectedItems.length})`;
         }
 
         return title;
@@ -348,7 +291,7 @@ export class AttributeDropdownCore extends React.PureComponent<
 
     private onDropdownOpenStateChanged = (isOpen: boolean) => {
         if (isOpen) {
-            this.getElements();
+            getElements(this.state.validElements, this.state.offset, this.state.limit, this.loadElements);
         } else {
             this.clearSearchString();
             this.restoreSelection();
@@ -378,7 +321,9 @@ export class AttributeDropdownCore extends React.PureComponent<
     };
 
     private onRangeChange = (_searchString: string, from: number, to: number) => {
-        this.setState({ offset: from, limit: to - from }, () => this.getElements());
+        this.setState({ offset: from, limit: to - from }, () =>
+            getElements(this.state.validElements, this.state.offset, this.state.limit, this.loadElements),
+        );
     };
 
     private emptyValueItems(items: AttributeListItem[]): AttributeListItem[] {

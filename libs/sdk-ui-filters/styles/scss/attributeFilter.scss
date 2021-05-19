@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2021 GoodData Corporation
 $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 
 @import "~@gooddata/sdk-ui/styles/scss/settings";
@@ -11,6 +11,8 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
 @import "~@gooddata/sdk-ui-kit/styles/scss/form";
 @import "~@gooddata/sdk-ui-kit/styles/scss/button";
 @import "~fixed-data-table-2/dist/fixed-data-table.css";
+
+$transition-length: 0.2s;
 
 .gd-attribute-filter {
     display: inline-block;
@@ -39,6 +41,163 @@ $gdc-goodstrap-basepath: "~@gooddata/goodstrap/lib/";
     &-actions {
         text-align: right;
         margin-top: 8px;
+    }
+}
+
+.gd-attribute-filter-button {
+    @include gd-font-base;
+
+    position: relative;
+    height: 41px;
+    margin: 7px 11px 7px 0;
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+    user-select: none;
+
+    .button-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        flex-direction: column;
+
+        .overlay & {
+            align-items: center;
+            height: 100%;
+            flex-direction: row;
+        }
+    }
+
+    .button-title,
+    .button-subtitle {
+        white-space: nowrap;
+        max-width: 100%;
+
+        &::after {
+            content: "\e612";
+            display: none;
+            vertical-align: top;
+            color: $gd-color-state-blank;
+            transition: $transition-length;
+            margin-left: 0.5em;
+            font-family: "Indigo";
+            font-weight: normal;
+            font-size: inherit;
+        }
+
+        &:only-child::after {
+            display: inline-block;
+        }
+    }
+
+    .button-title {
+        overflow: hidden;
+        color: $gd-color-link;
+
+        .gd-bubble-trigger,
+        .shortened {
+            display: inline-flex;
+        }
+
+        .shortened {
+            max-width: 100%;
+        }
+
+        .overlay & {
+            flex: 0 0 auto;
+            color: $gd-color-label;
+            max-width: 100%;
+            margin-right: 5px;
+
+            &::after {
+                content: ":";
+            }
+        }
+    }
+
+    .button-subtitle {
+        display: inline-flex;
+        overflow: hidden;
+        color: $gd-color-dark;
+        font-weight: bold;
+        text-overflow: ellipsis;
+
+        .overlay & {
+            flex: 1 1 auto;
+            max-width: none;
+
+            &::after {
+                position: absolute;
+                top: 50%;
+                right: -20px;
+                transform: translateY(-50%);
+                font-size: 18px;
+            }
+        }
+
+        &::after {
+            display: inline-block;
+        }
+    }
+
+    &:active,
+    &.is-active {
+        &::after {
+            &,
+            .edit-mode-on & {
+                box-shadow: inset 0 1px 0 0 $button-normal-active-shadow;
+                border-color: var(--gd-palette-complementary-5, $button-normal-hover-border-color);
+
+                // refactor
+                // stylelint-disable-next-line max-line-length
+                @include gradient-linear(
+                    $button-normal-active-gradient-top,
+                    $button-normal-active-gradient-bottom
+                );
+            }
+        }
+    }
+
+    &.is-active {
+        .button-title,
+        .button-subtitle {
+            &::after {
+                content: "\e613";
+            }
+        }
+    }
+}
+
+// remove button in mobile
+.gd-mobile-dropdown-overlay .gd-attribute-filter-button-mobile {
+    display: none;
+}
+
+// display the duplicate button in mobile content
+.gd-mobile-dropdown-content .gd-attribute-filter-button-mobile {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
+    line-height: 25px;
+    border-width: 1px 0;
+    border-top: 1px solid $gd-border-color;
+    border-bottom: 1px solid $gd-border-color;
+    font-size: nth(map-get($gd-typo, font-sizes), 4);
+    text-align: left;
+    background-color: $gd-color-white;
+
+    &::after {
+        display: none;
+    }
+
+    &::before {
+        right: 4px;
     }
 }
 
