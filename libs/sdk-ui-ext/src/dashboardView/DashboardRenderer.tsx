@@ -122,6 +122,7 @@ const validateItemsSize =
             const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
                 currentWidth,
                 currentHeight,
+                "insight",
                 insight,
                 { enableKDWidgetCustomHeight },
             );
