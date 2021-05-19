@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/dashboard-plugin-template",
+            "projectFolder": "tools/dashboard-plugin-template",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/plugin-toolkit",
             "projectFolder": "tools/plugin-toolkit",
             "reviewCategory": "tools",

@@ -20,6 +20,7 @@ specifiers:
   '@rush-temp/api-model-bear': file:./projects/api-model-bear.tgz
   '@rush-temp/applink': file:./projects/applink.tgz
   '@rush-temp/catalog-export': file:./projects/catalog-export.tgz
+  '@rush-temp/dashboard-plugin-template': file:./projects/dashboard-plugin-template.tgz
   '@rush-temp/experimental-workspace': file:./projects/experimental-workspace.tgz
   '@rush-temp/live-examples-workspace': file:./projects/live-examples-workspace.tgz
   '@rush-temp/mock-handling': file:./projects/mock-handling.tgz
@@ -76,6 +77,7 @@ dependencies:
   '@rush-temp/api-model-bear': file:projects/api-model-bear.tgz_ts-node@8.10.2
   '@rush-temp/applink': file:projects/applink.tgz
   '@rush-temp/catalog-export': file:projects/catalog-export.tgz
+  '@rush-temp/dashboard-plugin-template': file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2
   '@rush-temp/experimental-workspace': file:projects/experimental-workspace.tgz_ts-node@8.10.2
   '@rush-temp/live-examples-workspace': file:projects/live-examples-workspace.tgz_ts-node@8.10.2
   '@rush-temp/mock-handling': file:projects/mock-handling.tgz
@@ -19807,6 +19809,59 @@ packages:
       - canvas
       - eslint-config-prettier
       - supports-color
+      - utf-8-validate
+    dev: false
+
+  file:projects/dashboard-plugin-template.tgz_ts-node@8.10.2:
+    resolution: {integrity: sha512-XkqPzB/BfCCOv97XrSUuEmKWxqqEOk9d77pznGdekYdvOw48VVNd1q/BjRgOD/WMsj6oKJD6IXoLJJ+O1ySCeg==, tarball: file:projects/dashboard-plugin-template.tgz}
+    id: file:projects/dashboard-plugin-template.tgz
+    name: '@rush-temp/dashboard-plugin-template'
+    version: 0.0.0
+    dependencies:
+      '@gooddata/eslint-config': 2.1.0_92a213b8ee67f733a653316df3b3eb18
+      '@microsoft/api-documenter': 7.13.3
+      '@microsoft/api-extractor': 7.8.1
+      '@types/enzyme': 3.10.8
+      '@types/enzyme-adapter-react-16': 1.0.6
+      '@types/jest': 26.0.23
+      '@types/lodash': 4.14.168
+      '@types/raf': 3.4.0
+      '@types/react': 16.14.5
+      '@types/react-dom': 16.9.12
+      '@typescript-eslint/eslint-plugin': 4.22.0_316f1a4362085e72d65ffc324c1237ff
+      '@typescript-eslint/parser': 4.22.0_eslint@7.25.0+typescript@4.0.2
+      concurrently: 6.0.2
+      dependency-cruiser: 9.26.0
+      enzyme: 3.11.0
+      enzyme-adapter-react-16: 1.15.6_4f82faf5e8cab057bc46d4d95079ec42
+      eslint: 7.25.0
+      eslint-plugin-header: 3.1.1_eslint@7.25.0
+      eslint-plugin-import: 2.22.1_eslint@7.25.0
+      eslint-plugin-jest: 24.3.6_0d896d7184d2495853d2903a75aab90b
+      eslint-plugin-no-only-tests: 2.5.0
+      eslint-plugin-prettier: 3.4.0_eslint@7.25.0+prettier@2.3.0
+      eslint-plugin-react: 7.23.2_eslint@7.25.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.25.0
+      jest: 26.6.3_ts-node@8.10.2
+      jest-enzyme: 7.1.2_847a09de400b6a6d5a9c863e7946818d
+      jest-junit: 3.7.0
+      lodash: 4.17.21
+      node-sass: 4.14.1
+      node-sass-magic-importer: 5.3.2
+      prettier: 2.3.0
+      raf: 3.4.1
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      react-intl: 3.12.1_react@16.14.0
+      ts-jest: 26.5.5_jest@26.6.3+typescript@4.0.2
+      tslib: 2.2.0
+      typescript: 4.0.2
+    transitivePeerDependencies:
+      - bufferutil
+      - canvas
+      - eslint-config-prettier
+      - supports-color
+      - ts-node
       - utf-8-validate
     dev: false
 
