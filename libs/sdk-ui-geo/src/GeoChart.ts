@@ -1,16 +1,13 @@
 // (C) 2020-2021 GoodData Corporation
+import { IAttribute, IColorPalette, INullableFilter, ISortItem } from "@gooddata/sdk-model";
 import {
-    IAttribute,
-    IAttributeOrMeasure,
-    IColorPalette,
-    INullableFilter,
-    ISortItem,
-} from "@gooddata/sdk-model";
-import {
+    AnyMeasure,
     IDrillEventContext,
     ISeparators,
     IVisualizationCallbacks,
     IVisualizationProps,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
 } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IColorMapping, PositionType } from "@gooddata/sdk-ui-vis-commons";
@@ -214,13 +211,18 @@ export interface IGeoPushpinChartProps extends IVisualizationProps, IVisualizati
      */
     workspace?: string;
 
-    location: IAttribute;
-    size?: IAttributeOrMeasure;
-    color?: IAttributeOrMeasure;
-    segmentBy?: IAttribute;
+    location: ValueOrPlaceholder<IAttribute>;
+    size?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    color?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    segmentBy?: ValueOrPlaceholder<IAttribute>;
 
-    filters?: INullableFilter[];
-    sortBy?: ISortItem[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 
     config?: IGeoConfig;
 

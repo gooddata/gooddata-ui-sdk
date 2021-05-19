@@ -1,6 +1,6 @@
 // (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
+import { IAttribute, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { DataViewWindow } from "./withExecutionLoading";
 import {
     DataViewFacade,
@@ -8,6 +8,9 @@ import {
     useBackendStrict,
     useWorkspaceStrict,
     UseCancelablePromiseState,
+    useResolveValuesWithPlaceholders,
+    ValuesOrPlaceholders,
+    AnyMeasure,
 } from "../base";
 import { useDataView } from "./useDataView";
 import isEmpty from "lodash/isEmpty";
@@ -21,27 +24,32 @@ export interface IExecutionConfiguration {
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: IAttributeOrMeasure[];
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally slice all data series by elements of these attributes.
      */
-    slicesBy?: IAttribute[];
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally include these totals among the data slices.
      */
-    totals?: ITotal[];
+    totals?: ValuesOrPlaceholders<ITotal>;
 
     /**
      * Optional filters to apply on server side.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optional sorting to apply on server side.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 
     /**
      * Optional informative name of the component. This value is sent as telemetry information together
@@ -106,8 +114,29 @@ export function useExecutionDataView(
     const workspace = useWorkspaceStrict(config.workspace, "useExecutionDataView");
     const effectiveDeps = deps ?? [];
 
+    const propsToResolve = getExecutionConfigurationProps(config.execution);
+    const [seriesBy, slicesBy, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [
+            propsToResolve.seriesBy,
+            propsToResolve.slicesBy,
+            propsToResolve.totals,
+            propsToResolve.filters,
+            propsToResolve.sortBy,
+        ],
+        propsToResolve.placeholdersResolutionContext,
+    );
+
     const preparedExecution = isExecutionConfiguration(execution)
-        ? createExecution({ ...execution, backend, workspace })
+        ? createExecution({
+              ...execution,
+              seriesBy: seriesBy!,
+              slicesBy,
+              totals,
+              filters,
+              sortBy,
+              backend,
+              workspace,
+          })
         : execution;
 
     return useDataView({ execution: preparedExecution, window }, [
@@ -116,4 +145,17 @@ export function useExecutionDataView(
         preparedExecution?.fingerprint() ?? "__executionFingerprint__",
         ...effectiveDeps,
     ]);
+}
+
+/**
+ * @internal
+ */
+function getExecutionConfigurationProps(
+    execution?: IPreparedExecution | IExecutionConfiguration,
+): Partial<IExecutionConfiguration> {
+    if (isExecutionConfiguration(execution)) {
+        return execution;
+    }
+
+    return {};
 }

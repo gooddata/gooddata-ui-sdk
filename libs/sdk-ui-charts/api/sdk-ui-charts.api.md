@@ -4,16 +4,15 @@
 
 ```ts
 
+import { AnyMeasure } from '@gooddata/sdk-ui';
 import { ChartType } from '@gooddata/sdk-ui';
 import { ColorUtils } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
-import { IMeasure } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { ISeparators } from '@gooddata/numberjs';
@@ -23,16 +22,18 @@ import { ITheme } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { ValueOrPlaceholder } from '@gooddata/sdk-ui';
+import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
 
 // @public
-export const AreaChart: import("react").ComponentType<IAreaChartProps>;
+export const AreaChart: (props: IAreaChartProps) => JSX.Element;
 
 // @public (undocumented)
 export type AxisNamePosition = "high" | "low" | "middle";
 
 // @public
-export const BarChart: import("react").ComponentType<IBarChartProps>;
+export const BarChart: (props: IBarChartProps) => JSX.Element;
 
 // @internal
 export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
@@ -41,10 +42,10 @@ export const BaseChart: React_2.ComponentClass<IBaseChartProps, any>;
 export const BOTTOM = "bottom";
 
 // @public
-export const BubbleChart: import("react").ComponentType<IBubbleChartProps>;
+export const BubbleChart: (props: IBubbleChartProps) => JSX.Element;
 
 // @public
-export const BulletChart: import("react").ComponentType<IBulletChartProps>;
+export const BulletChart: (props: IBulletChartProps) => JSX.Element;
 
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
@@ -52,10 +53,10 @@ export type ChartAlignTypes = "top" | "bottom" | "middle";
 export { ColorUtils }
 
 // @public
-export const ColumnChart: import("react").ComponentType<IColumnChartProps>;
+export const ColumnChart: (props: IColumnChartProps) => JSX.Element;
 
 // @public
-export const ComboChart: import("react").ComponentType<IComboChartProps>;
+export const ComboChart: (props: IComboChartProps) => JSX.Element;
 
 // @internal
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps, any>;
@@ -64,24 +65,25 @@ export const CoreHeadline: React_2.ComponentClass<ICoreChartProps, any>;
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
 
 // @public
-export const DonutChart: import("react").ComponentType<IDonutChartProps>;
+export const DonutChart: (props: IDonutChartProps) => JSX.Element;
 
 // @public
-export const FunnelChart: import("react").ComponentType<IFunnelChartProps>;
+export const FunnelChart: (props: IFunnelChartProps) => JSX.Element;
 
 // @public
-export const Headline: React_2.ComponentType<IHeadlineProps>;
+export const Headline: (props: IHeadlineProps) => JSX.Element;
 
 // @public
-export const Heatmap: import("react").ComponentType<IHeatmapProps>;
+export const Heatmap: (props: IHeatmapProps) => JSX.Element;
 
 // @public (undocumented)
 export interface IAreaChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    stackBy?: IAttribute;
-    viewBy?: IAttribute | IAttribute[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)
@@ -107,11 +109,12 @@ export interface IAxisNameConfig {
 
 // @public (undocumented)
 export interface IBarChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    stackBy?: IAttribute;
-    viewBy?: IAttribute | IAttribute[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)
@@ -130,12 +133,13 @@ export interface IBaseChartProps extends ICoreChartProps {
 
 // @public (undocumented)
 export interface IBubbleChartBucketProps {
-    filters?: INullableFilter[];
-    size?: IMeasure;
-    sortBy?: ISortItem[];
-    viewBy?: IAttribute;
-    xAxisMeasure?: IMeasure;
-    yAxisMeasure?: IMeasure;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    size?: ValueOrPlaceholder<AnyMeasure>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
+    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
 }
 
 // @public (undocumented)
@@ -150,12 +154,13 @@ export interface IBucketChartProps extends ICommonChartProps {
 
 // @public (undocumented)
 export interface IBulletChartBucketProps {
-    comparativeMeasure?: IAttributeOrMeasure;
-    filters?: INullableFilter[];
-    primaryMeasure: IAttributeOrMeasure;
-    sortBy?: ISortItem[];
-    targetMeasure?: IAttributeOrMeasure;
-    viewBy?: IAttribute | IAttribute[];
+    comparativeMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    primaryMeasure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    targetMeasure?: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)
@@ -221,11 +226,12 @@ export { IColorMapping }
 
 // @public (undocumented)
 export interface IColumnChartBucketProps {
-    filters?: IFilter[];
-    measures: IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    stackBy?: IAttribute;
-    viewBy?: IAttribute | IAttribute[];
+    filters?: ValuesOrPlaceholders<IFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)
@@ -234,11 +240,12 @@ export interface IColumnChartProps extends IBucketChartProps, IColumnChartBucket
 
 // @public (undocumented)
 export interface IComboChartBucketProps {
-    filters?: INullableFilter[];
-    primaryMeasures?: IMeasure[];
-    secondaryMeasures?: IMeasure[];
-    sortBy?: ISortItem[];
-    viewBy?: IAttribute | IAttribute[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    primaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
+    secondaryMeasures?: ValuesOrPlaceholders<AnyMeasure>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 }
 
 // @public (undocumented)
@@ -277,10 +284,11 @@ export type IDataPointsVisible = boolean | "auto";
 
 // @public (undocumented)
 export interface IDonutChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure | IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    viewBy?: IAttribute;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValueOrPlaceholder<IAttribute | AnyMeasure> | ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 }
 
 // @public (undocumented)
@@ -289,10 +297,11 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
 
 // @public (undocumented)
 export interface IFunnelChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    viewBy?: IAttribute;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 }
 
 // @public (undocumented)
@@ -307,9 +316,10 @@ export interface IGridConfig {
 
 // @public (undocumented)
 export interface IHeadlineBucketProps {
-    filters?: INullableFilter[];
-    primaryMeasure: IMeasure;
-    secondaryMeasure?: IMeasure;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    primaryMeasure: ValueOrPlaceholder<AnyMeasure>;
+    secondaryMeasure?: ValueOrPlaceholder<AnyMeasure>;
 }
 
 // @public (undocumented)
@@ -318,11 +328,12 @@ export interface IHeadlineProps extends IBucketChartProps, IHeadlineBucketProps 
 
 // @public (undocumented)
 export interface IHeatmapBucketProps {
-    columns?: IAttribute;
-    filters?: INullableFilter[];
-    measure: IAttributeOrMeasure;
-    rows?: IAttribute;
-    sortBy?: ISortItem[];
+    columns?: ValueOrPlaceholder<IAttribute>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measure: ValueOrPlaceholder<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    rows?: ValueOrPlaceholder<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
 }
 
 // @public (undocumented)
@@ -354,11 +365,12 @@ export interface ILegendItem {
 
 // @public (undocumented)
 export interface ILineChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    segmentBy?: IAttribute;
-    sortBy?: ISortItem[];
-    trendBy?: IAttribute;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    segmentBy?: ValueOrPlaceholder<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    trendBy?: ValueOrPlaceholder<IAttribute>;
 }
 
 // @public (undocumented)
@@ -367,10 +379,11 @@ export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProp
 
 // @public (undocumented)
 export interface IPieChartBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    sortBy?: ISortItem[];
-    viewBy?: IAttribute;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 }
 
 // @public (undocumented)
@@ -391,11 +404,12 @@ export const isBulletChart: import("lodash/fp").LodashIsEqual1x1;
 
 // @public (undocumented)
 export interface IScatterPlotBucketProps {
-    attribute?: IAttribute;
-    filters?: INullableFilter[];
-    sortBy?: ISortItem[];
-    xAxisMeasure?: IMeasure;
-    yAxisMeasure?: IMeasure;
+    attribute?: ValueOrPlaceholder<IAttribute>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    xAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
+    yAxisMeasure?: ValueOrPlaceholder<AnyMeasure>;
 }
 
 // @public (undocumented)
@@ -436,10 +450,11 @@ export interface ITooltipConfig {
 
 // @public (undocumented)
 export interface ITreemapBucketProps {
-    filters?: INullableFilter[];
-    measures: IAttributeOrMeasure[];
-    segmentBy?: IAttribute;
-    viewBy?: IAttribute;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    segmentBy?: ValueOrPlaceholder<IAttribute>;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 }
 
 // @public (undocumented)
@@ -448,9 +463,10 @@ export interface ITreemapProps extends IBucketChartProps, ITreemapBucketProps {
 
 // @beta (undocumented)
 export interface IXirrBucketProps {
-    attribute?: IAttribute;
-    filters?: INullableFilter[];
-    measure: IMeasure;
+    attribute?: ValueOrPlaceholder<IAttribute>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measure: ValueOrPlaceholder<AnyMeasure>;
+    placeholdersResolutionContext?: any;
 }
 
 // @beta (undocumented)
@@ -458,7 +474,7 @@ export interface IXirrProps extends IBucketChartProps, IXirrBucketProps {
 }
 
 // @public
-export const LineChart: import("react").ComponentType<ILineChartProps>;
+export const LineChart: (props: ILineChartProps) => JSX.Element;
 
 // @internal (undocumented)
 export const MIDDLE = "middle";
@@ -467,19 +483,19 @@ export const MIDDLE = "middle";
 export type OnLegendReady = (data: ILegendData) => void;
 
 // @public
-export const PieChart: import("react").ComponentType<IPieChartProps>;
+export const PieChart: (props: IPieChartProps) => JSX.Element;
 
 // @public
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";
 
 // @public
-export const ScatterPlot: import("react").ComponentType<IScatterPlotProps>;
+export const ScatterPlot: (props: IScatterPlotProps) => JSX.Element;
 
 // @internal (undocumented)
 export const TOP = "top";
 
 // @public
-export const Treemap: import("react").ComponentType<ITreemapProps>;
+export const Treemap: (props: ITreemapProps) => JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
@@ -491,7 +507,7 @@ export const ViewByAttributesLimit = 2;
 export const withJsxExport: <T extends object>(Component: React_2.ComponentType<T>) => React_2.ComponentType<T>;
 
 // @beta
-export const Xirr: React_2.ComponentType<IXirrProps>;
+export const Xirr: (props: IXirrProps) => JSX.Element;
 
 
 ```

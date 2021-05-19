@@ -1,4 +1,5 @@
 // (C) 2007-2019 GoodData Corporation
+import React from "react";
 import {
     applyRatioRule,
     IAttribute,
@@ -9,7 +10,13 @@ import {
 } from "@gooddata/sdk-model";
 import { truncate } from "../_commons/truncate";
 import { IBucketChartProps, IChartConfig, ViewByAttributesLimit } from "../../interfaces";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { stackedChartDimensions } from "../_commons/dimensions";
 import { CoreAreaChart } from "./CoreAreaChart";
 import { IChartDefinition } from "../_commons/chartDefinition";
@@ -40,8 +47,8 @@ const areaChartDefinition: IChartDefinition<IAreaChartBucketProps, IAreaChartPro
             .withTelemetry("AreaChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(stackedChartDimensions);
     },
     propOverridesFactory: (props, buckets) => {
@@ -75,9 +82,9 @@ export function getBucketsProps(props: IAreaChartBucketProps): {
 
     if (viewBy.length <= 1) {
         return {
-            measures: measures || [],
-            viewBy,
-            stackBy: stackBy ? [stackBy] : [],
+            measures: (measures as IAttributeOrMeasure[]) || [],
+            viewBy: viewBy as IAttribute[],
+            stackBy: stackBy ? [stackBy as IAttribute] : [],
         };
     }
 
@@ -86,9 +93,9 @@ export function getBucketsProps(props: IAreaChartBucketProps): {
     const [firstAttribute, secondAttribute] = viewBy; // only take first two attributes
 
     return {
-        measures: [firstMeasure],
-        viewBy: [firstAttribute], // one attribute for viewBy which slices measure vertically
-        stackBy: [secondAttribute], // one attribute for stackBy which slices measure horizontally
+        measures: [firstMeasure as IAttributeOrMeasure],
+        viewBy: [firstAttribute as IAttribute], // one attribute for viewBy which slices measure vertically
+        stackBy: [secondAttribute as IAttribute], // one attribute for stackBy which slices measure horizontally
     };
 }
 
@@ -139,7 +146,7 @@ export interface IAreaChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify attributes to slice and optionally stack the area chart.
@@ -156,7 +163,7 @@ export interface IAreaChartBucketProps {
      * stackBy attribute. In either case, as soon as the area chart is stacked, only the first measure will be
      * calculated and charted.
      */
-    viewBy?: IAttribute | IAttribute[];
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally specify attribute to stack by. This is only applicable if you specify at most single viewBy
@@ -165,23 +172,30 @@ export interface IAreaChartBucketProps {
      * Note: stacking area chart using attribute elements means only a single measure can be charted. The component
      * will take the first measure.
      */
-    stackBy?: IAttribute;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProps {}
+
+const WrappedAreaChart = withChart(areaChartDefinition)(CoreAreaChart);
 
 /**
  * [AreaChart](http://sdk.gooddata.com/gooddata-ui/docs/area_chart_component.html)
@@ -196,4 +210,22 @@ export interface IAreaChartProps extends IBucketChartProps, IAreaChartBucketProp
  * @remarks See {@link IAreaChartProps} to learn how it is possible to configure the AreaChart
  * @public
  */
-export const AreaChart = withChart(areaChartDefinition)(CoreAreaChart);
+export const AreaChart = (props: IAreaChartProps) => {
+    const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedAreaChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                stackBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

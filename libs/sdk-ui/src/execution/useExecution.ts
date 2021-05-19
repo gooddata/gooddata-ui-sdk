@@ -1,7 +1,13 @@
 // (C) 2019-2021 GoodData Corporation
 import { IAnalyticalBackend, IPreparedExecution } from "@gooddata/sdk-backend-spi";
-import { IAttributeOrMeasure, IAttribute, ITotal, INullableFilter, ISortItem } from "@gooddata/sdk-model";
-import { useBackend, useWorkspace } from "../base";
+import { IAttribute, ITotal, INullableFilter, ISortItem } from "@gooddata/sdk-model";
+import {
+    AnyMeasure,
+    useBackend,
+    useResolveValuesWithPlaceholders,
+    useWorkspace,
+    ValuesOrPlaceholders,
+} from "../base";
 import { createExecution } from "./createExecution";
 
 /**
@@ -12,27 +18,32 @@ export interface IUseExecutionConfig {
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: IAttributeOrMeasure[];
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally slice all data series by elements of these attributes.
      */
-    slicesBy?: IAttribute[];
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally include these totals among the data slices.
      */
-    totals?: ITotal[];
+    totals?: ValuesOrPlaceholders<ITotal>;
 
     /**
      * Optional filters to apply on server side.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optional sorting to apply on server side.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 
     /**
      * Optional informative name of the component. This value is sent as telemetry information together
@@ -69,12 +80,19 @@ export interface IUseExecutionConfig {
 export function useExecution(config: IUseExecutionConfig): IPreparedExecution {
     const backend = useBackend(config.backend);
     const workspace = useWorkspace(config.workspace);
+    const [seriesBy, slicesBy, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [config.seriesBy, config.slicesBy, config.totals, config.filters, config.sortBy],
+        config.placeholdersResolutionContext,
+    );
 
-    const execution = createExecution({
+    return createExecution({
         ...config,
         backend,
         workspace,
+        seriesBy,
+        slicesBy,
+        totals,
+        filters,
+        sortBy,
     });
-
-    return execution;
 }

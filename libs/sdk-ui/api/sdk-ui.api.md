@@ -11,7 +11,6 @@ import { DependencyList } from 'react';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptor } from '@gooddata/sdk-backend-spi';
-import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -25,6 +24,7 @@ import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
+import { IMeasureDefinitionType } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-backend-spi';
 import { IMeasureGroupDescriptor } from '@gooddata/sdk-backend-spi';
 import { IntlShape } from 'react-intl';
@@ -43,13 +43,29 @@ import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
+import { ValueOrUpdateCallback } from '@gooddata/sdk-backend-base';
 import { WrappedComponentProps } from 'react-intl';
+
+// @public
+export type AnyArrayOf<T> = T[] | ArrayOf<T>;
+
+// @public
+export type AnyMeasure = IMeasure | MeasureOf<IMeasureDefinitionType>;
+
+// @public
+export type AnyPlaceholder<T = any> = IPlaceholder<T> | IComposedPlaceholder<T, any, any>;
+
+// @public
+export type AnyPlaceholderOf<T> = AnyPlaceholder<T> | PlaceholderOf<T>;
 
 // @internal
 export class ArithmeticMeasureTitleFactory {
     constructor(locale: ILocale);
     getTitle(arithmeticMeasureProps: IArithmeticMeasureTitleProps, measureTitleProps: IMeasureTitleProps[]): string | null;
     }
+
+// @public
+export type ArrayOf<T> = T extends any ? T[] : never;
 
 // @public
 export function attributeItemNameMatch(name: string): IHeaderPredicate;
@@ -153,6 +169,9 @@ export function composedFromIdentifier(identifier: string): IHeaderPredicate;
 
 // @public
 export function composedFromUri(uri: string): IHeaderPredicate;
+
+// @public
+export type ComposedPlaceholderResolutionContext<T> = T extends IComposedPlaceholder<any, any, infer TContext> ? TContext : any;
 
 // @internal (undocumented)
 export function convertDrillableItemsToPredicates(drillableItems: Array<IDrillableItem | IHeaderPredicate>): IHeaderPredicate[];
@@ -324,7 +343,7 @@ export class ErrorComponent extends React_2.Component<IErrorProps> {
 }
 
 // @public
-export const Execute: React_2.ComponentType<IExecuteProps>;
+export const Execute: (props: IExecuteProps) => JSX.Element;
 
 // @beta
 export const ExecuteInsight: React_2.ComponentType<IExecuteInsightProps>;
@@ -334,6 +353,9 @@ export function fillMissingTitles<T extends IInsightDefinition>(insight: T, loca
 
 // @internal
 export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEventData: IDrillEvent, target: EventTarget): void;
+
+// @public
+export type Flatten<T> = T extends Array<infer A> ? A : T;
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -503,6 +525,18 @@ export interface IColorsData {
     colorAssignments: IColorAssignment[];
     // (undocumented)
     colorPalette: IColorPalette;
+}
+
+// @public
+export interface IComposedPlaceholder<TReturn, TValue extends any[], TContext> {
+    // (undocumented)
+    computeValue: (values: PlaceholdersResolvedValues<TValue>, resolutionContext: TContext) => TReturn;
+    // (undocumented)
+    placeholders: TValue;
+    // (undocumented)
+    type: "IComposedPlaceholder";
+    // (undocumented)
+    use: IUseComposedPlaceholderHook<IComposedPlaceholder<TReturn, TValue, TContext>>;
 }
 
 // @public
@@ -794,13 +828,14 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
     componentName?: string;
     ErrorComponent?: IExecuteErrorComponent;
     exportTitle?: string;
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
     LoadingComponent?: IExecuteLoadingComponent;
     loadOnMount?: boolean;
-    seriesBy: IAttributeOrMeasure[];
-    slicesBy?: IAttribute[];
-    sortBy?: ISortItem[];
-    totals?: ITotal[];
+    placeholdersResolutionContext?: any;
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    totals?: ValuesOrPlaceholders<ITotal>;
     window?: DataViewWindow;
     workspace?: string;
 }
@@ -808,11 +843,12 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
 // @beta (undocumented)
 export interface IExecutionConfiguration {
     componentName?: string;
-    filters?: INullableFilter[];
-    seriesBy: IAttributeOrMeasure[];
-    slicesBy?: IAttribute[];
-    sortBy?: ISortItem[];
-    totals?: ITotal[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    totals?: ValuesOrPlaceholders<ITotal>;
 }
 
 // @alpha
@@ -966,6 +1002,30 @@ export class IntlWrapper extends React_2.PureComponent<IIntlWrapperProps> {
     render(): React_2.ReactNode;
 }
 
+// @public
+export type IPlaceholder<T> = {
+    type: "IPlaceholder";
+    id: string;
+    defaultValue?: T;
+    value?: T;
+    validate?: (value: T) => void;
+    use: IUsePlaceholderHook<IPlaceholder<T>>;
+};
+
+// @public
+export interface IPlaceholderOptions<T> {
+    id?: string;
+    validate?: (value?: T) => void;
+}
+
+// @public (undocumented)
+export interface IPlaceholdersProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    initialValues?: [placeholder: IPlaceholder<any>, initialValue: any][];
+}
+
 // @internal
 export interface IPushData {
     // (undocumented)
@@ -1039,6 +1099,9 @@ export interface IResultMetaMethods {
 }
 
 // @public
+export function isAnyPlaceholder<T>(obj: unknown): obj is AnyPlaceholder<T>;
+
+// @public
 export function isBadRequest(obj: unknown): obj is BadRequestSdkError;
 
 // @internal (undocumented)
@@ -1046,6 +1109,9 @@ export const isCancelError: (obj: unknown) => obj is CancelError;
 
 // @public
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError;
+
+// @public
+export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(obj: unknown): obj is IComposedPlaceholder<TReturn, TValue, TContext>;
 
 // @public
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError;
@@ -1086,6 +1152,9 @@ export function isNoDataSdkError(obj: unknown): obj is NoDataSdkError;
 export function isNotFound(obj: unknown): obj is NotFoundSdkError;
 
 // @public
+export function isPlaceholder<T>(obj: unknown): obj is IPlaceholder<T>;
+
+// @public
 export function isProtectedReport(obj: unknown): obj is ProtectedReportSdkError;
 
 // @internal (undocumented)
@@ -1122,15 +1191,19 @@ export interface ITranslationsProviderOwnProps {
 // @internal (undocumented)
 export type ITranslationsProviderProps = ITranslationsProviderOwnProps & WrappedComponentProps;
 
+// @public
+export type IUseComposedPlaceholderHook<T extends IComposedPlaceholder<any, any, any>> = (resolutionContext: ComposedPlaceholderResolutionContext<T>) => PlaceholderResolvedValue<T>;
+
 // @beta (undocumented)
 export interface IUseExecutionConfig {
     backend?: IAnalyticalBackend;
     componentName?: string;
-    filters?: INullableFilter[];
-    seriesBy: IAttributeOrMeasure[];
-    slicesBy?: IAttribute[];
-    sortBy?: ISortItem[];
-    totals?: ITotal[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    placeholdersResolutionContext?: any;
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    totals?: ValuesOrPlaceholders<ITotal>;
     workspace?: string;
 }
 
@@ -1167,6 +1240,12 @@ export interface IUsePagedResourceState<TItem> {
     // (undocumented)
     totalItemsCount: number | undefined;
 }
+
+// @public
+export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
+    value: PlaceholderValue<T> | undefined,
+    setPlaceholder: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+];
 
 // @public
 export interface IVisualizationCallbacks {
@@ -1240,6 +1319,9 @@ export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHead
 // @internal
 export function makeCancelable<T>(promise: Promise<T>): ICancelablePromise<T>;
 
+// @public
+export type MeasureOf<T extends IMeasureDefinitionType> = T extends any ? IMeasure<T> : never;
+
 // @internal (undocumented)
 export const messagesMap: {
     [locale: string]: ITranslations;
@@ -1251,7 +1333,13 @@ export class NegativeValuesSdkError extends GoodDataSdkError {
 }
 
 // @public
+export function newComposedPlaceholder<TValue extends any[], TReturn = PlaceholdersResolvedValues<TValue>, TContext = UnionToIntersection<ComposedPlaceholderResolutionContext<Flatten<TValue>>>>(placeholders: [...TValue], computeValue?: (values: PlaceholdersResolvedValues<TValue>, resolutionContext: TContext) => TReturn): IComposedPlaceholder<TReturn, TValue, TContext>;
+
+// @public
 export function newErrorMapping(intl: IntlShape): IErrorDescriptors;
+
+// @public
+export function newPlaceholder<T>(defaultValue?: T, options?: IPlaceholderOptions<T>): IPlaceholder<T>;
 
 // @public
 export class NoDataSdkError extends GoodDataSdkError {
@@ -1284,6 +1372,28 @@ export const OverTimeComparisonTypes: {
     PREVIOUS_PERIOD: "previous_period";
     NOTHING: "nothing";
 };
+
+// @public
+export type PlaceholderOf<T> = T extends any ? AnyPlaceholder<T> : never;
+
+// @public
+export type PlaceholderResolvedValue<T> = T extends Array<infer A> ? Flatten<PlaceholderResolvedValue<A>>[] : T extends IPlaceholder<infer B> ? B : T extends IComposedPlaceholder<infer C, any, any> ? C : T;
+
+// @public (undocumented)
+export function PlaceholdersProvider(props: IPlaceholdersProviderProps): JSX.Element;
+
+// @public
+export type PlaceholdersResolvedValues<Tuple extends any[]> = {
+    [Index in keyof Tuple]: PlaceholderResolvedValue<Tuple[Index]>;
+};
+
+// @public
+export type PlaceholdersValues<Tuple extends [...any[]]> = {
+    [Index in keyof Tuple]: PlaceholderValue<Tuple[Index]>;
+};
+
+// @public
+export type PlaceholderValue<T> = T extends IPlaceholder<infer A> ? A : T extends IComposedPlaceholder<infer B, any, any> ? B : T;
 
 // @public
 export class ProtectedReportSdkError extends GoodDataSdkError {
@@ -1330,6 +1440,9 @@ export class UnauthorizedSdkError extends GoodDataSdkError {
 export class UnexpectedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @public
+export type UnionToIntersection<T> = (T extends any ? (x: T) => any : never) extends (x: infer R) => any ? R : never;
 
 // @public
 export function uriMatch(uri: string): IHeaderPredicate;
@@ -1388,6 +1501,9 @@ export type UseCancelablePromiseSuccessState<TResult> = {
     status: "success";
 };
 
+// @public
+export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
+
 // @beta
 export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {
     execution: IPreparedExecution | undefined | null;
@@ -1425,6 +1541,24 @@ export function useInsightDataView(config: IUseInsightDataViewConfig, deps?: Rea
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>): IUsePagedResourceResult<TItem>;
 
 // @public
+export function usePlaceholder<T extends IPlaceholder<any>>(placeholder: T): [
+    returnValue: PlaceholderValue<T> | undefined,
+    setPlaceholderValue: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+];
+
+// @public
+export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [
+    returnValues: PlaceholdersValues<T>,
+    setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void
+];
+
+// @public
+export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;
+
+// @public
+export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContext?: C): PlaceholderResolvedValue<T>;
+
+// @public
 export const useWorkspace: (workspace?: string | undefined) => string | undefined;
 
 // @public
@@ -1432,6 +1566,12 @@ export const useWorkspaceStrict: (workspace?: string | undefined, context?: stri
 
 // @public (undocumented)
 export type ValueFormatter = (value: DataValue, format: string) => string;
+
+// @public
+export type ValueOrPlaceholder<T> = T | AnyPlaceholderOf<T>;
+
+// @public
+export type ValuesOrPlaceholders<T> = AnyArrayOf<ValueOrPlaceholder<T> | AnyPlaceholderOf<AnyArrayOf<T>>>;
 
 // @public (undocumented)
 export type VisElementType = ChartElementType | HeadlineElementType | TableElementType | "pushpin";

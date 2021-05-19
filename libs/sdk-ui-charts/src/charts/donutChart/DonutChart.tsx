@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
 import { CoreDonutChart } from "./CoreDonutChart";
@@ -15,11 +22,14 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
     chartName: "DonutChart",
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
-        const measures: IAttributeOrMeasure[] = Array.isArray(props.measures)
-            ? props.measures
-            : [props.measures];
+        const measures = (
+            Array.isArray(props.measures) ? props.measures : [props.measures]
+        ) as IAttributeOrMeasure[];
 
-        return [newBucket(BucketNames.MEASURES, ...measures), newBucket(BucketNames.VIEW, props.viewBy)];
+        return [
+            newBucket(BucketNames.MEASURES, ...measures),
+            newBucket(BucketNames.VIEW, props.viewBy as IAttribute),
+        ];
     },
     executionFactory: (props, buckets) => {
         const { backend, workspace } = props;
@@ -28,8 +38,8 @@ const donutChartDefinition: IChartDefinition<IDonutChartBucketProps, IDonutChart
             .withTelemetry("DonutChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(roundChartDimensions);
     },
 };
@@ -51,29 +61,36 @@ export interface IDonutChartBucketProps {
      * If you specify multiple measures, then there will be a donut slice for each measure value. You may not
      * specify the viewBy in this case.
      */
-    measures: IAttributeOrMeasure | IAttributeOrMeasure[];
+    measures: ValueOrPlaceholder<IAttribute | AnyMeasure> | ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify viewBy attribute that will be used to create the donut slices. There will be a slice
      * for each value of the attribute.
      */
-    viewBy?: IAttribute;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketProps {}
+
+const WrappedDonutChart = withChart(donutChartDefinition)(CoreDonutChart);
 
 /**
  * [DonutChart](http://sdk.gooddata.com/gooddata-ui/docs/donut_chart_component.html)
@@ -87,4 +104,21 @@ export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketPr
  *
  * @public
  */
-export const DonutChart = withChart(donutChartDefinition)(CoreDonutChart);
+export const DonutChart = (props: IDonutChartProps) => {
+    const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedDonutChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

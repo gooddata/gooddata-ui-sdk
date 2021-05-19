@@ -8,7 +8,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Execute, IExecuteProps } from "../Execute";
 import { ReferenceLdm } from "@gooddata/reference-workspace";
 import { newAttributeSort, newPositiveAttributeFilter, newTotal } from "@gooddata/sdk-model";
-import { createExecution } from "../createExecution";
+import { createExecution, CreateExecutionOptions } from "../createExecution";
 import { LoadingComponent } from "../../base/react/LoadingComponent";
 import { IExecuteErrorComponent } from "../interfaces";
 
@@ -265,7 +265,7 @@ describe("createExecution", () => {
             ...props,
         };
 
-        const execution = createExecution(input);
+        const execution = createExecution(input as CreateExecutionOptions);
 
         expect(execution.definition).toMatchSnapshot();
     });

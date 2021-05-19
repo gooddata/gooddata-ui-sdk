@@ -1,6 +1,13 @@
 // (C) 2007-2018 GoodData Corporation
+import React from "react";
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    AnyMeasure,
+    BucketNames,
+    useResolveValuesWithPlaceholders,
+    ValueOrPlaceholder,
+    ValuesOrPlaceholders,
+} from "@gooddata/sdk-ui";
 import { roundChartDimensions } from "../_commons/dimensions";
 import { IBucketChartProps } from "../../interfaces";
 import { CorePieChart } from "./CorePieChart";
@@ -16,8 +23,8 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
     bucketPropsKeys: ["measures", "viewBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
         return [
-            newBucket(BucketNames.MEASURES, ...props.measures),
-            newBucket(BucketNames.VIEW, props.viewBy),
+            newBucket(BucketNames.MEASURES, ...(props.measures as IAttributeOrMeasure[])),
+            newBucket(BucketNames.VIEW, props.viewBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -27,8 +34,8 @@ const pieChartDefinition: IChartDefinition<IPieChartBucketProps, IPieChartProps>
             .withTelemetry("PieChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as INullableFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(roundChartDimensions);
     },
 };
@@ -50,29 +57,36 @@ export interface IPieChartBucketProps {
      * If you specify multiple measures, then there will be a pie slice for each measure value. You may not
      * specify the viewBy in this case.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify viewBy attribute that will be used to create the pie slices. There will be a slice
      * for each value of the attribute.
      */
-    viewBy?: IAttribute;
+    viewBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps {}
+
+const WrappedPieChart = withChart(pieChartDefinition)(CorePieChart);
 
 /**
  * [PieChart](http://sdk.gooddata.com/gooddata-ui/docs/pie_chart_component.html)
@@ -81,4 +95,21 @@ export interface IPieChartProps extends IBucketChartProps, IPieChartBucketProps 
  *
  * @public
  */
-export const PieChart = withChart(pieChartDefinition)(CorePieChart);
+export const PieChart = (props: IPieChartProps) => {
+    const [measures, viewBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedPieChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

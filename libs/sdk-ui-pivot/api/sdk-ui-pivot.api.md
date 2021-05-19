@@ -4,9 +4,9 @@
 
 ```ts
 
+import { AnyMeasure } from '@gooddata/sdk-ui';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
-import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBackendCapabilities } from '@gooddata/sdk-backend-spi';
 import { Identifier } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
@@ -20,6 +20,7 @@ import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { TotalType } from '@gooddata/sdk-model';
+import { ValuesOrPlaceholders } from '@gooddata/sdk-ui';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public (undocumented)
@@ -128,12 +129,13 @@ export interface IPivotTableBaseProps extends IVisualizationProps, IVisualizatio
 
 // @public (undocumented)
 export interface IPivotTableBucketProps {
-    columns?: IAttribute[];
-    filters?: INullableFilter[];
-    measures?: IAttributeOrMeasure[];
-    rows?: IAttribute[];
-    sortBy?: ISortItem[];
-    totals?: ITotal[];
+    columns?: ValuesOrPlaceholders<IAttribute>;
+    filters?: ValuesOrPlaceholders<INullableFilter>;
+    measures?: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
+    placeholdersResolutionContext?: any;
+    rows?: ValuesOrPlaceholders<IAttribute>;
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+    totals?: ValuesOrPlaceholders<ITotal>;
 }
 
 // @public (undocumented)
@@ -197,7 +199,7 @@ export function newWidthForAttributeColumn(attributeOrId: IAttribute | string, w
 export function newWidthForSelectedColumns(measureOrId: IMeasure | string, locators: IAttributeColumnLocator[], width: number | "auto", allowGrowToFit?: boolean): IMeasureColumnWidthItem;
 
 // @public
-export const PivotTable: React_2.ComponentType<IPivotTableProps>;
+export const PivotTable: (props: IPivotTableProps) => JSX.Element;
 
 // @public
 export function pivotTableMenuForCapabilities(capabilities: IBackendCapabilities, desiredMenu?: IMenu): IMenu;

@@ -1,13 +1,21 @@
 // (C) 2019 GoodData Corporation
+import React from "react";
 import {
     applyRatioRule,
     IAttribute,
     IAttributeOrMeasure,
+    IFilter,
     INullableFilter,
     ISortItem,
     newBucket,
 } from "@gooddata/sdk-model";
-import { BucketNames } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    ValuesOrPlaceholders,
+    ValueOrPlaceholder,
+    AnyMeasure,
+    useResolveValuesWithPlaceholders,
+} from "@gooddata/sdk-ui";
 import { IBucketChartProps, ViewByAttributesLimit } from "../../interfaces";
 import { truncate } from "../_commons/truncate";
 import { CoreBarChart } from "./CoreBarChart";
@@ -24,13 +32,13 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
     chartName: "BarChart",
     bucketPropsKeys: ["measures", "viewBy", "stackBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
-        const measures = applyRatioRule(props.measures);
+        const measures = applyRatioRule(props.measures as IAttributeOrMeasure[]);
         const viewBy = truncate(props.viewBy, ViewByAttributesLimit);
 
         return [
             newBucket(BucketNames.MEASURES, ...measures),
-            newBucket(BucketNames.VIEW, ...viewBy),
-            newBucket(BucketNames.STACK, props.stackBy),
+            newBucket(BucketNames.VIEW, ...(viewBy as IAttribute[])),
+            newBucket(BucketNames.STACK, props.stackBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -40,8 +48,8 @@ const barChartDefinition: IChartDefinition<IBarChartBucketProps, IBarChartProps>
             .withTelemetry("BarChart", props)
             .workspace(workspace)
             .execution()
-            .forBuckets(buckets, props.filters)
-            .withSorting(...props.sortBy)
+            .forBuckets(buckets, props.filters as IFilter[])
+            .withSorting(...(props.sortBy as ISortItem[]))
             .withDimensions(stackedChartDimensions);
     },
     propOverridesFactory: (props, buckets) => {
@@ -65,7 +73,7 @@ export interface IBarChartBucketProps {
      * Note: it is possible to also include an attribute object among measures. In that case cardinality of the
      * attribute elements will be charted.
      */
-    measures: IAttributeOrMeasure[];
+    measures: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally specify one or two attributes to slice the measures along the Y axis.
@@ -74,28 +82,35 @@ export interface IBarChartBucketProps {
      * value of the first attribute there will be all applicable values of the second attribute. For each value of the
      * second attribute there will be a bar indicating the respective slice's value.
      */
-    viewBy?: IAttribute | IAttribute[];
+    viewBy?: ValueOrPlaceholder<IAttribute> | ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally specify attribute to stack the bars by.
      */
-    stackBy?: IAttribute;
+    stackBy?: ValueOrPlaceholder<IAttribute>;
 
     /**
      * Optionally specify filters to apply on the data to chart.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optionally specify how to sort the data to chart.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 }
 
 /**
  * @public
  */
 export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps {}
+
+const WrappedBarChart = withChart(barChartDefinition)(CoreBarChart);
 
 /**
  * [BarChart](http://sdk.gooddata.com/gooddata-ui/docs/bar_chart_component.html)
@@ -106,4 +121,22 @@ export interface IBarChartProps extends IBarChartBucketProps, IBucketChartProps 
  * @remarks See {@link IBarChartProps} to learn how to configure the AreaChart
  * @public
  */
-export const BarChart = withChart(barChartDefinition)(CoreBarChart);
+export const BarChart = (props: IBarChartProps) => {
+    const [measures, viewBy, stackBy, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.measures, props.viewBy, props.stackBy, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return (
+        <WrappedBarChart
+            {...props}
+            {...{
+                measures,
+                viewBy,
+                stackBy,
+                filters,
+                sortBy,
+            }}
+        />
+    );
+};

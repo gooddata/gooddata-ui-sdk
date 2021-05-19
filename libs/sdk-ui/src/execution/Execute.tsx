@@ -5,7 +5,7 @@ import { DataViewWindow, IWithLoadingEvents, WithLoadingResult } from "./withExe
 import { IAttribute, IAttributeOrMeasure, INullableFilter, ISortItem, ITotal } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual";
-import { withContexts } from "../base";
+import { AnyMeasure, useResolveValuesWithPlaceholders, ValuesOrPlaceholders, withContexts } from "../base";
 import { createExecution } from "./createExecution";
 import { IExecuteErrorComponent, IExecuteLoadingComponent } from "./interfaces";
 
@@ -33,27 +33,32 @@ export interface IExecuteProps extends IWithLoadingEvents<IExecuteProps> {
      * Data series will be built using the provided measures that are optionally further scoped for
      * elements of the specified attributes.
      */
-    seriesBy: IAttributeOrMeasure[];
+    seriesBy: ValuesOrPlaceholders<IAttribute | AnyMeasure>;
 
     /**
      * Optionally slice all data series by elements of these attributes.
      */
-    slicesBy?: IAttribute[];
+    slicesBy?: ValuesOrPlaceholders<IAttribute>;
 
     /**
      * Optionally include these totals among the data slices.
      */
-    totals?: ITotal[];
+    totals?: ValuesOrPlaceholders<ITotal>;
 
     /**
      * Optional filters to apply on server side.
      */
-    filters?: INullableFilter[];
+    filters?: ValuesOrPlaceholders<INullableFilter>;
 
     /**
      * Optional sorting to apply on server side.
      */
-    sortBy?: ISortItem[];
+    sortBy?: ValuesOrPlaceholders<ISortItem>;
+
+    /**
+     * Optional resolution context for composed placeholders.
+     */
+    placeholdersResolutionContext?: any;
 
     /**
      * Optional name to use for files exported from this component. If you do not specify this, then
@@ -149,23 +154,21 @@ function exportTitle(props: IExecuteProps): string {
     return props.exportTitle || componentName(props);
 }
 
-/**
- * The executor provides a more curated experience to obtain and work with data from backends. It is aligned
- * with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
- * optionally sliced by additional attributes.
- *
- * Once the executor finishes, the `DataViewFacade.data()` method will expose the data as series and
- * slices according to the specification to the executor.
- * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
- * of the child component to handle that if they need to.
- *
- * @remarks see `IDataAccessMethods` for additional documentation
- * @public
- */
-export const Execute = withContexts(
+const WrappedExecute = withContexts(
     withExecution<IExecuteProps>({
         exportTitle,
-        execution: (props) => createExecution({ componentName: componentName(props), ...props }),
+        execution: (props) => {
+            const { seriesBy, slicesBy, totals, filters, sortBy } = props;
+            return createExecution({
+                ...props,
+                componentName: componentName(props),
+                seriesBy: seriesBy as IAttributeOrMeasure[],
+                slicesBy: slicesBy as IAttribute[],
+                totals: totals as ITotal[],
+                filters: filters as INullableFilter[],
+                sortBy: sortBy as ISortItem[],
+            });
+        },
         events: (props: IExecuteProps) => {
             const { onError, onLoadingChanged, onLoadingFinish, onLoadingStart, onExportReady } = props;
 
@@ -207,3 +210,25 @@ export const Execute = withContexts(
         window: (props: IExecuteProps) => props.window,
     })(CoreExecute),
 );
+
+/**
+ * The executor provides a more curated experience to obtain and work with data from backends. It is aligned
+ * with the `DataAccess` infrastructure which exposes the underlying data as data series that can be
+ * optionally sliced by additional attributes.
+ *
+ * Once the executor finishes, the `DataViewFacade.data()` method will expose the data as series and
+ * slices according to the specification to the executor.
+ * Note that if the resulting data is empty this will NOT throw a NoDataError. It is the responsibility
+ * of the child component to handle that if they need to.
+ *
+ * @remarks see `IDataAccessMethods` for additional documentation
+ * @public
+ */
+export const Execute = (props: IExecuteProps) => {
+    const [seriesBy, slicesBy, totals, filters, sortBy] = useResolveValuesWithPlaceholders(
+        [props.seriesBy, props.slicesBy, props.totals, props.filters, props.sortBy],
+        props.placeholdersResolutionContext,
+    );
+
+    return <WrappedExecute {...props} {...{ seriesBy, slicesBy, totals, filters, sortBy }} />;
+};
