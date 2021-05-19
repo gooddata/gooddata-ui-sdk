@@ -372,6 +372,7 @@ describe("sizing", () => {
                     validateDashboardLayoutWidgetSize(
                         currentWidth,
                         currentHeight,
+                        "insight",
                         newInsightDefinition(`local:${visType}`),
                         settings,
                     ),
@@ -381,5 +382,12 @@ describe("sizing", () => {
                 });
             },
         );
+
+        it("should validate kpi size", () => {
+            expect(validateDashboardLayoutWidgetSize(2, 6, "kpi", kpiWidgetPop.kpi, settings)).toEqual({
+                validWidth: 2,
+                validHeight: 10,
+            });
+        });
     });
 });
