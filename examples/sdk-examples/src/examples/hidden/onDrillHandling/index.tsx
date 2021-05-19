@@ -5,11 +5,11 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { BarChartOnDrillExample } from "./BarChartOnDrillExample";
-import BarChartOnDrillExampleSRC from "!raw-loader!./BarChartOnDrillExample";
+import BarChartOnDrillExampleSRC from "./BarChartOnDrillExample?raw";
 import { HeadlineOnDrillExample } from "./HeadlineOnDrillExample";
-import HeadlineOnDrillExampleSRC from "!raw-loader!./HeadlineOnDrillExample";
+import HeadlineOnDrillExampleSRC from "./HeadlineOnDrillExample?raw";
 import { InsightOnDrillExample } from "./InsightOnDrillExample";
-import InsightOnDrillExampleSRC from "!raw-loader!./InsightOnDrillExample";
+import InsightOnDrillExampleSRC from "./InsightOnDrillExample?raw";
 
 export const OnDrillHandling: React.FC = () => (
     <div>

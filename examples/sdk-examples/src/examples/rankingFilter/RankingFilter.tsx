@@ -4,16 +4,16 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { RankingFilterSimpleExample } from "./RankingFilterSimpleExample";
-import RankingFilterSimpleExampleSRC from "!raw-loader!./RankingFilterSimpleExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import RankingFilterSimpleExampleSRCJS from "!raw-loader!../../../examplesJS/rankingFilter/RankingFilterSimpleExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first, import/default
+import RankingFilterSimpleExampleSRC from "./RankingFilterSimpleExample?raw"; // eslint-disable-line import/no-unresolved
+import RankingFilterSimpleExampleSRCJS from "./RankingFilterSimpleExample?rawJS"; // eslint-disable-line import/no-unresolved, import/default
 
 import { RankingFilterExample } from "./RankingFilterExample";
-import RankingFilterExampleSRC from "!raw-loader!./RankingFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import RankingFilterExampleSRCJS from "!raw-loader!../../../examplesJS/rankingFilter/RankingFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first, import/default
+import RankingFilterExampleSRC from "./RankingFilterExample?raw"; // eslint-disable-line import/no-unresolved
+import RankingFilterExampleSRCJS from "./RankingFilterExample?rawJS"; // eslint-disable-line import/no-unresolved, import/default
 
 import { RankingFilterCustomButtonExample } from "./RankingFilterCustomButtonExample";
-import RankingFilterCustomButtonExampleSRC from "!raw-loader!./RankingFilterCustomButtonExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import RankingFilterCustomButtonExampleSRCJS from "!raw-loader!../../../examplesJS/rankingFilter/RankingFilterCustomButtonExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first, import/default
+import RankingFilterCustomButtonExampleSRC from "./RankingFilterCustomButtonExample?raw"; // eslint-disable-line import/no-unresolved
+import RankingFilterCustomButtonExampleSRCJS from "./RankingFilterCustomButtonExample?rawJS"; // eslint-disable-line import/no-unresolved, import/default
 
 export const RankingFilter: React.FC = () => (
     <div>

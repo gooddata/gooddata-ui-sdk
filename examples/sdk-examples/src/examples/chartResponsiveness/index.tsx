@@ -7,13 +7,13 @@ import { HeadlineResponsiveExample } from "./HeadlineResponsiveExample";
 import { BarChartResponsiveExample } from "./BarChartResponsiveExample";
 import { ColumnChartResponsiveLegendExample } from "./ColumnChartResponsiveLegendExample";
 
-import HeadlineResponsiveExampleSrc from "!raw-loader!./HeadlineResponsiveExample";
-import BarChartResponsiveExampleSrc from "!raw-loader!./BarChartResponsiveExample";
-import ColumnChartResponsiveLegendExampleSrc from "!raw-loader!./ColumnChartResponsiveLegendExample";
+import HeadlineResponsiveExampleSrc from "./HeadlineResponsiveExample?raw";
+import BarChartResponsiveExampleSrc from "./BarChartResponsiveExample?raw";
+import ColumnChartResponsiveLegendExampleSrc from "./ColumnChartResponsiveLegendExample?raw";
 
-import HeadlineResponsiveExampleSrcJS from "!raw-loader!../../../examplesJS/chartResponsiveness/HeadlineResponsiveExample";
-import BarChartResponsiveExampleSrcJS from "!raw-loader!../../../examplesJS/chartResponsiveness/BarChartResponsiveExample";
-import ColumnChartResponsiveLegendExampleSrcJS from "!raw-loader!../../../examplesJS/chartResponsiveness/ColumnChartResponsiveLegendExample";
+import HeadlineResponsiveExampleSrcJS from "./HeadlineResponsiveExample?rawJS";
+import BarChartResponsiveExampleSrcJS from "./BarChartResponsiveExample?rawJS";
+import ColumnChartResponsiveLegendExampleSrcJS from "./ColumnChartResponsiveLegendExample?rawJS";
 
 export const ChartResponsiveness: React.FC = () => (
     <div>

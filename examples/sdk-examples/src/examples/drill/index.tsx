@@ -4,16 +4,16 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { PivotTableDrillExample } from "./PivotTableDrillExample";
-import PivotTableDrillExampleSRC from "!raw-loader!./PivotTableDrillExample";
-import PivotTableDrillExampleSRCJS from "!raw-loader!../../../examplesJS/drill/PivotTableDrillExample";
+import PivotTableDrillExampleSRC from "./PivotTableDrillExample?raw";
+import PivotTableDrillExampleSRCJS from "./PivotTableDrillExample?rawJS";
 
 import { DrillWithExternalDataExample } from "./DrillWithExternalDataExample";
-import DrillWithExternalDataExampleSRC from "!raw-loader!./DrillWithExternalDataExample";
-import DrillWithExternalDataExampleSRCJS from "!raw-loader!../../../examplesJS/drill/DrillWithExternalDataExample";
+import DrillWithExternalDataExampleSRC from "./DrillWithExternalDataExample?raw";
+import DrillWithExternalDataExampleSRCJS from "./DrillWithExternalDataExample?rawJS";
 
 import { GeoPushpinChartDrillExample } from "./GeoPushpinChartDrillExample";
-import GeoPushpinChartDrillExampleSRC from "!raw-loader!./GeoPushpinChartDrillExample";
-import GeoPushpinChartDrillExampleSRCJS from "!raw-loader!../../../examplesJS/drill/GeoPushpinChartDrillExample";
+import GeoPushpinChartDrillExampleSRC from "./GeoPushpinChartDrillExample?raw";
+import GeoPushpinChartDrillExampleSRCJS from "./GeoPushpinChartDrillExample?rawJS";
 
 export const PivotTableDrilling: React.FC = () => (
     <div>

@@ -13,6 +13,7 @@ module.exports = {
         library: "gooddata",
         path: path.join(__dirname, "umd"),
     },
+    target: ["web", "es5"], // support IE11
     externals: {
         "fetch-cookie": {
             root: "fetch-cookie",
@@ -41,7 +42,7 @@ module.exports = {
         extensions: [".js", ".ts", ".jsx", ".tsx", ".styl", ".scss", ".json"],
     },
     plugins: [
-        new webpack.IgnorePlugin(/\/iconv-loader$/),
+        new webpack.IgnorePlugin({ resourceRegExp: /\/iconv-loader$/ }),
         new LodashModuleReplacementPlugin({ currying: true, flattening: true, placeholders: true }),
         //new webpack.BannerPlugin({ banner: '<%= license %>', raw: true })
     ],

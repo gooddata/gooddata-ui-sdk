@@ -5,8 +5,8 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import CustomDashboardViewAdvanced from "./DashboardViewAdvancedCustomizationsSrc";
-import CustomDashboardViewAdvancedSRC from "!raw-loader!./DashboardViewAdvancedCustomizationsSrc";
-import CustomDashboardViewAdvancedSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewAdvancedCustomizationsSrc";
+import CustomDashboardViewAdvancedSRC from "./DashboardViewAdvancedCustomizationsSrc?raw";
+import CustomDashboardViewAdvancedSRCJS from "./DashboardViewAdvancedCustomizationsSrc?rawJS";
 
 const DashboardView = (): JSX.Element => (
     <div>

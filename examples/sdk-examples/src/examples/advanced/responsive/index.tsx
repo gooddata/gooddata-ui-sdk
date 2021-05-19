@@ -4,8 +4,8 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { ResponsiveExample } from "./ResponsiveExample";
-import ResponsiveExampleSRC from "!raw-loader!./ResponsiveExample";
-import ResponsiveExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/responsive/ResponsiveExample";
+import ResponsiveExampleSRC from "./ResponsiveExample?raw";
+import ResponsiveExampleSRCJS from "./ResponsiveExample?rawJS";
 
 export const Responsive: React.FC = () => (
     <div>

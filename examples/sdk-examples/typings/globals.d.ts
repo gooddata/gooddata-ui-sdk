@@ -16,3 +16,7 @@ declare const BACKEND_URL: string;
 declare const BASEPATH: string;
 declare const BUILTIN_MAPBOX_TOKEN: string;
 declare const BUILD_TYPE: string;
+
+declare const process: {
+    env: Record<string, any>;
+};

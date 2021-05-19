@@ -8,13 +8,13 @@ import AttributeFilterComponentExample from "./AttributeFilterComponentExample";
 import AttributeElementsExample from "./AttributeElementsExample";
 import AttributeFilterExample from "./AttributeFilterExample";
 
-import AttributeFilterComponentExampleSRC from "!raw-loader!./AttributeFilterComponentExample";
-import AttributeElementsExampleSRC from "!raw-loader!./AttributeElementsExample";
-import AttributeFilterExampleSRC from "!raw-loader!./AttributeFilterExample";
+import AttributeFilterComponentExampleSRC from "./AttributeFilterComponentExample?raw";
+import AttributeElementsExampleSRC from "./AttributeElementsExample?raw";
+import AttributeFilterExampleSRC from "./AttributeFilterExample?raw";
 
-import AttributeFilterComponentExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeFilterComponentExample";
-import AttributeElementsExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeElementsExample";
-import AttributeFilterExampleSRCJS from "!raw-loader!../../../examplesJS/attributeFilter/AttributeFilterExample";
+import AttributeFilterComponentExampleSRCJS from "./AttributeFilterComponentExample?rawJS";
+import AttributeElementsExampleSRCJS from "./AttributeElementsExample?rawJS";
+import AttributeFilterExampleSRCJS from "./AttributeFilterExample?rawJS";
 
 export const AttributeFilter = (): JSX.Element => (
     <div>

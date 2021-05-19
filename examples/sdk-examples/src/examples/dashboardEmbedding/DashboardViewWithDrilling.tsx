@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import DashboardViewWithDrilling from "./DashboardViewWithDrillingSrc";
-import DashboardViewWithDrillingSRC from "!raw-loader!./DashboardViewWithDrillingSrc";
-import DashboardViewWithDrillingSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithDrillingSrc";
+import DashboardViewWithDrillingSRC from "./DashboardViewWithDrillingSrc?raw";
+import DashboardViewWithDrillingSRCJS from "./DashboardViewWithDrillingSrc?rawJS";
 
 const DashboardView = (): JSX.Element => (
     <div>

@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import DashboardViewWithMergedFilters from "./DashboardViewWithMergedFiltersSrc";
-import DashboardViewWithMergedFiltersSRC from "!raw-loader!./DashboardViewWithMergedFiltersSrc";
-import DashboardViewWithMergedFiltersSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardViewWithMergedFiltersSrc";
+import DashboardViewWithMergedFiltersSRC from "./DashboardViewWithMergedFiltersSrc?raw";
+import DashboardViewWithMergedFiltersSRCJS from "./DashboardViewWithMergedFiltersSrc?rawJS";
 
 const DashboardView = (): JSX.Element => (
     <div>

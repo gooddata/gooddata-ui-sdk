@@ -5,8 +5,8 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import SimpleDashboardView from "./SimpleDashboardViewSrc";
-import SimpleDashboardViewSRC from "!raw-loader!./SimpleDashboardViewSrc";
-import SimpleDashboardViewSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/SimpleDashboardViewSrc";
+import SimpleDashboardViewSRC from "./SimpleDashboardViewSrc?raw";
+import SimpleDashboardViewSRCJS from "./SimpleDashboardViewSrc?rawJS";
 
 const DashboardView = (): JSX.Element => (
     <div>

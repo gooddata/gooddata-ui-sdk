@@ -5,20 +5,20 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { DateFilterComponentExample_DDMMYYYY } from "./DateFilterComponentExample_DDMMYYYY";
-import DateFilterComponentExample_DDMMYYYYSRC from "!raw-loader!./DateFilterComponentExample_DDMMYYYY";
-import DateFilterComponentExample_DDMMYYYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/dateFilter/DateFilterComponentExample_DDMMYYYY";
+import DateFilterComponentExample_DDMMYYYYSRC from "./DateFilterComponentExample_DDMMYYYY?raw";
+import DateFilterComponentExample_DDMMYYYYSRCJS from "./DateFilterComponentExample_DDMMYYYY?rawJS";
 
 import { DateFilterComponentExample_MDYY } from "./DateFilterComponentExample_MDYY";
-import DateFilterComponentExample_MDYYSRC from "!raw-loader!./DateFilterComponentExample_MDYY";
-import DateFilterComponentExample_MDYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/dateFilter/DateFilterComponentExample_MDYY";
+import DateFilterComponentExample_MDYYSRC from "./DateFilterComponentExample_MDYY?raw";
+import DateFilterComponentExample_MDYYSRCJS from "./DateFilterComponentExample_MDYY?rawJS";
 
 import { DateFilterWithColumnChartExample_DDMMYYYY } from "./DateFilterWithColumnChartExample_DDMMYYYY";
-import DateFilterWithColumnChartExample_DDMMYYYYSRC from "!raw-loader!./DateFilterWithColumnChartExample_DDMMYYYY";
-import DateFilterWithColumnChartExample_DDMMYYYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/dateFilter/DateFilterWithColumnChartExample_DDMMYYYY";
+import DateFilterWithColumnChartExample_DDMMYYYYSRC from "./DateFilterWithColumnChartExample_DDMMYYYY?raw";
+import DateFilterWithColumnChartExample_DDMMYYYYSRCJS from "./DateFilterWithColumnChartExample_DDMMYYYY?rawJS";
 
 import { DateFilterWithColumnChartExample_MDYY } from "./DateFilterWithColumnChartExample_MDYY";
-import DateFilterWithColumnChartExample_MDYYSRC from "!raw-loader!./DateFilterWithColumnChartExample_MDYY";
-import DateFilterWithColumnChartExample_MDYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/dateFilter/DateFilterWithColumnChartExample_MDYY";
+import DateFilterWithColumnChartExample_MDYYSRC from "./DateFilterWithColumnChartExample_MDYY?raw";
+import DateFilterWithColumnChartExample_MDYYSRCJS from "./DateFilterWithColumnChartExample_MDYY?rawJS";
 
 export const InternationalDateFilterExample: React.FC = () => (
     <div>

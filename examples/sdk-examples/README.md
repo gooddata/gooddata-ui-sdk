@@ -38,12 +38,8 @@ Your new examples should follow this convention. Additional practices to follow:
 The app uses `ExampleWithSource` component to enrich your example with additional components that show JavaScript and
 TypeScript code behind the example:
 
--   Webpack raw-loader is used to include the source code
--   JavaScript example code is the TypeScript transpiled using babel. The transpilation happens at build time - which
-    has the expected impact on dev workflow:
-
-    -   After adding a new example file, you need to rebuild the app
-    -   The example JavaScript code is not subject to live-update - you need to rebuild the app
+-   Webpack asset/source type is used to include the source code
+-   JavaScript example code is the TypeScript transpiled using babel. The transpilation happens in webpack, so it is business as usual.
 
 ## License
 

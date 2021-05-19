@@ -6,10 +6,10 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 import { DatePickerExample } from "./DatePickerExample";
 import { MonthPickerExample } from "./MonthPickerExample";
 
-import DatePickerExampleSRC from "!raw-loader!./DatePickerExample";
-import DatePickerExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/datePicker/DatePickerExample";
-import MonthPickerExampleSRC from "!raw-loader!./MonthPickerExample";
-import MonthPickerExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/datePicker/MonthPickerExample";
+import DatePickerExampleSRC from "./DatePickerExample?raw";
+import DatePickerExampleSRCJS from "./DatePickerExample?rawJS";
+import MonthPickerExampleSRC from "./MonthPickerExample?raw";
+import MonthPickerExampleSRCJS from "./MonthPickerExample?rawJS";
 
 export const DatePicker: React.FC = () => (
     <div>

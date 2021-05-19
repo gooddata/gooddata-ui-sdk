@@ -5,8 +5,9 @@ import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import ParentFilterExample from "./ParentFilterExample";
 // eslint-disable-next-line import/no-unresolved
-import ParentFilterExampleSRC from "!raw-loader!./ParentFilterExample";
-import ParentFilterExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/parentFilter/ParentFilterExample";
+import ParentFilterExampleSRC from "./ParentFilterExample?raw";
+// eslint-disable-next-line import/no-unresolved
+import ParentFilterExampleSRCJS from "./ParentFilterExample?rawJS";
 
 export const ParentFilter = (): JSX.Element => (
     <div>

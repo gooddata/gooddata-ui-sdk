@@ -7,14 +7,14 @@ import { SamePeriodColumnChartExample } from "./SamePeriodColumnChartExample";
 import PreviousPeriodHeadlineExample from "./PreviousPeriodHeadlineExample";
 
 // eslint-disable-next-line import/no-unresolved
-import SamePeriodColumnChartExampleSrc from "!raw-loader!./SamePeriodColumnChartExample";
+import SamePeriodColumnChartExampleSrc from "./SamePeriodColumnChartExample?raw";
 // eslint-disable-next-line import/no-unresolved
-import PreviousPeriodHeadlineExampleSrc from "!raw-loader!./PreviousPeriodHeadlineExample";
+import PreviousPeriodHeadlineExampleSrc from "./PreviousPeriodHeadlineExample?raw";
 
-// eslint-disable-next-line import/default
-import SamePeriodColumnChartExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/SamePeriodColumnChartExample";
-// eslint-disable-next-line import/default
-import PreviousPeriodHeadlineExampleSrcJS from "!raw-loader!../../../examplesJS/timeOverTimeComparison/PreviousPeriodHeadlineExample";
+// eslint-disable-next-line import/no-unresolved
+import SamePeriodColumnChartExampleSrcJS from "./SamePeriodColumnChartExample?rawJS";
+// eslint-disable-next-line import/no-unresolved
+import PreviousPeriodHeadlineExampleSrcJS from "./PreviousPeriodHeadlineExample?rawJS";
 
 export const TimeOverTimeComparison: React.FC = () => (
     <div>

@@ -13,8 +13,7 @@
     "**/stats.json": true,
     "**/temp": true,
     "**/umd": true,
-    "**/node_modules": true,
-    "**/examplesJS": true
+    "**/node_modules": true
 }
 ```
 

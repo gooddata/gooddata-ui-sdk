@@ -11,19 +11,19 @@ import { insightViewColumnChartExportExample } from "./InsightViewColumnChartExp
 import { HeadlineExportExample } from "./HeadlineExportExample";
 import { ExecuteExportExample } from "./ExecuteExportExample";
 
-import BarChartExportExampleSRC from "!raw-loader!./BarChartExportExample";
-import PivotTableExportExampleSRC from "!raw-loader!./PivotTableExportExample";
-import insightViewColumnChartExportExampleSRC from "!raw-loader!./InsightViewColumnChartExportExample";
-import HeadlineExportExampleSRC from "!raw-loader!./HeadlineExportExample";
-import ExecuteExportExampleSRC from "!raw-loader!./ExecuteExportExample";
-import ExampleWithExportSRC from "!raw-loader!./ExampleWithExport";
+import BarChartExportExampleSRC from "./BarChartExportExample?raw";
+import PivotTableExportExampleSRC from "./PivotTableExportExample?raw";
+import insightViewColumnChartExportExampleSRC from "./InsightViewColumnChartExportExample?raw";
+import HeadlineExportExampleSRC from "./HeadlineExportExample?raw";
+import ExecuteExportExampleSRC from "./ExecuteExportExample?raw";
+import ExampleWithExportSRC from "./ExampleWithExport?raw";
 
-import BarChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/BarChartExportExample";
-import PivotTableExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/PivotTableExportExample";
-import insightViewColumnChartExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/InsightViewColumnChartExportExample";
-import HeadlineExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/HeadlineExportExample";
-import ExecuteExportExampleSRCJS from "!raw-loader!../../../examplesJS/export/ExecuteExportExample";
-import ExampleWithExportSRCJS from "!raw-loader!../../../examplesJS/export/ExampleWithExport";
+import BarChartExportExampleSRCJS from "./BarChartExportExample?rawJS";
+import PivotTableExportExampleSRCJS from "./PivotTableExportExample?rawJS";
+import insightViewColumnChartExportExampleSRCJS from "./InsightViewColumnChartExportExample?rawJS";
+import HeadlineExportExampleSRCJS from "./HeadlineExportExample?rawJS";
+import ExecuteExportExampleSRCJS from "./ExecuteExportExample?rawJS";
+import ExampleWithExportSRCJS from "./ExampleWithExport?rawJS";
 
 export const Export: React.FC = () => (
     <div>

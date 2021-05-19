@@ -4,12 +4,12 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { DatePickerExample_DDMMYYYY } from "./DatePickerExample_DDMMYYYY";
-import DatePickerExample_DDMMYYYYSRC from "!raw-loader!./DatePickerExample_DDMMYYYY";
-import DatePickerExample_DDMMYYYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/datePicker/DatePickerExample_DDMMYYYY";
+import DatePickerExample_DDMMYYYYSRC from "./DatePickerExample_DDMMYYYY?raw";
+import DatePickerExample_DDMMYYYYSRCJS from "./DatePickerExample_DDMMYYYY?rawJS";
 
 import { DatePickerExample_MDYY } from "./DatePickerExample_MDYY";
-import DatePickerExample_MDYYSRC from "!raw-loader!./DatePickerExample_MDYY";
-import DatePickerExample_MDYYSRCJS from "!raw-loader!../../../../examplesJS/internationalDateFormat/datePicker/DatePickerExample_MDYY";
+import DatePickerExample_MDYYSRC from "./DatePickerExample_MDYY?raw";
+import DatePickerExample_MDYYSRCJS from "./DatePickerExample_MDYY?rawJS";
 
 export const InternationalDatePickerExample: React.FC = () => (
     <div>

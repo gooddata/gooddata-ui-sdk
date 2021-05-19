@@ -3,20 +3,20 @@
 import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 import { BarChartDynamicExample } from "./BarChartDynamicExample";
-import BarChartDynamicExampleSRC from "!raw-loader!./BarChartDynamicExample";
-import BarChartDynamicExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/BarChartDynamicExample";
+import BarChartDynamicExampleSRC from "./BarChartDynamicExample?raw";
+import BarChartDynamicExampleSRCJS from "./BarChartDynamicExample?rawJS";
 import ConfigurationColumnChartExample from "./ConfigurationColumnChartExample";
-import ConfigurationColumnChartExampleSRC from "!raw-loader!./ConfigurationColumnChartExample";
-import ConfigurationColumnChartExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/ConfigurationColumnChartExample";
+import ConfigurationColumnChartExampleSRC from "./ConfigurationColumnChartExample?raw";
+import ConfigurationColumnChartExampleSRCJS from "./ConfigurationColumnChartExample?rawJS";
 import { PieChartColorMappingExample } from "./PieChartColorMappingExample";
-import PieChartColorMappingExampleSRC from "!raw-loader!./PieChartColorMappingExample";
-import PieChartColorMappingExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/PieChartColorMappingExample";
+import PieChartColorMappingExampleSRC from "./PieChartColorMappingExample?raw";
+import PieChartColorMappingExampleSRCJS from "./PieChartColorMappingExample?rawJS";
 import { DualAxisColumnChartExample } from "./DualAxisColumnChartExample";
-import DualAxisColumnChartExampleSRC from "!raw-loader!./DualAxisColumnChartExample";
-import DualAxisColumnChartExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/DualAxisColumnChartExample";
+import DualAxisColumnChartExampleSRC from "./DualAxisColumnChartExample?raw";
+import DualAxisColumnChartExampleSRCJS from "./DualAxisColumnChartExample?rawJS";
 import insightViewDualAxisBarChartExample from "./InsightViewDualAxisBarChartExample";
-import insightViewDualAxisBarChartExampleSRC from "!raw-loader!./InsightViewDualAxisBarChartExample";
-import insightViewDualAxisBarChartExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/chartConfiguration/InsightViewDualAxisBarChartExample";
+import insightViewDualAxisBarChartExampleSRC from "./InsightViewDualAxisBarChartExample?raw";
+import insightViewDualAxisBarChartExampleSRCJS from "./InsightViewDualAxisBarChartExample?rawJS";
 
 export const ChartConfiguration = (): JSX.Element => (
     <div>

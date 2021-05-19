@@ -6,6 +6,7 @@
         "sourceMap": true,
         "esModuleInterop": true,
         "importHelpers": true,
+        "lib": ["es7", "dom"],
         "outDir": "dist",
         "strict": true,
         "noImplicitAny": true,

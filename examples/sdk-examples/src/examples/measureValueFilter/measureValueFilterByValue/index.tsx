@@ -7,15 +7,15 @@ import MeasureValueFilterShownInPercentageExample from "./MeasureValueFilterShow
 import MeasureValueFilterStackedToHundredPercentExample from "./MeasureValueFilterStackedToHundredPercentExample";
 import MeasureValueFilterFormattedInPercentageExample from "./MeasureValueFilterFormattedInPercentageExample";
 
-import MeasureValueFilterExampleSRC from "!raw-loader!./MeasureValueFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterShownInPercentageExampleSRC from "!raw-loader!./MeasureValueFilterShownInPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterStackedToHundredPercentExampleSRC from "!raw-loader!./MeasureValueFilterStackedToHundredPercentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterFormattedInPercentageExampleSRC from "!raw-loader!./MeasureValueFilterFormattedInPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterExampleSRC from "./MeasureValueFilterExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterShownInPercentageExampleSRC from "./MeasureValueFilterShownInPercentageExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterStackedToHundredPercentExampleSRC from "./MeasureValueFilterStackedToHundredPercentExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterFormattedInPercentageExampleSRC from "./MeasureValueFilterFormattedInPercentageExample?raw"; // eslint-disable-line import/no-unresolved
 
-import MeasureValueFilterExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterShownInPercentageExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterShownInPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterStackedToHundredPercentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterStackedToHundredPercentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterFormattedInPercentageExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterByValue/MeasureValueFilterFormattedInPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterExampleSRCJS from "./MeasureValueFilterExample?rawJS"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterShownInPercentageExampleSRCJS from "./MeasureValueFilterShownInPercentageExample?rawJS"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterStackedToHundredPercentExampleSRCJS from "./MeasureValueFilterStackedToHundredPercentExample?rawJS"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterFormattedInPercentageExampleSRCJS from "./MeasureValueFilterFormattedInPercentageExample?rawJS"; // eslint-disable-line import/no-unresolved
 
 export const MeasureValueFilter = (): JSX.Element => (
     <div>
