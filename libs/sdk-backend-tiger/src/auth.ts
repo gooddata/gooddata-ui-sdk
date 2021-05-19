@@ -32,13 +32,15 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
     public async deauthenticate(context: IAuthenticationContext): Promise<void> {
         const client = context.client as ITigerClient;
 
+        const logoutUrl = createTigerDeauthenticationUrl(context.backend, window.location);
+
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
         try {
-            await client.axios.post("/logout");
+            await client.axios.post(logoutUrl);
         } catch (error) {
             if ((error as AxiosError).response?.status === HttpStatusCodes.METHOD_NOT_ALLOWED) {
                 // this means we are on tiger >= 1.1 -> we must redirect to the /logout resource instead of POSTing to it
-                return window.location.assign("/logout");
+                return window.location.assign(logoutUrl);
             }
 
             // eslint-disable-next-line no-console
@@ -187,6 +189,31 @@ export function createTigerAuthenticationUrl(
     return `${host}${authenticationFlow.loginUrl}?${
         authenticationFlow.returnRedirectParam
     }=${encodeURIComponent(returnAddress)}`;
+}
+
+/**
+ * Given tiger backend and current location, this function creates URL where the
+ * browser should redirect to start deauthentication (logout) flow.
+ *
+ * The current location is essential to determine the URL should point:
+ *
+ * -  When running on same origin, then use relative path
+ * -  When running on different origin, then use absolute path to the proper origin
+ *
+ * @param backend - an instance of analytical backend
+ * @param location - current location
+ * @public
+ */
+export function createTigerDeauthenticationUrl(backend: IAnalyticalBackend, location: Location): string {
+    let host = `${location.protocol}//${location.host}`;
+    const { hostname: backendHostname } = backend.config;
+
+    if (backendHostname && backendHostname !== host) {
+        // different origin. app must redirect to the backend hostname
+        host = backendHostname;
+    }
+
+    return `${host}/logout`;
 }
 
 /**
