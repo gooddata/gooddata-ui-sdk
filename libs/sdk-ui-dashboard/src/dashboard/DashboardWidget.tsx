@@ -1,6 +1,6 @@
-import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 // (C) 2021 GoodData Corporation
 import React, { ComponentType } from "react";
+import { ObjRef, ObjRefInScope } from "@gooddata/sdk-model";
 
 /**
  * @internal

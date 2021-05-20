@@ -205,7 +205,7 @@ export function demonstrateCustomDashboardLayout() {
                         </div>
                         <div>
                             <DashboardWidget dateDataset={idRef("some.other.date.dataset")}>
-                                <LineChart /*...*/ />
+                                {/* <LineChart ... /> */}
                             </DashboardWidget>
                         </div>
                     </React.Fragment>
