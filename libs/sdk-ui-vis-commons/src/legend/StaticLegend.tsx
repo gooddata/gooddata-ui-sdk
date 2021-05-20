@@ -24,6 +24,7 @@ export interface IStaticLegendProps {
     onItemClick?(item: IPushpinCategoryLegendItem): void;
     paginationHeight?: number;
     customComponent?: JSX.Element | null;
+    onPageChanged?: (page: number) => void;
 }
 
 /**
@@ -33,6 +34,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
     public static defaultProps: Partial<IStaticLegendProps> = {
         buttonOrientation: "upDown",
         paginationHeight: STATIC_PAGING_HEIGHT,
+        onPageChanged: () => {},
     };
 
     public state = {
@@ -40,11 +42,15 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
     };
 
     public showNextPage = (): void => {
-        this.setState({ page: this.state.page + 1 });
+        const updatedPage = this.state.page + 1;
+        this.props.onPageChanged!(updatedPage);
+        this.setState({ page: updatedPage });
     };
 
     public showPrevPage = (): void => {
-        this.setState({ page: this.state.page - 1 });
+        const updatedPage = this.state.page - 1;
+        this.props.onPageChanged!(updatedPage);
+        this.setState({ page: updatedPage });
     };
 
     public renderPaging = (pagesCount: number): React.ReactNode => {
@@ -106,6 +112,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
             columnNum,
             paginationHeight,
         );
+        const usePaging = hasPaging || customComponent;
 
         const heightOfAvailableSpace = (visibleItemsCount / columnNum) * ITEM_HEIGHT;
         const heightOfVisibleItems = Math.min(visibleItemsCount / columnNum, seriesCount) * ITEM_HEIGHT;
@@ -121,7 +128,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
                         {labelComponent}
                         {customComponent}
                     </div>
-                    {hasPaging && this.renderPaging(pagesCount)}
+                    {usePaging && this.renderPaging(pagesCount)}
                 </div>
             );
         }
@@ -153,7 +160,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
                         onItemClick={onItemClick}
                     />
                 </div>
-                {hasPaging && this.renderPaging(pagesCount)}
+                {usePaging && this.renderPaging(pagesCount)}
             </div>
         );
     }
