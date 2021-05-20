@@ -38,7 +38,7 @@ const BAR_TEMPLATE = {
 export function getBarConfiguration(config: IChartConfig): HighchartsOptions {
     const barConfiguration = cloneDeep(BAR_TEMPLATE);
 
-    if (config?.enableCompactSize) {
+    if (config?.enableCompactSize && !config?.zoomInsight) {
         const reversed = true;
         const [xAxesCount, yAxesCount] = getAxesCounts(config);
         return {
