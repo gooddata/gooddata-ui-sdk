@@ -5,8 +5,8 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import SingleValuePlaceholder from "./SingleValuePlaceholderSrc";
-import SingleValuePlaceholderSRC from "!raw-loader!./SingleValuePlaceholderSrc";
-import SingleValuePlaceholderSRCJS from "!raw-loader!../../../examplesJS/placeholders/SingleValuePlaceholderSrc";
+import SingleValuePlaceholderSRC from "./SingleValuePlaceholderSrc?raw";
+import SingleValuePlaceholderSRCJS from "./SingleValuePlaceholderSrc?rawJS";
 
 const SingleValuePlaceholderExample = (): JSX.Element => (
     <div>

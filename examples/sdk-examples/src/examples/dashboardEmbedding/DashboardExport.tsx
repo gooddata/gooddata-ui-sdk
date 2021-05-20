@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import DashboardExport from "./DashboardExportSrc";
-import DashboardExportSRC from "!raw-loader!./DashboardExportSrc";
-import DashboardExportSRCJS from "!raw-loader!../../../examplesJS/dashboardEmbedding/DashboardExportSrc";
+import DashboardExportSRC from "./DashboardExportSrc?raw";
+import DashboardExportSRCJS from "./DashboardExportSrc?rawJS";
 
 const DashboardView = (): JSX.Element => (
     <div>

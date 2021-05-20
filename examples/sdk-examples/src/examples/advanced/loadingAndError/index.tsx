@@ -5,16 +5,16 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { LoadingExample } from "./LoadingExample";
-import LoadingExampleSRC from "!raw-loader!./LoadingExample";
-import LoadingExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/loadingAndError/LoadingExample";
+import LoadingExampleSRC from "./LoadingExample?raw";
+import LoadingExampleSRCJS from "./LoadingExample?rawJS";
 
 import { CustomisedLoadingExample } from "./CustomisedLoadingExample";
-import CustomisedLoadingExampleSRC from "!raw-loader!./CustomisedLoadingExample";
-import CustomisedLoadingExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/loadingAndError/CustomisedLoadingExample";
+import CustomisedLoadingExampleSRC from "./CustomisedLoadingExample?raw";
+import CustomisedLoadingExampleSRCJS from "./CustomisedLoadingExample?rawJS";
 
 import { ErrorExample } from "./ErrorExample";
-import ErrorExampleSRC from "!raw-loader!./ErrorExample";
-import ErrorExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/loadingAndError/ErrorExample";
+import ErrorExampleSRC from "./ErrorExample?raw";
+import ErrorExampleSRCJS from "./ErrorExample?rawJS";
 
 export const LoadingAndError: React.FC = () => (
     <div>

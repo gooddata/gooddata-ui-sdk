@@ -5,8 +5,8 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import MultiValuePlaceholder from "./MultiValuePlaceholderSrc";
-import MultiValuePlaceholderSRC from "!raw-loader!./MultiValuePlaceholderSrc";
-import MultiValuePlaceholderSRCJS from "!raw-loader!../../../examplesJS/placeholders/MultiValuePlaceholderSrc";
+import MultiValuePlaceholderSRC from "./MultiValuePlaceholderSrc?raw";
+import MultiValuePlaceholderSRCJS from "./MultiValuePlaceholderSrc?rawJS";
 
 const MultiValuePlaceholderExample = (): JSX.Element => (
     <div>

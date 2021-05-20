@@ -4,22 +4,22 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import MeasureValueFilterComponentExample from "./MeasureValueFilterComponentExample";
-import MeasureValueFilterComponentExampleSRC from "!raw-loader!./MeasureValueFilterComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterComponentExampleSRC from "./MeasureValueFilterComponentExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterComponentExampleSRCJS from "./MeasureValueFilterComponentExample?rawJS"; // eslint-disable-line import/no-unresolved
 import MeasureValueFilterComponentPercentageExample from "./MeasureValueFilterComponentPercentageExample";
-import MeasureValueFilterComponentPercentageExampleSRC from "!raw-loader!./MeasureValueFilterComponentPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterComponentPercentageExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterComponentPercentageExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterComponentPercentageExampleSRC from "./MeasureValueFilterComponentPercentageExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterComponentPercentageExampleSRCJS from "./MeasureValueFilterComponentPercentageExample?rawJS"; // eslint-disable-line import/no-unresolved
 import MeasureValueFilterComponentRatioExample from "./MeasureValueFilterComponentRatioExample";
-import MeasureValueFilterComponentRatioExampleSRC from "!raw-loader!./MeasureValueFilterComponentRatioExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterComponentRatioExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterComponentRatioExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterComponentRatioExampleSRC from "./MeasureValueFilterComponentRatioExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterComponentRatioExampleSRCJS from "./MeasureValueFilterComponentRatioExample?rawJS"; // eslint-disable-line import/no-unresolved
 
 import MeasureValueFilterDropdownComponentExample from "./MeasureValueFilterDropdownComponentExample";
-import MeasureValueFilterDropdownComponentExampleSRC from "!raw-loader!./MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterDropdownComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterDropdownComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterDropdownComponentExampleSRC from "./MeasureValueFilterDropdownComponentExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterDropdownComponentExampleSRCJS from "./MeasureValueFilterDropdownComponentExample?rawJS"; // eslint-disable-line import/no-unresolved
 
 import MeasureValueFilterTreatNullAsZeroComponentExample from "./MeasureValueFilterTreatNullAsZeroComponentExample";
-import MeasureValueFilterTreatNullAsZeroComponentExampleSRC from "!raw-loader!./MeasureValueFilterTreatNullAsZeroComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import MeasureValueFilterTreatNullAsZeroComponentExampleSRCJS from "!raw-loader!../../../../examplesJS/measureValueFilter/measureValueFilterComponent/MeasureValueFilterTreatNullAsZeroComponentExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import MeasureValueFilterTreatNullAsZeroComponentExampleSRC from "./MeasureValueFilterTreatNullAsZeroComponentExample?raw"; // eslint-disable-line import/no-unresolved
+import MeasureValueFilterTreatNullAsZeroComponentExampleSRCJS from "./MeasureValueFilterTreatNullAsZeroComponentExample?rawJS"; // eslint-disable-line import/no-unresolved
 
 export const MeasureValueFilterComponent = (): JSX.Element => (
     <div>

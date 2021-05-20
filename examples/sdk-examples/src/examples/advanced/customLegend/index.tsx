@@ -4,8 +4,8 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { CustomLegendExample } from "./CustomLegendExample";
-import CustomLegendExampleSRC from "!raw-loader!./CustomLegendExample";
-import CustomLegendExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/customLegend/CustomLegendExample";
+import CustomLegendExampleSRC from "./CustomLegendExample?raw";
+import CustomLegendExampleSRCJS from "./CustomLegendExample?rawJS";
 
 export const CustomLegend = (): JSX.Element => (
     <div>

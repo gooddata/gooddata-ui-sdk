@@ -12,23 +12,23 @@ import { UseDataViewAttributeValuesExample } from "./UseDataViewAttributeValuesE
 import { UseDataViewWithCustomVisualizationExample } from "./UseDataViewWithCustomVisualizationExample";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
-import ExecuteExampleSRC from "!raw-loader!./ExecuteExample";
-import ExecuteWithSlicesExampleSRC from "!raw-loader!./ExecuteWithSlicesExample";
-import ExecuteAttributeValuesExampleSRC from "!raw-loader!./ExecuteAttributeValuesExample";
-import ExecuteWithCustomVisualizationExampleSRC from "!raw-loader!./ExecuteWithCustomVisualizationExample";
-import UseDataViewExampleSRC from "!raw-loader!./UseDataViewExample";
-import UseDataViewWithSlicesExampleSRC from "!raw-loader!./UseDataViewWithSlicesExample";
-import UseDataViewAttributeValuesExampleSRC from "!raw-loader!./UseDataViewAttributeValuesExample";
-import UseDataViewWithCustomVisualizationExampleSRC from "!raw-loader!./UseDataViewWithCustomVisualizationExample";
+import ExecuteExampleSRC from "./ExecuteExample?raw";
+import ExecuteWithSlicesExampleSRC from "./ExecuteWithSlicesExample?raw";
+import ExecuteAttributeValuesExampleSRC from "./ExecuteAttributeValuesExample?raw";
+import ExecuteWithCustomVisualizationExampleSRC from "./ExecuteWithCustomVisualizationExample?raw";
+import UseDataViewExampleSRC from "./UseDataViewExample?raw";
+import UseDataViewWithSlicesExampleSRC from "./UseDataViewWithSlicesExample?raw";
+import UseDataViewAttributeValuesExampleSRC from "./UseDataViewAttributeValuesExample?raw";
+import UseDataViewWithCustomVisualizationExampleSRC from "./UseDataViewWithCustomVisualizationExample?raw";
 
-import ExecuteExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteExample";
-import ExecuteWithSlicesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteWithSlicesExample";
-import ExecuteAttributeValuesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteAttributeValuesExample";
-import ExecuteWithCustomVisualizationExampleSRCJS from "!raw-loader!../../../examplesJS/execution/ExecuteWithCustomVisualizationExample";
-import UseDataViewExampleSRCJS from "!raw-loader!../../../examplesJS/execution/UseDataViewExample";
-import UseDataViewWithSlicesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/UseDataViewWithSlicesExample";
-import UseDataViewAttributeValuesExampleSRCJS from "!raw-loader!../../../examplesJS/execution/UseDataViewAttributeValuesExample";
-import UseDataViewWithCustomVisualizationExampleSRCJS from "!raw-loader!../../../examplesJS/execution/UseDataViewWithCustomVisualizationExample";
+import ExecuteExampleSRCJS from "./ExecuteExample?rawJS";
+import ExecuteWithSlicesExampleSRCJS from "./ExecuteWithSlicesExample?rawJS";
+import ExecuteAttributeValuesExampleSRCJS from "./ExecuteAttributeValuesExample?rawJS";
+import ExecuteWithCustomVisualizationExampleSRCJS from "./ExecuteWithCustomVisualizationExample?rawJS";
+import UseDataViewExampleSRCJS from "./UseDataViewExample?rawJS";
+import UseDataViewWithSlicesExampleSRCJS from "./UseDataViewWithSlicesExample?rawJS";
+import UseDataViewAttributeValuesExampleSRCJS from "./UseDataViewAttributeValuesExample?rawJS";
+import UseDataViewWithCustomVisualizationExampleSRCJS from "./UseDataViewWithCustomVisualizationExample?rawJS";
 
 export const Execute: React.FC = () => (
     <div>

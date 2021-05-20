@@ -11,28 +11,28 @@ import GeoPushpinChartConfigurationColorMappingExample from "./GeoPushpinChartCo
 import GeoPushpinChartConfigurationPointsGroupNearbyExample from "./GeoPushpinChartConfigurationPointsGroupNearbyExample";
 import GeoPushpinChartConfigurationPointsSizeExample from "./GeoPushpinChartConfigurationPointsSizeExample";
 
-import GeoPushpinChartClusteringExampleSRC from "!raw-loader!./GeoPushpinChartClusteringExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartWithColorLegendExampleSRC from "!raw-loader!./GeoPushpinChartWithColorLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartWithCategoryLegendExampleSRC from "!raw-loader!./GeoPushpinChartWithCategoryLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationViewportExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationViewportExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import GeoPushpinChartClusteringExampleSRC from "./GeoPushpinChartClusteringExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartWithColorLegendExampleSRC from "./GeoPushpinChartWithColorLegendExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartWithCategoryLegendExampleSRC from "./GeoPushpinChartWithCategoryLegendExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationExampleSRC from "./GeoPushpinChartConfigurationExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationViewportExampleSRC from "./GeoPushpinChartConfigurationViewportExample?raw"; // eslint-disable-line import/no-unresolved
 
-import GeoPushpinChartConfigurationColorMappingExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationColorMappingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationPointsGroupNearbyExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationPointsGroupNearbyExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationPointsSizeExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationPointsSizeExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationLegendExampleSRC from "!raw-loader!./GeoPushpinChartConfigurationLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import GeoPushpinChartConfigurationColorMappingExampleSRC from "./GeoPushpinChartConfigurationColorMappingExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationPointsGroupNearbyExampleSRC from "./GeoPushpinChartConfigurationPointsGroupNearbyExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationPointsSizeExampleSRC from "./GeoPushpinChartConfigurationPointsSizeExample?raw"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationLegendExampleSRC from "./GeoPushpinChartConfigurationLegendExample?raw"; // eslint-disable-line import/no-unresolved
 
-import GeoPushpinChartClusteringExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartClusteringExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartWithColorLegendExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartWithColorLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartWithCategoryLegendExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartWithCategoryLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationViewportExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationViewportExample";
-import GeoPushpinChartConfigurationLegendExample from "./GeoPushpinChartConfigurationLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import GeoPushpinChartClusteringExampleSRCJS from "./GeoPushpinChartClusteringExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartWithColorLegendExampleSRCJS from "./GeoPushpinChartWithColorLegendExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartWithCategoryLegendExampleSRCJS from "./GeoPushpinChartWithCategoryLegendExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationExampleSRCJS from "./GeoPushpinChartConfigurationExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationViewportExampleSRCJS from "./GeoPushpinChartConfigurationViewportExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationLegendExample from "./GeoPushpinChartConfigurationLegendExample"; // eslint-disable-line import/no-unresolved
 
-import GeoPushpinChartConfigurationColorMappingExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationColorMappingExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationPointsGroupNearbyExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationPointsGroupNearbyExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationPointsSizeExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationPointsSizeExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
-import GeoPushpinChartConfigurationLegendExampleSRCJS from "!raw-loader!../../../examplesJS/geoPushpin/GeoPushpinChartConfigurationLegendExample"; // eslint-disable-line import/no-webpack-loader-syntax, import/no-unresolved, import/extensions, import/first
+import GeoPushpinChartConfigurationColorMappingExampleSRCJS from "./GeoPushpinChartConfigurationColorMappingExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationPointsGroupNearbyExampleSRCJS from "./GeoPushpinChartConfigurationPointsGroupNearbyExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationPointsSizeExampleSRCJS from "./GeoPushpinChartConfigurationPointsSizeExample?rawJS"; // eslint-disable-line import/no-unresolved
+import GeoPushpinChartConfigurationLegendExampleSRCJS from "./GeoPushpinChartConfigurationLegendExample?rawJS"; // eslint-disable-line import/no-unresolved
 
 export const GeoPushpin = (): JSX.Element => (
     <div>

@@ -6,7 +6,6 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const webpack = require("webpack");
-const StatsPlugin = require("stats-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
@@ -93,12 +92,14 @@ module.exports = async (env, argv) => {
             systemvars: true,
         }),
         new ForkTsCheckerWebpackPlugin({
-            reportFiles: ["src/**/*.{ts,tsx}"],
+            issue: {
+                include: [{ file: "src/**/*.{ts,tsx}" }],
+            },
         }),
     ];
 
     if (isProduction) {
-        plugins.push(new CompressionPlugin(), new StatsPlugin("stats.json"));
+        plugins.push(new CompressionPlugin());
     }
 
     // flip the `disable` flag to false if you want to diagnose webpack perf
@@ -106,9 +107,11 @@ module.exports = async (env, argv) => {
 
     return smp.wrap({
         entry: ["./src/index.tsx"],
+        target: ["web", "es5"], // support IE11
+        mode: isProduction ? "production" : "development",
         plugins,
         output: {
-            filename: "[name].[hash].js",
+            filename: "[name].[contenthash].js",
             path: path.join(__dirname, "dist"),
             publicPath: `${basePath}/`,
         },
@@ -131,23 +134,67 @@ module.exports = async (env, argv) => {
             rules: [
                 {
                     test: /\.css$/,
-                    loaders: ["style-loader", "css-loader"],
+                    use: ["style-loader", "css-loader"],
                 },
                 {
                     test: /\.s[ac]ss$/,
-                    loaders: ["style-loader", "css-loader", "sass-loader"],
+                    use: ["style-loader", "css-loader", "sass-loader"],
                 },
                 {
                     test: /\.[jt]sx?$/,
-                    exclude: /node_modules|update-dependencies/,
-                    loaders: ["babel-loader"],
+                    include: path.resolve(__dirname, "src"),
+                    oneOf: [
+                        // rule for JS code samples
+                        {
+                            resourceQuery: /rawJS/,
+                            type: "asset/source",
+                            use: [
+                                {
+                                    loader: "prettier-loader",
+                                    options: {
+                                        trailingComma: "all",
+                                        tabWidth: 4,
+                                        skipRewritingSource: true,
+                                        ignoreInitial: false,
+                                        parser: "typescript",
+                                    },
+                                },
+                                {
+                                    loader: "babel-loader",
+                                    options: {
+                                        babelrc: false,
+                                        plugins: [
+                                            [
+                                                "@babel/plugin-transform-typescript",
+                                                {
+                                                    isTSX: true,
+                                                    allExtensions: true,
+                                                },
+                                            ],
+                                        ],
+                                        retainLines: true,
+                                    },
+                                },
+                            ],
+                        },
+                        // rule for TS code samples
+                        {
+                            resourceQuery: /raw/,
+                            type: "asset/source",
+                        },
+                        // rule for actual code
+                        {
+                            use: ["babel-loader"],
+                        },
+                    ],
                 },
                 {
-                    test: /\.js?$/,
+                    test: /\.js$/,
                     include: (rawModulePath) => {
                         // Some npm modules no longer transpiled to ES5, which
                         // causes errors such in IE11.
-                        const inclusionReg = /node_modules\/.*((lru-cache)|(react-intl)|(intl-messageformat))/;
+                        const inclusionReg =
+                            /node_modules\/.*((lru-cache)|(react-intl)|(intl-messageformat))/;
                         // On Windows, mPath use backslashes for folder separators. We need
                         // to convert these to forward slashes because our
                         // test regex, inclusionReg, contains one.
@@ -163,7 +210,7 @@ module.exports = async (env, argv) => {
                 },
                 {
                     test: /\.(jpe?g|gif|png|svg|ico|eot|woff2?|ttf|wav|mp3)$/,
-                    use: "file-loader",
+                    type: "asset/resource",
                 },
                 {
                     test: /\.js$/,

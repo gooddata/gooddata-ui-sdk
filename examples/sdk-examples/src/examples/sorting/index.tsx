@@ -8,18 +8,18 @@ import { AttributeSortingExample } from "./AttributeSortingExample";
 import { DynamicSortingExample } from "./DynamicSortingExample";
 
 // eslint-disable-next-line import/no-unresolved
-import MeasureSortingExampleSRC from "!raw-loader!./MeasureSortingExample";
+import MeasureSortingExampleSRC from "./MeasureSortingExample?raw";
 // eslint-disable-next-line import/no-unresolved
-import AttributeSortingExampleSRC from "!raw-loader!./AttributeSortingExample";
+import AttributeSortingExampleSRC from "./AttributeSortingExample?raw";
 // eslint-disable-next-line import/no-unresolved
-import DynamicSortingExampleSRC from "!raw-loader!./DynamicSortingExample";
+import DynamicSortingExampleSRC from "./DynamicSortingExample?raw";
 
-// eslint-disable-next-line import/default
-import MeasureSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/MeasureSortingExample";
-// eslint-disable-next-line import/default
-import AttributeSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/AttributeSortingExample";
-// eslint-disable-next-line import/default
-import DynamicSortingExampleSRCJS from "!raw-loader!../../../examplesJS/sorting/DynamicSortingExample";
+// eslint-disable-next-line import/no-unresolved
+import MeasureSortingExampleSRCJS from "./MeasureSortingExample?rawJS";
+// eslint-disable-next-line import/no-unresolved
+import AttributeSortingExampleSRCJS from "./AttributeSortingExample?rawJS";
+// eslint-disable-next-line import/no-unresolved
+import DynamicSortingExampleSRCJS from "./DynamicSortingExample?rawJS";
 
 export const Sorting: React.FC = () => (
     <div>

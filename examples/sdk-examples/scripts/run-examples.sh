@@ -6,5 +6,5 @@ if [ ! -z "$1" ]; then # if first argument is not empty
 fi
 
 
-echo "$ webpack-dev-server --https $PARAMS"
-webpack-dev-server --hot --https $PARAMS
+echo "$ webpack serve --https $PARAMS"
+webpack serve --hot --https $PARAMS

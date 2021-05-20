@@ -5,8 +5,8 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import ComposedPlaceholder from "./ComposedPlaceholderSrc";
-import ComposedPlaceholderSRC from "!raw-loader!./ComposedPlaceholderSrc";
-import ComposedPlaceholderSRCJS from "!raw-loader!../../../examplesJS/placeholders/ComposedPlaceholderSrc";
+import ComposedPlaceholderSRC from "./ComposedPlaceholderSrc?raw";
+import ComposedPlaceholderSRCJS from "./ComposedPlaceholderSrc?rawJS";
 
 const ComposedPlaceholderExample = (): JSX.Element => (
     <div>

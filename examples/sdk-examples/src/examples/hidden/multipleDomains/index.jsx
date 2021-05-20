@@ -3,7 +3,7 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { MultipleDomainsExample } from "./MultipleDomainsExample";
-import MultipleDomainsExampleSRC from "!raw-loader!./MultipleDomainsExample.jsx";
+import MultipleDomainsExampleSRC from "./MultipleDomainsExample.jsx?raw";
 
 export const MultipleDomains = () => (
     <div>

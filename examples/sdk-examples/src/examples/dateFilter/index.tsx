@@ -5,12 +5,12 @@ import React from "react";
 import { ExampleWithSource } from "../../components/ExampleWithSource";
 
 import { DateFilterComponentExample } from "./DateFilterComponentExample";
-import DateFilterComponentExampleSRC from "!raw-loader!./DateFilterComponentExample";
-import DateFilterComponentExampleSRCJS from "!raw-loader!../../../examplesJS/dateFilter/DateFilterComponentExample";
+import DateFilterComponentExampleSRC from "./DateFilterComponentExample?raw";
+import DateFilterComponentExampleSRCJS from "./DateFilterComponentExample?rawJS";
 
 import { DateFilterWithColumnChartExample } from "./DateFilterWithColumnChartExample";
-import DateFilterWithColumnChartExampleSRC from "!raw-loader!./DateFilterWithColumnChartExample";
-import DateFilterWithColumnChartExampleSRCJS from "!raw-loader!../../../examplesJS/dateFilter/DateFilterWithColumnChartExample";
+import DateFilterWithColumnChartExampleSRC from "./DateFilterWithColumnChartExample?raw";
+import DateFilterWithColumnChartExampleSRCJS from "./DateFilterWithColumnChartExample?rawJS";
 
 export const DateFilter: React.FC = () => (
     <div>

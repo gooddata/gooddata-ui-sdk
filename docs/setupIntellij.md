@@ -17,7 +17,6 @@ Here are couple of hints to achieve optimal setup:
     -   All `esm` directories in all packages (in `libs`)
     -   In `libs/api-client-bear` exclude `umd`
     -   If IntelliJ does not automatically exclude `node_modules`, then mark them as excludes as well
-    -   In `examples/sdk-examples` exclude the auto-generated `examplesJS`
 
 ## Refactoring
 

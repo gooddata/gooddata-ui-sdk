@@ -11,17 +11,17 @@ import { ArithmeticMeasureRatioExample } from "./ArithmeticMeasureRatioExample";
 import { ArithmeticMeasureChangeExample } from "./ArithmeticMeasureChangeExample";
 import { ArithmeticMeasureDrillingExample } from "./ArithmeticMeasureDrillingExample";
 
-import ArithmeticMeasureSumExampleSrc from "!raw-loader!./ArithmeticMeasureSumExample";
-import ArithmeticMeasureMultiplicationExampleSrc from "!raw-loader!./ArithmeticMeasureMultiplicationExample";
-import ArithmeticMeasureRatioExampleSrc from "!raw-loader!./ArithmeticMeasureRatioExample";
-import ArithmeticMeasureChangeExampleSrc from "!raw-loader!./ArithmeticMeasureChangeExample";
-import ArithmeticMeasureDrillingExampleSrc from "!raw-loader!./ArithmeticMeasureDrillingExample";
+import ArithmeticMeasureSumExampleSrc from "./ArithmeticMeasureSumExample?raw";
+import ArithmeticMeasureMultiplicationExampleSrc from "./ArithmeticMeasureMultiplicationExample?raw";
+import ArithmeticMeasureRatioExampleSrc from "./ArithmeticMeasureRatioExample?raw";
+import ArithmeticMeasureChangeExampleSrc from "./ArithmeticMeasureChangeExample?raw";
+import ArithmeticMeasureDrillingExampleSrc from "./ArithmeticMeasureDrillingExample?raw";
 
-import ArithmeticMeasureSumExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureSumExample";
-import ArithmeticMeasureMultiplicationExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureMultiplicationExample";
-import ArithmeticMeasureRatioExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureRatioExample";
-import ArithmeticMeasureChangeExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureChangeExample";
-import ArithmeticMeasureDrillingExampleSrcJS from "!raw-loader!../../../examplesJS/arithmeticMeasures/ArithmeticMeasureDrillingExample";
+import ArithmeticMeasureSumExampleSrcJS from "./ArithmeticMeasureSumExample?rawJS";
+import ArithmeticMeasureMultiplicationExampleSrcJS from "./ArithmeticMeasureMultiplicationExample?rawJS";
+import ArithmeticMeasureRatioExampleSrcJS from "./ArithmeticMeasureRatioExample?rawJS";
+import ArithmeticMeasureChangeExampleSrcJS from "./ArithmeticMeasureChangeExample?rawJS";
+import ArithmeticMeasureDrillingExampleSrcJS from "./ArithmeticMeasureDrillingExample?rawJS";
 
 export const ArithmeticMeasures: React.FC = () => (
     <div>

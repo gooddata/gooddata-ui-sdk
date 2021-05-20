@@ -35,7 +35,7 @@
         "build-dev": "bash scripts/build.sh --dev",
         "build-cjs": "tsc -p tsconfig.build.json",
         "build-esm": "tsc -p tsconfig.build.esm.json",
-        "build-umd": "rm -rf umd && webpack -p",
+        "build-umd": "rm -rf umd && webpack --mode production",
         "test": "jest --watch",
         "test-once": "jest",
         "test-ci": "JEST_JUNIT_OUTPUT=./ci/results/test-results.xml jest --ci --config jest.ci.js",
@@ -88,10 +88,9 @@
         "lodash-webpack-plugin": "^0.11.0",
         "prettier": "~2.3.0",
         "ts-jest": "^26.3.0",
-        "ts-loader": "^6.2.1",
+        "ts-loader": "^8.3.0",
         "typescript": "4.0.2",
-        "webpack": "^4.44.1",
-        "webpack-cli": "^3.3.7",
-        "webpack-dev-server": "^3.8.0"
+        "webpack": "^5.18.0",
+        "webpack-cli": "^4.6.0"
     }
 }

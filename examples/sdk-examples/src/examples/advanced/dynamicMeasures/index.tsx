@@ -4,8 +4,8 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { DynamicMeasuresExample } from "./DynamicMeasuresExample";
-import DynamicMeasuresExampleSRC from "!raw-loader!./DynamicMeasuresExample";
-import DynamicMeasuresExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/dynamicMeasures/DynamicMeasuresExample";
+import DynamicMeasuresExampleSRC from "./DynamicMeasuresExample?raw";
+import DynamicMeasuresExampleSRCJS from "./DynamicMeasuresExample?rawJS";
 
 export const DynamicMeasures: React.FC = () => (
     <div>

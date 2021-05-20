@@ -4,8 +4,8 @@ import React from "react";
 import { ExampleWithSource } from "../../../components/ExampleWithSource";
 
 import { GlobalFiltersExample } from "./GlobalFiltersExample";
-import GlobalFiltersExampleSRC from "!raw-loader!./GlobalFiltersExample";
-import GlobalFiltersExampleSRCJS from "!raw-loader!../../../../examplesJS/advanced/globalFilters/GlobalFiltersExample";
+import GlobalFiltersExampleSRC from "./GlobalFiltersExample?raw";
+import GlobalFiltersExampleSRCJS from "./GlobalFiltersExample?rawJS";
 
 export const GlobalFilters: React.FC = () => (
     <div className="example-wrapper">

@@ -25,8 +25,15 @@ export const FailAllBuilds = (): number => 1;
 export const SucceedAllBuilds = (): number => 0;
 
 export class MockBuilder implements IEventListener {
-    constructor(private readonly eventBus: EventBus, private resultFn: MockBuilderResult = SucceedAllBuilds) {
+    private constructor(
+        private readonly eventBus: EventBus,
+        private resultFn: MockBuilderResult = SucceedAllBuilds,
+    ) {
         this.eventBus.register(this);
+    }
+
+    public static init(eventBus: EventBus, resultFn: MockBuilderResult = SucceedAllBuilds): MockBuilder {
+        return new MockBuilder(eventBus, resultFn);
     }
 
     public setResultFn = (resultFn: MockBuilderResult): void => {

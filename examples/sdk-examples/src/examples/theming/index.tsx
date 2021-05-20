@@ -6,10 +6,10 @@ import { ExampleWithSource } from "../../components/ExampleWithSource";
 import { ThemeProviderExample } from "./ThemedComponentsExample";
 
 // eslint-disable-next-line import/no-unresolved
-import ThemeProviderExampleSrc from "!raw-loader!./ThemedComponentsExample";
+import ThemeProviderExampleSrc from "./ThemedComponentsExample?raw";
 
-// eslint-disable-next-line import/default
-import ThemeProviderExampleSrcJS from "!raw-loader!../../../examplesJS/theming/ThemedComponentsExample";
+// eslint-disable-next-line import/no-unresolved
+import ThemeProviderExampleSrcJS from "./ThemedComponentsExample?rawJS";
 
 export const ThemedComponents: React.FC = () => (
     <div>

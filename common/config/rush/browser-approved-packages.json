@@ -715,6 +715,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "prettier-loader",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "qs",
       "allowedCategories": [ "production" ]
     },
@@ -847,10 +851,6 @@
       "allowedCategories": [ "examples" ]
     },
     {
-      "name": "stats-webpack-plugin",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "stringify-object",
       "allowedCategories": [ "production" ]
     },
@@ -877,10 +877,6 @@
     {
       "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "supertest",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "svgo",
