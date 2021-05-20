@@ -39,7 +39,7 @@ export const usePlaceholdersContext = (): IPlaceholdersContextState => useContex
  */
 export interface IPlaceholdersProviderProps {
     children: React.ReactNode;
-    initialValues?: [placeholder: IPlaceholder<any>, initialValue: any][];
+    initialValues?: [IPlaceholder<any>, any][];
 }
 
 /**

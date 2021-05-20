@@ -98,8 +98,8 @@ export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(
  * @public
  */
 export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
-    value: PlaceholderValue<T> | undefined,
-    setPlaceholder: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void,
+    PlaceholderValue<T> | undefined,
+    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void,
 ];
 
 /**
