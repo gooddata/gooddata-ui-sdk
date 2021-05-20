@@ -187,6 +187,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@reduxjs/toolkit",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@storybook/addon-actions",
       "allowedCategories": [ "production" ]
     },
@@ -279,10 +283,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/md5",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@types/node",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -293,10 +293,6 @@
     {
       "name": "@types/prettier",
       "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "@types/prop-types",
-      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@types/qs",
@@ -380,7 +376,7 @@
     },
     {
       "name": "@types/stringify-object",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/tinycolor2",
@@ -671,10 +667,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "md5",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "mkdirp",
       "allowedCategories": [ "production" ]
     },
@@ -692,7 +684,7 @@
     },
     {
       "name": "node-sass",
-      "allowedCategories": [ "examples", "production", "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "node-sass-magic-importer",
@@ -721,10 +713,6 @@
     {
       "name": "prettier",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "prop-types",
-      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "qs",
@@ -829,6 +817,10 @@
     {
       "name": "recharts",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "redux-saga",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "rimraf",

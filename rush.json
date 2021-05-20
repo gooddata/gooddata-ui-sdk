@@ -301,6 +301,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-dashboard",
+            "projectFolder": "libs/sdk-ui-dashboard",
+            "reviewCategory": "production",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/dashboard-plugin-template",
             "projectFolder": "tools/dashboard-plugin-template",
             "reviewCategory": "tools",
