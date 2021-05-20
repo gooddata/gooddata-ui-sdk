@@ -48,7 +48,7 @@ const BULLET_TEMPLATE = {
 export function getBulletConfiguration(config: IChartConfig): HighchartsOptions {
     const bulletConfiguration = cloneDeep(BULLET_TEMPLATE);
 
-    if (config?.enableCompactSize) {
+    if (config?.enableCompactSize && !config?.zoomInsight) {
         const reversed = true;
         return {
             ...bulletConfiguration,

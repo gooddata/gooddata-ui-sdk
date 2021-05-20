@@ -57,7 +57,7 @@ export function getLineConfiguration(
         ],
     };
 
-    if (config?.enableCompactSize) {
+    if (config?.enableCompactSize && !config?.zoomInsight) {
         const [xAxesCount, yAxesCount] = getAxesCounts(config);
         return {
             ...lineConfiguration,
