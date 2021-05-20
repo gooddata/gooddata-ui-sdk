@@ -2,12 +2,13 @@
     "name": "@gooddata/plugin-toolkit",
     "version": "1.0.0",
     "author": "GoodData",
-    "description": "GoodData SDK TypeScript skeleton",
+    "description": "GoodData Set of Tools for working with Plugins",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/plugin-toolkit"
     },
+    "private": true,
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",

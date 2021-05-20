@@ -1,13 +1,14 @@
 {
     "name": "@gooddata/dashboard-plugin-template",
     "version": "1.0.0",
-    "description": "GoodData SDK TypeScript & React skeleton",
+    "description": "GoodData Template for Dashboard Plugins",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/dashboard-plugin-template"
     },
     "author": "GoodData Corporation",
+    "private": true,
     "license": "MIT",
     "main": "dist/index.js",
     "module": "esm/index.js",
