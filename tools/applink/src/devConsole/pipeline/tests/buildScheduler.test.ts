@@ -12,7 +12,7 @@ describe("BuildScheduler", () => {
         collector = new EventCollector(eventBus, ["buildRequested", "packagesRebuilt"]);
 
         BuildScheduler.init(eventBus);
-        new MockBuilder(eventBus);
+        MockBuilder.init(eventBus);
 
         eventBus.post(sourceInitialized(TestSourceDescriptor));
         eventBus.post(targetSelected(TestTargetDescriptor));
