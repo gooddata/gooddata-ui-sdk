@@ -14,6 +14,7 @@ class DialogExamples extends PureComponent {
         dialogOpen: false,
         confirmDialogOpen: false,
         confirmDialogWithWarningOpen: false,
+        confirmDialogWithProgress: false,
         exportDialogOpen: false,
         communityDialogOpen: false,
     };
@@ -63,6 +64,25 @@ class DialogExamples extends PureComponent {
                 submitButtonText="Discard changes"
             >
                 <p>All your unsaved changes will be lost. Is this OK?</p>
+            </ConfirmDialog>
+        );
+    }
+
+    public renderConfirmDialogWithProgressIndicator(): JSX.Element {
+        return (
+            <ConfirmDialog
+                onCancel={() => {
+                    this.setState({ confirmDialogWithProgress: false });
+                }}
+                onSubmit={() => {
+                    this.setState({ confirmDialogWithProgress: false });
+                }}
+                showProgressIndicator={true}
+                headline="Progress indicator"
+                cancelButtonText="Cancel"
+                submitButtonText="Save"
+            >
+                <p>Progress indicators inform users about the status of ongoing processes...</p>
             </ConfirmDialog>
         );
     }
@@ -164,6 +184,23 @@ class DialogExamples extends PureComponent {
         );
     }
 
+    public renderConfirmDialogWithWithProgressExample(): JSX.Element {
+        return (
+            <div id="confirm-dialog-with-progress-example">
+                <Button
+                    value="Open confirm dialog with progress example"
+                    className="gd-button-positive s-confirm-dialog-with-warning-button"
+                    onClick={() => {
+                        this.setState({
+                            confirmDialogWithProgress: !this.state.confirmDialogWithProgress,
+                        });
+                    }}
+                />
+                {this.state.confirmDialogWithProgress && this.renderConfirmDialogWithProgressIndicator()}
+            </div>
+        );
+    }
+
     public renderConfirmDialogWithWarningExample(): JSX.Element {
         return (
             <div id="confirm-dialog-with-warning-example">
@@ -223,6 +260,9 @@ class DialogExamples extends PureComponent {
                 <h4>Confirm dialog with warning</h4>
                 {this.renderConfirmDialogWithWarningExample()}
 
+                <h4>Confirm dialog with progress indicator</h4>
+                {this.renderConfirmDialogWithWithProgressExample()}
+
                 <h4>Export dialog</h4>
                 {this.renderExportDialogExample()}
 
@@ -235,6 +275,11 @@ class DialogExamples extends PureComponent {
 
 const confirmDialogWithWarningProps = {
     clickSelector: "#confirm-dialog-with-warning-example button",
+    postInteractionWait: 200,
+};
+
+const confirmDialogWithProgressProps = {
+    clickSelector: "#confirm-dialog-with-progress-example button",
     postInteractionWait: 200,
 };
 
@@ -258,6 +303,7 @@ const screenshotProps = {
         postInteractionWait: 200,
     },
     "confirm-dialog-with-warning": confirmDialogWithWarningProps,
+    "confirm-dialog-with-progress": confirmDialogWithProgressProps,
     "export-dialog": exportDialogProps,
     "community-edition-dialog": communityEditionDialogProps,
 };

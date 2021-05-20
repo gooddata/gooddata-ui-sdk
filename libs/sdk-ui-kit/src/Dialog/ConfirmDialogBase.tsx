@@ -3,6 +3,7 @@ import React from "react";
 import cx from "classnames";
 import noop from "lodash/noop";
 import { Button } from "../Button";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { DialogBase } from "./DialogBase";
 import { IConfirmDialogBaseProps } from "./typings";
 import { Bubble, BubbleHoverTrigger } from "../Bubble";
@@ -31,6 +32,7 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
             submitButtonTooltipAlignPoints,
             submitButtonTooltipArrowOffsets,
             isSubmitDisabled,
+            showProgressIndicator,
             onSubmit,
             onCancel,
         } = this.props;
@@ -61,6 +63,8 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
                     <div className="gd-dialog-content">{children}</div>
 
                     <div className="gd-dialog-footer">
+                        {showProgressIndicator && <LoadingSpinner className="gd-dialog-spinner small" />}
+
                         <Button
                             onClick={onCancel}
                             className="gd-button-secondary s-dialog-cancel-button"

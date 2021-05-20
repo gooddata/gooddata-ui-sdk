@@ -720,6 +720,8 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     isSubmitDisabled?: boolean;
     // (undocumented)
+    showProgressIndicator?: boolean;
+    // (undocumented)
     submitButtonText?: string;
     // (undocumented)
     submitButtonTooltipAlignPoints?: IAlignPoint[];
@@ -2597,15 +2599,7 @@ export class MeasureNumberFormat extends React_2.PureComponent<IMeasureNumberFor
 export const Menu: React_2.FC<IMenuProps>;
 
 // @internal (undocumented)
-export type MenuAlignment =
-    ["bottom", "right"]
-    | ["bottom", "left"]
-    | ["top", "right"]
-    | ["top", "left"]
-    | ["right", "top"]
-    | ["right", "bottom"]
-    | ["left", "top"]
-    | ["left", "bottom"];
+export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "right"] | ["top", "left"] | ["right", "top"] | ["right", "bottom"] | ["left", "top"] | ["left", "bottom"];
 
 // @internal (undocumented)
 export const Message: React_2.FC<IMessageProps>;
@@ -2641,10 +2635,8 @@ export const otherHeader: IDateDatasetHeader;
 // @internal (undocumented)
 export class Overlay<T = HTMLElement> extends React_2.Component<IOverlayProps<T>, IOverlayState> {
     constructor(props: IOverlayProps<T>);
-
     // (undocumented)
     align: () => void;
-
     // (undocumented)
     closeOnEscape(e: React_2.KeyboardEvent): void;
     // (undocumented)
@@ -2795,10 +2787,8 @@ export class Spinner extends PureComponent<ISpinnerProps> {
     static defaultProps: {
         className: string;
     };
-
     // (undocumented)
     generateSpinnerTicks(): ReactNode[];
-
     // (undocumented)
     render(): ReactNode;
 }
@@ -2812,7 +2802,6 @@ export const SyntaxHighlightingInput: React_2.FC<ISyntaxHighlightingInputProps>;
 // @internal (undocumented)
 export class Tabs extends Component<ITabsProps, ITabsState> {
     constructor(props: ITabsProps);
-
     // (undocumented)
     static defaultProps: {
         className: string;
