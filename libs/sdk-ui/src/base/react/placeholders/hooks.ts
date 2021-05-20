@@ -25,10 +25,8 @@ import {
 export function usePlaceholder<T extends IPlaceholder<any>>(
     placeholder: T,
 ): [
-    returnValue: PlaceholderValue<T> | undefined,
-    setPlaceholderValue: (
-        valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>,
-    ) => void,
+    PlaceholderValue<T> | undefined,
+    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void,
 ] {
     const { state, updateState } = usePlaceholdersContext();
     const resolvedPlaceholderValue = resolvePlaceholderValue(placeholder, state);
@@ -63,10 +61,7 @@ export function usePlaceholder<T extends IPlaceholder<any>>(
  */
 export function usePlaceholders<T extends IPlaceholder<any>[]>(
     placeholders: [...T],
-): [
-    returnValues: PlaceholdersValues<T>,
-    setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void,
-] {
+): [PlaceholdersValues<T>, (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void] {
     const { state, updateState } = usePlaceholdersContext();
 
     const resolvedPlaceholderValues = placeholders.map((placeholder) =>

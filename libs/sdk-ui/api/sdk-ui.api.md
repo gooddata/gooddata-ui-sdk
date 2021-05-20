@@ -1023,7 +1023,7 @@ export interface IPlaceholdersProviderProps {
     // (undocumented)
     children: React_2.ReactNode;
     // (undocumented)
-    initialValues?: [placeholder: IPlaceholder<any>, initialValue: any][];
+    initialValues?: [IPlaceholder<any>, any][];
 }
 
 // @internal
@@ -1243,8 +1243,8 @@ export interface IUsePagedResourceState<TItem> {
 
 // @public
 export type IUsePlaceholderHook<T extends IPlaceholder<any>> = () => [
-    value: PlaceholderValue<T> | undefined,
-    setPlaceholder: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+    PlaceholderValue<T> | undefined,
+    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
 // @public
@@ -1542,15 +1542,12 @@ export function usePagedResource<TParams, TItem>(resourceFactory: (params: TPara
 
 // @public
 export function usePlaceholder<T extends IPlaceholder<any>>(placeholder: T): [
-    returnValue: PlaceholderValue<T> | undefined,
-    setPlaceholderValue: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
+    PlaceholderValue<T> | undefined,
+    (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholderValue<T> | undefined>) => void
 ];
 
 // @public
-export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [
-    returnValues: PlaceholdersValues<T>,
-    setPlaceholderValues: (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void
-];
+export function usePlaceholders<T extends IPlaceholder<any>[]>(placeholders: [...T]): [PlaceholdersValues<T>, (valueOrUpdateCallback: ValueOrUpdateCallback<PlaceholdersValues<T>>) => void];
 
 // @public
 export function useResolveValuesWithPlaceholders<T extends any[], C>(values: [...T], resolutionContext?: C): PlaceholdersResolvedValues<T>;
