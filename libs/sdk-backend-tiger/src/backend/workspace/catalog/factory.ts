@@ -9,6 +9,9 @@ import {
     ICatalogGroup,
     ICatalogMeasure,
     IGroupableCatalogItemBase,
+    isCatalogAttribute,
+    isCatalogFact,
+    isCatalogMeasure,
 } from "@gooddata/sdk-backend-spi";
 import { IdentifierRef, isUriRef, ObjRef } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types";
@@ -18,6 +21,7 @@ import { loadAttributesAndDateDatasets } from "./datasetLoader";
 import flatten from "lodash/flatten";
 import flatMap from "lodash/flatMap";
 import uniqBy from "lodash/uniqBy";
+import sortBy from "lodash/sortBy";
 import { MetadataUtilities, ValidateRelationsHeader } from "@gooddata/api-client-tiger";
 import invariant from "ts-invariant";
 
@@ -82,11 +86,26 @@ export class TigerWorkspaceCatalogFactory implements IWorkspaceCatalogFactory {
 
         const loadersResults = await Promise.all(promises);
 
-        const catalogItems: CatalogItem[] = flatten<CatalogItem>(loadersResults);
+        const catalogItems: CatalogItem[] = sortBy(flatten<CatalogItem>(loadersResults), (item) =>
+            this.getCatalogItemId(item)?.toUpperCase(),
+        );
 
         const groups = this.extractGroups(catalogItems);
 
         return new TigerWorkspaceCatalog(this.authCall, this.workspace, groups, catalogItems, this.options);
+    };
+
+    private getCatalogItemId = (item: CatalogItem) => {
+        if (isCatalogAttribute(item)) {
+            return item.attribute.id;
+        }
+        if (isCatalogFact(item)) {
+            return item.fact.id;
+        }
+        if (isCatalogMeasure(item)) {
+            return item.measure.title;
+        }
+        return;
     };
 
     private tagsToIdentifiers = (tags: ObjRef[]): string[] => {
