@@ -43,7 +43,7 @@ const computeXirr = (executionData: IXirrExecutionData[]): number => {
         .filter((datum) => datum.amount !== 0) // zero values are irrelevant to XIRR computation, filter them out here to avoid useless Date parsing later
         .map(({ amount, date }) => ({
             amount,
-            when: new Date(date as any),
+            when: new Date(date), // TODO: parse the date explicitly to avoid cross-browser inconsistencies
         }));
 
     return calculateXirr(transactions);
