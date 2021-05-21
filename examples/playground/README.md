@@ -10,6 +10,9 @@ monorepo, all the SDK dependencies are linked into the app. You can then benefit
 2.  Add your own component into the playground, this component exercises let's say contents of `@gooddata/sdk-ui-charts`
 3.  Start the dev mode in the `libs/sdk-ui-charts` - `npm run dev`
 
+    > Note: if you are making changes to multiple SDK packages, then you may find the applink "autoBuild" mode extra
+    > useful. Please check out documentation for [applink tool](../../tools/applink).
+
 Once you do this, every time you make a change in the `sdk-ui-charts`, the dev mode will do incremental build, populate
 the `esm` outputs. The webpack server in the playground will be notified of this and rebuild the playground
 automatically.

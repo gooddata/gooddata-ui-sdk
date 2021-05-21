@@ -54,6 +54,20 @@ The application supports several global hotkeys:
 
 > Note: The hotkeys work even if you are browsing build output.
 
+### autoBuild
+
+The autoBuild mode is a special mode of the devConsole suitable for automation of incremental SDK library builds. In
+this mode the dev console will not work towards updating some target application with latest build artifacts.
+
+Instead, it looks at all libs and tools, monitors changes and automatically triggers incremental builds in the
+affected packages. The build artifacts will be created in the respective packages output directories, but will not
+be propagated anywhere.
+
+This mode is useful especially in conjuction with the [examples/playground] project. You can start the playground in
+dev mode, start the applink dev console in autoBuild mode and every time you make a change to SDK package applink
+will trigger the build, this will populate the build outputs and the playground's watcher will pick it up, rebuild
+and reload the browser.
+
 ## Current limitations
 
 1.  Styles are not yet handled

@@ -1,16 +1,23 @@
 #!/usr/bin/env node
-// (C) 2020 GoodData Corporation
+// (C) 2020-2021 GoodData Corporation
 
 import program from "commander";
 import * as process from "process";
 import * as pkg from "../package.json";
-import { devConsole } from "./devConsole/action";
+import { autoBuild, devConsole } from "./devConsole/action";
 
 program
     .version(pkg.version)
     .command("devConsole <path>")
     .description("Starts development console for SDK dependencies of the application residing in <path>")
     .action(devConsole);
+
+program
+    .command("autoBuild")
+    .description(
+        "Starts development console in auto-build mode where changes to all SDK libraries and tools will be monitored for changes and incremental builds will be started according to dependencies.",
+    )
+    .action(autoBuild);
 
 async function run() {
     program.parse(process.argv);
