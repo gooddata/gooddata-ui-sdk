@@ -87,7 +87,7 @@ module.exports = async (env, argv) => {
 
     return smp.wrap({
         entry: ["./src/index.tsx"],
-        target: ["web", "es5"], // support IE11
+        target: "web",
         mode: isProduction ? "production" : "development",
         plugins,
         output: {
@@ -162,7 +162,7 @@ module.exports = async (env, argv) => {
             compress: true,
             port: 8999,
             stats: "errors-only",
-            hot: true,
+            liveReload: true,
             proxy,
         },
         stats: "errors-only",
