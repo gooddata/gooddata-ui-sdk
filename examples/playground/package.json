@@ -89,7 +89,7 @@
         "tslib": "^2.0.0"
     },
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx src/ test/"
+        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
     },
     "scripts": {
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__,examples/server/src,examples/src,examples/test}/**/*.{ts,js,tsx,jsx,json,scss,md,yaml,html}'",

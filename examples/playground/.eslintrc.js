@@ -1,6 +1,7 @@
 // (C) 2020 GoodData Corporation
 module.exports = {
     parser: "@typescript-eslint/parser",
+    ignorePatterns: ["src/playground/**/*"],
     plugins: ["react-hooks", "prettier"],
     extends: [
         "@gooddata",
