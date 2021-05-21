@@ -531,6 +531,12 @@
             "shouldPublish": false
         },
         {
+            "packageName": "@gooddata/playground",
+            "projectFolder": "examples/playground",
+            "reviewCategory": "examples",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-examples",
             "projectFolder": "examples/sdk-examples",
             "reviewCategory": "examples",

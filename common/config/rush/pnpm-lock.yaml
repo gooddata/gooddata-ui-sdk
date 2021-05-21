@@ -24,6 +24,7 @@ specifiers:
   '@rush-temp/experimental-workspace': file:./projects/experimental-workspace.tgz
   '@rush-temp/live-examples-workspace': file:./projects/live-examples-workspace.tgz
   '@rush-temp/mock-handling': file:./projects/mock-handling.tgz
+  '@rush-temp/playground': file:./projects/playground.tgz
   '@rush-temp/plugin-toolkit': file:./projects/plugin-toolkit.tgz
   '@rush-temp/reference-workspace': file:./projects/reference-workspace.tgz
   '@rush-temp/reference-workspace-mgmt': file:./projects/reference-workspace-mgmt.tgz
@@ -82,6 +83,7 @@ dependencies:
   '@rush-temp/experimental-workspace': file:projects/experimental-workspace.tgz_ts-node@8.10.2
   '@rush-temp/live-examples-workspace': file:projects/live-examples-workspace.tgz_ts-node@8.10.2
   '@rush-temp/mock-handling': file:projects/mock-handling.tgz
+  '@rush-temp/playground': file:projects/playground.tgz_ts-node@8.10.2
   '@rush-temp/plugin-toolkit': file:projects/plugin-toolkit.tgz_ts-node@8.10.2
   '@rush-temp/reference-workspace': file:projects/reference-workspace.tgz_ts-node@8.10.2
   '@rush-temp/reference-workspace-mgmt': file:projects/reference-workspace-mgmt.tgz_ts-node@8.10.2
@@ -20559,6 +20561,86 @@ packages:
       - eslint-config-prettier
       - supports-color
       - utf-8-validate
+    dev: false
+
+  file:projects/playground.tgz_ts-node@8.10.2:
+    resolution: {integrity: sha512-r2X5ytP5s/TVOpvlCPqceCoqXEtYM3eFe4HWL/rAKWcSSK1N9C9LdHkuzOIQ6QY1tUFdbjjQSa8G3HS7fltFBA==, tarball: file:projects/playground.tgz}
+    id: file:projects/playground.tgz
+    name: '@rush-temp/playground'
+    version: 0.0.0
+    dependencies:
+      '@babel/cli': 7.13.16_@babel+core@7.13.16
+      '@babel/core': 7.13.16
+      '@babel/plugin-proposal-class-properties': 7.13.0_@babel+core@7.13.16
+      '@babel/plugin-proposal-object-rest-spread': 7.13.8_@babel+core@7.13.16
+      '@babel/plugin-transform-async-to-generator': 7.13.0_@babel+core@7.13.16
+      '@babel/plugin-transform-typescript': 7.13.0_@babel+core@7.13.16
+      '@babel/polyfill': 7.12.1
+      '@babel/preset-env': 7.13.15_@babel+core@7.13.16
+      '@babel/preset-react': 7.13.13_@babel+core@7.13.16
+      '@babel/preset-typescript': 7.13.0_@babel+core@7.13.16
+      '@babel/runtime': 7.13.17
+      '@gooddata/eslint-config': 2.1.0_92a213b8ee67f733a653316df3b3eb18
+      '@types/lodash': 4.14.168
+      '@types/node': 12.20.10
+      '@types/react': 16.14.5
+      '@types/react-dom': 16.9.12
+      '@types/react-google-recaptcha': 1.1.2
+      '@types/react-helmet': 5.0.16
+      '@types/react-syntax-highlighter': 11.0.5
+      '@typescript-eslint/eslint-plugin': 4.22.0_316f1a4362085e72d65ffc324c1237ff
+      '@typescript-eslint/parser': 4.22.0_eslint@7.25.0+typescript@4.0.2
+      babel-loader: 8.2.2_76e7a785ab40ebe0b00fc3c0b6e0fe1f
+      babel-plugin-lodash: 3.3.4
+      babel-polyfill: 6.26.0
+      babel-runtime: 6.26.0
+      circular-dependency-plugin: 5.2.2_webpack@5.37.1
+      classnames: 2.3.1
+      clean-webpack-plugin: 3.0.0_webpack@5.37.1
+      compression-webpack-plugin: 7.1.2_webpack@5.37.1
+      css-loader: 5.2.4_webpack@5.37.1
+      dotenv-webpack: 7.0.2_webpack@5.37.1
+      eslint: 7.25.0
+      eslint-plugin-header: 3.1.1_eslint@7.25.0
+      eslint-plugin-import: 2.22.1_eslint@7.25.0
+      eslint-plugin-jest: 24.3.6_0d896d7184d2495853d2903a75aab90b
+      eslint-plugin-no-only-tests: 2.5.0
+      eslint-plugin-prettier: 3.4.0_eslint@7.25.0+prettier@2.3.0
+      eslint-plugin-react: 7.23.2_eslint@7.25.0
+      eslint-plugin-react-hooks: 4.2.0_eslint@7.25.0
+      fork-ts-checker-webpack-plugin: 6.2.5
+      html-webpack-plugin: 5.3.1_webpack@5.37.1
+      jest: 26.6.3_ts-node@8.10.2
+      jest-junit: 3.7.0
+      lodash: 4.17.21
+      npm-run-all: 4.1.5
+      prettier: 2.3.0
+      prettier-loader: 3.3.0_prettier@2.3.0+webpack@5.37.1
+      react: 16.14.0
+      react-dom: 16.14.0_react@16.14.0
+      sass: 1.32.11
+      sass-loader: 10.1.1_sass@1.32.11+webpack@5.37.1
+      source-map-loader: 2.0.2_webpack@5.37.1
+      speed-measure-webpack-plugin: 1.5.0_webpack@5.37.1
+      style-loader: 1.3.0_webpack@5.37.1
+      ts-invariant: 0.7.3
+      tslib: 2.2.0
+      typescript: 4.0.2
+      webpack: 5.37.1_webpack-cli@4.7.0
+      webpack-cli: 4.7.0_73b101d6e7258082846183368a5d0f22
+      webpack-dev-server: 3.11.2_webpack-cli@4.7.0+webpack@5.37.1
+    transitivePeerDependencies:
+      - '@webpack-cli/generators'
+      - '@webpack-cli/migrate'
+      - bufferutil
+      - canvas
+      - eslint-config-prettier
+      - fibers
+      - node-sass
+      - supports-color
+      - ts-node
+      - utf-8-validate
+      - webpack-bundle-analyzer
     dev: false
 
   file:projects/plugin-toolkit.tgz_ts-node@8.10.2:
