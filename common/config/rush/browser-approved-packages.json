@@ -44,11 +44,11 @@
     },
     {
       "name": "@babel/preset-env",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/preset-react",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@babel/preset-typescript",
@@ -132,7 +132,7 @@
     },
     {
       "name": "@gooddata/sdk-ui",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-charts",
@@ -140,7 +140,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-ext",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/sdk-ui-filters",
@@ -412,7 +412,7 @@
     },
     {
       "name": "babel-loader",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "babel-plugin-lodash",
@@ -432,6 +432,10 @@
     },
     {
       "name": "blessed",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "case-sensitive-paths-webpack-plugin",
       "allowedCategories": [ "tools" ]
     },
     {
@@ -480,7 +484,7 @@
     },
     {
       "name": "css-loader",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "custom-event",
@@ -723,6 +727,10 @@
       "allowedCategories": [ "examples" ]
     },
     {
+      "name": "process",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "qs",
       "allowedCategories": [ "production" ]
     },
@@ -848,7 +856,7 @@
     },
     {
       "name": "source-map-loader",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "tools" ]
     },
     {
       "name": "spark-md5",
@@ -868,7 +876,7 @@
     },
     {
       "name": "style-loader",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "styled-jsx",
@@ -908,7 +916,7 @@
     },
     {
       "name": "ts-loader",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "ts-morph",
@@ -935,20 +943,24 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "util",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "uuid",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "webpack",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "webpack-cli",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "webpack-dev-server",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "yup",
