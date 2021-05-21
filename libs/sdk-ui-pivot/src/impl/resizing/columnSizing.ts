@@ -2,6 +2,7 @@
 import invariant, { InvariantError } from "ts-invariant";
 import omit from "lodash/omit";
 import omitBy from "lodash/omitBy";
+import chunk from "lodash/chunk";
 import { isMeasureColumn } from "../base/agUtils";
 import {
     DEFAULT_HEADER_FONT,
@@ -55,6 +56,7 @@ export const MIN_WIDTH = 60;
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
 export const AUTO_SIZED_MAX_WIDTH = 500;
 export const SORT_ICON_WIDTH = 12;
+const COLUMN_RESIZE_CHUNK_SIZE = 50;
 
 //
 //
@@ -870,19 +872,29 @@ function getTableFonts(containerRef: HTMLDivElement): {
 /**
  * Ag-Grid API set desired column sizes (it *mutates* pivot table columns data).
  */
-export function autoresizeAllColumns(columnApi: ColumnApi | null, autoResizedColumns: IResizedColumns): void {
+export async function autoresizeAllColumns(columnApi: ColumnApi | null, autoResizedColumns: IResizedColumns) {
     if (columnApi) {
         const columns = columnApi.getPrimaryColumns();
 
-        columns.forEach((column: Column) => {
-            const columnDef = column.getColDef();
-            const colId = agColId(columnDef);
-            const autoResizedColumn = autoResizedColumns[colId];
+        // Resizing large number of columns is performance-intensive, so split the processing
+        // to async chunks to not block main thread until the whole resizing is completed.
+        const chunks = chunk(columns, COLUMN_RESIZE_CHUNK_SIZE);
+        for (const ch of chunks) {
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    ch.forEach((column: Column) => {
+                        const columnDef = column.getColDef();
+                        const colId = agColId(columnDef);
+                        const autoResizedColumn = autoResizedColumns[colId];
 
-            if (colId && autoResizedColumn && autoResizedColumn.width) {
-                columnApi.setColumnWidth(colId, autoResizedColumn.width);
-            }
-        });
+                        if (colId && autoResizedColumn && autoResizedColumn.width) {
+                            columnApi.setColumnWidth(colId, autoResizedColumn.width);
+                        }
+                    });
+                    resolve();
+                });
+            });
+        }
     }
 }
 
