@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface FilterContext {
+export interface FilterContextState {
     filterContext: any;
 }
 
-const initialState = { filterContext: 0 } as FilterContext;
+const initialState = { filterContext: 0 } as FilterContextState;
 
 const filterContextSlice = createSlice({
     name: "filterContext",

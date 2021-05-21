@@ -9,12 +9,18 @@ export interface IDashboardMenuButtonProps {
     onMenuItemClicked: (itemId: string) => void;
 }
 
+/**
+ * @internal
+ */
 export type MenuButtonItem = {
     itemId: string;
     itemName: string;
     callback: () => void;
 };
 
+/**
+ * @internal
+ */
 export interface IDefaultMenuButtonProps {
     /**
      * Optionally specify how the menu button looks like

@@ -1,10 +1,17 @@
 // (C) 2021 GoodData Corporation
-import { ComponentType } from "react";
-import { ITopBarProps } from "./TopBar";
+export { TopBar, NoTopBar, ITopBarProps, IDefaultTopBarProps, TopBarComponent } from "./TopBar";
 
-export { TopBar, NoTopBar, ITopBarProps } from "./TopBar";
-
-/**
- * @internal
- */
-export type TopBarComponent = ComponentType<ITopBarProps>;
+export { IDashboardTitleProps, DashboardTitle, DashboardTitleComponent } from "./DashboardTitle";
+export {
+    IDashboardButtonBarProps,
+    DashboardButtonBarComponent,
+    DashboardButtonBar,
+    IDefaultButtonBarProps,
+} from "./DashboardButtonBar";
+export {
+    IDashboardMenuButtonProps,
+    IDefaultMenuButtonProps,
+    MenuButtonItem,
+    DashboardMenuButtonComponent,
+    DashboardMenuButton,
+} from "./DashboardMenuButton";

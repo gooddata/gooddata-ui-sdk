@@ -335,6 +335,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@types/react-redux",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-responsive",
       "allowedCategories": [ "production" ]
     },
@@ -784,6 +788,10 @@
     },
     {
       "name": "react-portal",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "react-redux",
       "allowedCategories": [ "production" ]
     },
     {
