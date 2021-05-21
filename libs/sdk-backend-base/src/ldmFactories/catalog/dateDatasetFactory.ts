@@ -11,6 +11,7 @@ import {
     isAttributeMetadataObject,
     isDataSetMetadataObject,
 } from "@gooddata/sdk-backend-spi";
+
 import { Builder, builderFactory, BuilderModifications } from "../builder";
 import { AttributeMetadataObjectBuilder, newAttributeMetadataObject } from "../metadata/attributeFactory";
 import {
@@ -57,6 +58,11 @@ export class CatalogDateAttributeBuilder<
         } else {
             this.item.defaultDisplayForm = displayFormOrRef;
         }
+        return this;
+    }
+
+    public displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this {
+        this.item.displayForms = displayForms;
         return this;
     }
 }

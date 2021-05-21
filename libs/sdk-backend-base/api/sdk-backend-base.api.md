@@ -221,6 +221,8 @@ export class CatalogDateAttributeBuilder<T extends ICatalogDateAttribute = ICata
     // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
+    displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;
+    // (undocumented)
     granularity(granularity: DateAttributeGranularity): this;
 }
 

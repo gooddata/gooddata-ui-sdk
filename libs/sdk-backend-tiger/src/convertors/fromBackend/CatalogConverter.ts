@@ -104,6 +104,12 @@ export const convertDateAttribute = (
             .attribute(idRef(attribute.id, "attribute"), (a) =>
                 a.modify(commonMetadataObjectModifications(attribute)),
             )
+            .displayForms([
+                newAttributeDisplayFormMetadataObject(
+                    idRef(label.id, "displayForm"),
+                    commonMetadataObjectModifications(label),
+                ),
+            ])
             .defaultDisplayForm(idRef(label.id, "displayForm"), (df) =>
                 df.modify(commonMetadataObjectModifications(label)),
             );

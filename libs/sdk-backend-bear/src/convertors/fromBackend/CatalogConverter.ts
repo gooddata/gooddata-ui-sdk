@@ -1,6 +1,7 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import { uriRef, idRef, ObjRef } from "@gooddata/sdk-model";
 import { GdcCatalog, GdcMetadata, GdcDateDataSets } from "@gooddata/api-model-bear";
+
 import { IDisplayFormByKey, IAttributeByKey } from "../../types/catalog";
 import {
     CatalogItem,
@@ -38,10 +39,8 @@ const bearItemTypeByCatalogItemType: {
     measure: "metric",
 };
 
-export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType => {
-    const bearItemType = bearItemTypeByCatalogItemType[type];
-    return bearItemType;
-};
+export const convertItemType = (type: CompatibleCatalogItemType): GdcCatalog.CatalogItemType =>
+    bearItemTypeByCatalogItemType[type];
 
 const bearObjectMetaToBearRef = (obj: GdcMetadata.IObjectMeta): ObjRef => uriRef(obj.uri!);
 
@@ -84,7 +83,10 @@ const convertDisplayForm = (
     const ref = bearObjectMetaToBearRef(df.meta);
 
     return newAttributeDisplayFormMetadataObject(ref, (m) => {
-        return m.modify(commonMetadataModifications(df.meta)).attribute(attrRef);
+        return m
+            .modify(commonMetadataModifications(df.meta))
+            .attribute(attrRef)
+            .displayFormType(df.content.type);
     });
 };
 
@@ -96,6 +98,9 @@ export const convertAttribute = (
     const attrRef = bearCatalogItemToBearRef(attribute);
     const defaultDisplayForm = displayForms[attribute.links.defaultDisplayForm];
     const attributeData = attributes[attribute.identifier];
+    const attributeDisplayForms = attributeData.attribute.content.displayForms.map((displayForm) =>
+        convertDisplayForm(displayForm, attrRef),
+    );
     const geoPinDisplayForms = (attribute.links.geoPinDisplayForms ?? []).map((uri) => displayForms[uri]);
     const groups = bearGroupableCatalogItemToTagRefs(attribute);
     const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
@@ -108,6 +113,7 @@ export const convertAttribute = (
                 return a.modify(commonCatalogItemModifications(attribute)).drillDownStep(drillDownStep);
             })
             .defaultDisplayForm(convertDisplayForm(defaultDisplayForm, attrRef))
+            .displayForms(attributeDisplayForms)
             .geoPinDisplayForms(geoPinDisplayForms.map((df) => convertDisplayForm(df, attrRef)))
             .groups(groups),
     );
@@ -146,6 +152,9 @@ const convertDateDataSetAttribute = (
     const attributeRef = bearObjectMetaToBearRef(attributeMeta);
     const displayFormRef = bearObjectMetaToBearRef(defaultDisplayFormMeta);
     const attributeData = attributeById[attributeMeta.identifier!];
+    const attributeDisplayForms = attributeData.attribute.content.displayForms.map((displayForm) =>
+        convertDisplayForm(displayForm, attributeRef),
+    );
     const drillDownStep = attributeData.attribute.content.drillDownStepAttributeDF
         ? uriRef(attributeData.attribute.content.drillDownStepAttributeDF)
         : undefined;
@@ -158,6 +167,7 @@ const convertDateDataSetAttribute = (
             .defaultDisplayForm(displayFormRef, (df) =>
                 df.modify(commonMetadataModifications(defaultDisplayFormMeta)),
             )
+            .displayForms(attributeDisplayForms)
             .granularity(dateDatasetAttribute.type),
     );
 };

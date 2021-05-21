@@ -39,6 +39,7 @@ export const catalogAttribute: ICatalogAttribute = {
         displayForms: [catalogDisplayForm],
     },
     defaultDisplayForm: catalogDisplayForm,
+    displayForms: [catalogDisplayForm],
     geoPinDisplayForms: [],
     groups: [],
 };

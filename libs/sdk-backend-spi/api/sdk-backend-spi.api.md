@@ -308,6 +308,7 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
 export interface ICatalogDateAttribute {
     attribute: IAttributeMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+    displayForms: IAttributeDisplayFormMetadataObject[];
     granularity: DateAttributeGranularity;
 }
 

@@ -1,10 +1,11 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2021 GoodData Corporation
 import isEmpty from "lodash/isEmpty";
+import { DateAttributeGranularity } from "@gooddata/sdk-model";
+
 import { ICatalogItemBase } from "../types";
 import { IAttributeMetadataObject } from "../../metadata/attribute";
 import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm";
 import { IDataSetMetadataObject } from "../../metadata/dataSet";
-import { DateAttributeGranularity } from "@gooddata/sdk-model";
 
 /**
  * Type representing catalog dateDataset date attribute
@@ -26,6 +27,11 @@ export interface ICatalogDateAttribute {
      * Date attribute default display form metadata object
      */
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
+
+    /**
+     * All available display forms
+     */
+    displayForms: IAttributeDisplayFormMetadataObject[];
 }
 
 /**
