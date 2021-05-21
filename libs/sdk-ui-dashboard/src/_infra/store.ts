@@ -1,20 +1,31 @@
 // (C) 2021 GoodData Corporation
-import { combineReducers, configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
-import { filterContextSliceReducer } from "./filterContextSlice";
-import { layoutSliceReducer } from "./layoutSlice";
+import {
+    CombinedState,
+    combineReducers,
+    configureStore,
+    EnhancedStore,
+    getDefaultMiddleware,
+} from "@reduxjs/toolkit";
+import { filterContextSliceReducer, FilterContextState } from "./filterContextSlice";
+import { layoutSliceReducer, LayoutState } from "./layoutSlice";
 import createSagaMiddleware from "redux-saga";
 
-const reducers = combineReducers({
-    filterContext: filterContextSliceReducer,
-    layout: layoutSliceReducer,
-});
+export type DashboardState = CombinedState<{ filterContext: FilterContextState; layout: LayoutState }>;
+export type DashboardStore = EnhancedStore<DashboardState>;
 
-const sagaMiddleware = createSagaMiddleware();
-const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+export function createDashboardStore(): DashboardStore {
+    const reducers = combineReducers({
+        filterContext: filterContextSliceReducer,
+        layout: layoutSliceReducer,
+    });
 
-export const store = configureStore({
-    reducer: reducers,
-    middleware,
-});
+    const sagaMiddleware = createSagaMiddleware();
+    const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
 
-export type RootState = ReturnType<typeof store.getState>;
+    const store = configureStore({
+        reducer: reducers,
+        middleware,
+    });
+
+    return store;
+}

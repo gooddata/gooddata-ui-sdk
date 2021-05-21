@@ -1,11 +1,11 @@
 // (C) 2021 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface LayoutSlice {
+export interface LayoutState {
     layout: any;
 }
 
-const initialState = { layout: 0 } as LayoutSlice;
+const initialState = { layout: 0 } as LayoutState;
 
 const layoutSlice = createSlice({
     name: "layout",

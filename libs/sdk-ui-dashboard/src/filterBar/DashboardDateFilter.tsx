@@ -28,8 +28,6 @@ export interface IDashboardDateFilterProps {
  *
  * This will use SDK's Date Filter implementation. Loading of available presets will happen at this point.
  *
- * @param _props
- * @constructor
  * @internal
  */
 export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
@@ -42,8 +40,6 @@ export const DashboardDateFilter: React.FC<IDashboardDateFilterProps> = (
  * This implementation of dashboard date filter keeps the filter hidden out of sight. The attribute filter itself
  * will still be in effect.
  *
- * @param _props
- * @constructor
  * @internal
  */
 export const HiddenDashboardDateFilter: React.FC<IDashboardDateFilterProps> = (

@@ -1,18 +1,13 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
+import React, { ComponentType } from "react";
 import { DashboardTitleComponent } from "./DashboardTitle";
 import { DashboardMenuButtonComponent, IDefaultMenuButtonProps } from "./DashboardMenuButton";
 import { DashboardButtonBarComponent, IDefaultButtonBarProps } from "./DashboardButtonBar";
 
-export type TopBarEventHandler = {
-    onButtonHover?: (buttonId: string) => void;
-    onButtonClicked?: (buttonId: string) => void;
-    onMenuItemHover?: (itemId: string) => void;
-    onMenuItemClicked?: (itemId: string) => void;
-};
-
 /**
  * Props to configure the default top bar implementation.
+ *
+ * @internal
  */
 export interface IDefaultTopBarProps {
     titleConfig?: {
@@ -107,11 +102,6 @@ export interface IDefaultTopBarProps {
  * @internal
  */
 export interface ITopBarProps {
-    /**
-     * User-specified event handler.
-     */
-    eventHandler?: TopBarEventHandler;
-
     title: string;
 }
 
@@ -130,3 +120,8 @@ export const TopBar: React.FC<ITopBarProps & IDefaultTopBarProps> = (
 export const NoTopBar: React.FC<ITopBarProps> = (_props: ITopBarProps) => {
     return null;
 };
+
+/**
+ * @internal
+ */
+export type TopBarComponent = ComponentType<ITopBarProps>;

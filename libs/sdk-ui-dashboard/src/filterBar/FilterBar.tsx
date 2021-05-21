@@ -1,40 +1,9 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
+import React, { ComponentType } from "react";
 import { IDashboardAttributeFilter } from "@gooddata/sdk-backend-spi";
 import { DashboardAttributeFilterComponent } from "./DashboardAttributeFilter";
 import { DashboardDateFilterComponent } from "./DashboardDateFilter";
 import { IDashboardFilter } from "@gooddata/sdk-ui-ext";
-
-/**
- * @internal
- */
-export type FilterBarEventHandler = {
-    /**
-     * Called when height of the filter bar changes.
-     */
-    onFilterBarHeightChanged?: () => void;
-
-    /**
-     * Called when there are a lot of filters and the 'show more' button is available.
-     */
-    onFilterBarOverflow?: () => void;
-
-    /**
-     * Called when the 'show more' button is available and user clicks on it.
-     */
-    onFilterBarExpanded?: () => void;
-
-    /**
-     * Called when 'show less' button is available and user clicks on it.
-     */
-    onFilterBarShrunk?: () => void;
-
-    /**
-     * Called when a dashboard dashboard filter value changes.
-     * @param filter
-     */
-    onFilterChanged?: (filter: IDashboardFilter) => void;
-};
 
 /**
  * @internal
@@ -78,11 +47,6 @@ export interface IDefaultFilterBarProps {
  */
 export interface IFilterBarProps {
     /**
-     * User-provided event handler.
-     */
-    eventHandler?: FilterBarEventHandler;
-
-    /**
      * Filters that are set for the dashboard.
      */
     filters: IDashboardFilter[];
@@ -95,6 +59,11 @@ export interface IFilterBarProps {
      */
     onFilterChanged: (filter: IDashboardFilter) => void;
 }
+
+/**
+ * @internal
+ */
+export type FilterBarComponent = ComponentType<IFilterBarProps>;
 
 /**
  * @internal

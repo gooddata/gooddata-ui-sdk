@@ -23,4 +23,7 @@ export const DashboardTitle: React.FC<IDashboardTitleProps> = (_props: IDashboar
     return null;
 };
 
+/**
+ * @internal
+ */
 export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;

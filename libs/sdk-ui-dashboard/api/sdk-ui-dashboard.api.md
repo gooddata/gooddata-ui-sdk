@@ -4,8 +4,188 @@
 
 ```ts
 
+import { ComponentType } from 'react';
+import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
+import { default as React_2 } from 'react';
+
 // @internal (undocumented)
-export const empty = true;
+export type CustomAttributeFilter = DashboardAttributeFilterComponent | ((filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined);
+
+// @internal (undocumented)
+export const Dashboard: React_2.FC<IDashboardProps>;
+
+// @internal
+export const DashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
+
+// @internal (undocumented)
+export type DashboardAttributeFilterComponent = React_2.ComponentType<IDashboardAttributeFilterProps>;
+
+// @internal (undocumented)
+export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultButtonBarProps>;
+
+// @internal (undocumented)
+export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
+
+// @internal
+export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
+
+// @internal (undocumented)
+export type DashboardDateFilterComponent = React_2.ComponentType<IDashboardDateFilterProps>;
+
+// @internal
+export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
+
+// @internal (undocumented)
+export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps>;
+
+// @internal (undocumented)
+export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
+
+// @internal (undocumented)
+export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
+
+// @internal (undocumented)
+export const FilterBar: React_2.FC<IFilterBarProps & IDefaultFilterBarProps>;
+
+// @internal (undocumented)
+export type FilterBarComponent = ComponentType<IFilterBarProps>;
+
+// @internal
+export const HiddenDashboardAttributeFilter: React_2.FC<IDashboardAttributeFilter>;
+
+// @internal
+export const HiddenDashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
+
+// @internal
+export const HiddenFilterBar: React_2.FC<IFilterBarProps>;
+
+// @internal
+export interface IDashboardAttributeFilterProps {
+    filter: IDashboardAttributeFilter;
+    onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+}
+
+// @internal
+export interface IDashboardButtonBarProps {
+    // (undocumented)
+    onButtonClicked: (buttonId: string) => void;
+    // (undocumented)
+    onButtonHover: (buttonId: string) => void;
+}
+
+// @internal
+export interface IDashboardDateFilterProps {
+    filter: IDashboardDateFilter;
+    onFilterChanged: (filter: IDashboardDateFilter) => void;
+}
+
+// @internal (undocumented)
+export interface IDashboardMenuButtonProps {
+    // (undocumented)
+    onMenuItemClicked: (itemId: string) => void;
+    // (undocumented)
+    onMenuItemHover: (itemId: string) => void;
+}
+
+// @internal (undocumented)
+export interface IDashboardProps {
+    // (undocumented)
+    children?: (dashboard: any) => JSX.Element;
+    dashboardLayoutConfig?: {
+        Component?: any;
+        defaultComponentProps?: any;
+    };
+    filterBarConfig?: {
+        Component?: FilterBarComponent;
+        defaultComponentProps?: IDefaultFilterBarProps;
+    };
+    topBarConfig?: {
+        Component?: TopBarComponent;
+        defaultComponentProps?: IDefaultTopBarProps;
+    };
+}
+
+// @internal (undocumented)
+export interface IDashboardTitleProps {
+    onTitleClicked: () => void;
+    title: string;
+}
+
+// @internal (undocumented)
+export interface IDefaultButtonBarProps {
+}
+
+// @internal (undocumented)
+export interface IDefaultFilterBarProps {
+    // (undocumented)
+    attributeFilterConfig?: {
+        Component?: CustomAttributeFilter;
+    };
+    // (undocumented)
+    dateFilterConfig?: {
+        Component?: DashboardDateFilterComponent;
+    };
+}
+
+// @internal (undocumented)
+export interface IDefaultMenuButtonProps {
+    AdditionalMenuItems?: [number, MenuButtonItem][];
+    ButtonComponent?: React_2.FC;
+    MenuItems?: MenuButtonItem[];
+}
+
+// @internal
+export interface IDefaultTopBarProps {
+    // (undocumented)
+    buttonBarConfig?: {
+        Component?: DashboardButtonBarComponent;
+        placement?: "left" | "right";
+        order?: number;
+        defaultComponentProps?: IDefaultButtonBarProps;
+    };
+    menuButtonConfig?: {
+        Component?: DashboardMenuButtonComponent;
+        placement?: "left" | "right";
+        order?: number;
+        defaultComponentProps?: IDefaultMenuButtonProps;
+    };
+    // (undocumented)
+    titleConfig?: {
+        Component?: DashboardTitleComponent;
+        placement?: "left" | "right";
+        order?: number;
+    };
+}
+
+// @internal (undocumented)
+export interface IFilterBarProps {
+    filters: IDashboardFilter[];
+    onFilterChanged: (filter: IDashboardFilter) => void;
+}
+
+// @internal (undocumented)
+export interface ITopBarProps {
+    // (undocumented)
+    title: string;
+}
+
+// @internal (undocumented)
+export type MenuButtonItem = {
+    itemId: string;
+    itemName: string;
+    callback: () => void;
+};
+
+// @internal (undocumented)
+export const NoTopBar: React_2.FC<ITopBarProps>;
+
+// @internal (undocumented)
+export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
+
+// @internal (undocumented)
+export type TopBarComponent = ComponentType<ITopBarProps>;
 
 
 // (No @packageDocumentation comment for this package)

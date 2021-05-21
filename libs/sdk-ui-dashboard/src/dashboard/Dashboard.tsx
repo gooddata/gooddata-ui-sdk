@@ -1,36 +1,12 @@
 // (C) 2021 GoodData Corporation
 import React from "react";
-import { FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
-import { TopBarComponent } from "../topBar";
-import { FilterBarEventHandler } from "../filterBar/FilterBar";
-import { IDefaultTopBarProps, TopBarEventHandler } from "../topBar/TopBar";
-import { MenuButtonItem } from "../topBar/DashboardMenuButton";
-import { IDashboardAttributeFilterProps } from "../filterBar/DashboardAttributeFilter";
+import { FilterBarComponent, IDefaultFilterBarProps, IDashboardAttributeFilterProps } from "../filterBar";
+import { TopBarComponent, IDefaultTopBarProps, MenuButtonItem } from "../topBar";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 import { DashboardWidget } from "./DashboardWidget";
 import { idRef } from "@gooddata/sdk-model";
-
-export type DashboardEventHandler = FilterBarEventHandler &
-    TopBarEventHandler & {
-        /**
-         * Emitted when the dashboard loading starts.
-         */
-        onDashboardLoading?: () => void;
-
-        /**
-         * Emitted when the dashboard successfully loads.
-         *
-         * @param dashboardData - data loaded for the dashboard
-         */
-        onDashboardLoaded?: (dashboardData: any) => void;
-
-        /**
-         * Emitted when the dashboard loading fails.
-         *
-         * @param e - error that has occurred
-         */
-        onDashboardLoadFailed?: (e: Error) => void;
-    };
+import { createDashboardStore } from "../_infra/store";
+import { Provider } from "react-redux";
 
 /**
  * @internal
@@ -86,10 +62,7 @@ export interface IDashboardProps {
         /**
          * Specify component to use for rendering the layout.
          *
-         * If not specified the default {@link DashboardLayout} will be used.
-         *
-         * If you want to implement an ad-hoc dashboard layout yourself, you can provide children render function
-         *
+         * If you want to implement an ad-hoc dashboard layout yourself, you can provide children render function.
          */
         Component?: any;
 
@@ -103,7 +76,6 @@ export interface IDashboardProps {
 
     /**
      *
-     * @param layout
      */
     children?: (dashboard: any) => JSX.Element;
 }
@@ -111,8 +83,15 @@ export interface IDashboardProps {
 /**
  * @internal
  */
-export const Dashboard: React.FC<IDashboardProps> = (_props: IDashboardProps) => {
-    return null;
+export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const store = createDashboardStore();
+
+    return (
+        <Provider store={store}>
+            Test dashboard
+            {props.children}
+        </Provider>
+    );
 };
 
 /**

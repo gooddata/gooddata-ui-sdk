@@ -28,8 +28,6 @@ export interface IDashboardAttributeFilterProps {
  *
  * This will use the SDK's AttributeFilter with the button styled same as we have it today on KD.
  *
- * @param _props
- * @constructor
  * @internal
  */
 export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
@@ -42,8 +40,7 @@ export const DashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
  * This implementation of dashboard attribute filter keeps the filter hidden out of sight. The attribute filter itself
  * will still be in effect.
  *
- * @param _props
- * @constructor
+ * @internal
  */
 export const HiddenDashboardAttributeFilter: React.FC<IDashboardAttributeFilter> = (
     _props: IDashboardAttributeFilter,
