@@ -56,7 +56,12 @@ export const LegendDialog: React.FC<ILegendDialogProps> = (props) => {
                     <Overlay
                         alignTo={alignTo}
                         alignPoints={isMobile ? legendMobileDialogAlignPoints : legendDialogAlignPoints}
-                        closeOnOutsideClick={!isMobile}
+                        /*
+                         * Previous - closeOnOutsideClick={!isMobile}
+                         *
+                         * Some specific reason to not have it working on mobile sizes?
+                         */
+                        closeOnOutsideClick={true}
                         onClose={onCloseDialog}
                         className="kpi-alert-dialog-overlay"
                     >
