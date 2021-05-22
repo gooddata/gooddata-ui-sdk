@@ -80,6 +80,7 @@
         "@gooddata/sdk-ui-kit": "^8.5.0-alpha.4",
         "@gooddata/sdk-ui-pivot": "^8.5.0-alpha.4",
         "@gooddata/sdk-ui-theme-provider": "^8.5.0-alpha.4",
+        "@gooddata/sdk-ui-dashboard": "1.0.0",
         "babel-runtime": "^6.26.0",
         "babel-polyfill": "^6.26.0",
         "lodash": "^4.17.19",
