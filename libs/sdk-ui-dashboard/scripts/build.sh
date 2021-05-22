@@ -15,7 +15,7 @@ _common-build() {
 
 build() {
     _common-build
-    concurrently "npm run build-cjs" "npm run build-esm" && npm run api-extractor
+    concurrently "npm run build-cjs" "npm run build-esm"
 }
 
 build-dev() {
@@ -26,7 +26,7 @@ build-dev() {
 
 build-dev-watch() {
     _common-build
-    tsc --watch -p tsconfig.dev.json &
+    tsc --watch -p tsconfig.dev.json
     _build_styles
 }
 
