@@ -1,15 +1,23 @@
 // (C) 2021 GoodData Corporation
-import { AnyAction, configureStore, Dispatch, EnhancedStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import {
+    AnyAction,
+    configureStore,
+    Dispatch,
+    EnhancedStore,
+    EntityState,
+    getDefaultMiddleware,
+} from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IInsight, ObjRef } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
 import { FilterContextState } from "./filterContext/filterContextState";
 import { LayoutState } from "./layout/layoutState";
+import { insightsSliceReducer } from "./insights";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -23,6 +31,7 @@ export type DashboardState = {
     loading: LoadingState;
     filterContext: FilterContextState;
     layout: LayoutState;
+    insights: EntityState<IInsight>;
 };
 
 /**
@@ -103,6 +112,7 @@ export function createDashboardStore(config: DashboardStoreConfig): DashboardSto
             loading: loadingSliceReducer,
             filterContext: filterContextSliceReducer,
             layout: layoutSliceReducer,
+            insights: insightsSliceReducer,
         },
         middleware,
     });

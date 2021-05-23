@@ -11,4 +11,5 @@ export {
     LayoutState,
     filterContextSelector,
     FilterContextState,
+    insightsSelector,
 } from "./state";

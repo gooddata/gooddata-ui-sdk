@@ -15,8 +15,8 @@ const selectSelf = createSelector(
  *
  * @internal
  */
-export const layoutSelector = createSelector(selectSelf, (state: LayoutState) => {
-    invariant(state.layout, "attempting to access uninitialized layout state");
+export const layoutSelector = createSelector(selectSelf, (layoutState: LayoutState) => {
+    invariant(layoutState.layout, "attempting to access uninitialized layout state");
 
-    return state.layout;
+    return layoutState.layout;
 });

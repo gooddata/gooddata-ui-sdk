@@ -7,12 +7,14 @@
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
 import { Dispatch } from '@reduxjs/toolkit';
+import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
+import { IInsight } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -50,11 +52,12 @@ export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaul
 // @internal (undocumented)
 export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonProps>;
 
-// @internal (undocumented)
+// @internal
 export type DashboardState = {
     loading: LoadingState;
     filterContext: FilterContextState;
     layout: LayoutState;
+    insights: EntityState<IInsight>;
 };
 
 // @internal (undocumented)
@@ -193,6 +196,9 @@ export interface IFilterBarProps {
     filters: IDashboardFilter[];
     onFilterChanged: (filter: IDashboardFilter) => void;
 }
+
+// @internal
+export const insightsSelector: (state: DashboardState) => import("@gooddata/sdk-model").IInsight[];
 
 // @internal (undocumented)
 export interface ITopBarProps {

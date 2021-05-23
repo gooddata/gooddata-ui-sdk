@@ -21,3 +21,6 @@ export { FilterContextState } from "./filterContext/filterContextState";
 export { layoutSelector } from "./layout/layoutSelectors";
 export { layoutActions } from "./layout";
 export { LayoutState } from "./layout/layoutState";
+
+export { insightsActions } from "./insights";
+export { insightsSelector } from "./insights/insightsSelectors";
