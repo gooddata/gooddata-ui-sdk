@@ -29,7 +29,9 @@ export function createRootEventEmitter(initialHandlers: DashboardEventHandler[] 
             // eslint-disable-next-line no-console
             console.debug("starting root event emitter");
 
-            const eventChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.EVT"));
+            const eventChannel = yield actionChannel((action: any) =>
+                action.type.startsWith("GDC.DASHBOARD.EVT"),
+            );
 
             while (true) {
                 const event: DashboardEvents = yield take(eventChannel);

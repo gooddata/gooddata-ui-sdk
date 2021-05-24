@@ -5,7 +5,7 @@
  *
  * @internal
  */
-export type DashboardCommandType = "GDC.CMD.LOAD.DASHBOARD";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 
 /**
  * Base type for all commands.
@@ -18,7 +18,7 @@ export type DashboardCommandType = "GDC.CMD.LOAD.DASHBOARD";
  */
 export interface IDashboardCommand {
     /**
-     * Command type. Always starts with "GDC.CMD"
+     * Command type. Always starts with "GDC.DASHBOARD.CMD"
      */
     type: DashboardCommandType;
 
@@ -41,7 +41,7 @@ export interface IDashboardCommand {
  * @internal
  */
 export interface LoadDashboard extends IDashboardCommand {
-    type: "GDC.CMD.LOAD.DASHBOARD";
+    type: "GDC.DASHBOARD.CMD.LOAD";
 }
 
 /**
@@ -52,7 +52,7 @@ export interface LoadDashboard extends IDashboardCommand {
  */
 export function loadDashboard(correlationId?: string): LoadDashboard {
     return {
-        type: "GDC.CMD.LOAD.DASHBOARD",
+        type: "GDC.DASHBOARD.CMD.LOAD",
         correlationId,
     };
 }

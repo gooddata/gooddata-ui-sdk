@@ -15,14 +15,14 @@ export function* rootCommandHandler() {
     // eslint-disable-next-line no-console
     console.debug("starting root command handler");
 
-    const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.CMD"));
+    const commandChannel = yield actionChannel((action: any) => action.type.startsWith("GDC.DASHBOARD.CMD"));
 
     while (true) {
         const action: DashboardCommands = yield take(commandChannel);
         const dashboardContext: DashboardContext = yield getContext("dashboardContext");
 
         switch (action.type) {
-            case "GDC.CMD.LOAD.DASHBOARD": {
+            case "GDC.DASHBOARD.CMD.LOAD": {
                 yield call(loadDashboardCommandHandler, dashboardContext, action);
                 break;
             }

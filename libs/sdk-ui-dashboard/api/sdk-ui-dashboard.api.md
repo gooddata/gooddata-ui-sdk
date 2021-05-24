@@ -42,7 +42,7 @@ export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps
 export type DashboardCommands = LoadDashboard;
 
 // @internal
-export type DashboardCommandType = "GDC.CMD.LOAD.DASHBOARD";
+export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 
 // @internal (undocumented)
 export const DashboardContext: any;
@@ -73,7 +73,7 @@ export type DashboardEventHandler = {
 export type DashboardEvents = DashboardLoaded;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.EVT.DASHBOARD.LOADED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED";
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
@@ -83,7 +83,7 @@ export interface DashboardLoaded extends IDashboardEvent {
         insights: IInsight[];
     };
     // (undocumented)
-    type: "GDC.EVT.DASHBOARD.LOADED";
+    type: "GDC.DASHBOARD.EVT.LOADED";
 }
 
 // @internal
@@ -272,7 +272,7 @@ export interface LayoutState {
 // @internal
 export interface LoadDashboard extends IDashboardCommand {
     // (undocumented)
-    type: "GDC.CMD.LOAD.DASHBOARD";
+    type: "GDC.DASHBOARD.CMD.LOAD";
 }
 
 // @internal

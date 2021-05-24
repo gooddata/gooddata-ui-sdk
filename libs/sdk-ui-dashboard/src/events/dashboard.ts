@@ -7,7 +7,7 @@ import { DashboardContext } from "../dashboard/state";
 /**
  * @internal
  */
-export type DashboardEventType = "GDC.EVT.DASHBOARD.LOADED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED";
 
 /**
  * Base type for all dashboard events.
@@ -16,7 +16,7 @@ export type DashboardEventType = "GDC.EVT.DASHBOARD.LOADED";
  */
 export interface IDashboardEvent {
     /**
-     * Event type. Always starts with "GDC.EVT".
+     * Event type. Always starts with "GDC.DASHBOARD.EVT".
      */
     readonly type: DashboardEventType;
 
@@ -42,7 +42,7 @@ export interface IDashboardEvent {
  * @internal
  */
 export interface DashboardLoaded extends IDashboardEvent {
-    type: "GDC.EVT.DASHBOARD.LOADED";
+    type: "GDC.DASHBOARD.EVT.LOADED";
     payload: {
         /**
          * Loaded dashboard.
@@ -69,7 +69,7 @@ export function dashboardLoaded(
     insights: IInsight[],
 ): DashboardLoaded {
     return {
-        type: "GDC.EVT.DASHBOARD.LOADED",
+        type: "GDC.DASHBOARD.EVT.LOADED",
         ctx,
         payload: {
             dashboard,
