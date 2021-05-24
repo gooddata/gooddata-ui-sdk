@@ -5,18 +5,16 @@ import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
 import {
     createDashboardStore,
-    DashboardContext,
+    ReactDashboardContext,
     useDashboardDispatch,
     useDashboardSelector,
-} from "./state/dashboardStore";
-import { loadingSelector } from "./state";
-import { loadDashboard } from "../commands/dashboard";
-import { rootCommandHandler } from "./commandHandlers/rootCommandHandler";
+} from "../model/state/dashboardStore";
+import { loadingSelector } from "../model";
+import { loadDashboard } from "../model/commands/dashboard";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { createRootEventEmitter } from "./eventEmitter/rootEventEmitter";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { DashboardEventHandler } from "../model/events/eventHandler";
 
 /**
  * @internal
@@ -155,20 +153,17 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
-    const eventEmitter = createRootEventEmitter(props.eventHandlers);
-
-    const store = createDashboardStore({
+    const [store] = createDashboardStore({
         sagaContext: {
             backend,
             workspace,
             dashboardRef: props.dashboardRef,
         },
-        rootEventEmitter: eventEmitter.eventEmitterSaga,
-        rootCommandHandler,
+        initialEventHandlers: props.eventHandlers,
     });
 
     return (
-        <Provider store={store} context={DashboardContext}>
+        <Provider store={store} context={ReactDashboardContext}>
             <DashboardLoading {...props} />
         </Provider>
     );

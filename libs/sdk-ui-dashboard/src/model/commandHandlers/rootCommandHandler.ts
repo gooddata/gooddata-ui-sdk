@@ -1,8 +1,8 @@
 // (C) 2021 GoodData Corporation
 import { actionChannel, call, getContext, take } from "redux-saga/effects";
-import { DashboardCommands } from "../../commands/dashboard";
+import { DashboardCommands } from "../commands/dashboard";
 import { loadDashboardCommandHandler } from "./loadDashboardCommandHandler";
-import { DashboardContext } from "../state/dashboardStore";
+import { DashboardContext } from "../types/commonTypes";
 
 /**
  * Root command handler is the central point through which all command processing is done. The handler registers

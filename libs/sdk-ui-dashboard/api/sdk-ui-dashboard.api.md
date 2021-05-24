@@ -44,9 +44,6 @@ export type DashboardCommands = LoadDashboard;
 // @internal
 export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 
-// @internal (undocumented)
-export const DashboardContext: any;
-
 // @internal
 export type DashboardContext = {
     backend: IAnalyticalBackend;

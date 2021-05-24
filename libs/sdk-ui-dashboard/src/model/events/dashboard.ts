@@ -2,7 +2,7 @@
 
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
-import { DashboardContext } from "../dashboard/state";
+import { DashboardContext } from "../types/commonTypes";
 
 /**
  * @internal

@@ -1,4 +1,5 @@
 // (C) 2021 GoodData Corporation
+import React from "react";
 import {
     AnyAction,
     configureStore,
@@ -12,13 +13,15 @@ import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "re
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IInsight, ObjRef } from "@gooddata/sdk-model";
+import { IInsight } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState";
 import { FilterContextState } from "./filterContext/filterContextState";
 import { LayoutState } from "./layout/layoutState";
 import { insightsSliceReducer } from "./insights";
-import React from "react";
+import { createRootEventEmitter } from "../eventEmitter/rootEventEmitter";
+import { DashboardEventHandler } from "../events/eventHandler";
+import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
+import { DashboardContext } from "../types/commonTypes";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -53,40 +56,18 @@ export type DashboardStore = EnhancedStore<DashboardState>;
 /**
  * @internal
  */
-export const DashboardContext: any = React.createContext(null);
+export const ReactDashboardContext: any = React.createContext(null);
 
 /**
  * @internal
  */
-export const useDashboardDispatch = createDispatchHook(DashboardContext);
+export const useDashboardDispatch = createDispatchHook(ReactDashboardContext);
 
 /**
  * @internal
  */
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
-    createSelectorHook(DashboardContext);
-
-/**
- * Values in this context will be available to all sagas.
- *
- * @internal
- */
-export type DashboardContext = {
-    /**
-     * Analytical Backend where the dashboard exists.
-     */
-    backend: IAnalyticalBackend;
-
-    /**
-     * Analytical Backend where the dashboard exists.
-     */
-    workspace: string;
-
-    /**
-     * Dashboard that should be loaded into the store.
-     */
-    dashboardRef?: ObjRef;
-};
+    createSelectorHook(ReactDashboardContext);
 
 export type DashboardStoreConfig = {
     /**
@@ -96,16 +77,9 @@ export type DashboardStoreConfig = {
     sagaContext: DashboardContext;
 
     /**
-     * Specifies root event emitter of the dashboard. This is the saga that will be responsible for sending
-     * events to the registered event handlers.
+     *
      */
-    rootEventEmitter: any;
-
-    /**
-     * Specifies root command handler of the dashboard. This is the saga that will be taking all the supported
-     * commands and orchestrate their processing.
-     */
-    rootCommandHandler: any;
+    initialEventHandlers?: DashboardEventHandler[];
 };
 
 /**
@@ -113,7 +87,9 @@ export type DashboardStoreConfig = {
  *
  * @param config - runtime configuration to apply on the middlewares and the store
  */
-export function createDashboardStore(config: DashboardStoreConfig): DashboardStore {
+export function createDashboardStore(
+    config: DashboardStoreConfig,
+): [DashboardStore, (handler: DashboardEventHandler) => void] {
     const sagaMiddleware = createSagaMiddleware({
         context: {
             dashboardContext: config.sagaContext,
@@ -143,8 +119,10 @@ export function createDashboardStore(config: DashboardStoreConfig): DashboardSto
         middleware,
     });
 
-    sagaMiddleware.run(config.rootEventEmitter);
-    sagaMiddleware.run(config.rootCommandHandler);
+    const rootEventEmitter = createRootEventEmitter(config.initialEventHandlers);
 
-    return store;
+    sagaMiddleware.run(rootEventEmitter.eventEmitterSaga);
+    sagaMiddleware.run(rootCommandHandler as any);
+
+    return [store, rootEventEmitter.registerHandler];
 }
