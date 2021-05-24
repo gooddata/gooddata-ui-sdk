@@ -10,6 +10,8 @@ import { rootCommandHandler } from "./commandHandlers/rootCommandHandler";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { createRootEventEmitter } from "./eventEmitter/rootEventEmitter";
+import { DashboardEventHandler } from "../events/eventHandler";
 
 /**
  * @internal
@@ -35,6 +37,11 @@ export interface IDashboardProps {
      * Reference of the persisted dashboard to render.
      */
     dashboardRef?: ObjRef;
+
+    /**
+     * Optionally specify event handlers to register at the dashboard creation time.
+     */
+    eventHandlers?: DashboardEventHandler[];
 
     /**
      * Optionally configure how the top bar looks and behaves.
@@ -143,12 +150,15 @@ const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => 
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspaceStrict(props.workspace);
+    const eventEmitter = createRootEventEmitter(props.eventHandlers);
+
     const store = createDashboardStore({
         sagaContext: {
             backend,
             workspace,
             dashboardRef: props.dashboardRef,
         },
+        rootEventEmitter: eventEmitter.eventEmitterSaga,
         rootCommandHandler,
     });
 

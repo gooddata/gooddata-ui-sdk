@@ -9,6 +9,7 @@ import { ComponentType } from 'react';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
@@ -37,6 +38,19 @@ export const DashboardButtonBar: React_2.FC<IDashboardButtonBarProps & IDefaultB
 // @internal (undocumented)
 export type DashboardButtonBarComponent = ComponentType<IDashboardButtonBarProps>;
 
+// @internal (undocumented)
+export type DashboardCommands = LoadDashboard;
+
+// @internal
+export type DashboardCommandType = "GDC.CMD.LOAD.DASHBOARD";
+
+// @internal
+export type DashboardContext = {
+    backend: IAnalyticalBackend;
+    workspace: string;
+    dashboardRef?: ObjRef;
+};
+
 // @internal
 export const DashboardDateFilter: React_2.FC<IDashboardDateFilterProps>;
 
@@ -45,6 +59,29 @@ export type DashboardDateFilterComponent = React_2.ComponentType<IDashboardDateF
 
 // @internal
 export type DashboardDispatch = Dispatch<AnyAction>;
+
+// @internal
+export type DashboardEventHandler = {
+    eval: (type: DashboardEventType) => boolean;
+    handler: (event: DashboardEvents) => void;
+};
+
+// @internal (undocumented)
+export type DashboardEvents = DashboardLoaded;
+
+// @internal (undocumented)
+export type DashboardEventType = "GDC.EVT.DASHBOARD.LOADED";
+
+// @internal
+export interface DashboardLoaded extends IDashboardEvent {
+    // (undocumented)
+    payload: {
+        dashboard: IDashboard;
+        insights: IInsight[];
+    };
+    // (undocumented)
+    type: "GDC.EVT.DASHBOARD.LOADED";
+}
 
 // @internal
 export const DashboardMenuButton: React_2.FC<IDashboardMenuButtonProps & IDefaultMenuButtonProps>;
@@ -105,9 +142,22 @@ export interface IDashboardButtonBarProps {
 }
 
 // @internal
+export interface IDashboardCommand {
+    correlationId?: string;
+    type: DashboardCommandType;
+}
+
+// @internal
 export interface IDashboardDateFilterProps {
     filter: IDashboardDateFilter;
     onFilterChanged: (filter: IDashboardDateFilter) => void;
+}
+
+// @internal
+export interface IDashboardEvent {
+    readonly correlationId?: string;
+    readonly ctx: DashboardContext;
+    readonly type: DashboardEventType;
 }
 
 // @internal (undocumented)
@@ -128,6 +178,7 @@ export interface IDashboardProps {
         defaultComponentProps?: any;
     };
     dashboardRef?: ObjRef;
+    eventHandlers?: DashboardEventHandler[];
     filterBarConfig?: {
         Component?: FilterBarComponent;
         defaultComponentProps?: IDefaultFilterBarProps;
@@ -214,6 +265,15 @@ export interface LayoutState {
     // (undocumented)
     layout?: IDashboardLayout;
 }
+
+// @internal
+export interface LoadDashboard extends IDashboardCommand {
+    // (undocumented)
+    type: "GDC.CMD.LOAD.DASHBOARD";
+}
+
+// @internal
+export function loadDashboard(correlationId?: string): LoadDashboard;
 
 // @internal (undocumented)
 export const loadingSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;

@@ -61,6 +61,8 @@ export const useDashboardSelector: TypedUseSelectorHook<DashboardState> = useSel
 
 /**
  * Values in this context will be available to all sagas.
+ *
+ * @internal
  */
 export type DashboardContext = {
     /**
@@ -87,6 +89,12 @@ export type DashboardStoreConfig = {
     sagaContext: DashboardContext;
 
     /**
+     * Specifies root event emitter of the dashboard. This is the saga that will be responsible for sending
+     * events to the registered event handlers.
+     */
+    rootEventEmitter: any;
+
+    /**
      * Specifies root command handler of the dashboard. This is the saga that will be taking all the supported
      * commands and orchestrate their processing.
      */
@@ -105,7 +113,18 @@ export function createDashboardStore(config: DashboardStoreConfig): DashboardSto
         },
     });
 
-    const middleware = [...getDefaultMiddleware({ thunk: false }), sagaMiddleware];
+    const middleware = [
+        ...getDefaultMiddleware({
+            thunk: false,
+            /*
+             * TODO: events that fly through contain dashboard context which has some non-serializable data
+             */
+            serializableCheck: {
+                ignoredActionPaths: ["ctx"],
+            },
+        }),
+        sagaMiddleware,
+    ];
 
     const store = configureStore({
         reducer: {
@@ -117,6 +136,7 @@ export function createDashboardStore(config: DashboardStoreConfig): DashboardSto
         middleware,
     });
 
+    sagaMiddleware.run(config.rootEventEmitter);
     sagaMiddleware.run(config.rootCommandHandler);
 
     return store;

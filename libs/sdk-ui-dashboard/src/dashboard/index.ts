@@ -12,4 +12,5 @@ export {
     filterContextSelector,
     FilterContextState,
     insightsSelector,
+    DashboardContext,
 } from "./state";
