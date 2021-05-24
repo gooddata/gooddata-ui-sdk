@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
+import noop from "lodash/noop";
 
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger";
 import { Bubble } from "../Bubble/Bubble";
@@ -35,8 +36,8 @@ export class LegacySingleSelectListItem extends Component<
     ILegacySingleSelectListItemState
 > {
     static defaultProps = {
-        onMouseOver: (): void => {},
-        onMouseOut: (): void => {},
+        onMouseOver: noop,
+        onMouseOut: noop,
     };
 
     readonly state = { isOverflowed: false };

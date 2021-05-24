@@ -3,6 +3,7 @@ import React from "react";
 import first from "lodash/first";
 import times from "lodash/times";
 import assign from "lodash/assign";
+import noop from "lodash/noop";
 import { mount } from "enzyme";
 
 import { withIntl } from "@gooddata/sdk-ui";
@@ -28,7 +29,7 @@ describe("LegacyInvertableList", () => {
             width: 100,
             height: 100,
             itemHeight: 10,
-            onSearch: () => {},
+            onSearch: noop,
             items: [] as IItem[],
         };
 

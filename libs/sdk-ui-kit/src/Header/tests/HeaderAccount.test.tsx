@@ -1,6 +1,7 @@
 // (C) 2007-2020 GoodData Corporation
 import React from "react";
 import { mount } from "enzyme";
+import noop from "lodash/noop";
 import { withIntl, ITranslations } from "@gooddata/sdk-ui";
 
 import { HeaderAccount } from "../HeaderAccount";
@@ -22,9 +23,7 @@ const Wrapper = withIntl(HeaderAccount, "en-US", mockTranslation);
 
 describe("HeaderAccount", () => {
     it("should render username", () => {
-        const headerWrapper = mount(
-            <Wrapper items={menuItems} onMenuItemClick={() => {}} userName="John Doe" />,
-        );
+        const headerWrapper = mount(<Wrapper items={menuItems} onMenuItemClick={noop} userName="John Doe" />);
 
         expect(headerWrapper.find(".gd-header-account-user").text()).toEqual("John Doe");
     });

@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import pick from "lodash/pick";
 import cx from "classnames";
+import noop from "lodash/noop";
 
 import { LegacyList } from "./LegacyList";
 import { LegacyListItem } from "./LegacyListItem";
@@ -43,13 +44,13 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         items: [] as any[],
         itemsCount: 0,
         listItemClass: LegacySingleSelectListItem,
-        onItemMouseOut: (): void => {},
-        onItemMouseOver: (): void => {},
-        onItemMouseEnter: (): void => {},
-        onItemMouseLeave: (): void => {},
-        onRangeChange: (): void => {},
-        onScrollStart: (): void => {},
-        onSelect: (): void => {},
+        onItemMouseOut: noop,
+        onItemMouseOver: noop,
+        onItemMouseEnter: noop,
+        onItemMouseLeave: noop,
+        onRangeChange: noop,
+        onScrollStart: noop,
+        onSelect: noop,
         rowItem: null as React.ReactElement,
         scrollToSelected: false,
         selection: {},

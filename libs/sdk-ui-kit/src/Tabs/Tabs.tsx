@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
+import noop from "lodash/noop";
 
 /**
  * @internal
@@ -34,7 +35,7 @@ export interface ITabsState {
 export class Tabs extends Component<ITabsProps, ITabsState> {
     static defaultProps = {
         className: "",
-        onTabSelect: (): void => {},
+        onTabSelect: noop,
         selectedTabId: "",
         tabs: [] as ITab[],
     };

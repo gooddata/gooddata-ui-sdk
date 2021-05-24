@@ -46,7 +46,9 @@ const ThemedComponentsExample: React.FC = () => {
                     <br />
                     <AttributeFilter
                         filter={newPositiveAttributeFilter(Ldm.EmployeeName.Default, ["Abbie Adams"])}
-                        onApply={() => {}}
+                        onApply={() => {
+                            /* omitted for brevity */
+                        }}
                     />
                     <br />
                     <br />

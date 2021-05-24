@@ -2,6 +2,7 @@
 import React from "react";
 import uniqueId from "lodash/uniqueId";
 import debounce from "lodash/debounce";
+import noop from "lodash/noop";
 import format from "date-fns/format";
 import parse from "date-fns/parse";
 import isValid from "date-fns/isValid";
@@ -83,12 +84,12 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         className: "",
         date: new Date(),
         placeholder: "",
-        onChange: (): void => {},
+        onChange: noop,
         resetOnInvalidValue: false,
         size: "",
         tabIndex: 0,
         alignPoints: [{ align: "bl tl" }, { align: "br tr" }, { align: "tl bl" }, { align: "tr br" }],
-        onAlign: (): void => {},
+        onAlign: noop,
         dateFormat: DEFAULT_DATE_FORMAT,
     };
     constructor(props: DatePickerProps) {

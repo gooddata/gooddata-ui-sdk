@@ -34,7 +34,7 @@ export class StaticLegend extends React.PureComponent<IStaticLegendProps> {
     public static defaultProps: Partial<IStaticLegendProps> = {
         buttonOrientation: "upDown",
         paginationHeight: STATIC_PAGING_HEIGHT,
-        onPageChanged: () => {},
+        onPageChanged: noop,
     };
 
     public state = {
@@ -180,7 +180,7 @@ export const getPagingValues = (
     visibleItemsCount: number,
     seriesLength: number,
     hasCustomComponent: boolean,
-) => {
+): [number, number] => {
     const start = hasCustomComponent ? (page - 2) * visibleItemsCount : (page - 1) * visibleItemsCount;
     const end = hasCustomComponent
         ? Math.min(visibleItemsCount * (page - 1), seriesLength)

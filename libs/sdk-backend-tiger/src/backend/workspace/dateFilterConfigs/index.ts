@@ -138,8 +138,6 @@ export class TigerWorkspaceDateFilterConfigsQuery implements IDateFilterConfigsQ
     private limit: number | undefined;
     private offset: number | undefined;
 
-    constructor() {}
-
     public withLimit(limit: number): IDateFilterConfigsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 

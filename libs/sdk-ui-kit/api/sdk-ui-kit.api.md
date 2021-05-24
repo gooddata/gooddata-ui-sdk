@@ -72,9 +72,9 @@ export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
         arrowStyle: {};
         className: string;
         closeOnOutsideClick: boolean;
-        onClose: () => void;
-        onMouseEnter: () => void;
-        onMouseLeave: () => void;
+        onClose: (...args: any[]) => void;
+        onMouseEnter: (...args: any[]) => void;
+        onMouseLeave: (...args: any[]) => void;
         overlayClassName: string;
     };
     // (undocumented)
@@ -2503,10 +2503,10 @@ export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectL
     // (undocumented)
     static defaultProps: {
         isLoading: boolean;
-        onMouseOver: () => void;
-        onMouseOut: () => void;
-        onOnly: () => void;
-        onSelect: () => void;
+        onMouseOver: (...args: any[]) => void;
+        onMouseOut: (...args: any[]) => void;
+        onOnly: (...args: any[]) => void;
+        onSelect: (...args: any[]) => void;
         selected: boolean;
         source: {};
     };
@@ -2533,13 +2533,13 @@ export class LegacySingleSelectList<T> extends Component<ILegacySingleSelectList
         items: any[];
         itemsCount: number;
         listItemClass: typeof LegacySingleSelectListItem;
-        onItemMouseOut: () => void;
-        onItemMouseOver: () => void;
-        onItemMouseEnter: () => void;
-        onItemMouseLeave: () => void;
-        onRangeChange: () => void;
-        onScrollStart: () => void;
-        onSelect: () => void;
+        onItemMouseOut: (...args: any[]) => void;
+        onItemMouseOver: (...args: any[]) => void;
+        onItemMouseEnter: (...args: any[]) => void;
+        onItemMouseLeave: (...args: any[]) => void;
+        onRangeChange: (...args: any[]) => void;
+        onScrollStart: (...args: any[]) => void;
+        onSelect: (...args: any[]) => void;
         rowItem: React_2.ReactElement<any, string | ((props: any) => React_2.ReactElement<any, any>) | (new (props: any) => React_2.Component<any, any, any>)>;
         scrollToSelected: boolean;
         selection: {};
@@ -2556,8 +2556,8 @@ export class LegacySingleSelectListItem extends Component<ILegacySingleSelectLis
     componentDidUpdate(): void;
     // (undocumented)
     static defaultProps: {
-        onMouseOver: () => void;
-        onMouseOut: () => void;
+        onMouseOver: (...args: any[]) => void;
+        onMouseOut: (...args: any[]) => void;
     };
     // (undocumented)
     node: HTMLSpanElement;
@@ -2805,7 +2805,7 @@ export class Tabs extends Component<ITabsProps, ITabsState> {
     // (undocumented)
     static defaultProps: {
         className: string;
-        onTabSelect: () => void;
+        onTabSelect: (...args: any[]) => void;
         selectedTabId: string;
         tabs: ITab[];
     };
