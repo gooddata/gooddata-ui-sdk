@@ -13,22 +13,20 @@
  */
 
 export {
-    DashboardState,
-    DashboardDispatch,
-    useDashboardDispatch,
     useDashboardSelector,
-    loadingSelector,
-    LoadingState,
-    layoutSelector,
-    LayoutState,
-    filterContextSelector,
-    FilterContextState,
-    insightsSelector,
-    DashboardContext,
-} from "./state";
+    useDashboardDispatch,
+    DashboardDispatch,
+    DashboardState,
+} from "./state/dashboardStore";
 
+export { loadingSelector } from "./state/loading/loadingSelectors";
+export { LoadingState } from "./state/loading/loadingState";
+export { filterContextSelector } from "./state/filterContext/filterContextSelectors";
+export { FilterContextState } from "./state/filterContext/filterContextState";
+export { layoutSelector } from "./state/layout/layoutSelectors";
+export { LayoutState } from "./state/layout/layoutState";
+export { insightsSelector } from "./state/insights/insightsSelectors";
 export { DashboardEvents, DashboardEventType, DashboardLoaded, IDashboardEvent } from "./events/dashboard";
-
 export { DashboardEventHandler } from "./events/eventHandler";
 
 export {
@@ -38,3 +36,4 @@ export {
     LoadDashboard,
     DashboardCommandType,
 } from "./commands/dashboard";
+export { DashboardContext } from "./types/commonTypes";
