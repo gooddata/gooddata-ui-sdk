@@ -55,10 +55,10 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/sdk-backend-spi": "^8.5.0-alpha.2",
-        "@gooddata/sdk-model": "^8.5.0-alpha.2",
-        "@gooddata/sdk-ui-ext": "^8.5.0-alpha.2",
-        "@gooddata/sdk-ui-filters": "^8.5.0-alpha.2",
+        "@gooddata/sdk-backend-spi": "^8.5.0-alpha.3",
+        "@gooddata/sdk-model": "^8.5.0-alpha.3",
+        "@gooddata/sdk-ui-ext": "^8.5.0-alpha.3",
+        "@gooddata/sdk-ui-filters": "^8.5.0-alpha.3",
         "@reduxjs/toolkit": "^1.5.1",
         "lodash": "^4.17.19",
         "react-intl": "^3.6.0",
