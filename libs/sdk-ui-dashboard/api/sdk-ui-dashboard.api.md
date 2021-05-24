@@ -44,6 +44,9 @@ export type DashboardCommands = LoadDashboard;
 // @internal
 export type DashboardCommandType = "GDC.CMD.LOAD.DASHBOARD";
 
+// @internal (undocumented)
+export const DashboardContext: any;
+
 // @internal
 export type DashboardContext = {
     backend: IAnalyticalBackend;
@@ -302,7 +305,7 @@ export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;
 export type TopBarComponent = ComponentType<ITopBarProps>;
 
 // @internal (undocumented)
-export const useDashboardDispatch: () => DashboardDispatch;
+export const useDashboardDispatch: () => Dispatch<AnyAction>;
 
 // @internal (undocumented)
 export const useDashboardSelector: TypedUseSelectorHook<DashboardState>;

@@ -3,7 +3,12 @@ import React, { useEffect } from "react";
 import { FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
 import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
-import { createDashboardStore, useDashboardDispatch, useDashboardSelector } from "./state/dashboardStore";
+import {
+    createDashboardStore,
+    DashboardContext,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "./state/dashboardStore";
 import { loadingSelector } from "./state";
 import { loadDashboard } from "../commands/dashboard";
 import { rootCommandHandler } from "./commandHandlers/rootCommandHandler";
@@ -163,7 +168,7 @@ export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => 
     });
 
     return (
-        <Provider store={store}>
+        <Provider store={store} context={DashboardContext}>
             <DashboardLoading {...props} />
         </Provider>
     );

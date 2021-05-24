@@ -8,7 +8,7 @@ import {
     getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { createDispatchHook, createSelectorHook, TypedUseSelectorHook } from "react-redux";
 import { filterContextSliceReducer } from "./filterContext";
 import { layoutSliceReducer } from "./layout";
 import { loadingSliceReducer } from "./loading";
@@ -18,6 +18,7 @@ import { LoadingState } from "./loading/loadingState";
 import { FilterContextState } from "./filterContext/filterContextState";
 import { LayoutState } from "./layout/layoutState";
 import { insightsSliceReducer } from "./insights";
+import React from "react";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -52,12 +53,18 @@ export type DashboardStore = EnhancedStore<DashboardState>;
 /**
  * @internal
  */
-export const useDashboardDispatch = () => useDispatch<DashboardDispatch>();
+export const DashboardContext: any = React.createContext(null);
 
 /**
  * @internal
  */
-export const useDashboardSelector: TypedUseSelectorHook<DashboardState> = useSelector;
+export const useDashboardDispatch = createDispatchHook(DashboardContext);
+
+/**
+ * @internal
+ */
+export const useDashboardSelector: TypedUseSelectorHook<DashboardState> =
+    createSelectorHook(DashboardContext);
 
 /**
  * Values in this context will be available to all sagas.
