@@ -1,17 +1,53 @@
 // (C) 2021 GoodData Corporation
-import React from "react";
-import { FilterBarComponent, IDefaultFilterBarProps, IDashboardAttributeFilterProps } from "../filterBar";
-import { TopBarComponent, IDefaultTopBarProps, MenuButtonItem } from "../topBar";
-import { InsightView } from "@gooddata/sdk-ui-ext";
-import { DashboardWidget } from "./DashboardWidget";
-import { idRef } from "@gooddata/sdk-model";
-import { createDashboardStore } from "../_infra/store";
+import React, { useEffect } from "react";
+import { FilterBarComponent, IDefaultFilterBarProps } from "../filterBar";
+import { IDefaultTopBarProps, TopBarComponent } from "../topBar";
 import { Provider } from "react-redux";
+import {
+    createDashboardStore,
+    DashboardContext,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "./state/dashboardStore";
+import { loadingSelector } from "./state";
+import { loadDashboard } from "../commands/dashboard";
+import { rootCommandHandler } from "./commandHandlers/rootCommandHandler";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { ObjRef } from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { createRootEventEmitter } from "./eventEmitter/rootEventEmitter";
+import { DashboardEventHandler } from "../events/eventHandler";
 
 /**
  * @internal
  */
 export interface IDashboardProps {
+    /**
+     * Analytical backend from which the dashboard obtains data to render.
+     *
+     * If you do not specify instance of analytical backend using this prop, then you MUST have
+     * BackendProvider up in the component tree.
+     */
+    backend?: IAnalyticalBackend;
+
+    /**
+     * Identifier of analytical workspace, from which the dashboard obtains data to render.
+     *
+     * If you do not specify workspace identifier, then you MUST have WorkspaceProvider up in the
+     * component tree.
+     */
+    workspace?: string;
+
+    /**
+     * Reference of the persisted dashboard to render.
+     */
+    dashboardRef?: ObjRef;
+
+    /**
+     * Optionally specify event handlers to register at the dashboard creation time.
+     */
+    eventHandlers?: DashboardEventHandler[];
+
     /**
      * Optionally configure how the top bar looks and behaves.
      */
@@ -77,119 +113,63 @@ export interface IDashboardProps {
     /**
      *
      */
-    children?: (dashboard: any) => JSX.Element;
+    children?: JSX.Element | ((dashboard: any) => JSX.Element);
 }
+
+const DashboardInner: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    return (
+        <React.Fragment>
+            {typeof props.children === "function" ? props.children?.(null) : props.children}
+        </React.Fragment>
+    );
+};
+
+const DashboardLoading: React.FC<IDashboardProps> = (props: IDashboardProps) => {
+    const dispatch = useDashboardDispatch();
+    const { loading, error, result } = useDashboardSelector(loadingSelector);
+
+    useEffect(() => {
+        if (!loading && result === undefined) {
+            dispatch(loadDashboard());
+        }
+    }, [loading, result]);
+
+    if (!loading && result === undefined) {
+        return <div>Initializing...</div>;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    return <DashboardInner {...props} />;
+};
 
 /**
  * @internal
  */
 export const Dashboard: React.FC<IDashboardProps> = (props: IDashboardProps) => {
-    const store = createDashboardStore();
+    const backend = useBackendStrict(props.backend);
+    const workspace = useWorkspaceStrict(props.workspace);
+    const eventEmitter = createRootEventEmitter(props.eventHandlers);
+
+    const store = createDashboardStore({
+        sagaContext: {
+            backend,
+            workspace,
+            dashboardRef: props.dashboardRef,
+        },
+        rootEventEmitter: eventEmitter.eventEmitterSaga,
+        rootCommandHandler,
+    });
 
     return (
-        <Provider store={store}>
-            Test dashboard
-            {props.children}
+        <Provider store={store} context={DashboardContext}>
+            <DashboardLoading {...props} />
         </Provider>
     );
 };
-
-/**
- * Shows how to use built-in customization to influence placement of the menu
- */
-export function demonstrateCustomMenuPlacement() {
-    return (
-        <Dashboard
-            topBarConfig={{
-                defaultComponentProps: {
-                    menuButtonConfig: {
-                        placement: "left",
-                    },
-                },
-            }}
-        />
-    );
-}
-
-/**
- * Shows how to use built-in customization to influence placement and add custom menu items
- */
-export function demonstrateCustomMenuPlacementAndItem() {
-    const customItem: [number, MenuButtonItem] = [
-        -1,
-        {
-            itemId: "myItem",
-            itemName: "Open My App",
-            callback: () => {
-                window.location.assign("/bang");
-            },
-        },
-    ];
-    return (
-        <Dashboard
-            topBarConfig={{
-                defaultComponentProps: {
-                    menuButtonConfig: {
-                        placement: "left",
-                        defaultComponentProps: {
-                            AdditionalMenuItems: [customItem],
-                        },
-                    },
-                },
-            }}
-        />
-    );
-}
-
-const MyCustomAttrFilter: React.FC<IDashboardAttributeFilterProps> = (
-    _props: IDashboardAttributeFilterProps,
-) => {
-    // custom impl.. does whatever it wants, on user selection calls `props.onFilterChanged`
-
-    return null;
-};
-
-/**
- * Shows how to use built-in customization to have custom implementation of filter.
- */
-export function demonstrateCustomAttributeFilterImpl() {
-    return (
-        <Dashboard
-            filterBarConfig={{
-                defaultComponentProps: {
-                    attributeFilterConfig: {
-                        Component: MyCustomAttrFilter,
-                    },
-                },
-            }}
-        />
-    );
-}
-
-/**
- * Shows how to add a completely custom dashboard rendering.
- */
-export function demonstrateCustomDashboardLayout() {
-    return (
-        <Dashboard>
-            {(_dashboard: any) => {
-                return (
-                    <React.Fragment>
-                        <h1>My Custom Dashboard</h1>
-                        <div>
-                            {/* dashboard widget is our component*/}
-                            <DashboardWidget dateDataset={idRef("some.date.dataset")}>
-                                <InsightView insight="something"></InsightView>
-                            </DashboardWidget>
-                        </div>
-                        <div>
-                            <DashboardWidget dateDataset={idRef("some.other.date.dataset")}>
-                                {/* <LineChart ... /> */}
-                            </DashboardWidget>
-                        </div>
-                    </React.Fragment>
-                );
-            }}
-        </Dashboard>
-    );
-}
