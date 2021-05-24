@@ -6,7 +6,7 @@
         "target": "es5",
         "jsx": "react",
         "lib": ["es7", "dom"],
-        "module": "commonjs",
+        "module": "ESNext",
         "moduleResolution": "node",
         "esModuleInterop": true,
         "importHelpers": true,
@@ -16,8 +16,7 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "sourceMap": true,
-        "suppressImplicitAnyIndexErrors": true,
-        "baseUrl": ".."
+        "suppressImplicitAnyIndexErrors": true
     },
     "compileOnSave": false,
     "exclude": ["**/node_modules", "dist", "esm", "**/__mocks__/**/*"]
