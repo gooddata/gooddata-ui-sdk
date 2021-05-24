@@ -2,6 +2,7 @@
 import React, { PureComponent } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
+import noop from "lodash/noop";
 
 import { stringUtils } from "@gooddata/util";
 
@@ -26,10 +27,10 @@ export interface ILegacyMultiSelectListItemProps {
 export class LegacyMultiSelectListItem extends PureComponent<ILegacyMultiSelectListItemProps> {
     static defaultProps = {
         isLoading: false,
-        onMouseOver: (): void => {},
-        onMouseOut: (): void => {},
-        onOnly: (): void => {},
-        onSelect: (): void => {},
+        onMouseOver: noop,
+        onMouseOut: noop,
+        onOnly: noop,
+        onSelect: noop,
         selected: false,
         source: {},
     };

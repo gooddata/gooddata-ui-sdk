@@ -4,6 +4,7 @@ import keys from "lodash/keys";
 import cloneDeep from "lodash/cloneDeep";
 import isEqual from "lodash/isEqual";
 import result from "lodash/result";
+import noop from "lodash/noop";
 import cx from "classnames";
 
 import { IAlignPoint } from "../typings/positioning";
@@ -90,9 +91,9 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
         arrowStyle: {},
         className: "bubble-primary",
         closeOnOutsideClick: false,
-        onClose: (): void => {},
-        onMouseEnter: (): void => {},
-        onMouseLeave: (): void => {},
+        onClose: noop,
+        onMouseEnter: noop,
+        onMouseLeave: noop,
         overlayClassName: "",
     };
 

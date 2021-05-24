@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { Table, Column, Cell } from "fixed-data-table-2";
 import cx from "classnames";
 import { ScrollCallback } from "./List";
+import noop from "lodash/noop";
 
 const BORDER_HEIGHT = 1;
 
@@ -44,9 +45,9 @@ export interface ILegacyListState {
 export class LegacyList extends Component<ILegacyListProps, ILegacyListState> {
     static defaultProps: Partial<ILegacyListProps> = {
         className: "",
-        onScroll: (): void => {},
-        onScrollStart: (): void => {},
-        onSelect: (): void => {},
+        onScroll: noop,
+        onScrollStart: noop,
+        onSelect: noop,
         width: 200,
         height: 300,
         itemHeight: 28,

@@ -6,6 +6,7 @@ import keyBy from "lodash/keyBy";
 import values from "lodash/values";
 import take from "lodash/take";
 import has from "lodash/has";
+import noop from "lodash/noop";
 
 import { Input } from "../Form";
 import LegacyMultiSelectList from "./LegacyMultiSelectList";
@@ -105,8 +106,8 @@ export class LegacyInvertableList<T> extends Component<
         listItemClass: LegacyMultiSelectListItem,
         noItemsFound: false,
         noItemsFoundClass: injectIntl(NoItemsFound),
-        onRangeChange: (): void => {},
-        onSelect: (): void => {},
+        onRangeChange: noop,
+        onSelect: noop,
         searchPlaceholder: "",
         searchString: "",
         selection: [] as any[],

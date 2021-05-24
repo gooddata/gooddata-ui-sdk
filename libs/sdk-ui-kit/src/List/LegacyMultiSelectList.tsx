@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
+import noop from "lodash/noop";
 
 import { Button } from "../Button";
 import { LegacyList } from "./LegacyList";
@@ -62,13 +63,13 @@ export class LegacyMultiSelectList<T> extends Component<
         listItemClass: LegacyMultiSelectListItem, // TODO add tests
         maxSelectionSize: 500, // based on filters in gdc-client
         filteredItemsCount: 0,
-        onItemMouseOut: (): void => {},
-        onItemMouseOver: (): void => {},
-        onRangeChange: (): void => {},
-        onSelect: (): void => {},
-        onSelectAll: (): void => {},
-        onSelectNone: (): void => {},
-        onSelectOnly: (): void => {},
+        onItemMouseOut: noop,
+        onItemMouseOver: noop,
+        onRangeChange: noop,
+        onSelect: noop,
+        onSelectAll: noop,
+        onSelectNone: noop,
+        onSelectOnly: noop,
         rowItem: null as React.ReactElement,
         selectAllCheckbox: false,
         tagName: "",

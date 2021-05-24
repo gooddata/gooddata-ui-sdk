@@ -1,5 +1,6 @@
 // (C) 2007-2020 GoodData Corporation
 import React, { Component } from "react";
+import noop from "lodash/noop";
 import times from "lodash/times";
 import { LegacyInvertableList, LegacySingleSelectList } from "@gooddata/sdk-ui-kit";
 import { withIntl } from "@gooddata/sdk-ui";
@@ -26,7 +27,7 @@ const defaultListProps = {
     items,
     itemsCount: items.length,
     maxSelectionSize: 20,
-    onSearch: () => {},
+    onSearch: noop,
     selection: [],
     width: 210,
 };

@@ -7,8 +7,6 @@ import { ObjRef } from "@gooddata/sdk-model";
  * @internal
  */
 export class RecordedFacts implements IWorkspaceFactsService {
-    constructor() {}
-
     public getFactDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
         throw new NotSupported("not supported");
     }

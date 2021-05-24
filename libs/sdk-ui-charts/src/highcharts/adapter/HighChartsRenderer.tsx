@@ -304,7 +304,7 @@ export class HighChartsRenderer extends React.PureComponent<
             format,
             locale,
             showFluidLegend,
-            validateOverHeight: () => {},
+            validateOverHeight: noop,
             contentDimensions: contentRect?.client,
             containerId,
         };

@@ -4,6 +4,7 @@ import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
 import { translationUtils } from "@gooddata/util";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+import noop from "lodash/noop";
 
 import { OverlayPositionType } from "../typings/overlay";
 import { Dropdown, DropdownButton, DropdownList } from "../Dropdown";
@@ -45,7 +46,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         className: "",
         maxVisibleItemsCount: MAX_VISIBLE_ITEMS_COUNT,
         time: new Date(),
-        onChange: (): void => {},
+        onChange: noop,
         overlayZIndex: 0,
     };
 

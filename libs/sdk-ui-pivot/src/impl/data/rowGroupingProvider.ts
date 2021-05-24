@@ -20,7 +20,9 @@ export interface IGroupingProvider {
 }
 
 class DefaultGroupingProvider implements IGroupingProvider {
-    public reset() {}
+    public reset() {
+        /* not implemented in this provider */
+    }
 
     public isGroupBoundary(_rowIndex: number) {
         return false;
@@ -30,7 +32,9 @@ class DefaultGroupingProvider implements IGroupingProvider {
         return false;
     }
 
-    public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {}
+    public processPage(_pageRows: IGridRow[], _rowOffset: number, _columnIds: string[]) {
+        /* not implemented in this provider */
+    }
 
     public isRepeatedValue(_columnId: string, _rowIndex: number) {
         return false;
