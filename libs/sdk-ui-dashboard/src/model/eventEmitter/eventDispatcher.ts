@@ -1,7 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { put } from "redux-saga/effects";
-import { IDashboardEvent } from "../../events/dashboard";
+import { IDashboardEvent } from "../events/dashboard";
 
 /**
  * This saga is used to dispatch events into the dashboard's event bus.

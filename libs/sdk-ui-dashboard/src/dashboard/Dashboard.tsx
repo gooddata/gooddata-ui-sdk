@@ -8,15 +8,15 @@ import {
     DashboardContext,
     useDashboardDispatch,
     useDashboardSelector,
-} from "./state/dashboardStore";
-import { loadingSelector } from "./state";
-import { loadDashboard } from "../commands/dashboard";
-import { rootCommandHandler } from "./commandHandlers/rootCommandHandler";
+} from "../model/state/dashboardStore";
+import { loadingSelector } from "../model/state";
+import { loadDashboard } from "../model/commands/dashboard";
+import { rootCommandHandler } from "../model/commandHandlers/rootCommandHandler";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { createRootEventEmitter } from "./eventEmitter/rootEventEmitter";
-import { DashboardEventHandler } from "../events/eventHandler";
+import { createRootEventEmitter } from "../model/eventEmitter/rootEventEmitter";
+import { DashboardEventHandler } from "../model/events/eventHandler";
 
 /**
  * @internal

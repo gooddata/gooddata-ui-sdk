@@ -1,10 +1,10 @@
 // (C) 2021 GoodData Corporation
 import { call, put } from "redux-saga/effects";
-import { LoadDashboard } from "../../commands/dashboard";
+import { LoadDashboard } from "../commands/dashboard";
 import { filterContextActions, insightsActions, layoutActions, loadingActions } from "../state";
 import { DashboardContext } from "../state/dashboardStore";
 import { eventDispatcher } from "../eventEmitter/eventDispatcher";
-import { dashboardLoaded } from "../../events/dashboard";
+import { dashboardLoaded } from "../events/dashboard";
 
 export type PromiseReturnType<T> = T extends Promise<infer U> ? U : any;
 export type PromiseFnReturnType<T extends (...args: any) => any> = PromiseReturnType<ReturnType<T>>;
