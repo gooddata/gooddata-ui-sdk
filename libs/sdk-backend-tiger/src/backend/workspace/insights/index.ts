@@ -221,6 +221,9 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public getInsightReferencingObjects = async (ref: ObjRef): Promise<IInsightReferencing> => {
         const id = await objRefToIdentifier(ref, this.authCall);
+        const filterReferencingObj = {
+            filter: `visualizationObjects.id==${id}`, // RSQL format of querying data
+        };
 
         const dashboards = await this.authCall((client) =>
             MetadataUtilities.getAllPagesOf(
@@ -229,12 +232,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
                 {
                     workspaceId: this.workspace,
                     include: ["visualizationObjects"], // we must include the visualizationObjects so that we can do predicates on them
-                    predicate: {
-                        visualizationObjects: {
-                            id, // return only dashboards that have a link to the given id in their visualizationObjects
-                        },
-                    },
                 },
+                { query: filterReferencingObj as any }, // return only dashboards that have a link to the given id in their visualizationObjects
             )
                 .then(MetadataUtilities.mergeEntitiesResults)
                 .then((result) => result.data ?? []),
