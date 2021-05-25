@@ -1,14 +1,14 @@
 // (C) 2021 GoodData Corporation
 import { call, put } from "redux-saga/effects";
-import { LoadDashboard } from "../commands/dashboard";
-import { eventDispatcher } from "../eventEmitter/eventDispatcher";
-import { dashboardLoaded } from "../events/dashboard";
-import { filterContextActions } from "../state/filterContext";
-import { insightsActions } from "../state/insights";
-import { layoutActions } from "../state/layout";
-import { loadingActions } from "../state/loading";
-import { DashboardContext } from "../types/commonTypes";
-import { PromiseFnReturnType } from "../types/sagas";
+import { LoadDashboard } from "../../commands/dashboard";
+import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
+import { dashboardLoaded } from "../../events/dashboard";
+import { filterContextActions } from "../../state/filterContext";
+import { insightsActions } from "../../state/insights";
+import { layoutActions } from "../../state/layout";
+import { loadingActions } from "../../state/loading";
+import { DashboardContext } from "../../types/commonTypes";
+import { PromiseFnReturnType } from "../../types/sagas";
 
 async function loadDashboardFromBackend(ctx: DashboardContext) {
     const { backend, workspace, dashboardRef } = ctx;
