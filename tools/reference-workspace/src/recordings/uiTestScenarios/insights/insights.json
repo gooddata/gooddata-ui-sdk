@@ -2174,6 +2174,9 @@
     "Heatmap.2a2d8ea6e07a1ff6fb192121091e1c7e": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend on top."
     },
+    "Heatmap.3137935fdd1bbaa6f1b06c43058f8447": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend at bottom."
+    },
     "Heatmap.3338112eef4718bb43c490c90e0837b0": {
         "comment": "Auto-generated insight for test scenario Heatmap - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - legend at bottom."
     },
@@ -2182,6 +2185,9 @@
     },
     "Heatmap.3785d25a2a1233f5690bc9bb9051e28e": {
         "comment": "Auto-generated insight for test scenario Heatmap - coloring - custom palette."
+    },
+    "Heatmap.3bacaddc6b5c8cf6eb1dfb98dbef9ec5": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - auto legend."
     },
     "Heatmap.3c1681db9876b995912befc9c99d2513": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend on left."
@@ -2267,6 +2273,9 @@
     "Heatmap.95d5f6bd315c7f7fc4ef1e24b1be13cb": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on left."
     },
+    "Heatmap.969476ed922ff045694af9da1a875da6": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on left."
+    },
     "Heatmap.9824ef5804cfab871ba9215ae8884eb9": {
         "comment": "Auto-generated insight for test scenario Heatmap - axis name configuration - high."
     },
@@ -2282,6 +2291,9 @@
     "Heatmap.a0bf2524ac7af0636f105db8bae99ed4": {
         "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend at bottom."
     },
+    "Heatmap.a0c1614fad470143e430c56fd0c45267": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on top."
+    },
     "Heatmap.a2950fddaa59d9999e22607cb40d091d": {
         "comment": "Auto-generated insight for test scenario Heatmap - legend position - legend on left."
     },
@@ -2289,6 +2301,9 @@
         "comment": "Auto-generated insight for test scenario Heatmap - themed.",
         "scenarioName": "themed",
         "visName": "Heatmap"
+    },
+    "Heatmap.a3070cf4085899df0b02bb9265ccadf2": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend at bottom."
     },
     "Heatmap.a9d506f7ab82364cc84df26cff8da284": {
         "comment": "Auto-generated insight for test scenario Heatmap - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
@@ -2325,6 +2340,15 @@
     "Heatmap.e45ed81dfe76ee37a332f98574964c74": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x154 - Force position RIGHT - legend on right."
     },
+    "Heatmap.e4fccda8ea7173ebd2eaa3ff1d162486": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend on left."
+    },
+    "Heatmap.e7b6efa5b9a69eb3bd634d83e1365988": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend on right."
+    },
+    "Heatmap.ee51505c9fb1b2676d4f1a480227e7e6": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 620x400 - Position respects configuration, standard variant - legend on right."
+    },
     "Heatmap.f0a708fb42453ae7103c962a85e610bf": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend at bottom."
     },
@@ -2340,11 +2364,17 @@
     "Heatmap.f58b121c4333269bf2fa058a8648e0c8": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on top."
     },
+    "Heatmap.f5efbdeba1dd7ed8bcdfc2197e5413eb": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - auto legend."
+    },
     "Heatmap.fd17f7cbf408029974f69ac1ee6051ab": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
     },
     "Heatmap.fea3cd35f3498bfaee2743895f3cdd45": {
         "comment": "Auto-generated insight for test scenario Heatmap - 610x194 - Position respects configuration, max 1 row for TOP/BOTTOM - legend on right."
+    },
+    "Heatmap.ffcd3ac6aceccfc4375f651dcc50da81": {
+        "comment": "Auto-generated insight for test scenario Heatmap - 180x400 - Force position TOP, minimised variant - legend on top."
     },
     "LineChart.0384dd5bd8193a5ef1d419153265c781": {
         "comment": "Auto-generated insight for test scenario LineChart - 440x154 - Force position TOP, max 1 row, Gradient legend normal - legend on left."
