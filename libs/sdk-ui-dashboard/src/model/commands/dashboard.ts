@@ -1,5 +1,7 @@
 // (C) 2021 GoodData Corporation
 
+import { DashboardConfig } from "../types/commonTypes";
+
 /**
  * All available command types.
  *
@@ -42,18 +44,26 @@ export interface IDashboardCommand {
  */
 export interface LoadDashboard extends IDashboardCommand {
     type: "GDC.DASHBOARD.CMD.LOAD";
+    payload: {
+        config?: DashboardConfig;
+    };
 }
 
 /**
  * Creates the LoadDashboard command.
  *
+ * @param config - dashboard configuration provided by the user. if not specified, the load command WILL load
+ *  the configuration from backend.
  * @param correlationId - optionally specify correlation id to use for this command
  * @internal
  */
-export function loadDashboard(correlationId?: string): LoadDashboard {
+export function loadDashboard(config?: DashboardConfig, correlationId?: string): LoadDashboard {
     return {
         type: "GDC.DASHBOARD.CMD.LOAD",
         correlationId,
+        payload: {
+            config,
+        },
     };
 }
 

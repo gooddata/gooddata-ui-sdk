@@ -14,11 +14,22 @@ import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
+import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IFilterContext } from '@gooddata/sdk-backend-spi';
 import { IInsight } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
+
+// @internal
+export const configSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("../..").DashboardConfig, (res: import("./configState").ConfigState) => import("../..").DashboardConfig>;
+
+// @internal (undocumented)
+export interface ConfigState {
+    // (undocumented)
+    config?: DashboardConfig;
+}
 
 // @internal (undocumented)
 export type CustomAttributeFilter = DashboardAttributeFilterComponent | ((filter: IDashboardAttributeFilter) => DashboardAttributeFilterComponent | undefined);
@@ -45,6 +56,12 @@ export type DashboardCommands = LoadDashboard;
 export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 
 // @internal
+export type DashboardConfig = {
+    settings?: ISettings;
+    dateFilterConfig?: IDateFilterConfig;
+};
+
+// @internal
 export type DashboardContext = {
     backend: IAnalyticalBackend;
     workspace: string;
@@ -67,10 +84,10 @@ export type DashboardEventHandler = {
 };
 
 // @internal (undocumented)
-export type DashboardEvents = DashboardLoaded;
+export type DashboardEvents = DashboardLoaded | DateFilterValidationFailed;
 
 // @internal (undocumented)
-export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED";
+export type DashboardEventType = "GDC.DASHBOARD.EVT.LOADED" | "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
 
 // @internal
 export interface DashboardLoaded extends IDashboardEvent {
@@ -78,6 +95,7 @@ export interface DashboardLoaded extends IDashboardEvent {
     payload: {
         dashboard: IDashboard;
         insights: IInsight[];
+        config: DashboardConfig;
     };
     // (undocumented)
     type: "GDC.DASHBOARD.EVT.LOADED";
@@ -92,6 +110,7 @@ export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonPro
 // @internal
 export type DashboardState = {
     loading: LoadingState;
+    config: ConfigState;
     filterContext: FilterContextState;
     layout: LayoutState;
     insights: EntityState<IInsight>;
@@ -102,6 +121,22 @@ export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
 
 // @internal (undocumented)
 export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
+
+// @internal
+export type DateFilterConfigValidationResult = "Valid" | "NoConfigProvided" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
+
+// @internal
+export interface DateFilterValidationFailed extends IDashboardEvent {
+    // (undocumented)
+    payload: {
+        result: DateFilterValidationResult;
+    };
+    // (undocumented)
+    type: "GDC.DASHBOARD.EVT.DF.VALIDATION.FAILED";
+}
+
+// @internal (undocumented)
+export type DateFilterValidationResult = "TOO_MANY_PROJECT_CONFIGS" | DateFilterConfigValidationResult;
 
 // @internal (undocumented)
 export const FilterBar: React_2.FC<IFilterBarProps & IDefaultFilterBarProps>;
@@ -173,6 +208,7 @@ export interface IDashboardProps {
     backend?: IAnalyticalBackend;
     // (undocumented)
     children?: JSX.Element | ((dashboard: any) => JSX.Element);
+    config?: DashboardConfig;
     dashboardLayoutConfig?: {
         Component?: any;
         defaultComponentProps?: any;
@@ -269,11 +305,15 @@ export interface LayoutState {
 // @internal
 export interface LoadDashboard extends IDashboardCommand {
     // (undocumented)
+    payload: {
+        config?: DashboardConfig;
+    };
+    // (undocumented)
     type: "GDC.DASHBOARD.CMD.LOAD";
 }
 
 // @internal
-export function loadDashboard(correlationId?: string): LoadDashboard;
+export function loadDashboard(config?: DashboardConfig, correlationId?: string): LoadDashboard;
 
 // @internal (undocumented)
 export const loadingSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("./loadingState").LoadingState, (res: DashboardState) => import("./loadingState").LoadingState>;

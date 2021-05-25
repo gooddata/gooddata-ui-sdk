@@ -22,6 +22,8 @@ import { createRootEventEmitter } from "../eventEmitter/rootEventEmitter";
 import { DashboardEventHandler } from "../events/eventHandler";
 import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";
+import { ConfigState } from "./config/configState";
+import { configSliceReducer } from "./config";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -33,6 +35,7 @@ import { DashboardContext } from "../types/commonTypes";
  */
 export type DashboardState = {
     loading: LoadingState;
+    config: ConfigState;
     filterContext: FilterContextState;
     layout: LayoutState;
     insights: EntityState<IInsight>;
@@ -112,6 +115,7 @@ export function createDashboardStore(
     const store = configureStore({
         reducer: {
             loading: loadingSliceReducer,
+            config: configSliceReducer,
             filterContext: filterContextSliceReducer,
             layout: layoutSliceReducer,
             insights: insightsSliceReducer,
