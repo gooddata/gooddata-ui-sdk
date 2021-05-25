@@ -1,5 +1,3 @@
-// (C) 2021 GoodData Corporation
-
 // Derived from https://github.com/blacklabel/grouped_categories
 // Original licence https://github.com/blacklabel/grouped_categories/blob/master/license.txt
 // see "GoodData change" to find altered code
