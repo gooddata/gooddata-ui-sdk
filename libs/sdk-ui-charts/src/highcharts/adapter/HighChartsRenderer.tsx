@@ -1,7 +1,6 @@
 // (C) 2007-2018 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
-import cloneDeep from "lodash/cloneDeep";
 import { v4 } from "uuid";
 import set from "lodash/set";
 import isEqual from "lodash/isEqual";
@@ -10,11 +9,11 @@ import partial from "lodash/partial";
 import throttle from "lodash/throttle";
 import isNil from "lodash/isNil";
 import cx from "classnames";
-import { IChartConfig, OnLegendReady } from "../../interfaces";
+import { OnLegendReady } from "../../interfaces";
 import { Chart, IChartProps } from "./Chart";
 import { isPieOrDonutChart, isOneOfTypes, isHeatmap } from "../chartTypes/_util/common";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
-import Highcharts, { HighchartsOptions } from "../lib";
+import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib";
 import { alignChart } from "../chartTypes/_chartCreators/helpers";
 import {
     ILegendProps,
@@ -78,14 +77,6 @@ export function renderChart(props: IChartProps): JSX.Element {
 
 export function renderLegend(props: ILegendProps): JSX.Element {
     return <Legend {...props} />;
-}
-
-function updateAxisTitleStyle(axis: Highcharts.AxisOptions) {
-    set(axis, "title.style", {
-        ...(axis?.title?.style ?? {}),
-        textOverflow: "ellipsis",
-        overflow: "hidden",
-    });
 }
 
 export class HighChartsRenderer extends React.PureComponent<
@@ -223,7 +214,7 @@ export class HighChartsRenderer extends React.PureComponent<
     }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    private onChartSelection = (event: any): void => {
+    private onChartSelection = (event: any): undefined => {
         const chartWrapper = event.target.renderTo.parentElement;
         const resetZoomButton = chartWrapper.closest(".visualization").querySelector(".viz-zoom-out");
         if (event.resetSelection) {
@@ -231,44 +222,74 @@ export class HighChartsRenderer extends React.PureComponent<
         } else {
             resetZoomButton.style.display = "block";
         }
+
+        return undefined;
     };
 
-    public createChartConfig(chartConfig: IChartConfig, legendItemsEnabled: any[]): IChartConfig {
-        const config: any = cloneDeep(chartConfig);
-        const { yAxis } = config;
+    private createChartConfig(chartConfig: HighchartsOptions, legendItemsEnabled: any[]): HighchartsOptions {
+        const { series, chart, xAxis, yAxis } = chartConfig;
 
-        yAxis.forEach((axis: Highcharts.AxisOptions) => updateAxisTitleStyle(axis));
+        const selectionEvent = chart.zoomType
+            ? {
+                  selection: this.onChartSelection,
+              }
+            : {};
 
-        if (chartConfig.chart.zoomType) {
-            config.chart.events = {
-                ...config.chart.events,
-                selection: this.onChartSelection,
-            };
-        }
-        // render chart with disabled visibility based on legendItemsEnabled
         const firstSeriesTypes = [
             VisualizationTypes.PIE,
             VisualizationTypes.DONUT,
             VisualizationTypes.TREEMAP,
         ];
-        const itemsPath = isOneOfTypes(config.chart.type, firstSeriesTypes) ? "series[0].data" : "series";
-        const items: any[] = isOneOfTypes(config.chart.type, firstSeriesTypes)
-            ? config.series?.[0]?.data
-            : config.series;
-        set(
-            config,
-            itemsPath,
-            items.map((item: any, itemIndex: any) => {
-                const visible =
-                    legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
-                return {
-                    ...item,
-                    visible: isNil(item.visible) ? visible : item.visible,
-                };
-            }),
-        );
+        const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 
-        return config;
+        const items: any[] = isOneOfTypes(chart.type, firstSeriesTypes) ? (series?.[0] as any)?.data : series;
+        const updatedItems = items.map((item: any, itemIndex: number) => {
+            const visible =
+                legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
+            return {
+                ...item,
+                visible: isNil(item.visible) ? visible : item.visible,
+            };
+        });
+
+        let updatedSeries = updatedItems;
+        if (multipleSeries) {
+            updatedSeries = [
+                {
+                    ...series?.[0],
+                    data: updatedItems,
+                },
+                ...series.slice(1),
+            ];
+        }
+
+        return {
+            ...chartConfig,
+            chart: {
+                ...chartConfig?.chart,
+                events: {
+                    ...chartConfig?.chart?.events,
+                    ...selectionEvent,
+                },
+            },
+            series: updatedSeries,
+            yAxis: (yAxis as any).map((ax: YAxisOptions) => ({
+                ...ax,
+                title: {
+                    ...ax?.title,
+                    style: {
+                        ...ax?.title?.style,
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                    },
+                },
+            })),
+            // perform a shallow copy of axis
+            // (otherwise there's a highcharts internal error on smallest responsive charts)
+            xAxis: (xAxis as any).map((ax: XAxisOptions) => ({
+                ...ax,
+            })),
+        };
     }
 
     public renderLegend(
@@ -315,10 +336,11 @@ export class HighChartsRenderer extends React.PureComponent<
     public renderHighcharts(): React.ReactNode {
         // shrink chart to give space to legend items
         const style = { flex: "1 1 auto", position: "relative", overflow: "hidden" };
+        const config = this.createChartConfig(this.props.hcOptions, this.state.legendItemsEnabled);
         const chartProps = {
             domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style },
             ref: this.setChartRef,
-            config: this.createChartConfig(this.props.hcOptions, this.state.legendItemsEnabled),
+            config,
             callback: this.props.afterRender,
         };
         return this.props.chartRenderer(chartProps);
