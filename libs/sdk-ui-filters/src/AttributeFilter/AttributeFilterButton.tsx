@@ -16,7 +16,6 @@ import { IElementQueryResultWithEmptyItems } from "./AttributeDropdown/types";
 import debounce from "lodash/debounce";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import noop from "lodash/noop";
 import { MAX_SELECTION_SIZE } from "./AttributeDropdown/AttributeDropdownList";
 import { mergeElementQueryResults } from "./AttributeDropdown/mergeElementQueryResults";
 import { IntlWrapper, useCancelablePromise, withContexts } from "@gooddata/sdk-ui";
@@ -159,6 +158,10 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         getElements(validElements, offset, limit, loadElements);
     }, [props.workspace, searchString]);
 
+    useEffect(() => {
+        closeDropdown();
+    }, [prevIsInverted, prevSelectedFilterOptions]);
+
     useCancelablePromise<IAttributeMetadataObject>(
         {
             promise: async () => {
@@ -292,7 +295,7 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
 
     const onApplyButtonClicked = () => {
         onApply();
-        backupSelection(closeDropdown);
+        backupSelection();
     };
 
     /**
@@ -308,11 +311,9 @@ export const AttributeFilterButtonCore: React.FC<IAttributeFilterButtonProps> = 
         }
     };
 
-    const backupSelection = async (callback: () => any = noop) => {
-        await setPrevSelectedFilterOptions(selectedFilterOptions);
-        await setPrevIsInverted(isInverted);
-
-        callback();
+    const backupSelection = () => {
+        setPrevSelectedFilterOptions(selectedFilterOptions);
+        setPrevIsInverted(isInverted);
     };
 
     const restoreSelection = () => {
