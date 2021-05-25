@@ -2,13 +2,16 @@
 import { storiesOf } from "@storybook/react";
 import React from "react";
 import { BarChart, IBarChartProps } from "@gooddata/sdk-ui-charts";
-import { withMultipleScreenshots } from "../../../_infra/backstopWrapper";
+import { withMultipleScreenshots, withScreenshot } from "../../../_infra/backstopWrapper";
 import { CustomStories } from "../../../_infra/storyGroups";
 import { StorybookBackend, ReferenceWorkspaceId } from "../../../_infra/backend";
 
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
 import "../insightStories.css";
-import { BarChartWithLargeLegend } from "../../../../scenarios/charts/barChart/base";
+import {
+    BarChartWithLargeLegend,
+    BarChartWithTwoMeasuresAndTwoViewBy,
+} from "../../../../scenarios/charts/barChart/base";
 import { createElementCountResolver, ScreenshotReadyWrapper } from "../../../_infra/ScreenshotReadyWrapper";
 import { wrapWithTheme } from "../../themeWrapper";
 
@@ -37,6 +40,35 @@ const BarChartTest = (config: Partial<IBarChartProps> = {}) => (
                     position: "top",
                     responsive: "autoPositionWithPopup",
                 },
+            }}
+            {...config}
+        />
+    </div>
+);
+
+const BarChartWithHierarchicalLabelsTest = (config: Partial<IBarChartProps> = {}) => (
+    <div
+        style={{
+            width: 400,
+            height: 134,
+            padding: 10,
+            border: "solid 1px #000000",
+            resize: "both",
+            overflow: "auto",
+        }}
+        className="s-table"
+    >
+        <BarChart
+            backend={backend}
+            workspace={ReferenceWorkspaceId}
+            measures={BarChartWithTwoMeasuresAndTwoViewBy.measures}
+            viewBy={BarChartWithTwoMeasuresAndTwoViewBy.viewBy}
+            config={{
+                legend: {
+                    position: "top",
+                    responsive: "autoPositionWithPopup",
+                },
+                enableCompactSize: true,
             }}
             {...config}
         />
@@ -76,5 +108,13 @@ storiesOf(`${CustomStories}/BarChart`, module).add("themed popup legend", () => 
                 postInteractionWait: 300,
             },
         },
+    );
+});
+
+storiesOf(`${CustomStories}/BarChart`, module).add("hidding of hierarchical axis labels", () => {
+    return withScreenshot(
+        <ScreenshotReadyWrapper resolver={createElementCountResolver(1)}>
+            <BarChartWithHierarchicalLabelsTest />
+        </ScreenshotReadyWrapper>,
     );
 });

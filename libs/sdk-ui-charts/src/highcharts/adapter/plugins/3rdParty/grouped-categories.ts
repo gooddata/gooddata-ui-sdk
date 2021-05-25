@@ -276,6 +276,13 @@ export function groupedCategories(HC) {
             if (tick.startAt + tick.leaves - 1 < axis.min || tick.startAt > axis.max) {
                 tick.label.hide();
                 tick.destroyed = 0;
+                /* GoodData change - added following lines #2 */
+                /* https://jira.intgdc.com/browse/ONE-4988 */
+                /* Hide parent label once non of its children is rendered */
+                /* Can be removed once https://github.com/blacklabel/grouped_categories/issues/177 is solved */
+            } else if (Object.keys(tick.renderedChildren).length === 0) {
+                tick.label.hide();
+                /* end of GoodData change #2 */
             } else {
                 tick.label.attr({
                     visibility: visible ? "visible" : "hidden",
@@ -524,6 +531,15 @@ export function groupedCategories(HC) {
             attrs,
             bBox;
 
+        /* GoodData change - added following lines #2 */
+        /* Keep track of all rendered children. Keep them in map as sometimes one child is rendered multiple times */
+        if (tick.parent) {
+            tick.parent.renderedChildren = tick.parent.renderedChildren
+                ? { ...tick.parent.renderedChildren, [tick.pos]: tick.pos }
+                : { [tick.pos]: tick.pos };
+        }
+        /* end of GoodData change #2 */
+
         // render grid for "normal" categories (first-level), render left grid line only for the first category
         if (isFirst) {
             gridAttrs = horiz
@@ -608,8 +624,20 @@ export function groupedCategories(HC) {
 
         while (group) {
             group.destroyed = group.destroyed ? group.destroyed + 1 : 1;
+            /* GoodData change - added following lines #2 */
+            /* https://jira.intgdc.com/browse/ONE-4985 */
+            /* When tick is destroyed clean it from parents map */
+            delete group.renderedChildren[this.pos];
+            /* end of GoodData change #2 */
             group = group.parent;
         }
+        /* GoodData change - added following lines #2 */
+        /* https://jira.intgdc.com/browse/ONE-4985 */
+        /* Hide parent label once non of its children is rendered */
+        if (this.parent && Object.keys(this.parent.renderedChildren).length === 0) {
+            this.parent.label.hide();
+        }
+        /* end of GoodData change #2 */
 
         protoTickDestroy.call(this);
     };
