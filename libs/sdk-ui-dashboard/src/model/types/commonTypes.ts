@@ -1,6 +1,6 @@
 // (C) 2021 GoodData Corporation
 import { IAnalyticalBackend, IDateFilterConfig, ISettings } from "@gooddata/sdk-backend-spi";
-import { ObjRef } from "@gooddata/sdk-model";
+import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
@@ -18,6 +18,11 @@ export type DashboardConfig = {
      * available on the date filter component.
      */
     dateFilterConfig?: IDateFilterConfig;
+
+    /**
+     * Color palette to pass down to charts.
+     */
+    colorPalette?: IColorPalette;
 };
 
 /**

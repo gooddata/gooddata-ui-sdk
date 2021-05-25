@@ -12,6 +12,8 @@ import {
     validateDateFilterConfig,
 } from "../../_staging/dateFilterConfig";
 import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
+import { IColorPalette } from "@gooddata/sdk-model";
+import { PromiseFnReturnType } from "../../types/sagas";
 
 function loadDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfigsQueryResult | undefined> {
     const { backend, workspace } = ctx;
@@ -31,6 +33,12 @@ function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IWorkspaceSe
     const { backend, workspace } = ctx;
 
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
+}
+
+function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
+    const { backend, workspace } = ctx;
+
+    return backend.workspace(workspace).styling().getColorPalette();
 }
 
 const FallbackToDefault: DateFilterConfigValidationResult[] = [
@@ -56,10 +64,15 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
         return config;
     }
 
-    const [dateFilterConfigResult, settings]: [
-        IDateFilterConfigsQueryResult | undefined,
-        IWorkspaceSettings,
-    ] = yield all([call(loadDateFilterConfig, ctx), call(loadSettingsForCurrentUser, ctx)]);
+    const [dateFilterConfigResult, settings, colorPalette]: [
+        PromiseFnReturnType<typeof loadDateFilterConfig>,
+        PromiseFnReturnType<typeof loadSettingsForCurrentUser>,
+        PromiseFnReturnType<typeof loadColorPalette>,
+    ] = yield all([
+        call(loadDateFilterConfig, ctx),
+        call(loadSettingsForCurrentUser, ctx),
+        call(loadColorPalette, ctx),
+    ]);
 
     if ((dateFilterConfigResult?.totalCount ?? 0) > 1) {
         yield call(
@@ -86,5 +99,6 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
     return {
         dateFilterConfig,
         settings,
+        colorPalette,
     } as DashboardConfig;
 }

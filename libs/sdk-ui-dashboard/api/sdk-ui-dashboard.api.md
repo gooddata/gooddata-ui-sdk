@@ -9,6 +9,7 @@ import { ComponentType } from 'react';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
@@ -59,6 +60,7 @@ export type DashboardCommandType = "GDC.DASHBOARD.CMD.LOAD";
 export type DashboardConfig = {
     settings?: ISettings;
     dateFilterConfig?: IDateFilterConfig;
+    colorPalette?: IColorPalette;
 };
 
 // @internal

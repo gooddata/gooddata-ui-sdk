@@ -7,10 +7,11 @@ import { filterContextActions } from "../../state/filterContext";
 import { insightsActions } from "../../state/insights";
 import { layoutActions } from "../../state/layout";
 import { loadingActions } from "../../state/loading";
-import { DashboardConfig, DashboardContext } from "../../types/commonTypes";
+import { DashboardContext } from "../../types/commonTypes";
 import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { loadDashboardConfig } from "./configLoader";
 import { configActions } from "../../state/config";
+import { PromiseFnReturnType } from "../../types/sagas";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -25,11 +26,10 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
     try {
         yield put(loadingActions.setLoadingStart());
 
-        // TODO: how to type this properly?
-        const [dashboardWithReferences, config]: [IDashboardWithReferences, DashboardConfig] = yield all([
-            call(loadDashboardFromBackend, ctx),
-            call(loadDashboardConfig, ctx, cmd),
-        ]);
+        const [dashboardWithReferences, config]: [
+            PromiseFnReturnType<typeof loadDashboardFromBackend>,
+            PromiseFnReturnType<typeof loadDashboardConfig>,
+        ] = yield all([call(loadDashboardFromBackend, ctx), call(loadDashboardConfig, ctx, cmd)]);
 
         const { dashboard, references } = dashboardWithReferences;
 
