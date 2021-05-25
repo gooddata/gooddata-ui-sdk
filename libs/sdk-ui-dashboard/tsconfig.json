@@ -22,7 +22,9 @@
         "paths": {
             "@gooddata/sdk-model": ["sdk-model/src"],
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
-            "@gooddata/sdk-ui-ext": ["sdk-ui-ext/src"]
+            "@gooddata/sdk-ui": ["sdk-ui/src"],
+            "@gooddata/sdk-ui-ext": ["sdk-ui-ext/src"],
+            "@gooddata/sdk-ui-filters": ["sdk-ui-filters/src"]
         }
     },
     "compileOnSave": false,
