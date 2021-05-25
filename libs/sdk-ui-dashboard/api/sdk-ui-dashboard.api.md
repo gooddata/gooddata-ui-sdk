@@ -6,6 +6,7 @@
 
 import { AnyAction } from '@reduxjs/toolkit';
 import { ComponentType } from 'react';
+import { DashboardDateFilterConfigMode } from '@gooddata/sdk-backend-spi';
 import { Dispatch } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -13,6 +14,7 @@ import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboard } from '@gooddata/sdk-backend-spi';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IDashboardDateFilter } from '@gooddata/sdk-backend-spi';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilter } from '@gooddata/sdk-ui-ext';
 import { IDashboardLayout } from '@gooddata/sdk-backend-spi';
 import { IDateFilterConfig } from '@gooddata/sdk-backend-spi';
@@ -115,6 +117,7 @@ export type DashboardState = {
     config: ConfigState;
     filterContext: FilterContextState;
     layout: LayoutState;
+    dateFilterConfig: DateFilterConfigState;
     insights: EntityState<IInsight>;
 };
 
@@ -125,7 +128,17 @@ export const DashboardTitle: React_2.FC<IDashboardTitleProps>;
 export type DashboardTitleComponent = ComponentType<IDashboardTitleProps>;
 
 // @internal
-export type DateFilterConfigValidationResult = "Valid" | "NoConfigProvided" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
+export const dateFilterConfigSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined>;
+
+// @internal (undocumented)
+export interface DateFilterConfigState {
+    dateFilterConfig?: IDashboardDateFilterConfig;
+    effectiveDateFilterConfig?: IDateFilterConfig;
+    isUsingDashboardOverrides?: boolean;
+}
+
+// @internal
+export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
 
 // @internal
 export interface DateFilterValidationFailed extends IDashboardEvent {
@@ -138,7 +151,16 @@ export interface DateFilterValidationFailed extends IDashboardEvent {
 }
 
 // @internal (undocumented)
-export type DateFilterValidationResult = "TOO_MANY_PROJECT_CONFIGS" | DateFilterConfigValidationResult;
+export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
+
+// @internal
+export const effectiveDateFilterConfigSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IDateFilterConfig, (res: import("./dateFilterConfigState").DateFilterConfigState) => import("@gooddata/sdk-backend-spi").IDateFilterConfig>;
+
+// @internal
+export const effectiveDateFilterCustomTitleSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, string | undefined, (res1: boolean, res2: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => string | undefined>;
+
+// @internal
+export const effectiveDateFilterModeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, DashboardDateFilterConfigMode, (res: import("@gooddata/sdk-backend-spi").IDashboardDateFilterConfig | undefined) => DashboardDateFilterConfigMode>;
 
 // @internal (undocumented)
 export const FilterBar: React_2.FC<IFilterBarProps & IDefaultFilterBarProps>;

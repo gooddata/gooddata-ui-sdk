@@ -24,6 +24,8 @@ import { rootCommandHandler } from "../commandHandlers/rootCommandHandler";
 import { DashboardContext } from "../types/commonTypes";
 import { ConfigState } from "./config/configState";
 import { configSliceReducer } from "./config";
+import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
+import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -38,6 +40,7 @@ export type DashboardState = {
     config: ConfigState;
     filterContext: FilterContextState;
     layout: LayoutState;
+    dateFilterConfig: DateFilterConfigState;
     insights: EntityState<IInsight>;
 };
 
@@ -118,6 +121,7 @@ export function createDashboardStore(
             config: configSliceReducer,
             filterContext: filterContextSliceReducer,
             layout: layoutSliceReducer,
+            dateFilterConfig: dateFilterConfigSliceReducer,
             insights: insightsSliceReducer,
         },
         middleware,

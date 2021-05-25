@@ -3,7 +3,7 @@
 import { IDashboard } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { DashboardConfig, DashboardContext } from "../types/commonTypes";
-import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig";
+import { DateFilterConfigValidationResult } from "../_staging/dateFilterConfig/validation";
 
 /**
  * @internal
@@ -96,7 +96,7 @@ export function dashboardLoaded(
 /**
  * @internal
  */
-export type DateFilterValidationResult = "TOO_MANY_PROJECT_CONFIGS" | DateFilterConfigValidationResult;
+export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;
 
 /**
  * This event may occur while the dashboard is handling the Load Dashboard command and is loading and validating

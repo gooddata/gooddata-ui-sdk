@@ -10,9 +10,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { DateGranularity } from "@gooddata/sdk-model";
 
-/*
- * TODO: we need a better place for this. perhaps in filters package?
- */
+const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity.week;
+const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity.week;
 
 function getDuplicateIdentifiers(options: IDateFilterOption[]): string[] {
     const groups = groupBy(options, (filter: IDateFilterOption) => filter.localIdentifier);
@@ -76,6 +75,10 @@ function isSelectedOptionValid(config: IDateFilterConfig): boolean {
     return matchingOption ? matchingOption.visible : false;
 }
 
+//
+// Public functions
+//
+
 /**
  * Validation result.
  *
@@ -83,7 +86,6 @@ function isSelectedOptionValid(config: IDateFilterConfig): boolean {
  */
 export type DateFilterConfigValidationResult =
     | "Valid"
-    | "NoConfigProvided"
     | "NoVisibleOptions"
     | "ConflictingIdentifiers"
     | "SelectedOptionInvalid";
@@ -93,12 +95,12 @@ export type DateFilterConfigValidationResult =
  * covered by the typing.
  *
  * @param config - config to validate
+ * @param shouldCheckSelectedOption - indicate whether validation should check that a valid option is selected
  */
-export function validateDateFilterConfig(config: IDateFilterConfig): DateFilterConfigValidationResult {
-    if (!config) {
-        return "NoConfigProvided";
-    }
-
+export function validateDateFilterConfig(
+    config: IDateFilterConfig,
+    shouldCheckSelectedOption: boolean = true,
+): DateFilterConfigValidationResult {
     if (!isAnyFilterVisible(config)) {
         return "NoVisibleOptions";
     }
@@ -110,12 +112,13 @@ export function validateDateFilterConfig(config: IDateFilterConfig): DateFilterC
         return "ConflictingIdentifiers";
     }
 
-    return isSelectedOptionValid(config) ? "Valid" : "SelectedOptionInvalid";
+    return !shouldCheckSelectedOption || isSelectedOptionValid(config) ? "Valid" : "SelectedOptionInvalid";
 }
 
-const isNotWeekGranularity = (granularity: DateFilterGranularity) => granularity !== DateGranularity.week;
-const isNotWeekPreset = (preset: IRelativeDateFilterPreset) => preset.granularity !== DateGranularity.week;
-
+/**
+ * Filters out all weekly presets from the filter config.
+ * @param config
+ */
 export function filterOutWeeks(config: IDateFilterConfig): IDateFilterConfig {
     const { relativeForm, relativePresets } = config;
     const relativeFormProp = relativeForm

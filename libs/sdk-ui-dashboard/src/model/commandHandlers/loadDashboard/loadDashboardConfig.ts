@@ -1,16 +1,21 @@
 // (C) 2021 GoodData Corporation
 import includes from "lodash/includes";
 import { DashboardConfig, DashboardContext } from "../../types/commonTypes";
-import { IDateFilterConfigsQueryResult, IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
+import {
+    IDateFilterConfig,
+    IDateFilterConfigsQueryResult,
+    ISettings,
+    IWorkspaceSettings,
+} from "@gooddata/sdk-backend-spi";
 import { LoadDashboard } from "../../commands/dashboard";
 import { all, call } from "redux-saga/effects";
 import { dateFilterValidationFailed } from "../../events/dashboard";
-import { defaultDateFilterConfig } from "./defaultDateFilterConfig";
+import { defaultDateFilterConfig } from "../../_staging/dateFilterConfig/defaultConfig";
 import {
     DateFilterConfigValidationResult,
     filterOutWeeks,
     validateDateFilterConfig,
-} from "../../_staging/dateFilterConfig";
+} from "../../_staging/dateFilterConfig/validation";
 import { eventDispatcher } from "../../eventEmitter/eventDispatcher";
 import { IColorPalette } from "@gooddata/sdk-model";
 import { PromiseFnReturnType } from "../../types/sagas";
@@ -41,11 +46,24 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
     return backend.workspace(workspace).styling().getColorPalette();
 }
 
-const FallbackToDefault: DateFilterConfigValidationResult[] = [
-    "NoConfigProvided",
-    "ConflictingIdentifiers",
-    "NoVisibleOptions",
-];
+const FallbackToDefault: DateFilterConfigValidationResult[] = ["ConflictingIdentifiers", "NoVisibleOptions"];
+
+/**
+ * Given the date filter config loaded from backend and the settings, this function will perform validation
+ * of the config and if needed also cleanup of invalid/disabled presents
+ *
+ */
+function getValidDateFilterConfig(
+    config: IDateFilterConfig,
+    settings: ISettings,
+): [IDateFilterConfig, DateFilterConfigValidationResult] {
+    const configValidation = validateDateFilterConfig(config);
+    const validConfig = !includes(FallbackToDefault, configValidation) ? config : defaultDateFilterConfig;
+
+    const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
+
+    return [dateFilterConfig, configValidation];
+}
 
 /**
  * Loads all essential dashboard configuration from the backend if needed. The load command may specify their
@@ -75,22 +93,19 @@ export function* loadDashboardConfig(ctx: DashboardContext, cmd: LoadDashboard) 
     ]);
 
     if ((dateFilterConfigResult?.totalCount ?? 0) > 1) {
-        yield call(
-            eventDispatcher,
-            dateFilterValidationFailed(ctx, "TOO_MANY_PROJECT_CONFIGS", cmd.correlationId),
-        );
+        yield call(eventDispatcher, dateFilterValidationFailed(ctx, "TOO_MANY_CONFIGS", cmd.correlationId));
     }
 
-    // There may be no date filter config on backend, fall back to default
-    const loadedConfig = dateFilterConfigResult?.items[0] ?? defaultDateFilterConfig;
-    // Validate the config as it is possible to construct & upload the config incorrectly
-    const configValidation = validateDateFilterConfig(loadedConfig);
-    // Some validation errors mean the config is useless and code should fall back to default anyway
-    const validConfig = !includes(FallbackToDefault, configValidation)
-        ? loadedConfig
-        : defaultDateFilterConfig;
-    // Finally, if week filtering is disabled, ensure that the respective presets are not present
-    const dateFilterConfig = !settings.enableWeekFilters ? filterOutWeeks(validConfig) : validConfig;
+    const firstConfig = dateFilterConfigResult?.items[0];
+
+    if (!firstConfig) {
+        yield call(eventDispatcher, dateFilterValidationFailed(ctx, "NO_CONFIG", cmd.correlationId));
+    }
+
+    const [dateFilterConfig, configValidation] = getValidDateFilterConfig(
+        firstConfig ?? defaultDateFilterConfig,
+        settings,
+    );
 
     if (configValidation !== "Valid") {
         yield call(eventDispatcher, dateFilterValidationFailed(ctx, configValidation, cmd.correlationId));
