@@ -8,9 +8,7 @@ import { insightsActions } from "../state/insights";
 import { layoutActions } from "../state/layout";
 import { loadingActions } from "../state/loading";
 import { DashboardContext } from "../types/commonTypes";
-
-export type PromiseReturnType<T> = T extends Promise<infer U> ? U : any;
-export type PromiseFnReturnType<T extends (...args: any) => any> = PromiseReturnType<ReturnType<T>>;
+import { PromiseFnReturnType } from "../types/sagas";
 
 async function loadDashboardFromBackend(ctx: DashboardContext) {
     const { backend, workspace, dashboardRef } = ctx;
