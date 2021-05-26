@@ -817,6 +817,7 @@ export interface IDialogBaseProps {
     children?: React.ReactNode;
     // (undocumented)
     className?: string;
+    containerClassName?: string;
     // (undocumented)
     displayCloseButton?: boolean;
     // (undocumented)

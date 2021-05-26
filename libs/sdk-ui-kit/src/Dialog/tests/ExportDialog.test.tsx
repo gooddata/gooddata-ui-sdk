@@ -6,9 +6,12 @@ import { Overlay } from "../../Overlay";
 
 describe("ExportDialog", () => {
     it("should render content", () => {
-        const wrapper = mount(<ExportDialog className="exportDialogTest" />);
+        const wrapper = mount(
+            <ExportDialog className="exportDialogTest" containerClassName="containerTestClass" />,
+        );
 
         expect(wrapper.find(Overlay)).toHaveLength(1);
         expect(wrapper.find(".exportDialogTest")).toHaveLength(1);
+        expect(wrapper.find(".containerTestClass").hostNodes()).toHaveLength(1);
     });
 });

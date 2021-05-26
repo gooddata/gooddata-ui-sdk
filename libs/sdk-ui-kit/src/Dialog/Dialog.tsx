@@ -9,6 +9,8 @@ import { IDialogBaseProps } from "./typings";
  */
 export class Dialog extends Component<IDialogBaseProps> {
     public render(): JSX.Element {
+        const { containerClassName, ...dialogProps } = this.props;
+
         return (
             <Overlay
                 alignPoints={[
@@ -18,8 +20,9 @@ export class Dialog extends Component<IDialogBaseProps> {
                 ]}
                 isModal
                 positionType="fixed"
+                containerClassName={containerClassName}
             >
-                <DialogBase {...this.props} />
+                <DialogBase {...dialogProps} />
             </Overlay>
         );
     }

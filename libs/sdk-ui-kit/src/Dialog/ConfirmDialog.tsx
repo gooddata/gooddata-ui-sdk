@@ -9,6 +9,8 @@ import { IConfirmDialogBaseProps } from "./typings";
  */
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     public render(): JSX.Element {
+        const { containerClassName, ...dialogProps } = this.props;
+
         return (
             <Overlay
                 alignPoints={[
@@ -18,8 +20,9 @@ export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
                 ]}
                 isModal
                 positionType="fixed"
+                containerClassName={containerClassName}
             >
-                <ConfirmDialogBase {...this.props} />
+                <ConfirmDialogBase {...dialogProps} />
             </Overlay>
         );
     }

@@ -9,6 +9,10 @@ import { IAlignPoint } from "../typings/positioning";
 export interface IDialogBaseProps {
     children?: React.ReactNode;
     className?: string;
+    /**
+     * className will be placed to the container, which wraps overlay background and dialog content elements
+     */
+    containerClassName?: string;
     displayCloseButton?: boolean;
     submitOnEnterKey?: boolean;
     onCancel?: (data?: any) => void;

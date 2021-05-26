@@ -12,6 +12,7 @@ export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
         displayCloseButton,
         isPositive,
         isSubmitDisabled,
+        containerClassName,
 
         headline,
         cancelButtonText,
@@ -39,6 +40,7 @@ export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
             ]}
             isModal
             positionType="fixed"
+            containerClassName={containerClassName}
         >
             <ExportDialogBase
                 displayCloseButton={displayCloseButton}
