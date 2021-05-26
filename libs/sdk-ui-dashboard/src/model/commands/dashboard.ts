@@ -1,6 +1,7 @@
 // (C) 2021 GoodData Corporation
 
 import { DashboardConfig } from "../types/commonTypes";
+import { IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 
 /**
  * All available command types.
@@ -46,6 +47,7 @@ export interface LoadDashboard extends IDashboardCommand {
     type: "GDC.DASHBOARD.CMD.LOAD";
     payload: {
         config?: DashboardConfig;
+        permissions?: IWorkspacePermissions;
     };
 }
 

@@ -8,12 +8,14 @@ import { insightsActions } from "../../state/insights";
 import { layoutActions } from "../../state/layout";
 import { loadingActions } from "../../state/loading";
 import { DashboardContext, ResolvedDashboardConfig } from "../../types/commonTypes";
-import { IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { loadDashboardConfig } from "./loadDashboardConfig";
 import { configActions } from "../../state/config";
 import { PromiseFnReturnType } from "../../types/sagas";
 import { dateFilterConfigActions } from "../../state/dateFilterConfig";
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs";
+import { loadPermissions } from "./loadPermissions";
+import { permissionsActions } from "../../state/permissions";
 
 function loadDashboardFromBackend(ctx: DashboardContext): Promise<IDashboardWithReferences> {
     const { backend, workspace, dashboardRef } = ctx;
@@ -28,10 +30,15 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
     try {
         yield put(loadingActions.setLoadingStart());
 
-        const [dashboardWithReferences, config]: [
+        const [dashboardWithReferences, config, permissions]: [
             PromiseFnReturnType<typeof loadDashboardFromBackend>,
             ResolvedDashboardConfig,
-        ] = yield all([call(loadDashboardFromBackend, ctx), call(loadDashboardConfig, ctx, cmd)]);
+            IWorkspacePermissions,
+        ] = yield all([
+            call(loadDashboardFromBackend, ctx),
+            call(loadDashboardConfig, ctx, cmd),
+            call(loadPermissions, ctx, cmd),
+        ]);
 
         const { dashboard, references } = dashboardWithReferences;
         const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
@@ -43,6 +50,7 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
         );
 
         yield put(configActions.setConfig(config));
+        yield put(permissionsActions.setPermissions(permissions));
 
         yield put(filterContextActions.setFilterContext(dashboard.filterContext));
         yield put(layoutActions.setLayout(dashboard.layout));
@@ -58,7 +66,10 @@ export function* loadDashboardCommandHandler(ctx: DashboardContext, cmd: LoadDas
 
         yield put(loadingActions.setLoadingSuccess());
 
-        yield call(eventDispatcher, dashboardLoaded(ctx, dashboard, references.insights, config));
+        yield call(
+            eventDispatcher,
+            dashboardLoaded(ctx, dashboard, references.insights, config, permissions),
+        );
     } catch (e) {
         yield put(loadingActions.setLoadingError(e));
     }

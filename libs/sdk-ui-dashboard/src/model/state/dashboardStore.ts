@@ -26,6 +26,8 @@ import { ConfigState } from "./config/configState";
 import { configSliceReducer } from "./config";
 import { DateFilterConfigState } from "./dateFilterConfig/dateFilterConfigState";
 import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
+import { PermissionsState } from "./permissions/permissionsState";
+import { permissionsSliceReducer } from "./permissions";
 
 /**
  * TODO: unfortunate. normally the typings get inferred from store. However since this code creates store
@@ -38,6 +40,7 @@ import { dateFilterConfigSliceReducer } from "./dateFilterConfig";
 export type DashboardState = {
     loading: LoadingState;
     config: ConfigState;
+    permissions: PermissionsState;
     filterContext: FilterContextState;
     layout: LayoutState;
     dateFilterConfig: DateFilterConfigState;
@@ -119,6 +122,7 @@ export function createDashboardStore(
         reducer: {
             loading: loadingSliceReducer,
             config: configSliceReducer,
+            permissions: permissionsSliceReducer,
             filterContext: filterContextSliceReducer,
             layout: layoutSliceReducer,
             dateFilterConfig: dateFilterConfigSliceReducer,

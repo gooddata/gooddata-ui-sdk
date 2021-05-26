@@ -28,6 +28,8 @@ export {
     separatorsSelector,
     settingsSelector,
 } from "./state/config/configSelectors";
+export { PermissionsState } from "./state/permissions/permissionsState";
+export { permissionsSelector } from "./state/permissions/permissionsSelectors";
 export { FilterContextState } from "./state/filterContext/filterContextState";
 export { filterContextSelector } from "./state/filterContext/filterContextSelectors";
 export { LayoutState } from "./state/layout/layoutState";

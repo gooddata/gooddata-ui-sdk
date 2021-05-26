@@ -11,7 +11,7 @@ import {
 } from "../model/state/dashboardStore";
 import { loadingSelector } from "../model";
 import { loadDashboard } from "../model/commands/dashboard";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IWorkspacePermissions } from "@gooddata/sdk-backend-spi";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { DashboardEventHandler } from "../model/events/eventHandler";
@@ -48,6 +48,15 @@ export interface IDashboardProps {
      * If not specified, then the dashboard will retrieve and use the essential configuration from the backend.
      */
     config?: DashboardConfig;
+
+    /**
+     * Optionally specify permissions to use when determining availability of the different features of
+     * the dashboard component.
+     *
+     * If you do not specify permissions, the dashboard component will load permissions for the currently
+     * logged-in user.
+     */
+    permissions?: IWorkspacePermissions;
 
     /**
      * Optionally specify event handlers to register at the dashboard creation time.

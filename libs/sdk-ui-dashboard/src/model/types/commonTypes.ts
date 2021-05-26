@@ -2,6 +2,8 @@
 import { IAnalyticalBackend, IDateFilterConfig, ISeparators, ISettings } from "@gooddata/sdk-backend-spi";
 import { IColorPalette, ObjRef } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
+import keys from "lodash/keys";
+import includes from "lodash/includes";
 
 /**
  * Dashboard configuration can influence the available features, look and feel and behavior of the dashboard.
@@ -42,6 +44,30 @@ export type DashboardConfig = {
  * @internal
  */
 export type ResolvedDashboardConfig = Required<DashboardConfig>;
+
+type DashboardConfigKeys = keyof DashboardConfig;
+const RequiredConfigKeys: DashboardConfigKeys[] = [
+    "dateFilterConfig",
+    "locale",
+    "separators",
+    "colorPalette",
+    "settings",
+];
+
+/**
+ * Tests whether the provided config is fully resolved - it contains all the necessary values.
+ *
+ * @param config - config to test
+ */
+export function isResolvedConfig(config?: DashboardConfig): config is ResolvedDashboardConfig {
+    if (!config) {
+        return false;
+    }
+
+    const specifiedConfig = keys(config);
+
+    return RequiredConfigKeys.every((key) => includes(specifiedConfig, key));
+}
 
 /**
  * Values in this context will be available to all sagas.

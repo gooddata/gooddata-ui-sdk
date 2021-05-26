@@ -23,6 +23,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ISeparators } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-backend-spi';
+import { IWorkspacePermissions } from '@gooddata/sdk-backend-spi';
 import { ObjRef } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 import { TypedUseSelectorHook } from 'react-redux';
@@ -104,6 +105,7 @@ export interface DashboardLoaded extends IDashboardEvent {
         dashboard: IDashboard;
         insights: IInsight[];
         config: DashboardConfig;
+        permissions: IWorkspacePermissions;
     };
     // (undocumented)
     type: "GDC.DASHBOARD.EVT.LOADED";
@@ -119,6 +121,7 @@ export type DashboardMenuButtonComponent = ComponentType<IDashboardMenuButtonPro
 export type DashboardState = {
     loading: LoadingState;
     config: ConfigState;
+    permissions: PermissionsState;
     filterContext: FilterContextState;
     layout: LayoutState;
     dateFilterConfig: DateFilterConfigState;
@@ -247,6 +250,7 @@ export interface IDashboardProps {
         Component?: FilterBarComponent;
         defaultComponentProps?: IDefaultFilterBarProps;
     };
+    permissions?: IWorkspacePermissions;
     topBarConfig?: {
         Component?: TopBarComponent;
         defaultComponentProps?: IDefaultTopBarProps;
@@ -335,6 +339,7 @@ export interface LoadDashboard extends IDashboardCommand {
     // (undocumented)
     payload: {
         config?: DashboardConfig;
+        permissions?: IWorkspacePermissions;
     };
     // (undocumented)
     type: "GDC.DASHBOARD.CMD.LOAD";
@@ -365,6 +370,15 @@ export type MenuButtonItem = {
 
 // @internal (undocumented)
 export const NoTopBar: React_2.FC<ITopBarProps>;
+
+// @internal
+export const permissionsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").IWorkspacePermissions, (res: import("./permissionsState").PermissionsState) => import("@gooddata/sdk-backend-spi").IWorkspacePermissions>;
+
+// @internal (undocumented)
+export interface PermissionsState {
+    // (undocumented)
+    permissions?: IWorkspacePermissions;
+}
 
 // @internal
 export type ResolvedDashboardConfig = Required<DashboardConfig>;
