@@ -353,6 +353,9 @@ export type LoadingState = {
     error?: Error;
 };
 
+// @internal
+export const localeSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | undefined, (res: import("../..").DashboardConfig) => "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | undefined>;
+
 // @internal (undocumented)
 export type MenuButtonItem = {
     itemId: string;
@@ -362,6 +365,12 @@ export type MenuButtonItem = {
 
 // @internal (undocumented)
 export const NoTopBar: React_2.FC<ITopBarProps>;
+
+// @internal
+export const separatorsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISeparators | undefined, (res: import("../..").DashboardConfig) => import("@gooddata/sdk-backend-spi").ISeparators | undefined>;
+
+// @internal
+export const settingsSelector: import("@reduxjs/toolkit").OutputSelector<DashboardState, import("@gooddata/sdk-backend-spi").ISettings | undefined, (res: import("../..").DashboardConfig) => import("@gooddata/sdk-backend-spi").ISettings | undefined>;
 
 // @internal (undocumented)
 export const TopBar: React_2.FC<ITopBarProps & IDefaultTopBarProps>;

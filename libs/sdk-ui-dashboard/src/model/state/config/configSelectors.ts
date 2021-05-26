@@ -21,13 +21,6 @@ export const configSelector = createSelector(selectSelf, (configState) => {
 });
 
 /**
- * Returns settings that are in effect for the current dashboard.
- */
-export const settingsSelector = createSelector(configSelector, (state) => {
-    return state.settings;
-});
-
-/**
  * Returns workspace-level configuration for the of the date filter options and presets.
  *
  * Note: this configuration SHOULD be further augmented by the dashboard-level overrides to obtain
@@ -35,4 +28,31 @@ export const settingsSelector = createSelector(configSelector, (state) => {
  */
 export const dateFilterConfigSelector = createSelector(configSelector, (state) => {
     return state.dateFilterConfig;
+});
+
+/**
+ * Returns settings that are in effect for the current dashboard.
+ *
+ * @internal
+ */
+export const settingsSelector = createSelector(configSelector, (state) => {
+    return state.settings;
+});
+
+/**
+ * Returns locale to use for internationalization of the dashboard.
+ *
+ * @internal
+ */
+export const localeSelector = createSelector(configSelector, (state) => {
+    return state.locale;
+});
+
+/**
+ * Returns number separators to use when rendering numeric values on charts or KPIs.
+ *
+ * @internal
+ */
+export const separatorsSelector = createSelector(configSelector, (state) => {
+    return state.separators;
 });
